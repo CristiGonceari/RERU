@@ -15,7 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.0.0" />
-    <PackageReference Include="CVU.ERP.Common.DataTransferObjects" Version="1.2.0" />
     <PackageReference Include="FluentValidation" Version="9.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.3" />
   </ItemGroup>
