@@ -1,0 +1,80 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!--<Import Project="..\CODWER.RERU.Core.CodeAnalysis.targets" />-->
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>CODWER.RERU.Core.Application</AssemblyName>
+    <RootNamespace>CODWER.RERU.Core.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CS4014;CS1998</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>	  <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.2" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.8.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Identity\CVU.ERP.Identity.csproj" />
+    <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Infrastructure\CVU.ERP.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Module.Application\src\CVU.ERP.Module.Application.csproj" />
+    <ProjectReference Include="..\CODWER.RERU.Core.Data.Entities\CODWER.RERU.Core.Data.Entities.csproj" />
+    <ProjectReference Include="..\CODWER.RERU.Core.Data.Persistence\CODWER.RERU.Core.Data.Persistence.csproj" />
+    <ProjectReference Include="..\CODWER.RERU.Core.DataTransferObjects\CODWER.RERU.Core.DataTransferObjects.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CVU.ERP.Common.DataTransferObjects">
+    </Reference>
+    <Reference Include="CVU.ERP.Module.Common">
+      <HintPath>..\..\..\Common\CODWER.Common\CVU.ERP.Module.Common\src\bin\Debug\net5.0\CVU.ERP.Module.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\UserRegister.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\DeactivateUser.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\ActivateUser.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\SetPassword.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\ResetPassword.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\ResetByEmailToken.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\ResetByEmailPassword.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

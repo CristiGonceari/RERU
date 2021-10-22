@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!--<Import Project="..\CVU.ERP.CodeAnalysis.targets" />-->
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>CVU.ERP.Common</AssemblyName>
+    <RootNamespace>CVU.ERP.Common</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>CVU Intelligence</Authors>
+    <Company>CVU Intelligence</Company>
+    <Description>CVU Intelligence</Description>
+    <Version>2.3.3</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.0.0" />
+    <PackageReference Include="CVU.ERP.Common.DataTransferObjects" Version="1.2.0" />
+    <PackageReference Include="FluentValidation" Version="9.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CODWER.DataTransferObjects\CVU.ERP.Common.DataTransferObjects.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="EmailTemplates\NewUserCreated.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplates\ResetPassword.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplates\UserRegister.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

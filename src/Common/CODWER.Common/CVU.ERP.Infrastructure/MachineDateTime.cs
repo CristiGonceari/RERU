@@ -1,0 +1,12 @@
+using System;
+using CVU.ERP.Common;
+
+namespace CVU.ERP.Infrastructure
+{
+    public class MachineDateTime : IDateTime
+    {
+        public DateTime Now => DateTime.Now;
+
+        public int CurrentYear => DateTime.Now.Year;
+    }
+}

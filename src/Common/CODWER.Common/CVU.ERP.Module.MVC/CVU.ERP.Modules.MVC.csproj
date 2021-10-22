@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Version>2.2.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\CODWER.DataTransferObjects\CVU.ERP.Common.DataTransferObjects.csproj" />
+    <ProjectReference Include="..\CVU.ERP.Module.Common\src\CVU.ERP.Module.Common.csproj" />
+  </ItemGroup>
+
+</Project>
