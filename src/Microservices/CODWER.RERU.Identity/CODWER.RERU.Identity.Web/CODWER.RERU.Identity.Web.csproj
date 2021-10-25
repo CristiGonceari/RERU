@@ -8,4 +8,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Identity\CVU.ERP.Identity.csproj" />
+    <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Module.API\src\CVU.ERP.Module.API.csproj" />
+  </ItemGroup>
+
 </Project>
