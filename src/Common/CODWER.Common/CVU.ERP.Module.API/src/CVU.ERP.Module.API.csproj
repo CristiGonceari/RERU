@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\CVU.ERP.Module.Common\src\CVU.ERP.Module.Common.csproj" />
-    <ProjectReference Include="..\..\CVU.ERP.Module.MVC\CVU.ERP.Modules.MVC.csproj" />
   </ItemGroup>
 
 </Project>

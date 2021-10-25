@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CODWER.RERU.Core.Data.Persistence.Migrations
 {
     [DbContext(typeof(CoreDbContext))]
-    [Migration("20211022131040_Init")]
+    [Migration("20211025124536_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

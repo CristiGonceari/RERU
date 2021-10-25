@@ -29,14 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="CVU.ERP.Common.DataTransferObjects">
-    </Reference>
-    <Reference Include="CVU.ERP.Module.Common">
-      <HintPath>..\..\..\Common\CODWER.Common\CVU.ERP.Module.Common\src\bin\Debug\net5.0\CVU.ERP.Module.Common.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Templates\UserRegister.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
