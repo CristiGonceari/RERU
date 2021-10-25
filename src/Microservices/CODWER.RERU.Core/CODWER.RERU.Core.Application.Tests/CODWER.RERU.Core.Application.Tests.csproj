@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!--<Import Project="..\CODWER.RERU.Core.CodeAnalysis.targets" />-->
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Shouldly" Version="3.0.2" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CODWER.RERU.Core.Application\CODWER.RERU.Core.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Customers\Queries\GetCustomerDetailQueryHandlerTests.cs" />
+    <Compile Remove="Infrastructure\CommandTestBase.cs" />
+  </ItemGroup>
+</Project>

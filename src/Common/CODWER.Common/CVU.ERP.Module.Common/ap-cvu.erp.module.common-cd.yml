@@ -1,0 +1,35 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  - main
+
+pool:
+  name: Default
+
+steps:
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: "restore"
+      projects: "**/CVU.ERP.Module.Common.csproj"
+      feedsToUse: "select"
+      vstsFeed: "291e92b7-ee93-4c4e-a5b4-a782100d2421/cd1c0186-4930-4bf3-88cf-330daedb1591"
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'test'
+      projects: '**/CVU.ERP.Module.Common/tests/tests.csproj'
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: "pack"
+      packagesToPack: "**/src/CVU.ERP.Module.Common.csproj"
+      versioningScheme: "off"
+      
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: "push"
+      packagesToPush: "$(Build.ArtifactStagingDirectory)/*.nupkg"
+      nuGetFeedType: "internal"
+      publishVstsFeed: "291e92b7-ee93-4c4e-a5b4-a782100d2421/cd1c0186-4930-4bf3-88cf-330daedb1591"
+      publishPackageMetadata: false

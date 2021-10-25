@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>CVU Intelligence</Authors>
+    <Company>CVU Intelligence</Company>
+    <Description>CVU Intelligence</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.2.0</Version>
+  </PropertyGroup>
+</Project>
