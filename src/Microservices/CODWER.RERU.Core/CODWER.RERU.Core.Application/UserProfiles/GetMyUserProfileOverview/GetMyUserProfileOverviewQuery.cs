@@ -1,5 +1,4 @@
 using CODWER.RERU.Core.DataTransferObjects.Profile;
-using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 
 namespace CODWER.RERU.Core.Application.UserProfiles.GetMyUserProfileOverview {

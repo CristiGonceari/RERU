@@ -3,20 +3,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.Common.Pagination;
 using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
+using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Data.Entities;
 using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
 using MediatR;
 
-namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles {
-    public class GetAllUserProfilesQueryHandler : BaseHandler, IRequestHandler<GetAllUserProfilesQuery, PaginatedModel<UserProfileDto>> {
+namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles 
+{
+    public class GetAllUserProfilesQueryHandler : BaseHandler, IRequestHandler<GetAllUserProfilesQuery, PaginatedModel<UserProfileDto>> 
+    {
         private readonly IPaginationService _paginationService;
 
         public GetAllUserProfilesQueryHandler (ICommonServiceProvider commonServiceProvider, IPaginationService paginationService) : base (commonServiceProvider) {
             _paginationService = paginationService;
         }
 
-        public async Task<PaginatedModel<UserProfileDto>> Handle (GetAllUserProfilesQuery request, CancellationToken cancellationToken) {
+        public async Task<PaginatedModel<UserProfileDto>> Handle (GetAllUserProfilesQuery request, CancellationToken cancellationToken) 
+        {
             var userProfiles = CoreDbContext.UserProfiles.AsQueryable ();
 
             userProfiles = Filter (userProfiles, request);
@@ -27,7 +30,8 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles {
             return paginatedModel;
         }
 
-        private IQueryable<UserProfile> Filter (IQueryable<UserProfile> items, GetAllUserProfilesQuery request) {
+        private IQueryable<UserProfile> Filter (IQueryable<UserProfile> items, GetAllUserProfilesQuery request) 
+        {
             // common search by name and/or lastName
             if (!string.IsNullOrEmpty (request.Keyword)) {
                 var toSearch = request.Keyword.Split (' ').ToList ();

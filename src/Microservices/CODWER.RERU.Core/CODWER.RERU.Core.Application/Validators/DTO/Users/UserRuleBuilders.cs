@@ -1,7 +1,9 @@
 using FluentValidation;
 
-namespace CODWER.RERU.Core.Application.Validators.DTO.Users {
-    public static class UserRuleBuilders {
+namespace CODWER.RERU.Core.Application.Validators.DTO.Users 
+{
+    public static class UserRuleBuilders 
+    {
         public static IRuleBuilderOptions<T, string> NameRule<T> (this IRuleBuilder<T, string> ruleBuilder) {
             return ruleBuilder
                 .NotNull()

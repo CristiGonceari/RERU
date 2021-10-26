@@ -10,11 +10,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace CODWER.RERU.Core.API.Controllers {
     [ApiController]
     [Route ("api/[controller]")]
-    public class ProfileController : BaseController {
+    public class ProfileController : BaseController 
+    {
         public ProfileController (IMediator mediator) : base (mediator) { }
 
         [HttpGet]
-        public async Task<UserProfileOverviewDto> GetProfileOverview () {
+        public async Task<UserProfileOverviewDto> GetProfileOverview ()
+        {
             return await Mediator.Send (new GetMyUserProfileOverviewQuery ());
         }
 

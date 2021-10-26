@@ -1,9 +1,9 @@
 ﻿using CVU.ERP.Common.Pagination;
-using CODWER.RERU.Core.Application.ModulePermissions.GetAllModulePermissions;
 using CODWER.RERU.Core.DataTransferObjects.ModulePermissions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using CODWER.RERU.Core.Application.ModulePermissions.GetModulePermissions;
 
 namespace CODWER.RERU.Core.API.Controllers
 {

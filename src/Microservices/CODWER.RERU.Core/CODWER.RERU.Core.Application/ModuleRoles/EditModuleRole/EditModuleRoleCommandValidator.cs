@@ -4,9 +4,9 @@ using FluentValidation;
 
 namespace CODWER.RERU.Core.Application.ModuleRoles.EditModuleRole
 {
-    public class EditModuleRoleCommanValidator : AbstractValidator<CreateModuleRoleCommand>
+    public class EditModuleRoleCommandValidator : AbstractValidator<CreateModuleRoleCommand>
     {
-        public EditModuleRoleCommanValidator(IValidator<AddEditModuleRoleDto> addEditModuleRoleDto)
+        public EditModuleRoleCommandValidator(IValidator<AddEditModuleRoleDto> addEditModuleRoleDto)
         {
             RuleFor(x => x.ModuleRole)
                 .SetValidator(addEditModuleRoleDto);

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CODWER.RERU.Core.Application.Common.Services.Password
+namespace CODWER.RERU.Core.Application.Common.Services.PasswordGenerator
 {
     public class PasswordGenerator : IPasswordGenerator
     {

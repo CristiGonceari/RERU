@@ -1,5 +1,5 @@
 ﻿using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
+using CODWER.RERU.Core.Application.Common.Providers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -23,6 +23,7 @@ namespace CODWER.RERU.Core.Application.ModuleRoles.EditModuleRole
                        .Where(mr => mr.ModuleId == request.ModuleRole.ModuleId)
                        .Where(mr => mr.IsAssignByDefault == true)
                        .ForEachAsync(x => x.IsAssignByDefault = false);
+                
                 await CoreDbContext.SaveChangesAsync();
             }
             Mapper.Map(request.ModuleRole , moduleRole);

@@ -3,13 +3,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.Common.Pagination;
 using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
+using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.DataTransferObjects.Modules;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using CODWER.RERU.Core.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Modules.GetAllModules {
-    public class GetAllModulesQueryHandler : BaseHandler, IRequestHandler<GetAllModulesQuery, PaginatedModel<ModuleDto>> {
+    public class GetAllModulesQueryHandler : BaseHandler, IRequestHandler<GetAllModulesQuery, PaginatedModel<ModuleDto>> 
+    {
 
         private readonly IPaginationService _paginationService;
 

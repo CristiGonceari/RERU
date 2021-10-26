@@ -1,25 +1,28 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CVU.ERP.Common.DataTransferObjects.Response;
 using CVU.ERP.Common.Pagination;
 using CODWER.RERU.Core.Data.Persistence.Context;
 using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Identity.Models;
 using MediatR;
 
-namespace CODWER.RERU.Core.Application.Users.GetUsers {
-    public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedModel<UserDto>> {
+namespace CODWER.RERU.Core.Application.Users.GetUsers 
+{
+    public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedModel<UserDto>> 
+    {
 
         private readonly IPaginationService _paginationService;
         private readonly UserManagementDbContext _userManagementDbContext;
 
-        public GetUsersQueryHandler (IPaginationService paginationService, UserManagementDbContext userManagementDbContext) {
+        public GetUsersQueryHandler (IPaginationService paginationService, UserManagementDbContext userManagementDbContext)
+        {
             _paginationService = paginationService;
             _userManagementDbContext = userManagementDbContext;
         }
 
-        public async Task<PaginatedModel<UserDto>> Handle (GetUsersQuery request, CancellationToken cancellationToken) {
+        public async Task<PaginatedModel<UserDto>> Handle (GetUsersQuery request, CancellationToken cancellationToken) 
+        {
             var users = _userManagementDbContext.Users.AsQueryable ();
 
             users = Filter (users, request);

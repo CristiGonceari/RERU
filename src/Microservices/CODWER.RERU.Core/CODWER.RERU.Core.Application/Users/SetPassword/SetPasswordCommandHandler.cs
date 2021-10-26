@@ -7,14 +7,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.Common.Interfaces;
 using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
+using CODWER.RERU.Core.Application.Common.Providers;
 using CVU.ERP.Identity.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Core.Application.Users.SetPassword {
-    public class SetPasswordCommandHandler : BaseHandler, IRequestHandler<SetPasswordCommand, Unit> {
+    public class SetPasswordCommandHandler : BaseHandler, IRequestHandler<SetPasswordCommand, Unit> 
+    {
         private readonly UserManager<ERPIdentityUser> _userManager;
         private readonly IEmailService _emailService;
 

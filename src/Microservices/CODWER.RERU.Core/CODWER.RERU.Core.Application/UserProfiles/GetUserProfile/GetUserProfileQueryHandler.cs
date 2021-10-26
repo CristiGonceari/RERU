@@ -2,14 +2,15 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
+using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services;
 using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Core.Application.UserProfiles.GetUserProfile {
-    public class GetUserProfileQueryHandler : BaseHandler, IRequestHandler<GetUserProfileQuery, UserProfileDto> {
+    public class GetUserProfileQueryHandler : BaseHandler, IRequestHandler<GetUserProfileQuery, UserProfileDto> 
+    {
         private readonly IDocumentStorageService _documentService;
 
         public GetUserProfileQueryHandler (ICommonServiceProvider commonServicepProvider, IDocumentStorageService documentService) : base (commonServicepProvider)

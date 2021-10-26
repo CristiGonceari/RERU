@@ -1,4 +1,4 @@
-namespace CODWER.RERU.Core.Application.Common.Services.Password
+namespace CODWER.RERU.Core.Application.Common.Services.PasswordGenerator
 {
     public interface IPasswordGenerator
     {

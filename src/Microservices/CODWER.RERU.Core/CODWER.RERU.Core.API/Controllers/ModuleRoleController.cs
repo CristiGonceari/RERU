@@ -13,10 +13,12 @@ using CODWER.RERU.Core.DataTransferObjects.ModuleRoles;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CODWER.RERU.Core.API.Controllers {
+namespace CODWER.RERU.Core.API.Controllers 
+{
     [ApiController]
     [Route ("api/[controller]")]
-    public class ModuleRoleController : BaseController {
+    public class ModuleRoleController : BaseController 
+    {
 
         public ModuleRoleController (IMediator mediator) : base (mediator) { }
 
