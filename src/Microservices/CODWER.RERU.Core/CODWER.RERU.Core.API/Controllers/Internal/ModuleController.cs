@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Modules.GetInternalModules;
-using CODWER.RERU.Core.DataTransferObjects.Modules;
 using CVU.ERP.Module.Application.Models;
 using MediatR;
 

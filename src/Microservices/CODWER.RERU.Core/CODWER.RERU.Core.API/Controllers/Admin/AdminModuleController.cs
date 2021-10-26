@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using CVU.ERP.Common.DataTransferObjects.Response;
 using CVU.ERP.Common.Pagination;
 using CODWER.RERU.Core.Application.Modules.DeleteModule;
 using CODWER.RERU.Core.Application.Modules.EditModule;
@@ -12,44 +10,52 @@ using CODWER.RERU.Core.DataTransferObjects.Modules;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CODWER.RERU.Core.API.Controllers.Admin {
+namespace CODWER.RERU.Core.API.Controllers.Admin 
+{
 
     [Route ("api/admin/module")]
-    public class AdminModuleController : BaseController {
+    public class AdminModuleController : BaseController
+    {
         public AdminModuleController (IMediator mediator) : base (mediator) { }
 
         [HttpPost]
-        public async Task RegisterModule ([FromBody] AddEditModuleDto module) {
+        public async Task RegisterModule ([FromBody] AddEditModuleDto module) 
+        {
             var registerModuleCommand = new RegisterModuleCommand { Module = module };
             await Mediator.Send (registerModuleCommand);
         }
 
         [HttpGet]
-        public async Task<PaginatedModel<ModuleDto>> GetUsers ([FromQuery] GetAllModulesQuery query) {
+        public async Task<PaginatedModel<ModuleDto>> GetUsers ([FromQuery] GetAllModulesQuery query)
+        {
             var mediatorResponse = await Mediator.Send (query);
             return mediatorResponse;
         }
 
         [HttpGet ("{id:int}")]
-        public Task<ModuleDto> GetModuleDetails ([FromRoute] int id) {
+        public Task<ModuleDto> GetModuleDetails ([FromRoute] int id)
+        {
             var getModuleDetails = new GetModuleDetailsQuery (id);
             return Mediator.Send (getModuleDetails);
         }
 
         [HttpGet ("{id}/edit")]
-        public Task<ModuleDto> GetEditModule ([FromRoute] int id) {
+        public Task<ModuleDto> GetEditModule ([FromRoute] int id) 
+        {
             var getEditModule = new GetEditModuleQuery (id);
             return Mediator.Send (getEditModule);
         }
 
         [HttpPut]
-        public Task EditModule ([FromBody] AddEditModuleDto module) {
+        public Task EditModule ([FromBody] AddEditModuleDto module) 
+        {
             var getEditModule = new EditModuleCommand (module);
             return Mediator.Send (getEditModule);
         }
 
         [HttpDelete ("{id}")]
-        public Task DeleteModule ([FromRoute] int id) {
+        public Task DeleteModule ([FromRoute] int id) 
+        {
             var deleteCommand = new DeleteModuleCommand (id);
             return Mediator.Send (deleteCommand);
         }

@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
+using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Identity.Models;
 using CVU.ERP.Module.Application.Providers;
@@ -11,11 +11,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Core.Application.Users.GetPersonalData {
-    public class GetPersonalDataQueryHandler : BaseHandler, IRequestHandler<GetPersonalDataQuery, UserPersonalDataDto> {
+    public class GetPersonalDataQueryHandler : BaseHandler, IRequestHandler<GetPersonalDataQuery, UserPersonalDataDto> 
+    {
         private readonly UserManager<ERPIdentityUser> _userManager;
         private readonly ICurrentApplicationUserProvider _userProvider;
 
-        public GetPersonalDataQueryHandler (ICommonServiceProvider commonServicepProvider, ICurrentApplicationUserProvider userProvider, UserManager<ERPIdentityUser> userManager) : base (commonServicepProvider) {
+        public GetPersonalDataQueryHandler (ICommonServiceProvider commonServicepProvider, ICurrentApplicationUserProvider userProvider, UserManager<ERPIdentityUser> userManager) : base (commonServicepProvider) 
+        {
             _userManager = userManager;
             _userProvider = userProvider;
         }

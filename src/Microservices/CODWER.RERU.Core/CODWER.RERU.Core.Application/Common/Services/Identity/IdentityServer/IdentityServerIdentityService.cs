@@ -3,10 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using AutoMapper;
 using CVU.ERP.Common.Interfaces;
 using CODWER.RERU.Core.Application.Common.Services.Identity.Exceptions;
-using CODWER.RERU.Core.Application.Common.Services.Password;
+using CODWER.RERU.Core.Application.Common.Services.PasswordGenerator;
 using CODWER.RERU.Core.Data.Entities;
 using CVU.ERP.Identity.Models;
 using Microsoft.AspNetCore.Identity;
@@ -15,15 +14,13 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 {
     public class IdentityServerIdentityService : IIdentityService
     {
-        private readonly IMapper _mapper;
         private readonly UserManager<ERPIdentityUser> _userManager;
         private readonly IEmailService _emailService;
         private readonly IPasswordGenerator _passwordGenerator;
         public string Type => "local";
 
-        public IdentityServerIdentityService(UserManager<ERPIdentityUser> userManager, IMapper mapper, IEmailService emailService, IPasswordGenerator passwordGenerator)
+        public IdentityServerIdentityService(UserManager<ERPIdentityUser> userManager, IEmailService emailService, IPasswordGenerator passwordGenerator)
         {
-            _mapper = mapper;
             _userManager = userManager;
             _emailService = emailService;
             _passwordGenerator = passwordGenerator;
@@ -71,7 +68,6 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 
             if (response.Errors.Any())
             {
-                // throw new CreateIdentityFailedException($"User was not created because of some possible errors: {response.Errors.Select(e => $"{e.Code} {e.Description}")}");
                 throw new CreateIdentityFailedException(response.Errors.Select(re => $"{re.Code}: {re.Description}").ToArray());
             }
 

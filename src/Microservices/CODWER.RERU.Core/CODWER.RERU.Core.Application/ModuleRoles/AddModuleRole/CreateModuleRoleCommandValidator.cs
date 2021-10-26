@@ -1,5 +1,4 @@
-﻿
-using CODWER.RERU.Core.DataTransferObjects.ModuleRoles;
+﻿using CODWER.RERU.Core.DataTransferObjects.ModuleRoles;
 using FluentValidation;
 
 namespace CODWER.RERU.Core.Application.ModuleRoles.AddModuleRole

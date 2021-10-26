@@ -1,7 +1,5 @@
-﻿
-using CVU.ERP.Common.Validation;
-using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
+﻿using CODWER.RERU.Core.Application.Common.Handlers;
+using CODWER.RERU.Core.Application.Common.Providers;
 using CVU.ERP.Identity.Models;
 using CVU.ERP.Module.Application.Providers;
 using FluentValidation;
@@ -47,11 +45,11 @@ namespace CODWER.RERU.Core.Application.Users.ChangeMyPassword
 
                         if (!result.Succeeded)
                         {
-                        foreach (var error in result.Errors)
-                        {
-                            passwordErrors.Add(error.Description);
-                            throw new Exception("Validation Error");
-                        }
+                            foreach (var error in result.Errors)
+                            {
+                                passwordErrors.Add(error.Description);
+                                throw new Exception("Validation Error");
+                            }
                         } else
                         {
                             user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, request.newPassword);

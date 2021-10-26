@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
+using CODWER.RERU.Core.Application.Common.Providers;
 using CVU.ERP.Identity.Models;
 using CVU.ERP.Module.Application.Providers;
 using MediatR;
@@ -33,7 +33,7 @@ namespace CODWER.RERU.Core.Application.Users.ChangePersonalData
 
             var userProfile = await CoreDbContext
                 .UserProfiles
-                .FirstOrDefaultAsync(up => up.Id == Convert.ToInt32(currentUser.Id));
+                .FirstOrDefaultAsync(up => up.Id == int.Parse(currentUser.Id));
 
             if (userProfile == null)
             {

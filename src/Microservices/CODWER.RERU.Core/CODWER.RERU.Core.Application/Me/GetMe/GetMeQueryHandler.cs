@@ -1,8 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
-using CODWER.RERU.Core.Application.Common.Services;
+using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.DataTransferObjects.Me;
 using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Module.Application.Providers;

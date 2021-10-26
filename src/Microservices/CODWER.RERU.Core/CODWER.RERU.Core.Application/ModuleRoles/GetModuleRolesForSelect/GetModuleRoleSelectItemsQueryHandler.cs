@@ -1,6 +1,6 @@
 ﻿using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
+using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.DataTransferObjects.ModuleRoles;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

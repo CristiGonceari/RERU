@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
+using CODWER.RERU.Core.Application.Common.Providers;
 using CVU.ERP.Identity.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity;

@@ -7,13 +7,10 @@ using CODWER.RERU.Core.Application.UserProfileModuleRoles.RemoveModuleAccess;
 using CODWER.RERU.Core.Application.UserProfileModuleRoles.UpdateUserProfileModuleAccess;
 using CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles;
 using CODWER.RERU.Core.Application.UserProfiles.GetUserProfile;
-using CODWER.RERU.Core.Application.UserProfiles.RemoveAvatar;
-using CODWER.RERU.Core.Application.UserProfiles.UploadAvatar;
 using CODWER.RERU.Core.DataTransferObjects.Modules;
 using CODWER.RERU.Core.DataTransferObjects.UserProfileModuleRoles;
 using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CODWER.RERU.Core.API.Controllers {

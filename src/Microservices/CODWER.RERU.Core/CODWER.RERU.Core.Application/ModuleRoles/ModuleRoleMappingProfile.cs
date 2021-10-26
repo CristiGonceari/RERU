@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CODWER.RERU.Core.Data.Entities;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CODWER.RERU.Core.DataTransferObjects.ModuleRoles;
 
@@ -8,28 +9,28 @@ namespace CODWER.RERU.Core.Application.ModuleRoles
     {
         public ModuleRoleMappingProfile()
         {
-            CreateMap<Data.Entities.ModuleRole, ModuleRoleRowDto>();
-            CreateMap<Data.Entities.ModuleRole, SelectItem>()
+            CreateMap<ModuleRole, ModuleRoleRowDto>();
+            CreateMap<ModuleRole, SelectItem>()
                 .ForMember(destination => destination.Value, options => options.MapFrom(src=> src.Id.ToString()))
                 .ForMember(destination => destination.Label, options => options.MapFrom(src=> src.Name))
                 ;
 
-            CreateMap<Data.Entities.ModuleRole, ModuleRoleDto>();
+            CreateMap<ModuleRole, ModuleRoleDto>();
 
-            CreateMap<Data.Entities.ModuleRole, ModuleRoleForSelectDto>();
+            CreateMap<ModuleRole, ModuleRoleForSelectDto>();
 
-            CreateMap<AddEditModuleRoleDto, Data.Entities.ModuleRole>();
+            CreateMap<AddEditModuleRoleDto, ModuleRole>();
 
-            CreateMap<ModuleRoleForSelectDto, Data.Entities.ModuleRole>()
+            CreateMap<ModuleRoleForSelectDto, ModuleRole>()
                 .ForMember(destination => destination.Id, options => options.Ignore());
 
-            CreateMap<Data.Entities.ModuleRole, AddEditModuleRoleDto>()
+            CreateMap<ModuleRole, AddEditModuleRoleDto>()
                 .ForMember(destination => destination.Id, options => options.Ignore());
 
-            CreateMap<ModuleRoleRowDto, Data.Entities.ModuleRole>()
+            CreateMap<ModuleRoleRowDto, ModuleRole>()
                 .ForMember(destination => destination.Id, options => options.Ignore());
 
-            CreateMap<ModuleRoleDto, Data.Entities.ModuleRole>()
+            CreateMap<ModuleRoleDto, ModuleRole>()
                 .ForMember(destination => destination.Id, options => options.Ignore());
         }
     }

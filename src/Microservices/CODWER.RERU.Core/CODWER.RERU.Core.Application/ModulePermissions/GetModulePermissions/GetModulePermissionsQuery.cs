@@ -2,7 +2,7 @@
 using CODWER.RERU.Core.DataTransferObjects.ModulePermissions;
 using MediatR;
 
-namespace CODWER.RERU.Core.Application.ModulePermissions.GetAllModulePermissions
+namespace CODWER.RERU.Core.Application.ModulePermissions.GetModulePermissions
 {
     public class GetModulePermissionsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<ModulePermissionRowDto>>
     {

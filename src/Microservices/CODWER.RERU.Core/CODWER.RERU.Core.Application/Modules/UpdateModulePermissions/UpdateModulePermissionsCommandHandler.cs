@@ -3,20 +3,24 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
+using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Data.Entities;
 using CODWER.RERU.Core.Data.Entities.Enums;
 using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.Models;
 using MediatR;
 
-namespace CODWER.RERU.Core.Application.Modules.UpdateModulePermissions {
-    public class UpdateModulePermissionsCommandHandler : BaseHandler, IRequestHandler<UpdateModulePermissionsCommand, Unit> {
+namespace CODWER.RERU.Core.Application.Modules.UpdateModulePermissions 
+{
+    public class UpdateModulePermissionsCommandHandler : BaseHandler, IRequestHandler<UpdateModulePermissionsCommand, Unit> 
+    {
         private readonly IModuleClient _moduleClient;
         public UpdateModulePermissionsCommandHandler (ICommonServiceProvider commonServiceProvider, IModuleClient moduleClient) : base (commonServiceProvider) {
             _moduleClient = moduleClient;
         }
-        public async Task<Unit> Handle (UpdateModulePermissionsCommand request, CancellationToken cancellationToken) {
+
+        public async Task<Unit> Handle (UpdateModulePermissionsCommand request, CancellationToken cancellationToken) 
+        {
             var applicationModule = Mapper.Map<ApplicationModule> (request.Module);
             try
             {

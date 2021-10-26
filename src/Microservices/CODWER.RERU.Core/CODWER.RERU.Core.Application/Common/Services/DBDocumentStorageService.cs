@@ -28,10 +28,10 @@ namespace CODWER.RERU.Core.Application.Common.Services
             var document = _coreDbContext.DocumentBodies.FirstOrDefault(d => d.Id == id);
 
             if (document != null)
-            {
-            _coreDbContext.DocumentBodies.Remove(document);
+            { 
+                _coreDbContext.DocumentBodies.Remove(document);
 
-            await _coreDbContext.SaveChangesAsync();
+                await _coreDbContext.SaveChangesAsync();
             }
 
             return Unit.Value;

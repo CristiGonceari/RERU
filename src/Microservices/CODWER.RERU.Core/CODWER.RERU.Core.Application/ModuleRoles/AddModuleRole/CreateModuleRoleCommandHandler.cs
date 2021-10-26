@@ -1,6 +1,6 @@
 ﻿
 using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
+using CODWER.RERU.Core.Application.Common.Providers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,7 +19,8 @@ namespace CODWER.RERU.Core.Application.ModuleRoles.AddModuleRole
         {
             if(request.ModuleRole.ModuleId != null)
             {
-            var moduleRole = Mapper.Map<Data.Entities.ModuleRole>(request.ModuleRole);
+                var moduleRole = Mapper.Map<Data.Entities.ModuleRole>(request.ModuleRole);
+                
                 if (request.ModuleRole.IsAssignByDefault)
                 {
                     await CoreDbContext.ModuleRoles
@@ -30,9 +31,9 @@ namespace CODWER.RERU.Core.Application.ModuleRoles.AddModuleRole
 
                 }
 
-            moduleRole.Type = Data.Entities.Enums.RoleTypeEnum.Dynamic;
-            CoreDbContext.ModuleRoles.Add(moduleRole);
-            await CoreDbContext.SaveChangesAsync();
+                moduleRole.Type = Data.Entities.Enums.RoleTypeEnum.Dynamic;
+                CoreDbContext.ModuleRoles.Add(moduleRole);
+                await CoreDbContext.SaveChangesAsync();
 
             } else
             {

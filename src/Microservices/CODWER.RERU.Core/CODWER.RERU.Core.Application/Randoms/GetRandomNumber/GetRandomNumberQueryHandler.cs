@@ -1,8 +1,6 @@
 ﻿using MediatR;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,6 +12,7 @@ namespace CODWER.RERU.Core.Application.Randoms.GetRandomNumber
         {
             var random = new Random();
             string chars = "0123456789";
+
             return Task.FromResult(
                 new string(Enumerable.Repeat(chars, 4)
                     .Select(s => s[random.Next(s.Length)]).ToArray())

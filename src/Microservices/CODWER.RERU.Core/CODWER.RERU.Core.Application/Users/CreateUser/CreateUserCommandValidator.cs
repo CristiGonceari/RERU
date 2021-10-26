@@ -1,5 +1,4 @@
 ﻿using CVU.ERP.Common.DataTransferObjects.Users;
-using CODWER.RERU.Core.DataTransferObjects.Users;
 using FluentValidation;
 
 namespace CODWER.RERU.Core.Application.Users.CreateUser

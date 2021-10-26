@@ -1,5 +1,4 @@
-﻿
-using CODWER.RERU.Core.DataTransferObjects.Users;
+﻿using CODWER.RERU.Core.DataTransferObjects.Users;
 using FluentValidation;
 
 namespace CODWER.RERU.Core.Application.Validators.DTO.Users
