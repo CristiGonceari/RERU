@@ -1,0 +1,13 @@
+{
+  "name": "@erp/shared",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^10.0.9",
+    "@angular/core": "^10.0.9",
+    "@ng-bootstrap/ng-bootstrap": "^7.0.0",
+    "@ngx-translate/core": "^13.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

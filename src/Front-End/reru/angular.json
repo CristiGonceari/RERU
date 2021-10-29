@@ -25,10 +25,19 @@
             "aot": true,
             "assets": [
               "projects/core/src/favicon.ico",
-              "projects/core/src/assets"
+              "projects/core/src/assets",
+              {
+                "glob": "**/*",
+                "input": "projects/erp-shared/src/lib/assets",
+                "output": "/assets/"
+              }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/erp-shared/src/lib/styles"]
+            },
             "styles": [
-              "projects/core/src/styles.scss"
+              "projects/erp-shared/src/lib/styles/style.bundle.css",
+              "projects/erp-shared/src/lib/styles/plugins.bundle.css"
             ],
             "scripts": []
           },
@@ -51,8 +60,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "10mb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -146,10 +155,19 @@
             "aot": true,
             "assets": [
               "projects/evaluation/src/favicon.ico",
-              "projects/evaluation/src/assets"
+              "projects/evaluation/src/assets",
+              {
+                "glob": "**/*",
+                "input": "projects/erp-shared/src/lib/assets",
+                "output": "/assets/"
+              }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/erp-shared/src/lib/styles"]
+            },
             "styles": [
-              "projects/evaluation/src/styles.scss"
+              "projects/erp-shared/src/lib/styles/style.bundle.css", 
+              "projects/erp-shared/src/lib/styles/plugins.bundle.css"
             ],
             "scripts": []
           },
@@ -213,7 +231,8 @@
               "projects/evaluation/src/assets"
             ],
             "styles": [
-              "projects/evaluation/src/styles.scss"
+              "projects/erp-shared/src/lib/styles/style.bundle.css",
+              "projects/erp-shared/src/lib/styles/plugins.bundle.css"
             ],
             "scripts": []
           }
@@ -267,10 +286,19 @@
             "aot": true,
             "assets": [
               "projects/personal/src/favicon.ico",
-              "projects/personal/src/assets"
+              "projects/personal/src/assets",
+              {
+                "glob": "**/*",
+                "input": "projects/erp-shared/src/lib/assets",
+                "output": "/assets/"
+              }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/erp-shared/src/lib/styles"]
+            },
             "styles": [
-              "projects/personal/src/styles.scss"
+              "projects/erp-shared/src/lib/styles/style.bundle.css", 
+              "projects/erp-shared/src/lib/styles/plugins.bundle.css"
             ],
             "scripts": []
           },
@@ -333,6 +361,9 @@
               "projects/personal/src/favicon.ico",
               "projects/personal/src/assets"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/erp-shared/src/lib/styles"]
+            },
             "styles": [
               "projects/personal/src/styles.scss"
             ],
@@ -367,7 +398,7 @@
       }
     },
     "erp-shared": {
-      "projectType": "application",
+      "projectType": "library",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
@@ -375,117 +406,43 @@
       },
       "root": "projects/erp-shared",
       "sourceRoot": "projects/erp-shared/src",
-      "prefix": "app",
+      "prefix": "erp-shared",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "outputPath": "dist/erp-shared",
-            "index": "projects/erp-shared/src/index.html",
-            "main": "projects/erp-shared/src/main.ts",
-            "polyfills": "projects/erp-shared/src/polyfills.ts",
-            "tsConfig": "projects/erp-shared/tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              "projects/erp-shared/src/favicon.ico",
-              "projects/erp-shared/src/assets"
-            ],
-            "styles": [
-              "projects/erp-shared/src/styles.scss"
-            ],
-            "scripts": []
+            "tsConfig": "projects/erp-shared/tsconfig.lib.json",
+            "project": "projects/erp-shared/ng-package.json"
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/erp-shared/src/environments/environment.ts",
-                  "with": "projects/erp-shared/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
+              "tsConfig": "projects/erp-shared/tsconfig.lib.prod.json"
             }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "erp-shared:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "erp-shared:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "erp-shared:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "projects/erp-shared/src/test.ts",
-            "polyfills": "projects/erp-shared/src/polyfills.ts",
             "tsConfig": "projects/erp-shared/tsconfig.spec.json",
-            "karmaConfig": "projects/erp-shared/karma.conf.js",
-            "assets": [
-              "projects/erp-shared/src/favicon.ico",
-              "projects/erp-shared/src/assets"
-            ],
-            "styles": [
-              "projects/erp-shared/src/styles.scss"
-            ],
-            "scripts": []
+            "karmaConfig": "projects/erp-shared/karma.conf.js"
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
+            "eslintConfig": ".eslintrc.js",
             "tsConfig": [
-              "projects/erp-shared/tsconfig.app.json",
-              "projects/erp-shared/tsconfig.spec.json",
-              "projects/erp-shared/e2e/tsconfig.json"
+              "projects/erp-shared/tsconfig.lib.json",
+              "projects/erp-shared/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "projects/erp-shared/e2e/protractor.conf.js",
-            "devServerTarget": "erp-shared:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "erp-shared:serve:production"
-            }
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
     }},
-  "defaultProject": "core"
+  "defaultProject": "core",
+  "cli": {
+    "analytics": true
+  }
 }

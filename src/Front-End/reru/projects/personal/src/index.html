@@ -2,12 +2,86 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Personal</title>
+  <title>Personal :: RERU</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style type="text/css">
+    .preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #FFF;
+      z-index: 9999;
+      transition: opacity .65s
+    }
+
+    .circle {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: auto;
+      background: #ddd;
+      border-radius: 50%;
+    }
+
+    .inner-circle {
+      width: 92%;
+      height: 92%;
+      background: white;
+      border-radius: 50%;
+      margin: auto;
+      vertical-align: middle;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+
+    }
+
+    .spinner {
+      height: 0;
+      width: 0;
+      border-radius: 50%;
+      border-right: 50px solid #e40e0e;
+      border-top: 50px solid transparent;
+      border-left: 50px solid transparent;
+      border-bottom: 50px solid transparent;
+
+      animation: rotate .8s infinite linear;
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body>
-  <app-root></app-root>
+
+<body class="header-fixed header-mobile-fixed aside-enabled aside-fixed aside-secondary-enabled page-loading">
+  <app-root>
+    <div class="circle">
+      <div class="spinner"></div>
+      <div class="inner-circle"></div>
+    </div>
+  </app-root>
+  <script src="//cdn.ckeditor.com/4.7.1/full/ckeditor.js"></script>
 </body>
+
 </html>

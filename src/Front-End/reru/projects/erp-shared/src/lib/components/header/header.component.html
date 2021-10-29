@@ -1,0 +1,118 @@
+<ng-container *ngIf="!isCustomHeader">
+	<div id="kt_header" class="header header-fixed">
+		<div class="container d-flex align-items-stretch justify-content-between">
+			<div class="d-none d-lg-flex align-items-center mr-3 w-100">
+				<div class="tenant-name">{{ authUserModel?.tenant?.name }}</div>
+			</div>
+
+			<div class="topbar">
+				<div ngbDropdown #languageDropdown="ngbDropdown" class="dropdown">
+					<div class="topbar-item mr-4" data-toggle="dropdown" data-offset="10px,0px" aria-expanded="false">
+						<div ngbDropdownToggle id="languageDropdown" class="btn font-weight-bolder btn-sm btn-light-primary px-5">
+							{{ getLang() }}
+						</div>
+					</div>
+					<div
+						ngbDropdownMenu
+						aria-labelledby="languageDropdown"
+						class="dropdown-menu p-0 m-0 dropdown-menu-left dropdown-menu-anim-up"
+						style=""
+					>
+						<ul class="navi navi-hover py-5">
+							<li class="navi-item">
+								<a href="javascript:;" (click)="changeLanguage.emit('ro'); languageDropdown.close()" class="navi-link">
+									<span class="navi-text">Română</span>
+								</a>
+							</li>
+							<li class="navi-item">
+								<a href="javascript:;" (click)="changeLanguage.emit('en'); languageDropdown.close()" class="navi-link">
+									<span class="navi-text">English</span>
+								</a>
+							</li>
+							<li class="navi-item">
+								<a href="javascript:;" (click)="changeLanguage.emit('ru'); languageDropdown.close()" class="navi-link">
+									<span class="navi-text">Русский</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="topbar-item" style="white-space: nowrap; font-size: 14px; font-weight: 500">
+					{{ authUserModel?.user?.name }}
+					<div class="btn flex-shrink-0 mr-7 pt-4" (click)="toggle(sidebarView.USER)">
+						<div class="symbol symbol-40 symbol-sm-s" *ngIf="avatarString">
+							<img [src]="avatar" />
+						</div>
+						<div class="symbol symbol-40 symbol-sm-s symbol-light-success" style="size: 16px" *ngIf="!avatarString">
+							<span class="font-size-h3 symbol-label font-weight-boldest">{{ acronym }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-container>
+
+<ng-container *ngIf="isCustomHeader">
+	<div id="kt_header" class="header header-fixed">
+		<div class="container d-flex align-items-stretch justify-content-between">
+			<div class="d-none d-lg-flex align-items-center mr-3 w-100">
+				<a [routerLink]="['/']">
+					<img alt="Logo" [src]="logo" class="logo-sticky max-h-35px" />
+				</a>
+				<div class="tenant-name">ERP</div>
+			</div>
+
+			<div class="topbar">
+				<div ngbDropdown #languageDropdown="ngbDropdown" class="dropdown">
+					<div class="topbar-item mr-4" data-toggle="dropdown" data-offset="10px,0px" aria-expanded="false">
+						<div ngbDropdownToggle id="languageDropdown" class="btn font-weight-bolder btn-sm btn-light-primary px-5">
+							{{ getLang() }}
+						</div>
+					</div>
+					<div
+						ngbDropdownMenu
+						aria-labelledby="languageDropdown"
+						class="dropdown-menu p-0 m-0 dropdown-menu-left dropdown-menu-anim-up"
+						style=""
+					>
+						<ul class="navi navi-hover py-5">
+							<li class="navi-item">
+								<a href="javascript:;" (click)="changeLanguage.emit('ro'); languageDropdown.close()" class="navi-link">
+									<span class="navi-text">Română</span>
+								</a>
+							</li>
+							<li class="navi-item">
+								<a href="javascript:;" (click)="changeLanguage.emit('en'); languageDropdown.close()" class="navi-link">
+									<span class="navi-text">English</span>
+								</a>
+							</li>
+							<li class="navi-item">
+								<a href="javascript:;" (click)="changeLanguage.emit('ru'); languageDropdown.close()" class="navi-link">
+									<span class="navi-text">Русский</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="topbar-item" style="white-space: nowrap; font-size: 14px; font-weight: 500">
+					{{ user?.name }} {{ user?.lastName }}
+					<div class="btn flex-shrink-0 mr-7" (click)="toggle(sidebarView.USER)">
+						<div class="symbol symbol-50 symbol-sm-s symbol-light-success" style="size: 17px">
+							<span class="font-size-h3 symbol-label font-weight-boldest">{{ acronym }}</span>
+						</div>
+					</div>
+				</div>
+
+				<!--begin::Notifications-->
+				<!-- <div class="topbar-item">
+                    <div class="btn btn-icon btn-sm btn-primary font-weight-bolder p-0" id="kt_quick_notifications_toggle">
+                        3
+                    </div>
+                </div> -->
+			</div>
+		</div>
+	</div>
+</ng-container>

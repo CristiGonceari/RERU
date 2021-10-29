@@ -1,18 +1,58 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpLoaderFactory } from './utils/services/i18n/i18n.service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// import { CONFIG_INITIALIZER } from "./utils/util/initializer.util";
+import { UtilsModule } from './utils/utils.module';
+import { SharedModule, MOCK_AUTHENTICATION } from '@erp/shared';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { LayoutsComponent } from './components/layouts/layouts.component';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LayoutsComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgbModule,
+    SimpleNotificationsModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      }
+    }),
+    SharedModule,
+    FormsModule,
+    UtilsModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  entryComponents: [
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
+  providers: [
+    TranslatePipe,
+    //CONFIG_INITIALIZER,
+    {
+      provide: MOCK_AUTHENTICATION,
+      useValue: !environment.PRODUCTION
+    }
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

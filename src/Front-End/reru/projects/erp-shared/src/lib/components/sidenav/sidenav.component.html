@@ -1,0 +1,57 @@
+<div class="aside-left-custom d-flex aside-fixed" id="kt_aside">
+	<!--begin::Primary-->
+	<div class="aside-primary d-flex flex-column align-items-center flex-row-auto">
+		<!--begin::Brand-->
+		<div class="aside-brand d-flex flex-column align-items-center flex-column-auto">
+			<!--begin::Logo-->
+			<a href="/">
+				<img alt="ERP Logo" [src]="logo" class="max-h-30px" />
+			</a>
+			<!--end::Logo-->
+		</div>
+		<!--end::Brand-->
+		<!--begin::Nav Wrapper-->
+		<div
+			class="aside-nav d-flex flex-column align-items-center flex-column-fluid py-5 scroll scroll-pull ps"
+			style="height: 701px; overflow: hidden"
+		>
+			<!--begin::Nav-->
+			<ul class="nav flex-column" role="tablist">
+				<app-loading-spinner [colorClass]="'text-primary'" *ngIf="isLoading"></app-loading-spinner>
+				<ng-container *ngIf="!isLoading">
+					<li
+						*ngFor="let userModule of modules"
+						class="nav-item mb-1"
+						data-toggle="tooltip"
+						data-placement="right"
+						placement="right"
+						[ngbTooltip]="userModule.module.name"
+						data-container="body"
+						data-boundary="window"
+						container="body"
+					>
+						<a
+							[href]="userModule.module.publicUrl"
+							class="nav-link btn btn-icon btn-clean btn-lg"
+							data-toggle="tab"
+							data-target="#kt_aside_tab_1"
+							role="tab"
+							[ngClass]="{ active: userModule.module.id === moduleId }"
+						>
+							<svg-icon [key]="userModule.module.icon" [width]="24" [height]="24"></svg-icon>
+						</a>
+					</li>
+				</ng-container>
+			</ul>
+			<!--end::Nav-->
+			<div class="ps__rail-x" style="left: 0px; bottom: 0px">
+				<div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px"></div>
+			</div>
+			<div class="ps__rail-y" style="top: 0px; right: -2px">
+				<div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px"></div>
+			</div>
+		</div>
+		<!--end::Nav Wrapper-->
+	</div>
+	<!--end::Primary-->
+</div>
