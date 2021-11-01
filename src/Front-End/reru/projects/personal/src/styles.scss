@@ -1,1 +1,274 @@
 /* You can add global styles to this file, and also import other style files */
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$personal-primary: mat-palette($mat-red);
+$personal-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$personal-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$personal-theme: mat-light-theme((
+  color: (
+    primary: $personal-primary,
+    accent: $personal-accent,
+    warn: $personal-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($personal-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+/* UI METRONIC LIBRARY INITIALIZATION */
+@import "style";
+/* END METRONIC LIBRARY INITIALIZATION */
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+/* IMPORT ORGANIZATION CHART SCSS FILE */
+
+@import '~ngx-org-chart/_theming';
+
+@import '@swimlane/ngx-dnd/release/index.css';
+
+app-main {
+  width: 100%;
+}
+
+.pointer {
+  cursor: pointer;
+  outline: 0;
+}
+
+.simple-notification div,
+.simple-notification {
+    color: #FFF;
+}
+
+a.btn:not(.btn-icon),
+button.btn {
+  border-radius: 3px;
+
+  &.edit-button {
+    color: #FFF;
+    background: #187DE4;
+
+    &:hover,
+    &:focus {
+      color: #FFF;
+      background: #1673cf;
+    }
+  }
+}
+
+table.table.erp-table {
+  thead tr th {
+    color: #b5b5c3;
+    font-size: .9rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: .1rem;
+  }
+  thead tr th:first-child,
+  tbody tr td:first-child {
+    width: 250px;
+    max-width: 250px;
+  }
+  
+  tbody tr td {
+    outline: 0;
+  }
+
+  .btn-hover-default:hover:not(:disabled),
+    .show>.btn.btn-hover-default.dropdown-toggle.dropdown-toggle {
+      color: #B5B5C3;
+      background-color: #F3F6F9;
+      border-color: #F3F6F9;
+    }
+  
+    .dropdown.dropdown-inline {
+      a.dropdown-toggle::after {
+        display: none;
+      }
+    }
+}
+
+.details-page {
+  .btn-hover-default:hover:not(:disabled),
+  .show>.btn.btn-hover-default.dropdown-toggle.dropdown-toggle {
+    color: #B5B5C3;
+    background-color: #F3F6F9;
+    border-color: #F3F6F9;
+  }
+
+  .dropdown.dropdown-inline {
+    a.dropdown-toggle::after {
+      display: none;
+    }
+  }
+
+  .card.card-custom > .card-header .card-title .card-label {
+    font-size: 18px;
+    color: #1B283F;
+    font-weight: 700;
+    span.subheader-text {
+      font-size: 14px;
+      color: #80808F;
+      font-weight: 400;
+    }
+  }
+
+
+  label.col-form-label,
+  label.col-form-label + div {
+      color: #464E5F;
+  }
+
+  label.col-form-label {
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  label.col-form-label + div {
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+/* Hide input type number arrows */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+textarea.form-control {
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.navi.navi-hover .navi-item .navi-link:hover,
+div.dahsboard-component a.nav-link,
+div.card.card-custom,
+.datatable.datatable-default > .datatable-pager > .datatable-pager-nav > li > a.datatable-pager-link,
+div.dropdown-menu {
+  border-radius: 3px;
+}
+
+select.form-control,
+input.form-control {
+  height: 35px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+div.form-group {
+  margin-bottom: 0.5rem;
+}
+
+.card.card-custom {
+  height: 99%;
+}
+
+.form-group.required label:after { 
+  content:"*";
+  color:red;
+  padding: 0 0 0 4px;
+}
+
+select[disabled] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 0.01px;
+  text-overflow: '';
+}
+
+.vacation-box {
+  label {
+      color: #b5b5c3;
+      font-size: .9rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: .1rem;
+      span {
+          text-transform: initial;
+          word-break: break-all;
+      }
+  }
+}
+
+.request-box {
+  label {
+      color: #b5b5c3;
+      font-size: .9rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: .1rem;
+      span {
+          text-transform: initial;
+          word-break: break-all;
+      }
+  }
+}
+
+
+.slide-in-bck-center {
+	-webkit-animation: slide-in-bck-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-in-bck-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@-webkit-keyframes slide-in-bck-center {
+    0% {
+      -webkit-transform: translateZ(600px);
+              transform: translateZ(600px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateZ(0);
+              transform: translateZ(0);
+      opacity: 1;
+    }
+  }
+  @keyframes slide-in-bck-center {
+    0% {
+      -webkit-transform: translateZ(600px);
+              transform: translateZ(600px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateZ(0);
+              transform: translateZ(0);
+      opacity: 1;
+    }
+  }
+
+  .datepicker-only-month-select {
+    border: 0 !important;
+    .ngb-dp-months {
+      display: none !important;
+    }
+    width: 100%;
+  }
+  ngb-datepicker-navigation{
+    height: 30px;
+}
