@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { I18nService } from '../../utils/services/i18n.service';
+import { InitializerUserProfileService } from '../../utils/services/initializer-user-profile.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,10 +8,19 @@ import { I18nService } from '../../utils/services/i18n.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  constructor(private translate: I18nService) {}
+  profile;
+  isLoading: boolean = true;
+  constructor(private profileService: InitializerUserProfileService,
+              private translate: I18nService) {}
 
   ngOnInit(): void {
-    alert('Evaluation worksksks!')
+    this.retrieveProfile();
   }
 
-}
+  retrieveProfile(): void {
+    this.profileService.profile.subscribe(response => {
+      this.profile = response;
+      this.isLoading = false;
+    })
+  }
+ }

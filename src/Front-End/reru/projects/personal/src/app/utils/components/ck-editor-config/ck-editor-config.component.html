@@ -1,0 +1,29 @@
+<ngb-accordion (panelChange)="beforeChange($event)">
+    <ng-template #title></ng-template>
+    <ngb-panel id="panelOne">
+      <ng-template ngbPanelTitle>{{'documents-templates.configure-document'| translate}} *</ng-template>
+      <ng-template ngbPanelContent>
+        <div>
+          <div class="row ">
+            <div class="col-md-8">
+              <select class="form-control" name="employeeState" id="employeeState" [(ngModel)]="selectedDocument" (ngModelChange)="retrieveDocuments()">
+                <option *ngFor="let document of documents" [value]="document.id">{{ document.name }}</option>
+            </select>
+            </div>
+            <div class="col-md-4">
+              <button (click)="ckEditorContentToPdf()" class="btn btn-success button-wdth">
+                <i class="flaticon2-pie-chart"></i>
+                <small>{{'documents-templates.test-convert'| translate}}</small>
+              </button>
+            </div>
+          </div>
+          <hr *ngIf="selectedDocument != 0">
+          <ck-editor *ngIf="selectedDocument != 0" (ngModelChange)="changeValue($event)" #editor name="editor1" [(ngModel)]="editorValue" skin="moono-lisa" language="en"
+            [config]="{height: 1134, width: 794}" [editor]="Editor" [fullPage]="true" debounce="300"
+           >
+          </ck-editor>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+  

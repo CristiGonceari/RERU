@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -38,14 +38,11 @@ import { environment } from '../environments/environment';
 		SvgModule,
 		NgxDnDModule.forRoot(),
 	],
-	schemas: [
-		CUSTOM_ELEMENTS_SCHEMA
- 	],
 	providers: [TranslatePipe, Location,
     {
       provide: MOCK_AUTHENTICATION,
       useValue: !environment.PRODUCTION
     }],
-  	bootstrap: [AppComponent]
+	bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
