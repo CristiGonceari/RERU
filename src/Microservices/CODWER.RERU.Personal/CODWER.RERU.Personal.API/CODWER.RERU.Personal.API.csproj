@@ -43,6 +43,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Infrastructure\CVU.ERP.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.MessageQueue\CVU.ERP.MessageQueue.csproj" />
+    <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Module.Application\src\CVU.ERP.Module.Application.csproj" />
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Module\CVU.ERP.Module.csproj" />
     <ProjectReference Include="..\CODWER.RERU.Personal.Application\CODWER.RERU.Personal.Application.csproj" />
   </ItemGroup>

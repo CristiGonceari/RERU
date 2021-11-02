@@ -22,23 +22,12 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using NSwag;
 using NSwag.Generation.Processors.Security;
+using CVU.ERP.Module.Application.DependencyInjection;
 using System;
 using System.Text;
-using CVU.ERP.Module.Application.DependencyInjection;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Personal.API.Config.ServicesSetup;
-
-
-
-
-
-
-
-
-
-
-
 
 namespace CODWER.RERU.Personal.API
 {
@@ -109,16 +98,16 @@ namespace CODWER.RERU.Personal.API
                 }));
 
                 // Post process the generated document
-                document.PostProcess = d => d.Info.Title = "CVU.ERP.MP REST Client!";
+                document.PostProcess = d => d.Info.Title = "CODWER.RERU.MP REST Client!";
             });
 
             services.AddControllers()
                 .AddERPModuleControllers();
             services.AddWkhtmltopdf();
 
-            //services.AddERPModuleServices(Configuration);
-            //services.AddCommonModuleApplication();
-            //services.AddModuleApplicationServices();
+            services.AddERPModuleServices(Configuration);
+            services.AddCommonModuleApplication();
+            services.AddModuleApplicationServices();
 
             //if (CurrentEnvironment.IsDevelopment())
             //{
