@@ -1,0 +1,4 @@
+<span class="label label-lg font-weight-bold label-inline text-nowrap"
+      [ngClass]="{'label-light-info': state === vacationStates.New,
+                  'label-light-success': state === vacationStates.Approved,
+                  'label-light-danger': state === vacationStates.Rejected}">{{'vacation-state.'+state | translate}}</span>

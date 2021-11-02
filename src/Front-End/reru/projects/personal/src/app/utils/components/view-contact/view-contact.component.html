@@ -1,0 +1,13 @@
+<div class="d-flex align-items-center justify-content-between mb-2">
+    <span class="font-weight-bold mr-2">{{'personal.contact-type-name.'+contact.typeName | translate}}:</span>
+    <div>
+        <span [ngClass]="{'pr-2': !isView}">{{contact?.value || '-'}}</span>
+        <ng-container *ngIf="!isView">
+            <app-view-contact-dropdown 
+                [index]="1" 
+                (edit)="openContactEditModal()" 
+                (delete)="openConfirmationDeleteModal()">
+            </app-view-contact-dropdown>
+        </ng-container>
+    </div>
+</div>

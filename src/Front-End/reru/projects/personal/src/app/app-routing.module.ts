@@ -9,14 +9,76 @@ import {
 import { Location } from '@angular/common';
 import { ManualLoaderFactory } from './utils/services/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthenticationGuard } from '@erp/shared';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [{
   path: '',
   component: DashboardComponent,
   canActivate: [AuthenticationGuard],
-}];
+},
+{
+	path: 'my-profile',
+	loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule),
+	canActivate: [AuthenticationGuard],
+},
+{
+	path: 'personal',
+	loadChildren: () => import('./components/contractors/contractors.module').then(m => m.ContractorsModule),
+	canActivate: [AuthenticationGuard],
+},
+{
+	path: 'department',
+	loadChildren: () => import('./components/department/department.module').then(m => m.DepartmentModule),
+	canActivate: [AuthenticationGuard],
+},
+{
+	path: 'nomenclature',
+	loadChildren: () => import('./components/nomenclature/nomenclature.module').then(m => m.NomenclatureModule),
+	canActivate: [AuthenticationGuard],
+},
+{
+	path: 'roles',
+	loadChildren: () => import('./components/roles/roles.module').then(m => m.RolesModule),
+	canActivate: [AuthenticationGuard],
+},
+
+{
+	path: 'vacation',
+	loadChildren: () => import('./components/vacation/vacation.module').then(m => m.VacationModule),
+	canActivate: [AuthenticationGuard],
+},
+{
+	path: 'organigram',
+	loadChildren: () => import('./components/organigram/organigram.module').then(m => m.OrganigramModule),
+	canActivate: [AuthenticationGuard],
+},
+{
+	path: 'reports',
+	loadChildren: () => import('./components/reports/reports.module').then(m => m.ReportsModule),
+	canActivate: [AuthenticationGuard],
+},
+{
+	path: 'configurations',
+	loadChildren: () => import('./components/configurations/configurations.module').then(m => m.ConfigurationsModule),
+	canActivate: [AuthenticationGuard],
+},
+{ 
+	path: 'guide', 
+	loadChildren: () => import('./components/guide/guide.module').then(m => m.GuideModule),
+	canActivate: [AuthenticationGuard],
+},
+{
+	path: 'time-sheet',
+	loadChildren: () => import('./components/pontaj-data/pontaj-data.module').then(m => m.PontajDataModule),
+	canActivate: [AuthenticationGuard],
+},
+{
+	path: 'documents-templates',
+	loadChildren: () => import('./components/documents-templates/documents-templates.module').then(m => m.DocumentsTemplatesModule),
+	canActivate: [AuthenticationGuard],
+}
+];
 
 @NgModule({
   imports: [

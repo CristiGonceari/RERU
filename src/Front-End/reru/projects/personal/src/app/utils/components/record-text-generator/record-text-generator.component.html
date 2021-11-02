@@ -1,0 +1,13 @@
+<ng-container [ngSwitch]="type">
+    <span *ngSwitchCase="1">{{text || '-'}}</span>
+    <span *ngSwitchCase="2">{{text || '-'}}</span>
+    <span *ngSwitchCase="3">{{text || '-'}}</span>
+    <span *ngSwitchCase="4">{{text || '-'}}</span>
+    <label *ngSwitchCase="5" class="checkbox checkbox-square">
+        <input type="checkbox" class="form-control" readonly disabled [checked]="text">
+        <span class="mx-auto"></span>
+    </label>
+    <span *ngSwitchCase="6">{{text | date: 'dd.MM.yyyy'}}</span>
+    <span *ngSwitchCase="7">{{text | date: 'dd.MM.yyyy'}}</span>
+    <span *ngSwitchCase="8">{{text || '-'}}</span>
+</ng-container>

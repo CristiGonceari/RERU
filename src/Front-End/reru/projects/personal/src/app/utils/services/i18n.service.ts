@@ -26,7 +26,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-export function ManualLoaderFactory (
+export function ManualLoaderFactory(
   translate: TranslateService,
   location: Location,
   settings: LocalizeRouterSettings,
