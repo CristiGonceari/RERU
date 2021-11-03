@@ -1,6 +1,5 @@
 ﻿using CODWER.RERU.Evaluation.Data.Entities;
 using CVU.ERP.Common.Data.Persistence.EntityFramework;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Evaluation.Data.Persistence.Context

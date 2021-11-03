@@ -1,8 +1,19 @@
 ﻿using System.Reflection;
+using CODWER.RERU.Evaluation.Application;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using CODWER.RERU.Evaluation.Application.DependencyInjection;
+using CODWER.RERU.Evaluation.Application.Validation;
+using CVU.ERP.Common;
+using CVU.ERP.Common.Interfaces;
+using CVU.ERP.Common.Pagination;
+using CVU.ERP.Infrastructure;
+using CVU.ERP.Infrastructure.Email;
+using Microsoft.AspNetCore.Http;
+using ISession = CODWER.RERU.Evaluation.Application.Interfaces.ISession;
 
 namespace CODWER.RERU.Evaluation.API.Config
 {
@@ -32,20 +43,17 @@ namespace CODWER.RERU.Evaluation.API.Config
         #endregion
 
         #region DI
-        public static void ConfigureInjection(IServiceCollection services)
-        {          
-            //services.AddTransient<IPaginationService, PaginationService>();
-            //services.AddTransient<IDateTime, MachineDateTime>();
-            //services.AddTransient<IEmailService, EmailService>(); 
-            //services.AddTransient<ValidationService>();            
+        public static void ConfigureInjection(IServiceCollection services, IHostingEnvironment currentEnvironment)
+        {
+            services.AddTransient<IPaginationService, PaginationService>();
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IDateTime, MachineDateTime>();
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<ValidationService>();
 
-            //services.AddTransient<IOptionService, OptionService>();
-            //services.AddTransient<IQuestionUnitService, QuestionUnitService>();
-            //services.AddTransient<INotificationService, NotificationService>();
-            //services.AddTransient<IUserProfileProvider, UserProfileProvider>();
-            //services.AddTransient<IModulePermissionProvider, ModulePermissionProvider>();
+            services.AddScoped<ISession, Session>();
 
-            //services.AddTransient<ICurrentApplicationUserProvider, MockDataCurrentApplicationUserProvider>();
+            services.AddEvaluationApplication(currentEnvironment);
         }
 
         #endregion
