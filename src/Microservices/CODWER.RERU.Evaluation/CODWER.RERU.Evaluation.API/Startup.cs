@@ -13,17 +13,18 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using NSwag;
 using NSwag.Generation.Processors.Security;
-using System;
 using System.Text;
-using Hangfire.SqlServer;
-using Microsoft.AspNetCore.Http;
+using CODWER.RERU.Evaluation.Application.Validation;
+using FluentValidation.AspNetCore;
+using MediatR;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
 
 namespace CODWER.RERU.Evaluation.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IWebHostEnvironment env)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
             CurrentEnvironment = env;
@@ -32,55 +33,32 @@ namespace CODWER.RERU.Evaluation.API
         }
 
         public IConfiguration Configuration { get; }
-        public IWebHostEnvironment CurrentEnvironment { get; }
 
         private readonly SymmetricSecurityKey _securityKey;
+        private readonly IHostingEnvironment CurrentEnvironment;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddScoped<ITestService, TestService>();
-
             services.Configure<SmtpOptions>(this.Configuration.GetSection("Smtp"));
             services.Configure<RabbitMq>(Configuration.GetSection("MessageQueue"));
 
             ServicesSetup.ConfigureEntity(services, Configuration);
             ServicesSetup.ConfigurePolicies(services);
-            ServicesSetup.ConfigureInjection(services);
+            ServicesSetup.ConfigureInjection(services, CurrentEnvironment);
 
             // Add services
             services.AddCors();
-            services.AddOptions();
-            services.AddMemoryCache();
 
-            // Add Hangfire services.
-            services.AddHangfire(configuration => configuration
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
-                .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings()
-                .UseSqlServerStorage(Configuration.GetConnectionString("HangfireConnection"), new SqlServerStorageOptions
-                {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-                    QueuePollInterval = TimeSpan.Zero,
-                    UseRecommendedIsolationLevel = true,
-                    UsePageLocksOnDequeue = true,
-                    DisableGlobalLocks = true
-                }));
-
+            services.AddMediatR(typeof(ValidationService).Assembly);
+            
             services.AddOptions();
             services.AddMemoryCache();
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ValidationService>())
                 .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
-
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
 
             // Customise default API behavour
             services.Configure<ApiBehaviorOptions>(options => {
