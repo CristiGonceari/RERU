@@ -3,5 +3,21 @@
     "ro": "Română",
     "en": "English",
     "ru": "Русский"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Стартовая странница"
+  },
+  "sidebar": {
+    "home": "Главная",
+    "profile": "Мой профиль",
+    "administration": "Администрирование",
+    "modules": "Модули",
+    "users": "Пользователи"
+  },
+  "my-profile":{
+    "title":"Мой профиль",
+    "hello-username": "Здравствуйте, {{username}}!",
+    "have-a-good-day": "Добро пожаловать!"
   }
 }

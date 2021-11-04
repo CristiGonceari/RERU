@@ -3,5 +3,22 @@
     "ro": "Română",
     "en": "English",
     "ru": "Русский"
+  },
+  "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Start page"
+  },
+  "sidebar": {
+    "home": "Home",
+    "profile": "My profile",
+    "administration": "Administration",
+    "modules": "Modules",
+    "users": "Users"
+  },
+  "my-profile":{
+    "title": "My profile",
+    "hello-username": "Hello, {{username}}!",
+    "have-a-good-day": "Welcome, have a good day!"
   }
 }
+

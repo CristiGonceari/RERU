@@ -16,7 +16,11 @@ const routes: Routes = [{
   path: '',
   component: DashboardComponent,
   canActivate: [AuthenticationGuard]
-}]
+},
+  { path: 'modules', loadChildren: () => import('./components/modules/modules.module').then(m => m.ModulesModule) },
+  { path: 'users', loadChildren: () => import('./components/users/users.module').then(m => m.UsersModule) },
+  { path: 'roles', loadChildren: () => import('./components/roles/roles.module').then(m => m.RolesModule) },
+  { path: 'my-profile', loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule) }]
 @NgModule({
   imports: [
 		RouterModule.forRoot(routes, {
