@@ -1,14 +1,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CODWER.RERU.Core.Application.Modules.GetModules;
+using CODWER.RERU.Core.Application.Modules.GetAvailableModules;
 using CODWER.RERU.Core.DataTransferObjects.Modules;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CODWER.RERU.Core.API.Controllers {
+namespace CODWER.RERU.Core.API.Controllers 
+{
     [ApiController]
     [Route ("api/[controller]")]
-    public class ModuleController : BaseController {
+    public class ModuleController : BaseController 
+    {
 
         public ModuleController (IMediator mediator) : base (mediator) { }
 

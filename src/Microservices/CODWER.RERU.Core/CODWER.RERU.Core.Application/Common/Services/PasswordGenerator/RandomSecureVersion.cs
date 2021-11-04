@@ -1,7 +1,7 @@
 using System;
 using System.Security.Cryptography;
 
-namespace CODWER.RERU.Core.Application.Common.Services.Password
+namespace CODWER.RERU.Core.Application.Common.Services.PasswordGenerator
 
 {
     internal class RandomSecureVersion

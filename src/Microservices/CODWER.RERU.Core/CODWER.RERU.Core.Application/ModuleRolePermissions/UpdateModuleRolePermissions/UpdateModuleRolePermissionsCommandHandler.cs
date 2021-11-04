@@ -1,6 +1,5 @@
-﻿
-using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
+﻿using CODWER.RERU.Core.Application.Common.Handlers;
+using CODWER.RERU.Core.Application.Common.Providers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

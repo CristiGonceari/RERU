@@ -3,7 +3,7 @@ using CVU.ERP.Common.Pagination;
 using CODWER.RERU.Core.Data.Persistence.Context;
 using MediatR;
 
-namespace CODWER.RERU.Core.Application.Common.Provider {
+namespace CODWER.RERU.Core.Application.Common.Providers {
     public interface ICommonServiceProvider {
         CoreDbContext CoreDbContext { get; }
         UserManagementDbContext UserManagementDbContext { get; }

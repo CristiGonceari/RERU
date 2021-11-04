@@ -1,20 +1,28 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "es2015",
-    "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ]
-  }
+  "files": [],
+  "references": [{
+      "path": "./projects/personal/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/personal/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/erp-shared/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/erp-shared/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/core/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/core/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/evaluation/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/evaluation/tsconfig.spec.json"
+    },
+  ]
 }

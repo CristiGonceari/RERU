@@ -1,9 +1,10 @@
 using CODWER.RERU.Core.Application.Common.ExceptionHandlers.Response;
-using CODWER.RERU.Core.Application.Common.Provider;
+using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer;
-using CODWER.RERU.Core.Application.Common.Services.Password;
+using CODWER.RERU.Core.Application.Common.Services.PasswordGenerator;
 using CODWER.RERU.Core.Application.Module.Providers;
+using CODWER.RERU.Core.Application.Permissions;
 using CVU.ERP.Module.Application.DependencyInjection;
 using CVU.ERP.Module.Application.Providers;
 using CVU.ERP.Module.Common.ExceptionHandlers;
@@ -21,7 +22,7 @@ namespace CODWER.RERU.Core.Application.DependencyInjection
 
             //Module dependencies
             services.AddTransient<IApplicationUserProvider, CoreApplicationUserProvider>();
-            services.AddTransient<IModulePermissionProvider, CoreModulePermissionProvider>();
+            services.AddTransient<IModulePermissionProvider, ModulePermissionProvider>();
             // end of module dependencies
 
             services.AddTransient<ICommonServiceProvider, CommonServiceProvider>();

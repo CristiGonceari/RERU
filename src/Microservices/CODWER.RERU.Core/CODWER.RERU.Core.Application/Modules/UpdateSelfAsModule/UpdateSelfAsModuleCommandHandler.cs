@@ -3,14 +3,15 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
+using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Data.Entities;
 using CVU.ERP.Module.Common.Providers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule {
-    public class UpdateSelfAsModuleCommandHandler : BaseHandler, IRequestHandler<UpdateSelfAsModuleCommand, Unit> {
+    public class UpdateSelfAsModuleCommandHandler : BaseHandler, IRequestHandler<UpdateSelfAsModuleCommand, Unit> 
+    {
         private IEnumerable<IModulePermissionProvider> _permissionProviders;
         public UpdateSelfAsModuleCommandHandler (
             ICommonServiceProvider commonServicepProvider,
@@ -19,7 +20,8 @@ namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule {
             _permissionProviders = permissionProviders;
         }
 
-        public async Task<Unit> Handle (UpdateSelfAsModuleCommand request, CancellationToken cancellationToken) {
+        public async Task<Unit> Handle (UpdateSelfAsModuleCommand request, CancellationToken cancellationToken) 
+        {
             var moduleCode = "00"; // Take this value from appsettings;
             var superAdministratorCode = "R00000001";
             var selfModule = await CoreDbContext.Modules
@@ -27,6 +29,7 @@ namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule {
                 .Include (m => m.Roles)
                 .ThenInclude (mr => mr.Permissions)
                 .FirstOrDefaultAsync (m => m.Code == moduleCode);
+
             if (selfModule == null) {
                 selfModule = new Data.Entities.Module ();
                 selfModule.Code = moduleCode;

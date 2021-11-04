@@ -1,6 +1,6 @@
 using AutoMapper;
 using CVU.ERP.Common.Pagination;
-using CODWER.RERU.Core.Application.Common.Provider;
+using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Data.Persistence.Context;
 using MediatR;
 

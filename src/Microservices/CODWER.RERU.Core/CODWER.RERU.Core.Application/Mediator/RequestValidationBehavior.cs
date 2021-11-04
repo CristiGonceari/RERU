@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 
-namespace CVU.ERP.Module.Application.Infrastructure {
+namespace CODWER.RERU.Core.Application.Mediator {
     public class CoreRequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse> {
             private readonly IEnumerable<IValidator<TRequest>> _validators;

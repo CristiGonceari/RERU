@@ -1,0 +1,2 @@
+<span *ngIf="item?.employerState === employerState.IN_SERVICE">{{item?.organizationRoleName}}</span>
+<span *ngIf="item?.employerState === employerState.DISMISSED"><span class="last-position-label">{{'personal.last-organization-role' | translate}}:</span><br>{{item?.organizationRoleName}}</span>

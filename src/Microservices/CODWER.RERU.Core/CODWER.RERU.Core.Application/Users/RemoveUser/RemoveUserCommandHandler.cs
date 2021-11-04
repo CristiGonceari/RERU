@@ -1,5 +1,5 @@
 ﻿using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
+using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

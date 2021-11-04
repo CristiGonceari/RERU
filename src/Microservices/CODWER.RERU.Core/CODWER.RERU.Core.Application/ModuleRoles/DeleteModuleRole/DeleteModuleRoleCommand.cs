@@ -1,10 +1,10 @@
-﻿using CODWER.RERU.Core.Application.Module;
+﻿using CODWER.RERU.Core.Application.Permissions;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 
 namespace CODWER.RERU.Core.Application.ModuleRoles.DeleteModuleRole
 {
-    [ModuleOperation(permission: Permissions.REMOVE_MODULE_ROLE)]
+    [ModuleOperation(permission: PermissionCodes.REMOVE_MODULE_ROLE)]
 
     public class DeleteModuleRoleCommand : IRequest<Unit>
     {

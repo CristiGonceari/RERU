@@ -1,5 +1,4 @@
-﻿
-using CODWER.RERU.Core.DataTransferObjects.Modules;
+﻿using CODWER.RERU.Core.DataTransferObjects.Modules;
 using FluentValidation;
 
 namespace CODWER.RERU.Core.Application.Modules.EditModule

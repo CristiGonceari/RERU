@@ -1,9 +1,3 @@
-using System.Threading.Tasks;
-using CVU.ERP.Common.DataTransferObjects.Users;
-using CODWER.RERU.Core.Application.ApplicationUsers.GetApplicationUser;
-using CODWER.RERU.Core.Application.Users.CreateUser;
-using CODWER.RERU.Core.Application.Users.ResetUserPassword;
-using CVU.ERP.Module.Application.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

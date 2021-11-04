@@ -1,12 +1,11 @@
-﻿
-using CODWER.RERU.Core.Application.Module;
+﻿using CODWER.RERU.Core.Application.Permissions;
 using CODWER.RERU.Core.DataTransferObjects.ModuleRolePermissions;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 
 namespace CODWER.RERU.Core.Application.ModuleRolePermissions.UpdateModuleRolePermissions
 {
-    [ModuleOperation(permission: Permissions.UPDATE_MODULE_ROLE_PERMISSIONS)]
+    [ModuleOperation(permission: PermissionCodes.UPDATE_MODULE_ROLE_PERMISSIONS)]
 
     public class UpdateModuleRolePermissionsCommand : IRequest<Unit>
     {

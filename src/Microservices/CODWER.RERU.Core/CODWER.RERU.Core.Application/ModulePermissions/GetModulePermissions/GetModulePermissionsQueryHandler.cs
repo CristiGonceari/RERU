@@ -1,6 +1,6 @@
 ﻿using CVU.ERP.Common.Pagination;
 using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Provider;
+using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Data.Entities;
 using CODWER.RERU.Core.DataTransferObjects.ModulePermissions;
 using MediatR;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CODWER.RERU.Core.Application.ModulePermissions.GetAllModulePermissions
+namespace CODWER.RERU.Core.Application.ModulePermissions.GetModulePermissions
 {
     public class GetModulePermissionsQueryHandler : BaseHandler, IRequestHandler<GetModulePermissionsQuery, PaginatedModel<ModulePermissionRowDto>>
     {

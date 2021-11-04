@@ -8,6 +8,7 @@ namespace CODWER.RERU.Core.Application.Users.ResetPasswordByEmail
         {
             Email = email;
         }
+
         public string Email { set; get; }
     }
 }

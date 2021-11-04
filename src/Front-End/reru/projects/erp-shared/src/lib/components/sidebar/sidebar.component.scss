@@ -1,0 +1,66 @@
+.sidebar-left-custom {
+  position: fixed;
+  top: 80px;
+  bottom: 0;
+  left: 60px;
+  z-index: 98;
+  min-width: 220px;
+
+  .aside-menu .menu-nav > .menu-item.btn-margin {
+    padding: 0 25px;
+  }
+
+  .brand {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    height: 65px;
+    padding-left: 25px;
+
+    .brand-toggle .svg-icon svg g [fill] {
+      fill: #3699FF;
+    }
+  }
+
+  .aside-menu .menu-nav>.menu-item:not(.menu-item-parent):not(.menu-item-open):not(.menu-item-here):not(.menu-item-active):hover>.menu-link .menu-text,
+  .aside-menu .menu-nav>.menu-item.menu-item-active>.menu-link .menu-text {
+    color: #3699FF;
+  }
+
+  .aside-menu .menu-nav>.menu-item:not(.menu-item-parent):not(.menu-item-open):not(.menu-item-here):not(.menu-item-active):hover>.menu-link .menu-icon.svg-icon svg g [fill],
+  .aside-menu .menu-nav>.menu-item.menu-item-active>.menu-link .menu-icon.svg-icon svg g [fill] {
+    fill: #3699FF;
+  }
+
+  &.minimized {
+    min-width: 50px;
+    max-width: 55px;
+
+    .brand .brand-toggle .svg-icon svg {
+      transition: all 0.15s ease;
+      transform: rotate(180deg);
+    }
+
+    .brand-logo h2,
+    .menu-nav .menu-item .menu-link .menu-text,
+    .menu-nav .menu-section {
+      display: none;
+    }
+
+    .menu-nav .menu-item .menu-link {
+      padding: 9px 18px;
+    }
+  }
+
+  @media screen and (max-width: 425px) {
+    display: none !important;
+    height: 0;
+    width: 0;
+
+    &.minimized {
+      min-height: 0;
+      min-width: 0;
+    }
+  }
+}

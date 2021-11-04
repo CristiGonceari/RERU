@@ -1,5 +1,6 @@
 namespace CODWER.RERU.Core.DataTransferObjects.Modules {
-    public class ModuleDto {
+    public class ModuleDto 
+    {
         public int Id { set; get; }
         public string Icon { set; get; }
         public int Type { set; get; }

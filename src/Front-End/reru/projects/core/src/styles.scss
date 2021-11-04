@@ -1,1 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* UI METRONIC LIBRARY INITIALIZATION */
+@import "style";
+/* END METRONIC LIBRARY INITIALIZATION */
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+/* Importing Dragula SCSS file. */
+@import '~dragula/dist/dragula';
+
+html,
+body,
+app-main,
+app-dashboard {
+    width: 100%;
+}
+
+.simple-notification div,
+.simple-notification {
+    color: #FFF;
+}
+
+app-exception-404,
+app-root,
+app-login,
+.flex-root,
+.login {
+    height: 100%;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using CVU.ERP.Common.DataTransferObjects.Users;
 using CODWER.RERU.Core.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Common.Services.Identity

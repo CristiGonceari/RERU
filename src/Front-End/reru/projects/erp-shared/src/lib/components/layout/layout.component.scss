@@ -1,0 +1,35 @@
+/* SIDEBAR COLLAPSE STYLE - adjust depending on the project */
+div.wrapper {
+  max-width: 99%;
+  padding-left: 290px;
+
+  &.collapsed {
+    padding-left: 120px;
+  }
+
+  ::ng-deep {
+    div.content#kt_content {
+      padding: 0;
+    }
+
+    div.content#kt_content>div>.container {
+      max-width: 100%;
+    }
+
+    @media screen and (min-width: 768px) {
+
+      div.content#kt_content,
+      app-dashboard>div.content {
+        min-height: 80vh;
+      }
+    }
+  }
+
+  @media screen and (max-width: 425px) {
+    padding-left: 60px;
+
+    &.collapsed {
+      padding-left: 60px;
+    }
+  }
+}
