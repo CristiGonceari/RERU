@@ -1,0 +1,6 @@
+<app-layout [title]="'Dashboard'" [hasBackground]="true" [config]="appSettings" [languages]="translate.langs"
+    [currentLanguage]="translate.currentLanguage" [sidebarItems]="sidebarItems"
+    [letter]="'../assets/admin.png'" [logo]="'../assets/logo.png'" (navigate)="navigate($event)"
+    (changeLanguage)="translate.use($event)" (logout)="logout()">
+    <router-outlet></router-outlet>
+</app-layout>

@@ -3,5 +3,13 @@
     "ro": "Română",
     "en": "English",
     "ru": "Русский"
+  },
+  "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Start page"
+  },
+  "sidebar": {
+    "home": "Home"
   }
 }
+

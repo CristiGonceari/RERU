@@ -1,0 +1,39 @@
+:host {
+    ::ng-deep {
+  
+      .nav.nav-pills.nav-danger .nav-link:hover:not(.active) .nav-text,
+      .nav.nav-pills.nav-danger .nav-link:hover:not(.active) {
+        color: #FFF;
+        background: #3699FF;
+      }
+  
+      .nav.nav-pills.nav-danger .nav-link:hover:not(.active) .nav-icon .svg-icon svg g [fill] {
+        fill: #FFF;
+      }
+  
+      .card-custom .nav-item {
+        max-width: 125px;
+  
+        a.nav-link {
+          background: #f3f6f98c;
+  
+          .nav-icon svg g [fill] {
+            fill: #3699FF;
+          }
+        }
+  
+        a.nav-link:hover {
+          background: #3699FF;
+  
+          .nav-text {
+            color: #FFF;
+          }
+  
+          .nav-icon svg g [fill] {
+            fill: #FFF;
+          }
+        }
+      }
+    }
+  }
+  
