@@ -9,23 +9,18 @@ import {
 import { Location } from '@angular/common';
 import { ManualLoaderFactory } from './utils/services/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthenticationGuard } from '@erp/shared';
-import { DashboardComponent } from './main/dashboard/dashboard.component'
-import { MainComponent } from './main/main.component';
 
 const routes: Routes = [{
   path: '',
-  component: MainComponent,
-  canActivate: [AuthenticationGuard],
-  children: [
-	{ path: '', component: DashboardComponent, canActivate: [AuthenticationGuard] },
-
-  { path: 'modules', loadChildren: () => import('./main/modules/modules.module').then(m => m.ModulesModule) },
-  { path: 'users', loadChildren: () => import('./main/users/users.module').then(m => m.UsersModule) },
-  { path: 'roles', loadChildren: () => import('./main/roles/roles.module').then(m => m.RolesModule) },
-  { path: 'my-profile', loadChildren: () => import('./main/my-profile/my-profile.module').then(m => m.MyProfileModule) }]
-  
-}];
+  component: DashboardComponent,
+  canActivate: [AuthenticationGuard]
+},
+  { path: 'modules', loadChildren: () => import('./components/modules/modules.module').then(m => m.ModulesModule) },
+  { path: 'users', loadChildren: () => import('./components/users/users.module').then(m => m.UsersModule) },
+  { path: 'roles', loadChildren: () => import('./components/roles/roles.module').then(m => m.RolesModule) },
+  { path: 'my-profile', loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule) }]
 @NgModule({
   imports: [
 		RouterModule.forRoot(routes, {
