@@ -1,4 +1,6 @@
 ﻿using CODWER.RERU.Evaluation.Application.Permissions;
+using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Application.Services.Implementations;
 using CVU.ERP.Module.Common.Providers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.DependencyInjection
             services
                 .AddScoped(typeof(IModulePermissionProvider), typeof(ModulePermissionProvider))
                 //.AddScoped(typeof(IOptionService), typeof(OptionService))
-                //.AddScoped(typeof(IQuestionUnitService), typeof(QuestionUnitService))
+                .AddScoped(typeof(IQuestionUnitService), typeof(QuestionUnitService))
                 //.AddScoped(typeof(INotificationService), typeof(NotificationService))
                 //.AddScoped(typeof(IUserProfileProvider), typeof(UserProfileProvider))
                 ;
