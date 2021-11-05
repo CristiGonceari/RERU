@@ -5,6 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Mock\NewFolder\**" />
+    <Content Remove="Mock\NewFolder\**" />
+    <EmbeddedResource Remove="Mock\NewFolder\**" />
+    <None Remove="Mock\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Mock\.application-user.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Mock\.application-user.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.4" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.25" />
     <PackageReference Include="Hangfire.Core" Version="1.7.25" />
