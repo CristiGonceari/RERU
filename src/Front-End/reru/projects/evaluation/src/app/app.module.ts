@@ -10,10 +10,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { CONFIG_INITIALIZER } from "./utils/util/initializer.util";
 import { UtilsModule } from './utils/utils.module';
-import { SharedModule, MOCK_AUTHENTICATION } from '@erp/shared';
+import { SharedModule, MOCK_AUTHENTICATION, SvgModule } from '@erp/shared';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { LayoutsComponent } from './components/layouts/layouts.component';
 import { environment } from '../environments/environment';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,8 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+		CommonModule,
+		SvgModule,
     ReactiveFormsModule,
     FormsModule,
     NgbModule,
@@ -45,14 +48,11 @@ import { environment } from '../environments/environment';
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  providers: [
-    TranslatePipe,
-    //CONFIG_INITIALIZER,
+  providers: [TranslatePipe, Location,
     {
       provide: MOCK_AUTHENTICATION,
       useValue: !environment.PRODUCTION
-    }
-  ],
+    }],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
