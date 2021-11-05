@@ -64,6 +64,7 @@
         //question category
         public static string INVALID_CATEGORY = "03001301";
         public static string EXISTENT_CATEGORY = "03001302";
+        public static string EMPTY_CATEGORY_NAME = "03001303";
 
         //question
         public static string EMPTY_QUESTION = "03001401";

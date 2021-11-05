@@ -1,23 +1,36 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { CategoriesRoutingModule } from './categories-routing.module';
-import { CategoriesComponent } from './categories.component';
-import { AddEditCategoryComponent } from './add-edit-category/add-edit-category.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from '@erp/shared';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { UtilsModule } from '../../utils/utils.module';
 import { CategoryDetailsComponent } from './category-details/category-details.component';
-import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryOverviewComponent } from './category-details/category-overview/category-overview.component';
-import { CategoryQuestionsComponent } from './category-details/category-questions/category-questions.component';
-import { SearchCategoryComponent } from './category-list/search-category/search-category.component';
-import { CategoryNameComponent } from './category-list/category-name/category-name.component';
-import { CategoryListTableComponent } from './category-list/category-list-table/category-list-table.component';
-
 
 @NgModule({
-  declarations: [CategoriesComponent, AddEditCategoryComponent, CategoryDetailsComponent, CategoryListComponent, CategoryOverviewComponent, CategoryQuestionsComponent, SearchCategoryComponent, CategoryNameComponent, CategoryListTableComponent],
+  declarations: [
+    CategoryDetailsComponent,
+    CategoryOverviewComponent,
+  ],
   imports: [
     CommonModule,
-    CategoriesRoutingModule
-  ]
+    ReactiveFormsModule,
+    FormsModule,
+    NgbModule,
+    TranslateModule,
+    SharedModule,
+    RouterModule,
+    HttpClientModule,
+    UtilsModule
+  ],
+  exports: [
+  ],
+  entryComponents: [
+  ],
+  providers: [NgbActiveModal]
 })
-export class CategoriesModule { }
+export class CategoriesModule {
+}
