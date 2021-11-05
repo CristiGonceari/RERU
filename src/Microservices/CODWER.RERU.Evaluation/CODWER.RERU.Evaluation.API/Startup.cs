@@ -51,7 +51,9 @@ namespace CODWER.RERU.Evaluation.API
             services.AddCors();
 
             services.AddMediatR(typeof(ValidationService).Assembly);
-            
+            services.AddAutoMapper(typeof(ValidationService).Assembly);
+
+
             services.AddOptions();
             services.AddMemoryCache();
 
