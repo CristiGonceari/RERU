@@ -25,43 +25,43 @@ const routes: Routes = [
 				path: 'categories',
 				loadChildren: () => import('./components/categories/categories.module').then(m => m.CategoriesModule),
 				data: { permission: 'P03010102' },
-				canActivate: [PermissionRouteGuard]
+				// canActivate: [PermissionRouteGuard]
 			},
 			{
 				path: 'test-type',
 				loadChildren: () => import('./components/test-types/test-types.module').then(m => m.TestTypesModule),
 				data: { permission: 'P03010402' },
-				canActivate: [PermissionRouteGuard]
+				// canActivate: [PermissionRouteGuard]
 			},
 			{
 				path: 'questions',
 				loadChildren: () => import('./components/questions/questions.module').then(m => m.QuestionsModule),
 				data: { permission: 'P03010202' },
-				canActivate: [PermissionRouteGuard]
+				// canActivate: [PermissionRouteGuard]
 			},
 			{
 				path: 'locations',
 				loadChildren: () => import('./components/locations/locations.module').then(m => m.LocationsModule),
 				data: { permission: 'P03011101' },
-				canActivate: [PermissionRouteGuard]
+				// canActivate: [PermissionRouteGuard]
 			},
 			{
 				path: 'events',
 				loadChildren: () => import('./components/events/events.module').then(m => m.EventsModule),
 				data: { permission: 'P03011201' },
-				canActivate: [PermissionRouteGuard]
+				// canActivate: [PermissionRouteGuard]
 			},
 			{
 				path: 'faq',
 				loadChildren: () => import('./components/faq/faq.module').then(m => m.FaqModule),
 				data: { permission: 'P03010904' },
-				canActivate: [PermissionRouteGuard]
+				// canActivate: [PermissionRouteGuard]
 			},
 			{
 				path: 'tests',
 				loadChildren: () => import('./components/tests/tests.module').then(m => m.TestsModule),
 				data: { permission: 'P03010602' },
-				canActivate: [PermissionRouteGuard]
+				// canActivate: [PermissionRouteGuard]
 			},
 			{
 				path: 'polls',
@@ -71,7 +71,7 @@ const routes: Routes = [
 				path: 'plans', 
 				loadChildren: () => import('./components/plans/plans.module').then(m => m.PlansModule),
 				data: { permission: 'P03011501' },
-				canActivate: [PermissionRouteGuard]
+				// canActivate: [PermissionRouteGuard]
 			},
 			{
 				path: 'statistics', 
