@@ -1,0 +1,28 @@
+<app-header-mobile [logo]="letter"></app-header-mobile>
+
+<div class="d-flex flex-column flex-root">
+	<!--begin::Page-->
+	<div class="d-flex flex-row flex-column-fluid page">
+		<app-sidenav [moduleId]="moduleId" [logo]="logo" [config]="config"></app-sidenav>
+
+		<!--begin::Wrapper-->
+		<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper" [ngClass]="{ collapsed: isCollapsed }">
+			<app-header [logo]="letter" [currentLanguage]="currentLanguage" [languages]="languages"
+				(changeLanguage)="changeLanguage.emit($event)" [isCustomHeader]="isCustomHeader" [user]="user"></app-header>
+			<app-sidebar [title]="title" [menuItems]="sidebarItems" (navigate)="navigate.emit($event)"></app-sidebar>
+
+			<app-content [hasBackground]="hasBackground" [backgroundColor]="backgroundColor">
+				<ng-content></ng-content>
+			</app-content>
+
+			<app-sidebar-right (changePassword)="changePassword.emit(user.id);closeRightSidebar()"
+							   [isCustomHeader]="isCustomHeader"
+							   [user]="user"
+							   (logOut)="logout.emit()">
+			</app-sidebar-right>
+			<app-footer></app-footer>
+		</div>
+		<!--end::Wrapper-->
+	</div>
+	<!--end::Page-->
+</div>

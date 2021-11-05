@@ -1,0 +1,13 @@
+<ng-container [formGroup]="form" [ngSwitch]="type">
+    <input autocomplete="off" list="listCompleteOff" *ngSwitchCase="1" class="form-control" type="text" [formControlName]="field">
+    <input autocomplete="off" list="listCompleteOff" *ngSwitchCase="2" class="form-control" type="text" [formControlName]="field" maxlength="1">
+    <input autocomplete="off" list="listCompleteOff" *ngSwitchCase="3" class="form-control" type="number" [formControlName]="field">
+    <input autocomplete="off" list="listCompleteOff" *ngSwitchCase="4" class="form-control" type="number" [formControlName]="field">
+    <label *ngSwitchCase="5" class="checkbox checkbox-square">
+        <input class="form-control" type="checkbox" [formControlName]="field">
+        <span></span>
+    </label>
+    <app-date *ngSwitchCase="6" [parent]="form" [date]="field"></app-date>
+    <app-date *ngSwitchCase="7" [parent]="form" [date]="field"></app-date>
+    <input autocomplete="off" list="listCompleteOff" *ngSwitchCase="8" class="form-control" type="text" [formControlName]="field">
+</ng-container>

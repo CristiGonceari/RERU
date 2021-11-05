@@ -1,0 +1,86 @@
+[
+	{
+		"name": "blocks",
+		"path": "assets/svg/blocks.svg"
+	},
+	{
+		"name": "group",
+		"path": "assets/svg/group.svg"
+	},
+	{
+		"name": "equalizer",
+		"path": "assets/svg/equalizer.svg"
+	},
+	{
+		"name": "shield-check",
+		"path": "assets/svg/shield-check.svg"
+	},
+	{
+		"name": "library",
+		"path": "assets/svg/library.svg"
+	},
+	{
+		"name": "file-plus",
+		"path": "assets/svg/file-plus.svg"
+	},
+	{
+		"name": "user",
+		"path": "assets/svg/user.svg"
+	},
+	{
+		"name": "selected-file",
+		"path": "assets/svg/selected-file.svg"
+	},
+	{
+		"name": "test",
+		"path": "assets/svg/test.svg"
+	},
+	{
+		"name": "error",
+		"path": "assets/svg/error.svg"
+	},
+  	{
+		"name": "dashboard",
+		"path": "assets/svg/dashboard.svg"
+	},
+  	{
+		"name": "success",
+		"path": "assets/svg/059-success.svg"
+	}
+  ,{
+		"name": "153-id card",
+		"path": "assets/svg/153-id card.svg"
+	},{
+		"name": "247-folder",
+		"path": "assets/svg/247-folder.svg"
+	},{
+		"name": "255-folder",
+		"path": "assets/svg/255-folder.svg"
+	},{
+		"name": "258-list",
+		"path": "assets/svg/258-list.svg"
+	},{
+		"name": "260-resume",
+		"path": "assets/svg/260-resume.svg"
+	},{
+		"name": "275-bookmark",
+		"path": "assets/svg/275-bookmark.svg"
+	},{
+		"name": "storage-warehouse",
+		"path": "assets/svg/storage-warehouse.svg"
+	},{
+		"name": "actions",
+		"path": "assets/svg/actions.svg"
+	},{
+		"name": "access",
+		"path": "assets/svg/access.svg"
+	},{
+		"name": "modules",
+		"path": "assets/svg/modules.svg"
+	}
+  ,{
+		"name": "360-users",
+		"path": "assets/svg/360-users.svg"
+	}
+
+]

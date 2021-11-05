@@ -1,0 +1,7 @@
+<div class="content d-flex flex-column flex-column-fluid slide-in-bck-center" [ngClass]="classes" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div [ngClass]="{'container': !isFluidContainer, 'fluid-container': isFluidContainer}">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

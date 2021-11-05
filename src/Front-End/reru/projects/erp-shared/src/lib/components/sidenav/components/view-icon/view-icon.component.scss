@@ -1,0 +1,9 @@
+.btn.btn-clean:not(:disabled):not(.disabled):active:not(.btn-text) .svg-icon svg g [fill],
+.btn.btn-clean:not(:disabled):not(.disabled).active .svg-icon svg g [fill],
+.show>.btn.btn-clean.dropdown-toggle .svg-icon svg g [fill],
+.show .btn.btn-clean.btn-dropdown .svg-icon svg g [fill],
+.btn.btn-clean:hover:not(.btn-text):not(:disabled):not(.disabled) .svg-icon svg g [fill],
+.btn.btn-clean:focus:not(.btn-text) .svg-icon svg g [fill],
+.btn.btn-clean.focus:not(.btn-text) .svg-icon svg g [fill] {
+  fill: #3699FF;
+}

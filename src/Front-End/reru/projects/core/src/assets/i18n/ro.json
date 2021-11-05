@@ -1,0 +1,23 @@
+{
+  "languages": {
+    "ro": "Română",
+    "en": "English",
+    "ru": "Русский"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Pagina de start"
+  },
+  "sidebar": {
+    "home": "Acasă",
+    "profile": "Profilul meu",
+    "administration": "Administrare",
+    "modules": "Module",
+    "users": "Utilizatori"
+  },
+  "my-profile":{
+    "title":"Profilul meu",
+    "hello-username": "Salut, {{username}}!",
+    "have-a-good-day": "Bine ai venit!"
+  }
+}

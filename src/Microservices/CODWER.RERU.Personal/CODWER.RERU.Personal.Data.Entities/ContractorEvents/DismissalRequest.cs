@@ -1,0 +1,25 @@
+﻿using System;
+using CODWER.RERU.Personal.Data.Entities.Enums;
+using CODWER.RERU.Personal.Data.Entities.Files;
+using CVU.ERP.Common.Data.Entities;
+
+namespace CODWER.RERU.Personal.Data.Entities.ContractorEvents
+{
+    public class DismissalRequest : SoftDeleteBaseEntity
+    {
+        public DateTime From { get; set; }
+        public StageStatusEnum Status { get; set; }
+
+        public int ContractorId { get; set; }
+        public Contractor Contractor { get; set; }
+
+        public int? RequestId { get; set; }
+        public ByteArrayFile Request { get; set; }
+
+        public int? OrderId { get; set; }
+        public ByteArrayFile Order { get; set; }
+
+        public int PositionId { get; set; }
+        public Position Position { get; set; }
+    }
+}

@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+/* UI METRONIC LIBRARY INITIALIZATION */
+@import 'style';
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.simple-notification div,
+.simple-notification {
+    color: #FFF;
+}
+
+/* Hide input type number arrows */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
