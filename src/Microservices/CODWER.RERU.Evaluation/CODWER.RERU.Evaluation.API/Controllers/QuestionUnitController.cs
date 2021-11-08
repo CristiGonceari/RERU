@@ -11,7 +11,6 @@ using CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionBulkTemplate;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnit;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.GetTags;
-using CODWER.RERU.Evaluation.Application.QuestionUnits.UnassignTagFromQuestionUnit;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using CVU.ERP.Common.Pagination;
@@ -61,12 +60,6 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<List<TagDto>> GetTags([FromQuery] GetTagsQuery query)
         {
             return await Mediator.Send(query);
-        }
-
-        [HttpDelete("tags")]
-        public async Task<Unit> DeleteTagFromQuestion([FromRoute] UnassignTagFromQuestionUnitCommand command)
-        {
-            return await Mediator.Send(command);
         }
 
         [HttpPatch("edit-status")]

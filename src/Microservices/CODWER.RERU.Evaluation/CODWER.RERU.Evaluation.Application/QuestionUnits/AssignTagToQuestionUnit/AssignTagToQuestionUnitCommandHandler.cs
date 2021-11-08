@@ -58,11 +58,13 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AssignTagToQuestionUn
                 {
                     continue;
                 }
+
                 var existingTag = _appDbContext.Tags.FirstOrDefault(x => x.Name.Equals(tag));
 
                 if (existingTag == null)
                 {
                     existingTag = new Tag() { Name = tag };
+
                     await _appDbContext.Tags.AddAsync(existingTag);
                     await _appDbContext.SaveChangesAsync();
                 }
