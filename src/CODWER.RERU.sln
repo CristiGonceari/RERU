@@ -73,15 +73,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CODWER.RERU.Personal.DataTr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CODWER.RERU.Identity", "CODWER.RERU.Identity", "{6A500DED-4BA9-4F03-9F4D-E2D077050881}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CODWER.RERU.IdentityMigrator.Console", "Microservices\CODWER.RERU.Identity\CODWER.RERU.IdentityMigrator.Console\CODWER.RERU.IdentityMigrator.Console\CODWER.RERU.IdentityMigrator.Console.csproj", "{5F2751A4-5D90-46B8-8F98-10482B438B3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CODWER.RERU.IdentityMigrator.Console", "Microservices\CODWER.RERU.Identity\CODWER.RERU.IdentityMigrator.Console\CODWER.RERU.IdentityMigrator.Console.csproj", "{5F2751A4-5D90-46B8-8F98-10482B438B3A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CODWER.RERU.Identity.Web", "Microservices\CODWER.RERU.Identity\CODWER.RERU.Identity.Web\CODWER.RERU.Identity.Web.csproj", "{C607DB0C-FFD1-446E-8D97-53392607F0E2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CODWER.RERU.Gateway", "CODWER.RERU.Gateway", "{AEA2C170-D525-46A5-8452-BD6C0A76D19F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CODWER.RERU.Gateway.Internal", "Microservices\CODWER.RERU.Gateway\CODWER.RERU.Gateway.Internal\CODWER.RERU.Gateway.Internal.csproj", "{28A81AC0-6F7A-4A60-B8FB-770CCBE01FA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CODWER.RERU.Gateway.Internal", "Microservices\CODWER.RERU.Gateway\CODWER.RERU.Gateway.Internal\CODWER.RERU.Gateway.Internal.csproj", "{28A81AC0-6F7A-4A60-B8FB-770CCBE01FA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CODWER.RERU.Gateway.Public", "Microservices\CODWER.RERU.Gateway\CODWER.RERU.Gateway.Public\CODWER.RERU.Gateway.Public.csproj", "{5AB09C27-DDDF-4683-96F5-32A2139142B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CODWER.RERU.Gateway.Public", "Microservices\CODWER.RERU.Gateway\CODWER.RERU.Gateway.Public\CODWER.RERU.Gateway.Public.csproj", "{5AB09C27-DDDF-4683-96F5-32A2139142B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

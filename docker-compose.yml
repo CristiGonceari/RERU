@@ -1,0 +1,269 @@
+version: "3.4"
+
+services:
+  reru-identity-migrator:
+    container_name: reru-identity-migrator
+    # networks:
+    #   - my-network
+    build:
+      context: .
+      dockerfile: ./Dockerfile-RERU-IdentityMigrator
+    volumes:
+      - ./docker-settings/Identity/IdentityMigrator/appsettings.json:/app/appsettings.json
+    depends_on:
+      - db
+
+  reru-public-gateway:
+    hostname: localhost
+    container_name: reru-public-gateway
+    # networks:
+    #   - my-network
+    build:
+      context: .
+      dockerfile: ./Dockerfile-RERU-PublicGateway
+    environment:
+      - ASPNETCORE_URLS=http://*:8080
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - 10000:8080
+    volumes:
+      - ./docker-settings/Gateway/Public/appsettings.json:/app/appsettings.json
+
+  reru-internal-gateway:
+    hostname: localhost
+    # networks:
+    #   - my-network
+    container_name: reru-internal-gateway
+    build:
+      context: .
+      dockerfile: ./Dockerfile-RERU-InternalGateway
+    environment:
+      - ASPNETCORE_URLS=http://*:8080
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - 10002:8080
+    volumes:
+      - ./docker-settings/Gateway/Internal/appsettings.json:/app/appsettings.json
+
+  reru-core:
+    hostname: localhost
+    container_name: reru-core
+    # networks:
+    #   - my-network
+    build:
+      context: .
+      dockerfile: ./Dockerfile-RERU-Core
+    environment:
+      - ASPNETCORE_URLS=http://*:8080
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=server=db;database=RERU-Core;User=sa;Password=Your_password123;
+      - ConnectionStrings__Identity=server=db;database=RERU-Identity;User=sa;Password=Your_password123;
+    depends_on:
+      - db
+      - identity-migrator
+    volumes:
+      - ./docker-settings/Core/appsettings.json:/app/appsettings.json
+
+  reru-core-fe:
+    hostname: localhost
+    # networks:
+    #   - my-network
+    container_name: reru-core-fe
+    build:
+      context: .
+      dockerfile: ./Dockerfile-RERU-Core-FE
+    volumes:
+      - ./docker-settings/Core-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
+
+  # mock-sign:
+  #   hostname: localhost
+  #   # networks:
+  #   #   - my-network
+  #   container_name: erp-mock-sign
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile-Mock-Sign
+  #   environment:
+  #     - ASPNETCORE_URLS=http://*:8080
+  #     - ASPNETCORE_ENVIRONMENT=Production
+  #     - BASE_PATH=/ms/mock-sign
+  #     # - ConnectionStrings__Default=server=db;database=Mock_Sign;User=sa;Password=Your_password123;
+  #   ports:
+  #     - 10004:8080
+  #   volumes:
+  #     - ./docker-files/Mock-Sign/appsettings.json:/app/appsettings.json
+    
+
+  # personal:
+  #   hostname: localhost
+  #   # networks:
+  #   #   - my-network
+  #   container_name: erp-personal
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile-Personal
+  #   environment:
+  #     - ASPNETCORE_URLS=http://*:8080
+  #     - ASPNETCORE_ENVIRONMENT=Production
+  #     - ConnectionStrings__Default=server=db;database=Personal;User=sa;Password=Your_password123;
+  #   volumes:
+  #     - ./docker-files/Personal/appsettings.json:/app/appsettings.json
+
+  # mock:
+  #   hostname: localhost
+  #   # networks:
+  #   #   - my-network
+  #   container_name: erp-mock
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile-Mock
+  #   environment:
+  #     - ASPNETCORE_URLS=http://*:8080
+  #     - ASPNETCORE_ENVIRONMENT=Production
+  #   ports:
+  #     - 5001:8080
+
+  # personal-fe:
+  #   hostname: localhost
+  #   # networks:
+  #   #   - my-network
+  #   container_name: erp-personal-fe
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile-Personal-FE
+  #   volumes:
+  #     - ./docker-files/Personal-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
+
+  # evaluation-fe:
+  #   hostname: localhost
+  #   container_name: erp-evaluation-fe
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile-Evaluation-FE
+  #   volumes:
+  #     - ./docker-files/Evaluation-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
+
+  # reru-identity:
+  #   hostname: localhost
+  #   # networks:
+  #   #   - my-network
+  #   container_name: reru-identity
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile-RERU-Identity
+  #   environment:
+  #     - ASPNETCORE_URLS=http://*:8080
+  #     - ASPNETCORE_ENVIRONMENT=Production
+  #     - ConnectionStrings__Default=server=db;database=RERU-Identity;User=sa;Password=Your_password123;
+  #   depends_on:
+  #     - db
+  #     - reru-identity-migrator
+
+  reru-identity:
+    # networks:
+    #   - my-network
+    hostname: identity-new
+    container_name: reru-identity-new
+    build:
+      context: .
+      dockerfile: ./Dockerfile-RERU-Identity
+    ports: 
+      - 9999:8080
+    environment:
+      - ASPNETCORE_URLS=http://*:8080
+      - ASPNETCORE_ENVIRONMENT=Development
+      - BASE_PATH=/ms/identity-new
+      - SAML_METADATA_ENDPOINT=http://reru-saml2:8080/simplesaml/saml2/idp/metadata.php
+      - SAML_ENTITY_ID=http://localhost:10000
+      - SAML_ENDPOINT=http://reru-saml2:8080
+      - ConnectionStrings__Default=server=db;database=RERU-Identity;User=sa;Password=Your_password123;
+      - IDENTITY_ISSUER_URI=http://identity-new:8080/ms/identity-new
+      - IDENTITY_DISCOVERY_ENDPOINT_URI=http://localhost:10000
+    volumes:
+      - ./docker-settings/Identity/IdentityWeb/appsettings.json:/app/appsettings.json
+
+
+  reru-saml2:
+    # networks:
+    #   - my-network
+    hostname: reru-saml2
+    container_name: reru-saml2
+    image: hashpe/docker-test-saml-idp
+    ports: 
+      - 8080:8080
+    environment:
+      - SIMPLESAMLPHP_SP_ENTITY_ID=http://localhost:10000
+      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=http://localhost:10000/ms/identity-new/Saml2/Acs
+      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=http://localhost:10000/ms/identity-new/Saml2/Signout"
+      - SIMPLESAMLPHP_BASE_URL_PATH=simplesaml/
+
+  # evaluation:
+  #   hostname: localhost
+  #   # networks:
+  #   #   - my-network
+  #   container_name: erp-evaluation
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile-Evaluation
+  #   environment:
+  #     - ASPNETCORE_URLS=http://*:8080
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ConnectionStrings__Default=server=db;database=Evaluation;User=sa;Password=Your_password123;
+  #     - ConnectionStrings__HangfireConnection=server=db;database=Evaluation;User=sa;Password=Your_password123;
+  #   depends_on:
+  #     - db
+
+  # evaluation-360:
+  #   hostname: localhost
+  #   # networks:
+  #   #   - my-network
+  #   container_name: erp-evaluation-360
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile-Evaluation360
+  #   environment:
+  #     - ASPNETCORE_URLS=http://*:8080
+  #     - ASPNETCORE_ENVIRONMENT=Production
+  #     - ConnectionStrings__Default=server=db;database=Evaluation360;User=sa;Password=Your_password123;
+  #     - ConnectionStrings__HangfireConnection=server=db;database=Evaluation360;User=sa;Password=Your_password123;
+  #   depends_on:
+  #     - db
+
+  #   ports:
+  #     - 9000:8080
+
+  # evaluation360-fe:
+  #   hostname: localhost
+  #   # networks:
+  #   #   - my-network
+  #   container_name: erp-evaluation360-fe
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile-Evaluation360-FE
+  #   # volumes:
+  #   #   - ./docker-files/Evaluation-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
+
+  # #### --------------------------------- ####
+  # #### SQL SERVER
+
+  db:
+    container_name: erp-sql-server
+    # networks:
+    #   - my-network
+    image: "mcr.microsoft.com/mssql/server"
+    environment:
+      SA_PASSWORD: "Your_password123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - 1444:1433
+
+  ubuntu:
+    container_name: ubuntu
+    # networks:
+    #   - my-network
+    image: "ubuntu:21.04"
+    command: tail -F anything
+
+# networks:
+#   my-network:
+#     external: true
