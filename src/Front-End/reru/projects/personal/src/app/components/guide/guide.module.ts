@@ -14,14 +14,14 @@ import { SharedModule } from 'dist/erp-shared';
 @NgModule({
   declarations: [GuideComponent],
   imports: [
-    CommonModule,
-    GuideRoutingModule,
-    RouterModule,
-    HttpClientModule,
-    NgbModule,
-    TranslateModule,
-    UtilsModule,
-    SharedModule
+    // CommonModule,
+    // GuideRoutingModule,
+    // RouterModule,
+    // HttpClientModule,
+    // NgbModule,
+    // TranslateModule,
+    // UtilsModule,
+    // SharedModule
   ]
 })
 export class GuideModule { }
