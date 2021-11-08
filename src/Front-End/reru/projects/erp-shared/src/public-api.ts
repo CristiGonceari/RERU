@@ -49,3 +49,5 @@ export * from './lib/constants/injection-tokens';
 export * from './lib/factories/initializer.factory';
 // export * from './lib/initializers/module.initializer';
 export * from './lib/modules/svg.module';
+
+export * from './lib/modals/confirm-modal/confirm-modal.component';
