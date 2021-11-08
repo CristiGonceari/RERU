@@ -111,7 +111,7 @@ namespace CODWER.RERU.Personal.API
 
             //if (CurrentEnvironment.IsDevelopment())
             //{
-            services.AddTransient<ICurrentApplicationUserProvider, Application.Services.Implementations.MockCurrentApplicationUserProvider>();
+           // services.AddTransient<ICurrentApplicationUserProvider, Application.Services.Implementations.MockCurrentApplicationUserProvider>();
             //{ 
 
             services.AddHangfire(config =>

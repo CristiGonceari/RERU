@@ -3,6 +3,8 @@ version: "3.4"
 services:
   reru-identity-migrator:
     container_name: reru-identity-migrator
+    networks:
+      - my-network
     build:
       context: .
       dockerfile: ./Dockerfile-RERU-IdentityMigrator
@@ -13,6 +15,8 @@ services:
 
   reru-identity:
     hostname: identity-new
+    networks:
+      - my-network
     container_name: reru-identity-new
     build:
       context: .
@@ -34,6 +38,8 @@ services:
 
   reru-saml2:
     hostname: reru-saml2
+    networks:
+      - my-network
     container_name: reru-saml2
     image: hashpe/docker-test-saml-idp
     ports: 
@@ -46,6 +52,8 @@ services:
 
   reru-public-gateway:
     hostname: localhost
+    networks:
+      - my-network
     container_name: reru-public-gateway
     build:
       context: .
@@ -60,6 +68,8 @@ services:
 
   reru-internal-gateway:
     hostname: localhost
+    networks:
+      - my-network
     container_name: reru-internal-gateway
     build:
       context: .
@@ -74,6 +84,8 @@ services:
 
   reru-core:
     hostname: localhost
+    networks:
+      - my-network
     container_name: reru-core
     build:
       context: .
@@ -91,6 +103,8 @@ services:
 
   reru-core-fe:
     hostname: localhost
+    networks:
+      - my-network
     container_name: reru-core-fe
     build:
       context: .
@@ -100,6 +114,8 @@ services:
 
   reru-personal:
     hostname: localhost
+    networks:
+      - my-network
     container_name: reru-personal
     build:
       context: .
@@ -113,6 +129,8 @@ services:
 
   reru-personal-fe:
     hostname: localhost
+    networks:
+      - my-network
     container_name: reru-personal-fe
     build:
       context: .
@@ -123,6 +141,8 @@ services:
 
   reru-evaluation:
     hostname: localhost
+    networks:
+      - my-network
     container_name: reru-evaluation
     build:
       context: .
@@ -132,17 +152,34 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__Default=server=db;database=RERU-Evaluation;User=sa;Password=Your_password123;
       - ConnectionStrings__HangfireConnection=server=db;database=RERU-Evaluation;User=sa;Password=Your_password123;
+    volumes:
+      - ./docker-settings/Evaluation/appsettings.json:/app/appsettings.json
     depends_on:
       - db
 
   reru-evaluation-fe:
     hostname: localhost
+    networks:
+      - my-network
     container_name: reru-evaluation-fe
     build:
       context: .
       dockerfile: ./Dockerfile-RERU-Evaluation-FE
     volumes:
       - ./docker-settings/Evaluation-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   # mock:
@@ -218,6 +255,8 @@ services:
 
   db:
     container_name: erp-sql-server
+    networks:
+      - my-network
     image: "mcr.microsoft.com/mssql/server"
     environment:
       SA_PASSWORD: "Your_password123"
@@ -227,5 +266,11 @@ services:
 
   ubuntu:
     container_name: ubuntu
+    networks:
+      - my-network
     image: "ubuntu:21.04"
     command: tail -F anything
+
+networks:
+  my-network:
+    external: true

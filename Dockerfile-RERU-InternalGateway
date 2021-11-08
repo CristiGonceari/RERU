@@ -22,4 +22,4 @@ USER 1000
 
 COPY --chown=1000 --from=build /publish .
 
-ENTRYPOINT ["dotnet", "CODWER.RERU.Gateway.Internal"]
+ENTRYPOINT ["dotnet", "CODWER.RERU.Gateway.Internal.dll"]
