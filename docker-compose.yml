@@ -1,7 +1,7 @@
 version: "3.4"
 
 services:
-  identity-migrator:
+  reru-identity-migrator:
     container_name: reru-identity-migrator
     # networks:
     #   - my-network
@@ -9,41 +9,41 @@ services:
       context: .
       dockerfile: ./Dockerfile-RERU-IdentityMigrator
     volumes:
-      - ./docker-settings/Migrator/appsettings.json:/app/appsettings.json
+      - ./docker-settings/Identity/IdentityMigrator/appsettings.json:/app/appsettings.json
     depends_on:
       - db
 
-  # public-gateway:
-  #   hostname: localhost
-  #   container_name: erp-public-gateway
-  #   # networks:
-  #   #   - my-network
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfile-PublicGateway
-  #   environment:
-  #     - ASPNETCORE_URLS=http://*:8080
-  #     - ASPNETCORE_ENVIRONMENT=Production
-  #   ports:
-  #     - 10000:8080
-  #   volumes:
-  #     - ./docker-files/PublicGateway/appsettings.json:/app/appsettings.json
+  reru-public-gateway:
+    hostname: localhost
+    container_name: reru-public-gateway
+    # networks:
+    #   - my-network
+    build:
+      context: .
+      dockerfile: ./Dockerfile-RERU-PublicGateway
+    environment:
+      - ASPNETCORE_URLS=http://*:8080
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - 10000:8080
+    volumes:
+      - ./docker-settings/Gateway/Public/appsettings.json:/app/appsettings.json
 
-  # internal-gateway:
-  #   hostname: localhost
-  #   # networks:
-  #   #   - my-network
-  #   container_name: erp-internal-gateway
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfile-InternalGateway
-  #   environment:
-  #     - ASPNETCORE_URLS=http://*:8080
-  #     - ASPNETCORE_ENVIRONMENT=Production
-  #   ports:
-  #     - 10002:8080
-  #   volumes:
-  #     - ./docker-files/InternalGateway/appsettings.json:/app/appsettings.json
+  reru-internal-gateway:
+    hostname: localhost
+    # networks:
+    #   - my-network
+    container_name: reru-internal-gateway
+    build:
+      context: .
+      dockerfile: ./Dockerfile-RERU-InternalGateway
+    environment:
+      - ASPNETCORE_URLS=http://*:8080
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - 10002:8080
+    volumes:
+      - ./docker-settings/Gateway/Internal/appsettings.json:/app/appsettings.json
 
   reru-core:
     hostname: localhost
@@ -143,59 +143,59 @@ services:
   #   volumes:
   #     - ./docker-files/Evaluation-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
 
-  # identity:
+  # reru-identity:
   #   hostname: localhost
   #   # networks:
   #   #   - my-network
-  #   container_name: erp-identity
+  #   container_name: reru-identity
   #   build:
   #     context: .
-  #     dockerfile: ./Dockerfile-Identity
+  #     dockerfile: ./Dockerfile-RERU-Identity
   #   environment:
   #     - ASPNETCORE_URLS=http://*:8080
   #     - ASPNETCORE_ENVIRONMENT=Production
-  #     - ConnectionStrings__Default=server=db;database=Identity;User=sa;Password=Your_password123;
+  #     - ConnectionStrings__Default=server=db;database=RERU-Identity;User=sa;Password=Your_password123;
   #   depends_on:
   #     - db
-  #     - identity-migrator
+  #     - reru-identity-migrator
 
-  # identity:
-  #   # networks:
-  #   #   - my-network
-  #   hostname: identity-new
-  #   container_name: erp-identity-new
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfile-Identity-new
-  #   ports: 
-  #     - 9999:8080
-  #   environment:
-  #     - ASPNETCORE_URLS=http://*:8080
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - BASE_PATH=/ms/identity-new
-  #     - SAML_METADATA_ENDPOINT=http://erp-saml2:8080/simplesaml/saml2/idp/metadata.php
-  #     - SAML_ENTITY_ID=http://localhost:10000
-  #     - SAML_ENDPOINT=http://erp-saml2:8080
-  #     - ConnectionStrings__Default=server=db;database=Identity;User=sa;Password=Your_password123;
-  #     - IDENTITY_ISSUER_URI=http://identity-new:8080/ms/identity-new
-  #     - IDENTITY_DISCOVERY_ENDPOINT_URI=http://localhost:10000
-  #   volumes:
-  #     - ./docker-files/Identity-New/appsettings.json:/app/appsettings.json
+  reru-identity:
+    # networks:
+    #   - my-network
+    hostname: identity-new
+    container_name: reru-identity-new
+    build:
+      context: .
+      dockerfile: ./Dockerfile-RERU-Identity
+    ports: 
+      - 9999:8080
+    environment:
+      - ASPNETCORE_URLS=http://*:8080
+      - ASPNETCORE_ENVIRONMENT=Development
+      - BASE_PATH=/ms/identity-new
+      - SAML_METADATA_ENDPOINT=http://reru-saml2:8080/simplesaml/saml2/idp/metadata.php
+      - SAML_ENTITY_ID=http://localhost:10000
+      - SAML_ENDPOINT=http://reru-saml2:8080
+      - ConnectionStrings__Default=server=db;database=RERU-Identity;User=sa;Password=Your_password123;
+      - IDENTITY_ISSUER_URI=http://identity-new:8080/ms/identity-new
+      - IDENTITY_DISCOVERY_ENDPOINT_URI=http://localhost:10000
+    volumes:
+      - ./docker-settings/Identity/IdentityWeb/appsettings.json:/app/appsettings.json
 
 
-  # saml2:
-  #   # networks:
-  #   #   - my-network
-  #   hostname: erp-saml2
-  #   container_name: erp-saml2
-  #   image: hashpe/docker-test-saml-idp
-  #   ports: 
-  #     - 8080:8080
-  #   environment:
-  #     - SIMPLESAMLPHP_SP_ENTITY_ID=http://localhost:10000
-  #     - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=http://localhost:10000/ms/identity-new/Saml2/Acs
-  #     - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=http://localhost:10000/ms/identity-new/Saml2/Signout"
-  #     - SIMPLESAMLPHP_BASE_URL_PATH=simplesaml/
+  reru-saml2:
+    # networks:
+    #   - my-network
+    hostname: reru-saml2
+    container_name: reru-saml2
+    image: hashpe/docker-test-saml-idp
+    ports: 
+      - 8080:8080
+    environment:
+      - SIMPLESAMLPHP_SP_ENTITY_ID=http://localhost:10000
+      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=http://localhost:10000/ms/identity-new/Saml2/Acs
+      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=http://localhost:10000/ms/identity-new/Saml2/Signout"
+      - SIMPLESAMLPHP_BASE_URL_PATH=simplesaml/
 
   # evaluation:
   #   hostname: localhost
