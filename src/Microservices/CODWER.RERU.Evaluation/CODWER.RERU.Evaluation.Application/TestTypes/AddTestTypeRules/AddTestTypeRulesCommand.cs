@@ -9,6 +9,6 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.AddTestTypeRules
 
     public class AddTestTypeRulesCommand : IRequest<Unit>
     {
-        public RulesDto Input { get; set; }
+        public RulesDto Data { get; set; }
     }
 }

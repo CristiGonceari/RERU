@@ -20,9 +20,9 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.EditTestType
 
         public async Task<int> Handle(EditTestTypeCommand request, CancellationToken cancellationToken)
         {
-            var updateTestType = await _appDbContext.TestTypes.FirstOrDefaultAsync(x => x.Id == request.Input.Id);
+            var updateTestType = await _appDbContext.TestTypes.FirstOrDefaultAsync(x => x.Id == request.Data.Id);
 
-            _mapper.Map(request.Input, updateTestType);
+            _mapper.Map(request.Data, updateTestType);
             await _appDbContext.SaveChangesAsync();
 
             return updateTestType.Id;

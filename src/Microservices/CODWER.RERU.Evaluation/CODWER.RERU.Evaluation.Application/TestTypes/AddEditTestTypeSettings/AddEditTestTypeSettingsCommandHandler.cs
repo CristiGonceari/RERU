@@ -21,16 +21,16 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.AddEditTestTypeSettings
 
         public async Task<Unit> Handle(AddEditTestTypeSettingsCommand request, CancellationToken cancellationToken)
         {
-            var existingSettings = await _appDbContex.TestTypeSettings.FirstOrDefaultAsync(x => x.TestTypeId == request.Input.TestTypeId);
+            var existingSettings = await _appDbContex.TestTypeSettings.FirstOrDefaultAsync(x => x.TestTypeId == request.Data.TestTypeId);
 
             if (existingSettings == null)
             {
-                var settingsToAdd = _mapper.Map<TestTypeSettings>(request.Input);
+                var settingsToAdd = _mapper.Map<TestTypeSettings>(request.Data);
                 _appDbContex.TestTypeSettings.Add(settingsToAdd);
             }
             else
             {
-                _mapper.Map(request.Input, existingSettings);
+                _mapper.Map(request.Data, existingSettings);
             }
 
             await _appDbContex.SaveChangesAsync();

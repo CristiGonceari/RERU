@@ -19,10 +19,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.AddTestTypeRules
 
         public async Task<Unit> Handle(AddTestTypeRulesCommand request, CancellationToken cancellationToken)
         {
-            var plainTextBytes = Encoding.UTF8.GetBytes(request.Input.Rules);
+            var plainTextBytes = Encoding.UTF8.GetBytes(request.Data.Rules);
             var rulesToAdd = Convert.ToBase64String(plainTextBytes);
 
-            var testType = await _appDbContext.TestTypes.FirstOrDefaultAsync(x => x.Id == request.Input.TestTypeId);
+            var testType = await _appDbContext.TestTypes.FirstOrDefaultAsync(x => x.Id == request.Data.TestTypeId);
             testType.Rules = rulesToAdd;
 
             await _appDbContext.SaveChangesAsync();

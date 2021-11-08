@@ -8,6 +8,6 @@ namespace CODWER.RERU.Evaluation.Application.Options.EditOption
     [ModuleOperation(permission: PermissionCodes.OPTIONS_GENERAL_ACCESS)]
     public class EditOptionsCommand : IRequest<Unit>
     {
-        public AddEditOptionDto Input { get; set; }
+        public AddEditOptionDto Data { get; set; }
     }
 }
