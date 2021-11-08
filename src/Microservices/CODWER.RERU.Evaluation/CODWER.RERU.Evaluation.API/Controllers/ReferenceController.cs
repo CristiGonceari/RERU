@@ -28,5 +28,21 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
             return await Mediator.Send(query);
         }
+
+        [HttpGet("test-type-statuses/select-values")]
+        public async Task<List<SelectItem>> GetTestTypeStatueses()
+        {
+            var items = EnumConverter<TestTypeStatusEnum>.SelectValues;
+
+            return items;
+        }
+
+        [HttpGet("test-type-mode/select-values")]
+        public async Task<List<SelectItem>> GetMode()
+        {
+            var items = EnumConverter<TestTypeModeEnum>.SelectValues;
+
+            return items;
+        }
     }
 }
