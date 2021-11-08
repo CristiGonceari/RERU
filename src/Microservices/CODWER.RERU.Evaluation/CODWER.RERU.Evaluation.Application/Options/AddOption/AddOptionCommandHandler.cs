@@ -20,7 +20,7 @@ namespace CODWER.RERU.Evaluation.Application.Options.AddOption
 
         public async Task<int> Handle(AddOptionCommand request, CancellationToken cancellationToken)
         {
-            var newOption = _mapper.Map<Option>(request.Input);
+            var newOption = _mapper.Map<Option>(request.Data);
 
             await _appDbContext.Options.AddAsync(newOption);
 

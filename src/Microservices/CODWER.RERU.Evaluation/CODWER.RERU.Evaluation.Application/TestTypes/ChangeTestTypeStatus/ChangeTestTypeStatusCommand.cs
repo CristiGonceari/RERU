@@ -9,6 +9,6 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.ChangeTestTypeStatus
 
     public class ChangeTestTypeStatusCommand : IRequest<Unit>
     {
-        public EditTestTypeStatusDto Input { get; set; }
+        public EditTestTypeStatusDto Data { get; set; }
     }
 }

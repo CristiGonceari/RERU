@@ -9,6 +9,6 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.EditTestType
 
     public class EditTestTypeCommand : IRequest<int>
     {
-        public AddEditTestTypeDto Input { get; set; }
+        public AddEditTestTypeDto Data { get; set; }
     }
 }

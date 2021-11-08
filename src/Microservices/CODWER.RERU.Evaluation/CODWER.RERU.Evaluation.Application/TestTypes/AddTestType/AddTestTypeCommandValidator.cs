@@ -8,31 +8,31 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.AddTestType
     {
         public AddTestTypeCommandValidator()
         {
-            RuleFor(r => r.Input)
+            RuleFor(r => r.Data)
                 .NotNull()
                 .WithErrorCode(ValidationCodes.NULL_OR_EMPTY_INPUT);
 
-            When(r => r.Input != null, () =>
+            When(r => r.Data != null, () =>
             {
-                RuleFor(x => x.Input.Name)
+                RuleFor(x => x.Data.Name)
                     .NotEmpty()
                     .WithErrorCode(ValidationCodes.EMPTY_NAME);
 
-                RuleFor(x => x.Input.QuestionCount)
+                RuleFor(x => x.Data.QuestionCount)
                     .Must(x => x > 0)
                     .WithErrorCode(ValidationCodes.INVALID_QUESTION_COUNT);
 
-                RuleFor(x => x.Input.Mode)
+                RuleFor(x => x.Data.Mode)
                     .IsInEnum()
                     .WithErrorCode(ValidationCodes.INVALID_TYPE);
 
-                When(r => r.Input.Mode == TestTypeModeEnum.Test, () =>
+                When(r => r.Data.Mode == TestTypeModeEnum.Test, () =>
                 {
-                    RuleFor(x => x.Input.Duration)
+                    RuleFor(x => x.Data.Duration)
                         .Must(x => x > 0)
                         .WithErrorCode(ValidationCodes.INVALID_DURATION);
 
-                    RuleFor(x => x.Input.MinPercent)
+                    RuleFor(x => x.Data.MinPercent)
                         .Must(x => x > 0)
                         .WithErrorCode(ValidationCodes.INVALID_MIN_PERCENT);
                 });

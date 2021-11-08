@@ -9,7 +9,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.AddEditTestTypeSettings
 
     public class AddEditTestTypeSettingsCommand : IRequest<Unit>
     {
-        public TestTypeSettingsDto Input { get; set; }
+        public TestTypeSettingsDto Data { get; set; }
     }
 
 }

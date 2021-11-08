@@ -645,7 +645,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 try
                 {
                     option.OptionDto.QuestionUnitId = questionId;
-                    option.Id = await _mediator.Send(new AddOptionCommand { Input = option.OptionDto });
+                    option.Id = await _mediator.Send(new AddOptionCommand { Data = option.OptionDto });
                     _rowsToDelete.Add(option.Row);                    
                 }
                 catch (Exception ex)

@@ -46,7 +46,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit
             if (request.Data.Tags != null && request.Data.Tags.Count > 0)
             {
                 await _mediator.Send(new AssignTagToQuestionUnitCommand { QuestionUnitId = editQuestionUnit.Id, Tags = request.Data.Tags });
-            }
+            } 
 
             if (editQuestionUnit.QuestionType == QuestionTypeEnum.HashedAnswer)
             {

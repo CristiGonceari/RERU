@@ -20,7 +20,8 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         [HttpGet("{id}")]
         public async Task<OptionDto> GetOption([FromRoute] int id)
         {
-            return await Mediator.Send(new GetOptionQuery { Id = id });
+            var query = new GetOptionQuery { Id = id };
+            return await Mediator.Send(query);
         }
 
         [HttpGet()]

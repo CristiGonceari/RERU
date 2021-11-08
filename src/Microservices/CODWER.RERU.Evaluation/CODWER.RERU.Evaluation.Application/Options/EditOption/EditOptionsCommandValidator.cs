@@ -14,25 +14,25 @@ namespace CODWER.RERU.Evaluation.Application.Options.EditOption
         {
             _appDbContext = appDbContext;
 
-            RuleFor(r => r.Input.Id)
+            RuleFor(r => r.Data.Id)
                 .Must(x => appDbContext.Options.Any(d => d.Id == x))
                 .WithErrorCode(ValidationCodes.INVALID_ID);
 
-            RuleFor(r => r.Input.QuestionUnitId)
+            RuleFor(r => r.Data.QuestionUnitId)
                 .Must(x => appDbContext.QuestionUnits.Any(d => d.Id == x))
                 .WithErrorCode(ValidationCodes.INVALID_QUESTION);
 
-            RuleFor(r => r.Input.Answer)
+            RuleFor(r => r.Data.Answer)
                 .NotEmpty()
                 .WithErrorCode(ValidationCodes.EMPTY_ANSWER);
 
-            RuleFor(r => r.Input.IsCorrect)
+            RuleFor(r => r.Data.IsCorrect)
                 .NotNull()
                 .WithErrorCode(ValidationCodes.EMPTY_CORRECT_ANSWER);
 
-            When(x => appDbContext.TestQuestions.Any(t => t.QuestionUnitId == x.Input.QuestionUnitId), () =>
+            When(x => appDbContext.TestQuestions.Any(t => t.QuestionUnitId == x.Data.QuestionUnitId), () =>
             {
-                RuleFor(x => x.Input.QuestionUnitId)
+                RuleFor(x => x.Data.QuestionUnitId)
                 .Must(x => IsQuestionInActiveTest(x) == false)
                 .WithErrorCode(ValidationCodes.QUESTION_IS_IN_ACTIVE_TEST_TYPE);
             });
