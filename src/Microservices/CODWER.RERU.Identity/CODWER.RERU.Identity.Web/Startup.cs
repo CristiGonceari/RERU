@@ -49,6 +49,7 @@ namespace CODWER.RERU.Identity.Web
 
             services.AddIdentity<ERPIdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityDbContext>()
+                .AddUserManager<UserManager<ERPIdentityUser>>()
                 .AddDefaultTokenProviders();
 
             var builder = services.AddIdentityServer(options =>
@@ -103,7 +104,7 @@ namespace CODWER.RERU.Identity.Web
             }
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, System.IServiceProvider serviceProvider)
         {
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -125,6 +126,8 @@ namespace CODWER.RERU.Identity.Web
                 app.UseDeveloperExceptionPage();
                 //  app.UseDatabaseErrorPage();
             }
+
+            DbSeeder.SeedDb(serviceProvider);
 
             var basePath = Configuration.GetValue<string>("BASE_PATH") ?? string.Empty;
             app.UseCookiePolicy();

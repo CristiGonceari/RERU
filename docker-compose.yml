@@ -3,6 +3,8 @@ version: "3.4"
 services:
   reru-identity-migrator:
     container_name: reru-identity-migrator
+    networks:
+      - my-network
     build:
       context: .
       dockerfile: ./Dockerfile-RERU-IdentityMigrator
@@ -11,8 +13,10 @@ services:
     depends_on:
       - db
 
-  reru-identity:
-    hostname: identity-new
+  reru-identity-new:
+    hostname: reru-identity-new
+    networks:
+      - my-network
     container_name: reru-identity-new
     build:
       context: .
@@ -22,30 +26,34 @@ services:
     environment:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Development
-      - BASE_PATH=/ms/identity-new
+      - BASE_PATH=/ms/reru-identity-new
       - SAML_METADATA_ENDPOINT=http://reru-saml2:8080/simplesaml/saml2/idp/metadata.php
       - SAML_ENTITY_ID=http://localhost:10000
       - SAML_ENDPOINT=http://reru-saml2:8080
       - ConnectionStrings__Default=server=db;database=RERU-Identity;User=sa;Password=Your_password123;
-      - IDENTITY_ISSUER_URI=http://identity-new:8080/ms/identity-new
+      - IDENTITY_ISSUER_URI=http://reru-identity-new:8080/ms/reru-identity-new
       - IDENTITY_DISCOVERY_ENDPOINT_URI=http://localhost:10000
     volumes:
       - ./docker-settings/Identity/IdentityWeb/appsettings.json:/app/appsettings.json
 
   reru-saml2:
     hostname: reru-saml2
+    networks:
+      - my-network
     container_name: reru-saml2
     image: hashpe/docker-test-saml-idp
     ports: 
       - 8080:8080
     environment:
       - SIMPLESAMLPHP_SP_ENTITY_ID=http://localhost:10000
-      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=http://localhost:10000/ms/identity-new/Saml2/Acs
-      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=http://localhost:10000/ms/identity-new/Saml2/Signout"
+      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=http://localhost:10000/ms/reru-identity-new/Saml2/Acs
+      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=http://localhost:10000/ms/reru-identity-new/Saml2/Signout"
       - SIMPLESAMLPHP_BASE_URL_PATH=simplesaml/
 
   reru-public-gateway:
     hostname: localhost
+    networks:
+      - my-network
     container_name: reru-public-gateway
     build:
       context: .
@@ -60,6 +68,8 @@ services:
 
   reru-internal-gateway:
     hostname: localhost
+    networks:
+      - my-network
     container_name: reru-internal-gateway
     build:
       context: .
@@ -74,6 +84,8 @@ services:
 
   reru-core:
     hostname: localhost
+    networks:
+      - my-network
     container_name: reru-core
     build:
       context: .
@@ -91,6 +103,8 @@ services:
 
   reru-core-fe:
     hostname: localhost
+    networks:
+      - my-network
     container_name: reru-core-fe
     build:
       context: .
@@ -100,6 +114,8 @@ services:
 
   reru-personal:
     hostname: localhost
+    networks:
+      - my-network
     container_name: reru-personal
     build:
       context: .
@@ -113,6 +129,8 @@ services:
 
   reru-personal-fe:
     hostname: localhost
+    networks:
+      - my-network
     container_name: reru-personal-fe
     build:
       context: .
@@ -123,6 +141,8 @@ services:
 
   reru-evaluation:
     hostname: localhost
+    networks:
+      - my-network
     container_name: reru-evaluation
     build:
       context: .
@@ -132,17 +152,34 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__Default=server=db;database=RERU-Evaluation;User=sa;Password=Your_password123;
       - ConnectionStrings__HangfireConnection=server=db;database=RERU-Evaluation;User=sa;Password=Your_password123;
+    volumes:
+      - ./docker-settings/Evaluation/appsettings.json:/app/appsettings.json
     depends_on:
       - db
 
   reru-evaluation-fe:
     hostname: localhost
+    networks:
+      - my-network
     container_name: reru-evaluation-fe
     build:
       context: .
       dockerfile: ./Dockerfile-RERU-Evaluation-FE
     volumes:
       - ./docker-settings/Evaluation-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   # mock:
@@ -218,6 +255,8 @@ services:
 
   db:
     container_name: erp-sql-server
+    networks:
+      - my-network
     image: "mcr.microsoft.com/mssql/server"
     environment:
       SA_PASSWORD: "Your_password123"
@@ -227,5 +266,11 @@ services:
 
   ubuntu:
     container_name: ubuntu
+    networks:
+      - my-network
     image: "ubuntu:21.04"
     command: tail -F anything
+
+networks:
+  my-network:
+    external: true
