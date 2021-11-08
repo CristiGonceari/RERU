@@ -82,8 +82,8 @@ import { IDNP_INTERCEPTOR_PROVIDER } from './utils/interceptors/idnp.interceptor
   providers: [
     TranslatePipe,
     //CONFIG_INITIALIZER,
-    NOTIFICATION_INTERCEPTOR_PROVIDER,
-    IDNP_INTERCEPTOR_PROVIDER,
+    // NOTIFICATION_INTERCEPTOR_PROVIDER,
+    // IDNP_INTERCEPTOR_PROVIDER,
     {
       provide: MOCK_AUTHENTICATION,
       useValue: !environment.PRODUCTION

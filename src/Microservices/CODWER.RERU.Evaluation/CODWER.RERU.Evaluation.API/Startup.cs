@@ -17,6 +17,8 @@ using System.Text;
 using CODWER.RERU.Evaluation.Application.Validation;
 using FluentValidation.AspNetCore;
 using MediatR;
+using System;
+using AutoMapper.EquivalencyExpression;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
 
@@ -51,8 +53,7 @@ namespace CODWER.RERU.Evaluation.API
             services.AddCors();
 
             services.AddMediatR(typeof(ValidationService).Assembly);
-            services.AddAutoMapper(typeof(ValidationService).Assembly);
-
+            services.AddAutoMapper(cfg => { cfg.AddCollectionMappers(); }, AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddOptions();
             services.AddMemoryCache();
@@ -96,7 +97,6 @@ namespace CODWER.RERU.Evaluation.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

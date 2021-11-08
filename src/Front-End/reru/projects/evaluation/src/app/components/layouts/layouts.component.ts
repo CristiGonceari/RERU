@@ -39,7 +39,7 @@ export class LayoutsComponent implements OnInit {
 			name: '',
 		},
 		{
-			permission: 'P03010402',
+			// permission: 'P03010402',
 			type: SidebarItemType.ITEM,
 			url: '/test-type',
 			name: '',
@@ -60,7 +60,7 @@ export class LayoutsComponent implements OnInit {
       </svg>`,
 		},
 		{
-			permission: 'P03010102',
+			// permission: 'P03010102',
 			type: SidebarItemType.ITEM,
 			url: '/categories',
 			name: '',
@@ -83,7 +83,7 @@ export class LayoutsComponent implements OnInit {
       </svg>`,
 		},
 		{
-			permission: 'P03010202',
+			// permission: 'P03010202',
 			type: SidebarItemType.ITEM,
 			url: '/questions',
 			name: '',
@@ -107,7 +107,7 @@ export class LayoutsComponent implements OnInit {
 			name: '',
 		},
 		{
-			permission: 'P03010602',
+			// permission: 'P03010602',
 			type: SidebarItemType.ITEM,
 			url: '/tests',
 			name: '',
@@ -144,7 +144,7 @@ export class LayoutsComponent implements OnInit {
 			name: '',
 		},
 		{
-			permission: 'P03011101',
+			// // permission: 'P03011101',
 			type: SidebarItemType.ITEM,
 			url: '/locations',
 			name: '',
@@ -156,7 +156,7 @@ export class LayoutsComponent implements OnInit {
 			</svg>`,
 		},
 		{
-			permission: 'P03011201',
+			// permission: 'P03011201',
 			type: SidebarItemType.ITEM,
 			url: '/events',
 			name: '',
@@ -169,7 +169,7 @@ export class LayoutsComponent implements OnInit {
 			</svg>`,
 		},
 		{
-			permission: 'P03011501',
+			// permission: 'P03011501',
 			type: SidebarItemType.ITEM,
 			url: '/plans',
 			name: '',
@@ -193,7 +193,7 @@ export class LayoutsComponent implements OnInit {
 			name: '',
 		},
 		{
-			permission: 'P03010904',
+			// permission: 'P03010904',
 			type: SidebarItemType.ITEM,
 			url: '/faq',
 			name: '',
