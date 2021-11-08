@@ -20,7 +20,6 @@ namespace CODWER.RERU.Evaluation.Application.DependencyInjection
         {
             services
                 .AddScoped(typeof(IModulePermissionProvider), typeof(ModulePermissionProvider))
-                //.AddScoped(typeof(IOptionService), typeof(OptionService))
                 .AddScoped(typeof(IQuestionUnitService), typeof(QuestionUnitService))
                 //.AddScoped(typeof(INotificationService), typeof(NotificationService))
                 //.AddScoped(typeof(IUserProfileProvider), typeof(UserProfileProvider))

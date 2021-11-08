@@ -14,6 +14,8 @@ using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Options;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
+using CODWER.RERU.Evaluation.Application.Options.AddOption;
+using CODWER.RERU.Evaluation.Application.Options.DeleteOption;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 {
@@ -643,7 +645,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 try
                 {
                     option.OptionDto.QuestionUnitId = questionId;
-                    //option.Id = await _mediator.Send(new AddOptionCommand { Input = option.OptionDto });
+                    option.Id = await _mediator.Send(new AddOptionCommand { Input = option.OptionDto });
                     _rowsToDelete.Add(option.Row);                    
                 }
                 catch (Exception ex)
@@ -657,7 +659,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         private async Task DeleteOption(int id)
         {
-            //await _mediator.Send(new DeleteOptionCommand { Id = id });
+            await _mediator.Send(new DeleteOptionCommand { Id = id });
         }
     }
 }
