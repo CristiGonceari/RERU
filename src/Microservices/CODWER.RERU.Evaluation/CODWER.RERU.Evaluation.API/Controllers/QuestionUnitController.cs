@@ -1,17 +1,19 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using AutoMapper;
 using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.DeleteQuestionUnit;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionStatus;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit;
+using CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionBulkTemplate;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnit;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.GetTags;
+using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
@@ -62,6 +64,14 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<Unit> EditQuestionStatus([FromBody] EditQuestionStatusCommand command)
         {
             return await Mediator.Send(command);
+        }
+
+        [IgnoreResponseWrap]
+        [HttpGet("excel-template/{questionType}")]
+        public async Task<FileContentResult> GetExcelTemplate([FromRoute] QuestionTypeEnum questionType)
+        {
+            byte[] answerBytes = await Mediator.Send(new GetQuestionBulkTemplateQuery { QuestionType = questionType }) as byte[];
+            return File(answerBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "AddQuestionsTemplate.xlsx");
         }
     }
 }
