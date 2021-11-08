@@ -13,8 +13,8 @@ services:
     depends_on:
       - db
 
-  reru-identity:
-    hostname: identity-new
+  reru-identity-new:
+    hostname: reru-identity-new
     networks:
       - my-network
     container_name: reru-identity-new
@@ -26,12 +26,12 @@ services:
     environment:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Development
-      - BASE_PATH=/ms/identity-new
+      - BASE_PATH=/ms/reru-identity-new
       - SAML_METADATA_ENDPOINT=http://reru-saml2:8080/simplesaml/saml2/idp/metadata.php
       - SAML_ENTITY_ID=http://localhost:10000
       - SAML_ENDPOINT=http://reru-saml2:8080
       - ConnectionStrings__Default=server=db;database=RERU-Identity;User=sa;Password=Your_password123;
-      - IDENTITY_ISSUER_URI=http://identity-new:8080/ms/identity-new
+      - IDENTITY_ISSUER_URI=http://reru-identity-new:8080/ms/reru-identity-new
       - IDENTITY_DISCOVERY_ENDPOINT_URI=http://localhost:10000
     volumes:
       - ./docker-settings/Identity/IdentityWeb/appsettings.json:/app/appsettings.json
@@ -46,8 +46,8 @@ services:
       - 8080:8080
     environment:
       - SIMPLESAMLPHP_SP_ENTITY_ID=http://localhost:10000
-      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=http://localhost:10000/ms/identity-new/Saml2/Acs
-      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=http://localhost:10000/ms/identity-new/Saml2/Signout"
+      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=http://localhost:10000/ms/reru-identity-new/Saml2/Acs
+      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=http://localhost:10000/ms/reru-identity-new/Saml2/Signout"
       - SIMPLESAMLPHP_BASE_URL_PATH=simplesaml/
 
   reru-public-gateway:
