@@ -1,1 +1,46 @@
-<p>question-list works!</p>
+<app-page-title title="{{ 'questions.settings' | translate }}" subTitle="{{ 'questions.subtitle' | translate }}">
+</app-page-title>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+	<div class="d-flex flex-column-fluid">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="card card-custom gutter-b">
+						<div class="card-header flex-wrap border-0 py-5">
+							<div class="card-title">
+								<h3 class="card-label">{{ 'questions.title' | translate }}</h3>
+							</div>
+							<div class="card-toolbar">
+								<div class="dropdown dropdown-inline my-auto" ngbDropdown>
+									<app-add-button class="btn my-auto" id="action1" ngbDropdownToggle
+										[value]="'questions.add-question' | translate">
+									</app-add-button>
+									<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+										<div ngbDropdownMenu aria-labelledby="action1">
+											<button  class="navi-link align-items-center px-6" ngbDropdownItem 
+												(click)="add()">
+												<i class="la la-plus mr-2"></i> 
+												{{'questions.add-question' | translate}}
+											</button>
+											<button (click)="bulkImport()" class="navi-link align-items-baseline px-6" ngbDropdownItem >
+												<i class="la la-download mr-2"></i>
+												{{'questions.bulk-import' | translate}}
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-header border-0 pt-0 pb-0 mt-3" style="min-height: 100%;">
+							<app-search-question style="width: 100%;" (handleSearch)="questionsTable.list({keyword: $event, page: 1})"></app-search-question>
+						</div>
+						<div class="card-body">
+							<app-question-list-table #questionsTable></app-question-list-table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -20,7 +20,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.AddTestType
 
         public async Task<int> Handle(AddTestTypeCommand request, CancellationToken cancellationToken)
         {
-            var newTestType = _mapper.Map<TestType>(request.Input);
+            var newTestType = _mapper.Map<TestType>(request.Data);
 
             _appDbContext.TestTypes.Add(newTestType);
 

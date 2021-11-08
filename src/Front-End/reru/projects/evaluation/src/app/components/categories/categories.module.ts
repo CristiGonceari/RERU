@@ -1,36 +1,47 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '@erp/shared';
+import { UtilsModule } from '../../utils/utils.module';
+import { CategoriesRoutingModule } from './categories-routing.module';
+import { AddEditCategoryComponent } from './add-edit-category/add-edit-category.component';
+import { CategoryListComponent } from './category-list/category-list.component';
+import { CategoryListTableComponent } from './category-list/category-list-table/category-list-table.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { UtilsModule } from '../../utils/utils.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CategoryNameComponent } from './category-list/category-name/category-name.component';
+import { SearchCategoryComponent } from './category-list/search-category/search-category.component';
 import { CategoryDetailsComponent } from './category-details/category-details.component';
 import { CategoryOverviewComponent } from './category-details/category-overview/category-overview.component';
+import { CategoryQuestionsComponent } from './category-details/category-questions/category-questions.component';
+
 
 @NgModule({
   declarations: [
-    CategoryDetailsComponent,
-    CategoryOverviewComponent,
+    AddEditCategoryComponent, 
+    CategoryListComponent, 
+    CategoryListTableComponent, 
+    CategoryNameComponent, 
+    SearchCategoryComponent, 
+    CategoryDetailsComponent, 
+    CategoryOverviewComponent, 
+    CategoryQuestionsComponent
   ],
+  
   imports: [
     CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NgbModule,
-    TranslateModule,
+    CategoriesRoutingModule,
     SharedModule,
-    RouterModule,
+    UtilsModule,
     HttpClientModule,
-    UtilsModule
-  ],
-  exports: [
-  ],
-  entryComponents: [
-  ],
-  providers: [NgbActiveModal]
+    RouterModule,
+    TranslateModule,
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule
+  ]
 })
-export class CategoriesModule {
-}
+export class CategoriesModule { }

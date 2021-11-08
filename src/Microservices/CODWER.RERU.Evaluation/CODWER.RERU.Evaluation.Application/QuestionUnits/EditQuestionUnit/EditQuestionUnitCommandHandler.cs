@@ -39,19 +39,16 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit
                 _appDbContext.Options.RemoveRange(deleteOptions);
             }
 
-            _mapper.Map(request.Data, editQuestionUnit);
-
-            await _appDbContext.SaveChangesAsync();
-
-            if (request.Data.Tags != null && request.Data.Tags.Count > 0)
-            {
-                await _mediator.Send(new AssignTagToQuestionUnitCommand { QuestionUnitId = editQuestionUnit.Id, Tags = request.Data.Tags });
-            }
-
             if (editQuestionUnit.QuestionType == QuestionTypeEnum.HashedAnswer)
             {
                 await _questionUnitService.HashQuestionUnit(editQuestionUnit.Id);
             }
+
+            _mapper.Map(request.Data, editQuestionUnit);
+
+            await _appDbContext.SaveChangesAsync();
+
+            await _mediator.Send(new AssignTagToQuestionUnitCommand { QuestionUnitId = editQuestionUnit.Id, Tags = request.Data.Tags });
 
             return Unit.Value;
         }

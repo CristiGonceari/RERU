@@ -27,11 +27,12 @@ import { TestsRoutingModule } from './components/tests/tests-routing.module';
 import { TestTypesRoutingModule } from './components/test-types/test-types-routing.module';
 import { EventsRoutingModule } from './components/events/events-routing.module';
 import { LocationsRoutingModule } from './components/locations/locations-routing.module';
-import { QuestionsRoutingModule } from './components/questions/questions-routing.module';
-import { CategoryRoutingModule } from './components/categories/categories-routing.module';
+import { QuestionRoutingModule } from './components/questions/questions-routing.module';
+import { CategoriesRoutingModule } from './components/categories/categories-routing.module';
 import { MaterialModule } from './material.module'
 import { NOTIFICATION_INTERCEPTOR_PROVIDER } from './utils/interceptors/notification.interceptor'
 import { IDNP_INTERCEPTOR_PROVIDER } from './utils/interceptors/idnp.interceptor';
+// import { SvgModule } from 'dist/erp-shared/lib/modules/svg.module';
 
 
 @NgModule({
@@ -63,8 +64,8 @@ import { IDNP_INTERCEPTOR_PROVIDER } from './utils/interceptors/idnp.interceptor
     EventsModule,
     PollsModule,
     PlansModule,
-    CategoryRoutingModule,
-    QuestionsRoutingModule,
+    CategoriesRoutingModule,
+    QuestionRoutingModule,
     LocationsRoutingModule,
     EventsRoutingModule,
     TestTypesRoutingModule,

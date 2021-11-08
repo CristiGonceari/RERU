@@ -1,1 +1,43 @@
-<p>add-option works!</p>
+<app-page-title title="{{ 'questions.subtitle' | translate }}" subTitle="{{ 'tests.options' | translate }}">
+</app-page-title>
+
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
+  <div class="d-flex flex-column-fluid">
+    <div class="container">
+      <div class="card card-custom gutter-b">
+        <div class="card-body p-0">
+          <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+            <div class="col-xl-12 col-xxl-7">
+              <div class="form" id="kt_contact_add_form">
+                <h3 class="mb-10 font-weight-bold text-dark">{{'questions.add-option' | translate}}</h3>
+                <div class="row">
+                  <div class="col-xl-12">
+                    <div class="form-group row mb-10">
+                      <label
+                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'answers.answer' | translate}}</label>
+                      <div class="col-lg-9 col-xl-9">
+                        <textarea type="text" class="form-control form-control-lg form-control-solid" name="answer"
+                          placeholder="{{'questions.question' | translate}}" value="" [(ngModel)]="answer">
+                                                        </textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-right border-top pt-10">
+                  <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="back()">
+                  </app-button>
+                  <app-add-button class="btn" [value]="'button.confirm' | translate" (handle)="confirm()">
+                  </app-add-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

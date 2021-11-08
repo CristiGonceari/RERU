@@ -17,8 +17,8 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.ChangeTestTypeStatus
 
         public async Task<Unit> Handle(ChangeTestTypeStatusCommand request, CancellationToken cancellationToken)
         {
-            var updateTestType = await _appDbContext.TestTypes.FirstAsync(x => x.Id == request.Input.TestTypeId);
-            updateTestType.Status = request.Input.Status;
+            var updateTestType = await _appDbContext.TestTypes.FirstAsync(x => x.Id == request.Data.TestTypeId);
+            updateTestType.Status = request.Data.Status;
 
             await _appDbContext.SaveChangesAsync();
 
