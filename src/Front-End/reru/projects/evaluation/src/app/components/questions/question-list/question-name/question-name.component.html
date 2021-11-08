@@ -1,1 +1,9 @@
-<p>question-name works!</p>
+<span class="font-size-lg" >
+    <a [routerLink]="['question-detail', question.id]" class="text-dark-50 text-hover-dark-75" >
+        {{ question.question }}
+    </a>
+</span>
+
+<!-- <span class="font-size-lg" *ngIf="!permission">
+    {{ question.question }}
+</span> -->

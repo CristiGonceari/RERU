@@ -1,0 +1,115 @@
+<app-page-title title="{{'questions.title' | translate}}" subTitle="{{'questions.question-data' | translate}}">
+</app-page-title>
+
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+  <div class="d-flex flex-column-fluid">
+    <div class="container">
+      <div class="card card-custom gutter-b">
+        <div class="card-body p-0">
+          <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+            <div class="col-xl-12 col-xxl-7">
+              <div class="form" id="kt_contact_add_form" [formGroup]="questionForm">
+                <h3 class="mb-10 font-weight-bold text-dark">{{'questions.question-details' | translate}}</h3>
+                <div class="row">
+                  <div class="col-xl-12">
+                    <div class="form-group row">
+                      <label
+                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'questions.question' | translate}}</label>
+                      <div class="col-lg-9 col-xl-9">
+                        <textarea type="text" class="form-control form-control-lg form-control-solid" name="question"
+                          placeholder="{{'questions.question' | translate}}" value="0" formControlName="question">
+                        </textarea>
+                        <div *ngIf="hasErrors('question')" class="fv-plugins-message-container">
+                          <div *ngIf="hasError('question', 'required')" data-field="question" data-validator="notEmpty"
+                            class="fv-help-block">
+                            {{ 'locations.empty-name' | translate }}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label
+                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'questions.type' | translate}}</label>
+                      <div class="col-lg-9 col-xl-9">
+                        <select name="questionType" class="form-control form-control-lg form-control-solid"
+                          [formControl]="questionForm.controls['questionType']">
+                          <option value="0">{{'questions.select' | translate}}</option>
+                          <option *ngFor="let item of types" [value]="item.value">
+                            {{'statuses.' + item.label | translate}} </option>
+                        </select>
+                        <div *ngIf="hasErrors('questionType')" class="fv-plugins-message-container">
+                          <div *ngIf="hasError('questionType', 'required')" data-field="questionType"
+                            data-validator="notEmpty" class="fv-help-block">
+                            {{ 'locations.empty-name' | translate }}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label
+                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'questions.category' | translate}}</label>
+                      <div class="col-lg-9 col-xl-9">
+                        <select class="form-control form-control-lg form-control-solid" name="questionCategoryId"
+                          [formControl]="questionForm.controls['questionCategoryId']">
+                          <option value="0">{{'questions.select' | translate}}</option>
+                          <option *ngFor="let item of categories" [value]="item.value">{{ item.label }}</option>
+                        </select>
+                        <div *ngIf="hasErrors('questionCategoryId')" class="fv-plugins-message-container">
+                          <div *ngIf="hasError('questionCategoryId', 'required')" data-field="questionCategoryId"
+                            data-validator="notEmpty" class="fv-help-block">
+                            {{ 'locations.empty-name' | translate }}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row mb-10">
+                      <label
+                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'questions.points' | translate}}</label>
+                      <div class="col-lg-9 col-xl-9">
+                        <input type="number" class="form-control form-control-lg form-control-solid" name="questionPoints"
+                          value="1" formControlName="questionPoints" oninput="this.value = this.value.replace(/(\.)\./g, '');"
+                          onkeydown="if(event.key==='.') {event.preventDefault();}"/>
+                        <div *ngIf="hasErrors('questionPoints')" class="fv-plugins-message-container">
+                          <div *ngIf="hasError('questionPoints', 'required')" data-field="points" data-validator="notEmpty"
+                            class="fv-help-block">
+                            {{ 'locations.empty-name' | translate }}</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row mb-10">
+                      <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                        {{'questions.tags' | translate}}
+                      </label>
+                      <div class="col-lg-9 col-xl-9">
+                        <tag-input class="py-0 form-control form-control-lg form-control-solid h-100"
+                          [ngModelOptions]="{standalone: true}" [(ngModel)]="tags" (onTextChange)="onTextChange($event)" [modelAsStrings]="true"
+                          [placeholder]="placeHolderString" [secondaryPlaceholder]="placeHolderString">
+                        <tag-input-dropdown
+                          [autocompleteItems]="items"
+                            [showDropdownIfEmpty]="false"
+                            [dynamicUpdate]="false"
+                          >
+                          </tag-input-dropdown>
+                        </tag-input>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-right border-top pt-10">
+                  <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
+                  </app-button>
+
+                  <app-add-button class="btn" (handle)="onSave()" 
+                  [disabled]="questionForm.invalid" [value]="'button.confirm' | translate">
+                  </app-add-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
