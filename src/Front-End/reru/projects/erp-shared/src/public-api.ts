@@ -15,6 +15,8 @@ export * from './lib/components/buttons/confirm-button/confirm-button.component'
 export * from './lib/components/buttons/button/button.component';
 export * from './lib/components/buttons/delete-button/delete-button.component';
 export * from './lib/components/svg-icon/svg-icon.component';
+export * from './lib/components/pagination/pagination.component';
+export * from './lib/components/loading-spinner/loading-spinner.component';
 export * from './lib/components/authentication/authentication-callback/authentication-callback.component';
 
 export * from './lib/services/sidebar.service';
