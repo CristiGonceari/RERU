@@ -10,8 +10,9 @@ import { ManualLoaderFactory } from './utils/services/i18n/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Location } from '@angular/common';
 import { LayoutsComponent } from './components/layouts/layouts.component';
-import { AuthenticationCallbackComponent, AuthenticationGuard, PermissionRouteGuard } from '@erp/shared';
 import { CategoryRoutingModule } from './components/categories/categories-routing.module';
+import { AuthenticationCallbackComponent, AuthenticationGuard, PermissionRouteGuard } from '@erp/shared';
+
 
 const routes: Routes = [
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent },

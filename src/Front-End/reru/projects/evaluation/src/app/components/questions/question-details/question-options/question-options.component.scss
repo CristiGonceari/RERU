@@ -1,0 +1,12 @@
+.dropdown-toggle::after {
+    display:none;
+}
+
+.disabled-area{
+    cursor: default;
+    pointer-events: none !important;
+}
+
+.invisible-area {
+    display: none;
+}

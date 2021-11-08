@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AbstractService, AppSettingsService } from '@erp/shared';
 import { HttpClient } from '@angular/common/http';
-import { OptionModel } from '../../models/option.model';
+import { OptionModel } from '../../models/options/option.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
