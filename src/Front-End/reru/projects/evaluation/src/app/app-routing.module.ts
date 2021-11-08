@@ -10,9 +10,9 @@ import { ManualLoaderFactory } from './utils/services/i18n/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Location } from '@angular/common';
 import { LayoutsComponent } from './components/layouts/layouts.component';
-import { CategoryRoutingModule } from './components/categories/categories-routing.module';
-import { AuthenticationCallbackComponent, AuthenticationGuard, PermissionRouteGuard } from '@erp/shared';
-
+import { AuthenticationCallbackComponent, AuthenticationGuard } from '@erp/shared';
+import { CategoriesRoutingModule } from './components/categories/categories-routing.module';
+import { PermissionRouteGuard } from '@erp/shared';
 
 const routes: Routes = [
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent },
@@ -23,8 +23,9 @@ const routes: Routes = [
 		children: [
 			{ path: '', loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule) },
 			{
-				path: 'categories',
-				loadChildren: () => import('./components/categories/categories.module').then(m => m.CategoriesModule),
+				
+				path: 'categories', 
+				loadChildren: () => import('./components/categories/categories.module').then(m => m.CategoriesModule) ,
 				data: { permission: 'P03010102' },
 				// canActivate: [PermissionRouteGuard]
 			},
@@ -85,7 +86,7 @@ const routes: Routes = [
 
 @NgModule({
 	imports: [
-		CategoryRoutingModule,
+		CategoriesRoutingModule,
 		RouterModule.forRoot(routes, {
 			useHash: true,
 			scrollPositionRestoration: 'enabled',
