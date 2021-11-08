@@ -9,7 +9,15 @@
 
 .simple-notification div,
 .simple-notification {
-    color: #FFF;
+  color: #FFF;
+}
+
+.navi.navi-hover .navi-item .navi-link:hover,
+div.dahsboard-component a.nav-link,
+div.card.card-custom,
+.datatable.datatable-default > .datatable-pager > .datatable-pager-nav > li > a.datatable-pager-link,
+div.dropdown-menu {
+  border-radius: 3px;
 }
 
 /* Hide input type number arrows */

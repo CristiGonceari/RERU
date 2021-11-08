@@ -170,9 +170,14 @@
             },
             "styles": [
               "projects/erp-shared/src/lib/styles/style.bundle.css", 
-              "projects/erp-shared/src/lib/styles/plugins.bundle.css"
+              "projects/erp-shared/src/lib/styles/plugins.bundle.css",
+              "projects/evaluation/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "file-saver",
+              "@swimlane/dragula"
+            ]
           },
           "configurations": {
             "production": {
@@ -235,7 +240,8 @@
             ],
             "styles": [
               "projects/erp-shared/src/lib/styles/style.bundle.css",
-              "projects/erp-shared/src/lib/styles/plugins.bundle.css"
+              "projects/erp-shared/src/lib/styles/plugins.bundle.css",
+              "projects/evaluation/src/styles.scss"
             ],
             "scripts": []
           }
@@ -444,8 +450,5 @@
         }
       }
     }},
-  "defaultProject": "core",
-  "cli": {
-    "analytics": true
-  }
+  "defaultProject": "core"
 }

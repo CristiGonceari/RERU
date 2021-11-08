@@ -12,4 +12,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  list(): void {
+    console.log('list');
+  }
 }

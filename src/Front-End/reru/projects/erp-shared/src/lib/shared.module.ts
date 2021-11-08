@@ -44,6 +44,8 @@ import { appInitializerFn } from './factories/initializer.factory';
 import { ApplicationUserService } from './services/application-user.service';
 import { AuthenticationService } from './services/authentication.service';
 import { AuthenticationCallbackComponent } from './components/authentication/authentication-callback/authentication-callback.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 
 
@@ -65,6 +67,8 @@ const commonExports = [
 	ButtonComponent,
 	PermissionDirective,
 	AuthenticationCallbackComponent,
+	PaginationComponent,
+	LoadingSpinnerComponent
 ];
 
 @NgModule({
