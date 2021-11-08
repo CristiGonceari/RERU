@@ -24,7 +24,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(new GetQuestionCategoryQuery { Id = id });
         }
 
-        [HttpGet("list")]
+        [HttpGet]
         public async Task<PaginatedModel<QuestionCategoryDto>> GetAllQuestionCategories([FromQuery] GetQuestionCategoriesQuery query)
         {
             return await Mediator.Send(query);
@@ -48,7 +48,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(new EditQuestionCategoryCommand { Data = request });
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<Unit> DeleteQuestionCategory([FromRoute] int id)
         {
             return await Mediator.Send(new DeleteQuestionCategoryCommand { Id = id });

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { QuestionCategory } from 'projects/evaluation/src/app/utils/models/question-category/question-category.model';
 
 @Component({
   selector: 'app-category-name',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoryNameComponent implements OnInit {
 
+  @Input() category: QuestionCategory;
+  
   constructor() { }
 
   ngOnInit(): void {
