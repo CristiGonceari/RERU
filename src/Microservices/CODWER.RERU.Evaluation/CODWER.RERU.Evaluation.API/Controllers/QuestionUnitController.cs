@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit;
+using CODWER.RERU.Evaluation.Application.QuestionUnits.BulkUploadQuestionUnits;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.DeleteQuestionUnit;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionStatus;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit;
@@ -15,6 +16,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -72,6 +74,14 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         {
             byte[] answerBytes = await Mediator.Send(new GetQuestionBulkTemplateQuery { QuestionType = questionType }) as byte[];
             return File(answerBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "AddQuestionsTemplate.xlsx");
+        }
+
+        [IgnoreResponseWrap]
+        [HttpPost("excel-template/upload")]
+        public async Task<FileContentResult> BulkQuestionsUpload([FromForm] IFormFile file)
+        {
+            byte[] answerBytes = await Mediator.Send(new BulkUploadQuestionUnitsCommand { Input = file }) as byte[];
+            return File(answerBytes ?? new byte[0], "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ErrorList.xlsx");
         }
     }
 }
