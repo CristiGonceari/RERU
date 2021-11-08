@@ -1,7 +1,7 @@
 {
   "id": "test-id-1",
-  "name": "Test Test",
-  "email": "test@test.com",
+  "name": "RERU Client",
+  "email": "andrian.hubencu@codwer.com",
   "modules": [
     {
       "module": { "name": "test module" },
@@ -35,7 +35,10 @@
       ]
     },
     {
-      "module": { "name": "anoother test module", "icon": "user" },
+      "module": {
+        "name": "anoother test module",
+        "icon": "user"
+      },
       "role": "test role",
       "permissions": [
         "P02000001",
@@ -66,7 +69,10 @@
       ]
     },
     {
-      "module": { "name": "anoother test module", "icon": "test" },
+      "module": {
+        "name": "anoother test module",
+        "icon": "test"
+      },
       "role": "test role",
       "permissions": [
         "P02000001",

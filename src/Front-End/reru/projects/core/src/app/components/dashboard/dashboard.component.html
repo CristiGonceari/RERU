@@ -1,13 +1,29 @@
-<app-page-title [title]="'pages.start.title' | translate" [subTitle]="'pages.start.subtitle' | translate">
+<app-page-title [title]="'dashboard.title' | translate" [subTitle]="'dashboard.subtitle' | translate">
 </app-page-title>
-<app-content>
-  <div class="row dahsboard-component">
-    <div class="col">
-      <div class="card card-custom wave wave-secondary shadow-sm wave-animate-fast gutter-b card-stretch card-shadowless">
-        <div class="card-body">
-          <app-loading-spinner colorClass="text-primary" contentHeight="10rem" height="5rem" width="5rem"></app-loading-spinner>
+<div class="row dahsboard-component">
+  <div class="col">
+    <div class="card card-custom wave wave-secondary shadow-sm wave-animate-fast gutter-b card-stretch card-shadowless">
+      <div class="card-body" *ngIf="!isLoading">
+        <app-loading-spinner colorClass="text-primary" contentHeight="10rem" height="5rem" width="5rem"></app-loading-spinner>
+      </div>
+      <div class="card-body" *ngIf="isLoading">
+        <div class="flex-grow-1 p-10 card-rounded flex-grow-1 bgi-no-repeat" style="background-position: calc(96% + -0.5rem) top; background-size: 14% auto; background-image: url(assets/hand.png)">
+          <h2 *ngIf="profile?.email" class="text-dark pb-5 font-weight-bolder">{{'my-profile.hello-username' | translate: {username: profile?.email || '-'} }} ☀️</h2>
+          <h2 *ngIf="!profile?.email" class="text-dark pb-5 font-weight-bolder">{{'my-profile.hello-username' | translate: {username: '' } }} ☀️</h2>
+          <p class="text-dark-50 pb-5 font-size-h2">{{'my-profile.have-a-good-day' | translate}}</p>
+          <a routerLink="./my-profile" class="profile-button btn btn-danger font-weight-bold py-0 px-6 slide-in-blurred-bottom">
+            <span class="svg-icon svg-icon-white">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                  <path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                  <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero"></path>
+                </g>
+              </svg>
+            </span>
+            {{'my-profile.title' | translate}}</a>
         </div>
       </div>
     </div>
   </div>
-</app-content>
+</div>

@@ -23,8 +23,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVU.ERP.Module.Application"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVU.ERP.Module.Common", "CVU.ERP.Module.Common\src\CVU.ERP.Module.Common.csproj", "{817326C2-4A09-48D1-9211-9A4B9335E3FA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVU.ERP.Modules.MVC", "CVU.ERP.Module.MVC\CVU.ERP.Modules.MVC.csproj", "{CB048267-75F2-4F64-94C9-8EC46003897F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,18 +153,6 @@ Global
 		{817326C2-4A09-48D1-9211-9A4B9335E3FA}.Release|x64.Build.0 = Release|Any CPU
 		{817326C2-4A09-48D1-9211-9A4B9335E3FA}.Release|x86.ActiveCfg = Release|Any CPU
 		{817326C2-4A09-48D1-9211-9A4B9335E3FA}.Release|x86.Build.0 = Release|Any CPU
-		{CB048267-75F2-4F64-94C9-8EC46003897F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CB048267-75F2-4F64-94C9-8EC46003897F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CB048267-75F2-4F64-94C9-8EC46003897F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{CB048267-75F2-4F64-94C9-8EC46003897F}.Debug|x64.Build.0 = Debug|Any CPU
-		{CB048267-75F2-4F64-94C9-8EC46003897F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{CB048267-75F2-4F64-94C9-8EC46003897F}.Debug|x86.Build.0 = Debug|Any CPU
-		{CB048267-75F2-4F64-94C9-8EC46003897F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CB048267-75F2-4F64-94C9-8EC46003897F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CB048267-75F2-4F64-94C9-8EC46003897F}.Release|x64.ActiveCfg = Release|Any CPU
-		{CB048267-75F2-4F64-94C9-8EC46003897F}.Release|x64.Build.0 = Release|Any CPU
-		{CB048267-75F2-4F64-94C9-8EC46003897F}.Release|x86.ActiveCfg = Release|Any CPU
-		{CB048267-75F2-4F64-94C9-8EC46003897F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

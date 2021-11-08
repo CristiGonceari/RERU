@@ -1,13 +1,6 @@
-<app-page-title [title]="'pages.start.title' | translate" [subTitle]="'pages.start.subtitle' | translate">
-</app-page-title>
-<app-content>
-  <div class="row dahsboard-component">
-    <div class="col">
-      <div class="card card-custom wave wave-secondary shadow-sm wave-animate-fast gutter-b card-stretch card-shadowless">
-        <div class="card-body">
-          <app-loading-spinner colorClass="text-primary" contentHeight="10rem" height="5rem" width="5rem"></app-loading-spinner>
-        </div>
-      </div>
-    </div>
-  </div>
-</app-content>
+<app-layout [title]="'Evaluation'" [hasBackground]="true" [config]="appSettings" [languages]="translate.langs"
+  [currentLanguage]="translate.currentLanguage" [sidebarItems]="sidebarItems"
+  [letter]="'assets/images/evaluation-logo.png'" [logo]="'assets/images/logo.png'" (navigate)="navigate($event)"
+  (changeLanguage)="translate.use($event)" (logout)="logout()">
+<router-outlet></router-outlet>
+</app-layout>
