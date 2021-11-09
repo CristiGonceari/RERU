@@ -33,7 +33,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypes
 
             if (!string.IsNullOrEmpty(request.Name))
             {
-                testTypes = testTypes.Where(x => x.Name.Contains(request.EventName));
+                testTypes = testTypes.Where(x => x.Name.Contains(request.Name));
             }
 
             if (request.Status.HasValue)
