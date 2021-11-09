@@ -30,7 +30,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     public class TestTypeController : BaseController
     {
         [HttpGet("{id}")]
-        public async Task<TestTypeDto> GetTestType([FromQuery] int id)
+        public async Task<TestTypeDto> GetTestType([FromRoute] int id)
         {
             var query = new GetTestTypeQuery { Id = id };
             return await Mediator.Send(query);
@@ -73,7 +73,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
-        [HttpGet("{status}")]
+        [HttpGet("status/{status}")]
         public async Task<List<SelectItem>> GetTestTypeByStatus([FromRoute] TestTypeStatusEnum status)
         {
             var query = new GetTestTypeByStatusQuery() { TestTypeStatus = status };
