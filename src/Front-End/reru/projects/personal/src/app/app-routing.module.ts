@@ -1,18 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {
-	LocalizeRouterModule,
-	LocalizeParser,
-	LocalizeRouterSettings,
-	CacheMechanism,
-} from '@gilsdav/ngx-translate-router';
+import {LocalizeRouterModule,LocalizeParser,LocalizeRouterSettings,CacheMechanism,} from '@gilsdav/ngx-translate-router';
 import { Location } from '@angular/common';
 import { ManualLoaderFactory } from './utils/services/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationGuard } from '@erp/shared';
+import { AuthenticationCallbackComponent, AuthenticationGuard } from '@erp/shared';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
-const routes: Routes = [{
+const routes: Routes = [
+	{ path: 'auth-callback', component: AuthenticationCallbackComponent },
+	{
   path: '',
   component: DashboardComponent,
   canActivate: [AuthenticationGuard],
