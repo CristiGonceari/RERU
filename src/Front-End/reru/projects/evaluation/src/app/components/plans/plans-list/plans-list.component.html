@@ -1,0 +1,96 @@
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<div *ngIf="!isLoading" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+    id="kt_datatable">
+    <table class="datatable table font-size-lg" style="overflow: visible">
+        <thead class="text-uppercase text-muted">
+            <tr>
+                <th scope="col" style="width: 400px;">{{'events.name' | translate}}</th>
+                <th scope="col">{{'locations.description' | translate}}</th>
+                <th scope="col" style="width: 200px;">{{'events.start-date' | translate}}</th>
+                <th scope="col" style="width: 200px;">{{'events.end-date' | translate}}</th>
+                <th scope="col" style="width: 48px"></th>
+            </tr>
+        </thead>
+        <tbody class="datatable-body" *ngIf="plans.length">
+            <tr *ngFor="let item of plans" (dblclick)="navigate(item.id)">
+                <td>
+                  <app-plan-name [plan]="item"></app-plan-name>
+                </td>
+                <td style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                  {{item.description}}
+              </td>
+                <td>{{item.fromDate | date: 'dd/MM/yyyy'}}</td>
+                <td>{{item.tillDate | date: 'dd/MM/yyyy'}}</td>
+                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
+                  <div style="overflow: visible; position: relative; width: 0px">
+                    <div ngbDropdown class="dropdown dropdown-inline">
+                      <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                        <span class="svg-icon svg-icon-md" ngbDropdownToggle>
+                          <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
+                            version="1.1">
+                            <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
+                              <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3" fill="black">
+                              </rect>
+                              <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3" fill="black"
+                                fill-opacity="0.7"></rect>
+                            </g>
+                          </svg>
+                        </span>
+                      </div>
+                      <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                        <div ngbDropdownMenu aria-labelledby="action1">
+                          <button [routerLink]="['plan', item.id]"
+                            class="navi-link align-items-center px-6" ngbDropdownItem>
+                            {{'categories.view-details' | translate}}
+                          </button>
+                          <button [routerLink]="['edit', item.id]" 
+                            class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                            {{ 'button.edit' | translate }}
+                          </button>
+                          <button [routerLink]="['remove', item.id]"
+                            class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                            {{ 'button.delete' | translate }}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+        </tbody>
+        <tbody class="datatable-body" *ngIf="!plans.length">
+            <tr>
+                <td colspan="5" class="text-center">
+                    {{ 'message.no-record' | translate }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-between align-items-baseline" *ngIf="plans.length">
+        <ngb-pagination [collectionSize]="pagination.totalCount" [(page)]="pagination.currentPage"
+          [pageSize]="pagination.pageSize" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
+          (pageChange)="list({page: $event})">
+        </ngb-pagination>
+        <div class="d-flex align-items-center py-3">
+          <select class="btn text-primary font-weight-bold mr-4 border-0 bg-light w-75px" [(ngModel)]="pagination.pageSize"
+            (ngModelChange)="list({page: pagination.currentPage, itemsPerPage: pagination.pageSize})">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+    
+          <span class="text-muted">
+            {{'pagination.displaing' | translate}} {{ pagination.pageSize }}
+            {{'pagination.of' | translate}}
+            <b>{{ pagination.totalCount }}</b>
+            {{'pagination.records' | translate}}
+          </span>
+        </div>
+      </div>
+</div>

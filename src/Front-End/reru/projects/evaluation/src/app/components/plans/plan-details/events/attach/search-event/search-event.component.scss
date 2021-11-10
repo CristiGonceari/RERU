@@ -1,0 +1,12 @@
+::ng-deep{
+    .mat-autocomplete-panel {
+        max-height: 150px !important;
+        height: auto;
+        border-radius: 0 0 5px 5px;
+        margin-left: 6px;
+
+        .mat-option {
+            height: 35px !important;
+        }
+    }
+}

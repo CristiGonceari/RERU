@@ -1,0 +1,41 @@
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="card card-custom gutter-b" style="margin-left: 16px;">
+        <div class="card-header flex-wrap border-0 py-5">
+            <div class="card-title"><b>{{'categories.overview' | translate}}</b></div>
+        </div>
+        <div class="card-body">
+            <div class="form-group row align-items-center mb-2">
+                <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                    {{'locations.name' | translate}}:
+                </label>
+                <div class="col-lg-9 col-xl-6">
+                    <p class="font-size-lg m-0">{{plan.name}}</p>
+                </div>
+            </div>
+            <div class="form-group row align-items-center mb-2">
+                <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                    {{'events.start-date' | translate}}:
+                </label>
+                <div class="col-lg-9 col-xl-6">
+                    <p class="font-size-lg m-0">{{plan.fromDate | date: 'dd/MM/yyyy'}}</p>
+                </div>
+            </div>
+            <div class="form-group row align-items-center mb-2">
+                <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                    {{'events.end-date' | translate}}:
+                </label>
+                <div class="col-lg-9 col-xl-6">
+                    <p class="font-size-lg m-0">{{plan.tillDate | date: 'dd/MM/yyyy'}}</p>
+                </div>
+            </div>
+            <div class="form-group row align-items-center mb-2">
+                <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                    {{'locations.description' | translate}}:
+                </label>
+                <div class="col-lg-9 col-xl-6">
+                    <p class="font-size-lg m-0">{{plan.description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
