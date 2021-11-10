@@ -1,5 +1,5 @@
 ﻿using CODWER.RERU.Evaluation.Application.Permissions;
-using CVU.ERP.Evaluation.DataTransferObjects.Events;
+using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 

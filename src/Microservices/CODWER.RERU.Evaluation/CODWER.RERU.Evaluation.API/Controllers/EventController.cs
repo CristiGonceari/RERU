@@ -8,7 +8,7 @@ using CODWER.RERU.Evaluation.Application.Events.DeleteEvent;
 using CODWER.RERU.Evaluation.Application.Events.EditEvent;
 using CODWER.RERU.Evaluation.Application.Events.GetEvent;
 using CODWER.RERU.Evaluation.Application.Events.GetEvents;
-using CVU.ERP.Evaluation.DataTransferObjects.Events;
+using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
