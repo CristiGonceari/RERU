@@ -6,8 +6,8 @@ services:
     networks:
       - my-network
     build:
-      context: .
-      dockerfile: ./Dockerfile-RERU-IdentityMigrator
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-IdentityMigrator
     volumes:
       - ./docker-settings/Identity/IdentityMigrator/appsettings.json:/app/appsettings.json
     depends_on:
@@ -19,8 +19,8 @@ services:
       - my-network
     container_name: reru-identity-new
     build:
-      context: .
-      dockerfile: ./Dockerfile-RERU-Identity
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-Identity
     ports: 
       - 9999:8080
     environment:
@@ -56,8 +56,8 @@ services:
       - my-network
     container_name: reru-public-gateway
     build:
-      context: .
-      dockerfile: ./Dockerfile-RERU-PublicGateway
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-PublicGateway
     environment:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Production
@@ -72,8 +72,8 @@ services:
       - my-network
     container_name: reru-internal-gateway
     build:
-      context: .
-      dockerfile: ./Dockerfile-RERU-InternalGateway
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-InternalGateway
     environment:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Production
@@ -88,8 +88,8 @@ services:
       - my-network
     container_name: reru-core
     build:
-      context: .
-      dockerfile: ./Dockerfile-RERU-Core
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-Core
     environment:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Development
@@ -107,8 +107,8 @@ services:
       - my-network
     container_name: reru-core-fe
     build:
-      context: .
-      dockerfile: ./Dockerfile-RERU-Core-FE
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-Core-FE
     volumes:
       - ./docker-settings/Core-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
 
@@ -118,8 +118,8 @@ services:
       - my-network
     container_name: reru-personal
     build:
-      context: .
-      dockerfile: ./Dockerfile-RERU-Personal
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-Personal
     environment:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Production
@@ -133,11 +133,10 @@ services:
       - my-network
     container_name: reru-personal-fe
     build:
-      context: .
-      dockerfile: ./Dockerfile-RERU-Personal-FE
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-Personal-FE
     volumes:
       - ./docker-settings/Personal-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
-
 
   reru-evaluation:
     hostname: localhost
@@ -145,8 +144,8 @@ services:
       - my-network
     container_name: reru-evaluation
     build:
-      context: .
-      dockerfile: ./Dockerfile-RERU-Evaluation
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-Evaluation
     environment:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Development
@@ -163,95 +162,10 @@ services:
       - my-network
     container_name: reru-evaluation-fe
     build:
-      context: .
-      dockerfile: ./Dockerfile-RERU-Evaluation-FE
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-Evaluation-FE
     volumes:
       - ./docker-settings/Evaluation-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  # mock:
-  #   hostname: localhost
-  #   container_name: erp-mock
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfile-Mock
-  #   environment:
-  #     - ASPNETCORE_URLS=http://*:8080
-  #     - ASPNETCORE_ENVIRONMENT=Production
-  #   ports:
-  #     - 5001:8080
-
-  # mock-sign:
-  #   hostname: localhost
-  #   container_name: erp-mock-sign
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfile-Mock-Sign
-  #   environment:
-  #     - ASPNETCORE_URLS=http://*:8080
-  #     - ASPNETCORE_ENVIRONMENT=Production
-  #     - BASE_PATH=/ms/mock-sign
-  #     # - ConnectionStrings__Default=server=db;database=Mock_Sign;User=sa;Password=Your_password123;
-  #   ports:
-  #     - 10004:8080
-  #   volumes:
-  #     - ./docker-files/Mock-Sign/appsettings.json:/app/appsettings.json
-
-  # reru-identity:
-  #   hostname: localhost
-  #   container_name: reru-identity
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfile-RERU-Identity
-  #   environment:
-  #     - ASPNETCORE_URLS=http://*:8080
-  #     - ASPNETCORE_ENVIRONMENT=Production
-  #     - ConnectionStrings__Default=server=db;database=RERU-Identity;User=sa;Password=Your_password123;
-  #   depends_on:
-  #     - db
-  #     - reru-identity-migrator
-
-  # evaluation-360:
-  #   hostname: localhost
-  #   container_name: erp-evaluation-360
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfile-Evaluation360
-  #   environment:
-  #     - ASPNETCORE_URLS=http://*:8080
-  #     - ASPNETCORE_ENVIRONMENT=Production
-  #     - ConnectionStrings__Default=server=db;database=Evaluation360;User=sa;Password=Your_password123;
-  #     - ConnectionStrings__HangfireConnection=server=db;database=Evaluation360;User=sa;Password=Your_password123;
-  #   depends_on:
-  #     - db
-
-  #   ports:
-  #     - 9000:8080
-
-  # evaluation360-fe:
-  #   hostname: localhost
-  #   container_name: erp-evaluation360-fe
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfile-Evaluation360-FE
-  #   # volumes:
-  #   #   - ./docker-files/Evaluation-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
-
-  # #### --------------------------------- ####
-  # #### SQL SERVER
 
   db:
     container_name: erp-sql-server
