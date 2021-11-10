@@ -15,7 +15,6 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { LayoutsComponent } from './components/layouts/layouts.component';
 import { environment } from '../environments/environment';
 import { CommonModule } from '@angular/common';
-import { PlansModule } from './components/plans/plans.module';
 import { EventsModule } from './components/events/events.module';
 import { PollsModule } from './components/polls/polls.module';
 import { FaqRoutingModule } from './components/faq/faq-routing.module';
@@ -32,7 +31,7 @@ import { CategoriesRoutingModule } from './components/categories/categories-rout
 import { MaterialModule } from './material.module'
 import { NOTIFICATION_INTERCEPTOR_PROVIDER } from './utils/interceptors/notification.interceptor'
 import { IDNP_INTERCEPTOR_PROVIDER } from './utils/interceptors/idnp.interceptor';
-// import { SvgModule } from 'dist/erp-shared/lib/modules/svg.module';
+import { PlansModule } from './components/plans/plans.module';
 
 
 @NgModule({

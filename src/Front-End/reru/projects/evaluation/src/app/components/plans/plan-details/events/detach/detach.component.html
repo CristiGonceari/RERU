@@ -1,0 +1,47 @@
+<app-page-title title="{{'plans.manage-plans' | translate}}"
+  subTitle="{{'events.remove' | translate}}">
+</app-page-title>
+
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="card card-custom gutter-b">
+                <div class="card-header text-center border-0 pt-6 pb-0">
+                    <h3 class="w-100 font-weight-bold text-dark">
+                        {{'plans.remove-event-msg' | translate}}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row justify-content-center px-8 px-lg-10">
+                        <div class="col-xl-12 col-xxl-7">
+                            <div class="form-group row align-items-center mb-3">
+                                <label class="col-xl-5 col-lg-4 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                                    {{'events.event-name' | translate}}:
+                                </label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <p class="font-size-lg m-0">{{event.name}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-center mb-3">
+                                <label class="col-xl-5 col-lg-4 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                                    {{'plans.plan-name' | translate}}:
+                                </label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <p class="font-size-lg m-0">{{plan.name}}</p>
+                                </div>
+                            </div>
+                            <div class="text-right border-top pt-10">
+                                <app-button class="btn mr-2" [value]="'button.no' | translate" (handle)="backClicked()"></app-button>
+                                <app-delete-button class="btn" [value]="'button.yes' | translate" (handle)="detach()"></app-delete-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

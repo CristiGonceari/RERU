@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PermissionRouteGuard } from '@erp/shared';
-//import { UniversalDeleteModalComponent } from 'dist/erp-shared/lib/modals/universal-delete-modal/universal-delete-modal.component';
+// import { UniversalDeleteModalComponent } from 'dist/erp-shared/lib/modals/universal-delete-modal/universal-delete-modal.component';
 import { AddEditQuestionComponent } from './add-edit-question/add-edit-question.component';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
 import { AddOptionComponent } from './question-details/question-options/add-option/add-option.component';
