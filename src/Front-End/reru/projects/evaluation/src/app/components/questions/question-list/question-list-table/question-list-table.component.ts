@@ -47,8 +47,6 @@ export class QuestionListTableComponent implements OnInit {
 					.map(key => QuestionUnitTypeEnum[key])
 					.filter(value => typeof value === 'string') as string[];
 				this.isLoading = false;
-				console.log("res", res);
-				
 			}
 		});
 	}

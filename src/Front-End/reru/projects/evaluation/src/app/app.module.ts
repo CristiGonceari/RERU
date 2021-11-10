@@ -24,7 +24,7 @@ import { StatisticsModule } from './components/statistics/statistics.module';
 import { StatisticsRoutingModule } from './components/statistics/statistics-routing.module';
 import { PlansRoutingModule } from './components/plans/plans-routing.module';
 import { TestsRoutingModule } from './components/tests/tests-routing.module';
-import { TestTypesRoutingModule } from './components/test-types/test-types-routing.module';
+import { TestTypeRoutingModule } from './components/test-types/test-types-routing.module';
 import { EventsRoutingModule } from './components/events/events-routing.module';
 import { LocationsRoutingModule } from './components/locations/locations-routing.module';
 import { QuestionRoutingModule } from './components/questions/questions-routing.module';
@@ -68,7 +68,7 @@ import { IDNP_INTERCEPTOR_PROVIDER } from './utils/interceptors/idnp.interceptor
     QuestionRoutingModule,
     LocationsRoutingModule,
     EventsRoutingModule,
-    TestTypesRoutingModule,
+    TestTypeRoutingModule,
     FaqRoutingModule,
     TestsRoutingModule,
     DashboardRoutingModule,

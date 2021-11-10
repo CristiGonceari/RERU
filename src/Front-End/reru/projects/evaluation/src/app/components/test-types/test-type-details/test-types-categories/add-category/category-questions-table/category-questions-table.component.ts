@@ -1,0 +1,187 @@
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { QuestionUnitStatusEnum } from 'projects/evaluation/src/app/utils/enums/question-unit-status.enum';
+import { SelectionTypeEnum } from 'projects/evaluation/src/app/utils/enums/selection-type.enum';
+import { SequenceTypeEnum } from 'projects/evaluation/src/app/utils/enums/sequence-type.enum';
+import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
+import { QuestionUnit } from 'projects/evaluation/src/app/utils/models/question-units/question-unit.model';
+import { QuestionUnitTypeEnum } from 'projects/evaluation/src/app/utils/enums/question-unit-type.enum';
+import { DragulaService } from 'ng2-dragula';
+import { QuestionService } from 'projects/evaluation/src/app/utils/services/question/question.service';
+import { ReferenceService } from 'projects/evaluation/src/app/utils/services/reference/reference.service';
+import { TestTypeQuestionCategoryService } from 'projects/evaluation/src/app/utils/services/test-type-question-category/test-type-question-category.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
+import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
+
+@Component({
+  selector: 'app-category-questions-table',
+  templateUrl: './category-questions-table.component.html',
+  styleUrls: ['./category-questions-table.component.scss']
+})
+export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
+  @Input() timeLimit;
+  @Input() setLimit;
+  isLoading: boolean = false;
+  previewMode: boolean = false;
+  questionStatus = QuestionUnitStatusEnum;
+  qType = QuestionUnitTypeEnum;
+  questions: QuestionUnit[] = [];
+  selectedQuestions = [];
+  questionCategoryName: string;
+  questionCategoryId: number;
+  questionType: number;
+  questionCount: number;
+  pagination: PaginationModel = new PaginationModel();
+  testTypeId: number;
+  sequenceType: SequenceTypeEnum;
+  checked;
+  itemsToAdd;
+  selectQuestions: SelectionTypeEnum;
+  questiosToAdd = []
+
+  constructor(private dragulaService: DragulaService,
+    private questionService: QuestionService,
+    private referenceService: ReferenceService,
+    private questionCategoryService: TestTypeQuestionCategoryService,
+    private route: ActivatedRoute,
+    public router: Router,
+    private notificationService: NotificationsService) { }
+
+  ngOnInit(): void {
+    this.dragulaService.createGroup('Questions', {});
+    this.getTestTypeId();
+  }
+
+  getTestTypeId() {
+    this.route.params.subscribe(params => {
+      this.testTypeId = params.id;
+    });
+  }
+
+  onItemChange() {
+    this.previewMode = !this.previewMode;
+    if (this.previewMode === true) {
+      this.previewQuestions();
+    }
+  }
+
+  selectQuestion(event) {
+    if (event.target.checked === true) {
+      let idToInclude = event.target.value;
+      this.selectedQuestions.push(+idToInclude);
+    } else if (event.target.checked === false) {
+      let idToExclude = event.target.value;
+      this.selectedQuestions.splice(this.selectedQuestions.indexOf(+idToExclude), 1);
+    }
+
+    this.checked = Object.keys(this.selectedQuestions).map((id, index) => {
+      return {
+        index: +id + 1,
+        id: Object.values(this.selectedQuestions)[index]
+      }
+    });
+
+    this.itemsToAdd = Object.keys(this.selectedQuestions).map((id, index) => {
+      return {
+        index: +id + 1,
+        testTypeQuestionCategoryId: this.questionCategoryId,
+        questionUnitId: Object.values(this.selectedQuestions)[index]
+      }
+    });
+  }
+
+  previewQuestions() {
+    let params = {
+      testTypeId: +this.testTypeId,
+      categoryId: this.questionCategoryId,
+      questionCount: this.questionCount,
+      questionType: this.questionType,
+      selectionType: this.selectQuestions,
+      sequenceType: this.sequenceType,
+      selectedQuestions: this.checked
+    }
+    if (this.previewMode === true) {
+      this.questionCategoryService.preview(params).subscribe(res => {
+        if (res && res.data) {
+          this.questions = res.data;
+        }
+        this.selectedQuestions = [];
+      })
+    }
+  }
+
+  addQuestions(questions) {
+    if(this.selectQuestions === 1) {
+      let idList = questions.map(x => x.questionUnitId);
+      this.questiosToAdd = Object.keys(idList).map((id, index) => {
+        return {
+          index: +id + 1,
+          testTypeQuestionCategoryId: this.questionCategoryId,
+          questionUnitId: Object.values(idList)[index]
+        }
+      });
+    }
+
+    let params = {
+      testTypeId: +this.testTypeId,
+      questionCategoryId: this.questionCategoryId,
+      categoryIndex: 0,
+      questionCount: this.questionCount,
+      questionType: this.questionType,
+      selectionType: this.selectQuestions,
+      sequenceType: this.sequenceType,
+      testCategoryQuestions: this.questiosToAdd || this.questions,
+      timeLimit: this.setLimit ? this.timeLimit : null
+    }
+    this.questionCategoryService.add(params).subscribe(res => {
+      if (res && res.data) {
+        this.notificationService.success('Success', 'Questions were successfully added', NotificationUtil.getDefaultMidConfig());
+        this.router.navigate(['test-type/type-details', this.testTypeId, 'categories'])
+      }
+    })
+  }
+
+  initData(data): void {
+    this.questionCategoryId = +data.questionCategoryId;
+    this.questionType = +data.type;
+    this.questionCount = +data.questionCount;
+    this.sequenceType = +data.sequenceType;
+    this.selectQuestions = +data.selectQuestions
+    this.getQuestionCategory(data.questionCategoryId);
+    this.list();
+  }
+
+  list(): void {
+    this.previewMode = false;
+    let params = {
+      // questionCategoryId: this.questionCategoryId,
+      type: this.questionType,
+      page: this.pagination.currentPage || 1,
+      itemsPerPage: Number(this.pagination?.pageSize || 10)
+    }
+    this.questionService.getAll(params).subscribe(res => {
+      this.questions = res.data.items;
+      this.pagination = res.data.pagedSummary;
+    })
+  }
+
+  reset(): void {
+    this.previewMode = false;
+    this.list()
+  }
+
+  refresh(): void {
+    this.previewQuestions();
+  }
+
+  getQuestionCategory(id): void {
+    this.referenceService.getQuestionCategory().subscribe(res => {
+      this.questionCategoryName = res.data.filter(el => el.value === id).map(name => name.label);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.dragulaService.destroy('Questions');
+  }
+
+}

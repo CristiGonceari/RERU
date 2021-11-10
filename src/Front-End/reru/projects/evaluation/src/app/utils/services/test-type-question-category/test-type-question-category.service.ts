@@ -17,7 +17,7 @@ export class TestTypeQuestionCategoryService extends AbstractService {
 	}
 
 	getQuestionCategoryByTestTypeId(params): Observable<any> {
-		return this.http.get(`${this.baseUrl}/${this.urlRoute}/list`, { params });
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
 	}
 
 	deleteTestTypeQuestionCategory(params): Observable<any> {
@@ -28,12 +28,12 @@ export class TestTypeQuestionCategoryService extends AbstractService {
 		return this.http.post(`${this.baseUrl}/${this.urlRoute}/sequence-type`, params);
 	}
 
-	add(input): Observable<any> {
-		return this.http.post(`${this.baseUrl}/${this.urlRoute}/add`, { input });
+	add(data): Observable<any> {
+		return this.http.post(`${this.baseUrl}/${this.urlRoute}`, { data });
 	}
 
-	preview(input): Observable<any> {
-		return this.http.post(`${this.baseUrl}/${this.urlRoute}/preview`, { input });
+	preview(data): Observable<any> {
+		return this.http.post(`${this.baseUrl}/${this.urlRoute}/preview`, { data });
 	}
 
 	setSequence(input): Observable<any> {
