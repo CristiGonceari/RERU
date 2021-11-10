@@ -75,4 +75,8 @@ export class QuestionService extends AbstractService {
 	getTags(params): Observable<any> {
 		return this.client.get(`${this.baseUrl}/${this.urlRoute}/tags`, { params });
 	}
+	
+	getActiveQuestions(params): Observable<any> {
+		return this.client.get(`${this.baseUrl}/${this.urlRoute}/active-question`, {params});
+	  }
 }

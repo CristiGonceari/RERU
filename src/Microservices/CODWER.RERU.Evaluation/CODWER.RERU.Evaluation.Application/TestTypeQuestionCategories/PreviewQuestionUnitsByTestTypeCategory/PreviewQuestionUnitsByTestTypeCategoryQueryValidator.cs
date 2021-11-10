@@ -50,18 +50,18 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQ
 
                 When(r => r.Data.QuestionCount.HasValue, () =>
                 {
+                    RuleFor(r => r.Data)
+                        .Must(x => appDbContext.QuestionCategories.Include(c => c.QuestionUnits).First(c => c.Id == x.CategoryId).QuestionUnits.Where(q => q.Status == QuestionUnitStatusEnum.Active).Count() >= x.QuestionCount)
+                        .WithErrorCode(ValidationCodes.INSUFFICIENT_QUESTIONS_IN_CATEGORY);
+
                     RuleFor(r => r.Data.QuestionCount)
                         .GreaterThan(0)
                         .WithErrorCode(ValidationCodes.INVALID_QUESTION_COUNT);
 
-                    RuleFor(r => r.Data)
-                        .Must(x => appDbContext.QuestionCategories.Include(c => c.QuestionUnits).First(c => c.Id == x.CategoryId).QuestionUnits.Count >= x.QuestionCount)
-                        .WithErrorCode(ValidationCodes.INSUFFICIENT_QUESTIONS_IN_CATEGORY);
-
                     When(r => r.Data.QuestionType.HasValue, () =>
                     {
                         RuleFor(r => r.Data)
-                            .Must(x => appDbContext.QuestionCategories.Include(c => c.QuestionUnits).First(c => c.Id == x.CategoryId).QuestionUnits.Where(q => q.QuestionType == x.QuestionType.Value).Count() >= x.QuestionCount)
+                            .Must(x => appDbContext.QuestionCategories.Include(c => c.QuestionUnits).First(c => c.Id == x.CategoryId).QuestionUnits.Where(q => q.QuestionType == x.QuestionType.Value && q.Status == QuestionUnitStatusEnum.Active).Count() >= x.QuestionCount)
                             .WithErrorCode(ValidationCodes.INSUFFICIENT_QUESTIONS_IN_CATEGORY);
                     });
                 });
