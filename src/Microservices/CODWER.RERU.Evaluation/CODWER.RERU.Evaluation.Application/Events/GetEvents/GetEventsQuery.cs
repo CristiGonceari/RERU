@@ -1,6 +1,6 @@
 ﻿using CODWER.RERU.Evaluation.Application.Permissions;
+using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Common.Pagination;
-using CVU.ERP.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 

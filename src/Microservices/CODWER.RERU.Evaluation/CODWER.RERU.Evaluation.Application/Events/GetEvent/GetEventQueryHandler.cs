@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CVU.ERP.Evaluation.DataTransferObjects.Events;
+using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
