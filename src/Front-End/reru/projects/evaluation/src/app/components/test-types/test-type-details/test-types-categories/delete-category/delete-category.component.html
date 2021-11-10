@@ -1,0 +1,26 @@
+<app-page-title title="{{'tests.subtitle' | translate}}" subTitle="{{'categories.delete-category' | translate}}">
+</app-page-title>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="card card-custom gutter-b">
+                <div class="card-header text-center border-0 py-5">
+                    <h3 class="w-100 font-weight-bold text-dark">
+                        {{'tests.remove-test-category-msg' | translate}}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row justify-content-center px-8 px-lg-10">
+                        <div class="col-xl-12 col-xxl-7">
+                            <div class="text-right border-top pt-10">
+                                <app-button class="btn mr-3" [value]="'button.no' | translate" (handle)="back()"></app-button>
+                                <app-delete-button class="btn" [value]="'button.yes' | translate" (handle)="yes()"></app-delete-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

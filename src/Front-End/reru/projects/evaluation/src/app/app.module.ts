@@ -15,7 +15,6 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { LayoutsComponent } from './components/layouts/layouts.component';
 import { environment } from '../environments/environment';
 import { CommonModule } from '@angular/common';
-import { PlansModule } from './components/plans/plans.module';
 import { EventsModule } from './components/events/events.module';
 import { PollsModule } from './components/polls/polls.module';
 import { FaqRoutingModule } from './components/faq/faq-routing.module';
@@ -24,7 +23,7 @@ import { StatisticsModule } from './components/statistics/statistics.module';
 import { StatisticsRoutingModule } from './components/statistics/statistics-routing.module';
 import { PlansRoutingModule } from './components/plans/plans-routing.module';
 import { TestsRoutingModule } from './components/tests/tests-routing.module';
-import { TestTypesRoutingModule } from './components/test-types/test-types-routing.module';
+import { TestTypeRoutingModule } from './components/test-types/test-types-routing.module';
 import { EventsRoutingModule } from './components/events/events-routing.module';
 import { LocationsRoutingModule } from './components/locations/locations-routing.module';
 import { QuestionRoutingModule } from './components/questions/questions-routing.module';
@@ -32,7 +31,7 @@ import { CategoriesRoutingModule } from './components/categories/categories-rout
 import { MaterialModule } from './material.module'
 import { NOTIFICATION_INTERCEPTOR_PROVIDER } from './utils/interceptors/notification.interceptor'
 import { IDNP_INTERCEPTOR_PROVIDER } from './utils/interceptors/idnp.interceptor';
-// import { SvgModule } from 'dist/erp-shared/lib/modules/svg.module';
+import { PlansModule } from './components/plans/plans.module';
 
 
 @NgModule({
@@ -68,7 +67,7 @@ import { IDNP_INTERCEPTOR_PROVIDER } from './utils/interceptors/idnp.interceptor
     QuestionRoutingModule,
     LocationsRoutingModule,
     EventsRoutingModule,
-    TestTypesRoutingModule,
+    TestTypeRoutingModule,
     FaqRoutingModule,
     TestsRoutingModule,
     DashboardRoutingModule,

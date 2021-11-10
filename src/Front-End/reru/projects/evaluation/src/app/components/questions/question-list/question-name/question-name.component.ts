@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PermissionCheckerService } from 'dist/erp-shared/erp-shared';
+import { PermissionCheckerService } from '@erp/shared';
 import { QuestionUnit } from 'projects/evaluation/src/app/utils/models/question-units/question-unit.model';
 
 @Component({

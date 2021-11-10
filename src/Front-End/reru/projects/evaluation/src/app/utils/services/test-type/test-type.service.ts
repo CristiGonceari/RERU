@@ -26,12 +26,12 @@ export class TestTypeService extends AbstractService {
     return this.http.patch(`${this.baseUrl}/${this.urlRoute}`, data);
   }
 
-  getTestType(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
+  getTestType(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}` );
   }
 
   getTestTypes(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/list`, { params });
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
   }
 
   deleteTestType(params): Observable<any> {
@@ -39,11 +39,11 @@ export class TestTypeService extends AbstractService {
   }
 
   addRules(data): Observable<any> {
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/rules`, data);
+    return this.http.patch(`${this.baseUrl}/${this.urlRoute}/rules`, data);
   }
 
   getRules(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}/rules`);
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/rules/${id}`);
   }
 
   validateTestType(params): Observable<any>{
@@ -51,7 +51,7 @@ export class TestTypeService extends AbstractService {
   }
 
   addEditTestTypeSettings(data): Observable<any>{
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/settings`, data);
+    return this.http.patch(`${this.baseUrl}/${this.urlRoute}/settings`, data);
   }
 
   getTestTypeSettings(params): Observable<any> {
@@ -59,7 +59,7 @@ export class TestTypeService extends AbstractService {
   }
 
   changeStatus(data): Observable<any>{
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/status`, data);
+    return this.http.patch(`${this.baseUrl}/${this.urlRoute}/status`, data);
   }
 
   getTestTypeByEvent(params): Observable<any> {

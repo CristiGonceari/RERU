@@ -8,6 +8,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class PlanService extends AbstractService {
   private readonly urlRoute = 'Plans';
+  private readonly urlRoute2 = 'PlanEvents';
+
   private eventId: BehaviorSubject<any> = new BehaviorSubject(null);
 	event = this.eventId.asObservable();
   private userId: BehaviorSubject<any> = new BehaviorSubject(null);
@@ -16,55 +18,51 @@ export class PlanService extends AbstractService {
 	constructor(protected appConfigService: AppSettingsService, private http: HttpClient) {
 		super(appConfigService);
 	}
-
+  
   setEvent = (value: any) => {this.eventId.next(value)}
   setUser = (value: any) => {this.userId.next(value)}
 
   list(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/list`, { params });
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
   }
 
   add(data): Observable<any> {
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/create`, data);
+    return this.http.post(`${this.baseUrl}/${this.urlRoute}`, data);
   }
 
   edit(data): Observable<any> {
     return this.http.patch(`${this.baseUrl}/${this.urlRoute}`, data);
   }
 
-  get(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
-  }
-
-  details(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/details`, { params });
+  get(id): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`);
   }
 
   delete(params): Observable<any>{
     return this.http.delete(`${this.baseUrl}/${this.urlRoute}`, { params });
   }
 
-  events(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/events`, { params });
+  events(id): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute2}/events-by-${id}`);
   }
 
   attachEvent(data){
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/assign-event`, data);
+    return this.http.post(`${this.baseUrl}/${this.urlRoute2}/assign-event`, data);
   }
 
   detachEvent(data){
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/detach-event`, data);
+    return this.http.post(`${this.baseUrl}/${this.urlRoute2}/unassign-event`, data);
   }
 
-  persons(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/responsible`, { params });
+  persons(id): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute2}/responsible-persons-by-${id}`);
   }
 
   attachPerson(data){
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/assign-person`, data);
+    return this.http.post(`${this.baseUrl}/${this.urlRoute2}/assign-person`, data);
   }
 
   detachPerson(data){
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/detach-person`, data);
+    return this.http.post(`${this.baseUrl}/${this.urlRoute2}/unassign-person`, data);
   }
 }

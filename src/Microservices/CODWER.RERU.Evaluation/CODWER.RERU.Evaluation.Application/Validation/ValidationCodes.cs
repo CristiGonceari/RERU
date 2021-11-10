@@ -45,7 +45,9 @@
         //location
         public static string EMPTY_ADDRESS = "03000801";
         public static string EMPTY_COMPUTERS_COUNT = "03000802";
-        public static string INVALID_LOCATION = "03000803";
+        public static string EMPTY_COMPUTERS_NUMBER = "03000803";
+        public static string EMPTY_LOCATION_NAME = "03000804";
+        public static string INVALID_LOCATION = "03000805";
 
         //location client
         public static string INVALID_COMPUTER_NUMBER = "03000901";

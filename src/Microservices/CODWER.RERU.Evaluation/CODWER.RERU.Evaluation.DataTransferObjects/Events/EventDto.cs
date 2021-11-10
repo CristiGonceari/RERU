@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CVU.ERP.Evaluation.DataTransferObjects.Events
+namespace CODWER.RERU.Evaluation.DataTransferObjects.Events
 {
     public class EventDto
     {

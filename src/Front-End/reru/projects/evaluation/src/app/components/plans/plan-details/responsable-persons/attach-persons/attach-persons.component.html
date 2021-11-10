@@ -1,0 +1,56 @@
+<app-page-title title="{{'plans.manage-plans' | translate}}"
+  subTitle="{{'plans.attach-person-to-plan' | translate}}">
+</app-page-title>
+
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
+  <div class="d-flex flex-column-fluid">
+    <div class="container">
+      <div class="card card-custom gutter-b">
+        <div class="card-body p-0">
+          <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+            <div class="col-xl-12 col-xxl-7">
+                <h3 class="mb-10 font-weight-bold text-dark">{{'locations.attach-res' | translate}}</h3>
+                <div class="col-xl-12 mb-10">
+                  <div class="form-group row m-1">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'plans.plan-name' | translate}}:</label>
+                    <div class="col-lg-9 col-xl-6">
+                      <p class="font-size-lg mt-3">{{plan.name}}</p>
+                    </div>
+                  </div>
+                  <div class="form-group row m-1">
+                    <label
+                      class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.start-date' | translate}}:</label>
+                    <div class="col-lg-9 col-xl-6">
+                      <p class="font-size-lg mt-3">{{plan.fromDate | date: 'dd/MM/yyyy'}}</p>
+                    </div>
+                  </div>
+                  <div class="form-group row m-1">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.end-date' | translate}}:</label>
+                    <div class="col-lg-9 col-xl-6">
+                      <p class="font-size-lg mt-3">{{plan.tillDate | date: 'dd/MM/yyyy'}}</p>
+                    </div>
+                  </div>
+                  <div class="form-group row mt-4">
+                      <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'locations.person' | translate}}:</label>
+                      <div class="col-lg-9 col-xl-9">
+                        <app-search-person></app-search-person>
+                      </div>
+                  </div>
+                </div>
+                <div class="text-right border-top pt-10">
+                  <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
+                  </app-button>
+                  <app-add-button class="btn" (handle)="attach()" [value]="'locations.attach' | translate">
+                  </app-add-button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
