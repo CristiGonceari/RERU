@@ -9,7 +9,8 @@ namespace CODWER.RERU.Evaluation.Application.QuestionCategories
     {
         public QuestionCategoryMapping()
         {
-            CreateMap<AddEditQuestionCategoryDto, Evaluation.Data.Entities.QuestionCategory>();
+            CreateMap<AddEditQuestionCategoryDto, QuestionCategory>()
+                .ForMember(x => x.Id, opts => opts.Ignore());
 
             CreateMap<QuestionCategory, QuestionCategoryDto>()
                 .ForMember(x => x.QuestionCount, opts => opts.MapFrom(qc => qc.QuestionUnits.Count));

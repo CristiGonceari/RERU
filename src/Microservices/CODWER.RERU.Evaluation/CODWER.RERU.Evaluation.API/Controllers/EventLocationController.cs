@@ -22,20 +22,20 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
-        [HttpGet("not-assigned")]
-        public async Task<List<LocationDto>> GetLocationsNotAssignedEvent([FromQuery] GetNoAssignedLocationsQuery query)
+        [HttpGet("no-assigned")]
+        public async Task<List<LocationDto>> GetNoAssignedLocations([FromQuery] GetNoAssignedLocationsQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpPost]
-        public async Task<Unit> AssignEventLocation([FromBody] AssignLocationToEventCommand command)
+        public async Task<Unit> AssignLocationToEvent([FromBody] AssignLocationToEventCommand command)
         {
             return await Mediator.Send(command);
         }
 
         [HttpDelete]
-        public async Task<Unit> UnassignEventLocation([FromBody] UnassignLocationFromEventCommand command)
+        public async Task<Unit> UnassignLocationFromEvent([FromBody] UnassignLocationFromEventCommand command)
         {
             return await Mediator.Send(command);
         }

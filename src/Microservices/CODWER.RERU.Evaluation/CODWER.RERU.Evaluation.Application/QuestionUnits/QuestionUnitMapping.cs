@@ -22,7 +22,8 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits
             CreateMap<QuestionUnit, QuestionUnitPreviewDto>()
                 .ForMember(dto => dto.CategoryName, options => options.MapFrom(entity => entity.QuestionCategory.Name));
 
-            CreateMap<AddEditQuestionUnitDto, QuestionUnit>();
+            CreateMap<AddEditQuestionUnitDto, QuestionUnit>()
+                .ForMember(x => x.Id, opts => opts.Ignore());
 
             CreateMap<QuestionUnit, EditQuestionStatusDto>()
                 .ForMember(dto => dto.QuestionId, options => options.MapFrom(entity => entity.Id));

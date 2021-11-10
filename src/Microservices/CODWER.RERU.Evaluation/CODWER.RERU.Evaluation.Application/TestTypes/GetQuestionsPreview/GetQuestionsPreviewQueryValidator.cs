@@ -1,7 +1,10 @@
 ﻿using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,8 +15,8 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.GetQuestionsPreview
         public GetQuestionsPreviewQueryValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.TestTypeId)
-                .Must(x => appDbContext.TestTypes.Any(t => t.Id == x))
-                .WithErrorCode(ValidationCodes.INVALID_TEST_TYPE);
+                .SetValidator(x => new ItemMustExistValidator<TestType>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
+                    ValidationMessages.InvalidReference));
 
             RuleForEach(x => appDbContext.TestTypes.Include(x => x.TestTypeQuestionCategories).First(t => t.Id == x.TestTypeId).TestTypeQuestionCategories)
                 .Must(x => x.QuestionCount <= appDbContext.QuestionCategories.Include(x => x.QuestionUnits).FirstOrDefault(c => c.Id == x.QuestionCategoryId).QuestionUnits.Where(q => q.Status == QuestionUnitStatusEnum.Active).Count())

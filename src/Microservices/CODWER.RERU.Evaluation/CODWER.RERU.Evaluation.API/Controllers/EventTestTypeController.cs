@@ -23,7 +23,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("no-assigned")]
-        public async Task<List<TestTypeDto>> GetTestTypesNotAttachedEvent([FromQuery] GetNoAssignedTestTypesQuery query)
+        public async Task<List<TestTypeDto>> GetNoAssignedTestTypes([FromQuery] GetNoAssignedTestTypesQuery query)
         {
             return await Mediator.Send(query);
         }

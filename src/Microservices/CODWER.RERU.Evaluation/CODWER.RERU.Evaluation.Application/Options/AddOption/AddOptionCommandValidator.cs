@@ -1,7 +1,9 @@
 ﻿using FluentValidation;
-using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 
 namespace CODWER.RERU.Evaluation.Application.Options.AddOption
 {
@@ -9,9 +11,9 @@ namespace CODWER.RERU.Evaluation.Application.Options.AddOption
     {
         public AddOptionCommandValidator(AppDbContext appDbContext)
         {
-            RuleFor(r => r.Data.QuestionUnitId)
-                .Must(x => appDbContext.QuestionUnits.Any(d => d.Id == x))
-                .WithErrorCode(ValidationCodes.INVALID_QUESTION);
+            RuleFor(x => x.Data.QuestionUnitId)
+                .SetValidator(x => new ItemMustExistValidator<QuestionUnit>(appDbContext, ValidationCodes.INVALID_QUESTION,
+                    ValidationMessages.InvalidReference));
 
             RuleFor(r => r.Data.Answer)
                 .NotEmpty()

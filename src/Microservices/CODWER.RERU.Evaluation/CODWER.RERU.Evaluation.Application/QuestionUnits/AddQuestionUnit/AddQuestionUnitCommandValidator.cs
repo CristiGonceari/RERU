@@ -1,6 +1,8 @@
-﻿using System.Linq;
-using CODWER.RERU.Evaluation.Application.Validation;
+﻿using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 using FluentValidation;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit
@@ -11,9 +13,9 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit
         {
             When(r => r.Data != null, () =>
             {
-                RuleFor(r => r.Data.QuestionCategoryId)
-                    .Must(x => appDbContext.QuestionCategories.Any(d => d.Id == x))
-                    .WithErrorCode(ValidationCodes.INVALID_CATEGORY);
+                RuleFor(x => x.Data.QuestionCategoryId)
+                    .SetValidator(x => new ItemMustExistValidator<QuestionCategory>(appDbContext, ValidationCodes.INVALID_CATEGORY,
+                        ValidationMessages.InvalidReference));
 
                 RuleFor(r => r.Data.Question)
                     .NotEmpty()

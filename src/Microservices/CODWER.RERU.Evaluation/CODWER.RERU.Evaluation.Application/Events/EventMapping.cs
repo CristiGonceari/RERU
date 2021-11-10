@@ -14,12 +14,6 @@ namespace CODWER.RERU.Evaluation.Application.Events
             CreateMap<AddEditEventDto, Event>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
 
-            CreateMap<AddEventPersonDto, EventUser>();
-
-            CreateMap<AddEventPersonDto, EventResponsiblePerson>();
-
-            CreateMap<AddEventEvaluatorDto, EventEvaluator>();
-
             CreateMap<Event, SelectItem>()
                 .ForMember(x => x.Value, opts => opts.MapFrom(e => e.Id))
                 .ForMember(x => x.Label, opts => opts.MapFrom(e => e.Name));

@@ -16,6 +16,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes
                 .ForMember(x => x.Status, opts => opts.MapFrom(tt => tt.Status));
 
             CreateMap<AddEditTestTypeDto, TestType>()
+                .ForMember(x => x.Id, opts => opts.Ignore())
                 .ForMember(x => x.Status, opts => opts.MapFrom(tt => (int)TestTypeStatusEnum.Draft))
                 .ForMember(x => x.CategoriesSequence, opts => opts.MapFrom(tt => (int)SequenceEnum.Random));
 

@@ -5,7 +5,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits
 {
     public class AddEditQuestionUnitDto
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public int QuestionCategoryId { get; set; }
         public string Question { get; set; }
         public List<string> Tags { get; set; }
