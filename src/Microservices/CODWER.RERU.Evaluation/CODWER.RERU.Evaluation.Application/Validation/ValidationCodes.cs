@@ -41,6 +41,7 @@
 
         //event user
         public static string INEXISTENT_CANDIDATE_IN_EVENT = "03000701";
+        public static string CANDIDATE_AND_RESPONSIBLE_PERSON_CANT_BE_THE_SAME = "03000702";
 
         //location
         public static string EMPTY_ADDRESS = "03000801";
@@ -55,14 +56,12 @@
         //location responsible person
         public static string EXISTENT_RESPONSIBLE_PERSON_IN_LOCATION = "03001001";
         public static string USER_ISNT_RESPONSIBLE_FOR_THIS_LOCATION = "03001002";
-        public static string INVALID_USER_PROFILE = "03001003";
-        public static string NO_RECORD_WITH_THIS_DATA = "03001004";
 
-        //Options
+        //options
         public static string EMPTY_ANSWER = "03001101";
         public static string EMPTY_CORRECT_ANSWER = "03001102";
 
-        //Plan
+        //plan
         public static string INVALID_PLAN = "03001201";
 
         //question category
@@ -134,5 +133,8 @@
         public static string NOT_ALL_ANSWERS_ARE_VERIFIED = "03001903";
         public static string INVALID_STATUS_FOR_VERIFY = "03001904";
         public static string QUESTION_POINTS_LIMIT_WRONG = "03001905";
+
+        //user
+        public static string INVALID_USER = "03002001";
     }
 }

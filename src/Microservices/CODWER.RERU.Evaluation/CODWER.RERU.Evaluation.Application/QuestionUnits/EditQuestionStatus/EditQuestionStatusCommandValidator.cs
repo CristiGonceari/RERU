@@ -1,7 +1,10 @@
 ﻿using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,9 +21,8 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionStatus
             When(r => r.Data != null, () =>
             {
                 RuleFor(x => x.Data.QuestionId)
-                    .GreaterThan(0)
-                    .Must(x => appDbContext.QuestionUnits.Any(l => l.Id == x))
-                    .WithErrorCode(ValidationCodes.INVALID_QUESTION);
+                    .SetValidator(x => new ItemMustExistValidator<QuestionUnit>(appDbContext, ValidationCodes.INVALID_QUESTION,
+                        ValidationMessages.InvalidReference));
 
                 RuleFor(r => r.Data.Status)
                     .IsInEnum()

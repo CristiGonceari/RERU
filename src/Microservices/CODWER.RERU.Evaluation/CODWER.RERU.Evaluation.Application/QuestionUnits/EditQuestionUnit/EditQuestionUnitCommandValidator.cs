@@ -1,7 +1,10 @@
 ﻿using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,12 +20,12 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit
             When(r => r.Data != null, () =>
             {
                 RuleFor(x => x.Data.Id)
-                    .Must(x => appDbContext.QuestionUnits.Any(q => q.Id == x))
-                    .WithErrorCode(ValidationCodes.INVALID_QUESTION);
+                    .SetValidator(x => new ItemMustExistValidator<QuestionUnit>(appDbContext, ValidationCodes.INVALID_QUESTION,
+                        ValidationMessages.InvalidReference));
 
                 RuleFor(x => x.Data.QuestionCategoryId)
-                .Must(x => appDbContext.QuestionCategories.Any(q => q.Id == x))
-                .WithErrorCode(ValidationCodes.INVALID_CATEGORY);
+                    .SetValidator(x => new ItemMustExistValidator<QuestionCategory>(appDbContext, ValidationCodes.INVALID_CATEGORY,
+                        ValidationMessages.InvalidReference));
 
                 RuleFor(x => x.Data.Question)
                     .NotEmpty()
@@ -43,7 +46,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit
 
                 When(x => appDbContext.TestQuestions.Any(t => t.QuestionUnitId == x.Data.Id), () =>
                 {
-                    RuleFor(x => x.Data.Id.Value)
+                    RuleFor(x => x.Data.Id)
                     .Must(x => !IsQuestionInActiveTest(x))
                     .WithErrorCode(ValidationCodes.QUESTION_IS_IN_ACTIVE_TEST_TYPE);
                 });

@@ -1,7 +1,10 @@
 ﻿using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +17,9 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.DeleteQuestionUnit
         {
             _appDbContext = appDbContext;
 
-            RuleFor(r => r.Id)
-                .Must(x => appDbContext.QuestionUnits.Any(d => d.Id == x))
-                .WithErrorCode(ValidationCodes.INVALID_QUESTION);
+            RuleFor(x => x.Id)
+                .SetValidator(x => new ItemMustExistValidator<QuestionUnit>(appDbContext, ValidationCodes.INVALID_QUESTION,
+                    ValidationMessages.InvalidReference));
 
             When(x => appDbContext.TestQuestions.Any(t => t.QuestionUnitId == x.Id), () =>
             {

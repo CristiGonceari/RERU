@@ -4,6 +4,9 @@ using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using CODWER.RERU.Evaluation.Data.Entities;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 
 namespace CODWER.RERU.Evaluation.Application.Options.DeleteAllOptionsByQuestion
 {
@@ -15,9 +18,9 @@ namespace CODWER.RERU.Evaluation.Application.Options.DeleteAllOptionsByQuestion
         {
             _appDbContext = appDbContext;
 
-            RuleFor(r => r.QuestionUnitId)
-                .Must(x => appDbContext.QuestionUnits.Any(d => d.Id == x))
-                .WithErrorCode(ValidationCodes.INVALID_QUESTION);
+            RuleFor(x => x.QuestionUnitId)
+                .SetValidator(x => new ItemMustExistValidator<QuestionUnit>(appDbContext, ValidationCodes.INVALID_QUESTION,
+                    ValidationMessages.InvalidReference));
 
             When(x => appDbContext.TestQuestions.Any(t => t.QuestionUnitId == x.QuestionUnitId), () =>
             {

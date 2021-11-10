@@ -1,7 +1,9 @@
 ﻿using FluentValidation;
-using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 
 namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.DeleteQuestionCategoryFromTestType
 {
@@ -10,8 +12,8 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.DeleteQu
         public DeleteQuestionCategoryFromTestTypeCommandValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.Id)
-                .Must(x => appDbContext.TestTypeQuestionCategories.Any(tt => tt.Id == x))
-                .WithErrorCode(ValidationCodes.INVALID_ID);
+                .SetValidator(x => new ItemMustExistValidator<TestTypeQuestionCategory>(appDbContext, ValidationCodes.INVALID_ID,
+                    ValidationMessages.InvalidReference));
         }
     }
 }

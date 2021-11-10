@@ -1,8 +1,11 @@
 ﻿using FluentValidation;
 using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 
 namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.AssignQuestionCategoryToTestType
 {
@@ -17,12 +20,12 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.AssignQu
             When(r => r.Data != null, () =>
             {
                 RuleFor(x => x.Data.TestTypeId)
-                .Must(x => appDbContext.TestTypes.Any(t => t.Id == x))
-                .WithErrorCode(ValidationCodes.INVALID_TEST_TYPE);
+                    .SetValidator(x => new ItemMustExistValidator<TestType>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
+                        ValidationMessages.InvalidReference));
 
                 RuleFor(x => x.Data.QuestionCategoryId)
-                    .Must(x => appDbContext.QuestionCategories.Any(q => q.Id == x))
-                    .WithErrorCode(ValidationCodes.INVALID_CATEGORY);
+                    .SetValidator(x => new ItemMustExistValidator<QuestionCategory>(appDbContext, ValidationCodes.INVALID_CATEGORY,
+                        ValidationMessages.InvalidReference));
 
                 RuleFor(x => x.Data)
                     .Must(x => appDbContext.TestTypeQuestionCategories

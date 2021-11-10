@@ -1,0 +1,43 @@
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.API.Config;
+using CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignResponsiblePersonToEvent;
+using CODWER.RERU.Evaluation.Application.EventResponsiblePersons.GetEventResponsiblePersons;
+using CODWER.RERU.Evaluation.Application.EventResponsiblePersons.GetNoAssignedResponsiblePersons;
+using CODWER.RERU.Evaluation.Application.EventResponsiblePersons.UnassignResponsiblePersonFromEvent;
+using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
+using CVU.ERP.Common.Pagination;
+using MediatR;
+
+namespace CODWER.RERU.Evaluation.API.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class EventResponsiblePersonController : BaseController
+    {
+        [HttpGet]
+        public async Task<PaginatedModel<UserProfileDto>> GetEventResponsiblePersons([FromQuery] GetEventResponsiblePersonsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("no-assigned")]
+        public async Task<List<UserProfileDto>> GetNoAssignedResponsiblePersons([FromQuery] GetNoAssignedResponsiblePersonsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpPost]
+        public async Task<Unit> AssignResponsiblePersonToEvent([FromBody] AssignResponsiblePersonToEventCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
+        [HttpDelete]
+        public async Task<Unit> UnassignResponsiblePersonFromEvent([FromBody] UnassignResponsiblePersonFromEventCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+    }
+}

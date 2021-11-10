@@ -2,7 +2,10 @@
 using System;
 using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 
 namespace CODWER.RERU.Evaluation.Application.Events.EditEvent
 {
@@ -17,8 +20,8 @@ namespace CODWER.RERU.Evaluation.Application.Events.EditEvent
             When(r => r.Data != null, () =>
             {
                 RuleFor(x => x.Data.Id)
-                .Must(x => appDbContext.Events.Any(u => u.Id == x))
-                .WithErrorCode(ValidationCodes.INVALID_EVENT);
+                    .SetValidator(x => new ItemMustExistValidator<Event>(appDbContext, ValidationCodes.INVALID_EVENT,
+                        ValidationMessages.InvalidReference));
 
                 RuleFor(r => r.Data.Name)
                     .NotEmpty()
