@@ -29,7 +29,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQ
                     .ThenInclude(x => x.Options)
                 .FirstOrDefaultAsync(x => x.Id == request.Data.CategoryId);
 
-            var questionsToUse = questionCategory.QuestionUnits;
+            var questionsToUse = questionCategory.QuestionUnits.Where(x => x.Status == QuestionUnitStatusEnum.Active);
             var answer = new List<CategoryQuestionUnitDto>();
 
             if (request.Data.QuestionType.HasValue)
@@ -49,9 +49,9 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQ
                     var questionDtoToAdd = new CategoryQuestionUnitDto()
                     {
                         QuestionUnitId = question.Id,
-                        QuestionType = (QuestionTypeEnum)question.QuestionType,
+                        QuestionType = question.QuestionType,
                         Question = question.Question,
-                        Status = (QuestionUnitStatusEnum)question.Status,
+                        Status = question.Status,
                         OptionsCount = question.Options.Count,
                         Index = request.Data.SelectedQuestions.FirstOrDefault(s => s.Id == question.Id).Index
                     };
@@ -86,9 +86,9 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQ
                     var questionDtoToAdd = new CategoryQuestionUnitDto()
                     {
                         QuestionUnitId = question.Id,
-                        QuestionType = (QuestionTypeEnum)question.QuestionType,
+                        QuestionType = question.QuestionType,
                         Question = question.Question,
-                        Status = (QuestionUnitStatusEnum)question.Status,
+                        Status = question.Status,
                         OptionsCount = question.Options.Count,
                         Index = i
                     };

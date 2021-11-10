@@ -58,13 +58,6 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
     });
   }
 
-  onItemChange() {
-    this.previewMode = !this.previewMode;
-    if (this.previewMode === true) {
-      this.previewQuestions();
-    }
-  }
-
   selectQuestion(event) {
     if (event.target.checked === true) {
       let idToInclude = event.target.value;
@@ -91,6 +84,7 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   }
 
   previewQuestions() {
+    this.selectedQuestions = [];
     let params = {
       testTypeId: +this.testTypeId,
       categoryId: this.questionCategoryId,
@@ -100,14 +94,13 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
       sequenceType: this.sequenceType,
       selectedQuestions: this.checked
     }
-    if (this.previewMode === true) {
       this.questionCategoryService.preview(params).subscribe(res => {
         if (res && res.data) {
           this.questions = res.data;
         }
-        this.selectedQuestions = [];
+      }, err => {
+        this.previewMode = false;
       })
-    }
   }
 
   addQuestions(questions) {
@@ -142,6 +135,7 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   }
 
   initData(data): void {
+    this.previewMode = false;
     this.questionCategoryId = +data.questionCategoryId;
     this.questionType = +data.type;
     this.questionCount = +data.questionCount;
@@ -152,14 +146,13 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   }
 
   list(): void {
-    this.previewMode = false;
     let params = {
-      // questionCategoryId: this.questionCategoryId,
+      categoryId: this.questionCategoryId,
       type: this.questionType,
       page: this.pagination.currentPage || 1,
       itemsPerPage: Number(this.pagination?.pageSize || 10)
     }
-    this.questionService.getAll(params).subscribe(res => {
+    this.questionService.getActiveQuestions(params).subscribe(res => {
       this.questions = res.data.items;
       this.pagination = res.data.pagedSummary;
     })

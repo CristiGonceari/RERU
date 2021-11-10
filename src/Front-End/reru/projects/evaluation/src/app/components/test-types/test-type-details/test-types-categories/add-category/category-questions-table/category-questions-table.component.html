@@ -11,7 +11,7 @@
           <app-confirm-button class="btn h-35px mr-5" [value]="'Refresh'" [class.d-none]="!previewMode" (handle)="refresh()"></app-confirm-button>
 
             <label class="checkbox h-35px h5">
-                <input name="Preview" type="checkbox" [(ngModel)]="previewMode" (click)="onItemChange()">
+                <input name="Preview" type="checkbox" [(ngModel)]="previewMode" (click)="previewQuestions()">
                 <span class="mr-2"></span> {{'button.preview' | translate}}
             </label>
         </div>

@@ -7,6 +7,7 @@ using CODWER.RERU.Evaluation.Application.QuestionUnits.BulkUploadQuestionUnits;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.DeleteQuestionUnit;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionStatus;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit;
+using CODWER.RERU.Evaluation.Application.QuestionUnits.GetActiveQuestionUnitsValue;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionBulkTemplate;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnit;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits;
@@ -66,6 +67,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<Unit> EditQuestionStatus([FromBody] EditQuestionStatusCommand command)
         {
             return await Mediator.Send(command);
+        }
+
+        [HttpGet("active-question")]
+        public async Task<PaginatedModel<ActiveQuestionUnitValueDto>> GetActiveQuestion([FromQuery] GetActiveQuestionUnitsValueQuery query)
+        {
+            return await Mediator.Send(query);
         }
 
         [IgnoreResponseWrap]
