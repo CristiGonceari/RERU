@@ -27,6 +27,7 @@ export class CategoryQuestionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getAll();
   }
 
   getAll(){

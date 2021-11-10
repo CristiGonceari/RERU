@@ -5,6 +5,10 @@ import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagina
 import { QuestionUnit } from 'projects/evaluation/src/app/utils/models/question-units/question-unit.model';
 import { QuestionService } from 'projects/evaluation/src/app/utils/services/question/question.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NotificationsService } from 'angular2-notifications';
+import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
+import { ConfirmModalComponent } from '@erp/shared';
 
 @Component({
   selector: 'app-question-list-table',
@@ -20,7 +24,13 @@ export class QuestionListTableComponent implements OnInit {
 	type = QuestionUnitTypeEnum;
 	isLoading: boolean = true;
 
-	constructor(private questionService: QuestionService, private route: ActivatedRoute, private router: Router) { }
+	constructor(
+		private questionService: QuestionService,
+		private route: ActivatedRoute,
+		private router: Router,
+		private notificationService: NotificationsService,
+		private modalService: NgbModal
+	) { }
 
 	ngOnInit(): void {
 		this.subscribeForQuestions();
@@ -38,8 +48,6 @@ export class QuestionListTableComponent implements OnInit {
 			itemsPerPage: Number(this.pagination?.pageSize || 10)
 		}
 		this.questionService.getAll(params).subscribe((res) => {
-			console.log('pagedSummary', res.data.pagedSummary);
-			
 			if (res && res.data.items) {
 				this.questionList = res.data.items;
 				this.pagination = res.data.pagedSummary;
@@ -66,4 +74,18 @@ export class QuestionListTableComponent implements OnInit {
 		this.router.navigate(['question-detail/', id, 'overview'], {relativeTo: this.route});
 	}
 
+	deleteQuestion(id): void{
+		this.questionService.delete(id).subscribe(() => 
+		{
+			this.notificationService.success('Success', 'Question was successfully deleted', NotificationUtil.getDefaultMidConfig());
+			this.list();
+		});
+	}
+
+	openConfirmationDeleteModal(id): void {
+		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
+		modalRef.componentInstance.title = 'Delete';
+		modalRef.componentInstance.description = 'Are you sure you want to delete this question?';
+		modalRef.result.then(() => this.deleteQuestion(id), () => { });
+	}
 }

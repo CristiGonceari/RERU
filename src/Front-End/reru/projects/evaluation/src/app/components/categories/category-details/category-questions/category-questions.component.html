@@ -4,8 +4,8 @@
         <div class="card-title font-weight-bolder">{{'questions.questions' | translate}}</div>
       </div>
       <div class="card-body">
-        <app-loading-spinner *ngIf="!isLoading"></app-loading-spinner>
-        <table *ngIf="isLoading" class="datatable table font-size-lg">
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+        <table *ngIf="!isLoading" class="datatable table font-size-lg">
           <thead class="text-uppercase text-muted">
             <tr>
               <th scope="col">{{ 'questions.question' | translate }}</th>

@@ -8,14 +8,14 @@ import { Observable } from 'rxjs';
 	providedIn: 'root',
 })
 export class OptionsService extends AbstractService {
-	private readonly urlRoute = 'Options';
+	private readonly urlRoute = 'Option';
 
 	constructor(protected appConfigService: AppSettingsService, private client: HttpClient) {
 		super(appConfigService);
 	}
 
 	getAll(questionUnitId?: number): Observable<any> {
-		return this.client.get<any>(`${this.baseUrl}/${this.urlRoute}/list?QuestionUnitId=${questionUnitId}`);
+		return this.client.get<any>(`${this.baseUrl}/${this.urlRoute}/?QuestionUnitId=${questionUnitId}`);
 	}
 
 	get(id: number): Observable<any> {
@@ -26,11 +26,11 @@ export class OptionsService extends AbstractService {
 		return this.client.delete<OptionModel>(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}
 
-	create(data: OptionModel): Observable<OptionModel> {
+	create(data): Observable<OptionModel> {
 		return this.client.post<OptionModel>(`${this.baseUrl}/${this.urlRoute}`, data);
 	}
 
-	edit(data: OptionModel): Observable<OptionModel> {
+	edit(data): Observable<OptionModel> {
 		return this.client.patch<OptionModel>(`${this.baseUrl}/${this.urlRoute}`, data);
 	}
 

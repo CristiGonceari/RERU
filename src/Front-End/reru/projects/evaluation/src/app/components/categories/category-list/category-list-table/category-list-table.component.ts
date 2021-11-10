@@ -38,6 +38,7 @@ export class CategoryListTableComponent implements OnInit {
  	}
 
   	list(data: any = {}) {
+		console.warn('list')
 		this.isLoading = true;
 		this.keyword = data.keyword;
 		let params = {
@@ -82,13 +83,14 @@ export class CategoryListTableComponent implements OnInit {
 		this.questionCategoryService.delete(id).subscribe(() => 
 		{
 			this.notificationService.success('Success', 'Category was successfully deleted', NotificationUtil.getDefaultMidConfig());
+			this.list();
 		});
 	}
 
 	openConfirmationDeleteModal(id): void {
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
 		modalRef.componentInstance.title = 'Delete';
-		modalRef.componentInstance.description = 'Are you sure you want to delete it?';
+		modalRef.componentInstance.description = 'Are you sure you want to delete this category? All questions from this category will be deleted';
 		modalRef.result.then(() => this.deleteCategory(id), () => { });
 	}
 }
