@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CODWER.RERU.Evaluation.Application.Locations.AssignLocationComputer
+namespace CODWER.RERU.Evaluation.Application.LocationComputers.AssignLocationComputer
 {
     public class AssignLocationComputerCommandHandler : IRequestHandler<AssignLocationComputerCommand, string>
     {

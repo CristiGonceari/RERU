@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CODWER.RERU.Evaluation.Application.Locations.GetLocationComputers
+namespace CODWER.RERU.Evaluation.Application.LocationComputers.GetLocationComputers
 {
     public class GetLocationComputersQueryHandler : IRequestHandler<GetLocationComputersQuery, PaginatedModel<LocationClientDto>>
     {

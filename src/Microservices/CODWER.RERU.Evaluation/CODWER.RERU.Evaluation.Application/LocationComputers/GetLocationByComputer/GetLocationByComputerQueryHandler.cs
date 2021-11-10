@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CODWER.RERU.Evaluation.Application.Locations.GetLocationByComputer
+namespace CODWER.RERU.Evaluation.Application.LocationComputers.GetLocationByComputer
 {
     public class GetLocationByComputerQueryHandler : IRequestHandler<GetLocationByComputerQuery, LocationDto>
     {
