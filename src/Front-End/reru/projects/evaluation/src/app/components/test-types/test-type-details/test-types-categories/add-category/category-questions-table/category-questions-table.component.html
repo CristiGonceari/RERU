@@ -1,0 +1,75 @@
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<div *ngIf="!isLoading && questions.length">
+    <div class="d-flex p-0 justify-content-between">
+        <div class="card-title">
+          <h3 class="card-label text-capitalize ml-10">{{ questionCategoryName }}</h3>
+        </div>
+        <div class="card-toolbar d-flex align-items-baseline">
+          <app-confirm-button class="btn h-35px mr-5" [value]="'Refresh'" [class.d-none]="!previewMode" (handle)="refresh()"></app-confirm-button>
+
+            <label class="checkbox h-35px h5">
+                <input name="Preview" type="checkbox" [(ngModel)]="previewMode" (click)="onItemChange()">
+                <span class="mr-2"></span> {{'button.preview' | translate}}
+            </label>
+        </div>
+    </div>
+    <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable">
+        <table class="datatable table font-size-lg" style="overflow: visible">
+            <thead class="text-uppercase text-muted">
+                <tr>
+                    <th scope="col" class="text-left" style="width: 75px" *ngIf="!previewMode" [ngClass]="{'d-none': selectQuestions === 0}"></th>
+                    <th scope="col" class="text-left" style="width: 50px"> # </th>
+                    <th scope="col" class="text-left">{{'tests.questions' | translate}}</th>
+                    <th scope="col" class="text-left" style="width: 150px">{{'tests.status' | translate}}</th>
+                    <th scope="col" class="text-left" style="width: 200px">{{'questions.type' | translate}}</th>
+                </tr>
+            </thead>
+            <tbody class="datatable-body" dragula="Questions" [(dragulaModel)]="itemsToAdd">
+                <tr *ngFor="let item of questions; let i = index" [ngClass]="{'disabled-area': !previewMode || (sequenceType === 0) }">
+                    <td [ngClass]="{'d-none': selectQuestions === 0}" *ngIf="!previewMode" >
+                        <label class="checkbox mx-5 d-block" (change)="selectQuestion($event)">
+                            <input name="selected" type="checkbox" [value]="item.id">
+                            <span [ngClass]="{'show-cursor': !previewMode}"></span>
+                        </label>
+                    </td>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item.question }}</td>
+                    <td>{{ 'statuses.' + questionStatus[item.status] | translate}}</td>
+                    <td>{{ 'statuses.' + qType[item.questionType] | translate}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-right border-top pt-7">
+            <app-button class="btn mr-2" [value]="'button.reset' | translate" (handle)="reset()">
+            </app-button>
+            <app-add-button class="btn" [disabled]="!previewMode" [value]="'button.confirm' | translate" (handle)="addQuestions(itemsToAdd)">
+            </app-add-button>
+        </div>
+    </div>
+    <div class="card-body pb-0 d-flex justify-content-between" *ngIf="!previewMode">
+        <ngb-pagination [collectionSize]="pagination.totalCount" [(page)]="pagination.currentPage"
+            [pageSize]="pagination.pageSize" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
+            (pageChange)="list($event)">
+        </ngb-pagination>
+        <div class="d-flex align-items-center py-3" >
+            <select class="btn text-primary font-weight-bold mr-4 border-0 bg-light w-75px" [(ngModel)]="pagination.pageSize"
+                (ngModelChange)="list({page: pagination.currentPage, itemsPerPage: pagination.pageSize})">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+    
+            <span class="text-muted">
+                {{'pagination.displaing' | translate}} {{ pagination.pageSize }} 
+                {{'pagination.of' | translate}}
+                <b>{{ pagination.totalCount }}</b>
+                {{'pagination.records' | translate}}
+            </span>
+        </div>
+    </div>
+</div>

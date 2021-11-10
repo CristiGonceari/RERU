@@ -1,0 +1,15 @@
+:host {
+    .input-group>.form-control:not(:first-child) {
+      border-top-right-radius: 11px;
+      border-bottom-right-radius: 11px;
+    }
+  
+    .dropdown-toggle::after {
+      display:none;
+    }
+  }
+  
+  .table td {
+    vertical-align: baseline !important;
+  }
+  

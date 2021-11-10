@@ -1,0 +1,19 @@
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="card card-custom mb-7" style="margin-left: 16px;">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title"><b>{{'tests.rules' | translate}}</b></div>
+            <div class="card-toolbar">
+                <div >
+                    <app-add-button class="btn" [value]="'tests.step4' | translate" *ngIf="add"
+                        [routerLink]="['../../../rules', testTypeId, 'add']"></app-add-button>
+                    <app-confirm-button class="btn" [value]="'button.edit' | translate" *ngIf="!add"
+                        [routerLink]="['../../../rules', testTypeId, 'add']"></app-confirm-button>
+                </div>
+            </div>
+        </div>
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+        <div *ngIf="!isLoading" class="card-body disabled-area">
+            <ckeditor [(ngModel)]="editorData" [editor]="Editor" readOnly="true"></ckeditor>
+        </div>
+    </div>
+</div>

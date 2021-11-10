@@ -1,0 +1,84 @@
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="card card-custom mb-7" style="margin-left: 16px;">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title"><b>{{'categories.categories' | translate}}</b></div>
+            <div class="card-toolbar">
+                <app-add-button class="btn" [value]="'categories.new-category' | translate"
+                    [routerLink]="['../../../category', testTypeId, 'add']"></app-add-button>
+            </div>
+        </div>
+        <div class="card-body">
+            <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+            <div *ngIf="!isLoading" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+                id="kt_datatable">
+                <div class="d-flex align-items-center mb-5">
+                    <span class="h6 mb-0">{{'button.random' | translate}}</span>
+                    <span class="switch switch-sm mx-3">
+                        <label>
+                            <input type="checkbox" [checked]="sequence" name="select" (change)="checkEvent($event)">
+                            <span></span>
+                        </label>
+                    </span>
+                    <span class="h6 mb-0">{{'button.ordered' | translate}}</span>
+                </div>
+
+                <table class="datatable table font-size-lg" style="overflow: visible">
+                    <thead class="text-uppercase text-muted">
+                        <tr>
+                            <th scope="col" style="width: 50px"> # </th>
+                            <th scope="col">{{'categories.category-name' | translate}}</th>
+                            <th scope="col">{{'tests.questions' | translate}}</th>
+                            <th scope="col">{{'questions.type' | translate}}</th>
+                            <th scope="col" style="width: 48px"></th>
+                        </tr>
+                    </thead>
+                    <tbody dragula="Categories" [(dragulaModel)]="categories">
+                        <tr *ngFor="let item of categories; let i = index">
+                            <td [ngClass]="{'disabled-area': !sequence}">{{ i + 1 }}</td>
+                            <td [ngClass]="{'disabled-area': !sequence}">{{ item.categoryName }}</td>
+                            <td [ngClass]="{'disabled-area': !sequence}">{{ item.questionCount }}</td>
+                            <td [ngClass]="{'disabled-area': !sequence}"><label *ngIf="item.questionType">{{'statuses.' + type[item.questionType] | translate}}</label></td>
+                            <td data-field="Actions" data-autohide-disabled="false"
+                                class="datatable-cell datatable-cell-sort p-3">
+                                <div style="overflow: visible; position: relative; width: 0px">
+                                    <div ngbDropdown class="dropdown dropdown-inline" *ngIf="status == 1">
+                                        <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                                            <span class="svg-icon svg-icon-md" ngbDropdownToggle>
+                                                <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                    height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
+                                                        <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6"
+                                                            rx="3" fill="black">
+                                                        </rect>
+                                                        <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6"
+                                                            rx="3" fill="black" fill-opacity="0.7"></rect>
+                                                    </g>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                                            <div ngbDropdownMenu aria-labelledby="action1">
+                                                <button [routerLink]="['../../../delete-category', item.id]" 
+                                                    class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                                                    {{ 'button.delete' | translate }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr *ngIf="!categories.length">
+                            <td colspan="4" class="text-center">{{'message.no-record' | translate}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-right border-top pt-7">
+                    <app-add-button class="btn" [value]="'button.update' | translate" (handle)="confirm(categories)">
+                    </app-add-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
