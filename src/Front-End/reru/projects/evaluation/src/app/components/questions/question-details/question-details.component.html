@@ -29,23 +29,23 @@
                   </div>
                   <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                     <div ngbDropdownMenu aria-labelledby="action1">
-                      <button [routerLink]="['./../../question-detail', questionId]" *permission="'P03010201'"
+                      <button [routerLink]="['./../../question-detail', questionId]"
                         class="navi-link align-items-center px-6" ngbDropdownItem>
                         {{'categories.view-details' | translate}}
                       </button>
-                      <button class="navi-link align-items-baseline px-6" *permission="'P03010205'"
+                      <button class="navi-link align-items-baseline px-6"
                         [routerLink]="['./../../edit-question', questionId]" ngbDropdownItem>
                         {{'button.edit' | translate}}
                       </button>
                       <div *ngIf="status !== 2">
                         <button class="navi-link align-items-center px-6" (click)="changeStatus(questionId, status)"
-                          ngbDropdownItem *permission="'P03010203'">
+                          ngbDropdownItem>
                           <span class="font-size-lg" *ngIf="status == 0">{{'statuses.activate' | translate}}</span>
                           <span class="font-size-lg" *ngIf="status == 1">{{'statuses.inactivate' | translate}}</span>
                         </button>
                      </div>
-                      <button [routerLink]="['./../../remove', questionId]" class="navi-link align-items-baseline px-6"
-                        *permission="'P03010105'" ngbDropdownItem>
+                      <button (click)="openConfirmationDeleteModal(questionId)" class="navi-link align-items-baseline px-6"
+                        ngbDropdownItem>
                         {{'button.delete' | translate}}
                       </button>
                     </div>
@@ -70,7 +70,7 @@
                     </a>
                   </div>
                   <div class="navi-item mb-2" *ngIf="type == 2 || type == 3">
-                    <a [routerLink]="['options']" routerLinkActive="active" class="navi-link py-4" *permission="'P03010302'">
+                    <a [routerLink]="['options']" routerLinkActive="active" class="navi-link py-4">
                       <i class="flaticon-cogwheel-2 icon-md mr-3"></i>
                       <span class="navi-text font-size-lg">
                         {{ 'tests.options' | translate }}

@@ -19,7 +19,6 @@ import { QuestionNameComponent } from './question-list/question-name/question-na
 import { SearchQuestionComponent } from './question-list/search-question/search-question.component'
 import { QuestionOptionsComponent } from './question-details/question-options/question-options.component'
 import { AddOptionComponent } from './question-details/question-options/add-option/add-option.component';
-import { DeleteOptionComponent } from './question-details/question-options/delete-option/delete-option.component';
 import { QuestionListTableComponent } from './question-list/question-list-table/question-list-table.component';
 
 @NgModule({
@@ -33,7 +32,6 @@ import { QuestionListTableComponent } from './question-list/question-list-table/
     SearchQuestionComponent,
     QuestionOptionsComponent,
     AddOptionComponent,
-    DeleteOptionComponent,
     QuestionListTableComponent,
   ],
 	imports: [

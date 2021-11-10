@@ -46,12 +46,14 @@ export class AddOptionComponent implements OnInit {
   parse() {
     this.optionId = null ? null : this.optionId;
     this.isCorrect == true ? this.isCorrect : this.isCorrect = false;
-    return new OptionModel({
-      id: this.optionId,
-      answer: this.answer,
-      isCorrect: this.isCorrect,
-      questionUnitId: this.questionId
-    });
+    return {
+      data: new OptionModel({
+        id: this.optionId,
+        answer: this.answer,
+        isCorrect: this.isCorrect,
+        questionUnitId: this.questionId
+      })
+    }
   }
 
   add(){

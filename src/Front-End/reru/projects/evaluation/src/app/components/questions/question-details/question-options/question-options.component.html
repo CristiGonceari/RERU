@@ -3,7 +3,7 @@
         <div class="card-header flex-wrap border-0 py-5">
             <div class="card-title font-weight-bolder"><b>{{'questions.add-options' | translate}}</b></div>
             <div class="card-toolbar" *ngIf="status == 0">
-                <app-add-button class="btn" [value]="'questions.add-option' | translate" *permission="'P03010303'"
+                <app-add-button class="btn" [value]="'questions.add-option' | translate"
                     [routerLink]="['../../../option', questionId, 'add']">
                 </app-add-button>
             </div>
@@ -59,7 +59,7 @@
                                                     class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                                     {{ 'button.edit' | translate }}
                                                 </button>
-                                                <button [routerLink]="['../../../delete-option', item.id]" 
+                                                <button (click)="openConfirmationDeleteModal(item.id)" 
                                                     class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                                     {{ 'button.delete' | translate }}
                                                 </button>

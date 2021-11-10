@@ -6,6 +6,8 @@ import { QuestionService } from 'projects/evaluation/src/app/utils/services/ques
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { OptionsService } from '../../../../utils/services/options/options.service'
 import { OptionModel } from 'projects/evaluation/src/app/utils/models/options/option.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmModalComponent } from '@erp/shared';
 
 
 @Component({
@@ -26,7 +28,8 @@ export class QuestionOptionsComponent implements OnInit {
   constructor(private optionService: OptionsService, 
     private route: ActivatedRoute, 
     private questionService: QuestionService,
-    private notificationService: NotificationsService) { }
+    private notificationService: NotificationsService,
+		private modalService: NgbModal,) { }
 
   ngOnInit(): void {
     this.subsribeForParams();
@@ -66,12 +69,14 @@ export class QuestionOptionsComponent implements OnInit {
   }
 
   parse(element) {
-    return new OptionModel({
-      id: element.id,
-      answer: element.answer,
-      isCorrect: element.isCorrect,
-      questionUnitId: element.questionUnitId
-    });
+    return {
+      data: new OptionModel({
+        id: element.id,
+        answer: element.answer,
+        isCorrect: element.isCorrect,
+        questionUnitId: element.questionUnitId
+      })
+    }
   }
 
   getQuestion() {
@@ -91,4 +96,20 @@ export class QuestionOptionsComponent implements OnInit {
       }
     });
   }
+
+  deleteQuestion(id): void{
+		this.optionService.delete(id).subscribe(() => 
+		{
+			this.notificationService.success('Success', 'Option was successfully deleted', NotificationUtil.getDefaultMidConfig());
+      this.getOptions();
+		});
+	}
+
+	openConfirmationDeleteModal(id): void {
+		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
+		modalRef.componentInstance.title = 'Delete';
+		modalRef.componentInstance.description = 'Are you sure you want to delete this option?';
+		modalRef.result.then(() => this.deleteQuestion(id), () => { });
+	}
+
 }
