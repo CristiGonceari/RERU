@@ -13,7 +13,7 @@ namespace CODWER.RERU.Evaluation.Application.LocationComputers.UnassignLocationC
         public UnassignLocationComputerValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.LocationClientId)
-                 .SetValidator(x => new ItemMustExistValidator<Location>(appDbContext, ValidationCodes.NO_RECORD_WITH_THIS_DATA,
+                 .SetValidator(x => new ItemMustExistValidator<Location>(appDbContext, ValidationCodes.INVALID_RECORD,
                         ValidationMessages.InvalidReference));
         }
     }

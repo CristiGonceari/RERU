@@ -20,14 +20,14 @@ namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.Unassign
             {
                 RuleFor(x => x.Data)
                     .Must(x => appDbContext.LocationResponsiblePersons.Any(l => l.LocationId == x.LocationId && l.UserProfileId == x.UserProfileId))
-                    .WithErrorCode(ValidationCodes.NO_RECORD_WITH_THIS_DATA);
+                    .WithErrorCode(ValidationCodes.INVALID_RECORD);
 
                 RuleFor(x => x.Data.LocationId)
                     .SetValidator(x => new ItemMustExistValidator<Location>(appDbContext, ValidationCodes.INVALID_LOCATION,
                         ValidationMessages.InvalidReference));
 
                 RuleFor(x => x.Data.UserProfileId)
-                    .SetValidator(x => new ItemMustExistValidator<Location>(appDbContext, ValidationCodes.INVALID_USER_PROFILE,
+                    .SetValidator(x => new ItemMustExistValidator<Location>(appDbContext, ValidationCodes.INVALID_USER,
                         ValidationMessages.InvalidReference));
             });
         }
