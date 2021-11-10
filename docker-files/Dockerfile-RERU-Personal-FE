@@ -6,9 +6,10 @@ WORKDIR "/src/src/Front-End/reru/"
 RUN npm install 
 RUN npm run build erp-shared 
 RUN npm link "./dist/erp-shared" 
-RUN npm run build evaluation -- --prod --output-path=/src/src/Front-End/reru/dist/evaluation
+RUN npm run build personal -- --prod --output-path=/src/src/Front-End/reru/dist/personal
 
 FROM nginxinc/nginx-unprivileged
-COPY ./docker-settings/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./docker-files/docker-settings/nginx/nginx.conf /etc/nginx/nginx.conf
 WORKDIR /usr/share/nginx/html
-COPY --from=npm /src/src/Front-End/reru/dist/evaluation/ ./
+
+COPY --from=npm /src/src/Front-End/reru/dist/personal/ ./

@@ -10,9 +10,13 @@ import { Location } from '@angular/common';
 import { ManualLoaderFactory } from './utils/services/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { AuthenticationGuard } from '@erp/shared';
+import { AuthenticationCallbackComponent, AuthenticationGuard } from '@erp/shared';
 
-const routes: Routes = [{
+
+const routes: Routes = [
+//	{ path: '404', component: Exception404Component },
+	{ path: 'auth-callback', component: AuthenticationCallbackComponent },
+	{
   path: '',
   component: DashboardComponent,
   canActivate: [AuthenticationGuard]
