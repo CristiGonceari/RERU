@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CODWER.RERU.Evaluation.Application.Locations.UnassignLocationComputer
+namespace CODWER.RERU.Evaluation.Application.LocationComputers.UnassignLocationComputer
 {
     public class UnassignLocationComputerCommandHandler : IRequestHandler<UnassignLocationComputerCommand, Unit>
     {

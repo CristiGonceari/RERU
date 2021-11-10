@@ -44,5 +44,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
             return items;
         }
+
+        [HttpGet("locations/select-values")]
+        public async Task<List<SelectItem>> GetLocationType()
+        {
+            var items = EnumConverter<TestingLocationType>.SelectValues;
+
+            return items;
+        }
     }
 }

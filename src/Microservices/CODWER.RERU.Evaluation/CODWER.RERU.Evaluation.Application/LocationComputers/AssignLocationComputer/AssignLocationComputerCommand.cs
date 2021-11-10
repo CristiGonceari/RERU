@@ -2,7 +2,7 @@
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 
-namespace CODWER.RERU.Evaluation.Application.Locations.AssignLocationComputer
+namespace CODWER.RERU.Evaluation.Application.LocationComputers.AssignLocationComputer
 {
     [ModuleOperation(permission: Permissions.PermissionCodes.LOCATION_CLIENTS_GENERAL_ACCESS)]
     public class AssignLocationComputerCommand : IRequest<string>

@@ -55,6 +55,8 @@
         //location responsible person
         public static string EXISTENT_RESPONSIBLE_PERSON_IN_LOCATION = "03001001";
         public static string USER_ISNT_RESPONSIBLE_FOR_THIS_LOCATION = "03001002";
+        public static string INVALID_USER_PROFILE = "03001003";
+        public static string NO_RECORD_WITH_THIS_DATA = "03001004";
 
         //Options
         public static string EMPTY_ANSWER = "03001101";
