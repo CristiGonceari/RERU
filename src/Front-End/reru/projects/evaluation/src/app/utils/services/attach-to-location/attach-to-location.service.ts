@@ -23,7 +23,7 @@ export class AttachToLocationService extends AbstractService  {
 		this.userId.next(value);
 	};
 
-  assignPerson(data) {
+  	assignPerson(data) {
 		return this.http.post(`${this.baseUrl}/${this.urlRouteLocationResponsiblePerson}/assign-person`, data);
 	}
 
@@ -32,14 +32,14 @@ export class AttachToLocationService extends AbstractService  {
 	}
 
 	getPersons(params): Observable<any> {
-		return this.http.get(`${this.baseUrl}/${this.urlRouteLocationResponsiblePerson}/responsible`, { params });
+		return this.http.get(`${this.baseUrl}/${this.urlRouteLocationResponsiblePerson}`, { params });
 	}
 
-	getClients(params): Observable<any> {
+	getComputers(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRouteLocationComputers}/computers`, { params });
 	}
 
-	detachClient(params) {
+	detachComputer(params) {
 		return this.http.post(`${this.baseUrl}/${this.urlRouteLocationComputers}/detach-computer`, params);
 	}
 }
