@@ -327,11 +327,11 @@ stages:
     pool:
       name: "Default"
     variables:
-      k8sNamespace: default
-      k8sReleaseName: application-dev
+      k8sNamespace: reru
+      k8sReleaseName: reru-app-stage
     jobs:
       - deployment: DeployDev
-        environment: ErpPlatform-DEV
+        environment: RERUPlatform-DEV
         strategy:
           runOnce:
             deploy:
