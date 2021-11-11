@@ -17,9 +17,9 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     public class LocationsController : BaseController
     {
         [HttpGet("{id}")]
-        public async Task<LocationDto> GetLocation([FromQuery] GetLocationQuery query)
+        public async Task<LocationDto> GetLocation([FromRoute] int id)
         {
-            return await Mediator.Send(query);
+            return await Mediator.Send(new GetLocationQuery { Id = id });
         }
 
         [HttpGet]
@@ -40,11 +40,10 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(command);
         }
 
-        [HttpDelete]
-        public async Task<Unit> DeleteLocation([FromQuery] DeleteLocationCommand command)
+        [HttpDelete("{id}")]
+        public async Task<Unit> DeleteLocation([FromRoute] int id)
         {
-            return await Mediator.Send(command);
+            return await Mediator.Send(new DeleteLocationCommand { Id = id });
         }
-
     }
 }
