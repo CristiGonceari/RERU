@@ -30,6 +30,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQ
                 .FirstOrDefaultAsync(x => x.Id == request.Data.CategoryId);
 
             var questionsToUse = questionCategory.QuestionUnits.Where(x => x.Status == QuestionUnitStatusEnum.Active);
+
             var answer = new List<CategoryQuestionUnitDto>();
 
             if (request.Data.QuestionType.HasValue)

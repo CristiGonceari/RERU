@@ -30,6 +30,7 @@ namespace CODWER.RERU.Evaluation.Data.Entities
         public UserProfile UserProfile { get; set; }
         public UserProfile Evaluator { get; set; }
         public Event Event { get; set; }
+        public Location Location { get; set; }
 
         public virtual ICollection<TestQuestion> TestQuestions { get; set; }
     }
