@@ -53,8 +53,8 @@ reru_core:
   image:
     repository: cvuintell/reru-core
   database:
-    connection_string: server=mssql-deployment;database=Core-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;
-    identity_connection_string: server=mssql-deployment;database=Identity-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;
+    connection_string: server=mssql-deployment;database=RERU-Core-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;
+    identity_connection_string: server=mssql-deployment;database=RERU-Identity-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;
 
 reru_identity_migrator:
   enabled: true
@@ -63,7 +63,7 @@ reru_identity_migrator:
   image:
     repository: cvuintell/reru-identity-migrator
   database:
-    connection_string: server=mssql-deployment;database=Identity-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;
+    connection_string: server=mssql-deployment;database=RERU-Identity-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;
 
 reru_core_fe:
   name: "reru-core-fe"
@@ -83,7 +83,7 @@ reru_personal:
   image:
     repository: cvuintell/reru-personal
   database:
-    connection_string: server=mssql-deployment;database=Personal-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;MultipleActiveResultSets=True;
+    connection_string: server=mssql-deployment;database=RERU-Personal-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;MultipleActiveResultSets=True;
 
 reru_evaluation_fe:
   name: "reru-evaluation-fe"
@@ -97,7 +97,7 @@ reru_evaluation:
   image:
     repository: cvuintell/reru-evaluation
   database:
-    connection_string: server=mssql-deployment;database=evaluation-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;
+    connection_string: server=mssql-deployment;database=RERU-Evaluation-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;
 
 microservices:
   - test_saml:
@@ -154,7 +154,7 @@ microservices:
         - name: SAML_ENDPOINT
           value: "http://reru.codwer.com"
         - name: ConnectionStrings__Default
-          value: "server=mssql-deployment;database=Identity-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;"
+          value: "server=mssql-deployment;database=RERU-Identity-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;"
         - name: IDENTITY_ISSUER_URI
           value: "http://reru.codwer.com/ms/reru-identity-new"
         - name: IDENTITY_DISCOVERY_ENDPOINT_URI
