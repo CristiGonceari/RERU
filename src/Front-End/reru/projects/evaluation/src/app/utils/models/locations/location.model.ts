@@ -1,6 +1,6 @@
 import { TestingLocationTypeEnum } from "../../enums/testing-location-type.enum";
 
-export class Location {
+export class LocationModel {
     id?: number;
     name: string;
     address: string;

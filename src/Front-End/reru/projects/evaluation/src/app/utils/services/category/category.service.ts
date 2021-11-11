@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AbstractService, AppSettingsService } from '@erp/shared';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { QuestionCategoryModel } from '../../models/question-category.model';
 import { PaginatedListModel } from '../../models/paginated-list.model';
+import { QuestionCategory } from '../../models/question-category/question-category.model';
 
 export class PaginatedResponse {
 	page?: number;
@@ -39,15 +39,15 @@ export class CategoryService extends AbstractService {
 		return this.client.get(`${this.baseUrl}/${this.urlRoute}/list`, { params });
 	}
 
-	delete(id: number): Observable<QuestionCategoryModel> {
-		return this.client.delete<QuestionCategoryModel>(`${this.baseUrl}/${this.urlRoute}/delete/${id}`);
+	delete(id: number): Observable<QuestionCategory> {
+		return this.client.delete<QuestionCategory>(`${this.baseUrl}/${this.urlRoute}/delete/${id}`);
 	}
 
-	create(data: QuestionCategoryModel): Observable<any> {
+	create(data: QuestionCategory): Observable<any> {
 		return this.client.post<any>(`${this.baseUrl}/${this.urlRoute}/create`, data);
 	}
 
-	edit(data: QuestionCategoryModel): Observable<QuestionCategoryModel> {
-		return this.client.post<QuestionCategoryModel>(`${this.baseUrl}/${this.urlRoute}/edit`, data);
+	edit(data: QuestionCategory): Observable<QuestionCategory> {
+		return this.client.post<QuestionCategory>(`${this.baseUrl}/${this.urlRoute}/edit`, data);
 	}
 }
