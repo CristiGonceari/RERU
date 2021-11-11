@@ -1,0 +1,164 @@
+tag: dev
+
+ingress:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: nginx
+#     nginx.ingress.kubernetes.io/configuration-snippet: |
+#       add_header Content-Security-Policy "frame-ancestors mpass.staging.egov.md;";
+
+ingress_back:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/configuration-snippet: |
+    #   add_header Content-Security-Policy "frame-ancestors mpass.staging.egov.md;";
+
+# api variables
+reru_public_gateway:
+  name: "reru-public-gateway"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-public-gateway
+
+  deployment: # variables for api deployment
+    resources:
+      requests:
+        memory: "32Mi"
+        cpu: "250m"
+      limits:
+        memory: "256Mi"
+        cpu: "300m"
+  ingress:
+    enabled: true
+    host: reru.codwer.com
+    path: /
+    secretname: reru-codwer-com-public-gateway
+    livenessProbe: /api/discover
+
+  service:
+    port: 8080
+    portName: out
+    type: ClusterIP
+
+reru_internal_gateway:
+  name: "reru-internal-gateway"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-internal-gateway
+
+reru_core:
+  name: "reru-core"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-core
+  database:
+    connection_string: server=mssql-deployment;database=Core-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;
+    identity_connection_string: server=mssql-deployment;database=Identity-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;
+
+reru_identity_migrator:
+  enabled: true
+  name: "reru-identity-migrator"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-identity-migrator
+  database:
+    connection_string: server=mssql-deployment;database=Identity-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;
+
+reru_core_fe:
+  name: "reru-core-fe"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-core-fe
+
+reru_personal_fe:
+  name: "reru-personal-fe"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-personal-fe
+
+reru_personal:
+  name: "reru-personal"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-personal
+  database:
+    connection_string: server=mssql-deployment;database=Personal-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;MultipleActiveResultSets=True;
+
+reru_evaluation_fe:
+  name: "reru-evaluation-fe"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-evaluation-fe
+
+reru_evaluation:
+  name: "reru-evaluation"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-evaluation
+  database:
+    connection_string: server=mssql-deployment;database=evaluation-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;
+
+microservices:
+  - test_saml:
+    service:
+      createService: true
+    deployment:
+      createDeployment: true
+      replicas: 1
+      volumes:
+        - name: global-application-settings
+          configMap:
+            name: global-application-settings
+      image: hashpe/docker-test-saml-idp
+      tag: latest
+      env:
+        - name: SIMPLESAMLPHP_SP_ENTITY_ID
+          value: "http://reru.codwer.com"
+        - name: SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE
+          value: "http://reru.codwer.com/ms/reru-identity-new/Saml2/Acs"
+        - name: SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE
+          value: "http://reru.codwer.com/ms/reru-identity-new/Saml2/Signout"
+        - name: SIMPLESAMLPHP_BASE_URL_PATH
+          value: "http://reru.codwer.com/ms/saml2/simplesaml/"
+
+    name: "test-saml"
+    port: 8080
+
+  - reru_identity_new:
+    service:
+      createService: true
+    deployment:
+      createDeployment: true
+      replicas: 1
+      volumes:
+        - name: global-application-settings
+          configMap:
+            name: global-application-settings
+      image: cvuintell/reru-identity-new
+      tag: dev
+      useImagePullSecrets: true
+      env:
+        - name: ASPNETCORE_URLS
+          value: "http://*:8080"
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"
+        - name: BASE_PATH
+          value: "/ms/reru-identity-new"
+        - name: SAML_METADATA_ENDPOINT
+          value: "http://reru.codwer.com/ms/saml2/simplesaml/saml2/idp/metadata.php"
+        - name: SAML_ENTITY_ID
+          value: "http://reru.codwer.com"
+        - name: SAML_CORS_PATH
+          value: "/Saml2/Acs"
+        - name: SAML_ENDPOINT
+          value: "http://reru.codwer.com"
+        - name: ConnectionStrings__Default
+          value: "server=mssql-deployment;database=Identity-DEV;User=sa;Password=MyC0m9l&xP@ssw0rd;"
+        - name: IDENTITY_ISSUER_URI
+          value: "http://reru.codwer.com/ms/reru-identity-new"
+        - name: IDENTITY_DISCOVERY_ENDPOINT_URI
+          value: "http://reru.codwer.com"
+      appsettings: reru_identity_new.appsettings.json
+    name: "reru-identity-new"
+    port: 8080
