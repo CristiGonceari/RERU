@@ -17,7 +17,6 @@ export class AddEditCategoryComponent implements OnInit {
 
   categoryForm: FormGroup;
 	categoryId: number;
-	categoryName: string;
 	isLoading: boolean = true;
 
   constructor(

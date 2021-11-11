@@ -18,7 +18,7 @@ import { BulkImportQuestionsComponent } from '../../../questions/bulk-import-que
 export class CategoryListTableComponent implements OnInit {
 
   	questionCategories: QuestionCategory[] = [];
-  	pagination: PaginationModel = new PaginationModel();
+  	pagedSummary: PaginationModel = new PaginationModel();
 	name = '';
 	pager: number[] = [];
 	keyword: string;
@@ -38,24 +38,21 @@ export class CategoryListTableComponent implements OnInit {
  	}
 
   	list(data: any = {}) {
-		console.warn('list')
 		this.isLoading = true;
 		this.keyword = data.keyword;
 		let params = {
 			name: this.keyword || '',
-			page: data.page || this.pagination.currentPage,
-			itemsPerPage: Number(this.pagination?.pageSize || 10)
+			page: data.page || this.pagedSummary.currentPage,
+			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
 		}
 
 		this.questionCategoryService.getCategories(params).subscribe(
 			res => {
+				console.warn('list', res.data)
 				if (res && res.data) {
 					this.questionCategories = res.data.items;
-					this.pagination = res.data.pagedSummary;
+					this.pagedSummary = res.data.pagedSummary;
 					this.isLoading = false;
-				}
-				for (let i = 1; i <= this.pagination.totalCount; i++) {
-					this.pager.push(i);
 				}
 			}
 		)
