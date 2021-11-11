@@ -7,9 +7,9 @@ using FluentValidation;
 
 namespace CODWER.RERU.Evaluation.Application.EventTestTypes.GetNoAssignedTestTypes
 {
-    public class GetNoAssignedTestTypesQueryValidator : AbstractValidator<GetNoAssignedTestTypesQuery>
+    public class GetNoAssignedUserProfilesQueryValidator : AbstractValidator<GetNoAssignedTestTypesQuery>
     {
-        public GetNoAssignedTestTypesQueryValidator(AppDbContext appDbContext)
+        public GetNoAssignedUserProfilesQueryValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.EventId)
                 .SetValidator(x => new ItemMustExistValidator<Event>(appDbContext, ValidationCodes.INVALID_EVENT,

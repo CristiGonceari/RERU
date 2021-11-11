@@ -28,7 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit
 
         public async Task<Unit> Handle(EditQuestionUnitCommand request, CancellationToken cancellationToken)
         {
-            var editQuestionUnit = await _appDbContext.QuestionUnits.FirstOrDefaultAsync(x => x.Id == request.Data.Id.Value);
+            var editQuestionUnit = await _appDbContext.QuestionUnits.FirstOrDefaultAsync(x => x.Id == request.Data.Id);
 
             if (editQuestionUnit.QuestionType != request.Data.QuestionType)
             {

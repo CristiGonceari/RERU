@@ -2,8 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 
 namespace CODWER.RERU.Evaluation.Application.Options.EditOption
 {
@@ -14,13 +17,13 @@ namespace CODWER.RERU.Evaluation.Application.Options.EditOption
         {
             _appDbContext = appDbContext;
 
-            RuleFor(r => r.Data.Id)
-                .Must(x => appDbContext.Options.Any(d => d.Id == x))
-                .WithErrorCode(ValidationCodes.INVALID_ID);
+            RuleFor(x => x.Data.Id)
+                .SetValidator(x => new ItemMustExistValidator<Option>(appDbContext, ValidationCodes.INVALID_ID,
+                    ValidationMessages.InvalidReference));
 
-            RuleFor(r => r.Data.QuestionUnitId)
-                .Must(x => appDbContext.QuestionUnits.Any(d => d.Id == x))
-                .WithErrorCode(ValidationCodes.INVALID_QUESTION);
+            RuleFor(x => x.Data.QuestionUnitId)
+                .SetValidator(x => new ItemMustExistValidator<QuestionUnit>(appDbContext, ValidationCodes.INVALID_QUESTION,
+                    ValidationMessages.InvalidReference));
 
             RuleFor(r => r.Data.Answer)
                 .NotEmpty()

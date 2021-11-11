@@ -2,8 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 
 namespace CODWER.RERU.Evaluation.Application.Options.DeleteOption
 {
@@ -14,9 +17,9 @@ namespace CODWER.RERU.Evaluation.Application.Options.DeleteOption
         {
             _appDbContext = appDbContext;
 
-            RuleFor(r => r.Id)
-                .Must(x => appDbContext.Options.Any(d => d.Id == x))
-                .WithErrorCode(ValidationCodes.INVALID_ID);
+            RuleFor(x => x.Id)
+                .SetValidator(x => new ItemMustExistValidator<Option>(appDbContext, ValidationCodes.INVALID_ID,
+                    ValidationMessages.InvalidReference));
 
             When(x => appDbContext.TestQuestions.Any(t => t.QuestionUnitId == appDbContext.Options.Include(x => x.QuestionUnit).FirstOrDefault(o => o.Id == x.Id).QuestionUnit.Id), () =>
             {

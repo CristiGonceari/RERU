@@ -4,9 +4,9 @@ using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 
 namespace CODWER.RERU.Evaluation.Application.EventTestTypes
 {
-    public class EventTestTypeMapping : Profile
+    public class EventUserMapping : Profile
     {
-        public EventTestTypeMapping()
+        public EventUserMapping()
         {
             CreateMap<AddEventTestTypeDto, EventTestType>();
         }

@@ -20,7 +20,7 @@ namespace CODWER.RERU.Evaluation.Application.Options.EditOption
 
         public async Task<Unit> Handle(EditOptionsCommand request, CancellationToken cancellationToken)
         {
-            var editOptions = await _appDbContext.Options.FirstOrDefaultAsync(x => x.Id == request.Data.Id.Value);
+            var editOptions = await _appDbContext.Options.FirstOrDefaultAsync(x => x.Id == request.Data.Id);
 
             _mapper.Map(request.Data, editOptions);
 

@@ -7,7 +7,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.TestQuestions
     {
         public int TestId { get; set; }
         public int QuestionIndex { get; set; }
-        public AnswerStatusEnum? Status { get; set; }
+        public AnswerStatusEnum Status { get; set; }
         public List<TestAnswerDto> Answers { get; set; }
     }
 }

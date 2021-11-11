@@ -1,7 +1,9 @@
 ﻿using FluentValidation;
-using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 
 namespace CODWER.RERU.Evaluation.Application.Events.DeleteEvent
 {
@@ -10,8 +12,8 @@ namespace CODWER.RERU.Evaluation.Application.Events.DeleteEvent
         public DeleteEventCommandValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.Id)
-                .Must(x => appDbContext.Events.Any(l => l.Id == x))
-                .WithErrorCode(ValidationCodes.INVALID_EVENT);
+                .SetValidator(x => new ItemMustExistValidator<Event>(appDbContext, ValidationCodes.INVALID_EVENT,
+                    ValidationMessages.InvalidReference));
         }
     }
 }

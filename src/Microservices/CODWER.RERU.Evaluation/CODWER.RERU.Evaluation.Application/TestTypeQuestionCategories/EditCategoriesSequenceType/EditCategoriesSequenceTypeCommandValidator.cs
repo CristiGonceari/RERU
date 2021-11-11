@@ -1,8 +1,11 @@
 ﻿using FluentValidation;
 using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 
 namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.EditCategoriesSequenceType
 {
@@ -10,9 +13,9 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.EditCate
     {
         public EditCategoriesSequenceTypeCommandValidator(AppDbContext appDbContext)
         {
-            RuleFor(r => r.TestTypeId)
-                    .Must(x => appDbContext.TestTypes.Any(t => t.Id == x))
-                    .WithErrorCode(ValidationCodes.INVALID_TEST_TYPE);
+            RuleFor(x => x.TestTypeId)
+                .SetValidator(x => new ItemMustExistValidator<TestType>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
+                    ValidationMessages.InvalidReference));
 
             RuleFor(r => r.CategoriesSequenceType)
                     .NotNull()

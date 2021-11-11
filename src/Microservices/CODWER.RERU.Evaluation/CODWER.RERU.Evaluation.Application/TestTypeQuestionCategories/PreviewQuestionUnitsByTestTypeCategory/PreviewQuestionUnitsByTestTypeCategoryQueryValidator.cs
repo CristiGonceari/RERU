@@ -2,8 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 
 namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQuestionUnitsByTestTypeCategory
 {
@@ -17,19 +20,17 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQ
 
             When(r => r.Data != null, () =>
             {
-                RuleFor(r => r.Data.TestTypeId)
-                    .GreaterThan(0)
-                    .Must(x => appDbContext.TestTypes.Any(t => t.Id == x))
-                    .WithErrorCode(ValidationCodes.INVALID_TEST_TYPE);
+                RuleFor(x => x.Data.TestTypeId)
+                    .SetValidator(x => new ItemMustExistValidator<TestType>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
+                        ValidationMessages.InvalidReference));
 
                 RuleFor(x => x.Data.TestTypeId)
                     .Must(x => appDbContext.TestTypes.First(tt => tt.Id == x).Status == TestTypeStatusEnum.Draft)
                     .WithErrorCode(ValidationCodes.ONLY_PENDING_TEST_CAN_BE_CHANGED);
 
-                RuleFor(r => r.Data.CategoryId)
-                    .GreaterThan(0)
-                    .Must(x => appDbContext.QuestionCategories.Any(t => t.Id == x))
-                    .WithErrorCode(ValidationCodes.INVALID_CATEGORY);
+                RuleFor(x => x.Data.CategoryId)
+                    .SetValidator(x => new ItemMustExistValidator<QuestionCategory>(appDbContext, ValidationCodes.INVALID_CATEGORY,
+                        ValidationMessages.InvalidReference));
 
                 RuleFor(r => r.Data.SelectionType)
                     .NotNull()
