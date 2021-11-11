@@ -59,7 +59,7 @@ angular_microservice:
         cpu: "10m"
 
 # application variables
-public_gateway:
+reru_public_gateway:
   service:
     port: 80
   ingress:
