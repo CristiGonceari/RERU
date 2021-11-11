@@ -157,7 +157,7 @@ stages:
             displayName: Building Personal back end image
             inputs:
               command: build
-              dockerfile: "docker-files/-RERU-Personal"
+              dockerfile: "docker-files/Dockerfile-RERU-Personal"
               tags: |
                 $(tag)
             condition: and(succeeded(), eq(variables['BuildPersonal'], 'True'))
