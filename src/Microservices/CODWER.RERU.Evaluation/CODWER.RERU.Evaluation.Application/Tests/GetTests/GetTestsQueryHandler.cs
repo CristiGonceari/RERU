@@ -34,6 +34,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
                 .Include(t => t.Event)
+                .OrderBy(x => x.CreateDate)
                 .AsQueryable();
 
             if (request != null)

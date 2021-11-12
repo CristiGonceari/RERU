@@ -9,22 +9,22 @@ using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.GetTestsWithoutEvent
+namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent
 {
-    public class GetTestsWithoutEventQueryHandler : IRequestHandler<GetTestsWithoutEventQuery, PaginatedModel<TestDto>>
+    public class GetMyTestsWithoutEventQueryHandler : IRequestHandler<GetMyTestsWithoutEventQuery, PaginatedModel<TestDto>>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IUserProfileService _userProfileService;
         private readonly IPaginationService _paginationService;
 
-        public GetTestsWithoutEventQueryHandler(AppDbContext appDbContext, IUserProfileService userProfileService, IPaginationService paginationService)
+        public GetMyTestsWithoutEventQueryHandler(AppDbContext appDbContext, IUserProfileService userProfileService, IPaginationService paginationService)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
             _userProfileService = userProfileService;
         }
 
-        public async Task<PaginatedModel<TestDto>> Handle(GetTestsWithoutEventQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedModel<TestDto>> Handle(GetMyTestsWithoutEventQuery request, CancellationToken cancellationToken)
         {
             var myUserProfile = await _userProfileService.GetCurrentUser();
 

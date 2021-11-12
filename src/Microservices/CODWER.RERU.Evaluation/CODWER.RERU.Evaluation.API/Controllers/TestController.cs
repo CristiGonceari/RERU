@@ -6,9 +6,9 @@ using CODWER.RERU.Evaluation.Application.Tests.DeleteTest;
 using CODWER.RERU.Evaluation.Application.Tests.EditTestStatus;
 using CODWER.RERU.Evaluation.Application.Tests.FinalizeTest;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsByEvent;
+using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent;
 using CODWER.RERU.Evaluation.Application.Tests.GetTest;
 using CODWER.RERU.Evaluation.Application.Tests.GetTests;
-using CODWER.RERU.Evaluation.Application.Tests.GetTestsWithoutEvent;
 using CODWER.RERU.Evaluation.Application.Tests.SetConfirmationToStartTest;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Common.Pagination;
@@ -34,7 +34,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("my-tests-without-event")]
-        public async Task<PaginatedModel<TestDto>> GetMyTestsWithoutEvent([FromQuery] GetTestsWithoutEventQuery query)
+        public async Task<PaginatedModel<TestDto>> GetMyTestsWithoutEvent([FromQuery] GetMyTestsWithoutEventQuery query)
         {
             return await Mediator.Send(query);
         }
