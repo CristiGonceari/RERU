@@ -399,7 +399,7 @@ data:
       }
     }
 
-  reru_dashboard.appsettings.json: |
+  reru_core_fe.appsettings.json: |
     {
       	"IDENTITY_AUTHORITY": "http://reru.codwer.com/ms/reru-identity-new",
         "IDENTITY_AUTHORITY_REDIRECT_URI": "http://reru.codwer.com/#/auth-callback#",
