@@ -1,12 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.API.Config;
+using CODWER.RERU.Evaluation.Application.Tests.AddMyPoll;
 using CODWER.RERU.Evaluation.Application.Tests.AddTest;
 using CODWER.RERU.Evaluation.Application.Tests.DeleteTest;
 using CODWER.RERU.Evaluation.Application.Tests.EditTestStatus;
 using CODWER.RERU.Evaluation.Application.Tests.FinalizeTest;
+using CODWER.RERU.Evaluation.Application.Tests.GetMyPollsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent;
+using CODWER.RERU.Evaluation.Application.Tests.GetPollResult;
 using CODWER.RERU.Evaluation.Application.Tests.GetTest;
 using CODWER.RERU.Evaluation.Application.Tests.GetTests;
 using CODWER.RERU.Evaluation.Application.Tests.SetConfirmationToStartTest;
@@ -45,10 +49,28 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
+        [HttpGet("my-polls-by-event")]
+        public async Task<List<PollDto>> GetMyPollsByEvent([FromQuery] GetMyPollsByEventQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
         [HttpPost]
         public async Task<int> AddTest([FromBody] AddTestCommand command)
         {
             return await Mediator.Send(command);
+        }
+
+        [HttpPost("create-my-poll")]
+        public async Task<int> CreateMyPoll([FromBody] AddMyPollCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
+        [HttpGet("poll-result")]
+        public async Task<PollResultDto> GetPollResult([FromQuery] GetPollResultQuery query)
+        {
+            return await Mediator.Send(query);
         }
 
         [HttpPost("allow")]

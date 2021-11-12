@@ -5,6 +5,7 @@ using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 
@@ -12,8 +13,12 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQ
 {
     public class PreviewQuestionUnitsByTestTypeCategoryQueryValidator : AbstractValidator<PreviewQuestionUnitsByTestTypeCategoryQuery>
     {
+        private readonly AppDbContext _appDbContext;
+
         public PreviewQuestionUnitsByTestTypeCategoryQueryValidator(AppDbContext appDbContext)
         {
+            _appDbContext = appDbContext;
+
             RuleFor(r => r.Data)
                 .NotNull()
                 .WithErrorCode(ValidationCodes.NULL_OR_EMPTY_INPUT);
@@ -31,6 +36,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQ
                 RuleFor(x => x.Data.CategoryId)
                     .SetValidator(x => new ItemMustExistValidator<QuestionCategory>(appDbContext, ValidationCodes.INVALID_CATEGORY,
                         ValidationMessages.InvalidReference));
+
+                RuleFor(r => r.Data)
+                    .Must(x => IsPoll(x))
+                    .WithErrorCode(ValidationCodes.POLLS_ACCEPTS_ONLY_ONE_ANSWER_QUESTIONS);
 
                 RuleFor(r => r.Data.SelectionType)
                     .NotNull()
@@ -112,6 +121,18 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQ
                     });
                 });
             });
+        }
+
+        private bool IsPoll(QuestionCategoryPreviewDto data)
+        {
+            var testType = _appDbContext.TestTypes.FirstOrDefault(x => x.Id == data.TestTypeId);
+
+            if (testType != null && testType.Mode == TestTypeModeEnum.Poll && data.QuestionType != QuestionTypeEnum.OneAnswer)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
