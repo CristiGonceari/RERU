@@ -103,7 +103,7 @@ stages:
             displayName: Building InternalGateway Gateway image
             inputs:
               command: build
-              dockerfile: "docker-files/Dockerfile0-RERU-InternalGateway"
+              dockerfile: "docker-files/Dockerfile-RERU-InternalGateway"
               tags: |
                 $(tag)
             condition: and(succeeded(), eq(variables['BuildInternalGateway'], 'True'))
