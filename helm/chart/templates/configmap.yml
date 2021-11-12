@@ -333,7 +333,7 @@ data:
             "RequireHttpsMetadata": false
           },
           "CoreClient": {
-            "BaseUrl": "http://internal-gateway-service:8080/reru-core/api"
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-core/api"
           }
         }
     }
@@ -349,7 +349,7 @@ data:
        },
        "SecurityKey":"TESTSECURITYKEY2018",
        "Smtp":{
-          "From":"CVU.ERP.MP",
+          "From":"CVU.RERU.MP",
           "EnableSsl":false,
           "Host":"smtp.gmail.com",
           "Port":587,
@@ -381,7 +381,7 @@ data:
              "RequireHttpsMetadata":false
           },
           "CoreClient":{
-             "BaseUrl":"http://internal-gateway-service:8080/reru-core/api"
+             "BaseUrl":"http://reru-internal-gateway-service:8080/reru-core/api"
           }
        },
        "DocumentOptions":{
