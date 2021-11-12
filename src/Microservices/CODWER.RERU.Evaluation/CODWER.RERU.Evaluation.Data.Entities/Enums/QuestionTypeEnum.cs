@@ -3,7 +3,7 @@
     public enum QuestionTypeEnum
     {
         FreeText = 1,
-        MultiplyAnswers = 2,
+        MultipleAnswers = 2,
         OneAnswer = 3,
         HashedAnswer = 4
     }

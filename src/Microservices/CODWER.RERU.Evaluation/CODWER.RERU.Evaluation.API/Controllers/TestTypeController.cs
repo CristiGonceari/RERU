@@ -4,10 +4,10 @@ using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.TestTypes.AddEditTestTypeSettings;
 using CODWER.RERU.Evaluation.Application.TestTypes.AddTestType;
 using CODWER.RERU.Evaluation.Application.TestTypes.AddTestTypeRules;
-using CODWER.RERU.Evaluation.Application.TestTypes.ChangeTestTypeStatus;
 using CODWER.RERU.Evaluation.Application.TestTypes.CloneTestType;
 using CODWER.RERU.Evaluation.Application.TestTypes.DeleteTestType;
 using CODWER.RERU.Evaluation.Application.TestTypes.EditTestType;
+using CODWER.RERU.Evaluation.Application.TestTypes.EditTestTypeStatus;
 using CODWER.RERU.Evaluation.Application.TestTypes.GetQuestionsPreview;
 using CODWER.RERU.Evaluation.Application.TestTypes.GetTestType;
 using CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypeByStatus;
@@ -73,10 +73,9 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
-        [HttpGet("status/{status}")]
-        public async Task<List<SelectItem>> GetTestTypeByStatus([FromRoute] TestTypeStatusEnum status)
+        [HttpGet("status")]
+        public async Task<List<SelectTestTypeValueDto>> GetTestTypeByStatus([FromQuery] GetTestTypeByStatusQuery query)
         {
-            var query = new GetTestTypeByStatusQuery() { TestTypeStatus = status };
             return await Mediator.Send(query);
         }
 
@@ -93,7 +92,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpPatch("status")]
-        public async Task<Unit> ChangeTestTypeStatus([FromBody] ChangeTestTypeStatusCommand command)
+        public async Task<Unit> ChangeTestTypeStatus([FromBody] EditTestTypeStatusCommand command)
         {
             return await Mediator.Send(command);
         }

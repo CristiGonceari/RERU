@@ -3,11 +3,11 @@ using CODWER.RERU.Evaluation.DataTransferObjects.TestTypes;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 
-namespace CODWER.RERU.Evaluation.Application.TestTypes.ChangeTestTypeStatus
+namespace CODWER.RERU.Evaluation.Application.TestTypes.EditTestTypeStatus
 {
     [ModuleOperation(permission: PermissionCodes.TEST_TYPES_GENERAL_ACCESS)]
 
-    public class ChangeTestTypeStatusCommand : IRequest<Unit>
+    public class EditTestTypeStatusCommand : IRequest<Unit>
     {
         public EditTestTypeStatusDto Data { get; set; }
     }
