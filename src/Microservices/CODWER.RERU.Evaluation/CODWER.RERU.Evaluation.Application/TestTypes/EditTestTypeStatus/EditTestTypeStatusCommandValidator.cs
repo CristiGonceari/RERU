@@ -7,11 +7,11 @@ using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 
-namespace CODWER.RERU.Evaluation.Application.TestTypes.ChangeTestTypeStatus
+namespace CODWER.RERU.Evaluation.Application.TestTypes.EditTestTypeStatus
 {
-    public class ChangeTestTypeStatusCommandValidator : AbstractValidator<ChangeTestTypeStatusCommand>
+    public class EditTestTypeStatusCommandValidator : AbstractValidator<EditTestTypeStatusCommand>
     {
-        public ChangeTestTypeStatusCommandValidator(AppDbContext appDbContext)
+        public EditTestTypeStatusCommandValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.Data.TestTypeId)
                 .SetValidator(x => new ItemMustExistValidator<TestType>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,

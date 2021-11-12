@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.API.Config;
+using CODWER.RERU.Evaluation.Application.References.GetEventsValues;
 using CODWER.RERU.Evaluation.Application.References.GetQuestionCategoryValue;
+using CODWER.RERU.Evaluation.Application.References.GetUsersValue;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
+using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CVU.ERP.Common.EnumConverters;
 
@@ -51,6 +54,30 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             var items = EnumConverter<TestingLocationType>.SelectValues;
 
             return items;
+        }
+
+        [HttpGet("test-statuses/select-values")]
+        public async Task<List<SelectItem>> GetTestStatuses()
+        {
+            var items = EnumConverter<TestStatusEnum>.SelectValues;
+
+            return items;
+        }
+
+        [HttpGet("users-value/select-values")]
+        public async Task<List<SelectItem>> GetUsers()
+        {
+            var query = new GetUsersValueQuery();
+
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("events-value/select-values")]
+        public async Task<List<SelectEventValueDto>> GetEvents()
+        {
+            var query = new GetEventsValueQuery();
+
+            return await Mediator.Send(query);
         }
     }
 }
