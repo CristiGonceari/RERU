@@ -90,8 +90,8 @@ namespace CODWER.RERU.Evaluation.API
             services.AddCommonModuleApplication();
             services.AddModuleApplicationServices();
 
-            //services.AddHangfire(config =>
-            //    config.UseSqlServerStorage(Configuration.GetConnectionString("Default")));
+            // services.AddHangfire(config =>
+            //     config.UseSqlServerStorage(Configuration.GetConnectionString("Default")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -19,7 +19,7 @@ export class ArticlesService extends AbstractService {
 	}
 
 	getList(params): Observable<any> {
-		return this.client.get<any>(`${this.baseUrl}/${this.urlRoute}/list`, { params });
+		return this.client.get<any>(`${this.baseUrl}/${this.urlRoute}/`, { params });
 	}
 
 	delete(id: number): Observable<ArticleModel> {
