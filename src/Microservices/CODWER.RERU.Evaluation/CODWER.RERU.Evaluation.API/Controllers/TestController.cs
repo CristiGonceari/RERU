@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.API.Config;
@@ -6,6 +7,7 @@ using CODWER.RERU.Evaluation.Application.Tests.AddMyPoll;
 using CODWER.RERU.Evaluation.Application.Tests.AddTest;
 using CODWER.RERU.Evaluation.Application.Tests.DeleteTest;
 using CODWER.RERU.Evaluation.Application.Tests.EditTestStatus;
+using CODWER.RERU.Evaluation.Application.Tests.ExportTests;
 using CODWER.RERU.Evaluation.Application.Tests.FinalizeTest;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyPollsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsByEvent;
@@ -95,6 +97,15 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<Unit> DeleteTest([FromQuery] DeleteTestCommand command)
         {
             return await Mediator.Send(command);
+        }
+
+        [HttpGet("export")]
+        public async Task<FileContentResult> ExportTests()
+        {
+            byte[] answerBytes = await Mediator.Send(new ExportTestsQuery()) as byte[];
+
+            var timeStamp = DateTime.Now;
+            return File(answerBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"AllTests_{timeStamp.Year}-{timeStamp.Month.ToString("00")}-{timeStamp.Day.ToString("00")}.xlsx");
         }
     }
 }

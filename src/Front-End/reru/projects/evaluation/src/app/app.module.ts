@@ -18,7 +18,6 @@ import { CommonModule } from '@angular/common';
 import { EventsModule } from './components/events/events.module';
 import { PollsModule } from './components/polls/polls.module';
 import { FaqRoutingModule } from './components/faq/faq-routing.module';
-import { DashboardRoutingModule } from './components/dashboard/dashboard-routing.module';
 import { StatisticsModule } from './components/statistics/statistics.module';
 import { StatisticsRoutingModule } from './components/statistics/statistics-routing.module';
 import { PlansRoutingModule } from './components/plans/plans-routing.module';
@@ -32,12 +31,17 @@ import { MaterialModule } from './material.module'
 import { NOTIFICATION_INTERCEPTOR_PROVIDER } from './utils/interceptors/notification.interceptor'
 import { IDNP_INTERCEPTOR_PROVIDER } from './utils/interceptors/idnp.interceptor';
 import { PlansModule } from './components/plans/plans.module';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { MyActivitiesComponent } from './components/my-activities/my-activities.component';
+import { MyActivitiesRoutingModule } from './components/my-activities/my-activities-routing.module';
+import { MyActivitiesModule } from './components/my-activities/my-activities.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LayoutsComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -70,12 +74,13 @@ import { PlansModule } from './components/plans/plans.module';
     TestTypeRoutingModule,
     FaqRoutingModule,
     TestsRoutingModule,
-    DashboardRoutingModule,
     AppRoutingModule,
     PlansRoutingModule,
     StatisticsRoutingModule,
     StatisticsModule,
-    MaterialModule
+    MaterialModule,
+    MyActivitiesModule,
+    MyActivitiesRoutingModule
   ],
   entryComponents: [
   ],

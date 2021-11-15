@@ -34,12 +34,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests
 
             CreateMap<UserProfile, UserProfileDto>();
 
-            CreateMap<ApplicationUser, UserProfile>()
-                .ForMember(x => x.Id, opts => opts.Ignore())
-                .ForMember(x => x.CoreUserId, opts => opts.MapFrom(src => src.Id))
-                .ForMember(x => x.FirstName, opts => opts.MapFrom(src => src.Name))
-                .ForMember(x => x.Email, opts => opts.MapFrom(src => src.Email));
-
             CreateMap<Test, TestResultDto>()
                 .ForMember(x => x.MinPercent, opts => opts.MapFrom(src => src.TestType.MinPercent))
                 .ForMember(x => x.AccumulatedPercentage, opts => opts.MapFrom(src => src.AccumulatedPercentage))

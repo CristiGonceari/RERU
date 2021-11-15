@@ -13,6 +13,7 @@ import { LayoutsComponent } from './components/layouts/layouts.component';
 import { AuthenticationCallbackComponent, AuthenticationGuard } from '@erp/shared';
 import { CategoriesRoutingModule } from './components/categories/categories-routing.module';
 import { PermissionRouteGuard } from '@erp/shared';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent },
@@ -21,9 +22,8 @@ const routes: Routes = [
 		component: LayoutsComponent,
 		canActivate: [AuthenticationGuard],
 		children: [
-			{ path: '', loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule) },
+			{ path: '', component: DashboardComponent },
 			{
-				
 				path: 'categories', 
 				loadChildren: () => import('./components/categories/categories.module').then(m => m.CategoriesModule) ,
 				data: { permission: 'P03010102' },
@@ -78,6 +78,10 @@ const routes: Routes = [
 			{
 				path: 'statistics', 
 				loadChildren: () => import('./components/statistics/statistics.module').then(m => m.StatisticsModule),
+			},
+			{
+				path: 'my-activities', 
+				loadChildren: () => import('./components/my-activities/my-activities.module').then(m => m.MyActivitiesModule),
 			}
 		]
 	},
