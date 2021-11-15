@@ -271,7 +271,7 @@ data:
       "Module": {
         "UsesAuthentication": true,
         "Authentication": {
-          "Authority": "http://reru.codwer.com/ms/reru-identity-new",
+          "Authority": "http://reru-identity-new-service:8080/ms/reru-identity-new",
           "RequireHttpsMetadata": false
         },
         "IsCore": true,
@@ -329,7 +329,7 @@ data:
           "Name": "EvaluationModule",
           "UsesAuthentication": true,
           "Authentication": {
-            "Authority":"http://reru.codwer.com/ms/reru-identity-new",
+            "Authority":"http://reru-identity-new-service:8080/ms/reru-identity-new",
             "RequireHttpsMetadata": false
           },
           "CoreClient": {
@@ -377,7 +377,7 @@ data:
           "Name":"PersonalModule",
           "UsesAuthentication":true,
           "Authentication":{
-             "Authority":"http://reru.codwer.com/ms/reru-identity-new",
+             "Authority":"http://reru-identity-new-service:8080/ms/reru-identity-new",
              "RequireHttpsMetadata":false
           },
           "CoreClient":{
