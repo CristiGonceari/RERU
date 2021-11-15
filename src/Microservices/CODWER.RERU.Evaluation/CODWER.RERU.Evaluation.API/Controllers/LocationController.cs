@@ -14,7 +14,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class LocationsController : BaseController
+    public class LocationController : BaseController
     {
         [HttpGet("{id}")]
         public async Task<LocationDto> GetLocation([FromRoute] int id)

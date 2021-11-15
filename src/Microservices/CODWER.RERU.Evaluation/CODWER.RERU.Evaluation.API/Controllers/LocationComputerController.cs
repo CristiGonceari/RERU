@@ -13,7 +13,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class LocationComputersController : BaseController
+    public class LocationComputerController : BaseController
     {
         [HttpGet("by-computer")]
         public async Task<LocationDto> GetLocationByComputer([FromQuery] GetLocationByComputerQuery query)

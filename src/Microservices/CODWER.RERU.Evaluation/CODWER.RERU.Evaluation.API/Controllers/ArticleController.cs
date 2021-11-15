@@ -16,7 +16,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ArticlesController : BaseController
+    public class ArticleController : BaseController
     {
         [HttpGet("{id}")]
         public async Task<ArticleDto> GetArticle([FromRoute] int id)
