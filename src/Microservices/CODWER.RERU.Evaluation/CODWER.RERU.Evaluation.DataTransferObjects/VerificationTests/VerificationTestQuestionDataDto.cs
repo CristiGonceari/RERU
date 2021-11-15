@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CODWER.RERU.Evaluation.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.VerificationTests
 {
@@ -8,6 +9,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.VerificationTests
         public int CorrectAnswers { get; set; }
         public int TotalQuestions { get; set; }
         public int Points { get; set; }
-        public int Result { get; set; }
+        public TestResultStatusEnum Result { get; set; }
     }
 }

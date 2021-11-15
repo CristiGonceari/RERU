@@ -60,7 +60,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
                     .ThenInclude(x => x.TestAnswers)
                 .First(x => x.Id == testId);
 
-            var questions = test.TestQuestions.Where(x => x.AnswerStatus == AnswerStatusEnum.Answered && (x.QuestionUnit.QuestionType == QuestionTypeEnum.MultiplyAnswers || x.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer));
+            var questions = test.TestQuestions.Where(x => x.AnswerStatus == AnswerStatusEnum.Answered && (x.QuestionUnit.QuestionType == QuestionTypeEnum.MultipleAnswers || x.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer));
             var countedErrors = 0;
 
             foreach (var testQuestion in questions)

@@ -51,7 +51,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.SaveTestQuestion
                         await SaveAnswer(testQuestion.Id, request.Data.Answers[0].OptionId, null);
                         break;
 
-                    case QuestionTypeEnum.MultiplyAnswers:
+                    case QuestionTypeEnum.MultipleAnswers:
                         foreach (var answer in request.Data.Answers)
                         {
                             await SaveAnswer(testQuestion.Id, answer.OptionId, null);

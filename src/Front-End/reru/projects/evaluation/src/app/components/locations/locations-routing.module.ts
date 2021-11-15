@@ -61,7 +61,7 @@ const routes: Routes = [
     // canActivate: [PermissionRouteGuard],
   },
   {
-    path: 'location/:id/detach-client/:id2', 
+    path: 'location/:id/detach-computer/:id2', 
     component: DetachComputerComponent,
     data: { permission: 'P03011110' },
     // canActivate: [PermissionRouteGuard],

@@ -126,9 +126,9 @@ export class AddEditTestTypesComponent implements OnInit {
 		this.testTypeService.addTestType({data: this.testForm.value}).subscribe(res => { 
 			this.testId = res.data; 
 			this.settings();
+			// this.backClicked()
 			this.notificationService.success('Success', 'Test type was successfully added', NotificationUtil.getDefaultMidConfig());
 		});
-		this.backClicked()
 	}
 
 	settings(){

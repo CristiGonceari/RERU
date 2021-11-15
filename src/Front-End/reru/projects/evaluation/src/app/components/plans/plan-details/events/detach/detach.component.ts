@@ -52,7 +52,7 @@ export class DetachComponent implements OnInit {
   }
 
   getEvent(): void {
-    this.eventService.getEvent({ id: this.eventId }).subscribe((res) => {
+    this.eventService.getEvent(this.eventId).subscribe((res) => {
       if (res && res.data) {
         this.event = res.data;
         this.isLoading = false;

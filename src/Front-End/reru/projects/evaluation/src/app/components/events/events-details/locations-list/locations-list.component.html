@@ -1,0 +1,15 @@
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="card card-custom guutter-b" style="margin-left: 16px;">
+      <div class="card-header flex-wrap border-0 py-5">
+        <div class="card-title"><b>{{'locations.locations' | translate}}</b></div>
+        <div class="card-toolbar m-0">
+          <app-add-button class="btn" [value]="'events.attach-location' | translate"
+              [routerLink]="['../../../attach-location', id]"></app-add-button>
+        </div>
+      </div>
+      <div class="card-body">
+        <app-table [category]="url" [importedId]="id"></app-table>
+      </div>
+    </div>
+  </div>
+    

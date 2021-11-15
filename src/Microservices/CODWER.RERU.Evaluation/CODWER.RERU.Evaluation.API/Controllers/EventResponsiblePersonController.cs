@@ -34,9 +34,11 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(command);
         }
 
-        [HttpDelete]
-        public async Task<Unit> UnassignResponsiblePersonFromEvent([FromBody] UnassignResponsiblePersonFromEventCommand command)
+        [HttpDelete("Event={eventId}&&UserProfile={userProfileId}")]
+        public async Task<Unit> UnassignResponsiblePersonFromEvent([FromRoute] int eventId, int userProfileId )
         {
+            var command = new UnassignResponsiblePersonFromEventCommand { EventId = eventId, UserProfileId = userProfileId };
+
             return await Mediator.Send(command);
         }
     }

@@ -171,7 +171,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             {
                 return await GenerateFreeTextTemplate($"{questionType.ToString()}Template");
             }
-            else if (questionType == QuestionTypeEnum.MultiplyAnswers || questionType == QuestionTypeEnum.OneAnswer)
+            else if (questionType == QuestionTypeEnum.MultipleAnswers || questionType == QuestionTypeEnum.OneAnswer)
             {
                 return await GenerateStandartAnswerTemplate(questionType);
             }
@@ -287,8 +287,8 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                             await UploadOneOrMultiplyAnswer(ws, QuestionTypeEnum.OneAnswer);
                             break;
 
-                        case QuestionTypeEnum.MultiplyAnswers:
-                            await UploadOneOrMultiplyAnswer(ws, QuestionTypeEnum.MultiplyAnswers);
+                        case QuestionTypeEnum.MultipleAnswers:
+                            await UploadOneOrMultiplyAnswer(ws, QuestionTypeEnum.MultipleAnswers);
                             break;
 
                         case QuestionTypeEnum.HashedAnswer:

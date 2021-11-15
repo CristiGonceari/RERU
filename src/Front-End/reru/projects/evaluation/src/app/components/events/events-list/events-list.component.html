@@ -1,0 +1,27 @@
+<app-page-title title="{{'events.events' | translate}}" subTitle="{{'events.manage-events' | translate}}">
+</app-page-title>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+	<div class="d-flex flex-column-fluid">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="card card-custom gutter-b">
+						<div class="card-header flex-wrap border-0 py-5">
+							<div class="card-title">
+								<h3 class="card-label">{{'events.events' | translate}}</h3>
+							</div>
+							<div class="card-toolbar">
+								<app-add-button class="btn" [value]="'events.add-event' | translate" [routerLink]="['add-event']"></app-add-button>
+							</div>
+						</div>
+						
+						<div class="card-body">
+							<app-events-list-table></app-events-list-table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

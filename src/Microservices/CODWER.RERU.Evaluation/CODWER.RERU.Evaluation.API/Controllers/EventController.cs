@@ -8,6 +8,7 @@ using CODWER.RERU.Evaluation.Application.Events.DeleteEvent;
 using CODWER.RERU.Evaluation.Application.Events.EditEvent;
 using CODWER.RERU.Evaluation.Application.Events.GetEvent;
 using CODWER.RERU.Evaluation.Application.Events.GetEvents;
+using CODWER.RERU.Evaluation.Application.Events.GetMyEvents;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
@@ -25,6 +26,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpGet]
         public async Task<PaginatedModel<EventDto>> GetEvents([FromQuery] GetEventsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("my-events")]
+        public async Task<PaginatedModel<EventDto>> GetMyEvents([FromQuery] GetMyEventsQuery query)
         {
             return await Mediator.Send(query);
         }

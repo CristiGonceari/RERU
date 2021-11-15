@@ -839,6 +839,8 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 
                     b.HasIndex("EventId");
 
+                    b.HasIndex("LocationId");
+
                     b.HasIndex("ResultStatus");
 
                     b.HasIndex("TestPassStatus");
@@ -1221,6 +1223,9 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Idnp")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -1328,7 +1333,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                         new
                         {
                             Id = 2,
-                            Name = "MultiplyAnswers"
+                            Name = "MultipleAnswers"
                         },
                         new
                         {
@@ -1908,6 +1913,10 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                         .WithMany("Tests")
                         .HasForeignKey("EventId");
 
+                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId");
+
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.TestResultStatusEnum>", null)
                         .WithMany()
                         .HasForeignKey("ResultStatus")
@@ -1940,6 +1949,8 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.Navigation("Evaluator");
 
                     b.Navigation("Event");
+
+                    b.Navigation("Location");
 
                     b.Navigation("TestType");
 

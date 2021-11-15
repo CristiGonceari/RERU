@@ -34,7 +34,7 @@ export class UserProfileService extends AbstractService {
   }
 
   getUserProfilesByEvent(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/not-attached-event`, { params });
+    return this.http.get(`${this.baseUrl}/EventResponsiblePerson/no-assigned`, { params });
   }
 
   getUserProfilesByPlan(params): Observable<any> {
@@ -42,10 +42,10 @@ export class UserProfileService extends AbstractService {
   }
 
   getUserProfilesByAttachedUserEvent(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/not-attached-event-as-user`, { params });
+    return this.http.get(`${this.baseUrl}/EventUser/no-assigned`, { params });
   }
 
   getUserProfilesByEvaluatorEvent(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/not-attached-evaluator`, { params });
+    return this.http.get(`${this.baseUrl}/EventEvaluator/no-assigned`, { params });
   }
 }

@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CODWER.RERU.Evaluation.DataTransferObjects.TestTypes;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypeByStatus
 {
-    public class GetTestTypeByStatusQueryHandler : IRequestHandler<GetTestTypeByStatusQuery, List<SelectItem>>
+    public class GetTestTypeByStatusQueryHandler : IRequestHandler<GetTestTypeByStatusQuery, List<SelectTestTypeValueDto>>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
@@ -22,15 +23,34 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypeByStatus
             _mapper = mapper;
         }
 
-        public async Task<List<SelectItem>> Handle(GetTestTypeByStatusQuery request, CancellationToken cancellationToken)
+        public async Task<List<SelectTestTypeValueDto>> Handle(GetTestTypeByStatusQuery request, CancellationToken cancellationToken)
         {
-            var testTypes = await _appDbContext.TestTypes
+            var testTypes = _appDbContext.TestTypes
                 .Include(x => x.Settings)
                 .Where(x => x.Status == request.TestTypeStatus && x.Mode == (int)TestTypeModeEnum.Test)
-                .Select(x => _mapper.Map<SelectItem>(x))
-                .ToListAsync();
+                .AsQueryable();
 
-            return testTypes;
+            if (request.EventId.HasValue)
+            {
+                testTypes = testTypes
+                    .Include(x => x.EventTestTypes)
+                    .Where(x => x.EventTestTypes.Any(e => e.EventId == request.EventId));
+            }
+
+            var onlyOneAnswerTests = testTypes.Select(x => _mapper.Map<SelectTestTypeValueDto>(x)).ToList();
+
+            foreach (var x in onlyOneAnswerTests)
+            {
+                var testTypeCategories = _appDbContext.TestTypeQuestionCategories.Where(tt => tt.TestTypeId == x.TestTypeId).All(tt => tt.QuestionType == QuestionTypeEnum.OneAnswer);
+
+                if (testTypeCategories)
+                {
+                    x.IsOnlyOneAnswer = true;
+                }
+                else x.IsOnlyOneAnswer = false;
+            }
+
+            return onlyOneAnswerTests;
         }
     }
 }

@@ -1,0 +1,129 @@
+<app-page-title *ngIf="!locations" title="{{'events.manage-events' | translate}}"
+  subTitle="{{'events.attach-location-to-event' | translate}}">
+</app-page-title>
+
+<app-page-title *ngIf="!user" title="{{'events.manage-events' | translate}}"
+  subTitle="{{'events.attach-user-to-event' | translate}}">
+</app-page-title>
+
+<app-page-title *ngIf="!evaluator" title="{{'events.manage-events' | translate}}"
+  subTitle="{{'events.attach-evaluator' | translate}}">
+</app-page-title>
+
+<app-page-title *ngIf="!testType" title="{{'events.manage-events' | translate}}"
+  subTitle="{{'events.attach-test-type-to-event' | translate}}">
+</app-page-title>
+
+<app-page-title *ngIf="!person" title="{{'events.manage-events' | translate}}"
+  subTitle="{{'events.attach-to-event' | translate}}">
+</app-page-title>
+
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
+  <div class="d-flex flex-column-fluid">
+    <div class="container">
+      <div class="card card-custom gutter-b">
+        <div class="card-body p-0">
+          <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+            <div class="col-xl-12 col-xxl-7">
+              <h3 class="mb-10 font-weight-bold text-dark">{{'events.attach-location' | translate}}</h3>
+              <div class="col-xl-12 mb-10">
+                <div class="form-group row m-1">
+                  <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.name' | translate}}:</label>
+                  <div class="col-lg-9 col-xl-6">
+                    <p class="font-size-lg mt-3">{{name}}</p>
+                  </div>
+                </div>
+                <div class="form-group row m-1">
+                  <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.start-date' |
+                    translate}}:</label>
+                  <div class="col-lg-9 col-xl-6">
+                    <p class="font-size-lg mt-3">{{startDate | date: 'd/M/yy, HH:mm'}}</p>
+                  </div>
+                </div>
+                <div class="form-group row m-1">
+                  <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.end-date' | translate}}:</label>
+                  <div class="col-lg-9 col-xl-6">
+                    <p class="font-size-lg mt-3">{{endDate | date: 'd/M/yy, HH:mm'}}</p>
+                  </div>
+                </div>
+                <div *ngIf="!locations">
+                  <div class="form-group row mt-4">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.location' |
+                      translate}}:</label>
+                    <div class="col-lg-9 col-xl-9">
+                      <app-search [searchLocations]="locations"></app-search>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!evaluator">
+                  <div class="form-group row mt-4 mb-10">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.evaluator' |
+                      translate}}:</label>
+                    <div class="col-lg-9 col-xl-9">
+                      <app-search [searchEvaluators]="evaluator"></app-search>
+                    </div>
+                  </div>
+                  <div class="form-group row mt-4 mb-10">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.show-candidate' |
+                      translate}}:</label>
+                    <div class="col-lg-9 col-xl-9 my-auto">
+                      <label class="checkbox checkbox-lg checkbox-inline mr-5">
+                        <input type="checkbox" name="isSelected" (change)="onItemChange($event)" [value]="showName"
+                          [checked]="showName">
+                        <span></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!testType">
+                  <div class="form-group row mt-4">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.test-type-name' |
+                      translate}}:</label>
+                    <div class="col-lg-9 col-xl-9">
+                      <app-search [searchTestType]="testType"></app-search>
+                    </div>
+                  </div>
+                  <div class="form-group row mb-10">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.attempts' | translate}}</label>
+                    <div class="col-lg-9 col-xl-9">
+                      <input class="form-control form-control-solid" name="attempts" type="number"
+                        [(ngModel)]="attempts" min="1" />
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!person">
+                  <div class="form-group row mt-4 mb-10">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'locations.person' |
+                      translate}}:</label>
+                    <div class="col-lg-9 col-xl-9">
+                      <app-search [searchPerson]="person"></app-search>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!user">
+                  <div class="form-group row mt-4 mb-10">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'locations.person' |
+                      translate}}:</label>
+                    <div class="col-lg-9 col-xl-9">
+                      <app-search [searchUser]="user"></app-search>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-right border-top pt-10">
+                <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
+                </app-button>
+                <app-add-button class="btn" (handle)="attach()" [value]="'locations.attach' | translate">
+                </app-add-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

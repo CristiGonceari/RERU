@@ -126,6 +126,7 @@
         public static string INVALID_SELECTION_TYPE = "03001803";
         public static string INVALID_SEQUENCE_TYPE = "03001804";
         public static string QUESTION_COUNT_MUST_BE_EQUAL_TO_SELECTED_COUNT = "03001805";
+        public static string POLLS_ACCEPTS_ONLY_ONE_ANSWER_QUESTIONS = "03001806";
 
         //verify tests
         public static string CANT_CALCULATE_RESULT = "03001901";
