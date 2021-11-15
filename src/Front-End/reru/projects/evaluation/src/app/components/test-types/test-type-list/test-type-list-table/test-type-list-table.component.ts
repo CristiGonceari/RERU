@@ -7,14 +7,17 @@ import { SelectItem } from 'projects/evaluation/src/app/utils/models/select-item
 import { ReferenceService } from 'projects/evaluation/src/app/utils/services/reference/reference.service';
 import { TestType } from '../../../../utils/models/test-types/test-type.model';
 import { TestTypeService } from '../../../../utils/services/test-type/test-type.service';
-
+import { NotificationsService } from 'angular2-notifications';
+import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
+import { ConfirmModalComponent } from '@erp/shared';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
-  selector: 'app-test-type-list-table',
-  templateUrl: './test-type-list-table.component.html',
-  styleUrls: ['./test-type-list-table.component.scss']
+	selector: 'app-test-type-list-table',
+	templateUrl: './test-type-list-table.component.html',
+	styleUrls: ['./test-type-list-table.component.scss']
 })
 export class TestTypeListTableComponent implements OnInit {
-  testTypeList: TestType[] = [];
+	testTypeList: TestType[] = [];
 	testTypeStatusEnumList: SelectItem[] = [];
 	pagination: PaginationModel = new PaginationModel();
 	eventName: string;
@@ -39,7 +42,9 @@ export class TestTypeListTableComponent implements OnInit {
 		public referenceService: ReferenceService,
 		public router: Router,
 		private testTypeService: TestTypeService,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		private modalService: NgbModal,
+		private notificationService: NotificationsService
 	) { }
 
 	ngOnInit(): void {
@@ -51,14 +56,14 @@ export class TestTypeListTableComponent implements OnInit {
 		this.isLoading = true;
 		let params: any = {
 			name: this.testName || '',
-			eventName: this.eventName || '', 
+			eventName: this.eventName || '',
 			status: this.status,
 			page: data.page || this.pagedSummary.currentPage,
 			pagedSummary: this.pagedSummary,
 		}
 
-		this.testTypeService.getTestTypes(params).subscribe( res => {
-			if(res && res.data) {
+		this.testTypeService.getTestTypes(params).subscribe(res => {
+			if (res && res.data) {
 				this.isLoading = false;
 				this.testTypeList = res.data.items;
 				this.pagination = res.data.pagedSummary;
@@ -78,20 +83,34 @@ export class TestTypeListTableComponent implements OnInit {
 	}
 
 	validateTestType(id, status) {
-		this.testTypeService.validateTestType({testTypeId: id}).subscribe(() => this.changeStatus(id, status));
+		this.testTypeService.validateTestType({ testTypeId: id }).subscribe(() => this.changeStatus(id, status));
 	}
 
 	getStatusForDropdown() {
 		this.referenceService.getTestTypeStatuses().subscribe(res => this.testTypeStatusEnumList = res.data);
 	}
 
-	navigate(id){
-		this.router.navigate(['type-details/', id, 'overview'], {relativeTo: this.route});
+	navigate(id) {
+		this.router.navigate(['type-details/', id, 'overview'], { relativeTo: this.route });
 	}
 
 	cloneTestType(id): void {
 		this.testTypeService.clone(id).subscribe(res => {
 			if (res && res.data) this.list();
 		});
+	}
+
+	deleteTestType(id): void {
+		this.testTypeService.deleteTestType(id).subscribe(() => {
+			this.notificationService.success('Success', 'Test type was successfully deleted', NotificationUtil.getDefaultMidConfig());
+			this.list();
+		});
+	}
+
+	openConfirmationDeleteModal(id): void {
+		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
+		modalRef.componentInstance.title = 'Delete';
+		modalRef.componentInstance.description = 'Are you sure you want to delete this test type?';
+		modalRef.result.then(() => this.deleteTestType(id), () => { });
 	}
 }

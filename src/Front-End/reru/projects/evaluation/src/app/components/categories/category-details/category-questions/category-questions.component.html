@@ -63,7 +63,7 @@
                           <label style="font-size: 13px;" class="mb-0"
                             *ngIf="question.status == 1">{{'statuses.inactivate' | translate}}</label>
                         </button>
-                        <button [routerLink]="['../../../../questions/remove', question.id]"
+                        <button (click)="openConfirmationDeleteModal(question.id)"
                           class="navi-link align-items-baseline px-6" ngbDropdownItem>
                           {{'button.delete' | translate}}
                         </button>
