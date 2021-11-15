@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PermissionRouteGuard } from 'dist/erp-shared/public-api';
-import { EventsComponent } from '../events/events.component';
+import { EventsListComponent } from '../events/events-list/events-list.component';
 // import { PermissionRouteGuard } from '@erp/shared';
 import { AddComponent } from './add/add.component';
 import { DeleteComponent } from './delete/delete.component';
@@ -13,6 +13,7 @@ import { PlanOverviewComponent } from './plan-details/plan-overview/plan-overvie
 import { AttachPersonsComponent } from './plan-details/responsable-persons/attach-persons/attach-persons.component';
 import { DetachPersonsComponent } from './plan-details/responsable-persons/detach-persons/detach-persons.component';
 import { ResponsablePersonsComponent } from './plan-details/responsable-persons/responsable-persons.component';
+import { EventsComponent } from './plan-details/events/events.component';
 
 import { PlansComponent } from './plans.component';
 

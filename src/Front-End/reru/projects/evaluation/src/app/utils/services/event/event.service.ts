@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EventService extends AbstractService {
-  private readonly urlRoute = 'EventsConstroller';
+  private readonly urlRoute = 'Event';
 
   private userId: BehaviorSubject<any> = new BehaviorSubject(null);
   public uploadUsers: BehaviorSubject<void> = new BehaviorSubject(null);
@@ -21,79 +21,68 @@ export class EventService extends AbstractService {
   setData = (value: any) => {this.userId.next(value)}
 
   getEvents(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/list`, { params });
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
   }
 
   getMyEvents(params): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/mine`, { params });
   }
 
-  addEvent(data): Observable<any> {
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/create`, data);
+  addEvent(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${this.urlRoute}`, data);
   }
 
   editEvent(data): Observable<any> {
     return this.http.patch(`${this.baseUrl}/${this.urlRoute}`, data);
   }
 
-  getEvent(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
+  getEvent(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`);
   }
 
-  getDetailsEvent(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/details`, { params });
+  getDetailsEvent(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`);
   }
 
-  deleteEvent(params): Observable<any>{
-    return this.http.delete(`${this.baseUrl}/${this.urlRoute}`, { params });
+  deleteEvent(id): Observable<any>{
+    return this.http.delete(`${this.baseUrl}/${this.urlRoute}/${id}`);
   }
 
   getResponsiblePersons(params): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/responsible`, {params});
+    return this.http.get(`${this.baseUrl}/EventResponsiblePerson`, {params});
   }
 
   attachPerson(data){
     return this.http.post(`${this.baseUrl}/${this.urlRoute}/assign-person`, data);
   }
 
-  detachPerson(data){
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/detach-person`, data);
+  detachPerson(eventId, userProfileId){
+    return this.http.delete(`${this.baseUrl}/EventResponsiblePerson/Event=${eventId}&&UserProfile=${userProfileId}`);
   }
 
   getLocations(params): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/locations`, {params});
+    return this.http.get(`${this.baseUrl}/EventLocation`, {params});
   }
 
   attachLocation(data){
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/attach-location`, data);
+    return this.http.post(`${this.baseUrl}/EventLocation`, data);
   }
 
-  detachLocation(data){
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/detach-location`, data);
+  detachLocation(eventId , locationId): Observable<any>{
+    // console.log("data", data);
+    return this.http.delete(`${this.baseUrl}/EventLocation/Event=${eventId}&&Location=${locationId}`);
   }
 
   getUsers(params): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/users`, {params});
+    return this.http.get(`${this.baseUrl}/EventUser`, {params});
   }
 
   attachUser(data){
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/assign-user`, data);
+    return this.http.post(`${this.baseUrl}/EventUser`, data);
   }
 
-  detachUser(data){
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/detach-user`, data);
-  }
-
-  getTestTypes(params): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/testtypes`, {params});
-  }
-
-  attachTestType(data){
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/attach-testtype`, data);
-  }
-
-  detachTestType(data){
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/detach-testtype`, data);
+  detachUser(eventId, userProfileId){
+    return this.http.delete(`${this.baseUrl}/EventUser/Event=${eventId}&&User=${userProfileId}`);
   }
 
   eventsWihoutPlan(params): Observable<any>{
@@ -115,14 +104,18 @@ export class EventService extends AbstractService {
   }
 
   getEvaluators(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/evaluators`, {params});
+    return this.http.get(`${this.baseUrl}/EventEvaluator`, {params});
+  }
+
+  getNoAssignedEvaluators(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}EventEvaluator/no-assigned`, {params});
   }
 
   attachEvaluator(data) {
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/attach-evaluator`, data);
+    return this.http.post(`${this.baseUrl}/EventEvaluator`, data);
   }
 
-  detachEvaluator(data) {
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/detach-evaluator`, data);
+  detachEvaluator(eventId, evaluatorId) {
+    return this.http.delete(`${this.baseUrl}/EventEvaluator/Event=${eventId}&&Evaluator=${evaluatorId}`);
   }
 }
