@@ -11,13 +11,13 @@ import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notific
 import { ConfirmModalComponent } from '@erp/shared';
 
 @Component({
-  selector: 'app-question-list-table',
-  templateUrl: './question-list-table.component.html',
-  styleUrls: ['./question-list-table.component.scss']
+	selector: 'app-question-list-table',
+	templateUrl: './question-list-table.component.html',
+	styleUrls: ['./question-list-table.component.scss']
 })
 export class QuestionListTableComponent implements OnInit {
-  questionList: QuestionUnit[] = [];
-	pagination: PaginationModel = new PaginationModel();
+	questionList: QuestionUnit[] = [];
+	pagedSummary: PaginationModel = new PaginationModel();
 	qType: string[];
 	questionEnum = QuestionUnitStatusEnum;
 	keyword: string;
@@ -44,13 +44,13 @@ export class QuestionListTableComponent implements OnInit {
 		this.keyword = data.keyword;
 		let params = {
 			questionName: this.keyword || '',
-			page: data.page || this.pagination.currentPage,
-			itemsPerPage: Number(this.pagination?.pageSize || 10)
+			page: data.page || this.pagedSummary.currentPage,
+			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
 		}
 		this.questionService.getAll(params).subscribe((res) => {
 			if (res && res.data.items) {
 				this.questionList = res.data.items;
-				this.pagination = res.data.pagedSummary;
+				this.pagedSummary = res.data.pagedSummary;
 				this.qType = Object.keys(QuestionUnitTypeEnum)
 					.map(key => QuestionUnitTypeEnum[key])
 					.filter(value => typeof value === 'string') as string[];
@@ -62,21 +62,20 @@ export class QuestionListTableComponent implements OnInit {
 	changeStatus(id, status) {
 		let params;
 
-		if (status == QuestionUnitStatusEnum.Draft) 
-			params = {data:{ questionId: id, status: QuestionUnitStatusEnum.Active }}
-		else 
-			params = {data:{ questionId: id, status: QuestionUnitStatusEnum.Inactive }}
+		if (status == QuestionUnitStatusEnum.Draft)
+			params = { data: { questionId: id, status: QuestionUnitStatusEnum.Active } }
+		else
+			params = { data: { questionId: id, status: QuestionUnitStatusEnum.Inactive } }
 
 		this.questionService.editStatus(params).subscribe(() => this.list());
 	}
 
-	navigate(id){
-		this.router.navigate(['question-detail/', id, 'overview'], {relativeTo: this.route});
+	navigate(id) {
+		this.router.navigate(['question-detail/', id, 'overview'], { relativeTo: this.route });
 	}
 
-	deleteQuestion(id): void{
-		this.questionService.delete(id).subscribe(() => 
-		{
+	deleteQuestion(id): void {
+		this.questionService.delete(id).subscribe(() => {
 			this.notificationService.success('Success', 'Question was successfully deleted', NotificationUtil.getDefaultMidConfig());
 			this.list();
 		});

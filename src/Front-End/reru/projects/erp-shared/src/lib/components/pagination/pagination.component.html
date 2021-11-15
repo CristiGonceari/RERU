@@ -22,9 +22,9 @@
           class="flaticon2-fast-next" [disabled]="page === total"></i></a></li>
   </ul>
   <div class="datatable-pager-info my-2 mb-sm-0">
-    <select (change)="changeSize($event)" (ngModelChange)="changeSize($event)" [(ngModel)]="size" data-width="75px"
+    <select (change)="changeSize($event)" [(ngModel)]="size" [title]="size"
       class="btn text-dark-50 font-weight-bold mr-4 border-0 bg-light w-75px">
-			<option class="bs-title-option" value=""></option>
+      <option class="d-none" value=""></option>
 			<option value="5">5</option>
       <option value="10">10</option>
       <option value="20">20</option>

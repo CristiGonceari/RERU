@@ -1,5 +1,5 @@
 <app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
-  [colorClass]="'text-primary'">
+[colorClass]="'text-primary'">
 </app-loading-spinner>
 
 <div *ngIf="!isLoading" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
@@ -7,23 +7,15 @@
     <table class="datatable table font-size-lg" style="overflow: visible">
         <thead class="text-uppercase text-muted">
             <tr>
-                <th scope="col">{{ 'questions.question' | translate }}</th>
-                <th scope="col" style="width: 300px">{{ 'questions.category' | translate }}</th>
-                <th scope="col" class="text-left" style="width: 155px">{{ 'questions.type' | translate }}</th>
-                <th scope="col" class="text-left" style="width: 75px">{{ 'tests.status' | translate }}</th>
+                <th scope="col">{{'faq.name' | translate}}</th>
                 <th scope="col" style="width: 48px"></th>
             </tr>
         </thead>
-        <tbody class="datatable-body" *ngIf="questionList.length">
-            <tr *ngFor="let item of questionList" (dblclick)="navigate(item.id)">
+        <tbody class="datatable-body" *ngIf="articles">
+            <tr *ngFor="let item of articles" (dblclick)="navigate(item.id)">
                 <td>
-                    <app-question-name [question]="item"></app-question-name>
+                    <app-faq-name [article]="item"></app-faq-name>
                 </td>
-                <td>{{ item.categoryName }}</td>
-                <td>
-                    <span class="font-size-lg" *ngIf="item.questionType">{{'statuses.' + type[item.questionType] | translate}}</span>
-                </td>
-                <td>{{'statuses.' + questionEnum[item.status] | translate}}</td>
                 <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
                     <div style="overflow: visible; position: relative; width: 0px">
                         <div ngbDropdown class="dropdown dropdown-inline">
@@ -44,23 +36,16 @@
                             </div>
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                                 <div ngbDropdownMenu aria-labelledby="action1">
-                                    <button [routerLink]="['question-detail', item.id]" 
+                                    <button [routerLink]="['faq-details', item.id]"
                                         class="navi-link align-items-center px-6" ngbDropdownItem>
                                         {{'categories.view-details' | translate}}
                                     </button>
-                                    <button class="navi-link align-items-baseline px-6" *ngIf="item.status == 0 || item.status == 2"
-                                        [routerLink]="['edit-question', item.id]" ngbDropdownItem>
-                                        {{'button.edit' | translate}}
+                                    <button [routerLink]="['edit-article', item.id]"
+                                        class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                                        {{ 'button.edit' | translate }}
                                     </button>
-                                    <div *ngIf="item.status !== 2">
-                                        <button class="navi-link align-items-center px-6" 
-                                        (click)="changeStatus(item.id, item.status)" ngbDropdownItem>
-                                        <span class="font-size-lg" *ngIf="item.status == 0">{{'statuses.activate' | translate}}</span>
-                                        <span class="font-size-lg" *ngIf="item.status == 1">{{'statuses.inactivate' | translate}}</span>
-                                    </button>
-                                    </div>
-                                    <button (click)="openConfirmationDeleteModal(item.id)" class="navi-link align-items-baseline px-6"
-                                         ngbDropdownItem>
+                                    <button class="navi-link align-items-baseline px-6"
+                                        ngbDropdownItem (click)="openConfirmationDeleteModal(item.id)" >
                                         {{'button.delete' | translate}}
                                     </button>
                                 </div>
@@ -70,20 +55,42 @@
                 </td>
             </tr>
         </tbody>
-        <tbody class="datatable-body" *ngIf="!questionList.length">
+        <tbody class="datatable-body" *ngIf="!articles.length">
             <tr>
-                <td colspan="5" class="text-center">
+                <td colspan="2" class="text-center">
                     {{ 'message.no-record' | translate }}
                 </td>
             </tr>
         </tbody>
     </table>
     <div pagination class="datatable-pager datatable-paging-loaded"
-        [page]="pagedSummary.currentPage"
-        [total]="pagedSummary.totalPages"
-        [totalRecords]="pagedSummary.totalCount"
-        [size]="pagedSummary.pageSize"
-        (sizeChange)="list({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-        (pageChange)="list({ keyword: keyword, page: $event })">
-    </div>
+    [page]="pagedSummary.currentPage"
+    [total]="pagedSummary.totalPages"
+    [totalRecords]="pagedSummary.totalCount"
+    [size]="pagedSummary.pageSize"
+    (sizeChange)="list({ page: pagedSummary.currentPage, itemsPerPage: $event })"
+    (pageChange)="list({ keyword: keyword, page: $event })">
+  </div>
+    <!-- <div class="d-flex justify-content-between align-items-baseline" *ngIf="articles.length">
+        <ngb-pagination [collectionSize]="pagination.totalCount" [(page)]="pagination.currentPage"
+        [pageSize]="pagination.pageSize" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="list({keyword: keyword, page: $event})">
+        </ngb-pagination>
+        <div class="d-flex align-items-center py-3">
+            <select class="btn text-primary font-weight-bold mr-4 border-0 bg-light w-75px" [(ngModel)]="pagination.pageSize"
+                (ngModelChange)="list({keyword: keyword, page: pagination.currentPage, itemsPerPage: pagination.pageSize})">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+
+            <span class="text-muted">
+                {{'pagination.displaing' | translate}} {{ pagination.pageSize }} 
+                {{'pagination.of' | translate}}
+                <b>{{ pagination.totalCount }}</b>
+                {{'pagination.records' | translate}}
+            </span>
+        </div>
+    </div> -->
 </div>
