@@ -171,7 +171,8 @@
             "styles": [
               "projects/erp-shared/src/lib/styles/style.bundle.css", 
               "projects/erp-shared/src/lib/styles/plugins.bundle.css",
-              "projects/evaluation/src/styles.scss"
+              "projects/evaluation/src/styles.scss",
+              "projects/evaluation/src/assets/styles/picker.scss"
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [

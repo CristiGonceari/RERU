@@ -36,6 +36,30 @@ export class LocationService extends AbstractService {
 		return this.http.get<any>(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}
 
+	getDetailsLocation(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/details`, { params });
+	}
+
+	assignPerson(data) {
+		return this.http.post(`${this.baseUrl}/${this.urlRoute}/assign-person`, data);
+	}
+
+	detachPerson(data) {
+		return this.http.post(`${this.baseUrl}/${this.urlRoute}/detach-person`, data);
+	}
+
+	getPersons(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/responsible`, { params });
+	}
+
+	getLocationsByEvent(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/EventLocation/no-assigned`, { params });
+	}
+
+	getClients(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/clients`, { params });
+	}
+
 	deleteLocation(id: number): Observable<any> {
 		return this.http.delete(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}

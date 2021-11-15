@@ -17,9 +17,9 @@ namespace CODWER.RERU.Evaluation.Application.PlanEvents.AssignEventToPlan
 
         public async Task<Unit> Handle(AssignEventToPlanCommand request, CancellationToken cancellationToken)
         {
-            var _event = await _appDbContext.Events.FirstOrDefaultAsync(x => x.Id == request.Data.EventId);
+            var eventPlan = await _appDbContext.Events.FirstOrDefaultAsync(x => x.Id == request.Data.EventId);
 
-            _event.PlanId = request.Data.PlanId;
+            eventPlan.PlanId = request.Data.PlanId;
 
             await _appDbContext.SaveChangesAsync();
 

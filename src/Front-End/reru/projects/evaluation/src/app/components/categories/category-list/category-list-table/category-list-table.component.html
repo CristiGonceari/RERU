@@ -1,8 +1,9 @@
-<app-loading-spinner [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
-  [colorClass]="'text-primary'" *ngIf="isLoading">
+<app-loading-spinner [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'" [colorClass]="'text-primary'"
+  *ngIf="isLoading">
 </app-loading-spinner>
 
-<div *ngIf="!isLoading" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+<div *ngIf="!isLoading"
+  class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
   id="kt_datatable">
   <table class="datatable table font-size-lg" style="overflow: visible">
     <thead class="text-uppercase text-muted">
@@ -39,14 +40,15 @@
                     ngbDropdownItem>
                     {{'categories.view-details' | translate}}
                   </button>
-                  <button [routerLink]="['edit-category', item.id]" 
-                    class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                  <button [routerLink]="['edit-category', item.id]" class="navi-link align-items-baseline px-6"
+                    ngbDropdownItem>
                     {{ 'button.edit' | translate }}
                   </button>
                   <button (click)="addQuestion(item.id)" class="navi-link align-items-center px-6" ngbDropdownItem>
                     {{'questions.add-question' | translate}}
                   </button>
-                  <button (click)="openConfirmationDeleteModal(item.id)" class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                  <button (click)="openConfirmationDeleteModal(item.id)" class="navi-link align-items-baseline px-6"
+                    ngbDropdownItem>
                     {{'button.delete' | translate}}
                   </button>
                 </div>
@@ -63,11 +65,8 @@
       </tr>
     </tbody>
   </table>
-  <div pagination class="datatable-pager datatable-paging-loaded"
-    [page]="pagedSummary.currentPage"
-    [total]="pagedSummary.totalPages"
-    [totalRecords]="pagedSummary.totalCount"
-    [size]="pagedSummary.pageSize"
+  <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
+    [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
     (sizeChange)="list({ page: pagedSummary.currentPage, itemsPerPage: $event })"
     (pageChange)="list({ keyword: keyword, page: $event })">
   </div>
