@@ -2,9 +2,10 @@
   [colorClass]="'text-primary'" *ngIf="isLoading">
 </app-loading-spinner>
 
-<div *ngIf="!isLoading" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
-  id="kt_datatable">
-  <table class="datatable table font-size-lg" style="overflow: visible">
+<div *ngIf="!isLoading"
+class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+id="kt_datatable">
+<table class="datatable table font-size-lg" style="overflow: visible">
     <thead class="text-uppercase text-muted">
       <tr>
         <th scope="col">{{'categories.category-name' | translate}}</th>

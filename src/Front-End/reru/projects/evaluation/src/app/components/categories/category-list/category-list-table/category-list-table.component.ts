@@ -48,7 +48,6 @@ export class CategoryListTableComponent implements OnInit {
 
 		this.questionCategoryService.getCategories(params).subscribe(
 			res => {
-				console.warn('list', res.data)
 				if (res && res.data) {
 					this.questionCategories = res.data.items;
 					this.pagedSummary = res.data.pagedSummary;

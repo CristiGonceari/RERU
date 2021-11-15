@@ -16,7 +16,7 @@ export class CategoryQuestionsComponent implements OnInit {
   @Input() categoryId;
   categoryList = [];
 	questionList: QuestionUnit[] = [];
-	pagination: PaginationModel = new PaginationModel();
+	pagedSummary: PaginationModel = new PaginationModel();
 	questionEnum = QuestionUnitStatusEnum;
   type = QuestionUnitTypeEnum;
   isLoading: boolean = true;
@@ -30,17 +30,17 @@ export class CategoryQuestionsComponent implements OnInit {
     this.getAll();
   }
 
-  getAll(){
+  getAll(data: any = {}){
     let params = {
       questionCategoryId: this.categoryId,
-      page: this.pagination.currentPage ?? 1,
-			itemsPerPage: Number(this.pagination?.pageSize || 10) 
+      page: data.page || this.pagedSummary.currentPage,
+			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
     }
 
     this.questionService.getAll(params).subscribe((res) => {
       if (res && res.data) {
         this.questionList = res.data.items;
-        this.pagination = res.data.pagedSummary;
+        this.pagedSummary = res.data.pagedSummary;
         this.isLoading = false;
       }
     });
