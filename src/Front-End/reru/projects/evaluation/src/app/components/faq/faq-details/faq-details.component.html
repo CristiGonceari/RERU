@@ -31,16 +31,15 @@
 									<div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
 										<div ngbDropdownMenu aria-labelledby="action1">
 											<button [routerLink]="['../../faq-details', articleId]"
-												class="navi-link align-items-center px-6" ngbDropdownItem
-												*permission="'P03010903'">
+												class="navi-link align-items-center px-6" ngbDropdownItem>
 												{{'categories.view-details' | translate}}
 											</button>
-											<button [routerLink]="['../../edit-article', articleId]" *permission="'P03010901'"
+											<button [routerLink]="['../../edit-article', articleId]"
 												class="navi-link align-items-baseline px-6" ngbDropdownItem>
 												{{ 'button.edit' | translate }}
 											</button>
 											<button [routerLink]="['../../remove', articleId]"
-												class="navi-link align-items-baseline px-6" *permission="'P03010902'"
+												class="navi-link align-items-baseline px-6"
 												ngbDropdownItem>
 												{{'button.delete' | translate}}
 											</button>

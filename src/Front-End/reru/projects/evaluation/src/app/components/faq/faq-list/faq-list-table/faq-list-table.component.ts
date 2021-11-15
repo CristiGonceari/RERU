@@ -34,7 +34,7 @@ export class FaqListTableComponent implements OnInit {
 		let params = {
 			name: this.keyword || '',
 			page: data.page || this.pagedSummary.currentPage,
-			itemsPerPage: Number(this.pagedSummary?.pageSize || 10)
+			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
 		}
 
 		this.articleService.getList(params).subscribe( res => {
