@@ -16,7 +16,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PlanEventsController : BaseController
+    public class PlanEventController : BaseController
     {
 
         [HttpGet("events-by-{id}")]

@@ -14,7 +14,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PlansController : BaseController
+    public class PlanController : BaseController
     {
         [HttpGet("{id}")]
         public async Task<PlanDto> GetPlan([FromRoute] int id)
