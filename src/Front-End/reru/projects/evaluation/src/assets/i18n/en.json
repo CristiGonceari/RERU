@@ -256,7 +256,10 @@
     "score": "Score",
     "result": "Result",
     "manage-test": "Manage My Tests",
-    "min-score": "Min. Score"
+    "min-score": "Min. Score",
+    "hello-username": "Hello, {{username}}!",
+    "have-a-good-day": "Welcome, have a good day!",
+    "my-activities": "My activities"
   },
   "questions": {
     "settings": "Settings",

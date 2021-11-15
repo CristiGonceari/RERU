@@ -256,7 +256,10 @@
     "score": "Баллы ",
     "result": "Результат",
     "manage-test": "Управление моими тестами",
-    "min-score": "Мин. Балл"
+    "min-score": "Мин. Балл",
+    "hello-username": "Здравствуйте, {{username}}!",
+    "have-a-good-day": "Добро пожаловать!",
+    "my-activities": "Мои действия"
   },
   "questions": {
     "settings": "Настройка",

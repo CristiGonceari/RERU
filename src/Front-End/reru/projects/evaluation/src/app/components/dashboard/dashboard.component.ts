@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserProfileService } from './../../utils/services/user-profile/user-profile.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,13 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor() { }
+  profile;
+  isLoading: boolean = true;
+  constructor(private userService: UserProfileService) { }
 
   ngOnInit(): void {
+    this.retrieveProfile();
   }
 
-  list(): void {
-    console.log('list');
+  retrieveProfile(): void {
+    this.userService.getCurrentUser().subscribe(response => {
+      this.profile = response;
+      this.isLoading = false;
+    })
   }
 }
