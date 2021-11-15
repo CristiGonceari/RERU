@@ -1,6 +1,6 @@
 ﻿namespace CODWER.RERU.Evaluation.DataTransferObjects.Statistics
 {
-    public class TestQuestionStatisticsDto
+    public class TestQuestionStatisticDto
     {
         public int QuestionId { get; set; }
         public int TotalUsed { get; set; }
