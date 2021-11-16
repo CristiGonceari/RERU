@@ -53,7 +53,7 @@ export class EventService extends AbstractService {
   }
 
   attachPerson(data){
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/assign-person`, data);
+    return this.http.post(`${this.baseUrl}/EventResponsiblePerson`, data);
   }
 
   detachPerson(eventId, userProfileId){
