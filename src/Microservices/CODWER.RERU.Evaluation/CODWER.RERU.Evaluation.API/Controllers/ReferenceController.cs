@@ -9,6 +9,7 @@ using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CVU.ERP.Common.EnumConverters;
+using CODWER.RERU.Evaluation.Application.References.GetTestTypeValue;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -22,6 +23,14 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             var items = EnumConverter<QuestionTypeEnum>.SelectValues;
 
             return items;
+        }
+
+        [HttpGet("test-type/select-values")]
+        public async Task<List<SelectItem>> GetTestTypes()
+        {
+            var query = new GetTestTypeValueQuery();
+
+            return await Mediator.Send(query);
         }
 
         [HttpGet("question-categories-value/select-values")]
@@ -78,6 +87,14 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             var query = new GetEventsValueQuery();
 
             return await Mediator.Send(query);
+        }
+
+        [HttpGet("statistics/select-values")]
+        public async Task<List<SelectItem>> GetStatisticEnum()
+        {
+            var items = EnumConverter<StatisticsQuestionFilterEnum>.SelectValues;
+
+            return items;
         }
     }
 }
