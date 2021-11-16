@@ -50,7 +50,7 @@ export class FaqListTableComponent implements OnInit {
 		this.router.navigate(['faq-details/', id, 'overview'], {relativeTo: this.route});
 	}
 	
-	deleteQuestion(id): void{
+	deleteArticle(id): void{
 		this.articleService.delete(id).subscribe(() => 
 		{
 			this.notificationService.success('Success', 'Article was successfully deleted', NotificationUtil.getDefaultMidConfig());
@@ -62,6 +62,6 @@ export class FaqListTableComponent implements OnInit {
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
 		modalRef.componentInstance.title = 'Delete';
 		modalRef.componentInstance.description = 'Are you sure you want to delete this article?';
-		modalRef.result.then(() => this.deleteQuestion(id), () => { });
+		modalRef.result.then(() => this.deleteArticle(id), () => { });
 	}
 }

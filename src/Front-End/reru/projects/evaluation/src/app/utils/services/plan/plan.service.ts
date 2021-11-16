@@ -7,8 +7,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PlanService extends AbstractService {
-  private readonly urlRoute = 'Plans';
-  private readonly urlRoute2 = 'PlanEvents';
+  private readonly urlRoute = 'Plan';
+  private readonly urlRoute2 = 'PlanEvent';
 
   private eventId: BehaviorSubject<any> = new BehaviorSubject(null);
 	event = this.eventId.asObservable();

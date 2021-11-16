@@ -7,7 +7,7 @@ import { AbstractService, AppSettingsService } from '@erp/shared';
   providedIn: 'root'
 })
 export class StatisticService extends AbstractService {
-  private readonly urlRoute = 'Statistics';
+  private readonly urlRoute = 'Statistic';
   constructor(protected appConfigService: AppSettingsService, public http: HttpClient) {
     super(appConfigService);
   }
