@@ -48,7 +48,7 @@ export class TableComponent implements OnInit {
     let params = {
       eventId: this.importedId,
       page: data.page || this.pagination.currentPage,
-      itemsPerPage: Number(this.pagination?.pageSize || 10)
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10
     }
 
     if (this.category == "users") {

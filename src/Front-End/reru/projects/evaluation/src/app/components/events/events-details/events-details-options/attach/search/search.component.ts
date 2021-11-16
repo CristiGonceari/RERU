@@ -23,6 +23,7 @@ export class SearchComponent implements OnInit {
   form = new FormControl();
   eventId;
   id;
+  zizi: any;
 
   constructor(private locationService: LocationService,
     private eventService: EventService,
@@ -93,10 +94,10 @@ export class SearchComponent implements OnInit {
 
       if(this.searchPerson == false){
         if (!term)
-          this.userService.getUserProfilesByEvent({ eventId: this.eventId }).subscribe(data => this.list = data.data);
+          this.userService.getUserProfilesByEvent({ eventId: this.eventId }).subscribe(res => this.list = res.data);
         else if (term != '')
           this.userService.getUserProfilesByEvent({ keyword: term, eventId: this.eventId }).subscribe(data => this.list = data.data);
-      }
+        }
 
       if(this.searchUser == false){
         if (!term)
@@ -106,6 +107,8 @@ export class SearchComponent implements OnInit {
       }
       this.eventService.setData(term);
         });
+
+      
   }
 
   getTitle(id) {
@@ -113,7 +116,16 @@ export class SearchComponent implements OnInit {
       return this.list.find(u => u.id === id).name + ", " + this.list.find(u => u.id === id).address;
     }
     else if(id){
-      return this.list.find(u => u.id === id).name;
+      var user =  this.list.find(u => u.id === id);
+
+      if(user.lastName == null)
+      {
+        user.lastName = "";
+      }
+
+      var name = user.firstName +" "+ user.lastName;
+
+      return name;
     }
   }
 }
