@@ -29,7 +29,11 @@
         <div class="card-body p-0">
           <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
             <div class="col-xl-12 col-xxl-7">
-              <h3 class="mb-10 font-weight-bold text-dark">{{'events.attach-location' | translate}}</h3>
+              <h3 class="mb-10 font-weight-bold text-dark" *ngIf="!locations">{{'events.attach-location' | translate}}</h3>
+              <h3 class="mb-10 font-weight-bold text-dark" *ngIf="!user">{{'events.attach-user' | translate}}</h3>
+              <h3 class="mb-10 font-weight-bold text-dark" *ngIf="!evaluator">{{'events.attach-evaluator' | translate}}</h3>
+              <h3 class="mb-10 font-weight-bold text-dark" *ngIf="!person">{{'locations.attach-res' | translate}}</h3>
+              <h3 class="mb-10 font-weight-bold text-dark" *ngIf="!testType">{{'events.attach-test-type' | translate}}</h3>
               <div class="col-xl-12 mb-10">
                 <div class="form-group row m-1">
                   <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.name' | translate}}:</label>

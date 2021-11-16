@@ -33,7 +33,7 @@ export class EventsListTableComponent implements OnInit {
 	list(data: any = {}) {
 		let params = {
 			page: data.page || this.pagination.currentPage,
-			itemsPerPage: Number(this.pagination?.pageSize || 10)
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10
 		}
 
 		this.service.getEvents(params).subscribe(
