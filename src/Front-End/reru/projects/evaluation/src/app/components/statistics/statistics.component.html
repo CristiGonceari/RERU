@@ -1,1 +1,78 @@
-<p>statistics works!</p>
+<app-page-title title="{{'statistics.statistics' | translate}}"
+    subTitle="{{'statistics.manage-statistics' | translate}}">
+</app-page-title>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card card-custom gutter-b">
+                        <div class="card-header flex-wrap border-0 py-5">
+                            <div class="card-title">
+                                <h3 class="card-label">{{'statistics.statistics' | translate}} </h3>
+                            </div>
+                        </div>
+                        <div class="card-header border-0" style="min-height: 100%;">
+                            <div class="flex-column col-10">
+                                <div class="row col-12 w-100">
+                                    <div class="col-lg-6 col-6">
+                                        <div class="d-flex flex-column">
+                                            <label class="col-form-label pb-0 text-dark-50">{{'events.test-type-name' | translate}}</label>
+                                            <select class="form-control h-35px" name="testTypeId" [(ngModel)]="testTypeId" [disabled]="categoryId">
+                                                <option class="default-option" selected [ngValue]="null">{{'questions.select' | translate }}</option>
+                                                <option *ngFor="let item of testTypes" [ngValue]="item.value">
+                                                    {{ item.label }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-6">
+                                        <div class="d-flex flex-column">
+                                            <label class="col-form-label pb-0 text-dark-50">{{'questions.category' | translate}}</label>
+                                            <select class="form-control h-35px" name="categoryId" [(ngModel)]="categoryId" [disabled]="testTypeId">
+                                                <option class="default-option" selected [ngValue]="null">{{'questions.select' | translate }}</option>
+                                                <option *ngFor="let item of categories" [ngValue]="item.value">
+                                                    {{ item.label }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row col-12 w-100">
+                                    <div class="col-lg-6 col-6">
+                                        <div class="d-flex flex-column">
+                                            <label class="col-form-label pb-0 text-dark-50">{{'questions.type' | translate}}</label>
+                                            <select class="form-control h-35px" name="filterEnum"
+                                                [(ngModel)]="filterEnum">
+                                                <option *ngFor="let item of statisticEnum" [value]="item.value">
+                                                    {{'statuses.' + item.label | translate}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-6">
+                                        <div class="d-flex flex-column">
+                                          <label class="col-form-label pb-0 text-dark-50">{{'statistics.items-per-page' | translate}}</label>
+                                          <input type="number" class="form-control form-control-lg  h-35px" [(ngModel)]="itemsPerPage"
+                                            name="itemsPerPage" placeholder="{{'statistics.items-per-page' | translate}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6 mt-3">
+                                <div class="w-100 h-100 mt-6">
+                                  <app-confirm-button  [value]="'button.search' | translate" [width]="'100%'" (handle)="table.getQuestions(send())" 
+                                    [disabled]="!(itemsPerPage && filterEnum && (testTypeId || categoryId))"></app-confirm-button>
+                                </div>
+                              </div>
+                        </div>
+                        <div class="card-body">
+                            <app-statisctics-table #table></app-statisctics-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

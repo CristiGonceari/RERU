@@ -13,7 +13,7 @@ export class StatisticService extends AbstractService {
   }
 
   getTestTypeQuestions(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/questions-testtype`, { params });
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/questions-test-type`, { params });
   }
 
   getCategoryQuestions(params): Observable<any> {
