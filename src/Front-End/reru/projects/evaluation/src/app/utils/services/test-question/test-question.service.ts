@@ -13,7 +13,7 @@ export class TestQuestionService extends AbstractService {
 
 	answerSubject = new BehaviorSubject<any>(null);
 
-	private readonly urlRoute = 'TestQuestions';
+	private readonly urlRoute = 'TestQuestion';
 	constructor(protected appConfigService: AppSettingsService, public http: HttpClient) {
 		super(appConfigService);
 	}

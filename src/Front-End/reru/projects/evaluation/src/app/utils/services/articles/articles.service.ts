@@ -8,7 +8,7 @@ import { ArticleModel } from '../../models/article.model';
 	providedIn: 'root',
 })
 export class ArticlesService extends AbstractService {
-	private readonly urlRoute = 'Articles';
+	private readonly urlRoute = 'Article';
 
 	constructor(protected appConfigService: AppSettingsService, private client: HttpClient) {
 		super(appConfigService);

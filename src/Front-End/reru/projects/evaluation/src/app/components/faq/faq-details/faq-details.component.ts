@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ArticlesService } from '../../../utils/services/articles/articles.service';
 import { Location } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NotificationsService } from 'angular2-notifications';
+import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
+import { ConfirmModalComponent } from '@erp/shared';
 
 
 @Component({
@@ -18,6 +22,9 @@ export class FaqDetailsComponent implements OnInit {editorData: string;
     private articleService: ArticlesService,
     private activatedRoute: ActivatedRoute,
     private location: Location,
+    private notificationService: NotificationsService,
+    public router: Router,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +47,21 @@ export class FaqDetailsComponent implements OnInit {editorData: string;
 
   backClicked() {
 		this.location.back();
+	}
+
+  deleteArticle(id): void{
+		this.articleService.delete(id).subscribe(() => 
+		{
+			this.notificationService.success('Success', 'Article was successfully deleted', NotificationUtil.getDefaultMidConfig());
+      this.router.navigate(['/faq']);
+		});
+	}
+
+	openConfirmationDeleteModal(id): void {
+		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
+		modalRef.componentInstance.title = 'Delete';
+		modalRef.componentInstance.description = 'Are you sure you want to delete this article?';
+		modalRef.result.then(() => this.deleteArticle(id), () => { });
 	}
 
 }

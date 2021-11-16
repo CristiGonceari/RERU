@@ -15,7 +15,7 @@ export class PaginatedResponse {
 	providedIn: 'root',
 })
 export class TestService extends AbstractService {
-	private readonly urlRoute = 'Tests';
+	private readonly urlRoute = 'Test';
 	constructor(protected appConfigService: AppSettingsService, public http: HttpClient) {
 		super(appConfigService);
 	}

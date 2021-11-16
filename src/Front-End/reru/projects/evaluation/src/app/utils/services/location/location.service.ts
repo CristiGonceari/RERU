@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 	providedIn: 'root',
 })
 export class LocationService extends AbstractService {
-	private readonly urlRoute = 'Locations';
+	private readonly urlRoute = 'Location';
 
 	private userId: BehaviorSubject<any> = new BehaviorSubject(null);
 	user = this.userId.asObservable();
