@@ -2,13 +2,13 @@
     <input type="text" class="form-control" matInput [matAutocomplete]="auto" [formControl]="form">
     <mat-autocomplete class="form-control" #auto="matAutocomplete" [displayWith]="getTitle.bind(this)">
         <mat-option *ngFor="let option of list" [value]="option.id">
-            <div *ngIf="!searchLocations">
+            <div *ngIf="searchLocations == false">
                 {{option.name}}, {{option.address}}
             </div>
-            <div *ngIf="searchEvaluators || searchPerson || searchUser">
+            <div *ngIf="searchEvaluators  ==false || searchPerson  ==false || searchUser ==false">
                 {{option.firstName}} {{option.lastName}}
             </div>
-            <div *ngIf="searchTestType">
+            <div *ngIf="searchTestType  ==false">
                 {{option.name}}
             </div>
         </mat-option>

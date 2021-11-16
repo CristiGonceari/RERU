@@ -110,7 +110,7 @@ export class AttachComponent implements OnInit {
 
   attach() {
     if (this.person == false) {
-      this.eventService.attachUser(this.parse()).subscribe(() => {
+      this.eventService.attachPerson(this.parse()).subscribe(() => {
         this.backClicked();
         this.notificationService.success('Success', 'User was successfully attached', NotificationUtil.getDefaultMidConfig());
       });
