@@ -1,14 +1,14 @@
 ﻿using CODWER.RERU.Evaluation.Application.Permissions;
-using CODWER.RERU.Evaluation.DataTransferObjects.Plans;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 
-namespace CODWER.RERU.Evaluation.Application.PlanEvents.UnassignPlanResponsiblePerson
+namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.UnassignPlanResponsiblePerson
 {
     [ModuleOperation(permission: PermissionCodes.PLAN_RESPONSIBLE_PERSONS_GENERAL_ACCESS)]
 
     public class UnassignPlanResponsiblePersonCommand : IRequest<Unit>
     {
-        public AddPlanPersonDto Data { get; set; }
+        public int PlanId { get; set; }
+        public int UserProfileId { get; set; }
     }
 }

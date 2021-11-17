@@ -1,7 +1,9 @@
 ﻿using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using FluentValidation;
-using System.Linq;
+using CODWER.RERU.Evaluation.Data.Entities;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 
 namespace CODWER.RERU.Evaluation.Application.PlanEvents.UnassignPlanEvent
 {
@@ -9,16 +11,9 @@ namespace CODWER.RERU.Evaluation.Application.PlanEvents.UnassignPlanEvent
     {
         public UnassignPlanEventCommandValidator(AppDbContext appDbContext)
         {
-            RuleFor(r => r.Data)
-                .NotNull()
-                .WithErrorCode(ValidationCodes.NULL_OR_EMPTY_INPUT);
-
-            When(r => r.Data != null, () =>
-            {
-                RuleFor(r => r.Data.EventId)
-                    .Must(x => appDbContext.Events.Any(l => l.Id == x))
-                    .WithErrorCode(ValidationCodes.INVALID_EVENT);
-            });
+            RuleFor(x => x.EventId)
+                .SetValidator(x => new ItemMustExistValidator<Event>(appDbContext, ValidationCodes.INVALID_EVENT,
+                    ValidationMessages.InvalidReference));
         }
     }
 }

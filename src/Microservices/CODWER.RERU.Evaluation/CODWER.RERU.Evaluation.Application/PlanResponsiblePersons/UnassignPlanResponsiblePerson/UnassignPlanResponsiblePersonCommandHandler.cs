@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CODWER.RERU.Evaluation.Application.PlanEvents.UnassignPlanResponsiblePerson
+namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.UnassignPlanResponsiblePerson
 {
     public class UnassignPlanResponsiblePersonCommandHandler : IRequestHandler<UnassignPlanResponsiblePersonCommand, Unit>
     {
@@ -19,7 +19,7 @@ namespace CODWER.RERU.Evaluation.Application.PlanEvents.UnassignPlanResponsibleP
         {
             var planResponsiblePersonToDelete = await _appDbContext.PlanResponsiblePersons
                 .FirstAsync(x => 
-                    x.PlanId == request.Data.PlanId && x.UserProfileId == request.Data.UserProfileId);
+                    x.PlanId == request.PlanId && x.UserProfileId == request.UserProfileId);
 
             _appDbContext.PlanResponsiblePersons.Remove(planResponsiblePersonToDelete);
             await _appDbContext.SaveChangesAsync();
@@ -27,5 +27,4 @@ namespace CODWER.RERU.Evaluation.Application.PlanEvents.UnassignPlanResponsibleP
             return Unit.Value;
         }
     }
-
 }

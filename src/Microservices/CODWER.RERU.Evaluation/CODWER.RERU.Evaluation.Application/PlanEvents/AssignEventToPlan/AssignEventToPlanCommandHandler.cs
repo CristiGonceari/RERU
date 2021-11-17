@@ -26,5 +26,4 @@ namespace CODWER.RERU.Evaluation.Application.PlanEvents.AssignEventToPlan
             return Unit.Value;
         }
     }
-
 }

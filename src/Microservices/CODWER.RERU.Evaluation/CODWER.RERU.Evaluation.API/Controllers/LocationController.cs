@@ -28,7 +28,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<int> CreateLocation([FromBody] AddLocationCommand command)
         {
             return await Mediator.Send(command);

@@ -11,5 +11,4 @@ namespace CODWER.RERU.Evaluation.Application.PlanEvents.AssignEventToPlan
     {
         public AddPlanEventDto Data { get; set; }
     }
-
 }

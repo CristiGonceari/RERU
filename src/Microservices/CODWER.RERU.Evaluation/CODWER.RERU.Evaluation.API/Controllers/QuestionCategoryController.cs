@@ -36,13 +36,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<int> CreateQuestionCategory([FromBody] AddEditQuestionCategoryDto request)
         {
             return await Mediator.Send(new AddQuestionCategoryCommand { Data = request });
         }
 
-        [HttpPost("edit")]
+        [HttpPatch]
         public async Task<Unit> EditQuestionCategory([FromBody] AddEditQuestionCategoryDto request)
         {
             return await Mediator.Send(new EditQuestionCategoryCommand { Data = request });

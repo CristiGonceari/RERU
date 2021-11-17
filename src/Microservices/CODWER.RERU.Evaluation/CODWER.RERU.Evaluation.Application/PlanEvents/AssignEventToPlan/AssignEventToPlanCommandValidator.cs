@@ -1,7 +1,9 @@
 ﻿using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using FluentValidation;
-using System.Linq;
+using CODWER.RERU.Evaluation.Data.Entities;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 
 namespace CODWER.RERU.Evaluation.Application.PlanEvents.AssignEventToPlan
 {
@@ -15,15 +17,14 @@ namespace CODWER.RERU.Evaluation.Application.PlanEvents.AssignEventToPlan
 
             When(r => r.Data != null, () =>
             {
-                RuleFor(r => r.Data.PlanId)
-                    .Must(x => appDbContext.Plans.Any(l => l.Id == x))
-                    .WithErrorCode(ValidationCodes.INVALID_PLAN);
+                RuleFor(x => x.Data.PlanId)
+                    .SetValidator(x => new ItemMustExistValidator<Plan>(appDbContext, ValidationCodes.INVALID_PLAN,
+                        ValidationMessages.InvalidReference));
 
-                RuleFor(r => r.Data.EventId)
-                    .Must(x => appDbContext.Events.Any(l => l.Id == x))
-                    .WithErrorCode(ValidationCodes.INVALID_EVENT);
+                RuleFor(x => x.Data.EventId)
+                    .SetValidator(x => new ItemMustExistValidator<Event>(appDbContext, ValidationCodes.INVALID_EVENT,
+                        ValidationMessages.InvalidReference));
             });
         }
     }
-
 }

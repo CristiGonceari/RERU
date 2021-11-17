@@ -17,7 +17,7 @@ namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.Unassign
 
         public async Task<Unit> Handle(UnassignResponsiblePersonFromLocationCommand request, CancellationToken cancellationToken)
         {
-            var locationReponsiblePersonToDelete = await _appDbContext.LocationResponsiblePersons.FirstAsync(x => x.LocationId == request.Data.LocationId && x.UserProfileId == request.Data.UserProfileId);
+            var locationReponsiblePersonToDelete = await _appDbContext.LocationResponsiblePersons.FirstAsync(x => x.LocationId == request.LocationId && x.UserProfileId == request.UserProfileId);
 
             _appDbContext.LocationResponsiblePersons.Remove(locationReponsiblePersonToDelete);
 

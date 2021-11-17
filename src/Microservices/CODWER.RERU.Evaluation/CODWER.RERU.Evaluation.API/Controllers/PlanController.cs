@@ -30,7 +30,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpPost]
-        public async Task<int> CreatePlan([FromBody] AddPlanCommand command)
+        public async Task<int> AddPlan([FromBody] AddPlanCommand command)
         {
             return await Mediator.Send(command);
         }

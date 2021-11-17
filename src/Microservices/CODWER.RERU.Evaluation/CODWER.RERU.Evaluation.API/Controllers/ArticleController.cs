@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CODWER.RERU.Evaluation.API.Config;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.DataTransferObjects.Articles;
 using CODWER.RERU.Evaluation.Application.Articles.GetArticle;
@@ -24,7 +21,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(new GetArticleQuery { Id = id });
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<PaginatedModel<ArticleDto>> GetArticles([FromQuery] GetArticlesQuery query)
         {
             return await Mediator.Send(query);
