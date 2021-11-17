@@ -33,6 +33,7 @@ export class CategoryQuestionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.categoryService.category.subscribe(x => this.categoryId = x);
     this.getAll();
   }
 

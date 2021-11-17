@@ -44,6 +44,11 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
                 questions = questions.Where(x => x.QuestionType == request.Type.Value);
             }
 
+            if (request.QuestionCategoryId != null)
+            {
+                questions = questions.Where(x => x.QuestionCategoryId == request.QuestionCategoryId.Value);
+            }
+
             if (!string.IsNullOrWhiteSpace(request.QuestionName))
             {
                 questions = questions.Where(x => x.Question.Contains(request.QuestionName) || x.QuestionUnitTags.Any(qu => qu.Tag.Name.Contains(request.QuestionName)));
