@@ -1,7 +1,9 @@
 ﻿using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using FluentValidation;
-using System.Linq;
+using CODWER.RERU.Evaluation.Data.Entities;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 
 namespace CODWER.RERU.Evaluation.Application.Locations.EditLocation
 {
@@ -12,9 +14,8 @@ namespace CODWER.RERU.Evaluation.Application.Locations.EditLocation
             When(r => r.Data != null, () =>
             {
                 RuleFor(x => x.Data.Id)
-                    .NotNull()
-                    .Must(x => appDbContext.Locations.Any(u => u.Id == x))
-                    .WithErrorCode(ValidationCodes.INVALID_LOCATION);
+                    .SetValidator(x => new ItemMustExistValidator<Location>(appDbContext, ValidationCodes.INVALID_LOCATION,
+                        ValidationMessages.InvalidReference));
 
                 RuleFor(r => r.Data.Name)
                     .NotEmpty()

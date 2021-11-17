@@ -17,13 +17,12 @@ namespace CODWER.RERU.Evaluation.Application.PlanEvents.UnassignPlanEvent
 
         public async Task<Unit> Handle(UnassignPlanEventCommand request, CancellationToken cancellationToken)
         {
-            var _event = await _appDbContext.Events.FirstOrDefaultAsync(x => x.Id == request.Data.EventId);
-            _event.PlanId = null;
+            var palnEvent = await _appDbContext.Events.FirstOrDefaultAsync(x => x.Id == request.EventId);
+            palnEvent.PlanId = null;
 
             await _appDbContext.SaveChangesAsync();
 
             return Unit.Value;
         }
     }
-
 }

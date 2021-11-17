@@ -2,8 +2,11 @@
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using FluentValidation;
 using System.Linq;
+using CODWER.RERU.Evaluation.Data.Entities;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CVU.ERP.Common.Validation;
 
-namespace CODWER.RERU.Evaluation.Application.PlanEvents.AssignResponsiblePersonToPlan
+namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.AssignResponsiblePersonToPlan
 {
     public class AssignResponsiblePersonToPlanCommandValidator : AbstractValidator<AssignResponsiblePersonToPlanCommand>
     {
@@ -15,13 +18,13 @@ namespace CODWER.RERU.Evaluation.Application.PlanEvents.AssignResponsiblePersonT
 
             When(r => r.Data != null, () =>
             {
-                RuleFor(r => r.Data.PlanId)
-                    .Must(x => appDbContext.Plans.Any(l => l.Id == x))
-                    .WithErrorCode(ValidationCodes.INVALID_PLAN);
+                RuleFor(x => x.Data.PlanId)
+                    .SetValidator(x => new ItemMustExistValidator<Plan>(appDbContext, ValidationCodes.INVALID_PLAN,
+                        ValidationMessages.InvalidReference));
 
-                RuleFor(r => r.Data.UserProfileId)
-                    .Must(x => appDbContext.UserProfiles.Any(l => l.Id == x))
-                    .WithErrorCode(ValidationCodes.INVALID_ID);
+                RuleFor(x => x.Data.UserProfileId)
+                    .SetValidator(x => new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.INVALID_USER,
+                        ValidationMessages.InvalidReference));
 
                 RuleFor(r => r.Data)
                     .Must(x => !appDbContext.PlanResponsiblePersons.Any(l => l.PlanId == x.PlanId && l.UserProfileId == x.UserProfileId))

@@ -1,5 +1,4 @@
-﻿using CODWER.RERU.Evaluation.DataTransferObjects.Locations;
-using CVU.ERP.Module.Application.Attributes;
+﻿using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.UnassignResponsiblePersonFromLocation
@@ -7,6 +6,7 @@ namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.Unassign
     [ModuleOperation(permission: Permissions.PermissionCodes.LOCATION_RESPONSIBLE_PERSONS_GENERAL_ACCESS)]
     public class UnassignResponsiblePersonFromLocationCommand : IRequest<Unit>
     {
-        public AddLocationPersonDto Data { get; set; }
+        public int LocationId { get; set; }
+        public int UserProfileId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using CODWER.RERU.Evaluation.API.Config;
+﻿using System.Collections.Generic;
+using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.AssignResponsiblePersonToLocation;
 using CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.GetLocationResponsiblePersons;
 using CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.UnassignResponsiblePersonFromLocation;
@@ -7,6 +8,7 @@ using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.GetNoAssinedResponsiblePersons;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -20,15 +22,23 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
-        [HttpPost("assign-person")]
+        [HttpGet("not-assigned")]
+        public async Task<List<UserProfileDto>> GetUserProfilesNotAttachedToLocation([FromQuery] GetNoAssignedResponsiblePersonsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpPost]
         public async Task<Unit> AssignPersonToLocation([FromBody] AssignResponsiblePersonToLocationCommand command)
         {
             return await Mediator.Send(command);
         }
 
-        [HttpPost("detach-person")]
-        public async Task<Unit> DetachLocationResponsiblePerson([FromBody] UnassignResponsiblePersonFromLocationCommand command)
+        [HttpDelete("Location={locationId}&&UserProfile={personId}")]
+        public async Task<Unit> UnassignResponsiblePersonFromLocation([FromRoute] int locationId, int personId)
         {
+            var command = new UnassignResponsiblePersonFromLocationCommand { LocationId = locationId, UserProfileId = personId };
+
             return await Mediator.Send(command);
         }
     }

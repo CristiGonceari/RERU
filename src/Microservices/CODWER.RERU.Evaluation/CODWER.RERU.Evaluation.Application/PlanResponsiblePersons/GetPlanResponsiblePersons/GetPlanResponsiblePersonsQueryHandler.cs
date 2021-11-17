@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CODWER.RERU.Evaluation.Application.PlanEvents.GetPlanResponsiblePersons
+namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.GetPlanResponsiblePersons
 {
     public class GetPlanResponsiblePersonsQueryHandler : IRequestHandler<GetPlanResponsiblePersonsQuery, PaginatedModel<UserProfileDto>>
     {

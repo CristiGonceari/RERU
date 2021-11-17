@@ -37,18 +37,18 @@ export class QuestionCategoryService extends AbstractService{
   }
 
   getCategories(params): Observable<any> {
-  return this.client.get(`${this.baseUrl}/${this.urlRoute}`, { params });
+    return this.client.get(`${this.baseUrl}/${this.urlRoute}`, { params });
   }
 
   delete(id: number): Observable<QuestionCategory> {
-  return this.client.delete<QuestionCategory>(`${this.baseUrl}/${this.urlRoute}/${id}`);
+    return this.client.delete<QuestionCategory>(`${this.baseUrl}/${this.urlRoute}/${id}`);
   }
 
   create(data: QuestionCategory): Observable<any> {
-  return this.client.post<any>(`${this.baseUrl}/${this.urlRoute}/create`, data);
+    return this.client.post<any>(`${this.baseUrl}/${this.urlRoute}`, data);
   }
 
   edit(data: QuestionCategory): Observable<QuestionCategory> {
-  return this.client.post<QuestionCategory>(`${this.baseUrl}/${this.urlRoute}/edit`, data);
+    return this.client.patch<QuestionCategory>(`${this.baseUrl}/${this.urlRoute}`, data);
   }
 }

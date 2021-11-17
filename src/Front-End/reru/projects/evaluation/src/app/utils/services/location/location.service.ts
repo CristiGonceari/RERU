@@ -25,7 +25,7 @@ export class LocationService extends AbstractService {
 	}
 
 	createLocation(data): Observable<any> {
-		return this.http.post(`${this.baseUrl}/${this.urlRoute}/create`, data);
+		return this.http.post(`${this.baseUrl}/${this.urlRoute}`, data);
 	}
 	
 	editLocation(data): Observable<any> {

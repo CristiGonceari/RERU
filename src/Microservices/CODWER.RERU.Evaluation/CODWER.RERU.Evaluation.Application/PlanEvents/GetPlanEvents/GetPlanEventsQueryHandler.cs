@@ -33,5 +33,4 @@ namespace CODWER.RERU.Evaluation.Application.PlanEvents.GetPlanEvents
             return paginatedModel;
         }
     }
-
 }
