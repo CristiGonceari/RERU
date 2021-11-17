@@ -20,10 +20,10 @@ import { RegisteredComputersComponent } from './location-details/registered-comp
 import { ResponsiblePersonComponent } from './location-details/responsible-person/responsible-person.component';
 import { ComputersTableComponent } from './location-details/registered-computers/computers-table/computers-table.component';
 import { DetachComputerComponent } from './location-details/registered-computers/detach-computer/detach-computer.component';
-import { DetachPersonComponent } from './location-details/responsible-person/detach-person/detach-person.component';
 import { PersonTableListComponent } from './location-details/responsible-person/person-table-list/person-table-list.component';
 import { AttachPersonComponent } from './attach-person/attach-person.component';
 import { SearchPersonComponent } from './attach-person/search-person/search-person.component';
+import { MaterialModule } from './../../material.module';
 
 
 @NgModule({
@@ -39,7 +39,6 @@ import { SearchPersonComponent } from './attach-person/search-person/search-pers
     ResponsiblePersonComponent,
     ComputersTableComponent,
     DetachComputerComponent,
-    DetachPersonComponent,
     PersonTableListComponent,
     AttachPersonComponent,
     SearchPersonComponent, 
@@ -56,7 +55,8 @@ import { SearchPersonComponent } from './attach-person/search-person/search-pers
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    MaterialModule
   ]
 })
 export class LocationsModule { }

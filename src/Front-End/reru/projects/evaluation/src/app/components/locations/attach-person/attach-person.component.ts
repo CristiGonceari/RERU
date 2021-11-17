@@ -38,7 +38,7 @@ export class AttachPersonComponent implements OnInit {
     this.userId = this.userId == undefined ? 0 : this.userId;
     
     return {
-      input: new LocationResponsiblePerson({
+      data: new LocationResponsiblePerson({
         locationId: +this.locationId,
         userProfileId: +this.userId
       })
@@ -46,7 +46,7 @@ export class AttachPersonComponent implements OnInit {
   }
 
   attach(){
-    this.attachToLocationService.assignPerson(this.parse()).subscribe(() => {
+    this.locationService.assignPerson(this.parse()).subscribe(() => {
       this.backClicked();
 			this.notificationService.success('Success', 'Person was successfully attached', NotificationUtil.getDefaultMidConfig());
     });

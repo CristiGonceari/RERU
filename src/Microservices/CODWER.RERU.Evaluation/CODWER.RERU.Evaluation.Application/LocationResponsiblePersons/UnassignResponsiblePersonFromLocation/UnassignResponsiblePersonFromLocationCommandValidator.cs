@@ -21,7 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.Unassign
                         ValidationMessages.InvalidReference));
 
                 RuleFor(x => x.UserProfileId)
-                    .SetValidator(x => new ItemMustExistValidator<Location>(appDbContext, ValidationCodes.INVALID_USER,
+                    .SetValidator(x => new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.INVALID_USER,
                         ValidationMessages.InvalidReference));
         }
     }

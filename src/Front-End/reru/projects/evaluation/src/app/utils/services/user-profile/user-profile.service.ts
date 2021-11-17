@@ -13,10 +13,6 @@ export class UserProfileService extends AbstractService {
     super(appConfigService);
   }
 
-  create(data): Observable<any> {
-    return this.http.post(`${this.baseUrl}/${this.urlRoute}/create`, data);
-  }
-
   getCurrentUser(): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/my`);
   }
@@ -30,7 +26,7 @@ export class UserProfileService extends AbstractService {
   }
 
   getUserProfilesByLocation(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/not-attached-location`, { params });
+    return this.http.get(`${this.baseUrl}/LocationResponsiblePerson/no-assigned`, { params });
   }
 
   getUserProfilesByEvent(params): Observable<any> {

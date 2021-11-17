@@ -32,7 +32,7 @@
                             </div>
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                                 <div ngbDropdownMenu aria-labelledby="action1">
-                                    <button [routerLink]="['../../../location',locationId,'remove-person', item.id]"
+                                    <button (click)="openConfirmationDeleteModal(locationId, item.id)"
                                       class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                       {{ 'button.delete' | translate }}
                                     </button>
