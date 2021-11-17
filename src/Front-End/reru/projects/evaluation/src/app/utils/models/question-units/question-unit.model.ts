@@ -9,7 +9,24 @@ export class QuestionUnit {
         usedInTestsCount: number;
         question: string;
         categoryName: string;
-        categoryId: number;
+        questionCategoryId: number;
         tags: string[];
-        questionPoints: number;       
+        questionPoints: number;    
+        
+        constructor(questionUnitModel?: QuestionUnit) {
+                if (questionUnitModel) {
+                    this.id = questionUnitModel.id;
+                    this.questionCategoryId = questionUnitModel.questionCategoryId;
+                    this.question = questionUnitModel.question;
+                    this.questionType = questionUnitModel.questionType;
+                    this.status = questionUnitModel.status;
+                } else {
+                    this.id = null;
+                    this.questionCategoryId = null;
+                    this.question = null;
+                    this.questionType = null;
+                    this.status = null;
+                }
+            }
 }
+
