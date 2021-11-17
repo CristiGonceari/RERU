@@ -7,7 +7,6 @@ import { LocationDetailsComponent } from './location-details/location-details.co
 import { LocationOverviewComponent } from './location-details/location-overview/location-overview.component';
 import { DetachComputerComponent } from './location-details/registered-computers/detach-computer/detach-computer.component';
 import { RegisteredComputersComponent } from './location-details/registered-computers/registered-computers.component';
-import { DetachPersonComponent } from './location-details/responsible-person/detach-person/detach-person.component';
 import { ResponsiblePersonComponent } from './location-details/responsible-person/responsible-person.component';
 import { LocationListComponent } from './location-list/location-list.component';
 
@@ -47,12 +46,6 @@ const routes: Routes = [
         // canActivate: [PermissionRouteGuard]
       }
     ]
-  },
-  {
-    path: 'location/:id/remove-person/:id2', 
-    component: DetachPersonComponent,
-    data: { permission: 'P03011111' },
-    // canActivate: [PermissionRouteGuard],
   },
   {
     path: 'attach-person/:id', 

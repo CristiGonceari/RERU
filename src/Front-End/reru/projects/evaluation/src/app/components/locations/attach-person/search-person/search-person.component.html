@@ -1,10 +1,10 @@
 <div class="input-group input-group-solid">
-    <input type="text" class="form-control" [formControl]="form">
-    <!-- <mat-autocomplete class="form-control" #auto="matAutocomplete" [displayWith]="getTitle.bind(this)"> -->
+    <input type="text" class="form-control" matInput [matAutocomplete]="auto" [formControl]="form">
+    <mat-autocomplete class="form-control" #auto="matAutocomplete" [displayWith]="getTitle.bind(this)">
         <mat-option *ngFor="let option of list" [value]="option.id">
             {{option.firstName}} {{option.lastName}}
         </mat-option>
-    <!-- </mat-autocomplete> -->
+    </mat-autocomplete>
 
     <div class="input-group-append">
         <button class="input-group-text pointer" (click)="getList()">

@@ -10,7 +10,6 @@ import { UserProfileService } from 'projects/evaluation/src/app/utils/services/u
   styleUrls: ['./search-person.component.scss']
 })
 export class SearchPersonComponent implements OnInit {
-
   list;
   form = new FormControl();
   locationId;
@@ -23,6 +22,7 @@ export class SearchPersonComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getList();
   }
 
   initData() {
@@ -47,7 +47,17 @@ export class SearchPersonComponent implements OnInit {
    }
  
    getTitle(userId) {
-     if (userId)
-       return this.list.find(u => u.id === userId).firstName;
+     if (userId){
+      var user =  this.list.find(u => u.id === userId);
+
+      if(user.lastName == null)
+      {
+        user.lastName = "";
+      }
+
+      var name = user.firstName + " " + user.lastName;
+
+      return name;
+     }
    }
 }

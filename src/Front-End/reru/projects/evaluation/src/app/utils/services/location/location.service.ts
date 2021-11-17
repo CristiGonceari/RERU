@@ -8,6 +8,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class LocationService extends AbstractService {
 	private readonly urlRoute = 'Location';
+	private readonly urlRoute2 = 'LocationResponsiblePerson';
+	private readonly urlRoute3 = 'LocationComputer';
 
 	private userId: BehaviorSubject<any> = new BehaviorSubject(null);
 	user = this.userId.asObservable();
@@ -36,20 +38,20 @@ export class LocationService extends AbstractService {
 		return this.http.get<any>(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}
 
-	getDetailsLocation(params): Observable<any> {
-		return this.http.get(`${this.baseUrl}/${this.urlRoute}/details`, { params });
+	deleteLocation(id: number): Observable<any> {
+		return this.http.delete(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}
 
 	assignPerson(data) {
-		return this.http.post(`${this.baseUrl}/${this.urlRoute}/assign-person`, data);
+		return this.http.post(`${this.baseUrl}/${this.urlRoute2}`, data);
 	}
 
-	detachPerson(data) {
-		return this.http.post(`${this.baseUrl}/${this.urlRoute}/detach-person`, data);
+	detachPerson(locationId, personId) {
+		return this.http.delete(`${this.baseUrl}/${this.urlRoute2}/Location=${locationId}&&UserProfile=${personId}`);
 	}
 
 	getPersons(params): Observable<any> {
-		return this.http.get(`${this.baseUrl}/${this.urlRoute}/responsible`, { params });
+		return this.http.get(`${this.baseUrl}/${this.urlRoute2}`, { params });
 	}
 
 	getLocationsByEvent(params): Observable<any> {
@@ -58,9 +60,5 @@ export class LocationService extends AbstractService {
 
 	getClients(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/clients`, { params });
-	}
-
-	deleteLocation(id: number): Observable<any> {
-		return this.http.delete(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}
 }

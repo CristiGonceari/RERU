@@ -110,8 +110,8 @@ export class TableComponent implements OnInit {
       });
     }
   }
-  openConfirmationDeleteModal(eventId: number, itemId): void {
 
+  openConfirmationDeleteModal(eventId: number, itemId): void {
     const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
     modalRef.componentInstance.title = 'Delete';
     modalRef.componentInstance.description = `Are you sure you want to delete this ${this.currentUrl} ?`;

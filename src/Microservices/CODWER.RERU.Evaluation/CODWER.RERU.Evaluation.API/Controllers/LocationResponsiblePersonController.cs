@@ -22,7 +22,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
-        [HttpGet("not-assigned")]
+        [HttpGet("no-assigned")]
         public async Task<List<UserProfileDto>> GetUserProfilesNotAttachedToLocation([FromQuery] GetNoAssignedResponsiblePersonsQuery query)
         {
             return await Mediator.Send(query);
