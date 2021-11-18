@@ -8,13 +8,15 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateComponent } from './components/date/date.component';
+import { HashOptionInputComponent } from './components/hash-option-input/hash-option-input.component';
 
 
 
 @NgModule({
   declarations: [
     LoadingSpinnerComponent,
-    DateComponent
+    DateComponent,
+    HashOptionInputComponent
   ],
   imports: [
     HttpClientModule,
@@ -23,7 +25,7 @@ import { DateComponent } from './components/date/date.component';
     RouterModule,
     TranslateModule,
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter },

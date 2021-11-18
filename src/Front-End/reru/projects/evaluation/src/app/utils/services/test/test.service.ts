@@ -61,15 +61,17 @@ export class TestService extends AbstractService {
 	}
 
 	getTests(params): Observable<any> {
-		return this.http.get(`${this.baseUrl}/${this.urlRoute}/list`, { params });
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
 	}
 
 	changeStatus(data): Observable<any> {
-		return this.http.post(`${this.baseUrl}/${this.urlRoute}/status`, data);
+		console.log("data:", data)
+		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/edit-status`, data);
 	}
 
 	deleteTest(params): Observable<any> {
-		return this.http.delete(`${this.baseUrl}/${this.urlRoute}`, { params });
+		console.log("toremoveParams:", params)
+		return this.http.delete(`${this.baseUrl}/${this.urlRoute}`,  { params } );
 	}
 
 	export(): Observable<any> {

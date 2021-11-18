@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { AbstractService, AppSettingsService } from '@erp/shared';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { VerificationSummaryModel } from '../../models/verification-summary.model';
-import { TestModel } from '../../models/test.model';
+import { VerificationTestQuestionSummary } from '../../models/verification-test/verification-test-question-summary.model';
+import { Test } from '../../models/tests/test.model';
+import { TestListComponent } from '../../../components/tests/test-list/test-list.component';
 
 @Injectable({
 	providedIn: 'root',
@@ -15,7 +16,7 @@ export class VerifyTestService extends AbstractService {
 	}
 
 	getSummary(testId): Observable<any> {
-		return this.client.get<VerificationSummaryModel>(`${this.baseUrl}/${this.urlRoute}/summary/${testId}`);
+		return this.client.get<VerificationTestQuestionSummary>(`${this.baseUrl}/${this.urlRoute}/summary/${testId}`);
 	}
 
 	verify(data): Observable<any> {
@@ -23,16 +24,16 @@ export class VerifyTestService extends AbstractService {
 	}
 
 	getTest(data): Observable<any> {
-		return this.client.get<TestModel>(
+		return this.client.get<TestListComponent>(
 			`${this.baseUrl}/${this.urlRoute}?TestId=${data.testId}&QuestionIndex=${data.questionIndex}`
 		);
 	}
 
-	setVerified(testId): Observable<TestModel> {
-		return this.client.post<TestModel>(`${this.baseUrl}/${this.urlRoute}/${testId}/verified`, testId);
+	setVerified(testId): Observable<Test> {
+		return this.client.post<Test>(`${this.baseUrl}/${this.urlRoute}/${testId}/verified`, testId);
 	}
 
-	getProgress(testId): Observable<TestModel> {
-		return this.client.get<TestModel>(`${this.baseUrl}/${this.urlRoute}/${testId}/progress`);
+	getProgress(testId): Observable<Test> {
+		return this.client.get<Test>(`${this.baseUrl}/${this.urlRoute}/${testId}/progress`);
 	}
 }

@@ -15,7 +15,7 @@ export class TestTypeService extends AbstractService {
   }
 
   getActiveTestTypes(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/Active`);
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}`);
   }
 
   addTestType(data): Observable<any> {
@@ -68,5 +68,9 @@ export class TestTypeService extends AbstractService {
 
   clone(testTypeId: number): Observable<any>{
     return this.http.post(`${this.baseUrl}/${this.urlRoute}/clone`, { testTypeId });
+  }
+
+  getTestTypeByStatus( params ): Observable<any>{
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/status`, { params });
   }
 }

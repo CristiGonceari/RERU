@@ -29,8 +29,8 @@ export class ReferenceService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/question-categories-value/select-values`);
   }
 
-  getUsers(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/users-value/select-values`);
+  getUsers(params): Observable<any>{
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/users-value/select-values`, { params });
   }
 
   getStatisticEnum(): Observable<any>{
