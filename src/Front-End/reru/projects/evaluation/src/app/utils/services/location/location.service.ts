@@ -58,7 +58,11 @@ export class LocationService extends AbstractService {
 		return this.http.get(`${this.baseUrl}/EventLocation/no-assigned`, { params });
 	}
 
-	getClients(params): Observable<any> {
-		return this.http.get(`${this.baseUrl}/${this.urlRoute}/clients`, { params });
+	getComputers(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute3}`, { params });
+	}
+
+	unassignedComputer(id): Observable<any> {
+		return this.http.delete(`${this.baseUrl}/${this.urlRoute3}/${id}`);
 	}
 }

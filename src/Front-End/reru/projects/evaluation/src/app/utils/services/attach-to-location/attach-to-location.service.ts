@@ -9,7 +9,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class AttachToLocationService extends AbstractService  {
 
-  private readonly urlRouteLocationComputers = 'LocationComputers';
+  private readonly urlRouteLocationComputer = 'LocationComputer';
   private readonly urlRouteLocationResponsiblePerson = 'LocationResponsiblePerson';
 
 	private userId: BehaviorSubject<any> = new BehaviorSubject(null);
@@ -36,10 +36,10 @@ export class AttachToLocationService extends AbstractService  {
 	}
 
 	getComputers(params): Observable<any> {
-		return this.http.get(`${this.baseUrl}/${this.urlRouteLocationComputers}/computers`, { params });
+		return this.http.get(`${this.baseUrl}/${this.urlRouteLocationComputer}/computers`, { params });
 	}
 
 	detachComputer(params) {
-		return this.http.post(`${this.baseUrl}/${this.urlRouteLocationComputers}/detach-computer`, params);
+		return this.http.post(`${this.baseUrl}/${this.urlRouteLocationComputer}/detach-computer`, params);
 	}
 }

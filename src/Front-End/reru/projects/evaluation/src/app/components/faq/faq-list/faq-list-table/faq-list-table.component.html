@@ -1,8 +1,9 @@
 <app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
-[colorClass]="'text-primary'">
+    [colorClass]="'text-primary'">
 </app-loading-spinner>
 
-<div *ngIf="!isLoading" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+<div *ngIf="!isLoading"
+    class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
     <table class="datatable table font-size-lg" style="overflow: visible">
         <thead class="text-uppercase text-muted">
@@ -13,9 +14,7 @@
         </thead>
         <tbody class="datatable-body" *ngIf="articles">
             <tr *ngFor="let item of articles" (dblclick)="navigate(item.id)">
-                <td>
-                    <app-faq-name [article]="item"></app-faq-name>
-                </td>
+                <td style="cursor: pointer;" [routerLink]="['faq-details', item.id]">{{ item.name }}</td>
                 <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
                     <div style="overflow: visible; position: relative; width: 0px">
                         <div ngbDropdown class="dropdown dropdown-inline">
@@ -44,8 +43,8 @@
                                         class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                         {{ 'button.edit' | translate }}
                                     </button>
-                                    <button class="navi-link align-items-baseline px-6"
-                                        ngbDropdownItem (click)="openConfirmationDeleteModal(item.id)">
+                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem
+                                        (click)="openConfirmationDeleteModal(item.id)">
                                         {{'button.delete' | translate}}
                                     </button>
                                 </div>
@@ -63,12 +62,9 @@
             </tr>
         </tbody>
     </table>
-    <div pagination class="datatable-pager datatable-paging-loaded"
-    [page]="pagedSummary.currentPage"
-    [total]="pagedSummary.totalPages"
-    [totalRecords]="pagedSummary.totalCount"
-    [size]="pagedSummary.pageSize"
-    (sizeChange)="list({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-    (pageChange)="list({ keyword: keyword, page: $event })">
-  </div>
+    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage" *ngIf="articles.length"
+        [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
+        (sizeChange)="list({ page: pagedSummary.currentPage, itemsPerPage: $event })"
+        (pageChange)="list({ keyword: keyword, page: $event })">
+    </div>
 </div>

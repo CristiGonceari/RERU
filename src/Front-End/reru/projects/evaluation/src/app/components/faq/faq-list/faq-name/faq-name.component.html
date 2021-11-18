@@ -1,9 +1,0 @@
-<span *ngIf="permission">
-    <a [routerLink]="['faq-details', article.id]" class="font-size-lg text-dark-50 text-hover-dark-75">
-        {{ article.name }}
-    </a>
-</span>
-
-<span *ngIf="!permission">
-    {{ article.name }}
-</span>

@@ -12,7 +12,6 @@ import { TestTypeListComponent } from './test-type-list/test-type-list.component
 import { TestTypeRoutingModule } from './test-types-routing.module';
 import { TestTypeListTableComponent } from './test-type-list/test-type-list-table/test-type-list-table.component';
 import { TestTypesOverviewComponent } from './test-type-details/test-types-overview/test-types-overview.component'
-import { TestTypeNameComponent } from './test-type-list/test-type-name/test-type-name.component'
 import { TestTypeSearchComponent } from './test-type-list/test-type-search/test-type-search.component'
 import { AddEditTestTypesComponent } from './add-edit-test-types/add-edit-test-types.component'
 import { AddTestTypeOptionsComponent } from './test-type-details/add-test-type-options/add-test-type-options.component'
@@ -29,7 +28,6 @@ import { CategoryQuestionsTableComponent } from './test-type-details/test-types-
     TestTypeListTableComponent,
     TestTypeDetailsComponent,
     TestTypesOverviewComponent,
-    TestTypeNameComponent,
     TestTypeSearchComponent,
     AddEditTestTypesComponent,
     AddTestTypeOptionsComponent,

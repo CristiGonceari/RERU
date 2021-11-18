@@ -2,7 +2,8 @@
   [colorClass]="'text-primary'">
 </app-loading-spinner>
 
-<div *ngIf="!isLoading" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+<div *ngIf="!isLoading"
+  class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
   id="kt_datatable">
   <table class="datatable table font-size-lg" style="overflow: visible">
     <thead class="text-uppercase text-muted">
@@ -15,13 +16,9 @@
       </tr>
     </thead>
     <tbody class="datatable-body" *ngIf="events.length">
-      <tr *ngFor="let item of events" >
-        <td (dblclick)="navigate(item.id)" style="cursor: pointer;">
-          {{ item.name }}
-        </td>
-        <td style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-          {{item.description}}
-      </td>
+      <tr *ngFor="let item of events" (dblclick)="navigate(item.id)">
+        <td style="cursor: pointer;" [routerLink]="['event', item.id]">{{ item.name }}</td>
+        <td style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{item.description}}</td>
         <td>{{item.fromDate | date: 'd/M/yy, HH:mm'}}</td>
         <td>{{item.tillDate | date: 'd/M/yy, HH:mm'}}</td>
         <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
@@ -46,12 +43,12 @@
                   <button [routerLink]="['event', item.id]" class="navi-link align-items-center px-6" ngbDropdownItem>
                     {{'categories.view-details' | translate}}
                   </button>
-                  <button [routerLink]="['edit-event', item.id]"
-                    class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                  <button [routerLink]="['edit-event', item.id]" class="navi-link align-items-baseline px-6"
+                    ngbDropdownItem>
                     {{ 'button.edit' | translate }}
                   </button>
-                  <button (click)="openDeleteModal(item.id)"
-                    class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                  <button (click)="openDeleteModal(item.id)" class="navi-link align-items-baseline px-6"
+                    ngbDropdownItem>
                     {{ 'button.delete' | translate }}
                   </button>
                 </div>
@@ -64,17 +61,13 @@
     <tbody class="datatable-body" *ngIf="!events.length">
       <tr>
         <td colspan="5" class="text-center">
-        	{{ 'message.no-record' | translate }}
+          {{ 'message.no-record' | translate }}
         </td>
       </tr>
     </tbody>
   </table>
-    <div pagination class="datatable-pager datatable-paging-loaded" *ngIf="events.length"
-        [page]="pagination.currentPage"
-        [total]="pagination.totalPages"
-        [totalRecords]="pagination.totalCount"
-        [size]="pagination.pageSize"
-        (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event})"
-        (pageChange)="list({ page: $event})">
-    </div>
+  <div pagination class="datatable-pager datatable-paging-loaded" *ngIf="events.length" [page]="pagination.currentPage"
+    [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
+    (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event})" (pageChange)="list({ page: $event})">
+  </div>
 </div>

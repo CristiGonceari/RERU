@@ -15,7 +15,6 @@ import { AddComponent } from './add/add.component';
 import { EditComponent } from './edit/edit.component';
 import { PlanDetailsComponent } from './plan-details/plan-details.component';
 import { PlansListComponent } from './plans-list/plans-list.component';
-import { PlanNameComponent } from './plan-name/plan-name.component';
 import { PlanOverviewComponent } from './plan-details/plan-overview/plan-overview.component';
 import { ResponsablePersonsComponent } from './plan-details/responsable-persons/responsable-persons.component';
 import { AttachPersonsComponent } from './plan-details/responsable-persons/attach-persons/attach-persons.component';
@@ -34,7 +33,6 @@ import { SearchEventComponent } from './plan-details/events/attach/search-event/
     EditComponent, 
     PlanDetailsComponent, 
     PlansListComponent,
-    PlanNameComponent,
     PlanOverviewComponent,
     ResponsablePersonsComponent,
     AttachPersonsComponent,

@@ -14,9 +14,7 @@
     </thead>
     <tbody class="datatable-body" *ngIf="questionCategories.length">
       <tr *ngFor="let item of questionCategories" (dblclick)="navigate(item.id)">
-        <td>
-          <app-category-name [category]="item"></app-category-name>
-        </td>
+        <td class="pointer" [routerLink]="['question-category', item.id]">{{item.name}}</td>
         <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
           <div style="overflow: visible; position: relative; width: 0px">
             <div ngbDropdown class="dropdown dropdown-inline">
@@ -65,8 +63,8 @@
       </tr>
     </tbody>
   </table>
-  <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
-    [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
+  <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage" 
+    *ngIf="questionCategories.length" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
     (sizeChange)="list({ page: pagedSummary.currentPage, itemsPerPage: $event })"
     (pageChange)="list({ keyword: keyword, page: $event })">
   </div>

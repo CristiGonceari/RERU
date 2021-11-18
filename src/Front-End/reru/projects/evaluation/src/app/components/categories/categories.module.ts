@@ -11,7 +11,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CategoryNameComponent } from './category-list/category-name/category-name.component';
 import { SearchCategoryComponent } from './category-list/search-category/search-category.component';
 import { CategoryDetailsComponent } from './category-details/category-details.component';
 import { CategoryOverviewComponent } from './category-details/category-overview/category-overview.component';
@@ -23,7 +22,6 @@ import { CategoryQuestionsComponent } from './category-details/category-question
     AddEditCategoryComponent, 
     CategoryListComponent, 
     CategoryListTableComponent, 
-    CategoryNameComponent, 
     SearchCategoryComponent, 
     CategoryDetailsComponent, 
     CategoryOverviewComponent, 

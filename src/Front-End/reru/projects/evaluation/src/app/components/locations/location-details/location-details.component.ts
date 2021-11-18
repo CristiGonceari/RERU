@@ -37,7 +37,6 @@ export class LocationDetailsComponent implements OnInit {
         this.isLoading = false;
       }
     });
-    console.log('LOCATION', this.locationId);
   }
   
   subsribeForParams(): void {
@@ -47,10 +46,9 @@ export class LocationDetailsComponent implements OnInit {
         this.getLocation();
       }
     });
-    console.log('locIdFromDetails', this.locationId);
 	}
 
-  deleteCategory(categoryId): void{
+  deleteCategory(): void{
 		this.locationService.deleteLocation(this.locationId).subscribe(() => {
 			this.router.navigate(['/locations']);
 			this.notificationService.success('Success', 'Location was successfully deleted', NotificationUtil.getDefaultMidConfig());
@@ -61,6 +59,6 @@ export class LocationDetailsComponent implements OnInit {
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
 		modalRef.componentInstance.title = 'Delete';
 		modalRef.componentInstance.description = 'Are you sure you want to delete this Location?';
-		modalRef.result.then(() => this.deleteCategory(this.locationId), () => { });
+		modalRef.result.then(() => this.deleteCategory(), () => { });
 	}
 }

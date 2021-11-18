@@ -15,27 +15,28 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     [Route("api/[controller]")]
     public class LocationComputerController : BaseController
     {
+        [HttpGet]
+        public async Task<PaginatedModel<LocationClientDto>> GetLocationComputers([FromQuery] GetLocationComputersQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
         [HttpGet("by-computer")]
         public async Task<LocationDto> GetLocationByComputer([FromQuery] GetLocationByComputerQuery query)
         {
             return await Mediator.Send(query);
         }
 
-        [HttpGet("computers")]
-        public async Task<PaginatedModel<LocationClientDto>> GetLocationComputers([FromQuery] GetLocationComputersQuery query)
-        {
-            return await Mediator.Send(query);
-        }
-
-        [HttpPost("attach-computer")]
+        [HttpPost]
         public async Task<string> AttachLocationComputer([FromBody] AssignLocationComputerCommand command)
         {
             return await Mediator.Send(command);
         }
 
-        [HttpPost("detach-computer")]
-        public async Task<Unit> DetachLocationComputer([FromBody] UnassignLocationComputerCommand command)
+        [HttpDelete("{id}")]
+        public async Task<Unit> DetachLocationComputer([FromRoute] int id)
         {
+            var command = new UnassignLocationComputerCommand {LocationClientId = id};
             return await Mediator.Send(command);
         }
     }
