@@ -86,7 +86,7 @@ export class EventService extends AbstractService {
   }
 
   eventsWihoutPlan(params): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/not-attached-plan`, {params});
+    return this.http.get(`${this.baseUrl}/PlanEvent/not-assigned`, {params});
   }
 
   getTemplate(): Observable<any> {

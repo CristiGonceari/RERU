@@ -17,7 +17,8 @@ export class SearchPersonComponent implements OnInit {
 
   constructor(private planService: PlanService,
     private userService: UserProfileService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    ) { }
 
   ngOnInit() {
     this.getList();
@@ -25,7 +26,7 @@ export class SearchPersonComponent implements OnInit {
 
   initData() {
     this.planId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.userService.getUserProfiles({}).subscribe(() => {
+    this.planService.get(this.planId).subscribe(() => {
       this.form.setValue(null)
     })
   }
@@ -33,11 +34,12 @@ export class SearchPersonComponent implements OnInit {
   getList() {
    this.initData();
 
+
     this.form.valueChanges.subscribe(term => {
       if (!term)
-        this.userService.getUserProfilesByPlan({ planId: this.planId }).subscribe(data => this.list = data.data);
+        this.planService.getNoAssignedPersonToPlans({ planId: this.planId }).subscribe(data => this.list = data.data);
       else if (term != '')
-        this.userService.getUserProfilesByPlan({ keyword: term, planId: this.planId }).subscribe(data => this.list = data.data);
+        this.planService.getNoAssignedPersonToPlans({ keyword: term, planId: this.planId }).subscribe(data => this.list = data.data);
       
       this.planService.setUser(term);
     });

@@ -17,7 +17,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     public class PlanEventController : BaseController
     {
         [HttpGet]
-        public async Task<PaginatedModel<EventDto>> GetPlanEvents([FromRoute] GetPlanEventsQuery query)
+        public async Task<PaginatedModel<EventDto>> GetPlanEvents([FromQuery] GetPlanEventsQuery query)
         {
             return await Mediator.Send(query);
         }

@@ -112,10 +112,16 @@ export class SearchComponent implements OnInit {
   }
 
   getTitle(id) {
+
     if (this.searchLocations == false && id){
       return this.list.find(u => u.id === id).name + ", " + this.list.find(u => u.id === id).address;
     }
-    else if(id){
+
+    if(this.searchTestType == false && id ){
+      return this.list.find(u => u.id === id).name;
+    }
+    
+    if((this.searchPerson == false || this.searchEvaluators == false || this.searchUser == false) && id){
       var user =  this.list.find(u => u.id === id);
 
       if(user.lastName == null)

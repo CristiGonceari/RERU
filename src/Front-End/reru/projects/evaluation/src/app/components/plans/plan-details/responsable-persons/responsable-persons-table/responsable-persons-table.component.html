@@ -32,7 +32,7 @@
                             </div>
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                                 <div ngbDropdownMenu aria-labelledby="action1">
-                                    <button [routerLink]="['../../../plan', id, 'detach-person', item.id]" 
+                                    <button (click)="openConfirmationDeleteModal(id, item.id)"
                                       class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                       {{ 'button.delete' | translate }}
                                     </button>
@@ -51,27 +51,12 @@
 			</tr>
 		</tbody>
     </table>
-    <div class="d-flex justify-content-between align-items-baseline" *ngIf="persons.length">
-        <ngb-pagination [collectionSize]="pagination.totalCount" [(page)]="pagination.currentPage"
-            [pageSize]="pagination.pageSize" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
-            (pageChange)="list({page: $event})">
-        </ngb-pagination>
-        <div class="d-flex align-items-center py-3">
-            <select class="btn text-primary font-weight-bold mr-4 border-0 bg-light w-75px"
-                [(ngModel)]="pagination.pageSize"
-                (ngModelChange)="list({page: pagination.currentPage, itemsPerPage: pagination.pageSize})">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
-            <span class="text-muted">
-                {{'pagination.displaing' | translate}} {{ pagination.pageSize }}
-                {{'pagination.of' | translate}}
-                <b>{{ pagination.totalCount }}</b>
-                {{'pagination.records' | translate}}
-            </span>
-        </div>
-    </div>
+    <div pagination class="datatable-pager datatable-paging-loaded" *ngIf="persons.length"
+  [page]="pagination.currentPage"
+  [total]="pagination.totalPages"
+  [totalRecords]="pagination.totalCount"
+  [size]="pagination.pageSize"
+  (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event})"
+  (pageChange)="list({ page: $event})">
+</div>
 </div>
