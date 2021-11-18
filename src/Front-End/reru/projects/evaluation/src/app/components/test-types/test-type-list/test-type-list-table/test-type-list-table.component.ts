@@ -27,12 +27,6 @@ export class TestTypeListTableComponent implements OnInit {
 	keyword: string;
 	status: string = '';
 	public id: number;
-	pagedSummary = {
-		totalCount: 0,
-		pageSize: 0,
-		currentPage: 1,
-		totalPages: 1,
-	};
 
 	statusEnum = TestTypeStatusEnum;
 	isActive: boolean = false;
@@ -58,8 +52,8 @@ export class TestTypeListTableComponent implements OnInit {
 			name: this.testName || '',
 			eventName: this.eventName || '',
 			status: this.status,
-			page: data.page || this.pagedSummary.currentPage,
-			pagedSummary: this.pagedSummary,
+			page: data.page || this.pagination.currentPage,
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
 		}
 
 		this.testTypeService.getTestTypes(params).subscribe(res => {

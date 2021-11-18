@@ -13,60 +13,22 @@ import { TestTypeListComponent } from './test-type-list/test-type-list.component
 
 const routes: Routes = [
   { path: '', component: TestTypeListComponent },
-  {
-    path: 'add-test-type',
-    component: AddEditTestTypesComponent,
-    
-  },
-  {
-    path: 'edit-test-type/:id',
-    component: AddEditTestTypesComponent,
-  
-  },
-  // {
-  //   path: 'remove/:id',
-  //   component: DeleteTestTypeComponent,
-   
-  // },
+  { path: 'add-test-type', component: AddEditTestTypesComponent },
+  { path: 'edit-test-type/:id', component: AddEditTestTypesComponent },
   {
     path: 'type-details/:id',
     component: TestTypeDetailsComponent,
-    
     children: [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: 'overview', component: TestTypesOverviewComponent },
-      { 
-        path: 'options', 
-        component: AddTestTypeOptionsComponent, 
-        
-      },
-      { 
-        path: 'categories', 
-        component: TestTypesCategoriesComponent,
-     
-      },
-      { 
-        path: 'rules', 
-        component: TestTypesRulesComponent, 
-        
-      }
+      {  path: 'options', component: AddTestTypeOptionsComponent },
+      { path: 'categories', component: TestTypesCategoriesComponent },
+      { path: 'rules', component: TestTypesRulesComponent }
     ]
   },
-  { 
-    path: 'category/:id/add', 
-    component: AddCategoryComponent,
- 
-  },
-  { 
-    path: 'delete-category/:id', 
-    component: DeleteCategoryComponent,
-   
-  },
-  { 
-    path: 'rules/:id/add', 
-    component: AddTestTypeRulesComponent,
-   
-  }
+  { path: 'category/:id/add', component: AddCategoryComponent },
+  { path: 'delete-category/:id', component: DeleteCategoryComponent },
+  { path: 'rules/:id/add', component: AddTestTypeRulesComponent }
 ]
 
 @NgModule({

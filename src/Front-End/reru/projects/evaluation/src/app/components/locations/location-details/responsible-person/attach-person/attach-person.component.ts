@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
-import { LocationService } from '../../../utils/services/location/location.service';
-import { NotificationUtil } from '../../../utils/util/notification.util';
 import { Location } from '@angular/common';
-import { LocationResponsiblePerson } from '../../../utils/models/locations/location-responsible-person.model';
-import { AttachToLocationService } from '../../../utils/services/attach-to-location/attach-to-location.service';
+import { LocationService } from 'projects/evaluation/src/app/utils/services/location/location.service';
+import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
+import { LocationResponsiblePerson } from './../../../../../utils/models/locations/location-responsible-person.model';
 
 
 @Component({
@@ -24,7 +23,6 @@ export class AttachPersonComponent implements OnInit {
   constructor(
     private location: Location, 
     private locationService: LocationService, 
-    private attachToLocationService: AttachToLocationService, 
     private activatedRoute: ActivatedRoute,
 		private notificationService: NotificationsService
   ) { }
@@ -60,7 +58,6 @@ export class AttachPersonComponent implements OnInit {
         this.isLoading = false;
       }
     });
-    console.log('locationId', this.locationId);
   }
 
   backClicked() {

@@ -28,36 +28,34 @@ export class SearchPersonComponent implements OnInit {
   initData() {
     this.locationId = this.activatedRoute.snapshot.paramMap.get('id');
     this.locationService.getLocation(this.locationId).subscribe(res => {
-      this.form.setValue(res.data.userProfileId)
-      this.getTitle(res.data.userProfileId);
+      this.form.setValue(null)
     })
   }
 
   getList() {
     this.initData();
- 
-     this.form.valueChanges.subscribe(term => {
-       if (!term)
-         this.userService.getUserProfilesByLocation({ locationId: this.locationId }).subscribe(data => this.list = data.data);
-       else if (term != '')
-         this.userService.getUserProfilesByLocation({ keyword: term, locationId: this.locationId }).subscribe(data => this.list = data.data);
-         
-       this.locationService.setData(term);
-     });
-   }
- 
-   getTitle(userId) {
-     if (userId){
-      var user =  this.list.find(u => u.id === userId);
 
-      if(user.lastName == null)
-      {
+    this.form.valueChanges.subscribe(term => {
+      if (!term)
+        this.userService.getUserProfilesByLocation({ locationId: this.locationId }).subscribe(data => this.list = data.data);
+      else if (term != '')
+        this.userService.getUserProfilesByLocation({ keyword: term, locationId: this.locationId }).subscribe(data => this.list = data.data);
+
+      this.locationService.setData(term);
+    });
+  }
+
+  getTitle(userId) {
+    if (userId) {
+      var user = this.list.find(u => u.id === userId);
+
+      if (user.lastName == null) {
         user.lastName = "";
       }
 
       var name = user.firstName + " " + user.lastName;
 
       return name;
-     }
-   }
+    }
+  }
 }

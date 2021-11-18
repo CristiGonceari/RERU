@@ -16,9 +16,7 @@
         </thead>
         <tbody class="datatable-body" *ngIf="locations.length">
             <tr *ngFor="let item of locations" (dblclick)="navigate(item.id)">
-                <td>
-                    <app-location-name [location]="item"></app-location-name>
-                </td>
+                <td style="cursor: pointer;" [routerLink]="['location', item.id]">{{ item.name }}</td>
                 <td>{{item.address}}</td>
                 <td>
                     <span class="font-size-lg" *ngIf="item.type == enum.Class">{{'locations.Class' | translate}}</span>
@@ -72,27 +70,10 @@
             </tr>
         </tbody>
     </table>
-    <div class="d-flex justify-content-between align-items-baseline" *ngIf="locations.length">
-        <ngb-pagination [collectionSize]="pagination.totalCount" [(page)]="pagination.currentPage"
-        [pageSize]="pagination.pageSize" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="list({keyword: keyword, page: $event})">
-        </ngb-pagination>
-        <div class="d-flex align-items-center py-3">
-            <select class="btn text-primary font-weight-bold mr-4 border-0 bg-light w-75px" [(ngModel)]="pagination.pageSize"
-                (ngModelChange)="list({keyword: keyword, page: pagination.currentPage, itemsPerPage: pagination.pageSize})">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
-
-            <span class="text-muted">
-                {{'pagination.displaing' | translate}} {{ pagination.pageSize }} 
-                {{'pagination.of' | translate}}
-                <b>{{ pagination.totalCount }}</b>
-                {{'pagination.records' | translate}}
-            </span>
-        </div>
+    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage" *ngIf="locations.length"
+        [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
+        (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event })"
+        (pageChange)="list({ keyword: keyword, page: $event })">
     </div>
 </div>
 

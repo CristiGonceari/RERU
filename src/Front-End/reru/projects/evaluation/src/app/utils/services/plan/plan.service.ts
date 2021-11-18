@@ -52,7 +52,7 @@ export class PlanService extends AbstractService {
   }
 
   detachEvent(data){
-    return this.http.patch(`${this.baseUrl}/${this.urlRoute2}`, {data: data});
+    return this.http.patch(`${this.baseUrl}/${this.urlRoute2}`, data);
   }
 
   persons(params): Observable<any> {

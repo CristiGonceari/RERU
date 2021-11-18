@@ -10,7 +10,6 @@ import { FaqListComponent } from './faq-list/faq-list.component';
 import { FaqAddEditComponent } from './faq-add-edit/faq-add-edit.component';
 import { FaqListTableComponent } from './faq-list/faq-list-table/faq-list-table.component';
 import { FaqRoutingModule } from './faq-routing.module';
-import { FaqNameComponent } from './faq-list/faq-name/faq-name.component';
 import { FaqOverviewComponent } from './faq-details/faq-overview/faq-overview.component';
 import { SearchComponent } from './faq-list/search/search.component';
 import { UtilsModule } from '../../utils/utils.module';
@@ -21,7 +20,6 @@ import { UtilsModule } from '../../utils/utils.module';
 		FaqListComponent,
 		FaqAddEditComponent,
 		FaqListTableComponent,
-		FaqNameComponent,
 		FaqOverviewComponent,
 		SearchComponent,
 	],

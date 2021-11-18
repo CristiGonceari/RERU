@@ -16,9 +16,7 @@
         </thead>
         <tbody class="datatable-body" *ngIf="questionList.length">
             <tr *ngFor="let item of questionList" (dblclick)="navigate(item.id)">
-                <td>
-                    <app-question-name [question]="item"></app-question-name>
-                </td>
+                <td style="cursor: pointer;" [routerLink]="['question-detail', item.id]">{{ item.question }}</td>
                 <td>{{ item.categoryName }}</td>
                 <td>
                     <span class="font-size-lg" *ngIf="item.questionType">{{'statuses.' + type[item.questionType] | translate}}</span>

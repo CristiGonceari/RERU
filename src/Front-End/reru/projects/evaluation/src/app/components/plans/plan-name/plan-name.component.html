@@ -1,9 +1,0 @@
-<span *ngIf="permission">
-    <a [routerLink]="['plan', plan.id]" class="font-size-lg text-dark-50 text-hover-dark-75" >
-        {{ plan.name }}
-    </a>
-</span>
-
-<span *ngIf="!permission">
-    {{ plan.name }}
-</span>

@@ -16,9 +16,7 @@
         </thead>
         <tbody class="datatable-body" *ngIf="plans.length">
             <tr *ngFor="let item of plans" (dblclick)="navigate(item.id)">
-                <td>
-                  <app-plan-name [plan]="item"></app-plan-name>
-                </td>
+              <td style="cursor: pointer;" [routerLink]="['plan', item.id]">{{ item.name }}</td>
                 <td style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                   {{item.description}}
               </td>
