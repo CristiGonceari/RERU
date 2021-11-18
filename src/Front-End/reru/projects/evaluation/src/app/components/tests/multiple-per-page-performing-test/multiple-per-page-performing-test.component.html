@@ -1,0 +1,103 @@
+<app-page-title title="{{'tests.test' | translate}}" subTitle="{{'tests.run-test' | translate}}"></app-page-title>
+
+<div class="main-content py-10 content-bg">
+    <div class="d-flex flex-column-fluid container">
+        <div class="card card-custom gutter-c w-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="font-size-lg">
+                        {{ testDto.testTypeName }}
+                    </div>
+                    <div>
+                        <span class="svg-icon svg-icon-primary svg-icon-2x">
+                            <svg class="mb-2" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                    <path
+                                        d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
+                                        fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                    <path
+                                        d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
+                                        fill="#000000" fill-rule="nonzero" />
+                                </g>
+                            </svg>
+                        </span>
+                        <span class="font-size-lg text-dark-50">{{ testDto.userName }}</span>
+                    </div>
+                    <div class="text-muted font-size-lg">
+                        {{'tests.min-percentage' | translate}}:
+                        <span class="text-dark font-size-lg ml-5">
+                            {{ testDto.minPercent }} %
+                        </span>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-success h6 pt-1 mb-0">
+                            {{timeLeft}}
+                        </button>
+                        <app-confirm-button class="btn ml-5" (handle)="submitTest()"
+                            [value]="'button.terminate-test' | translate"></app-confirm-button>
+                    </div>
+                </div>
+                <div class="text-container mt-5 mx-auto w-80">
+                    <table class="table ">
+                        <thead *ngFor="let testQuestion of testQuestions">
+                            <td>
+                                <p class="mb-7 font-size-h2 bg-gray-100 text-center rounded p-7"
+                                    [innerHTML]="testQuestion.question | safeHtml">
+                                </p>
+                            </td>
+                            <tr *ngIf="testQuestion.questionType != questionTypeEnum.HashedAnswer">
+                                <div class="data-container border border-secondary rounded p-5 my-4 mx-5 d-flex align-items-center option-label"
+                                    *ngFor="let option of testQuestion.options">
+                                    <label class="checkbox checkbox-lg checkbox-inline mr-5">
+                                        <input type="checkbox" name="isSelected" (change)="onItemChange($event, testQuestion)"
+                                            value="{{option.id}}"
+                                            *ngIf="testQuestion.questionType == questionTypeEnum.MultiplyAnswers"
+                                            [checked]="option.isSelected">
+                                        <input type="radio" (change)="onItemChange($event, testQuestion)" [name]="testQuestion.questionUnitId"
+                                            value="{{option.id}}" 
+                                            *ngIf="testQuestion.questionType == questionTypeEnum.OneAnswer"
+                                            [checked]="option.isSelected">
+                                        <span></span>
+                                    </label>
+                                    {{ option.answer }}
+                                </div>
+                                <div class="data-container answer mx-5 my-2"
+                                    *ngIf="testQuestion.questionType == questionTypeEnum.FreeText">
+                                    <textarea class="form-control border rounded border-secondary p-7 w-100" rows="7"
+                                        placeholder="Write here..." [(ngModel)]="testQuestion.answerText"
+                                        name="answerText"></textarea>
+                                </div>
+                            </tr>
+                            <hr>
+                        </thead>
+                    </table>
+                    <div class="d-flex justify-content-between my-15">
+                        <div class="d-flex">
+                            <button *ngIf="settings.possibleChangeAnswer && settings.hidePagination"
+                                type="button" class="btn btn-secondary h6 mr-10 py-auto pb-9"
+                                (click)="getTestQuestions(questionIndex - 1)"
+                                [disabled]="questionIndex==1">{{'button.back' | translate}}</button>
+                            <button *ngIf="settings.possibleGetToSkipped" type="button"
+                                class="btn btn-secondary h6 mr-10 py-auto pb-9" (click)="skipQuestion()">{{'button.skip'
+                                | translate}}</button>
+                        </div>
+                        <div class="d-flex flex-row-reverse">
+                            <button type="button" (click)="postAnswer()"
+                                class="btn btn-success h6 py-auto pb-9">{{'button.save-and-next' | translate}}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-baseline">
+                        <ngb-pagination [collectionSize]="count" [(page)]="pageNumber" [pageSize]="settings.questionsCountPerPage"
+                            [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
+                            (pageChange)="getTestQuestions($event)">
+                        </ngb-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

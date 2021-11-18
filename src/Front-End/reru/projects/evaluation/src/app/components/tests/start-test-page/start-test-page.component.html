@@ -1,0 +1,71 @@
+<app-page-title title="{{'tests.test' | translate}}" subTitle="{{'tests.run-test' | translate}}"></app-page-title>
+
+<!--begin::Content-->
+<div class="content main-content content-bg" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card card-custom gutter-b">
+                        <div class="card-header flex-wrap border-0 py-5">
+                            <div class="card-title m-10">
+                                <h3 class="card-label text-muted">{{ 'tests.name' | translate }}:</h3>
+                                <h3 class="card-label">{{ testDto.testTypeName }}</h3>
+                            </div>
+                            <div class="card-title m-10">
+                                <h3 class="card-label text-muted">{{'verify-test.student' | translate}}:</h3>
+                                <h3 class="card-label">{{ testDto.userName }}</h3>
+                            </div>
+                            <div class="card-title m-10">
+                                <h3 class="card-label text-muted">{{'tests.time' | translate}}:</h3>
+                                <h3 class="card-label">{{ testDto.duration }} min</h3>
+                            </div>
+                            <div class="card-title m-10">
+                                <h3 class="card-label text-muted">{{'tests.min-percentage' | translate}}:</h3>
+                                <h3 class="card-label">{{ testDto.minPercent }} %</h3>
+                            </div>
+                            <div class="card-title m-10">
+                                <h3 class="card-label text-muted">{{'tests.questions' | translate}}:</h3>
+                                <h3 class="card-label">{{ testDto.questionCount }}</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-15">
+                                <div class="col-xl-12 d-flex align-items-center" style="justify-content: center;">
+                                    <h1 class="mr-5">{{'tests.test-start' | translate}}</h1>
+                                    <button type="button"
+                                        class="btn btn-success h1 px-8 py-auto font-weight-normal pb-14 rounded">
+                                        {{timeLeft}}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <h1 class="text-center">{{'tests.rules' | translate}}:</h1>
+                                    <div class="text mt-10"></div>
+                                    <ckeditor [(ngModel)]="testDto.rules" [editor]="Editor" readOnly="true"
+                                        class="disabled-area"></ckeditor>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="d-flex mt-10 align-items-center">
+                                        <label class="checkbox checkbox-lg checkbox-inline mr-3">
+                                            <input type="checkbox" (change)="accept = !accept">
+                                            <span></span>
+                                        </label>
+                                        {{'button.accept' | translate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <app-add-button class="btn" [disabled]="!(startTest && accept)" (handle)="goToTest()"
+                                [value]="'button.start' | translate"></app-add-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

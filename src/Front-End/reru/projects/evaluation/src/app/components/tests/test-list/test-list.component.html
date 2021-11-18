@@ -1,0 +1,73 @@
+<app-page-title title="{{'sidebar.test' | translate}}" subTitle="{{'verify-test.subtitle' | translate}}">
+</app-page-title>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+  <div class="d-flex flex-column-fluid">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="card card-custom gutter-b">
+            <div class="card-header flex-wrap border-0 py-5">
+              <div class="card-title">
+                <h3 class="card-label">{{'verify-test.title' | translate}}</h3>
+              </div>
+              <div class="card-toolbar">
+                <app-add-button class="btn my-auto mr-5" [routerLink]="['add-test']" 
+                  [value]="'tests.new-test' | translate"></app-add-button>
+              </div>
+            </div> 
+            <div class="card-header border-0 pt-0 pb-0 pr-5" style="min-height: 100%;"> 
+              <div class="row w-100">
+                <div class="col-lg-3 col-12">
+                  <div class="input-group input-group-sm input-group-solid">
+                    <input type="text" class="form-control" [placeholder]="'tests.search-test' | translate" name="testToSearch" [(ngModel)]="testsTable.testToSearch">
+                  </div>
+                </div>
+                <div class="col-lg-3 col-12 mt-lg-0 mt-3">
+                  <div class="input-group input-group-sm input-group-solid">
+                    <input type="text" class="form-control" [placeholder]="'events.search-event' | translate" name="eventName" [(ngModel)]="testsTable.eventName">
+                  </div>
+                </div>
+                <div class="col-lg-3 col-12 mt-lg-0 mt-3">
+                  <div class="input-group input-group-sm input-group-solid">
+                    <input type="text" class="form-control" [placeholder]="'events.search-location' | translate" name="locationName" [(ngModel)]="testsTable.locationName">
+                  </div>
+                </div>
+                <div class="col-lg-3 col-12 mt-lg-0 mt-3">
+                  <div class="input-group input-group-sm input-group-solid">
+                    <input type="text" class="form-control" [placeholder]="'verify-test.search-student' | translate" name="userName" [(ngModel)]="testsTable.userName">
+                  </div>
+                </div>
+              </div>
+              <div class="row w-100">
+                <div class="col-lg-3 col-12 mt-3">
+                  <app-search-status (filter)="testsTable.selectedStatus = $event.target.value"></app-search-status>
+                </div>
+                <div class="col-lg-3 col-12 mt-3">
+                  <div class="input-group input-group-sm input-group-solid">
+                    <input class="form-control" [owlDateTime]="dtFrom" [owlDateTimeTrigger]="dtFrom" [placeholder]="'events.search-from' | translate" [(ngModel)]="testsTable.dateTimeFrom" autocomplete="off">
+                    <owl-date-time #dtFrom></owl-date-time>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-12 mt-3">
+                  <div class="input-group input-group-sm input-group-solid">
+                    <input class="form-control" [owlDateTime]="toDate" [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate" [(ngModel)]="testsTable.dateTimeTo" autocomplete="off">
+                    <owl-date-time #toDate></owl-date-time>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-12 mt-3 px-8">
+                  <div class="row justify-content-lg-end justify-content-center confirmation-container">
+                    <app-confirm-button (handle)="testsTable.getTests({page: 1})" [value]="'button.search' | translate" ></app-confirm-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <app-test-list-table #testsTable></app-test-list-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -37,6 +37,7 @@ import { MyActivitiesRoutingModule } from './components/my-activities/my-activit
 import { MyActivitiesModule } from './components/my-activities/my-activities.module';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +52,6 @@ import { MyActivitiesModule } from './components/my-activities/my-activities.mod
 		CommonModule,
 		SvgModule,
     ReactiveFormsModule,
-    FormsModule,
     NgbModule,
     SimpleNotificationsModule.forRoot(),
     TranslateModule.forRoot({
@@ -84,6 +84,9 @@ import { MyActivitiesModule } from './components/my-activities/my-activities.mod
   ],
   entryComponents: [
   ],
+	schemas: [
+		CUSTOM_ELEMENTS_SCHEMA
+ 	],
   providers: [
     TranslatePipe,
     //CONFIG_INITIALIZER,

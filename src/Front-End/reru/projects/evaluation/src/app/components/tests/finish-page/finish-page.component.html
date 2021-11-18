@@ -1,0 +1,65 @@
+<app-page-title title="{{'verify-test.subtitle' | translate}}" subTitle="{{'tests.finished-test' | translate}}">
+</app-page-title>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="card card-custom gutter-b">
+                <div class="card-header text-center border-0 py-5">
+                    <h3 class="w-100 font-weight-bold text-dark"> {{'tests.finished-success' | translate}} </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row justify-content-center px-8 px-lg-10">
+                        <div class="col-xl-12 col-xxl-7">
+                            <div *ngIf="viewResult">
+                                <div class="form-group row align-items-center mb-3">
+                                    <label class="col-xl-5 col-lg-4 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                                        {{'categories.total-questions' | translate}}:
+                                    </label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <p class="font-size-lg m-0">{{totalQuestions}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center mb-3">
+                                    <label class="col-xl-5 col-lg-4 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                                        {{'tests.min-percentage' | translate}}:
+                                    </label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <p class="font-size-lg m-0">{{points}}%</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center mb-3">
+                                    <label class="col-xl-5 col-lg-4 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                                        {{'tests.accumulated-percent' | translate}}:
+                                    </label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <p class="font-size-lg m-0" [style.color]="'#1BC5BD'">{{points}}%</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center mb-3">
+                                    <label class="col-xl-5 col-lg-4 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                                        {{'verify-test.result' | translate}}:
+                                    </label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <p class="label label-lg label-light-success label-inline" *ngIf="result == 1">{{'statuses.passed' |
+                                            translate}}</p>
+                                        <p class="label label-lg label-light-danger label-inline" *ngIf="result == 2">{{'statuses.not-passed' |
+                                            translate}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right border-top pt-10">
+                                <app-button *ngIf="viewResult" [routerLink]="['']" class="btn mr-2" [value]="'button.cancel' | translate">
+                                </app-button>
+                                <app-add-button *ngIf="viewResult" [routerLink]="['../../test-result', testId]" class="btn mr-2" [value]="'tests.view' | translate">
+                                </app-add-button>
+                                <app-add-button *ngIf="!viewResult" [routerLink]="['']" class="btn" [value]="'button.ok' | translate">
+                                </app-add-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
