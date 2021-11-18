@@ -15,10 +15,18 @@ import { SharedModule, SvgModule, MOCK_AUTHENTICATION } from '@erp/shared';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { NgxDnDModule } from '@swimlane/ngx-dnd';
 import { environment } from '../environments/environment';
-
+import { ModulesComponent } from './components/modules/modules.component';
+import { RolesComponent } from './components/roles/roles.component';
 
 @NgModule({
-	declarations: [AppComponent, DashboardComponent],
+	declarations: [
+			//AuthenticationCallbackComponent,
+			AppComponent,
+			//    LoginComponent,
+			DashboardComponent,
+			ModulesComponent,
+			RolesComponent,
+	],
 	imports: [
 		BrowserModule,
 		BrowserAnimationsModule,
