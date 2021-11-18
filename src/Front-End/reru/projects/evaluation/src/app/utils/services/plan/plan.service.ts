@@ -9,6 +9,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class PlanService extends AbstractService {
   private readonly urlRoute = 'Plan';
   private readonly urlRoute2 = 'PlanEvent';
+  private readonly urlRoute3 = 'PlanResponsiblePerson';
 
   private eventId: BehaviorSubject<any> = new BehaviorSubject(null);
 	event = this.eventId.asObservable();
@@ -38,31 +39,35 @@ export class PlanService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`);
   }
 
-  delete(params): Observable<any>{
-    return this.http.delete(`${this.baseUrl}/${this.urlRoute}`, { params });
+  delete(id): Observable<any>{
+    return this.http.delete(`${this.baseUrl}/${this.urlRoute}/${id}`);
   }
 
-  events(id): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute2}/events-by-${id}`);
+  events(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute2}`, {params});
   }
 
   attachEvent(data){
-    return this.http.post(`${this.baseUrl}/${this.urlRoute2}/assign-event`, data);
+    return this.http.post(`${this.baseUrl}/${this.urlRoute2}`, data);
   }
 
   detachEvent(data){
-    return this.http.post(`${this.baseUrl}/${this.urlRoute2}/unassign-event`, data);
+    return this.http.patch(`${this.baseUrl}/${this.urlRoute2}`, {data: data});
   }
 
-  persons(id): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute2}/responsible-persons-by-${id}`);
+  persons(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute3}`, {params});
   }
 
   attachPerson(data){
-    return this.http.post(`${this.baseUrl}/${this.urlRoute2}/assign-person`, data);
+    return this.http.post(`${this.baseUrl}/${this.urlRoute3}`, data);
   }
 
-  detachPerson(data){
-    return this.http.post(`${this.baseUrl}/${this.urlRoute2}/unassign-person`, data);
+  detachPerson(id, itemId){
+    return this.http.delete(`${this.baseUrl}/${this.urlRoute3}/Plan=${id}&&UserProfile=${itemId}`);
+  }
+
+  getNoAssignedPersonToPlans(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute3}/no-assigned`, {params});
   }
 }

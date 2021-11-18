@@ -17,7 +17,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     public class PlanResponsiblePersonController : BaseController
     {
         [HttpGet]
-        public async Task<PaginatedModel<UserProfileDto>> GetPlanResponsiblePersons([FromRoute] GetPlanResponsiblePersonsQuery query)
+        public async Task<PaginatedModel<UserProfileDto>> GetPlanResponsiblePersons([FromQuery] GetPlanResponsiblePersonsQuery query)
         {
             return await Mediator.Send(query);
         }

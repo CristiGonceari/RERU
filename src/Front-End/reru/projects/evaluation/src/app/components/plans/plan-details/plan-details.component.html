@@ -30,7 +30,7 @@
                                                 class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                                 {{ 'button.edit' | translate }}
                                             </button>
-                                            <button [routerLink]="['../../remove', plan.id]"
+                                            <button (click)="openDeleteModal(plan.id)"
                                                 class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                                 {{ 'button.delete' | translate }}
                                             </button>

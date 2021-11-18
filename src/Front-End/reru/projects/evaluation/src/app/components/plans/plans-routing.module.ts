@@ -4,14 +4,11 @@ import { PermissionRouteGuard } from 'dist/erp-shared/public-api';
 import { EventsListComponent } from '../events/events-list/events-list.component';
 // import { PermissionRouteGuard } from '@erp/shared';
 import { AddComponent } from './add/add.component';
-import { DeleteComponent } from './delete/delete.component';
 import { EditComponent } from './edit/edit.component';
 import { AttachComponent } from './plan-details/events/attach/attach.component';
-import { DetachComponent } from './plan-details/events/detach/detach.component';
 import { PlanDetailsComponent } from './plan-details/plan-details.component';
 import { PlanOverviewComponent } from './plan-details/plan-overview/plan-overview.component';
 import { AttachPersonsComponent } from './plan-details/responsable-persons/attach-persons/attach-persons.component';
-import { DetachPersonsComponent } from './plan-details/responsable-persons/detach-persons/detach-persons.component';
 import { ResponsablePersonsComponent } from './plan-details/responsable-persons/responsable-persons.component';
 import { EventsComponent } from './plan-details/events/events.component';
 
@@ -54,33 +51,15 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'remove/:id', 
-    component: DeleteComponent,
-    // data: { permission: 'P03011505' },
-    // canActivate: [PermissionRouteGuard]
-  },
-  {
     path: 'attach-event/:id', 
     component: AttachComponent,
     // data: { permission: 'P03011510' },
     // canActivate: [PermissionRouteGuard],
   },
   {
-    path: 'plan/:id/detach-event/:id2', 
-    component: DetachComponent,
-    // data: { permission: 'P03011511' },
-    // canActivate: [PermissionRouteGuard],
-  },
-  {
     path: 'attach-person/:id', 
     component: AttachPersonsComponent,
     // data: { permission: 'P03011507' },
-    // canActivate: [PermissionRouteGuard],
-  },
-  {
-    path: 'plan/:id/detach-person/:id2', 
-    component: DetachPersonsComponent,
-    // data: { permission: 'P03011508' },
     // canActivate: [PermissionRouteGuard],
   },
 ]
