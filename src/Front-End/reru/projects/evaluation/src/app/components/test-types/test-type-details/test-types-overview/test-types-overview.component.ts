@@ -40,9 +40,6 @@ export class TestTypesOverviewComponent implements OnInit {
           this.isLoading = false;
           this.status = TestTypeStatusEnum[res.data.status];
         }
-        console.log("testType", this.testType);
-        console.log("status", this.status);
-        
     })
   }
 

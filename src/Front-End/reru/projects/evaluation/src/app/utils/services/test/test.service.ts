@@ -65,12 +65,10 @@ export class TestService extends AbstractService {
 	}
 
 	changeStatus(data): Observable<any> {
-		console.log("data:", data)
 		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/edit-status`, data);
 	}
 
 	deleteTest(params): Observable<any> {
-		console.log("toremoveParams:", params)
 		return this.http.delete(`${this.baseUrl}/${this.urlRoute}`,  { params } );
 	}
 

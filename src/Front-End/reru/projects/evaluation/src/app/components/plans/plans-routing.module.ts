@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AddComponent } from './add/add.component';
-import { EditComponent } from './edit/edit.component';
 import { AttachComponent } from './plan-details/events/attach/attach.component';
 import { PlanDetailsComponent } from './plan-details/plan-details.component';
 import { PlanOverviewComponent } from './plan-details/plan-overview/plan-overview.component';
@@ -9,11 +7,12 @@ import { AttachPersonsComponent } from './plan-details/responsable-persons/attac
 import { ResponsablePersonsComponent } from './plan-details/responsable-persons/responsable-persons.component';
 import { EventsComponent } from './plan-details/events/events.component';
 import { PlansComponent } from './plans.component';
+import { AddEditPlansComponent } from './add-edit-plans/add-edit-plans.component';
 
 const routes: Routes = [
   {path: '', component: PlansComponent},
-  { path: 'add', component: AddComponent },
-  { path: 'edit/:id', component: EditComponent },
+  { path: 'edit/:id', component: AddEditPlansComponent },
+  { path: 'add', component: AddEditPlansComponent },
   { 
     path: 'plan/:id',
     component: PlanDetailsComponent,
