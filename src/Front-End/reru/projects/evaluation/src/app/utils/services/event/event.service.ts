@@ -25,7 +25,7 @@ export class EventService extends AbstractService {
   }
 
   getMyEvents(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/mine`, { params });
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-events`, { params });
   }
 
   addEvent(data: any): Observable<any> {

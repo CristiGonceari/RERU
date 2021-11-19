@@ -1,1 +1,48 @@
-<p>my-activities works!</p>
+<app-page-title title="{{'dashboard.title' | translate}}" subTitle="{{'dashboard.subtitle' | translate}}">
+</app-page-title>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+	<div class="d-flex flex-column-fluid">
+		<div class="container">
+			<div class="d-flex flex-row">
+				<div class="flex-row-auto offcanvas-mobile w-300px w-xl-350px mb-7" id="kt_profile_aside">
+					<div class="card card-custom">
+						<div class="card-body pt-4">
+							<div class="py-9">
+								<div class="navi navi-bold navi-hover navi-active navi-link-rounded">
+									<div class="navi-item mb-2">
+										<a [routerLink]="['my-tests']" routerLinkActive="active" class="navi-link py-4">
+											<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
+											<span class="navi-text font-size-lg">
+												{{ 'verify-test.title' | translate }}
+											</span>
+										</a>
+									</div>
+									<div class="navi-item mb-2">
+										<a [routerLink]="['my-events']" routerLinkActive="active" class="navi-link py-4">
+											<i class="far fa-question-circle icon-md mr-3"></i>
+											<span class="navi-text font-size-lg">
+												{{ 'events.events' | translate }}
+											</span>
+										</a>
+									</div> 
+									<div class="navi-item mb-2">
+										<a [routerLink]="['my-polls']" routerLinkActive="active" class="navi-link py-4">
+											<i class="fas fa-poll-h icon-md mr-3"></i>
+											<span class="navi-text font-size-lg">
+												{{ 'polls.polls' | translate }}
+											</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="flex-row-fluid">
+					<router-outlet></router-outlet>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
