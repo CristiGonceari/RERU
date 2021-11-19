@@ -11,8 +11,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '@erp/shared';
 import { MaterialModule } from '../../material.module';
 import { UtilsModule } from '../../utils/utils.module';
-import { AddComponent } from './add/add.component';
-import { EditComponent } from './edit/edit.component';
 import { PlanDetailsComponent } from './plan-details/plan-details.component';
 import { PlansListComponent } from './plans-list/plans-list.component';
 import { PlanOverviewComponent } from './plan-details/plan-overview/plan-overview.component';
@@ -25,13 +23,12 @@ import { AttachComponent } from './plan-details/events/attach/attach.component';
 import { EventsTableComponent } from './plan-details/events/events-table/events-table.component';
 import { SearchEventComponent } from './plan-details/events/attach/search-event/search-event.component';
 import { AddEditPlansComponent } from './add-edit-plans/add-edit-plans.component';
+import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-datetime';
 
 
 @NgModule({
   declarations: [
     PlansComponent, 
-    AddComponent, 
-    EditComponent, 
     PlanDetailsComponent, 
     PlansListComponent,
     PlanOverviewComponent,
@@ -56,7 +53,9 @@ import { AddEditPlansComponent } from './add-edit-plans/add-edit-plans.component
     HttpClientModule,
     UtilsModule,
     MaterialModule,
-    PlansRoutingModule
+    PlansRoutingModule,
+    OwlDateTimeModule,
+    OwlMomentDateTimeModule,
   ]
 })
 export class PlansModule { }

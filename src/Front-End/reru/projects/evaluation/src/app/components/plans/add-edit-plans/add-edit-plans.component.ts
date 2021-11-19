@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 import { PlanService } from '../../../utils/services/plan/plan.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
@@ -15,22 +15,28 @@ import { Plan } from '../../../utils/models/plans/plan.model';
 export class AddEditPlansComponent implements OnInit {
 
   planForm: FormGroup;
+  isEditForm: boolean = false;
   isLoading: boolean;
 
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
     private planService: PlanService,
-              private location: Location,
-              private notificationService: NotificationsService) { }
+    private location: Location,
+    private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
+	  this.planForm = new FormGroup({ name: new FormControl() });
+    this.initForm();
     this.subscribeForParams();
   }
 
   subscribeForParams(): void {
     this.route.params.subscribe(response => {
       if (response.id) {
+        this.isEditForm = true;
         this.retrievePlan(response.id);
+      } else {
+         this.initForm();
       }
     })
   }
@@ -42,17 +48,19 @@ export class AddEditPlansComponent implements OnInit {
     });
   } 
 
+
   initForm(plan: Plan = <any>{}): void {
     this.planForm = this.fb.group({
-      name: this.fb.control(null, [Validators.required]),
-      fromDate: this.fb.control(null, [Validators.required]),
-      tillDate: this.fb.control(null, [Validators.required]),
-      description: this.fb.control(null, [Validators.required])
+      id: this.fb.control(this.isEditForm? plan.id : null, []),
+      name: this.fb.control(this.isEditForm? plan.name : null, [Validators.required]),
+      fromDate: this.fb.control(this.isEditForm? plan.fromDate : null, [Validators.required]),
+      tillDate: this.fb.control(this.isEditForm? plan.tillDate : null, [Validators.required]),
+      description: this.fb.control(this.isEditForm? plan.description : null, [Validators.required])
     });
   }
 
   onSave(): void {
-		if (this.planForm) {
+		if (!this.isEditForm) {
 			this.addPlan();
 		} else {
 			this.editPlan();
@@ -60,7 +68,6 @@ export class AddEditPlansComponent implements OnInit {
 	}
   
   addPlan(): void {
-    console.log("this.planFormValue:", this.planForm.value)
     this.planService.add({data: this.planForm.value}).subscribe(() => {
       this.back();
 			this.notificationService.success('Success', 'Plan was successfully added', NotificationUtil.getDefaultMidConfig());

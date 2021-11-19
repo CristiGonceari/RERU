@@ -32,11 +32,7 @@ namespace CODWER.RERU.Evaluation.Application.References.GetEventsValues
             {
                 var eventEvaluators = await _appDbContext.EventEvaluators.AnyAsync(e => e.EventId == x.EventId);
 
-                if (eventEvaluators)
-                {
-                    x.IsEventEvaluator = true;
-                }
-                else x.IsEventEvaluator = false;
+                x.IsEventEvaluator = eventEvaluators;
             }
 
             return events;
