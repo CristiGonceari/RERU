@@ -1,0 +1,64 @@
+<app-page-title title="{{'plans.manage-plans' | translate}}" subTitle="{{'plans.plan-data' | translate}}"></app-page-title>
+
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'" [colorClass]="'text-primary'"></app-loading-spinner>
+
+<div *ngIf="!isLoading" class="content  d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class=" container ">
+            <div class="card card-custom gutter-b">
+                <div class="card-body p-0">
+                    <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first" data-wizard-clickable="true">
+                        <div class="row justify-content-center my-5 px-8 my-lg-7 px-lg-10">
+                            <div class="col-xl-12 col-xxl-7">
+                                <form class="form" id="kt_contact_add_form" [formGroup]="planForm" autocomplete="off">
+                                    <div class="pb-5">
+                                        <h3 class="mb-10 font-weight-bolder text-dark">
+                                            {{'plans.plan-details' | translate}}</h3>
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="form-group row">
+                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'locations.name' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-9">
+                                                        <input class="form-control form-control-solid" type="text" formControlName="name" [placeholder]="'plans.plan-name' | translate" autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="fromDate" class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.start-date' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-9">
+                                                        <app-date [parent]="planForm" [date]="'fromDate'" [placeholder]="'events.start-date' | translate"></app-date>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="tillDate" class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.end-date' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-9">
+                                                        <app-date [parent]="planForm" [date]="'tillDate'" [placeholder]="'events.end-date' | translate"></app-date>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-10">
+                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'locations.description' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-9">
+                                                      <textarea type="text" class="form-control form-control-solid" name="description"
+                                                        placeholder="{{'locations.description' | translate}}" value="" formControlName="description">
+                                                      </textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" (click)="back()" class="btn btn-secondary font-weight-bold mr-2">
+                                            {{'button.cancel' | translate}}
+                                        </button>
+                                        <button type="button" class="btn btn-success font-weight-bold" [disabled]="planForm.invalid" (click)="onSave()">
+                                            {{'button.confirm' | translate}}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

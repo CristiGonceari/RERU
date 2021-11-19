@@ -1,0 +1,5 @@
+<input type="text" class="form-control" autocomplete="off" (change)="handleChange($event.target.value)" [disabled]="isDisabled" name="answerValue" [(ngModel)]="answerValue">
+
+<div #answer [hidden]="true">
+    <ng-content></ng-content>
+</div>

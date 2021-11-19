@@ -68,7 +68,7 @@ const commonExports = [
 	PermissionDirective,
 	AuthenticationCallbackComponent,
 	PaginationComponent,
-	LoadingSpinnerComponent
+	LoadingSpinnerComponent,
 ];
 
 @NgModule({

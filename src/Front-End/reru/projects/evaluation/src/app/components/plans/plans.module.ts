@@ -24,6 +24,7 @@ import { EventsComponent } from './plan-details/events/events.component';
 import { AttachComponent } from './plan-details/events/attach/attach.component';
 import { EventsTableComponent } from './plan-details/events/events-table/events-table.component';
 import { SearchEventComponent } from './plan-details/events/attach/search-event/search-event.component';
+import { AddEditPlansComponent } from './add-edit-plans/add-edit-plans.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { SearchEventComponent } from './plan-details/events/attach/search-event/
     EventsComponent,
     AttachComponent,
     EventsTableComponent,
-    SearchEventComponent
+    SearchEventComponent,
+    AddEditPlansComponent
   ],
   imports: [
     CommonModule,

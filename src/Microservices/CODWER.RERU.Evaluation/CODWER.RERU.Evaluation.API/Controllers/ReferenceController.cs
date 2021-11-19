@@ -74,10 +74,8 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("users-value/select-values")]
-        public async Task<List<SelectItem>> GetUsers()
+        public async Task<List<SelectItem>> GetUsers([FromQuery] GetUsersValueQuery query)
         {
-            var query = new GetUsersValueQuery();
-
             return await Mediator.Send(query);
         }
 

@@ -30,9 +30,9 @@ namespace CODWER.RERU.Evaluation.Application.References.GetEventsValues
 
             foreach (var x in events)
             {
-                var eventEvaluators = _appDbContext.EventEvaluators.Select(e => e.EventId == x.EventId).Count();
+                var eventEvaluators = await _appDbContext.EventEvaluators.AnyAsync(e => e.EventId == x.EventId);
 
-                if (eventEvaluators > 0)
+                if (eventEvaluators)
                 {
                     x.IsEventEvaluator = true;
                 }

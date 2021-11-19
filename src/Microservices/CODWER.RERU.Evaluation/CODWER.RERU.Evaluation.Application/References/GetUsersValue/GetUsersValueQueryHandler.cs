@@ -23,12 +23,16 @@ namespace CODWER.RERU.Evaluation.Application.References.GetUsersValue
 
         public async Task<List<SelectItem>> Handle(GetUsersValueQuery request, CancellationToken cancellationToken)
         {
-            var users = await _appDbContext.UserProfiles
-                .AsQueryable()
-                .Select(u => _mapper.Map<SelectItem>(u))
-                .ToListAsync();
+            var users = _appDbContext.UserProfiles.AsQueryable();
 
-            return users;
+            if (request.EventId.HasValue)
+            {
+                users = users
+                    .Include(x => x.EventUsers)
+                    .Where(x => x.EventUsers.Any(e => e.EventId == request.EventId));
+            }
+
+            return await users.Select(u => _mapper.Map<SelectItem>(u)).ToListAsync();
         }
     }
 }
