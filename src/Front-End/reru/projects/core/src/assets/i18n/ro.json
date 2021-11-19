@@ -4,9 +4,51 @@
     "en": "English",
     "ru": "Русский"
   },
-  "dashboard": {
-    "title": "Dashboard",
-    "subtitle": "Pagina de start"
+  "right-sidebar": {
+    "header": "Profilul utilizatorului",
+    "my-profile": "Profilul meu",
+    "change-password": "Schimbarea parolei",
+    "logout": "Ieșire"
+  },
+  "login": {
+    "admin-panel": "Panou de Administrare",
+    "signin": "Autentificare",
+    "login": "Logare",
+    "email": "Email",
+    "email-is-required": "Email este obligatoriu",
+    "token": "Token",
+    "token-is-required": "Token este obligatoriu",
+    "please-use-valid-email": "Vă rugăm să folosiți o formă corectă email, ex. example@mail.com",
+    "password": "Parolă",
+    "password-is-required": "Parola este obligatorie",
+    "forgot-password": "Ai uitat parola?",
+    "recover-email-sent": "Mesajul de recuperare a fost trimis pe email!"
+  },
+  "notification": {
+    "title": {
+      "success": "Succes",
+      "error": "Eroare",
+      "warning": "Atenție"
+    },
+    "body": {
+      "success": {
+        "create": "A fost creat cu succes!",
+        "update": "A fost actualizat cu succes!",
+        "delete": "A fost sters cu succes!",
+        "login": "Logare cu succes!"
+      },
+      "error": "A avut loc o eroare!"
+    }
+  },
+  "modules": {
+    "dashboard": "Dashboard",
+    "personal": "Management Personal",
+    "crm": "Management Clienti",
+    "documents": "Management Documente",
+    "inventory": "Inventar",
+    "tasks": "Misiuni",
+    "evaluation": "Evaluări",
+    "ecommerce": "E-Commerce"
   },
   "sidebar": {
     "home": "Acasă",
@@ -15,9 +57,223 @@
     "modules": "Module",
     "users": "Utilizatori"
   },
-  "my-profile":{
-    "title":"Profilul meu",
-    "hello-username": "Salut, {{username}}!",
-    "have-a-good-day": "Bine ai venit!"
+  "button": {
+    "change": "Schimba",
+    "add": "Adaugă",
+    "edit": "Editează",
+    "cancel": "Anulează",
+    "confirm": "Confirmă",
+    "delete": "Șterge",
+    "view-user": "Vizualizarea profilului utilizatorului",
+    "add-user": "Adaugarea utilizatorului",
+    "edit-user": "Editarea profilului utilizatorului",
+    "delete-user": "Ștergerea utilizatorului",
+    "activate-user": "Activarea utilizatorului",
+    "deactivate-user": "Deactivarea utilizatorului",
+    "add-module": "Adaugarea modulului",
+    "edit-module": "Editarea modulului",
+    "add-role": "Adaugarea rolului",
+    "edit-role": "Editarea rolului",
+    "submit": "Confirm",
+    "back": "Înapoi",
+    "navigate": "Navighează",
+    "update": "Actualizează",
+    "search":"Căutarea",
+    "filter": "Filtrează",
+    "yes": "Da",
+    "no": "Nu"
+  },
+  "pagination": {
+    "displaing": "Se afișează",
+    "of": "din",
+    "records": "înregistrări"
+  },
+  "table": {
+    "add": "Adaugă",
+    "icon": "Iconiță",
+    "module": "Titlul modulului",
+    "name": "Nume",
+    "email":"Poștă electronică",
+    "lastName": "Prenume",
+    "role": "Rolul",
+    "actions": "Acțiuni",
+    "type": "Tip",
+    "code": "Cod",
+    "color": "Culoare",
+    "publicUrl": "Public URL",
+    "internalUrl": "Internal Gateway",
+    "title": "Titlul",
+    "username": "Numele utilizatorului",
+    "active": "Activ",
+    "description": "Descripție",
+    "permission": "Permisiune",
+    "default": "Implicit",
+    "priority":"Prioritate"
+  },
+  "menu": {
+    "menu-sections": {
+      "administration": "Administrare"
+    }
+  },
+  "user-profile": {
+    "overview": "Vizualizarea profilului personal",
+    "edit-title": "Editarea profilului personal",
+    "edit-subtitle": "Inserta datele personale",
+    "personal-details": "Datele profilului:",
+    "change-personal-data": "Schimbare datelor profilului personal",
+    "change-personal-details": "Schimbare datelor profilului personal:",
+    "logout": "Ieșire",
+    "logout-msg": "Sunteți sigur(-ă) că doriți să ieșiți din sistem?",
+    "empty-name": "Camp este obligatorie, cel puțin 1 caracter",
+    "wrong-name": "Camp trebue să incepe cu 1 caracter",
+    "available-modules": "Module disponibile"
+  },
+  "user": {
+    "edit-title": "Editarea utilizatorului",
+    "delete-title": "Stergerea utilizatorului",
+    "block-title": "Blocare/Deblocare",
+    "remove-sure": "Sunteți sigur(-ă) că doriți să stergeți acest utilizator?"
+  },
+  "word": {
+    "search": "Căutarea"
+  },
+  "set-password": {
+    "title": "Setarea Parolei",
+    "subheader": "Introduceți parola utilizatorului",
+    "password": "Parola"
+  },
+  "reset-password": {
+    "title": "Resetarea Parolei",
+    "subheader": "Confirmați-vă acțiunea",
+    "sure": "Sunteți sigur(-ă) că doriți să resetați parola utilizatorului"
+  },
+  "change-password-comp": {
+    "title": "Schimbarea parolei",
+    "password-details": "Detaliile parolei",
+    "old-password": "Parola veche",
+    "new-password": "Parola noua",
+    "repeat-password": "Repetați parola",
+    "password-is-required": "Parola este obligatorie",
+    "please-use-valid-password": "Vă rugăm să folosiți o formă corectă de parola",
+    "send-notification": "Trimiteți notificare utilizatorului prin e-mail",
+    "password-should-contain": "Parola trebuie să conțină cel puțin",
+    "password-length": "8 caractere",
+    "uppercase-character": "1 caracter majuscul",
+    "number": "1 număr",
+    "special-character": "1 caracter special"
+  },
+  "deactivate-user": {
+    "title": "Deactivarea utilizatorului",
+    "sure": "Sunteți sigur(-ă) că doriți să deactivați "
+  },
+  "activate-user": {
+    "title": "Activarea utilizatorului",
+    "sure": "Sunteți sigur(-ă) că doriți să activați "
+  },
+  "module-access": {
+    "title": "Accesul utilizatorului la module",
+    "module": "Titlul modulului",
+    "role": "Rolul",
+    "manage": "Gestionarea accesului la modul",
+    "module-access-info": "Informații despre acces la module",
+    "user-name": "Numele utilizatorului",
+    "select": "Selectează",
+    "remove-access-message": "Sunteți sigur(-ă) că doriți să eliminați accesul la acest modul?"
+  },
+  "remove-module": {
+    "title": "Ștergerea modulului",
+    "sure": "Sunteți sigur(-ă) că doriți să stergeți modulul?"
+  },
+  "pages": {
+    "users": {
+      "title": "Gestionarea utilizatorilor aplicației",
+      "user-list": "Lista utilizatorilor",
+      "new": "Utilizator nou",
+      "edit": "Editarea utilizatorului",
+      "details": "Detaliile utilizatorului",
+      "do-not-send-email": "Fără notificare prin email"
+    },
+    "user-details": {
+      "title": "Profilul utilizatorului",
+      "overview": "Vizualizarea profilului",
+      "details": "Vizualizarea generală a detaliilor profilului utilizatorului",
+      "module-access": "Acces la module",
+      "email": "E-mail",
+      "give-module-access": "Dați accesul",
+      "update-module-access": "Actualizați accesul",
+      "remove-module-access": "Eliminați accesul"
+    },
+    "modules": {
+      "title": "Module",
+      "subtitle": "Gestionarea modulelor aplicației",
+      "list-module": "Lista de module",
+      "details": "Vizualizați detaliile",
+      "edit": "Editați modulul",
+      "navigate": "Navigați la modul",
+      "remove": "Ștergeți modulul",
+      "development": "Dezvoltarea modulelor",
+      "info": "Informații despre modul"
+    },
+    "access-roles": {
+      "title": "Gestionarea rolulilor de acces"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Pagina de start"
+    },
+    "modules-details": {
+      "title": "Detaliile modulului",
+      "overview": "Vizualizarea modulului",
+      "roles": "Rolurile modulului",
+      "permissions": "Permisiunile modulului"
+    },
+    "roles": {
+      "view-permissions": "Vizualizați permisiunile",
+      "details": "Detaliile rolului",
+      "permissions": "Permisiunile rolului",
+      "update-permissions": "Editarea permisiunilor",
+      "management": "Managementul rolului",
+      "name": "Numele rolului",
+      "use-as-default": "Folosiți ca rol implicit"
+    }
+  },
+  "upload-avatar": {
+    "title": "Încărcați imaginea de profil",
+    "drop-msg": "Plasați imaginea aici sau faceți clic pentru a încărca imaginea.",
+    "sure-image-msg": "Asigurați-vă că încărcați o imagine.",
+    "remove": "Ștergerea avatarului",
+    "sure-remove-msg": "Sunteți sigur(-ă) că doriți să ștergeți avatarul?",
+    "upload-btn": "Încărcă"
+  },
+  "expired-token": {
+    "title": "Sesiune expirată",
+    "expired-msg": "Sesiunea dvs. a fost expirată. Veți fi redirecționat către pagina de autentificare."
+  },
+  "deactivated": {
+    "title": "Dezactivare",
+    "deactivated-msg": "Contul dvs. a fost dezactivat. Veți fi redirecționat către pagina de autentificare."
+  },
+  "messages": {
+    "no-permissions": "Nu există permisiuni...",
+    "required-field": "Câmpul este obligatoriu",
+    "color-input": "Vă rugăm să începeți să tastați din caracterul '#'. Ex .: '# C9F7F5'",
+    "no-records": "Nu sunt înregistrări"
+  },
+  "message-code": {
+    "M00000001": "Inserare nevalidă",
+    "M00010001": "Numele nu trebuie să fie nul",
+    "M00010002": "Numele nu trebuie să fie gol",
+    "M00010003": "Este necesară lungimea minimă",
+    "M00010004": "Numele nu ar trebui să înceapă cu un număr",
+    "MAR000001": "Route nu a fost găsit",
+    "MAR000002": "Nu există conținut",
+    "MAR000003": "Cerere greșită",
+    "MAR000004": "Cerere neautorizată",
+    "MAR000005": "Metoda nu este permisă",
+    "MAR000006": "Unsupported media type",
+    "MAR000007": "General Unknown",
+    "MAR000008": "Nu e  api cerere",
+    "MAP0000001": "Cerere către aplicație neautentificată",
+    "MAP0000002": "Cerere neautorizată. Nu sunt permisiuni."
   }
 }

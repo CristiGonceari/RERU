@@ -4,21 +4,278 @@
     "en": "English",
     "ru": "Русский"
   },
-  "dashboard": {
-      "title": "Dashboard",
-      "subtitle": "Start page"
+  "right-sidebar": {
+    "header": "User profile",
+    "my-profile": "My profile",
+    "change-password": "Change password",
+    "logout": "Logout"
+  },
+  "login": {
+    "admin-panel": "Administration Panel",
+    "signin": "Sign In",
+    "login": "Login",
+    "email": "Email",
+    "email-is-required": "Email is required",
+    "token": "Token",
+    "token-is-required": "Token is required",
+    "please-use-valid-email": "Please use a valid email e.g. example@mail.com",
+    "password": "Password",
+    "password-is-required": "Password is required",
+    "forgot-password": "Forgot Password?",
+    "recover-email-sent": "The recover email has been sent!"
+  },
+  "notification": {
+    "title": {
+      "success": "Success",
+      "error": "Error",
+      "warning": "Warning"
+    },
+    "body": {
+      "success": {
+        "create": "Has been created successfully!",
+        "update": "Has been updated successfully!",
+        "delete": "Has been deleted successfully",
+        "login": "Login successfully!"
+      },
+      "error": "There has been an error!"
+    }
+  },
+  "modules": {
+    "dashboard": "Dashboard",
+    "personal": "HR Management",
+    "crm": "Customers Management",
+    "documents": "Documents Management",
+    "inventory": "Inventory",
+    "tasks": "Tasks",
+    "evaluation": "Evaluation",
+    "ecommerce": "E-Commerce"
   },
   "sidebar": {
     "home": "Home",
     "profile": "My profile",
     "administration": "Administration",
     "modules": "Modules",
-    "users": "Users"
+    "users": "Users",
+    "access-roles": "Roles access"
   },
-  "my-profile":{
-    "title": "My profile",
-    "hello-username": "Hello, {{username}}!",
-    "have-a-good-day": "Welcome, have a good day!"
+  "button": {
+    "change": "Change",
+    "add": "Add",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view-user": "View personal details",
+    "add-user": "Add user",
+    "edit-user": "Edit personal details",
+    "activate-user": "Activate user",
+    "deactivate-user": "Deactivate user",
+    "delete-user": "Delete user",
+    "add-module": "Add Module",
+    "edit-module": "Edit Module",
+    "add-role": "Add role",
+    "edit-role": "Edit role",
+    "submit": "Submit",
+    "back": "Back",
+    "navigate": "Navigate to",
+    "update": "Update",
+    "search":"Search",
+    "filter": "Filter",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "pagination": {
+    "displaing": "Displaying",
+    "of": "of",
+    "records": "records"
+  },
+  "table": {
+    "add": "Add",
+    "icon": "Icon",
+    "module": "Module name",
+    "name": "Name",
+    "email":"Email",
+    "lastName": "Last name",
+    "role": "Role",
+    "actions": "Actions",
+    "type": "Type",
+    "code": "Code",
+    "color": "Color",
+    "publicUrl": "Public URL",
+    "internalUrl": "Internal Gateway",
+    "title": "Title",
+    "username": "User name",
+    "active": "Active",
+    "description": "Description",
+    "permission": "Permission",
+    "default": "Default",
+    "priority":"Priority"
+  },
+  "menu": {
+    "menu-sections": {
+      "administration": "Administration"
+    }
+  },
+  "user-profile": {
+    "overview": "Overview profile",
+    "edit-title": "Edit my profile",
+    "edit-subtitle": "Insert your personal data",
+    "personal-details": "Personal profile details:",
+    "change-personal-data": "Change my personal data",
+    "change-personal-details": "Change personal profile details:",
+    "logout": "Logout",
+    "logout-msg": "Are you sure you want to logout from the system?",
+    "empty-name": "Insert at least one symbol",
+    "wrong-name": "Wrong name , should start with symbol",
+    "available-modules": "Available modules"
+  },
+  "user": {
+    "edit-title": "Edit User",
+    "delete-title": "Delete User",
+    "block-title": "Block/Unblock",
+    "remove-sure": "Are you sure you want to remove this user?"
+  },
+  "word": {
+    "search": "Search"
+  },
+  "set-password": {
+    "title": "Set Password",
+    "subheader": "Insert new password for user",
+    "password": "Password"
+  },
+  "reset-password": {
+    "title": "Reset Password",
+    "subheader": "Confirm your action",
+    "sure": "Are you sure you want to reset password for user"
+  },
+  "change-password-comp": {
+    "title": "Change password",
+    "password-details": "Password details",
+    "change-password": "Change password",
+    "old-password": "Old password",
+    "new-password": "New password",
+    "repeat-password": "Repeat password",
+    "password-is-required": "Password is required",
+    "please-use-valid-password": "Please use valid password",
+    "send-notification": "Send email notification to user",
+    "password-should-contain": "Password should contain at least",
+    "password-length": "8 characters",
+    "uppercase-character": "1 uppercase character",
+    "number": "1 number",
+    "special-character": "1 special character"
+  },
+  "deactivate-user": {
+    "title": "Deactivate user",
+    "sure": "Are you sure you want to deactivate "
+  },
+  "activate-user": {
+    "title": "Activate user",
+    "sure": "Are you sure you want to activate "
+  },
+  "module-access": {
+    "title": "User's access to modules",
+    "module": "Module name",
+    "role": "Role",
+    "manage": "Manage Module Access",
+    "module-access-info": "Module Access Info",
+    "user-name": "User's Name",
+    "select": "Select",
+    "remove-access-message": "Are you sure you want to remove access to this module?"
+  },
+  "remove-module": {
+    "title": "Remove module",
+    "sure": "Are you sure you want to remove this module?"
+  },
+  "pages": {
+    "users": {
+      "title": "Manage application users",
+      "user-list": "User list",
+      "new": "New user",
+      "edit": "Edit user",
+      "details": "User's details",
+      "do-not-send-email": "Do not send email notification"
+    },
+    "user-details": {
+      "title": "User's profile",
+      "overview": "Overview profile",
+      "details": "Overview user's profile details",
+      "module-access": "Module access",
+      "email": "E-mail",
+      "give-module-access": "Give access",
+      "update-module-access": "Update access",
+      "remove-module-access": "Remove access"
+    },
+    "modules": {
+      "title": "Modules",
+      "subtitle": "Manage application modules",
+      "list-module": "Module list",
+      "details": "View details",
+      "edit": "Edit module",
+      "navigate": "Navigate to module",
+      "remove": "Remove module",
+      "development": "Modules development",
+      "info": "Module info"
+    },
+    "access-roles": {
+      "title": "Manage application acceess roles"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Start page"
+    },
+    "modules-details": {
+      "title": "Module details",
+      "overview": "Module overview",
+      "roles": "Module roles",
+      "permissions": "Module permissions"
+    },
+    "roles": {
+      "view-permissions": "View permissions",
+      "details": "Role details",
+      "permissions": "Role permissions",
+      "update-permissions": "Update permissions",
+      "management": "Roles management",
+      "name": "Role name",
+      "use-as-default": "Use as default role"
+    }
+  },
+  "upload-avatar": {
+    "title": "Upload profile image",
+    "drop-msg": "Drop image here or click to upload.",
+    "sure-image-msg": "Be sure you upload an image.",
+    "remove": "Remove avatar",
+    "sure-remove-msg": "Are you sure you want to remove your avatar?",
+    "upload-btn": "Upload"
+  },
+  "expired-token": {
+    "title": "Expired session",
+    "expired-msg": "Your session has been expired. You will be redirected to login page."
+  },
+  "deactivated": {
+    "title": "Deactivation",
+    "deactivated-msg": "Your account was deactivated. You will be redirected to login page."
+  },
+  "messages": {
+    "no-permissions": "No permissions yet...",
+    "required-field": "The field is required",
+    "color-input": "Please start typing from '#' character. Ex.: '#C9F7F5'",
+    "no-records": "No records"
+  },
+  "message-code": {
+    "M00000001": "Invalid input",
+    "M00010001": "Name should not be null",
+    "M00010002": "Name should not be empty",
+    "M00010003": "Minimum length is required",
+    "M00010004": "Name should not start with a number",
+    "MAR000001": "Route not found",
+    "MAR000002": "No content",
+    "MAR000003": "Bad request",
+    "MAR000004": "Unauthorized request",
+    "MAR000005": "Method not allowed",
+    "MAR000006": "Unsupported media type",
+    "MAR000007": "General Unknown",
+    "MAR000008": "Not api request",
+    "MAP0000001": "Unauthenticated application request",
+    "MAP0000002": "Unauthorized request"
   }
 }
-

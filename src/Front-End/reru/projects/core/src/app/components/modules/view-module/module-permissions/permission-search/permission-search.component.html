@@ -1,0 +1,4 @@
+<div class="input-group input-group-sm input-group-solid">
+    <input type="text" class="form-control" id="kt_subheader_search_form" (keydown.enter)="search(key)" [placeholder]="'word.search' | translate" [(ngModel)]="key">
+    <app-confirm-button (click)="search(key)" [value]="'button.filter' | translate" ></app-confirm-button>
+</div>
