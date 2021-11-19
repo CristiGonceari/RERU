@@ -1,0 +1,27 @@
+::ng-deep .page-link {
+	border-radius: 0.85rem !important;
+	margin: 2px;
+}
+
+
+.dropdown-toggle::after {
+	display:none;
+}
+
+.module-color {
+	height: 30px;
+	width: 30px;
+	border-radius: 7px;
+}
+
+tbody {
+	tr {
+		td {
+			vertical-align: middle !important;
+		}
+	}
+}
+
+.no-actions {
+	pointer-events: none;
+}

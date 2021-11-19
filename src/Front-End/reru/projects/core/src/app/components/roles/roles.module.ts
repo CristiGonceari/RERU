@@ -7,6 +7,7 @@ import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { UtilsModule } from '../../utils/utils.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RolesRoutingModule } from './roles-routing.module';
+import { AddEditRoleComponent } from './add-edit-role/add-edit-role.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { RolesRoutingModule } from './roles-routing.module';
   providers: [
     TranslatePipe,
     Location
-  ]
+  ],
+  declarations: [AddEditRoleComponent]
 })
 export class RolesModule { }

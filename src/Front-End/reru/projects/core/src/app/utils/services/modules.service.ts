@@ -39,6 +39,6 @@ export class ModulesService extends AbstractService {
 	}
 
 	list(): Observable<any> {
-		return this.http.get(`${this.coreUrl}/module`);
+		return this.http.get(`${this.coreUrl}`);
 	}
 }

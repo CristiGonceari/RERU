@@ -6,7 +6,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateComponent } from './components/date/date.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
-import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { SearchPipe } from './pipes/search.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,7 +16,6 @@ const commonComponents = [
   Exception500Component,
   DateComponent,
   ConfirmModalComponent,
-  LoadingSpinnerComponent,
   SearchPipe,
   SafeHtmlPipe,
   PaginationComponent
