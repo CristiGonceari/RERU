@@ -28,8 +28,8 @@ export class TestService extends AbstractService {
 		return this.http.patch(`${this.baseUrl}/${this.urlRoute}`, data);
 	}
 
-	getTest(params): Observable<any> {
-		return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
+	getTest(id): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}
 
 	getUserTests(params): Observable<any> {

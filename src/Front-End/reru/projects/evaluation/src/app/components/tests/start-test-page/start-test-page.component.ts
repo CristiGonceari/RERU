@@ -51,9 +51,8 @@ export class StartTestPageComponent implements OnInit {
         this.timeLeft = this.milisecondsToHms(Math.abs(programmedTime - date));
       } else {
         this.timeLeft = "00 : 00 : 00";
-        if (!this.settings.startBeforeProgrammation && this.timeLeft == "00 : 00 : 00") {
+        if (!this.settings.startBeforeProgrammation && this.timeLeft == "00 : 00 : 00") 
           this.startTest = true;
-        }
       }
     }, 1000)
   }
@@ -69,13 +68,13 @@ export class StartTestPageComponent implements OnInit {
 
   goToTest(): void {
     if(this.settings.showManyQuestionPerPage)
-      this.testQuestionService.generate(this.testId).subscribe(() => this.router.navigate(['run-test-questions', this.testId]));
+      this.testQuestionService.generate(this.testId).subscribe(() => this.router.navigate(['tests/performing-multiple-questions', this.testId]));
     else 
-      this.testQuestionService.generate(this.testId).subscribe(() => this.router.navigate(['run-test', this.testId]));
+      this.testQuestionService.generate(this.testId).subscribe(() => this.router.navigate(['tests/performing-test', this.testId]));
   }
 
   getTestById(testId: number) {
-    this.testService.getTest({ id: testId }).subscribe(
+    this.testService.getTest(testId).subscribe(
       res => {
         this.testDto = res.data;
         this.getTestType();
