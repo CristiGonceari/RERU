@@ -27,7 +27,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetMyEvents
 
         public async Task<PaginatedModel<EventDto>> Handle(GetMyEventsQuery request, CancellationToken cancellationToken)
         {
-            var curUser = _userProfileService.GetCurrentUser();
+            var curUser = await _userProfileService.GetCurrentUser();
 
             if (curUser != null)
             {

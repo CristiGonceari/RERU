@@ -80,6 +80,15 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.AutoVerificationT
                         testQuestion.Verified = VerificationStatusEnum.NotVerified;
                     }
                 }
+                else
+                {
+                    if (testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer)
+                    {
+                        testQuestion.IsCorrect = false;
+                        testQuestion.Points = 0;
+                        testQuestion.Verified = (int)VerificationStatusEnum.VerifiedBySystem;
+                    }
+                }
             }
 
             await _appDbContext.SaveChangesAsync();
