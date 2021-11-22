@@ -195,7 +195,7 @@
     "finished-test": "Законченный тест",
     "finished-success": "Тест успешно завершен",
     "min-percentage": "Мин. процентное содержание баллов",
-    "accumulated-percent": "Набранные баллы",
+    "accumulated-percent": "Собранные проценты",
     "test-type-autoverify": "Выбранный тип теста будет проверен системой",
     "event-has-evaluator": "У выбранного события есть свои оценщики"
   },

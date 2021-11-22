@@ -195,7 +195,7 @@
     "finished-test": "Test terminat",
     "finished-success": "Testul a fost finisat cu succes",
     "min-percentage": "Min. procent de puncte",
-    "accumulated-percent": "Puncte colectate",
+    "accumulated-percent": "Procente colectate",
     "test-type-autoverify": "Tipul de test selectat va fi verificat de sistem",
     "event-has-evaluator": "Evenimentul selectat are propriii evaluatori"
   },
