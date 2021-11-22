@@ -45,6 +45,9 @@ export class ModulePermissionsComponent implements OnInit {
 			page: data.page || this.pagination.currentPage,
 			itemsPerPage: this.pagination.pageSize
 		};
+		this.list(data);
+	}
+	list(data){
 		this.permissionServise.get(this.moduleId, ObjectUtil.preParseObject(data)).subscribe(res => {
 			if (res && res.data.items.length) {
 				this.result = true;
@@ -61,5 +64,6 @@ export class ModulePermissionsComponent implements OnInit {
 		});
 		this.isLoading = true;
 	}
+
 
 }

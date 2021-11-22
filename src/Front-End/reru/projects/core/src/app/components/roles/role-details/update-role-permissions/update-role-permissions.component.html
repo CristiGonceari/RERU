@@ -1,0 +1,42 @@
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+[colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<div *ngIf="!isLoading" id="kt_content" class="content d-flex flex-column flex-column-fluid">
+  <app-page-title title="{{'pages.roles.update-permissions' | translate}}"
+    subTitle="{{role.name}}">
+  </app-page-title>
+  <div class="d-flex flex-column-fluid">
+    <div class="container">
+      <div class="card card-custom gutter-b">
+        <div class="card-body">
+          <table class="datatable table font-size-lg">
+            <thead class="text-uppercase text-muted">
+              <tr>
+                <th scope="col" style="width: 100px">{{'table.add' | translate}}</th>
+                <th scope="col" style="width: 110px">{{'table.code' | translate}}</th>
+                <th scope="col">{{'table.description' | translate}}</th>
+              </tr>
+            </thead>
+            <tbody [formGroup]="permissionForm" class="text-dark-75">
+              <tr *ngFor="let item of permissions ; let i= index">
+                <td style="vertical-align: baseline">
+                  <label class="checkbox checkbox-lg checkbox-inline">
+                    <input type="checkbox" [formControlName]="'option'+i" [name]="'option' + i">
+                    <span></span>
+                  </label>
+                </td>
+                <td>{{item.code}}</td>
+                <td>{{item.description}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="text-right"> 
+            <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="back()"></app-button>
+            <app-add-button class="btn" [value]="'button.update' | translate" (handle)="updateRolePermission()"></app-add-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,7 +5,10 @@ import { AdminModuleModel } from '../../../utils/models/admin-module.model';
 import { ModulesService } from '../../../utils/services/modules.service';
 import { PaginationSummary } from 'projects/core/src/app/utils/models/pagination-summary.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PermissionCheckerService } from '@erp/shared';
+import { ConfirmModalComponent, PermissionCheckerService } from '@erp/shared';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NotificationUtil } from '../../../utils/util/notification.util';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
 	selector: 'app-list-module',
@@ -24,7 +27,9 @@ export class ListModuleComponent implements OnInit {
 		private moduleService: ModulesService,
 		private router: Router, 
 		private route: ActivatedRoute,
-		public permissionService: PermissionCheckerService
+		public permissionService: PermissionCheckerService,
+		private modalService: NgbModal,
+		private notificationService: NotificationsService,
 	) {}
 
 	ngOnInit(): void {
@@ -32,12 +37,16 @@ export class ListModuleComponent implements OnInit {
 		this.checkPermission();
 	}
 
-	getModules(page?): void {
+	getModules(): void {
 		let params: any = {
-			page,
-			itemsPerPage: this.pagination.pageSize,
+			page:  this.pagination.currentPage,
+			itemsPerPage: this.pagination.pageSize || 10
 		};
 		this.isLoading = true;
+		this.list(params);
+	}
+	
+	list(params){
 		this.moduleService.moduleList(params).subscribe(res => {
 			if(res && res.data) {
 				this.modules = res.data.items;
@@ -61,6 +70,29 @@ export class ListModuleComponent implements OnInit {
 	checkPermission(): void {
 		// if (this.permissionService.isGranted('P00000004')) 
       	// 	this.viewDetails = true;
+	}
+
+	openRemoveModal(id: number, name): void {
+		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
+		modalRef.componentInstance.title = 'Remove';
+		modalRef.componentInstance.description = `Are you sure you want to delete this ${name}?`;
+		modalRef.result.then(() => this.removeModule(id, name), () => {});
+	}
+
+	removeModule(id: number, name): void {
+		this.moduleService.delete(id).subscribe(
+			res => {
+				this.notificationService.success(
+					'Success',
+					`Module ${name} has been removed successfully!`,
+					NotificationUtil.getDefaultMidConfig(),
+		 			this.getModules()
+				);
+			},
+			err => {
+				this.notificationService.error('Errror', 'An error occured!', NotificationUtil.getDefaultMidConfig());
+			}
+		);
 	}
 
 }

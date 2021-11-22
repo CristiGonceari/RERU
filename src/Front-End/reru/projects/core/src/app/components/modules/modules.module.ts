@@ -8,7 +8,6 @@ import { UtilsModule } from '../../utils/utils.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModulesRoutingModule } from './modules-routing.module';
 import { ListModuleComponent } from './list-module/list-module.component';
-import { RemoveModuleComponent } from './remove-module/remove-module.component';
 import { AddEditModuleComponent } from './add-edit-module/add-edit-module.component';
 
 @NgModule({
@@ -27,7 +26,6 @@ import { AddEditModuleComponent } from './add-edit-module/add-edit-module.compon
   declarations: [
     ListModuleComponent,
     AddEditModuleComponent,
-    RemoveModuleComponent,
   ],
   providers: [
     TranslatePipe,

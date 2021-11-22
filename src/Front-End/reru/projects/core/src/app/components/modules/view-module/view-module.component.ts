@@ -2,10 +2,9 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModulesService } from '../../../utils/services/modules.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmModalComponent } from '../../../utils/modals/confirm-modal/confirm-modal.component';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from '../../../utils/util/notification.util';
-import { IconService } from '@erp/shared';
+import { ConfirmModalComponent, IconService } from '@erp/shared';
 import { IconModel } from 'projects/core/src/app/utils/models/icon.model';
 
 @Component({

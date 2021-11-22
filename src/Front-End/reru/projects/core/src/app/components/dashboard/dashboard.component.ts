@@ -23,5 +23,7 @@ export class DashboardComponent implements OnInit {
 
 	list(): void {
 		this.modules = this.moduleService.get();
+		console.log("this.module", this.modules);
+		
 	}
 }

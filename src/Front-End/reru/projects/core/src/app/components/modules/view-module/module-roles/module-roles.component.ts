@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
-import { ConfirmModalComponent } from 'projects/core/src/app/utils/modals/confirm-modal/confirm-modal.component';
 import { PaginationSummary } from 'projects/core/src/app/utils/models/pagination-summary.model';
 import { RoleModel } from 'projects/core/src/app/utils/models/role.model';
 import { ModuleRolesService } from 'projects/core/src/app/utils/services/module-roles.service';
 import { NotificationUtil } from 'projects/core/src/app/utils/util/notification.util';
-import { PermissionCheckerService } from '@erp/shared';
+import { ConfirmModalComponent, PermissionCheckerService } from '@erp/shared';
 
 @Component({
 	selector: 'app-module-roles',
@@ -50,6 +49,10 @@ export class ModuleRolesComponent implements OnInit {
 			page,
 			itemsPerPage: this.pagination.pageSize,
 		};
+		this.list(params);
+	}
+
+	list(params){
 		this.roleService.get(this.moduleId, params).subscribe(res => {
 			this.isLoading = false;
 			if (res && res.data.items.length) {
@@ -63,10 +66,10 @@ export class ModuleRolesComponent implements OnInit {
 		this.isLoading = true;
 	}
 
-	openRemoveRoleModal(id: string): void {
+	openRemoveRoleModal(id: string, name): void {
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
 		modalRef.componentInstance.title = 'Remove';
-		modalRef.componentInstance.description = 'Are you sure you want to delete this role?';
+		modalRef.componentInstance.description = `Are you sure you want to delete this role (${name})?`;
 		modalRef.result.then(() => this.removeRole(id), () => { });
 	}
 

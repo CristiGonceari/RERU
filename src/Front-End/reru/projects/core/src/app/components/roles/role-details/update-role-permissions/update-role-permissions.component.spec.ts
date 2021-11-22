@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { RemoveModuleComponent } from './remove-module.component';
+import { UpdateRolePermissionsComponent } from './update-role-permissions.component';
 
-describe('RemoveModuleComponent', () => {
-  let component: RemoveModuleComponent;
-  let fixture: ComponentFixture<RemoveModuleComponent>;
+describe('UpdateRolePermissionsComponent', () => {
+  let component: UpdateRolePermissionsComponent;
+  let fixture: ComponentFixture<UpdateRolePermissionsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RemoveModuleComponent ]
+      declarations: [ UpdateRolePermissionsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RemoveModuleComponent);
+    fixture = TestBed.createComponent(UpdateRolePermissionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 //import { AuthGuard } from '../../utils/guards/auth.guard';
 import { AddEditModuleComponent } from './add-edit-module/add-edit-module.component';
-import { RemoveModuleComponent } from './remove-module/remove-module.component';
 import { ListModuleComponent } from './list-module/list-module.component';
 import { ModulesComponent } from './modules.component';
 import { PermissionRouteGuard, AuthenticationGuard } from '@erp/shared';
@@ -29,10 +28,6 @@ const routes: Routes = [
 			{
 				path: ':id/add-role',
 				component: AddEditRoleComponent,
-			},
-			{
-				path: 'remove/:id',
-				component: RemoveModuleComponent,
 			},
 			{
 				path: ':id',
