@@ -10,8 +10,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateComponent } from './components/date/date.component';
 import { HashOptionInputComponent } from './components/hash-option-input/hash-option-input.component';
 
-
-
 @NgModule({
   declarations: [
     LoadingSpinnerComponent,

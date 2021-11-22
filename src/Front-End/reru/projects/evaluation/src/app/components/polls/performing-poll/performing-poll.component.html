@@ -1,0 +1,91 @@
+<app-page-title title="{{'polls.poll' | translate}}" subTitle="{{'polls.run-poll' | translate}}"></app-page-title>
+
+<div class="main-content py-10 content-bg">
+    <div class="d-flex flex-column-fluid container">
+        <div class="card card-custom gutter-c w-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="font-size-lg">
+                        {{ testDto.testTypeName }}
+                    </div>
+                    <div>
+                        <app-confirm-button class="btn ml-5" (handle)="submitTest()" [value]="'tests.finalize-poll' | translate"></app-confirm-button>
+                    </div>
+                </div>
+                <div class="text-container mt-5 mx-auto w-80">
+                    <div class="data-container">
+                        <p class="mb-7 font-size-h2 bg-gray-100 text-center rounded p-7"
+                            [innerHTML]="questionUnit.question">
+                        </p>
+                    </div>
+                    <div class="data-container border border-secondary rounded p-5 my-4 d-flex align-items-center option-label" *ngFor="let option of testOptionsList">
+                        <label class="checkbox checkbox-lg checkbox-inline mr-5">
+                            <input type="checkbox" name="isSelected" (change)="onItemChange($event)"
+                                value="{{option.id}}"
+                                *ngIf="questionUnit.questionType == questionTypeEnum.MultiplyAnswers"
+                                [checked]="option.isSelected">
+                            <input type="radio" (change)="onItemChange($event)" name="isSelected" value="{{option.id}}"
+                                *ngIf="questionUnit.questionType == questionTypeEnum.OneAnswer"
+                                [checked]="option.isSelected">
+                            <span></span>
+                        </label>
+                        {{ option.answer }}
+                    </div>
+                    <div class="buttons my-15">
+                        <button type="button" class="btn btn-secondary h6 mr-10 py-auto pb-9"
+                            (click)="skipQuestion()">{{'button.skip' | translate}}</button>
+                        <button type="button" (click)="saveAnswers()"
+                            class="btn btn-success h6 py-auto pb-9">{{'button.save-and-next' | translate}}
+                        </button>
+                    </div>
+                    <div class="card-body d-flex justify-content-between p-0">
+                        <div class="mx-auto">
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mb-7">
+                              <div class="d-flex flex-wrap">
+                                <button class="btn btn-icon btn-light page-link" (click)="getTestQuestions(questionIndex - 1)" [disabled]="questionIndex === 1 || disableNext">
+                                  <span class="svg-icon svg-icon-primary svg-icon-1x">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                      height="24px" viewBox="0 0 24 24" version="1.1">
+                                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <polygon points="0 0 24 0 24 24 0 24" />
+                                        <path
+                                          d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
+                                          fill="#000000" fill-rule="nonzero"
+                                          transform="translate(12.000003, 11.999999) scale(-1, 1) rotate(-270.000000) translate(-12.000003, -11.999999) " />
+                                      </g>
+                                    </svg>
+                                  </span>
+                                </button>
+                    
+                                <button class="btn btn-icon page-link"
+                                        *ngFor="let page of pager"
+                                        (click)="getTestQuestions(page)"
+                                        [disabled]="disableNext"
+                                        [class.active-page]="page === questionIndex"
+                                        [ngClass]="{'viewed': getViewed(page), 'skipped': getSkipped(page), 'answered': getAnswered(page), 'disabled-area': disabled(page)}">
+                                  {{page}}
+                                </button>
+                  
+                                <button class="btn btn-icon btn-light page-link" (click)="getTestQuestions(questionIndex + 1)" [disabled]="questionIndex === testDto.questionCount || disableNext">
+                                  <span class="svg-icon svg-icon-primary svg-icon-1x">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                      height="24px" viewBox="0 0 24 24" version="1.1">
+                                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <polygon points="0 0 24 0 24 24 0 24" />
+                                        <path
+                                          d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
+                                          fill="#000000" fill-rule="nonzero"
+                                          transform="translate(12.000003, 11.999999) rotate(-270.000000) translate(-12.000003, -11.999999) " />
+                                      </g>
+                                    </svg>
+                                  </span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -22,7 +22,7 @@
             </thead>
             <tbody class="datatable-body" *ngIf="testTypeList.length">
                 <tr *ngFor="let testType of testTypeList" (dblclick)="navigate(testType.id)">
-                    <td class="pointer" [routerLink]="['type-details', testType.id]">{{testType.name}}</td>
+                    <td style="cursor: pointer;" [routerLink]="['type-details', testType.id]">{{testType.name}}</td>
                     <td>{{ testType.categoriesCount }}</td>
                     <td>{{ testType.questionCount }}</td>
                     <td>{{ testType.duration }}</td>

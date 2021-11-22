@@ -1,6 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-
 import { TestsRoutingModule } from './tests-routing.module';
 import { TestListTableComponent } from './test-list-table/test-list-table.component';
 import { AddTestComponent } from './add-test/add-test.component';
@@ -22,6 +21,8 @@ import { MultiplePerPagePerformingTestComponent } from './multiple-per-page-perf
 import { FinishPageComponent } from './finish-page/finish-page.component';
 import { StartTestPageComponent } from './start-test-page/start-test-page.component';
 import { TestListComponent } from './test-list/test-list.component';
+import { ViewTestResultComponent } from './view-test-result/view-test-result.component';
+import { TestVerificationProcessComponent } from './test-verification-process/test-verification-process.component';
 
 
 @NgModule({
@@ -33,7 +34,9 @@ import { TestListComponent } from './test-list/test-list.component';
     MultiplePerPagePerformingTestComponent,
     FinishPageComponent,
     StartTestPageComponent,
-    TestListComponent
+    TestListComponent,
+    ViewTestResultComponent,
+    TestVerificationProcessComponent
   ],
   imports: [
     CommonModule,
