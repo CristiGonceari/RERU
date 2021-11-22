@@ -2,9 +2,11 @@
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.VerificationTests;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTestQuestion
 {
@@ -29,19 +31,31 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
 
         private async Task<bool> IsEvaluator(VerificationTestQuestionDto input)
         {
+            var test = _appDbContext.Tests
+                .Include(t => t.TestType)
+                .FirstOrDefault(t => t.Id == input.TestId);
+
+            var isOnlyOneAnswerTest = _appDbContext.TestTypeQuestionCategories
+                .Where(tt => tt.TestTypeId == test.TestTypeId)
+                .All(tt => tt.QuestionType == QuestionTypeEnum.OneAnswer);
+
             var currentUser = await _userProfileService.GetCurrentUser();
 
-            var test = _appDbContext.Tests.FirstOrDefault(t => t.Id == input.TestId);
             var isEvaluator = false;
 
-            if (test != null && test.EventId != null && test.EvaluatorId == null)
+            if (!isOnlyOneAnswerTest)
             {
-                isEvaluator = _appDbContext.EventEvaluators.Any(e => e.EventId == test.EventId && e.EvaluatorId == currentUser.Id);
+                if (test != null && test.EventId != null && test.EvaluatorId == null)
+                {
+                    isEvaluator = _appDbContext.EventEvaluators.Any(e =>
+                        e.EventId == test.EventId && e.EvaluatorId == currentUser.Id);
+                }
+                else if (test != null)
+                {
+                    isEvaluator = _appDbContext.Tests.Any(t => t.Id == test.Id && t.EvaluatorId == currentUser.Id);
+                }
             }
-            else if (test != null)
-            {
-                isEvaluator = _appDbContext.Tests.Any(t => t.Id == test.Id && t.EvaluatorId == currentUser.Id);
-            }
+            else return true;
 
             return isEvaluator;
         }
