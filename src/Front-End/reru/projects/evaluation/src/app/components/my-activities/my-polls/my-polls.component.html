@@ -5,7 +5,6 @@
         </div>
         <div class="card-body">
             <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-            <p *ngFor="let event of events"> {{event}}</p>
             <div *ngIf="!isLoading" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
                 id="kt_datatable">
                 <ngb-accordion
