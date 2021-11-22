@@ -27,26 +27,7 @@ namespace CODWER.RERU.Core.Application.Users.BlockUser {
                 userProfile.IsActive = false;
                 await CoreDbContext.SaveChangesAsync ();
             }
-            // if (userProfile != null && !string.IsNullOrEmpty(userProfile.UserId))
-            // {
-            //     var user = await UserManagementDbContext.Users.FirstOrDefaultAsync(u => u.Id == userProfile.UserId);
-            //     if (user != null)
-            //     {
-            //         user.LockoutEnabled = true;
-            //         if (user.LockoutEnd < DateTime.MaxValue)
-            //         {
-            //             userProfile.IsActive = false;
-            //             user.LockoutEnd = DateTime.MaxValue;
-            //         }
-            //         else
-            //         {
-            //             userProfile.IsActive = true;
-            //             user.LockoutEnd = DateTime.UtcNow;
-            //         }
-            //         await UserManagementDbContext.SaveChangesAsync();
-            //         await CoreDbContext.SaveChangesAsync();
-            //     }
-            // }
+
             return Unit.Value;
         }
     }

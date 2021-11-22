@@ -21,7 +21,8 @@ namespace CODWER.RERU.Core.Application.ModuleRoles.GetAllModuleRoles
 
         public async Task<PaginatedModel<ModuleRoleRowDto>> Handle(GetModuleRolesQuery request, CancellationToken cancellationToken)
         {
-            var moduleRoles = CoreDbContext.ModuleRoles.Where(m=>m.ModuleId == request.ModuleId);
+            var moduleRoles = CoreDbContext.ModuleRoles
+                .Where(m=>m.ModuleId == request.ModuleId);
 
             var paginatedModel = _paginationService.MapAndPaginateModel<Data.Entities.ModuleRole, ModuleRoleRowDto>(moduleRoles, request);
 

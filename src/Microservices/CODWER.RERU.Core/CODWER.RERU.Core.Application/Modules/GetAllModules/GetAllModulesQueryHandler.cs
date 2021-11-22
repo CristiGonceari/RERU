@@ -7,7 +7,6 @@ using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.DataTransferObjects.Modules;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using CODWER.RERU.Core.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Modules.GetAllModules {
     public class GetAllModulesQueryHandler : BaseHandler, IRequestHandler<GetAllModulesQuery, PaginatedModel<ModuleDto>> 

@@ -27,10 +27,6 @@ namespace CODWER.RERU.Core.Application.Users.ChangePersonalData
         {
             var currentUser = await _userProvider.Get();
 
-            // var user = await UserManagementDbContext.Users.FirstOrDefaultAsync (u => u.Email == currentUser.Email);
-            // Mapper.Map (request.User, user);
-            // await UserManagementDbContext.SaveChangesAsync ();
-
             var userProfile = await CoreDbContext
                 .UserProfiles
                 .FirstOrDefaultAsync(up => up.Id == int.Parse(currentUser.Id));

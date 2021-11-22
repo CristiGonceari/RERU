@@ -2,7 +2,6 @@
 using CODWER.RERU.Core.Application.Common.Providers;
 using CVU.ERP.Identity.Models;
 using CVU.ERP.Module.Application.Providers;
-using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -59,10 +58,10 @@ namespace CODWER.RERU.Core.Application.Users.ChangeMyPassword
                 }   else 
                     throw new Exception("New password and Repeat password aren't the same");
             }
-                else
-                {
+            else
+            {
                 throw new Exception("Wrong Old Password");
-                }
+            }
             return Unit.Value;
         }
     }

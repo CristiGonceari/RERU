@@ -7,7 +7,6 @@ using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services;
 using CODWER.RERU.Core.Data.Entities;
-using CODWER.RERU.Core.Data.Persistence.Context;
 using CVU.ERP.Module.Application.Providers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

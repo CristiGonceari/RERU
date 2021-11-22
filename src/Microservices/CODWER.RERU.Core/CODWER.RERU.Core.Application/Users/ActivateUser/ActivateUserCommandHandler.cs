@@ -25,35 +25,36 @@ namespace CODWER.RERU.Core.Application.Users.ActivateUser {
             _emailService = emailService;
         }
 
-        public async Task<Unit> Handle (ActivateUserCommand request, CancellationToken cancellationToken) {
-            var userProfile = await CoreDbContext.UserProfiles.FirstOrDefaultAsync (up => up.Id == request.Id);
-            // if (userProfile != null && !string.IsNullOrEmpty (userProfile.UserId)) {
-            if (userProfile != null) {
-                // var user = await UserManagementDbContext.Users.FirstOrDefaultAsync (u => u.Id == userProfile.UserId);
-                // if (user != null) {
-                //     user.LockoutEnabled = false;
+        public async Task<Unit> Handle(ActivateUserCommand request, CancellationToken cancellationToken)
+        {
+            var userProfile = await CoreDbContext.UserProfiles
+                .FirstOrDefaultAsync(up => up.Id == request.Id);
+
+            if (userProfile != null)
+            {
                 userProfile.IsActive = true;
-                // user.LockoutEnd = DateTime.UtcNow;
+                await CoreDbContext.SaveChangesAsync();
 
-                // await UserManagementDbContext.SaveChangesAsync ();
-                await CoreDbContext.SaveChangesAsync ();
-
-                try {
-                    string assemblyPath = Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location) + "/Templates";
-                    var template = await File.ReadAllTextAsync (assemblyPath + "/ActivateUser.html", cancellationToken);
+                try
+                {
+                    string assemblyPath =
+                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
+                    var template = await File.ReadAllTextAsync(assemblyPath + "/ActivateUser.html", cancellationToken);
 
                     template = template
-                        .Replace ("{FirstName}", userProfile.Name + ' ' + userProfile.LastName);
+                        .Replace("{FirstName}", userProfile.Name + ' ' + userProfile.LastName);
 
-                    await _emailService.QuickSendAsync (subject: "Account Activation",
-                        body : template,
+                    await _emailService.QuickSendAsync(subject: "Account Activation",
+                        body: template,
                         from: "Do Not Reply",
-                        to : userProfile.Email);
-                } catch (Exception e) {
-                    Console.WriteLine ($"ERROR {e.Message}");
+                        to: userProfile.Email);
                 }
-                // }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"ERROR {e.Message}");
+                }
             }
+
             return Unit.Value;
         }
     }

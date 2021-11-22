@@ -14,22 +14,25 @@ namespace CODWER.RERU.Core.Application.UserProfileModuleRoles.UpdateUserProfileM
         public async Task<Unit> Handle (UpdateUserProfileModuleAccessCommand request, CancellationToken cancellationToken) 
         {
             var userProfile = await CoreDbContext.UserProfiles
-                .FirstOrDefaultAsync (up => up.Id == request.Data.UserId);
+                .FirstOrDefaultAsync(up => up.Id == request.Data.UserId);
 
             var moduleRole = await CoreDbContext.ModuleRoles
-                .FirstOrDefaultAsync(mr => mr.ModuleId == request.Data.ModuleId 
-                                            && mr.Id == request.Data.RoleId);
+                .FirstOrDefaultAsync(mr => mr.ModuleId == request.Data.ModuleId
+                                           && mr.Id == request.Data.RoleId);
 
-            if (moduleRole != null && userProfile != null) {
+            if (moduleRole != null && userProfile != null)
+            {
                 var upmr = await CoreDbContext.UserProfileModuleRoles
-                    .FirstOrDefaultAsync(upmr => upmr.ModuleRole.ModuleId == request.Data.ModuleId 
-                                                  && upmr.UserProfileId == request.Data.UserId);
+                    .FirstOrDefaultAsync(upmr => upmr.ModuleRole.ModuleId == request.Data.ModuleId
+                                                 && upmr.UserProfileId == request.Data.UserId);
 
-                if (upmr is null) {
-                    upmr = new UserProfileModuleRole {
+                if (upmr is null)
+                {
+                    upmr = new UserProfileModuleRole
+                    {
                         UserProfile = userProfile
                     };
-                    
+
                     CoreDbContext.UserProfileModuleRoles.Add(upmr);
                 }
 

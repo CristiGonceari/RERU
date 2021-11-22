@@ -29,7 +29,7 @@ namespace CODWER.RERU.Core.Application.ModuleRolePermissions.UpdateModuleRolePer
                         {
                             ModuleRoleId = request.ModuleRolePermissions.ModuleRoleId,
                             ModulePermissionId = permission.PermissionId
-                    });
+                        });
                     }
                 }
                 else
@@ -40,8 +40,10 @@ namespace CODWER.RERU.Core.Application.ModuleRolePermissions.UpdateModuleRolePer
                         CoreDbContext.ModuleRolePermissions.Remove(permissionToDelete);
                     }
                 }
-            await CoreDbContext.SaveChangesAsync();
+
+                await CoreDbContext.SaveChangesAsync();
             }
+
             return Unit.Value;
         }
     }

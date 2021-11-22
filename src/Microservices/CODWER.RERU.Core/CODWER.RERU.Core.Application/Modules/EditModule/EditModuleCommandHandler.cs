@@ -6,19 +6,24 @@ using CODWER.RERU.Core.Application.Modules.UpdateModulePermissions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CODWER.RERU.Core.Application.Modules.EditModule {
-    public class EditModuleCommandHandler : BaseHandler, IRequestHandler<EditModuleCommand, Unit> {
-        public EditModuleCommandHandler (ICommonServiceProvider commonServiceProvider) : base (commonServiceProvider) { }
-        public async Task<Unit> Handle (EditModuleCommand request, CancellationToken cancellationToken) 
+namespace CODWER.RERU.Core.Application.Modules.EditModule
+{
+    public class EditModuleCommandHandler : BaseHandler, IRequestHandler<EditModuleCommand, Unit>
+    {
+        public EditModuleCommandHandler(ICommonServiceProvider commonServiceProvider) : base(commonServiceProvider)
+        {
+        }
+
+        public async Task<Unit> Handle(EditModuleCommand request, CancellationToken cancellationToken)
         {
             var module = await CoreDbContext.Modules
                 .Include(m => m.Permissions)
-                .FirstOrDefaultAsync (m => m.Id == request.Module.Id);
-            
-            Mapper.Map (request.Module, module);
-            await CoreDbContext.SaveChangesAsync ();
+                .FirstOrDefaultAsync(m => m.Id == request.Module.Id);
 
-            await Mediator.Send (new UpdateModulePermissionsCommand (module));
+            Mapper.Map(request.Module, module);
+            await CoreDbContext.SaveChangesAsync();
+
+            await Mediator.Send(new UpdateModulePermissionsCommand(module));
             return Unit.Value;
         }
     }

@@ -21,7 +21,9 @@ namespace CODWER.RERU.Core.Application.ModuleRolePermissions.GetModuleRolePermis
 
         public async Task<PaginatedModel<ModulePermissionRowDto>> Handle(GetModuleRolePermissionsQuery request, CancellationToken cancellationToken)
         {
-            var moduleRolePermissions = CoreDbContext.ModuleRoles.Where(m => m.Id == request.RoleId).SelectMany(rp=>rp.Permissions.Select(mrp=>mrp.Permission));
+            var moduleRolePermissions = CoreDbContext.ModuleRoles
+                .Where(m => m.Id == request.RoleId)
+                .SelectMany(rp=>rp.Permissions.Select(mrp=>mrp.Permission));
 
             var paginatedModel = _paginationService.MapAndPaginateModel<Data.Entities.ModulePermission, ModulePermissionRowDto>(moduleRolePermissions, request);
 

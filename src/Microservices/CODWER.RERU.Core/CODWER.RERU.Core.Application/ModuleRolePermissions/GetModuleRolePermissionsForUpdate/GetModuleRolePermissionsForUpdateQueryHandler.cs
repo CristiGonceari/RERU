@@ -20,9 +20,12 @@ namespace CODWER.RERU.Core.Application.ModuleRolePermissions.GetModuleRolePermis
                 .Where(mrp => mrp.ModuleRoleId == request.RoleId)
                 .ToListAsync();
 
-            var module = CoreDbContext.ModuleRoles.FirstOrDefault(mrp => mrp.Id == request.RoleId);
+            var module = CoreDbContext.ModuleRoles
+                .FirstOrDefault(mrp => mrp.Id == request.RoleId);
 
-            var modulePermissions = await CoreDbContext.ModulePermissions.Where(m => m.ModuleId == module.ModuleId).ToListAsync();
+            var modulePermissions = await CoreDbContext.ModulePermissions
+                .Where(m => m.ModuleId == module.ModuleId)
+                .ToListAsync();
 
             List<ModuleRolePermissionGrantedRowDto> allPerm = new List<ModuleRolePermissionGrantedRowDto>();
 

@@ -14,10 +14,13 @@ namespace CODWER.RERU.Core.Application.ModuleRoles.DeleteModuleRole
 
         public async Task<Unit> Handle(DeleteModuleRoleCommand request, CancellationToken cancellationToken)
         {
-            var moduleRole = await CoreDbContext.ModuleRoles.FirstOrDefaultAsync(u => u.Id == request.Id);
+            var moduleRole = await CoreDbContext.ModuleRoles
+                .FirstOrDefaultAsync(u => u.Id == request.Id);
+
             if (moduleRole.Type == Data.Entities.Enums.RoleTypeEnum.Dynamic)
             {
                 CoreDbContext.ModuleRoles.Remove(moduleRole);
+
                 await CoreDbContext.SaveChangesAsync();
             }
             else
