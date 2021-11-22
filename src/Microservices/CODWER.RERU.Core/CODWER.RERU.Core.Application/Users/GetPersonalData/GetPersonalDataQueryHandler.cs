@@ -24,7 +24,9 @@ namespace CODWER.RERU.Core.Application.Users.GetPersonalData {
         public async Task<UserPersonalDataDto> Handle (GetPersonalDataQuery request, CancellationToken cancellationToken) {
             var currentUser = await _userProvider.Get ();
 
-            var user = await UserManagementDbContext.Users.FirstOrDefaultAsync (u => u.Email == currentUser.Email);
+            var user = await UserManagementDbContext.Users
+                .FirstOrDefaultAsync (u => u.Email == currentUser.Email);
+
             await UserManagementDbContext.SaveChangesAsync ();
 
             return Mapper.Map<UserPersonalDataDto> (user);

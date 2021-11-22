@@ -31,7 +31,9 @@ namespace CODWER.RERU.Core.Application.UserProfiles.RemoveAvatar
 
             if (userProfile.Avatar != null)
             {
-                var document = CoreDbContext.Documents.FirstOrDefault(d => d.DocumentStorageId == userProfile.Avatar.DocumentStorageId);
+                var document = CoreDbContext.Documents
+                    .FirstOrDefault(d => d.DocumentStorageId == userProfile.Avatar.DocumentStorageId);
+
                 await _documentService.Remove(userProfile.Avatar.DocumentStorageId);
                 CoreDbContext.Documents.Remove(document);
                 await CoreDbContext.SaveChangesAsync();

@@ -20,7 +20,8 @@ namespace CODWER.RERU.Core.Application.ApplicationUsers.Internal.GetInternalAppl
         {
             var userProfile = await CoreDbContext.UserProfiles
              .IncludeBasic()
-             .FirstOrDefaultAsync(up => up.Identities.Any(upi => upi.Identificator == request.Identity && upi.Type == request.IdentityType));
+             .FirstOrDefaultAsync(up => up.Identities.Any(upi => upi.Identificator == request.Identity 
+                                                                 && upi.Type == request.IdentityType));
 
             return Mapper.Map<ApplicationUser>(userProfile);
         }

@@ -27,15 +27,15 @@ namespace CODWER.RERU.Core.Application.ModuleRoles.AddModuleRole
                         .Where(mr => mr.ModuleId == request.ModuleRole.ModuleId)
                         .Where(mr => mr.IsAssignByDefault == true)
                         .ForEachAsync(x => x.IsAssignByDefault = false);
-                    await CoreDbContext.SaveChangesAsync();
 
+                    await CoreDbContext.SaveChangesAsync();
                 }
 
                 moduleRole.Type = Data.Entities.Enums.RoleTypeEnum.Dynamic;
                 CoreDbContext.ModuleRoles.Add(moduleRole);
                 await CoreDbContext.SaveChangesAsync();
-
-            } else
+            } 
+            else
             {
                 throw new Exception("Introduce Module Id");
             }

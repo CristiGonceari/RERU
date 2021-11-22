@@ -4,8 +4,6 @@ using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Data.Entities;
 using CODWER.RERU.Core.DataTransferObjects.ModulePermissions;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,7 +26,7 @@ namespace CODWER.RERU.Core.Application.ModulePermissions.GetModulePermissions
 
             moduleRoles = Filter(moduleRoles, request);
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<Data.Entities.ModulePermission, ModulePermissionRowDto>(moduleRoles, request);
+            var paginatedModel = _paginationService.MapAndPaginateModel<ModulePermission, ModulePermissionRowDto>(moduleRoles, request);
 
             return paginatedModel;
         }

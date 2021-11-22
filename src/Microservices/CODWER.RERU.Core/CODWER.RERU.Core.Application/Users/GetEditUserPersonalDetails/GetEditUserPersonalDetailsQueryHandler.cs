@@ -14,7 +14,8 @@ namespace CODWER.RERU.Core.Application.Users.GetEditUserPersonalDetails
 
         public async Task<EditUserPersonalDetailsDto> Handle (GetEditUserPersonalDetailsQuery request, CancellationToken cancellationToken) 
         {
-            var userProfile = await CoreDbContext.UserProfiles.FirstOrDefaultAsync (up => up.Id == request.Id);
+            var userProfile = await CoreDbContext.UserProfiles
+                .FirstOrDefaultAsync (up => up.Id == request.Id);
 
             return Mapper.Map<EditUserPersonalDetailsDto> (userProfile);
         }

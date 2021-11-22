@@ -15,8 +15,11 @@ namespace CODWER.RERU.Core.Application.ModuleRoles.EditModuleRole
 
         public async Task<Unit> Handle(EditModuleRoleCommand request, CancellationToken cancellationToken)
         {
-            var moduleRole = await CoreDbContext.ModuleRoles.FirstOrDefaultAsync(mr => mr.Id == request.ModuleRole.Id);
+            var moduleRole = await CoreDbContext.ModuleRoles
+                .FirstOrDefaultAsync(mr => mr.Id == request.ModuleRole.Id);
+
             request.ModuleRole.ModuleId = moduleRole.ModuleId;
+
             if (request.ModuleRole.IsAssignByDefault)
             {
                 await CoreDbContext.ModuleRoles
@@ -26,6 +29,7 @@ namespace CODWER.RERU.Core.Application.ModuleRoles.EditModuleRole
                 
                 await CoreDbContext.SaveChangesAsync();
             }
+
             Mapper.Map(request.ModuleRole , moduleRole);
             await CoreDbContext.SaveChangesAsync();
 
