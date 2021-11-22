@@ -8,6 +8,7 @@ import { UtilsModule } from '../../utils/utils.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RolesRoutingModule } from './roles-routing.module';
 import { AddEditRoleComponent } from './add-edit-role/add-edit-role.component';
+import { RoleDetailsComponent } from './role-details/role-details.component';
 
 
 @NgModule({
@@ -26,6 +27,6 @@ import { AddEditRoleComponent } from './add-edit-role/add-edit-role.component';
     TranslatePipe,
     Location
   ],
-  declarations: [AddEditRoleComponent]
+  declarations: [AddEditRoleComponent, RoleDetailsComponent]
 })
 export class RolesModule { }

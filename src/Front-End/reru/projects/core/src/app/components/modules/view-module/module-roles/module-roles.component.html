@@ -5,12 +5,13 @@
     <div class="card-header flex-wrap border-0 py-5">
       <div class="w-100 d-flex justify-content-between align-items-center">
         <div class="card-title">{{ 'pages.modules-details.roles' | translate }}</div>
-        <app-add-button class="btn" [value]="'button.add-role' | translate" [routerLink]="['../add-role']"
-          *permission="'P00000006'">
+        <app-add-button class="btn" [value]="'button.add-role' | translate" [routerLink]="['../add-role']">
         </app-add-button>
       </div>
     </div>
     <div class="card-body">
+      <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+      id="kt_datatable">
       <table class="datatable table font-size-lg">
         <thead class="text-uppercase text-muted">
           <tr>
@@ -49,27 +50,27 @@
                   </div>
                   <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                     <div ngbDropdownMenu [aria-labelledby]="'action' + i" class="p-0">
-                      <span *permission="'P00000010'">
+                      <span >
                         <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
                           [routerLink]="['../../../roles', role.id, 'permissions']">
                           {{ 'pages.roles.view-permissions' | translate }}
                         </button>
                       </span>
-                      <span *permission="'P00000007'">
+                      <span >
                         <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
                           (click)="navigateToUpdatePermissions(role.id)" [class.mb-2]="role.type == '1'">
                           {{ 'pages.roles.update-permissions' | translate }}
                         </button>
                       </span>
-                      <span *permission="'P00000011'">
+                      <span >
                         <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
                           *ngIf="role.type == '2'" [routerLink]="['../../../roles/edit', role.id]">
                           {{ 'button.edit-role' | translate }}
                         </button>
                       </span>
-                      <span *permission="'P00000009'">
+                      <span >
                         <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
-                          *ngIf="role.type == '2'" (click)="openRemoveRoleModal(role.id)">
+                          *ngIf="role.type == '2'" (click)="openRemoveRoleModal(role.id, role.name)">
                           {{ 'button.delete' | translate }}
                         </button>
                       </span>
@@ -88,29 +89,10 @@
           </tr>
         </tbody>
       </table>
-
-      <div class="d-flex justify-content-between align-items-baseline" *ngIf="roles">
-        <ngb-pagination [collectionSize]="pagination.totalCount" [(page)]="pagination.currentPage"
-          [pageSize]="pagination.pageSize" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
-          (pageChange)="getRoles($event)">
-        </ngb-pagination>
-        <div class="d-flex align-items-center py-3">
-          <select class="btn text-primary font-weight-bold mr-4 border-0 bg-light w-75px"
-            [(ngModel)]="pagination.pageSize" (ngModelChange)="getRoles()">
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
-
-          <span class="text-muted">
-            {{'pagination.displaing' | translate}}
-            {{ pagination.pageSize }}
-            {{'pagination.of' | translate}}
-            <b>{{ pagination.totalCount }}</b>
-            {{'pagination.records' | translate}}
-          </span>
+        <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage" *ngIf="roles"
+            [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
+            (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event })"
+            (pageChange)="list({ page: $event })">
         </div>
       </div>
     </div>

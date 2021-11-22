@@ -1,0 +1,16 @@
+::ng-deep .page-link {
+	border-radius: 0.85rem !important;
+	margin: 2px;
+}
+  
+.dropdown-toggle::after {
+	display:none;
+}
+
+tbody {
+	tr {
+		td {
+			vertical-align: middle !important;
+		}
+	}
+}
