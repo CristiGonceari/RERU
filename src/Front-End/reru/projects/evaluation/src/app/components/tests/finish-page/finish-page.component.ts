@@ -6,7 +6,8 @@ import { Test } from '../../../utils/models/tests/test.model';
 import { TestQuestionService } from '../../../utils/services/test-question/test-question.service';
 import { TestTypeService } from '../../../utils/services/test-type/test-type.service';
 import { TestService } from '../../../utils/services/test/test.service';
-import { VerifyTestService } from '../../../utils/services/verify-test/verify-test.service';
+import { TestVerificationProcessService } from '../../../utils/services/test-verification-process/test-verification-process.service';
+
 
 @Component({
   selector: 'app-finish-page',
@@ -28,7 +29,7 @@ export class FinishPageComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private testService: TestService,
     private testTypeService: TestTypeService,
-    private verifyService: VerifyTestService,
+    private verifyService: TestVerificationProcessService,
     private testQuestionService: TestQuestionService) { }
 
   ngOnInit(): void {

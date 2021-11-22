@@ -1,0 +1,68 @@
+<app-page-title title="{{'polls.polls' | translate}}" subTitle="{{'polls.poll-progress' | translate}}">
+</app-page-title>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card card-custom gutter-b">
+                        <div class="card-header flex-wrap border-0 py-5">
+                            <div class="card-title my-5">
+                                <h3 class="card-label text-muted">{{ 'events.event-name' | translate }}:</h3>
+                                <h3 class="card-label">{{pollResult.eventName}}</h3>
+                            </div>
+                            <div class="card-title my-5">
+                                <h3 class="card-label text-muted">{{'polls.poll-name' | translate}}:</h3>
+                                <h3 class="card-label">{{pollResult.testTypeName}}</h3>
+                            </div>
+                        </div>
+                        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+                        <div *ngIf="!isLoading" class="card-body py-0">
+                            <section class="example-section">
+                                <mat-progress-bar [value]="pollResult.totalVotedPercent">
+                                </mat-progress-bar>
+                                <div style="position: absolute; padding: 10px; color: white;"> {{'polls.voted' | translate}}:
+                                    {{pollResult.totalVotedCount}} ( {{pollResult.totalVotedPercent}}% ) </div>
+                            </section>
+                            <div class="card-title" style="float: right; display: inline-flex;">
+                                <label class="card-label text-muted mr-2">{{'polls.invited' | translate}}:</label>
+                                <p class="card-label">{{pollResult.totalInvited}}</p>
+                            </div>
+                            <div class="data-container mt-15" *ngFor="let question of pollResult.questions">
+                                <p class="font-size-h2 bg-gray-100 text-center rounded p-7 mt-2"
+                                    [innerHTML]="question.question"></p>
+                                <div class="mx-auto text-center">
+                                </div>
+                                <div>
+                                    <label class="h6">{{'polls.voted' | translate}}: {{question.votedCount}} ( {{question.votedPercent}}% )</label>
+                                    <section *ngFor="let item of question.options" class="example-section mt=5">
+                                        <label class="col-xl-1 col-lg-1 col-form-label" style="white-space: nowrap;"> 
+                                            {{item.answer}}</label>
+                                        <div class="col-lg-10 col-xl-10">
+                                            <mat-progress-bar [value]="item.votedPercent">
+                                            </mat-progress-bar>
+                                        </div>
+                                        <label class="col-lg-1 col-xl-1"> {{'polls.voted' | translate}}:
+                                            {{item.votedCount}} ( {{item.votedPercent}}% ) </label>
+                                    </section>
+                                </div>
+                                <div class="d-flex justify-content-center mt-5 mb-0">
+                                    <ngb-pagination [collectionSize]="pollResult.itemsCount" [(page)]="pageNumber" [pageSize]="1" 
+                                        [rotate]="true" [boundaryLinks]="true" (pageChange)="getPollResult($event)">
+                                    </ngb-pagination>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-success h-35px" style="float: right;" (click)="getPollResult()">
+                                <i class="ki ki-refresh icon-nm"></i>
+                                {{'button.refresh' | translate}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

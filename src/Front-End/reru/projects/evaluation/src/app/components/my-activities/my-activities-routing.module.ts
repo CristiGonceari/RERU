@@ -1,5 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PerformingPollComponent } from '../polls/performing-poll/performing-poll.component';
+import { StartPollPageComponent } from '../polls/start-poll-page/start-poll-page.component';
+import { ViewPollProgressComponent } from '../polls/view-poll-progress/view-poll-progress.component';
+import { MultiplePerPagePerformingTestComponent } from '../tests/multiple-per-page-performing-test/multiple-per-page-performing-test.component';
+import { OnePerPagePerformingTestComponent } from '../tests/one-per-page-performing-test/one-per-page-performing-test.component';
+import { StartTestPageComponent } from '../tests/start-test-page/start-test-page.component';
 import { MyActivitiesComponent } from './my-activities.component';
 import { MyEventsComponent } from './my-events/my-events.component';
 import { MyPollsComponent } from './my-polls/my-polls.component';
@@ -22,6 +28,12 @@ const routes: Routes = [
       component: MyPollsComponent
     },
   ]},
+  { path: 'start-test/:id', component: StartTestPageComponent },
+  { path: 'run-test/:id', component: OnePerPagePerformingTestComponent},
+  { path: 'run-test-questions/:id', component: MultiplePerPagePerformingTestComponent},
+  { path: 'poll/:id', component: StartPollPageComponent },
+  { path: 'run-poll/:id', component: PerformingPollComponent },
+  { path: 'poll-progress/:id', component: ViewPollProgressComponent },
 ];
 
 @NgModule({

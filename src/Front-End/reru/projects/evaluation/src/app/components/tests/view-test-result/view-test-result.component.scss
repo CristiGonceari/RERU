@@ -1,0 +1,37 @@
+.bg-successTransparent {
+	background-color: #effff9;
+}
+
+.bg-dangerTransparent {
+	background-color: #ffe1e1;
+}
+
+.not-correct {
+	background-color: #f8bcb48a !important;
+	color: white !important;
+}
+
+.correct {
+	background-color: #89e2c4ab !important;
+	color: white !important;
+}
+
+.active-page {
+	border-color: #F64E60 !important;
+    background-color: white !important;
+    color: #F64E60 !important;
+}
+
+.correct-label:hover, .correct-label:active {
+	background-color: #1BC5BD !important;
+	color: white !important;
+ }
+
+.not-correct-label:hover, .not-correct-label:active {
+	color: white !important;
+    background-color: #F64E60 !important;
+}
+
+.option-label {
+    font-size: 16px;
+}
