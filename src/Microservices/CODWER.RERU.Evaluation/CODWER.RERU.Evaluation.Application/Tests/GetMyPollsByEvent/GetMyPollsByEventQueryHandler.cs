@@ -24,7 +24,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyPollsByEvent
 
         public async Task<List<PollDto>> Handle(GetMyPollsByEventQuery request, CancellationToken cancellationToken)
         {
-            var myUserProfile = _userProfileService.GetCurrentUser();
+            var myUserProfile = await _userProfileService.GetCurrentUser();
             var thisEvent = _appDbContext.Events.First(x => x.Id == request.EventId);
 
             var myTestsTypes = await _appDbContext.EventTestTypes

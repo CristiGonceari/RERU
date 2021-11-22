@@ -79,11 +79,11 @@
                         {{'button.continue' | translate}}
                     </button>
                     <button *ngIf="test.testStatus == enum.Programmed || test.testStatus == enum.AlowedToStart"
-                        class="btn btn-light-success" [routerLink]="['../test', test.id]">
+                        class="btn btn-light-success" [routerLink]="['../../tests/start-test', test.id]">
                         {{'button.start-test' | translate}}
                     </button>
                     <button *ngIf="test.result == resultEnum.NotPassed || test.result == resultEnum.Passed"
-                        class="btn btn-light-success" [routerLink]="['../tests/test-result', test.id]">
+                        class="btn btn-light-success" [routerLink]="['../../tests/test-result', test.id]">
                         {{'tests.view' | translate}}
                     </button>
                 </td>
