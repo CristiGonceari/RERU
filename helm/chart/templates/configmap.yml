@@ -162,7 +162,7 @@ data:
           "DownstreamScheme": "http",
           "DownstreamHostAndPorts": [
             {
-              "Host": "reru-core-service",s
+              "Host": "reru-core-service",
               "Port": 8080
             }
           ],
