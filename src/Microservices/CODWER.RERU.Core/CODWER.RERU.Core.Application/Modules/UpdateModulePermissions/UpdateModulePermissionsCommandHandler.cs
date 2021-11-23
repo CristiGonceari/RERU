@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -28,6 +29,13 @@ namespace CODWER.RERU.Core.Application.Modules.UpdateModulePermissions
             try
             {
                 var allModulePermissions = await _moduleClient.GetPermissions(applicationModule);
+
+                for (int i = 0; i < 5; i++)
+                {
+                    Console.WriteLine("_____________________________________________________________________________");
+                }
+                Console.WriteLine($"allPermission {allModulePermissions != null} ");
+
 
                 if (allModulePermissions != null)
                 {

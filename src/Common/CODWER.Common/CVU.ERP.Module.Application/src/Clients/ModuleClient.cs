@@ -20,6 +20,11 @@ namespace CVU.ERP.Module.Application.Clients {
         public async Task<IEnumerable<ModulePermission>> GetPermissions (ApplicationModule module) {
             const string resourceBasePath = "permission";
             var resourceUrl = $"{module.InternalGatewayAPIPath}/{resourceBasePath}";
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine("_____________________________________________________________________________");
+            }
+            Console.WriteLine($"url {_restClient.BaseUrl}{resourceBasePath}");
 
             var request = new RestRequest (resourceUrl, DataFormat.Json);
             var response = await _restClient.GetAsync<Response<IEnumerable<ModulePermission>>> (request, new CancellationToken ());
