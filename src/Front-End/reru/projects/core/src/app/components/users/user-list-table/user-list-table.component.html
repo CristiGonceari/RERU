@@ -1,0 +1,146 @@
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'20rem'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'">
+</app-loading-spinner>
+<div *ngIf="!isLoading"
+  class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+  id="kt_datatable">
+  <table class="datatable table font-size-lg" style="overflow: visible">
+    <thead class="text-uppercase text-muted">
+      <tr>
+        <th scope="col" style="width: 50px"></th>
+        <th scope="col" class="pointer" (click)="sortedList({ sort: 'name' })">
+          {{ 'table.name' | translate }}
+          <app-sort-button *ngIf="filter.sort === 'name'" [desc]="filter.order"></app-sort-button>
+        </th>
+        <th scope="col" class="pointer" (click)="sortedList({ sort: 'username' })">
+          {{ 'table.username' | translate }}
+          <app-sort-button *ngIf="filter.sort === 'username'" [desc]="filter.order"></app-sort-button>
+        </th>
+        <th scope="col" style="width: 75px; text-align: center; vertical-align: middle">
+          {{ 'table.active' | translate }}
+        </th>
+        <th scope="col w-50px"></th>
+      </tr>
+    </thead>
+    <tbody class="datatable-body" *ngIf="result">
+      <tr *ngFor="let user of users">
+        <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+          <div class="symbol symbol-35 symbol-sm-s symbol-light-success">
+            <span class="font-size-h4 symbol-label font-weight-boldest">{{ renderText(user) }}</span>
+          </div>
+        </td>
+        <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+          <a [routerLink]="['../../user-profile', user.id, 'overview']" class="font-size-lg text-dark-50 text-hover-dark-75" >
+            {{ user.lastName }} {{ user.name }}
+        </a>
+        </td>
+        <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+          {{ user.email }}
+        </td>
+        <td style="text-align: center">
+          <div [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+            <div *ngIf="user.isActive === false" style="width: 25px; display: inline-block">
+              <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
+                style="enable-background: new 0 0 50 50" xml:space="preserve">
+                <circle style="fill: #d75a4a" cx="25" cy="25" r="25" />
+                <polyline
+                  style="fill: none; stroke: #ffffff; stroke-width: 2; stroke-linecap: round; stroke-miterlimit: 10"
+                  points="16,34 25,25 34,16 " />
+                <polyline
+                  style="fill: none; stroke: #ffffff; stroke-width: 2; stroke-linecap: round; stroke-miterlimit: 10"
+                  points="16,16 25,25 34,34" />
+              </svg>
+            </div>
+            <div *ngIf="user.isActive === true" style="width: 25px; display: inline-block">
+              <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
+                style="enable-background: new 0 0 50 50" xml:space="preserve">
+                <circle style="fill: #25ae88" cx="25" cy="25" r="25" />
+                <polyline style="
+										fill: none;
+										stroke: #ffffff;
+										stroke-width: 2;
+										stroke-linecap: round;
+										stroke-linejoin: round;
+										stroke-miterlimit: 10;
+									" points="38,15 22,33 12,25 " />
+              </svg>
+            </div>
+          </div>
+        </td>
+        <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
+          <div style="overflow: visible; position: relative; width: 0px">
+            <div ngbDropdown class="dropdown dropdown-inline">
+              <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                <span class="svg-icon svg-icon-md" [id]="'action' + i" ngbDropdownToggle>
+                  <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
+                    version="1.1">
+                    <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
+                      <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3" fill="black"></rect>
+                      <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3" fill="black"
+                        fill-opacity="0.7"></rect>
+                    </g>
+                  </svg>
+                </span>
+              </div>
+              <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                <div ngbDropdownMenu aria-labelledby="action1" class="p-0">
+                  <button [routerLink]="['../../user-profile', user.id, 'overview']"
+                    class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem >
+                    {{ 'button.view-user' | translate }}
+                  </button>
+                  <button [routerLink]="['../edit', user.id]" class="navi-link align-items-center py-2 px-6 my-2"
+                    ngbDropdownItem >
+                    {{ 'button.edit-user' | translate }}
+                  </button>
+                  <button [routerLink]="['../set', user.id]" class="navi-link align-items-baseline py-2 px-6 my-2"
+                    ngbDropdownItem >
+                    {{ 'change-password-comp.title' | translate }}
+                  </button>
+                  <button (click)="openConfirmModal(user.id, user.name, user.lastName, 'reset-password')" class="navi-link align-items-baseline py-2 px-6 my-2"
+                    ngbDropdownItem >
+                    {{ 'reset-password.title' | translate }}
+                  </button>
+                  <span >
+                    <button *ngIf="user.isActive === false" (click)="openConfirmModal(user.id, user.name, user.lastName, 'activate-user')"
+                      class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem>
+                      {{ 'button.activate-user' | translate }}
+                    </button>
+                  </span>
+                  <span >
+                    <button *ngIf="user.isActive === true" (click)="openConfirmModal(user.id, user.name, user.lastName, 'deactivate-user')"
+                      class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem>
+                      {{ 'button.deactivate-user' | translate }}
+                    </button>
+                  </span>
+                  <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
+                    [routerLink]="['../../user-profile', user.id, 'module-access']" >
+                    {{ 'pages.user-details.module-access' | translate }}
+                  </button>
+                  <button [routerLink]="['../remove', user.id]" class="navi-link align-items-center py-2 px-6 my-2"
+                    ngbDropdownItem >
+                    {{ 'button.delete-user' | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <tbody class="datatable-body" *ngIf="!result">
+      <tr *ngIf="!result">
+        <td colspan="4" class="text-center">
+          {{ 'messages.no-records' | translate }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage" *ngIf="result"
+  [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize" 
+ (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event })"
+ (pageChange)="list({ keyword: keyword, page: $event })">
+</div>
+</div>

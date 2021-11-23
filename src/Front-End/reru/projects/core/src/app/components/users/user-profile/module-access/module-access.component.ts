@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
     selector: '',
     template: '<router-outlet></router-outlet>'
 })
-export class UsersComponent {
-    constructor() { }
+export class ModuleAccessComponent {
+    constructor() {  }
 }
