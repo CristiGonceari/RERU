@@ -158,11 +158,11 @@ data:
           "HttpHandlerOptions": {
             "UseTracing": true
           },
-          "DownstreamPathTemplate": "/reru-internal/api/{all}",
+          "DownstreamPathTemplate": "/reru-core/api/{all}",
           "DownstreamScheme": "http",
           "DownstreamHostAndPorts": [
             {
-              "Host": "reru-core-service",
+              "Host": "reru-core-service",s
               "Port": 8080
             }
           ],
@@ -172,7 +172,7 @@ data:
           "HttpHandlerOptions": {
             "UseTracing": true
           },
-          "DownstreamPathTemplate": "/reru-internal/api/{all}",
+          "DownstreamPathTemplate": "/reru-personal/api/{all}",
           "DownstreamScheme": "http",
           "DownstreamHostAndPorts": [
             {
@@ -186,7 +186,7 @@ data:
           "HttpHandlerOptions": {
             "UseTracing": true
           },
-          "DownstreamPathTemplate": "/reru-internal/api/{all}",
+          "DownstreamPathTemplate": "/reru-evaluation/api/{all}",
 
           "DownstreamScheme": "http",
           "DownstreamHostAndPorts": [
