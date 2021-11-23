@@ -1,0 +1,68 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<div *ngIf="!isLoading" class="content  d-flex flex-column flex-column-fluid" id="kt_content">
+  <div class="d-flex flex-column-fluid">
+    <div class="container p-0">
+      <div class="card card-custom gutter-b">
+        <div class="card-header flex-wrap border-0 py-5">
+          <div class="card-title">{{'user-profile.edit-title' | translate}}</div>
+        </div>
+        <div class="card-body p-0">
+          <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first" data-wizard-clickable="true">
+            <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+              <div class="col-xl-12 col-xxl-7">
+                <form class="form" id="kt_contact_add_form" [formGroup]="personalDataForm">
+                  <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="form-group row">
+                          <label class="col-xl-3 col-lg-3 col-form-label">
+                            {{'table.name' | translate}}
+                          </label>
+                          <div class="col-lg-9 col-xl-9">
+                            <input class="form-control form-control-lg form-control-solid" name="name" type="text"
+                              formControlName="name"
+                              [ngClass]="{'is-invalid': hasErrors('name'), 'is-valid': personalDataForm.get('name').valid}" />
+                            <div *ngIf="hasErrors('name')" class="fv-plugins-message-container">
+                              <div *ngIf="hasError('name', 'required')" data-field="name" data-validator="notEmpty"
+                                class="fv-help-block">
+                                {{ 'user-profile.empty-name' | translate }}</div>
+                              <div *ngIf="hasError('name', 'pattern')" data-field="name" data-validator="notEmpty"
+                                class="fv-help-block">
+                                {{ 'user-profile.wrong-name' | translate }}</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-xl-3 col-lg-3 col-form-label">
+                            {{'table.lastName' | translate}}
+                          </label>
+                          <div class="col-lg-9 col-xl-9">
+                            <input class="form-control form-control-lg form-control-solid" name="lastName" type="text"
+                              formControlName="lastName"
+                              [ngClass]="{'is-invalid': hasErrors('lastName'), 'is-valid': personalDataForm.get('lastName').valid}" />
+                            <div *ngIf="hasErrors('lastName')" class="fv-plugins-message-container">
+                              <div *ngIf="hasError('lastName', 'required')" data-field="lastName"
+                                data-validator="notEmpty" class="fv-help-block">
+                                {{ 'user-profile.empty-name' | translate }}</div>
+                              <div *ngIf="hasError('lastName', 'pattern')" data-field="lastName"
+                                data-validator="notEmpty" class="fv-help-block">
+                                {{ 'user-profile.wrong-name' | translate }}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-right border-top pt-10">
+                    <app-add-button class="btn" [value]="'button.submit' | translate" (handle)="changePersonalData()">
+                    </app-add-button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
