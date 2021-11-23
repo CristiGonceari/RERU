@@ -1,0 +1,90 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<!--begin::Content-->
+<div *ngIf="!isLoading" class="content  d-flex flex-column flex-column-fluid" id="kt_content">
+  <!--begin::Entry-->
+  <div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class=" container ">
+      <!--begin::Card-->
+      <div class="card card-custom gutter-b">
+        <!--begin::Body-->
+        <div class="card-body p-0">
+          <!--begin::Wizard-->
+          <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first" data-wizard-clickable="true">
+            <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+              <div class="col-xl-12 col-xxl-7">
+                <!--begin::Form Wizard Form-->
+                <form class="form" id="kt_contact_add_form" [formGroup]="userForm">
+                  <!--begin::Form Wizard Step 1-->
+                  <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                    <h3 class="mb-10 font-weight-bold text-dark">{{'user.edit-title' | translate}}</h3>
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="form-group row">
+                          <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
+                          <div class="col-lg-9 col-xl-9">
+                            <input class="form-control form-control-lg form-control-solid" name="avatar" type="text"
+                              formControlName="avatar" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-xl-3 col-lg-3 col-form-label">Name</label>
+                          <div class="col-lg-9 col-xl-9">
+                            <input class="form-control form-control-lg form-control-solid" name="name" type="text"
+                              formControlName="name" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-xl-3 col-lg-3 col-form-label">Last Name</label>
+                          <div class="col-lg-9 col-xl-9">
+                            <input class="form-control form-control-lg form-control-solid" name="lastName" type="text"
+                              formControlName="lastName" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-xl-3 col-lg-3 col-form-label">Email</label>
+                          <div class="col-lg-9 col-xl-9">
+                            <input class="form-control form-control-lg form-control-solid" name="email" type="text"
+                              formControlName="email" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-xl-3 col-lg-3 col-form-label">Username</label>
+                          <div class="col-lg-9 col-xl-9">
+                            <input class="form-control form-control-lg form-control-solid" name="username" type="text"
+                              formControlName="username" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--end::Form Wizard Step 1-->
+                  <!--begin::Wizard Actions-->
+                  <div class="d-flex justify-content-between border-top pt-10">
+                    <div class="mr-2">
+                      <button type="button" class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                        data-wizard-type="action-prev">
+                        Previous
+                      </button>
+                    </div>
+                    <div>
+                      <app-add-button class="btn" [value]="'button.update' | translate" (handle)="editUser()"></app-add-button>
+                    </div>
+                  </div>
+                  <!--end::Wizard Actions-->
+                </form>
+                <!--end::Form Wizard Form-->
+              </div>
+            </div>
+          </div>
+          <!--end::Wizard-->
+        </div>
+        <!--end::Body-->
+      </div>
+      <!--end::Card-->
+    </div>
+    <!--end::Container-->
+  </div>
+  <!--end::Entry-->
+</div>
+<!--end::Content-->

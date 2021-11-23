@@ -1,0 +1,56 @@
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'20rem'" [width]="'5rem'" [height]="'5rem'">
+</app-loading-spinner>
+<div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
+  <app-page-title title="{{ 'module-access.manage' | translate }}"
+    subTitle="{{ 'pages.modules.development' | translate }}">
+  </app-page-title>
+  <div class="d-flex flex-column-fluid">
+    <div class="container p-0">
+      <div class="card card-custom gutter-b">
+        <div class="card-body p-0" *ngIf="userData">
+          <div class="row justify-content-center my-7 px-8 my-lg-10 px-lg-10">
+            <div class="col-xl-12 col-xxl-7">
+              <h3 class="mb-10 font-weight-bold">
+                {{'module-access.module-access-info' | translate}}
+              </h3>
+              <div class="form-group row align-items-center mb-4">
+                <label class="col-xl-3 col-lg-3 col-form-label text-dark-50">
+                  {{'module-access.user-name' | translate}}:
+                </label>
+                <div class="col-lg-9 col-xl-9 d-flex flex-column">
+                  <p class="font-size-lg m-0">{{userData.userName}} {{userData.userLastName}}</p>
+                  <p class="text-muted m-0">{{userData.userEmail}}</p>
+                </div>
+              </div>
+              <div class="form-group row align-items-center mb-4">
+                <label class="col-xl-3 col-lg-3 col-form-label text-dark-50">
+                  {{'module-access.module' | translate}}:
+                </label>
+                <div class="col-lg-9 col-xl-9">
+                  <p class="font-size-lg m-0">{{userData.moduleName}}</p>
+                </div>
+              </div>
+              <div class="form-group row align-items-center mb-9">
+                <label class="col-xl-3 col-lg-3 col-form-label text-dark-50">
+                  {{'module-access.role' | translate}}:
+                </label>
+                <div class="col-lg-9 col-xl-9">
+                  <select class="form-control form-control-lg form-control-solid" name="role" id="role"
+                    [(ngModel)]="role">
+                    <option value="null">{{'module-access.select' | translate}}</option>
+                    <option *ngFor="let item of roles" [value]="item.value">{{ item.label }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="text-right border-top pt-10">
+                <app-button class="btn mr-2" [value]="'button.cancel' | translate" (click)="back()"></app-button>
+                <app-add-button class="btn" [value]="'button.confirm' | translate" (handle)="submit()" [disabled]="!role">
+                </app-add-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

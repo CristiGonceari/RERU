@@ -1,0 +1,6 @@
+<div class="input-group input-group-sm input-group-solid">
+  <input type="text" class="form-control" id="kt_subheader_search_form"
+    [placeholder]="'word.search' | translate"
+    (keydown.enter)="searchOnEnter.emit($event.target.value)"
+    (change)="handleSearch.emit($event)">
+</div>
