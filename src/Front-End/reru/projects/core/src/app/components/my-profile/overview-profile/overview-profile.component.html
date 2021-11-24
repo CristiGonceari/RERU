@@ -1,0 +1,49 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+<div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
+  <div class="card card-custom mb-7">
+    <div class="card-header flex-wrap border-0 py-5">
+      <div class="card-title">{{'user-profile.overview' | translate}}</div>
+    </div>
+    <div class="card-body">
+      <div class="form-group row align-items-center">
+        <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+          {{'pages.user-details.email' | translate}}:
+        </label>
+        <div class="col-lg-9 col-xl-6">
+          <p class="font-size-lg m-0">{{profileData.email}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-custom mb-7">
+    <div class="card-header flex-wrap border-0 py-5">
+      <div class="card-title">{{'user-profile.available-modules' | translate}}</div>
+    </div>
+    <div class="card-body">
+      <table class="datatable table font-size-lg">
+        <thead class="text-uppercase text-muted">
+          <tr>
+            <th scope="col" style="width: 48px"></th>
+            <th scope="col">{{ 'table.module' | translate }}</th>
+            <th scope="col">{{'table.role' | translate}}</th>
+            <th scope="col" style="width: 180px"></th>
+          </tr>
+        </thead>
+        <tbody class="text-dark-75">
+          <tr *ngFor="let item of profileData.modules">
+            <td>
+              <svg-icon [key]="item.moduleIcon" [width]="32" [height]="32"></svg-icon>
+            </td>
+            <td>{{ item.module }}</td>
+            <td>{{ item.role }}</td>
+            <td class="text-right">
+              <app-confirm-button [value]="'button.navigate' | translate" (click)="navigate(item.modulePublicUrl)"></app-confirm-button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

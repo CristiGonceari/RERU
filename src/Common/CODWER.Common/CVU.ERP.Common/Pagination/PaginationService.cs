@@ -49,5 +49,12 @@ namespace CVU.ERP.Common.Pagination
 
             return new PaginatedModel<TDestination>(paginatedList);
         }
+
+        public PaginatedModel<TSource> MapAndPaginateModel<TSource>(List<TSource> list, PaginatedQueryParameter pagedQuery, Expression<Func<TSource, string>>[] membersToSearch = null)
+        {
+            var paginatedList = PaginatedList<TSource>.Create(list, pagedQuery.Page, pagedQuery.ItemsPerPage);
+
+            return new PaginatedModel<TSource>(paginatedList);
+        }
     }
 }

@@ -19,6 +19,8 @@ using FluentValidation.AspNetCore;
 using MediatR;
 using System;
 using AutoMapper.EquivalencyExpression;
+using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CODWER.RERU.Evaluation.Data.Persistence.Initializer;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
 
@@ -95,7 +97,7 @@ namespace CODWER.RERU.Evaluation.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext appDbContext)
         {
             if (env.IsDevelopment())
             {
@@ -107,6 +109,8 @@ namespace CODWER.RERU.Evaluation.API
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+
+            DatabaseSeeder.SeedDb(appDbContext);
 
             //app.UseHangfireDashboard();
             //app.UseHangfireServer();
