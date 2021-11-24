@@ -22,7 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddMyPoll
 
         public async Task<int> Handle(AddMyPollCommand request, CancellationToken cancellationToken)
         {
-            var curUser = _userProfileService.GetCurrentUser();
+            var curUser = await _userProfileService.GetCurrentUser();
 
             var myPoll = _appDbContext.Tests.FirstOrDefault(x => x.TestTypeId == request.TestTypeId && x.UserProfileId == curUser.Id);
 

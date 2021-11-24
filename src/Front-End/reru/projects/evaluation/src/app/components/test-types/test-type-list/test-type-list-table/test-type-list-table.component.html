@@ -77,7 +77,7 @@
                                         <span *ngIf="testType.status == statusEnum.Canceled">
                                             <button (click)="cloneTestType(testType.id)"
                                                 class="navi-link align-items-baseline px-6" ngbDropdownItem>
-                                                {{'statuses.clone' | translate}}
+                                                <span style="font-size: 13px;">{{'statuses.clone' | translate}}</span>
                                             </button>
                                         </span>
                                     </div>

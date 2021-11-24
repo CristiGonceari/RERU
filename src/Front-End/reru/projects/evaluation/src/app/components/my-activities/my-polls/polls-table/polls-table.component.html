@@ -23,8 +23,8 @@
                 <td>{{ poll.startTime | date: 'short'}}</td>
                 <td>{{ poll.endTime | date: 'short' }}</td>
                 <td>
-                    <button *ngIf="poll.status == enum.NotVoted && poll.testStatus == null" class="btn btn-light-success"
-                        (click)="createPoll(true, poll.id)">
+                    <button *ngIf="poll.status == enum.NotVoted && (poll.testStatus == 0 || poll.testStatus == null)" 
+                        class="btn btn-light-success" (click)="createPoll(true, poll.id)">
                         {{'button.vote' | translate}}
                     </button>
                     <button *ngIf="poll.testStatus == testEnum.InProgress" (click)="createPoll(false, poll.id)"
