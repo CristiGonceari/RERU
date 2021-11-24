@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TestStatusEnum } from '../../../../utils/enums/test-status.enum';
 import { MyPollStatusEnum } from '../../../../utils/enums/my-poll-status.enum';
 import { TestService } from 'projects/evaluation/src/app/utils/services/test/test.service';
+import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
  
 @Component({
   selector: 'app-polls-table',
@@ -15,7 +16,8 @@ export class PollsTableComponent implements OnInit {
   isLoading: boolean = true;
   enum = MyPollStatusEnum;
   testEnum = TestStatusEnum;
-  date;
+  date: any;
+  pagedSummary: PaginationModel = new PaginationModel();
 
   constructor(private testService: TestService, private router: Router) { }
 
@@ -25,12 +27,17 @@ export class PollsTableComponent implements OnInit {
     if(this.id) this.getPolls();
   }
 
-  getPolls(){
-    const params: any = { eventId: this.id }
+  getPolls(data: any = {}){
+    const params: any = {
+      eventId: this.id,
+			page: data.page || this.pagedSummary.currentPage,
+			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
+    }
 
     this.testService.getUserPollsByEvent(params).subscribe(
       (res) => {
-          this.polls = res.data;
+          this.polls = res.data.items;
+          this.pagedSummary = res.data.pagedSummary;
           this.isLoading = false;
       }
     )
