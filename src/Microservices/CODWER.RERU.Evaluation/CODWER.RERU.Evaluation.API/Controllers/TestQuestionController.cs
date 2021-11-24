@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions;
 using CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion;
+using CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestions;
 using CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestionsSummary;
 using CODWER.RERU.Evaluation.Application.TestQuestions.SaveTestQuestion;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestQuestions;
+using CVU.ERP.Common.Pagination;
 using MediatR;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
@@ -17,6 +19,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     {
         [HttpGet]
         public async Task<TestQuestionDto> GetTestQuestion([FromQuery] GetTestQuestionQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("multiple-per-page")]
+        public async Task<PaginatedModel<TestQuestionDto>> GetTestQuestions([FromQuery] GetTestQuestionsQuery query)
         {
             return await Mediator.Send(query);
         }

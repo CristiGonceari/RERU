@@ -52,7 +52,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("my-polls-by-event")]
-        public async Task<List<PollDto>> GetMyPollsByEvent([FromQuery] GetMyPollsByEventQuery query)
+        public async Task<PaginatedModel<PollDto>> GetMyPollsByEvent([FromQuery] GetMyPollsByEventQuery query)
         {
             return await Mediator.Send(query);
         }
