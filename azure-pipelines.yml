@@ -94,12 +94,6 @@ stages:
                       echo "##vso[task.setvariable variable=BuildPersonalFE]True"
                       echo "##vso[task.setvariable variable=BuildCoreFe]True"
                     }
-
-                    #to remove
-                      echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
-                      echo "##vso[task.setvariable variable=BuildPersonalFE]True"
-                      echo "##vso[task.setvariable variable=BuildCoreFe]True"
-                    #end remove
                 }
 
           - task: Docker@2
