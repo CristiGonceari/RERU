@@ -1,45 +1,44 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-    <div class="card card-custom mb-7 ml-5">
-        <div class="card-header flex-wrap border-0 py-5">
-            <div class="card-title font-weight-bolder">{{'polls.polls' | translate}}</div>
-        </div>
-        <div class="card-body">
-            <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-            <div *ngIf="!isLoading" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
-                id="kt_datatable">
-                <ngb-accordion
-                    *ngFor="let event of events; let i = index">
-                    <ngb-panel [id]="i">
-                        <ng-template ngbPanelTitle style="color: black; font-size: 14px; display: flex;">
-                            <span class="svg-icon svg-icon-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                    width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                        <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                                        <path
-                                            d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
-                                            fill="#000000" fill-rule="nonzero"></path>
-                                        <path
-                                            d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
-                                            fill="#000000" fill-rule="nonzero" opacity="0.3"
-                                            transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) ">
-                                        </path>
-                                    </g>
-                                </svg>
-                            </span>
-                            <label>{{event.name}}</label>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                            <app-polls-table [id]="event.id"></app-polls-table>
-                        </ng-template>
-                    </ngb-panel>
-                </ngb-accordion>
-                <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage" 
-                    *ngIf="events.length" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
-                    (sizeChange)="getEvents({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-                    (pageChange)="getEvents({ page: $event })">
-                </div>
-            </div>
-        </div>
+  <div class="card card-custom mb-7 ml-5">
+    <div class="card-header flex-wrap border-0 py-5">
+      <div class="card-title font-weight-bolder">{{'polls.polls' | translate}}</div>
     </div>
+    <div class="card-body">
+      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+      <div *ngIf="!isLoading"
+        class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+        id="kt_datatable">
+        <table class="datatable table">
+            <tbody class="datatable-body">
+                <ng-container *ngFor="let event of events; let i = index">
+                    <tr (click)="toggleShow(event.id)" style="cursor: pointer;">
+                        <td class="datatable-cell datatable-toggle-detail" scope="col" style="width: 30px;">
+                            <a class="datatable-toggle-detail">
+                                <i class="fa" [ngClass]="{ 'fa-caret-right' : !(show && eventId == event.id), 'fa-caret-down' : (show && eventId == event.id) }"></i>
+                            </a>
+                        </td>
+                        <td data-field="Title" aria-label="Title" class="datatable-cell">
+                            <b>{{event.name}}</b>
+                        </td>
+                    </tr>
+
+                    <ng-container *ngIf="eventId == event.id && show">
+                      <tr>
+                        <td class="datatable-detail" colspan="13">
+                            <app-polls-table [id]="event.id"></app-polls-table>
+                        </td>
+                      </tr>
+                    </ng-container>
+                </ng-container>
+            </tbody>
+        </table>
+        <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
+          *ngIf="events.length > 5" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
+          [size]="pagedSummary.pageSize"
+          (sizeChange)="getEvents({ page: pagedSummary.currentPage, itemsPerPage: $event })"
+          (pageChange)="getEvents({ page: $event })">
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

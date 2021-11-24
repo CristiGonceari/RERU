@@ -11,6 +11,8 @@ export class MyPollsComponent implements OnInit {
   events = [];
   isLoading: boolean = true;
   pagedSummary: PaginationModel = new PaginationModel();
+  show: boolean = false;
+  eventId: number;
 
   constructor(private eventService: EventService) { }
 
@@ -18,7 +20,12 @@ export class MyPollsComponent implements OnInit {
     this.getEvents();
   }
 
-  getEvents(data: any = {}){
+  toggleShow(id): void {
+    id == this.eventId ? this.show = !this.show : this.show = true;
+    this.eventId = id;
+  }
+
+  getEvents(data: any = {}) {
     let params = {
       testTypeMode: 1,
 			page: data.page || this.pagedSummary.currentPage,

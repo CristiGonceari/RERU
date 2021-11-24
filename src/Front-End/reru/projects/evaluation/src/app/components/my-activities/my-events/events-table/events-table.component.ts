@@ -18,6 +18,7 @@ export class EventsTableComponent implements OnInit {
   isLoading: boolean = true;
   enum = TestStatusEnum;
   resultEnum = TestResultStatusEnum;
+
   constructor(private testService: TestService) { }
 
   ngOnInit(): void {
@@ -33,7 +34,11 @@ export class EventsTableComponent implements OnInit {
 
     this.testService.getUserTestsByEvent(params).subscribe( res => {
       this.tests = res.data.items;
+      this.pagedSummary = res.data.pagedSummary;
       this.isLoading = false;
     })
+
+    console.log('pagination', this.pagedSummary);
+    
   }
 }

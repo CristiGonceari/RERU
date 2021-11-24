@@ -11,6 +11,8 @@ export class MyEventsComponent implements OnInit {
   events = [];
   isLoading: boolean = true;
   pagedSummary: PaginationModel = new PaginationModel();
+  show: boolean = false;
+  testId: number;
 
   constructor(private eventService: EventService) { }
 
@@ -18,7 +20,12 @@ export class MyEventsComponent implements OnInit {
     this.getEvents();
   }
 
-  getEvents(data: any = {}){
+  toggleShow(id): void {
+    id == this.testId ? this.show = !this.show : this.show = true;
+    this.testId = id;
+  }
+
+  getEvents(data: any = {}) {
     let params = {
       testTypeMode: 0,
 			page: data.page || this.pagedSummary.currentPage,

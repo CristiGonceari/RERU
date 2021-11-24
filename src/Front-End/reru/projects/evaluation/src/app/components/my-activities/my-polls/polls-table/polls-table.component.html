@@ -7,8 +7,8 @@
         <thead class="text-uppercase text-muted">
             <tr>
                 <th scope="col" class="colored">{{'tests.name' | translate}}</th>
-                <th scope="col" style="width: 100px;">{{'tests.status' | translate}}</th>
-                <th scope="col" style="width: 170px;">{{'polls.voted-time' | translate}}</th>
+                <th scope="col" style="width: 150px;">{{'tests.status' | translate}}</th>
+                <th scope="col" style="width: 200px;">{{'polls.voted-time' | translate}}</th>
                 <th scope="col" style="width: 150px;">{{'events.start-date' | translate}}</th>
                 <th scope="col" style="width: 150px;">{{'events.end-date' | translate}}</th>
                 <th scope="col" style="width: 100px"></th>
@@ -46,4 +46,9 @@
             </tr>
         </tbody>
     </table>
+    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage" 
+        *ngIf="polls.length > 5" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
+        (sizeChange)="getPolls({ page: pagedSummary.currentPage, itemsPerPage: $event })"
+        (pageChange)="getPolls({ page: $event })">
+    </div>
 </div>
