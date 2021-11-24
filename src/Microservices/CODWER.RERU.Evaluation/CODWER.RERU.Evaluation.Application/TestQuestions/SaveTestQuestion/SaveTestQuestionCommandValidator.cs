@@ -11,21 +11,32 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.SaveTestQuestion
     {
         public SaveTestQuestionCommandValidator(AppDbContext appDbContext)
         {
-            RuleFor(x => x.Data)
-                .Must(x => appDbContext.TestQuestions
-                        .Any(t => t.Id == appDbContext.Tests
-                            .FirstOrDefault(ts => ts.Id == x.TestId)
-                            .TestQuestions
-                            .FirstOrDefault(q => q.Index == x.QuestionIndex).Id))
-                .WithErrorCode(ValidationCodes.INVALID_TEST_QUESTION);
-
             RuleFor(x => x.Data.Status)
                 .NotNull()
                 .IsInEnum()
                 .WithErrorCode(ValidationCodes.INVALID_ANSWER_STATUS);
 
-            When(x => appDbContext.Tests.Include(x => x.TestType).ThenInclude(x => x.Settings).FirstOrDefault(t => t.Id == x.Data.TestId).TestType.Settings.ShowManyQuestionPerPage == false, () => 
+            When(x => x.Data.QuestionUnitId.HasValue, () =>
             {
+                RuleFor(x => x.Data)
+                    .Must(x => appDbContext.TestQuestions
+                        .Any(t => t.Id == appDbContext.Tests
+                            .FirstOrDefault(ts => ts.Id == x.TestId)
+                            .TestQuestions
+                            .FirstOrDefault(q => q.QuestionUnitId == x.QuestionIndex).Id))
+                    .WithErrorCode(ValidationCodes.INVALID_TEST_QUESTION);
+            });
+
+            When(x => x.Data.QuestionIndex.HasValue, () => 
+            {
+                RuleFor(x => x.Data)
+                    .Must(x => appDbContext.TestQuestions
+                        .Any(t => t.Id == appDbContext.Tests
+                            .FirstOrDefault(ts => ts.Id == x.TestId)
+                            .TestQuestions
+                            .FirstOrDefault(q => q.Index == x.QuestionIndex).Id))
+                    .WithErrorCode(ValidationCodes.INVALID_TEST_QUESTION);
+
                 When(x => !appDbContext.Tests.Include(x => x.TestType).ThenInclude(x => x.Settings).FirstOrDefault(t => t.Id == x.Data.TestId).TestType.Settings.PossibleChangeAnswer, () =>
                 {
                     RuleFor(x => x.Data)

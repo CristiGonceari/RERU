@@ -20,10 +20,20 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.SaveTestQuestion
 
         public async Task<Unit> Handle(SaveTestQuestionCommand request, CancellationToken cancellationToken)
         {
-            var testQuestion = await _appDbContext.TestQuestions
-                .Include(x => x.QuestionUnit)
-                .FirstAsync(x => x.Index == request.Data.QuestionIndex && x.TestId == request.Data.TestId);
+            var testQuestions = _appDbContext.TestQuestions
+                .Include(x => x.QuestionUnit);
 
+            var testQuestion = new TestQuestion();
+
+            if (request.Data.QuestionIndex.HasValue)
+            {
+                testQuestion = testQuestions.First(x => x.Index == request.Data.QuestionIndex && x.TestId == request.Data.TestId);
+            } 
+            else if (request.Data.QuestionUnitId.HasValue)
+            {
+                testQuestion = testQuestions.First(x => x.QuestionUnitId == request.Data.QuestionUnitId && x.TestId == request.Data.TestId);
+            }
+            
             if ((request.Data.Answers == null || request.Data.Answers.Count == 0) && request.Data.Status != AnswerStatusEnum.Viewed)
             {
                 request.Data.Status = AnswerStatusEnum.Skipped;

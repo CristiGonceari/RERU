@@ -24,7 +24,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionCategories.GetQuestionCateg
         {
             var categories = _appDbContext.QuestionCategories
                 .Include(x => x.QuestionUnits)
-                .OrderBy(x => x.Name)
+                .OrderByDescending(x => x.CreateDate)
                 .AsQueryable();
 
             if (request != null && !string.IsNullOrEmpty(request.Name))
