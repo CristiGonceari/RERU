@@ -36,7 +36,7 @@ import { TestVerificationProcessComponent } from './test-verification-process/te
     StartTestPageComponent,
     TestListComponent,
     ViewTestResultComponent,
-    TestVerificationProcessComponent
+    TestVerificationProcessComponent,
   ],
   imports: [
     CommonModule,

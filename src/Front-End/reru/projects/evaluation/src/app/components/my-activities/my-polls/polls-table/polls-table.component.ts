@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TestStatusEnum } from '../../../../utils/enums/test-status.enum';
 import { MyPollStatusEnum } from '../../../../utils/enums/my-poll-status.enum';
 import { TestService } from 'projects/evaluation/src/app/utils/services/test/test.service';
@@ -19,7 +19,8 @@ export class PollsTableComponent implements OnInit {
   date: any;
   pagedSummary: PaginationModel = new PaginationModel();
 
-  constructor(private testService: TestService, private router: Router) { }
+  constructor(private testService: TestService, private router: Router, private route: ActivatedRoute,
+    ) { }
 
   ngOnInit(): void {
     
@@ -46,9 +47,9 @@ export class PollsTableComponent implements OnInit {
   createPoll(check: boolean, testTypeId?) {
     this.testService.createMinePoll({testTypeId: testTypeId, eventId: this.id}).subscribe((res) => {
       if(check)
-        this.router.navigate(['poll', res.data]);
+        this.router.navigate(['../../polls/start-poll-page', res.data], { relativeTo: this.route });
       else 
-       this.router.navigate(['run-poll', res.data]);
+       this.router.navigate(['../../polls/performing-poll', res.data], { relativeTo: this.route });
     });
   }
 }

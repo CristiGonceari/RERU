@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TestTypeStatusEnum } from '../../../utils/enums/test-type-status.enum';
 import { TestTypeService } from '../../../utils/services/test-type/test-type.service';
 import { Location } from '@angular/common';
@@ -21,6 +21,7 @@ export class TestTypeDetailsComponent implements OnInit {
     private service: TestTypeService,
     private activatedRoute: ActivatedRoute,
     private location: Location,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +43,12 @@ export class TestTypeDetailsComponent implements OnInit {
         }
     })
   }
+
+  cloneTestType(id): void {
+		this.service.clone(id).subscribe(res => {
+			if (res && res.data) this.router.navigate(['../test-type']);
+		});
+	}
 
   backClicked() {
 		this.location.back();

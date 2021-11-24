@@ -32,7 +32,7 @@ export class StartPollPageComponent implements OnInit {
   }
 
   getTestById(testId: number) {
-    this.testService.getTest({ id: testId }).subscribe(
+    this.testService.getTest(testId).subscribe(
       res => {
         this.testDto = res.data;
         if (this.testDto.rules == null) {
@@ -51,6 +51,6 @@ export class StartPollPageComponent implements OnInit {
   }
 
   generatePoll(){
-    this.testQuestionService.generate(this.pollId).subscribe(() => {this.router.navigate(['run-poll/:id', this.pollId])});
+    this.testQuestionService.generate(this.pollId).subscribe(() => {this.router.navigate(['../../performing-poll', this.pollId], { relativeTo: this.activatedRoute })});
   }
 }

@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { PollsRoutingModule } from './polls-routing.module';
-import { PollsComponent } from './polls.component';
 import { PerformingPollComponent } from './performing-poll/performing-poll.component';
 import { StartPollPageComponent } from './start-poll-page/start-poll-page.component';
 import { ViewPollProgressComponent } from './view-poll-progress/view-poll-progress.component';
@@ -19,7 +17,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
-    PollsComponent, 
     PerformingPollComponent, 
     StartPollPageComponent, 
     ViewPollProgressComponent

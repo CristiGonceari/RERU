@@ -15,9 +15,9 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     public class TestVerificationController : BaseController
     {
         [HttpGet]
-        public async Task<VerificationTestQuestionUnitDto> GetTestQuestion([FromQuery] GetTestQuestionForVerifyQuery query)
+        public async Task<VerificationTestQuestionUnitDto> GetTestQuestion([FromQuery] VerificationTestQuestionDto data)
         {
-            return await Mediator.Send(query);
+            return await Mediator.Send(new GetTestQuestionForVerifyQuery { Data = data }); 
         }
 
         [HttpGet("summary")]
