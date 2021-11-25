@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.Options.EditOption
 {
-    [ModuleOperation(permission: PermissionCodes.OPTIONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.QUESTION_UNITS_GENERAL_ACCESS)]
     public class EditOptionsCommand : IRequest<Unit>
     {
         public AddEditOptionDto Data { get; set; }

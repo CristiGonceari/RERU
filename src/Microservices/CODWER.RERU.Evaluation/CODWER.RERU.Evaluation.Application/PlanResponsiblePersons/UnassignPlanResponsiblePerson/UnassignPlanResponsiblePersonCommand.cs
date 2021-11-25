@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.UnassignPlanResponsiblePerson
 {
-    [ModuleOperation(permission: PermissionCodes.PLAN_RESPONSIBLE_PERSONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.PLANS_GENERAL_ACCESS)]
 
     public class UnassignPlanResponsiblePersonCommand : IRequest<Unit>
     {

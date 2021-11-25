@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetEventEvaluators
 {
-    [ModuleOperation(permission: PermissionCodes.EVENT_EVALUATORS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
     public class GetEventEvaluatorsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<UserProfileDto>>
     {
         public int EventId { get; set; }

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.EventLocations.GetNoAssignedLocations
 {
-    [ModuleOperation(permission: PermissionCodes.EVENT_LOCATIONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
     public class GetNoAssignedLocationsQuery : IRequest<List<LocationDto>>
     {
         public int EventId { get; set; }

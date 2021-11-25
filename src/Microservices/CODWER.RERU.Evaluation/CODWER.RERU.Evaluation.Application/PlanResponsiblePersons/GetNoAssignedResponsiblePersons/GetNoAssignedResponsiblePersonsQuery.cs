@@ -6,7 +6,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 
 namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.GetNoAssignedResponsiblePersons
 {
-    [ModuleOperation(permission: PermissionCodes.PLAN_RESPONSIBLE_PERSONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.PLANS_GENERAL_ACCESS)]
     public class GetNoAssignedResponsiblePersonsQuery : IRequest<List<UserProfileDto>>
     {
         public int PlanId { get; set; }

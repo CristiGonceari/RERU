@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.EventTestTypes.AssignTestTypeToEvent
 {
-    [ModuleOperation(permission: PermissionCodes.EVENT_TEST_TYPES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
     public class AssignTestTypeToEventCommand : IRequest<Unit>
     {
         public AddEventTestTypeDto Data { get; set; }

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.LocationComputers.UnassignLocationComputer
 {
-    [ModuleOperation(permission: Permissions.PermissionCodes.LOCATION_CLIENTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: Permissions.PermissionCodes.LOCATIONS_GENERAL_ACCESS)]
     public class UnassignLocationComputerCommand : IRequest<Unit>
     {
         public int LocationClientId { get; set; }

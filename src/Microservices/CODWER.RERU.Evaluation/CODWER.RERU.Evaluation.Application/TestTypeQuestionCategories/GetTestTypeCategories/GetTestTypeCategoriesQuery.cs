@@ -6,7 +6,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
 
 namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.GetTestTypeCategories
 {
-    [ModuleOperation(permission: PermissionCodes.TEST_TYPE_QUESTION_CATEGORIES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.TEST_TYPES_GENERAL_ACCESS)]
     public class GetTestTypeCategoriesQuery : IRequest<List<TestTypeQuestionCategoryDto>>
     {
         public int TestTypeId { get; set; }

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 {
-    [ModuleOperation(permission: PermissionCodes.EVENT_USERS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
     public class AssignUserToEventCommand : IRequest<Unit>
     {
         public AddEventPersonDto Data { get; set; }

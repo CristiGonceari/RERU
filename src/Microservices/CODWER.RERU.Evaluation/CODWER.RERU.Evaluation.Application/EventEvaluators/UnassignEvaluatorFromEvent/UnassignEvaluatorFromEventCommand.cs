@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.EventEvaluators.UnassignEvaluatorFromEvent
 {
-    [ModuleOperation(permission: PermissionCodes.EVENT_EVALUATORS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
     public class UnassignEvaluatorFromEventCommand : IRequest<Unit>
     {
         public int EventId { get; set; }

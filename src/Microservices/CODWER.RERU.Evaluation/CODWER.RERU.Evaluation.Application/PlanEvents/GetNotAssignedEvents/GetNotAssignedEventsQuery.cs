@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.PlanEvents.GetNotAssignedEvents
 {
-    [ModuleOperation(permission: PermissionCodes.PLAN_EVENTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.PLANS_GENERAL_ACCESS)]
     public class GetNotAssignedEventsQuery : IRequest<List<EventDto>>
     {
         public string Keyword { get; set; }
