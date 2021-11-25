@@ -31,6 +31,13 @@
                     </ng-container>
                 </ng-container>
             </tbody>
+            <tbody class="datatable-body" *ngIf="!events.length">
+              <tr>
+                  <td colspan="6" class="text-center">
+                      {{ 'message.no-record' | translate }}
+                  </td>
+              </tr>
+          </tbody>
         </table>
         <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
           *ngIf="events.length > 5" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
