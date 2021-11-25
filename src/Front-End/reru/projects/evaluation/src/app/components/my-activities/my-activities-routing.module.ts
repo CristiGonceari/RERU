@@ -29,10 +29,11 @@ const routes: Routes = [
     },
   ]},
   { path: 'start-test/:id', component: StartTestPageComponent },
-  { path: 'run-test/:id', component: OnePerPagePerformingTestComponent},
-  { path: 'run-test-questions/:id', component: MultiplePerPagePerformingTestComponent},
-  
   { path: 'performing-poll/:id', component: PerformingPollComponent },
+  { path: 'one-test-per-page/:id', component: OnePerPagePerformingTestComponent},
+  { path: 'multiple-per-page/:id', component: MultiplePerPagePerformingTestComponent},
+  { path: 'poll/:id', component: StartPollPageComponent },
+  { path: 'run-poll/:id', component: PerformingPollComponent },
   { path: 'poll-progress/:id', component: ViewPollProgressComponent },
 ];
 

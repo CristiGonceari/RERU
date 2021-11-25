@@ -32,9 +32,9 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
                         .ThenInclude(q => q.QuestionCategory)
                             .ThenInclude(x => x.QuestionUnits)
                                 .ThenInclude(q => q.Options)
-                .FirstAsync(x => x.Id == request.Data.TestId);
+                .FirstAsync(x => x.Id == request.TestId);
 
-            var testQuestion = test.TestQuestions.FirstOrDefault(x => x.Index == request.Data.QuestionIndex);
+            var testQuestion = test.TestQuestions.FirstOrDefault(x => x.Index == request.QuestionIndex);
             var questionUnit = testQuestion.QuestionUnit;
 
             if (questionUnit.QuestionType == QuestionTypeEnum.HashedAnswer)

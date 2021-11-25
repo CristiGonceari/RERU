@@ -18,9 +18,9 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     public class TestQuestionController : BaseController
     {
         [HttpGet]
-        public async Task<TestQuestionDto> GetTestQuestion([FromQuery] AddTestQuestionDto data)
+        public async Task<TestQuestionDto> GetTestQuestion([FromQuery] GetTestQuestionQuery query)
         {
-            return await Mediator.Send(new GetTestQuestionQuery { Data = data });
+            return await Mediator.Send(query);
         }
 
         [HttpGet("multiple-per-page")]

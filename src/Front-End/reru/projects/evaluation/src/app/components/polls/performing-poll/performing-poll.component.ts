@@ -145,6 +145,7 @@ export class PerformingPollComponent implements OnInit {
     return new AddTestQuestion({
       testId: +this.testId,
       questionIndex: this.questionIndex,
+      questionUnitId: null,
       status: status,
       answers: this.testAnswersInput
     });

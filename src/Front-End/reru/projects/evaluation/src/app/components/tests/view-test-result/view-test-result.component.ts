@@ -76,7 +76,7 @@ export class ViewTestResultComponent implements OnInit {
   }
 
   getTestById() {
-    this.testService.getTest({ id: this.testId }).subscribe(
+    this.testService.getTest(this.testId).subscribe(
       res => {
         this.testData = res.data;
       },

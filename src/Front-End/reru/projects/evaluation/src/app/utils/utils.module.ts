@@ -9,12 +9,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateComponent } from './components/date/date.component';
 import { HashOptionInputComponent } from './components/hash-option-input/hash-option-input.component';
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
 @NgModule({
   declarations: [
     LoadingSpinnerComponent,
     DateComponent,
-    HashOptionInputComponent
+    HashOptionInputComponent,
+    SafeHtmlPipe,
   ],
   imports: [
     HttpClientModule,
@@ -27,10 +29,12 @@ import { HashOptionInputComponent } from './components/hash-option-input/hash-op
   ],
   providers: [
     { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter },
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    SafeHtmlPipe
   ],
   exports: [
     LoadingSpinnerComponent,
+    SafeHtmlPipe,
     TranslateModule,
     DateComponent
   ]

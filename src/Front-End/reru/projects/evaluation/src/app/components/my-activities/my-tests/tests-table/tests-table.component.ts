@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TestResultStatusEnum } from '../../../../utils/enums/test-result-status.enum';
 import { TestStatusEnum } from '../../../../utils/enums/test-status.enum';
 import { Test } from '../../../../utils/models/tests/test.model';
@@ -20,10 +20,14 @@ export class TestsTableComponent implements OnInit {testRowList: Test[] = [];
   resultEnum = TestResultStatusEnum;
   testDto = new Test();
   settings: any;
+  testId;
+
 
   constructor(private testService: TestService,
     private testTypeService: TestTypeService,
-    private router: Router) { }
+    private router: Router,
+		private route: ActivatedRoute,
+    ) { }
 
   ngOnInit(): void {
     this.getUserTests();
@@ -47,13 +51,12 @@ export class TestsTableComponent implements OnInit {testRowList: Test[] = [];
   }
 
   getTestById(testId: number) {
-    this.testService.getTest({ id: testId }).subscribe(res => {
+    this.testService.getTest(testId).subscribe(res => {
       this.testId = res.data.id; 
       this.getTestType(res.data.testTypeId); 
     })
   }
 
-  testId;
 
   getTestType(testTypeId) {
     this.testTypeService.getTestTypeSettings({ testTypeId: testTypeId }).subscribe(res => {
@@ -64,9 +67,11 @@ export class TestsTableComponent implements OnInit {testRowList: Test[] = [];
 
   goToTest(): void {
     if (this.settings.showManyQuestionPerPage)
-      this.router.navigate(['run-test-questions', this.testId]);
+      this.router.navigate(['my-activities/multiple-per-page', this.testId]);
     else
-      this.router.navigate(['run-test', this.testId]);
+      // this.router.navigate(['run-test', this.testId]);
+      this.router.navigate(['my-activities/one-test-per-page', this.testId]);
+
   }
 
 }

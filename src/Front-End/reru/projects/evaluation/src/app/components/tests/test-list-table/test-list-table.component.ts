@@ -168,9 +168,10 @@ export class TestListTableComponent implements OnInit {
     modalRef.componentInstance.title = "Finish Test";
     modalRef.componentInstance.description = "Do you want to finish test ?";
     modalRef.result.then(
-      () => this.getTests(),
-      () => { }
+      () => this.testService.finalizeTest(id).subscribe(() => {this.getTests()}),
+      () => {}          
     );
+   
   }
 
   closeTest(testId): void {

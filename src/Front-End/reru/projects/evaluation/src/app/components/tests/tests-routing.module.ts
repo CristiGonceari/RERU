@@ -6,10 +6,12 @@ import { TestVerificationProcessComponent } from './test-verification-process/te
 import { FinishPageComponent } from './finish-page/finish-page.component';
 import { OnePerPagePerformingTestComponent } from './one-per-page-performing-test/one-per-page-performing-test.component';
 import { StartTestPageComponent } from './start-test-page/start-test-page.component';
+import { MultiplePerPagePerformingTestComponent } from './multiple-per-page-performing-test/multiple-per-page-performing-test.component';
 
 const routes: Routes = [
   { path: '', component: TestListComponent },
-  { path: 'performing-test/:id', component: OnePerPagePerformingTestComponent },
+  { path: 'one-test-per-page/:id', component: OnePerPagePerformingTestComponent },
+  { path: 'multiple-per-page/:id', component: MultiplePerPagePerformingTestComponent},
   { path: 'start-test/:id', component: StartTestPageComponent },
   { path: 'add-test', component: AddTestComponent },
 	{ path: 'finish-page/:id', component: FinishPageComponent },

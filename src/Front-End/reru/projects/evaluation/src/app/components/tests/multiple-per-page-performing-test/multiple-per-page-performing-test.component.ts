@@ -59,7 +59,7 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
   }
 
   getTestById() {
-    this.testService.getTest({ id: this.testId }).subscribe(
+    this.testService.getTest(this.testId).subscribe(
       res => {
         this.testDto = res.data;
         this.getTestTypeSettings(res.data.testTypeId);
@@ -163,9 +163,11 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
   }
 
   parse(el) {
+    console.log(el, "ELLLL")
     return new AddTestQuestion({
       testId: this.testId,
-      questionIndex: el.questionUnitId,
+      questionIndex: null,
+      questionUnitId: el.questionUnitId,
       status: AnswerStatusEnum.Answered,
       answers: this.saveAnswers(el)
     });

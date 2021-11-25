@@ -16,12 +16,15 @@ import { TestAnswer } from '../../../utils/models/test-questions/test-answer.mod
 import { TestType } from '../../../utils/models/test-types/test-type.model';
 import { TestTypeSettings } from '../../../utils/models/test-types/test-type-settings.model';
 import { AddTestQuestion } from '../../../utils/models/test-questions/add-test-question.model';
+import { SafeHtmlPipe } from '../../../utils/pipes/safe-html.pipe';
 import { ConfirmModalComponent } from '@erp/shared';
 
 @Component({
   selector: 'app-one-per-page-performing-test',
   templateUrl: './one-per-page-performing-test.component.html',
-  styleUrls: ['./one-per-page-performing-test.component.scss']
+  styleUrls: ['./one-per-page-performing-test.component.scss'],
+  providers: [SafeHtmlPipe]
+
 })
 export class OnePerPagePerformingTestComponent implements OnInit {
 
@@ -145,7 +148,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   }
 
   getTestById() {
-    this.testService.getTest({ id: this.testId }).subscribe(
+    this.testService.getTest(this.testId).subscribe(
       res => {
         this.testDto = res.data;
         this.getTestType(res.data.testTypeId);
@@ -208,12 +211,15 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   }
 
   parse(status) {
-    return new AddTestQuestion({
-      testId: this.testId,
-      questionIndex: this.questionIndex,
-      status: status,
-      answers: this.testAnswersInput
-    });
+    return{
+      data: new AddTestQuestion({
+        testId: this.testId,
+        questionIndex: this.questionIndex,
+        questionUnitId: null,
+        status: status,
+        answers: this.testAnswersInput
+      })
+    }
   }
 
   saveAnswers() {
@@ -339,6 +345,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     modalRef.componentInstance.description = "Do you want to finish test ?";
     modalRef.result.then(
       () => {
+        this.testService.finalizeTest(this.testId);
         clearInterval(this.interval);
         clearInterval(this.timerInterval);
         this.router.navigate(['tests/finish-page', this.testId]);

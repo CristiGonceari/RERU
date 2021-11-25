@@ -21,7 +21,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("summary")]
-        public async Task<VerificationTestQuestionDataDto> GetTestQuestionsSummary([FromRoute] GetTestVerificationSummaryQuery query)
+        public async Task<VerificationTestQuestionDataDto> GetTestQuestionsSummary([FromQuery] GetTestVerificationSummaryQuery query)
         {
             return await Mediator.Send(query);
         }
