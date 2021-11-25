@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEvent
 {
-    [ModuleOperation(permission: PermissionCodes.EVENT_EVALUATORS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
     public class AssignEvaluatorToEventCommand : IRequest<Unit>
     {
         public AddEventEvaluatorDto Data { get; set; }

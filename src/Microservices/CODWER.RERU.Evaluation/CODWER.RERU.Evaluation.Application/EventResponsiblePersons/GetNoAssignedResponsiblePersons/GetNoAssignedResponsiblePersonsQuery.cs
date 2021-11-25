@@ -6,7 +6,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 
 namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.GetNoAssignedResponsiblePersons
 {
-    [ModuleOperation(permission: PermissionCodes.EVENT_RESPONSIBLE_PERSONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
     public class GetNoAssignedResponsiblePersonsQuery : IRequest<List<UserProfileDto>>
     {
         public int EventId { get; set; }

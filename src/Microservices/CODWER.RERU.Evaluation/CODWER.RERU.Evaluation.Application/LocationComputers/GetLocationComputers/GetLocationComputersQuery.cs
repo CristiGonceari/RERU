@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.LocationComputers.GetLocationComputers
 {
-    [ModuleOperation(permission: Permissions.PermissionCodes.LOCATION_CLIENTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: Permissions.PermissionCodes.LOCATIONS_GENERAL_ACCESS)]
     public class GetLocationComputersQuery : PaginatedQueryParameter, IRequest<PaginatedModel<LocationClientDto>>
     {
         public int LocationId { get; set; }

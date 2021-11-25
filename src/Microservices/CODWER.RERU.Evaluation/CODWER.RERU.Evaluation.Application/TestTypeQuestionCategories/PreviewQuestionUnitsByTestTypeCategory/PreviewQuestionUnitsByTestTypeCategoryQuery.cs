@@ -6,7 +6,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
 
 namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQuestionUnitsByTestTypeCategory
 {
-    [ModuleOperation(permission: PermissionCodes.TEST_TYPE_QUESTION_CATEGORIES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.TEST_TYPES_GENERAL_ACCESS)]
     public class PreviewQuestionUnitsByTestTypeCategoryQuery : IRequest<List<CategoryQuestionUnitDto>>
     {
         public QuestionCategoryPreviewDto Data { get; set; }

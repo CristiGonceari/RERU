@@ -6,7 +6,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 
 namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.GetNoAssinedResponsiblePersons
 {
-    [ModuleOperation(permission: PermissionCodes.LOCATION_RESPONSIBLE_PERSONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.LOCATIONS_GENERAL_ACCESS)]
     public class GetNoAssignedResponsiblePersonsQuery : IRequest<List<UserProfileDto>>
     {
         public string Keyword { get; set; }

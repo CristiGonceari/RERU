@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.EventTestTypes.GetEventTestTypes
 {
-    [ModuleOperation(permission: PermissionCodes.EVENT_TEST_TYPES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
     public class GetEventTestTypesQuery : PaginatedQueryParameter, IRequest<PaginatedModel<TestTypeDto>>
     {
         public int EventId { get; set; }

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.PlanEvents.AssignEventToPlan
 {
-    [ModuleOperation(permission: PermissionCodes.PLAN_EVENTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.PLANS_GENERAL_ACCESS)]
 
     public class AssignEventToPlanCommand : IRequest<Unit>
     {

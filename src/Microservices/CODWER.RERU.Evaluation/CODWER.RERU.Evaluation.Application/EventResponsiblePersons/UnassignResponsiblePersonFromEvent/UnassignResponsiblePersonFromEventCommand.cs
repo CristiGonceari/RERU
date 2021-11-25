@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.UnassignResponsiblePersonFromEvent
 {
-    [ModuleOperation(permission: PermissionCodes.EVENT_RESPONSIBLE_PERSONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
     public class UnassignResponsiblePersonFromEventCommand : IRequest<Unit>
     {
         public int EventId { get; set; }

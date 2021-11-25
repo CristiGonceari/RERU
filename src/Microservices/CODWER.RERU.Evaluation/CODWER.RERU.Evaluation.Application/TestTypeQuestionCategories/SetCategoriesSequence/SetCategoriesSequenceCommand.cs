@@ -7,7 +7,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
 
 namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.SetCategoriesSequence
 {
-    [ModuleOperation(permission: PermissionCodes.TEST_TYPE_QUESTION_CATEGORIES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.TEST_TYPES_GENERAL_ACCESS)]
     public class SetCategoriesSequenceCommand : IRequest<Unit>
     {
         public int TestTypeId { get; set; }

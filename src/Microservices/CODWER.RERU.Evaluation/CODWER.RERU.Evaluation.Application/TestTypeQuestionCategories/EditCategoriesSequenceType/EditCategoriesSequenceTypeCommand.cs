@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.EditCategoriesSequenceType
 {
-    [ModuleOperation(permission: PermissionCodes.TEST_TYPE_QUESTION_CATEGORIES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.TEST_TYPES_GENERAL_ACCESS)]
     public class EditCategoriesSequenceTypeCommand : IRequest<Unit>
     {
         public int TestTypeId { get; set; }

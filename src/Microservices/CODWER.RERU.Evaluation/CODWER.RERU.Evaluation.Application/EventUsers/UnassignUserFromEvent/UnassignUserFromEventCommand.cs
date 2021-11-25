@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.EventUsers.UnassignUserFromEvent
 {
-    [ModuleOperation(permission: PermissionCodes.EVENT_USERS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
     public class UnassignUserFromEventCommand : IRequest<Unit>
     {
         public int EventId { get; set; }

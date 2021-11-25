@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.AssignQuestionCategoryToTestType
 {
-    [ModuleOperation(permission: PermissionCodes.TEST_TYPE_QUESTION_CATEGORIES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.TEST_TYPES_GENERAL_ACCESS)]
     public class AssignQuestionCategoryToTestTypeCommand : IRequest<int>
     {
         public AssignQuestionCategoryToTestTypeDto Data { get; set; }
