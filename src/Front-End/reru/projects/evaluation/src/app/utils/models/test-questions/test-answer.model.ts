@@ -1,5 +1,5 @@
 export class TestAnswer {
-    optionId: number;
+    optionId?: number;
     answerValue: string;
 
     constructor(testAnswerModel?: TestAnswer) {

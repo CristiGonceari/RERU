@@ -35,7 +35,7 @@ export class TestQuestionService extends AbstractService {
 	}
 
 	postTestQuestions(data): Observable<any> {
-		return this.http.post<any>(`${this.baseUrl}/${this.urlRoute}`, {data});
+		return this.http.post<any>(`${this.baseUrl}/${this.urlRoute}`, data);
 	}
 
 	summary(id: number): Observable<any> {
