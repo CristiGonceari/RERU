@@ -107,6 +107,7 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
   
   postAnswer() {
     this.testQuestions.forEach(el => {
+      console.log("this.parse(el)", this.parse(el))
       this.testQuestionService.postTestQuestions(this.parse(el)).subscribe(() => {
         this.testAnswersInput = [];
       })
@@ -163,14 +164,15 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
   }
 
   parse(el) {
-    console.log(el, "ELLLL")
-    return new AddTestQuestion({
-      testId: this.testId,
-      questionIndex: null,
-      questionUnitId: el.questionUnitId,
-      status: AnswerStatusEnum.Answered,
-      answers: this.saveAnswers(el)
-    });
+    return{
+      data: new AddTestQuestion({
+        testId: this.testId,
+        questionIndex: null,
+        questionUnitId: el.questionUnitId,
+        status: AnswerStatusEnum.Answered,
+        answers: this.saveAnswers(el)
+      })
+    }
   }
 
   startTimer() {
@@ -203,8 +205,8 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
     modalRef.componentInstance.description = "Do you want to finish test ?";
     modalRef.result.then(
       () => {
+        this.finalizeTest();
         clearInterval(this.interval);
-        this.router.navigate(['tests/finish-page', this.testId]);
       }
     );
   }

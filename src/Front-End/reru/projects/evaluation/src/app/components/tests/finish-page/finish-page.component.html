@@ -49,11 +49,11 @@
                                 </div>
                             </div>
                             <div class="text-right border-top pt-10">
-                                <app-button *ngIf="viewResult" [routerLink]="['']" class="btn mr-2" [value]="'button.cancel' | translate">
+                                <app-button *ngIf="viewResult" [routerLink]="['../../../my-activities']" class="btn mr-2" [value]="'button.cancel' | translate">
                                 </app-button>
                                 <app-add-button *ngIf="viewResult" [routerLink]="['../../test-result', testId]" class="btn mr-2" [value]="'tests.view' | translate">
                                 </app-add-button>
-                                <app-add-button *ngIf="!viewResult" [routerLink]="['']" class="btn" [value]="'button.ok' | translate">
+                                <app-add-button *ngIf="!viewResult" [routerLink]="['../../../my-activities']" class="btn" [value]="'button.ok' | translate">
                                 </app-add-button>
                             </div>
                         </div>

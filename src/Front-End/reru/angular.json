@@ -39,7 +39,6 @@
               "includePaths": ["projects/erp-shared/src/lib/styles"]
             },
             "styles": [
-              "projects/erp-shared/src/lib/styles/style.bundle.css",
               "projects/erp-shared/src/lib/styles/plugins.bundle.css",
               "projects/core/src/styles.scss"
             ],

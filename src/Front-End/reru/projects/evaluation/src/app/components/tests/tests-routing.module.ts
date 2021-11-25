@@ -15,7 +15,6 @@ const routes: Routes = [
   { path: 'start-test/:id', component: StartTestPageComponent },
   { path: 'add-test', component: AddTestComponent },
 	{ path: 'finish-page/:id', component: FinishPageComponent },
-  {path: 'start-test/:id', component: StartTestPageComponent},
   { path: 'verify-test/:id', component: TestVerificationProcessComponent },
 ];
 

@@ -48,7 +48,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   testQuestionSummary: TestQuestionSummary[] = [];
   questionUnit = new TestQuestion();
   testAnswersInput: TestAnswer[] = [];
-  testQuestion: TestQuestion[] = [];
+  // testQuestion: AddTestQuestion[] = [];
   testTypeModel = new TestType();
   testTypeSettings = new TestTypeSettings();
   hashedOptions;
@@ -222,7 +222,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     }
   }
 
-  saveAnswers() {
+   saveAnswers() {
     this.testAnswersInput = [];
 
     if (this.questionUnit.questionType == this.questionTypeEnum.FreeText)
@@ -345,10 +345,9 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     modalRef.componentInstance.description = "Do you want to finish test ?";
     modalRef.result.then(
       () => {
-        this.testService.finalizeTest(this.testId);
+        this.finalizeTest();
         clearInterval(this.interval);
         clearInterval(this.timerInterval);
-        this.router.navigate(['tests/finish-page', this.testId]);
       }
     );
   }
@@ -356,5 +355,4 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   finalizeTest() {
     this.testService.finalizeTest(this.testId).subscribe(() => this.router.navigate(['tests/finish-page', this.testId]));
   }
-
 }
