@@ -18,7 +18,7 @@
                   {{ 'pages.modules.list-module' | translate }}
                 </h3>
               </div>
-              <div class="card-toolbar">
+              <div class="card-toolbar" *permission="'P00000002'">
                 <app-add-button class="btn" routerLink="../new" [value]="'button.add-module' | translate">
                 </app-add-button>
               </div>
@@ -87,11 +87,11 @@
                           <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                             <div ngbDropdownMenu [aria-labelledby]="'action' + i" class="p-0">
                               <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
-                                [routerLink]="['../', module.id, 'overview']">
+                                [routerLink]="['../', module.id, 'overview']" *permission="'P00000004'">
                                 {{ 'pages.modules.details' | translate }}
                               </button>
                               <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
-                                 [routerLink]="['../edit', module.id]">
+                                 [routerLink]="['../edit', module.id]" *permission="'P00000003'">
                                 {{ 'pages.modules.edit' | translate }}
                               </button>
                               <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
@@ -99,7 +99,7 @@
                                 {{ 'pages.modules.navigate' | translate }}
                               </button>
                               <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
-                                 (click)="openRemoveModal(module.id, module.name)" >
+                                 (click)="openRemoveModal(module.id, module.name)" *permission="'P00000005'">
                                 {{ 'pages.modules.remove' | translate }}
                               </button>
                             </div>

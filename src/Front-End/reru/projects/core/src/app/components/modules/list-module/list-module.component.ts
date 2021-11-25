@@ -68,8 +68,8 @@ export class ListModuleComponent implements OnInit {
 	}
 
 	checkPermission(): void {
-		// if (this.permissionService.isGranted('P00000004')) 
-      	// 	this.viewDetails = true;
+		if (this.permissionService.isGranted('P00000004')) 
+      		this.viewDetails = true;
 	}
 
 	openRemoveModal(id: number, name): void {
