@@ -23,7 +23,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.SaveTestQuestion
                         .Any(t => t.Id == appDbContext.Tests
                             .FirstOrDefault(ts => ts.Id == x.TestId)
                             .TestQuestions
-                            .FirstOrDefault(q => q.QuestionUnitId == x.QuestionIndex).Id))
+                            .FirstOrDefault(q => q.QuestionUnitId == x.QuestionUnitId).Id))
                     .WithErrorCode(ValidationCodes.INVALID_TEST_QUESTION);
             });
 

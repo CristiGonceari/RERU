@@ -70,7 +70,7 @@
                 </td>
                 <td>
                     <button *ngIf="test.testStatus == enum.InProgress" class="btn btn-light-success"
-                        [routerLink]="['../run-test', test.id]">
+                        [routerLink]="['../one-test-per-page', test.id]">
                         {{'button.continue' | translate}}
                     </button>
                     <button *ngIf="test.testStatus == enum.Programmed || test.testStatus == enum.AlowedToStart"

@@ -67,19 +67,21 @@ export class StartTestPageComponent implements OnInit {
   }
 
   goToTest(): void {
-    if(this.settings.showManyQuestionPerPage)
-      this.testQuestionService.generate(this.testId).subscribe(() => this.router.navigate(['tests/performing-multiple-questions', this.testId]));
-    else 
-      this.testQuestionService.generate(this.testId).subscribe(() => this.router.navigate(['tests/performing-test', this.testId]));
+    if(!this.settings.showManyQuestionPerPage){
+      this.testQuestionService.generate(this.testId).subscribe(() => this.router.navigate(['tests/one-test-per-page', this.testId]));
+    }else 
+      this.testQuestionService.generate(this.testId).subscribe(() => this.router.navigate(['tests/multiple-per-page', this.testId]));
   }
 
   getTestById(testId: number) {
     this.testService.getTest(testId).subscribe(
       res => {
         this.testDto = res.data;
+        console.log("testDto:", this.testDto)
         this.getTestType();
         if (this.testDto.rules == null) {
           this.testDto.rules == '';
+          console.log("testDtoRUles:", this.testDto.rules)
         } else {
           this.testDto.rules = this.b64DecodeUnicode(res.data.rules);
         }

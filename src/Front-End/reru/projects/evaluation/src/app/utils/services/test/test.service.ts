@@ -28,7 +28,7 @@ export class TestService extends AbstractService {
 		return this.http.patch(`${this.baseUrl}/${this.urlRoute}`, data);
 	}
 
-	getTest(id): Observable<any> {
+	getTest(id: number): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}
 

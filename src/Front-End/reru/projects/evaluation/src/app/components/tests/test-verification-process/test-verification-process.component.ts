@@ -72,7 +72,7 @@ export class TestVerificationProcessComponent implements OnInit {
 	}
 
   	getTestById() {
-		this.testService.getTest({ id: this.testId }).subscribe( res => {
+		this.testService.getTest(this.testId ).subscribe( res => {
 			this.testData = res.data;
 		});
 	}

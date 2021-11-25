@@ -31,7 +31,7 @@ export class TestQuestionService extends AbstractService {
 	}
 
 	getTestQuestions(params): Observable<any> {
-		return this.http.get(`${this.baseUrl}/${this.urlRoute}/list`, { params });
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/multiple-per-page`, { params });
 	}
 
 	postTestQuestions(data): Observable<any> {

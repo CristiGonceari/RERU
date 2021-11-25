@@ -1,4 +1,6 @@
-﻿using CODWER.RERU.Evaluation.Application.Permissions;
+﻿using System.Collections.Generic;
+using CODWER.RERU.Evaluation.Application.Permissions;
+using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestQuestions;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
@@ -8,6 +10,9 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
     [ModuleOperation(permission: PermissionCodes.TEST_QUESTIONS_GENERAL_ACCESS)]
     public class GetTestQuestionQuery : IRequest<TestQuestionDto>
     {
-        public AddTestQuestionDto Data { get; set; }
+        public int TestId { get; set; }
+        public int QuestionIndex { get; set; }
+        public AnswerStatusEnum Status { get; set; }
+        public List<TestAnswerDto> Answers { get; set; }
     }
 }

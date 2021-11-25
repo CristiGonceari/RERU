@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -17,6 +17,7 @@ import { PollsTableComponent } from './my-polls/polls-table/polls-table.componen
 import { TestsTableComponent } from './my-tests/tests-table/tests-table.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MaterialModule } from '../../material.module';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,10 @@ import { MaterialModule } from '../../material.module';
     MyActivitiesRoutingModule,
     MatProgressBarModule,
     MaterialModule,
+    CKEditorModule
+  ],
+  schemas: [ 
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class MyActivitiesModule { }
