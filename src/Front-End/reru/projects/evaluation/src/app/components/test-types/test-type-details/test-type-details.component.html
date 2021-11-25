@@ -45,7 +45,7 @@
 													<span style="font-size: 13px;" *ngIf="status == 0">{{'statuses.canceled' | translate}}</span>
 												</button>
 											</div>
-											<button [routerLink]="['../../remove', testId]" class="navi-link align-items-baseline px-6"  ngbDropdownItem>
+											<button (click)="openConfirmationDeleteModal(testId)" class="navi-link align-items-baseline px-6"  ngbDropdownItem>
 												{{'button.delete' | translate}}
 											</button>
 											<span *ngIf="status == statusEnum.Canceled">

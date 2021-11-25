@@ -34,8 +34,8 @@ export class TestTypeService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
   }
 
-  deleteTestType(params): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${this.urlRoute}`, { params });
+  deleteTestType(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${this.urlRoute}/${id}`);
   }
 
   addRules(data): Observable<any> {

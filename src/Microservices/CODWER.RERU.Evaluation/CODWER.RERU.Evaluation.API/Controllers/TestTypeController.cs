@@ -52,10 +52,10 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(command);
         }
 
-        [HttpDelete]
-        public async Task<Unit> DeleteTestType([FromQuery] DeleteTestTypeCommand command)
+        [HttpDelete("{id}")]
+        public async Task<Unit> DeleteTestType([FromRoute] int id)
         {
-            return await Mediator.Send(command);
+            return await Mediator.Send(new DeleteTestTypeCommand { Id = id });
         }
 
         [HttpGet("settings")]
