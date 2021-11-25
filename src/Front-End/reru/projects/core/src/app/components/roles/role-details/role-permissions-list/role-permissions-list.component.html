@@ -6,7 +6,7 @@
       <div class="w-100 d-flex justify-content-between align-items-center">
         <div class="card-title">{{'pages.roles.permissions' | translate}}</div>
         <app-add-button class="btn" [value]="'pages.roles.update-permissions' | translate"
-          (click)="navigateToUpdatePermissions()">
+          (click)="navigateToUpdatePermissions()"  *permission="'P00000007'">
         </app-add-button>
       </div>
     </div>

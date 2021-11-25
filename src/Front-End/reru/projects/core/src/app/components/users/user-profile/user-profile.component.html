@@ -20,32 +20,32 @@
                   <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                     <div ngbDropdownMenu aria-labelledby="action1">
                       <button [routerLink]="['../../user-profile', user?.data?.id, 'overview']"
-                        class="navi-link align-items-center px-6" ngbDropdownItem >
+                        class="navi-link align-items-center px-6" ngbDropdownItem *permission="'P00000020'">
                         {{ 'button.view-user' | translate }}
                       </button>
                       <button [routerLink]="['../../users/edit', user?.data?.id]"
                         class="navi-link align-items-center px-6" ngbDropdownItem
-                        >
+                        *permission="'P00000014'">
                         {{ 'button.edit-user' | translate }}
                       </button>
                       <button [routerLink]="['../../users/set', user?.data?.id]"
                         class="navi-link align-items-baseline px-6" ngbDropdownItem
-                        >
+                        *permission="'P00000015'">
                         {{ 'change-password-comp.title' | translate }}
                       </button>
                       <button [routerLink]="['../../users/reset', user?.data?.id]"
                         class="navi-link align-items-baseline px-6" ngbDropdownItem
-                        >
+                        *permission="'P00000016'">
                         {{ 'reset-password.title' | translate }}
                       </button>
-                      <span >
+                      <span *permission="'P00000017'">
                         <button *ngIf="user?.data?.isActive === false"
                           [routerLink]="['../../users/activate', user?.data?.id]"
                           class="navi-link align-items-center px-6" ngbDropdownItem>
                           {{ 'button.activate-user' | translate }}
                         </button>
                       </span>
-                      <span >
+                      <span *permission="'P00000018'">
                         <button *ngIf="user?.data?.isActive === true"
                           [routerLink]="['../../users/deactivate', user?.data?.id]"
                           class="navi-link align-items-center px-6" ngbDropdownItem>
@@ -53,11 +53,11 @@
                         </button>
                       </span>
                       <button class="navi-link align-items-center px-6" ngbDropdownItem
-                        [routerLink]="['module-access']" >
+                        [routerLink]="['module-access']" *permission="'P00000021'">
                         {{ 'pages.user-details.module-access' | translate }}
                       </button>
                       <button [routerLink]="['../../users/remove', user?.data?.id]" class="navi-link align-items-center px-6"
-                        ngbDropdownItem >
+                        ngbDropdownItem *permission="'P00000019'">
                         {{ 'button.delete-user' | translate }}
                       </button>
                     </div>

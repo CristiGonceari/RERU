@@ -5,7 +5,7 @@
     <div class="card-header flex-wrap border-0 py-5">
       <div class="w-100 d-flex justify-content-between align-items-center">
         <div class="card-title">{{ 'pages.modules-details.roles' | translate }}</div>
-        <app-add-button class="btn" [value]="'button.add-role' | translate" [routerLink]="['../add-role']">
+        <app-add-button class="btn" [value]="'button.add-role' | translate" [routerLink]="['../add-role']" *permission="'P00000006'">
         </app-add-button>
       </div>
     </div>
@@ -50,25 +50,25 @@
                   </div>
                   <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                     <div ngbDropdownMenu [aria-labelledby]="'action' + i" class="p-0">
-                      <span >
+                      <span *permission="'P00000010'">
                         <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
                           [routerLink]="['../../../roles', role.id, 'permissions']">
                           {{ 'pages.roles.view-permissions' | translate }}
                         </button>
                       </span>
-                      <span >
+                      <span *permission="'P00000007'">
                         <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
                           (click)="navigateToUpdatePermissions(role.id)" [class.mb-2]="role.type == '1'">
                           {{ 'pages.roles.update-permissions' | translate }}
                         </button>
                       </span>
-                      <span >
+                      <span *permission="'P00000011'">
                         <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
                           *ngIf="role.type == '2'" [routerLink]="['../../../roles/edit', role.id]">
                           {{ 'button.edit-role' | translate }}
                         </button>
                       </span>
-                      <span >
+                      <span *permission="'P00000009'">
                         <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
                           *ngIf="role.type == '2'" (click)="openRemoveRoleModal(role.id, role.name)">
                           {{ 'button.delete' | translate }}
