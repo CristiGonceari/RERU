@@ -142,13 +142,15 @@ export class PerformingPollComponent implements OnInit {
   }
 
   parse(status) {
-    return new AddTestQuestion({
-      testId: +this.testId,
-      questionIndex: this.questionIndex,
-      questionUnitId: null,
-      status: status,
-      answers: this.testAnswersInput
-    });
+    return{
+      data: new AddTestQuestion({
+        testId: +this.testId,
+        questionIndex: this.questionIndex,
+        questionUnitId: null,
+        status: status,
+        answers: this.testAnswersInput
+      })
+    }
   }
 
   saveAnswers() {

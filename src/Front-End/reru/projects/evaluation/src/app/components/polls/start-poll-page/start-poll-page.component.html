@@ -16,7 +16,7 @@
                             <div class="row">
                                 <div class="col-xl-12">
                                     <h1 class="text-center">{{'polls.conditions' | translate}}</h1>
-                                    <div class="text mt-10"><ckeditor [(ngModel)]="testDto.rules" [editor]="Editor" readOnly="true"
+                                    <div class="text mt-10"><ckeditor *ngIf="testDto.rules" [(ngModel)]="testDto.rules" [editor]="Editor" readOnly="true"
                                         class="disabled-area"></ckeditor></div>
                                 </div>
                             </div>

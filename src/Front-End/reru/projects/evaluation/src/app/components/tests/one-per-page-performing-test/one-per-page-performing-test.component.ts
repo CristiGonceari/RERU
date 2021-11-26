@@ -48,7 +48,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   testQuestionSummary: TestQuestionSummary[] = [];
   questionUnit = new TestQuestion();
   testAnswersInput: TestAnswer[] = [];
-  // testQuestion: AddTestQuestion[] = [];
+  testQuestion: AddTestQuestion[] = [];
   testTypeModel = new TestType();
   testTypeSettings = new TestTypeSettings();
   hashedOptions;

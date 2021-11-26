@@ -29,14 +29,14 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit
         {
             var newQuestionUnit = _mapper.Map<QuestionUnit>(request.Data);
 
+            await _appDbContext.QuestionUnits.AddAsync(newQuestionUnit);
+
+            await _appDbContext.SaveChangesAsync();
+
             if (newQuestionUnit.QuestionType == QuestionTypeEnum.HashedAnswer)
             {
                 await _questionUnitService.HashQuestionUnit(newQuestionUnit.Id);
             }
-
-            await _appDbContext.QuestionUnits.AddAsync(newQuestionUnit);
-
-            await _appDbContext.SaveChangesAsync();
 
             await _mediator.Send(new AssignTagToQuestionUnitCommand { QuestionUnitId = newQuestionUnit.Id, Tags = request.Data.Tags });
 
