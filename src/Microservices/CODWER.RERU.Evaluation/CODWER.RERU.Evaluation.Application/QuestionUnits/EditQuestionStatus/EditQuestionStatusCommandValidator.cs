@@ -28,6 +28,18 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionStatus
                     .IsInEnum()
                     .WithErrorCode(ValidationCodes.INVALID_STATUS);
 
+                When(x => appDbContext.QuestionUnits.Where(q => q.Id == x.Data.QuestionId).Any(q =>
+                        (q.QuestionType == QuestionTypeEnum.MultipleAnswers || q.QuestionType == QuestionTypeEnum.OneAnswer) && q.Status == QuestionUnitStatusEnum.Draft), () =>
+                {
+                    RuleFor(x => x.Data)
+                        .Must(x => appDbContext.Options.Any(o => o.QuestionUnitId == x.QuestionId))
+                        .WithErrorCode(ValidationCodes.INVALID_OPTION);
+
+                    RuleFor(x => x.Data)
+                        .Must(x => appDbContext.Options.Where(o => o.QuestionUnitId == x.QuestionId).Any(o => o.IsCorrect))
+                        .WithErrorCode(ValidationCodes.EMPTY_CORRECT_OPTION);
+                });
+
                 When(x => 
                     appDbContext.Tests.Include(x => x.TestQuestions).ThenInclude(x => x.QuestionUnit)
                               .Where(t => t.TestQuestions.Any(tq => tq.QuestionUnitId == x.Data.QuestionId)).Any(s => s.TestStatus > TestStatusEnum.AlowedToStart) &&
