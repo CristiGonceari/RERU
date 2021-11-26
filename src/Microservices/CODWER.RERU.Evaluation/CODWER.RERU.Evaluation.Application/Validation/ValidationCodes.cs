@@ -34,7 +34,6 @@
 
         //event responsible person
         public static string USER_ISNT_RESPONSIBLE_FOR_THIS_EVENT = "03000501";
-        public static string EVALUATOR_AND_RESPONSIBLE_PERSON_CANT_BE_THE_SAME = "03000502";
 
         //event test type
         public static string EXISTENT_TEST_TYPE_IN_EVENT = "03000601";
