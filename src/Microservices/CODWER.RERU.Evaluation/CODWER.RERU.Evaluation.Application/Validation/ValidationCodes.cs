@@ -78,6 +78,8 @@
         public static string EMPTY_QUESTION_STATUS = "03001406";
         public static string INVALID_QUESTION_POINTS = "03001407";
         public static string INVALID_QUESTION = "03001408";
+        public static string INVALID_OPTION = "03001409";
+        public static string EMPTY_CORRECT_OPTION = "03001419";
 
         //tests
         public static string INVALID_TEST = "03001501";

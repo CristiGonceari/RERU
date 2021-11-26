@@ -81,7 +81,7 @@
             <div class="col-lg-2 col-6 mt-3">
               <div class="w-100 h-100 mt-6">
                 <app-confirm-button (handle)="questionsTable.initData(tableData)" [value]="'button.search' | translate"
-                  [width]="'100%'" [disabled]="!questionCategoryId">
+                  [width]="'100%'" [disabled]="!(questionCategoryId && questionCount && questionType)">
                 </app-confirm-button>
               </div>
             </div>

@@ -43,7 +43,7 @@
                                 <div class="col-xl-12">
                                     <h1 class="text-center">{{'tests.rules' | translate}}:</h1>
                                     <div class="text mt-10"></div>
-                                    <ckeditor [(ngModel)]="testDto.rules" [editor]="Editor" readOnly="true"
+                                    <ckeditor *ngIf="testDto.rules" [(ngModel)]="testDto.rules" [editor]="Editor" readOnly="true"
                                         class="disabled-area"></ckeditor>
                                 </div>
                             </div>

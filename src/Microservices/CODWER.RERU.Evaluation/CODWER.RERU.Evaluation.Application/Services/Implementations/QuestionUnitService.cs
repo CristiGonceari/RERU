@@ -81,8 +81,18 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         public async Task HashQuestionUnit(int questionId)
         {
             var question = await _appDbContext.QuestionUnits.FirstOrDefaultAsync(x => x.Id == questionId);
+            string hashedQuestion = "";
 
-            var hashedQuestion = await CreateHashStringAndSave(question.Id, question.Question, 0);
+            try
+            {
+                hashedQuestion = await CreateHashStringAndSave(question.Id, question.Question, 0);
+            }
+            catch (Exception e)
+            {
+                _appDbContext.QuestionUnits.Remove(question);
+                await _appDbContext.SaveChangesAsync();
+                throw;
+            }
 
             question.Question = hashedQuestion;
             await _appDbContext.SaveChangesAsync();

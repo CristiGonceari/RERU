@@ -59,7 +59,7 @@
                         <label class="checkbox checkbox-lg checkbox-inline mr-5">
                             <input type="checkbox" name="isSelected" (change)="onItemChange($event)"
                                 value="{{option.id}}"
-                                *ngIf="questionUnit.questionType == questionTypeEnum.MultiplyAnswers"
+                                *ngIf="questionUnit.questionType == questionTypeEnum.MultipleAnswers"
                                 [checked]="option.isSelected">
                             <input type="radio" (change)="onItemChange($event)" name="isSelected" value="{{option.id}}"
                                 *ngIf="questionUnit.questionType == questionTypeEnum.OneAnswer"

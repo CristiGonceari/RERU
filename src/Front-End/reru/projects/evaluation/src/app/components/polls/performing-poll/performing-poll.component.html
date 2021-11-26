@@ -22,7 +22,7 @@
                         <label class="checkbox checkbox-lg checkbox-inline mr-5">
                             <input type="checkbox" name="isSelected" (change)="onItemChange($event)"
                                 value="{{option.id}}"
-                                *ngIf="questionUnit.questionType == questionTypeEnum.MultiplyAnswers"
+                                *ngIf="questionUnit.questionType == questionTypeEnum.MultipleAnswers"
                                 [checked]="option.isSelected">
                             <input type="radio" (change)="onItemChange($event)" name="isSelected" value="{{option.id}}"
                                 *ngIf="questionUnit.questionType == questionTypeEnum.OneAnswer"
@@ -31,12 +31,16 @@
                         </label>
                         {{ option.answer }}
                     </div>
-                    <div class="buttons my-15">
+                    <div class="d-flex justify-content-between my-15">
+                      <div class="d-flex">
                         <button type="button" class="btn btn-secondary h6 mr-10 py-auto pb-9"
-                            (click)="skipQuestion()">{{'button.skip' | translate}}</button>
+                        (click)="skipQuestion()">{{'button.skip' | translate}}</button>
+                      </div>
+                      <div class="d-flex flex-row-reverse">
                         <button type="button" (click)="saveAnswers()"
-                            class="btn btn-success h6 py-auto pb-9">{{'button.save-and-next' | translate}}
+                        class="btn btn-success h6 py-auto pb-9">{{'button.save-and-next' | translate}}
                         </button>
+                      </div>
                     </div>
                     <div class="card-body d-flex justify-content-between p-0">
                         <div class="mx-auto">
