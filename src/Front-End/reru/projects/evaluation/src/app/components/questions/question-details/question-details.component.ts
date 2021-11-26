@@ -54,11 +54,11 @@ export class QuestionDetailsComponent implements OnInit {
 		let params;
 
 		if (status == QuestionUnitStatusEnum.Draft) 
-			params = { questionId: id, status: QuestionUnitStatusEnum.Active }
+			params = { questionId: +id, status: QuestionUnitStatusEnum.Active }
 		else 
-			params = { questionId: id, status: QuestionUnitStatusEnum.Inactive }
+			params = { questionId: +id, status: QuestionUnitStatusEnum.Inactive }
 
-		this.questionService.editStatus(params).subscribe(()=> { this.getList(); this.router.navigate(['questions/question-detail', this.questionId, 'overview'])});
+		this.questionService.editStatus({data : params}).subscribe(()=> { this.getList(); this.router.navigate(['questions/question-detail', this.questionId, 'overview'])});
 	}
 
   deleteQuestion(id): void{

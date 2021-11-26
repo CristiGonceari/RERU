@@ -160,6 +160,5 @@ export class AddTestTypeOptionsComponent implements OnInit {
 			this.getTestTypeSettings();
 			this.notificationService.success('Success', 'Settings were successfully updated', NotificationUtil.getDefaultMidConfig());
 		});
-		this.backClicked();
 	}
 }

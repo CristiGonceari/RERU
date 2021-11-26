@@ -40,7 +40,7 @@
 												{{ 'button.edit' | translate }}
 											</button>
 											<div *ngIf="status != statusEnum.Canceled">
-												<button (click)="validateTestType()"  class="navi-link align-items-baseline pb-0 px-6" ngbDropdownItem>
+												<button (click)="validateTestType()"  class="navi-link align-items-baseline px-6" ngbDropdownItem>
 													<span style="font-size: 13px;" *ngIf="status == 1">{{'statuses.activate' | translate}}</span>
 													<span style="font-size: 13px;" *ngIf="status == 0">{{'statuses.canceled' | translate}}</span>
 												</button>

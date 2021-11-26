@@ -64,15 +64,21 @@ export class TestTypeDetailsComponent implements OnInit {
 		let params;
 
 		if (this.status == TestTypeStatusEnum.Draft)
-			params = { testTypeId: this.testId, status: TestTypeStatusEnum.Active }
+			params = { testTypeId: +this.testId, status: TestTypeStatusEnum.Active }
 		else if (this.status == TestTypeStatusEnum.Active)
-			params = { testTypeId: this.testId, status: TestTypeStatusEnum.Canceled }
+			params = { testTypeId: +this.testId, status: TestTypeStatusEnum.Canceled }
 
-		this.service.changeStatus({ input: params }).subscribe(() => {});
+		this.service.changeStatus({ data: params }).subscribe(() => { this.get(); this.router.navigate(['test-type/type-details', this.testId, 'overview'])});
 	}
 
 	validateTestType() {
-		this.service.validateTestType({testTypeId: this.testId}).subscribe(() => this.changeStatus());
+    const params = {
+      testTypeId: +this.testId
+    }
+		this.service.validateTestType(params).subscribe(() => {
+      this.changeStatus();
+    });
+    
 	}
 
   deleteTestType(testId): void {
