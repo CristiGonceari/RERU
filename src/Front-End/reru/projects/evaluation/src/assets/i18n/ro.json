@@ -512,7 +512,7 @@
     "MAP0000001": "Cerere către aplicație neautentificată",
     "MAP0000002": "Cerere neautorizată. Nu sunt permisiuni.",
     "03000001": "Datele introduse sunt nevalide",
-    "03000002": "The field is not valid or has not been filled",
+    "03000002": "Câmpul nu este valid sau nu a fost completat",
     "03000003": "Această înregistrare există deja",
     "03000004": "Numele este necompletat, completați-l",
     "03000005": "ID nevalid",
