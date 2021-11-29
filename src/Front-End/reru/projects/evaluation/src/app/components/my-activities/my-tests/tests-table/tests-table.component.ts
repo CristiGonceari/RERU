@@ -69,7 +69,6 @@ export class TestsTableComponent implements OnInit {testRowList: Test[] = [];
     if (this.settings.showManyQuestionPerPage)
       this.router.navigate(['my-activities/multiple-per-page', this.testId]);
     else
-      // this.router.navigate(['run-test', this.testId]);
       this.router.navigate(['my-activities/one-test-per-page', this.testId]);
 
   }

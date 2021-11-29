@@ -3,14 +3,14 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PaginationModel } from '../../../utils/models/pagination.model';
-import { ReferenceService } from '../../../utils/services/reference/reference.service';
-import { TestService } from '../../../utils/services/test/test.service';
-import { TestStatusEnum } from '../../../utils/enums/test-status.enum'
-import { TestResultStatusEnum } from '../../../utils/enums/test-result-status.enum'
+import { PaginationModel } from '../../../../utils/models/pagination.model';
+import { ReferenceService } from '../../../../utils/services/reference/reference.service';
+import { TestService } from '../../../../utils/services/test/test.service';
+import { TestStatusEnum } from '../../../../utils/enums/test-status.enum'
+import { TestResultStatusEnum } from '../../../../utils/enums/test-result-status.enum'
 import { saveAs } from 'file-saver';
 import { ConfirmModalComponent } from '@erp/shared';
-import { NotificationUtil } from '../../../utils/util/notification.util';
+import { NotificationUtil } from '../../../../utils/util/notification.util';
 import { Location } from '@angular/common';
 import { NotificationsService } from 'angular2-notifications';
 

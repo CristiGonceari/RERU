@@ -35,6 +35,24 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 .Include(t => t.Location)
                 .Include(t => t.Event)
                 .OrderByDescending(x => x.CreateDate)
+                .Select(t => new Test
+                {
+                    Id = t.Id,
+                    UserProfile = t.UserProfile,
+                    TestType = t.TestType,
+                    TestQuestions = t.TestQuestions,
+                    Location = t.Location,
+                    Event = t.Event,
+                    AccumulatedPercentage = t.AccumulatedPercentage,
+                    EvaluatorId = t.EvaluatorId,
+                    EventId = t.EventId,
+                    ResultStatus = t.ResultStatus,
+                    TestStatus = t.TestStatus,
+                    ProgrammedTime = t.ProgrammedTime,
+                    EndTime = t.EndTime,
+                    TestTypeId = t.TestTypeId,
+                    TestPassStatus = t.TestPassStatus
+                })
                 .AsQueryable();
 
             if (request != null)
