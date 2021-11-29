@@ -14,6 +14,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
         {
             CreateMap<Test, TestDto>()
                 .ForMember(x => x.Id, opts => opts.MapFrom(src => src.Id))
+                .ForMember(x => x.UserId, opts => opts.MapFrom(src => src.UserProfile.Id))
                 .ForMember(x => x.Duration, opts => opts.MapFrom(src => src.TestType.Duration))
                 .ForMember(x => x.MinPercent, opts => opts.MapFrom(src => src.TestType.MinPercent))
                 .ForMember(x => x.QuestionCount, opts => opts.MapFrom(src => src.TestType.QuestionCount))
