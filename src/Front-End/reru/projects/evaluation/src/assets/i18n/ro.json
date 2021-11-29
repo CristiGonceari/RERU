@@ -145,6 +145,10 @@
     "remove-questions-in-category": "Toate întrebările din această categorie vor fi eliminate"
   },
   "tests": {
+    "add-test-event": "Adaugarea unui test cu un eveniment",
+    "add-test": "Adauga un test simplu",
+    "add-test-event-description": "Adaugarea unui test care este inclus in eveniment",
+    "add-test-description": "Adaugarea unui test fara eveniment",
     "settings": "Setări",
     "title": "Teste",
     "subtitle": "Gestionarea testelor",
