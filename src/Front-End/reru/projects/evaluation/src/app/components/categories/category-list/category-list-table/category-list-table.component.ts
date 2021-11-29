@@ -86,7 +86,7 @@ export class CategoryListTableComponent implements OnInit {
 	openConfirmationDeleteModal(id): void {
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
 		modalRef.componentInstance.title = 'Delete';
-		modalRef.componentInstance.description = 'Are you sure you want to delete this category? All questions from this category will be deleted';
+		modalRef.componentInstance.description = 'Are you sure you want to delete this category? All questions from this category will be deleted.';
 		modalRef.result.then(() => this.deleteCategory(id), () => { });
 	}
 }
