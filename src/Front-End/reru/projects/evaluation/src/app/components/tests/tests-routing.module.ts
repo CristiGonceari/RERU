@@ -7,6 +7,8 @@ import { FinishPageComponent } from './finish-page/finish-page.component';
 import { OnePerPagePerformingTestComponent } from './one-per-page-performing-test/one-per-page-performing-test.component';
 import { StartTestPageComponent } from './start-test-page/start-test-page.component';
 import { MultiplePerPagePerformingTestComponent } from './multiple-per-page-performing-test/multiple-per-page-performing-test.component';
+import { ViewTestResultComponent } from './view-test-result/view-test-result.component';
+import { TestListTableComponent } from './test-list-table/test-list-table.component';
 
 const routes: Routes = [
   { path: '', component: TestListComponent },
@@ -15,7 +17,9 @@ const routes: Routes = [
   { path: 'start-test/:id', component: StartTestPageComponent },
   { path: 'add-test', component: AddTestComponent },
 	{ path: 'finish-page/:id', component: FinishPageComponent },
+  { path: 'start-test/:id', component: StartTestPageComponent },
   { path: 'verify-test/:id', component: TestVerificationProcessComponent },
+  { path: 'test-result/:id', component: ViewTestResultComponent },
 ];
 
 @NgModule({
