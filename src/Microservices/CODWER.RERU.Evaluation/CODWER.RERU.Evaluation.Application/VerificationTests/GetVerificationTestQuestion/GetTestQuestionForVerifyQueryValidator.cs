@@ -24,9 +24,9 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
                     .Any(t => t.Id == appDbContext.Tests.FirstOrDefault(ts => ts.Id == x.TestId).TestQuestions.FirstOrDefault(q => q.Index == x.QuestionIndex).Id))
                 .WithErrorCode(ValidationCodes.INVALID_TEST_QUESTION);
 
-            RuleFor(x => x.Data)
-                .MustAsync((x, cancellation) => IsEvaluator(x))
-                .WithErrorCode(ValidationCodes.INVALID_EVALUATOR_FOR_THIS_TEST);
+            //RuleFor(x => x.Data)
+            //    .MustAsync((x, cancellation) => IsEvaluator(x))
+            //    .WithErrorCode(ValidationCodes.INVALID_EVALUATOR_FOR_THIS_TEST);
         }
 
         private async Task<bool> IsEvaluator(VerificationTestQuestionDto input)

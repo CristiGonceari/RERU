@@ -26,7 +26,7 @@ export class TestVerificationProcessService extends AbstractService {
 	}
 
 	verify(data): Observable<any> {
-		return this.client.post<any>(`${this.baseUrl}/${this.urlRoute}`, data);
+		return this.client.post<any>(`${this.baseUrl}/${this.urlRoute}`, {data});
 	}
 
 	setTestAsVerified(testId): Observable<Test> {

@@ -143,7 +143,7 @@ export class ViewTestResultComponent implements OnInit {
 	}
 
   close() {
-		this.router.navigate(['']);
+		this.router.navigate(['/my-activities']);
 	}
 
   next(): void {

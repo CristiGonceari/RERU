@@ -6,6 +6,7 @@ import { ViewPollProgressComponent } from '../polls/view-poll-progress/view-poll
 import { MultiplePerPagePerformingTestComponent } from '../tests/multiple-per-page-performing-test/multiple-per-page-performing-test.component';
 import { OnePerPagePerformingTestComponent } from '../tests/one-per-page-performing-test/one-per-page-performing-test.component';
 import { StartTestPageComponent } from '../tests/start-test-page/start-test-page.component';
+import { ViewTestResultComponent } from '../tests/view-test-result/view-test-result.component';
 import { MyActivitiesComponent } from './my-activities.component';
 import { MyEventsComponent } from './my-events/my-events.component';
 import { MyPollsComponent } from './my-polls/my-polls.component';
@@ -29,12 +30,11 @@ const routes: Routes = [
     },
   ]},
   { path: 'start-test/:id', component: StartTestPageComponent },
-  { path: 'performing-poll/:id', component: PerformingPollComponent },
   { path: 'one-test-per-page/:id', component: OnePerPagePerformingTestComponent},
   { path: 'multiple-per-page/:id', component: MultiplePerPagePerformingTestComponent},
-  { path: 'poll/:id', component: StartPollPageComponent },
-  { path: 'run-poll/:id', component: PerformingPollComponent },
   { path: 'poll-progress/:id', component: ViewPollProgressComponent },
+  { path: 'test-result/:id', component: ViewTestResultComponent }
+
 ];
 
 @NgModule({
