@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
-import { TestStatusEnum } from '../../../utils/enums/test-status.enum';
-import { SelectItem } from '../../../utils/models/select-item.model';
-import { ReferenceService } from '../../../utils/services/reference/reference.service';
-import { TestTypeService } from '../../../utils/services/test-type/test-type.service';
-import { TestService } from '../../../utils/services/test/test.service';
-import { NotificationUtil } from '../../../utils/util/notification.util';
-import { AddEditTest } from '../../../utils/models/tests/add-edit-test.model';
 import { Location } from '@angular/common';
-import { TestTypeStatusEnum } from '../../../utils/enums/test-type-status.enum';
+import { SelectItem } from 'projects/evaluation/src/app/utils/models/select-item.model';
+import { ReferenceService } from 'projects/evaluation/src/app/utils/services/reference/reference.service';
+import { TestTypeService } from 'projects/evaluation/src/app/utils/services/test-type/test-type.service';
+import { TestService } from 'projects/evaluation/src/app/utils/services/test/test.service';
+import { TestTypeStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-type-status.enum';
+import { TestStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-status.enum';
+import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
+import { AddEditTest } from '../../../../utils/models/tests/add-edit-test.model';
 
 @Component({
   selector: 'app-add-test',
@@ -34,6 +34,7 @@ export class AddTestComponent implements OnInit {
   search: string;
   showName: boolean = false;
   isTestTypeOneAnswer: boolean = false;
+  @Input() testEvent : boolean;
   
 
   constructor(

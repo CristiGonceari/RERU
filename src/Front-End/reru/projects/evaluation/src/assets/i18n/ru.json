@@ -145,6 +145,10 @@
     "remove-questions-in-category": "Все вопросы из этой категории будут удалены"
   },
   "tests": {
+    "add-test-event": "Добавить тест с событием",
+    "add-test": "Добавить простой тест",
+    "add-test-event-description": "Добавление теста, включенного в мероприятие",
+    "add-test-description": "Добавить тест без события",
     "settings": "Настройки",
     "title": "Типы Тестов",
     "subtitle": "Управление Tестами",

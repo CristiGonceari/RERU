@@ -145,6 +145,10 @@
     "remove-questions-in-category": "All questions from this category will be removed"
   },
   "tests": {
+    "add-test-event": "Add Test Event",
+    "add-test": "Add Test",
+    "add-test-event-description": "Adding a test that is included in the event",
+    "add-test-description": "Add a test without an event",
     "settings": "Settings",
     "title": "Test Type",
     "subtitle": "Manage Test Type",
