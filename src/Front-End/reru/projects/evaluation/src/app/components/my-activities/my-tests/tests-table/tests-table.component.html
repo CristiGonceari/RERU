@@ -83,7 +83,7 @@
                         {{'button.start-test' | translate}}
                     </button>
                     <button *ngIf="test.result == resultEnum.NotPassed || test.result == resultEnum.Passed"
-                        class="btn btn-light-success" [routerLink]="['../../tests/test-result', test.id]">
+                        class="btn btn-light-success" [routerLink]="['../test-result', test.id]">
                         {{'tests.view' | translate}}
                     </button>
                 </td>

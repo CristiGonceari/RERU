@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PerformingPollComponent } from '../polls/performing-poll/performing-poll.component';
 import { StartPollPageComponent } from '../polls/start-poll-page/start-poll-page.component';
 import { ViewPollProgressComponent } from '../polls/view-poll-progress/view-poll-progress.component';
+import { FinishPageComponent } from '../tests/finish-page/finish-page.component';
 import { MultiplePerPagePerformingTestComponent } from '../tests/multiple-per-page-performing-test/multiple-per-page-performing-test.component';
 import { OnePerPagePerformingTestComponent } from '../tests/one-per-page-performing-test/one-per-page-performing-test.component';
 import { StartTestPageComponent } from '../tests/start-test-page/start-test-page.component';
@@ -16,25 +17,16 @@ const routes: Routes = [
   {path: '', component: MyActivitiesComponent,
   children: [
     { path: '', redirectTo: 'my-tests', pathMatch: 'full' },
-    {
-      path: 'my-tests',
-      component: MyTestsComponent
-    },
-    {
-      path: 'my-events',
-      component: MyEventsComponent
-    },
-    {
-      path: 'my-polls',
-      component: MyPollsComponent
-    },
+    { path: 'my-tests', component: MyTestsComponent },
+    { path: 'my-events', component: MyEventsComponent },
+    { path: 'my-polls', component: MyPollsComponent },
   ]},
   { path: 'start-test/:id', component: StartTestPageComponent },
   { path: 'one-test-per-page/:id', component: OnePerPagePerformingTestComponent},
   { path: 'multiple-per-page/:id', component: MultiplePerPagePerformingTestComponent},
   { path: 'poll-progress/:id', component: ViewPollProgressComponent },
-  { path: 'test-result/:id', component: ViewTestResultComponent }
-
+  { path: 'test-result/:id', component: ViewTestResultComponent },
+  { path: 'finish-page/:id', component: FinishPageComponent }
 ];
 
 @NgModule({

@@ -212,6 +212,6 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
   }
 
   finalizeTest() {
-    this.testService.finalizeTest(this.testId).subscribe(() => this.router.navigate(['tests/finish-page', this.testId]));
+    this.testService.finalizeTest(this.testId).subscribe(() => this.router.navigate(['my-activities/finish-page', this.testId]));
   }
 }

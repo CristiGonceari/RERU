@@ -151,13 +151,9 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     this.testService.getTest(this.testId).subscribe(
       res => {
         this.testDto = res.data;
-        this.getTestType(res.data.testTypeId);
+        this.getTestTypeSettings(res.data.testTypeId);
       }
     )
-  }
-
-  getTestType(testTypeId) {
-    this.testTypeService.getTestType(testTypeId).subscribe(res => { this.testtypeId = res.data.id; this.getTestTypeSettings(res.data.id) });
   }
 
   summary() {
@@ -353,6 +349,6 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   }
 
   finalizeTest() {
-    this.testService.finalizeTest(this.testId).subscribe(() => this.router.navigate(['tests/finish-page', this.testId]));
+    this.testService.finalizeTest(this.testId).subscribe(() => this.router.navigate(['my-activities/finish-page', this.testId]));
   }
 }

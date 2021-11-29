@@ -78,7 +78,7 @@ const routes: Routes = [
 			{
 				path: 'statistics', 
 				loadChildren: () => import('./components/statistics/statistics.module').then(m => m.StatisticsModule),
-				data: { permission: 'P03001001' },
+				data: { permission: 'P03000901' },
 				canActivate: [PermissionRouteGuard]
 			},
 			{
