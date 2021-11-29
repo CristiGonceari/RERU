@@ -33,10 +33,10 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(command);
         }
 
-        [HttpPost("verified")]
-        public async Task<Unit> SetTestAsVerified([FromBody] FinalizeTestVerificationCommand command)
+        [HttpPost("{id}/verified")]
+        public async Task<Unit> SetTestAsVerified([FromRoute] int id)
         {
-            return await Mediator.Send(command);
+            return await Mediator.Send(new FinalizeTestVerificationCommand { TestId = id });
         }
     }
 }

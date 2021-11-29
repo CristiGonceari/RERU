@@ -68,9 +68,9 @@ export class StartTestPageComponent implements OnInit {
 
   goToTest(): void {
     if(!this.settings.showManyQuestionPerPage){
-      this.testQuestionService.generate(this.testId).subscribe(() => this.router.navigate(['tests/one-test-per-page', this.testId]));
+      this.testQuestionService.generate(this.testId).subscribe(() => this.router.navigate(['my-activities/one-test-per-page', this.testId]));
     }else 
-      this.testQuestionService.generate(this.testId).subscribe(() => this.router.navigate(['tests/multiple-per-page', this.testId]));
+      this.testQuestionService.generate(this.testId).subscribe(() => this.router.navigate(['my-activities/multiple-per-page', this.testId]));
   }
 
   getTestById(testId: number) {

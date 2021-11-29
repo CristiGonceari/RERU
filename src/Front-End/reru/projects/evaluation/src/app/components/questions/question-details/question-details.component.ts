@@ -58,7 +58,11 @@ export class QuestionDetailsComponent implements OnInit {
 		else 
 			params = { questionId: +id, status: QuestionUnitStatusEnum.Inactive }
 
-		this.questionService.editStatus({data : params}).subscribe(()=> { this.getList(); this.router.navigate(['questions/question-detail', this.questionId, 'overview'])});
+		this.questionService.editStatus({data : params}).subscribe(()=> { 
+      this.getList(); 
+      this.router.navigate(['questions/question-detail', this.questionId, 'overview'])
+			this.notificationService.success('Success', 'Question status was updated', NotificationUtil.getDefaultMidConfig());
+    });
 	}
 
   deleteQuestion(id): void{

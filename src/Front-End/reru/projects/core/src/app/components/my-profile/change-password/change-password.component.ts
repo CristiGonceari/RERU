@@ -13,7 +13,6 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 })
 
 export class ChangePasswordComponent implements OnInit {
-  
   passwordForm: FormGroup;
   isLoading = true;
   changePasswordData: ChangePassword;

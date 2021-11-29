@@ -56,11 +56,11 @@ export class CategoryQuestionsComponent implements OnInit {
   changeStatus(id, status) {
 		let params;
 		if (status == QuestionUnitStatusEnum.Active) 
-			params = { questionId: id, status: QuestionUnitStatusEnum.Inactive }
+			params = { data: { questionId: id, status: QuestionUnitStatusEnum.Inactive } }
 		else
-			params = { questionId: id, status: QuestionUnitStatusEnum.Active }
+			params = { data: { questionId: id, status: QuestionUnitStatusEnum.Active } }
 
-		this.questionService.editStatus(params).subscribe(
+      this.questionService.editStatus(params).subscribe(
 			res => {
 				this.getAll();
 			}

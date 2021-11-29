@@ -23,9 +23,9 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.SetTestQuestionAs
                 .FirstAsync(x => x.Index == request.Data.QuestionIndex && x.TestId == request.Data.TestId);
 
             testQuestion.Verified = VerificationStatusEnum.Verified;
-            //testQuestion.IsCorrect = request.Data.IsCorrect;
-            //testQuestion.Points = request.Data.EvaluatorPoints;
-            //testQuestion.QuestionUnitId = request.Data.QuestionUnitId;
+            testQuestion.IsCorrect = request.Data.IsCorrect;
+            testQuestion.Points = request.Data.EvaluatorPoints;
+            testQuestion.QuestionUnitId = request.Data.QuestionUnitId;
 
             if (!string.IsNullOrWhiteSpace(request.Data.Comment))
             {

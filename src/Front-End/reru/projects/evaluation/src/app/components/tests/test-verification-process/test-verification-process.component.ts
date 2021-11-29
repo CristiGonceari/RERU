@@ -1,5 +1,5 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { createCustomElement } from '@angular/elements';
 import { NotificationsService } from 'angular2-notifications';
@@ -20,7 +20,7 @@ import { ConfirmModalComponent } from '@erp/shared';
 })
 export class TestVerificationProcessComponent implements OnInit {
 
-  testId: number;
+  	testId: number;
 	index = 1;
 	count: number;
 	question: string;
@@ -50,10 +50,15 @@ export class TestVerificationProcessComponent implements OnInit {
     private notificationService: NotificationsService,
     private injector: Injector,
     private testQuestionService: TestQuestionService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    
+    	this.getTestId();
+		this.getSummary(this.testId, this.index - 1);
+		this.ngDoBoostrap();
+		this.pagination();
+		this.testQuestionService.setData(true);
   }
 
   ngDoBoostrap() {
@@ -203,13 +208,14 @@ export class TestVerificationProcessComponent implements OnInit {
   	setTestVerified(testId): void{
     this.verifyService.setTestAsVerified(testId).subscribe(()=>{
       this.notificationService.success('Success', 'Test was successfully verified', NotificationUtil.getDefaultMidConfig());
+	  this.router.navigate(['../../../tests'], { relativeTo: this.activatedRoute })
     })
   	}
 
   	finalizeVerificationModal(): void {
 		const modalRef = this.modalService.open(ConfirmModalComponent, { centered: true });
-		modalRef.componentInstance.testName = this.testData.testTypeName;
-		modalRef.componentInstance.testId = this.testId;
+		modalRef.componentInstance.title = "Finish test verification"
+		modalRef.componentInstance.description = "Are you sure you want to complete test verification?";
 		modalRef.result.then(() => this.setTestVerified(this.testId), () => { });
 	}
 }

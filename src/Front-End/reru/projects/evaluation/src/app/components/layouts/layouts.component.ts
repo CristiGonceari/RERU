@@ -130,7 +130,7 @@ export class LayoutsComponent implements OnInit {
       </svg>`,
 		},
 		{
-			permission: 'P03001001',
+			permission: 'P03000901',
 			type: SidebarItemType.ITEM,
 			url: '/statistics',
 			name: '',

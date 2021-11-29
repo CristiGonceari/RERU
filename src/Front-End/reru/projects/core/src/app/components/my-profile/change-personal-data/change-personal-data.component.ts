@@ -6,12 +6,12 @@ import { PersonalData } from '../../../utils/models/personal-data.model';
 import { UserService } from '../../../utils/services/user.service';
 
 @Component({
-  selector: 'app-change-personal-data',
-  templateUrl: './change-personal-data.component.html',
-  styleUrls: ['./change-personal-data.component.scss']
+	selector: 'app-change-personal-data',
+	templateUrl: './change-personal-data.component.html',
+	styleUrls: ['./change-personal-data.component.scss']
 })
 export class ChangePersonalDataComponent implements OnInit {
-  personalDataForm: FormGroup;
+	personalDataForm: FormGroup;
 	isLoading: boolean = true;
 
 	constructor(
@@ -20,7 +20,7 @@ export class ChangePersonalDataComponent implements OnInit {
 		private userService: UserService,
 		private notificationService: NotificationsService,
 		private router: Router
-	) {}
+	) { }
 
 	ngOnInit(): void {
 		this.subsribeForParams();
