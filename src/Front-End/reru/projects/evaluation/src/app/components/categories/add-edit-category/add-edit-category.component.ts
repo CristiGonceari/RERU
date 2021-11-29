@@ -9,31 +9,31 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-add-edit-category',
-  templateUrl: './add-edit-category.component.html',
-  styleUrls: ['./add-edit-category.component.scss']
+	selector: 'app-add-edit-category',
+	templateUrl: './add-edit-category.component.html',
+	styleUrls: ['./add-edit-category.component.scss']
 })
 export class AddEditCategoryComponent implements OnInit {
 
-  categoryForm: FormGroup;
+	categoryForm: FormGroup;
 	categoryId: number;
 	isLoading: boolean = true;
 
-  constructor(
+	constructor(
 		private formBuilder: FormBuilder,
 		private categoryService: QuestionCategoryService,
 		public translate: I18nService,
 		private location: Location,
 		private activatedRoute: ActivatedRoute,
 		private notificationService: NotificationsService
-  ) { }
+	) { }
 
-  ngOnInit(): void {
-	this.categoryForm = new FormGroup({ name: new FormControl() });
-	this.initData();
-  }
+	ngOnInit(): void {
+		this.categoryForm = new FormGroup({ name: new FormControl() });
+		this.initData();
+	}
 
-  initData(): void {
+	initData(): void {
 		this.activatedRoute.params.subscribe(response => {
 			if (!(response && Object.keys(response).length === 0 && response.constructor === Object)) {
 				this.categoryId = response.id;
@@ -46,19 +46,7 @@ export class AddEditCategoryComponent implements OnInit {
 		})
 	}
 
-  hasErrors(field): boolean {
-		return this.categoryForm.touched && this.categoryForm.get(field).invalid;
-	}
-
-	hasError(field: string, error = 'required'): boolean {
-		return (
-			this.categoryForm.get(field).invalid &&
-			this.categoryForm.get(field).touched &&
-			this.categoryForm.get(field).hasError(error)
-		);
-	}
-
-  initForm(category?: any): void {
+	initForm(category?: any): void {
 		if (category) {
 			this.categoryForm = this.formBuilder.group({
 				id: this.formBuilder.control(category.id, [Validators.required]),
@@ -74,7 +62,7 @@ export class AddEditCategoryComponent implements OnInit {
 		}
 	}
 
-  onSave(): void {
+	onSave(): void {
 		if (this.categoryId) {
 			this.editQuestionCategory();
 		} else {

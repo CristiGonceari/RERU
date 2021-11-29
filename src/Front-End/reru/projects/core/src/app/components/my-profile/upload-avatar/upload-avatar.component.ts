@@ -8,7 +8,7 @@ import { ProfileService } from '../../../utils/services/profile.service';
   styleUrls: ['./upload-avatar.component.scss']
 })
 export class UploadAvatarComponent implements OnInit {
-	files: File[] = [];
+  files: File[] = [];
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -18,18 +18,18 @@ export class UploadAvatarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-	uploadAvatar(): void {
+  uploadAvatar(): void {
     const formData = new FormData();
-		formData.append('file', this.files[0]);
+    formData.append('file', this.files[0]);
     this.profileService.uploadAvatar(formData).subscribe(
       () => {
-				this.activeModal.close();
+        this.activeModal.close();
         window.location.reload();
-			}
+      }
     )
   };
 
   onSelect(event) {
     this.files.push(...event.addedFiles);
-	}
+  }
 }

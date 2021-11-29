@@ -20,10 +20,8 @@
 
         public const string TEST_TYPES_GENERAL_ACCESS = "P03000801";
 
-        public const string TEST_TYPE_QUESTION_CATEGORIES_GENERAL_ACCESS = "P03000901";
+        public const string STATISTICS_GENERAL_ACCESS = "P03000901";
 
-        public const string STATISTICS_GENERAL_ACCESS = "P03001001";
-
-        public const string TEST_VERIFICATION_GENERAL_ACCESS = "P03001101";
+        public const string TEST_VERIFICATION_GENERAL_ACCESS = "P03001001";
     }
 }
