@@ -67,7 +67,11 @@ export class QuestionListTableComponent implements OnInit {
 		else
 			params = { data: { questionId: id, status: QuestionUnitStatusEnum.Inactive } }
 
-		this.questionService.editStatus(params).subscribe(() => this.list());
+		this.questionService.editStatus(params).subscribe(() => {
+			this.list();
+			this.notificationService.success('Success', 'Question status was updated', NotificationUtil.getDefaultMidConfig());
+		}
+		);
 	}
 
 	navigate(id) {
