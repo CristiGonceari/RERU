@@ -56,9 +56,7 @@
                         </button>
                         <button class="navi-link align-items-center px-6"
                           (click)="changeStatus(question.id, question.status)" ngbDropdownItem>
-                          <label style="font-size: 13px;" class="mb-0" *ngIf="question.status == 0">{{'statuses.activate'
-                              | translate}}</label>
-                          <label style="font-size: 13px;" class="mb-0" *ngIf="question.status == 2">{{'statuses.activate'
+                          <label style="font-size: 13px;" class="mb-0" *ngIf="question.status == 0 || question.status == 2">{{'statuses.activate'
                               | translate}}</label>
                           <label style="font-size: 13px;" class="mb-0"
                             *ngIf="question.status == 1">{{'statuses.inactivate' | translate}}</label>
