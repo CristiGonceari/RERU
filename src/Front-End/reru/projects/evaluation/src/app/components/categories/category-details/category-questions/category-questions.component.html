@@ -40,7 +40,7 @@
           </thead>
           <tbody class="text-dark-75" *ngIf="questionList.length">
             <tr *ngFor="let question of questionList">
-              <td>{{ question.question }}</td>
+              <td style="cursor: pointer;" (click)="goToQuestuionOptions(question.id)">{{ question.question }}</td>
               <td class="text-right">
                 <span class="font-size-lg">{{'statuses.' + questionEnum[question.status] | translate}}</span>
               </td>

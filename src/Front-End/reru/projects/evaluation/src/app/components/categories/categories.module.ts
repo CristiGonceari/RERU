@@ -15,6 +15,8 @@ import { SearchCategoryComponent } from './category-list/search-category/search-
 import { CategoryDetailsComponent } from './category-details/category-details.component';
 import { CategoryOverviewComponent } from './category-details/category-overview/category-overview.component';
 import { CategoryQuestionsComponent } from './category-details/category-questions/category-questions.component';
+import { CategoryQuestionsOptionsComponent } from './category-details/category-questions-options/category-questions-options.component';
+import { AddOptionComponent } from './category-details/category-questions-options/add-option/add-option.component';
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import { CategoryQuestionsComponent } from './category-details/category-question
     SearchCategoryComponent, 
     CategoryDetailsComponent, 
     CategoryOverviewComponent, 
-    CategoryQuestionsComponent
+    CategoryQuestionsComponent, 
+    CategoryQuestionsOptionsComponent, AddOptionComponent
   ],
   
   imports: [

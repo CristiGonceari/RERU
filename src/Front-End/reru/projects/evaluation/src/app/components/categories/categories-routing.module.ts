@@ -5,6 +5,9 @@ import { CategoryDetailsComponent } from './category-details/category-details.co
 import { CategoryOverviewComponent } from './category-details/category-overview/category-overview.component';
 import { CategoryQuestionsComponent } from './category-details/category-questions/category-questions.component';
 import { CategoryListComponent } from './category-list/category-list.component';
+import { CategoryQuestionsOptionsComponent } from './category-details/category-questions-options/category-questions-options.component';
+import { AddOptionComponent } from './category-details/category-questions-options/add-option/add-option.component';
+
 
 const routes: Routes = [
   { path: '', component: CategoryListComponent },
@@ -17,6 +20,9 @@ const routes: Routes = [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: 'overview', component: CategoryOverviewComponent },
       { path: 'question-details', component: CategoryQuestionsComponent },
+      { path: 'question-options/:id', component: CategoryQuestionsOptionsComponent},
+      { path: 'option/:id/add', component: AddOptionComponent },
+      { path: 'option/:id/edit/:id2', component: AddOptionComponent } 
     ]
   }
 ];

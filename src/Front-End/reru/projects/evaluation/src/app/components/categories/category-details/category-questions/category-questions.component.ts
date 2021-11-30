@@ -10,7 +10,7 @@ import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notific
 import { ConfirmModalComponent } from '@erp/shared';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BulkImportQuestionsComponent } from '../../../questions/bulk-import-questions/bulk-import-questions.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionByCategoryService } from 'projects/evaluation/src/app/utils/services/question-by-category/question-by-category.service';
 
 @Component({
@@ -22,19 +22,20 @@ export class CategoryQuestionsComponent implements OnInit {
 
   @Input() categoryId;
   categoryList = [];
-	questionList: QuestionUnit[] = [];
-	pagedSummary: PaginationModel = new PaginationModel();
-	questionEnum = QuestionUnitStatusEnum;
+  questionList: QuestionUnit[] = [];
+  pagedSummary: PaginationModel = new PaginationModel();
+  questionEnum = QuestionUnitStatusEnum;
   type = QuestionUnitTypeEnum;
   isLoading: boolean = true;
   
   constructor(
     private questionService: QuestionService,
     private categoryService: QuestionCategoryService,
-		private modalService: NgbModal,
-		private notificationService: NotificationsService,
+	private modalService: NgbModal,
+	private notificationService: NotificationsService,
     public router: Router,
     private questionByCategory: QuestionByCategoryService,
+	private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -98,5 +99,9 @@ export class CategoryQuestionsComponent implements OnInit {
 		modalRef.componentInstance.title = 'Delete';
 		modalRef.componentInstance.description = 'Are you sure you want to delete this question?';
 		modalRef.result.then(() => this.deleteQuestion(id), () => { });
+	}
+
+	goToQuestuionOptions(id){
+		this.router.navigate(['../question-options', id], {relativeTo:this.route});
 	}
 }

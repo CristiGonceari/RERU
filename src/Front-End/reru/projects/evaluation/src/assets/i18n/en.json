@@ -365,7 +365,8 @@
     "questions-per-page": "Questions count per page",
     "show-user-name": "Show user name in tests",
     "set-time-limit": "Set time limit per question (seconds)",
-    "set-max-errors": "Set max errors"
+    "set-max-errors": "Set max errors",
+    "this-is-free-text": "This is a Free Text question"
   },
   "tooltips": {
     "option1": "User have the possibility to start test without administrator confirmation",

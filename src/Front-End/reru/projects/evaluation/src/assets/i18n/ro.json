@@ -365,7 +365,9 @@
     "questions-per-page": "Numărul de întrebări pe pagină",
     "show-user-name": "Afișați numele de utilizator în teste",
     "set-time-limit": "Setați limita de timp pentru fiecare întrebare (secunde)",
-    "set-max-errors": "Setați maximum de erori"
+    "set-max-errors": "Setați maximum de erori",
+    "this-is-free-text": "Aceasta este o intrebare cu forma libera"
+
   },
   "tooltips": {
     "option1": "Utilizatorul are posibilitatea de a începe testul fără confirmarea administratorului",
