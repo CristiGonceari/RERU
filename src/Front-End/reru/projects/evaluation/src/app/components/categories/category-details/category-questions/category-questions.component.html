@@ -2,6 +2,27 @@
   <div class="card card-custom mb-7 ml-5">
     <div class="card-header flex-wrap border-0 py-5">
       <div class="card-title font-weight-bolder">{{'questions.questions' | translate}}</div>
+      <div class="card-toolbar">
+        <div class="dropdown dropdown-inline my-auto" ngbDropdown>
+          <app-add-button class="btn my-auto" id="action1" ngbDropdownToggle
+            [value]="'questions.add-question' | translate">
+          </app-add-button>
+          <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+            <div ngbDropdownMenu aria-labelledby="action1">
+              <button class="navi-link align-items-center px-6" ngbDropdownItem
+              (click)="addQuestion()">
+                <i class="la la-plus mr-2"></i> 
+                {{'questions.add-question' | translate}}
+              </button>
+              <button class="navi-link align-items-baseline px-6" ngbDropdownItem
+              (click)="bulkImport()">
+                <i class="la la-download mr-2"></i>
+                {{'questions.bulk-import' | translate}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="card-body">
       <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>

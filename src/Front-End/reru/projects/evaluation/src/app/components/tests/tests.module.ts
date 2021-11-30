@@ -1,7 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { TestsRoutingModule } from './tests-routing.module';
-import { TestListTableComponent } from './test-list-table/test-list-table.component';
 import { AddTestComponent } from './add-test-list/add-test/add-test.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,7 +27,6 @@ import { AddTestListComponent } from './add-test-list/add-test-list.component';
 
 @NgModule({
   declarations: [
-    TestListTableComponent,
     AddTestComponent,
     OnePerPagePerformingTestComponent,
     SearchStatusComponent,
