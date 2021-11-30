@@ -23,7 +23,11 @@
         </thead>
         <tbody class="text-dark-75" *ngIf="roles">
           <tr *ngFor="let role of roles">
-            <td [class.no-actions]="!viewPermissions" (dblclick)="navigateToPermissions(role.id)">{{ role.name }}</td>
+            <td [class.no-actions]="!viewPermissions" (dblclick)="navigateToPermissions(role.id)">
+              <a [routerLink]="['../../../roles', role.id, 'permissions']" class="font-size-lg text-dark-50 text-hover-dark-75" >
+                {{ role.name }}
+              </a>
+            </td>
             <td [class.no-actions]="!viewPermissions" (dblclick)="navigateToPermissions(role.id)"
               style="text-align: center">
               <svg-icon *ngIf="role.isAssignByDefault === true" key="success" [width]="24" [height]="24"></svg-icon>

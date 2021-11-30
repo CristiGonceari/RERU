@@ -193,7 +193,7 @@
       "new": "New user",
       "edit": "Edit user",
       "details": "User's details",
-      "do-not-send-email": "Do not send email notification"
+      "send-email": "Send email notification"
     },
     "user-details": {
       "title": "User's profile",

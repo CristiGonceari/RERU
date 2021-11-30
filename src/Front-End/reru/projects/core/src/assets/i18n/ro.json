@@ -191,7 +191,7 @@
       "new": "Utilizator nou",
       "edit": "Editarea utilizatorului",
       "details": "Detaliile utilizatorului",
-      "do-not-send-email": "Fără notificare prin email"
+      "send-email": "Notificare prin email"
     },
     "user-details": {
       "title": "Profilul utilizatorului",
