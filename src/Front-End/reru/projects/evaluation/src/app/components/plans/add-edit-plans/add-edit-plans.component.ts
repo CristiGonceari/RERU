@@ -55,7 +55,7 @@ export class AddEditPlansComponent implements OnInit {
       name: this.fb.control(this.isEditForm? plan.name : null, [Validators.required]),
       fromDate: this.fb.control(this.isEditForm? plan.fromDate : null, [Validators.required]),
       tillDate: this.fb.control(this.isEditForm? plan.tillDate : null, [Validators.required]),
-      description: this.fb.control(this.isEditForm? plan.description : null, [Validators.required])
+      description: this.fb.control(this.isEditForm? plan.description : null)
     });
   }
 
