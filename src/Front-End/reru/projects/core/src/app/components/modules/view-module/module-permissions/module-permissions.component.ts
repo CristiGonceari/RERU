@@ -43,7 +43,7 @@ export class ModulePermissionsComponent implements OnInit {
 			...data,
 			keyword: this.keyword,
 			page: data.page || this.pagination.currentPage,
-			itemsPerPage: this.pagination.pageSize
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
 		};
 		this.list(data);
 	}

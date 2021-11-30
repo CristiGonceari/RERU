@@ -44,10 +44,10 @@ export class ModuleRolesComponent implements OnInit {
 		});
 	}
 
-	getRoles(page?): void {
+	getRoles(data: any = {}): void {
 		let params: any = {
-			page,
-			itemsPerPage: this.pagination.pageSize,
+			page: data.page || this.pagination.currentPage,
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
 		};
 		this.list(params);
 	}
