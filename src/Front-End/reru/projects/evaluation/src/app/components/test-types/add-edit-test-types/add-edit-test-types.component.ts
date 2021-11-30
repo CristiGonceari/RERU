@@ -73,9 +73,9 @@ export class AddEditTestTypesComponent implements OnInit {
 			this.testForm = this.formBuilder.group({
 				id: this.formBuilder.control(test.id, [Validators.required]),
 				name: this.formBuilder.control((test && test.name) || null, [Validators.required]),
-				questionCount: this.formBuilder.control((test && test.questionCount) || 0, [Validators.required]),
-				duration: this.formBuilder.control((test && test.duration) || 0, [Validators.required]),
-				minPercent: this.formBuilder.control((test && test.minPercent) || 0, [Validators.required]),
+				questionCount: this.formBuilder.control((test && test.questionCount), [Validators.required]),
+				duration: this.formBuilder.control((test && test.duration), [Validators.required]),
+				minPercent: this.formBuilder.control((test && test.minPercent), [Validators.required]),
 				mode: this.formBuilder.control((test && !isNaN(test.mode) ? test.mode : null), [Validators.required]),
 				status: this.statusEnum.Draft,
 			});
@@ -84,9 +84,9 @@ export class AddEditTestTypesComponent implements OnInit {
 		else {
 			this.testForm = this.formBuilder.group({
 				name: this.formBuilder.control(null, [Validators.required]),
-				questionCount: this.formBuilder.control(0, [Validators.required]),
-				duration: this.formBuilder.control(0, [Validators.required]),
-				minPercent: this.formBuilder.control(0, [Validators.required]),
+				questionCount: this.formBuilder.control([Validators.required]),
+				duration: this.formBuilder.control([Validators.required]),
+				minPercent: this.formBuilder.control([Validators.required]),
 				mode: this.formBuilder.control(0, [Validators.required]),
 				status: this.statusEnum.Draft,
 			});
