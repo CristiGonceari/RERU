@@ -87,7 +87,7 @@ export class AddEditLocationComponent implements OnInit {
 				name: this.formBuilder.control(null, [Validators.required]),
 				address: this.formBuilder.control(null, [Validators.required]),
 				type: this.formBuilder.control(0, [Validators.required]),
-				places: this.formBuilder.control(0, [Validators.required]),
+				places: this.formBuilder.control([Validators.required]),
 				description: this.formBuilder.control(null, [Validators.required])
 			});
 			this.isLoading = false;
