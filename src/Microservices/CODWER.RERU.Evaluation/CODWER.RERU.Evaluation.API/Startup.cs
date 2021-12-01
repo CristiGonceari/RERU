@@ -21,6 +21,7 @@ using System;
 using AutoMapper.EquivalencyExpression;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.Data.Persistence.Initializer;
+using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
 
@@ -87,6 +88,7 @@ namespace CODWER.RERU.Evaluation.API
 
             services.AddControllers()
                 .AddERPModuleControllers();
+            services.AddWkhtmltopdf();
 
             services.AddERPModuleServices(Configuration);
             services.AddCommonModuleApplication();
