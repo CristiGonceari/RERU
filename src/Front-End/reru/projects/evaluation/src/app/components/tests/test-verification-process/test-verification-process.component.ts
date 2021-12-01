@@ -92,8 +92,6 @@ export class TestVerificationProcessComponent implements OnInit {
 				} else {
 					this.router.navigate(['../../../tests'], { relativeTo: this.activatedRoute })
 				}
-        	console.log('evaluatorIDDD', this.evaluatorId);
-			console.log('userIDIIDIDI', this.currentUserId);
 		});
 	}
 
