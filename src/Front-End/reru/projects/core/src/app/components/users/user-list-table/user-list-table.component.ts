@@ -8,7 +8,6 @@ import { ConfirmModalComponent, PermissionCheckerService } from '@erp/shared';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from '../../../utils/util/notification.util';
-import { Location } from '@angular/common';
 import { UserService } from '../../../utils/services/user.service';
 
 @Component({
@@ -48,7 +47,6 @@ export class UserListTableComponent implements OnInit {
 		public permissionService: PermissionCheckerService,
 		private modalService: NgbModal,
 		private notificationService: NotificationsService,
-		private location: Location,
     	private userService: UserService,
 	) {}
 
@@ -61,7 +59,8 @@ export class UserListTableComponent implements OnInit {
 	list(data: any = {}): void {
 		data = {
 			...data,
-			page: data.page || this.pagedSummary.currentPage,
+			page: data.page || this.pagination.currentPage,
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
 			keyword: data.keyword || this.searchValue,
 			status: this.userState
 		};
@@ -71,10 +70,7 @@ export class UserListTableComponent implements OnInit {
 				this.result = true;
 				this.users = response.data.items;
 				this.pagination = response.data.pagedSummary;
-				for (let i = 1; i <= this.pagination.totalCount; i++) {
-					this.pager.push(i);
-					this.isLoading = false;
-				}
+				this.isLoading = false;
 			} else {
 				this.isLoading = false;
 				this.result = false;

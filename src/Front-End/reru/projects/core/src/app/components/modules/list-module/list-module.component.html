@@ -24,97 +24,101 @@
               </div>
             </div>
             <div class="card-body">
-              <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
-              id="kt_datatable">
-              <table class="datatable table font-size-lg">
-                <thead class="text-uppercase text-muted">
-                  <tr>
-                    <th scope="col" style="width: 48px"></th>
-                    <th scope="col" style="width: 48px"></th>
-                    <th scope="col">{{ 'table.module' | translate }}</th>
-                    <th scope="col" style="width: 100px">{{ 'table.code' | translate }}</th>
-                    <th scope="col" style="width: 120px">{{ 'table.type' | translate }}</th>
-                    <th scope="col" style="width: 120px">{{ 'table.priority' | translate }}</th>
-                    <th scope="col" style="width: 100px">{{ 'table.color' | translate }}</th>
-                    <th scope="col" style="width: 50px"></th>
-                  </tr>
-                </thead>
-                <tbody class="text-dark-75">
-                  <tr *ngFor="let module of modules">
-                    <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
-                      <svg-icon *ngIf="module.status === false" key="error" [width]="24" [height]="24"
-                        data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Offline">
-                      </svg-icon>
-                      <svg-icon *ngIf="module.status === true" key="success" [width]="24" [height]="24"
-                        data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Online">
-                      </svg-icon>
-                    </td>
-                    <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
-                      <svg-icon [key]="module.icon" [width]="32" [height]="32"></svg-icon>
-                    </td>
-                    <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
-                      <span class="font-size-lg">
-                        {{ module.name }}
-                    </span>
-                    </td>
-                    <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">{{ module.code }}</td>
-                    <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
-                      <span style="width: 120px" class="font-size-lg" *ngIf="module.type === 0">Dynamic</span>
-                      <span style="width: 120px" class="font-size-lg" *ngIf="module.type === 1">Default</span>
-                    </td>
-                    <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">{{ module.priority }}</td>
-                    <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
-                      <div class="module-color" [ngStyle]="{ 'background-color': module.color }"></div>
-                    </td>
-                    <td data-field="Actions" data-autohide-disabled="false"
-                      class="datatable-cell datatable-cell-sort p-3">
-                      <div style="overflow: visible; position: relative; width: 0px">
-                        <div ngbDropdown class="dropdown dropdown-inline" class="p-0">
-                          <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
-                            <span class="svg-icon svg-icon-md" [id]="'action' + i" ngbDropdownToggle>
-                              <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                viewBox="0 0 24 24" version="1.1">
-                                <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
-                                  <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3" fill="black">
-                                  </rect>
-                                  <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3" fill="black"
-                                    fill-opacity="0.7"></rect>
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                          <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
-                            <div ngbDropdownMenu [aria-labelledby]="'action' + i" class="p-0">
-                              <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
-                                [routerLink]="['../', module.id, 'overview']" *permission="'P00000004'">
-                                {{ 'pages.modules.details' | translate }}
-                              </button>
-                              <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
-                                 [routerLink]="['../edit', module.id]" *permission="'P00000003'">
-                                {{ 'pages.modules.edit' | translate }}
-                              </button>
-                              <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
-                                (click)="navigate(module.publicUrl)">
-                                {{ 'pages.modules.navigate' | translate }}
-                              </button>
-                              <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
-                                 (click)="openRemoveModal(module.id, module.name)" *permission="'P00000005'">
-                                {{ 'pages.modules.remove' | translate }}
-                              </button>
+              <div
+                class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+                id="kt_datatable">
+                <table class="datatable table font-size-lg">
+                  <thead class="text-uppercase text-muted">
+                    <tr>
+                      <th scope="col" style="width: 48px"></th>
+                      <th scope="col" style="width: 48px"></th>
+                      <th scope="col">{{ 'table.module' | translate }}</th>
+                      <th scope="col" style="width: 100px">{{ 'table.code' | translate }}</th>
+                      <th scope="col" style="width: 120px">{{ 'table.type' | translate }}</th>
+                      <th scope="col" style="width: 120px">{{ 'table.priority' | translate }}</th>
+                      <th scope="col" style="width: 100px">{{ 'table.color' | translate }}</th>
+                      <th scope="col" style="width: 50px"></th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-dark-75">
+                    <tr *ngFor="let module of modules">
+                      <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
+                        <svg-icon *ngIf="module.status === false" key="error" [width]="24" [height]="24"
+                          data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Offline">
+                        </svg-icon>
+                        <svg-icon *ngIf="module.status === true" key="success" [width]="24" [height]="24"
+                          data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Online">
+                        </svg-icon>
+                      </td>
+                      <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
+                        <svg-icon [key]="module.icon" [width]="32" [height]="32"></svg-icon>
+                      </td>
+                      <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
+                        <a [routerLink]="['..', module.id, 'overview']"
+                          class="font-size-lg text-dark-50 text-hover-dark-75">
+                          {{ module.name }}
+                        </a>
+                      </td>
+                      <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">{{ module.code }}
+                      </td>
+                      <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
+                        <span style="width: 120px" class="font-size-lg" *ngIf="module.type === 0">Dynamic</span>
+                        <span style="width: 120px" class="font-size-lg" *ngIf="module.type === 1">Default</span>
+                      </td>
+                      <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
+                        {{ module.priority }}</td>
+                      <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
+                        <div class="module-color" [ngStyle]="{ 'background-color': module.color }"></div>
+                      </td>
+                      <td data-field="Actions" data-autohide-disabled="false"
+                        class="datatable-cell datatable-cell-sort p-3">
+                        <div style="overflow: visible; position: relative; width: 0px">
+                          <div ngbDropdown class="dropdown dropdown-inline" class="p-0">
+                            <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                              <span class="svg-icon svg-icon-md" [id]="'action' + i" ngbDropdownToggle>
+                                <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
+                                  xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                  viewBox="0 0 24 24" version="1.1">
+                                  <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
+                                    <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3" fill="black">
+                                    </rect>
+                                    <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3" fill="black"
+                                      fill-opacity="0.7"></rect>
+                                  </g>
+                                </svg>
+                              </span>
+                            </div>
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                              <div ngbDropdownMenu [aria-labelledby]="'action' + i" class="p-0">
+                                <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
+                                  [routerLink]="['../', module.id, 'overview']" *permission="'P00000004'">
+                                  {{ 'pages.modules.details' | translate }}
+                                </button>
+                                <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
+                                  [routerLink]="['../edit', module.id]" *permission="'P00000003'">
+                                  {{ 'pages.modules.edit' | translate }}
+                                </button>
+                                <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
+                                  (click)="navigate(module.publicUrl)">
+                                  {{ 'pages.modules.navigate' | translate }}
+                                </button>
+                                <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
+                                  (click)="openRemoveModal(module.id, module.name)" *permission="'P00000005'">
+                                  {{ 'pages.modules.remove' | translate }}
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-                <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage" *ngIf="modules.length"
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
                   [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
                   (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event })"
-                  (pageChange)="list({ page: $event })">
-               </div>
+                  (pageChange)="list({ keyword: keyword, page: $event })" *ngIf="modules">
+                </div>
               </div>
             </div>
           </div>

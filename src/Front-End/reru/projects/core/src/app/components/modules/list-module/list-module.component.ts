@@ -17,7 +17,7 @@ import { NotificationsService } from 'angular2-notifications';
 	providers: [SearchPipe, SafeHtmlPipe],
 })
 export class ListModuleComponent implements OnInit {
-	isLoading = false;
+	isLoading = true;
 	modules: AdminModuleModel[];
 	pagination: PaginationSummary = new PaginationSummary();
 	pager: number[] = [];
@@ -37,12 +37,11 @@ export class ListModuleComponent implements OnInit {
 		this.checkPermission();
 	}
 
-	getModules(): void {
+	getModules(data: any = {}): void {
 		let params: any = {
-			page:  this.pagination.currentPage,
-			itemsPerPage: this.pagination.pageSize || 10
+			page: data.page || this.pagination.currentPage,
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
 		};
-		this.isLoading = true;
 		this.list(params);
 	}
 	
@@ -51,9 +50,6 @@ export class ListModuleComponent implements OnInit {
 			if(res && res.data) {
 				this.modules = res.data.items;
 				this.pagination = res.data.pagedSummary;
-				for (let i = 1; i <= this.pagination.totalCount; i++) {
-					this.pager.push(i);
-				}
 				this.isLoading = false;
 			}
 		});
