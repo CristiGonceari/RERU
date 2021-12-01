@@ -30,7 +30,9 @@ const routes: Routes = [
 	{ path: 'users', loadChildren: () => import('./components/users/users.module').then(m => m.UsersModule) },
 	{ path: 'roles', loadChildren: () => import('./components/roles/roles.module').then(m => m.RolesModule) },
 	{ path: 'my-profile', loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule) },
-	{ path: '**', redirectTo: '404' },
+	{ path: 'reru-evaluation', loadChildren: () => import('../../../evaluation/src/app/app.module').then(m => m.AppModule) },
+	{ path: 'reru-personal', loadChildren: () => import('../../../personal/src/app/app.module').then(m => m.AppModule) },
+	{ path: '**', redirectTo: '404' }
 ];
 
 @NgModule({
