@@ -12,6 +12,7 @@ import { TestVerificationProcessService } from '../../../utils/services/test-ver
 import { TestService } from '../../../utils/services/test/test.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { ConfirmModalComponent } from '@erp/shared';
+import { UserProfileService } from '../../../utils/services/user-profile/user-profile.service';
 
 @Component({
   selector: 'app-test-verification-process',
@@ -21,6 +22,8 @@ import { ConfirmModalComponent } from '@erp/shared';
 export class TestVerificationProcessComponent implements OnInit {
 
   	testId: number;
+	evaluatorId: number;
+  	currentUserId: number;
 	index = 1;
 	count: number;
 	question: string;
@@ -50,11 +53,13 @@ export class TestVerificationProcessComponent implements OnInit {
     private notificationService: NotificationsService,
     private injector: Injector,
     private testQuestionService: TestQuestionService,
-    private router: Router
+    private router: Router,
+    private userService: UserProfileService
   ) { }
 
   ngOnInit(): void {
     	this.getTestId();
+		this.getCurrentUserId();
 		this.getSummary(this.testId, this.index - 1);
 		this.ngDoBoostrap();
 		this.pagination();
@@ -79,7 +84,23 @@ export class TestVerificationProcessComponent implements OnInit {
   	getTestById() {
 		this.testService.getTest(this.testId ).subscribe( res => {
 			this.testData = res.data;
+        	this.evaluatorId = res.data.evaluatorId;
+
+        		if(this.currentUserId == this.evaluatorId)
+				{
+					this.testData = res.data;
+				} else {
+					this.router.navigate(['../../../tests'], { relativeTo: this.activatedRoute })
+				}
+        	console.log('evaluatorIDDD', this.evaluatorId);
+			console.log('userIDIIDIDI', this.currentUserId);
 		});
+	}
+
+	getCurrentUserId(): void{
+		this.userService.getCurrentUser().subscribe(response => {
+			this.currentUserId = response.data.id;
+		  })
 	}
 
 	pagination() {
