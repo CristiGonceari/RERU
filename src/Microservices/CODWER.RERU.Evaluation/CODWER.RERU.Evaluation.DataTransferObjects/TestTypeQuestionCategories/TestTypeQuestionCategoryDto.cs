@@ -1,4 +1,5 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
+﻿using CODWER.RERU.Evaluation.Data.Entities;
+using CODWER.RERU.Evaluation.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories
 {
@@ -13,6 +14,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories
         public SelectionEnum SelectionType { get; set; }
         public SequenceEnum SequenceType { get; set; }
         public int? QuestionCount { get; set; }
+        public QuestionUnit QuestionUnits { get; set; }
 
     }
 }

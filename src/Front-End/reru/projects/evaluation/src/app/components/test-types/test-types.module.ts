@@ -20,7 +20,8 @@ import { TestTypesCategoriesComponent } from './test-type-details/test-types-cat
 import { DeleteCategoryComponent } from './test-type-details/test-types-categories/delete-category/delete-category.component'
 import { TestTypesRulesComponent } from './test-type-details/test-types-rules/test-types-rules.component'
 import { AddTestTypeRulesComponent } from './test-type-details/test-types-rules/add-test-type-rules/add-test-type-rules.component'
-import { CategoryQuestionsTableComponent } from './test-type-details/test-types-categories/add-category/category-questions-table/category-questions-table.component'
+import { CategoryQuestionsTableComponent } from './test-type-details/test-types-categories/add-category/category-questions-table/category-questions-table.component';
+import { ViewCategoryComponent } from './test-type-details/test-types-categories/view-category/view-category.component'
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { CategoryQuestionsTableComponent } from './test-type-details/test-types-
     TestTypesRulesComponent,
     AddTestTypeRulesComponent,
     CategoryQuestionsTableComponent,
+    ViewCategoryComponent,
   ],
   imports: [
     CommonModule,

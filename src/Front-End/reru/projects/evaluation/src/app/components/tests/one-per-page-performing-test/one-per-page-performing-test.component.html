@@ -33,7 +33,8 @@
                         </span>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-success h6 pt-1 mb-0" style="width: 110px; max-width: 110px;">
+                        <button type="button" class="btn btn-success h6 pt-1 mb-0"
+                            style="width: 110px; max-width: 110px;">
                             {{timeLeft}}
                         </button>
                         <app-confirm-button class="btn ml-5" (handle)="submitTest()"
@@ -45,7 +46,8 @@
                         <mat-progress-bar mode="determinate" [value]="percent"></mat-progress-bar>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <span class="completed_progress_bar">{{timeQuestionLeft}} {{'tests.seconds-to-complete' | translate}}</span>
+                        <span class="completed_progress_bar">{{timeQuestionLeft}} {{'tests.seconds-to-complete' |
+                            translate}}</span>
                     </div>
                 </div>
                 <div class="text-container mt-5 mx-auto w-80">
@@ -54,9 +56,9 @@
                             [innerHTML]="questionUnit.question | safeHtml">
                         </p>
                     </div>
-                    <div class="data-container border border-secondary rounded p-5 my-4 d-flex align-items-center option-label"
-                        *ngFor="let option of testOptionsList">
-                        <label class="checkbox checkbox-lg checkbox-inline mr-5">
+                    <div class="data-container" *ngFor="let option of testOptionsList">
+                        <label
+                            class="checkbox checkbox-lg checkbox-inline border border-secondary rounded p-5 my-4 d-flex align-items-center option-label">
                             <input type="checkbox" name="isSelected" (change)="onItemChange($event)"
                                 value="{{option.id}}"
                                 *ngIf="questionUnit.questionType == questionTypeEnum.MultipleAnswers"
@@ -65,8 +67,10 @@
                                 *ngIf="questionUnit.questionType == questionTypeEnum.OneAnswer"
                                 [checked]="option.isSelected">
                             <span></span>
+                            <div class="ml-5">
+                                {{ option.answer }}
+                            </div>
                         </label>
-                        {{ option.answer }}
                     </div>
                     <div class="data-container answer" *ngIf="questionUnit.questionType == questionTypeEnum.FreeText">
                         <textarea class="form-control border rounded border-secondary p-7 my-7 w-100" rows="7"

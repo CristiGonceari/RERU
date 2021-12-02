@@ -350,7 +350,9 @@
     "NotCorrect": "Inorrect",
     "Skipped": "Skipped",
     "clone": "Clone",
-    "Select": "Select"
+    "Select": "Select",
+    "Random": "Random",
+    "Strict": "Strict"
   },
   "options": {
     "start-without-confirmation": "Possible to start test without confirmation",
@@ -488,6 +490,10 @@
     "detach-evaluator": "Remove evaluator",
     "detach-evaluator-msg": "Are you sure you want to remove this evaluator from this event?",
     "show-candidate": "Show candidate name"
+  },
+  "test-template":{
+      "number-of-questions":"Number of questions",
+      "order-of-questions":"The order of the questions"
   },
   "plans": {
     "plans": "Plans",

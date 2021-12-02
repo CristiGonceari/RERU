@@ -49,9 +49,9 @@
                                 </p>
                             </td>
                             <tr *ngIf="testQuestion.questionType != questionTypeEnum.HashedAnswer">
-                                <div class="data-container border border-secondary rounded p-5 my-4 mx-5 d-flex align-items-center option-label"
+                                <div class="data-container"
                                     *ngFor="let option of testQuestion.options">
-                                    <label class="checkbox checkbox-lg checkbox-inline mr-5">
+                                    <label class="checkbox checkbox-lg checkbox-inline border border-secondary rounded p-5 my-4 mx-5 d-flex align-items-center option-label">
                                         <input type="checkbox" name="isSelected" (change)="onItemChange($event, testQuestion)"
                                             value="{{option.id}}"
                                             *ngIf="testQuestion.questionType == questionTypeEnum.MultipleAnswers"
@@ -61,8 +61,11 @@
                                             *ngIf="testQuestion.questionType == questionTypeEnum.OneAnswer"
                                             [checked]="option.isSelected">
                                         <span></span>
+                                        <div class="ml-5">
+                                            {{ option.answer }}
+                                        </div>
                                     </label>
-                                    {{ option.answer }}
+                                    
                                 </div>
                                 <div class="data-container answer mx-5 my-2"
                                     *ngIf="testQuestion.questionType == questionTypeEnum.FreeText">
