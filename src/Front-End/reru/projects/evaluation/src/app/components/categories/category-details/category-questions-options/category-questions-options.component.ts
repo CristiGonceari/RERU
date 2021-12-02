@@ -18,7 +18,7 @@ import { Location } from '@angular/common';
 export class CategoryQuestionsOptionsComponent implements OnInit {
 
   options = [];
-  questionId;
+  questionId: number;
   type: number;
   newList = [];
   status: number;
@@ -37,6 +37,9 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.subsribeForParams();
+    if(this.questionId != null){
+      this.subsribeForParams();
+    }
   }
 
   subsribeForParams(): void {

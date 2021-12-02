@@ -15,5 +15,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits
         public int CategoryId { get; set; }
         public List<string> Tags { get; set; }
         public int QuestionPoints { get; set; }
+        public int OptionsCount { get; set; }
+        public bool IsReadyToActivate { get; set; }
     }
 }

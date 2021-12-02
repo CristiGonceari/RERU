@@ -75,7 +75,7 @@ export class AddEditTestTypesComponent implements OnInit {
 				name: this.formBuilder.control((test && test.name) || null, [Validators.required]),
 				questionCount: this.formBuilder.control((test && test.questionCount) || null, [Validators.required]),
 				duration: this.formBuilder.control((test && test.duration) || null, [Validators.required]),
-				minPercent: this.formBuilder.control((test && test.minPercent) || null, [Validators.required]),
+				minPercent: this.formBuilder.control(test && test.minPercent, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*\.)?$/)]),
 				mode: this.formBuilder.control((test && !isNaN(test.mode) ? test.mode : null), [Validators.required]),
 				status: this.statusEnum.Draft,
 			});
@@ -86,7 +86,7 @@ export class AddEditTestTypesComponent implements OnInit {
 				name: this.formBuilder.control(null, [Validators.required]),
 				questionCount: this.formBuilder.control(null, [Validators.required]),
 				duration: this.formBuilder.control(null, [Validators.required]),
-				minPercent: this.formBuilder.control(null, [Validators.required]),
+				minPercent: this.formBuilder.control([Validators.required] , [Validators.pattern(/^-?(0|[1-9]\d*\.)?$/)]),
 				mode: this.formBuilder.control(0, [Validators.required]),
 				status: this.statusEnum.Draft,
 			});
@@ -115,7 +115,13 @@ export class AddEditTestTypesComponent implements OnInit {
 		}
 	}
 
+	parseNumber(){
+		let parsedNumber = this.testForm.get("minPercent").value;
+		this.testForm.get("minPercent").setValue(Math.round(parsedNumber))
+	}
+
 	edit() {
+		this.parseNumber();
 		this.testTypeService.editTestType({ data: this.testForm.value }).subscribe(() => {
 			this.backClicked();
 			this.notificationService.success('Success', 'Test type was successfully updated', NotificationUtil.getDefaultMidConfig());
@@ -123,6 +129,7 @@ export class AddEditTestTypesComponent implements OnInit {
 	}
 
 	add() {
+		this.parseNumber();
 		this.testTypeService.addTestType({data: this.testForm.value}).subscribe(res => { 
 			this.testId = res.data; 
 			this.settings();

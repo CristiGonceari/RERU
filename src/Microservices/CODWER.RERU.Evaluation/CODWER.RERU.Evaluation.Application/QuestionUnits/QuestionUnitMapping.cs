@@ -14,7 +14,9 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits
                 .ForMember(dto => dto.UsedInTestsCount, options => options.MapFrom(entity => entity.TestQuestions.Count))
                 .ForMember(dto => dto.CategoryName, options => options.MapFrom(entity => entity.QuestionCategory.Name))
                 .ForMember(dto => dto.Tags, options => options.MapFrom(entity => entity.QuestionUnitTags.Select(x => x.Tag.Name)))
-                .ForMember(dto => dto.CategoryId, options => options.MapFrom(entity => entity.QuestionCategory.Id));
+                .ForMember(dto => dto.CategoryId, options => options.MapFrom(entity => entity.QuestionCategory.Id))
+                .ForMember(dto => dto.OptionsCount, options => options.MapFrom(entity => entity.Options.Count()))
+                ;
 
             CreateMap<QuestionUnit, ActiveQuestionUnitValueDto>()
                 .ForMember(dto => dto.CategoryId, options => options.MapFrom(entity => entity.QuestionCategory.Id));
