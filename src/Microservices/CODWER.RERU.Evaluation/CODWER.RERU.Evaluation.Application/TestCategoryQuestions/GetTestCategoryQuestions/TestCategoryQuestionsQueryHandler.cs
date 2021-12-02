@@ -33,7 +33,8 @@ namespace CODWER.RERU.Evaluation.Application.TestCategoryQuestions
             result.SequenceType = testTypeQuestionCategory.SequenceType;
             result.QuestionCategoryName = testTypeQuestionCategory.QuestionCategory.Name;
 
-            if (testTypeQuestionCategory.SequenceType == SequenceEnum.Random)
+            
+            if (testTypeQuestionCategory.SequenceType == SequenceEnum.Random && testTypeQuestionCategory.SelectionType == SelectionEnum.All)
             {
 
                 var allQuestions = _appDbContext.QuestionUnits
