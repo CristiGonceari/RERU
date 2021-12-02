@@ -576,7 +576,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         private string GetColumnFromType(QuestionTypeEnum questionType)
         {
-            if(questionType==QuestionTypeEnum.FreeText|| questionType == QuestionTypeEnum.HashedAnswer)
+            if(questionType==QuestionTypeEnum.FreeText || questionType == QuestionTypeEnum.HashedAnswer)
             {
                 return "F";
             }
