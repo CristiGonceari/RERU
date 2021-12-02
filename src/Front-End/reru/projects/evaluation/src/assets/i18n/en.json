@@ -607,6 +607,7 @@
     "03001721": "Only closed test type may be cloned",
     "03001722": "Invalid time",
     "03001723": "Invalid poll",
+    "03001724": "Only draft tests can be deleted",
     "03001801": "Question count reached the limit",
     "03001802": "Invalid sequence",
     "03001803": "Invalid selection type",

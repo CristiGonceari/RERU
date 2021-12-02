@@ -607,6 +607,7 @@
     "03001721": "Numai tipul de test închis poate fi clonat",
     "03001722": "Ora nevalidă",
     "03001723": "Sondaj nevalid",
+    "03001724": "Doar testul in status maculator poate fi sters",
     "03001801": "Numărul de întrebări a atins limita",
     "03001802": "Secvență nevalidă",
     "03001803": "Tip de selecție nevalid",
