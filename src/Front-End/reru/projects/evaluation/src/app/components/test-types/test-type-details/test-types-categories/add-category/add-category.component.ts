@@ -48,11 +48,8 @@ export class AddCategoryComponent implements OnInit {
 
   onSelect() {
     this.tableData = {
-      questionCount: this.questionCount,
+      type: this.questionType,
       questionCategoryId: this.questionCategoryId,
-      sequenceType: this.orderQuestions,
-      selectQuestions: this.selectQuestions,
-      type: this.questionType
     }
   }
 }

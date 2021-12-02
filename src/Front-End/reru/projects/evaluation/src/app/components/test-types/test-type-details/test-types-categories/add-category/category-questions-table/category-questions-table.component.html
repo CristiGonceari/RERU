@@ -1,26 +1,62 @@
 <app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
-  [colorClass]="'text-primary'">
+    [colorClass]="'text-primary'">
 </app-loading-spinner>
 
 <div *ngIf="!isLoading && questions.length">
+    <div class="card-title">
+        <h3 class="card-label text-capitalize ml-10">{{ questionCategoryName }}</h3>
+    </div>
     <div class="d-flex p-0 justify-content-between">
-        <div class="card-title">
-          <h3 class="card-label text-capitalize ml-10">{{ questionCategoryName }}</h3>
-        </div>
-        <div class="card-toolbar d-flex align-items-baseline">
-          <app-confirm-button class="btn h-35px mr-5" [value]="'Refresh'" [class.d-none]="!previewMode" (handle)="refresh()"></app-confirm-button>
-
-            <label class="checkbox h-35px h5">
-                <input name="Preview" type="checkbox" [(ngModel)]="previewMode" (click)="previewQuestions()">
-                <span class="mr-2"></span> {{'button.preview' | translate}}
-            </label>
+        <div class="d-flex w-100">
+            <div class="flex-column col-10">
+                <div class="row col-12 w-100">
+                    <div class="col-lg-4 col-6">
+                        <div class="d-flex flex-column">
+                            <label class="col-form-label pb-0 text-dark-50">{{'questions.select-questions' |
+                                translate}}</label>
+                            <select class="form-control h-35px" name="selectQuestions" [(ngModel)]="selectQuestions" (ngModelChange)="onChangeSelection($event)">
+                                <option selected value='0' class="default-option"> {{ 'button.all' | translate }}
+                                </option>
+                                <option value='1'> {{ 'questions.select' | translate }} </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-6">
+                        <div class="d-flex flex-column">
+                            <label class="col-form-label pb-0 text-dark-50">{{'questions.order-questions' |
+                                translate}}</label>
+                            <select class="form-control h-35px" name="orderQuestions" [(ngModel)]="orderQuestions" (ngModelChange)="onChangeSequence($event)">
+                                <option selected value='0' class="default-option"> {{'button.random' | translate}}
+                                </option>
+                                <option value='1' *ngIf="selectQuestions == 1"> {{'button.ordered' | translate}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-6">
+                        <div class="d-flex flex-column">
+                            <label class="col-form-label pb-0 text-dark-50">{{'tests.questions' | translate}}</label>
+                            <input type="number" class="form-control form-control-lg  h-35px"
+                                [(ngModel)]="questionCount" name="questionCount" placeholder="Question count">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-6 mt-3 p-0">
+                <div class="w-100 h-100 mt-6">
+                    <app-confirm-button (handle)="previewQuestions()" [disabled]="!questionCount" [value]="'button.preview' | translate"
+                        [width]="'100%'">
+                    </app-confirm-button>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable">
+    <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+        id="kt_datatable">
         <table class="datatable table font-size-lg" style="overflow: visible">
             <thead class="text-uppercase text-muted">
                 <tr>
-                    <th scope="col" class="text-left" style="width: 75px" *ngIf="!previewMode" [ngClass]="{'d-none': selectQuestions === 0}"></th>
+                    <th scope="col" class="text-left" style="width: 75px" *ngIf="selectQuestions == 1 && !preview"></th>
                     <th scope="col" class="text-left" style="width: 50px"> # </th>
                     <th scope="col" class="text-left">{{'tests.questions' | translate}}</th>
                     <th scope="col" class="text-left" style="width: 150px">{{'tests.status' | translate}}</th>
@@ -28,11 +64,11 @@
                 </tr>
             </thead>
             <tbody class="datatable-body" dragula="Questions" [(dragulaModel)]="itemsToAdd">
-                <tr *ngFor="let item of questions; let i = index" [ngClass]="{'disabled-area': !previewMode || (sequenceType === 0) }">
-                    <td [ngClass]="{'d-none': selectQuestions === 0}" *ngIf="!previewMode" >
+                <tr *ngFor="let item of questions; let i = index" [ngClass]="{'disabled-area': !preview || (orderQuestions == 0)}">
+                    <td *ngIf="selectQuestions == 1 && !preview">
                         <label class="checkbox mx-5 d-block" (change)="selectQuestion($event)">
                             <input name="selected" type="checkbox" [value]="item.id">
-                            <span [ngClass]="{'show-cursor': !previewMode}"></span>
+                            <span [ngClass]="{'show-cursor': !preview }"></span>
                         </label>
                     </td>
                     <td>{{ i + 1 }}</td>
@@ -41,21 +77,34 @@
                     <td>{{ 'statuses.' + qType[item.questionType] | translate}}</td>
                 </tr>
             </tbody>
+            <tbody class="datatable-body" *ngIf="!questions.length">
+                <tr>
+                    <td colspan="2" class="text-center">
+                        {{ 'message.no-record' | translate }}
+                    </td>
+                </tr>
+            </tbody>
         </table>
         <div class="text-right border-top pt-7">
-            <app-button class="btn mr-2" [value]="'button.reset' | translate" (handle)="reset()">
-            </app-button>
-            <app-add-button class="btn" [disabled]="!previewMode" [value]="'button.confirm' | translate" (handle)="addQuestions(itemsToAdd)">
-            </app-add-button>
+            <div class="d-flex justify-content-between">
+                <div class="d-flex">
+                    <app-confirm-button class="btn h-35px mr-5" [value]="'Refresh'" *ngIf="preview" (handle)="refresh()"></app-confirm-button>
+                </div>
+                <div class="d-flex">
+                    <app-button class="btn mr-2" [value]="'button.reset' | translate" (handle)="reset()"></app-button>
+                    <app-add-button class="btn" [disabled]="!preview" [value]="'button.confirm' | translate" (handle)="addQuestions(itemsToAdd)"></app-add-button>
+                </div>
+            </div>    
         </div>
     </div>
-    <div class="card-body pb-0 d-flex justify-content-between" *ngIf="!previewMode">
+    <div class="card-body pb-0 d-flex justify-content-between">
         <ngb-pagination [collectionSize]="pagination.totalCount" [(page)]="pagination.currentPage"
             [pageSize]="pagination.pageSize" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
             (pageChange)="list($event)">
         </ngb-pagination>
-        <div class="d-flex align-items-center py-3" >
-            <select class="btn text-primary font-weight-bold mr-4 border-0 bg-light w-75px" [(ngModel)]="pagination.pageSize"
+        <div class="d-flex align-items-center py-3">
+            <select class="btn text-primary font-weight-bold mr-4 border-0 bg-light w-75px"
+                [(ngModel)]="pagination.pageSize"
                 (ngModelChange)="list({page: pagination.currentPage, itemsPerPage: pagination.pageSize})">
                 <option value="10">10</option>
                 <option value="20">20</option>
@@ -63,9 +112,9 @@
                 <option value="50">50</option>
                 <option value="100">100</option>
             </select>
-    
+
             <span class="text-muted">
-                {{'pagination.displaing' | translate}} {{ pagination.pageSize }} 
+                {{'pagination.displaing' | translate}} {{ pagination.pageSize }}
                 {{'pagination.of' | translate}}
                 <b>{{ pagination.totalCount }}</b>
                 {{'pagination.records' | translate}}

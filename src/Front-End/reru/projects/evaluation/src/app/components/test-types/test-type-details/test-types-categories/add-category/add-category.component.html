@@ -35,53 +35,11 @@
                   </div>
                 </div>
               </div>
-              <div class="row col-12 w-100">
-                <div class="col-lg-4 col-6">
-                  <div class="d-flex flex-column">
-                    <label class="col-form-label pb-0 text-dark-50">{{'tests.questions' | translate}}</label>
-                    <input type="number" class="form-control form-control-lg  h-35px" [(ngModel)]="questionCount"
-                      name="questionCount" placeholder="Question count" (change)="onSelect()">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-6">
-                  <div class="d-flex flex-column">
-                    <label class="col-form-label pb-0 text-dark-50">{{'questions.select-questions' | translate}}</label>
-                    <select class="form-control h-35px" name="selectQuestions" [(ngModel)]="selectQuestions" (change)="onSelect()">
-                      <option selected value='0' class="default-option"> {{ 'button.all' | translate }} </option>
-                      <option value='1'> {{ 'questions.select' | translate }} </option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-6">
-                  <div class="d-flex flex-column">
-                    <label class="col-form-label pb-0 text-dark-50">{{'questions.order-questions' | translate}}</label>
-                    <select class="form-control h-35px" name="orderQuestions" [(ngModel)]="orderQuestions" (change)="onSelect()">
-                      <option selected value='0' class="default-option"> {{'button.random' | translate}} </option>
-                      <option value='1' *ngIf="selectQuestions == 1"> {{'button.ordered' | translate}} </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="row col-12 w-100">
-                <div class="col-lg-12 col-6 mt-6">
-                  <div class="d-inline-flex align-items-center">
-                    <label class="checkbox checkbox-inline mr-3">
-                      <input type="checkbox" name="startBeforeProgrammation" [(ngModel)]="setLimit">
-                      <span></span>
-                    </label>
-                    <span class="mr-2">
-                      {{'options.set-time-limit' | translate}}
-                    </span>
-                    <input *ngIf="setLimit" [(ngModel)]="timeLimit" class="form-control form-control-solid h-30px" 
-                      style="width: 70px;" type="number" name="timeLimit" min="0">
-                  </div>
-                </div>
-              </div>
             </div>
             <div class="col-lg-2 col-6 mt-3">
               <div class="w-100 h-100 mt-6">
                 <app-confirm-button (handle)="questionsTable.initData(tableData)" [value]="'button.search' | translate"
-                  [width]="'100%'" [disabled]="!(questionCategoryId && questionCount && questionType)">
+                  [width]="'100%'" [disabled]="!questionCategoryId">
                 </app-confirm-button>
               </div>
             </div>
