@@ -39,4 +39,5 @@ export class TestTypeQuestionCategoryService extends AbstractService {
 	setSequence(input): Observable<any> {
 		return this.http.post(`${this.baseUrl}/${this.urlRoute}/set-sequence`, input);
 	}
+	
 }

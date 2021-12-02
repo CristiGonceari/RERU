@@ -1,0 +1,74 @@
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+  <div class="card card-custom mb-7" style="margin-left: 16px;">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+      <div class="card-title"><b>{{ categoriesName }}</b></div>
+    </div>
+    <div class="card-body">
+      <div class="d-flex align-items-center mb-1 bg-light-warning rounded p-5">
+        <span class="svg-icon svg-icon-warning mr-5">
+          <span class="svg-icon svg-icon-primary svg-icon-2x">
+            <svg
+              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+              viewBox="0 0 24 24" version="1.1">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <path
+                  d="M17,12 L18.5,12 C19.3284271,12 20,12.6715729 20,13.5 C20,14.3284271 19.3284271,15 18.5,15 L5.5,15 C4.67157288,15 4,14.3284271 4,13.5 C4,12.6715729 4.67157288,12 5.5,12 L7,12 L7.5582739,6.97553494 C7.80974924,4.71225688 9.72279394,3 12,3 C14.2772061,3 16.1902508,4.71225688 16.4417261,6.97553494 L17,12 Z"
+                  fill="#000000" />
+                <rect fill="#000000" opacity="0.3" x="10" y="16" width="4" height="4" rx="2" />
+              </g>
+            </svg>
+          </span>
+        </span>
+        <div class="d-flex flex-column flex-grow-1 mr-2">
+          <a class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">{{ 'test-template.number-of-questions' | translate}}</a>
+        </div>
+        <span class="font-weight-bolder text-warning py-1 font-size-lg">{{ usedQuestionCount }}</span>
+      </div>
+      <div class="d-flex align-items-center mb-9 bg-light-warning rounded p-5">
+        <span class="svg-icon svg-icon-warning mr-5">
+          <span class="svg-icon svg-icon-primary svg-icon-2x">
+            <svg
+              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+              viewBox="0 0 24 24" version="1.1">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <path
+                  d="M17,12 L18.5,12 C19.3284271,12 20,12.6715729 20,13.5 C20,14.3284271 19.3284271,15 18.5,15 L5.5,15 C4.67157288,15 4,14.3284271 4,13.5 C4,12.6715729 4.67157288,12 5.5,12 L7,12 L7.5582739,6.97553494 C7.80974924,4.71225688 9.72279394,3 12,3 C14.2772061,3 16.1902508,4.71225688 16.4417261,6.97553494 L17,12 Z"
+                  fill="#000000" />
+                <rect fill="#000000" opacity="0.3" x="10" y="16" width="4" height="4" rx="2" />
+              </g>
+            </svg>
+          </span>
+        </span>
+        <div class="d-flex flex-column flex-grow-1 mr-2">
+          <a class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">{{ 'test-template.order-of-questions' | translate}}</a>
+        </div>
+        <span class="font-weight-bolder text-warning py-1 font-size-lg">{{'statuses.' + sequence[sequenceType] | translate}}</span>
+      </div>
+      <table class="datatable table font-size-lg" style="overflow: visible">
+        <thead class="text-uppercase text-muted">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">{{ 'questions.question' | translate }}</th>
+            <th scope="col" style="width:200px">{{ 'questions.type' | translate }}</th>
+            <th scope="col" class="text-left" style="width: 155px">{{ 'tests.status' | translate }}</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of categoriesQuestions; let i = index">
+            <th>{{ i + 1}}</th>
+            <td>{{ item.question }}</td>
+            <td>{{'statuses.' + questionEnum[item.status] | translate}}</td>
+            <td>
+              <span class="font-size-lg" *ngIf="item.questionType">{{'statuses.' + type[item.questionType] | translate}}</span>
+            </td>
+            <td>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+      <app-button class="btn mr-3" [value]="'button.close' | translate" (click)="close()"></app-button>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!isActive">
     <div class="card card-custom mb-7" style="margin-left: 16px;">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title"><b>{{'categories.categories' | translate}}</b></div>
@@ -9,7 +9,8 @@
         </div>
         <div class="card-body">
             <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-            <div *ngIf="!isLoading" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+            <div *ngIf="!isLoading"
+                class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
                 id="kt_datatable">
                 <div class="d-flex align-items-center mb-5">
                     <span class="h6 mb-0">{{'button.random' | translate}}</span>
@@ -21,7 +22,6 @@
                     </span>
                     <span class="h6 mb-0">{{'button.ordered' | translate}}</span>
                 </div>
-
                 <table class="datatable table font-size-lg" style="overflow: visible">
                     <thead class="text-uppercase text-muted">
                         <tr>
@@ -35,9 +35,10 @@
                     <tbody dragula="Categories" [(dragulaModel)]="categories">
                         <tr *ngFor="let item of categories; let i = index">
                             <td [ngClass]="{'disabled-area': !sequence}">{{ i + 1 }}</td>
-                            <td [ngClass]="{'disabled-area': !sequence}">{{ item.categoryName }}</td>
-                            <td [ngClass]="{'disabled-area': !sequence}">{{ item.questionCount }}</td>
-                            <td [ngClass]="{'disabled-area': !sequence}"><label *ngIf="item.questionType">{{'statuses.' + type[item.questionType] | translate}}</label></td>
+                            <td [ngClass]="{'disabled-area': !sequence}" >{{ item.categoryName }}</td>
+                            <td [ngClass]="{'disabled-area': !sequence}"><div (click)="demo(item.questionType, item.id)">{{ item.questionCount }}</div></td>
+                            <td [ngClass]="{'disabled-area': !sequence}"><label *ngIf="item.questionType">{{'statuses.'
+                                    + type[item.questionType] | translate}}</label></td>
                             <td data-field="Actions" data-autohide-disabled="false"
                                 class="datatable-cell datatable-cell-sort p-3">
                                 <div style="overflow: visible; position: relative; width: 0px">
@@ -59,9 +60,13 @@
                                         </div>
                                         <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                                             <div ngbDropdownMenu aria-labelledby="action1">
-                                                <button [routerLink]="['../../../delete-category', item.id]" 
+                                                <button [routerLink]="['../../../delete-category', item.id]"
                                                     class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                                     {{ 'button.delete' | translate }}
+                                                </button>
+                                                <button  (click)="openView(item.id)"
+                                                    class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                                                    {{ 'button.view' | translate }}
                                                 </button>
                                             </div>
                                         </div>
@@ -82,3 +87,5 @@
         </div>
     </div>
 </div>
+<div>
+

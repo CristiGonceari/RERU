@@ -139,5 +139,6 @@
 
         //user
         public static string INVALID_USER = "03002001";
+        public static string INVALID_TEST_TYPE_QUESTION_CATEGORY = "03002002";
     }
 }

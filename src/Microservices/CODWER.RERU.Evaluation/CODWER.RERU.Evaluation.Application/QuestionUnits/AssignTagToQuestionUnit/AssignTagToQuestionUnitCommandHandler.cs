@@ -52,29 +52,34 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AssignTagToQuestionUn
                 }
             }
 
-            foreach (var tag in request.Tags)
+            if (request.Tags != null)
             {
-                if (existingQuestionUnitTags.Any(x => x.Tag.Name.Equals(tag)))
+                foreach (var tag in request.Tags)
                 {
-                    continue;
+                    if (existingQuestionUnitTags.Any(x => x.Tag.Name.Equals(tag)))
+                    {
+                        continue;
+                    }
+
+                    var existingTag = _appDbContext.Tags.FirstOrDefault(x => x.Name.Equals(tag));
+
+                    if (existingTag == null)
+                    {
+                        existingTag = new Tag() { Name = tag };
+
+                        await _appDbContext.Tags.AddAsync(existingTag);
+                        await _appDbContext.SaveChangesAsync();
+                    }
+
+                    questionUnitTagsToAdd.Add(new QuestionUnitTag()
+                    {
+                        QuestionUnitId = request.QuestionUnitId,
+                        TagId = existingTag.Id
+                    });
                 }
 
-                var existingTag = _appDbContext.Tags.FirstOrDefault(x => x.Name.Equals(tag));
-
-                if (existingTag == null)
-                {
-                    existingTag = new Tag() { Name = tag };
-
-                    await _appDbContext.Tags.AddAsync(existingTag);
-                    await _appDbContext.SaveChangesAsync();
-                }
-
-                questionUnitTagsToAdd.Add(new QuestionUnitTag()
-                {
-                    QuestionUnitId = request.QuestionUnitId,
-                    TagId = existingTag.Id
-                });
             }
+
 
             if (questionUnitTagsToAdd.Count > 0)
             {

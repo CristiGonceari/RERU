@@ -350,7 +350,9 @@
     "NotCorrect": "Incorecte",
     "Skipped": "Omise",
     "clone": "Clonați",
-    "Select": "Selectați"
+    "Select": "Selectați",
+    "Random": "Aleatorie",
+    "Strict": "Strictă"
   },
   "options": {
     "start-without-confirmation": "Este posibil să porniți testul fără confirmare",
@@ -488,6 +490,10 @@
     "detach-evaluator-msg": "Sigur doriți să eliminați acest evaluator din acest eveniment?",
     "show-candidate": "Afișați numele candidatului"
   },
+  "test-template":{
+    "number-of-questions":"Numărul de întrebări",
+    "order-of-questions":"Ordinea întrebărilor"
+},
   "plans": {
     "plans": "Planuri",
     "plan": "Plan",

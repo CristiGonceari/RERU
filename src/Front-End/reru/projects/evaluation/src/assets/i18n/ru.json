@@ -350,7 +350,9 @@
     "NotCorrect": "Неправильныe",
     "Skipped": "Пропущенные",
     "clone": "Клонировать",
-    "Select": "Выбрать"
+    "Select": "Выбрать",
+    "Random": "Cлучайный",
+    "Strict": "Cтрогий"
   },
   "options": {
     "start-without-confirmation": "Возможен запуск теста без подтверждения",
@@ -490,6 +492,10 @@
     "detach-evaluator-msg": "Вы уверенны, что хотите удалить этого проверяющего из этого события?",
     "show-candidate": "Показывать имя кандидата"
   },
+  "test-template":{
+    "number-of-questions":"Количество вопросов",
+    "order-of-questions":"Порядок вопросов"
+},
   "plans": {
     "plans": "Планы",
     "plan": "План",

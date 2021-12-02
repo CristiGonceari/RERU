@@ -2,3 +2,10 @@
     cursor: default;
     pointer-events: none !important;
 } 
+.font-size-lg{
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}

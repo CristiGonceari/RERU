@@ -24,6 +24,7 @@ export class QuestionOptionsComponent implements OnInit {
   isLoading: boolean = true;
   disable: boolean = false;
   edit: boolean = false;
+  click: boolean = false;
 
   constructor(private optionService: OptionsService, 
     private route: ActivatedRoute, 
@@ -50,13 +51,13 @@ export class QuestionOptionsComponent implements OnInit {
       if (el.id == event.target.value) {
         el.isCorrect = event.target.checked;
       } else {
-        if (this.type == 3) {
+        if (this.type == 3 || !this.click) {
           el.isCorrect = false;
         }
       }
     });
   }
-
+  
   updateOptions() {
     this.options.forEach(el => {
       this.optionService.edit(this.parse(el)).subscribe(() => {

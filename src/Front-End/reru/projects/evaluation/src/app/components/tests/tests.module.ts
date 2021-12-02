@@ -1,7 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { TestsRoutingModule } from './tests-routing.module';
-import { TestListTableComponent } from './test-list/test-list-table/test-list-table.component';
 import { AddTestComponent } from './add-test-list/add-test/add-test.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,11 +23,11 @@ import { TestListComponent } from './test-list/test-list.component';
 import { ViewTestResultComponent } from './view-test-result/view-test-result.component';
 import { TestVerificationProcessComponent } from './test-verification-process/test-verification-process.component';
 import { AddTestListComponent } from './add-test-list/add-test-list.component';
+import { TestListTableComponent } from './test-list/test-list-table/test-list-table.component';
 
 
 @NgModule({
   declarations: [
-    TestListTableComponent,
     AddTestComponent,
     OnePerPagePerformingTestComponent,
     SearchStatusComponent,
@@ -39,6 +38,7 @@ import { AddTestListComponent } from './add-test-list/add-test-list.component';
     ViewTestResultComponent,
     TestVerificationProcessComponent,
     AddTestListComponent,
+    TestListTableComponent
   ],
   imports: [
     CommonModule,

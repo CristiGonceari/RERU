@@ -28,7 +28,7 @@ export class QuestionDetailsComponent implements OnInit {
   ) {  }
   
   ngOnInit(): void {
-   this.subsribeForParams();
+    this.subsribeForParams();
   }
 
   getList(){
@@ -66,11 +66,10 @@ export class QuestionDetailsComponent implements OnInit {
 	}
 
   deleteQuestion(id): void{
-		this.questionService.delete(id).subscribe(() => 
+		this.questionService.delete(id).subscribe(() =>
 		{
 			this.notificationService.success('Success', 'Question was successfully deleted', NotificationUtil.getDefaultMidConfig());
 			this.router.navigate(['/questions']);
-      this.getList();
 		});
 	}
 
