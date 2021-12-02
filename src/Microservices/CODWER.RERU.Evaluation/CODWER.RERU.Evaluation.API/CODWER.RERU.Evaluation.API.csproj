@@ -51,4 +51,19 @@
     <ProjectReference Include="..\CODWER.RERU.Evaluation.Data.Persistence\CODWER.RERU.Evaluation.Data.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="PdfTemplates\TestPage.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Rotativa\Linux\wkhtmltopdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Rotativa\Mac\wkhtmltopdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Rotativa\Windows\wkhtmltopdf.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

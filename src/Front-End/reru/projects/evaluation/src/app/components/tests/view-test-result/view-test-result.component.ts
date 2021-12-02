@@ -12,6 +12,7 @@ import { TestService } from '../../../utils/services/test/test.service';
 import { TestQuestionService } from '../../../utils/services/test-question/test-question.service';
 import { HashOptionInputComponent } from '../../../utils/components/hash-option-input/hash-option-input.component';
 import { NotificationUtil } from '../../../utils/util/notification.util';
+import { UserProfileService } from '../../../utils/services/user-profile/user-profile.service';
 
 @Component({
   selector: 'app-view-test-result',
@@ -22,6 +23,9 @@ export class ViewTestResultComponent implements OnInit {
 
   isDisabled = true;
   testId: number;
+  evaluatorId: number;
+  currentUserId: number;
+  testUserId: number
   index = 1;
   count: number;
   question: string;
@@ -55,7 +59,8 @@ export class ViewTestResultComponent implements OnInit {
     private testQuestionService: TestQuestionService,
     private translate: I18nService,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private userService: UserProfileService
   ) { 
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
@@ -65,6 +70,7 @@ export class ViewTestResultComponent implements OnInit {
   ngOnInit(): void {
     this.getSummary();
     this.getTestById();
+    this.getCurrentUserId();
     this.ngDoBoostrap();
     this.testQuestionService.setData(true);
   }
@@ -79,12 +85,27 @@ export class ViewTestResultComponent implements OnInit {
     this.testService.getTest(this.testId).subscribe(
       res => {
         this.testData = res.data;
+        this.evaluatorId = res.data.evaluatorId;
+        this.testUserId = res.data.userId;
+
+        if(this.currentUserId == this.evaluatorId || this.evaluatorId === null && this.testUserId)
+				{
+					this.testData = res.data;
+				} else {
+					this.router.navigate(['../../../tests'], { relativeTo: this.activatedRoute })
+				}
       },
       error => {
         this.notificationService.error('Server error occured!', null, NotificationUtil.getDefaultMidConfig());
       }
     );
   }
+
+  getCurrentUserId(): void{
+		this.userService.getCurrentUser().subscribe(response => {
+			this.currentUserId = response.data.id;
+		  })
+	}
 
   getSummary(): void {
     this.verifyService.getSummary(this.testId).subscribe(

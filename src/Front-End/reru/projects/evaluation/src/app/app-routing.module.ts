@@ -13,6 +13,7 @@ import { LayoutsComponent } from './components/layouts/layouts.component';
 import { AuthenticationCallbackComponent, AuthenticationGuard } from '@erp/shared';
 import { CategoriesRoutingModule } from './components/categories/categories-routing.module';
 import { PermissionRouteGuard } from '@erp/shared';
+import { Exception404Component } from './utils/exceptions/404/404.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
@@ -87,7 +88,8 @@ const routes: Routes = [
 			}
 		]
 	},
-	// { path: 'public', loadChildren: () => import('./components/public/public.module').then(m => m.PublicModule) },
+	{ path: '404', component: Exception404Component },
+	{ path: '**', redirectTo: '404' }
 ];
 
 @NgModule({
@@ -96,6 +98,8 @@ const routes: Routes = [
 		RouterModule.forRoot(routes, {
 			useHash: true,
 			scrollPositionRestoration: 'enabled',
+			onSameUrlNavigation: 'reload',
+			paramsInheritanceStrategy: 'always'
 		}),
 		LocalizeRouterModule.forRoot(routes, {
 			parser: {
