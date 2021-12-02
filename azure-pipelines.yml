@@ -110,7 +110,7 @@ stages:
               repository: "cvuintell/reru-public-gateway"
               Dockerfile: "docker-files/Dockerfile-RERU-PublicGateway"
               tags: $(tag)
-            condition: and(succeeded(), eq(variables['BuildPublicGateway'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildPublicGateway'], 'True'))
 
           - task: Docker@2
             displayName: "Push Public Gateway image"
@@ -120,7 +120,7 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
-            condition: and(succeeded(), eq(variables['BuildPublicGateway'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildPublicGateway'], 'True'))
 
           - task: Docker@2
             displayName: Build Internal Gateway image
@@ -132,7 +132,7 @@ stages:
               Dockerfile: "docker-files/Dockerfile-RERU-InternalGateway"
               tags: |
                 $(tag)
-            condition: and(succeeded(), eq(variables['BuildInternalGateway'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildInternalGateway'], 'True'))
 
           - task: Docker@2
             displayName: "Push Internal Gateway image"
@@ -142,7 +142,7 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
-            condition: and(succeeded(), eq(variables['BuildInternalGateway'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildInternalGateway'], 'True'))
 
           - task: Docker@2
             displayName: Build Identity New image
@@ -154,7 +154,7 @@ stages:
               Dockerfile: "docker-files/Dockerfile-RERU-Identity"
               tags: |
                 $(tag)
-            condition: and(succeeded(), eq(variables['BuildIdentityNew'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildIdentityNew'], 'True'))
 
           - task: Docker@2
             displayName: "Push Identity New image"
@@ -164,7 +164,7 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
-            condition: and(succeeded(), eq(variables['BuildIdentityNew'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildIdentityNew'], 'True'))
 
           - task: Docker@2
             displayName: Build Identity Migrator back end image
@@ -176,7 +176,7 @@ stages:
               Dockerfile: "docker-files/Dockerfile-RERU-IdentityMigrator"
               tags: |
                 $(tag)
-            condition: and(succeeded(), eq(variables['BuildIdentityMigrator'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildIdentityMigrator'], 'True'))
 
           - task: Docker@2
             displayName: "Push Identity Migrator back end image"
@@ -186,7 +186,7 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
-            condition: and(succeeded(), eq(variables['BuildIdentityMigrator'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildIdentityMigrator'], 'True'))
 
           - task: Docker@2
             displayName: Build Core front end image
@@ -198,7 +198,7 @@ stages:
               Dockerfile: "docker-files/Dockerfile-RERU-Core-FE"
               tags: |
                 $(tag)
-            condition: and(succeeded(), eq(variables['BuildCoreFE'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildCoreFE'], 'True'))
 
           - task: Docker@2
             displayName: "Push Core front end image"
@@ -208,7 +208,7 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
-            condition: and(succeeded(), eq(variables['BuildCoreFE'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildCoreFE'], 'True'))
 
           - task: Docker@2
             displayName: Build Core image
@@ -220,7 +220,7 @@ stages:
               Dockerfile: "docker-files/Dockerfile-RERU-Core"
               tags: |
                 $(tag)
-            condition: and(succeeded(), eq(variables['BuildCore'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildCore'], 'True'))
 
           - task: Docker@2
             displayName: "Push Core Image"
@@ -230,7 +230,7 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
-            condition: and(succeeded(), eq(variables['BuildCore'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildCore'], 'True'))
 
           - task: Docker@2
             displayName: Build Personal front end  image
@@ -242,7 +242,7 @@ stages:
               Dockerfile: "docker-files/Dockerfile-RERU-Personal-FE"
               tags: |
                 $(tag)
-            condition: and(succeeded(), eq(variables['BuildPersonalFE'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildPersonalFE'], 'True'))
 
           - task: Docker@2
             displayName: "Push Personal front end image"
@@ -252,7 +252,7 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
-            condition: and(succeeded(), eq(variables['BuildPersonalFE'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildPersonalFE'], 'True'))
 
           - task: Docker@2
             displayName: Build Personal back end image
@@ -264,7 +264,7 @@ stages:
               Dockerfile: "docker-files/Dockerfile-RERU-Personal"
               tags: |
                 $(tag)
-            condition: and(succeeded(), eq(variables['BuildPersonal'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildPersonal'], 'True'))
 
           - task: Docker@2
             displayName: "Push Personal back end image"
@@ -274,7 +274,7 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
-            condition: and(succeeded(), eq(variables['BuildPersonal'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildPersonal'], 'True'))
 
           - task: Docker@2
             displayName: Build Evaluation front end  image
@@ -286,7 +286,7 @@ stages:
               Dockerfile: "docker-files/Dockerfile-RERU-Evaluation-FE"
               tags: |
                 $(tag)
-            condition: and(succeeded(), eq(variables['BuildEvaluationFE'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildEvaluationFE'], 'True'))
 
           - task: Docker@2
             displayName: "Push Evaluation front end image"
@@ -296,7 +296,7 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
-            condition: and(succeeded(), eq(variables['BuildEvaluationFE'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildEvaluationFE'], 'True'))
 
           - task: Docker@2
             displayName: Build Evaluation back end image
@@ -308,7 +308,7 @@ stages:
               Dockerfile: "docker-files/Dockerfile-RERU-Evaluation"
               tags: |
                 $(tag)
-            condition: and(succeeded(), eq(variables['BuildEvaluation'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildEvaluation'], 'True'))
 
           - task: Docker@2
             displayName: "Push Evaluation back end image"
@@ -318,7 +318,7 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
-            condition: and(succeeded(), eq(variables['BuildEvaluation'], 'True'))
+            #condition: and(succeeded(), eq(variables['BuildEvaluation'], 'True'))
 
           - task: CmdLine@2
             displayName: Clean all docker resources
