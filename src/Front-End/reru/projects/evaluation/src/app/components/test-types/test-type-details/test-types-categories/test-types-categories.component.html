@@ -42,7 +42,7 @@
                             <td data-field="Actions" data-autohide-disabled="false"
                                 class="datatable-cell datatable-cell-sort p-3">
                                 <div style="overflow: visible; position: relative; width: 0px">
-                                    <div ngbDropdown class="dropdown dropdown-inline" *ngIf="status == 1">
+                                    <div ngbDropdown class="dropdown dropdown-inline">
                                         <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                                             <span class="svg-icon svg-icon-md" ngbDropdownToggle>
                                                 <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +60,7 @@
                                         </div>
                                         <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                                             <div ngbDropdownMenu aria-labelledby="action1">
-                                                <button [routerLink]="['../../../delete-category', item.id]"
+                                                <button [routerLink]="['../../../delete-category', item.id]" *ngIf="status == 1"
                                                     class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                                     {{ 'button.delete' | translate }}
                                                 </button>
