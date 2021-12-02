@@ -21,8 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.DeleteTestType
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x.Id)
-                .Must(x => appDbContext.TestTypes.First(tt => tt.Id == x).Status == TestTypeStatusEnum.Draft ||
-                           appDbContext.TestTypes.First(tt => tt.Id == x).Status == TestTypeStatusEnum.Canceled)
+                .Must(x => appDbContext.TestTypes.First(tt => tt.Id == x).Status == TestTypeStatusEnum.Draft)
                 .WithErrorCode(ValidationCodes.ONLY_INACTIVE_TEST_CAN_BE_DELETED);
         }
     }
