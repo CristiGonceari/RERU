@@ -1,21 +1,27 @@
 ﻿using FluentValidation;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypeByStatus;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
+using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 {
      public class AddTestCommandValidator : AbstractValidator<AddTestCommand>
     {
         private readonly AppDbContext _appDbContext;
-        public AddTestCommandValidator(AppDbContext appDbContext)
+        private readonly IMediator _mediator;
+        public AddTestCommandValidator(AppDbContext appDbContext, IMediator mediator)
         {
             _appDbContext = appDbContext;
+            _mediator = mediator;
 
             RuleFor(r => r.Data)
                 .NotNull()
@@ -53,9 +59,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                 When(r => !r.Data.EvaluatorId.HasValue && !r.Data.EventId.HasValue, () =>
                 {
                     RuleFor(x => x.Data)
-                        .Must(x => appDbContext.TestTypeQuestionCategories
-                            .Where(tt => tt.TestTypeId == x.TestTypeId)
-                            .All(tt => tt.QuestionType == QuestionTypeEnum.OneAnswer))
+                        .MustAsync((x, cancellation) => IsOnlyOneAnswerTest(x))
                         .WithErrorCode(ValidationCodes.MUST_ADD_EVENT_OR_EVALUATOR);
                 });
 
@@ -85,5 +89,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                 });
             });
         }
-    }
+
+        private async Task<bool> IsOnlyOneAnswerTest(AddEditTestDto data)
+        {
+            var dataList = await _mediator.Send(new GetTestTypeByStatusQuery { TestTypeStatus = TestTypeStatusEnum.Active });
+
+            var result = dataList.FirstOrDefault(x => x.TestTypeId == data.TestTypeId);
+
+            return result.IsOnlyOneAnswer;
+        }
+     }
 }

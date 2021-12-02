@@ -1,11 +1,13 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypeByStatus;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.VerificationTests;
 using FluentValidation;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTestQuestion
@@ -14,10 +16,12 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
     {
         private readonly AppDbContext _appDbContext;
         private readonly IUserProfileService _userProfileService;
-        public GetTestQuestionForVerifyQueryValidator(AppDbContext appDbContext, IUserProfileService userProfileService)
+        private readonly IMediator _mediator;
+        public GetTestQuestionForVerifyQueryValidator(AppDbContext appDbContext, IUserProfileService userProfileService, IMediator mediator)
         {
             _appDbContext = appDbContext;
             _userProfileService = userProfileService;
+            _mediator = mediator;
 
             RuleFor(x => x.Data)
                 .Must(x => appDbContext.TestQuestions
@@ -29,21 +33,21 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
                 .WithErrorCode(ValidationCodes.INVALID_EVALUATOR_FOR_THIS_TEST);
         }
 
-        private async Task<bool> IsEvaluator(VerificationTestQuestionDto input)
+        private async Task<bool> IsEvaluator(VerificationTestQuestionDto data)
         {
             var test = _appDbContext.Tests
                 .Include(t => t.TestType)
-                .FirstOrDefault(t => t.Id == input.TestId);
+                .FirstOrDefault(t => t.Id == data.TestId);
 
-            var isOnlyOneAnswerTest = _appDbContext.TestTypeQuestionCategories
-                .Where(tt => tt.TestTypeId == test.TestTypeId)
-                .All(tt => tt.QuestionType == QuestionTypeEnum.OneAnswer);
+            var dataList = await _mediator.Send(new GetTestTypeByStatusQuery { TestTypeStatus = TestTypeStatusEnum.Active });
+
+            var result = dataList.FirstOrDefault(x => x.TestTypeId == test.TestTypeId);
 
             var currentUser = await _userProfileService.GetCurrentUser();
 
             var isEvaluator = false;
 
-            if (!isOnlyOneAnswerTest)
+            if (!result.IsOnlyOneAnswer)
             {
                 if (test != null && test.EventId != null && test.EvaluatorId == null)
                 {
