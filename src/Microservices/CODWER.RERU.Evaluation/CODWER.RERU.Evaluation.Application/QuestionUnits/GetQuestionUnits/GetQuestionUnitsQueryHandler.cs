@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -64,6 +65,8 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
 
             var hashedQuestions = items.Where(x => x.QuestionType == QuestionTypeEnum.HashedAnswer).ToList();
 
+            IsReadyToActivate(items, questions);
+
             foreach (var unit in hashedQuestions)
             {
                 items.Remove(unit);
@@ -76,5 +79,20 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
 
             return paginatedModel;
         }
+
+        private void IsReadyToActivate(List<QuestionUnitDto> items, IQueryable<QuestionUnit> questions)
+        {
+            foreach (var item in items)
+            {
+                var options = questions.First(q => q.Id == item.Id).Options.Any(x => x.IsCorrect);
+
+                if (item.OptionsCount > 1 && options || item.QuestionType != QuestionTypeEnum.FreeText)
+                {
+                    item.IsReadyToActivate = true;
+                }
+
+            }
+        }
+
     }
 }

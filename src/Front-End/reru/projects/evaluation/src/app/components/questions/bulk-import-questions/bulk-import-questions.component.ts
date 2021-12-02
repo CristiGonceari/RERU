@@ -70,6 +70,7 @@ export class BulkImportQuestionsComponent implements OnInit {
 					const file = new File([blob], 'error.xlsx', { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
 					saveAs(file);
 					alert("Somethig wrong! Please check your .xlsx file.");
+					this.files = [];
 				}
 				else this.activeModal.close();
 			}
