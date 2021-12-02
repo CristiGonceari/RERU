@@ -22,7 +22,6 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   @Input() timeLimit;
   @Input() setLimit;
   isLoading: boolean = false;
-  previewMode: boolean = false;
   questionStatus = QuestionUnitStatusEnum;
   qType = QuestionUnitTypeEnum;
   questions: QuestionUnit[] = [];
@@ -36,8 +35,12 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   sequenceType: SequenceTypeEnum;
   checked;
   itemsToAdd;
-  selectQuestions: SelectionTypeEnum;
+  selectQuestions = SelectionTypeEnum.All;
   questiosToAdd = []
+  orderQuestions = SequenceTypeEnum.Random;
+  tableData: any;
+
+  preview: boolean = false;
 
   constructor(private dragulaService: DragulaService,
     private questionService: QuestionService,
@@ -83,8 +86,21 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
     });
   }
 
+  onChangeSelection(event){
+    console.log(event)
+    this.selectQuestions = event;
+    this.reset()
+  }
+
+  onChangeSequence(event){
+    console.log(event)
+    this.sequenceType = event;
+    this.reset()
+  }
+
   previewQuestions() {
     this.selectedQuestions = [];
+
     let params = {
       testTypeId: +this.testTypeId,
       categoryId: this.questionCategoryId,
@@ -94,12 +110,15 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
       sequenceType: this.sequenceType,
       selectedQuestions: this.checked
     }
+
+    console.log(params)
       this.questionCategoryService.preview(params).subscribe(res => {
         if (res && res.data) {
           this.questions = res.data;
+          this.preview = true;
         }
       }, err => {
-        this.previewMode = false;
+        this.reset();
       })
   }
 
@@ -123,7 +142,7 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
       questionType: this.questionType,
       selectionType: this.selectQuestions,
       sequenceType: this.sequenceType,
-      testCategoryQuestions: this.questiosToAdd || this.questions,
+      testCategoryQuestions: this.questions,
       timeLimit: this.setLimit ? this.timeLimit : null
     }
     this.questionCategoryService.add(params).subscribe(res => {
@@ -135,12 +154,8 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   }
 
   initData(data): void {
-    this.previewMode = false;
     this.questionCategoryId = +data.questionCategoryId;
     this.questionType = +data.type;
-    this.questionCount = +data.questionCount;
-    this.sequenceType = +data.sequenceType;
-    this.selectQuestions = +data.selectQuestions
     this.getQuestionCategory(data.questionCategoryId);
     this.list();
   }
@@ -159,8 +174,9 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   }
 
   reset(): void {
-    this.previewMode = false;
-    this.list()
+    this.list();
+    this.preview = false;
+    this.questionCount = null;
   }
 
   refresh(): void {
@@ -176,5 +192,4 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.dragulaService.destroy('Questions');
   }
-
 }
