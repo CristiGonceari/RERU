@@ -6,6 +6,7 @@ import { ManualLoaderFactory } from './utils/services/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationCallbackComponent, AuthenticationGuard } from '@erp/shared';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { Exception404Component } from './utils/exceptions/404/404.component';
 
 const routes: Routes = [
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent },
@@ -74,7 +75,9 @@ const routes: Routes = [
 	path: 'documents-templates',
 	loadChildren: () => import('./components/documents-templates/documents-templates.module').then(m => m.DocumentsTemplatesModule),
 	canActivate: [AuthenticationGuard],
-}
+},
+{ path: '404', component: Exception404Component },
+{ path: '**', redirectTo: '404' }
 ];
 
 @NgModule({
