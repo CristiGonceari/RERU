@@ -6,6 +6,7 @@ import { TestTypeDetailsComponent } from './test-type-details/test-type-details.
 import { AddCategoryComponent } from './test-type-details/test-types-categories/add-category/add-category.component';
 import { DeleteCategoryComponent } from './test-type-details/test-types-categories/delete-category/delete-category.component';
 import { TestTypesCategoriesComponent } from './test-type-details/test-types-categories/test-types-categories.component';
+import { ViewCategoryComponent } from './test-type-details/test-types-categories/view-category/view-category.component';
 import { TestTypesOverviewComponent } from './test-type-details/test-types-overview/test-types-overview.component';
 import { AddTestTypeRulesComponent } from './test-type-details/test-types-rules/add-test-type-rules/add-test-type-rules.component';
 import { TestTypesRulesComponent } from './test-type-details/test-types-rules/test-types-rules.component';
@@ -22,8 +23,9 @@ const routes: Routes = [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: 'overview', component: TestTypesOverviewComponent },
       {  path: 'options', component: AddTestTypeOptionsComponent },
-      { path: 'categories', component: TestTypesCategoriesComponent },
-      { path: 'rules', component: TestTypesRulesComponent }
+      { path: 'categories', component: TestTypesCategoriesComponent},
+      { path: 'categories-view/:id', component: ViewCategoryComponent},
+      { path: 'rules', component: TestTypesRulesComponent },
     ]
   },
   { path: 'category/:id/add', component: AddCategoryComponent },

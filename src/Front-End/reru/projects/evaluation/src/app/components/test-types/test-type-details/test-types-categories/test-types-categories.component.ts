@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { DragulaService } from 'ng2-dragula';
 import { SequenceTypeEnum } from 'projects/evaluation/src/app/utils/enums/sequence-type.enum';
@@ -7,6 +7,9 @@ import { TestTypeService } from 'projects/evaluation/src/app/utils/services/test
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { QuestionUnitTypeEnum } from 'projects/evaluation/src/app/utils/enums/question-unit-type.enum'
 import { TestTypeQuestionCategoryService } from 'projects/evaluation/src/app/utils/services/test-type-question-category/test-type-question-category.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmModalComponent } from 'dist/erp-shared/public-api';
+import { ViewCategoryComponent } from './view-category/view-category.component';
 
 @Component({
   selector: 'app-test-types-categories',
@@ -21,12 +24,15 @@ export class TestTypesCategoriesComponent implements OnInit {
   isLoading: boolean = false;
   sequence = SequenceTypeEnum;
   order = [];
+  @Input() isActive: boolean ;
 
   constructor(private service: TestTypeQuestionCategoryService,
     private route: ActivatedRoute,
     private dragulaService: DragulaService,
     private testTypeService: TestTypeService,
-    private notificationService: NotificationsService) { }
+    private notificationService: NotificationsService,
+    private router: Router,
+    private modalService: NgbModal, ) { }
 
   ngOnInit(): void {
     this.dragulaService.createGroup('Categories', {});
@@ -102,4 +108,9 @@ export class TestTypesCategoriesComponent implements OnInit {
   ngOnDestroy(): void {
     this.dragulaService.destroy('Categories');
   }
+  openView(id){
+      this.router.navigate(['../categories-view/',id], {relativeTo:this.route});
+  }
+  
+
 }

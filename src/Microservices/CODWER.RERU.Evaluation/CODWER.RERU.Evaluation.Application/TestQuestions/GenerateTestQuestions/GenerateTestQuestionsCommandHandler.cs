@@ -122,7 +122,10 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
             }
 
             var questionIds = await allQuestions.Select(x => x.Id).ToListAsync();
-            var strictQuestionsToUse = _appDbContext.TestCategoryQuestions.Include(x => x.QuestionUnit).Where(x => x.TestTypeQuestionCategoryId == testTypeQuestionCategoryId);
+
+            var strictQuestionsToUse = _appDbContext.TestCategoryQuestions
+                                                        .Include(x => x.QuestionUnit)
+                                                        .Where(x => x.TestTypeQuestionCategoryId == testTypeQuestionCategoryId);
 
             if (testTypeQuestionCategory.SelectionType == SelectionEnum.Select)
             {
