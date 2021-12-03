@@ -33,7 +33,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-6">
+                    <div class="col-lg-4 col-6" *ngIf="selectQuestions == 0">
                         <div class="d-flex flex-column">
                             <label class="col-form-label pb-0 text-dark-50">{{'tests.questions' | translate}}</label>
                             <input type="number" class="form-control form-control-lg  h-35px"
