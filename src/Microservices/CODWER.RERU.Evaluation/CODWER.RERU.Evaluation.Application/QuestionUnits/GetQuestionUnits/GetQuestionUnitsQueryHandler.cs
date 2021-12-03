@@ -86,7 +86,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
             {
                 var options = questions.First(q => q.Id == item.Id).Options.Any(x => x.IsCorrect);
 
-                if (item.OptionsCount > 1 && options || item.QuestionType != QuestionTypeEnum.FreeText)
+                if (item.OptionsCount > 1 && options || item.QuestionType == QuestionTypeEnum.FreeText)
                 {
                     item.IsReadyToActivate = true;
                 }
