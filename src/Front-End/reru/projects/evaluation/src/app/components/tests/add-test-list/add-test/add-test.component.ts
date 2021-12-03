@@ -16,9 +16,7 @@ import { AddEditTest } from '../../../../utils/models/tests/add-edit-test.model'
   styleUrls: ['./add-test.component.scss']
 })
 export class AddTestComponent implements OnInit {
-
   usersList: any;
-  // eventsList: SelectItem[] = [{ label: '', value: '' }];
   eventsList: any;
   selectActiveTests: any;
   evaluatorList: [] = [];
@@ -34,8 +32,8 @@ export class AddTestComponent implements OnInit {
   search: string;
   showName: boolean = false;
   isTestTypeOneAnswer: boolean = false;
-  @Input() testEvent : boolean;
-  
+  @Input() testEvent: boolean;
+
 
   constructor(
     private referenceService: ReferenceService,
@@ -66,7 +64,7 @@ export class AddTestComponent implements OnInit {
 
   getEvaluators() {
     if (this.needEvaluator === false && this.hasEventEvaluator === false) {
-      this.referenceService.getUsers({ eventId: this.event.value }).subscribe(res => {this.evaluatorList = res.data});
+      this.referenceService.getUsers({ eventId: this.event.value }).subscribe(res => { this.evaluatorList = res.data });
     }
     else {
       this.evaluatorList = [];
@@ -93,11 +91,11 @@ export class AddTestComponent implements OnInit {
     this.getUsers();
   }
 
-  checkIfIsOneAnswer($event){
+  checkIfIsOneAnswer($event) {
     this.isTestTypeOneAnswer = this.selectActiveTests.find(x => x.testTypeId === $event).isOnlyOneAnswer
   }
 
-  checkIfEventHasEvaluator($event){
+  checkIfEventHasEvaluator($event) {
     this.hasEventEvaluator = this.eventsList.find(x => x.eventId === $event).isEventEvaluator
   }
 
@@ -120,13 +118,13 @@ export class AddTestComponent implements OnInit {
   createTest() {
     this.testService.createTest(this.parse()).subscribe(() => {
       this.backClicked();
-			this.notificationService.success('Success', 'Test was successfully programmed', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success('Success', 'Test was successfully programmed', NotificationUtil.getDefaultMidConfig());
     });
   }
 
   backClicked() {
-		this.location.back();
-	}
+    this.location.back();
+  }
 
   onItemChange(event) {
     this.showName = event.target.checked;

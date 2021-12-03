@@ -35,7 +35,7 @@
                 </td>
                 <td>{{'statuses.' + status[item.testStatus] | translate}}</td>
                 <td>
-                    <a *ngIf="item.testStatus === status.Verified" [routerLink]="['test-result', item.id]">{{ item.verificationProgress }}</a>
+                    <a *ngIf="item.testStatus === status.Verified" [routerLink]="['../my-activities/test-result', item.id]">{{ item.verificationProgress }}</a>
                     <a *ngIf="item.testStatus != status.Verified" style="text-decoration: none;">{{ item.verificationProgress }}</a>
                 </td>
                 <td>{{'verify-test.' + result[item.result] | translate}}</td>
