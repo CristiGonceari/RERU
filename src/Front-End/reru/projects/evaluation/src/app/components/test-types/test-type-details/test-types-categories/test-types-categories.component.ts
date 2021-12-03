@@ -8,8 +8,7 @@ import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notific
 import { QuestionUnitTypeEnum } from 'projects/evaluation/src/app/utils/enums/question-unit-type.enum'
 import { TestTypeQuestionCategoryService } from 'projects/evaluation/src/app/utils/services/test-type-question-category/test-type-question-category.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmModalComponent } from 'dist/erp-shared/public-api';
-import { ViewCategoryComponent } from './view-category/view-category.component';
+import { ConfirmModalComponent } from '@erp/shared';
 
 @Component({
   selector: 'app-test-types-categories',
@@ -108,9 +107,22 @@ export class TestTypesCategoriesComponent implements OnInit {
   ngOnDestroy(): void {
     this.dragulaService.destroy('Categories');
   }
+
   openView(id){
       this.router.navigate(['../categories-view/',id], {relativeTo:this.route});
   }
-  
 
+  openConfirmationDeleteModal(id, name): void {
+		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
+		modalRef.componentInstance.title = 'Delete';
+		modalRef.componentInstance.description = `Are you sure you want to delete this category(${name})?`;
+		modalRef.result.then(() => this.deleteTestTemplateCategory(id), () => { });
+	}
+
+  deleteTestTemplateCategory(id){
+    this.service.deleteTestTypeQuestionCategory({id: id}).subscribe(() => {
+			this.notificationService.success('Success', 'Category was successfully deleted', NotificationUtil.getDefaultMidConfig());
+      this.getList();
+    });
+  }
 }
