@@ -40,6 +40,18 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent
 
             var paginatedModel = _paginationService.MapAndPaginateModel<Test, TestDto>(myTests, request);
 
+            foreach (var myTest in paginatedModel.Items)
+            {
+                var testType = await _appDbContext.TestTypes
+                    .Include(tt => tt.Settings)
+                    .FirstOrDefaultAsync(tt => tt.Id == myTest.TestTypeId);
+
+                if (testType.Settings.CanViewResultWithoutVerification)
+                {
+                    myTest.ViewTestResult = true;
+                }
+            }
+
             return paginatedModel;
         }
     }

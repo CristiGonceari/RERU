@@ -27,6 +27,7 @@ export class Test {
     result: TestResultStatusEnum;
     programmedTime: string;
     endTime?: string;
+    viewTestResult?: boolean;
 }
 
 export class CreateTestModel {
