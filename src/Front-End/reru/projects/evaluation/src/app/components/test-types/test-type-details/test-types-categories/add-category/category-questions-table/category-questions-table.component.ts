@@ -34,7 +34,7 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   testTypeId: number;
   sequenceType: SequenceTypeEnum;
   checked;
-  itemsToAdd;
+  itemsToAdd = [];
   selectQuestions = SelectionTypeEnum.All;
   questiosToAdd = []
   orderQuestions = SequenceTypeEnum.Random;
@@ -61,6 +61,10 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
     });
   }
 
+  getCount(): void {
+    this.questionCount = this.itemsToAdd.length ;
+  }
+
   selectQuestion(event) {
     if (event.target.checked === true) {
       let idToInclude = event.target.value;
@@ -84,16 +88,15 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
         questionUnitId: Object.values(this.selectedQuestions)[index]
       }
     });
+    this.getCount();
   }
 
   onChangeSelection(event){
-    console.log(event)
     this.selectQuestions = event;
     this.reset()
   }
 
   onChangeSequence(event){
-    console.log(event)
     this.sequenceType = event;
     this.reset()
   }
@@ -111,7 +114,6 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
       selectedQuestions: this.checked
     }
 
-    console.log(params)
       this.questionCategoryService.preview(params).subscribe(res => {
         if (res && res.data) {
           this.questions = res.data;
