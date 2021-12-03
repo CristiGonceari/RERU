@@ -563,6 +563,7 @@
     "03001301": "Invalid category",
     "03001302": "Category already exists",
     "03001303": "Category name is empty",
+    "03001304": "Category used in active tests can not be deleted",
     "03001401": "Question is empty",
     "03001402": "Question type is empty",
     "03001403": "Question is in active test type",
