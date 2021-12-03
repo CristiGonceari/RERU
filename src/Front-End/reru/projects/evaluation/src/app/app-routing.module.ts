@@ -99,7 +99,6 @@ const routes: Routes = [
 			useHash: true,
 			scrollPositionRestoration: 'enabled',
 			onSameUrlNavigation: 'reload',
-			paramsInheritanceStrategy: 'always'
 		}),
 		LocalizeRouterModule.forRoot(routes, {
 			parser: {

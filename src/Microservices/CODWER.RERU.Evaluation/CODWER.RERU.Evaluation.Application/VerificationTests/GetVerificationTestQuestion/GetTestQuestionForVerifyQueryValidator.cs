@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
-using CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypeByStatus;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
@@ -37,17 +36,15 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
         {
             var test = _appDbContext.Tests
                 .Include(t => t.TestType)
+                .Include(t => t.TestQuestions)
+                    .ThenInclude(tq => tq.QuestionUnit)
                 .FirstOrDefault(t => t.Id == data.TestId);
-
-            var dataList = await _mediator.Send(new GetTestTypeByStatusQuery { TestTypeStatus = TestTypeStatusEnum.Active });
-
-            var result = dataList.FirstOrDefault(x => x.TestTypeId == test.TestTypeId);
 
             var currentUser = await _userProfileService.GetCurrentUser();
 
             var isEvaluator = false;
 
-            if (!result.IsOnlyOneAnswer)
+            if (!test.TestQuestions.All(t => t.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer))
             {
                 if (test != null && test.EventId != null && test.EvaluatorId == null)
                 {
