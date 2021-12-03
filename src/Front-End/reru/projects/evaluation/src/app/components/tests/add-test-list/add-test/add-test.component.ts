@@ -93,6 +93,10 @@ export class AddTestComponent implements OnInit {
 
   checkIfIsOneAnswer($event) {
     this.isTestTypeOneAnswer = this.selectActiveTests.find(x => x.testTypeId === $event).isOnlyOneAnswer
+    if(this.isTestTypeOneAnswer){
+      this.evaluator.value = null;
+    }
+
   }
 
   checkIfEventHasEvaluator($event) {
