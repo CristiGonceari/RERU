@@ -33,7 +33,7 @@
           <thead class="text-uppercase text-muted">
             <tr>
               <th scope="col">{{ 'questions.question' | translate }}</th>
-              <th scope="col" class="text-right" style="width: 100px">{{ 'questionCount' | translate }}</th>
+              <th scope="col" class="text-center" style="width: 160px">{{ 'questions.number-of-options' | translate }}</th>
               <th scope="col" class="text-right" style="width: 100px">{{ 'tests.status' | translate }}</th>
               <th scope="col" class="text-right" style="width: 155px">{{ 'questions.type' | translate }}</th>
               <th scope="col" style="width: 48px"></th>
@@ -42,7 +42,8 @@
           <tbody class="text-dark-75" *ngIf="questionList.length">
             <tr *ngFor="let question of questionList">
               <td style="cursor: pointer;" scope="col" (click)="goToQuestuionOptions(question.id)">{{ question.question }}</td>
-              <td scope="col" class="text-center" style="width: 150px" >{{ question.optionsCount }}</td>
+              <td *ngIf="question.questionType == 1 || question.questionType == 1" scope="col" class="text-center" style="width: 150px" > - </td>
+              <td *ngIf="question.questionType == 2 || question.questionType == 3" scope="col" class="text-center" style="width: 150px" >{{ question.optionsCount }}</td>
               <td class="text-right" scope="col" style="width: 100px">
                 <span class="font-size-lg">{{'statuses.' + questionEnum[question.status] | translate}}</span>
               </td>

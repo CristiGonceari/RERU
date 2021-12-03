@@ -300,7 +300,9 @@
     "question-type": "Выберите тип вопросов",
     "select-questions": "Выбор вопросов",
     "order-questions": "Порядок вопросов",
-    "points": "Баллы"
+    "points": "Баллы",
+    "number-of-options": "Варианты ответа"
+
   },
   "answers": {
     "option-settings": "Настройка Опции",
