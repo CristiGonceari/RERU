@@ -300,7 +300,9 @@
     "question-type": "Selectați tipul întrebărilor",
     "select-questions": "Alegerea întrebărilor",
     "order-questions": "Ordinea întrebărilor",
-    "points": "Puncte"
+    "points": "Puncte",
+    "number-of-options": "Optiuni"
+
   },
   "answers": {
     "option-settings": "Setări Opțiuni",

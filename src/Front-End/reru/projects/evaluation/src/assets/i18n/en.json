@@ -300,7 +300,8 @@
     "question-type": "Select question type",
     "select-questions": "Select Questions",
     "order-questions": "Order Questions",
-    "points": "Points"
+    "points": "Points",
+    "number-of-options": "Options"
   },
   "answers": {
     "option-settings": "Option Settions",
