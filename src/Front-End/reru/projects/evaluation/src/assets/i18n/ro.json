@@ -564,6 +564,7 @@
     "03001301": "Categorie nevalidă",
     "03001302": "Categoria există deja",
     "03001303": "Numele categoriei este necompletat",
+    "03001304": "Categoria utilizată în testele active nu poate fi ștearsă",
     "03001401": "Întrebarea este necompletată",
     "03001402": "Tipul de întrebare este necompletat",
     "03001403": "Întrebarea este de tip test activ",
