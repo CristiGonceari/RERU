@@ -4,7 +4,6 @@ import { AddEditTestTypesComponent } from './add-edit-test-types/add-edit-test-t
 import { AddTestTypeOptionsComponent } from './test-type-details/add-test-type-options/add-test-type-options.component';
 import { TestTypeDetailsComponent } from './test-type-details/test-type-details.component';
 import { AddCategoryComponent } from './test-type-details/test-types-categories/add-category/add-category.component';
-import { DeleteCategoryComponent } from './test-type-details/test-types-categories/delete-category/delete-category.component';
 import { TestTypesCategoriesComponent } from './test-type-details/test-types-categories/test-types-categories.component';
 import { ViewCategoryComponent } from './test-type-details/test-types-categories/view-category/view-category.component';
 import { TestTypesOverviewComponent } from './test-type-details/test-types-overview/test-types-overview.component';
@@ -29,7 +28,6 @@ const routes: Routes = [
     ]
   },
   { path: 'category/:id/add', component: AddCategoryComponent },
-  { path: 'delete-category/:id', component: DeleteCategoryComponent },
   { path: 'rules/:id/add', component: AddTestTypeRulesComponent }
 ]
 

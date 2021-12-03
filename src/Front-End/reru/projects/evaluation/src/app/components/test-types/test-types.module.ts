@@ -17,7 +17,6 @@ import { AddEditTestTypesComponent } from './add-edit-test-types/add-edit-test-t
 import { AddTestTypeOptionsComponent } from './test-type-details/add-test-type-options/add-test-type-options.component'
 import { AddCategoryComponent } from './test-type-details/test-types-categories/add-category/add-category.component'
 import { TestTypesCategoriesComponent } from './test-type-details/test-types-categories/test-types-categories.component'
-import { DeleteCategoryComponent } from './test-type-details/test-types-categories/delete-category/delete-category.component'
 import { TestTypesRulesComponent } from './test-type-details/test-types-rules/test-types-rules.component'
 import { AddTestTypeRulesComponent } from './test-type-details/test-types-rules/add-test-type-rules/add-test-type-rules.component'
 import { CategoryQuestionsTableComponent } from './test-type-details/test-types-categories/add-category/category-questions-table/category-questions-table.component';
@@ -34,7 +33,6 @@ import { ViewCategoryComponent } from './test-type-details/test-types-categories
     AddTestTypeOptionsComponent,
     AddCategoryComponent,
     TestTypesCategoriesComponent,
-    DeleteCategoryComponent,
     TestTypesRulesComponent,
     AddTestTypeRulesComponent,
     CategoryQuestionsTableComponent,
