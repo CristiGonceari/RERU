@@ -37,7 +37,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
                 .Include(x => x.TestQuestions)
                 .Include(x => x.QuestionUnitTags)
                     .ThenInclude(x => x.Tag)
-                .OrderByDescending(x => x.CreateDate)
+                .OrderByDescending(x => x.Id)
                 .AsQueryable();
 
             if (request.Type != null)
