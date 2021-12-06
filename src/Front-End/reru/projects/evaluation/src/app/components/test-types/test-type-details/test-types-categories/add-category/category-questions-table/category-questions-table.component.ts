@@ -12,6 +12,7 @@ import { TestTypeQuestionCategoryService } from 'projects/evaluation/src/app/uti
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
+import { TestTypeService } from 'projects/evaluation/src/app/utils/services/test-type/test-type.service';
 
 @Component({
   selector: 'app-category-questions-table',
@@ -39,6 +40,7 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   questiosToAdd = []
   orderQuestions = SequenceTypeEnum.Random;
   tableData: any;
+  maxQuestionCount: number;
 
   preview: boolean = false;
 
@@ -48,7 +50,8 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
     private questionCategoryService: TestTypeQuestionCategoryService,
     private route: ActivatedRoute,
     public router: Router,
-    private notificationService: NotificationsService) { }
+    private notificationService: NotificationsService,
+    private testTypeService: TestTypeService) { }
 
   ngOnInit(): void {
     this.dragulaService.createGroup('Questions', {});
@@ -58,6 +61,11 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   getTestTypeId() {
     this.route.params.subscribe(params => {
       this.testTypeId = params.id;
+      if (this.testTypeId) {
+        this.testTypeService.getTestType(this.testTypeId).subscribe( res => {
+          this.maxQuestionCount = res.data.questionCount;
+        })
+      }
     });
   }
 
@@ -98,7 +106,6 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
 
   onChangeSequence(event){
     this.sequenceType = event;
-    this.reset()
   }
 
   previewQuestions() {
@@ -162,12 +169,12 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
     this.list();
   }
 
-  list(): void {
+  list(data: any = {}): void {
     let params = {
       categoryId: this.questionCategoryId,
       type: this.questionType,
-      page: this.pagination.currentPage || 1,
-      itemsPerPage: Number(this.pagination?.pageSize || 10)
+			page: data.page || this.pagination.currentPage,
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
     }
     this.questionService.getActiveQuestions(params).subscribe(res => {
       this.questions = res.data.items;

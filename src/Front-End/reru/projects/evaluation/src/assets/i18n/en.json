@@ -266,6 +266,7 @@
     "my-activities": "My activities"
   },
   "questions": {
+    "count": "Question count",
     "settings": "Settings",
     "title": "Question Unit",
     "question": "Question",

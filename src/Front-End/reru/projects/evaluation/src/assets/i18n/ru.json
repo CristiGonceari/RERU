@@ -266,6 +266,7 @@
     "my-activities": "Мои действия"
   },
   "questions": {
+    "count": "Количество вопросов",
     "settings": "Настройка",
     "title": "Вопросы",
     "question": "Вопрос",

@@ -2,15 +2,16 @@
     [colorClass]="'text-primary'">
 </app-loading-spinner>
 
-<div *ngIf="!isLoading && questions.length">
+<div *ngIf="!isLoading && questions.length" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+id="kt_datatable">
     <div class="card-title">
         <h3 class="card-label text-capitalize ml-10">{{ questionCategoryName }}</h3>
     </div>
-    <div class="d-flex p-0 justify-content-between">
+    <div class="d-flex p-0 justify-content-between pr-5">
         <div class="d-flex w-100">
             <div class="flex-column col-10">
-                <div class="row col-12 w-100">
-                    <div class="col-lg-4 col-6">
+                <div class="row col-12 w-100 m-0">
+                    <div class="col-6" [class.col-lg-4]="selectQuestions == 1" [class.col-lg-7]="selectQuestions == 0">
                         <div class="d-flex flex-column">
                             <label class="col-form-label pb-0 text-dark-50">{{'questions.select-questions' |
                                 translate}}</label>
@@ -21,29 +22,35 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-6">
+                    <div class="col-6 pr-0" *ngIf="selectQuestions == 1" [class.col-lg-4]="selectQuestions == 1" [class.col-lg-5]="selectQuestions == 0">
                         <div class="d-flex flex-column">
                             <label class="col-form-label pb-0 text-dark-50">{{'questions.order-questions' |
                                 translate}}</label>
                             <select class="form-control h-35px" name="orderQuestions" [(ngModel)]="orderQuestions" (ngModelChange)="onChangeSequence($event)">
                                 <option selected value='0' class="default-option"> {{'button.random' | translate}}
                                 </option>
-                                <option value='1' *ngIf="selectQuestions == 1"> {{'button.ordered' | translate}}
+                                <option value='1'> {{'button.ordered' | translate}}
                                 </option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-6" *ngIf="selectQuestions == 0">
+                    <div class="col-6 pr-0" [class.col-lg-4]="selectQuestions == 1" [class.col-lg-5]="selectQuestions == 0">
                         <div class="d-flex flex-column">
                             <label class="col-form-label pb-0 text-dark-50">{{'tests.questions' | translate}}</label>
-                            <input type="number" class="form-control form-control-lg  h-35px"
-                                [(ngModel)]="questionCount" name="questionCount" placeholder="Question count">
+                            <div class="input-group">
+                                <input type="number" class="form-control form-control-lg h-35px"
+                                    placeholder="{{'questions.count' | translate}}" [(ngModel)]="questionCount"
+                                    [disabled]="selectQuestions == 1">
+                                <div class="input-group-append h-35px">
+                                    <span class="input-group-text text-dark">{{maxQuestionCount}}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-6 mt-3 p-0">
-                <div class="w-100 h-100 mt-6">
+            <div class="col-lg-2 col-6 mt-auto ml-9">
+                <div class="w-100">
                     <app-confirm-button (handle)="previewQuestions()" [disabled]="!questionCount" [value]="'button.preview' | translate"
                         [width]="'100%'">
                     </app-confirm-button>
@@ -64,7 +71,7 @@
                 </tr>
             </thead>
             <tbody class="datatable-body" dragula="Questions" [(dragulaModel)]="itemsToAdd">
-                <tr *ngFor="let item of questions; let i = index" [ngClass]="{'disabled-area': !preview || (orderQuestions == 0)}">
+                <tr *ngFor="let item of questions; let i = index" [ngClass]="{'disabled-area': orderQuestions == 0}">
                     <td *ngIf="selectQuestions == 1 && !preview">
                         <label class="checkbox mx-5 d-block" (change)="selectQuestion($event)">
                             <input name="selected" type="checkbox" [value]="item.id">
@@ -97,28 +104,9 @@
             </div>    
         </div>
     </div>
-    <div class="card-body pb-0 d-flex justify-content-between">
-        <ngb-pagination [collectionSize]="pagination.totalCount" [(page)]="pagination.currentPage"
-            [pageSize]="pagination.pageSize" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
-            (pageChange)="list($event)">
-        </ngb-pagination>
-        <div class="d-flex align-items-center py-3">
-            <select class="btn text-primary font-weight-bold mr-4 border-0 bg-light w-75px"
-                [(ngModel)]="pagination.pageSize"
-                (ngModelChange)="list({page: pagination.currentPage, itemsPerPage: pagination.pageSize})">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
-
-            <span class="text-muted">
-                {{'pagination.displaing' | translate}} {{ pagination.pageSize }}
-                {{'pagination.of' | translate}}
-                <b>{{ pagination.totalCount }}</b>
-                {{'pagination.records' | translate}}
-            </span>
-        </div>
+    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage" 
+        *ngIf="questions.length" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
+        (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event })"
+        (pageChange)="list({ page: $event })">
     </div>
 </div>
