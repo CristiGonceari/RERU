@@ -44,17 +44,20 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypeByStatus
 
             foreach (var x in onlyOneAnswerTests)
             {
-                var testType = testTypes.FirstOrDefault(tt => tt.Id == x.TestTypeId);
+                var testType = testTypes
+                    .Include(tt => tt.TestTypeQuestionCategories)
+                    .FirstOrDefault(tt => tt.Id == x.TestTypeId);
 
-                var testTypeCategories = _appDbContext.TestTypeQuestionCategories
-                    .Where(tt => tt.TestTypeId == testType.Id);
+                var testTypeCategories = testType.TestTypeQuestionCategories
+                    .Where(tt => tt.TestTypeId == testType.Id)
+                    .ToList();
 
                 var questionsList = new List<QuestionUnitDto>();
 
                 foreach (var testTypeCategory in testTypeCategories)
                 {
                     var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { TestTypeQuestionCategoryId = testTypeCategory.Id });
-                    
+
                     questionsList.AddRange(testCategoryQuestionData.Questions);
                     x.IsOnlyOneAnswer = questionsList.All(x => x.QuestionType == QuestionTypeEnum.OneAnswer);
                 }
