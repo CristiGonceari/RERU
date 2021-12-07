@@ -1,7 +1,5 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NotificationsService } from 'angular2-notifications';
-import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { Location } from '@angular/common';
 import { createCustomElement } from '@angular/elements';
 import { OptionModel } from '../../../utils/models/options/option.model';
@@ -11,8 +9,6 @@ import { TestVerificationProcessService } from '../../../utils/services/test-ver
 import { TestService } from '../../../utils/services/test/test.service';
 import { TestQuestionService } from '../../../utils/services/test-question/test-question.service';
 import { HashOptionInputComponent } from '../../../utils/components/hash-option-input/hash-option-input.component';
-import { NotificationUtil } from '../../../utils/util/notification.util';
-import { UserProfileService } from '../../../utils/services/user-profile/user-profile.service';
 
 @Component({
   selector: 'app-view-test-result',
@@ -20,12 +16,8 @@ import { UserProfileService } from '../../../utils/services/user-profile/user-pr
   styleUrls: ['./view-test-result.component.scss']
 })
 export class ViewTestResultComponent implements OnInit {
-
   isDisabled = true;
   testId: number;
-  evaluatorId: number;
-  currentUserId: number;
-  testUserId: number
   index = 1;
   count: number;
   question: string;
@@ -54,14 +46,11 @@ export class ViewTestResultComponent implements OnInit {
     private verifyService: TestVerificationProcessService,
     private activatedRoute: ActivatedRoute,
     private testService: TestService,
-    private notificationService: NotificationsService,
     private injector: Injector,
     private testQuestionService: TestQuestionService,
-    private translate: I18nService,
     private router: Router,
     private location: Location,
-    private userService: UserProfileService
-  ) { 
+  ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
     });
@@ -70,7 +59,6 @@ export class ViewTestResultComponent implements OnInit {
   ngOnInit(): void {
     this.getSummary();
     this.getTestById();
-    this.getCurrentUserId();
     this.ngDoBoostrap();
     this.testQuestionService.setData(true);
   }
@@ -83,29 +71,11 @@ export class ViewTestResultComponent implements OnInit {
 
   getTestById() {
     this.testService.getTest(this.testId).subscribe(
-      res => {
+      (res) => {
         this.testData = res.data;
-        this.evaluatorId = res.data.evaluatorId;
-        this.testUserId = res.data.userId;
-
-        if(this.currentUserId == this.evaluatorId || this.evaluatorId === null && this.testUserId)
-				{
-					this.testData = res.data;
-				} else {
-					this.router.navigate(['../../../tests'], { relativeTo: this.activatedRoute })
-				}
-      },
-      error => {
-        this.notificationService.error('Server error occured!', null, NotificationUtil.getDefaultMidConfig());
       }
     );
   }
-
-  getCurrentUserId(): void{
-		this.userService.getCurrentUser().subscribe(response => {
-			this.currentUserId = response.data.id;
-		  })
-	}
 
   getSummary(): void {
     this.verifyService.getSummary(this.testId).subscribe(
@@ -141,31 +111,39 @@ export class ViewTestResultComponent implements OnInit {
       questionIndex: this.index
     };
 
-    this.verifyService.getTest(testData).subscribe( res => {
-      if (res && res.data) {
-        this.question = res.data.question;
-        this.correctQuestion = res.data.correctHashedQuestion;
-        this.answer = res.data.answerText;
-        this.comment = res.data.comment;
-        this.options = res.data.options;
-        this.correct = res.data.isCorrect;
-        if (this.correct == null) this.correct = false;
-        this.index = index;
-        this.questionType = res.data.questionType;
-        this.isLoading = false;
-        this.maxPoints = res.data.questionMaxPoints;
-        this.accumulatedPoints = res.data.evaluatorPoints;
+    this.verifyService.getTest(testData).subscribe(
+      (res) => {
+        if (res && res.data) {
+          this.question = res.data.question;
+          this.correctQuestion = res.data.correctHashedQuestion;
+          this.answer = res.data.answerText;
+          this.comment = res.data.comment;
+          this.options = res.data.options;
+          this.correct = res.data.isCorrect;
+          if (this.correct == null) this.correct = false;
+          this.index = index;
+          this.questionType = res.data.questionType;
+          this.isLoading = false;
+          this.maxPoints = res.data.questionMaxPoints;
+          this.accumulatedPoints = res.data.evaluatorPoints;
+        }
+      },
+      (err) => {
+        err.error.messages.some(x => {
+          if (x.code === '03001609')
+            this.router.navigate(['../../../tests'], { relativeTo: this.activatedRoute })
+        })
       }
-    });
+    );
   }
 
   backClicked() {
-		this.location.back();
-	}
+    this.location.back();
+  }
 
   close() {
-		this.router.navigate(['/my-activities']);
-	}
+    this.router.navigate(['/my-activities']);
+  }
 
   next(): void {
     if (this.index < this.summaryList.length)
@@ -175,6 +153,6 @@ export class ViewTestResultComponent implements OnInit {
 
   logout(): void {
     localStorage.removeItem('idnp');
-    this.router.navigate(['public']);  
+    this.router.navigate(['public']);
   }
 }
