@@ -1,5 +1,7 @@
 ﻿using CODWER.RERU.Evaluation.Application.Permissions;
 using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Application.Services.GetPdfServices;
+using CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementations;
 using CODWER.RERU.Evaluation.Application.Services.Implementations;
 using CVU.ERP.Module.Common.Providers;
 using Microsoft.AspNetCore.Hosting;
@@ -21,7 +23,10 @@ namespace CODWER.RERU.Evaluation.Application.DependencyInjection
             services
                 .AddScoped(typeof(IModulePermissionProvider), typeof(ModulePermissionProvider))
                 .AddScoped(typeof(IQuestionUnitService), typeof(QuestionUnitService))
-                .AddScoped(typeof(IUserProfileService), typeof(UserProfileService));
+                .AddScoped(typeof(IUserProfileService), typeof(UserProfileService))
+                .AddScoped(typeof(IGetQuestionUnitPdf), typeof(GetQuestionUnitPdf))
+                .AddScoped(typeof(IGetTestPdf), typeof(GetTestPdf))
+                .AddScoped(typeof(IGetTestTemplatePdf), typeof(GetTestTemplatePdf));
         }
     }
 }
