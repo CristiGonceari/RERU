@@ -12,18 +12,14 @@ import { TestVerificationProcessService } from '../../../utils/services/test-ver
 import { TestService } from '../../../utils/services/test/test.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { ConfirmModalComponent } from '@erp/shared';
-import { UserProfileService } from '../../../utils/services/user-profile/user-profile.service';
 
 @Component({
-  selector: 'app-test-verification-process',
-  templateUrl: './test-verification-process.component.html',
-  styleUrls: ['./test-verification-process.component.scss']
+	selector: 'app-test-verification-process',
+	templateUrl: './test-verification-process.component.html',
+	styleUrls: ['./test-verification-process.component.scss']
 })
 export class TestVerificationProcessComponent implements OnInit {
-
-  	testId: number;
-	evaluatorId: number;
-  	currentUserId: number;
+	testId: number;
 	index = 1;
 	count: number;
 	question: string;
@@ -31,10 +27,10 @@ export class TestVerificationProcessComponent implements OnInit {
 	comment: string;
 	correct: boolean;
 	testData = new Test();
-  	options = new OptionModel();
+	options = new OptionModel();
 	verifiedStatus = [];
 	questionType;
-  	enum = QuestionUnitTypeEnum;
+	enum = QuestionUnitTypeEnum;
 	hashedOptions;
 	autoverified: any;
 	verified: any;
@@ -45,28 +41,26 @@ export class TestVerificationProcessComponent implements OnInit {
 	points: number;
 	questionUnitId: number;
 
-  constructor(
-    private verifyService: TestVerificationProcessService,
-	private modalService: NgbModal,
-    private activatedRoute: ActivatedRoute,
-    private testService: TestService,
-    private notificationService: NotificationsService,
-    private injector: Injector,
-    private testQuestionService: TestQuestionService,
-    private router: Router,
-    private userService: UserProfileService
-  ) { }
+	constructor(
+		private verifyService: TestVerificationProcessService,
+		private modalService: NgbModal,
+		private activatedRoute: ActivatedRoute,
+		private testService: TestService,
+		private notificationService: NotificationsService,
+		private injector: Injector,
+		private testQuestionService: TestQuestionService,
+		private router: Router,
+	) { }
 
-  ngOnInit(): void {
-    	this.getTestId();
-		this.getCurrentUserId();
+	ngOnInit(): void {
+		this.getTestId();
 		this.getSummary(this.testId, this.index - 1);
 		this.ngDoBoostrap();
 		this.pagination();
 		this.testQuestionService.setData(true);
-  }
+	}
 
-  ngDoBoostrap() {
+	ngDoBoostrap() {
 		const el = createCustomElement(HashOptionInputComponent, { injector: this.injector });
 
 		customElements.get('app-hash-option-input') || customElements.define('app-hash-option-input', el);
@@ -81,24 +75,12 @@ export class TestVerificationProcessComponent implements OnInit {
 		});
 	}
 
-  	getTestById() {
-		this.testService.getTest(this.testId ).subscribe( res => {
-			this.testData = res.data;
-        	this.evaluatorId = res.data.evaluatorId;
-
-        		if(this.currentUserId == this.evaluatorId)
-				{
-					this.testData = res.data;
-				} else {
-					this.router.navigate(['../../../tests'], { relativeTo: this.activatedRoute })
-				}
-		});
-	}
-
-	getCurrentUserId(): void{
-		this.userService.getCurrentUser().subscribe(response => {
-			this.currentUserId = response.data.id;
-		  })
+	getTestById() {
+		this.testService.getTest(this.testId).subscribe(
+			(res) => {
+				this.testData = res.data;
+			}
+		);
 	}
 
 	pagination() {
@@ -109,7 +91,7 @@ export class TestVerificationProcessComponent implements OnInit {
 		});
 	}
 
-  	getSummary(testId, index): void {
+	getSummary(testId, index): void {
 		this.verifyService.getSummary(testId).subscribe(
 			(res) => {
 				this.verifiedStatus = res.data.testQuestions.map(el => el.verificationStatus);
@@ -125,35 +107,42 @@ export class TestVerificationProcessComponent implements OnInit {
 			return !!(this.autoverified.includes(page));
 	}
 
-  	getVerified(page) {
+	getVerified(page) {
 		if (page)
 			return !!(this.verified.includes(page));
 	}
 
-  	processTestQuestion(index: number): void {
+	processTestQuestion(index: number): void {
 		const testData = {
 			testId: +this.testId,
 			questionIndex: index
 		};
-		this.verifyService.getTest(testData).subscribe( res => {
-			if (res && res.data) {
-				this.question = res.data.question;
-				this.correctQuestion = res.data.correctHashedQuestion;
-				this.answer = res.data.answerText;
-				this.comment = res.data.comment;
-				this.options = res.data.options;
-				this.correct = res.data.isCorrect;
-				this.index = index;
-				this.questionType = res.data.questionType;
-				this.isLoading = false;
-				this.maxPoints = res.data.questionMaxPoints;
-				this.questionUnitId = res.data.questionUnitId;
-				this.points = (res.data.evaluatorPoints === 0) ? '' : res.data.evaluatorPoints;
-			}
-		});
+		this.verifyService.getTest(testData).subscribe(
+			(res) => {
+				if (res && res.data) {
+					this.question = res.data.question;
+					this.correctQuestion = res.data.correctHashedQuestion;
+					this.answer = res.data.answerText;
+					this.comment = res.data.comment;
+					this.options = res.data.options;
+					this.correct = res.data.isCorrect;
+					this.index = index;
+					this.questionType = res.data.questionType;
+					this.isLoading = false;
+					this.maxPoints = res.data.questionMaxPoints;
+					this.questionUnitId = res.data.questionUnitId;
+					this.points = (res.data.evaluatorPoints === 0) ? '' : res.data.evaluatorPoints;
+				}
+			},
+			(err) => {
+				err.error.messages.some(x => {
+					if (x.code === '03001609')
+						this.router.navigate(['../../../tests'], { relativeTo: this.activatedRoute })
+				})
+			});
 	}
 
-  	verifyTest(): void {
+	verifyTest(): void {
 		if (this.correct === null) {
 			this.notificationService.error('"Correct" or "Not Correct" value is not selected', null, NotificationUtil.getDefaultMidConfig());
 		} else if (this.points < 1 && this.correct === true) {
@@ -173,7 +162,7 @@ export class TestVerificationProcessComponent implements OnInit {
 		}
 	}
 
-  	next() {
+	next() {
 		if (this.isNotVerified()) {
 			this.index = Math.min.apply({}, this.getNotVerified());
 			this.getSummary(this.testId, this.index);
@@ -185,7 +174,7 @@ export class TestVerificationProcessComponent implements OnInit {
 		this.finalizeVerificationModal();
 	}
 
-  	isNotVerified(): boolean {
+	isNotVerified(): boolean {
 		if (!this.verifiedStatus.length) {
 			return false;
 		}
@@ -197,7 +186,7 @@ export class TestVerificationProcessComponent implements OnInit {
 		return this.verifiedStatus.map((el, i) => { if (el === 2) return i + 1 }).filter(el => !isNaN(el));
 	}
 
-  	getNextIndex(): number {
+	getNextIndex(): number {
 		const notVerifiedIndexes = this.getNotVerified();
 		const unansweredIndex = notVerifiedIndexes.length ? Math.min.apply({}, this.getNotVerified()) : 1;
 
@@ -216,7 +205,7 @@ export class TestVerificationProcessComponent implements OnInit {
 		return this.verifiedStatus.length;
 	}
 
-  	check(event) {
+	check(event) {
 		this.correct = (!!+event.target.value);
 	}
 
@@ -224,14 +213,14 @@ export class TestVerificationProcessComponent implements OnInit {
 		return !(typeof this.correct === 'boolean');
 	}
 
-  	setTestVerified(testId): void{
-    this.verifyService.setTestAsVerified(testId).subscribe(()=>{
-      this.notificationService.success('Success', 'Test was successfully verified', NotificationUtil.getDefaultMidConfig());
-	  this.router.navigate(['../../../tests'], { relativeTo: this.activatedRoute })
-    })
-  	}
+	setTestVerified(testId): void {
+		this.verifyService.setTestAsVerified(testId).subscribe(() => {
+			this.notificationService.success('Success', 'Test was successfully verified', NotificationUtil.getDefaultMidConfig());
+			this.router.navigate(['../../../tests'], { relativeTo: this.activatedRoute })
+		})
+	}
 
-  	finalizeVerificationModal(): void {
+	finalizeVerificationModal(): void {
 		const modalRef = this.modalService.open(ConfirmModalComponent, { centered: true });
 		modalRef.componentInstance.title = "Finish test verification"
 		modalRef.componentInstance.description = "Are you sure you want to complete test verification?";

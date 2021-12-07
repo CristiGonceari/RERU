@@ -48,7 +48,7 @@
               <span class="font-size-lg">{{'verify-test.comment' | translate}}:</span>
               <p class="border rounded border-secondary p-7 my-7">{{comment}}</p>
             </div>
-            <div *ngIf="questionType == enum.MultiplyAnswers || questionType == enum.OneAnswer">
+            <div *ngIf="questionType == enum.MultipleAnswers || questionType == enum.OneAnswer">
               <span class="h4">{{'tests.options' | translate}}:</span>
               <div *ngFor="let item of options" class="border border-secondary rounded p-5 my-4 d-flex"
                 [class.bg-successTransparent]="item.isSelected && item.isCorrect"
