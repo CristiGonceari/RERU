@@ -104,7 +104,7 @@ namespace CODWER.RERU.Identity.Web
             }
         }
 
-        public void Configure(IApplicationBuilder app, System.IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, System.IServiceProvider serviceProvider, IdentityDbContext identityDbContext)
         {
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -127,6 +127,7 @@ namespace CODWER.RERU.Identity.Web
                 //  app.UseDatabaseErrorPage();
             }
 
+            identityDbContext.Database.Migrate();
             DbSeeder.SeedDb(serviceProvider);
 
             var basePath = Configuration.GetValue<string>("BASE_PATH") ?? string.Empty;
