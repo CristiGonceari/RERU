@@ -1,4 +1,5 @@
-﻿using CODWER.RERU.Evaluation.Data.Persistence.Context;
+﻿using System.Linq;
+using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
@@ -16,10 +17,16 @@ namespace CODWER.RERU.Evaluation.Application.QuestionCategories.DeleteQuestionCa
         }
         public async Task<Unit> Handle(DeleteQuestionCategoryCommand request, CancellationToken cancellationToken)
         {
-            var questionCategoryToEdit = await _appDbContext.QuestionCategories
+            var questionCategory = await _appDbContext.QuestionCategories
+                .Include(x => x.QuestionUnits)
                 .FirstOrDefaultAsync(x => x.Id == request.Id);
 
-            _appDbContext.QuestionCategories.Remove(questionCategoryToEdit);
+            var testTypTesQuestionCategories = _appDbContext.TestTypeQuestionCategories
+                .Include(x=>x.TestCategoryQuestions)
+                .Where(x => x.QuestionCategoryId == request.Id);
+
+            _appDbContext.TestTypeQuestionCategories.RemoveRange(testTypTesQuestionCategories);
+            _appDbContext.QuestionCategories.Remove(questionCategory);
 
             await _appDbContext.SaveChangesAsync();
 

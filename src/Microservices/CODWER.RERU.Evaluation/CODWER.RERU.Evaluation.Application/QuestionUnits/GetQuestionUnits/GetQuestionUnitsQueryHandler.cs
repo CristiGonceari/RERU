@@ -37,7 +37,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
                 .Include(x => x.TestQuestions)
                 .Include(x => x.QuestionUnitTags)
                     .ThenInclude(x => x.Tag)
-                .OrderByDescending(x => x.CreateDate)
+                .OrderByDescending(x => x.Id)
                 .AsQueryable();
 
             if (request.Type != null)
@@ -86,7 +86,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
             {
                 var options = questions.First(q => q.Id == item.Id).Options.Any(x => x.IsCorrect);
 
-                if (item.OptionsCount > 1 && options || item.QuestionType != QuestionTypeEnum.FreeText)
+                if (item.OptionsCount > 1 && options || item.QuestionType == QuestionTypeEnum.FreeText || item.QuestionType == QuestionTypeEnum.HashedAnswer)
                 {
                     item.IsReadyToActivate = true;
                 }

@@ -554,7 +554,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             if (questionType == QuestionTypeEnum.FreeText || questionType == QuestionTypeEnum.HashedAnswer)
             {
-                return "F";
+                return "E";
             }
             else
             {

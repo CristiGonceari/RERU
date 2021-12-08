@@ -67,6 +67,7 @@
         public static string INVALID_CATEGORY = "03001301";
         public static string EXISTENT_CATEGORY = "03001302";
         public static string EMPTY_CATEGORY_NAME = "03001303";
+        public static string CATEGORY_USED_IN_ACTIVE_TESTS_CANT_BE_DELETED = "03001304";
 
         //question
         public static string EMPTY_QUESTION = "03001401";

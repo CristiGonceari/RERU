@@ -14,7 +14,7 @@ import { SharedModule, MOCK_AUTHENTICATION, SvgModule } from '@erp/shared';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { LayoutsComponent } from './components/layouts/layouts.component';
 import { environment } from '../environments/environment';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { EventsModule } from './components/events/events.module';
 import { PollsModule } from './components/polls/polls.module';
 import { FaqRoutingModule } from './components/faq/faq-routing.module';
@@ -88,7 +88,7 @@ import { MyActivitiesModule } from './components/my-activities/my-activities.mod
 		CUSTOM_ELEMENTS_SCHEMA
  	],
   providers: [
-    TranslatePipe,
+    TranslatePipe, Location,
     //CONFIG_INITIALIZER,
     // NOTIFICATION_INTERCEPTOR_PROVIDER,
     // IDNP_INTERCEPTOR_PROVIDER,

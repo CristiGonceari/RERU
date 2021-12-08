@@ -266,6 +266,7 @@
     "my-activities": "Activitățile mele"
   },
   "questions": {
+    "count": "Număr de întrebări",
     "settings": "Setări",
     "title": "Întrebări",
     "question": "Întrebare",
@@ -300,7 +301,9 @@
     "question-type": "Selectați tipul întrebărilor",
     "select-questions": "Alegerea întrebărilor",
     "order-questions": "Ordinea întrebărilor",
-    "points": "Puncte"
+    "points": "Puncte",
+    "number-of-options": "Optiuni"
+
   },
   "answers": {
     "option-settings": "Setări Opțiuni",
@@ -562,6 +565,7 @@
     "03001301": "Categorie nevalidă",
     "03001302": "Categoria există deja",
     "03001303": "Numele categoriei este necompletat",
+    "03001304": "Categoria utilizată în testele active nu poate fi ștearsă",
     "03001401": "Întrebarea este necompletată",
     "03001402": "Tipul de întrebare este necompletat",
     "03001403": "Întrebarea este de tip test activ",

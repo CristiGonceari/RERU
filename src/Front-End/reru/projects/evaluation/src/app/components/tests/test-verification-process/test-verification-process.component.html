@@ -25,7 +25,8 @@
         </div>
         <div class="card-body">
           <div class="data-container">
-            <span *ngIf="questionType == enum.HashedAnswer" class="font-size-lg">{{'verify-test.user-answer' | translate}}:</span>
+            <span *ngIf="questionType == enum.HashedAnswer" class="font-size-lg">{{'verify-test.user-answer' |
+              translate}}:</span>
             <p class="font-size-h3 bg-gray-100 text-center rounded p-7 mt-2" [innerHTML]="question | safeHtml"></p>
             <span *ngIf="correctQuestion" class="font-size-lg">{{'verify-test.correct-question' | translate}}:</span>
             <div class="mx-auto text-center">
@@ -36,8 +37,7 @@
               <span class="font-size-lg">{{'verify-test.answer' | translate}}:</span>
               <p class="border rounded border-secondary p-7 my-7">{{answer}}</p>
               <span class="font-size-lg">{{'verify-test.comment' | translate}}:</span>
-              <textarea class="border rounded border-secondary p-7 my-7 w-100"
-                [(ngModel)]="comment">{{comment}}
+              <textarea class="border rounded border-secondary p-7 my-7 w-100" [(ngModel)]="comment">{{comment}}
               </textarea>
             </div>
             <div *ngIf="questionType == enum.HashedAnswer">
@@ -66,13 +66,15 @@
                   <input ngbButton type="radio" value="1" (change)="$event ? check($event) : null">
                   {{'verify-test.correct' | translate}}
                 </label>
-                <label ngbButtonLabel class="btn-light-primary" [class.active]="correct===false" style="white-space: nowrap;">
+                <label ngbButtonLabel class="btn-light-primary" [class.active]="correct===false"
+                  style="white-space: nowrap;">
                   <input ngbButton type="radio" value="0" (change)="$event ? check($event) : null">
                   {{'verify-test.not-correct' | translate}}
                 </label>
               </div>
               <div class="input-group">
-                <input type="text" class="form-control" placeholder="{{'questions.points' | translate}}" value="points" [(ngModel)]="points">
+                <input type="text" class="form-control" placeholder="{{'questions.points' | translate}}" value="points"
+                  [(ngModel)]="points">
                 <div class="input-group-append">
                   <span class="input-group-text text-dark">{{maxPoints}}</span>
                 </div>
@@ -85,7 +87,7 @@
               </button>
             </div>
           </div>
-          <div class="d-flex flex-row-reverse"  *ngIf="questionType == enum.OneAnswer">
+          <div class="d-flex flex-row-reverse" *ngIf="questionType == enum.OneAnswer">
             <app-confirm-button class="btn" (handle)="next()" [value]="'verify-test.next-question' | translate">
             </app-confirm-button>
           </div>
@@ -110,7 +112,8 @@
               </button>
 
               <button class="btn btn-icon page-link" *ngFor="let page of pager" (click)="processTestQuestion(page)"
-                [class.active-page]="page === index" [ngClass]="{'autoverified': getAutoverified(page), 'verified': getVerified(page)}">
+                [class.active-page]="page === index"
+                [ngClass]="{'autoverified': getAutoverified(page), 'verified': getVerified(page)}">
                 {{page}}
               </button>
 

@@ -37,9 +37,6 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.subsribeForParams();
-    if(this.questionId != null){
-      this.subsribeForParams();
-    }
   }
 
   subsribeForParams(): void {
@@ -69,11 +66,11 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
       this.optionService.edit(this.parse(el)).subscribe(() => {
         this.getOptions();
         this.edit = true;
+        this.back();
       });
     });
     
     this.notificationService.success('Success', 'Options was successfully updated', NotificationUtil.getDefaultMidConfig());
-    this.back();
   }
 
   parse(element) {
