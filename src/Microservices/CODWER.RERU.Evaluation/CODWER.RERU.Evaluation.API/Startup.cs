@@ -48,7 +48,7 @@ namespace CODWER.RERU.Evaluation.API
         {
             services.Configure<SmtpOptions>(this.Configuration.GetSection("Smtp"));
             services.Configure<RabbitMq>(Configuration.GetSection("MessageQueue"));
-            services.Configure<FileOptions>(this.Configuration.GetSection("Minio"));
+            services.Configure<MinioSettings>(this.Configuration.GetSection("Minio"));
 
 
             ServicesSetup.ConfigureEntity(services, Configuration);

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.Files
 {
-    public class FileOptions
+    public class MinioSettings
     {
-        public string endpoint { get; set; }
-        public string accessKey { get; set; }
-        public string secretKey { get; set; }
+        public string Endpoint { get; set; }
+        public string AccessKey { get; set; }
+        public string SecretKey { get; set; }
     }
 }

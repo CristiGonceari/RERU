@@ -19,10 +19,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations.Storage
         private readonly AppDbContext _appDbContext;
         private readonly MinioClient _minio;
 
-        public CloudStorageFileService(AppDbContext appDbContext, IOptions<DataTransferObjects.Files.FileOptions> fileOptions) {
+        public CloudStorageFileService(AppDbContext appDbContext, IOptions<DataTransferObjects.Files.MinioSettings> fileOptions) {
 
             _appDbContext = appDbContext;
-            _minio = new MinioClient(fileOptions.Value.endpoint, fileOptions.Value.accessKey, fileOptions.Value.secretKey);
+            _minio = new MinioClient(fileOptions.Value.Endpoint, fileOptions.Value.AccessKey, fileOptions.Value.SecretKey);
 
         }
 
