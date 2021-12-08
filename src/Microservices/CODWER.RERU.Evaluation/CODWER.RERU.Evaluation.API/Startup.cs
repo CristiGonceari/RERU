@@ -24,6 +24,7 @@ using CODWER.RERU.Evaluation.Data.Persistence.Initializer;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
+using CODWER.RERU.Evaluation.DataTransferObjects.Files;
 
 namespace CODWER.RERU.Evaluation.API
 {
@@ -47,6 +48,8 @@ namespace CODWER.RERU.Evaluation.API
         {
             services.Configure<SmtpOptions>(this.Configuration.GetSection("Smtp"));
             services.Configure<RabbitMq>(Configuration.GetSection("MessageQueue"));
+            services.Configure<MinioSettings>(this.Configuration.GetSection("Minio"));
+
 
             ServicesSetup.ConfigureEntity(services, Configuration);
             ServicesSetup.ConfigurePolicies(services);
