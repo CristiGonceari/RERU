@@ -175,3 +175,6 @@ minio:
     size: 20Gi
 
     subPath: ""
+
+  accessKey: "minioaccesskey"
+  secretKey: "miniosecretkey"
