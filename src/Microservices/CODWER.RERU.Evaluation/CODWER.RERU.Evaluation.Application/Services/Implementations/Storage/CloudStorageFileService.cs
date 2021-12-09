@@ -19,14 +19,15 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations.Storage
         private readonly AppDbContext _appDbContext;
         private readonly MinioClient _minio;
 
-        public CloudStorageFileService(AppDbContext appDbContext, IOptions<DataTransferObjects.Files.MinioSettings> fileOptions) {
+        public CloudStorageFileService(AppDbContext appDbContext, IOptions<DataTransferObjects.Files.MinioSettings> fileOptions)
+        {
 
             _appDbContext = appDbContext;
             _minio = new MinioClient(fileOptions.Value.Endpoint, fileOptions.Value.AccessKey, fileOptions.Value.SecretKey);
 
         }
-
-        public async Task<Guid> AddFile(string fileName, FileTypeEnum fileType, string type, byte[] content)
+   
+        public async Task<string> AddFile(string fileName, FileTypeEnum fileType, string type, byte[] content)
         {
             try
             {
@@ -38,6 +39,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations.Storage
 
                 var fileToAdd = new Data.Entities.Files.File
                 {
+                    Id = new Guid(),
                     FileName = fileName,
                     Type = type,
                     FileType = fileType,
@@ -48,7 +50,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations.Storage
                 await _appDbContext.Files.AddAsync(fileToAdd);
                 await _appDbContext.SaveChangesAsync();
 
-                return fileToAdd.Id;
+                return fileToAdd.Id.ToString();
             }
             catch (Exception e)
             {
@@ -56,7 +58,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations.Storage
             }
         }
 
-        public async Task<Guid> AddFile(AddFileDto dto)
+        public async Task<string> AddFile(AddFileDto dto)
         {
             try
             {
@@ -71,6 +73,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations.Storage
 
                 var fileToAdd = new Data.Entities.Files.File
                 {
+                    Id = new Guid(),
                     FileName = dto.File.FileName,
                     FileType = dto.Type,
                     UniqueFileName = uniqueFileName,
@@ -81,7 +84,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations.Storage
                 await _appDbContext.Files.AddAsync(fileToAdd);
                 await _appDbContext.SaveChangesAsync();
 
-                return fileToAdd.Id;
+                return fileToAdd.Id.ToString();
             }
             catch (Exception e)
             {
@@ -89,11 +92,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations.Storage
             }
         }
 
-        public async Task<Unit> RemoveFile(Guid fileId)
+        public async Task<Unit> RemoveFile(string fileId)
         {
             try
             {
-                var toRemove = await _appDbContext.Files.FirstOrDefaultAsync(x => x.Id == fileId);
+                var toRemove = await _appDbContext.Files.FirstOrDefaultAsync(x => x.Id.ToString() == fileId);
 
                 if (toRemove != null)
                 {
@@ -112,30 +115,30 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations.Storage
             }
         }
 
-        public async Task<FileDataDto> GetFile(Guid fileId)
+        public async Task<FileDataDto> GetFile(string fileId)
         {
             try
             {
-                var dbFile = await _appDbContext.Files.FirstOrDefaultAsync(x => x.Id == fileId);
+                var dbFile = await _appDbContext.Files.FirstOrDefaultAsync(x => x.Id.ToString() == fileId);
 
                 if (dbFile != null)
-                {   
+                {
                     var filestream = new MemoryStream();
 
                     await _minio.GetObjectAsync(dbFile.BucketName,
-                                                    dbFile.UniqueFileName, 
+                                                    dbFile.UniqueFileName,
                                                     s =>
                                                     {
-                                                        s.CopyTo(filestream); 
+                                                        s.CopyTo(filestream);
                                                     }
                                                 );
 
-                     return new FileDataDto
-                        {
-                            Content = filestream.ToArray(),
-                            ContentType = dbFile.Type,
-                            Name = dbFile.FileName
-                        }; 
+                    return new FileDataDto
+                    {
+                        Content = filestream.ToArray(),
+                        ContentType = dbFile.Type,
+                        Name = dbFile.FileName
+                    };
 
                 }
             }
