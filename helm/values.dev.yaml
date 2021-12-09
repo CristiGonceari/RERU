@@ -162,3 +162,16 @@ microservices:
       appsettings: reru_identity_new.appsettings.json
     name: "reru-identity-new"
     port: 8080
+
+minio:
+  persistence:
+    enabled: false
+    annotations: 
+      - test
+
+    storageClass: "local-path"
+    VolumeName: "minio-volume"
+    accessMode: ReadWriteOnce
+    size: 20Gi
+
+    subPath: ""
