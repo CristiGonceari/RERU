@@ -151,7 +151,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
         {
             var testTemplateRules = rules;
 
-            if (string.IsNullOrEmpty(rules)) return testTemplateRules;
+            if (string.IsNullOrEmpty(rules)) return "-";
 
             var base64EncodedBytes = Convert.FromBase64String(rules);
             testTemplateRules = Encoding.UTF8.GetString(base64EncodedBytes);
