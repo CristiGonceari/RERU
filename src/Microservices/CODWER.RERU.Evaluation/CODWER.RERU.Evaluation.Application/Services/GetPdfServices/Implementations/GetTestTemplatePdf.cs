@@ -1,7 +1,8 @@
-﻿using AutoMapper;
+﻿using CODWER.RERU.Evaluation.Application.TestCategoryQuestions;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Files;
+using CODWER.RERU.Evaluation.DataTransferObjects.TestCategoryQuestions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,8 +11,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Application.TestCategoryQuestions;
-using CODWER.RERU.Evaluation.DataTransferObjects.TestCategoryQuestions;
 using Wkhtmltopdf.NetCore;
 
 namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementations
@@ -118,7 +117,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             </tr>
             <tr>
                     <th colspan=""4"" style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;"">
-                          Vor fi alese <b>{item.QuestionCount}</b> {ParseQuestion(item.QuestionCount)} din <b>{item.QuestionCategory.QuestionUnits.Count}</b> cu ordinea intrebarilor - {EnumMessages.EnumMessages.GetQuestionSequence(item.SequenceType)}
+                          <b>{item.QuestionCount}</b> {ParseQuestion(item.QuestionCount)} din <b>{item.QuestionCategory.QuestionUnits.Count}</b>, ordinea intrebarilor - {EnumMessages.EnumMessages.GetQuestionSequence(item.SequenceType)}
                     </th>
             </tr>
             <tr>
