@@ -50,14 +50,13 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             var path = new FileInfo("PdfTemplates/TestTemplate.html").FullName;
             var source = await File.ReadAllTextAsync(path);
 
-            var myDictionary = GetOrderDictionary(testTemplate);
+            var myDictionary = await GetOrderDictionary(testTemplate);
 
             foreach (var (key, value) in myDictionary)
             {
                 source = source.Replace(key, value);
             }
 
-            source = source.Replace("{category_replace}", await GetTableContent(testTemplate.TestTypeQuestionCategories.ToList(), testTemplate));
 
             var res = Parse(source);
 
@@ -81,7 +80,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             }
         }
 
-        private Dictionary<string, string> GetOrderDictionary(TestType testTemplate)
+        private async Task<Dictionary<string, string>> GetOrderDictionary(TestType testTemplate)
         {
 
             var myDictionary = new Dictionary<string, string>();
@@ -93,11 +92,12 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             myDictionary.Add("{test_mode}", testTemplate.Mode.ToString());
             myDictionary.Add("{settings_replace}", GetParsedSettingsForTestTemplate(testTemplate));
             myDictionary.Add("{rules_name}", DecodeRules(testTemplate.Rules));
+            myDictionary.Add("{category_replace}", await GetTableContent(testTemplate.TestTypeQuestionCategories.ToList()));
 
-            return myDictionary;
+            return  myDictionary;
         }
 
-        private async Task<string> GetTableContent(List<TestTypeQuestionCategory> testTypeQuestionCategories, TestType testTemplate)
+        private async Task<string> GetTableContent(List<TestTypeQuestionCategory> testTypeQuestionCategories)
         {
             var content = string.Empty;
 
@@ -127,14 +127,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             </tr>
             "
             ;
-                var command = new TestCategoryQuestionsQuery
-                {
-                    TestTypeQuestionCategoryId = item.Id
-                };
 
-                var result = await _mediator.Send(command);
+                var result = await GetQuestionsForCategoryContent(item.Id);
 
-                content += GetQuestionsForCategoryContent(result);
+                content += BuildHtmlContentForQuestions(result);
 
                 content += AddBrakeLineAfterCategory();
             }
@@ -142,7 +138,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             return content;
         }
 
-        private string GetQuestionsForCategoryContent(TestCategoryQuestionContentDto testTypeQuestionCategory)
+        private string BuildHtmlContentForQuestions(TestCategoryQuestionContentDto testTypeQuestionCategory)
         {
             return testTypeQuestionCategory.Questions.Aggregate(string.Empty, (current, questionUnit)
                 =>
@@ -252,10 +248,18 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
 
             return content;
         }
-
         private string ParseQuestion(int? questionCount)
         {
             return questionCount > 1 ? "intrebari" : "intrebare";
+        }
+        private async Task<TestCategoryQuestionContentDto> GetQuestionsForCategoryContent(int testTypeQuestionCategoryId)
+        {
+            var command = new TestCategoryQuestionsQuery
+            {
+                TestTypeQuestionCategoryId = testTypeQuestionCategoryId
+            };
+
+            return  await _mediator.Send(command);
         }
     }
 }
