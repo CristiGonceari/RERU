@@ -11,6 +11,9 @@ import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { ConfirmModalComponent } from '@erp/shared';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
+import { saveAs } from 'file-saver';
+
 @Component({
 	selector: 'app-test-type-list-table',
 	templateUrl: './test-type-list-table.component.html',
@@ -38,7 +41,8 @@ export class TestTypeListTableComponent implements OnInit {
 		private testTypeService: TestTypeService,
 		private route: ActivatedRoute,
 		private modalService: NgbModal,
-		private notificationService: NotificationsService
+		private notificationService: NotificationsService,
+		private printTemplateService: PrintTemplateService
 	) { }
 
 	ngOnInit(): void {
@@ -106,5 +110,19 @@ export class TestTypeListTableComponent implements OnInit {
 		modalRef.componentInstance.title = 'Delete';
 		modalRef.componentInstance.description = 'Are you sure you want to delete this test type?';
 		modalRef.result.then(() => this.deleteTestType(id), () => { });
+	}
+
+	printTestTemplate(id){
+		this.printTemplateService.getTestTemplatePdf(id).subscribe((response : any) => {
+			let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+			
+			if (response.body.type === 'application/pdf') {
+			  fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
+			}
+	  
+			const blob = new Blob([response.body], { type: response.body.type });
+			const file = new File([blob], fileName, { type: response.body.type });
+			saveAs(file);
+			  });
 	}
 }

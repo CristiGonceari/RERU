@@ -58,6 +58,9 @@
     <None Update="PdfTemplates\TestPage.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="PdfTemplates\TestTemplate.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Rotativa\Linux\wkhtmltopdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
