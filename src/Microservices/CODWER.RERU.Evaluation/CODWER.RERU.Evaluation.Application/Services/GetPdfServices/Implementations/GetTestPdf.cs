@@ -32,6 +32,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
                 .Include(t => t.TestType)
                     .ThenInclude(tt => tt.TestTypeQuestionCategories)
                         .ThenInclude(tc => tc.QuestionCategory)
+                            .ThenInclude(c => c.QuestionUnits)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Evaluator)
                 .Include(t => t.Event)
@@ -58,12 +59,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
                                     padding-left: 5px; font-size: 15px; height: 30px;"">{testCategory.QuestionCategory.Name}</th>
                                 </tr>
                                 <tr>
-                                    <th style=""border: 1px solid black; border-collapse: collapse; background-color: #1f3864; color: white; height: 30px;"">Numărul de întrebări din categorie</th>
-                                    <th style=""border: 1px solid black; border-collapse: collapse; background-color: #1f3864; color: white; height: 30px;"">Ordinea întrebărilor</th>
+                                    <th colspan=""2"" style=""border: 1px solid black; border-collapse: collapse; background-color: #1f3864; color: white; height: 30px;"">Numărul de întrebări din categorie</th>
                                 </tr>
                                 <tr>
-                                    <th style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;"">{testCategory.QuestionCount}</th>
-                                    <th style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;"">{EnumMessages.EnumMessages.GetQuestionSequence(testCategory.SequenceType)}</th>
+                                    <th colspan=""2"" style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;""><b>{testCategory.QuestionCount}</b> din <b>{testCategory.QuestionCategory.QuestionUnits.Count}</b>, oridnea - {EnumMessages.EnumMessages.GetQuestionSequence(testCategory.SequenceType)}</th>
                                 </tr>
                                 <tr>
                                     <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; background-color: #1f3864; color: white; height: 30px;"">Lista de întrebări</th>
