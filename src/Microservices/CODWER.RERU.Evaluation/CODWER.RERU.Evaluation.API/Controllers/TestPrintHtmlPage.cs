@@ -3,6 +3,7 @@ using CODWER.RERU.Evaluation.Application.PrintTestReportList;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.Services.GetPdfServices;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -10,11 +11,28 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     [ApiController]
     public class TestPrintHtmlPage : BaseController
     {
+        private readonly IGetTestPdf _testPdf;
+
+        public TestPrintHtmlPage(IGetTestPdf testPdf)
+        {
+            _testPdf = testPdf;
+        }
+
         [HttpGet("reports-list")]
         [IgnoreResponseWrap]
         public async Task<IActionResult> GetDocuments([FromQuery] PrintTestReportListCommand query)
         {
             var result = await Mediator.Send(query);
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpGet("test-pdf/{testId}")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> GetTestPdf([FromRoute] int testId)
+        {
+            var result = await _testPdf.PrintTestPdf(testId);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);
         }
