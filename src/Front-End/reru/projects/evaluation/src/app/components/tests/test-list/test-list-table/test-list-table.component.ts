@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationModel } from '../../../../utils/models/pagination.model';
 import { ReferenceService } from '../../../../utils/services/reference/reference.service';
+import { PrintTemplateService } from '../../../../utils/services/print-template/print-template.service';
 import { TestService } from '../../../../utils/services/test/test.service';
 import { TestStatusEnum } from '../../../../utils/enums/test-status.enum'
 import { TestResultStatusEnum } from '../../../../utils/enums/test-result-status.enum'
@@ -21,7 +22,7 @@ import { NotificationsService } from 'angular2-notifications';
   styleUrls: ['./test-list-table.component.scss']
 })
 export class TestListTableComponent implements OnInit {
-  
+
   pagination: PaginationModel = new PaginationModel();
   testTypeName = [];
   testToSearch;
@@ -56,8 +57,8 @@ export class TestListTableComponent implements OnInit {
     public router: Router,
     private referenceService: ReferenceService,
     private datePipe: DatePipe,
-		private notificationService: NotificationsService
-
+    private notificationService: NotificationsService,
+    private printService: PrintTemplateService
   ) { }
 
   ngOnInit(): void {
@@ -113,7 +114,7 @@ export class TestListTableComponent implements OnInit {
         this.searchFrom = '';
         this.searchTo = '';
         this.isLoading = false;
-  
+
         for (let i = 1; i <= this.pagination.totalCount; i++) {
           this.pager.push(i);
         }
@@ -168,10 +169,10 @@ export class TestListTableComponent implements OnInit {
     modalRef.componentInstance.title = "Finish Test";
     modalRef.componentInstance.description = "Do you want to finish test ?";
     modalRef.result.then(
-      () => this.testService.finalizeTest(id).subscribe(() => {this.getTests()}),
-      () => {}          
+      () => this.testService.finalizeTest(id).subscribe(() => { this.getTests() }),
+      () => { }
     );
-   
+
   }
 
   closeTest(testId): void {
@@ -208,14 +209,24 @@ export class TestListTableComponent implements OnInit {
       () => this.onConfirm(id), () => { })
   }
 
- 
-
   onConfirm(testId: number): void {
-		this.testService.deleteTest( {id: testId} ).subscribe(() => {
+    this.testService.deleteTest({ id: testId }).subscribe(() => {
       this.getTests()
-			this.notificationService.success('Success', 'Test was successfully deleted', NotificationUtil.getDefaultMidConfig());
-		});
-	}
+      this.notificationService.success('Success', 'Test was successfully deleted', NotificationUtil.getDefaultMidConfig());
+    });
+  }
 
+  printTest(testId) {
+    this.printService.getTestPdf(testId).subscribe((response: any) => {
+      let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
 
+      if (response.body.type === 'application/pdf') {
+        fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
+      }
+
+      const blob = new Blob([response.body], { type: response.body.type });
+      const file = new File([blob], fileName, { type: response.body.type });
+      saveAs(file);
+    });
+  }
 }

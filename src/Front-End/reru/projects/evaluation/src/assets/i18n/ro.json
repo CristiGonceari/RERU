@@ -108,7 +108,8 @@
     "ok": "Bine",
     "random": "Întâmplător",
     "ordered": "Ordonat",
-    "preview": "Previzualizare"
+    "preview": "Previzualizare",
+    "print": "Imprima"
   },
   "message": {
     "deleteMsg": "Sunteți sigur(-ă) că doriți să ștergeți",

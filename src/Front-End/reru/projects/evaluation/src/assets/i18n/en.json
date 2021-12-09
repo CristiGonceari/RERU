@@ -108,7 +108,8 @@
     "ok": "Ok",
     "random": "Random",
     "ordered": "Ordered",
-    "preview": "Preview"
+    "preview": "Preview",
+    "print": "Print"
   },
   "message": {
     "deleteMsg": "Are you sure you want to delete",

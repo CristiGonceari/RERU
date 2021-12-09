@@ -87,6 +87,9 @@
                                         [routerLink]="['../my-activities/test-result', item.id]" *ngIf="item.testStatus === status.Verified">
                                         {{ 'button.view' | translate }}
                                     </button>
+                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem (click)="printTest(item.id)">
+                                        {{ 'button.print' | translate }}
+                                    </button>
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem
                                         (click)="removeTest(item.id)">
                                         {{ 'button.delete' | translate }}
