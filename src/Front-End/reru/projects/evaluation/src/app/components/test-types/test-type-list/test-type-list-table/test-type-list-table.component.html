@@ -80,13 +80,9 @@
                                                 <span style="font-size: 13px;">{{'statuses.clone' | translate}}</span>
                                             </button>
                                         </span>
-                                        <span>
-                                            <button
-                                        (click)="printTestTemplate(testType.id)"
-                                            class="navi-link align-items-baseline px-6" ngbDropdownItem>
-                                           Print TestTemplate 
+                                            <button (click)="printTestTemplate(testType.id)" class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                                            {{ 'button.print' | translate }}
                                         </button>
-                                        </span>
                                     </div>
                                 </div>
                             </div>
