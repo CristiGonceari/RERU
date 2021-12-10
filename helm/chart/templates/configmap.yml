@@ -297,6 +297,11 @@ data:
             "Microsoft": "Information"
           }
         },
+        "Minio": {
+          "endpoint": "play.min.io",
+          "accessKey": "minioadmin",
+          "secretKey": "minioadmin"
+        },
         "SecurityKey": "TESTSECURITYKEY2018",
         "Smtp": {
           "From": "CVU.RERU.Evaluation",
@@ -347,11 +352,6 @@ data:
              "Microsoft":"Information"
           }
        },
-       "Minio": {
-          "endpoint": "play.min.io",
-          "accessKey": "minioadmin",
-          "secretKey": "minioadmin"
-        },
        "SecurityKey":"TESTSECURITYKEY2018",
        "Smtp":{
           "From":"CVU.RERU.MP",
