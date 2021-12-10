@@ -46,9 +46,9 @@ export class DashboardComponent implements OnInit {
   downloadFile(item): void {
     this.seIncarca = false;
     this.fileService.get(item).subscribe(response => {
-      const fileName = response.name;
+      const fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0].split('"')[1];
       const blob = new Blob([response.body], { type: response.body.type });
-			const file = new File([blob], fileName, { type: response.body.type });
+      const file = new File([blob], fileName, { type: response.body.type });
       saveAs(file);
       this.seIncarca = true;
     });
@@ -73,6 +73,7 @@ export class DashboardComponent implements OnInit {
       this.lastId = res.data;
       this.notificationService.success('Success', 'Fișier adăugat!', NotificationUtil.getDefaultConfig());
       this.seIncarca1 = true;
+      this.getDemoList();
     }, error =>
     {
       this.notificationService.warn('Error', NotificationUtil.getDefaultConfig());

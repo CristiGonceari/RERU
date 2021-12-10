@@ -33,6 +33,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<IActionResult> GetFile([FromRoute] string fileId)
         {
             var result = await _storageFileService.GetFile(fileId);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);
         }
