@@ -4,6 +4,7 @@ import { saveAs } from 'file-saver';
 import { CloudFileService } from '../../utils/services/cloud-file/cloud-file.service';
 import { NotificationUtil } from '../../utils/util/notification.util';
 import { NotificationsService } from 'angular2-notifications';
+import { PaginationModel } from '../../utils/models/pagination.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,9 +17,14 @@ export class DashboardComponent implements OnInit {
   fileId;
   seIncarca: boolean = true;
   seIncarca1: boolean = true;
+  seIncarca3: boolean = true;
+  isLoadingTable: boolean = true;
   fileType;
-  files;
+  files:[] = [];
+  pagedSummary: PaginationModel = new PaginationModel();
   lastId;
+  uploadFiles;
+  fileIdForDelete;
 
   constructor(private userService: UserProfileService,
               private fileService : CloudFileService,
@@ -27,6 +33,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.retrieveProfile();
+    this.getDemoList();
   }
 
   retrieveProfile(): void {
@@ -46,11 +53,21 @@ export class DashboardComponent implements OnInit {
       this.seIncarca = true;
     });
   }
+
+  deleteFile(id):void
+  {
+    this.fileService.delete(id).subscribe(res => {
+      this.notificationService.success('Success', 'Was deleted', NotificationUtil.getDefaultConfig());
+      this.getDemoList();
+    })
+    
+  }
+  
   uploadFile(): void
   {
     this.seIncarca1 = false;
     const request = new FormData();
-    request.append('File', this.files);
+    request.append('File', this.uploadFiles);
     request.append('Type', this.fileType);
     this.fileService.create(request).subscribe(res => {
       this.lastId = res.data;
@@ -64,7 +81,20 @@ export class DashboardComponent implements OnInit {
   }
   
   onFileChange(event){
-    this.files = event.target.files[0];
+    this.uploadFiles = event.target.files[0];
   }
+
+  getDemoList(data: any = {}) {
+
+		this.fileService.list().subscribe(
+			res => {
+				if (res && res.data) {
+					this.files = res.data;
+					this.pagedSummary = res.data.pagedSummary;
+					this.isLoadingTable = false;
+				}
+			}
+		)
+	}
   
 }
