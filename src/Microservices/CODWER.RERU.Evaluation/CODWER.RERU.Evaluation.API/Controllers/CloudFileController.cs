@@ -23,7 +23,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
         [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = 409715200)]
-        public async Task<string> Pizdet([FromForm] AddFileDto dto)
+        public async Task<string> UploadFile([FromForm] AddFileDto dto)
         {
             return await _storageFileService.AddFile(dto);
         }
