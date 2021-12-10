@@ -298,9 +298,9 @@ data:
           }
         },
         "Minio": {
-          "endpoint": "play.min.io",
-          "accessKey": "minioadmin",
-          "secretKey": "minioadmin"
+          "endpoint": "http://reru-app-stage-minio:8080",
+          "accessKey": "minioaccesskey",
+          "secretKey": "miniosecretkey"
         },
         "SecurityKey": "TESTSECURITYKEY2018",
         "Smtp": {
