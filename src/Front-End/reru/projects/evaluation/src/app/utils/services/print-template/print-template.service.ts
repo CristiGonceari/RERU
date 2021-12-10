@@ -20,4 +20,8 @@ export class PrintTemplateService extends AbstractService {
   getTestTemplatePdf(testTemplateId): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/print-test-type-${testTemplateId}`, { responseType: 'blob', observe: 'response' });
   }
+
+  getQuestionUnitPdf(questionId): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/question-pdf/${questionId}`, { responseType: 'blob', observe: 'response' });
+  }
 }

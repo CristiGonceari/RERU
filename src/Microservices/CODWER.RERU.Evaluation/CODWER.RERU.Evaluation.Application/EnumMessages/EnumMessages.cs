@@ -16,6 +16,9 @@ namespace CODWER.RERU.Evaluation.Application.EnumMessages
         public const string MultipleAnswers = "Răspunsuri multiple";
         public const string OneAnswer = "Un răspuns";
         public const string HashedAnswer = "Completează textul";
+        public const string Draft = "Maculator";
+        public const string Active = "Activ";
+        public const string Inactive = "Inactiv";
 
         public static string GetTestStatus(TestStatusEnum testStatus)
         {
@@ -52,5 +55,17 @@ namespace CODWER.RERU.Evaluation.Application.EnumMessages
                 _ => "-"
             };
         }
-    }
+
+        public static string GetQuestionStatus(QuestionUnitStatusEnum questionStatus)
+        {
+            return questionStatus switch
+            {
+                QuestionUnitStatusEnum.Draft => Draft,
+                QuestionUnitStatusEnum.Active => Active,
+                QuestionUnitStatusEnum.Inactive => Inactive,
+                _ => "-"
+
+            };
+        }
+        }
 }

@@ -57,6 +57,9 @@
                                         <span class="font-size-lg" *ngIf="item.status == 1">{{'statuses.inactivate' | translate}}</span>
                                     </button>
                                     </div>
+                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem (click)="printQuestionUnitPdf(item.id)">
+                                        {{ 'button.print' | translate }}
+                                    </button>
                                     <button (click)="openConfirmationDeleteModal(item.id)" class="navi-link align-items-baseline px-6"
                                          ngbDropdownItem>
                                         {{'button.delete' | translate}}

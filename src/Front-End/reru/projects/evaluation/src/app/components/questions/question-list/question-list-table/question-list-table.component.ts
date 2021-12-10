@@ -9,6 +9,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { ConfirmModalComponent } from '@erp/shared';
+import { saveAs } from 'file-saver';
+import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
 
 @Component({
 	selector: 'app-question-list-table',
@@ -29,7 +31,8 @@ export class QuestionListTableComponent implements OnInit {
 		private route: ActivatedRoute,
 		private router: Router,
 		private notificationService: NotificationsService,
-		private modalService: NgbModal
+		private modalService: NgbModal,
+		private printTemplateService: PrintTemplateService
 	) { }
 
 	ngOnInit(): void {
@@ -76,6 +79,20 @@ export class QuestionListTableComponent implements OnInit {
 
 	navigate(id) {
 		this.router.navigate(['question-detail/', id, 'overview'], { relativeTo: this.route });
+	}
+
+	printQuestionUnitPdf(questionId){
+		this.printTemplateService.getQuestionUnitPdf(questionId).subscribe((response : any) => {
+			let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+			
+			if (response.body.type === 'application/pdf') {
+			  fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
+			}
+	  
+			const blob = new Blob([response.body], { type: response.body.type });
+			const file = new File([blob], fileName, { type: response.body.type });
+			saveAs(file);
+			  });
 	}
 
 	deleteQuestion(id): void {
