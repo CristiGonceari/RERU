@@ -31,8 +31,17 @@ export class CloudFileService  extends AbstractService  {
 				saveAs(file);
 			});
 	}
+
   create(data): Observable<any> {
 		return this.http.post<any>(`${this.baseUrl}/${this.urlRoute}`, data);
 	}
 
+  list(): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/allFiles`);
+	  }
+
+
+  delete(id: number): Observable<any> {
+		return this.http.delete<any>(`${this.baseUrl}/${this.urlRoute}/${id}`);
+	}
 }

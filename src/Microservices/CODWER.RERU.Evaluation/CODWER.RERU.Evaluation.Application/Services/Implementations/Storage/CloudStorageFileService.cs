@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Minio;
 using Minio.Exceptions;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
@@ -26,7 +27,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations.Storage
             _minio = new MinioClient(fileOptions.Value.Endpoint, fileOptions.Value.AccessKey, fileOptions.Value.SecretKey);
 
         }
-   
+        public async Task<List<Data.Entities.Files.File>> GetDemoList()
+        {
+            var list = _appDbContext.Files.ToList();
+            return list;
+        }
         public async Task<string> AddFile(string fileName, FileTypeEnum fileType, string type, byte[] content)
         {
             try

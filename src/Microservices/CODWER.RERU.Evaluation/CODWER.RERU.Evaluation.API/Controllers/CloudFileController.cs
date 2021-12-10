@@ -1,10 +1,12 @@
 ﻿using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Data.Entities.Files;
 using CODWER.RERU.Evaluation.DataTransferObjects.Files;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
@@ -40,5 +42,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         {
             return await _storageFileService.RemoveFile(fileId);
         }
+
+        [HttpGet("allFiles")]
+        public async Task<List<File>> GetDemoFiles()
+        {
+            return await _storageFileService.GetDemoList();
+        }
+
+
     }
 }
