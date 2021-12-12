@@ -15,6 +15,8 @@ x-minio-common: &minio-common
     interval: 30s
     timeout: 20s
     retries: 3
+  networks:
+    - my-network
 
 services:
   minio1:
@@ -23,6 +25,8 @@ services:
     volumes:
       - .\..\files\data1-1:/data1
       - .\..\files\data1-2:/data2
+    networks:
+      - my-network
 
   minio2:
     <<: *minio-common
@@ -30,6 +34,8 @@ services:
     volumes:
       - .\..\files\data2-1:/data1
       - .\..\files\data2-2:/data2
+    networks:
+      - my-network
 
   minio3:
     <<: *minio-common
@@ -37,6 +43,8 @@ services:
     volumes:
       - .\..\files\data3-1:/data1
       - .\..\files\data3-2:/data2
+    networks:
+      - my-network
 
   minio4:
     <<: *minio-common
@@ -44,6 +52,8 @@ services:
     volumes:
       - .\..\files\data4-1:/data1
       - .\..\files\data4-2:/data2
+    networks:
+      - my-network
 
   nginx:
     image: nginx:1.19.2-alpine
@@ -58,6 +68,8 @@ services:
       - minio2
       - minio3
       - minio4
+    networks:
+      - my-network
       
   reru-identity-migrator:
     container_name: reru-identity-migrator
