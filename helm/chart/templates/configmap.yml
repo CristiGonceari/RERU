@@ -298,7 +298,7 @@ data:
           }
         },
         "Minio": {
-          "endpoint": "localhost:9000",
+          "endpoint": "reru-app-stage-minio:9000",
           "accessKey": "minioaccesskey",
           "secretKey": "miniosecretkey"
         },
