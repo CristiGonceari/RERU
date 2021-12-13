@@ -49,13 +49,12 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             var path = new FileInfo("PdfTemplates/TestTemplate.html").FullName;
             var source = await File.ReadAllTextAsync(path);
 
-            var myDictionary = await GetOrderDictionary(testTemplate);
+            var myDictionary = await GetDictionary(testTemplate);
 
             foreach (var (key, value) in myDictionary)
             {
                 source = source.Replace(key, value);
             }
-
 
             var res = Parse(source);
 
@@ -79,7 +78,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             }
         }
 
-        private async Task<Dictionary<string, string>> GetOrderDictionary(TestType testTemplate)
+        private async Task<Dictionary<string, string>> GetDictionary(TestType testTemplate)
         {
 
             var myDictionary = new Dictionary<string, string>();
@@ -149,12 +148,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
         }
         private string DecodeRules(string rules)
         {
-            var testTemplateRules = rules;
-
             if (string.IsNullOrEmpty(rules)) return "-";
 
             var base64EncodedBytes = Convert.FromBase64String(rules);
-            testTemplateRules = Encoding.UTF8.GetString(base64EncodedBytes);
+            var testTemplateRules = Encoding.UTF8.GetString(base64EncodedBytes);
 
             return testTemplateRules;
         }

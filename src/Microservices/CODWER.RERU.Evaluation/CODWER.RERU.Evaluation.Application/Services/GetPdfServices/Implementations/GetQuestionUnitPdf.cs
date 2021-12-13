@@ -4,6 +4,7 @@ using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Files;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             return await GetPdf(questions);
         }
 
-        private string GetQuestionOptions(QuestionUnit questionOption)
+        private string GetTableContent(QuestionUnit questionOption)
         {
             var content = string.Empty;
             if (questionOption.QuestionType == QuestionTypeEnum.MultipleAnswers || questionOption.QuestionType == QuestionTypeEnum.OneAnswer)
@@ -68,25 +69,23 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
 
         public async Task<FileDataDto> GetPdf(QuestionUnit items)
         {
-            byte[] res;
             var path = new FileInfo("PdfTemplates/one_multiple_question.html").FullName;
             var source = await File.ReadAllTextAsync(path);
 
-             source = source.Replace("{question_name}", await GetQuestionName(items.Id))
-                            .Replace("{category_name}", items.QuestionCategory.Name)
-                            .Replace("{question_type}", EnumMessages.EnumMessages.GetQuestionType(items.QuestionType))
-                            .Replace("{question_points}", items.QuestionPoints.ToString())
-                            .Replace("{question_status}", EnumMessages.EnumMessages.GetQuestionStatus(items.Status))
-                            .Replace("{answer_option}", GetQuestionOptions(items));
+            var myDictionary = await GetOrderDictionary(items);
 
-            try
+            foreach (var (key, value) in myDictionary)
             {
-                res = _generatePdf.GetPDF(source);
+                source = source.Replace(key, value);
             }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
+            //source = source.Replace("{question_name}", await GetQuestionName(items.Id))
+            //               .Replace("{category_name}", items.QuestionCategory.Name)
+            //               .Replace("{question_type}", EnumMessages.EnumMessages.GetQuestionType(items.QuestionType))
+            //               .Replace("{question_points}", items.QuestionPoints.ToString())
+            //               .Replace("{question_status}", EnumMessages.EnumMessages.GetQuestionStatus(items.Status))
+            //               .Replace("{answer_option}", GetQuestionOptions(items));
+
+            var res = Parse(source);
 
             return new FileDataDto
             {
@@ -95,18 +94,43 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
                 Name = "Intrebarea.pdf"
             };
         }
+
+        private async Task<Dictionary<string, string>> GetOrderDictionary(QuestionUnit items)
+        {
+            var myDictionary = new Dictionary<string, string>();
+
+            myDictionary.Add("{question_name}", await GetQuestionName(items.Id));
+            myDictionary.Add("{category_name}", items.QuestionCategory.Name);
+            myDictionary.Add("{question_type}", EnumMessages.EnumMessages.GetQuestionType(items.QuestionType));
+            myDictionary.Add("{question_points}", items.QuestionPoints.ToString());
+            myDictionary.Add("{question_status}", EnumMessages.EnumMessages.GetQuestionStatus(items.Status));
+            myDictionary.Add("{answer_option}", GetTableContent(items));
+
+            return myDictionary;
+        }
+
+        private byte[] Parse(string html)
+        {
+            try
+            {
+                return _generatePdf.GetPDF(html);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         private async Task<string> GetQuestionName(int id)
         {
             var questionUnit = _appDbContext.QuestionUnits.FirstOrDefault(x => x.Id == id);
-
-            if (questionUnit != null)
-            {
-                if (questionUnit.QuestionType == QuestionTypeEnum.HashedAnswer)
+           
+                if (questionUnit is {QuestionType: QuestionTypeEnum.HashedAnswer})
                 {
                     questionUnit = await _questionUnitService.GetUnHashedQuestionUnit(questionUnit.Id);
                     questionUnit.Options = null;
                 }
-            }
+
             return questionUnit.Question;
         }
     }
