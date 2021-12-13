@@ -25,6 +25,7 @@ using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
 using CODWER.RERU.Evaluation.DataTransferObjects.Files;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace CODWER.RERU.Evaluation.API
 {
@@ -46,6 +47,20 @@ namespace CODWER.RERU.Evaluation.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<KestrelServerOptions>(options =>
+                {
+                    options.AllowSynchronousIO = true;
+                    //options.Limits.MaxRequestBodySize = null; --did not worked
+                    options.Limits.MaxRequestBodySize = int.MaxValue;
+                })
+                // If using IIS:
+                .Configure<IISServerOptions>(options =>
+                {
+                    options.AllowSynchronousIO = true;
+                    //options.MaxRequestBodySize = null;
+                    options.MaxRequestBodySize = int.MaxValue;
+                });
+
             services.Configure<SmtpOptions>(this.Configuration.GetSection("Smtp"));
             services.Configure<RabbitMq>(Configuration.GetSection("MessageQueue"));
             services.Configure<MinioSettings>(this.Configuration.GetSection("Minio"));
