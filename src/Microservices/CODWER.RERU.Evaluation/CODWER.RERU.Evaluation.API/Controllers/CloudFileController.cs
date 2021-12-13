@@ -21,8 +21,10 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
             _storageFileService = iStorageFileService;
         }
+
         [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = 409715200)]
+        [RequestSizeLimit(int.MaxValue)]
         public async Task<string> UploadFile([FromForm] AddFileDto dto)
         {
             return await _storageFileService.AddFile(dto);
