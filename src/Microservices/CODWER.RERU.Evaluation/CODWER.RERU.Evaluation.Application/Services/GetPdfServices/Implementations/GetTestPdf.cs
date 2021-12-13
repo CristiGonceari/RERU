@@ -43,7 +43,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             return await GetPdf(item);
         }
 
-        private async Task<string> GetTableContentAsync(Test item)
+        private async Task<string> GetTableContentForTest(Test item)
         {
             var content = string.Empty;
 
@@ -92,28 +92,28 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
 
         public async Task<FileDataDto> GetPdf(Test item)
         {
-            byte[] res;
             var path = new FileInfo("PdfTemplates/Test.html").FullName;
             var source = await File.ReadAllTextAsync(path);
 
-            source = source.Replace("{test_name}", item.TestType.Name);
-            source = source.Replace("{nr_test_question}", item.TestType.QuestionCount.ToString());
-            source = source.Replace("{test_time}", item.ProgrammedTime.ToString("dd/MM/yyyy, HH:mm"));
-            source = source.Replace("{min_percentage}", item.TestType.MinPercent.ToString());
-            source = source.Replace("{event_name}", item.EventId != null ? item.Event.Name : "-");
-            source = source.Replace("{location_name}", item.LocationId != null ? item.Location.Name : "-");
-            source = source.Replace("{evaluat_name}", item.UserProfile.FirstName + " " + item.UserProfile.LastName);
-            source = source.Replace("{evaluator_name}", getEvaluatorName(item));
-            source = source.Replace("{tr_area_replace}", await GetTableContentAsync(item));
+            var myDictionary = await GetOrderDictionary(item);
 
-            try
+
+            foreach (var (key, value) in myDictionary)
             {
-                res = _generatePdf.GetPDF(source);
+                source = source.Replace(key, value);
             }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
+
+            //source = source.Replace("{test_name}", item.TestType.Name);
+            //source = source.Replace("{nr_test_question}", item.TestType.QuestionCount.ToString());
+            //source = source.Replace("{test_time}", item.ProgrammedTime.ToString("dd/MM/yyyy, HH:mm"));
+            //source = source.Replace("{min_percentage}", item.TestType.MinPercent.ToString());
+            //source = source.Replace("{event_name}", item.EventId != null ? item.Event.Name : "-");
+            //source = source.Replace("{location_name}", item.LocationId != null ? item.Location.Name : "-");
+            //source = source.Replace("{evaluat_name}", item.UserProfile.FirstName + " " + item.UserProfile.LastName);
+            //source = source.Replace("{evaluator_name}", getEvaluatorName(item));
+            //source = source.Replace("{tr_area_replace}", await GetTableContentAsync(item));
+
+            var res = Parse(source);
 
             return new FileDataDto
             {
@@ -121,6 +121,36 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
                 ContentType = "application/pdf",
                 Name = "Test.pdf"
             };
+        }
+
+        private byte[] Parse(string html)
+        {
+            try
+            {
+                return _generatePdf.GetPDF(html);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        private async Task<Dictionary<string, string>> GetOrderDictionary(Test item)
+        {
+
+            var myDictionary = new Dictionary<string, string>();
+
+            myDictionary.Add("{test_name}", item.TestType.Name);
+            myDictionary.Add("{nr_test_question}", item.TestType.QuestionCount.ToString());
+            myDictionary.Add("{test_time}", item.ProgrammedTime.ToString("dd/MM/yyyy, HH:mm"));
+            myDictionary.Add("{min_percentage}", item.TestType.MinPercent.ToString());
+            myDictionary.Add("{event_name}", item.EventId != null ? item.Event.Name : "-");
+            myDictionary.Add("{location_name}", item.LocationId != null ? item.Location.Name : "-");
+            myDictionary.Add("{evaluat_name}", item.UserProfile.FirstName + " " + item.UserProfile.LastName);
+            myDictionary.Add("{evaluator_name}", getEvaluatorName(item));
+            myDictionary.Add("{tr_area_replace}", await GetTableContentForTest(item));
+
+            return myDictionary;
         }
 
         public string getEvaluatorName(Test item)
@@ -135,16 +165,13 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
                     .Where(e => e.EventId == item.EventId)
                     .ToList();
 
-                foreach (var evaluator in evaluators)
-                {
-                    list.Add(evaluator.Evaluator.FirstName + " " + evaluator.Evaluator.LastName);
-
-                }
-                string combineString = string.Join(", ", list);
+                list.AddRange(evaluators.Select(evaluator => evaluator.Evaluator.FirstName + " " + evaluator.Evaluator.LastName));
+                var combineString = string.Join(", ", list);
 
                 return combineString;
             }
-            else if(item.EvaluatorId != null)
+
+            if(item.EvaluatorId != null)
             {
                 return item.Evaluator.FirstName + " " + item.Evaluator.LastName;
             }
