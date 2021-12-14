@@ -35,6 +35,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MyActivitiesComponent } from './components/my-activities/my-activities.component';
 import { MyActivitiesRoutingModule } from './components/my-activities/my-activities-routing.module';
 import { MyActivitiesModule } from './components/my-activities/my-activities.module';
+import { MatProgressBar, MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 
@@ -46,6 +47,7 @@ import { MyActivitiesModule } from './components/my-activities/my-activities.mod
   ],
   imports: [
     BrowserModule,
+    MatProgressBarModule,
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AbstractService, AppSettingsService } from '@erp/shared';
 import saveAs from 'file-saver';
@@ -14,8 +14,12 @@ export class CloudFileService  extends AbstractService  {
 		super(appConfigService);
 	}
 
-  get(id): Observable<any> {
-		return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`, { responseType: 'blob', observe: 'response' });
+  get(id): Observable<HttpEvent<Blob>> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`, { 
+			reportProgress: true,
+			observe: 'events',
+			responseType: 'blob'
+		});
 	}
 
   download(id: string): void {
