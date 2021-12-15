@@ -72,6 +72,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations.Storage
         {
             try
             {
+                for (int i = 0; i < 10; i++)
+                {
+                    Console.WriteLine("___________________________________");
+                }
+                Console.WriteLine("Uploaded file in RAM");
                 var prefix = GetUniqueFilePrefix();
                 var uniqueFileName = $"{prefix}_{dto.File.FileName}";
 
