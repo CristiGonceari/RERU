@@ -5,6 +5,7 @@ import { TestQuestionService } from '../../../utils/services/test-question/test-
 import { TestTypeService } from '../../../utils/services/test-type/test-type.service';
 import { TestService } from '../../../utils/services/test/test.service';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import { TestStatusEnum } from '../../../utils/enums/test-status.enum';
 
 @Component({
   selector: 'app-start-test-page',
@@ -51,7 +52,7 @@ export class StartTestPageComponent implements OnInit {
         this.timeLeft = this.milisecondsToHms(Math.abs(programmedTime - date));
       } else {
         this.timeLeft = "00 : 00 : 00";
-        if (!this.settings.startBeforeProgrammation && this.timeLeft == "00 : 00 : 00") 
+        if (!this.settings.startBeforeProgrammation && this.timeLeft == "00 : 00 : 00")
           this.startTest = true;
       }
     }, 1000)
@@ -66,11 +67,13 @@ export class StartTestPageComponent implements OnInit {
     return ` ${h < 10 ? '0' + h : h} : ${m < 10 ? '0' + m : m} : ${s < 10 ? '0' + s : s}`;
   }
 
-  goToTest(): void {
-    if(!this.settings.showManyQuestionPerPage){
-      this.testQuestionService.generate(this.testId).subscribe(() => this.router.navigate(['my-activities/one-test-per-page', this.testId]));
-    }else 
-      this.testQuestionService.generate(this.testId).subscribe(() => this.router.navigate(['my-activities/multiple-per-page', this.testId]));
+  editTestStatus(){
+    this.testService.changeStatus({testId: this.testId, status: TestStatusEnum.InProgress}).subscribe(() => {
+      if (!this.settings.showManyQuestionPerPage)
+        this.router.navigate(['my-activities/one-test-per-page', this.testId]);
+      else
+       this.router.navigate(['my-activities/multiple-per-page', this.testId]);
+    });
   }
 
   getTestById(testId: number) {
