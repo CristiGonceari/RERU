@@ -9,6 +9,7 @@ import { TestTypeStatusEnum } from 'projects/evaluation/src/app/utils/enums/test
 import { TestStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-status.enum';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { AddEditTest } from '../../../../utils/models/tests/add-edit-test.model';
+import { TestQuestionService } from 'projects/evaluation/src/app/utils/services/test-question/test-question.service';
 
 @Component({
   selector: 'app-add-test',
@@ -40,7 +41,8 @@ export class AddTestComponent implements OnInit {
     private testTypeService: TestTypeService,
     private testService: TestService,
     private location: Location,
-    private notificationService: NotificationsService
+    private notificationService: NotificationsService,
+    private testQuestionService: TestQuestionService
   ) { }
 
   ngOnInit(): void {
@@ -119,9 +121,15 @@ export class AddTestComponent implements OnInit {
     }
   }
 
+  generate(testId){
+    this.testQuestionService.generate(testId).subscribe(() => {});
+  }
+
+
   createTest() {
-    this.testService.createTest(this.parse()).subscribe(() => {
+    this.testService.createTest(this.parse()).subscribe((res) => {
       this.backClicked();
+      this.generate(res.data);
       this.notificationService.success('Success', 'Test was successfully programmed', NotificationUtil.getDefaultMidConfig());
     });
   }
