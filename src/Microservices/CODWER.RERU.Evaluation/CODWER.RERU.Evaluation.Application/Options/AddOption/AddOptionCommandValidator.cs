@@ -11,15 +11,15 @@ namespace CODWER.RERU.Evaluation.Application.Options.AddOption
     {
         public AddOptionCommandValidator(AppDbContext appDbContext)
         {
-            RuleFor(x => x.Data.QuestionUnitId)
+            RuleFor(x => x.QuestionUnitId)
                 .SetValidator(x => new ItemMustExistValidator<QuestionUnit>(appDbContext, ValidationCodes.INVALID_QUESTION,
                     ValidationMessages.InvalidReference));
 
-            RuleFor(r => r.Data.Answer)
+            RuleFor(r => r.Answer)
                 .NotEmpty()
                 .WithErrorCode(ValidationCodes.EMPTY_ANSWER);
 
-            RuleFor(r => r.Data.IsCorrect)
+            RuleFor(r => r.IsCorrect)
                 .NotNull()
                 .WithErrorCode(ValidationCodes.EMPTY_CORRECT_ANSWER);
         }

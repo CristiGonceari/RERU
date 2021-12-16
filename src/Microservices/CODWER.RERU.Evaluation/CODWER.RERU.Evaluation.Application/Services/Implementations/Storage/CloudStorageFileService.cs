@@ -115,7 +115,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations.Storage
 
                 if (toRemove != null)
                 {
-                    var deleteObject = _minio.RemoveObjectAsync(toRemove.BucketName, toRemove.UniqueFileName);
+                    await _minio.RemoveObjectAsync(toRemove.BucketName, toRemove.UniqueFileName);
 
                     _appDbContext.Files.Remove(toRemove);
                     await _appDbContext.SaveChangesAsync();
