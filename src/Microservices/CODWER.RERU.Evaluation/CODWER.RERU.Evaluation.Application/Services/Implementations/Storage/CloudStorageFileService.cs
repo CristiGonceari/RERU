@@ -71,7 +71,8 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations.Storage
         public async Task<string> AddFile(AddFileDto dto)
         {
             try
-            {   if (dto != null)
+            {   
+                if (dto != null)
                 {
                     for (int i = 0; i < 10; i++)
                     {
