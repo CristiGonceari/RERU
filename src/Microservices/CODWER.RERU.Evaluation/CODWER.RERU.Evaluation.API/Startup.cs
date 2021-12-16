@@ -25,6 +25,7 @@ using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
 using CODWER.RERU.Evaluation.DataTransferObjects.Files;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace CODWER.RERU.Evaluation.API
@@ -59,6 +60,12 @@ namespace CODWER.RERU.Evaluation.API
                     options.AllowSynchronousIO = true;
                     //options.MaxRequestBodySize = null;
                     options.MaxRequestBodySize = int.MaxValue;
+                })
+                .Configure<FormOptions>(options =>
+                {
+                    options.ValueLengthLimit = int.MaxValue;
+                    options.MultipartBodyLengthLimit = int.MaxValue; // if don't set default value is: 128 MB
+                    options.MultipartHeadersLengthLimit = int.MaxValue;
                 });
 
             services.Configure<SmtpOptions>(this.Configuration.GetSection("Smtp"));
