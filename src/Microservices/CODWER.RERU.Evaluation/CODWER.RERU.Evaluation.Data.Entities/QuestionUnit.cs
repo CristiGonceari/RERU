@@ -21,6 +21,7 @@ namespace CODWER.RERU.Evaluation.Data.Entities
         public int? QuestionPoints { get; set; }
         public QuestionCategory QuestionCategory { get; set; }
         public Guid PdfFileId { get; set; }
+        public string? MediaFileId { get; set; }
 
         public virtual ICollection<Option> Options { get; set; }
         public virtual ICollection<TestQuestion> TestQuestions { get; set; }

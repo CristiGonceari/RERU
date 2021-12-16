@@ -17,5 +17,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits
         public int QuestionPoints { get; set; }
         public int OptionsCount { get; set; }
         public bool IsReadyToActivate { get; set; }
+        public string? MediaFileId { get; set; }
     }
 }

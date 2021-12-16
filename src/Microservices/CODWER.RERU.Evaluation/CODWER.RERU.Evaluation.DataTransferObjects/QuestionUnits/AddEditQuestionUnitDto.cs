@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
+using CODWER.RERU.Evaluation.DataTransferObjects.Files;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits
 {
@@ -12,5 +13,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits
         public QuestionTypeEnum QuestionType { get; set; }
         public QuestionUnitStatusEnum Status { get; set; }
         public int QuestionPoints { get; set; }
+        public string? MediaFileId { get; set; }
     }
 }
