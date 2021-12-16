@@ -4,8 +4,9 @@ ingress:
   annotations:
     kubernetes.io/tls-acme: "true"
     kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/proxy-body-size: "250m"
     nginx.org/client-body-timeout: "3600"
-    nginx.org/client-max-body-size: 5000m
+    nginx.org/client-max-body-size: 250m
     nginx.org/proxy-connect-timeout: "3600"
     nginx.org/proxy-read-timeout: "3600"
     nginx.org/proxy-send-timeout: "3600"
@@ -16,8 +17,9 @@ ingress_back:
   annotations:
     kubernetes.io/tls-acme: "true"
     kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/proxy-body-size: "250m"
     nginx.org/client-body-timeout: "3600"
-    nginx.org/client-max-body-size: 5000m
+    nginx.org/client-max-body-size: 250m
     nginx.org/proxy-connect-timeout: "3600"
     nginx.org/proxy-read-timeout: "3600"
     nginx.org/proxy-send-timeout: "3600"
@@ -34,7 +36,7 @@ reru_public_gateway:
   deployment: # variables for api deployment
     resources:
       requests:
-        memory: "32Mi"
+        memory: "250Mi"
         cpu: "250m"
       limits:
         memory: "256Mi"

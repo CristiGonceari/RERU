@@ -3,6 +3,15 @@ apiVersion: v1
 metadata:
   name: {{ .Values.name }}-application-settings
 data:
+  proxy-connect-timeout: "15"
+  proxy-read-timeout: "600"
+  proxy-send-timeout: "600"
+  proxy-body-size: "250m"
+  hsts-include-subdomains: "false"
+  body-size: "250m"
+  server-name-hash-bucket-size: "256"
+  client-max-body-size: "250m"
+
   reru_public_gateway.appsettings.json: |
     {
       "Logging": {
