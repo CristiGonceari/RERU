@@ -39,7 +39,6 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit
 
             var storage = await _storageFileService.AddFile(request.FileDto);
 
-
             var newQuestion = new AddEditQuestionUnitDto()
             {
                 QuestionCategoryId = request.QuestionCategoryId,
