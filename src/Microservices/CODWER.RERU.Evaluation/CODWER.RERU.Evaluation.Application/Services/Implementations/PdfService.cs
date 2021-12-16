@@ -47,7 +47,6 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             return await GetPdf(testTemplate);
         }
-
         public async Task<FileDataDto> PrintTestPdf(int testId)
         {
             var item = _appDbContext.Tests
@@ -64,7 +63,6 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             return await GetPdf(item);
         }
-
         public async Task<FileDataDto> PrintQuestionUnitPdf(int questionId)
         {
             var questions = _appDbContext.QuestionUnits
@@ -73,6 +71,19 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 .FirstOrDefault(x => x.Id == questionId);
 
             return await GetPdf(questions);
+        }
+        public async Task<FileDataDto> PrintPerformingTestPdf(int testId)
+        {
+            var item = _appDbContext.Tests
+                .Include(t => t.UserProfile)
+                .Include(t => t.Evaluator)
+                .Include(t => t.TestType)
+                .Include(t => t.TestQuestions)
+                    .ThenInclude(tq => tq.QuestionUnit)
+                        .ThenInclude(q => q.Options)
+                .FirstOrDefault(t => t.Id == testId);
+
+            return await GetPdf(item, "PdfTemplates/PerformingTest.html");
         }
 
         #region GetPdf
@@ -131,7 +142,24 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 Name = "Intrebarea.pdf"
             };
         }
+        private async Task<FileDataDto> GetPdf(Test item, string name)
+        {
+            var path = new FileInfo(name).FullName;
+            var source = await File.ReadAllTextAsync(path);
 
+            var myDictionary = await GetDictionary(item, name);
+
+            source = ReplaceKeys(source, myDictionary);
+
+            var res = Parse(source);
+
+            return new FileDataDto
+            {
+                Content = res,
+                ContentType = "application/pdf",
+                Name = "PerformingTest.pdf"
+            };
+        }
         #endregion
 
         #region GetDictionary
@@ -177,6 +205,20 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             myDictionary.Add("{question_points}", items.QuestionPoints.ToString());
             myDictionary.Add("{question_status}", EnumMessages.EnumMessages.GetQuestionStatus(items.Status));
             myDictionary.Add("{answer_option}", GetTableContent(items));
+
+            return myDictionary;
+        }
+        private async Task<Dictionary<string, string>> GetDictionary(Test item, string name)
+        {
+            var myDictionary = new Dictionary<string, string>();
+
+            myDictionary.Add("{candidate_name}", item.UserProfile.FirstName + " " + item.UserProfile.LastName);
+            myDictionary.Add("{min_percent}", item.TestType.MinPercent.ToString());
+            myDictionary.Add("{test_name}", item.TestType.Name);
+            myDictionary.Add("{test_type_duration}", item.TestType.Duration.ToString());
+            myDictionary.Add("{tr_area_replace}", await GetTestQuestionContent(item));
+            myDictionary.Add("{evaluator_name}", GetEvaluatorName(item));
+            myDictionary.Add("{test_date}", item.ProgrammedTime.ToString("dd-MM-yyyy"));
 
             return myDictionary;
         }
@@ -301,6 +343,24 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                     }
                 }
             }
+            return content;
+        }
+        private async Task<string> GetTestQuestionContent(Test item)
+        {
+            var content = string.Empty;
+
+            foreach (var testQuestion in item.TestQuestions.Select((value, i) => new { i, value })) 
+            {
+                if (testQuestion.value.QuestionUnit.QuestionType == QuestionTypeEnum.HashedAnswer)
+                {
+                    content = await GetQuestionTemplateByType(testQuestion.value.QuestionUnit, content);
+                }
+
+                content += $@"<div style=""margin-bottom: 20px; width: 930px;""><b>{testQuestion.i+1}. {testQuestion.value.QuestionUnit.Question}</b> ({testQuestion.value.QuestionUnit.QuestionPoints}p)</div>";
+
+                content = await GetQuestionTemplateByType(testQuestion.value.QuestionUnit, content);
+            }
+
             return content;
         }
 
@@ -483,6 +543,65 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             }
 
             return questionUnit.Question;
+        }
+        private async Task<string> GetQuestionTemplateByType(QuestionUnit question, string content)
+        {
+            if (question.QuestionType == QuestionTypeEnum.HashedAnswer)
+            {
+                question = await _questionUnitService.GetUnHashedQuestionUnit(question.Id);
+
+                if (question.Options != null)
+                {
+                    foreach (var option in question.Options)
+                    {
+                        question.Question = question.Question.Replace($"[answer]{option.Answer}[/answer]", "________________");
+                    }
+                }
+            }
+
+            if (question.QuestionType == QuestionTypeEnum.FreeText)
+            {
+                content += $@"<div style=""margin-bottom: 20px; width: 930px;"">
+                                                   ______________________________________________________________________________________________________
+                                                   ______________________________________________________________________________________________________
+                                                   ______________________________________________________________________________________________________
+                                                   ______________________________________________________________________________________________________
+                                                   ______________________________________________________________________________________________________
+                                                   ______________________________________________________________________________________________________
+                             </div>";
+            }
+
+            if (question.QuestionType == QuestionTypeEnum.MultipleAnswers)
+            {
+                foreach (var option in question.Options.Select((value, i) => new { i, value}))
+                {
+                    content += $@"<div>
+                                    <label>
+                                        <input type=""checkbox"" style=""margin-left: 20px; margin-bottom: 15px;"">
+                                        <span style=""height: 25px; width: 25px;"">{option.value.Answer}</span>
+                                    </label>
+                                 </div>";
+                }
+
+                content += $@"<div style=""margin-bottom: 20px;""></div>";
+            }
+
+            if (question.QuestionType == QuestionTypeEnum.OneAnswer)
+            {
+                foreach (var option in question.Options.Select((value, i) => new { i, value }))
+                {
+                    content += $@"<div>
+                                                    <label>
+                                                        <input type=""radio"" style=""margin-left: 20px; margin-bottom: 15px;"">
+                                                        <span style=""height: 25px; width: 25px;"">{option.value.Answer}</span>
+                                                    </label>
+                                                 </div>";
+                }
+
+                content += $@"<div style=""margin-bottom: 20px;""></div>";
+            }
+
+            return content;
         }
     }
 }
