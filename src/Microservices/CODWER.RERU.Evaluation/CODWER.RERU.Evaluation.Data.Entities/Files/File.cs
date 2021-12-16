@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 
 namespace CODWER.RERU.Evaluation.Data.Entities.Files
 {

@@ -38,10 +38,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             var testTemplate = await _appDbContext.TestTypes
                 .Include(x => x.TestTypeQuestionCategories)
-                .ThenInclude(x => x.TestCategoryQuestions)
+                    .ThenInclude(x => x.TestCategoryQuestions)
                 .Include(x => x.TestTypeQuestionCategories)
-                .ThenInclude(x => x.QuestionCategory)
-                .ThenInclude(x => x.QuestionUnits)
+                    .ThenInclude(x => x.QuestionCategory)
+                        .ThenInclude(x => x.QuestionUnits)
                 .Include(x => x.Settings)
                 .FirstOrDefaultAsync(x => x.Id == testTemplateId);
 
