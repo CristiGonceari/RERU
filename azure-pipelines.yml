@@ -198,7 +198,7 @@ stages:
               Dockerfile: "docker-files/Dockerfile-RERU-Core-FE"
               tags: |
                 $(tag)
-            #condition: and(succeeded(), eq(variables['BuildCoreFE'], 'True'))
+            condition: and(succeeded(), eq(variables['BuildCoreFE'], 'True'))
 
           - task: Docker@2
             displayName: "Push Core front end image"
@@ -208,7 +208,7 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
-            #condition: and(succeeded(), eq(variables['BuildCoreFE'], 'True'))
+            condition: and(succeeded(), eq(variables['BuildCoreFE'], 'True'))
 
           - task: Docker@2
             displayName: Build Core image
@@ -242,7 +242,7 @@ stages:
               Dockerfile: "docker-files/Dockerfile-RERU-Personal-FE"
               tags: |
                 $(tag)
-            #condition: and(succeeded(), eq(variables['BuildPersonalFE'], 'True'))
+            condition: and(succeeded(), eq(variables['BuildPersonalFE'], 'True'))
 
           - task: Docker@2
             displayName: "Push Personal front end image"
@@ -252,7 +252,7 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
-            #condition: and(succeeded(), eq(variables['BuildPersonalFE'], 'True'))
+            condition: and(succeeded(), eq(variables['BuildPersonalFE'], 'True'))
 
           - task: Docker@2
             displayName: Build Personal back end image
@@ -286,7 +286,7 @@ stages:
               Dockerfile: "docker-files/Dockerfile-RERU-Evaluation-FE"
               tags: |
                 $(tag)
-            #condition: and(succeeded(), eq(variables['BuildEvaluationFE'], 'True'))
+            condition: and(succeeded(), eq(variables['BuildEvaluationFE'], 'True'))
 
           - task: Docker@2
             displayName: "Push Evaluation front end image"
@@ -296,7 +296,7 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
-            #condition: and(succeeded(), eq(variables['BuildEvaluationFE'], 'True'))
+            condition: and(succeeded(), eq(variables['BuildEvaluationFE'], 'True'))
 
           - task: Docker@2
             displayName: Build Evaluation back end image
