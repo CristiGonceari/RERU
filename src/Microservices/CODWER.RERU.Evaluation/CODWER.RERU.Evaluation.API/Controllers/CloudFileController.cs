@@ -23,8 +23,8 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpPost]
-        [DisableRequestSizeLimit]
-        //[RequestSizeLimit(int.MaxValue)]
+        //[DisableRequestSizeLimit]
+        [RequestSizeLimit(70_000_000)]
         public async Task<string> UploadFile([FromForm] AddFileDto dto)
         {
             return await _storageFileService.AddFile(dto);
