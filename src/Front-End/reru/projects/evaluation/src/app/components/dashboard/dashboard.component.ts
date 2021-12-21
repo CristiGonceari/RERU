@@ -87,7 +87,7 @@ export class DashboardComponent implements OnInit {
               this.filenames.unshift(filename);
             }
           } else {
-           const fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0].split('"')[1];
+            const fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
             const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
             const file = new File([blob], fileName, { type: httpEvent.body.type });
             saveAs(file);
