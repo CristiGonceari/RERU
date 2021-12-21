@@ -18,7 +18,6 @@ using CVU.ERP.Common.Pagination;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
     [ApiController]
@@ -39,7 +38,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpPost]
-        public async Task<int> AddQuestionUnit([FromBody] AddQuestionUnitCommand command)
+        public async Task<int> AddQuestionUnit([FromForm] AddQuestionUnitCommand command)
         {
             return await Mediator.Send(command);
         }

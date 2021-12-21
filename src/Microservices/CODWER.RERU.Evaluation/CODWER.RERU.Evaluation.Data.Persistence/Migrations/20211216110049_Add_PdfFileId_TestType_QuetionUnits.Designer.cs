@@ -4,14 +4,16 @@ using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211216110049_Add_PdfFileId_TestType_QuetionUnits")]
+    partial class Add_PdfFileId_TestType_QuetionUnits
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -539,9 +541,6 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("MediaFileId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("QuestionUnitId")
                         .HasColumnType("int");
 
@@ -694,9 +693,6 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 
                     b.Property<Guid>("PdfFileId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("MediaFileId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Question")
                         .HasColumnType("nvarchar(max)");

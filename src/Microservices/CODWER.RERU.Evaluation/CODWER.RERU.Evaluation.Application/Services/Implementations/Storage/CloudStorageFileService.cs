@@ -36,6 +36,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations.Storage
         {
             try
             {
+                for (int i = 0; i < 10; i++)
+                {
+                    Console.WriteLine("___________________________________");
+                }
+                Console.WriteLine("Uploaded file in RAM");
                 var prefix = GetUniqueFilePrefix();
                 var uniqueFileName = $"{prefix}_{fileName}";
 
@@ -66,30 +71,41 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations.Storage
         public async Task<string> AddFile(AddFileDto dto)
         {
             try
-            {
-                var prefix = GetUniqueFilePrefix();
-                var uniqueFileName = $"{prefix}_{dto.File.FileName}";
-
-                await using var ms = new MemoryStream();
-                await dto.File.CopyToAsync(ms);
-
-                await CreateBucket(dto.Type.ToString());
-                await FileUpload(dto.Type.ToString(), uniqueFileName, ms.ToArray());
-
-                var fileToAdd = new Data.Entities.Files.File
+            {   
+                if (dto != null)
                 {
-                    Id = new Guid(),
-                    FileName = dto.File.FileName,
-                    FileType = dto.Type,
-                    UniqueFileName = uniqueFileName,
-                    BucketName = dto.Type.ToString(),
-                    Type = dto.File.ContentType
-                };
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Console.WriteLine("___________________________________");
+                    }
+                    Console.WriteLine("Uploaded file in RAM");
+                    var prefix = GetUniqueFilePrefix();
+                    var uniqueFileName = $"{prefix}_{dto.File.FileName}";
 
-                await _appDbContext.Files.AddAsync(fileToAdd);
-                await _appDbContext.SaveChangesAsync();
+                    await using var ms = new MemoryStream();
+                    await dto.File.CopyToAsync(ms);
 
-                return fileToAdd.Id.ToString();
+                    await CreateBucket(dto.Type.ToString());
+                    await FileUpload(dto.Type.ToString(), uniqueFileName, ms.ToArray());
+
+                    var fileToAdd = new Data.Entities.Files.File
+                    {
+                        Id = new Guid(),
+                        FileName = dto.File.FileName,
+                        FileType = dto.Type,
+                        UniqueFileName = uniqueFileName,
+                        BucketName = dto.Type.ToString(),
+                        Type = dto.File.ContentType
+                    };
+
+                    await _appDbContext.Files.AddAsync(fileToAdd);
+                    await _appDbContext.SaveChangesAsync();
+
+                    return fileToAdd.Id.ToString();
+                }
+                else {
+                    return null;
+                }
             }
             catch (Exception e)
             {
@@ -105,7 +121,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations.Storage
 
                 if (toRemove != null)
                 {
-                    var deleteObject = _minio.RemoveObjectAsync(toRemove.BucketName, toRemove.UniqueFileName);
+                    await _minio.RemoveObjectAsync(toRemove.BucketName, toRemove.UniqueFileName);
 
                     _appDbContext.Files.Remove(toRemove);
                     await _appDbContext.SaveChangesAsync();

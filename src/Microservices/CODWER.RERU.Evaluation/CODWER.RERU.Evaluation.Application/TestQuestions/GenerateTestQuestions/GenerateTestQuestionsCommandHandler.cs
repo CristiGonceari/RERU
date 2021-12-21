@@ -101,7 +101,6 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
             }
 
             test.MaxErrors = test.TestType.Settings.MaxErrors;
-            test.TestStatus = TestStatusEnum.InProgress;
 
             await _appDbContext.SaveChangesAsync();
 

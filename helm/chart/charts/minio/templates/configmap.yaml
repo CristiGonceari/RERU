@@ -8,5 +8,14 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 data:
+  proxy-connect-timeout: "15"
+  proxy-read-timeout: "600"
+  proxy-send-timeout: "600"
+  proxy-body-size: "250m"
+  hsts-include-subdomains: "false"
+  body-size: "250m"
+  server-name-hash-bucket-size: "256"
+  client-max-body-size: "250m"
+  
   initialize: |-
 {{ include (print $.Template.BasePath "/_helper_create_bucket.txt") . | indent 4 }}

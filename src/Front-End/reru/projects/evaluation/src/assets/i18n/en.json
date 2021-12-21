@@ -109,7 +109,8 @@
     "random": "Random",
     "ordered": "Ordered",
     "preview": "Preview",
-    "print": "Print"
+    "print": "Print",
+    "performing-test": "Print performing test"
   },
   "message": {
     "deleteMsg": "Are you sure you want to delete",

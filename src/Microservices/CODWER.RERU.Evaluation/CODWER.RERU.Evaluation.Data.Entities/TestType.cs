@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CVU.ERP.Common.Data.Entities;
 
@@ -22,6 +23,7 @@ namespace CODWER.RERU.Evaluation.Data.Entities
         public TestTypeModeEnum Mode { get; set; }
         public SequenceEnum CategoriesSequence { get; set; }
         public TestTypeSettings Settings { get; set; }
+        public Guid PdfFileId { get; set; }
 
         public virtual ICollection<Test> Tests { get; set; }
         public virtual ICollection<TestTypeQuestionCategory> TestTypeQuestionCategories { get; set; }

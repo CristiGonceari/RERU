@@ -22,7 +22,6 @@ import { NotificationsService } from 'angular2-notifications';
   styleUrls: ['./test-list-table.component.scss']
 })
 export class TestListTableComponent implements OnInit {
-
   pagination: PaginationModel = new PaginationModel();
   testTypeName = [];
   testToSearch;
@@ -218,6 +217,20 @@ export class TestListTableComponent implements OnInit {
 
   printTest(testId) {
     this.printService.getTestPdf(testId).subscribe((response: any) => {
+      let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+
+      if (response.body.type === 'application/pdf') {
+        fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
+      }
+
+      const blob = new Blob([response.body], { type: response.body.type });
+      const file = new File([blob], fileName, { type: response.body.type });
+      saveAs(file);
+    });
+  }
+
+  performingTestPdf(testId) {
+    this.printService.getPerformingTestPdf(testId).subscribe((response: any) => {
       let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
 
       if (response.body.type === 'application/pdf') {

@@ -4,6 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.DataTransferObjects.Options;
 
 namespace CODWER.RERU.Evaluation.Application.Options.AddOption
 {
@@ -11,16 +13,29 @@ namespace CODWER.RERU.Evaluation.Application.Options.AddOption
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly IStorageFileService _storageService;
 
-        public AddOptionCommandHandler(AppDbContext appDbContext, IMapper mapper)
+        public AddOptionCommandHandler(AppDbContext appDbContext, IMapper mapper, IStorageFileService storageService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _storageService = storageService;
         }
 
         public async Task<int> Handle(AddOptionCommand request, CancellationToken cancellationToken)
         {
-            var newOption = _mapper.Map<Option>(request.Data);
+
+            var storage = await _storageService.AddFile(request.FileDto);
+
+            var option = new AddEditOptionDto()
+            {
+                QuestionUnitId = request.QuestionUnitId,
+                Answer = request.Answer,
+                IsCorrect = request.IsCorrect,
+                MediaFileId = storage
+            };
+
+            var newOption = _mapper.Map<Option>(option);
 
             await _appDbContext.Options.AddAsync(newOption);
 

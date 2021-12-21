@@ -633,7 +633,16 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
                 try
                 {
-                    var questionId = await _mediator.Send(new AddQuestionUnitCommand { Data = questionToAdd.QuestionUnitDto });
+                    var questionId = await _mediator.Send(new AddQuestionUnitCommand { 
+                        Question = questionToAdd.QuestionUnitDto.Question,
+                        QuestionCategoryId = questionToAdd.QuestionUnitDto.QuestionCategoryId,
+                        Tags = questionToAdd.QuestionUnitDto.Tags,
+                        Id = questionToAdd.QuestionUnitDto.Id,
+                        QuestionType = questionToAdd.QuestionUnitDto.QuestionType,
+                        Status = questionToAdd.QuestionUnitDto.Status,
+                        QuestionPoints = questionToAdd.QuestionUnitDto.QuestionPoints,
+
+                    });
                     _rowsToDelete.Add(questionToAdd.Row);
                     return questionId;
                 }
@@ -655,7 +664,12 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 try
                 {
                     option.OptionDto.QuestionUnitId = questionId;
-                    option.Id = await _mediator.Send(new AddOptionCommand { Data = option.OptionDto });
+                    option.Id = await _mediator.Send(new AddOptionCommand { 
+                        Id = option.OptionDto.Id,
+                        QuestionUnitId = option.OptionDto.QuestionUnitId,
+                        Answer = option.OptionDto.Answer,
+                        IsCorrect = option.OptionDto.IsCorrect,
+                    });
                     _rowsToDelete.Add(option.Row);                    
                 }
                 catch (Exception ex)

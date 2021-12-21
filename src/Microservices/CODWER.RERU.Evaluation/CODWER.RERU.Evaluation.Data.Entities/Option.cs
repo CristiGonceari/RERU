@@ -9,5 +9,6 @@ namespace CODWER.RERU.Evaluation.Data.Entities
         public string Answer { get; set; }
         public bool IsCorrect { get; set; }
         public virtual QuestionUnit QuestionUnit { get; set; }
+        public string? MediaFileId { get; set; }
     }
 }
