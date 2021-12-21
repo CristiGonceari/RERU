@@ -52,9 +52,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="PdfTemplates\PerformingTest.html">
+    <None Update="PdfTemplates\one_multiple_question.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+	<None Update="PdfTemplates\PerformingTest.html">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
     <None Update="PdfTemplates\Test.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
