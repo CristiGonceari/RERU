@@ -3,6 +3,8 @@ using CVU.ERP.Module.API.DependencyInjection;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +26,26 @@ namespace CODWER.RERU.Gateway.Public
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<KestrelServerOptions>(options =>
+                {
+                    options.AllowSynchronousIO = true;
+                    //options.Limits.MaxRequestBodySize = null; --did not worked
+                    options.Limits.MaxRequestBodySize = int.MaxValue;
+                })
+                // If using IIS:
+                .Configure<IISServerOptions>(options =>
+                {
+                    options.AllowSynchronousIO = true;
+                    //options.MaxRequestBodySize = null;
+                    options.MaxRequestBodySize = int.MaxValue;
+                })
+                .Configure<FormOptions>(options =>
+                {
+                    options.ValueLengthLimit = int.MaxValue;
+                    options.MultipartBodyLengthLimit = int.MaxValue; // if don't set default value is: 128 MB
+                    options.MultipartHeadersLengthLimit = int.MaxValue;
+                });
+
             services.AddControllers();
 
             var authenticationProviderKey = "Testkey";
