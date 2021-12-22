@@ -1,8 +1,3 @@
-<!-- <h1>Audio with extension in src and type</h1>
-  <audio controls>
-    <source src='https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3' type="audio/mpeg">
-  </audio>
-               -->
 <app-page-title title="{{'questions.title' | translate}}" subTitle="{{'questions.question-data' | translate}}">
 </app-page-title>
 
@@ -110,18 +105,12 @@
                         </div>
                         <div class="d-flex">
                           <ngx-dropzone class="custom-dropzone d-block border-0" style="display: contents;" [expandable]="true" (change)="onSelect($event)" [multiple]="false" #drop>
-                            <ngx-dropzone-preview *ngFor="let file of allFiles" [removable]="true">
-                              <ngx-dropzone-label>{{ file.name }} ({{ file.type }})</ngx-dropzone-label>
-                            </ngx-dropzone-preview>
-  
                             <div *ngIf="imageUrl" class="d-flex">
                               <img [src]="imageUrl" class="h-200px rounded">
                             </div>
-                          
-                            <video *ngIf="videoUrl" class="" controls>
+                            <video *ngIf="videoUrl" class="h-200px rounded" controls>
                                 <source [src]="videoUrl">
                             </video>
-                          
                             <audio *ngIf="audioUrl" controls>
                               <source [src]="audioUrl" type="audio/mpeg">
                             </audio>

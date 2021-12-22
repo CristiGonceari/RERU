@@ -26,33 +26,23 @@ export class AddEditQuestionComponent implements OnInit {
 
   types: SelectItem[] = [{ label: '', value: '' }];
   categories: SelectItem[] = [{ label: '', value: '' }];
-  category = 0;
+  category: number;
   value = false;
   isLoading: boolean = true;
   items = [];
   placeHolderString = '+ Tag'
-  tags = [];
-  fileId;
-  seIncarca: boolean = true;
-  seIncarca1: boolean = true;
+  tags: any;
+  fileId: string;
   seIncarca3: boolean = true;
-  fileType;
-  uploadFiles;
-  lastId;
-  video = false;
-  image = false;
-  audio = false;
-
+  fileType: string;
+  attachedFile: File;
   allFiles: File[] = [];
-    imageFiles: File[] = [];
-    videoFiles: File[] = [];
-    audioFiles: File[] = [];
-
-    imageUrl: any;
-    audioUrl: any;
-    videoUrl: any;
-
-    isLabelHideen = false;
+  imageFiles: File[] = [];
+  videoFiles: File[] = [];
+  audioFiles: File[] = [];
+  imageUrl: any;
+  audioUrl: any;
+  videoUrl: any;
 
   constructor(
     private questionService: QuestionService,
@@ -104,41 +94,11 @@ export class AddEditQuestionComponent implements OnInit {
 		);
 	}
 
-  onFileChange(event) {
-    this.uploadFiles = event.target.files[0];
-    if (this.uploadFiles.type.includes('video')) this.video = true;
-    else if (this.uploadFiles.type.includes('audio')) this.audio = true;
-    else if (this.uploadFiles.type.includes('image')) this.image = true;
-    else this.video = false; this.audio = false; this.image = false;
-    console.log('onFileChange', this.uploadFiles, this.video);
-  }
-
   deleteFile(id):void {
     this.fileService.delete(id).subscribe(res => {
       this.notificationService.success('Success', 'Was deleted', NotificationUtil.getDefaultConfig());
-      // this.getDemoList();
-      console.log('deleete', id);
     })
     
-  }
-  
-  uploadFile(): void
-  {
-    this.seIncarca1 = false;
-    const request = new FormData();
-    request.append('File', this.uploadFiles);
-    request.append('Type', '4');
-    this.fileService.create(request).subscribe(res => {
-      this.lastId = res.data;
-      this.notificationService.success('Success', 'Fișier adăugat!', NotificationUtil.getDefaultConfig());
-      this.seIncarca1 = true;
-      // this.getDemoList();
-      console.log('upload', this.lastId);
-    }, error =>
-    {
-      this.notificationService.error('Error', 'Invalid file type',  NotificationUtil.getDefaultConfig());
-      this.seIncarca1 = true;
-    })
   }
 
 	initForm(data?: any): void {
@@ -176,11 +136,18 @@ export class AddEditQuestionComponent implements OnInit {
   }
 
   addQuestion() {
-    let params = {
-        ...this.questionForm.value,
-        tags: this.tags
-    };
-    this.questionService.create({data: params}).subscribe(() => {
+    this.fileType = '4';
+    const request = new FormData();
+    request.append('FileDto.File', this.attachedFile[0]);
+    request.append('FileDto.Type', this.fileType);
+    request.append('Question', this.questionForm.value.question);
+    request.append('QuestionCategoryId', this.questionForm.value.questionCategoryId);
+    request.append('QuestionPoints', this.questionForm.value.questionPoints);
+    request.append('QuestionType', this.questionForm.value.questionType);
+    request.append('QuestionStatus', this.questionForm.value.status);
+    request.append('Tags', this.tags);
+
+    this.questionService.create(request).subscribe(() => {
       this.backClicked();
 			this.notificationService.success('Success', 'Question was successfully added', NotificationUtil.getDefaultMidConfig());
     });
@@ -210,7 +177,6 @@ export class AddEditQuestionComponent implements OnInit {
       this.editQuestion();
     } else {
       this.addQuestion();
-      this.uploadFile();
     }
   }
 
@@ -220,53 +186,36 @@ export class AddEditQuestionComponent implements OnInit {
 
   onSelect(event) {
     event.addedFiles.forEach((element) => {
-        // for check image type
         const regexImage = new RegExp('(.*?).(jpg|png|jpeg|svg|gif)$');
-        // for check video type
         const regexVideo = new RegExp('(.*?).(mp4|3gp|ogg|wmv|flv|avi)$');
-        // for check video type
         const regexAudio = new RegExp('(.*?).(mp3|oga|wav)$');
 
-        // clear list
-        // this.onRemoved();
-
         if (regexImage.test(element.name)) {
-            this.imageFiles.push(...event.addedFiles);
-            this.readFile(this.imageFiles[0]).then(fileContents => {
-                // Put this string in a request body to upload it to an API.
-                this.imageUrl = fileContents;
-            });
-            console.warn('this.imageUrl', this.imageFiles[0]);
-            
-            this.isLabelHideen = true;
+          this.imageFiles.push(...event.addedFiles);
+          this.readFile(this.imageFiles[0]).then(fileContents => {
+            this.imageUrl = fileContents;
+          });
         } else if (regexVideo.test(element.name)) {
-            this.videoFiles.push(...event.addedFiles);
-            this.readFile(this.videoFiles[0]).then(fileContents => {
-                // Put this string in a request body to upload it to an API.
-                this.videoUrl = fileContents;
-            });
-            this.isLabelHideen = true;
-        } else if(regexAudio.test(element.name)){
-            this.audioFiles.push(...event.addedFiles);
-            this.readFile(this.audioFiles[0]).then(fileContents => {
-                // Put this string in a request body to upload it to an API.
-                this.audioUrl = fileContents;
-                this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
-            });
-            this.isLabelHideen = true;
+          this.videoFiles.push(...event.addedFiles);
+          this.readFile(this.videoFiles[0]).then(fileContents => {
+            this.videoUrl = fileContents;
+          });
+        } else if (regexAudio.test(element.name)){
+          this.audioFiles.push(...event.addedFiles);
+          this.readFile(this.audioFiles[0]).then(fileContents => {
+            this.audioUrl = fileContents;
+            this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
+          });
         } else {
           this.notificationService.error('Error', 'Invalid file type',  NotificationUtil.getDefaultConfig());
         }
-
+        this.attachedFile = event.addedFiles;
     });
 }   
 
 onRemoved() {
   this.imageFiles = this.videoFiles = this.audioFiles = [];
-  this.videoUrl = null;
-  this.audioUrl = null;
-  this.imageUrl= null;
-  this.isLabelHideen = false;
+  this.videoUrl = this.audioUrl = this.imageUrl = null;
 }
 
 public async readFile(file: File): Promise<string | ArrayBuffer> {
@@ -276,18 +225,18 @@ public async readFile(file: File): Promise<string | ArrayBuffer> {
       reader.onload = e => {
         return resolve((e.target as FileReader).result);
       };
-  
+
       reader.onerror = e => {
         console.error(`FileReader failed on file ${file.name}.`);
         return reject(null);
       };
-  
+
       if (!file) {
         console.error('No file to read.');
         return reject(null);
       }
-  
+
       reader.readAsDataURL(file);
     });
-}
+  }
 }
