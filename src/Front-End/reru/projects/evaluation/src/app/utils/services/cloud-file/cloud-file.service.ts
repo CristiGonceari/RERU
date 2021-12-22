@@ -45,7 +45,7 @@ export class CloudFileService  extends AbstractService  {
 	  }
 
 
-  delete(id: number): Observable<any> {
+  delete(id): Observable<any> {
 		return this.http.delete<any>(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}
 }

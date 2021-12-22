@@ -18,6 +18,9 @@ import { TestTypeSettings } from '../../../utils/models/test-types/test-type-set
 import { AddTestQuestion } from '../../../utils/models/test-questions/add-test-question.model';
 import { SafeHtmlPipe } from '../../../utils/pipes/safe-html.pipe';
 import { ConfirmModalComponent } from '@erp/shared';
+import { CloudFileService } from '../../../utils/services/cloud-file/cloud-file.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-one-per-page-performing-test',
@@ -35,11 +38,9 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   viewed: number[] = [];
   skipped: number[] = [];
   answered: number[] = [];
-
   timeLeft;
   interval;
   count: number;
-
   timeQuestionLeft;
   timerInterval;
   percent;
@@ -63,6 +64,17 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   isLoading = true;
   testtypeId;
 
+  isLoadingMedia: boolean;
+  imageFiles: File[] = [];
+  videoFiles: File[] = [];
+  audioFiles: File[] = [];
+  imageUrl: any;
+  audioUrl: any;
+  videoUrl: any;
+  filenames: any;
+  fileName: string;
+  fileId: string;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private injector: Injector,
@@ -70,7 +82,9 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     private testService: TestService,
     private modalService: NgbModal,
     private router: Router,
-    private testTypeService: TestTypeService
+    private testTypeService: TestTypeService,
+    private fileService : CloudFileService,
+    private sanitizer: DomSanitizer
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
@@ -307,6 +321,8 @@ export class OnePerPagePerformingTestComponent implements OnInit {
           this.questionUnit = res.data;
           this.testOptionsList = res.data.options;
           this.hashedOptions = res.data.hashedOptions;
+          this.fileId = res.data.mediaFileId;
+          // if (res.data.mediaFileId) this.getMediaFile(this.fileId);
 
           if (this.questionUnit.timeLimit)
             this.startQuestionTimer();
@@ -329,6 +345,62 @@ export class OnePerPagePerformingTestComponent implements OnInit {
           })
         }
       )
+  }
+
+  getMediaFile(fileId) {
+    this.isLoadingMedia = true;
+    this.fileService.get(fileId).subscribe( res => {
+      this.resportProggress(res);
+    })
+  }
+
+  private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void
+  {
+    switch(httpEvent.type)
+    {
+      case HttpEventType.Response:
+        if (httpEvent.body instanceof Array) {
+          for (const filename of httpEvent.body) {
+            this.filenames.unshift(filename);
+          }
+        } else {
+          this.fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+          const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
+          const file = new File([blob], this.fileName, { type: httpEvent.body.type });
+          this.readFile(file).then(fileContents => {
+            if (blob.type.includes('image')) this.imageUrl = fileContents;
+            else if (blob.type.includes('video')) this.videoUrl = fileContents;
+            else if (blob.type.includes('audio')) {
+              this.audioUrl = fileContents;
+              this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
+            }
+          });
+        this.isLoadingMedia = false;
+      }
+      break;
+    }
+  }
+
+  public async readFile(file: File): Promise<string | ArrayBuffer> {
+    return new Promise<string | ArrayBuffer>((resolve, reject) => {
+      const reader = new FileReader();
+  
+      reader.onload = e => {
+        return resolve((e.target as FileReader).result);
+      };
+
+      reader.onerror = e => {
+        console.error(`FileReader failed on file ${file.name}.`);
+        return reject(null);
+      };
+
+      if (!file) {
+        console.error('No file to read.');
+        return reject(null);
+      }
+
+      reader.readAsDataURL(file);
+    });
   }
 
   submitTest() {

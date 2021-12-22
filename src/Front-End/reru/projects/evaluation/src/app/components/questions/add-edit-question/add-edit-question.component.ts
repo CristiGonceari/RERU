@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Resolve } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
@@ -12,6 +12,8 @@ import { ReferenceService } from '../../../utils/services/reference/reference.se
 import { QuestionUnit } from '../../../utils/models/question-units/question-unit.model';
 import { CloudFileService } from '../../../utils/services/cloud-file/cloud-file.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { saveAs } from 'file-saver';
 
 
 
@@ -29,20 +31,21 @@ export class AddEditQuestionComponent implements OnInit {
   category: number;
   value = false;
   isLoading: boolean = true;
+  isLoadingMedia: boolean;
   items = [];
   placeHolderString = '+ Tag'
   tags: any;
   fileId: string;
-  seIncarca3: boolean = true;
-  fileType: string;
+  fileType: string = null;
   attachedFile: File;
-  allFiles: File[] = [];
   imageFiles: File[] = [];
   videoFiles: File[] = [];
   audioFiles: File[] = [];
   imageUrl: any;
   audioUrl: any;
   videoUrl: any;
+  filenames: any;
+  fileName: string;
 
   constructor(
     private questionService: QuestionService,
@@ -75,12 +78,13 @@ export class AddEditQuestionComponent implements OnInit {
 			if (!(response && Object.keys(response).length === 0 && response.constructor === Object)) {
 				this.questionUnitId = response.id;
 				this.questionService.get(this.questionUnitId).subscribe(res => {
+          this.fileId = res.data.mediaFileId;
 					this.initForm(res.data);
-          this.tags = res.data.tags;
+          if (res.data.mediaFileId) this.getMediaFile(this.fileId);
+          res.data.tags[0] != 'undefined' ? this.tags = res.data.tags : this.tags = null;
 				})
 			}
-			else
-				this.initForm();
+			else this.initForm();
 		})
 	}
 
@@ -135,11 +139,47 @@ export class AddEditQuestionComponent implements OnInit {
     this.referenceService.getQuestionCategory().subscribe((res) => this.categories = res.data);
   }
 
+  getMediaFile(fileId) {
+    this.isLoadingMedia = true;
+    this.fileService.get(fileId).subscribe( res => {
+      this.resportProggress(res);
+    })
+  }
+
+  private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void
+  {
+    switch(httpEvent.type)
+    {
+      case HttpEventType.Response:
+        if (httpEvent.body instanceof Array) {
+          for (const filename of httpEvent.body) {
+            this.filenames.unshift(filename);
+          }
+        } else {
+          this.fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+          const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
+          const file = new File([blob], this.fileName, { type: httpEvent.body.type });
+          this.readFile(file).then(fileContents => {
+            if (blob.type.includes('image')) this.imageUrl = fileContents;
+            else if (blob.type.includes('video')) this.videoUrl = fileContents;
+            else if (blob.type.includes('audio')) {
+              this.audioUrl = fileContents;
+              this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
+            }
+          });
+        this.isLoadingMedia = false;
+      }
+      break;
+    }
+  }
+
   addQuestion() {
-    this.fileType = '4';
     const request = new FormData();
-    request.append('FileDto.File', this.attachedFile[0]);
-    request.append('FileDto.Type', this.fileType);
+    if (this.attachedFile) {
+      this.fileType = '4';
+      request.append('FileDto.File', this.attachedFile);
+      request.append('FileDto.Type', this.fileType);
+    }
     request.append('Question', this.questionForm.value.question);
     request.append('QuestionCategoryId', this.questionForm.value.questionCategoryId);
     request.append('QuestionPoints', this.questionForm.value.questionPoints);
@@ -161,10 +201,11 @@ export class AddEditQuestionComponent implements OnInit {
     }
   };
 
-  editQuestion() {
+  editQuestion(): void {
     let params = {
       ...this.questionForm.value,
-      tags: this.tags
+      mediaFileId: this.fileName ? this.fileId : null,
+      tags: this.tags || []
     }
     this.questionService.edit({data: params}).subscribe(() => {
       this.backClicked();
@@ -209,16 +250,19 @@ export class AddEditQuestionComponent implements OnInit {
         } else {
           this.notificationService.error('Error', 'Invalid file type',  NotificationUtil.getDefaultConfig());
         }
-        this.attachedFile = event.addedFiles;
+        this.attachedFile = event.addedFiles[0];
     });
 }   
 
-onRemoved() {
-  this.imageFiles = this.videoFiles = this.audioFiles = [];
-  this.videoUrl = this.audioUrl = this.imageUrl = null;
-}
+  onRemoved() {
+    this.imageFiles = this.videoFiles = this.audioFiles = [];
+    this.videoUrl = this.audioUrl = this.imageUrl = this.fileName = null;
+    // this.fileService.delete(this.fileId).subscribe( res => {
+    //   if(res) this.fileId = null;
+    // })
+  }
 
-public async readFile(file: File): Promise<string | ArrayBuffer> {
+  public async readFile(file: File): Promise<string | ArrayBuffer> {
     return new Promise<string | ArrayBuffer>((resolve, reject) => {
       const reader = new FileReader();
   
@@ -239,4 +283,5 @@ public async readFile(file: File): Promise<string | ArrayBuffer> {
       reader.readAsDataURL(file);
     });
   }
+
 }
