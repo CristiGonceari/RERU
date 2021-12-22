@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 import { Location } from '@angular/common';
 import { SelectItem } from 'projects/evaluation/src/app/utils/models/select-item.model';
@@ -9,31 +9,45 @@ import { TestTypeStatusEnum } from 'projects/evaluation/src/app/utils/enums/test
 import { TestStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-status.enum';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { AddEditTest } from '../../../../utils/models/tests/add-edit-test.model';
-import { TestQuestionService } from 'projects/evaluation/src/app/utils/services/test-question/test-question.service';
+import { FormControl} from '@angular/forms';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { AssignedUsers } from '../../../../utils/models/tests/assigned-users';
 
 @Component({
   selector: 'app-add-test',
   templateUrl: './add-test.component.html',
-  styleUrls: ['./add-test.component.scss']
+  styleUrls: ['./add-test.component.scss'],
 })
 export class AddTestComponent implements OnInit {
+  @ViewChild('autoCompleteInput', { read: MatAutocompleteTrigger }) autoCompleteElement: MatAutocompleteTrigger;
+  @Input() testEvent: boolean;
+
   usersList: any;
   eventsList: any;
   selectActiveTests: any;
+  testTypeEvaluator: any;
+  eventEvaluator: any;
+
   evaluatorList: [] = [];
+  userListToAdd:number[] = [];
+  displayUserNames: AssignedUsers[] = []; 
+
   user = new SelectItem();
   event = new SelectItem();
   testType = new SelectItem();
   evaluator = new SelectItem();
-  testTypeEvaluator: any;
-  eventEvaluator: any;
-  needEvaluator: boolean = false;
-  hasEventEvaluator: boolean = false;
-  date: Date;
-  search: string;
+  
   showName: boolean = false;
   isTestTypeOneAnswer: boolean = false;
-  @Input() testEvent: boolean;
+  needEvaluator: boolean = false;
+  hasEventEvaluator: boolean = false;
+  isListOrderedAsc: boolean = false;
+
+  date: Date;
+  search: string;
+  key: string = '';
+  
+  myControl = new FormControl();
 
 
   constructor(
@@ -42,7 +56,6 @@ export class AddTestComponent implements OnInit {
     private testService: TestService,
     private location: Location,
     private notificationService: NotificationsService,
-    private testQuestionService: TestQuestionService
   ) { }
 
   ngOnInit(): void {
@@ -50,9 +63,10 @@ export class AddTestComponent implements OnInit {
     this.getEvents();
     this.getEvaluators();
   }
+ 
 
   getUsers() {
-    this.referenceService.getUsers({ eventId: this.event.value }).subscribe(res => {
+    this.referenceService.getUsers({name: this.key, eventId: this.event.value }).subscribe(res => {
       this.usersList = res.data
     });
   }
@@ -104,13 +118,40 @@ export class AddTestComponent implements OnInit {
   checkIfEventHasEvaluator($event) {
     this.hasEventEvaluator = this.eventsList.find(x => x.eventId === $event).isEventEvaluator
   }
+ 
+  deleteFromList(index: any){
+    var deleteElement = this.displayUserNames[index];
+    var indexOfIdToDelete = this.userListToAdd.findIndex(x => x == deleteElement.value);
+
+    this.displayUserNames.splice(index, 1);
+    this.userListToAdd.splice(indexOfIdToDelete, 1);
+  }
+
+  addUserToList(id: number, name: string){
+    if(!this.userListToAdd.includes(+id)){
+      this.displayUserNames.push(
+        new AssignedUsers(id, name)
+      );
+      this.userListToAdd.push(+id);
+    }
+    this.autoCompleteElement.openPanel();
+  }
+
+  sortByName(){
+    if(!this.isListOrderedAsc){
+      this.displayUserNames.sort( (a,b)=> a.label > b.label ? 1:-1 );
+      this.isListOrderedAsc = true;
+    } else {
+      this.displayUserNames.sort( (a,b)=> a.label > b.label ? -1:1 );
+      this.isListOrderedAsc = false;
+    }
+  }
 
 
   parse() {
     this.setTimeToSearch();
-    return {
-      data: new AddEditTest({
-        userProfileId: +this.user.value || 0,
+    return  new AddEditTest({
+        userProfileId: this.userListToAdd,
         programmedTime: this.search,
         eventId: +this.event.value || null,
         evaluatorId: +this.evaluator.value || null,
@@ -118,18 +159,11 @@ export class AddTestComponent implements OnInit {
         testTypeId: +this.testType.value || 0,
         showUserName: this.showName
       })
-    }
   }
-
-  generate(testId){
-    this.testQuestionService.generate(testId).subscribe(() => {});
-  }
-
 
   createTest() {
     this.testService.createTest(this.parse()).subscribe((res) => {
       this.backClicked();
-      this.generate(res.data);
       this.notificationService.success('Success', 'Test was successfully programmed', NotificationUtil.getDefaultMidConfig());
     });
   }

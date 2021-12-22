@@ -203,7 +203,9 @@
     "min-percentage": "Min. percentage of points(%)",
     "accumulated-percent": "Collected percentages",
     "test-type-autoverify": "Selected test template will be veified by system",
-    "event-has-evaluator": "Selected event has its own evaluators"
+    "event-has-evaluator": "Selected event has its own evaluators",
+    "asignee": "Assignee",
+    "user-list-to-add": "User list to add"
   },
   "verify-test": {
     "title": "Tests",

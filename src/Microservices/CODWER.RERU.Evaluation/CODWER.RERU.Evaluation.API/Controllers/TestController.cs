@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.Tests.AddMyPoll;
 using CODWER.RERU.Evaluation.Application.Tests.AddTest;
+using CODWER.RERU.Evaluation.Application.Tests.AddTests;
 using CODWER.RERU.Evaluation.Application.Tests.DeleteTest;
 using CODWER.RERU.Evaluation.Application.Tests.EditTestStatus;
 using CODWER.RERU.Evaluation.Application.Tests.ExportTests;
@@ -57,8 +58,8 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
-        [HttpPost]
-        public async Task<int> AddTest([FromBody] AddTestCommand command)
+        [HttpPost("tests")]
+        public async Task<Unit> AddTests([FromBody] AddTestsCommand command)
         {
             return await Mediator.Send(command);
         }
