@@ -1076,6 +1076,9 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("PdfFileId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("QuestionCount")
                         .HasColumnType("int");
 
