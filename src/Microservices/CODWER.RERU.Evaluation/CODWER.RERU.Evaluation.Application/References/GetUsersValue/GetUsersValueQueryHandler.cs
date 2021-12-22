@@ -6,7 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Data.Entities;
+using CODWER.RERU.Evaluation.Data.Entities.StaticExtensions;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using RestSharp.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.References.GetUsersValue
 {
@@ -25,14 +28,33 @@ namespace CODWER.RERU.Evaluation.Application.References.GetUsersValue
         {
             var users = _appDbContext.UserProfiles.AsQueryable();
 
-            if (request.EventId.HasValue)
+            users = await FilterByName(request, users);
+
+            users =  await FilterByEvent(request, users);
+
+            return await users.Select(u => _mapper.Map<SelectItem>(u)).ToListAsync();
+        }
+
+        private async Task<IQueryable<UserProfile>> FilterByName(GetUsersValueQuery request, IQueryable<UserProfile> users)
+        {
+            if (!string.IsNullOrEmpty(request.Name))
+            {
+                users = users.FilterByName(request.Name);
+            }
+
+            return users.AsQueryable();
+        }
+
+        private async Task<IQueryable<UserProfile>> FilterByEvent(GetUsersValueQuery request,IQueryable<UserProfile> users)
+        {
+            if (request.EventId != null)
             {
                 users = users
                     .Include(x => x.EventUsers)
                     .Where(x => x.EventUsers.Any(e => e.EventId == request.EventId));
             }
 
-            return await users.Select(u => _mapper.Map<SelectItem>(u)).ToListAsync();
+            return users.AsQueryable();
         }
     }
 }

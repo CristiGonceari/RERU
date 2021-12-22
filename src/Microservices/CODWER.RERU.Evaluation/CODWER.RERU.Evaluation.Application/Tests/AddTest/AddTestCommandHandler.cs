@@ -33,7 +33,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 
                 if (eventTestType?.MaxAttempts != null)
                 {
-                    var attempts = _appDbContext.Tests.Where(x => x.UserProfileId == request.Data.UserProfileId && x.EventId == request.Data.EventId.Value && x.TestTypeId == request.Data.TestTypeId).Count();
+                    var attempts = _appDbContext.Tests
+                        .Where(x => x.UserProfileId == request.Data.UserProfileId 
+                                        && x.EventId == request.Data.EventId.Value 
+                                        && x.TestTypeId == request.Data.TestTypeId).Count();
 
                     if (attempts >= eventTestType?.MaxAttempts)
                     {

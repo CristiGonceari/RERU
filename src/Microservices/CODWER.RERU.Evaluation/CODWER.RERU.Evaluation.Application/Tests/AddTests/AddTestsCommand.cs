@@ -1,13 +1,14 @@
-﻿using System;
+﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
+using MediatR;
+using System;
 using System.Collections.Generic;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
 
-namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
+namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 {
-    public class AddEditTestDto
+    public class AddTestsCommand : IRequest<Unit>
     {
         public int Id { get; set; }
-        public int UserProfileId { get; set; }
+        public List<int> UserProfileId { get; set; }
         public int? EvaluatorId { get; set; }
         public bool? ShowUserName { get; set; }
         public int TestTypeId { get; set; }

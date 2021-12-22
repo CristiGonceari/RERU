@@ -21,7 +21,7 @@ export class TestService extends AbstractService {
 	}
 
 	createTest(data): Observable<any> {
-		return this.http.post(`${this.baseUrl}/${this.urlRoute}`, data);
+		return this.http.post(`${this.baseUrl}/${this.urlRoute}/tests`, data);
 	}
 
 	editTest(data): Observable<any> {
