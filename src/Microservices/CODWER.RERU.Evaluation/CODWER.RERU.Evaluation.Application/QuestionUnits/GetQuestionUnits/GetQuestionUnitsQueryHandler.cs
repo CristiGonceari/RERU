@@ -52,8 +52,11 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
                         Name = x.QuestionCategory.Name,
                     },
 
-                    Options = x.Options.Select(o => new Option()).ToList(),
                     TestQuestions = x.TestQuestions.Select(tq => new TestQuestion()).ToList(),
+                    Options = x.Options.Select(o => new Option
+                    {
+                        IsCorrect = o.IsCorrect
+                    }).ToList(),
                     QuestionUnitTags = x.QuestionUnitTags.Select(qut => new QuestionUnitTag
                     {
                         Tag = new Tag
@@ -89,7 +92,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
 
             var hashedQuestions = items.Where(x => x.QuestionType == QuestionTypeEnum.HashedAnswer).ToList();
 
-            IsReadyToActivate(items, questions);
+            //IsReadyToActivate(items, questions);
 
             foreach (var unit in hashedQuestions)
             {
@@ -104,19 +107,19 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
             return paginatedModel;
         }
 
-        private void IsReadyToActivate(List<QuestionUnitDto> items, IQueryable<QuestionUnit> questions)
-        {
-            foreach (var item in items)
-            {
-                var options = questions.First(q => q.Id == item.Id).Options.Any(x => x.IsCorrect);
+        //private void IsReadyToActivate(List<QuestionUnitDto> items, IQueryable<QuestionUnit> questions)
+        //{
+        //    foreach (var item in items)
+        //    {
+        //        var options = questions.First(q => q.Id == item.Id).Options.Any(x => x.IsCorrect);
 
-                if (item.OptionsCount > 1 && options || item.QuestionType == QuestionTypeEnum.FreeText || item.QuestionType == QuestionTypeEnum.HashedAnswer)
-                {
-                    item.IsReadyToActivate = true;
-                }
+        //        if (item.OptionsCount > 1 && options || item.QuestionType == QuestionTypeEnum.FreeText || item.QuestionType == QuestionTypeEnum.HashedAnswer)
+        //        {
+        //            item.IsReadyToActivate = true;
+        //        }
 
-            }
-        }
+        //    }
+        //}
 
     }
 }
