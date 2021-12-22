@@ -63,36 +63,64 @@
                         </div>
                       </div>
                     </div>
-                    <div class="form-group row mb-10">
+                    <div class="form-group row">
                       <label
                         class="col-xl-3 col-lg-3 col-form-label text-right">{{'questions.points' | translate}}</label>
                       <div class="col-lg-9 col-xl-9">
-                        <input type="number" class="form-control form-control-lg form-control-solid" name="questionPoints"
-                          value="1" formControlName="questionPoints" oninput="this.value = this.value.replace(/(\.)\./g, '');"
-                          onkeydown="if(event.key==='.') {event.preventDefault();}"/>
+                        <input type="number" class="form-control form-control-lg form-control-solid"
+                          name="questionPoints" value="1" formControlName="questionPoints"
+                          oninput="this.value = this.value.replace(/(\.)\./g, '');"
+                          onkeydown="if(event.key==='.') {event.preventDefault();}" />
                         <div *ngIf="hasErrors('questionPoints')" class="fv-plugins-message-container">
-                          <div *ngIf="hasError('questionPoints', 'required')" data-field="points" data-validator="notEmpty"
-                            class="fv-help-block">
+                          <div *ngIf="hasError('questionPoints', 'required')" data-field="points"
+                            data-validator="notEmpty" class="fv-help-block">
                             {{ 'locations.empty-name' | translate }}</div>
                         </div>
                       </div>
                     </div>
-                    
-                    <div class="form-group row mb-10">
+
+                    <div class="form-group row"> 
                       <label class="col-xl-3 col-lg-3 col-form-label text-right">
                         {{'questions.tags' | translate}}
                       </label>
                       <div class="col-lg-9 col-xl-9">
                         <tag-input class="py-0 form-control form-control-lg form-control-solid h-100"
-                          [ngModelOptions]="{standalone: true}" [(ngModel)]="tags" (onTextChange)="onTextChange($event)" [modelAsStrings]="true"
-                          [placeholder]="placeHolderString" [secondaryPlaceholder]="placeHolderString">
-                        <tag-input-dropdown
-                          [autocompleteItems]="items"
-                            [showDropdownIfEmpty]="false"
-                            [dynamicUpdate]="false"
-                          >
+                          [ngModelOptions]="{standalone: true}" [(ngModel)]="tags" (onTextChange)="onTextChange($event)"
+                          [modelAsStrings]="true" [placeholder]="placeHolderString"
+                          [secondaryPlaceholder]="placeHolderString">
+                          <tag-input-dropdown [autocompleteItems]="items" [showDropdownIfEmpty]="false"
+                            [dynamicUpdate]="false">
                           </tag-input-dropdown>
                         </tag-input>
+                      </div>
+                    </div>
+                    <div class="form-group row mb-10">
+                      <label class="col-xl-3 col-lg-3 col-form-label text-right">Media</label>
+                      <div class="col-lg-9 col-xl-9">
+                        <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
+                          [colorClass]="'text-primary'">
+                        </app-loading-spinner>
+                        <div *ngIf="!isLoadingMedia">
+                          <div class="d-flex">
+                            <app-confirm-button type="button" class="btn mb-5" (click)="drop.showFileSelector()">Browse</app-confirm-button> 
+                            <p class="mb-0 ml-5 mt-1 font-weght-lighter" *ngIf="attachedFile">{{attachedFile.name}}</p>
+                            <p class="mb-0 ml-5 mt-2 font-weght-lighter" *ngIf="fileId">{{fileName}}</p>
+                          </div>
+                          <div class="d-flex">
+                            <ngx-dropzone class="custom-dropzone d-block border-0" style="display: contents;" [expandable]="true" (change)="onSelect($event)" [multiple]="false" #drop>
+                              <div *ngIf="imageUrl" class="d-flex">
+                                <img [src]="imageUrl" class="h-200px rounded">
+                              </div>
+                              <video *ngIf="videoUrl" class="h-200px rounded" controls>
+                                <source [src]="videoUrl">
+                              </video>
+                              <audio *ngIf="audioUrl" controls>
+                                <source [src]="audioUrl" type="audio/mpeg">
+                              </audio>
+                            </ngx-dropzone>
+                            <p *ngIf="imageUrl || videoUrl || audioUrl" class="mx-5 my-auto h1 cursor-pointer" (click)="onRemoved()"> &#215; </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -101,8 +129,8 @@
                   <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
                   </app-button>
 
-                  <app-add-button class="btn" (handle)="onSave()" 
-                  [disabled]="questionForm.invalid" [value]="'button.confirm' | translate">
+                  <app-add-button class="btn" (handle)="onSave()" [disabled]="questionForm.invalid"
+                    [value]="'button.confirm' | translate">
                   </app-add-button>
                 </div>
               </div>

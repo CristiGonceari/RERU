@@ -20,6 +20,21 @@
     .ng2-tag-input__text-input {
         padding: 0 !important;
         background: transparent;
-    }  
-    
-} 
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+    .custom-file-upload {
+        color: #FFF !important;
+        border-radius: 0.3rem !important;
+        background: #6993FF;
+        &:hover {
+          color: #FFF;
+          background: #4A7DFF;
+        }
+    }
+    .expandable {
+        min-height: 10px !important;
+    }
+}

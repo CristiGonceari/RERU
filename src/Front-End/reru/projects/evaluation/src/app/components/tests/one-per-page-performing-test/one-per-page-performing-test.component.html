@@ -51,10 +51,19 @@
                     </div>
                 </div>
                 <div class="text-container mt-5 mx-auto w-80">
-                    <div class="data-container">
-                        <p class="mb-7 font-size-h2 bg-gray-100 text-center rounded p-7"
+                    <div class="data-container mb-7 bg-gray-100 text-center rounded p-7">
+                        <p class="font-size-h2"
                             [innerHTML]="questionUnit.question | safeHtml">
                         </p>
+                        <!-- <div *ngIf="imageUrl" class="d-flex">
+                            <img [src]="imageUrl" class="h-200px rounded">
+                          </div>
+                          <video *ngIf="videoUrl" class="h-200px rounded" controls>
+                            <source [src]="videoUrl">
+                          </video>
+                          <audio *ngIf="audioUrl" controls>
+                            <source [src]="audioUrl" type="audio/mpeg">
+                          </audio> -->
                     </div>
                     <div class="data-container" *ngFor="let option of testOptionsList">
                         <label

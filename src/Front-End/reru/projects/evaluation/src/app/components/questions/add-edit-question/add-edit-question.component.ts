@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Resolve } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
@@ -10,6 +10,11 @@ import { QuestionByCategoryService } from '../../../utils/services/question-by-c
 import { QuestionUnitStatusEnum } from '../../../utils/enums/question-unit-status.enum';
 import { ReferenceService } from '../../../utils/services/reference/reference.service';
 import { QuestionUnit } from '../../../utils/models/question-units/question-unit.model';
+import { CloudFileService } from '../../../utils/services/cloud-file/cloud-file.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { saveAs } from 'file-saver';
+
 
 
 @Component({
@@ -23,12 +28,24 @@ export class AddEditQuestionComponent implements OnInit {
 
   types: SelectItem[] = [{ label: '', value: '' }];
   categories: SelectItem[] = [{ label: '', value: '' }];
-  category = 0;
+  category: number;
   value = false;
   isLoading: boolean = true;
+  isLoadingMedia: boolean;
   items = [];
   placeHolderString = '+ Tag'
-  tags = [];
+  tags: any;
+  fileId: string;
+  fileType: string = null;
+  attachedFile: File;
+  imageFiles: File[] = [];
+  videoFiles: File[] = [];
+  audioFiles: File[] = [];
+  imageUrl: any;
+  audioUrl: any;
+  videoUrl: any;
+  filenames: any;
+  fileName: string;
 
   constructor(
     private questionService: QuestionService,
@@ -37,7 +54,9 @@ export class AddEditQuestionComponent implements OnInit {
     private location: Location,
     private questionByCategory: QuestionByCategoryService,
     private formBuilder: FormBuilder,
-		private notificationService: NotificationsService
+		private notificationService: NotificationsService,
+    private fileService : CloudFileService,
+    private sanitizer: DomSanitizer
   ) {  }
 
   ngOnInit(): void {
@@ -59,12 +78,13 @@ export class AddEditQuestionComponent implements OnInit {
 			if (!(response && Object.keys(response).length === 0 && response.constructor === Object)) {
 				this.questionUnitId = response.id;
 				this.questionService.get(this.questionUnitId).subscribe(res => {
+          this.fileId = res.data.mediaFileId;
 					this.initForm(res.data);
-          this.tags = res.data.tags;
+          if (res.data.mediaFileId) this.getMediaFile(this.fileId);
+          res.data.tags[0] != 'undefined' ? this.tags = res.data.tags : this.tags = null;
 				})
 			}
-			else
-				this.initForm();
+			else this.initForm();
 		})
 	}
 
@@ -77,6 +97,13 @@ export class AddEditQuestionComponent implements OnInit {
 			this.questionForm.get(field).touched && this.questionForm.get(field).hasError(error)
 		);
 	}
+
+  deleteFile(id):void {
+    this.fileService.delete(id).subscribe(res => {
+      this.notificationService.success('Success', 'Was deleted', NotificationUtil.getDefaultConfig());
+    })
+    
+  }
 
 	initForm(data?: any): void {
 		if (data){
@@ -112,12 +139,55 @@ export class AddEditQuestionComponent implements OnInit {
     this.referenceService.getQuestionCategory().subscribe((res) => this.categories = res.data);
   }
 
+  getMediaFile(fileId) {
+    this.isLoadingMedia = true;
+    this.fileService.get(fileId).subscribe( res => {
+      this.resportProggress(res);
+    })
+  }
+
+  private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void
+  {
+    switch(httpEvent.type)
+    {
+      case HttpEventType.Response:
+        if (httpEvent.body instanceof Array) {
+          for (const filename of httpEvent.body) {
+            this.filenames.unshift(filename);
+          }
+        } else {
+          this.fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+          const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
+          const file = new File([blob], this.fileName, { type: httpEvent.body.type });
+          this.readFile(file).then(fileContents => {
+            if (blob.type.includes('image')) this.imageUrl = fileContents;
+            else if (blob.type.includes('video')) this.videoUrl = fileContents;
+            else if (blob.type.includes('audio')) {
+              this.audioUrl = fileContents;
+              this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
+            }
+          });
+        this.isLoadingMedia = false;
+      }
+      break;
+    }
+  }
+
   addQuestion() {
-    let params = {
-        ...this.questionForm.value,
-        tags: this.tags
-    };
-    this.questionService.create({data: params}).subscribe(() => {
+    const request = new FormData();
+    if (this.attachedFile) {
+      this.fileType = '4';
+      request.append('FileDto.File', this.attachedFile);
+      request.append('FileDto.Type', this.fileType);
+    }
+    request.append('Question', this.questionForm.value.question);
+    request.append('QuestionCategoryId', this.questionForm.value.questionCategoryId);
+    request.append('QuestionPoints', this.questionForm.value.questionPoints);
+    request.append('QuestionType', this.questionForm.value.questionType);
+    request.append('QuestionStatus', this.questionForm.value.status);
+    request.append('Tags', this.tags);
+
+    this.questionService.create(request).subscribe(() => {
       this.backClicked();
 			this.notificationService.success('Success', 'Question was successfully added', NotificationUtil.getDefaultMidConfig());
     });
@@ -131,10 +201,11 @@ export class AddEditQuestionComponent implements OnInit {
     }
   };
 
-  editQuestion() {
+  editQuestion(): void {
     let params = {
       ...this.questionForm.value,
-      tags: this.tags
+      mediaFileId: this.fileName ? this.fileId : null,
+      tags: this.tags || []
     }
     this.questionService.edit({data: params}).subscribe(() => {
       this.backClicked();
@@ -153,4 +224,64 @@ export class AddEditQuestionComponent implements OnInit {
   backClicked() {
     this.location.back();
   }
+
+  onSelect(event) {
+    event.addedFiles.forEach((element) => {
+        const regexImage = new RegExp('(.*?).(jpg|png|jpeg|svg|gif)$');
+        const regexVideo = new RegExp('(.*?).(mp4|3gp|ogg|wmv|flv|avi)$');
+        const regexAudio = new RegExp('(.*?).(mp3|oga|wav)$');
+
+        if (regexImage.test(element.name)) {
+          this.imageFiles.push(...event.addedFiles);
+          this.readFile(this.imageFiles[0]).then(fileContents => {
+            this.imageUrl = fileContents;
+          });
+        } else if (regexVideo.test(element.name)) {
+          this.videoFiles.push(...event.addedFiles);
+          this.readFile(this.videoFiles[0]).then(fileContents => {
+            this.videoUrl = fileContents;
+          });
+        } else if (regexAudio.test(element.name)){
+          this.audioFiles.push(...event.addedFiles);
+          this.readFile(this.audioFiles[0]).then(fileContents => {
+            this.audioUrl = fileContents;
+            this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
+          });
+        } else {
+          this.notificationService.error('Error', 'Invalid file type',  NotificationUtil.getDefaultConfig());
+        }
+        this.attachedFile = event.addedFiles[0];
+    });
+}   
+
+  onRemoved() {
+    this.imageFiles = this.videoFiles = this.audioFiles = [];
+    this.videoUrl = this.audioUrl = this.imageUrl = this.fileName = null;
+    // this.fileService.delete(this.fileId).subscribe( res => {
+    //   if(res) this.fileId = null;
+    // })
+  }
+
+  public async readFile(file: File): Promise<string | ArrayBuffer> {
+    return new Promise<string | ArrayBuffer>((resolve, reject) => {
+      const reader = new FileReader();
+  
+      reader.onload = e => {
+        return resolve((e.target as FileReader).result);
+      };
+
+      reader.onerror = e => {
+        console.error(`FileReader failed on file ${file.name}.`);
+        return reject(null);
+      };
+
+      if (!file) {
+        console.error('No file to read.');
+        return reject(null);
+      }
+
+      reader.readAsDataURL(file);
+    });
+  }
+
 }
