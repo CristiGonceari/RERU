@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using AutoMapper;
+using CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
@@ -30,6 +31,10 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits
 
             CreateMap<AddEditQuestionUnitDto, QuestionUnit>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
+
+            CreateMap<EditQuestionUnitCommand, QuestionUnit>();
+
+            CreateMap<QuestionUnit, EditQuestionUnitDto>();
 
             CreateMap<QuestionUnit, EditQuestionStatusDto>()
                 .ForMember(dto => dto.QuestionId, options => options.MapFrom(entity => entity.Id));
