@@ -65,9 +65,6 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   testtypeId;
 
   isLoadingMedia: boolean;
-  imageFiles: File[] = [];
-  videoFiles: File[] = [];
-  audioFiles: File[] = [];
   imageUrl: any;
   audioUrl: any;
   videoUrl: any;
@@ -322,7 +319,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
           this.testOptionsList = res.data.options;
           this.hashedOptions = res.data.hashedOptions;
           this.fileId = res.data.mediaFileId;
-          // if (res.data.mediaFileId) this.getMediaFile(this.fileId);
+          if (res.data.mediaFileId) this.getMediaFile(this.fileId);
 
           if (this.questionUnit.timeLimit)
             this.startQuestionTimer();
@@ -354,8 +351,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     })
   }
 
-  private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void
-  {
+  private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
     switch(httpEvent.type)
     {
       case HttpEventType.Response:
@@ -374,7 +370,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
               this.audioUrl = fileContents;
               this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
             }
-          });
+          }).then(this.videoUrl = this.audioUrl = this.imageUrl = this.fileName = null);
         this.isLoadingMedia = false;
       }
       break;
