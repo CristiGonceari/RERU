@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.EditTestStatus
 {
-    [ModuleOperation(permission: PermissionCodes.TESTS_GENERAL_ACCESS)]
+    //[ModuleOperation(permission: PermissionCodes.TESTS_GENERAL_ACCESS)]
     public class EditTestStatusCommand : IRequest<Unit>
     {
         public int TestId { get; set; }

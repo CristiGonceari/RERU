@@ -38,33 +38,33 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
                 .Include(x => x.QuestionUnitTags)
                     .ThenInclude(x => x.Tag)
                 .OrderByDescending(x => x.Id)
-                .Select(x=> new QuestionUnit
-                {
-                    Id = x.Id,
-                    QuestionType = x.QuestionType,
-                    Status = x.Status,
-                    Question = x.Question,
-                    QuestionPoints = x.QuestionPoints,
-                    MediaFileId = x.MediaFileId,
-                    QuestionCategory = new QuestionCategory
-                    {
-                        Id = x.QuestionCategory.Id,
-                        Name = x.QuestionCategory.Name,
-                    },
+                //.Select(x=> new QuestionUnit
+                //{
+                //    Id = x.Id,
+                //    QuestionType = x.QuestionType,
+                //    Status = x.Status,
+                //    Question = x.Question,
+                //    QuestionPoints = x.QuestionPoints,
+                //    MediaFileId = x.MediaFileId,
+                //    QuestionCategory = new QuestionCategory
+                //    {
+                //        Id = x.QuestionCategory.Id,
+                //        Name = x.QuestionCategory.Name,
+                //    },
 
-                    TestQuestions = x.TestQuestions.Select(tq => new TestQuestion()).ToList(),
-                    Options = x.Options.Select(o => new Option
-                    {
-                        IsCorrect = o.IsCorrect
-                    }).ToList(),
-                    QuestionUnitTags = x.QuestionUnitTags.Select(qut => new QuestionUnitTag
-                    {
-                        Tag = new Tag
-                        {
-                            Name = qut.Tag.Name
-                        }
-                    }).ToList()
-                })
+                //    TestQuestions = x.TestQuestions.Select(tq => new TestQuestion()).ToList(),
+                //    Options = x.Options.Select(o => new Option
+                //    {
+                //        IsCorrect = o.IsCorrect
+                //    }).ToList(),
+                //    QuestionUnitTags = x.QuestionUnitTags.Select(qut => new QuestionUnitTag
+                //    {
+                //        Tag = new Tag
+                //        {
+                //            Name = qut.Tag.Name
+                //        }
+                //    }).ToList()
+                //})
                 .AsQueryable();
 
             if (request.Type != null)
