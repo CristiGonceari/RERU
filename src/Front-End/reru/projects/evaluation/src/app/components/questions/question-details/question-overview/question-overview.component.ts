@@ -52,7 +52,7 @@ export class QuestionOverviewComponent implements OnInit {
         this.type = QuestionUnitTypeEnum[res.data.questionType];
         this.status = QuestionUnitStatusEnum[res.data.status];
         this.questionPoints = res.data.questionPoints;
-        this.tags = res.data.tags[0] != 'undefined' ? this.tags = res.data.tags.join(', ') : this.tags = null;;
+        this.tags = res.data.tags[0] != 'undefined' ? this.tags = res.data.tags.join(', ') : this.tags = null;
         this.isLoading = false;
         this.fileId = res.data.mediaFileId;
         if (res.data.mediaFileId) this.getMediaFile(this.fileId);
