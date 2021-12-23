@@ -18,5 +18,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.TestQuestions
         public QuestionTypeEnum QuestionType { get; set; }
         public List<TestOptionsDto> Options { get; set; }
         public List<TestOptionsDto> HashedOptions { get; set; }
+        public string MediaFileId { get; set; }
+
     }
 }
