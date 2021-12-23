@@ -81,7 +81,7 @@ export class AddEditQuestionComponent implements OnInit {
           this.fileId = res.data.mediaFileId;
 					this.initForm(res.data);
           if (res.data.mediaFileId) this.getMediaFile(this.fileId);
-          res.data.tags[0] != 'undefined' ? this.tags = res.data.tags : this.tags = null;
+          res.data.tags[0] != ('undefined' || 'null') ? this.tags = res.data.tags : this.tags = null;
 				})
 			}
 			else this.initForm();
