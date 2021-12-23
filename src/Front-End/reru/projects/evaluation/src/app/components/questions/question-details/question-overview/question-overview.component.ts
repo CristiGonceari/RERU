@@ -57,6 +57,7 @@ export class QuestionOverviewComponent implements OnInit {
         this.fileId = res.data.mediaFileId;
         if (res.data.mediaFileId) this.getMediaFile(this.fileId);
       }
+      console.log('response', res.data);
     })
   }
 
