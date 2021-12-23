@@ -22,7 +22,8 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions
                 .ForMember(dto => dto.AnswersCount, options => options.MapFrom(entity => entity.QuestionUnit.QuestionCategory.Name))
                 .ForMember(dto => dto.HashedOptions, options => options.MapFrom(entity => entity.QuestionUnit.QuestionType == QuestionTypeEnum.HashedAnswer ? entity.QuestionUnit.Options : null))
                 .ForMember(dto => dto.Options, options => options.MapFrom(entity => entity.QuestionUnit.Options))
-                .ForMember(dto => dto.AnswerStatus, options => options.MapFrom(entity => (AnswerStatusEnum)entity.AnswerStatus));
+                .ForMember(dto => dto.AnswerStatus, options => options.MapFrom(entity => (AnswerStatusEnum)entity.AnswerStatus))
+                .ForMember(dto => dto.MediaFileId, options => options.MapFrom(entity => entity.QuestionUnit.MediaFileId));
 
             CreateMap<TestQuestionDto, TestQuestion>();
 
