@@ -110,7 +110,8 @@
     "ordered": "Ordered",
     "preview": "Preview",
     "print": "Print",
-    "performing-test": "Print performing test"
+    "performing-test": "Print performing test",
+    "attach": "Attach file"
   },
   "message": {
     "deleteMsg": "Are you sure you want to delete",

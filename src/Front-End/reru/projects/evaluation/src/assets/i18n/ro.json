@@ -110,7 +110,8 @@
     "ordered": "Ordonat",
     "preview": "Previzualizare",
     "print": "Imprimă",
-    "performing-test": "Imprimarea efectuării testului"
+    "performing-test": "Imprimarea efectuării testului",
+    "attach": "Atașați file-ul"
   },
   "message": {
     "deleteMsg": "Sunteți sigur(-ă) că doriți să ștergeți",
