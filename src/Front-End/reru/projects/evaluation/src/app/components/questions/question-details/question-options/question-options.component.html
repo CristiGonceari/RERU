@@ -34,21 +34,20 @@
                                 </label>
                             </td>
                             <td >{{item.answer}}
-                            <div class="form-group row align-items-center" *ngIf="fileId">
+                            <div class="form-group row align-items-center">
                                 <div class="col-lg-9 col-xl-6">
                                   <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
                                     [colorClass]="'text-primary'">
                                   </app-loading-spinner>
-                                  <div *ngIf="!isLoadingMedia">
-                                    <div *ngIf="imageUrl" class="d-flex">
-                                        <img [src]="imageUrl" class="h-200px rounded">
-                                        <p>{{item.mediaFileId}}</p>
+                                  <div *ngIf="!isLoadingMedia" class="mt-3">
+                                    <div *ngIf="item.imageUrl" class="d-flex">
+                                        <img [src]="item.imageUrl" class="h-200px rounded">
                                     </div>
-                                    <video *ngIf="videoUrl" class="h-200px rounded" controls>
-                                      <source [src]="videoUrl">
+                                    <video *ngIf="item.videoUrl" class="h-200px rounded" controls>
+                                        <source [src]="item.videoUrl">
                                     </video>
-                                    <audio *ngIf="audioUrl" controls>
-                                      <source [src]="audioUrl" type="audio/mpeg">
+                                    <audio *ngIf="item.audioUrl" controls>
+                                        <source [src]="item.audioUrl" type="audio/mpeg">
                                     </audio>
                                   </div>
                                 </div>

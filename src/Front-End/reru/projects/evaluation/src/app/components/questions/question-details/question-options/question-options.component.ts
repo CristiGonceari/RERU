@@ -33,15 +33,8 @@ export class QuestionOptionsComponent implements OnInit {
   edit: boolean = false;
   filenames: any;
   fileName: string;
-  fileId: string;
-  imageFiles: File[] = [];
-  videoFiles: File[] = [];
-  audioFiles: File[] = [];
-  isLoadingMedia: boolean;
-  imageUrl: any;
-  audioUrl: any;
-  videoUrl: any;
-  
+  fileId = [];
+  isLoadingMedia: boolean = true;
 
   constructor(private optionService: OptionsService, 
     private route: ActivatedRoute, 
@@ -108,46 +101,34 @@ export class QuestionOptionsComponent implements OnInit {
     })
   }
 
-  getOptions(): void {
+  getOptions() {
     this.optionService.getAll(this.questionId).subscribe(res => {
       if (res && res.data) {
-        this.options = res.data;
-        console.warn('options', this.options);
-        
         this.isLoading = false;
-        for(let i = 0; i < this.options.length; i++){
-          this.fileId = this.options[i].mediaFileId;
-          console.log('file id from for', this.fileId);
-          if (this.options[i].mediaFileId !== null) this.getMediaFile(this.fileId);
+        this.options = res.data;
+        this.options.map ( (option) => {
+          // TODO add type Option -> options = array<Option>
+            option.videoUrl = null
+            option.imageUrl = null
+            option.audioUrl = null
+            return option;
+        })
+        this.fileId = res.data.map(el => el.mediaFileId);
+        for (let i = 0; i < this.fileId.length; i++) {
+          if (this.fileId[i] !== null) this.getMediaFile(this.fileId[i], i);
         }
-        console.log('file iddd blabla', this.fileId);
-        console.log('response', res.data);
       }
     });
   }
 
-  getMediaFile(index) {
-    console.warn('getMedia', index);
-    
-  //  if(this.options[index].mediaFileId !== null){
-  //   this.fileId = this.options[index].mediaFileId;
-  //   this.isLoadingMedia = true;
-  //   this.fileService.get(this.fileId).subscribe( res => {
-  //     console.log("res:", res)
-  //     this.resportProggress(res);
-  //   })
-  //  }
-
-  this.isLoadingMedia = true;
-  this.fileService.get(index).subscribe( res => {
-    console.warn('res', res);
-    if (this.fileId == index)  this.resportProggress(res);
-  })
-    
+  getMediaFile(fileId, index) {
+    this.fileService.get(fileId).subscribe(res => {
+      this.resportProggress(res, index);
+    })
   }
 
-  private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void
-  {
+  private resportProggress(httpEvent: HttpEvent<string[] | Blob>, index): void
+  { 
     switch(httpEvent.type)
     {
       case HttpEventType.Response:
@@ -160,21 +141,25 @@ export class QuestionOptionsComponent implements OnInit {
           const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
           const file = new File([blob], this.fileName, { type: httpEvent.body.type });
           this.readFile(file).then(fileContents => {
-            if (blob.type.includes('image')) this.imageUrl = fileContents;
-            else if (blob.type.includes('video')) this.videoUrl = fileContents;
-            else if (blob.type.includes('audio')) {
-              this.audioUrl = fileContents;
-              this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
+            if (blob.type.includes('image')) {
+              this.options[index].imageUrl = fileContents;
             }
+            else if (blob.type.includes('video')) {
+              this.options[index].videoUrl = fileContents;
+            }
+            else if (blob.type.includes('audio')) {
+              this.options[index].audioUrl = fileContents;
+              this.options[index].audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.options[index].audioUrl);
+            }
+            this.isLoadingMedia = false;
           });
-          console.log("audioUrl")
-        this.isLoadingMedia = false;
-      }
+        }
       break;
     }
   }
 
-  public async readFile(file: File): Promise<string | ArrayBuffer> {
+  public readFile(file: File): Promise<string | ArrayBuffer> {
+    
     return new Promise<string | ArrayBuffer>((resolve, reject) => {
       const reader = new FileReader();
   

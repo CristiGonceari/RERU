@@ -102,7 +102,6 @@ export class AddEditQuestionComponent implements OnInit {
     this.fileService.delete(id).subscribe(res => {
       this.notificationService.success('Success', 'Was deleted', NotificationUtil.getDefaultConfig());
     })
-    
   }
 
 	initForm(data?: any): void {
@@ -115,8 +114,7 @@ export class AddEditQuestionComponent implements OnInit {
 				questionType: this.formBuilder.control((data && !isNaN(data.questionType) ? data.questionType : null), [Validators.required]),
 				status: QuestionUnitStatusEnum.Draft
 			});
-		}
-		else {
+		} else {
       if(this.value) this.questionByCategory.selected.subscribe(x => this.category = x);
       
 			this.questionForm = this.formBuilder.group({
