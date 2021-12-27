@@ -37,7 +37,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpPatch]
-        public async Task<Unit> EditOption([FromBody] EditOptionsCommand command)
+        public async Task<Unit> EditOption([FromForm] EditOptionsCommand command)
         {
             return await Mediator.Send(command);
         }
