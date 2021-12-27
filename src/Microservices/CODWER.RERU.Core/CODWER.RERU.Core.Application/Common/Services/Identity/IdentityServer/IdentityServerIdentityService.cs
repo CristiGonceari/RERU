@@ -3,11 +3,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using CVU.ERP.Common.Interfaces;
 using CODWER.RERU.Core.Application.Common.Services.Identity.Exceptions;
 using CODWER.RERU.Core.Application.Common.Services.PasswordGenerator;
 using CODWER.RERU.Core.Data.Entities;
 using CVU.ERP.Identity.Models;
+using CVU.ERP.Notifications.Email;
 using Microsoft.AspNetCore.Identity;
 using CVU.ERP.Notifications.Services;
 using CVU.ERP.Notifications.Enums;
@@ -17,7 +17,6 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
     public class IdentityServerIdentityService : IIdentityService
     {
         private readonly UserManager<ERPIdentityUser> _userManager;
-        //private readonly IEmailService _emailService;
         private readonly INotificationService _notificationService;
         private readonly IPasswordGenerator _passwordGenerator;
         public string Type => "local";
@@ -54,10 +53,15 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                             .Replace("{FirstName}", $"{userProfile.Name} {userProfile.LastName}")
                             .Replace("{Password}", password);
 
-                        await _notificationService.Notify(subject: "New account",
-                            body: template,
-                            from: "Do Not Reply",
-                            to: identityUser.Email, NotificationType.Both);
+                        var emailData = new EmailData()
+                        {
+                            subject = "New account",
+                            body = template,
+                            from = "Do Not Reply",
+                            to = identityUser.Email
+                        };
+
+                        await _notificationService.Notify(emailData, NotificationType.Both);
                     }
                     catch (Exception e)
                     {
@@ -109,10 +113,15 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                     .Replace("{FirstName}", user.UserName)
                     .Replace("{Password}", password);
 
-                await _notificationService.Notify(subject: "Reset Password",
-                    body: template,
-                    from: "Do Not Reply",
-                    to: user.Email, NotificationType.LocalNotification);
+                var emailData = new EmailData()
+                {
+                    subject = "Reset Password",
+                    body = template,
+                    from = "Do Not Reply",
+                    to = user.Email
+                };
+
+                await _notificationService.Notify(emailData, NotificationType.LocalNotification);
             }
         }
     }
