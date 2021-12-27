@@ -9,20 +9,23 @@ using CODWER.RERU.Core.Application.Common.Services.PasswordGenerator;
 using CODWER.RERU.Core.Data.Entities;
 using CVU.ERP.Identity.Models;
 using Microsoft.AspNetCore.Identity;
+using CVU.ERP.Notifications.Services;
+using CVU.ERP.Notifications.Enums;
 
 namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 {
     public class IdentityServerIdentityService : IIdentityService
     {
         private readonly UserManager<ERPIdentityUser> _userManager;
-        private readonly IEmailService _emailService;
+        //private readonly IEmailService _emailService;
+        private readonly INotificationService _notificationService;
         private readonly IPasswordGenerator _passwordGenerator;
         public string Type => "local";
 
-        public IdentityServerIdentityService(UserManager<ERPIdentityUser> userManager, IEmailService emailService, IPasswordGenerator passwordGenerator)
+        public IdentityServerIdentityService(UserManager<ERPIdentityUser> userManager, INotificationService notificationService, IPasswordGenerator passwordGenerator)
         {
             _userManager = userManager;
-            _emailService = emailService;
+            _notificationService = notificationService;
             _passwordGenerator = passwordGenerator;
         }
 
@@ -51,10 +54,10 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                             .Replace("{FirstName}", $"{userProfile.Name} {userProfile.LastName}")
                             .Replace("{Password}", password);
 
-                        await _emailService.QuickSendAsync(subject: "New account",
+                        await _notificationService.Notify(subject: "New account",
                             body: template,
                             from: "Do Not Reply",
-                            to: identityUser.Email);
+                            to: identityUser.Email, NotificationType.LocalNotification);
                     }
                     catch (Exception e)
                     {
@@ -106,10 +109,10 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                     .Replace("{FirstName}", user.UserName)
                     .Replace("{Password}", password);
 
-                await _emailService.QuickSendAsync(subject: "Reset Password",
+                await _notificationService.Notify(subject: "Reset Password",
                     body: template,
                     from: "Do Not Reply",
-                    to: user.Email);
+                    to: user.Email, NotificationType.LocalNotification);
             }
         }
     }
