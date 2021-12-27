@@ -242,7 +242,8 @@
             "styles": [
               "projects/erp-shared/src/lib/styles/style.bundle.css",
               "projects/erp-shared/src/lib/styles/plugins.bundle.css",
-              "projects/evaluation/src/styles.scss"
+              "projects/evaluation/src/styles.scss",
+              "projects/evaluation/src/assets/styles/picker.scss"
             ],
             "scripts": []
           }
@@ -447,6 +448,144 @@
               "projects/erp-shared/tsconfig.spec.json"
             ],
             "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "logging": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/logging",
+      "sourceRoot": "projects/logging/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/logging",
+            "index": "projects/logging/src/index.html",
+            "main": "projects/logging/src/main.ts",
+            "polyfills": "projects/logging/src/polyfills.ts",
+            "tsConfig": "projects/logging/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/logging/src/favicon.ico",
+              "projects/logging/src/assets",
+              {
+                "glob": "**/*",
+                "input": "projects/erp-shared/src/lib/assets",
+                "output": "/assets/"
+              }
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/erp-shared/src/lib/styles"]
+            },
+            "styles": [
+              "projects/erp-shared/src/lib/styles/style.bundle.css", 
+              "projects/erp-shared/src/lib/styles/plugins.bundle.css",
+              "projects/logging/src/styles.scss",
+              "projects/logging/src/assets/styles/picker.scss"
+            ],
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "file-saver",
+              "@swimlane/dragula"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/logging/src/environments/environment.ts",
+                  "with": "projects/logging/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "10mb",
+                  "maximumError": "10mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "logging:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "logging:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "logging:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/logging/src/test.ts",
+            "polyfills": "projects/logging/src/polyfills.ts",
+            "tsConfig": "projects/logging/tsconfig.spec.json",
+            "karmaConfig": "projects/logging/karma.conf.js",
+            "assets": [
+              "projects/logging/src/favicon.ico",
+              "projects/logging/src/assets"
+            ],
+            "styles": [
+              "projects/erp-shared/src/lib/styles/style.bundle.css",
+              "projects/erp-shared/src/lib/styles/plugins.bundle.css",
+              "projects/logging/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/logging/tsconfig.app.json",
+              "projects/logging/tsconfig.spec.json",
+              "projects/logging/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/logging/e2e/protractor.conf.js",
+            "devServerTarget": "logging:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "logging:serve:production"
+            }
           }
         }
       }

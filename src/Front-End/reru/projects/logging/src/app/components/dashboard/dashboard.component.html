@@ -1,0 +1,59 @@
+<app-page-title [title]="'dashboard.title' | translate" [subTitle]="'dashboard.subtitle' | translate">
+</app-page-title>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="card card-custom gutter-b">
+              <div class="card-header border-0 mt-5 pr-5" style="min-height: 100%;">
+                <div class="row w-100">
+                    <div class="col-lg-3 col-8">
+                        <div class="input-group input-group-sm input-group-solid">
+                            <input class="form-control" [owlDateTime]="dtFrom" [owlDateTimeTrigger]="dtFrom" [placeholder]="'events.search-from' | translate" [(ngModel)]="fromDate" autocomplete="off">
+                            <owl-date-time #dtFrom></owl-date-time>
+                        </div>
+                      </div>
+                  <div class="col-lg-3 col-8">
+                    <div class="input-group input-group-sm input-group-solid">
+                        <input class="form-control" [owlDateTime]="toDate" [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate" autocomplete="off">
+                        <owl-date-time #toDate></owl-date-time>
+                      </div>
+                  </div>
+                  <div class="col-lg-3 col-8">
+                    <div class="input-group input-group-sm input-group-solid">
+                        <input class="form-control" [placeholder]="'projectNameDropDown'" [(ngModel)]="projectName" autocomplete="off">
+                      </div>
+                  </div>
+                  <div class="col-lg-3 col-8">
+                    <div class="input-group input-group-sm input-group-solid">
+                        <input class="form-control" [placeholder]="'EventDropDown'" [(ngModel)]="event" autocomplete="off">
+                      </div>
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="card-body">
+                  <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable">
+                    <table class="datatable table font-size-lg" style="overflow: visible">
+                        <thead class="text-uppercase text-muted">
+                            <tr>
+                                <th scope="col">Project</th>
+                                <th scope="col" >User Name</th>
+                                <th scope="col" >User Identifier</th>
+                                <th scope="col" >Event</th>
+                                <th scope="col" >Event Message</th>
+                                <th scope="col" >Date</th>
+                            </tr>
+                        </thead>
+                        <tbody class="datatable-body">
+                        </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
