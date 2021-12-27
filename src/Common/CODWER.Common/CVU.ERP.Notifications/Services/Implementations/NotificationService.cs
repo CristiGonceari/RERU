@@ -1,6 +1,7 @@
 ﻿using CVU.ERP.Common.Interfaces;
 using CVU.ERP.Notifications.Enums;
 using System.Threading.Tasks;
+using CVU.ERP.Notifications.Email;
 
 namespace CVU.ERP.Notifications.Services.Implementations
 {
@@ -13,7 +14,7 @@ namespace CVU.ERP.Notifications.Services.Implementations
             _emailService = emailService;
         }
         
-        public async Task<IEmailService> Notify(string subject, string body, string from, string to, NotificationType type)
+        public async Task<IEmailService> Notify(EmailData data, NotificationType type)
         {
             var result = _emailService;
 
@@ -23,7 +24,7 @@ namespace CVU.ERP.Notifications.Services.Implementations
             }
             else if (type == NotificationType.LocalNotification)
             {
-                result = await _emailService.QuickSendAsync(subject, body, from, to);
+                result = await _emailService.QuickSendAsync(data.subject, data.body, data.from, data.to);
             }
             else if (type == NotificationType.Both)
             {
