@@ -48,37 +48,11 @@ export class LayoutsComponent implements OnInit {
 
 	translateData(): void {
 		forkJoin([
-			this.translate.get('sidebar.home'),
-			this.translate.get('dashboard.my-activities'),
-			this.translate.get('sidebar.settings'),
-			this.translate.get('sidebar.manage-categories'),
-			this.translate.get('sidebar.manage-questions'),
-			this.translate.get('sidebar.manage-tests'),
-			this.translate.get('sidebar.test'),
-			this.translate.get('verify-test.title'),
-			this.translate.get('statistics.statistics'),
-			this.translate.get('sidebar.events'),
-			this.translate.get('locations.locations'),
-			this.translate.get('events.events'),
-			this.translate.get('plans.plans'),
-			this.translate.get('faq.help'),
-			this.translate.get('faq.faq'),
-		]).subscribe(([home, activities, settings, categories, questions, tests, test, verifyTest,statistic, event, location, events, plan, help, faq]) => {
+			this.translate.get('sidebar.home')
+		
+		]).subscribe(([home]) => {
 			this.sidebarItems[0].name = home;
-			this.sidebarItems[1].name = activities;
-			this.sidebarItems[2].name = settings;
-			this.sidebarItems[3].name = categories;
-			this.sidebarItems[4].name = questions;
-			this.sidebarItems[5].name = tests;
-			this.sidebarItems[6].name = test;
-			this.sidebarItems[7].name = verifyTest;
-			this.sidebarItems[8].name = statistic;
-			this.sidebarItems[9].name = event;
-			this.sidebarItems[10].name = location;
-			this.sidebarItems[11].name = events;
-			this.sidebarItems[12].name = plan;
-			this.sidebarItems[13].name = help;
-			this.sidebarItems[14].name = faq;
+		
 		});
 	}
 

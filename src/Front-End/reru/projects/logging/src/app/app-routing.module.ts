@@ -5,7 +5,7 @@ import { CacheMechanism, LocalizeParser, LocalizeRouterModule, LocalizeRouterSet
 import { ManualLoaderFactory } from './utils/services/i18n/i18n.service';
 import { Exception404Component } from './utils/exceptions/404/404.component';
 import { TranslateService } from '@ngx-translate/core';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { LayoutsComponent } from './components/layouts/layouts.component';
 import { Location } from '@angular/common';
 

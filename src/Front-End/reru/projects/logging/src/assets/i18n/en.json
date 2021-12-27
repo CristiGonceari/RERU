@@ -255,19 +255,8 @@
     "correct-answers": "Correct answers"
   },
   "dashboard": {
-    "title": "Evaluation",
-    "subtitle": "Start Page",
-    "start-test": "Start a Test",
-    "my-tests": "My Tests",
-    "date-status": "Data & Status",
-    "test": "Test",
-    "score": "Score",
-    "result": "Result",
-    "manage-test": "Manage My Tests",
-    "min-score": "Min. Score",
-    "hello-username": "Hello, {{username}}!",
-    "have-a-good-day": "Welcome, have a good day!",
-    "my-activities": "My activities"
+    "title": "Logging",
+    "subtitle": "Logging table"
   },
   "questions": {
     "count": "Question count",

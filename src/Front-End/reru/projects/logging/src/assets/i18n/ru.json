@@ -255,19 +255,8 @@
     "correct-answers": "Правильные ответы"
   },
   "dashboard": {
-    "title": "Оценивание",
-    "subtitle": "Стартовая Cтраница",
-    "start-test": "Начать Tест",
-    "my-tests": "Мои Tесты",
-    "date-status": "Дата и Статус",
-    "test": "Тест",
-    "score": "Баллы ",
-    "result": "Результат",
-    "manage-test": "Управление моими тестами",
-    "min-score": "Мин. Балл",
-    "hello-username": "Здравствуйте, {{username}}!",
-    "have-a-good-day": "Добро пожаловать!",
-    "my-activities": "Мои действия"
+    "title": "Logging",
+    "subtitle": "Logging table"
   },
   "questions": {
     "count": "Количество вопросов",

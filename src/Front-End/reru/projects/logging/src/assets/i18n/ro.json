@@ -255,19 +255,8 @@
     "correct-answers": "Răspunsuri corecte"
   },
   "dashboard": {
-    "title": "Evaluare",
-    "subtitle": "Pagina de start",
-    "start-test": "Începe un test",
-    "my-tests": "Testele mele",
-    "date-status": "Data & Status",
-    "test": "Testul",
-    "score": "Puncte",
-    "result": "Rezultat",
-    "manage-test": "Gestionarea testelor mele",
-    "min-score": "Scorul Min.",
-    "hello-username": "Salut, {{username}}!",
-    "have-a-good-day": "Bine ai venit!",
-    "my-activities": "Activitățile mele"
+    "title": "Logare",
+    "subtitle": "Tabelul de logare"
   },
   "questions": {
     "count": "Număr de întrebări",

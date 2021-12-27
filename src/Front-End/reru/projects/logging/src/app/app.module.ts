@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { LayoutsComponent } from './components/layouts/layouts.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { UtilsModule } from './utils/utils.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { HttpLoaderFactory, MOCK_AUTHENTICATION, SharedModule } from '@erp/share
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule, Location } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-datetime';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         deps: [HttpClient],
       }
     }),
+    OwlDateTimeModule,
+    OwlMomentDateTimeModule,
   ],
   schemas: [
 		CUSTOM_ELEMENTS_SCHEMA
