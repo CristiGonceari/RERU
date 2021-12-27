@@ -17,7 +17,7 @@ import { CategoryOverviewComponent } from './category-details/category-overview/
 import { CategoryQuestionsComponent } from './category-details/category-questions/category-questions.component';
 import { CategoryQuestionsOptionsComponent } from './category-details/category-questions-options/category-questions-options.component';
 import { AddOptionComponent } from './category-details/category-questions-options/add-option/add-option.component';
-
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
   declarations: [
@@ -28,9 +28,11 @@ import { AddOptionComponent } from './category-details/category-questions-option
     CategoryDetailsComponent, 
     CategoryOverviewComponent, 
     CategoryQuestionsComponent, 
-    CategoryQuestionsOptionsComponent, AddOptionComponent
+    CategoryQuestionsOptionsComponent, 
+    AddOptionComponent
   ],
   
+
   imports: [
     CommonModule,
     CategoriesRoutingModule,
@@ -42,7 +44,8 @@ import { AddOptionComponent } from './category-details/category-questions-option
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    NgxDropzoneModule
   ]
 })
 export class CategoriesModule { }

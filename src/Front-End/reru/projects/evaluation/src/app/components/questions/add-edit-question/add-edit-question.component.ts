@@ -81,7 +81,7 @@ export class AddEditQuestionComponent implements OnInit {
           this.fileId = res.data.mediaFileId;
 					this.initForm(res.data);
           if (res.data.mediaFileId) this.getMediaFile(this.fileId);
-          res.data.tags[0] != 'undefined' ? this.tags = res.data.tags : this.tags = null;
+          res.data.tags[0] != ('undefined' || 'null') ? this.tags = res.data.tags : this.tags = null;
 				})
 			}
 			else this.initForm();
@@ -102,7 +102,6 @@ export class AddEditQuestionComponent implements OnInit {
     this.fileService.delete(id).subscribe(res => {
       this.notificationService.success('Success', 'Was deleted', NotificationUtil.getDefaultConfig());
     })
-    
   }
 
 	initForm(data?: any): void {
@@ -115,8 +114,7 @@ export class AddEditQuestionComponent implements OnInit {
 				questionType: this.formBuilder.control((data && !isNaN(data.questionType) ? data.questionType : null), [Validators.required]),
 				status: QuestionUnitStatusEnum.Draft
 			});
-		}
-		else {
+		} else {
       if(this.value) this.questionByCategory.selected.subscribe(x => this.category = x);
       
 			this.questionForm = this.formBuilder.group({
@@ -202,12 +200,24 @@ export class AddEditQuestionComponent implements OnInit {
   };
 
   editQuestion(): void {
-    let params = {
-      ...this.questionForm.value,
-      mediaFileId: this.fileName ? this.fileId : null,
-      tags: this.tags || []
+    const request = new FormData();
+
+    if (this.attachedFile)
+    {
+      this.fileType = '4';
+      request.append('Data.FileDto.File', this.attachedFile);
+      request.append('Data.FileDto.Type', this.fileType);
     }
-    this.questionService.edit({data: params}).subscribe(() => {
+    request.append('Data.Id', this.questionForm.value.id);
+    request.append('Data.Question', this.questionForm.value.question);
+    request.append('Data.QuestionCategoryId', this.questionForm.value.questionCategoryId);
+    request.append('Data.QuestionPoints', this.questionForm.value.questionPoints);
+    request.append('Data.QuestionType', this.questionForm.value.questionType);
+    request.append('Data.QuestionStatus', this.questionForm.value.status);
+    request.append('Data.Tags', this.tags);
+    request.append('Data.MediaFileId', this.fileId);
+
+    this.questionService.edit(request).subscribe(() => {
       this.backClicked();
 			this.notificationService.success('Success', 'Question was successfully updated', NotificationUtil.getDefaultMidConfig());
     });

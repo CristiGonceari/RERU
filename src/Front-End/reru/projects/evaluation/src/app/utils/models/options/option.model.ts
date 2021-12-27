@@ -1,8 +1,9 @@
 export class OptionModel {
     id?: number;
-    questionUnitId: number;
+    questionUnitId: any;
     answer: string;
-    isCorrect?: boolean;
+    isCorrect?: any;
+    mediaFileId?: string;
 
     constructor(model?: OptionModel) {
         if (model) {
@@ -10,11 +11,13 @@ export class OptionModel {
             this.questionUnitId = model.questionUnitId;
             this.answer = model.answer;
             this.isCorrect = model.isCorrect;
+            this.mediaFileId = model.mediaFileId
         } else {
             this.id = null;
             this.questionUnitId = null;
             this.answer = null;
             this.isCorrect = null;
+            this.mediaFileId = null;
         }
     }
 }

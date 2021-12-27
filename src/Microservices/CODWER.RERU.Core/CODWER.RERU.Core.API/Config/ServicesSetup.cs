@@ -6,6 +6,8 @@ using CODWER.RERU.Core.Application.DependencyInjection;
 using CODWER.RERU.Core.Data.Persistence.Context;
 using CVU.ERP.Infrastructure;
 using CVU.ERP.Infrastructure.Email;
+using CVU.ERP.Notifications.Services;
+using CVU.ERP.Notifications.Services.Implementations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -54,6 +56,7 @@ namespace CODWER.RERU.Core.API.Config {
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor> ();
             services.AddTransient<IDateTime, MachineDateTime> ();
             services.AddTransient<IEmailService, EmailService> ();
+            services.AddTransient<INotificationService, NotificationService> ();
         }
         #endregion
     }

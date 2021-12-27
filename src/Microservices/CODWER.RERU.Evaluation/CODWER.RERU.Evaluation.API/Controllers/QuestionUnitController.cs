@@ -44,7 +44,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpPatch]
-        public async Task<Unit> EditQuestionUnit([FromBody] EditQuestionUnitCommand command)
+        public async Task<Unit> EditQuestionUnit([FromForm] EditQuestionUnitCommand command)
         {
             return await Mediator.Send(command);
         }
