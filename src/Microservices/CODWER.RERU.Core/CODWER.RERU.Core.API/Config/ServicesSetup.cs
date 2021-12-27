@@ -1,13 +1,8 @@
 using System.Reflection;
 using CVU.ERP.Common;
-using CVU.ERP.Common.Interfaces;
 using CVU.ERP.Common.Pagination;
-using CODWER.RERU.Core.Application.DependencyInjection;
 using CODWER.RERU.Core.Data.Persistence.Context;
 using CVU.ERP.Infrastructure;
-using CVU.ERP.Infrastructure.Email;
-using CVU.ERP.Notifications.Services;
-using CVU.ERP.Notifications.Services.Implementations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

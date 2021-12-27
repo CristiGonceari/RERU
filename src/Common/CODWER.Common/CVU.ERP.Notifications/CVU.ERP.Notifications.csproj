@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\CODWER.Common\CVU.ERP.Common\CVU.ERP.Common.csproj" />
-    <ProjectReference Include="..\Common\CODWER.Common\CVU.ERP.Infrastructure\CVU.ERP.Infrastructure.csproj" />
+    <ProjectReference Include="..\CVU.ERP.Common\CVU.ERP.Common.csproj" />
+    <ProjectReference Include="..\CVU.ERP.Infrastructure\CVU.ERP.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
