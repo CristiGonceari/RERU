@@ -57,7 +57,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                         await _notificationService.Notify(subject: "New account",
                             body: template,
                             from: "Do Not Reply",
-                            to: identityUser.Email, NotificationType.LocalNotification);
+                            to: identityUser.Email, NotificationType.Both);
                     }
                     catch (Exception e)
                     {
