@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CODWER.RERU.Logging.Persistence\CODWER.RERU.Logging.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

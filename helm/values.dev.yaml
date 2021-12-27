@@ -67,6 +67,7 @@ reru_core:
   database:
     connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Core-DEV;User=sa;Password=FXW}t,HLjM:TSpR;
     identity_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Identity-DEV;User=sa;Password=FXW}t,HLjM:TSpR;
+    log_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Logging-DEV;User=sa;Password=FXW}t,HLjM:TSpR;
 
 reru_identity_migrator:
   enabled: true
@@ -96,6 +97,7 @@ reru_personal:
     repository: cvuintell/reru-personal
   database:
     connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Personal-DEV;User=sa;Password=FXW}t,HLjM:TSpR;MultipleActiveResultSets=True;
+    log_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Logging-DEV;User=sa;Password=FXW}t,HLjM:TSpR;
 
 reru_evaluation_fe:
   name: "reru-evaluation-fe"
@@ -110,6 +112,21 @@ reru_evaluation:
     repository: cvuintell/reru-evaluation
   database:
     connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Evaluation-DEV;User=sa;Password=FXW}t,HLjM:TSpR;
+    log_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Logging-DEV;User=sa;Password=FXW}t,HLjM:TSpR;
+
+reru_logging_fe:
+  name: "reru-logging-fe"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-logging-fe
+
+reru_logging:
+  name: "reru-logging"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-logging
+  database:
+    log_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Logging-DEV;User=sa;Password=FXW}t,HLjM:TSpR;
 
 microservices:
   - test_saml:

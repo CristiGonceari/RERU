@@ -9,6 +9,7 @@ using CODWER.RERU.Core.DataTransferObjects.Me;
 using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
 using CVU.ERP.Identity.Models;
 using CVU.ERP.Infrastructure.Email;
+using CVU.ERP.Logging.DependencyInjection;
 using CVU.ERP.Module;
 using CVU.ERP.Module.Common.Models;
 using MediatR;
@@ -109,7 +110,8 @@ namespace CODWER.RERU.Core.API
                 .AddERPModuleControllers();
 
             services.AddERPModuleServices(Configuration)
-                .AddCoreModuleApplication();
+                .AddCoreModuleApplication()
+                .AddCommonLoggingContext(Configuration);
         }
 
 

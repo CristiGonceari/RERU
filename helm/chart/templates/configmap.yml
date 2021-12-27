@@ -64,6 +64,21 @@ data:
           "DownstreamScheme": "http",
           "DownstreamHostAndPorts": [
             {
+              "Host": "reru-logging-service",
+              "Port": 8080
+            }
+          ],
+          "UpstreamPathTemplate": "/ms/reru-logging/api/{all}"
+        },
+
+        {
+          "HttpHandlerOptions": {
+            "UseTracing": true
+          },
+          "DownstreamPathTemplate": "/api/{all}",
+          "DownstreamScheme": "http",
+          "DownstreamHostAndPorts": [
+            {
               "Host": "reru-core-service",
               "Port": 8080
             }
@@ -115,6 +130,21 @@ data:
             }
           ],
           "UpstreamPathTemplate": "/reru-evaluation/{all}"
+        },
+
+        {
+          "HttpHandlerOptions": {
+            "UseTracing": true
+          },
+          "DownstreamPathTemplate": "/{all}",
+          "DownstreamScheme": "http",
+          "DownstreamHostAndPorts": [
+            {
+              "Host": "reru-logging-fe-service",
+              "Port": 8080
+            }
+          ],
+          "UpstreamPathTemplate": "/reru-logging/{all}"
         },
 
         {
@@ -182,6 +212,21 @@ data:
             "UseTracing": true
           },
           "DownstreamPathTemplate": "/internal/api/{all}",
+
+          "DownstreamScheme": "http",
+          "DownstreamHostAndPorts": [
+            {
+              "Host": "reru-logging-service",
+              "Port": 8080
+            }
+          ],
+          "UpstreamPathTemplate": "/reru-logging/api/{all}"
+        },
+        {
+          "HttpHandlerOptions": {
+            "UseTracing": true
+          },
+          "DownstreamPathTemplate": "/internal/api/{all}",
           "DownstreamScheme": "http",
           "DownstreamHostAndPorts": [
             {
@@ -228,6 +273,9 @@ data:
           },
           {
             "Name": "evaluation"
+          },
+          {
+            "Name": "logging"
           }
         ],
         "Clients": [
@@ -235,7 +283,7 @@ data:
             "ClientId": "RERU-Web-client",
             "ClientName": "RERU web client",
             "AllowedGrantTypes": ["implicit"],
-            "AllowedScopes": ["openid", "core", "personal", "evaluation"],
+            "AllowedScopes": ["openid", "core", "personal", "evaluation", "logging"],
             "RedirectUris": ["http://reru.codwer.com/#/auth-callback#"],
             "PostLogoutRedirectUris": ["http://reru.codwer.com/"],
             "AllowedCorsOrigins": ["http://reru.codwer.com"],
@@ -296,6 +344,7 @@ data:
           }
         }
     }
+
   reru_evaluation.appsettings.json: | 
     {
        "Logging": {
@@ -313,12 +362,13 @@ data:
         },
         "SecurityKey": "TESTSECURITYKEY2018",
         "Smtp": {
-          "From": "CVU.RERU.Evaluation",
+          "FromName" : "CODWER RERU",
+          "From": "donotreply-dev@codwer.com",
           "EnableSsl": false,
-          "Host": "smtp.gmail.com",
+          "Host": "smtp.office365.com",
           "Port": 587,
-          "UserName": "app.tester.cvu@gmail.com",
-          "Password": "Parola1a1",
+          "UserName": "donotreply-dev@codwer.com",
+          "Password": "Zun94569",
           "RequiresAuthentication": true,
           "UseDefaultCredentials": false,
           "SystemErrorRecipients": "andrian.hubencu@codwer.com"
@@ -351,6 +401,30 @@ data:
           }
         }
     }
+
+  reru_logging.appsettings.json: | 
+    {
+       "Logging": {
+          "IncludeScopes": false,
+          "LogLevel": {
+            "Default": "Debug",
+            "System": "Information",
+            "Microsoft": "Information"
+          }
+        },
+        "Module": {
+          "Name": "LoggingModule",
+          "UsesAuthentication": true,
+          "Authentication": {
+            "Authority":"http://reru-identity-new-service:8080/ms/reru-identity-new",
+            "RequireHttpsMetadata": false
+          },
+          "CoreClient": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-core/api"
+          }
+        }
+    }
+
   reru_personal.appsettings.json: | 
     {
        "Logging":{
@@ -362,17 +436,18 @@ data:
           }
        },
        "SecurityKey":"TESTSECURITYKEY2018",
-       "Smtp":{
-          "From":"CVU.RERU.MP",
-          "EnableSsl":false,
-          "Host":"smtp.gmail.com",
-          "Port":587,
-          "UserName":"app.tester.cvu@gmail.com",
-          "Password":"Parola1a1",
-          "RequiresAuthentication":true,
-          "UseDefaultCredentials":false,
-          "SystemErrorRecipients":"andrian.hubencu@codwer.com"
-       },
+        "Smtp": {
+          "FromName" : "CODWER RERU",
+          "From": "donotreply-dev@codwer.com",
+          "EnableSsl": false,
+          "Host": "smtp.office365.com",
+          "Port": 587,
+          "UserName": "donotreply-dev@codwer.com",
+          "Password": "Zun94569",
+          "RequiresAuthentication": true,
+          "UseDefaultCredentials": false,
+          "SystemErrorRecipients": "andrian.hubencu@codwer.com"
+        },
        "TokenProviderOptions":{
           "Issuer":"TemplateServer",
           "Audience":"http://localhost:43991/"
@@ -444,6 +519,18 @@ data:
         "MODULE_SCOPE": "evaluation",
         "CLIENT_ID": "RERU-Web-client",
         "SERVER_URL": "http://reru.codwer.com/ms/reru-evaluation",
+        "CORE_URL": "http://reru.codwer.com/ms/reru-core",
+        "APP_BASE_URL": "http://reru.codwer.com/reru-personal/#",
+        "production": true
+    }
+
+  reru_logging_fe.appsettings.json: |
+    {
+      	"IDENTITY_AUTHORITY": "http://reru.codwer.com/ms/reru-identity-new",
+        "IDENTITY_AUTHORITY_REDIRECT_URI": "http://reru.codwer.com/#/auth-callback#",
+        "MODULE_SCOPE": "logging",
+        "CLIENT_ID": "RERU-Web-client",
+        "SERVER_URL": "http://reru.codwer.com/ms/reru-logging",
         "CORE_URL": "http://reru.codwer.com/ms/reru-core",
         "APP_BASE_URL": "http://reru.codwer.com/reru-personal/#",
         "production": true

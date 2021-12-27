@@ -25,6 +25,7 @@ using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
 using CODWER.RERU.Evaluation.DataTransferObjects.Files;
+using CVU.ERP.Logging.DependencyInjection;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
@@ -117,7 +118,8 @@ namespace CODWER.RERU.Evaluation.API
 
             services.AddERPModuleServices(Configuration);
             services.AddCommonModuleApplication();
-            services.AddModuleApplicationServices();
+            services.AddModuleApplicationServices()
+                .AddCommonLoggingContext(Configuration);
 
             services.AddHangfire(config =>
                 config.UseSqlServerStorage(Configuration.GetConnectionString("Default")));
