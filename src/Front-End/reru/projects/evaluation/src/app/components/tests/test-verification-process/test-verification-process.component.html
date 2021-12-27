@@ -27,7 +27,25 @@
           <div class="data-container">
             <span *ngIf="questionType == enum.HashedAnswer" class="font-size-lg">{{'verify-test.user-answer' |
               translate}}:</span>
-            <p class="font-size-h3 bg-gray-100 text-center rounded p-7 mt-2" [innerHTML]="question | safeHtml"></p>
+            <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
+                [colorClass]="'text-primary'">
+            </app-loading-spinner>
+            <div *ngIf="!isLoadingMedia" class="data-container mb-7 bg-gray-100 text-center rounded p-7">
+              <p class="font-size-h2"
+                  [innerHTML]="question | safeHtml">
+              </p>
+              <div *ngIf="fileId">
+                  <div *ngIf="imageUrl" class="d-block">
+                      <img [src]="imageUrl" class="h-200px rounded">
+                  </div>
+                  <video *ngIf="videoUrl" class="h-200px rounded" controls>
+                      <source [src]="videoUrl">
+                  </video>
+                  <audio *ngIf="audioUrl" controls>
+                      <source [src]="audioUrl" type="audio/mpeg">
+                  </audio>
+              </div>
+            </div>
             <span *ngIf="correctQuestion" class="font-size-lg">{{'verify-test.correct-question' | translate}}:</span>
             <div class="mx-auto text-center">
               <p class="font-size-h3 text-center rounded p-7 mt-2" [style.background-color]="'#ecfff4'"
@@ -73,7 +91,7 @@
                 </label>
               </div>
               <div class="input-group">
-                <input type="text" class="form-control" placeholder="{{'questions.points' | translate}}" value="points"
+                <input type="text" class="form-control h-40px" placeholder="{{'questions.points' | translate}}" value="points"
                   [(ngModel)]="points">
                 <div class="input-group-append">
                   <span class="input-group-text text-dark">{{maxPoints}}</span>
