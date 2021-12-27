@@ -48,7 +48,6 @@ namespace CODWER.RERU.Evaluation.API.Config
             services.AddTransient<IPaginationService, PaginationService>();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IDateTime, MachineDateTime>();
-            services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<ValidationService>();
 
             services.AddScoped<ISession, Session>();

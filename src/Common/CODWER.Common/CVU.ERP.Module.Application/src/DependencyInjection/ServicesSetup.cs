@@ -6,6 +6,7 @@ using CVU.ERP.Module.Application.Infrastructure;
 using CVU.ERP.Module.Application.Providers;
 using CVU.ERP.Module.Common.ExceptionHandlers;
 using CVU.ERP.Module.Common.Models;
+using CVU.ERP.Notifications.DependencyInjection;
 using FluentValidation;
 using MediatR;
 using MediatR.Pipeline;
@@ -55,6 +56,7 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             //
             services.AddTransient<IRestClient, RestClient>();
             services.AddTransient<IModuleClient, ModuleClient>();
+            services.AddNotificationService();
 
             return services;
         }

@@ -55,8 +55,6 @@ namespace CODWER.RERU.Core.API.Config {
             services.AddTransient<IPaginationService, PaginationService> ();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor> ();
             services.AddTransient<IDateTime, MachineDateTime> ();
-            services.AddTransient<IEmailService, EmailService> ();
-            services.AddTransient<INotificationService, NotificationService> ();
         }
         #endregion
     }
