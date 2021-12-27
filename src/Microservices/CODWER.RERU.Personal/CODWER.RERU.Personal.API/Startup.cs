@@ -25,6 +25,7 @@ using NSwag.Generation.Processors.Security;
 using CVU.ERP.Module.Application.DependencyInjection;
 using System;
 using System.Text;
+using CVU.ERP.Logging.DependencyInjection;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Personal.API.Config.ServicesSetup;
@@ -107,7 +108,8 @@ namespace CODWER.RERU.Personal.API
 
             services.AddERPModuleServices(Configuration);
             services.AddCommonModuleApplication();
-            services.AddModuleApplicationServices();
+            services.AddModuleApplicationServices()
+                .AddCommonLoggingContext(Configuration);
 
             //if (CurrentEnvironment.IsDevelopment())
             //{

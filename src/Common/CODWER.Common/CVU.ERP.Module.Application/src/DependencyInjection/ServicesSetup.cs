@@ -1,8 +1,11 @@
 using System;
 using AutoMapper;
+using CVU.ERP.Logging.DependencyInjection;
 using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.ExceptionHandlers;
 using CVU.ERP.Module.Application.Infrastructure;
+using CVU.ERP.Module.Application.LoggerServices;
+using CVU.ERP.Module.Application.LoggerServices.Implementations;
 using CVU.ERP.Module.Application.Providers;
 using CVU.ERP.Module.Common.ExceptionHandlers;
 using CVU.ERP.Module.Common.Models;
@@ -10,6 +13,7 @@ using CVU.ERP.Notifications.DependencyInjection;
 using FluentValidation;
 using MediatR;
 using MediatR.Pipeline;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using RestSharp;
@@ -57,6 +61,9 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             services.AddTransient<IRestClient, RestClient>();
             services.AddTransient<IModuleClient, ModuleClient>();
             services.AddNotificationService();
+
+            //log service 
+            services.AddTransient(typeof(ILoggerService<>), typeof(LoggerService<>));
 
             return services;
         }

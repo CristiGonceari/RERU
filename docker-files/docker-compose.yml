@@ -152,6 +152,34 @@ services:
     volumes:
       - ./docker-settings/Gateway/Internal/appsettings.json:/app/appsettings.json
 
+  reru-logging:
+    hostname: localhost
+    networks:
+      - my-network
+    container_name: reru-logging
+    build:
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-Logging
+    environment:
+      - ASPNETCORE_URLS=http://*:8080
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Log=server=db;database=RERU-Logging;User=sa;Password=Your_password123;
+    volumes:
+      - ./docker-settings/Logging/appsettings.json:/app/appsettings.json
+    depends_on:
+      - db
+
+  reru-logging-fe:
+    hostname: localhost
+    networks:
+      - my-network
+    container_name: reru-logging-fe
+    build:
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-Logging-FE
+    volumes:
+      - ./docker-settings/Logging-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
+
   reru-core:
     hostname: localhost
     networks:
@@ -165,6 +193,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__Default=server=db;database=RERU-Core;User=sa;Password=Your_password123;
       - ConnectionStrings__Identity=server=db;database=RERU-Identity;User=sa;Password=Your_password123;
+      - ConnectionStrings__Log=server=db;database=RERU-Logging;User=sa;Password=Your_password123;
     depends_on:
       - db
       - reru-identity-migrator
@@ -194,6 +223,7 @@ services:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Production
       - ConnectionStrings__Default=server=db;database=RERU-Personal;User=sa;Password=Your_password123;
+      - ConnectionStrings__Log=server=db;database=RERU-Logging;User=sa;Password=Your_password123;
     volumes:
       - ./docker-settings/Personal/appsettings.json:/app/appsettings.json
 
@@ -221,6 +251,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__Default=server=db;database=RERU-Evaluation;User=sa;Password=Your_password123;
       - ConnectionStrings__HangfireConnection=server=db;database=RERU-Evaluation;User=sa;Password=Your_password123;
+      - ConnectionStrings__Log=server=db;database=RERU-Logging;User=sa;Password=Your_password123;
     volumes:
       - ./docker-settings/Evaluation/appsettings.json:/app/appsettings.json
     depends_on:

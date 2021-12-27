@@ -1,32 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.reru_personal.name }}
+  name: {{ .Values.reru_logging.name }}
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.reru_personal.name }}
-  replicas: {{ .Values.reru_personal.replicas }}
+      app: {{ .Values.reru_logging.name }}
+  replicas: {{ .Values.reru_logging.replicas }}
   template:
     metadata:
       labels:
-        app: {{ .Values.reru_personal.name }}
+        app: {{ .Values.reru_logging.name }}
     spec:
       volumes:
-        - name: {{ .Values.name }}-application-settings
-          configMap:
-            name: {{ .Values.name }}-application-settings
+      - name: {{ .Values.name }}-application-settings
+        configMap:
+          name: {{ .Values.name }}-application-settings
       imagePullSecrets:
       - name: {{ .Values.imagePullSecret.name }}
       containers:
-      - name: {{ .Values.reru_personal.name }}
-        image: {{ .Values.reru_personal.image.repository }}:{{ .Values.tag }}
+      - name: {{ .Values.reru_logging.name }}
+        image: {{ .Values.reru_logging.image.repository }}:{{ .Values.tag }}
         imagePullPolicy: Always
         env:
-        - name: ConnectionStrings__Default
-          value: {{ .Values.reru_personal.database.connection_string }}   
         - name: ConnectionStrings__Log
-          value: {{ .Values.reru_personal.database.log_connection_string }}   
+          value: {{ .Values.reru_logging.database.log_connection_string }}   
         - name: TZ
           value: {{ .Values.timeZone }}
         {{- if .Values.dotnet_microservice.deployment.env }}
@@ -52,5 +50,4 @@ spec:
         volumeMounts:
           - name: {{ .Values.name }}-application-settings
             mountPath: {{ .Values.dotnet_microservice.deployment.appsettings }}
-            subPath: reru_personal.appsettings.json
-
+            subPath: reru_logging.appsettings.json

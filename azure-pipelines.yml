@@ -62,6 +62,11 @@ stages:
                     {
                       echo "##vso[task.setvariable variable=BuildCore]True"
                     }
+                     
+                  if ($name -like "src/Microservices/CODWER.RERU.Logging/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildLogging]True"
+                    }
 
                   if ($name -like "src/Microservices/CODWER.RERU.Personal/*" -or $override -eq 'True')
                     {
@@ -76,6 +81,11 @@ stages:
                   if ($name -like "src/Front-End/reru/projects/core/*" -or $override -eq 'True')
                     {
                       echo "##vso[task.setvariable variable=BuildCoreFe]True"
+                    }
+
+                  if ($name -like "src/Front-End/reru/projects/logging/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildLoggingFe]True"
                     }
 
                   if ($name -like "src/Front-End/reru/projects/personal/*" -or $override -eq 'True')
@@ -93,6 +103,7 @@ stages:
                       echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
                       echo "##vso[task.setvariable variable=BuildPersonalFE]True"
                       echo "##vso[task.setvariable variable=BuildCoreFe]True"
+                      echo "##vso[task.setvariable variable=BuildLoggingFe]True"
                     }
                 }
 
@@ -231,6 +242,50 @@ stages:
               tags: $(tag)
               addPipelineData: false
             condition: and(succeeded(), eq(variables['BuildCore'], 'True'))
+
+          - task: Docker@2
+            displayName: Build Logging front end image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-logging-fe"
+              Dockerfile: "docker-files/Dockerfile-RERU-Logging-FE"
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildLoggingFE'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Logging front end image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-logging-fe"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+            condition: and(succeeded(), eq(variables['BuildLoggingFE'], 'True'))
+
+          - task: Docker@2
+            displayName: Build Logging image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-logging"
+              Dockerfile: "docker-files/Dockerfile-RERU-Logging"
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildLogging'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Logging Image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-logging"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+            condition: and(succeeded(), eq(variables['BuildLogging'], 'True'))
 
           - task: Docker@2
             displayName: Build Personal front end  image

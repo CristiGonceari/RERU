@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.reru_core.name }}
+  name: {{ .Values.reru_logging_fe.name }}
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.reru_core.name }}
-  replicas: {{ .Values.reru_core.replicas }}
+      app: {{ .Values.reru_logging_fe.name }}
+  replicas: {{ .Values.reru_logging_fe.replicas }}
   template:
     metadata:
       labels:
-        app: {{ .Values.reru_core.name }}
+        app: {{ .Values.reru_logging_fe.name }}
     spec:
       volumes:
       - name: {{ .Values.name }}-application-settings
@@ -19,26 +19,14 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.imagePullSecret.name }}
       containers:
-      - name: {{ .Values.reru_core.name }}
-        image: {{ .Values.reru_core.image.repository }}:{{ .Values.tag }}
+      - name: {{ .Values.reru_logging_fe.name }}
+        image: {{ .Values.reru_logging_fe.image.repository }}:{{ .Values.tag }}
         imagePullPolicy: Always
-        env:
-        - name: ConnectionStrings__Default
-          value: {{ .Values.reru_core.database.connection_string }}   
-        - name: ConnectionStrings__Identity
-          value: {{ .Values.reru_core.database.identity_connection_string }}   
-        - name: ConnectionStrings__Log
-          value: {{ .Values.reru_core.database.log_connection_string }}   
-        - name: TZ
-          value: {{ .Values.timeZone }}
-        {{- if .Values.dotnet_microservice.deployment.env }}
-{{ toYaml .Values.dotnet_microservice.deployment.env | indent 8 }}
-        {{- end }}             
         ports:
         - containerPort: {{ .Values.microservice.port }}
         livenessProbe:
           httpGet:
-            path: {{ .Values.dotnet_microservice.deployment.liveness.livenessProbe }}
+            path: {{ .Values.angular_microservice.deployment.liveness.livenessProbe }}
             port: {{ .Values.microservice.port }}
           initialDelaySeconds: {{ .Values.microservice.deployment.liveness.initialDelaySeconds }}
           periodSeconds: {{ .Values.microservice.deployment.liveness.periodSeconds }}
@@ -46,7 +34,7 @@ spec:
 
         readinessProbe:
           httpGet:
-            path: {{ .Values.dotnet_microservice.deployment.liveness.livenessProbe }}
+            path: {{ .Values.angular_microservice.deployment.liveness.livenessProbe }}
             port: {{ .Values.microservice.port }}
           initialDelaySeconds: {{ .Values.microservice.deployment.readiness.initialDelaySeconds }}
           periodSeconds: {{ .Values.microservice.deployment.readiness.periodSeconds }}
@@ -54,5 +42,5 @@ spec:
 
         volumeMounts:
           - name: {{ .Values.name }}-application-settings
-            mountPath: {{ .Values.dotnet_microservice.deployment.appsettings }}
-            subPath: reru_core.appsettings.json
+            mountPath: {{ .Values.angular_microservice.deployment.appsettings }}
+            subPath: reru_logging_fe.appsettings.json
