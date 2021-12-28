@@ -4,17 +4,22 @@ using AutoMapper.EquivalencyExpression;
 using CODWER.RERU.Logging.Application.Validations;
 using CODWER.RERU.Logging.Persistence;
 using CODWER.RERU.Logging.Persistence.DbSeeder;
+using CVU.ERP.Common.Pagination;
 using CVU.ERP.Logging.Context;
+using CVU.ERP.Logging.DependencyInjection;
 using CVU.ERP.Module;
 using CVU.ERP.Module.Application.DependencyInjection;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 
 namespace CODWER.RERU.Logging.API
 {
@@ -33,6 +38,8 @@ namespace CODWER.RERU.Logging.API
             services.AddDbContext<LoggingDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Log"),
                             b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name)));
+
+            services.AddTransient<IPaginationService, PaginationService>();
 
             services.AddCors();
 
