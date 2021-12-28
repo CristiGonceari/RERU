@@ -54,7 +54,7 @@ export class TestVerificationProcessComponent implements OnInit {
 
 
 	optionFileId = [];
-  	isLoadingOptionMedia = false;
+  	isLoadingOptionMedia:  boolean = true;
   	optionFilenames: any;
   	optionFileName: string;
 
