@@ -27,7 +27,7 @@ export class QuestionOptionsComponent implements OnInit {
   isCorrect: any;
   questionId: any;
   optionId: any;
-  mediaFileId;
+  mediaFileId: string;
   attachedFile;
   fileType: string = null;
   options = [];
@@ -68,7 +68,6 @@ export class QuestionOptionsComponent implements OnInit {
   }
 
   onItemChange(event) {
-   
     this.options.forEach(el => {
       if (el.id == event.target.value) {
         el.isCorrect = event.target.checked;
@@ -81,41 +80,21 @@ export class QuestionOptionsComponent implements OnInit {
   }
  
   updateOptions() {
-    const request = new FormData();
+    this.options.forEach(element => {
+      const request = new FormData();
+      request.append('Data.Id', element.id);
+      request.append('Data.Answer', element.answer);
+      request.append('Data.IsCorrect', element.isCorrect);
+      request.append('Data.QuestionUnitId', element.questionUnitId);
+      request.append('Data.MediaFileId', element.mediaFileId);
 
-    if (this.attachedFile)
-    {
-      this.fileType = '4';
-      request.append('Data.FileDto.File', this.attachedFile);
-      request.append('Data.FileDto.Type', this.fileType);
-    }
-      request.append('Data.Id', this.optionId);
-      request.append('Data.Answer', this.answer);
-      request.append('Data.IsCorrect', this.isCorrect);
-      request.append('Data.QuestionUnitId', this.questionId);
-      request.append('Data.MediaFileId', this.mediaFileId);
-
-    this.options.forEach(request => {
       this.optionService.edit(request).subscribe(() => {
-       this.getOptions();
+        this.getOptions();
         this.edit = true;
       });
-
     });
-
+    
     this.notificationService.success('Success', 'Options was successfully updated', NotificationUtil.getDefaultMidConfig());
-  }
-
-  parse(element) {
-    return {
-      data: new OptionModel({
-        id: element.id,
-        answer: element.answer,
-        isCorrect: element.isCorrect,
-        questionUnitId: element.questionUnitId,
-        mediaFileId: element.mediaFileId
-      })
-    }
   }
 
   getQuestion() {
@@ -140,9 +119,12 @@ export class QuestionOptionsComponent implements OnInit {
             return option;
         })
         this.fileId = res.data.map(el => el.mediaFileId);
-        for (let i = 0; i < this.fileId.length; i++) {
-          if (this.fileId[i] !== null) this.getMediaFile(this.fileId[i], i);
+        if(this.fileId.some(el => el !== null)) {
+          for (let i = 0; i < this.fileId.length; i++) {
+            if (this.fileId[i] !== null) this.getMediaFile(this.fileId[i], i);
+          }
         }
+        else this.isLoadingMedia = false;
       }
     });
   }
@@ -185,7 +167,6 @@ export class QuestionOptionsComponent implements OnInit {
   }
 
   public readFile(file: File): Promise<string | ArrayBuffer> {
-    
     return new Promise<string | ArrayBuffer>((resolve, reject) => {
       const reader = new FileReader();
   
