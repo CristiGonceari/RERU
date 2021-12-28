@@ -18,7 +18,7 @@ export class AddOptionComponent implements OnInit {
   answer: string;
   isCorrect: any;
   questionId: any;
-  optionId: number;
+  optionId: any;
   mediaFileId: string;
   uploadFiles;
   addedFiles;
@@ -192,19 +192,31 @@ private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void
       request.append('FileDto.File', this.attachedFile);
       request.append('FileDto.Type', this.fileType);
     }
-    request.append('Answer', this.answer);
-    request.append('IsCorrect', this.isCorrect);
-    request.append('QuestionUnitId', this.questionId);
+      request.append('Answer', this.answer);
+      request.append('IsCorrect', this.isCorrect);
+      request.append('QuestionUnitId', this.questionId);
 
     this.optionService.create(request).subscribe(() => {
-    console.log("mediaFIle id from add!", this.mediaFileId);
       this.back();
 			this.notificationService.success('Success', 'Option was successfully added', NotificationUtil.getDefaultMidConfig());
     });
   }
 
   edit(){
-    this.optionService.edit(this.parse()).subscribe(() => {
+    const request = new FormData();
+
+    if (this.attachedFile)
+    {
+      this.fileType = '4';
+      request.append('Data.FileDto.File', this.attachedFile);
+      request.append('Data.FileDto.Type', this.fileType);
+    }
+      request.append('Data.Id', this.optionId);
+      request.append('Data.Answer', this.answer);
+      request.append('Data.IsCorrect', this.isCorrect);
+      request.append('Data.QuestionUnitId', this.questionId);
+
+    this.optionService.edit(request).subscribe(() => {
       this.back();
 			this.notificationService.success('Success', 'Option was successfully updated', NotificationUtil.getDefaultMidConfig());
     });

@@ -73,7 +73,27 @@
                   <input type="checkbox" value="{{ item.id }}" name="option" [checked]="item.isSelected" />
                   <span [class.bg-success]="item.isSelected && item.isCorrect"></span>
                 </label>
-                <p class="mb-0 font-size-lg">{{item.answer}}</p>
+                <div>
+                  <p class="mb-0 font-size-lg">{{item.answer}}</p>
+                  <div class="form-group row align-items-center">
+                    <div class="col-lg-6 col-xl-3">
+                      <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
+                        [colorClass]="'text-primary'">
+                      </app-loading-spinner>
+                      <div *ngIf="!isLoadingMedia" class="mt-3">
+                        <div *ngIf="item.imageUrl" class="d-flex">
+                            <img [src]="item.imageUrl" class="h-200px rounded">
+                        </div>
+                        <video *ngIf="item.videoUrl" class="h-200px rounded" controls>
+                            <source [src]="item.videoUrl">
+                        </video>
+                        <audio *ngIf="item.audioUrl" controls>
+                            <source [src]="item.audioUrl" type="audio/mpeg">
+                        </audio>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
