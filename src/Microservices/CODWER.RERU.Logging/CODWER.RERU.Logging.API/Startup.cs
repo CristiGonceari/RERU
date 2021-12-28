@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using AutoMapper.EquivalencyExpression;
+using CODWER.RERU.Logging.Application.DependencyInjection;
 using CODWER.RERU.Logging.Application.Validations;
 using CODWER.RERU.Logging.Persistence;
 using CODWER.RERU.Logging.Persistence.DbSeeder;
@@ -51,6 +52,8 @@ namespace CODWER.RERU.Logging.API
 
             services.AddControllers()
                 .AddERPModuleControllers();
+
+            services.AddLoggingApplication();
 
             services.AddERPModuleServices(Configuration);
             services.AddCommonModuleApplication();
