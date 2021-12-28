@@ -18,7 +18,7 @@ export class AddOptionComponent implements OnInit {
   answer: string;
   isCorrect: any;
   questionId: any;
-  optionId: number;
+  optionId: any;
   mediaFileId: string;
   uploadFiles;
   addedFiles;
@@ -204,7 +204,19 @@ private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void
   }
 
   edit(){
-    this.optionService.edit(this.parse()).subscribe(() => {
+    const request = new FormData();
+
+    if (this.attachedFile)
+    {
+      this.fileType = '4';
+      request.append('Data.FileDto.File', this.attachedFile);
+      request.append('Data.FileDto.Type', this.fileType);
+    }
+      request.append('Data.Id', this.optionId);
+      request.append('Data.Answer', this.answer);
+      request.append('Data.IsCorrect', this.isCorrect);
+      request.append('Data.QuestionUnitId', this.questionId);
+    this.optionService.edit(request).subscribe(() => {
       this.back();
 			this.notificationService.success('Success', 'Option was successfully updated', NotificationUtil.getDefaultMidConfig());
     });

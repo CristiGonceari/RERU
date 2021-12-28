@@ -28,7 +28,9 @@ export class ViewTestResultComponent implements OnInit {
   comment: string;
   correct: boolean;
   testData = new Test();
-  options = new OptionModel();
+  options = [];
+
+  // options = new OptionModel();
   verifiedStatus = [];
   questionType;
   enum = QuestionUnitTypeEnum;
@@ -52,6 +54,11 @@ export class ViewTestResultComponent implements OnInit {
 	fileName: string;
 	fileId: string;
 
+  optionFileId = [];
+  isLoadingOptionMedia = false;
+  optionFilenames: any;
+  optionFileName: string;
+  
   constructor(
     private verifyService: TestVerificationProcessService,
     private activatedRoute: ActivatedRoute,
@@ -131,6 +138,17 @@ export class ViewTestResultComponent implements OnInit {
           this.answer = res.data.answerText;
           this.comment = res.data.comment;
           this.options = res.data.options;
+          this.options.map ( (option) => {
+            // TODO add type Option -> options = array<Option>
+              option.videoUrl = null
+              option.imageUrl = null
+              option.audioUrl = null
+              return option;
+          })
+          this.optionFileId = res.data.options.map(el => el.optionMediaFileId);
+          for (let i = 0; i < this.optionFileId.length; i++) {
+            if (this.optionFileId[i] !== null) this.getOptionsMediaFile(this.optionFileId[i], i);
+          }
           this.correct = res.data.isCorrect;
           if (this.correct == null) this.correct = false;
           this.index = index;
@@ -150,6 +168,67 @@ export class ViewTestResultComponent implements OnInit {
       }
     );
   }
+
+  getOptionsMediaFile(optionFileId, index) {
+    this.fileService.get(optionFileId).subscribe(res => {
+      this.resportOptionsProggress(res, index);
+    })
+  }
+
+  private resportOptionsProggress(httpEvent: HttpEvent<string[] | Blob>, index): void
+  { 
+    switch(httpEvent.type)
+    {
+      case HttpEventType.Response:
+        if (httpEvent.body instanceof Array) {
+          for (const filename of httpEvent.body) {
+            this.optionFilenames.unshift(filename);
+          }
+        } else {
+          this.optionFileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+          const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
+          const file = new File([blob], this.optionFileName, { type: httpEvent.body.type });
+          this.readFile(file).then(fileContents => {
+            if (blob.type.includes('image')) {
+              this.options[index].imageUrl = fileContents;
+            }
+            else if (blob.type.includes('video')) {
+              this.options[index].videoUrl = fileContents;
+            }
+            else if (blob.type.includes('audio')) {
+              this.options[index].audioUrl = fileContents;
+              this.options[index].audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.options[index].audioUrl);
+            }
+            this.isLoadingOptionMedia = false;
+          });
+        }
+      break;
+    }
+  }
+
+  public readOptionsFile(file: File): Promise<string | ArrayBuffer> {
+    
+    return new Promise<string | ArrayBuffer>((resolve, reject) => {
+      const reader = new FileReader();
+  
+      reader.onload = e => {
+        return resolve((e.target as FileReader).result);
+      };
+
+      reader.onerror = e => {
+        console.error(`FileReader failed on file ${file.name}.`);
+        return reject(null);
+      };
+
+      if (!file) {
+        console.error('No file to read.');
+        return reject(null);
+      }
+
+      reader.readAsDataURL(file);
+    });
+  }
+
 
   backClicked() {
     this.location.back();

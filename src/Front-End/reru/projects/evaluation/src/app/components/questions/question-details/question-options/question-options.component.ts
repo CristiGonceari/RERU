@@ -12,6 +12,7 @@ import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagina
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { CloudFileService } from 'projects/evaluation/src/app/utils/services/cloud-file/cloud-file.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -20,8 +21,16 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./question-options.component.scss']
 })
 export class QuestionOptionsComponent implements OnInit {
+
+  optionForm: FormGroup;
+  answer: string;
+  isCorrect: any;
+  questionId: any;
+  optionId: any;
+  mediaFileId;
+  attachedFile;
+  fileType: string = null;
   options = [];
-  questionId;
   type: number;
   newList = [];
 	pagedSummary: PaginationModel = new PaginationModel();
@@ -59,6 +68,7 @@ export class QuestionOptionsComponent implements OnInit {
   }
 
   onItemChange(event) {
+   
     this.options.forEach(el => {
       if (el.id == event.target.value) {
         el.isCorrect = event.target.checked;
@@ -71,11 +81,26 @@ export class QuestionOptionsComponent implements OnInit {
   }
  
   updateOptions() {
-    this.options.forEach(el => {
-      this.optionService.edit(this.parse(el)).subscribe(() => {
-        this.getOptions();
+    const request = new FormData();
+
+    if (this.attachedFile)
+    {
+      this.fileType = '4';
+      request.append('Data.FileDto.File', this.attachedFile);
+      request.append('Data.FileDto.Type', this.fileType);
+    }
+      request.append('Data.Id', this.optionId);
+      request.append('Data.Answer', this.answer);
+      request.append('Data.IsCorrect', this.isCorrect);
+      request.append('Data.QuestionUnitId', this.questionId);
+      request.append('Data.MediaFileId', this.mediaFileId);
+
+    this.options.forEach(request => {
+      this.optionService.edit(request).subscribe(() => {
+       this.getOptions();
         this.edit = true;
       });
+
     });
 
     this.notificationService.success('Success', 'Options was successfully updated', NotificationUtil.getDefaultMidConfig());
@@ -87,7 +112,8 @@ export class QuestionOptionsComponent implements OnInit {
         id: element.id,
         answer: element.answer,
         isCorrect: element.isCorrect,
-        questionUnitId: element.questionUnitId
+        questionUnitId: element.questionUnitId,
+        mediaFileId: element.mediaFileId
       })
     }
   }

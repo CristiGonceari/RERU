@@ -24,10 +24,21 @@
             <app-loading-spinner></app-loading-spinner>
         </div>
         <div class="card-body" *ngIf="!isLoading">
-            <div>
-                <p class="card-title font-weight-bolder text-center">
+            <div class="card-title text-center">
+                <p class="font-size-h2">
                     {{ questionName }}
                 </p>
+                <div *ngIf="fileId">
+                    <div *ngIf="imageUrl" class="d-block">
+                        <img [src]="imageUrl" class="h-200px rounded">
+                    </div>
+                    <video *ngIf="videoUrl" class="h-200px rounded" controls>
+                        <source [src]="videoUrl">
+                    </video>
+                    <audio *ngIf="audioUrl" controls>
+                        <source [src]="audioUrl" type="audio/mpeg">
+                    </audio>
+                </div>
             </div>
 
             <div class="
@@ -61,7 +72,26 @@
                                     <span></span>
                                 </label>
                             </td>
-                            <td>{{ item.answer }}</td>
+                            <td>{{ item.answer }}
+                                <div class="form-group row align-items-center">
+                                    <div class="col-lg-9 col-xl-6">
+                                      <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
+                                        [colorClass]="'text-primary'">
+                                      </app-loading-spinner>
+                                      <div *ngIf="!isLoadingMedia" class="mt-3">
+                                        <div *ngIf="item.imageUrl" class="d-flex">
+                                            <img [src]="item.imageUrl" class="h-200px rounded">
+                                        </div>
+                                        <video *ngIf="item.videoUrl" class="h-200px rounded" controls>
+                                            <source [src]="item.videoUrl">
+                                        </video>
+                                        <audio *ngIf="item.audioUrl" controls>
+                                            <source [src]="item.audioUrl" type="audio/mpeg">
+                                        </audio>
+                                      </div>
+                                    </div>
+                                </div>
+                            </td>
                             <td data-field="Actions" data-autohide-disabled="false"
                                 class="datatable-cell datatable-cell-sort p-3">
                                 <div style="overflow: visible; position: relative; width: 0px"
