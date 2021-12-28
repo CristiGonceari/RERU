@@ -55,7 +55,7 @@ export class ViewTestResultComponent implements OnInit {
 	fileId: string;
 
   optionFileId = [];
-  isLoadingOptionMedia = false;
+  isLoadingOptionMedia:  boolean = true;
   optionFilenames: any;
   optionFileName: string;
   

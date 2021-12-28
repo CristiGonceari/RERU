@@ -14,7 +14,7 @@
                 <b>{{ "questions.add-options" | translate }}</b>
             </div>
             <span class="card-title font-weight-bolder"></span>
-            <div class="card-toolbar" *ngIf="status == 0 && type != 1">
+            <div class="card-toolbar" *ngIf="status == 0 && type == 2 || type == 3">
                 <app-add-button class="btn" [value]="'questions.add-option' | translate"
                     [routerLink]="['../../option', questionId, 'add']">
                 </app-add-button>
@@ -49,7 +49,7 @@
           datatable-primary
           datatable-loaded
         " id="kt_datatable"
-        *ngIf="type != 1">
+        *ngIf="type == 2 || type == 3">
                 <table class="datatable table font-size-lg" style="overflow: visible">
                     <thead class="text-uppercase text-muted">
                         <tr>
