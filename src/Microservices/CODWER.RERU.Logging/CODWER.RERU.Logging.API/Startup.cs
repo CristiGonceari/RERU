@@ -87,6 +87,14 @@ namespace CODWER.RERU.Logging.API
 
             app.UseRouting();
 
+            if (env.IsDevelopment())
+            {
+                app.UseCors(
+                    options => options.SetIsOriginAllowed(x => _ = true).AllowAnyMethod().AllowAnyHeader().AllowCredentials()
+                );
+            }
+
+
             app.UseAuthorization();
             app.UseERPMiddlewares();
 

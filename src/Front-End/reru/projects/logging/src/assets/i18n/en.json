@@ -19,6 +19,18 @@
     "of": "of",
     "records": "records"
   },
+  "dashboard": {
+   "title": "Logging",
+   "subtitle": "Logging Table",
+   "from": "From Date",
+   "to": "To Date",
+   "project": "Project",
+   "event": "Event",
+   "user-name": "User-name",
+   "user-identifier": "User Identifier",
+   "event-message": "Event Message",
+   "date": "Date"
+  },
   "user-profile": {
     "overview": "Overview profile",
     "edit-title": "Edit my profile",
