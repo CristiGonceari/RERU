@@ -19,6 +19,9 @@ namespace CODWER.RERU.Evaluation.Application.EnumMessages
         public const string Draft = "Maculator";
         public const string Active = "Activ";
         public const string Inactive = "Inactiv";
+        public const string NoResult = "Niciun Rezultat";
+        public const string Passed = "cu succes";
+        public const string NotPassed = "fără succes";
 
         public static string GetTestStatus(TestStatusEnum testStatus)
         {
@@ -64,8 +67,18 @@ namespace CODWER.RERU.Evaluation.Application.EnumMessages
                 QuestionUnitStatusEnum.Active => Active,
                 QuestionUnitStatusEnum.Inactive => Inactive,
                 _ => "-"
-
             };
         }
+
+        public static string GetTestResultStatus(TestResultStatusEnum testResultStatus)
+        {
+            return testResultStatus switch
+            {
+                TestResultStatusEnum.NoResult => NoResult,
+                TestResultStatusEnum.Passed => Passed,
+                TestResultStatusEnum.NotPassed => NotPassed,
+                _ => "-"
+            };
         }
+    }
 }

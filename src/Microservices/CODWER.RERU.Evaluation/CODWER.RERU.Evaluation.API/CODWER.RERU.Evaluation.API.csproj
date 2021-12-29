@@ -52,6 +52,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="PdfTemplates\EmailNotificationTemplate.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="PdfTemplates\one_multiple_question.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
