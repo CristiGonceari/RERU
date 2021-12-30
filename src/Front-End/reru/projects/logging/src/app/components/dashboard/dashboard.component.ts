@@ -8,7 +8,6 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  
   pagination: PaginationModel = new PaginationModel();
 
   dateTimeFrom: string;
@@ -69,16 +68,16 @@ export class DashboardComponent implements OnInit {
     };
 
     this.loggingService.getLoggingValues(params).subscribe((res) => {
-      this.loggingValues = res.data.items, console.log('res', res.data.items),
-      this.pagination = res.data.pagedSummary;
+      (this.loggingValues = res.data.items),
+        (this.pagination = res.data.pagedSummary);
     });
   }
 
-  atachProject(item: any){
-   this.selectedProject = item.target.value;
+  atachProject(item: any) {
+    this.selectedProject = item.target.value;
   }
 
-  atachEvent(item: any){
+  atachEvent(item: any) {
     this.selectedEvent = item.target.value;
-   }
+  }
 }
