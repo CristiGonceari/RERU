@@ -23,6 +23,7 @@ export class AddOptionComponent implements OnInit {
   uploadFiles;
   addedFiles;
   attachedFile: File;
+  disableBtn: boolean = false;
 
   fileId: string;
   fileType: string = null;
@@ -185,7 +186,8 @@ private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void
     }
   }
 
-  add(){
+  add() {
+    this.disableBtn = true;
     const request = new FormData();
 
     if (this.attachedFile) {
@@ -203,7 +205,8 @@ private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void
     });
   }
 
-  edit(){
+  edit() {
+    this.disableBtn = true;
     const request = new FormData();
 
     if (this.attachedFile)

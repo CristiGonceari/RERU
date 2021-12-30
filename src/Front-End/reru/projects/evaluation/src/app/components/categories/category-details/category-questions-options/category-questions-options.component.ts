@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { ConfirmModalComponent } from '@erp/shared';
@@ -51,6 +51,7 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
   disable: boolean = false;
   edit: boolean = false;
   questionName: string;
+  fromCategory: boolean = false;
 
   constructor(private optionService: OptionsService, 
     private route: ActivatedRoute, 
@@ -67,13 +68,20 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
   }
 
   subsribeForParams(): void {
-    this.route.params.subscribe(params => {
-      this.questionId = params.id;
-      if (this.questionId) {
-        this.getOptions();
-        this.getQuestion();
-      }
-    });
+    if (window.location.href.includes('question-category')) {
+      this.fromCategory = true;
+      this.route.params.subscribe(params => {
+        this.questionId = params.id;
+      });
+    } else {
+      this.route.parent.params.subscribe(params => {
+        this.questionId = params.id;
+      });
+    }
+    if (this.questionId) {
+      this.getOptions();
+      this.getQuestion();
+    }
   }
 
   onItemChange(event) {
