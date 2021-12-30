@@ -10,8 +10,9 @@ import { BulkImportQuestionsComponent } from '../bulk-import-questions/bulk-impo
   styleUrls: ['./question-list.component.scss']
 })
 export class QuestionListComponent implements OnInit {
-  
-  constructor(private modalService: NgbModal, private router: Router, private questionByCategory: QuestionByCategoryService) { }
+  constructor( private modalService: NgbModal,
+			private router: Router,
+			private questionByCategory: QuestionByCategoryService) { }
 
 	ngOnInit(): void {
 	}
