@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { PaginationModel } from '../../../../../evaluation/src/app/utils/models/pagination.model';
+import { PaginationModel } from '../../utils/models/pagination.model';
 import { LoggingService } from '../../utils/services/logging-service/logging.service';
-
+import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  
   pagination: PaginationModel = new PaginationModel();
+
   dateTimeFrom: string;
   dateTimeTo: string;
   searchFrom: string;
@@ -16,10 +18,12 @@ export class DashboardComponent implements OnInit {
 
   selectedProject: any;
   selectedEvent: any;
-  loggingValues: any;
+  loggingValues: [] = [];
 
   projects: any;
   events: any;
+
+  form: FormGroup;
 
   constructor(private loggingService: LoggingService) {}
 
@@ -29,8 +33,12 @@ export class DashboardComponent implements OnInit {
   }
 
   retriveDeopdowns() {
-    this.loggingService.getProjectSelectItem().subscribe((res) => (this.projects = res.data));
-    this.loggingService.getEventSelectItem().subscribe((res) => (this.events = res.data));
+    this.loggingService
+      .getProjectSelectItem()
+      .subscribe((res) => (this.projects = res.data));
+    this.loggingService
+      .getEventSelectItem()
+      .subscribe((res) => (this.events = res.data));
   }
 
   setTimeToSearch(): void {
@@ -50,20 +58,27 @@ export class DashboardComponent implements OnInit {
 
   getLoggingValues(data: any = {}) {
     this.setTimeToSearch();
-    
+
     let params = {
       fromDate: this.searchFrom || '',
       toDate: this.searchTo || '',
-      project: this.selectedProject || '',
+      projectName: this.selectedProject || '',
       event: this.selectedEvent || '',
       page: data.page || this.pagination.currentPage,
-			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
     };
 
     this.loggingService.getLoggingValues(params).subscribe((res) => {
-      (this.loggingValues = res.data.items), console.log('res', res.data.items);
+      this.loggingValues = res.data.items, console.log('res', res.data.items),
+      this.pagination = res.data.pagedSummary;
     });
-
   }
 
+  atachProject(item: any){
+   this.selectedProject = item.target.value;
+  }
+
+  atachEvent(item: any){
+    this.selectedEvent = item.target.value;
+   }
 }

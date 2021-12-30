@@ -13,7 +13,7 @@
                           <input id="from" 
                           [owlDateTime]="dtFrom" 
                           [owlDateTimeTrigger]="dtFrom" 
-                          placeholder="Date Time"
+                          [placeholder]="'dashboard.from' | translate" 
                           class="form-control form-control-lg form-control-solid" 
                           name="date" 
                           [(ngModel)]="dateTimeFrom"
@@ -27,7 +27,7 @@
                       <input class="form-control"
                       [owlDateTime]="toDate" 
                       [owlDateTimeTrigger]="toDate" 
-                      [placeholder]="'events.search-to' | translate" 
+                      [placeholder]="'dashboard.to' | translate" 
                       [(ngModel)]="dateTimeTo" 
                       autocomplete="off"
                       />
@@ -36,7 +36,7 @@
                   </div>
                   <div class="col">
                     <div class="input-group input-group-sm input-group-solid">
-                      <select class="form-control h-35px" name="selectedStatus" id="selectedStatus" [(ngModel)]="selectedProject">
+                      <select class="form-control h-35px" name="selectedStatus" id="selectedStatus" (change)="atachProject($event)">
                         <option class="default-option text-muted" selected value="">{{ 'dashboard.project' | translate }}</option>
                         <option *ngFor="let item of projects" [value]="item">
                             {{ item }}
@@ -46,10 +46,10 @@
                   </div>
                   <div class="col">
                     <div class="input-group input-group-sm input-group-solid">
-                      <select class="form-control h-35px" name="selectedStatus" id="selectedStatus" [(ngModel)]="selectedEvent" >
+                      <select class="form-control h-35px" name="selectedStatus" id="selectedStatus" (change)="atachEvent($event)" >
                         <option class="default-option text-muted" selected value="">{{ 'dashboard.event' | translate }}</option>
                         <option *ngFor="let item of events" [value]="item">
-                            {{ item.label }}
+                            {{ item }}
                         </option>
                     </select>
                       </div>
@@ -60,37 +60,46 @@
                 </div>
               </div>
               <div class="card-body">
-                  <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable">
+                  <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+                   id="kt_datatable">
                     <table class="datatable table font-size-lg" style="overflow: visible">
                         <thead class="text-uppercase text-muted">
                             <tr>
-                                <th scope="col">{{'dashboard.project' | translate }}</th>
-                                <th scope="col">{{'dashboard.user-name' | translate }}</th>
-                                <th scope="col">{{'dashboard.user-identifier' | translate }}</th>
-                                <th scope="col">{{'dashboard.event' | translate }}</th>
-                                <th scope="col">{{'dashboard.event-message' | translate }}</th>
-                                <th scope="col">{{'dashboard.date' | translate }}</th>
+                                <th scope="col"  class="text-center">{{'dashboard.project' | translate }}</th>
+                                <th scope="col"  class="text-center">{{'dashboard.user-name' | translate }}</th>
+                                <th scope="col"  class="text-center">{{'dashboard.user-identifier' | translate }}</th>
+                                <th scope="col"  class="text-center">{{'dashboard.event' | translate }}</th>
+                                <th scope="col"  class="text-center">{{'dashboard.event-message' | translate }}</th>
+                                <th scope="col"  class="text-center">{{'dashboard.date' | translate }}</th>
                             </tr>
                         </thead>
-                        <tbody class="datatable-body" *ngIf="loggingValues.length">
+                        <tbody class="datatable-body" *ngIf="loggingValues.length" >
                           <tr *ngFor="let item of loggingValues">
-                            <td>{{ item.project }}</td>
-                            <td>{{ item.userName }}</td>
-                            <td>{{ item.userIdentifier }}</td>
-                            <td>{{ item.event }}</td>
-                            <td>{{ item.eventMessage }}</td>
-                            <td>{{ item.date }}</td>
+                            <td class="text-center">{{ item.project }}</td>
+                            <td class="text-center">{{ item.userName }}</td>
+                            <td class="text-center">{{ item.userIdentifier }}</td>
+                            <td class="text-center">{{ item.event }}</td>
+                            <td class="text-center">{{ item.eventMessage }}</td>
+                            <td class="text-center">{{ item.date | date: 'd/M/yy, HH:mm'}}</td>
                           </tr>
                         </tbody>
-                        <tbody class="datatable-body" *ngIf="!loggingValues.length">
+                        <tbody class="datatable-body"  >
                           <tr>
-                              <td colspan="10" class="text-center">
+                              <td colspan="10" class="text-center" *ngIf="!loggingValues.length">
                                   {{ 'message.no-record' | translate }}
                               </td>
                           </tr>
                       </tbody>
                     </table>
-                  
+                    <div pagination
+                    class="datatable-pager datatable-paging-loaded"
+                    [page]="pagination.currentPage"
+                    [total]="pagination.totalPages"
+                    [totalRecords]="pagination.totalCount"
+                    [size]="pagination.pageSize"
+                    (sizeChange)="getLoggingValues({ page: pagination.currentPage, itemsPerPage: $event})"
+                    (pageChange)="getLoggingValues({ page: $event})">
+                </div>
                 </div>
                
               </div>
@@ -99,9 +108,9 @@
         </div>
       </div>
     </div>
-    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
+    <!-- <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
     [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
     (sizeChange)="getLoggingValues({ page: pagination.currentPage, itemsPerPage: $event })"
     (pageChange)="getLoggingValues({ page: $event })">
-</div>
+</div> -->
   </div>
