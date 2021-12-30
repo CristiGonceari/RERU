@@ -99,8 +99,10 @@
                 <div class="text-right border-top pt-10">
                   <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
                   </app-button>
-                  <app-add-button class="btn" [value]="'button.confirm' | translate" (handle)="createTest()">
+                  <app-add-button class="btn mr-2" [value]="'button.confirm' | translate" (handle)="createTest()">
                   </app-add-button>
+                  <app-confirm-button class="btn" [value]="'button.confirm-print' | translate" (handle)="createTestAndPrint()">
+                  </app-confirm-button>
                 </div>
               </div>
      

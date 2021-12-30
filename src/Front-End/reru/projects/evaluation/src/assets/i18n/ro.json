@@ -111,7 +111,8 @@
     "preview": "Previzualizare",
     "print": "Imprimă",
     "performing-test": "Imprimarea efectuării testului",
-    "attach": "Atașați fișierul"
+    "attach": "Atașați fișierul",
+    "confirm-print": "Confirmă și Printează"
   },
   "message": {
     "deleteMsg": "Sunteți sigur(-ă) că doriți să ștergeți",
