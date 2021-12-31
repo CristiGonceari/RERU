@@ -12,6 +12,8 @@ using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
+using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Application.Validation;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 {
@@ -20,12 +22,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
         private readonly AppDbContext _appDbContext;
         private readonly IMediator _mediator;
         private readonly INotificationService _notificationService;
+        private readonly IInternalNotificationService _internalNotificationService;
 
-        public FinalizeTestCommandHandler(AppDbContext appDbContext, IMediator mediator, INotificationService notificationService)
+        public FinalizeTestCommandHandler(AppDbContext appDbContext, IMediator mediator, INotificationService notificationService, IInternalNotificationService internalMotificationService)
         {
             _appDbContext = appDbContext;
             _mediator = mediator;
             _notificationService = notificationService;
+            _internalNotificationService = internalMotificationService;
         }
 
         public async Task<Unit> Handle(FinalizeTestCommand request, CancellationToken cancellationToken)
@@ -45,6 +49,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
                 await _mediator.Send(new AutoCheckTestScoreCommand { TestId = request.TestId });
                 testToFinalize.TestStatus = TestStatusEnum.Verified;
                 await _appDbContext.SaveChangesAsync();
+
+                await _internalNotificationService.AddNotification(testToFinalize.UserProfileId, NotificationMessages.YourTestWasVerified);
 
                 await SendEmailNotification(testToFinalize);
             }

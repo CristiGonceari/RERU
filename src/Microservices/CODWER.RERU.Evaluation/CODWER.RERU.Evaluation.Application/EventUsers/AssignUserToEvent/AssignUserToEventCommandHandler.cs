@@ -9,6 +9,8 @@ using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using Microsoft.EntityFrameworkCore;
+using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Application.Services;
 
 namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 {
@@ -17,12 +19,14 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
+        private readonly IInternalNotificationService _internalNotificationService;
 
-        public AssignUserToEventCommandHandler(AppDbContext appDbContext, IMapper mapper, INotificationService notificationService)
+        public AssignUserToEventCommandHandler(AppDbContext appDbContext, IMapper mapper, INotificationService notificationService, IInternalNotificationService internalMotificationService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _notificationService = notificationService;
+            _internalNotificationService = internalMotificationService;
         }
 
         public async Task<Unit> Handle(AssignUserToEventCommand request, CancellationToken cancellationToken)
@@ -31,6 +35,12 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 
             await _appDbContext.EventUsers.AddAsync(eventUser);
             await _appDbContext.SaveChangesAsync();
+
+            var eventName = await _appDbContext.EventUsers
+               .Include(x => x.Event)
+               .FirstAsync(x => x.EventId == eventUser.EventId && x.UserProfileId == eventUser.UserProfileId);
+
+            await _internalNotificationService.AddNotification(eventUser.UserProfileId, NotificationMessages.YouWereInvitedToEventAsCandidate);
 
             await SendEmailNotification(eventUser);
 

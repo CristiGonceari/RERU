@@ -9,6 +9,8 @@ using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using Microsoft.EntityFrameworkCore;
+using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Application.Validation;
 
 namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEvent
 {
@@ -17,12 +19,14 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
+        private readonly IInternalNotificationService _internalNotificationService;
 
-        public AssignEvaluatorToEventCommandHandler(AppDbContext appDbContext, IMapper mapper, INotificationService notificationService)
+        public AssignEvaluatorToEventCommandHandler(AppDbContext appDbContext, IMapper mapper, INotificationService notificationService, IInternalNotificationService internalMotificationService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _notificationService = notificationService;
+            _internalNotificationService = internalMotificationService;
         }
 
         public async Task<Unit> Handle(AssignEvaluatorToEventCommand request, CancellationToken cancellationToken)
@@ -31,6 +35,12 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
 
             await _appDbContext.EventEvaluators.AddAsync(eventEvaluator);
             await _appDbContext.SaveChangesAsync();
+
+            var eventName = await _appDbContext.EventEvaluators
+                .Include(x => x.Event)
+                .FirstAsync(x => x.EventId == eventEvaluator.EventId && x.EvaluatorId == eventEvaluator.EvaluatorId);
+
+            await _internalNotificationService.AddNotification(eventEvaluator.EvaluatorId, NotificationMessages.YouWereInvitedToEventAsEvaluator);
 
             await SendEmailNotification(eventEvaluator);
 
