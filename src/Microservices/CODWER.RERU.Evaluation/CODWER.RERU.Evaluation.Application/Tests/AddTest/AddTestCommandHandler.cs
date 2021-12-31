@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Application.Services;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 {
@@ -14,11 +16,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly IInternalNotificationService _internalNotificationService;
 
-        public AddTestCommandHandler(AppDbContext appDbContext, IMapper mapper)
+        public AddTestCommandHandler(AppDbContext appDbContext, IMapper mapper, IInternalNotificationService internalMotificationService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _internalNotificationService = internalMotificationService;
         }
 
         public async Task<int> Handle(AddTestCommand request, CancellationToken cancellationToken)
@@ -47,6 +51,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 
             _appDbContext.Tests.Add(newTest);
             await _appDbContext.SaveChangesAsync();
+
+            await _internalNotificationService.AddNotification(newTest.UserProfileId, NotificationMessages.YouHaveNewProgrammedTest);
 
             return newTest.Id;
         }
