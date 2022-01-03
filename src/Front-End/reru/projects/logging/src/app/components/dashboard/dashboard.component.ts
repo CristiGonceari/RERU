@@ -14,6 +14,8 @@ export class DashboardComponent implements OnInit {
   dateTimeTo: string;
   searchFrom: string;
   searchTo: string;
+  userName: string;
+  userIdentifier: string;
 
   selectedProject: any;
   selectedEvent: any;
@@ -63,6 +65,8 @@ export class DashboardComponent implements OnInit {
       toDate: this.searchTo || '',
       projectName: this.selectedProject || '',
       event: this.selectedEvent || '',
+      userName:  this.userName || '',
+      userIdentifier: this.userIdentifier || '',
       page: data.page || this.pagination.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
     };

@@ -1,5 +1,4 @@
-﻿using System;
-using CODWER.RERU.Logging.DataTransferObjects;
+﻿using CODWER.RERU.Logging.DataTransferObjects;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Logging.Context;
 using CVU.ERP.Logging.Entities;
@@ -42,6 +41,16 @@ namespace CODWER.RERU.Logging.Application.GetLoggingValuesQuery
             if (!string.IsNullOrEmpty(request.ProjectName))
             {
                 items = items.Where(x => x.Project.Contains(request.ProjectName));
+            }
+
+            if (!string.IsNullOrEmpty(request.UserName))
+            {
+                items = items.Where(x => x.UserName.Contains(request.UserName));
+            }
+
+            if (!string.IsNullOrEmpty(request.UserIdentifier))
+            {
+                items = items.Where(x => x.UserIdentifier.Contains(request.UserIdentifier));
             }
 
             if (request.FromDate != null)
