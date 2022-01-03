@@ -1,6 +1,6 @@
-﻿using CODWER.RERU.Evaluation.API.Config;
+﻿using System.Collections.Generic;
+using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.PrintTestReportList;
-//using CODWER.RERU.Evaluation.Application.Services.GetPdfServices;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -12,21 +12,10 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     [ApiController]
     public class TestPrintHtmlPage : BaseController
     {
-        //private readonly IGetTestPdf _testPdf;
-        //private readonly IGetTestTemplatePdf _getTestTemplatePdf;
-        //private readonly IGetQuestionUnitPdf _getQuestionPdf;
         private readonly IPdfService _pdfService;
 
-
-        public TestPrintHtmlPage(
-            //IGetTestPdf testPdf,
-            //IGetTestTemplatePdf getTestTemplatePdf, 
-            //IGetQuestionUnitPdf getQuestionPdf, 
-            IPdfService pdfService)
+        public TestPrintHtmlPage(IPdfService pdfService)
         {
-            //_testPdf = testPdf;
-            //_getTestTemplatePdf = getTestTemplatePdf;
-            //_getQuestionPdf = getQuestionPdf;
             _pdfService = pdfService;
         }
 
@@ -50,11 +39,11 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return File(result.Content, result.ContentType, result.Name);
         }
 
-        [HttpGet("performing-test-pdf/{testId}")]
+        [HttpGet("performing-test-pdf")]
         [IgnoreResponseWrap]
-        public async Task<IActionResult> GetPerformingTestPdf([FromRoute] int testId)
+        public async Task<IActionResult> GetPerformingTestPdf([FromQuery] List<int> testsIds)
         {
-            var result = await _pdfService.PrintPerformingTestPdf(testId);
+            var result = await _pdfService.PrintPerformingTestPdf(testsIds);
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);

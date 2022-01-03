@@ -111,7 +111,8 @@
     "preview": "Preview",
     "print": "Print",
     "performing-test": "Print performing test",
-    "attach": "Attach file"
+    "attach": "Attach file",
+    "confirm-print": "Confirm and Print"
   },
   "message": {
     "deleteMsg": "Are you sure you want to delete",

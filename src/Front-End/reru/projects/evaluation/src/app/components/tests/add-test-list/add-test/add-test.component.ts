@@ -12,6 +12,8 @@ import { AddEditTest } from '../../../../utils/models/tests/add-edit-test.model'
 import { FormControl} from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { AssignedUsers } from '../../../../utils/models/tests/assigned-users';
+import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-add-test',
@@ -56,6 +58,7 @@ export class AddTestComponent implements OnInit {
     private testService: TestService,
     private location: Location,
     private notificationService: NotificationsService,
+    private printService: PrintTemplateService
   ) { }
 
   ngOnInit(): void {
@@ -112,7 +115,6 @@ export class AddTestComponent implements OnInit {
     if(this.isTestTypeOneAnswer){
       this.evaluator.value = null;
     }
-
   }
 
   checkIfEventHasEvaluator($event) {
@@ -164,7 +166,15 @@ export class AddTestComponent implements OnInit {
   createTest() {
     this.testService.createTest(this.parse()).subscribe((res) => {
       this.backClicked();
-      this.notificationService.success('Success', 'Test was successfully programmed', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success('Success', 'Tests was successfully programmed', NotificationUtil.getDefaultMidConfig());
+    });
+  }
+
+  createTestAndPrint() {
+    this.testService.createTest(this.parse()).subscribe((res) => {
+      this.performingTestPdf(res.data)
+      this.backClicked();
+      this.notificationService.success('Success', 'Tests was successfully programmed', NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -174,5 +184,19 @@ export class AddTestComponent implements OnInit {
 
   onItemChange(event) {
     this.showName = event.target.checked;
+  }
+
+  performingTestPdf(testIds) {
+    this.printService.getPerformingTestPdf({testsIds: testIds}).subscribe((response: any) => {
+      let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+
+      if (response.body.type === 'application/pdf') {
+        fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
+      }
+
+      const blob = new Blob([response.body], { type: response.body.type });
+      const file = new File([blob], fileName, { type: response.body.type });
+      saveAs(file);
+    });
   }
 }

@@ -1,4 +1,5 @@
-﻿using CODWER.RERU.Evaluation.Application.Tests.AddTest;
+﻿using System.Collections.Generic;
+using CODWER.RERU.Evaluation.Application.Tests.AddTest;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using MediatR;
@@ -15,7 +16,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 {
-    public class AddTestsCommandHandler : IRequestHandler<AddTestsCommand, Unit>
+    public class AddTestsCommandHandler : IRequestHandler<AddTestsCommand, List<int>>
     {
         private readonly IMediator _mediator;
         private readonly AppDbContext _appDbContext;
@@ -28,9 +29,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             _notificationService = notificationService;
         }
 
-        public async Task<Unit> Handle(AddTestsCommand request, CancellationToken cancellationToken)
+        public async Task<List<int>> Handle(AddTestsCommand request, CancellationToken cancellationToken)
         {
             var testId = 0;
+            var testsIds = new List<int>();
 
             foreach (var testCommand in request.UserProfileId.Select(id => new AddTestCommand
             {
@@ -48,6 +50,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             }))
             {
                 testId = await _mediator.Send(testCommand);
+                testsIds.Add(testId);
 
                 var generateCommand = new GenerateTestQuestionsCommand
                 {
@@ -61,7 +64,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
             await SendEmailNotification(null, request, testId);
 
-            return Unit.Value;
+            return testsIds;
         }
 
         private async Task<Unit> SendEmailNotification(AddTestCommand testCommand, AddTestsCommand request, int testId)
