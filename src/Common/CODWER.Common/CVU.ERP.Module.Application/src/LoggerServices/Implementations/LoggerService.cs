@@ -12,8 +12,6 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
 {
     public class LoggerService<T> : ILoggerService<T>
     {
-        public virtual string Project { get; protected set; }
-
         private readonly LoggingDbContext _localLoggingDbContext;
         private readonly IEnumerable<ICurrentApplicationUserProvider> _userProvider;
         public LoggerService(LoggingDbContext localLoggingDbContext, IEnumerable<ICurrentApplicationUserProvider> userProvider)
@@ -46,7 +44,7 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
             var toLog = new Log
             {
                 Id = Guid.NewGuid().ToString(),
-                Project = Project,
+                Project = data.Project,
                 UserName = coreUser.Name,
                 UserIdentifier = coreUser.Id,
                 Event = !string.IsNullOrWhiteSpace(data.Event) ? data.Event : ParseName(),
