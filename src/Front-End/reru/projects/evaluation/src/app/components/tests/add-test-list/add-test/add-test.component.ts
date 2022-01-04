@@ -41,6 +41,7 @@ export class AddTestComponent implements OnInit {
   
   showName: boolean = false;
   isTestTypeOneAnswer: boolean = false;
+  printTest: boolean = true;
   needEvaluator: boolean = false;
   hasEventEvaluator: boolean = false;
   isListOrderedAsc: boolean = false;
@@ -48,6 +49,7 @@ export class AddTestComponent implements OnInit {
   date: Date;
   search: string;
   key: string = '';
+  messageText = "";
   
   myControl = new FormControl();
 
@@ -111,7 +113,12 @@ export class AddTestComponent implements OnInit {
   }
 
   checkIfIsOneAnswer($event) {
-    this.isTestTypeOneAnswer = this.selectActiveTests.find(x => x.testTypeId === $event).isOnlyOneAnswer
+    this.isTestTypeOneAnswer = this.selectActiveTests.find(x => x.testTypeId === $event).isOnlyOneAnswer;
+    this.printTest = this.selectActiveTests.find(x => x.testTypeId === $event).printTest;
+    
+    if(!this.printTest) 
+      this.messageText = "Acest test poate conține video sau audio!"
+
     if(this.isTestTypeOneAnswer){
       this.evaluator.value = null;
     }
