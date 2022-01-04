@@ -8,6 +8,26 @@
             <div class="card card-custom gutter-b">
               <div class="card-header border-0 mt-5 pr-5" style="min-height: 100%;">
                 <div class="row w-100">
+                  <div class="col">
+                    <div class="input-group input-group-sm input-group-solid">
+                      <select class="form-control h-35px" name="selectedStatus" id="selectedStatus" (change)="atachProject($event)">
+                        <option class="default-option text-muted" selected value="">{{ 'dashboard.project' | translate }}</option>
+                        <option *ngFor="let item of projects" [value]="item">
+                            {{ item }}
+                        </option>
+                    </select>
+                      </div>
+                  </div>
+                  <div class="col">
+                    <div class="input-group input-group-sm input-group-solid">
+                      <select class="form-control h-35px" name="selectedStatus" id="selectedStatus" (change)="atachEvent($event)" >
+                        <option class="default-option text-muted" selected value="">{{ 'dashboard.event' | translate }}</option>
+                        <option *ngFor="let item of events" [value]="item">
+                            {{ item }}
+                        </option>
+                    </select>
+                      </div>
+                  </div>
                     <div class="col">
                         <div class="input-group input-group-sm input-group-solid">
                           <input id="from" 
@@ -34,26 +54,6 @@
                           <owl-date-time #toDate></owl-date-time>
                           </div>
                       </div>
-                  <div class="col">
-                    <div class="input-group input-group-sm input-group-solid">
-                      <select class="form-control h-35px" name="selectedStatus" id="selectedStatus" (change)="atachProject($event)">
-                        <option class="default-option text-muted" selected value="">{{ 'dashboard.project' | translate }}</option>
-                        <option *ngFor="let item of projects" [value]="item">
-                            {{ item }}
-                        </option>
-                    </select>
-                      </div>
-                  </div>
-                  <div class="col">
-                    <div class="input-group input-group-sm input-group-solid">
-                      <select class="form-control h-35px" name="selectedStatus" id="selectedStatus" (change)="atachEvent($event)" >
-                        <option class="default-option text-muted" selected value="">{{ 'dashboard.event' | translate }}</option>
-                        <option *ngFor="let item of events" [value]="item">
-                            {{ item }}
-                        </option>
-                    </select>
-                      </div>
-                  </div>
                 </div>
                 <div class="row w-100" style="margin-top: 1%;">
                   <div class="col-lg-3 col-12">
