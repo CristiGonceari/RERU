@@ -24,7 +24,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit
                         IMapper mapper, 
                         IQuestionUnitService questionUnitService, 
                         IMediator mediator,
-                        IStorageFileService iStorageFileService,
+                        IStorageFileService iStorageFileService
                        )
         {
             _appDbContext = appDbContext;

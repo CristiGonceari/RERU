@@ -9,6 +9,7 @@ using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Data.Entities.StaticExtensions;
 using CVU.ERP.Logging.Models;
 using CVU.ERP.Module.Application.LoggerServices;
 
@@ -60,7 +61,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 
             await _internalNotificationService.AddNotification(newTest.UserProfileId, NotificationMessages.YouHaveNewProgrammedTest);
 
-            await _loggerService.Log(new LogData($"Was added a new test with {newTest.TestType.Name} test template at date {newTest.ProgrammedTime.Date}").AsEvaluation());
+            await _loggerService.Log(new LogData($"User {newTest.UserProfile.GetFullName()} was assigned to test with {newTest.TestType.Name} test template at {newTest.ProgrammedTime.Date}").AsEvaluation());
 
             return newTest.Id;
         }

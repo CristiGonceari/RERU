@@ -10,7 +10,6 @@
         public string Project { get; set; }
         public string Event { get; set; }
         public string EventMessage { get; set; }
-        
 
         public LogData AsEvaluation()
         {
@@ -18,12 +17,14 @@
 
             return this;
         }
+
         public LogData AsPersonal()
         {
             Project = Projects.PERSONAL;
 
             return this;
         }
+
         public LogData AsCore()
         {
             Project = Projects.CORE;
