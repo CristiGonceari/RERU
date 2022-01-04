@@ -12,7 +12,7 @@ export class NotificationsApiService extends AbstractService {
 
 	type: string;
 	messageText: string;
-	private readonly urlRoute = 'Notifications';
+	private readonly urlRoute = 'InternalNotifications';
 
 	constructor(protected appConfigService: AppSettingsService,
 		private client: HttpClient,

@@ -9,6 +9,8 @@ using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using Microsoft.EntityFrameworkCore;
+using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Application.Services;
 
 namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignResponsiblePersonToEvent
 {
@@ -16,12 +18,14 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly IInternalNotificationService _internalNotificationService;
         private readonly INotificationService _notificationService;
 
-        public AssignResponsiblePersonToEventCommandHandler(AppDbContext appDbContext, IMapper mapper, INotificationService notificationService)
+        public AssignResponsiblePersonToEventCommandHandler(AppDbContext appDbContext, IMapper mapper, INotificationService notificationService, IInternalNotificationService internalMotificationService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _internalNotificationService = internalMotificationService;
             _notificationService = notificationService;
         }
 
@@ -32,6 +36,11 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
             await _appDbContext.EventResponsiblePersons.AddAsync(eventResponsiblePerson);
             await _appDbContext.SaveChangesAsync();
 
+            var eventName = await _appDbContext.EventResponsiblePersons
+                .Include(x => x.Event)
+                .FirstAsync(x => x.EventId == eventResponsiblePerson.EventId && x.UserProfileId == eventResponsiblePerson.UserProfileId);
+
+            await _internalNotificationService.AddNotification(eventResponsiblePerson.UserProfileId, NotificationMessages.YouWereInvitedToEventAsResponsiblePerson);
             await SendEmailNotification(eventResponsiblePerson);
 
             return Unit.Value;

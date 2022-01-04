@@ -111,7 +111,8 @@
     "preview": "Preview",
     "print": "Print",
     "performing-test": "Print performing test",
-    "attach": "Attach file"
+    "attach": "Attach file",
+    "confirm-print": "Confirm and Print"
   },
   "message": {
     "deleteMsg": "Are you sure you want to delete",
@@ -627,7 +628,13 @@
     "03001903": "Not all answers are verified",
     "03001904": "Invalid status for verifying",
     "03001905": "Question points limit is wrong",
-    "03002001": "Invalid user"
+    "03002001": "Invalid user",
+    "03030101": "You are invited to event",
+    "03030201": "You have new programmed test",
+    "03030202": "Your test was verified",
+    "03030203": "You were invited to event as a candidate",
+    "03030204": "You have been invited to event as responsible person",
+    "03030205": "You were invited to the event as an evaluator"
   },
   "login": {
     "colaborator-id": "Collaborator ID",

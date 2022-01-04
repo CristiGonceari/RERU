@@ -8,47 +8,114 @@
             <div class="card card-custom gutter-b">
               <div class="card-header border-0 mt-5 pr-5" style="min-height: 100%;">
                 <div class="row w-100">
-                    <div class="col-lg-3 col-8">
+                  <div class="col">
+                    <div class="input-group input-group-sm input-group-solid">
+                      <select class="form-control h-35px" name="selectedStatus" id="selectedStatus" (change)="atachProject($event)">
+                        <option class="default-option text-muted" selected value="">{{ 'dashboard.project' | translate }}</option>
+                        <option *ngFor="let item of projects" [value]="item">
+                            {{ item }}
+                        </option>
+                    </select>
+                      </div>
+                  </div>
+                  <div class="col">
+                    <div class="input-group input-group-sm input-group-solid">
+                      <select class="form-control h-35px" name="selectedStatus" id="selectedStatus" (change)="atachEvent($event)" >
+                        <option class="default-option text-muted" selected value="">{{ 'dashboard.event' | translate }}</option>
+                        <option *ngFor="let item of events" [value]="item">
+                            {{ item }}
+                        </option>
+                    </select>
+                      </div>
+                  </div>
+                    <div class="col">
                         <div class="input-group input-group-sm input-group-solid">
-                            <input class="form-control" [owlDateTime]="dtFrom" [owlDateTimeTrigger]="dtFrom" [placeholder]="'events.search-from' | translate" [(ngModel)]="fromDate" autocomplete="off">
-                            <owl-date-time #dtFrom></owl-date-time>
+                          <input id="from" 
+                          [owlDateTime]="dtFrom" 
+                          [owlDateTimeTrigger]="dtFrom" 
+                          [placeholder]="'dashboard.from' | translate" 
+                          class="form-control form-control-lg form-control-solid" 
+                          name="date" 
+                          [(ngModel)]="dateTimeFrom"
+                          autocomplete="off" 
+                          />
+                        <owl-date-time #dtFrom ></owl-date-time>
                         </div>
                       </div>
-                  <div class="col-lg-3 col-8">
-                    <div class="input-group input-group-sm input-group-solid">
-                        <input class="form-control" [owlDateTime]="toDate" [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate" autocomplete="off">
-                        <owl-date-time #toDate></owl-date-time>
+                      <div class="col">
+                        <div class="input-group input-group-sm input-group-solid">
+                          <input class="form-control"
+                          [owlDateTime]="toDate" 
+                          [owlDateTimeTrigger]="toDate" 
+                          [placeholder]="'dashboard.to' | translate" 
+                          [(ngModel)]="dateTimeTo" 
+                          autocomplete="off"
+                          />
+                          <owl-date-time #toDate></owl-date-time>
+                          </div>
                       </div>
-                  </div>
-                  <div class="col-lg-3 col-8">
+                </div>
+                <div class="row w-100" style="margin-top: 1%;">
+                  <div class="col-lg-3 col-12">
                     <div class="input-group input-group-sm input-group-solid">
-                        <input class="form-control" [placeholder]="'projectNameDropDown'" [(ngModel)]="projectName" autocomplete="off">
-                      </div>
                   </div>
-                  <div class="col-lg-3 col-8">
-                    <div class="input-group input-group-sm input-group-solid">
-                        <input class="form-control" [placeholder]="'EventDropDown'" [(ngModel)]="event" autocomplete="off">
-                      </div>
+                </div>
+                <div class="col-lg-3 col-12 mt-lg-0 mt-3">
+                  <div class="input-group input-group-sm input-group-solid">
+                    <input type="text" class="form-control" [placeholder]="'dashboard.user-name' | translate" name="user-name" [(ngModel)]="userName">
+                </div>
+              </div>
+              <div class="col-lg-3 col-12 mt-lg-0 mt-3">
+                <div class="input-group input-group-sm input-group-solid">
+                   <input type="text" class="form-control" [placeholder]="'dashboard.user-identifier' | translate" name="user-identifier" [(ngModel)]="userIdentifier" >
+                </div>
+              </div>
+                  <div class="col-lg-3 col-12 mt-lg-0 mt-3">
+                      <app-confirm-button [value]="'button.search' | translate" (click)="getLoggingValues()" ></app-confirm-button>
                   </div>
-                  
                 </div>
               </div>
               <div class="card-body">
-                  <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable">
+                  <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+                   id="kt_datatable">
                     <table class="datatable table font-size-lg" style="overflow: visible">
                         <thead class="text-uppercase text-muted">
                             <tr>
-                                <th scope="col">Project</th>
-                                <th scope="col" >User Name</th>
-                                <th scope="col" >User Identifier</th>
-                                <th scope="col" >Event</th>
-                                <th scope="col" >Event Message</th>
-                                <th scope="col" >Date</th>
+                                <th scope="col" class="text-center">{{'dashboard.project' | translate }}</th>
+                                <th scope="col" class="text-center">{{'dashboard.user-name' | translate }}</th>
+                                <th scope="col" class="text-center">{{'dashboard.user-identifier' | translate }}</th>
+                                <th scope="col" class="text-center">{{'dashboard.event' | translate }}</th>
+                                <th scope="col" class="text-center">{{'dashboard.event-message' | translate }}</th>
+                                <th scope="col" class="text-center">{{'dashboard.date' | translate }}</th>
                             </tr>
                         </thead>
-                        <tbody class="datatable-body">
+                        <tbody class="datatable-body" *ngIf="loggingValues.length" >
+                          <tr *ngFor="let item of loggingValues">
+                            <td class="text-center">{{ item.project }}</td>
+                            <td class="text-center">{{ item.userName }}</td>
+                            <td class="text-center">{{ item.userIdentifier }}</td>
+                            <td class="text-center">{{ item.event }}</td>
+                            <td class="text-center">{{ item.eventMessage }}</td>
+                            <td class="text-center">{{ item.date | date: 'd/M/yy, HH:mm'}}</td>
+                          </tr>
                         </tbody>
+                        <tbody class="datatable-body"  >
+                          <tr>
+                              <td colspan="10" class="text-center" *ngIf="!loggingValues.length">
+                                  {{ 'message.no-record' | translate }}
+                              </td>
+                          </tr>
+                      </tbody>
                     </table>
+                    <div pagination
+                    class="datatable-pager datatable-paging-loaded"
+                    [page]="pagination.currentPage"
+                    [total]="pagination.totalPages"
+                    [totalRecords]="pagination.totalCount"
+                    [size]="pagination.pageSize"
+                    (sizeChange)="getLoggingValues({ page: pagination.currentPage, itemsPerPage: $event})"
+                    (pageChange)="getLoggingValues({ page: $event})">
+                </div>
                 </div>
               </div>
             </div>

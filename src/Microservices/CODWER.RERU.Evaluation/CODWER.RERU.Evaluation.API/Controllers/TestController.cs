@@ -59,7 +59,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpPost("tests")]
-        public async Task<Unit> AddTests([FromBody] AddTestsCommand command)
+        public async Task<List<int>> AddTests([FromBody] AddTestsCommand command)
         {
             return await Mediator.Send(command);
         }

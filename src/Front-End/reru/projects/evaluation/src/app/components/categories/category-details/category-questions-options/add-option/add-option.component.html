@@ -56,7 +56,7 @@
                 <div class="text-right border-top pt-10">
                   <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="back()">
                   </app-button>
-                  <app-add-button class="btn" [value]="'button.confirm' | translate" (handle)="confirm()">
+                  <app-add-button class="btn" [value]="'button.confirm' | translate" [disabled]="disableBtn" (handle)="confirm()">
                   </app-add-button>
                 </div>
               </div>

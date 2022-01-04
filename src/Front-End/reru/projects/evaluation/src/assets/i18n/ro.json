@@ -111,7 +111,8 @@
     "preview": "Previzualizare",
     "print": "Imprimă",
     "performing-test": "Imprimarea efectuării testului",
-    "attach": "Atașați fișierul"
+    "attach": "Atașați fișierul",
+    "confirm-print": "Confirmă și Printează"
   },
   "message": {
     "deleteMsg": "Sunteți sigur(-ă) că doriți să ștergeți",
@@ -628,7 +629,13 @@
     "03001903": "Nu toate răspunsurile sunt verificate",
     "03001904": "Starea nevalidă pentru verificare",
     "03001905": "Limita punctelor de întrebare este greșită",
-    "03002001": "Utilizator nevalid"
+    "03002001": "Utilizator nevalid",
+    "03030101": "Sunteți invitat la eveniment",
+    "03030201": "Aveți un nou test programat",
+    "03030202": "Testul dvs. a fost verificat", 
+    "03030203": "Ați fost invitat la eveniment ca candidat",
+    "03030204": "Ați fost invitat la eveniment ca persoana responsabilă",
+    "03030205": "Ați fost invitat la eveniment ca evaluator"
   },
   "login": {
     "colaborator-id": "Colaborator ID",
