@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using CVU.ERP.Logging.Models;
+﻿using CVU.ERP.Logging.Models;
+using System.Threading.Tasks;
 
 namespace CVU.ERP.Module.Application.LoggerServices
 {

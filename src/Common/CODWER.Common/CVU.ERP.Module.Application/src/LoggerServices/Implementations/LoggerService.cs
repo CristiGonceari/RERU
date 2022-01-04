@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CVU.ERP.Logging.Context;
+﻿using CVU.ERP.Logging.Context;
 using CVU.ERP.Logging.Entities;
 using CVU.ERP.Logging.Models;
 using CVU.ERP.Module.Application.Providers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace CVU.ERP.Module.Application.LoggerServices.Implementations
 {
     public class LoggerService<T> : ILoggerService<T>
     {
+
         private readonly LoggingDbContext _localLoggingDbContext;
         private readonly IEnumerable<ICurrentApplicationUserProvider> _userProvider;
-
         public LoggerService(LoggingDbContext localLoggingDbContext, IEnumerable<ICurrentApplicationUserProvider> userProvider)
         {
             _localLoggingDbContext = localLoggingDbContext;
@@ -47,12 +48,22 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
                 Project = data.Project,
                 UserName = coreUser.Name,
                 UserIdentifier = coreUser.Id,
-                Event = data.Event,
+                Event = !string.IsNullOrWhiteSpace(data.Event) ? data.Event : ParseName(),
                 EventMessage = data.EventMessage,
                 Date = DateTime.Now
             };
 
             await _localLoggingDbContext.Logs.AddAsync(toLog);
+            await _localLoggingDbContext.SaveChangesAsync();
+        }
+
+        private string ParseName()
+        { 
+            var splicedEventName = Regex.Split(typeof(T).Name, @"(?<!^)(?=[A-Z])").ToList();
+            splicedEventName.Remove("Command");
+            splicedEventName.Remove("Handler");
+
+            return String.Join(" ", splicedEventName.ToArray());
         }
     }
 }
