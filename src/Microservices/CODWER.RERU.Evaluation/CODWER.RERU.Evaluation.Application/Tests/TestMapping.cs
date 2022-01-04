@@ -24,7 +24,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.EventName, opts => opts.MapFrom(src => src.Event.Name))
                 .ForMember(x => x.EvaluatorId, opts => opts.MapFrom(src => src.EvaluatorId))
                 .ForMember(x => x.EventId, opts => opts.MapFrom(src => src.EventId))
-                .ForMember(x => x.UserName, opts => opts.MapFrom(src => src.UserProfile.FirstName + src.UserProfile.LastName))
+                .ForMember(x => x.UserName, opts => opts.MapFrom(src => src.UserProfile.FirstName + " " + src.UserProfile.LastName))
                 .ForMember(x => x.Rules, opts => opts.MapFrom(src => src.TestType.Rules))
                 .ForMember(x => x.VerificationProgress, opts => opts.MapFrom(src => GetVerifiationStatus(src)))
                 .ForMember(x => x.Result, opts => opts.MapFrom(src => src.ResultStatus))

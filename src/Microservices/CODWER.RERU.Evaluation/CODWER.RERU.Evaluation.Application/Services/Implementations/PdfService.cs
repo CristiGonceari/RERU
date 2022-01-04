@@ -620,7 +620,6 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             return content;
         }
-
         private async Task<string> GetTestMedia(string mediaId)
         {
             var image = await _storageFileService.GetFile(mediaId);
