@@ -194,17 +194,22 @@ microservices:
 
 minio:
   persistence:
-    enabled: false
+    enabled: true
+    annotations: {}
+    existingClaim: "task-pv-claim"
+    # storageClassName: microk8s-hostpath
     # annotations: 
     #   - test
 
-    storageClass: "local-path"
-    VolumeName: "minio-volume"
-    accessMode: ReadWriteOnce
-    size: 20Gi
+    storageClass: "microk8s-hostpath"
+    # VolumeName: "minio-volume"
+    # accessMode: ReadWriteOnce
+    # size: 8Gi
 
-    subPath: ""
+    # subPath: ""
 
   accessKey: "minioaccesskey"
   secretKey: "miniosecretkey"
+  # mountPath: "/app/data"
+
   port: 8080
