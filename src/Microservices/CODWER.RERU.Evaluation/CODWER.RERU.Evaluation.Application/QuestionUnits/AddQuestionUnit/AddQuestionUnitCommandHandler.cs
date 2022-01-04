@@ -1,13 +1,14 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.AssignTagToQuestionUnit;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
+using CVU.ERP.Logging.Models;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit
 {
@@ -18,20 +19,22 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit
         private readonly IQuestionUnitService _questionUnitService;
         private readonly IMediator _mediator;
         private readonly IStorageFileService _storageFileService;
+        private readonly ILoggingService<AddQuestionUnitCommandHandler> _loggingService;
 
         public AddQuestionUnitCommandHandler(
                         AppDbContext appDbContext, 
                         IMapper mapper, 
                         IQuestionUnitService questionUnitService, 
                         IMediator mediator,
-                        IStorageFileService iStorageFileService
-            )
+                        IStorageFileService iStorageFileService, 
+                        ILoggingService<AddQuestionUnitCommandHandler> loggingService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _questionUnitService = questionUnitService;
             _mediator = mediator;
             _storageFileService = iStorageFileService;
+            _loggingService = loggingService;
         }
 
         public async Task<int> Handle(AddQuestionUnitCommand request, CancellationToken cancellationToken)
@@ -62,6 +65,8 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit
             }
 
             await _mediator.Send(new AssignTagToQuestionUnitCommand { QuestionUnitId = newQuestionUnit.Id, Tags = request.Tags });
+
+            await _loggingService.Log(new LogData { EventMessage = "Was Added A question For Needed Test" });
 
             return newQuestionUnit.Id;
         }

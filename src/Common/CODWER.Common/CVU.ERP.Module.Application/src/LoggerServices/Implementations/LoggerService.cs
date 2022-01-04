@@ -12,6 +12,7 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
 {
     public class LoggerService<T> : ILoggerService<T>
     {
+        public virtual string Project { get; protected set; }
 
         private readonly LoggingDbContext _localLoggingDbContext;
         private readonly IEnumerable<ICurrentApplicationUserProvider> _userProvider;
@@ -21,7 +22,7 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
             _userProvider = userProvider;
         }
 
-        public async Task Log(LogData data)
+        public virtual async Task Log(LogData data)
         {
             await LocalLog(data);
         }
@@ -45,7 +46,7 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
             var toLog = new Log
             {
                 Id = Guid.NewGuid().ToString(),
-                Project = data.Project,
+                Project = Project,
                 UserName = coreUser.Name,
                 UserIdentifier = coreUser.Id,
                 Event = !string.IsNullOrWhiteSpace(data.Event) ? data.Event : ParseName(),
@@ -62,6 +63,7 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
             var splicedEventName = Regex.Split(typeof(T).Name, @"(?<!^)(?=[A-Z])").ToList();
             splicedEventName.Remove("Command");
             splicedEventName.Remove("Handler");
+            splicedEventName.Remove("Query");
 
             return String.Join(" ", splicedEventName.ToArray());
         }
