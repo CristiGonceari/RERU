@@ -124,7 +124,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                     {
                         await EditOption(key, existingOption.Id);                        
                     }
-                    answer = answer.Replace($"{_openingHashTag}{key}{_closingHashTag}", $"[{existingOption.Id}]");
+                    answer = answer.Replace($"{keyWithTags}", $"[{existingOption.Id}]");
                 }
 
                 if (answer.Contains(_openingHashTag))
@@ -144,7 +144,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             var tempKey = input.Substring(input.IndexOf(_openingHashTag));
             var keyWithTags = tempKey.Substring(0, tempKey.IndexOf(_closingHashTag) + _closingHashTag.Length);
-            return keyWithTags.Replace(_openingHashTag, "").Replace(_closingHashTag, "").Trim(); ;
+            return keyWithTags.Replace(_openingHashTag, "").Replace(_closingHashTag, "").Trim();
         }
 
         private async Task<int> SaveOption (string key, int questionUnitId, int counter)
@@ -181,21 +181,17 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         public async Task<byte[]> GenerateExcelTemplate(QuestionTypeEnum questionType)
         {
-            if (questionType == QuestionTypeEnum.FreeText)
+            switch (questionType)
             {
-                return await GenerateFreeTextTemplate($"{questionType.ToString()}Template");
-            }
-            else if (questionType == QuestionTypeEnum.MultipleAnswers || questionType == QuestionTypeEnum.OneAnswer)
-            {
-                return await GenerateStandartAnswerTemplate(questionType);
-            }
-            else if (questionType == QuestionTypeEnum.HashedAnswer)
-            {
-                return await GenerateHashedTemplate($"{questionType.ToString()}Template");
-            }
-            else
-            {
-                return null;
+                case QuestionTypeEnum.FreeText:
+                    return await GenerateFreeTextTemplate($"{questionType.ToString()}Template");
+                case QuestionTypeEnum.MultipleAnswers:
+                case QuestionTypeEnum.OneAnswer:
+                    return await GenerateStandartAnswerTemplate(questionType);
+                case QuestionTypeEnum.HashedAnswer:
+                    return await GenerateHashedTemplate($"{questionType.ToString()}Template");
+                default:
+                    return null;
             }
         }
 
