@@ -4,11 +4,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Evaluation.Application.TestCategoryQuestions;
-using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
-using CODWER.RERU.Evaluation.DataTransferObjects.TestCategoryQuestions;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestTypes;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -69,35 +67,27 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypeByStatus
                     x.IsOnlyOneAnswer = true;
                 }
 
-                x.PrintTest = await CanPrintTest(testTypeCategories);
+                x.PrintTest = await CanPrintTest(questionsList);
             }
 
             return onlyOneAnswerTests;
         }
 
-        private async Task<bool> CanPrintTest(List<TestTypeQuestionCategory> testTypeCategories)
+        private async Task<bool> CanPrintTest(List<QuestionUnitDto> questionsList)
         {
             var mediaList = new List<string>() { "video", "audio" };
-            var result = false;
+            bool result;
             var filesIdsList = new List<string>();
 
-            var questions = await _appDbContext.QuestionUnits
-                .Include(x => x.QuestionCategory)
-                .Include(x => x.Options)
-                .Where(q => testTypeCategories
-                    .Select(x => x.QuestionCategoryId)
-                    .Contains(q.QuestionCategoryId))
-                .ToListAsync();
-
             var mediaOptionsIds = await _appDbContext.Options
-                .Where(o => questions
+                .Where(o => questionsList
                     .Select(x => x.Id)
                     .Contains(o.QuestionUnitId))
                 .Where(o => o.MediaFileId != null)
                 .Select(o => o.MediaFileId)
                 .ToListAsync();
 
-            var mediaQuestionsIds = questions
+            var mediaQuestionsIds = questionsList
                 .Where(q => q.MediaFileId != null)
                 .Select(o => o.MediaFileId)
                 .ToList();
