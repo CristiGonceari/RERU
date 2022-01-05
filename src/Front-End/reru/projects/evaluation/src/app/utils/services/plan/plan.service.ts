@@ -39,8 +39,16 @@ export class PlanService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`);
   }
 
+  getByDate(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/byDate`, {params});
+  }
+
+  getPlanCount(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/plansCount`, {params});
+  }
+
   delete(id): Observable<any>{
-    return this.http.delete(`${this.baseUrl}/${this.urlRoute}/${id}`);
+    return this.http.delete(`${this.baseUrl}/${this.urlRoute}${id}`);
   }
 
   events(params): Observable<any> {

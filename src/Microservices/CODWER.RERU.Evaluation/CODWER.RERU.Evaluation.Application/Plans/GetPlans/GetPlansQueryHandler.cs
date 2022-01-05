@@ -22,12 +22,16 @@ namespace CODWER.RERU.Evaluation.Application.Plans.GetPlans
 
         public async Task<PaginatedModel<PlanDto>> Handle(GetPlansQuery request, CancellationToken cancellationToken)
         {
-            var plans = _appDbContext.Plans
-                .AsQueryable();
+            var plans = _appDbContext.Plans.AsQueryable();
 
             if (!string.IsNullOrEmpty(request.Name))
             {
                 plans = plans.Where(x => x.Name.Contains(request.Name));
+            }
+
+            if (request.FromDate != null && request.TillDate != null)
+            {
+                plans = plans.Where(p => p.FromDate.Date >= request.FromDate && p.TillDate.Date <= request.TillDate);
             }
 
             return await _paginationService.MapAndPaginateModelAsync<Plan, PlanDto>(plans, request);

@@ -1,0 +1,53 @@
+
+<div class="center">
+    <h2>
+      {{ 'calendar.'+ displayMonth | translate }} {{displayYear}}
+    </h2> 
+  </div>
+<div class="center mb-5">
+  <div>
+    <a type="button" (click)="decreaseMonth()" value="-" >
+      <i class="flaticon2-fast-back mr-25"></i>
+    </a>
+    <a type="button"  class="btn btn-primary" (click)="setCurrentMonth()" value="today" >
+      {{ 'calendar.current-month' | translate }}
+    </a>
+    <a  type="button" (click)="increaseMonth()" value="+" >
+      <i class="flaticon2-fast-next ml-25"></i>
+    </a>
+  </div>
+</div>
+
+<table class='calendar-table' *ngIf="calendar">
+  <thead>
+    <tr>
+      <th>{{ 'calendar.monday' | translate}}</th>
+      <th>{{ 'calendar.tuesday' | translate}}</th>
+      <th>{{ 'calendar.wednesday' | translate}}</th>
+      <th>{{ 'calendar.thursday' | translate}}</th>
+      <th>{{ 'calendar.friday' | translate}}</th>
+      <th>{{ 'calendar.saturday' | translate}}</th>
+      <th>{{ 'calendar.sunday' | translate}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of calendar | chunk: 7; let i = index">
+      <td class="calendar-day" 
+            [ngClass]="{
+                  'today': c.isToday, 
+                   'notDayOfWeek': c.month != onChangeMonth, 
+                    'blue-date': c.isToday
+                        }" 
+             *ngFor="let c of row; let j = index"
+             (click)="getClickedDay(c.date)"
+             >
+        <div class="calendar-day-header" >
+          <strong>{{c.date.getDate()}}</strong> 
+          <div class="d-flex justify-content-center" *ngIf="c.count > 0" >
+            <span class="badge badge-square badge-danger">{{c.count}}</span>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
