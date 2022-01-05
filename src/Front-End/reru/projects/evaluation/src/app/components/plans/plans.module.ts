@@ -24,6 +24,8 @@ import { EventsTableComponent } from './plan-details/events/events-table/events-
 import { SearchEventComponent } from './plan-details/events/attach/search-event/search-event.component';
 import { AddEditPlansComponent } from './add-edit-plans/add-edit-plans.component';
 import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-datetime';
+import { PlansCalendarComponent } from './plans-list/plans-calendar/plans-calendar.component';
+import { ChunkPipe } from '../../utils/pipes/calendar-chunk-pipe';
 
 
 @NgModule({
@@ -40,7 +42,9 @@ import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-dat
     AttachComponent,
     EventsTableComponent,
     SearchEventComponent,
-    AddEditPlansComponent
+    AddEditPlansComponent,
+    PlansCalendarComponent,
+    ChunkPipe
   ],
   imports: [
     CommonModule,

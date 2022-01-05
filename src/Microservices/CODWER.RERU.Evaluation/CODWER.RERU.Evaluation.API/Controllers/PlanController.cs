@@ -9,6 +9,9 @@ using CODWER.RERU.Evaluation.Application.Plans.GetPlan;
 using CODWER.RERU.Evaluation.Application.Plans.GetPlans;
 using CODWER.RERU.Evaluation.DataTransferObjects.Plans;
 using CVU.ERP.Common.Pagination;
+using CODWER.RERU.Evaluation.Application.Plans.GetPlansByDate;
+using CODWER.RERU.Evaluation.Application.Plans.GetCountedPlans;
+using System.Collections.Generic;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -25,6 +28,18 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpGet]
         public async Task<PaginatedModel<PlanDto>> GetPlans([FromQuery] GetPlansQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("byDate")]
+        public async Task<PaginatedModel<PlanDto>> GetPlansByDate([FromQuery] GetPlansByDateQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("plansCount")]
+        public async Task<List<PlanCount>> GetPlanCount([FromQuery] GetPlanCountQuery query)
         {
             return await Mediator.Send(query);
         }
