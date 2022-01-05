@@ -1,21 +1,21 @@
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using MediatR;
-using Microsoft.AspNetCore.Http;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.Options.AddOption;
+using CODWER.RERU.Evaluation.Application.Options.DeleteOption;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Options;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
-using CODWER.RERU.Evaluation.Application.Options.AddOption;
-using CODWER.RERU.Evaluation.Application.Options.DeleteOption;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 {
@@ -105,6 +105,9 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             var key = GetKeyFromString(answer);
 
+            var tempKey = answer.Substring(answer.IndexOf(_openingHashTag));
+            var keyWithTags = tempKey.Substring(0, tempKey.IndexOf(_closingHashTag) + _closingHashTag.Length);
+
             if (!string.IsNullOrWhiteSpace(key))
             {
                 var existingOption = _appDbContext.Options.FirstOrDefault(x => x.QuestionUnitId == questionId && x.InternalId == counter);
@@ -112,10 +115,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 if (existingOption == null) 
                 {
                     var savedOptionId = await SaveOption(key, questionId, counter);
-                    answer = answer.Replace($"{_openingHashTag}{key}{_closingHashTag}", $"[{savedOptionId}]");
+
+                    answer = answer.Replace($"{keyWithTags}", $"[{savedOptionId}]");
                 }
                 else
-                {
+                { 
                     if (key != existingOption.Answer) 
                     {
                         await EditOption(key, existingOption.Id);                        
@@ -140,7 +144,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             var tempKey = input.Substring(input.IndexOf(_openingHashTag));
             var keyWithTags = tempKey.Substring(0, tempKey.IndexOf(_closingHashTag) + _closingHashTag.Length);
-            return keyWithTags.Replace(_openingHashTag, "").Replace(_closingHashTag, "").Trim();
+            return keyWithTags.Replace(_openingHashTag, "").Replace(_closingHashTag, "").Trim(); ;
         }
 
         private async Task<int> SaveOption (string key, int questionUnitId, int counter)
