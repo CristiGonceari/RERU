@@ -140,7 +140,6 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             return answer;
         }
 
-
         private string GetKeyFromString(string input)
         {
             var tempKey = input.Substring(input.IndexOf(_openingHashTag));
