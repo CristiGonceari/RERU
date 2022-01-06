@@ -28,7 +28,7 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
   questionId: any;
   optionId: any;
 
-  attachedFile;
+  attachedFile: File;
   fileType: string = null;
   filenames: any;
   fileName: string;
@@ -109,39 +109,32 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
     });
   }
 
-  updateOptions() {
+  parseEdit(element){
     const request = new FormData();
-
+    
     if (this.attachedFile)
     {
       this.fileType = '4';
       request.append('Data.FileDto.File', this.attachedFile);
       request.append('Data.FileDto.Type', this.fileType);
     }
-      request.append('Data.Id', this.optionId);
-      request.append('Data.Answer', this.answer);
-      request.append('Data.IsCorrect', this.isCorrect);
-      request.append('Data.QuestionUnitId', this.questionId);
+      request.append('Data.Id', element.id);
+      request.append('Data.Answer', element.answer);
+      request.append('Data.IsCorrect', element.isCorrect);
+      request.append('Data.QuestionUnitId', element.questionUnitId);
 
-    this.options.forEach(request => {
-      this.optionService.edit(request).subscribe(() => {
+      return request;
+  }
+
+  updateOptions() {
+    this.options.forEach(element => {
+      this.optionService.edit(this.parseEdit(element)).subscribe(() => {
         this.getOptions();
         this.edit = true;
-        this.back();
+        //this.back();
       });
     });
     this.notificationService.success('Success', 'Options was successfully updated', NotificationUtil.getDefaultMidConfig());
-  }
-
-  parse(element) {
-    return {
-      data: new OptionModel({
-        id: element.id,
-        answer: element.answer,
-        isCorrect: element.isCorrect,
-        questionUnitId: element.questionUnitId
-      })
-    }
   }
 
   getQuestion() {
@@ -215,7 +208,7 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
   getOptions() {
     this.optionService.getAll(this.questionId).subscribe(res => {
       if (res && res.data) {
-        this.isLoading = false;
+        this.isLoadingMedia = false;
         this.options = res.data;
         this.options.map ( (option) => {
           // TODO add type Option -> options = array<Option>
