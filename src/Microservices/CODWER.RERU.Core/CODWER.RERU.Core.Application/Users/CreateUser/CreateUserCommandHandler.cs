@@ -59,7 +59,7 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
             await CoreDbContext.SaveChangesAsync();
 
             await _loggerService.Log(new LogData(
-                $"User {userProfile.Name} {userProfile.LastName} with email {userProfile.Email} was added to system").AsCore());
+                $"User {userProfile.Name} {userProfile.LastName} with email {userProfile.Email} was added to system with a new Id = {userProfile.Id}").AsCore());
 
             return userProfile.Id;
         }
