@@ -61,7 +61,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 
             await _internalNotificationService.AddNotification(newTest.UserProfileId, NotificationMessages.YouHaveNewProgrammedTest);
 
-            await _loggerService.Log(new LogData($"User {newTest.UserProfile.GetFullName()} was assigned to test with {newTest.TestType.Name} test template at {newTest.ProgrammedTime.Date}").AsEvaluation());
+            var user = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == newTest.UserProfileId);
+            var testType = await _appDbContext.TestTypes.FirstOrDefaultAsync(x => x.Id == newTest.TestTypeId);
+
+            await _loggerService.Log(new LogData($"User {user.GetFullName()} was assigned to test with {testType.Name} test template at {newTest.ProgrammedTime.Date}").AsEvaluation());
 
             return newTest.Id;
         }
