@@ -16,8 +16,6 @@ export class ConfirmModalComponent {
 
   close(): void {
     this.activeModal.close();
-    console.log("no BUTTON", this.buttonNo);
-    console.log("yes BUTTON", this.buttonYes);
   }
 
   dismiss(): void {
