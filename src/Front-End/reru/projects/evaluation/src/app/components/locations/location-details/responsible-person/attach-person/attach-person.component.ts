@@ -5,7 +5,8 @@ import { Location } from '@angular/common';
 import { LocationService } from 'projects/evaluation/src/app/utils/services/location/location.service';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { LocationResponsiblePerson } from './../../../../../utils/models/locations/location-responsible-person.model';
-
+import { forkJoin } from 'rxjs';
+import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-attach-person',
@@ -19,10 +20,13 @@ export class AttachPersonComponent implements OnInit {
   name;
   address;
   isLoading: boolean = true;
+  title: string;
+	description: string;
 
   constructor(
     private location: Location, 
     private locationService: LocationService, 
+		public translate: I18nService,
     private activatedRoute: ActivatedRoute,
 		private notificationService: NotificationsService
   ) { }
@@ -45,8 +49,15 @@ export class AttachPersonComponent implements OnInit {
 
   attach(){
     this.locationService.assignPerson(this.parse()).subscribe(() => {
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('locations.succes-add-person-msg'),
+			  ]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
       this.backClicked();
-			this.notificationService.success('Success', 'Person was successfully attached', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 

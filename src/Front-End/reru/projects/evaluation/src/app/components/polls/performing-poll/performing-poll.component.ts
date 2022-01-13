@@ -18,6 +18,8 @@ import { TestTypeService } from '../../../utils/services/test-type/test-type.ser
 import { TestService } from '../../../utils/services/test/test.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { NotificationsService } from 'angular2-notifications';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-performing-poll',
@@ -33,6 +35,13 @@ export class PerformingPollComponent implements OnInit {
   viewed: number[] = [];
   skipped: number[] = [];
   answered: number[] = [];
+
+  title: string;
+  title1: string;
+	description: string;
+	description1: string;
+	no: string;
+	yes: string;
 
   timeLeft;
   interval;
@@ -61,6 +70,7 @@ export class PerformingPollComponent implements OnInit {
     private testQuestionService: TestQuestionService,
     private testService: TestService,
     private modalService: NgbModal,
+	  public translate: I18nService,
     private router: Router,
     private testTypeService: TestTypeService,
 		private notificationService: NotificationsService
@@ -249,15 +259,31 @@ export class PerformingPollComponent implements OnInit {
     if (this.testQuestionSummary.every(x => x.isClosed === true)) {
       this.testQuestionService.summary(this.testId).subscribe(() => this.disableNext = true);
     }
-
+    forkJoin([
+			this.translate.get('modal.finish-poll'),
+			this.translate.get('modal.success'),
+			this.translate.get('polls.finish-poll-msg'),
+			this.translate.get('polls.succes-finish-poll-msg'),
+			this.translate.get('modal.no'),
+			this.translate.get('modal.yes'),
+		]).subscribe(([title, title1, description, description1, no, yes]) => {
+			this.title = title;
+			this.title1 = title1;
+			this.description = description;
+			this.description1 = description1;
+			this.no = no;
+			this.yes = yes;
+			});
       const modalRef = this.modalService.open(ConfirmModalComponent, { centered: true });
-      modalRef.componentInstance.title = "Finish Poll";
-      modalRef.componentInstance.description = "Do you want to finish this poll?";
+      modalRef.componentInstance.title = this.title;
+      modalRef.componentInstance.description = this.description;
+      modalRef.componentInstance.buttonNo = this.no;
+      modalRef.componentInstance.buttonYes = this.yes;
       modalRef.result.then(
         () => {
           this.testService.finalizeTest(this.testId).subscribe(() => 
       {
-        this.notificationService.success('Success', 'Poll was successfully terminated', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.success(this.title1, this.description1, NotificationUtil.getDefaultMidConfig());
         this.router.navigate(['../../../my-activities/my-polls'], { relativeTo: this.activatedRoute })
       });
         }

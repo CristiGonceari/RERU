@@ -4,7 +4,7 @@
 <div class="modal-body py-1 px-7">
     <p>{{description}}</p>
 </div>
-<div class="modal-footer border-0 pt-0">
-    <button type="button" class="btn btn-secondary" (click)="dismiss()">No</button>
-    <button type="button" class="btn btn-primary" (click)="close()">Yes</button>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">{{ buttonNo }}</button>
+    <button type="button" class="btn btn-primary" (click)="close()">{{ buttonYes }}</button>
 </div>

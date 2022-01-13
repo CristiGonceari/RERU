@@ -9,6 +9,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ConfirmModalComponent {
   @Input() title: string;
   @Input() description: string;
+  @Input() buttonNo: string;
+  @Input() buttonYes: string;
+  
   constructor(private activeModal: NgbActiveModal) { }
 
   close(): void {

@@ -6,6 +6,7 @@ import { QuestionCategory } from '../../../utils/models/question-category/questi
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { QuestionCategoryService } from '../../../utils/services/question-category/question-category.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
+import { forkJoin } from 'rxjs';
 import { Location } from '@angular/common';
 
 @Component({
@@ -17,7 +18,9 @@ export class AddEditCategoryComponent implements OnInit {
 
 	categoryForm: FormGroup;
 	categoryId: number;
-	isLoading: boolean = true;
+	isLoading: boolean = true;  
+	title: string;
+	description: string;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -80,8 +83,15 @@ export class AddEditCategoryComponent implements OnInit {
 		} as QuestionCategory;
 
 		this.categoryService.create(createCategoryDto).subscribe(() => {
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('categories.succes-add-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
 			this.backClicked();
-			this.notificationService.success('Success', 'Category was successfully added', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 		});
 	}
 
@@ -92,8 +102,15 @@ export class AddEditCategoryComponent implements OnInit {
 		} as QuestionCategory;
 
 		this.categoryService.edit(editCategoryDto).subscribe(() => {
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('categories.succes-update-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
 			this.backClicked();
-			this.notificationService.success('Success', 'Category was successfully updated', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 		});
 	}
 }

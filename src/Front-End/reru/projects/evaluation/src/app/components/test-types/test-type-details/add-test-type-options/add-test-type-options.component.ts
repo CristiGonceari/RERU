@@ -7,6 +7,8 @@ import { Location } from '@angular/common';
 import { TestTypeStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-type-status.enum';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { TestTypeSettings } from 'projects/evaluation/src/app/utils/models/test-types/test-type-settings.model';
+import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-add-test-type-options',
@@ -29,9 +31,13 @@ export class AddTestTypeOptionsComponent implements OnInit {
 	hidePagination;
 	setMaxErrors: boolean;
 
+	title: string;
+  	description: string;
+
 	constructor(
 		private activatedRoute: ActivatedRoute,
-		private location: Location,
+	  	public translate: I18nService,
+	  	private location: Location,
 		private testTypeService: TestTypeService,
 		private notificationService: NotificationsService,
 		private formBuilder: FormBuilder
@@ -157,8 +163,15 @@ export class AddTestTypeOptionsComponent implements OnInit {
 
 	updateOptions() {
 		this.testTypeService.addEditTestTypeSettings({ data: this.settingsForm.value }).subscribe(() => {
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('tests.succes-update-settings-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
 			this.getTestTypeSettings();
-			this.notificationService.success('Success', 'Settings were successfully updated', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 		});
 	}
 }

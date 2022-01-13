@@ -19,8 +19,8 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits
                 .ForMember(dto => dto.CategoryId, options => options.MapFrom(entity => entity.QuestionCategory.Id))
                 .ForMember(dto => dto.OptionsCount, options => options.MapFrom(entity => entity.Options.Count()))
                 .ForMember(dto => dto.MediaFileId, options => options.MapFrom(entity => entity.MediaFileId))
-                .ForMember(dto => dto.IsReadyToActivate, options => options.MapFrom(entity => 
-                    entity.Options.Count > 1 && entity.Options.Any(op => op.IsCorrect) || entity.QuestionType == QuestionTypeEnum.FreeText || entity.QuestionType == QuestionTypeEnum.HashedAnswer))
+                //.ForMember(dto => dto.IsReadyToActivate, options => options.MapFrom(entity => 
+                //    entity.Options.Count > 1 && entity.Options.Any(op => op.IsCorrect) || entity.QuestionType == QuestionTypeEnum.FreeText || entity.QuestionType == QuestionTypeEnum.HashedAnswer))
                 ;
 
             CreateMap<QuestionUnit, ActiveQuestionUnitValueDto>()

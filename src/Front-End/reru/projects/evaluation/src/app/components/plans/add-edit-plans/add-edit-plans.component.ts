@@ -6,6 +6,8 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Plan } from '../../../utils/models/plans/plan.model';
+import { I18nService } from '../../../utils/services/i18n/i18n.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-add-edit-plans',
@@ -18,8 +20,12 @@ export class AddEditPlansComponent implements OnInit {
   isEditForm: boolean = false;
   isLoading: boolean;
 
+  title: string;
+  description: string;
+
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
+	  public translate: I18nService,
     private planService: PlanService,
     private location: Location,
     private notificationService: NotificationsService) { }
@@ -69,15 +75,29 @@ export class AddEditPlansComponent implements OnInit {
   
   addPlan(): void {
     this.planService.add({data: this.planForm.value}).subscribe(() => {
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('plans.succes-add-plan-msg'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+        });
       this.back();
-			this.notificationService.success('Success', 'Plan was successfully added', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
   editPlan(): void {
     this.planService.edit({data: this.planForm.value}).subscribe(() => {
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('plans.succes-edit-plan-msg'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+        });
       this.back();
-      this.notificationService.success('Success', 'Plan was successfully edited', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 

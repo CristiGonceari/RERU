@@ -15,6 +15,8 @@ import { ConfirmModalComponent } from '@erp/shared';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { CloudFileService } from '../../../utils/services/cloud-file/cloud-file.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
 @Component({
 	selector: 'app-test-verification-process',
@@ -52,6 +54,13 @@ export class TestVerificationProcessComponent implements OnInit {
 	fileName: string;
 	fileId: string;
 
+	title: string;
+	description: string;
+	description1: string;
+	description2: string;
+	description3: string;
+	no: string;
+	yes: string;
 
 	optionFileId = [];
   	isLoadingOptionMedia:  boolean = true;
@@ -66,7 +75,8 @@ export class TestVerificationProcessComponent implements OnInit {
 		private notificationService: NotificationsService,
 		private injector: Injector,
 		private testQuestionService: TestQuestionService,
-		private router: Router,
+	  	public translate: I18nService,
+	  	private router: Router,
 		private fileService : CloudFileService,
 		private sanitizer: DomSanitizer
 	) { }
@@ -290,12 +300,24 @@ export class TestVerificationProcessComponent implements OnInit {
 	  }
 	  
 	verifyTest(): void {
+		forkJoin([
+			this.translate.get('modal.error'),
+			this.translate.get('verify-test.point-value-not-selected'),
+			this.translate.get('verify-test.points-must-be-greater'),
+			this.translate.get('verify-test.set-points-to-zero'),
+		]).subscribe(([title, description1, description2, description3]) => {
+			this.title = title;
+			this.description1 = description1;
+			this.description2 = description2;
+			this.description3 = description3;
+
+			});
 		if (this.correct === null) {
-			this.notificationService.error('"Correct" or "Not Correct" value is not selected', null, NotificationUtil.getDefaultMidConfig());
+			this.notificationService.error(this.title, this.description1, null, NotificationUtil.getDefaultMidConfig());
 		} else if (this.points < 1 && this.correct === true) {
-			this.notificationService.error('Error', "If answer is correct, points must be greater than 0", NotificationUtil.getDefaultMidConfig());
+			this.notificationService.error(this.title, this.description2, NotificationUtil.getDefaultMidConfig());
 		} else if (this.points > 0 && this.correct === false) {
-			this.notificationService.error('Error', "If answer is false, set points to 0", NotificationUtil.getDefaultMidConfig());
+			this.notificationService.error(this.title, this.description3, NotificationUtil.getDefaultMidConfig());
 		} else {
 			const verifyData = {
 				testId: +this.testId,
@@ -361,16 +383,36 @@ export class TestVerificationProcessComponent implements OnInit {
 	}
 
 	setTestVerified(testId): void {
+		forkJoin([
+			this.translate.get('modal.success'),
+			this.translate.get('verify-test.succes-verified-msg'),
+		]).subscribe(([title, description]) => {
+			this.title = title;
+			this.description = description;
+			});
 		this.verifyService.setTestAsVerified(testId).subscribe(() => {
-			this.notificationService.success('Success', 'Test was successfully verified', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			this.router.navigate(['../../../tests'], { relativeTo: this.activatedRoute })
 		})
 	}
 
 	finalizeVerificationModal(): void {
+		forkJoin([
+			this.translate.get('modal.finish-verification'),
+			this.translate.get('verify-test.finish-verification-msg'),
+			this.translate.get('modal.no'),
+			this.translate.get('modal.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
 		const modalRef = this.modalService.open(ConfirmModalComponent, { centered: true });
-		modalRef.componentInstance.title = "Finish test verification"
-		modalRef.componentInstance.description = "Are you sure you want to complete test verification?";
+		modalRef.componentInstance.title = this.title;
+		modalRef.componentInstance.description = this.description;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
 		modalRef.result.then(() => this.setTestVerified(this.testId), () => { });
 	}
 }

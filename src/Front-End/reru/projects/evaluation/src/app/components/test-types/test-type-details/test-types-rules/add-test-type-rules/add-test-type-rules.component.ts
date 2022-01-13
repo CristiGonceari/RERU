@@ -3,9 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { NotificationsService } from 'angular2-notifications';
 import { TestTypeService } from 'projects/evaluation/src/app/utils/services/test-type/test-type.service';
+import { forkJoin } from 'rxjs';
 import { Location } from '@angular/common';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { RulesModel } from 'projects/evaluation/src/app/utils/models/test-types/rules.model';
+import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-add-test-type-rules',
@@ -17,6 +19,9 @@ export class AddTestTypeRulesComponent implements OnInit{
   id: number;
   public Editor = DecoupledEditor;
   isLoading: boolean = false;
+  
+  title: string;
+  description: string;
 
   public onReady(editor) {
     editor.ui.getEditableElement().parentElement.insertBefore(
@@ -27,6 +32,7 @@ export class AddTestTypeRulesComponent implements OnInit{
 
   constructor(private service: TestTypeService,
     private activatedRoute: ActivatedRoute,
+	  public translate: I18nService,
     private location: Location,
     private notificationService: NotificationsService
   ) { }
@@ -61,8 +67,15 @@ export class AddTestTypeRulesComponent implements OnInit{
 
   save() {
     this.service.addRules(this.parse()).subscribe(() => {
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('tests.succes-add-rules-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
       this.backClicked();
-			this.notificationService.success('Success', 'Rules were successfully added', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 

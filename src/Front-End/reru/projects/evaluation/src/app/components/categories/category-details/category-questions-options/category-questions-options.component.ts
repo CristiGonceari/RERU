@@ -11,8 +11,10 @@ import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notific
 import { Location } from '@angular/common';
 import { CloudFileService } from 'projects/evaluation/src/app/utils/services/cloud-file/cloud-file.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { forkJoin } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-category-questions-options',
@@ -35,6 +37,11 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
   fileId = [];
   isLoadingMedia: boolean = true;
   questionFileId: string;
+  
+  title: string;
+  description: string;
+  no: string;
+  yes: string;
 
   imageFiles: File[] = [];
   videoFiles: File[] = [];
@@ -55,6 +62,7 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
 
   constructor(private optionService: OptionsService, 
     private route: ActivatedRoute, 
+	  public translate: I18nService,
     private sanitizer: DomSanitizer,
     private fileService : CloudFileService,
     private questionService: QuestionService,
@@ -133,8 +141,15 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
         this.edit = true;
         //this.back();
       });
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('options.succes-update-options-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
     });
-    this.notificationService.success('Success', 'Options was successfully updated', NotificationUtil.getDefaultMidConfig());
+    this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
   }
 
   getQuestion() {
@@ -288,15 +303,35 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
   deleteQuestion(id): void{
 		this.optionService.delete(id).subscribe(() => 
 		{
-			this.notificationService.success('Success', 'Option was successfully deleted', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('options.succes-delete-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getOptions();
 		});
 	}
 
 	openConfirmationDeleteModal(id): void {
+    forkJoin([
+			this.translate.get('modal.delete'),
+			this.translate.get('options.delete-msg'),
+			this.translate.get('button.no'),
+			this.translate.get('button.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
-		modalRef.componentInstance.title = 'Delete';
-		modalRef.componentInstance.description = 'Are you sure you want to delete this option?';
+		modalRef.componentInstance.title = this.title;
+		modalRef.componentInstance.description = this.description;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
 		modalRef.result.then(() => this.deleteQuestion(id), () => { });
 	}
 

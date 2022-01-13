@@ -9,6 +9,8 @@ import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { AttachLocationToEventModel } from 'projects/evaluation/src/app/utils/models/locations/attachTestTypeToEventModel';
 import { ConfirmModalComponent } from 'projects/erp-shared/src/lib/modals/confirm-modal/confirm-modal.component';
+import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-table',
@@ -31,8 +33,14 @@ export class TableComponent implements OnInit {
   enum = TestingLocationTypeEnum;
   fields = [];
 
+  title: string;
+	description: string;
+	no: string;
+	yes: string;
+
   constructor(private eventService: EventService,
     private route: ActivatedRoute,
+		public translate: I18nService,
     private router: Router,
     private eventTestTypeService: EventTestTypeService,
     private modalService: NgbModal,
@@ -112,9 +120,23 @@ export class TableComponent implements OnInit {
   }
 
   openConfirmationDeleteModal(eventId: number, itemId): void {
+    forkJoin([
+			this.translate.get('modal.delete'),
+			this.translate.get('modal.delete-msg'),
+			this.translate.get('button.no'),
+			this.translate.get('button.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
     const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
+		modalRef.componentInstance.title = this.title;
     modalRef.componentInstance.title = 'Delete';
-    modalRef.componentInstance.description = `Are you sure you want to delete this ${this.currentUrl} ?`;
+    modalRef.componentInstance.description = `${this.description} ${this.currentUrl} ?`;
+    modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
     if (this.locations == false) {
       modalRef.result.then(() => this.detachLocation(eventId, itemId), () => { });
     }
@@ -138,35 +160,70 @@ export class TableComponent implements OnInit {
 
   detachLocation(eventId, locationId) {
     this.eventService.detachLocation(eventId, locationId).subscribe(() => {
-      this.notificationService.success('Success', 'Location was successfully detached', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('events.succes-remove-location-msg'),
+			  ]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.list();
     });
   }
 
   detachTestType(eventId, testTypeId) {
     this.eventTestTypeService.detachTestType(eventId, testTypeId).subscribe(() => {
-      this.notificationService.success('Success', 'Test type was successfully detached', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('events.succes-remove-test-type-msg'),
+        ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+        });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.list();
     });
   }
 
   detachUser(eventId, userProfileId) {
     this.eventService.detachUser(eventId, userProfileId).subscribe(() => {
-      this.notificationService.success('Success', 'User was successfully detached', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('events.succes-remove-user-msg'),
+        ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+        });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.list();
     });
   }
 
   detachEvaluator(eventId, evaluatorId) {
     this.eventService.detachEvaluator(eventId, evaluatorId).subscribe(() => {
-      this.notificationService.success('Success', 'Evaluator was successfully detached', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('events.succes-detach-evaluator-msg'),
+        ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+        });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.list();
     });
   }
 
   detachPerson(eventId, userProfileId){
     this.eventService.detachPerson(eventId, userProfileId).subscribe(() => {
-			this.notificationService.success('Success', 'Person was successfully detached', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('events.succes-remove-person-msg'),
+        ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+        });
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.list();
     });
   }

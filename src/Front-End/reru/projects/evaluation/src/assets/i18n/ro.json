@@ -137,6 +137,21 @@
     "attach": "Atașați fișierul",
     "confirm-print": "Confirmă și Printează"
   },
+  "modal":{
+    "delete": "Șterge",
+    "success": "Succes",
+    "error": "Eroare",
+    "finish-test": "Terminați testul",
+    "finish-poll": "Terminați sondajul",
+    "finish-verification": "Terminați verificarea testului",
+    "delete-msg": "Sigur doriți să ștergeți acest/aceasta",
+    "yes": "Da",
+    "no": "Nu"
+  },
+  "media":{
+    "invalid-type": "Tip de fișier nevalid",
+    "file-was-deleted": "Fișierul a fost șters"
+  },
   "message": {
     "deleteMsg": "Sunteți sigur(-ă) că doriți să ștergeți",
     "finalize-test": "Sigur doriți să finalizați acest test",
@@ -169,7 +184,11 @@
     "category-details": "Detaliile categoriei",
     "remove": "Ștergeți categoria",
     "remove-msg": "Sigur doriți să ștergeți această categorie?",
-    "remove-questions-in-category": "Toate întrebările din această categorie vor fi eliminate"
+    "remove-questions-in-category": "Toate întrebările din această categorie vor fi eliminate",
+    "delete-msg": "Sigur doriți sa ștergeți categoria? Toate întrebările din această categorie vor fi eliminate.",
+    "succes-delete-msg": "Categoria a fost ștearsă cu succes",
+    "succes-add-msg": "Categoria a fost adăugată cu succes",
+    "succes-update-msg": "Categoria a fost actualizată cu succes"
   },
   "tests": {
     "add-test-event": "Adaugarea unui test cu un eveniment",
@@ -230,7 +249,18 @@
     "test-type-autoverify": "Șablonul de test selectat va fi verificat de sistem",
     "event-has-evaluator": "Evenimentul selectat are propriii evaluatori",
     "asignee": "Asigneaza",
-    "user-list-to-add": "Lista de utilizatori asignati"
+    "user-list-to-add": "Lista de utilizatori asignati",
+    "delete-msg": "Sigur doriți să ștergeți acest șablon de test?",
+    "succes-delete-msg": "Șablon de test a fost șters cu succes",
+    "succes-add-msg": "Șablon de test a fost adăugat cu succes",
+    "succes-update-msg": "Șablon de test a fost actualizat cu succes",
+    "succes-update-status-msg": "Statutul șablonului de test a fost actualizat",
+    "succes-add-rules-msg": "Regurile au fost adăugate cu succes",
+    "succes-order-update": "Ordinea a fost actualizată cu succes",
+    "succes-update-settings-msg": "Setările au fost actualizate cu succes",
+    "tests-were-programmed": "Test a fost programat cu succes",
+    "finish-test-msg": "Doriți sa terminați testul?",
+    "stop-test-msg": "Sigur doriți să opriți acest test?"
   },
   "verify-test": {
     "title": "Teste",
@@ -277,7 +307,12 @@
     "remove-msg": "Sigur doriți să ștergeți acest test?",
     "view-test": "Vizializarea testului",
     "verify-test": "Verificarea testului",
-    "correct-answers": "Răspunsuri corecte"
+    "correct-answers": "Răspunsuri corecte",
+    "point-value-not-selected": "Valoarea „Corect” sau „Incorect” nu este selectată",
+    "points-must-be-greater": "Dacă răspunsul este corect, punctele trebuie să fie mai mari decât 0",
+    "set-points-to-zero": "Dacă răspunsul este fals, setați punctele la 0",
+    "finish-verification-msg": "Sigur doriți să finalizați verificarea testului?",
+    "succes-verified-msg": "Testul a fost verificat cu succes"
   },
   "dashboard": {
     "title": "Evaluare",
@@ -331,8 +366,13 @@
     "select-questions": "Alegerea întrebărilor",
     "order-questions": "Ordinea întrebărilor",
     "points": "Puncte",
-    "number-of-options": "Optiuni"
-
+    "number-of-options": "Optiuni",
+    "delete-msg": "Sigur doriți sa ștergeți întrebarea?",
+    "succes-delete-msg": "Întrebarea a fost ștearsă cu succes",
+    "succes-add-msg": "Întrebarea a fost adăugată cu succes",
+    "succes-add-multiple-msg": "Întrebarile au fost adăugate cu succes",
+    "succes-update-msg": "Întrebarea a fost actualizată cu succes",
+    "succes-update-status-msg": "Statutul intrebării a fost actualizat"
   },
   "answers": {
     "option-settings": "Setări Opțiuni",
@@ -400,8 +440,12 @@
     "show-user-name": "Afișați numele de utilizator în teste",
     "set-time-limit": "Setați limita de timp pentru fiecare întrebare (secunde)",
     "set-max-errors": "Setați maximum de erori",
-    "this-is-free-text": "Aceasta este o intrebare cu forma libera"
-
+    "this-is-free-text": "Aceasta este o intrebare cu forma libera",
+    "delete-msg": "Sigur doriți sa ștergeți opțiunea?",
+    "succes-delete-msg": "Opțiunea a fost ștearsă cu succes",
+    "succes-add-msg": "Opțiunea a fost adăugată cu succes",
+    "succes-update-msg": "Opțiunea a fost actualizată cu succes",
+    "succes-update-options-msg": "Opțiunile au fost actualizate cu succes"
   },
   "tooltips": {
     "option1": "Utilizatorul are posibilitatea de a începe testul fără confirmarea administratorului",
@@ -426,7 +470,10 @@
     "name": "Nume",
     "content": "Conţinut",
     "remove": "Ștergeți articol",
-    "remove-msg": "Sigur doriți să ștergeți acest articol?"
+    "remove-msg": "Sigur doriți să ștergeți acest articol?",
+    "succes-remove-msg": "Articol a fost șters cu succes",
+    "succes-add-msg": "Articol a fost adăugat cu succes",
+    "succes-edit-msg": "Articol a fost editat cu succes"
   },
   "locations": {
     "locations": "Locații de Testare",
@@ -455,7 +502,13 @@
     "description": "Descriere",
     "Class": "Clasă",
     "ComputerClass": "Clasă cu calculatoare",
-    "empty-name": "Câmpul este obligatoriu"
+    "empty-name": "Câmpul este obligatoriu",
+    "succes-remove-location-msg": "Locația a fost ștearsă cu succes",
+    "succes-remove-person-msg": "Persoana responsabilă a fost eliminată cu succes",
+    "succes-add-location-msg": "Locația a fost adăugată cu succes",
+    "succes-edit-location-msg": "Locația a fost editată cu succes",
+    "succes-add-person-msg": "Persoana responsabilă a fost adăugată cu succes"
+  
   },
   "polls": {
     "polls": "Sondaje",
@@ -469,7 +522,9 @@
     "poll-name": "Numele sondajului",
     "invited": "Invitați",
     "voted": "Votat",
-    "conditions": "Condiții"
+    "conditions": "Condiții",
+    "finish-poll-msg": "Sigur doriți să terminați acest sondaj?",
+    "succes-finish-poll-msg": "Sondaj a fost terminat cu succes"
   },
   "events": {
     "events": "Evenimente",
@@ -520,11 +575,24 @@
     "attach-evaluator": "Atașați evaluator",
     "detach-evaluator": "Eliminați evaluator",
     "detach-evaluator-msg": "Sigur doriți să eliminați acest evaluator din acest eveniment?",
-    "show-candidate": "Afișați numele candidatului"
+    "show-candidate": "Afișați numele candidatului",
+    "succes-remove-event-msg": "Eveniment a fost șters cu succes",
+    "succes-remove-person-msg": "Persoana responsabilă a fost eliminată cu suces",
+    "succes-remove-location-msg": "Locatia a fost eliminată cu succes",
+    "succes-remove-user-msg": "Utilizator a fost eliminat cu succes",
+    "succes-remove-test-type-msg": "Șablon de test a fost eliminat cu succes",
+    "succes-add-event-msg": "Eveniment a fost adăugat cu succes",
+    "succes-edit-event-msg": "Eveniment a fost editat cu succes",
+    "succes-add-person-msg": "Persoana responsabilă a fost adăugată cu suces",
+    "succes-add-location-msg": "Locatia a fost adăugat cu succes",
+    "succes-add-user-msg": "Utilizator a fost adăugat cu succes",
+    "succes-add-test-type-msg": "Șablon de test a fost adăugat cu succes",
+    "succes-attach-evaluator-msg": "Evaluator a fost atașat cu succes",
+    "succes-detach-evaluator-msg": "Evaluator a fost eliminat cu succes"
   },
   "test-template":{
-    "number-of-questions":"Numărul de întrebări",
-    "order-of-questions":"Ordinea întrebărilor"
+    "number-of-questions": "Numărul de întrebări",
+    "order-of-questions": "Ordinea întrebărilor"
 },
   "plans": {
     "plans": "Planuri",
@@ -535,12 +603,19 @@
     "plan-details": "Detaliile planului",
     "remove": "Ștergeți planul",
     "remove-msg": "Sigur doriți să ștergeți acest plan?",
+    "succes-remove-msg": "Plan a fost șters cu succes",
     "plan-name": "Numele planului",
     "attach-event": "Atașați eveniment",
     "attach-event-to-plan": "Atașați evenimentul la plan",
     "remove-event-msg": "Sigur doriți să eliminați acest eveniment din acest plan?",
+    "succes-remove-event-msg": "Eveniment a fost eliminat cu succes",
+    "succes-add-event-msg": "Eveniment a fost adăugat cu succes",
     "attach-person-to-plan": "Atașați persoana responsabilă la plan",
-    "remove-person-msg": "Sigur doriți să eliminați această persoană responsabilă din acest plan?"
+    "succes-attach-msg": "Persoana responsabilă a fost atașată cu succes",
+    "remove-person-msg": "Sigur doriți să eliminați această persoană responsabilă din acest plan?",
+    "succes-remove-person-msg": "Persoana responsabilă a fost eliminată cu succes",
+    "succes-add-plan-msg": "Planul a fost adăugat cu succes",
+    "succes-edit-plan-msg": "Planul a fost editat cu succes"
   },
   "statistics": {
     "statistic": "Statistic",
