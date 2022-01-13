@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Resolve } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
@@ -9,11 +9,11 @@ import { SelectItem } from '../../../utils/models/select-item.model';
 import { QuestionByCategoryService } from '../../../utils/services/question-by-category/question-by-category.service';
 import { QuestionUnitStatusEnum } from '../../../utils/enums/question-unit-status.enum';
 import { ReferenceService } from '../../../utils/services/reference/reference.service';
-import { QuestionUnit } from '../../../utils/models/question-units/question-unit.model';
 import { CloudFileService } from '../../../utils/services/cloud-file/cloud-file.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { saveAs } from 'file-saver';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
 
 
@@ -45,7 +45,10 @@ export class AddEditQuestionComponent implements OnInit {
   audioUrl: any;
   videoUrl: any;
   filenames: any;
-  fileName: string;
+  fileName: string; 
+  
+  title: string;
+  description: string;
 
   constructor(
     private questionService: QuestionService,
@@ -53,6 +56,7 @@ export class AddEditQuestionComponent implements OnInit {
     private referenceService: ReferenceService,
     private location: Location,
     private questionByCategory: QuestionByCategoryService,
+	  public translate: I18nService,
     private formBuilder: FormBuilder,
 		private notificationService: NotificationsService,
     private fileService : CloudFileService,
@@ -100,7 +104,14 @@ export class AddEditQuestionComponent implements OnInit {
 
   deleteFile(id):void {
     this.fileService.delete(id).subscribe(res => {
-      this.notificationService.success('Success', 'Was deleted', NotificationUtil.getDefaultConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('media.file-was-deleted'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultConfig());
     })
   }
 
@@ -186,8 +197,15 @@ export class AddEditQuestionComponent implements OnInit {
     request.append('Tags', this.tags);
 
     this.questionService.create(request).subscribe(() => {
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('questions.succes-add-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
       this.backClicked();
-			this.notificationService.success('Success', 'Question was successfully added', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -218,8 +236,15 @@ export class AddEditQuestionComponent implements OnInit {
     request.append('Data.MediaFileId', this.fileId);
 
     this.questionService.edit(request).subscribe(() => {
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('questions.succes-update-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
       this.backClicked();
-			this.notificationService.success('Success', 'Question was successfully updated', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -258,7 +283,14 @@ export class AddEditQuestionComponent implements OnInit {
             this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
           });
         } else {
-          this.notificationService.error('Error', 'Invalid file type',  NotificationUtil.getDefaultConfig());
+          forkJoin([
+            this.translate.get('modal.error'),
+            this.translate.get('media.invalid-type'),
+          ]).subscribe(([title, description]) => {
+            this.title = title;
+            this.description = description;
+            });
+          this.notificationService.error(this.title, this.description,  NotificationUtil.getDefaultConfig());
         }
         this.attachedFile = event.addedFiles[0];
     });

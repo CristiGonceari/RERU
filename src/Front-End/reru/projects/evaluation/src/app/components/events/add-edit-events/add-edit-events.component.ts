@@ -5,6 +5,8 @@ import { EventService } from '../../../utils/services/event/event.service';
 import { Location } from '@angular/common';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { Event } from '../../../utils/models/events/event.model';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-add-edit-events',
@@ -21,10 +23,13 @@ export class AddEditEventsComponent implements OnInit {
 	tillDate;
 	description;
 	isLoading: boolean = true;
+	title: string;
+	description1: string;
 
 	constructor(
 		private eventService: EventService,
 		private location: Location,
+		public translate: I18nService,
 		private activatedRoute: ActivatedRoute,
 		private notificationService: NotificationsService
 	) { }
@@ -102,15 +107,29 @@ export class AddEditEventsComponent implements OnInit {
 
 	add(): void {
 		this.eventService.addEvent(this.parse()).subscribe(() => {
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('events.succes-add-event-msg"'),
+			  ]).subscribe(([title, description1]) => {
+				this.title = title;
+				this.description1 = description1;
+				});
 			this.backClicked();
-			this.notificationService.success('Success', 'Event was successfully added', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description1, NotificationUtil.getDefaultMidConfig());
 		});
 	}
 
 	edit(): void {
 		this.eventService.editEvent(this.parse()).subscribe(() => {
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('events.succes-edit-event-msg"'),
+			  ]).subscribe(([title, description1]) => {
+				this.title = title;
+				this.description1 = description1;
+				});
 			this.backClicked();
-			this.notificationService.success('Success', 'Event was successfully updated', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description1, NotificationUtil.getDefaultMidConfig());
 		});
 	}
 

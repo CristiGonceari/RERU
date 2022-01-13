@@ -7,6 +7,8 @@ import { LocationService } from '../../../utils/services/location/location.servi
 import { ReferenceService } from '../../../utils/services/reference/reference.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { Location } from '@angular/common';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-add-edit-location',
@@ -20,10 +22,13 @@ export class AddEditLocationComponent implements OnInit {
 	locationName;
 	types: SelectItem[] = [];
 	isLoading: boolean = true;
-  
+	title: string;
+	description: string;
+
   	constructor(
    		private formBuilder: FormBuilder,
 		private locationService: LocationService,
+		public translate: I18nService,
 		private location: Location,
 		private activatedRoute: ActivatedRoute,
 		private reference: ReferenceService,
@@ -108,15 +113,29 @@ export class AddEditLocationComponent implements OnInit {
 
   	addLocation(): void {
 		this.locationService.createLocation({data: this.locationForm.value}).subscribe(() => {
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('locations.succes-add-location-msg'),
+			  ]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
 			this.backClicked();
-			this.notificationService.success('Success', 'Location was successfully added', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 		});
 	}
 
  	editLocation(): void {
 		this.locationService.editLocation({data: this.locationForm.value}).subscribe(() => {
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('locations.succes-edit-location-msg'),
+			  ]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
 			this.backClicked();
-			this.notificationService.success('Success', 'Location was successfully updated', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 		});
 	}
 }

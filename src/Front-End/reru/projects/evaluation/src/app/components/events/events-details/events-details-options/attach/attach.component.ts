@@ -8,6 +8,8 @@ import { EventService } from 'projects/evaluation/src/app/utils/services/event/e
 import { EventTestTypeService } from 'projects/evaluation/src/app/utils/services/event-test-type/event-test-type.service';
 import { AttachLocationToEventModel } from 'projects/evaluation/src/app/utils/models/locations/attachTestTypeToEventModel';
 import { AttachPersonToEventModel } from 'projects/evaluation/src/app/utils/models/events/attachPersonToEventModel'
+import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-attach',
@@ -33,10 +35,14 @@ export class AttachComponent implements OnInit {
   attempts;
   showName = false;
 
+  title: string;
+	description: string;
+
   constructor(private location: Location,
     private eventService: EventService,
     private activatedRoute: ActivatedRoute,
     private notificationService: NotificationsService,
+		public translate: I18nService,
     private router: Router,
     private eventTestTypeService: EventTestTypeService) { }
 
@@ -111,32 +117,67 @@ export class AttachComponent implements OnInit {
   attach() {
     if (this.person == false) {
       this.eventService.attachPerson(this.parse()).subscribe(() => {
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('events.succes-add-person-msg'),
+          ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+          });
         this.backClicked();
-        this.notificationService.success('Success', 'User was successfully attached', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       });
     }
     if (this.locations == false) {
       this.eventService.attachLocation(this.parse()).subscribe(() => {
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('events.succes-add-location-msg'),
+          ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+          });
         this.backClicked();
-        this.notificationService.success('Success', 'Location was successfully attached', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       });
     }
     if (this.testType == false) {
       this.eventTestTypeService.attachTestType(this.parse()).subscribe(() => {
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('events.succes-add-test-type-msg'),
+          ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+          });
         this.backClicked();
-        this.notificationService.success('Success', 'Test type was successfully attached', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       });
     }
     if (this.evaluator == false) {
       this.eventService.attachEvaluator(this.parse()).subscribe(() => {
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('events.succes-attach-evaluator-msg'),
+          ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+          });
         this.backClicked();
-        this.notificationService.success('Success', 'Evaluator was successfully attached', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       });
     }
     if (this.user == false) {
       this.eventService.attachUser(this.parse()).subscribe(() => {
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('events.succes-add-user-msg'),
+          ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+          });
         this.backClicked();
-        this.notificationService.success('Success', 'User was successfully attached', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       });
     }
   }

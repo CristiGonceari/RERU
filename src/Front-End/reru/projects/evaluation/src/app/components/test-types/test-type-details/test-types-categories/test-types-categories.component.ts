@@ -8,7 +8,9 @@ import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notific
 import { QuestionUnitTypeEnum } from 'projects/evaluation/src/app/utils/enums/question-unit-type.enum'
 import { TestTypeQuestionCategoryService } from 'projects/evaluation/src/app/utils/services/test-type-question-category/test-type-question-category.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { forkJoin } from 'rxjs';
 import { ConfirmModalComponent } from '@erp/shared';
+import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-test-types-categories',
@@ -23,6 +25,10 @@ export class TestTypesCategoriesComponent implements OnInit {
   isLoading: boolean = false;
   sequence = SequenceTypeEnum;
   order = [];
+  title: string;
+  description: string;
+  no: string;
+  yes: string;
   @Input() isActive: boolean ;
 
   constructor(private service: TestTypeQuestionCategoryService,
@@ -30,6 +36,7 @@ export class TestTypesCategoriesComponent implements OnInit {
     private dragulaService: DragulaService,
     private testTypeService: TestTypeService,
     private notificationService: NotificationsService,
+	  public translate: I18nService,
     private router: Router,
     private modalService: NgbModal, ) { }
 
@@ -93,8 +100,15 @@ export class TestTypesCategoriesComponent implements OnInit {
       sequenceType: this.sequence ? 1 : 0
     }
     this.service.setSequence(params).subscribe(res => {
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('tests.succes-order-update'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
       if (res && res.data) {
-        this.notificationService.success('Success', 'Order was successfully updated', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
         this.getList(this.testTypeId);
       }
     });
@@ -113,15 +127,35 @@ export class TestTypesCategoriesComponent implements OnInit {
   }
 
   openConfirmationDeleteModal(id, name): void {
+    forkJoin([
+			this.translate.get('modal.delete'),
+			this.translate.get('categories.delete-msg'),
+			this.translate.get('button.no'),
+			this.translate.get('button.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
-		modalRef.componentInstance.title = 'Delete';
-		modalRef.componentInstance.description = `Are you sure you want to delete this category(${name})?`;
+		modalRef.componentInstance.title = this.title;
+		modalRef.componentInstance.description = this.description;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
 		modalRef.result.then(() => this.deleteTestTemplateCategory(id), () => { });
 	}
 
   deleteTestTemplateCategory(id){
     this.service.deleteTestTypeQuestionCategory({id: id}).subscribe(() => {
-			this.notificationService.success('Success', 'Category was successfully deleted', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('categories.succes-delete-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getList();
     });
   }

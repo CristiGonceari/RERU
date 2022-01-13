@@ -7,6 +7,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { ConfirmModalComponent } from '@erp/shared';
+import { forkJoin } from 'rxjs';
+import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-faq-list-table',
@@ -18,9 +20,14 @@ export class FaqListTableComponent implements OnInit {
   keyword: string;
   pagedSummary: PaginationModel = new PaginationModel();
   isLoading: boolean = true;
+  title: string;
+  description: string;
+  no: string;
+  yes: string;
 
   constructor(private articleService: ArticlesService,
 	private route: ActivatedRoute,
+	public translate: I18nService,
 	private router: Router,
 	private notificationService: NotificationsService,
 	private modalService: NgbModal) { }
@@ -53,15 +60,35 @@ export class FaqListTableComponent implements OnInit {
 	deleteArticle(id): void{
 		this.articleService.delete(id).subscribe(() => 
 		{
-			this.notificationService.success('Success', 'Article was successfully deleted', NotificationUtil.getDefaultMidConfig());
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('faq.succes-remove-msg'),
+			  ]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			this.list();
 		});
 	}
 
 	openConfirmationDeleteModal(id): void {
+		forkJoin([
+			this.translate.get('faq.remove'),
+			this.translate.get('faq.remove-msg'),
+			this.translate.get('button.no'),
+			this.translate.get('button.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
-		modalRef.componentInstance.title = 'Delete';
-		modalRef.componentInstance.description = 'Are you sure you want to delete this article?';
+		modalRef.componentInstance.title = this.title;
+		modalRef.componentInstance.description = this.description;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
 		modalRef.result.then(() => this.deleteArticle(id), () => { });
 	}
 }

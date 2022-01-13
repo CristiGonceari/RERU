@@ -5,6 +5,8 @@ import { Plan } from 'projects/evaluation/src/app/utils/models/plans/plan.model'
 import { PlanService } from 'projects/evaluation/src/app/utils/services/plan/plan.service';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { Location } from '@angular/common';
+import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-attach',
@@ -17,7 +19,11 @@ export class AttachComponent implements OnInit {
   plan: Plan = new Plan();
   isLoading: boolean = true;
 
+  title: string;
+  description: string;
+
   constructor(private location: Location, 
+	  public translate: I18nService,
     private planService: PlanService, 
     private activatedRoute: ActivatedRoute,
     private notificationService: NotificationsService) { }
@@ -31,8 +37,15 @@ export class AttachComponent implements OnInit {
     this.planId = this.planId == undefined ? 0 : this.planId;
 
     this.planService.attachEvent({data: {eventId: +this.eventId, planId: +this.planId}}).subscribe(() => {
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('plans.succes-add-event-msg'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+        });
       this.backClicked();
-			this.notificationService.success('Success', 'Location was successfully attached', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 

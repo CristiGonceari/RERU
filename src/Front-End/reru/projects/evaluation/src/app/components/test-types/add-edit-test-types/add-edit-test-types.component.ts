@@ -8,8 +8,10 @@ import { SelectItem } from '../../../utils/models/select-item.model';
 import { TestType } from '../../../utils/models/test-types/test-type.model';
 import { ReferenceService } from '../../../utils/services/reference/reference.service';
 import { TestTypeService } from '../../../utils/services/test-type/test-type.service';
+import { forkJoin } from 'rxjs';
 import { Location } from '@angular/common';
 import { NotificationUtil } from '../../../utils/util/notification.util';
+import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-add-edit-test-types',
@@ -24,11 +26,14 @@ export class AddEditTestTypesComponent implements OnInit {
 	modeId;
 	modes: SelectItem[] = [{label: '', value: ''}];
 	testType: TestType = new TestType();
+	title: string;
+	description: string;
 
 	constructor(private location: Location,
 		private testTypeService: TestTypeService,
 		private activatedRoute: ActivatedRoute,
-		private formBuilder: FormBuilder,
+	  	public translate: I18nService,
+	  	private formBuilder: FormBuilder,
 		private referenceService: ReferenceService,
 		private notificationService: NotificationsService) { }
 
@@ -123,18 +128,32 @@ export class AddEditTestTypesComponent implements OnInit {
 	edit() {
 		this.parseNumber();
 		this.testTypeService.editTestType({ data: this.testForm.value }).subscribe(() => {
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('tests.succes-update-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
 			this.backClicked();
-			this.notificationService.success('Success', 'Test type was successfully updated', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 		});
 	}
 
 	add() {
 		this.parseNumber();
 		this.testTypeService.addTestType({data: this.testForm.value}).subscribe(res => { 
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('tests.succes-add-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
 			this.testId = res.data; 
 			this.settings();
 			// this.backClicked()
-			this.notificationService.success('Success', 'Test type was successfully added', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 		});
 	}
 

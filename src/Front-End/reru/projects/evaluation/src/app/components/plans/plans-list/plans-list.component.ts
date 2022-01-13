@@ -8,7 +8,8 @@ import { PaginationModel } from '../../../utils/models/pagination.model';
 import { PlanService } from '../../../utils/services/plan/plan.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { PlansCalendarComponent } from './plans-calendar/plans-calendar.component';
-
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-plans-list',
@@ -30,15 +31,21 @@ export class PlansListComponent implements OnInit {
   plans: any[] = [];
   pagination: PaginationModel = new PaginationModel();
   eventuri: any[] = [];
- dates: Date;
+  dates: Date;
 
- countedPlans;
-fromDate;
-tillDate;
+  countedPlans;
+  fromDate;
+  tillDate;
+
+  title: string;
+  description: string;
+  no: string;
+  yes: string;
 
   constructor(private planService: PlanService,
               private router: Router,
               private route: ActivatedRoute,
+		          public translate: I18nService,
               private modalService: NgbModal,
 		          private notificationService: NotificationsService,
               public dialog: MatDialog,
@@ -109,15 +116,35 @@ tillDate;
   }
 
   openDeleteModal(id){
+    forkJoin([
+			this.translate.get('plans.remove'),
+			this.translate.get('plans.remove-msg'),
+			this.translate.get('button.no'),
+			this.translate.get('button.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
     const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true});
-    modalRef.componentInstance.title = "Delete";
-    modalRef.componentInstance.description= "Do you whant to delete this plan ?"
+		modalRef.componentInstance.title = this.title;
+		modalRef.componentInstance.description = this.description;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
     modalRef.result.then(() => this.delete(id), () => {});
  }
 
  delete(id){
    this.planService.delete(id).subscribe(() => {
-     this.notificationService.success('Success', 'Event was successfully deleted', NotificationUtil.getDefaultMidConfig());
+    forkJoin([
+      this.translate.get('modal.success'),
+      this.translate.get('plans.succes-remove-msg'),
+    ]).subscribe(([title, description]) => {
+      this.title = title;
+      this.description = description;
+      });
+     this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
      this.list();
    })
  }

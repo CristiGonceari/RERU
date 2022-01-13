@@ -5,7 +5,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HashOptionInputComponent } from '../../../utils/components/hash-option-input/hash-option-input.component';
 import { AnswerStatusEnum } from '../../../utils/enums/answer-status.enum';
 import { QuestionUnitTypeEnum } from '../../../utils/enums/question-unit-type.enum';
-import { TestOptions } from '../../../utils/models/test-questions/test-options.model';
 import { TestQuestionSummary } from '../../../utils/models/test-questions/test-question-summary.model';
 import { Test } from '../../../utils/models/tests/test.model';
 import { TestQuestionService } from '../../../utils/services/test-question/test-question.service';
@@ -21,6 +20,8 @@ import { ConfirmModalComponent } from '@erp/shared';
 import { CloudFileService } from '../../../utils/services/cloud-file/cloud-file.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-one-per-page-performing-test',
@@ -44,6 +45,11 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   timeQuestionLeft;
   timerInterval;
   percent;
+
+  title: string;
+	description: string;
+	no: string;
+	yes: string;
 
   testOptionsList = [];
   testQuestionSummary: TestQuestionSummary[] = [];
@@ -83,6 +89,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     private testQuestionService: TestQuestionService,
     private testService: TestService,
     private modalService: NgbModal,
+	  public translate: I18nService,
     private router: Router,
     private testTypeService: TestTypeService,
     private fileService : CloudFileService,
@@ -454,10 +461,22 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     if (this.testQuestionSummary.every(x => x.isClosed === true)) {
       this.testQuestionService.summary(this.testId).subscribe(() => this.disableNext = true);
     }
-
+    forkJoin([
+			this.translate.get('modal.finish-test'),
+			this.translate.get('tests.finish-test-msg'),
+			this.translate.get('modal.no'),
+			this.translate.get('modal.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
     const modalRef = this.modalService.open(ConfirmModalComponent, { centered: true });
-    modalRef.componentInstance.title = "Finish Test";
-    modalRef.componentInstance.description = "Do you want to finish test ?";
+    modalRef.componentInstance.title = this.title;
+		modalRef.componentInstance.description = this.description;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
     modalRef.result.then(
       () => {
         this.finalizeTest();

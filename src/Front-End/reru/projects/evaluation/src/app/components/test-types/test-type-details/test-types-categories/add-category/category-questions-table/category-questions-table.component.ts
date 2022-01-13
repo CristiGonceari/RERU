@@ -13,6 +13,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { TestTypeService } from 'projects/evaluation/src/app/utils/services/test-type/test-type.service';
+import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-category-questions-table',
@@ -42,12 +44,16 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   tableData: any;
   maxQuestionCount: number;
 
+  title: string;
+  description: string;
+
   preview: boolean = false;
 
   constructor(private dragulaService: DragulaService,
     private questionService: QuestionService,
     private referenceService: ReferenceService,
     private questionCategoryService: TestTypeQuestionCategoryService,
+	  public translate: I18nService,
     private route: ActivatedRoute,
     public router: Router,
     private notificationService: NotificationsService,
@@ -156,7 +162,14 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
     }
     this.questionCategoryService.add(params).subscribe(res => {
       if (res && res.data) {
-        this.notificationService.success('Success', 'Questions were successfully added', NotificationUtil.getDefaultMidConfig());
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('questions.succes-add-multiple-msg'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+          });
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
         this.router.navigate(['test-type/type-details', this.testTypeId, 'categories'])
       }
     })

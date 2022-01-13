@@ -7,6 +7,8 @@ import { TestingLocationTypeEnum } from 'projects/evaluation/src/app/utils/enums
 import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { LocationService } from '../../../../utils/services/location/location.service';
+import { forkJoin } from 'rxjs';
+import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-location-list-table',
@@ -21,8 +23,14 @@ export class LocationListTableComponent implements OnInit {
 	enum = TestingLocationTypeEnum;
 	isLoading: boolean = true;
   
+	title: string;
+	description: string;
+	no: string;
+	yes: string;
+
   	constructor(
     	private locationService: LocationService,
+		public translate: I18nService,
     	private router: Router, 
     	private route: ActivatedRoute,
 		private notificationService: NotificationsService,
@@ -56,15 +64,35 @@ export class LocationListTableComponent implements OnInit {
 	deleteLocation(id): void{
 		this.locationService.deleteLocation(id).subscribe(() => 
 		{
-			this.notificationService.success('Success', 'Location was successfully deleted', NotificationUtil.getDefaultMidConfig());
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('locations.succes-remove-location-msg'),
+			  ]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			this.list();
 		});
 	}
 
 	openConfirmationDeleteModal(id): void {
+		forkJoin([
+			this.translate.get('locations.remove'),
+			this.translate.get('locations.remove-msg'),
+			this.translate.get('button.no'),
+			this.translate.get('button.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
-		modalRef.componentInstance.title = 'Delete';
-		modalRef.componentInstance.description = 'Are you sure you want to delete this location?';
+		modalRef.componentInstance.title = this.title;
+		modalRef.componentInstance.description = this.description;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
 		modalRef.result.then(() => this.deleteLocation(id), () => { });
 	}
 }

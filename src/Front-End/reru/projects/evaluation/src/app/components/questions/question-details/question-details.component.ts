@@ -5,7 +5,9 @@ import { NotificationsService } from 'angular2-notifications';
 import { ConfirmModalComponent } from '@erp/shared';
 import { QuestionUnitStatusEnum } from '../../../utils/enums/question-unit-status.enum';
 import { QuestionService } from '../../../utils/services/question/question.service';
+import { forkJoin } from 'rxjs';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
+import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-question-details',
@@ -18,10 +20,15 @@ export class QuestionDetailsComponent implements OnInit {
   type: string;
   status: string;
   isLoading: boolean = true;
+  title: string;
+  description: string;
+  no: string;
+  yes: string;
 
   constructor(
 		private questionService: QuestionService,
 		private activatedRoute: ActivatedRoute,
+		public translate: I18nService,
     public router: Router,
 		private notificationService: NotificationsService,
 		private modalService: NgbModal,
@@ -58,25 +65,52 @@ export class QuestionDetailsComponent implements OnInit {
 		else 
 			params = { questionId: +id, status: QuestionUnitStatusEnum.Inactive }
 
-		this.questionService.editStatus({data : params}).subscribe(()=> { 
+		this.questionService.editStatus({data : params}).subscribe(()=> {
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('questions.succes-update-status-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				}); 
       this.getList(); 
       this.router.navigate(['questions/question-detail', this.questionId, 'overview'])
-			this.notificationService.success('Success', 'Question status was updated', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
 	}
 
   deleteQuestion(id): void{
 		this.questionService.delete(id).subscribe(() =>
 		{
-			this.notificationService.success('Success', 'Question was successfully deleted', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('questions.succes-delete-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			this.router.navigate(['/questions']);
 		});
 	}
 
 	openConfirmationDeleteModal(id): void {
+    forkJoin([
+			this.translate.get('modal.delete'),
+			this.translate.get('questions.delete-msg'),
+			this.translate.get('button.no'),
+			this.translate.get('button.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
-		modalRef.componentInstance.title = 'Delete';
-		modalRef.componentInstance.description = 'Are you sure you want to delete it?';
+		modalRef.componentInstance.title = this.title;
+		modalRef.componentInstance.description = this.description;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
 		modalRef.result.then(() => this.deleteQuestion(id), () => { });
 	}
 }

@@ -13,6 +13,8 @@ import { ConfirmModalComponent } from '@erp/shared';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
 import { saveAs } from 'file-saver';
+import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
 	selector: 'app-test-type-list-table',
@@ -35,8 +37,14 @@ export class TestTypeListTableComponent implements OnInit {
 	isActive: boolean = false;
 	isLoading: boolean = false;
 
+	title: string;
+	description: string;
+	no: string;
+	yes: string;
+
 	constructor(
 		public referenceService: ReferenceService,
+		public translate: I18nService,
 		public router: Router,
 		private testTypeService: TestTypeService,
 		private route: ActivatedRoute,
@@ -77,7 +85,18 @@ export class TestTypeListTableComponent implements OnInit {
 		else if (status == TestTypeStatusEnum.Active)
 			params = { testTypeId: id, status: TestTypeStatusEnum.Canceled }
 
-		this.testTypeService.changeStatus({ data: params }).subscribe(() => this.list());
+		this.testTypeService.changeStatus({ data: params }).subscribe(() => 
+		{
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('questions.succes-update-status-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+			this.list()
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+		});
 	}
 
 	validateTestType(id, status) {
@@ -100,15 +119,35 @@ export class TestTypeListTableComponent implements OnInit {
 
 	deleteTestType(id): void {
 		this.testTypeService.deleteTestType(id).subscribe(() => {
-			this.notificationService.success('Success', 'Test type was successfully deleted', NotificationUtil.getDefaultMidConfig());
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('tests.succes-delete-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			this.list();
 		});
 	}
 
 	openConfirmationDeleteModal(id): void {
+		forkJoin([
+			this.translate.get('modal.delete'),
+			this.translate.get('tests.delete-msg'),
+			this.translate.get('modal.no'),
+			this.translate.get('modal.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
-		modalRef.componentInstance.title = 'Delete';
-		modalRef.componentInstance.description = 'Are you sure you want to delete this test type?';
+		modalRef.componentInstance.title = this.title;
+		modalRef.componentInstance.description = this.description;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
 		modalRef.result.then(() => this.deleteTestType(id), () => { });
 	}
 

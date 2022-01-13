@@ -8,6 +8,8 @@ import { Location } from '@angular/common';
 import { CloudFileService } from 'projects/evaluation/src/app/utils/services/cloud-file/cloud-file.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { forkJoin } from 'rxjs';
+import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-add-option',
@@ -44,9 +46,13 @@ export class AddOptionComponent implements OnInit {
   isLoadingMedia: boolean;
   isLoading: boolean = true;
 
+  title: string;
+  description: string;
+
   constructor(private optionService: OptionsService, 
     private route: ActivatedRoute, 
     private location: Location,
+	  public translate: I18nService,
     private fileService: CloudFileService,
     private notificationService: NotificationsService,
     private sanitizer: DomSanitizer
@@ -107,7 +113,14 @@ export class AddOptionComponent implements OnInit {
                 this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
             });
         } else {
-          this.notificationService.error('Error', 'Invalid file type',  NotificationUtil.getDefaultConfig());
+          forkJoin([
+            this.translate.get('modal.error'),
+            this.translate.get('media.invalid-type'),
+          ]).subscribe(([title, description]) => {
+            this.title = title;
+            this.description = description;
+            });
+          this.notificationService.error(this.title, this.description,  NotificationUtil.getDefaultConfig());
         }
         this.attachedFile = event.addedFiles[0];
     });
@@ -200,8 +213,15 @@ private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void
       request.append('QuestionUnitId', this.questionId);
 
     this.optionService.create(request).subscribe(() => {
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('options.succes-add-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
       this.back();
-			this.notificationService.success('Success', 'Option was successfully added', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -220,8 +240,15 @@ private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void
       request.append('Data.IsCorrect', this.isCorrect);
       request.append('Data.QuestionUnitId', this.questionId);
     this.optionService.edit(request).subscribe(() => {
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('options.succes-update-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
       this.back();
-			this.notificationService.success('Success', 'Option was successfully updated', NotificationUtil.getDefaultMidConfig());
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 

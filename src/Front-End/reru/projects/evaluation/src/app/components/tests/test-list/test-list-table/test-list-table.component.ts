@@ -12,7 +12,9 @@ import { TestResultStatusEnum } from '../../../../utils/enums/test-result-status
 import { saveAs } from 'file-saver';
 import { ConfirmModalComponent } from '@erp/shared';
 import { NotificationUtil } from '../../../../utils/util/notification.util';
+import { forkJoin } from 'rxjs';
 import { NotificationsService } from 'angular2-notifications';
+import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 
 
 @Component({
@@ -49,9 +51,15 @@ export class TestListTableComponent implements OnInit {
   locationName;
   isLoading: boolean = true;
 
+  title: string;
+	description: string;
+	no: string;
+	yes: string;
+
   constructor(
     private testService: TestService,
     private modalService: NgbModal,
+	  public translate: I18nService,
     public router: Router,
     private referenceService: ReferenceService,
     private datePipe: DatePipe,
@@ -163,9 +171,22 @@ export class TestListTableComponent implements OnInit {
   }
 
   stopTest(id): void {
+    forkJoin([
+			this.translate.get('modal.finish-test'),
+			this.translate.get('tests.stop-test-msg'),
+			this.translate.get('modal.no'),
+			this.translate.get('modal.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
     const modalRef = this.modalService.open(ConfirmModalComponent, { centered: true });
-    modalRef.componentInstance.title = "Finish Test";
-    modalRef.componentInstance.description = "Do you want to finish test ?";
+    modalRef.componentInstance.title = this.title;
+		modalRef.componentInstance.description = this.description;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
     modalRef.result.then(
       () => this.testService.finalizeTest(id).subscribe(() => { this.getTests() }),
       () => { }
@@ -200,17 +221,37 @@ export class TestListTableComponent implements OnInit {
   }
 
   removeTest(id: number): void {
+    forkJoin([
+			this.translate.get('modal.delete'),
+			this.translate.get('tests.delete-msg'),
+			this.translate.get('modal.no'),
+			this.translate.get('modal.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
     const modalRef = this.modalService.open(ConfirmModalComponent, { centered: true });
-    modalRef.componentInstance.title = "Delete Test";
-    modalRef.componentInstance.description = "Do you want to delete test ?";
+    modalRef.componentInstance.title = this.title;
+		modalRef.componentInstance.description = this.description;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
     modalRef.result.then(
       () => this.onConfirm(id), () => { })
   }
 
   onConfirm(testId: number): void {
     this.testService.deleteTest({ id: testId }).subscribe(() => {
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('tests.succes-delete-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
       this.getTests()
-      this.notificationService.success('Success', 'Test was successfully deleted', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 

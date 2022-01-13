@@ -5,6 +5,8 @@ import { Location } from '@angular/common';
 import { ArticlesService } from '../../../utils/services/articles/articles.service';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from '../../../utils/util/notification.util';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-faq-add-edit',
@@ -24,9 +26,15 @@ export class FaqAddEditComponent implements OnInit {
     );
   }
 
+  title1: string;
+  description: string;
+  no: string;
+  yes: string;
+
   constructor(
     private articleService: ArticlesService,
     private activatedRoute: ActivatedRoute,
+	  public translate: I18nService,
     private location: Location,
 		private notificationService: NotificationsService
   ) { }
@@ -66,13 +74,27 @@ export class FaqAddEditComponent implements OnInit {
 
     if (this.articleId) {
       this.articleService.create(editData).subscribe(() => {
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('faq.succes-edit-msg'),
+          ]).subscribe(([title1, description]) => {
+          this.title1 = title1;
+          this.description = description;
+          });
         this.backClicked();
-			  this.notificationService.success('Success', 'Article was successfully updated', NotificationUtil.getDefaultMidConfig());
+			  this.notificationService.success(this.title1, this.description, NotificationUtil.getDefaultMidConfig());
       });
     } else {
       this.articleService.create(createData).subscribe(() => {
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('faq.succes-add-msg'),
+          ]).subscribe(([title1, description]) => {
+          this.title1 = title1;
+          this.description = description;
+          });
         this.backClicked();
-			  this.notificationService.success('Success', 'Article was successfully added', NotificationUtil.getDefaultMidConfig());
+			  this.notificationService.success(this.title1, this.description, NotificationUtil.getDefaultMidConfig());
       });
     }
   }

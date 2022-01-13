@@ -13,7 +13,9 @@ import { FormControl} from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { AssignedUsers } from '../../../../utils/models/tests/assigned-users';
 import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
+import { forkJoin } from 'rxjs';
 import { saveAs } from 'file-saver';
+import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-add-test',
@@ -29,6 +31,9 @@ export class AddTestComponent implements OnInit {
   selectActiveTests: any;
   testTypeEvaluator: any;
   eventEvaluator: any;
+
+  title: string;
+	description: string;
 
   evaluatorList: [] = [];
   userListToAdd:number[] = [];
@@ -58,6 +63,7 @@ export class AddTestComponent implements OnInit {
     private referenceService: ReferenceService,
     private testTypeService: TestTypeService,
     private testService: TestService,
+	  public translate: I18nService,
     private location: Location,
     private notificationService: NotificationsService,
     private printService: PrintTemplateService
@@ -172,16 +178,30 @@ export class AddTestComponent implements OnInit {
 
   createTest() {
     this.testService.createTest(this.parse()).subscribe((res) => {
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('tests.tests-were-programmed'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
       this.backClicked();
-      this.notificationService.success('Success', 'Tests was successfully programmed', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
   createTestAndPrint() {
     this.testService.createTest(this.parse()).subscribe((res) => {
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('tests.tests-were-programmed'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
       this.performingTestPdf(res.data)
       this.backClicked();
-      this.notificationService.success('Success', 'Tests was successfully programmed', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
