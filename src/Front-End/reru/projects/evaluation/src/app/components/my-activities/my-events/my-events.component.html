@@ -4,45 +4,63 @@
             <div class="card-title font-weight-bolder">{{'events.events' | translate}}</div>
         </div>
         <div class="card-body">
+            <app-event-calendar 
+                (onDatePicked)="getListByDate($event)" 
+                (listOfDates)="getEvents($event)"
+                (listOfCountedEvents)="getListOfCoutedEvents($event)">
+            </app-event-calendar>
+        </div>
+        <div class="card-body pt-0">
+
             <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-                <div *ngIf="!isLoading" id="kt_datatable"
-                    class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded">
-                <table class="datatable table">
-                    <tbody class="datatable-body">
-                        <ng-container *ngFor="let event of events; let i = index">
-                            <tr (click)="toggleShow(event.id)" style="cursor: pointer;">
-                                <td class="datatable-cell datatable-toggle-detail" scope="col" style="width: 30px;">
-                                    <a class="datatable-toggle-detail">
-                                        <i class="fa" [ngClass]="{ 'fa-caret-right' : !(show && testId == event.id), 'fa-caret-down' : (show && testId == event.id) }"></i>
-                                    </a>
-                                </td>
-                                <td data-field="Title" aria-label="Title" class="datatable-cell">
-                                    <b>{{event.name}}</b>
+
+            <div *ngIf="!isLoading" id="kt_datatable"
+                class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded">
+
+                <div class="card">
+                    <div class="card-header text-center" *ngIf="selectedDay != null">
+                        {{ 'calendar.selected-date' | translate }}: {{selectedDay}}
+                    </div>
+                    <div class="card-header text-center" *ngIf="selectedDay == null">
+                        {{ 'calendar.'+ displayMonth | translate }} {{displayYear}}
+                    </div>
+                    <table class="datatable table">
+                        <tbody class="datatable-body">
+                            <ng-container *ngFor="let event of events; let i = index">
+                                <tr (click)="toggleShow(event.id)" style="cursor: pointer;">
+                                    <td class="datatable-cell datatable-toggle-detail" scope="col" style="width: 30px;">
+                                        <a class="datatable-toggle-detail">
+                                            <i class="fa"
+                                                [ngClass]="{ 'fa-caret-right' : !(show && testId == event.id), 'fa-caret-down' : (show && testId == event.id) }"></i>
+                                        </a>
+                                    </td>
+                                    <td data-field="Title" aria-label="Title" class="datatable-cell">
+                                        <b>{{event.name}}</b>
+                                    </td>
+                                </tr>
+                                <ng-container *ngIf="testId == event.id && show">
+                                    <tr>
+                                        <td class="datatable-detail" colspan="13">
+                                            <app-events-table [id]="event.id"></app-events-table>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </tbody>
+                        <tbody class="datatable-body" *ngIf="!events.length">
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    {{ 'message.no-record' | translate }}
                                 </td>
                             </tr>
-
-                            <ng-container *ngIf="testId == event.id && show">
-                                <tr>
-                                <td class="datatable-detail" colspan="13">
-                                    <app-events-table [id]="event.id"></app-events-table>
-                                </td>
-                                </tr>
-                            </ng-container>
-                        </ng-container>
-                    </tbody>
-                    <tbody class="datatable-body" *ngIf="!events.length">
-                        <tr>
-                            <td colspan="6" class="text-center">
-                                {{ 'message.no-record' | translate }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
-                    *ngIf="events.length > 5" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
-                    [size]="pagedSummary.pageSize"
-                    (sizeChange)="getEvents({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-                    (pageChange)="getEvents({ page: $event })">
+                        </tbody>
+                    </table>
+                    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
+                        *ngIf="events.length > 5" [total]="pagedSummary.totalPages"
+                        [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
+                        (sizeChange)="getEvents({ page: pagedSummary.currentPage, itemsPerPage: $event })"
+                        (pageChange)="getEvents({ page: $event })">
+                    </div>
                 </div>
             </div>
         </div>

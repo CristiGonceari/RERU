@@ -23,8 +23,8 @@ namespace CODWER.RERU.Evaluation.Application.Plans.GetPlanCount
         {
 
             var plans =  _appDbContext.Plans.Where(p => p.FromDate.Date >= request.FromDate.Date && p.TillDate.Date <= request.TillDate ||
-                                                    p.FromDate.Date <= request.FromDate.Date && request.FromDate.Date <= p.TillDate.Date && p.TillDate.Date <= request.TillDate.Date ||
-                                                    p.FromDate.Date >= request.FromDate.Date && p.FromDate.Date <= request.TillDate.Date && p.TillDate.Date >=request.TillDate.Date).AsQueryable();
+                                                    (request.FromDate.Date <= p.FromDate.Date && p.FromDate.Date <= request.TillDate.Date) && (request.FromDate.Date <= p.TillDate.Date && p.TillDate.Date >= request.TillDate.Date) ||
+                                                    (request.FromDate.Date >= p.FromDate.Date && p.FromDate.Date <= request.TillDate.Date) && ( request.FromDate.Date <= p.TillDate.Date && p.TillDate.Date <= request.TillDate.Date)).AsQueryable();
 
             var dates = new List<PlanCount>();
             
@@ -32,13 +32,13 @@ namespace CODWER.RERU.Evaluation.Application.Plans.GetPlanCount
             {
                 var count = plans.Where(p => p.FromDate.Date <= dt.Date && dt.Date <= p.TillDate.Date).Count();
 
-                var daugarea = new PlanCount()
+                var planCount = new PlanCount()
                 {
                     Date = dt,
                     Count = count
                 };
 
-                dates.Add(daugarea);
+                dates.Add(planCount);
 
             }
 

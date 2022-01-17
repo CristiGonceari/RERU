@@ -40,6 +40,14 @@ export class TestService extends AbstractService {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-tests-without-event`, { params });
 	}
 
+	getUserTestsWithoutEventByDate(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-tests-without-event-by-date`, { params });
+	}
+
+	getUserTestsWithoutEventCount(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-tests-without-event-count`, {params});
+	  }
+
 	getUserTestsByEvent(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-tests-by-event`, { params });
 	}

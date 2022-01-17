@@ -43,7 +43,7 @@ import { MatProgressBar, MatProgressBarModule } from '@angular/material/progress
   declarations: [
     AppComponent,
     LayoutsComponent,
-    DashboardComponent
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

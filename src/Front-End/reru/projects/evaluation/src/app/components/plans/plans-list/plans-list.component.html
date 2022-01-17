@@ -1,15 +1,15 @@
+<app-event-calendar 
+(onDatePicked)="getListByDate($event)" 
+(listOfDates)="list($event)"
+(listOfCountedEvents)="getListOfCoutedPlans($event)"
+>
+</app-event-calendar>
+
 <app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
   [colorClass]="'text-primary'">
 </app-loading-spinner>
 
-<app-plans-calendar (onDatePicked)="getListByDate($event)" (listOfDates)="list($event)">
-</app-plans-calendar>
-
-<app-loading-spinner *ngIf="!isLoadingTable" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
-  [colorClass]="'text-primary'">
-</app-loading-spinner>
-
-<div *ngIf="isLoadingTable"
+<div *ngIf="!isLoading"
   class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded mt-13"
   id="kt_datatable">
   <div class="card">
@@ -17,7 +17,7 @@
       {{ 'calendar.selected-date' | translate }}: {{selectedDay}}
     </div>
     <div class="card-header text-center" *ngIf="selectedDay == null">
-      {{ 'calendar.current-month' | translate }}
+      {{ 'calendar.'+ displayMonth | translate }} {{displayYear}}
     </div>
     <div class="card-body">
       <table class="datatable table font-size-lg" style="overflow: visible">

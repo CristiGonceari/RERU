@@ -20,6 +20,8 @@ using CODWER.RERU.Evaluation.Application.Tests.SetConfirmationToStartTest;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Common.Pagination;
 using MediatR;
+using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEventByDate;
+using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -42,6 +44,19 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpGet("my-tests-without-event")]
         public async Task<PaginatedModel<TestDto>> GetMyTestsWithoutEvent([FromQuery] GetMyTestsWithoutEventQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("my-tests-without-event-by-date")]
+
+        public async Task<PaginatedModel<TestDto>> GetMyTestsWithoutEventByDate([FromQuery] GetMyTestsWithoutEventByDateQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("my-tests-without-event-count")]
+        public async Task<List<TestCount>> GetMyTestsCountWithoutEvent([FromQuery] GetMyTestsCountWithoutEventQuery query)
         {
             return await Mediator.Send(query);
         }
