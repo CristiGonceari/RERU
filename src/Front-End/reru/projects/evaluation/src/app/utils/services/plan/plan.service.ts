@@ -48,7 +48,7 @@ export class PlanService extends AbstractService {
   }
 
   delete(id): Observable<any>{
-    return this.http.delete(`${this.baseUrl}/${this.urlRoute}${id}`);
+    return this.http.delete(`${this.baseUrl}/${this.urlRoute}/${id}`);
   }
 
   events(params): Observable<any> {

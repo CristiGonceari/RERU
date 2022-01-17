@@ -10,6 +10,9 @@ using CODWER.RERU.Evaluation.Application.Events.GetEvent;
 using CODWER.RERU.Evaluation.Application.Events.GetEvents;
 using CODWER.RERU.Evaluation.Application.Events.GetMyEvents;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
+using CODWER.RERU.Evaluation.Application.Events.GetMyEventsByDate;
+using CODWER.RERU.Evaluation.Application.Events.GetMyEventsCount;
+using System.Collections.Generic;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -32,6 +35,18 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpGet("my-events")]
         public async Task<PaginatedModel<EventDto>> GetMyEvents([FromQuery] GetMyEventsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("my-events-by-date")]
+        public async Task<PaginatedModel<EventDto>> GetMyEventsByDate([FromQuery] GetMyEventsByDateQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("my-events-count")]
+        public async Task<List<EventCount>> GetMyEventsCount([FromQuery] GetMyEventsCountQuery query)
         {
             return await Mediator.Send(query);
         }

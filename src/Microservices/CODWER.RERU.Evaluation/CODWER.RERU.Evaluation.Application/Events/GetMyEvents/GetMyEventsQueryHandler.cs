@@ -38,6 +38,13 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetMyEvents
                     .Where(x => x.EventUsers.Any(e => e.UserProfileId == curUser.Id) && x.EventTestTypes.Any(e => e.TestType.Mode == request.TestTypeMode))
                     .AsQueryable();
 
+                if (request.FromDate != null && request.TillDate != null) 
+                {
+                    myEvents = myEvents.Where(p => p.FromDate >= request.FromDate && p.TillDate <= request.TillDate ||
+                                                    (request.FromDate <= p.FromDate && p.FromDate <= request.TillDate) && (request.FromDate <= p.TillDate && p.TillDate >= request.TillDate) ||
+                                                    (request.FromDate >= p.FromDate && p.FromDate <= request.TillDate) && (request.FromDate <= p.TillDate && p.TillDate <= request.TillDate));
+                }
+
                 return _paginationService.MapAndPaginateModel<Event, EventDto>(myEvents, request);
             }
 

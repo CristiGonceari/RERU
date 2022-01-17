@@ -7,9 +7,11 @@ import { ConfirmModalComponent } from 'projects/erp-shared/src/lib/modals/confir
 import { PaginationModel } from '../../../utils/models/pagination.model';
 import { PlanService } from '../../../utils/services/plan/plan.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
-import { PlansCalendarComponent } from './plans-calendar/plans-calendar.component';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
+import { EventCalendarComponent } from '../../../utils/components/event-calendar/event-calendar.component';
+import { CalendarDay } from '../../../utils/models/calendar/calendarDay';
+import { Events } from '../../../utils/models/calendar/events';
 
 @Component({
   selector: 'app-plans-list',
@@ -19,14 +21,15 @@ import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
 
 export class PlansListComponent implements OnInit {
- 
-  @ViewChild(PlansCalendarComponent)  currentMonth: boolean;
+
+  @ViewChild(EventCalendarComponent) currentMonth: boolean;
+
+  public calendar: CalendarDay[] = [];
 
   selectedDay;
   date: Date;
 
   isLoading: boolean = true;
-  isLoadingTable: boolean = true;
 
   plans: any[] = [];
   pagination: PaginationModel = new PaginationModel();
@@ -42,6 +45,9 @@ export class PlansListComponent implements OnInit {
   no: string;
   yes: string;
 
+  displayMonth: string;
+  displayYear: number;
+
   constructor(private planService: PlanService,
               private router: Router,
               private route: ActivatedRoute,
@@ -54,41 +60,47 @@ export class PlansListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getListByDate(data :any = {}): void
-  { 
-    if(data.clickedDay != null){
+  getListByDate(data: any = {}): void {
+    if (data.clickedDay != null) {
       this.selectedDay = data.clickedDay;
     }
 
-    this.isLoadingTable = false;
+    this.isLoading = true;
 
     const request = {
       date: data.clickedDay || this.selectedDay,
       page: data.page || this.pagination.currentPage,
-			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize
     }
-    
+
     this.planService.getByDate(request).subscribe(response => {
       if (response.success) {
         this.plans = response.data.items || [];
         this.pagination = response.data.pagedSummary;
-        this.isLoadingTable = true;
+        this.isLoading = false;
       }
     });
   }
 
-  list(data :any = {}): void {
-    if (data.fromDate != null && data.tillDate != null){
-      this.tillDate = data.tillDate,
-      this.fromDate = data.fromDate
-    }
-    
+  list(data: any = {}): void {
+    this.selectedDay = null;
     this.isLoading = true;
+    
+    if (data.fromDate != null && data.tillDate != null) {
+      this.tillDate = data.tillDate,
+        this.fromDate = data.fromDate
+    }
+    if (data.displayMonth != null && data.displayYear != null) {
+      this.displayMonth = data.displayMonth;
+      this.displayYear = data.displayYear;
+    }
+
+    
     const request = {
-      fromDate:  this.parseDates(this.fromDate),
-      tillDate:  this.parseDates(this.tillDate),
+      fromDate: this.parseDates(this.fromDate),
+      tillDate: this.parseDates(this.tillDate),
       page: data.page || this.pagination.currentPage,
-      itemsPerPage: data.itemsPerPage || this.pagination.pageSize 
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize
     }
 
     this.planService.list(request).subscribe(response => {
@@ -103,8 +115,8 @@ export class PlansListComponent implements OnInit {
     });
   }
 
-  parseDates(date){
-      
+  parseDates(date) {
+
     const day = date && date.getDate() || -1;
     const dayWithZero = day.toString().length > 1 ? day : '0' + day;
     const month = date && date.getMonth() + 1 || -1;
@@ -112,7 +124,7 @@ export class PlansListComponent implements OnInit {
     const year = date && date.getFullYear() || -1;
 
     return `${year}-${monthWithZero}-${dayWithZero}`;
-    
+
   }
 
   openDeleteModal(id){
@@ -150,8 +162,35 @@ export class PlansListComponent implements OnInit {
  }
 
   navigate(id) {
-		this.router.navigate(['plan/', id, 'overview'], { relativeTo: this.route });
-	}
+    this.router.navigate(['plan/', id, 'overview'], { relativeTo: this.route });
+  }
+
+  getListOfCoutedPlans(data) {
+    const request = {
+      fromDate: this.parseDates(data.fromDate),
+      tillDate: this.parseDates(data.tillDate)
+    }
+    this.planService.getPlanCount(request).subscribe(response => {
+      if (response.success) {
+        this.countedPlans = response.data;
+
+        for (let calendar of data.calendar) {
+
+          let data = new Date(calendar.date);
+
+          for (let values of response.data) {
+
+            let c = new Date(values.date);
+            let compararea = +data == +c;
+
+            if (compararea) {
+              calendar.count = values.count;
+            }
+          }
+        }
+      }
+    })
+  }
 
 }
 

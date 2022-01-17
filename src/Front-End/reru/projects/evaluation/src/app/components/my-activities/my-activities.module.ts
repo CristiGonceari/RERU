@@ -27,7 +27,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     MyPollsComponent,
     EventsTableComponent,
     PollsTableComponent,
-    TestsTableComponent
+    TestsTableComponent,
   ],
   imports: [
     CommonModule,

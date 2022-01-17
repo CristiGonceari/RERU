@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateComponent } from './components/date/date.component';
 import { HashOptionInputComponent } from './components/hash-option-input/hash-option-input.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { EventCalendarComponent } from './components/event-calendar/event-calendar.component';
+import { CalendarChunkPipe } from './pipes/calendar-chunk.pipe';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     DateComponent,
     HashOptionInputComponent,
     SafeHtmlPipe,
+    EventCalendarComponent,
+    CalendarChunkPipe
   ],
   imports: [
     HttpClientModule,
@@ -36,7 +40,9 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     LoadingSpinnerComponent,
     SafeHtmlPipe,
     TranslateModule,
-    DateComponent
+    DateComponent,
+    EventCalendarComponent
+
   ]
 })
 export class UtilsModule { }

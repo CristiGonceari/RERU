@@ -31,7 +31,9 @@ namespace CODWER.RERU.Evaluation.Application.Plans.GetPlans
 
             if (request.FromDate != null && request.TillDate != null)
             {
-                plans = plans.Where(p => p.FromDate.Date >= request.FromDate && p.TillDate.Date <= request.TillDate);
+                plans = plans.Where(p => p.FromDate.Date >= request.FromDate && p.TillDate.Date <= request.TillDate ||
+                                                    (request.FromDate <= p.FromDate.Date && p.FromDate.Date <= request.TillDate) && (request.FromDate <= p.TillDate.Date && p.TillDate.Date >= request.TillDate) ||
+                                                    (request.FromDate >= p.FromDate.Date && p.FromDate.Date <= request.TillDate) && (request.FromDate <= p.TillDate.Date && p.TillDate.Date <= request.TillDate));
             }
 
             return await _paginationService.MapAndPaginateModelAsync<Plan, PlanDto>(plans, request);

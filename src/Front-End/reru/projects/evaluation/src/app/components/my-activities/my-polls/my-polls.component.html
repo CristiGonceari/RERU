@@ -4,41 +4,59 @@
       <div class="card-title font-weight-bolder">{{'polls.polls' | translate}}</div>
     </div>
     <div class="card-body">
+      <app-event-calendar 
+        (onDatePicked)="getListByDate($event)" 
+        (listOfDates)="getEvents($event)"
+        (listOfCountedEvents)="getListOfCoutedEvents($event)">
+      </app-event-calendar>
+    </div>
+    <div class="card-body pt-0">
+
       <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
       <div *ngIf="!isLoading"
         class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
         id="kt_datatable">
-        <table class="datatable table">
+        <div class="card">
+          <div class="card-header text-center" *ngIf="selectedDay != null">
+            {{ 'calendar.selected-date' | translate }}: {{selectedDay}}
+          </div>
+          <div class="card-header text-center" *ngIf="selectedDay == null">
+            {{ 'calendar.'+ displayMonth | translate }} {{displayYear}}
+          </div>
+          <table class="datatable table">
             <tbody class="datatable-body">
-                <ng-container *ngFor="let event of events; let i = index">
-                    <tr (click)="toggleShow(event.id)" style="cursor: pointer;">
-                        <td class="datatable-cell datatable-toggle-detail" scope="col" style="width: 30px;">
-                            <a class="datatable-toggle-detail">
-                                <i class="fa" [ngClass]="{ 'fa-caret-right' : !(show && eventId == event.id), 'fa-caret-down' : (show && eventId == event.id) }"></i>
-                            </a>
-                        </td>
-                        <td data-field="Title" aria-label="Title" class="datatable-cell">
-                            <b>{{event.name}}</b>
-                        </td>
-                    </tr>
+              <ng-container *ngFor="let event of events; let i = index">
+                <tr (click)="toggleShow(event.id)" style="cursor: pointer;">
+                  <td class="datatable-cell datatable-toggle-detail" scope="col" style="width: 30px;">
+                    <a class="datatable-toggle-detail">
+                      <i class="fa"
+                        [ngClass]="{ 'fa-caret-right' : !(show && eventId == event.id), 'fa-caret-down' : (show && eventId == event.id) }"></i>
+                    </a>
+                  </td>
+                  <td data-field="Title" aria-label="Title" class="datatable-cell">
+                    <b>{{event.name}}</b>
+                  </td>
+                </tr>
 
-                    <ng-container *ngIf="eventId == event.id && show">
-                      <tr>
-                        <td class="datatable-detail" colspan="13">
-                            <app-polls-table [id]="event.id"></app-polls-table>
-                        </td>
-                      </tr>
-                    </ng-container>
+                <ng-container *ngIf="eventId == event.id && show">
+                  <tr>
+                    <td class="datatable-detail" colspan="13">
+                      <app-polls-table [id]="event.id"></app-polls-table>
+                    </td>
+                  </tr>
                 </ng-container>
+              </ng-container>
             </tbody>
             <tbody class="datatable-body" *ngIf="!events.length">
               <tr>
-                  <td colspan="6" class="text-center">
-                      {{ 'message.no-record' | translate }}
-                  </td>
+                <td colspan="6" class="text-center">
+                  {{ 'message.no-record' | translate }}
+                </td>
               </tr>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
         <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
           *ngIf="events.length > 5" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
           [size]="pagedSummary.pageSize"
