@@ -8,6 +8,7 @@ using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestQuestions;
+using System;
 
 namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
 {
@@ -16,12 +17,14 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly IQuestionUnitService _questionUnitService;
+        private readonly Random _random;
 
         public GetTestQuestionQueryHandler(AppDbContext appDbContext, IMapper mapper, IQuestionUnitService questionUnitService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _questionUnitService = questionUnitService;
+            _random = new Random();
         }
 
         public async Task<TestQuestionDto> Handle(GetTestQuestionQuery request, CancellationToken cancellationToken)
@@ -45,6 +48,12 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
             var answer = _mapper.Map<TestQuestionDto>(questionUnit);
             answer.AnswerStatus = testQuestion.AnswerStatus;
             answer.TimeLimit = testQuestion.TimeLimit;
+
+            if (questionUnit.QuestionType == QuestionTypeEnum.MultipleAnswers || questionUnit.QuestionType == QuestionTypeEnum.OneAnswer)
+            {
+                var options = answer.Options.Where(x => x.QuestionUnitId == questionUnit.Id).OrderBy(opt => _random.Next()).ToList();
+                answer.Options = options;
+            }
 
             if (testQuestion.AnswerStatus == AnswerStatusEnum.Answered)
             {

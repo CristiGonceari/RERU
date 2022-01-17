@@ -10,6 +10,7 @@ using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestQuestions;
+using System;
 
 namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestions
 {
@@ -19,6 +20,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestions
         private readonly IMapper _mapper;
         private readonly IQuestionUnitService _questionUnitService;
         private readonly IPaginationService _paginationService;
+        private readonly Random _random;
 
         public GetTestQuestionsQueryHandler(AppDbContext appDbContext, IMapper mapper, IQuestionUnitService questionUnitService, IPaginationService paginationService)
         {
@@ -26,6 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestions
             _mapper = mapper;
             _questionUnitService = questionUnitService;
             _paginationService = paginationService;
+            _random = new Random();
         }
 
         public async Task<PaginatedModel<TestQuestionDto>> Handle(GetTestQuestionsQuery request, CancellationToken cancellationToken)
@@ -45,6 +48,12 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestions
                 if (testQuestionDto.QuestionType == QuestionTypeEnum.HashedAnswer)
                 {
                     testQuestionDto.Question = (await _questionUnitService.GetHashedQuestionUnit(testQuestionDto.QuestionUnitId)).Question;
+                }
+
+                if (testQuestionDto.QuestionType == QuestionTypeEnum.MultipleAnswers || testQuestionDto.QuestionType == QuestionTypeEnum.OneAnswer)
+                {
+                    var options = testQuestionDto.Options.Where(x => x.QuestionUnitId == testQuestionDto.QuestionUnitId).OrderBy(opt => _random.Next()).ToList();
+                    testQuestionDto.Options = options;
                 }
 
                 if (testQuestionDto.AnswerStatus == AnswerStatusEnum.Answered)
