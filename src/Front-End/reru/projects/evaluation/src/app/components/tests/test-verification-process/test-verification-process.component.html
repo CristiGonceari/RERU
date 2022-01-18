@@ -35,7 +35,7 @@
                   [innerHTML]="question | safeHtml">
               </p>
               <div *ngIf="fileId">
-                  <div *ngIf="imageUrl" class="d-block">
+                  <!-- <div *ngIf="imageUrl" class="d-block">
                       <img [src]="imageUrl" class="h-200px rounded">
                   </div>
                   <video *ngIf="videoUrl" class="h-200px rounded" controls>
@@ -43,7 +43,8 @@
                   </video>
                   <audio *ngIf="audioUrl" controls>
                       <source [src]="audioUrl" type="audio/mpeg">
-                  </audio>
+                  </audio> -->
+                  <app-get-media-file [fileId]="fileId"></app-get-media-file>
               </div>
             </div>
             <span *ngIf="correctQuestion" class="font-size-lg">{{'verify-test.correct-question' | translate}}:</span>

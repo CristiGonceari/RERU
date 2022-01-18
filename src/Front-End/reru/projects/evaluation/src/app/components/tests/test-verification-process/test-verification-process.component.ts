@@ -173,7 +173,6 @@ export class TestVerificationProcessComponent implements OnInit {
 					this.questionUnitId = res.data.questionUnitId;
 					this.points = (res.data.evaluatorPoints === 0) ? '' : res.data.evaluatorPoints;
 					this.fileId = res.data.questionUnitMediaFileId;
-          				if (res.data.questionUnitMediaFileId) this.getMediaFile(this.fileId);
 				}
 			},
 			(err) => {
@@ -183,41 +182,8 @@ export class TestVerificationProcessComponent implements OnInit {
 				})
 			});
 	}
-
-	getMediaFile(fileId) {
-		this.isLoadingMedia = true;
-		this.fileService.get(fileId).subscribe( res => {
-		  this.resportProggress(res);
-		})
-	  }
 	
-	  private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
-		switch(httpEvent.type)
-		{
-		  case HttpEventType.Response:
-			if (httpEvent.body instanceof Array) {
-			  for (const filename of httpEvent.body) {
-				this.filenames.unshift(filename);
-			  }
-			} else {
-			  this.fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
-			  const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
-			  const file = new File([blob], this.fileName, { type: httpEvent.body.type });
-			  this.readFile(file).then(fileContents => {
-				if (blob.type.includes('image')) this.imageUrl = fileContents;
-				else if (blob.type.includes('video')) this.videoUrl = fileContents;
-				else if (blob.type.includes('audio')) {
-				  this.audioUrl = fileContents;
-				  this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
-				}
-			  }).then(this.videoUrl = this.audioUrl = this.imageUrl = this.fileName = null);
-			this.isLoadingMedia = false;
-		  }
-		  break;
-		}
-	  }
-	
-	  public async readFile(file: File): Promise<string | ArrayBuffer> {
+	public async readFile(file: File): Promise<string | ArrayBuffer> {
 		return new Promise<string | ArrayBuffer>((resolve, reject) => {
 		  const reader = new FileReader();
 	  
@@ -274,31 +240,8 @@ export class TestVerificationProcessComponent implements OnInit {
 			}
 		  break;
 		}
-	  }
-	
-	  public readOptionsFile(file: File): Promise<string | ArrayBuffer> {
-		
-		return new Promise<string | ArrayBuffer>((resolve, reject) => {
-		  const reader = new FileReader();
-	  
-		  reader.onload = e => {
-			return resolve((e.target as FileReader).result);
-		  };
-	
-		  reader.onerror = e => {
-			console.error(`FileReader failed on file ${file.name}.`);
-			return reject(null);
-		  };
-	
-		  if (!file) {
-			console.error('No file to read.');
-			return reject(null);
-		  }
-	
-		  reader.readAsDataURL(file);
-		});
-	  }
-	  
+	}
+ 
 	verifyTest(): void {
 		forkJoin([
 			this.translate.get('modal.error'),
