@@ -1,0 +1,66 @@
+# Global env
+name: 'global' # name for global k8s objects
+db_connection: '' # MSSQL server connection string 
+
+timeZone: Europe/Chisinau
+
+ingress:
+  annotations: {}
+
+
+imagePullSecret:
+  name: regcred
+
+microservice:
+  port: 8080
+  deployment:
+    liveness:
+      initialDelaySeconds: 20
+      periodSeconds: 60
+      timeoutSeconds: 20
+    readiness:
+      initialDelaySeconds: 5
+      periodSeconds: 60
+      timeoutSeconds: 20
+    resources:
+      requests:
+        memory: "250Mi"
+        cpu: "250m"
+      limits:
+        memory: "512Mi"
+        cpu: "300m"
+    service:
+      port: 8080
+      portName: out
+      type: ClusterIP
+
+dotnet_microservice:
+  deployment:
+    env:
+      - name: ASPNETCORE_URLS
+        value: 'http://*:8080'
+      - name: ASPNETCORE_ENVIRONMENT
+        value: 'Production'
+    liveness:
+      livenessProbe: /api/discover
+    appsettings: /app/appsettings.json
+
+angular_microservice:
+  deployment:
+    liveness:
+      livenessProbe: /
+    appsettings: /usr/share/nginx/html/assets/config/appsettings.json
+    resources:
+      requests:
+        memory: "250Mi"
+        cpu: "250m"
+      limits:
+        memory: "250Mi"
+        cpu: "250m"
+
+# application variables
+reru_public_gateway:
+  service:
+    port: 80
+  ingress:
+    path: /
