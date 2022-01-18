@@ -16,8 +16,6 @@ import { QuestionDetailsComponent } from './question-details/question-details.co
 import { TagInputModule } from 'ngx-chips';
 import { QuestionOverviewComponent } from './question-details/question-overview/question-overview.component';
 import { SearchQuestionComponent } from './question-list/search-question/search-question.component'
-import { QuestionOptionsComponent } from './question-details/question-options/question-options.component'
-import { AddOptionComponent } from './question-details/question-options/add-option/add-option.component';
 import { QuestionListTableComponent } from './question-list/question-list-table/question-list-table.component';
 
 @NgModule({
@@ -28,8 +26,6 @@ import { QuestionListTableComponent } from './question-list/question-list-table/
     QuestionDetailsComponent,
     QuestionOverviewComponent,
     SearchQuestionComponent,
-    QuestionOptionsComponent,
-    AddOptionComponent,
     QuestionListTableComponent,
   ],
 	imports: [

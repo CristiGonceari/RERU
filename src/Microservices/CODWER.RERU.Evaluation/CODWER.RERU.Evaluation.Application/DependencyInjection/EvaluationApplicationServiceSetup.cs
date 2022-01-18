@@ -29,7 +29,9 @@ namespace CODWER.RERU.Evaluation.Application.DependencyInjection
                 .AddScoped(typeof(IGetQuestionUnitPdf), typeof(GetQuestionUnitPdf))
                 .AddScoped(typeof(IGetTestPdf), typeof(GetTestPdf))
                 .AddScoped(typeof(IGetTestTemplatePdf), typeof(GetTestTemplatePdf))
-                .AddScoped(typeof(IPdfService), typeof(PdfService));
+                .AddScoped(typeof(IPdfService), typeof(PdfService))
+                .AddScoped(typeof(IInternalNotificationService), typeof(InternalNotificationService))
+                .AddScoped(typeof(ILoggingService<>), typeof(LoggingService<>));
         }
     }
 }

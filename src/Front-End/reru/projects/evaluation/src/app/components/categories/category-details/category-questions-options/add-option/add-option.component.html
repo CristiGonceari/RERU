@@ -30,7 +30,7 @@
                         </app-loading-spinner>
                         <div *ngIf="!isLoadingMedia">
                           <div class="d-flex">
-                            <app-confirm-button type="button" class="btn mb-5" (click)="drop.showFileSelector()">Browse</app-confirm-button> 
+                            <app-confirm-button type="button" class="btn mb-5" (click)="drop.showFileSelector()">{{'button.attach' | translate}}</app-confirm-button> 
                             <p class="mb-0 ml-5 mt-1 font-weght-lighter" *ngIf="attachedFile">{{attachedFile.name}}</p>
                             <p class="mb-0 ml-5 mt-2 font-weght-lighter" *ngIf="fileId">{{fileName}}</p>
                           </div>
@@ -56,7 +56,7 @@
                 <div class="text-right border-top pt-10">
                   <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="back()">
                   </app-button>
-                  <app-add-button class="btn" [value]="'button.confirm' | translate" (handle)="confirm()">
+                  <app-add-button class="btn" [value]="'button.confirm' | translate" [disabled]="disableBtn" (handle)="confirm()">
                   </app-add-button>
                 </div>
               </div>

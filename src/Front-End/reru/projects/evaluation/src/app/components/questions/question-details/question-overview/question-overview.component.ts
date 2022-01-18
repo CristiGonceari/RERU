@@ -25,9 +25,9 @@ export class QuestionOverviewComponent implements OnInit {
   imageFiles: File[] = [];
   videoFiles: File[] = [];
   audioFiles: File[] = [];
-  imageUrl: any;
+  imageUrl: string | ArrayBuffer;
   audioUrl: any;
-  videoUrl: any;
+  videoUrl: string | ArrayBuffer;
   filenames: any;
   fileName: string;
   fileId: string;

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 {
-    public class AddTestsCommand : IRequest<Unit>
+    public class AddTestsCommand : IRequest<List<int>>
     {
         public int Id { get; set; }
         public List<int> UserProfileId { get; set; }

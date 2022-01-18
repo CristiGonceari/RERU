@@ -3,4 +3,5 @@ export class TestOptions {
     questionUnitId: number;
     answer: string;
     isSelected: boolean;
+    mediaFileId?: string;
 }

@@ -23,8 +23,8 @@ services:
     <<: *minio-common
     hostname: minio1
     volumes:
-      - .\..\files\data1-1:/data1
-      - .\..\files\data1-2:/data2
+      - data1-1:/data1
+      - data1-2:/data2
     networks:
       - my-network
 
@@ -32,8 +32,8 @@ services:
     <<: *minio-common
     hostname: minio2
     volumes:
-      - .\..\files\data2-1:/data1
-      - .\..\files\data2-2:/data2
+      - data2-1:/data1
+      - data2-2:/data2
     networks:
       - my-network
 
@@ -41,8 +41,8 @@ services:
     <<: *minio-common
     hostname: minio3
     volumes:
-      - .\..\files\data3-1:/data1
-      - .\..\files\data3-2:/data2
+      - data3-1:/data1
+      - data3-2:/data2
     networks:
       - my-network
 
@@ -50,8 +50,8 @@ services:
     <<: *minio-common
     hostname: minio4
     volumes:
-      - .\..\files\data4-1:/data1
-      - .\..\files\data4-2:/data2
+      - data4-1:/data1
+      - data4-2:/data2
     networks:
       - my-network
 

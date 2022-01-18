@@ -45,7 +45,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   timerInterval;
   percent;
 
-  testOptionsList: TestOptions[] = [];
+  testOptionsList = [];
   testQuestionSummary: TestQuestionSummary[] = [];
   questionUnit = new TestQuestion();
   testAnswersInput: TestAnswer[] = [];
@@ -71,6 +71,11 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   filenames: any;
   fileName: string;
   fileId: string;
+
+  optionFileId = [];
+  isLoadingOptionMedia:  boolean = true;
+  optionFilenames: any;
+  optionFileName: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -243,7 +248,6 @@ export class OnePerPagePerformingTestComponent implements OnInit {
         this.testAnswersInput.push(this.parseAnswer(el));
       });
     }
-
     this.postAnswer(+this.answerStatusEnum.Answered);
   }
 
@@ -317,13 +321,22 @@ export class OnePerPagePerformingTestComponent implements OnInit {
         (res) => {
           this.questionUnit = res.data;
           this.testOptionsList = res.data.options;
+          this.testOptionsList.map ( (option) => {
+						// TODO add type Option -> options = array<Option>
+						  option.videoUrl = null
+						  option.imageUrl = null
+						  option.audioUrl = null
+						  return option;
+					  })
+					this.optionFileId = res.data.options.map(el => el.mediaFileId);
+          	for (let i = 0; i < this.optionFileId.length; i++) {
+            	if (this.optionFileId[i] !== null) this.getOptionsMediaFile(this.optionFileId[i], i);
+          	}
           this.hashedOptions = res.data.hashedOptions;
           this.fileId = res.data.mediaFileId;
           if (res.data.mediaFileId) this.getMediaFile(this.fileId);
-
           if (this.questionUnit.timeLimit)
             this.startQuestionTimer();
-
           if (this.questionUnit.answerStatus == AnswerStatusEnum.None)
             this.testQuestionService.postTestQuestions(this.parse(AnswerStatusEnum.Viewed)).subscribe(
               (res) => {
@@ -332,7 +345,6 @@ export class OnePerPagePerformingTestComponent implements OnInit {
                     this.viewed = res.data.filter(st => st.answerStatus === 1).map(id => id.index);
                   });
               });
-
           this.ngDoBoostrap();
         },
         (error) => {
@@ -343,6 +355,45 @@ export class OnePerPagePerformingTestComponent implements OnInit {
         }
       )
   }
+
+  getOptionsMediaFile(optionFileId, index) {
+		this.fileService.get(optionFileId).subscribe(res => {
+		  this.resportOptionsProggress(res, index);
+		})
+	}
+	
+	  private resportOptionsProggress(httpEvent: HttpEvent<string[] | Blob>, index): void
+	  { 
+		  switch(httpEvent.type)
+		  {
+		    case HttpEventType.Response:
+			  if (httpEvent.body instanceof Array) {
+			  for (const filename of httpEvent.body) {
+				this.optionFilenames.unshift(filename);
+			  }
+			} else {
+			  this.optionFileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+			  const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
+			  const file = new File([blob], this.optionFileName, { type: httpEvent.body.type });
+
+			  this.readFile(file).then(fileContents => {
+
+				if (blob.type.includes('image')) {
+          this.testOptionsList[index].imageUrl = fileContents;
+				}
+				else if (blob.type.includes('video')) {
+          this.testOptionsList[index].videoUrl = fileContents;
+				}
+				else if (blob.type.includes('audio')) {
+          this.testOptionsList[index].audioUrl = fileContents;
+				  this.testOptionsList[index].audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.testOptionsList[index].audioUrl);
+				}
+				  this.isLoadingOptionMedia = false;
+			  });
+			}
+		  break;
+		}
+	  }
 
   getMediaFile(fileId) {
     this.isLoadingMedia = true;

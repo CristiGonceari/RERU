@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Application.Services;
+using CVU.ERP.Logging.Models;
+using CVU.ERP.Module.Application.LoggerServices;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 {
@@ -14,11 +18,17 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly IInternalNotificationService _internalNotificationService;
+        private readonly ILoggerService<AddTestCommandHandler> _loggerService;
 
-        public AddTestCommandHandler(AppDbContext appDbContext, IMapper mapper)
+        public AddTestCommandHandler(AppDbContext appDbContext, IMapper mapper, 
+            IInternalNotificationService internalNotificationService,
+            ILoggerService<AddTestCommandHandler> loggerService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _internalNotificationService = internalNotificationService;
+            _loggerService = loggerService;
         }
 
         public async Task<int> Handle(AddTestCommand request, CancellationToken cancellationToken)
@@ -47,6 +57,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 
             _appDbContext.Tests.Add(newTest);
             await _appDbContext.SaveChangesAsync();
+
+            await _internalNotificationService.AddNotification(newTest.UserProfileId, NotificationMessages.YouHaveNewProgrammedTest);
+
+            await _loggerService.Log(new LogData($"Was added a new test with {newTest.TestType.Name} test template at date {newTest.ProgrammedTime.Date}").AsEvaluation());
 
             return newTest.Id;
         }

@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CVU.ERP.Logging.Context;
+﻿using CVU.ERP.Logging.Context;
 using CVU.ERP.Logging.Entities;
 using CVU.ERP.Logging.Models;
 using CVU.ERP.Module.Application.Providers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace CVU.ERP.Module.Application.LoggerServices.Implementations
 {
@@ -13,14 +14,13 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
     {
         private readonly LoggingDbContext _localLoggingDbContext;
         private readonly IEnumerable<ICurrentApplicationUserProvider> _userProvider;
-
         public LoggerService(LoggingDbContext localLoggingDbContext, IEnumerable<ICurrentApplicationUserProvider> userProvider)
         {
             _localLoggingDbContext = localLoggingDbContext;
             _userProvider = userProvider;
         }
 
-        public async Task Log(LogData data)
+        public virtual async Task Log(LogData data)
         {
             await LocalLog(data);
         }
@@ -47,12 +47,23 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
                 Project = data.Project,
                 UserName = coreUser.Name,
                 UserIdentifier = coreUser.Id,
-                Event = data.Event,
+                Event = !string.IsNullOrWhiteSpace(data.Event) ? data.Event : ParseName(),
                 EventMessage = data.EventMessage,
                 Date = DateTime.Now
             };
 
             await _localLoggingDbContext.Logs.AddAsync(toLog);
+            await _localLoggingDbContext.SaveChangesAsync();
+        }
+
+        private string ParseName()
+        { 
+            var splicedEventName = Regex.Split(typeof(T).Name, @"(?<!^)(?=[A-Z])").ToList();
+            splicedEventName.Remove("Command");
+            splicedEventName.Remove("Handler");
+            splicedEventName.Remove("Query");
+
+            return String.Join(" ", splicedEventName.ToArray());
         }
     }
 }
