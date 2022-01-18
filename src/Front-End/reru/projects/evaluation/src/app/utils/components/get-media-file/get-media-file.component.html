@@ -1,0 +1,14 @@
+<app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
+              [colorClass]="'text-primary'">
+</app-loading-spinner>
+<div *ngIf="!isLoadingMedia">
+    <div *ngIf="imageUrl" class="d-flex justify-content-center">
+        <img [src]="imageUrl" class="h-200px rounded">
+    </div>
+    <video *ngIf="videoUrl" class="h-200px rounded" controls>
+        <source [src]="videoUrl">
+    </video>
+    <audio *ngIf="audioUrl" controls>
+        <source [src]="audioUrl" type="audio/mpeg">
+    </audio>
+</div>

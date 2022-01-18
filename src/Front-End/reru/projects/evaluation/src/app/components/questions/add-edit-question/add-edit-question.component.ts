@@ -10,12 +10,8 @@ import { QuestionByCategoryService } from '../../../utils/services/question-by-c
 import { QuestionUnitStatusEnum } from '../../../utils/enums/question-unit-status.enum';
 import { ReferenceService } from '../../../utils/services/reference/reference.service';
 import { CloudFileService } from '../../../utils/services/cloud-file/cloud-file.service';
-import { DomSanitizer } from '@angular/platform-browser';
-import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
-
-
 
 @Component({
   selector: 'app-add-edit-question',
@@ -25,31 +21,22 @@ import { I18nService } from '../../../utils/services/i18n/i18n.service';
 export class AddEditQuestionComponent implements OnInit {
   questionForm: FormGroup;
   questionUnitId: number;
+  disableBtn: boolean = false;
 
   types: SelectItem[] = [{ label: '', value: '' }];
   categories: SelectItem[] = [{ label: '', value: '' }];
   category: number;
   value = false;
   isLoading: boolean = true;
-  isLoadingMedia: boolean;
   items = [];
   placeHolderString = '+ Tag'
   tags: any;
   fileId: string;
   fileType: string = null;
   attachedFile: File;
-  imageFiles: File[] = [];
-  videoFiles: File[] = [];
-  audioFiles: File[] = [];
-  imageUrl: any;
-  audioUrl: any;
-  videoUrl: any;
-  filenames: any;
-  fileName: string; 
-  
   title: string;
   description: string;
-
+  
   constructor(
     private questionService: QuestionService,
     private activatedRoute: ActivatedRoute,
@@ -60,7 +47,6 @@ export class AddEditQuestionComponent implements OnInit {
     private formBuilder: FormBuilder,
 		private notificationService: NotificationsService,
     private fileService : CloudFileService,
-    private sanitizer: DomSanitizer
   ) {  }
 
   ngOnInit(): void {
@@ -84,8 +70,9 @@ export class AddEditQuestionComponent implements OnInit {
 				this.questionService.get(this.questionUnitId).subscribe(res => {
           this.fileId = res.data.mediaFileId;
 					this.initForm(res.data);
-          if (res.data.mediaFileId) this.getMediaFile(this.fileId);
-          res.data.tags[0] != ('undefined' || 'null') ? this.tags = res.data.tags : this.tags = null;
+          if (res.data.tags[0] != null && res.data.tags[0] != 'undefined') {
+            this.tags = res.data.tags[0].split(',')
+          } else this.tags = [];
 				})
 			}
 			else this.initForm();
@@ -148,41 +135,8 @@ export class AddEditQuestionComponent implements OnInit {
     this.referenceService.getQuestionCategory().subscribe((res) => this.categories = res.data);
   }
 
-  getMediaFile(fileId) {
-    this.isLoadingMedia = true;
-    this.fileService.get(fileId).subscribe( res => {
-      this.resportProggress(res);
-    })
-  }
-
-  private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void
-  {
-    switch(httpEvent.type)
-    {
-      case HttpEventType.Response:
-        if (httpEvent.body instanceof Array) {
-          for (const filename of httpEvent.body) {
-            this.filenames.unshift(filename);
-          }
-        } else {
-          this.fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
-          const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
-          const file = new File([blob], this.fileName, { type: httpEvent.body.type });
-          this.readFile(file).then(fileContents => {
-            if (blob.type.includes('image')) this.imageUrl = fileContents;
-            else if (blob.type.includes('video')) this.videoUrl = fileContents;
-            else if (blob.type.includes('audio')) {
-              this.audioUrl = fileContents;
-              this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
-            }
-          });
-        this.isLoadingMedia = false;
-      }
-      break;
-    }
-  }
-
   addQuestion() {
+    this.disableBtn = true;
     const request = new FormData();
     if (this.attachedFile) {
       this.fileType = '4';
@@ -218,6 +172,7 @@ export class AddEditQuestionComponent implements OnInit {
   };
 
   editQuestion(): void {
+    this.disableBtn = true;
     const request = new FormData();
 
     if (this.attachedFile)
@@ -225,15 +180,15 @@ export class AddEditQuestionComponent implements OnInit {
       this.fileType = '4';
       request.append('Data.FileDto.File', this.attachedFile);
       request.append('Data.FileDto.Type', this.fileType);
+      request.append('Data.MediaFileId', this.fileId);
     }
     request.append('Data.Id', this.questionForm.value.id);
     request.append('Data.Question', this.questionForm.value.question);
     request.append('Data.QuestionCategoryId', this.questionForm.value.questionCategoryId);
     request.append('Data.QuestionPoints', this.questionForm.value.questionPoints);
     request.append('Data.QuestionType', this.questionForm.value.questionType);
-    request.append('Data.QuestionStatus', this.questionForm.value.status);
+    request.append('Data.Status', this.questionForm.value.status);
     request.append('Data.Tags', this.tags);
-    request.append('Data.MediaFileId', this.fileId);
 
     this.questionService.edit(request).subscribe(() => {
       forkJoin([
@@ -260,70 +215,8 @@ export class AddEditQuestionComponent implements OnInit {
     this.location.back();
   }
 
-  onSelect(event) {
-    event.addedFiles.forEach((element) => {
-        const regexImage = new RegExp('(.*?).(jpg|png|jpeg|svg|gif)$');
-        const regexVideo = new RegExp('(.*?).(mp4|3gp|ogg|wmv|flv|avi)$');
-        const regexAudio = new RegExp('(.*?).(mp3|oga|wav)$');
-
-        if (regexImage.test(element.name)) {
-          this.imageFiles.push(...event.addedFiles);
-          this.readFile(this.imageFiles[0]).then(fileContents => {
-            this.imageUrl = fileContents;
-          });
-        } else if (regexVideo.test(element.name)) {
-          this.videoFiles.push(...event.addedFiles);
-          this.readFile(this.videoFiles[0]).then(fileContents => {
-            this.videoUrl = fileContents;
-          });
-        } else if (regexAudio.test(element.name)){
-          this.audioFiles.push(...event.addedFiles);
-          this.readFile(this.audioFiles[0]).then(fileContents => {
-            this.audioUrl = fileContents;
-            this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
-          });
-        } else {
-          forkJoin([
-            this.translate.get('modal.error'),
-            this.translate.get('media.invalid-type'),
-          ]).subscribe(([title, description]) => {
-            this.title = title;
-            this.description = description;
-            });
-          this.notificationService.error(this.title, this.description,  NotificationUtil.getDefaultConfig());
-        }
-        this.attachedFile = event.addedFiles[0];
-    });
-}   
-
-  onRemoved() {
-    this.imageFiles = this.videoFiles = this.audioFiles = [];
-    this.videoUrl = this.audioUrl = this.imageUrl = this.fileName = null;
-    // this.fileService.delete(this.fileId).subscribe( res => {
-    //   if(res) this.fileId = null;
-    // })
-  }
-
-  public async readFile(file: File): Promise<string | ArrayBuffer> {
-    return new Promise<string | ArrayBuffer>((resolve, reject) => {
-      const reader = new FileReader();
-  
-      reader.onload = e => {
-        return resolve((e.target as FileReader).result);
-      };
-
-      reader.onerror = e => {
-        console.error(`FileReader failed on file ${file.name}.`);
-        return reject(null);
-      };
-
-      if (!file) {
-        console.error('No file to read.');
-        return reject(null);
-      }
-
-      reader.readAsDataURL(file);
-    });
+  checkFile(event) {
+    this.attachedFile = event;
   }
 
 }
