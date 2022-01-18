@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.reru_internal_gateway.name }}-service
+spec:
+  selector:
+    app: {{ .Values.reru_internal_gateway.name }}
+  ports:
+   - protocol: TCP
+     port: {{ .Values.microservice.deployment.service.port }}
+     targetPort: {{ .Values.microservice.deployment.port }}
+     name: {{ .Values.microservice.deployment.service.portName }}
+  type: {{ .Values.microservice.deployment.service.type }}
