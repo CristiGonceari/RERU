@@ -64,7 +64,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
             var user = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == newTest.UserProfileId);
             var testType = await _appDbContext.TestTypes.FirstOrDefaultAsync(x => x.Id == newTest.TestTypeId);
 
-            await _loggerService.Log(new LogData($"User {user.GetFullName()} was assigned to test with {testType.Name} test template at {newTest.ProgrammedTime.Date}").AsEvaluation());
+            await _loggerService.Log(new LogData($"User {user.GetFullName()} was assigned to test with {testType.Name} test template at {newTest.ProgrammedTime.ToUniversalTime()}").AsEvaluation());
 
             return newTest.Id;
         }
