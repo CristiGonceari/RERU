@@ -30,13 +30,6 @@ namespace CODWER.RERU.Core.Application.Modules.UpdateModulePermissions
             {
                 var allModulePermissions = await _moduleClient.GetPermissions(applicationModule);
 
-                for (int i = 0; i < 5; i++)
-                {
-                    Console.WriteLine("_____________________________________________________________________________");
-                }
-                Console.WriteLine($"allPermission {allModulePermissions != null} ");
-
-
                 if (allModulePermissions != null)
                 {
                     request.Module.Permissions.RemoveAll(dbPermission =>

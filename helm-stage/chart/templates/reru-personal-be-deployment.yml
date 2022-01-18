@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.reru_personal.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.reru_personal.name }}
+  replicas: {{ .Values.reru_personal.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.reru_personal.name }}
+    spec:
+      volumes:
+        - name: {{ .Values.name }}-application-settings
+          configMap:
+            name: {{ .Values.name }}-application-settings
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecret.name }}
+      containers:
+      - name: {{ .Values.reru_personal.name }}
+        image: {{ .Values.reru_personal.image.repository }}:{{ .Values.tag }}
+        imagePullPolicy: Always
+        env:
+        - name: ConnectionStrings__Default
+          value: {{ .Values.reru_personal.database.connection_string }}   
+        - name: ConnectionStrings__Log
+          value: {{ .Values.reru_personal.database.log_connection_string }}   
+        - name: TZ
+          value: {{ .Values.timeZone }}
+        {{- if .Values.dotnet_microservice.deployment.env }}
+{{ toYaml .Values.dotnet_microservice.deployment.env | indent 8 }}
+        {{- end }}             
+        ports:
+        - containerPort: {{ .Values.microservice.port }}
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.dotnet_microservice.deployment.liveness.livenessProbe }}
+            port: {{ .Values.microservice.port }}
+          initialDelaySeconds: {{ .Values.microservice.deployment.liveness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.microservice.deployment.liveness.periodSeconds }}
+          timeoutSeconds: {{ .Values.microservice.deployment.liveness.timeoutSeconds }}
+
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.dotnet_microservice.deployment.liveness.livenessProbe }}
+            port: {{ .Values.microservice.port }}
+          initialDelaySeconds: {{ .Values.microservice.deployment.readiness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.microservice.deployment.readiness.periodSeconds }}
+          timeoutSeconds: {{ .Values.microservice.deployment.readiness.timeoutSeconds }}
+        volumeMounts:
+          - name: {{ .Values.name }}-application-settings
+            mountPath: {{ .Values.dotnet_microservice.deployment.appsettings }}
+            subPath: reru_personal.appsettings.json
+
