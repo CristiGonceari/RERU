@@ -341,6 +341,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
           	}
           this.hashedOptions = res.data.hashedOptions;
           this.fileId = res.data.mediaFileId;
+          this.isLoadingMedia = false;
           if (this.questionUnit.timeLimit)
             this.startQuestionTimer();
           if (this.questionUnit.answerStatus == AnswerStatusEnum.None)

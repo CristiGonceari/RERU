@@ -19,7 +19,6 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
   styleUrls: ['./view-test-result.component.scss']
 })
 export class ViewTestResultComponent implements OnInit {
-  isDisabled = true;
   testId: number;
   index = 1;
   count: number;
@@ -34,13 +33,11 @@ export class ViewTestResultComponent implements OnInit {
   verifiedStatus = [];
   questionType;
   enum = QuestionUnitTypeEnum;
-  hashedOptions;
   correctAnswer: any;
   notCorrectAnswer: any;
   pager: number[] = [];
   correctQuestion;
   summaryList;
-  closed;
   result;
   correctAnswers;
   isLoading: boolean = true;
@@ -50,7 +47,6 @@ export class ViewTestResultComponent implements OnInit {
 	imageUrl: any;
 	audioUrl: any;
 	videoUrl: any;
-	filenames: any;
 	fileName: string;
 	fileId: string;
 
@@ -157,7 +153,6 @@ export class ViewTestResultComponent implements OnInit {
           this.maxPoints = res.data.questionMaxPoints;
           this.accumulatedPoints = res.data.evaluatorPoints;
           this.fileId = res.data.questionUnitMediaFileId;
-            // if (res.data.questionUnitMediaFileId) this.getMediaFile(this.fileId);
         }
       },
       (err) => {
@@ -269,5 +264,5 @@ export class ViewTestResultComponent implements OnInit {
 	
 		  reader.readAsDataURL(file);
 		});
-	  }
+  }
 }

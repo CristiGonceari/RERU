@@ -4,6 +4,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NotificationsService } from 'angular2-notifications';
 import { CloudFileService } from '../../services/cloud-file/cloud-file.service';
 import { NotificationUtil } from '../../util/notification.util';
+import { forkJoin } from 'rxjs';
+import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-add-edit-media-file',
@@ -24,18 +26,21 @@ export class AddEditMediaFileComponent implements OnInit {
   
   addedFiles;
   attachedFile: File;
-  isLoading: boolean = true;
   isLoadingMedia: boolean = false;
+
+  title: string;
+  description: string;
+
   @Input() fileId: string;
   @Output() handleFile: EventEmitter<File>  = new EventEmitter<File>();
 
   constructor( private sanitizer: DomSanitizer,
               private notificationService: NotificationsService,
               private fileService: CloudFileService,
+              public translate: I18nService,
     ) { }
 
   ngOnInit(): void {
-    this.isLoading = false;
     if (this.fileId != undefined) {
       this.isLoadingMedia = true;
       this.fileService.get(this.fileId).subscribe( res => {
@@ -78,7 +83,14 @@ export class AddEditMediaFileComponent implements OnInit {
                 this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
             });
         } else {
-          this.notificationService.error('Error', 'Invalid file type',  NotificationUtil.getDefaultConfig());
+          forkJoin([
+            this.translate.get('modal.error'),
+            this.translate.get('media.invalid-type'),
+          ]).subscribe(([title, description]) => {
+            this.title = title;
+            this.description = description;
+            });
+          this.notificationService.error(this.title, this.description,  NotificationUtil.getDefaultConfig());
         }
         this.attachedFile = event.addedFiles[0];
         this.handleFile.emit(this.attachedFile);

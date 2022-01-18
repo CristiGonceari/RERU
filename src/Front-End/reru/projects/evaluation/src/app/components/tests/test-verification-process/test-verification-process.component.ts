@@ -26,7 +26,6 @@ import { I18nService } from '../../../utils/services/i18n/i18n.service';
 export class TestVerificationProcessComponent implements OnInit {
 	testId: number;
 	index = 1;
-	count: number;
 	question: string;
 	answer: string;
 	comment: string;
@@ -37,7 +36,6 @@ export class TestVerificationProcessComponent implements OnInit {
 	verifiedStatus = [];
 	questionType;
 	enum = QuestionUnitTypeEnum;
-	hashedOptions;
 	autoverified: any;
 	verified: any;
 	pager: number[] = [];
