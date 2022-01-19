@@ -76,12 +76,15 @@ export class MyPollsComponent implements OnInit {
   }
 
   getListByDate(data: any = {}): void {
-    if (data.clickedDay != null) {
-      this.selectedDay = data.clickedDay;
+
+    this.isLoading = true;
+
+    if (data.date != null) {
+      this.selectedDay = this.parseDates(data.date);
     }
 
     const request = {
-      date: data.clickedDay || this.selectedDay,
+      date: this.selectedDay,
       testTypeMode: 1,
       page: data.page || this.pagedSummary.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
@@ -91,6 +94,7 @@ export class MyPollsComponent implements OnInit {
       if (response.success) {
         this.events = response.data.items || [];
         this.pagedSummary = response.data.pagedSummary;
+        this.isLoading = false;
       }
     });
   }

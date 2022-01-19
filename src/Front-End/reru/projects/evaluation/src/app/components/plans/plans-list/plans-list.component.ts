@@ -12,6 +12,7 @@ import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { EventCalendarComponent } from '../../../utils/components/event-calendar/event-calendar.component';
 import { CalendarDay } from '../../../utils/models/calendar/calendarDay';
 import { Events } from '../../../utils/models/calendar/events';
+import { NullTemplateVisitor } from '@angular/compiler';
 
 @Component({
   selector: 'app-plans-list',
@@ -61,14 +62,15 @@ export class PlansListComponent implements OnInit {
   }
 
   getListByDate(data: any = {}): void {
-    if (data.clickedDay != null) {
-      this.selectedDay = data.clickedDay;
+
+    if (data.date != null) {
+      this.selectedDay = this.parseDates(data.date);
     }
 
     this.isLoading = true;
 
     const request = {
-      date: data.clickedDay || this.selectedDay,
+      date:  this.selectedDay,
       page: data.page || this.pagination.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagination.pageSize
     }
