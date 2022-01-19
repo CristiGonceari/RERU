@@ -56,21 +56,12 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit
 
             await _mediator.Send(new AssignTagToQuestionUnitCommand { QuestionUnitId = editQuestionUnit.Id, Tags = request.Data.Tags });
 
-            if (request.Data.MediaFileId !="null")
+            if (request.Data.FileDto != null)
             {
-                var changeMediaFileId = await _appDbContext.QuestionUnits.FirstOrDefaultAsync(qu => qu.MediaFileId == request.Data.MediaFileId);
 
                 var addFile = await _storageFileService.AddFile(request.Data.FileDto);
 
-                ChangeMediaFileId(changeMediaFileId, addFile);
-            }
-            else 
-            {
-                var changeMediaFileId = await _appDbContext.QuestionUnits.FirstOrDefaultAsync(qu => qu.Id == request.Data.Id);
-
-                var addFile = await _storageFileService.AddFile(request.Data.FileDto);
-
-                ChangeMediaFileId(changeMediaFileId, addFile);
+                ChangeMediaFileId(editQuestionUnit, addFile);
             }
 
             return Unit.Value;
