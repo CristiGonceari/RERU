@@ -16,9 +16,6 @@
     <div class="card-header text-center" *ngIf="selectedDay != null">
       {{ 'calendar.selected-date' | translate }}: {{selectedDay}}
     </div>
-    <div class="card-header text-center" *ngIf="selectedDay == null">
-      {{ 'calendar.'+ displayMonth | translate }} {{displayYear}}
-    </div>
     <div class="card-body">
       <table class="datatable table font-size-lg" style="overflow: visible">
         <thead class="text-uppercase text-muted">

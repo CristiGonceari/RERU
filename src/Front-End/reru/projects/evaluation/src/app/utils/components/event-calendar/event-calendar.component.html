@@ -1,12 +1,16 @@
 <div class="center mb-5">
-  <div>
-    <a type="button" (click)="decreaseMonth()" value="-">
+  <div >
+    <a type="button child" class="buttons" (click)="decreaseMonth()" value="-">
       <i class="flaticon2-fast-back mr-25"></i>
     </a>
-    <a type="button" class="btn btn-primary" (click)="setCurrentMonth()" value="today">
-      {{ 'calendar.current-month' | translate }}
+    <a class="child">
+      <strong class="fw-bolder fs-2">
+      <h2>
+       {{ 'calendar.'+ displayMonth | translate }} {{displayYear}}
+      </h2>
+    </strong>
     </a>
-    <a type="button" (click)="increaseMonth()" value="+">
+    <a type="button child" class="buttons" (click)="increaseMonth()" value="+">
       <i class="flaticon2-fast-next ml-25"></i>
     </a>
   </div>
@@ -29,8 +33,9 @@
       <td class="calendar-day" [ngClass]="{
                   'today': c.isToday, 
                    'notDayOfWeek': c.month != onChangeMonth, 
-                    'blue-date': c.isToday
-                        }" *ngFor="let c of row; let j = index" (click)="getClickedDay(c.date)">
+                    'blue-date': c.isToday ,
+                    'selected-date': c.clickedDay
+                        }" *ngFor="let c of row; let j = index" (click)="getClickedDay(c)">
         <div class="calendar-day-header">
           <strong>{{c.date.getDate()}}</strong>
           <div class="d-flex justify-content-center" *ngIf="c.count > 0">

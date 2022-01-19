@@ -49,12 +49,12 @@ export class TestsTableComponent implements OnInit {
   getListByDate(data: any = {}): void {
     this.isLoading = true;
 
-    if (data.clickedDay != null) {
-      this.selectedDay = data.clickedDay;
+    if (data.date != null) {
+      this.selectedDay = this.parseDates(data.date);
     }
 
     const request = {
-      date: data.clickedDay || this.selectedDay,
+      date: this.selectedDay,
       page: data.page || this.pagedSummary.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
     }
