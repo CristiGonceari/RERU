@@ -34,8 +34,8 @@ namespace CODWER.RERU.Identity.Web
                     LockoutEnd = null,
                     LockoutEnabled = true,
                     AccessFailedCount = 0,
-                    Name = null,
-                    LastName = null,
+                    Name = "Admin",
+                    LastName = "Platforma",
                     Avatar = null
                 };
 
