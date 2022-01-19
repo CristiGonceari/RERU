@@ -19,7 +19,6 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
   styleUrls: ['./view-test-result.component.scss']
 })
 export class ViewTestResultComponent implements OnInit {
-  isDisabled = true;
   testId: number;
   index = 1;
   count: number;
@@ -34,13 +33,11 @@ export class ViewTestResultComponent implements OnInit {
   verifiedStatus = [];
   questionType;
   enum = QuestionUnitTypeEnum;
-  hashedOptions;
   correctAnswer: any;
   notCorrectAnswer: any;
   pager: number[] = [];
   correctQuestion;
   summaryList;
-  closed;
   result;
   correctAnswers;
   isLoading: boolean = true;
@@ -50,7 +47,6 @@ export class ViewTestResultComponent implements OnInit {
 	imageUrl: any;
 	audioUrl: any;
 	videoUrl: any;
-	filenames: any;
 	fileName: string;
 	fileId: string;
 
@@ -157,7 +153,6 @@ export class ViewTestResultComponent implements OnInit {
           this.maxPoints = res.data.questionMaxPoints;
           this.accumulatedPoints = res.data.evaluatorPoints;
           this.fileId = res.data.questionUnitMediaFileId;
-            if (res.data.questionUnitMediaFileId) this.getMediaFile(this.fileId);
         }
       },
       (err) => {
@@ -249,40 +244,7 @@ export class ViewTestResultComponent implements OnInit {
     this.router.navigate(['public']);
   }
 
-  getMediaFile(fileId) {
-		this.isLoadingMedia = true;
-		this.fileService.get(fileId).subscribe( res => {
-		  this.resportProggress(res);
-		})
-	  }
-	
-	  private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
-		switch(httpEvent.type)
-		{
-		  case HttpEventType.Response:
-			if (httpEvent.body instanceof Array) {
-			  for (const filename of httpEvent.body) {
-				this.filenames.unshift(filename);
-			  }
-			} else {
-			  this.fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
-			  const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
-			  const file = new File([blob], this.fileName, { type: httpEvent.body.type });
-			  this.readFile(file).then(fileContents => {
-				if (blob.type.includes('image')) this.imageUrl = fileContents;
-				else if (blob.type.includes('video')) this.videoUrl = fileContents;
-				else if (blob.type.includes('audio')) {
-				  this.audioUrl = fileContents;
-				  this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
-				}
-			  }).then(this.videoUrl = this.audioUrl = this.imageUrl = this.fileName = null);
-			this.isLoadingMedia = false;
-		  }
-		  break;
-		}
-	  }
-	
-	  public async readFile(file: File): Promise<string | ArrayBuffer> {
+  public async readFile(file: File): Promise<string | ArrayBuffer> {
 		return new Promise<string | ArrayBuffer>((resolve, reject) => {
 		  const reader = new FileReader();
 	  
@@ -302,5 +264,5 @@ export class ViewTestResultComponent implements OnInit {
 	
 		  reader.readAsDataURL(file);
 		});
-	  }
+  }
 }

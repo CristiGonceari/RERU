@@ -18,7 +18,7 @@
                   transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) " />
               </g>
             </svg>
-            <!--end::Svg Icon--></span>
+          </span>
         </span>
         <b>{{ "tests.options" | translate }}</b>
       </div>
@@ -44,16 +44,8 @@
         <p class="font-size-h2">
           {{ questionName }}
         </p>
-        <div *ngIf="fileId">
-          <div *ngIf="imageUrl" class="d-block">
-            <img [src]="imageUrl" class="h-200px rounded">
-          </div>
-          <video *ngIf="videoUrl" class="h-200px rounded" controls>
-            <source [src]="videoUrl">
-          </video>
-          <audio *ngIf="audioUrl" controls>
-            <source [src]="audioUrl" type="audio/mpeg">
-          </audio>
+        <div *ngIf="questionFileId" class="text-center">
+          <app-get-media-file [fileId]="questionFileId"></app-get-media-file>
         </div>
       </div>
 

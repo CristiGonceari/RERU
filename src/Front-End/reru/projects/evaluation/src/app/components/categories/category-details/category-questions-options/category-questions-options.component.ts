@@ -22,7 +22,6 @@ import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18
   styleUrls: ['./category-questions-options.component.scss']
 })
 export class CategoryQuestionsOptionsComponent implements OnInit {
-
   optionForm: FormGroup;
 
   answer: string;
@@ -43,16 +42,12 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
   no: string;
   yes: string;
 
-  imageFiles: File[] = [];
-  videoFiles: File[] = [];
-  audioFiles: File[] = [];
   imageUrl: any;
   audioUrl: any;
   videoUrl: any;
 
   options = [];
   type: number;
-  newList = [];
   status: number;
   isLoading: boolean = true;
   disable: boolean = false;
@@ -158,66 +153,9 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
       this.type = res.data.questionType;
       this.status = res.data.status;
       this.questionFileId = res.data.mediaFileId;
-        if (res.data.mediaFileId) this.getQuestionMediaFile(this.questionFileId);
       if(this.status == QuestionUnitStatusEnum.Active || this.status == QuestionUnitStatusEnum.Inactive)
         this.disable = true
     })
-  }
-
-  getQuestionMediaFile(questionFileId) {
-    this.isLoadingMedia = true;
-    this.fileService.get(questionFileId).subscribe( res => {
-      this.resportQuestionProggress(res);
-    })
-  }
-
-  private resportQuestionProggress(httpEvent: HttpEvent<string[] | Blob>): void
-  {
-    switch(httpEvent.type)
-    {
-      case HttpEventType.Response:
-        if (httpEvent.body instanceof Array) {
-          for (const filename of httpEvent.body) {
-            this.filenames.unshift(filename);
-          }
-        } else {
-          this.fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
-          const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
-          const file = new File([blob], this.fileName, { type: httpEvent.body.type });
-          this.readQuestionFile(file).then(fileContents => {
-            if (blob.type.includes('image')) this.imageUrl = fileContents;
-            else if (blob.type.includes('video')) this.videoUrl = fileContents;
-            else if (blob.type.includes('audio')) {
-              this.audioUrl = fileContents;
-              this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
-            }
-          });
-        this.isLoadingMedia = false;
-      }
-      break;
-    }
-  }
-
-  public async readQuestionFile(file: File): Promise<string | ArrayBuffer> {
-    return new Promise<string | ArrayBuffer>((resolve, reject) => {
-      const reader = new FileReader();
-  
-      reader.onload = e => {
-        return resolve((e.target as FileReader).result);
-      };
-
-      reader.onerror = e => {
-        console.error(`FileReader failed on file ${file.name}.`);
-        return reject(null);
-      };
-
-      if (!file) {
-        console.error('No file to read.');
-        return reject(null);
-      }
-
-      reader.readAsDataURL(file);
-    });
   }
 
   getOptions() {
