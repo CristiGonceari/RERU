@@ -18,11 +18,25 @@ namespace CODWER.RERU.Identity.Web
             if (!userManager.Users.Any())
             {
 
-                var User = new ERPIdentityUser()
+                var user = new ERPIdentityUser()
                 {
                     Email = "admin@mail.com",
                     UserName = "admin.platforma@mail.com",
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    PasswordHash = "AQAAAAEAACcQAAAAEPl5AizO+7pAJaojbT4e1OlRoA0lvZkU/ohahAr8/4PWMGtUSK9zLw0cydtIQwk62A==",
+                    SecurityStamp = "Z53QFF4QIZWJANJ6GQUJD5KFHWJDAT4F",
+                    NormalizedEmail = "ADMIN@MAIL.COM",
+                    NormalizedUserName = "ADMIN.PLATFORMA@MAIL.COM",
+                    ConcurrencyStamp = "3002e66c-9a29-4af4-a622-2ace5e7cba90",
+                    PhoneNumber = null,
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEnd = null,
+                    LockoutEnabled = true,
+                    AccessFailedCount = 0,
+                    Name = null,
+                    LastName = null,
+                    Avatar = null
                 };
 
                 if (!appDbContext.Roles.Any())
@@ -42,12 +56,11 @@ namespace CODWER.RERU.Identity.Web
                     };
 
                     appDbContext.Roles.AddRange(role1, role2);
+                    appDbContext.Users.Add(user);
                     appDbContext.SaveChanges();
                 }
 
-                userManager.CreateAsync(User, "Parola11a#").Wait();
-
-                userManager.AddToRoleAsync(User, "Administrator").Wait();
+                userManager.AddToRoleAsync(user, "Administrator").Wait();
             }
         }
     }
