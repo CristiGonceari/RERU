@@ -111,7 +111,7 @@
                   <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
                   </app-button>
 
-                  <app-add-button class="btn" (handle)="onSave()" [disabled]="questionForm.invalid"
+                  <app-add-button class="btn" (handle)="onSave()" [disabled]="questionForm.invalid || disableBtn"
                     [value]="'button.confirm' | translate">
                   </app-add-button>
                 </div>
