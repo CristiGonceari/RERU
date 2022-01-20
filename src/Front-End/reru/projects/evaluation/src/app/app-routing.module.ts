@@ -99,44 +99,44 @@ const routes: Routes = [
 	{
 		path: 'categories', 
 		loadChildren: () => import('./components/categories/categories.module').then(m => m.CategoriesModule) ,
-		data: { permission: 'P03000401' },
-		canActivate: [PermissionRouteGuard]
+		//data: { permission: 'P03000401' },
+		canActivate: [AuthenticationGuard]
 	},
 	{
 		path: 'test-type',
 		loadChildren: () => import('./components/test-types/test-types.module').then(m => m.TestTypesModule),
-		data: { permission: 'P03000801' },
-		canActivate: [PermissionRouteGuard]
+		//data: { permission: 'P03000801' },
+		canActivate: [AuthenticationGuard]
 	},
 	{
 		path: 'questions',
 		loadChildren: () => import('./components/questions/questions.module').then(m => m.QuestionsModule),
-		data: { permission: 'P03000501' },
-		canActivate: [PermissionRouteGuard]
+		//data: { permission: 'P03000501' },
+		canActivate: [AuthenticationGuard]
 	},
 	{
 		path: 'locations',
 		loadChildren: () => import('./components/locations/locations.module').then(m => m.LocationsModule),
-		data: { permission: 'P03000201' },
-		canActivate: [PermissionRouteGuard]
+		//data: { permission: 'P03000201' },
+		canActivate: [AuthenticationGuard]
 	},
 	{
 		path: 'events',
 		loadChildren: () => import('./components/events/events.module').then(m => m.EventsModule),
-		data: { permission: 'P03000101' },
-		canActivate: [PermissionRouteGuard]
+		//data: { permission: 'P03000101' },
+		canActivate: [AuthenticationGuard]
 	},
 	{
 		path: 'faq',
 		loadChildren: () => import('./components/faq/faq.module').then(m => m.FAQModule),
-		data: { permission: 'P03000001' },
-		canActivate: [PermissionRouteGuard]
+		//data: { permission: 'P03000001' },
+		canActivate: [AuthenticationGuard]
 	},
 	{
 		path: 'tests',
 		loadChildren: () => import('./components/tests/tests.module').then(m => m.TestsModule),
-		data: { permission: 'P03000601' },
-		canActivate: [PermissionRouteGuard]
+		//data: { permission: 'P03000601' },
+		canActivate: [AuthenticationGuard]
 	},
 	{
 		path: 'polls',
@@ -145,14 +145,14 @@ const routes: Routes = [
 	{
 		path: 'plans', 
 		loadChildren: () => import('./components/plans/plans.module').then(m => m.PlansModule),
-		data: { permission: 'P03000301' },
-		canActivate: [PermissionRouteGuard]
+		//data: { permission: 'P03000301' },
+		canActivate: [AuthenticationGuard]
 	},
 	{
 		path: 'statistics', 
 		loadChildren: () => import('./components/statistics/statistics.module').then(m => m.StatisticsModule),
-		data: { permission: 'P03000901' },
-		canActivate: [PermissionRouteGuard]
+		//data: { permission: 'P03000901' },
+		canActivate: [AuthenticationGuard]
 	},
 	{
 		path: 'my-activities', 
