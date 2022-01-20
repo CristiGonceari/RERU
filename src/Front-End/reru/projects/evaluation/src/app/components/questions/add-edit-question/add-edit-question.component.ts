@@ -180,7 +180,6 @@ export class AddEditQuestionComponent implements OnInit {
       this.fileType = '4';
       request.append('Data.FileDto.File', this.attachedFile);
       request.append('Data.FileDto.Type', this.fileType);
-      request.append('Data.MediaFileId', this.fileId);
     }
     request.append('Data.Id', this.questionForm.value.id);
     request.append('Data.Question', this.questionForm.value.question);
