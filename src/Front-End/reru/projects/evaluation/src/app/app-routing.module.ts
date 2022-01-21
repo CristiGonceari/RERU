@@ -1,17 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {
-	CacheMechanism,
-	LocalizeParser,
-	LocalizeRouterModule,
-	LocalizeRouterSettings,
-} from '@gilsdav/ngx-translate-router';
+import { CacheMechanism, LocalizeParser, LocalizeRouterModule, LocalizeRouterSettings } from '@gilsdav/ngx-translate-router';
+import { Location } from '@angular/common';
 import { ManualLoaderFactory } from './utils/services/i18n/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Location } from '@angular/common';
-import { LayoutsComponent } from './components/layouts/layouts.component';
 import { AuthenticationCallbackComponent, AuthenticationGuard } from '@erp/shared';
-import { CategoriesRoutingModule } from './components/categories/categories-routing.module';
 import { PermissionRouteGuard } from '@erp/shared';
 import { Exception404Component } from './utils/exceptions/404/404.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -21,68 +14,71 @@ const routes: Routes = [
 	{ 
 		path: '', 
 		component: DashboardComponent, 
-		canActivate: [AuthenticationGuard] },
+		canActivate: [AuthenticationGuard] 
+	},
 	{
 		path: 'categories', 
 		loadChildren: () => import('./components/categories/categories.module').then(m => m.CategoriesModule) ,
 		data: { permission: 'P03000401' },
-		canActivate: [PermissionRouteGuard]
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
 	{
 		path: 'test-type',
 		loadChildren: () => import('./components/test-types/test-types.module').then(m => m.TestTypesModule),
 		data: { permission: 'P03000801' },
-		canActivate: [PermissionRouteGuard]
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
 	{
 		path: 'questions',
 		loadChildren: () => import('./components/questions/questions.module').then(m => m.QuestionsModule),
 		data: { permission: 'P03000501' },
-		canActivate: [PermissionRouteGuard]
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
 	{
 		path: 'locations',
 		loadChildren: () => import('./components/locations/locations.module').then(m => m.LocationsModule),
 		data: { permission: 'P03000201' },
-		canActivate: [PermissionRouteGuard]
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
 	{
 		path: 'events',
 		loadChildren: () => import('./components/events/events.module').then(m => m.EventsModule),
 		data: { permission: 'P03000101' },
-		canActivate: [PermissionRouteGuard]
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
 	{
 		path: 'faq',
 		loadChildren: () => import('./components/faq/faq.module').then(m => m.FAQModule),
 		data: { permission: 'P03000001' },
-		canActivate: [PermissionRouteGuard]
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
 	{
 		path: 'tests',
 		loadChildren: () => import('./components/tests/tests.module').then(m => m.TestsModule),
 		data: { permission: 'P03000601' },
-		canActivate: [PermissionRouteGuard]
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
 	{
 		path: 'polls',
 		loadChildren: () => import('./components/polls/polls.module').then(m => m.PollsModule),
+		canActivate: [AuthenticationGuard]
 	},
 	{
 		path: 'plans', 
 		loadChildren: () => import('./components/plans/plans.module').then(m => m.PlansModule),
 		data: { permission: 'P03000301' },
-		canActivate: [PermissionRouteGuard]
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
 	{
 		path: 'statistics', 
 		loadChildren: () => import('./components/statistics/statistics.module').then(m => m.StatisticsModule),
 		data: { permission: 'P03000901' },
-		canActivate: [PermissionRouteGuard]
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
 	{
 		path: 'my-activities', 
 		loadChildren: () => import('./components/my-activities/my-activities.module').then(m => m.MyActivitiesModule),
+		canActivate: [AuthenticationGuard]
 	},
 	{ path: '404', component: Exception404Component },
 	{ path: '**', redirectTo: '404' }
@@ -90,7 +86,6 @@ const routes: Routes = [
 
 @NgModule({
 	imports: [
-		CategoriesRoutingModule,
 		RouterModule.forRoot(routes, {
 			useHash: true,
 			scrollPositionRestoration: 'enabled',
