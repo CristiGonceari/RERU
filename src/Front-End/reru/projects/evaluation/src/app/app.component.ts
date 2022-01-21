@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { LocalizeRouterService } from '@gilsdav/ngx-translate-router';
 import { forkJoin } from 'rxjs';
 import { SidebarItemType } from '../app/utils/models/sidebar.model';
-import { AppSettingsService, IAppSettings } from '@erp/shared';
+import { AppSettingsService, IAppSettings, AuthenticationService } from '@erp/shared';
 // import { IAppConfig } from '../../utils/models/app-config.model';
 
 @Component({
@@ -229,7 +229,8 @@ export class AppComponent {
 		private router: Router,
 		public translate: I18nService,
 		private localize: LocalizeRouterService,
-		private appSettingsService: AppSettingsService
+		private appSettingsService: AppSettingsService,
+		private authenticationService: AuthenticationService
 	) {
 		this.appSettings = this.appSettingsService.settings;
 	}
@@ -280,7 +281,8 @@ export class AppComponent {
 	}
 
 	logout() {
-		localStorage.clear();
-		window.location.assign('/');
+		this.authenticationService.signout();
+		// localStorage.clear();
+		// window.location.assign('/');
 	}
 }

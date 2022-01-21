@@ -2,6 +2,6 @@
   [currentLanguage]="translate.currentLanguage" [sidebarItems]="sidebarItems"
   [letter]="'assets/images/evaluation-logo.png'" [logo]="'assets/images/logo.png'" (navigate)="navigate($event)"
   (changeLanguage)="translate.use($event)" (logout)="logout()">
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </app-layout>
 <simple-notifications [options]="options"></simple-notifications>
