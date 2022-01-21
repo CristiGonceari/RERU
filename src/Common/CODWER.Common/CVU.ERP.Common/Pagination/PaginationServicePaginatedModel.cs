@@ -7,18 +7,6 @@ namespace CVU.ERP.Common.Pagination
 {
     public partial class PaginationService
     {
-        /////<summary>
-        /////Return PaginatedList (created for best performance)
-        /////</summary>
-        //public PaginatedList<TDestination> Create<TSource, TDestination>(List<TSource> source, int pageNumber, int pageSize)
-        //{
-        //    var count = source.Count();
-
-        //    var items = source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-
-        //    return new PaginatedList<TDestination>(_mapper.Map<List<TDestination>>(items), count, pageNumber, pageSize);
-        //}
-
         ///<summary>
         ///Return PaginatedList (created for best performance)
         ///</summary>
