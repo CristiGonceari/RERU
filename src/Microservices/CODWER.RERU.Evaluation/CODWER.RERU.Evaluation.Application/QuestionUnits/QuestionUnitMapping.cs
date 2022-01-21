@@ -32,9 +32,11 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits
             CreateMap<AddEditQuestionUnitDto, QuestionUnit>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
 
-            CreateMap<EditQuestionUnitCommand, QuestionUnit>();
+            CreateMap<EditQuestionUnitDto, QuestionUnit>()
+                .ForMember(x => x.Id, opts => opts.Ignore());
 
-            CreateMap<QuestionUnit, EditQuestionUnitDto>();
+            CreateMap<QuestionUnit, EditQuestionUnitDto>()
+                .ForMember(x => x.Id, opts => opts.Ignore());
 
             CreateMap<QuestionUnit, EditQuestionStatusDto>()
                 .ForMember(dto => dto.QuestionId, options => options.MapFrom(entity => entity.Id));

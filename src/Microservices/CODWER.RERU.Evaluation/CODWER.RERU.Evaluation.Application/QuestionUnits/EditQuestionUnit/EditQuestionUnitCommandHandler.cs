@@ -4,11 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.AssignTagToQuestionUnit;
 using CODWER.RERU.Evaluation.Application.Services;
-using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.Files;
-using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -56,7 +53,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit
                 editQuestionUnit.MediaFileId = null;
             }
 
-            _mapper.Map(request, editQuestionUnit);
+            _mapper.Map(request.Data, editQuestionUnit);
 
             await _appDbContext.SaveChangesAsync();
 
