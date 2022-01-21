@@ -19,8 +19,8 @@ const routes: Routes = [
 	{
 		path: 'categories', 
 		loadChildren: () => import('./components/categories/categories.module').then(m => m.CategoriesModule) ,
-		//data: { permission: 'P03000401' },
-		canActivate: [AuthenticationGuard]
+		data: { permission: 'P03000401' },
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
 	{
 		path: 'test-type',
