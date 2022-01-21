@@ -85,11 +85,13 @@ const routes: Routes = [
 			{
 				path: 'my-activities', 
 				loadChildren: () => import('./components/my-activities/my-activities.module').then(m => m.MyActivitiesModule),
-			}
+			},
+			{ path: '404', component: Exception404Component },
+			{ path: '**', redirectTo: '404' }
 		]
 	},
-	{ path: '404', component: Exception404Component },
-	{ path: '**', redirectTo: '404' }
+	// { path: '404', component: Exception404Component },
+	// { path: '**', redirectTo: '404' }
 ];
 
 @NgModule({
