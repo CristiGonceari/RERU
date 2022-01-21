@@ -13,7 +13,7 @@ const routes: Routes = [
 	{
   path: '',
   component: DashboardComponent,
-  canActivate: [AuthenticationGuard],
+  canActivate: [AuthenticationGuard]
 },
 {
 	path: 'my-profile',

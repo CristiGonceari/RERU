@@ -38,33 +38,6 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
                 .Include(x => x.QuestionUnitTags)
                     .ThenInclude(x => x.Tag)
                 .OrderByDescending(x => x.Id)
-                //.Select(x=> new QuestionUnit
-                //{
-                //    Id = x.Id,
-                //    QuestionType = x.QuestionType,
-                //    Status = x.Status,
-                //    Question = x.Question,
-                //    QuestionPoints = x.QuestionPoints,
-                //    MediaFileId = x.MediaFileId,
-                //    QuestionCategory = new QuestionCategory
-                //    {
-                //        Id = x.QuestionCategory.Id,
-                //        Name = x.QuestionCategory.Name,
-                //    },
-
-                //    TestQuestions = x.TestQuestions.Select(tq => new TestQuestion()).ToList(),
-                //    Options = x.Options.Select(o => new Option
-                //    {
-                //        IsCorrect = o.IsCorrect
-                //    }).ToList(),
-                //    QuestionUnitTags = x.QuestionUnitTags.Select(qut => new QuestionUnitTag
-                //    {
-                //        Tag = new Tag
-                //        {
-                //            Name = qut.Tag.Name
-                //        }
-                //    }).ToList()
-                //})
                 .AsQueryable();
 
             if (request.Type != null)
@@ -87,12 +60,12 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
                 questions = questions.Where(x => x.QuestionCategory.Name.Contains(request.CategoryName));
             }
 
+            questions = SelectOnlyReturnedFields(questions);
+
             var paginatedModel = _paginationService.MapAndPaginateModel<QuestionUnit, QuestionUnitDto>(questions, request);
             var items = paginatedModel.Items.ToList();
 
             var hashedQuestions = items.Where(x => x.QuestionType == QuestionTypeEnum.HashedAnswer).ToList();
-
-            //IsReadyToActivate(items, questions);
 
             foreach (var unit in hashedQuestions)
             {
@@ -107,19 +80,36 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
             return paginatedModel;
         }
 
-        //private void IsReadyToActivate(List<QuestionUnitDto> items, IQueryable<QuestionUnit> questions)
-        //{
-        //    foreach (var item in items)
-        //    {
-        //        var options = questions.First(q => q.Id == item.Id).Options.Any(x => x.IsCorrect);
-
-        //        if (item.OptionsCount > 1 && options || item.QuestionType == QuestionTypeEnum.FreeText || item.QuestionType == QuestionTypeEnum.HashedAnswer)
-        //        {
-        //            item.IsReadyToActivate = true;
-        //        }
-
-        //    }
-        //}
-
+        private IQueryable<QuestionUnit> SelectOnlyReturnedFields(IQueryable<QuestionUnit> items)
+        {
+            return items
+                .Select(x => new QuestionUnit
+                {
+                    Id = x.Id,
+                    QuestionType = x.QuestionType,
+                    Status = x.Status,
+                    Question = x.Question,
+                    QuestionPoints = x.QuestionPoints,
+                    MediaFileId = x.MediaFileId,
+                    QuestionCategory = new QuestionCategory
+                    {
+                        Id = x.QuestionCategoryId,
+                        Name = x.QuestionCategory.Name,
+                    },
+                    TestQuestions = x.TestQuestions.Select(tq => new TestQuestion()).ToList(),
+                    Options = x.Options.Select(o => new Option
+                    {
+                        IsCorrect = o.IsCorrect
+                    }).ToList(),
+                    QuestionUnitTags = x.QuestionUnitTags.Select(qut => new QuestionUnitTag
+                    {
+                        Tag = new Tag
+                        {
+                            Id = qut.TagId,
+                            Name = qut.Tag.Name
+                        }
+                    }).ToList()
+                });
+        }
     }
 }
