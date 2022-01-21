@@ -7,6 +7,7 @@ export class CalendarDay {
     public isPastDate: boolean;
     public isToday: boolean;
     public month: number;
+    public clickedDay: boolean;
   
     constructor(d: Date) {
       this.date = d;
@@ -14,6 +15,7 @@ export class CalendarDay {
       this.isToday = d.setHours(0, 0, 0, 0) == new Date().setHours(0, 0, 0, 0);
       this.month = d.getMonth();
       this.count = 0;
+      this.clickedDay = false;
     }
   
   }

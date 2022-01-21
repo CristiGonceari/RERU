@@ -21,9 +21,6 @@
           <div class="card-header text-center" *ngIf="selectedDay != null">
             {{ 'calendar.selected-date' | translate }}: {{selectedDay}}
           </div>
-          <div class="card-header text-center" *ngIf="selectedDay == null">
-            {{ 'calendar.'+ displayMonth | translate }} {{displayYear}}
-          </div>
           <table class="datatable table">
             <tbody class="datatable-body">
               <ng-container *ngFor="let event of events; let i = index">

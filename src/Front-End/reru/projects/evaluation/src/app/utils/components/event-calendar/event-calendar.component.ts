@@ -40,20 +40,21 @@ export class EventCalendarComponent implements OnInit {
   private monthIndex: number = 0;
 
   onChangeMonth;
-  clickedDay;
   countedPlans: Events[] = [];
-
+  onClickedDay;
+  
   currentMonth: boolean = false;
   isLoading: boolean = true;
 
   firstDayOfMonth;
   lastDayOfMonth;
+  todayDay;
+  dates: boolean = false;
 
   constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.generateCalendarDays(this.monthIndex);
-
   }
 
   private generateCalendarDays(monthIndex: number): void {
@@ -71,15 +72,6 @@ export class EventCalendarComponent implements OnInit {
     this.displayMonth = this.monthNames[day.getMonth()];
     this.displayYear = day.getFullYear();
 
-    let listData = {
-      fromDate: new Date(day.getFullYear(), day.getMonth(), 1),
-      tillDate: new Date(day.getFullYear(), day.getMonth() + 1, 0),
-      displayMonth: this.displayMonth,
-      displayYear: this.displayYear
-    }
-
-    this.listOfDates.emit(listData)
-
     let startingDateOfCalendar = this.getStartDateForCalendar(day);
 
     let dateToAdd = startingDateOfCalendar;
@@ -89,8 +81,20 @@ export class EventCalendarComponent implements OnInit {
       dateToAdd = new Date(dateToAdd.setDate(dateToAdd.getDate() + 1));
     }
 
-    this.getListOfCoutedEvents(data);
+    for(let calendar of this.calendar){
+      if(calendar.isToday){
+        this.todayDay = calendar
+      }
+    }
 
+    if(this.todayDay != null){
+      this.getClickedDay(this.todayDay)
+    }
+    else{
+        this.listOfDates.emit(data)
+    }
+
+    this.getListOfCoutedEvents(data);
   }
 
   private getStartDateForCalendar(selectedDate: Date) {
@@ -110,10 +114,13 @@ export class EventCalendarComponent implements OnInit {
 
   public increaseMonth() {
     this.monthIndex++;
+    this.todayDay = null;
     this.generateCalendarDays(this.monthIndex);
+    
   }
 
   public decreaseMonth() {
+    this.todayDay = null;
     this.monthIndex--
     this.generateCalendarDays(this.monthIndex);
   }
@@ -123,21 +130,18 @@ export class EventCalendarComponent implements OnInit {
     this.generateCalendarDays(this.monthIndex);
   }
 
-  getClickedDay(date) {
+  getClickedDay(data) {
+     
+    this.calendar.map(x => x.clickedDay = false);
 
-    const day = date && date.getDate() || -1;
-    const dayWithZero = day.toString().length > 1 ? day : '0' + day;
-    const month = date && date.getMonth() + 1 || -1;
-    const monthWithZero = month.toString().length > 1 ? month : '0' + month;
-    const year = date && date.getFullYear() || -1;
+    data.clickedDay = true;
 
-    this.clickedDay = `${year}-${monthWithZero}-${dayWithZero}`;
-
-    const data = {
-      clickedDay: this.clickedDay
+    const dates = {
+      date: data.date,
+      clickedDay: data.clickedDay
     }
-
-    this.onDatePicked.emit(data)
+    
+    this.onDatePicked.emit(dates)
   }
 
   getListOfCoutedEvents(data): void {

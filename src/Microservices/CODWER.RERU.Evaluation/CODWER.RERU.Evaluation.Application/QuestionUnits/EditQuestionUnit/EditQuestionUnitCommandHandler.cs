@@ -44,6 +44,17 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit
                 _appDbContext.Options.RemoveRange(deleteOptions);
             }
 
+            if (request.Data.FileDto != null)
+            {
+
+                var addFile = await _storageFileService.AddFile(request.Data.FileDto);
+
+                editQuestionUnit.MediaFileId = addFile;
+            }
+            else
+            {
+                editQuestionUnit.MediaFileId = null;
+            }
 
             _mapper.Map(request, editQuestionUnit);
 
@@ -56,33 +67,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit
 
             await _mediator.Send(new AssignTagToQuestionUnitCommand { QuestionUnitId = editQuestionUnit.Id, Tags = request.Data.Tags });
 
-            if (request.Data.MediaFileId !="null")
-            {
-                var changeMediaFileId = await _appDbContext.QuestionUnits.FirstOrDefaultAsync(qu => qu.MediaFileId == request.Data.MediaFileId);
-
-                var addFile = await _storageFileService.AddFile(request.Data.FileDto);
-
-                ChangeMediaFileId(changeMediaFileId, addFile);
-            }
-            else 
-            {
-                var changeMediaFileId = await _appDbContext.QuestionUnits.FirstOrDefaultAsync(qu => qu.Id == request.Data.Id);
-
-                var addFile = await _storageFileService.AddFile(request.Data.FileDto);
-
-                ChangeMediaFileId(changeMediaFileId, addFile);
-            }
-
             return Unit.Value;
-        }
-        private async Task ChangeMediaFileId(QuestionUnit questionUnit, string addFile)
-        {
-
-            questionUnit.MediaFileId = addFile;
-
-            //_mapper.Map<QuestionUnit>(questionUnit);
-
-            await _appDbContext.SaveChangesAsync();
         }
     }
 }

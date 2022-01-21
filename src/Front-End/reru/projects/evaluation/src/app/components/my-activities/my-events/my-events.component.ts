@@ -37,14 +37,10 @@ export class MyEventsComponent implements OnInit {
 
     this.isLoading = true;
     this.selectedDay = null;
+
     if (data.fromDate != null && data.tillDate != null) {
       this.fromDate = data.fromDate,
         this.tillDate = data.tillDate
-    }
-
-    if (data.displayMonth != null && data.displayYear != null) {
-      this.displayMonth = data.displayMonth;
-      this.displayYear = data.displayYear;
     }
 
     let params = {
@@ -75,12 +71,15 @@ export class MyEventsComponent implements OnInit {
   }
 
   getListByDate(data: any = {}): void {
-    if (data.clickedDay != null) {
-      this.selectedDay = data.clickedDay;
+    
+    this.isLoading = true;
+
+    if (data.date != null) {
+      this.selectedDay = this.parseDates(data.date);
     }
 
     const request = {
-      date: data.clickedDay || this.selectedDay,
+      date: this.selectedDay,
       testTypeMode: 0,
       page: data.page || this.pagedSummary.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
@@ -90,6 +89,7 @@ export class MyEventsComponent implements OnInit {
       if (response.success) {
         this.events = response.data.items || [];
         this.pagedSummary = response.data.pagedSummary;
+        this.isLoading = false;
       }
     });
   }
