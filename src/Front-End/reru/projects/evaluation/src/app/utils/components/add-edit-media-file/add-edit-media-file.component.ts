@@ -43,7 +43,7 @@ export class AddEditMediaFileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.fileId != undefined) {
+    if (this.fileId != undefined && this.fileId !='null') {
       this.isLoadingMedia = true;
       this.getMediaFile(this.fileId);
     }
@@ -137,7 +137,7 @@ export class AddEditMediaFileComponent implements OnInit {
         this.disableBtn.emit(true);
       break;
       case HttpEventType.DownloadProgress:
-        this.updateStatus(httpEvent.loaded, httpEvent.total, 'Dowloading...')
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'Downloading...')
         break;
       case HttpEventType.Response:
         if (httpEvent.body instanceof Array) {

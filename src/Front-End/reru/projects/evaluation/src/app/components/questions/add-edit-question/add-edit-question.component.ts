@@ -89,19 +89,6 @@ export class AddEditQuestionComponent implements OnInit {
 		);
 	}
 
-  deleteFile(id):void {
-    this.fileService.delete(id).subscribe(res => {
-      forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('media.file-was-deleted'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-				});
-      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultConfig());
-    })
-  }
-
 	initForm(data?: any): void {
 		if (data){
 			this.questionForm = this.formBuilder.group({
@@ -174,9 +161,9 @@ export class AddEditQuestionComponent implements OnInit {
   editQuestion(): void {
     this.disableBtn = true;
     const request = new FormData();
-
-    if (this.attachedFile)
-    {
+    console.warn('this.tags', this.tags, this.items);
+    
+    if (this.attachedFile) {
       this.fileType = '4';
       request.append('Data.FileDto.File', this.attachedFile);
       request.append('Data.FileDto.Type', this.fileType);
@@ -197,8 +184,12 @@ export class AddEditQuestionComponent implements OnInit {
 				this.title = title;
 				this.description = description;
 				});
-      this.backClicked();
+        this.disableBtn = false;
+        this.backClicked();
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+    }, () => {
+      this.disableBtn = false;
+      this.backClicked();
     });
   }
 

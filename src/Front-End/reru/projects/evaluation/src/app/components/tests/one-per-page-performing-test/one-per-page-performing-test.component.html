@@ -73,11 +73,11 @@
                                 *ngIf="questionUnit.questionType == questionTypeEnum.OneAnswer"
                                 [checked]="option.isSelected">
                             <span></span>
-                            <div class="ml-5">
+                            <div class="ml-5 w-100">
                                 {{ option.answer }}
                                 <div class="form-group row align-items-center">
                                     <div class="col-lg-6 col-xl-3">
-                                      <app-loading-spinner *ngIf="isLoadingOptionMedia" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
+                                      <!-- <app-loading-spinner *ngIf="isLoadingOptionMedia" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
                                         [colorClass]="'text-primary'">
                                       </app-loading-spinner>
                                       <div *ngIf="!isLoadingOptionMedia" class="mt-3">
@@ -90,6 +90,9 @@
                                         <audio *ngIf="option.audioUrl" controls>
                                             <source [src]="option.audioUrl" type="audio/mpeg">
                                         </audio>
+                                      </div> -->
+                                      <div *ngIf="option.mediaFileId" class="w-100">
+                                        <app-get-media-file [fileId]="option.mediaFileId"></app-get-media-file>
                                       </div>
                                     </div>
                                   </div>

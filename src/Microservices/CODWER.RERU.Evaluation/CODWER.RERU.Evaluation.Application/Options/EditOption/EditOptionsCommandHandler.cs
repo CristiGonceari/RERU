@@ -33,7 +33,7 @@ namespace CODWER.RERU.Evaluation.Application.Options.EditOption
                 editOptions.MediaFileId = addFile;
             }
             else {
-                editOptions.MediaFileId = null;
+                editOptions.MediaFileId = request.Data.MediaFileId;
             }
 
 

@@ -13,7 +13,6 @@ import { CloudFileService } from 'projects/evaluation/src/app/utils/services/clo
 import { DomSanitizer } from '@angular/platform-browser';
 import { forkJoin } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 
 @Component({
@@ -42,24 +41,17 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
   no: string;
   yes: string;
 
-  imageUrl: any;
-  audioUrl: any;
-  videoUrl: any;
-
   options = [];
   type: number;
   status: number;
   isLoading: boolean = true;
   disable: boolean = false;
-  edit: boolean = false;
   questionName: string;
   fromCategory: boolean = false;
 
   constructor(private optionService: OptionsService, 
     private route: ActivatedRoute, 
 	  public translate: I18nService,
-    private sanitizer: DomSanitizer,
-    private fileService : CloudFileService,
     private questionService: QuestionService,
     private notificationService: NotificationsService,
 		private modalService: NgbModal,
@@ -125,17 +117,17 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
       request.append('Data.Answer', element.answer);
       request.append('Data.IsCorrect', element.isCorrect);
       request.append('Data.QuestionUnitId', element.questionUnitId);
+      request.append('Data.MediaFileId', element.mediaFileId);
 
       return request;
   }
 
   updateOptions() {
     this.options.forEach(element => {
-      this.optionService.edit(this.parseEdit(element)).subscribe(() => {
-        this.getOptions();
-        this.edit = true;
-        //this.back();
-      });
+      this.optionService.edit(this.parseEdit(element)).subscribe(
+        () => {},
+        () => this.getOptions()
+      );
       forkJoin([
 				this.translate.get('modal.success'),
 				this.translate.get('options.succes-update-options-msg'),
@@ -163,78 +155,7 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
       if (res && res.data) {
         this.isLoadingMedia = false;
         this.options = res.data;
-        this.options.map ( (option) => {
-          // TODO add type Option -> options = array<Option>
-            option.videoUrl = null
-            option.imageUrl = null
-            option.audioUrl = null
-            return option;
-        })
-        this.fileId = res.data.map(el => el.mediaFileId);
-        for (let i = 0; i < this.fileId.length; i++) {
-          if (this.fileId[i] !== null) this.getMediaFile(this.fileId[i], i);
-        }
       }
-    });
-  }
-
-  getMediaFile(fileId, index) {
-    this.fileService.get(fileId).subscribe(res => {
-      this.resportProggress(res, index);
-    })
-  }
-
-  private resportProggress(httpEvent: HttpEvent<string[] | Blob>, index): void
-  { 
-    switch(httpEvent.type)
-    {
-      case HttpEventType.Response:
-        if (httpEvent.body instanceof Array) {
-          for (const filename of httpEvent.body) {
-            this.filenames.unshift(filename);
-          }
-        } else {
-          this.fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
-          const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
-          const file = new File([blob], this.fileName, { type: httpEvent.body.type });
-          this.readFile(file).then(fileContents => {
-            if (blob.type.includes('image')) {
-              this.options[index].imageUrl = fileContents;
-            }
-            else if (blob.type.includes('video')) {
-              this.options[index].videoUrl = fileContents;
-            }
-            else if (blob.type.includes('audio')) {
-              this.options[index].audioUrl = fileContents;
-              this.options[index].audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.options[index].audioUrl);
-            }
-            this.isLoadingMedia = false;
-          });
-        }
-      break;
-    }
-  }
-
-  public readFile(file: File): Promise<string | ArrayBuffer> {
-    
-    return new Promise<string | ArrayBuffer>((resolve, reject) => {
-      const reader = new FileReader();
-  
-      reader.onload = e => {
-        return resolve((e.target as FileReader).result);
-      };
-
-      reader.onerror = e => {
-        console.error(`FileReader failed on file ${file.name}.`);
-        return reject(null);
-      };
-
-      if (!file) {
-        console.error('No file to read.');
-        return reject(null);
-      }
-
-      reader.readAsDataURL(file);
     });
   }
 
