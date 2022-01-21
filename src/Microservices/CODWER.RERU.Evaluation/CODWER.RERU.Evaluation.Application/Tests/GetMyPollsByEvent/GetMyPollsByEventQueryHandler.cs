@@ -35,7 +35,15 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyPollsByEvent
                 .Include(t => t.TestType)
                     .ThenInclude(tt => tt.Settings)
                 .Where(t => t.TestType.Mode == TestTypeModeEnum.Poll && t.Event.Id == request.EventId)
-                .Select(t => new PollDto() { Id = t.TestTypeId, StartTime = thisEvent.FromDate, EndTime = thisEvent.TillDate, TestTypeName = t.TestType.Name, Setting = t.TestType.Settings.CanViewPollProgress, TestTypeStatus = (TestTypeStatusEnum)t.TestType.Status })
+                .Select(t => new PollDto
+                    { 
+                        Id = t.TestTypeId,
+                        StartTime = thisEvent.FromDate,
+                        EndTime = thisEvent.TillDate,
+                        TestTypeName = t.TestType.Name,
+                        Setting = t.TestType.Settings.CanViewPollProgress,
+                        TestTypeStatus = t.TestType.Status }
+                )
                 .ToListAsync();
 
 
@@ -43,7 +51,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyPollsByEvent
             foreach (var testType in myTestsTypes)
             {
                 var myPoll = await _appDbContext.Tests.Include(x => x.TestQuestions).FirstOrDefaultAsync(x => x.TestTypeId == testType.Id && x.UserProfileId == myUserProfile.Id);
-                testType.TestStatus = myPoll == null ? null : (TestStatusEnum)myPoll?.TestStatus;
+                testType.TestStatus = myPoll?.TestStatus;
 
                 if (myPoll != null && myPoll.TestStatus >= TestStatusEnum.Terminated)
                 {

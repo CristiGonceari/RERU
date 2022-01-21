@@ -29,7 +29,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTypes.GetEventTestTypes
                 .Select(x => x.TestType)
                 .AsQueryable();
 
-            return _paginationService.MapAndPaginateModel<TestType, TestTypeDto>(eventTestTypes, request);
+            return await _paginationService.MapAndPaginateModelAsync<TestType, TestTypeDto>(eventTestTypes, request);
         }
     }
 }

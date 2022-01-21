@@ -29,7 +29,7 @@ namespace CODWER.RERU.Evaluation.Application.EventLocations.GetEventLocations
                 .Select(x => x.Location)
                 .AsQueryable();
 
-            return _paginationService.MapAndPaginateModel<Location, LocationDto>(eventLocations, request);
+            return await _paginationService.MapAndPaginateModelAsync<Location, LocationDto>(eventLocations, request);
         }
     }
 }

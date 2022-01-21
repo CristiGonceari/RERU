@@ -24,7 +24,7 @@ namespace CODWER.RERU.Core.Application.ModuleRoles.GetAllModuleRoles
             var moduleRoles = CoreDbContext.ModuleRoles
                 .Where(m=>m.ModuleId == request.ModuleId);
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<Data.Entities.ModuleRole, ModuleRoleRowDto>(moduleRoles, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Data.Entities.ModuleRole, ModuleRoleRowDto>(moduleRoles, request);
 
             return paginatedModel;
         }

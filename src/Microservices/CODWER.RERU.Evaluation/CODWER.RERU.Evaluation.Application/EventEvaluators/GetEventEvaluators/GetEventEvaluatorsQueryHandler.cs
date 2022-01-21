@@ -29,7 +29,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetEventEvaluators
                 .Select(x => x.Evaluator)
                 .AsQueryable();
 
-            return _paginationService.MapAndPaginateModel<UserProfile, UserProfileDto>(eventEvaluators, request);
+            return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(eventEvaluators, request);
         }
     }
 }

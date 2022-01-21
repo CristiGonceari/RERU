@@ -62,7 +62,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
 
             questions = SelectOnlyReturnedFields(questions);
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<QuestionUnit, QuestionUnitDto>(questions, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<QuestionUnit, QuestionUnitDto>(questions, request);
             var items = paginatedModel.Items.ToList();
 
             var hashedQuestions = items.Where(x => x.QuestionType == QuestionTypeEnum.HashedAnswer).ToList();
