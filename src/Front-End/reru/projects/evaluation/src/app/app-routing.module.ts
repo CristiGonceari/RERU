@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CacheMechanism, LocalizeParser, LocalizeRouterModule, LocalizeRouterSettings } from '@gilsdav/ngx-translate-router';
-import { Location } from '@angular/common';
+import { Location, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ManualLoaderFactory } from './utils/services/i18n/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationCallbackComponent, AuthenticationGuard } from '@erp/shared';
@@ -19,8 +19,8 @@ const routes: Routes = [
 	{
 		path: 'categories', 
 		loadChildren: () => import('./components/categories/categories.module').then(m => m.CategoriesModule) ,
-		data: { permission: 'P03000401' },
-		canActivate: [PermissionRouteGuard, AuthenticationGuard]
+		//data: { permission: 'P03000401' },
+		canActivate: [AuthenticationGuard]
 	},
 	{
 		path: 'test-type',
@@ -93,6 +93,7 @@ const routes: Routes = [
 		LocalizeRouterModule.forRoot(routes, {
 			parser: {
 				provide: LocalizeParser,
+				useClass: HashLocationStrategy,
 				useFactory: ManualLoaderFactory,
 				deps: [TranslateService, Location, LocalizeRouterSettings],
 			},
