@@ -12,7 +12,6 @@ import { TestVerificationProcessService } from '../../../utils/services/test-ver
 import { TestService } from '../../../utils/services/test/test.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { ConfirmModalComponent } from '@erp/shared';
-import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { CloudFileService } from '../../../utils/services/cloud-file/cloud-file.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { forkJoin } from 'rxjs';
@@ -75,8 +74,6 @@ export class TestVerificationProcessComponent implements OnInit {
 		private testQuestionService: TestQuestionService,
 	  	public translate: I18nService,
 	  	private router: Router,
-		private fileService : CloudFileService,
-		private sanitizer: DomSanitizer
 	) { }
 
 	ngOnInit(): void {
@@ -159,10 +156,6 @@ export class TestVerificationProcessComponent implements OnInit {
 						  option.audioUrl = null
 						  return option;
 					  })
-					this.optionFileId = res.data.options.map(el => el.optionMediaFileId);
-          			for (let i = 0; i < this.optionFileId.length; i++) {
-            		if (this.optionFileId[i] !== null) this.getOptionsMediaFile(this.optionFileId[i], i);
-          			}
 					this.correct = res.data.isCorrect;
 					this.index = index;
 					this.questionType = res.data.questionType;
@@ -179,65 +172,6 @@ export class TestVerificationProcessComponent implements OnInit {
 						this.router.navigate(['../../../tests'], { relativeTo: this.activatedRoute })
 				})
 			});
-	}
-	
-	public async readFile(file: File): Promise<string | ArrayBuffer> {
-		return new Promise<string | ArrayBuffer>((resolve, reject) => {
-		  const reader = new FileReader();
-	  
-		  reader.onload = e => {
-			return resolve((e.target as FileReader).result);
-		  };
-	
-		  reader.onerror = e => {
-			console.error(`FileReader failed on file ${file.name}.`);
-			return reject(null);
-		  };
-	
-		  if (!file) {
-			console.error('No file to read.');
-			return reject(null);
-		  }
-	
-		  reader.readAsDataURL(file);
-		});
-	}
-
-	getOptionsMediaFile(optionFileId, index) {
-		this.fileService.get(optionFileId).subscribe(res => {
-		  this.resportOptionsProggress(res, index);
-		})
-	  }
-	
-	  private resportOptionsProggress(httpEvent: HttpEvent<string[] | Blob>, index): void
-	  { 
-		switch(httpEvent.type)
-		{
-		  case HttpEventType.Response:
-			if (httpEvent.body instanceof Array) {
-			  for (const filename of httpEvent.body) {
-				this.optionFilenames.unshift(filename);
-			  }
-			} else {
-			  this.optionFileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
-			  const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
-			  const file = new File([blob], this.optionFileName, { type: httpEvent.body.type });
-			  this.readFile(file).then(fileContents => {
-				if (blob.type.includes('image')) {
-				  this.options[index].imageUrl = fileContents;
-				}
-				else if (blob.type.includes('video')) {
-				  this.options[index].videoUrl = fileContents;
-				}
-				else if (blob.type.includes('audio')) {
-				  this.options[index].audioUrl = fileContents;
-				  this.options[index].audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.options[index].audioUrl);
-				}
-				this.isLoadingOptionMedia = false;
-			  });
-			}
-		  break;
-		}
 	}
  
 	verifyTest(): void {

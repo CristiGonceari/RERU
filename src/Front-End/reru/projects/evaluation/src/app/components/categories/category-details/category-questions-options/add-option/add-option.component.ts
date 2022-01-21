@@ -89,8 +89,7 @@ export class AddOptionComponent implements OnInit {
     this.disableBtn = true;
     const request = new FormData();
 
-    if (this.attachedFile)
-    {
+    if (this.attachedFile) {
       this.fileType = '4';
       request.append('Data.FileDto.File', this.attachedFile);
       request.append('Data.FileDto.Type', this.fileType);
@@ -99,6 +98,7 @@ export class AddOptionComponent implements OnInit {
       request.append('Data.Answer', this.answer);
       request.append('Data.IsCorrect', this.isCorrect);
       request.append('Data.QuestionUnitId', this.questionId);
+      request.append('Data.MediaFileId', this.fileId);
     this.optionService.edit(request).subscribe(() => {
       forkJoin([
 				this.translate.get('modal.success'),

@@ -20,23 +20,18 @@ export class GetMediaFileComponent implements OnInit, OnChanges {
   filenames: any;
   fileName: string;
   isLoadingMedia: boolean = false;
+  fileStatus = { requestType: '', percent: 1 }
+
   @Input() fileId: string;
 
   constructor(private sanitizer: DomSanitizer,
     private fileService: CloudFileService
   ) { }
 
-  ngOnInit(): void {
-    if (this.fileId != undefined) {
-      this.isLoadingMedia = true;
-      this.fileService.get(this.fileId).subscribe( res => {
-        this.resportProggress(res);
-      })
-    }
-  }
+  ngOnInit(): void { }
 
   ngOnChanges( changes: SimpleChanges ) {
-    if (changes.fileId.previousValue != this.fileId) {
+    if (this.fileId != 'null' && changes.fileId.previousValue != this.fileId) {
       this.getMediaFile(this.fileId);
     }
   }
@@ -44,23 +39,28 @@ export class GetMediaFileComponent implements OnInit, OnChanges {
   getMediaFile(fileId) {
     this.isLoadingMedia = true;
     this.fileService.get(fileId).subscribe( res => {
-      this.resportProggress(res);
+      this.reportProggress(res);
     })
   }
 
-  private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
-    this.imageUrl = this.videoUrl = this.audioUrl = null;
-    switch(httpEvent.type)
-    {
+  private reportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
+    switch (httpEvent.type) {
+      case HttpEventType.Sent:
+        this.isLoadingMedia = true;
+        this.fileStatus.percent = 1;
+      break;
+      case HttpEventType.DownloadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'Downloading...')
+      break;
       case HttpEventType.Response:
         if (httpEvent.body instanceof Array) {
           for (const filename of httpEvent.body) {
             this.filenames.unshift(filename);
           }
         } else {
-          this.fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+          const fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
           const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
-          const file = new File([blob], this.fileName, { type: httpEvent.body.type });
+          const file = new File([blob], fileName, { type: httpEvent.body.type });
           this.readFile(file).then(fileContents => {
             if (blob.type.includes('image')) this.imageUrl = fileContents;
             else if (blob.type.includes('video')) this.videoUrl = fileContents;
@@ -69,10 +69,15 @@ export class GetMediaFileComponent implements OnInit, OnChanges {
               this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
             }
           });
+        }
         this.isLoadingMedia = false;
-      }
       break;
     }
+  }
+
+  updateStatus(loaded: number, total: number | undefined, requestType: string) {
+    this.fileStatus.requestType = requestType;
+    this.fileStatus.percent = Math.round(100 * loaded / total);
   }
 
   public async readFile(file: File): Promise<string | ArrayBuffer> {
