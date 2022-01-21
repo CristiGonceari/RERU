@@ -26,7 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.LocationComputers.GetLocationComput
                 .Where(x => x.LocationId == request.LocationId)
                 .AsQueryable();
 
-            return _paginationService.MapAndPaginateModel<LocationClient, LocationClientDto>(locationClients, request);
+            return await _paginationService.MapAndPaginateModelAsync<LocationClient, LocationClientDto>(locationClients, request);
         }
     }
 }

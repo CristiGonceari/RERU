@@ -45,7 +45,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetActiveQuestionUnit
                 questions = questions.Where(x => x.QuestionCategoryId == request.CategoryId);
             }
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<QuestionUnit, ActiveQuestionUnitValueDto>(questions, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<QuestionUnit, ActiveQuestionUnitValueDto>(questions, request);
             var items = paginatedModel.Items.ToList();
 
             var hashedQuestions = items.Where(x => x.QuestionType == QuestionTypeEnum.HashedAnswer).ToList();

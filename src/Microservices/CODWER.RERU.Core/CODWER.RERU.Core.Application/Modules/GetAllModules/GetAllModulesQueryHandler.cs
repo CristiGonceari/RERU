@@ -25,7 +25,7 @@ namespace CODWER.RERU.Core.Application.Modules.GetAllModules {
                 modules = modules.Where (x => EF.Functions.Like (x.Name, $"%{request.Keyword}%"));
             }
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<Data.Entities.Module, ModuleDto> (modules.OrderByDescending(m=>m.Priority), request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Data.Entities.Module, ModuleDto> (modules.OrderByDescending(m=>m.Priority), request);
 
             return paginatedModel;
         }

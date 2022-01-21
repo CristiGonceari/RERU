@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.Locations.GetLocations
                 locations = locations.Where(x => EF.Functions.Like(x.Address, $"%{request.Address}%"));
             }
 
-            return _paginationService.MapAndPaginateModel<Location, LocationDto>(locations, request);
+            return await _paginationService.MapAndPaginateModelAsync<Location, LocationDto>(locations, request);
         }
     }
 }

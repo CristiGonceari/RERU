@@ -28,7 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.PlanEvents.GetPlanEvents
                 .FirstOrDefault(x => x.Id == request.PlanId)?.Events
                 .AsQueryable();
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<Event, EventDto>(planEvents, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Event, EventDto>(planEvents, request);
 
             return paginatedModel;
         }
