@@ -18,6 +18,7 @@ import { CategoryQuestionsComponent } from './category-details/category-question
 import { CategoryQuestionsOptionsComponent } from './category-details/category-questions-options/category-questions-options.component';
 import { AddOptionComponent } from './category-details/category-questions-options/add-option/add-option.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { BulkImportOptionsComponent } from './bulk-import-options/bulk-import-options.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     CategoryOverviewComponent, 
     CategoryQuestionsComponent, 
     CategoryQuestionsOptionsComponent, 
-    AddOptionComponent
+    AddOptionComponent, BulkImportOptionsComponent
   ],
   
 

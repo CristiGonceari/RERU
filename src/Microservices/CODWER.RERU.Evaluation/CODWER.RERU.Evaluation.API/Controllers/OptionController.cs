@@ -1,12 +1,17 @@
 ﻿using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.Options.AddOption;
+using CODWER.RERU.Evaluation.Application.Options.BulkUploadOptions;
 using CODWER.RERU.Evaluation.Application.Options.DeleteAllOptionsByQuestion;
 using CODWER.RERU.Evaluation.Application.Options.DeleteOption;
 using CODWER.RERU.Evaluation.Application.Options.EditOption;
 using CODWER.RERU.Evaluation.Application.Options.GetOption;
+using CODWER.RERU.Evaluation.Application.Options.GetOptionBulkTemplate;
 using CODWER.RERU.Evaluation.Application.Options.GetOptions;
+using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.Options;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -54,5 +59,23 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         {
             return await Mediator.Send(new DeleteAllOptionsByQuestionCommand { QuestionUnitId = questionId });
         }
+
+        [IgnoreResponseWrap]
+        [HttpGet("excel-template/{questionType}")]
+        public async Task<FileContentResult> GetExcelTemplate([FromRoute] QuestionTypeEnum questionType)
+        {
+            byte[] answerBytes = await Mediator.Send(new GetOptionBulkTemplateQuery { QuestionType = questionType }) as byte[];
+            return File(answerBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "AddOptionTemplate.xlsx");
+        }
+
+        [IgnoreResponseWrap]
+        [HttpPost("excel-template/upload")]
+        public async Task<FileContentResult> BulkOptionsUpload([FromForm] BulkUploadOptionsCommand command)
+        {
+            byte[] answerBytes = await Mediator.Send(command) as byte[];
+            return File(answerBytes ?? new byte[0], "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ErrorList.xlsx");
+        }
+       
+
     }
 }

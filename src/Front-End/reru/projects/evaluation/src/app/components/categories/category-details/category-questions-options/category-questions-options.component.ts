@@ -14,6 +14,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { forkJoin } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { BulkImportQuestionsComponent } from '../../../questions/bulk-import-questions/bulk-import-questions.component';
+import { BulkImportOptionsComponent } from '../../bulk-import-options/bulk-import-options.component';
 
 @Component({
   selector: 'app-category-questions-options',
@@ -48,6 +50,7 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
   disable: boolean = false;
   questionName: string;
   fromCategory: boolean = false;
+  questionType;
 
   constructor(private optionService: OptionsService, 
     private route: ActivatedRoute, 
@@ -142,6 +145,7 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
   getQuestion() {
     this.questionService.get(this.questionId).subscribe(res => {
       this.questionName = res.data.question;
+      this.questionType = res.data.questionType;
       this.type = res.data.questionType;
       this.status = res.data.status;
       this.questionFileId = res.data.mediaFileId;
@@ -197,4 +201,12 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
   back(){
     this.location.back();
   }
+
+  bulkImport(): void { 
+		const modalRef = this.modalService.open(BulkImportOptionsComponent, { centered: true, size: 'lg' });
+    modalRef.componentInstance.questionId = this.questionId
+		modalRef.result.then(() => this.subsribeForParams(),
+			() => { }
+		);
+	}
 }
