@@ -121,7 +121,7 @@ data:
           "HttpHandlerOptions": {
             "UseTracing": true
           },
-          "DownstreamPathTemplate": "/{all}",
+          "DownstreamPathTemplate": "/{everything}",
           "DownstreamScheme": "http",
           "DownstreamHostAndPorts": [
             {
@@ -129,14 +129,14 @@ data:
               "Port": 8080
             }
           ],
-          "UpstreamPathTemplate": "/reru-evaluation/{all}"
+          "UpstreamPathTemplate": "/reru-evaluation{everything}"
         },
 
         {
           "HttpHandlerOptions": {
             "UseTracing": true
           },
-          "DownstreamPathTemplate": "/{all}",
+          "DownstreamPathTemplate": "/{everything}",
           "DownstreamScheme": "http",
           "DownstreamHostAndPorts": [
             {
@@ -144,7 +144,7 @@ data:
               "Port": 8080
             }
           ],
-          "UpstreamPathTemplate": "/reru-logging/{all}"
+          "UpstreamPathTemplate": "/reru-logging{everything}"
         },
 
         {
