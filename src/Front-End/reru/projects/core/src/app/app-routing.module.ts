@@ -17,7 +17,7 @@ import { Exception404Component } from './utils/exceptions/404/404.component';
 
 
 const routes: Routes = [
-	{ path: 'auth-callback', component: AuthenticationCallbackComponent },
+	{ path: 'auth-callback', component: AuthenticationCallbackComponent},
 	{
 		path: '',
 		component: DashboardComponent,
