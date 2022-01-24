@@ -32,7 +32,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionCategories.GetQuestionCateg
                 categories = categories.Where(x => EF.Functions.Like(x.Name, $"%{request.Name}%"));
             }
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<Evaluation.Data.Entities.QuestionCategory, QuestionCategoryDto>(categories, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Evaluation.Data.Entities.QuestionCategory, QuestionCategoryDto>(categories, request);
 
             return paginatedModel;
         }

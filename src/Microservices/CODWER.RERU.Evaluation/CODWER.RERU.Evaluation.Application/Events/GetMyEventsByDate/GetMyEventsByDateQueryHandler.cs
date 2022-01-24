@@ -42,7 +42,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetMyEventsByDate
                                                     && x.FromDate.Date <= request.Date && x.TillDate.Date >= request.Date)
                     .AsQueryable();
 
-                return _paginationService.MapAndPaginateModel<Event, EventDto>(myEvents, request);
+                return await _paginationService.MapAndPaginateModelAsync<Event, EventDto>(myEvents, request);
             }
 
             return new PaginatedModel<EventDto>(new PaginatedList<EventDto>(new List<EventDto>(), 0, 1, 10));

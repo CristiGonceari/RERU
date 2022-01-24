@@ -44,7 +44,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent
                                                     (request.startTime >= p.StartTime && p.StartTime <= request.endTime) && (request.startTime <= p.EndTime && p.EndTime <= request.endTime));
             }
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<Test, TestDto>(myTests, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myTests, request);
 
             foreach (var myTest in paginatedModel.Items)
             {

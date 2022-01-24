@@ -25,7 +25,7 @@ namespace CODWER.RERU.Core.Application.ModuleRolePermissions.GetModuleRolePermis
                 .Where(m => m.Id == request.RoleId)
                 .SelectMany(rp=>rp.Permissions.Select(mrp=>mrp.Permission));
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<Data.Entities.ModulePermission, ModulePermissionRowDto>(moduleRolePermissions, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Data.Entities.ModulePermission, ModulePermissionRowDto>(moduleRolePermissions, request);
 
             return paginatedModel;
         }

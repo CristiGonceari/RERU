@@ -40,7 +40,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEventByDate
                 .AsQueryable();
 
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<Test, TestDto>(myTests, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myTests, request);
 
             foreach (var myTest in paginatedModel.Items)
             {

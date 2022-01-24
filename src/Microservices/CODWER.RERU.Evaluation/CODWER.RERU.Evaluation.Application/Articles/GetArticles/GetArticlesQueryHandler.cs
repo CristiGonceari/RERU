@@ -30,7 +30,7 @@ namespace CODWER.RERU.Evaluation.Application.Articles.GetArticles
                 articles = articles.Where(x => EF.Functions.Like(x.Name, $"%{request.Name}%"));
             }
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<Article, ArticleDto>(articles, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Article, ArticleDto>(articles, request);
 
             return paginatedModel;
         }

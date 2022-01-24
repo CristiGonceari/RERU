@@ -25,7 +25,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
             userProfiles = Filter (userProfiles, request);
             userProfiles = Sort(userProfiles, request);
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<UserProfile, UserProfileDto> (userProfiles, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto> (userProfiles, request);
 
             return paginatedModel;
         }

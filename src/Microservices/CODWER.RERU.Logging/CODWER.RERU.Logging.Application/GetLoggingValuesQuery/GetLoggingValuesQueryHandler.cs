@@ -26,7 +26,7 @@ namespace CODWER.RERU.Logging.Application.GetLoggingValuesQuery
 
             logs = Filter(logs, request);
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<Log, LogDto>(logs, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Log, LogDto>(logs, request);
 
             return paginatedModel;
         }

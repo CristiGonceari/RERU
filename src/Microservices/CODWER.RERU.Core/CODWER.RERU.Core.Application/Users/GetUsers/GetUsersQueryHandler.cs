@@ -27,7 +27,7 @@ namespace CODWER.RERU.Core.Application.Users.GetUsers
 
             users = Filter (users, request);
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<ERPIdentityUser, UserDto> (users, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<ERPIdentityUser, UserDto> (users, request);
 
             return paginatedModel;
         }

@@ -26,7 +26,7 @@ namespace CODWER.RERU.Core.Application.ModulePermissions.GetModulePermissions
 
             moduleRoles = Filter(moduleRoles, request);
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<ModulePermission, ModulePermissionRowDto>(moduleRoles, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<ModulePermission, ModulePermissionRowDto>(moduleRoles, request);
 
             return paginatedModel;
         }

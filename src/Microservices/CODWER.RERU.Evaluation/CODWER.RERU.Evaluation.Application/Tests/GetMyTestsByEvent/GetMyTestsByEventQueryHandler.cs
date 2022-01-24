@@ -38,7 +38,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsByEvent
                 .OrderByDescending(x => x.ProgrammedTime)
                 .AsQueryable();
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<Test, TestDto>(myTests, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myTests, request);
 
             foreach (var myTest in paginatedModel.Items)
             {

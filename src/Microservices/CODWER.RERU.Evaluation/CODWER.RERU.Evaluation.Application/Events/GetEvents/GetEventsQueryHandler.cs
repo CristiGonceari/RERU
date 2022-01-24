@@ -40,7 +40,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetEvents
                 }
             }
 
-            return _paginationService.MapAndPaginateModel<Event, EventDto>(events, request);
+            return await _paginationService.MapAndPaginateModelAsync<Event, EventDto>(events, request);
         }
     }
 }

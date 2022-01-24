@@ -40,7 +40,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestions
                 .Where(x => x.TestId == request.TestId)
                 .AsQueryable();
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<TestQuestion, TestQuestionDto>(testQuestions, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<TestQuestion, TestQuestionDto>(testQuestions, request);
 
             foreach (var testQuestionDto in paginatedModel.Items)
             {
