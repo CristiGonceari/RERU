@@ -4,14 +4,16 @@ using CVU.ERP.Logging.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CODWER.RERU.Logging.Persistence.Migrations
 {
     [DbContext(typeof(LoggingDbContext))]
-    partial class LoggingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220124153953_Json_Message_Field")]
+    partial class Json_Message_Field
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
