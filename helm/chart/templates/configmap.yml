@@ -520,7 +520,7 @@ data:
         "CLIENT_ID": "RERU-Web-client",
         "SERVER_URL": "http://reru.codwer.com/ms/reru-evaluation",
         "CORE_URL": "http://reru.codwer.com/ms/reru-core",
-        "APP_BASE_URL": "http://reru.codwer.com/reru-personal/#",
+        "APP_BASE_URL": "http://reru.codwer.com/reru-evaluation/#",
         "production": true
     }
 
@@ -532,6 +532,6 @@ data:
         "CLIENT_ID": "RERU-Web-client",
         "SERVER_URL": "http://reru.codwer.com/ms/reru-logging",
         "CORE_URL": "http://reru.codwer.com/ms/reru-core",
-        "APP_BASE_URL": "http://reru.codwer.com/reru-personal/#",
+        "APP_BASE_URL": "http://reru.codwer.com/reru-logging/#",
         "production": true
     }

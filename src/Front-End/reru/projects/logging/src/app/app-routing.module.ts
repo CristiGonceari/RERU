@@ -13,7 +13,7 @@ const routes: Routes = [
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent },
   { path: '',
   component: LayoutsComponent,
-  // canActivate: [AuthenticationGuard],
+  //// canActivate: [AuthenticationGuard],
     children: [
       { path: '', component: DashboardComponent },
       { path: '404', component: Exception404Component },
