@@ -25,9 +25,29 @@
       <span class="card-title font-weight-bolder"></span>
       <div class="card-toolbar" *ngIf="status == 0 && type == 2 || type == 3">
         <span *ngIf="fromCategory">
-            <app-add-button class="btn" [value]="'questions.add-option' | translate"
+          <div class="card-toolbar">
+            <div class="dropdown dropdown-inline my-auto" ngbDropdown>
+              <app-add-button class="btn my-auto" id="action1" ngbDropdownToggle 
+              [value]="'questions.add-option' | translate">
+              </app-add-button>
+              <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                <div ngbDropdownMenu aria-labelledby="action1">
+                  <button class="navi-link align-items-center px-6" ngbDropdownItem
+                    [routerLink]="['../../option', questionId, 'add']">
+                    <i class="la la-plus mr-2"></i> 
+                    {{'questions.add-option' | translate}}
+                  </button>
+                  <button (click)="bulkImport()" class="navi-link align-items-baseline px-6" ngbDropdownItem *ngIf="questionType == 3" >
+                    <i class="la la-download mr-2"></i>
+                    {{'options.bulk-import' | translate}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+            <!-- <app-add-button class="btn" [value]="'questions.add-option' | translate" ngbDropdownToggle
                 [routerLink]="['../../option', questionId, 'add']">
-            </app-add-button>
+            </app-add-button> -->
         </span>
         <span *ngIf="!fromCategory">
             <app-add-button class="btn" [value]="'questions.add-option' | translate"

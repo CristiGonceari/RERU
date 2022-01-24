@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { AbstractService, AppSettingsService } from '@erp/shared';
 import { HttpClient } from '@angular/common/http';
 import { OptionModel } from '../../models/options/option.model';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class OptionsService extends AbstractService {
 	private readonly urlRoute = 'Option';
+	public uploadOption: BehaviorSubject<void> = new BehaviorSubject(null);
 
 	constructor(protected appConfigService: AppSettingsService, private client: HttpClient) {
 		super(appConfigService);
@@ -36,5 +37,19 @@ export class OptionsService extends AbstractService {
 
 	deleteAllOptions(questionId: number): Observable<OptionModel> {
 		return this.client.delete<OptionModel>(`${this.baseUrl}/${this.urlRoute}/${questionId}`);
+	}
+
+	getTemplate(questionType: number): Observable<any> {
+		return this.client.get<any>(`${this.baseUrl}/${this.urlRoute}/excel-template/${questionType}`, {
+			responseType: 'blob' as 'json',
+			observe: 'response' as 'body',
+		});
+	}
+	bulkUpload(file): Observable<any> {
+		
+		return this.client.post<any>(`${this.baseUrl}/${this.urlRoute}/excel-template/upload`,file, {
+			responseType: 'blob' as 'json',
+			observe: 'response' as 'body',
+		});
 	}
 }

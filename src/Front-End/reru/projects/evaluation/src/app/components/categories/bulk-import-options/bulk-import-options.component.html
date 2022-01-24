@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-between p-6 border-bottom">
+    <h5 class="modal-title" id="exampleModalLabel">{{'options.bulk-import' | translate}}</h5>
+    <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+      <span class="h1" aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card card-custom bg-light-primary p-7">
+      <div class="d-flex align-items-center">
+        <div class="d-flex flex-column w-100">
+          <div class="d-flex">
+            <div class="w-25">
+              <span class="svg-icon svg-icon-primary svg-icon-3x">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                  viewBox="0 0 24 24" version="1.1">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <rect x="0" y="0" width="24" height="24" />
+                    <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+                    <rect fill="#000000" x="11" y="10" width="2" height="7" rx="1" />
+                    <rect fill="#000000" x="11" y="7" width="2" height="2" rx="1" />
+                  </g>
+                </svg>
+              </span>
+            </div>
+            <label class="no-wrap my-auto">{{'questions.type' | translate}}</label>
+            <select name="type" class="form-control w-50 mx-7" [(ngModel)]="selectedTypeName"
+              (ngModelChange)="selectType($event)">
+              <option value="{{ item }}" *ngFor="let item of qType">{{ item }}</option>
+            </select>
+            <app-confirm-button class="btn" (handle)="downloadTemplate(selectedTypeId)"
+              [value]="'button.download' | translate"></app-confirm-button>
+          </div>
+          <p class="text-danger text-center mb-0">{{'message.bulk-downloadMsg' | translate}}.</p>
+          <div class="fv-plugins-message-container"></div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="form-group row mt-10" *ngIf="hasTemplate">
+      <label class="col-form-label col-3 text-right">{{'message.bulk-uploadMsg' | translate}}:</label>
+      <div class="col-9">
+        <ngx-dropzone (change)="onSelect($event)" class="font-weight-light justify-content-center" [multiple]="false" accept=".xlsx" [disabled]="files.length > 0">
+          <ngx-dropzone-label>
+            <h4>{{'message.bulk-dropMsg' | translate}}.</h4>
+            <p class="text-muted">{{'message.bulk-beSureMsg' | translate}}</p>
+          </ngx-dropzone-label>
+          <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+            <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+          </ngx-dropzone-preview>
+        </ngx-dropzone>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <app-button class="btn mr-2" (handle)="dismiss()" [value]="'button.cancel' | translate"></app-button>
+    <app-add-button class="btn" (handle)="onConfirm()" [value]="'button.confirm' | translate"></app-add-button>
+  </div>
+  

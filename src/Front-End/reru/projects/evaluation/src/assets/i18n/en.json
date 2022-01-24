@@ -445,7 +445,8 @@
     "succes-delete-msg": "Option was successfully deleted",
     "succes-add-msg": "Option was successfully added",
     "succes-update-msg": "Option was successfully updated",
-    "succes-update-options-msg": "Question status was updated"
+    "succes-update-options-msg": "Question status was updated",
+    "bulk-import":"Bulk Import Options"
   },
   "tooltips": {
     "option1": "User have the possibility to start test without administrator confirmation",

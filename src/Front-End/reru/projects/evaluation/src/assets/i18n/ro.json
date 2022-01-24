@@ -445,7 +445,8 @@
     "succes-delete-msg": "Opțiunea a fost ștearsă cu succes",
     "succes-add-msg": "Opțiunea a fost adăugată cu succes",
     "succes-update-msg": "Opțiunea a fost actualizată cu succes",
-    "succes-update-options-msg": "Opțiunile au fost actualizate cu succes"
+    "succes-update-options-msg": "Opțiunile au fost actualizate cu succes",
+    "bulk-import": "Bulk Import"
   },
   "tooltips": {
     "option1": "Utilizatorul are posibilitatea de a începe testul fără confirmarea administratorului",
