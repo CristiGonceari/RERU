@@ -1,7 +1,9 @@
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CloudFileService } from '../../services/cloud-file/cloud-file.service';
+import { ShowImageModalComponent } from '../show-image-modal/show-image-modal.component';
 
 @Component({
   selector: 'app-get-media-file',
@@ -20,8 +22,10 @@ export class GetMediaFileComponent implements OnInit, OnChanges {
 
   @Input() fileId: string;
 
-  constructor(private sanitizer: DomSanitizer,
-    private fileService: CloudFileService
+  constructor(
+    private sanitizer: DomSanitizer,
+    private fileService: CloudFileService,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void { }
@@ -97,6 +101,14 @@ export class GetMediaFileComponent implements OnInit, OnChanges {
 
       reader.readAsDataURL(file);
     });
+  }
+
+  showImage(url): void {
+    const modalRef = this.modalService.open(ShowImageModalComponent, { centered: true, size: 'xl' });
+    modalRef.componentInstance.imageUrl = url;
+		modalRef.result.then(
+			() => { }
+		);
   }
   
 }

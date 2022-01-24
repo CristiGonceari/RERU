@@ -16,6 +16,7 @@ import { AddEditMediaFileComponent } from './components/add-edit-media-file/add-
 import { GetMediaFileComponent } from './components/get-media-file/get-media-file.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SharedModule } from '@erp/shared';
+import { ShowImageModalComponent } from './components/show-image-modal/show-image-modal.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { SharedModule } from '@erp/shared';
     CalendarChunkPipe,
     AddEditMediaFileComponent,
     GetMediaFileComponent,
+    ShowImageModalComponent,
   ],
   imports: [
     HttpClientModule,
