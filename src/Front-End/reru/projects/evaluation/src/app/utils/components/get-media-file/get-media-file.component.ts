@@ -9,10 +9,6 @@ import { CloudFileService } from '../../services/cloud-file/cloud-file.service';
   styleUrls: ['./get-media-file.component.scss']
 })
 export class GetMediaFileComponent implements OnInit, OnChanges {
-  imageFiles: File[] = [];
-  videoFiles: File[] = [];
-  audioFiles: File[] = [];
-
   imageUrl: any;
   audioUrl: any;
   videoUrl: any;
@@ -73,6 +69,7 @@ export class GetMediaFileComponent implements OnInit, OnChanges {
         this.isLoadingMedia = false;
       break;
     }
+    this.videoUrl = this.audioUrl = this.imageUrl = null;
   }
 
   updateStatus(loaded: number, total: number | undefined, requestType: string) {

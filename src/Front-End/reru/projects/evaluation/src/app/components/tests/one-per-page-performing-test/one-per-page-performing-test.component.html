@@ -77,20 +77,6 @@
                                 {{ option.answer }}
                                 <div class="form-group row align-items-center">
                                     <div class="col-lg-6 col-xl-3">
-                                      <!-- <app-loading-spinner *ngIf="isLoadingOptionMedia" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
-                                        [colorClass]="'text-primary'">
-                                      </app-loading-spinner>
-                                      <div *ngIf="!isLoadingOptionMedia" class="mt-3">
-                                        <div *ngIf="option.imageUrl" class="d-flex">
-                                            <img [src]="option.imageUrl" class="h-200px rounded">
-                                        </div>
-                                        <video *ngIf="option.videoUrl" class="h-200px rounded" controls>
-                                            <source [src]="option.videoUrl">
-                                        </video>
-                                        <audio *ngIf="option.audioUrl" controls>
-                                            <source [src]="option.audioUrl" type="audio/mpeg">
-                                        </audio>
-                                      </div> -->
                                       <div *ngIf="option.mediaFileId" class="w-100">
                                         <app-get-media-file [fileId]="option.mediaFileId"></app-get-media-file>
                                       </div>

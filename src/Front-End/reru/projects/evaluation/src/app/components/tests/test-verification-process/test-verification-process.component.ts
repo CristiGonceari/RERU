@@ -44,11 +44,6 @@ export class TestVerificationProcessComponent implements OnInit {
 	points: number;
 	questionUnitId: number;
 	isLoadingMedia: boolean;
-	imageUrl: any;
-	audioUrl: any;
-	videoUrl: any;
-	filenames: any;
-	fileName: string;
 	fileId: string;
 
 	title: string;
@@ -61,8 +56,6 @@ export class TestVerificationProcessComponent implements OnInit {
 
 	optionFileId = [];
   	isLoadingOptionMedia:  boolean = true;
-  	optionFilenames: any;
-  	optionFileName: string;
 
 	constructor(
 		private verifyService: TestVerificationProcessService,
@@ -149,13 +142,6 @@ export class TestVerificationProcessComponent implements OnInit {
 					this.answer = res.data.answerText;
 					this.comment = res.data.comment;
 					this.options = res.data.options;
-					this.options.map ( (option) => {
-						// TODO add type Option -> options = array<Option>
-						  option.videoUrl = null
-						  option.imageUrl = null
-						  option.audioUrl = null
-						  return option;
-					  })
 					this.correct = res.data.isCorrect;
 					this.index = index;
 					this.questionType = res.data.questionType;

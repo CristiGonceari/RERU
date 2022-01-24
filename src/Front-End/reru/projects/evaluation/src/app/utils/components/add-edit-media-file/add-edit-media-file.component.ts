@@ -56,7 +56,6 @@ export class AddEditMediaFileComponent implements OnInit {
     })
   }
 
-
   onSelect(event) {
     event.addedFiles.forEach((element) => {
       const regexImage = new RegExp(/(.*?).(jpg|png|jpeg|svg|gif)$/gmi);
