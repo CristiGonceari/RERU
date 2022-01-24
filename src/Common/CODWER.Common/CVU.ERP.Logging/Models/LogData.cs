@@ -1,36 +1,29 @@
-﻿namespace CVU.ERP.Logging.Models
+﻿using System.Text.Json;
+namespace CVU.ERP.Logging.Models
 {
     public class LogData
     {
-        public LogData(string message)
+        public LogData(string message, string project, string obj = "")
         {
             EventMessage = message;
+            Project = project;
+            SerializedObject = obj;
         }
 
         public string Project { get; set; }
         public string Event { get; set; }
         public string EventMessage { get; set; }
+        public string SerializedObject { get; set; }
 
-        public LogData AsEvaluation()
-        {
-            Project = Projects.EVALUATION;
+        public static LogData AsEvaluation(string message) => new (message, Projects.EVALUATION);
+        public static LogData AsEvaluation<T>(string message, T obj) => new (message, Projects.EVALUATION, Serialize(obj));
 
-            return this;
-        }
+        public static LogData AsPersonal(string message) => new(message, Projects.PERSONAL);
+        public static LogData AsPersonal<T>(string message, T obj) => new(message, Projects.PERSONAL, Serialize(obj));
 
-        public LogData AsPersonal()
-        {
-            Project = Projects.PERSONAL;
+        public static LogData AsCore(string message) => new(message, Projects.CORE);
+        public static LogData AsCore<T>(string message, T obj) => new(message, Projects.CORE, Serialize(obj));
 
-            return this;
-        }
-
-        public LogData AsCore()
-        {
-            Project = Projects.CORE;
-
-            return this;
-        }
-
+        private static string Serialize<T>(T obj) => obj != null ? JsonSerializer.Serialize(obj) : string.Empty;
     }
 }

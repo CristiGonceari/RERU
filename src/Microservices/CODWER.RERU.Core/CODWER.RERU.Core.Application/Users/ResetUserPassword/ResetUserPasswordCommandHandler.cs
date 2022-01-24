@@ -7,8 +7,10 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Core.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Users.ResetUserPassword
 {
@@ -46,11 +48,15 @@ namespace CODWER.RERU.Core.Application.Users.ResetUserPassword
                     }
                 }
 
-                await _loggerService.Log(
-                    new LogData($"Password was reset for User {userProfile.Name} {userProfile.LastName}").AsCore());
+                await LogAction(userProfile);
             }
 
             return Unit.Value;
+        }
+
+        private async Task LogAction(UserProfile userProfile)
+        {
+            await _loggerService.Log(LogData.AsCore($" User {userProfile.Name} {userProfile.LastName}, password was reseted", userProfile));
         }
     }
 }

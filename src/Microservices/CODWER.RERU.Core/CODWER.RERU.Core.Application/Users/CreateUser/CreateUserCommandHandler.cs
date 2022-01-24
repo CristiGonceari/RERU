@@ -9,6 +9,7 @@ using CODWER.RERU.Core.Data.Entities;
 using CVU.ERP.Logging.Models;
 using CVU.ERP.Module.Application.LoggerServices;
 using MediatR;
+using System.Text.Json;
 
 namespace CODWER.RERU.Core.Application.Users.CreateUser
 {
@@ -17,7 +18,8 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
         private readonly IEnumerable<IIdentityService> _identityServices;
         private readonly ILoggerService<CreateUserCommandHandler> _loggerService;
 
-        public CreateUserCommandHandler(ICommonServiceProvider commonServiceProvider, IEnumerable<IIdentityService> identityServices, 
+        public CreateUserCommandHandler(ICommonServiceProvider commonServiceProvider,
+            IEnumerable<IIdentityService> identityServices, 
             ILoggerService<CreateUserCommandHandler> loggerService)
             : base(commonServiceProvider)
         {
@@ -58,10 +60,14 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
             await CoreDbContext.SaveChangesAsync();
 
-            await _loggerService.Log(new LogData(
-                $"User {userProfile.Name} {userProfile.LastName} with email {userProfile.Email} was added to system with a new Id = {userProfile.Id}").AsCore());
+            await LogAction(userProfile);
 
             return userProfile.Id;
+        }
+
+        private async Task LogAction(UserProfile userProfile)
+        {
+            await _loggerService.Log(LogData.AsCore($"User {userProfile.Name} {userProfile.LastName} was added to system", userProfile));
         }
     }
 }

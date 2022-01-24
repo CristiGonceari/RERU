@@ -1,7 +1,11 @@
-﻿using System.Threading;
+﻿using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Logging.Models;
+using CVU.ERP.Module.Application.LoggerServices;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,11 +15,13 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.EditTestType
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly ILoggerService<EditTestTypeCommandHandler> _loggerService;
 
-        public EditTestTypeCommandHandler(AppDbContext appDbContext, IMapper mapper)
+        public EditTestTypeCommandHandler(AppDbContext appDbContext, IMapper mapper, ILoggerService<EditTestTypeCommandHandler> logger)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _loggerService = logger;
         }
 
         public async Task<int> Handle(EditTestTypeCommand request, CancellationToken cancellationToken)
@@ -25,7 +31,14 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.EditTestType
             _mapper.Map(request.Data, updateTestType);
             await _appDbContext.SaveChangesAsync();
 
+            await LogAction(updateTestType);
+
             return updateTestType.Id;
+        }
+
+        private async Task LogAction(TestType testTemplate)
+        {
+            await _loggerService.Log(LogData.AsEvaluation($"Test template was edited", testTemplate));
         }
     }
 }

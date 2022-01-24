@@ -49,7 +49,8 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
                 UserIdentifier = coreUser.Id,
                 Event = !string.IsNullOrWhiteSpace(data.Event) ? data.Event : ParseName(),
                 EventMessage = data.EventMessage,
-                Date = DateTime.Now
+                Date = DateTime.Now,
+                JsonMessage = data.SerializedObject
             };
 
             await _localLoggingDbContext.Logs.AddAsync(toLog);
