@@ -19,11 +19,11 @@ import { MainComponent } from './components/main/main.component';
 
 const routes: Routes = [
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent},
-	{
-		path: '',
-		component: MainComponent,
-		canActivate: [AuthenticationGuard],
-		children: [
+	// {
+	// 	path: '',
+	// 	component: MainComponent,
+	// 	canActivate: [AuthenticationGuard],
+	// 	children: [
 			{
 				path: '',
 				component: DashboardComponent,
@@ -53,8 +53,8 @@ const routes: Routes = [
 				path: 'my-profile', 
 				loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule)
 			},
-		],
-	},
+		// ],
+	// },
 	{ path: '404', component: Exception404Component },
 	{ path: '**', redirectTo: '404' }
 ];
