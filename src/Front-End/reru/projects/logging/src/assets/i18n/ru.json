@@ -29,6 +29,7 @@
     "user-name": "Имя пользователя",
     "user-identifier": "Идентификатор пользователя",
     "event-message": "Действие",
+    "json-message": "JSON",
     "date": "Дата"
    },
   "user-profile": {

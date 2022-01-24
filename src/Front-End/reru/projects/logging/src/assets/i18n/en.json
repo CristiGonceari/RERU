@@ -26,9 +26,10 @@
    "to": "To Date",
    "project": "Project",
    "event": "Event",
-   "user-name": "User-name",
-   "user-identifier": "User Identifier",
+   "user-name": "User",
+   "user-identifier": "Identifier",
    "event-message": "Event Message",
+   "json-message": "JSON",
    "date": "Date"
   },
   "user-profile": {

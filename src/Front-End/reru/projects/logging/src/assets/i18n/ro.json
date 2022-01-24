@@ -24,11 +24,12 @@
     "subtitle": "Tabelul de logare",
     "from": "De la",
     "to": "Pana La",
-    "project": "Proiectul",
-    "event": "Evenimentul",
-    "user-name": "Numele Utilizatorului",
-    "user-identifier": "Identificatorul Utilizatorului",
-    "event-message": "Mesajul Evenimentului",
+    "project": "Proiect",
+    "event": "Eveniment",
+    "user-name": "Utilizator",
+    "user-identifier": "Identificator",
+    "event-message": "Mesajul Eveniment",
+    "json-message": "JSON",
     "date": "Data"
    },
   "user-profile": {
