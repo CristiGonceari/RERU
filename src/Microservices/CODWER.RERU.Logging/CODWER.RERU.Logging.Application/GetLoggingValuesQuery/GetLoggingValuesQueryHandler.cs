@@ -22,7 +22,9 @@ namespace CODWER.RERU.Logging.Application.GetLoggingValuesQuery
 
         public async Task<PaginatedModel<LogDto>> Handle(GetLoggingValuesQuery request, CancellationToken cancellationToken)
         {
-            var logs = _appDbContext.Logs.AsQueryable();
+            var logs = _appDbContext.Logs
+                .OrderByDescending(l => l.Date)
+                .AsQueryable();
 
             logs = Filter(logs, request);
 
