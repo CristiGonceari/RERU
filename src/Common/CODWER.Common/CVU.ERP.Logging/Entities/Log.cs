@@ -11,5 +11,6 @@ namespace CVU.ERP.Logging.Entities
         public string Event { get; set; }
         public string EventMessage { get; set; }
         public DateTime Date { get; set; }
+        public string JsonMessage { get; set; }
     }
 }

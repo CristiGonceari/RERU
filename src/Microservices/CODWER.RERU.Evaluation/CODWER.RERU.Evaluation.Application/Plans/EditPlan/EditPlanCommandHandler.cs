@@ -4,6 +4,9 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Data.Entities;
+using CVU.ERP.Logging.Models;
+using CVU.ERP.Module.Application.LoggerServices;
 
 namespace CODWER.RERU.Evaluation.Application.Plans.EditPlan
 {
@@ -11,11 +14,13 @@ namespace CODWER.RERU.Evaluation.Application.Plans.EditPlan
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly ILoggerService<EditPlanCommandHandler> _loggerService;
 
-        public EditPlanCommandHandler(AppDbContext appDbContext, IMapper mapper)
+        public EditPlanCommandHandler(AppDbContext appDbContext, IMapper mapper, ILoggerService<EditPlanCommandHandler> loggerService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _loggerService = loggerService;
         }
 
         public async Task<int> Handle(EditPlanCommand request, CancellationToken cancellationToken)
@@ -24,9 +29,14 @@ namespace CODWER.RERU.Evaluation.Application.Plans.EditPlan
 
             _mapper.Map(request.Data, planToEdit);
             await _appDbContext.SaveChangesAsync();
+            await LogAction(planToEdit);
 
             return planToEdit.Id;
         }
-    }
 
+        private async Task LogAction(Plan item)
+        {
+            await _loggerService.Log(LogData.AsEvaluation($"Plan was edited", item));
+        }
+    }
 }

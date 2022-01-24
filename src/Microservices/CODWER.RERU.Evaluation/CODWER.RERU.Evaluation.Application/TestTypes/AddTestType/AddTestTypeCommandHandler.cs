@@ -1,9 +1,13 @@
-﻿using System.Threading;
+﻿using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Logging.Models;
+using CVU.ERP.Module.Application.LoggerServices;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace CODWER.RERU.Evaluation.Application.TestTypes.AddTestType
 {
@@ -11,11 +15,13 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.AddTestType
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly ILoggerService<AddTestTypeCommandHandler> _loggerService;
 
-        public AddTestTypeCommandHandler(AppDbContext appDbContext, IMapper mapper)
+        public AddTestTypeCommandHandler(AppDbContext appDbContext, IMapper mapper, ILoggerService<AddTestTypeCommandHandler> loggerService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _loggerService = loggerService;
         }
 
         public async Task<int> Handle(AddTestTypeCommand request, CancellationToken cancellationToken)
@@ -26,8 +32,14 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.AddTestType
 
             await _appDbContext.SaveChangesAsync();
 
+            await LogAction(newTestType);
+
             return newTestType.Id;
         }
 
+        private async Task LogAction(TestType testTemplate)
+        {
+            await _loggerService.Log(LogData.AsEvaluation($"Test template was created", testTemplate));
+        }
     }
 }
