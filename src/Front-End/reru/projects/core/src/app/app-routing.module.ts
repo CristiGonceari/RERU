@@ -14,44 +14,46 @@ import { AuthenticationCallbackComponent, AuthenticationGuard } from '@erp/share
 import { ModulesRoutingModule } from './components/modules/modules-routing.module';
 import { MyProfileRoutingModule } from './components/my-profile/my-profile-routing.module';
 import { Exception404Component } from './utils/exceptions/404/404.component';
+import { MainComponent } from './components/main/main.component';
 
 
 const routes: Routes = [
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent},
 	{
 		path: '',
-		component: DashboardComponent,
-		canActivate: [AuthenticationGuard]
-	},
-	{ 
-		path: 'personal-profile', 
-		loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule), 
-		canActivate: [AuthenticationGuard]
-	},
-	{ 
-		path: 'user-profile', 
-		loadChildren: () => import('./components/users/user-profile/user-profile.module').then(m => m.UserProfileModule),
-		canActivate: [AuthenticationGuard] 
-	},
-	{ 
-		path: 'modules', 
-		loadChildren: () => import('./components/modules/modules.module').then(m => m.ModulesModule),
-		canActivate: [AuthenticationGuard]
-	},
-	{ 
-		path: 'users', 
-		loadChildren: () => import('./components/users/users.module').then(m => m.UsersModule),
-		canActivate: [AuthenticationGuard]
-	},
-	{ 
-		path: 'roles', 
-		loadChildren: () => import('./components/roles/roles.module').then(m => m.RolesModule),
-		canActivate: [AuthenticationGuard]
-	},
-	{ 
-		path: 'my-profile', 
-		loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule),
-		canActivate: [AuthenticationGuard]
+		component: MainComponent,
+		canActivate: [AuthenticationGuard],
+		children: [
+			{
+				path: '',
+				component: DashboardComponent,
+				canActivate: [AuthenticationGuard]
+			},
+			{ 
+				path: 'personal-profile', 
+				loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule)
+			},
+			{ 
+				path: 'user-profile', 
+				loadChildren: () => import('./components/users/user-profile/user-profile.module').then(m => m.UserProfileModule)
+			},
+			{ 
+				path: 'modules', 
+				loadChildren: () => import('./components/modules/modules.module').then(m => m.ModulesModule)
+			},
+			{ 
+				path: 'users', 
+				loadChildren: () => import('./components/users/users.module').then(m => m.UsersModule)
+			},
+			{ 
+				path: 'roles', 
+				loadChildren: () => import('./components/roles/roles.module').then(m => m.RolesModule)
+			},
+			{ 
+				path: 'my-profile', 
+				loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule)
+			},
+		],
 	},
 	{ path: '404', component: Exception404Component },
 	{ path: '**', redirectTo: '404' }
@@ -59,8 +61,8 @@ const routes: Routes = [
 
 @NgModule({
 	imports: [
-		// ModulesRoutingModule,
-		// MyProfileRoutingModule,
+		ModulesRoutingModule,
+		MyProfileRoutingModule,
 		RouterModule.forRoot(routes, {
 			useHash: true,
 			scrollPositionRestoration: 'enabled',

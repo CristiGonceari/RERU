@@ -17,6 +17,7 @@ import { NgxDnDModule } from '@swimlane/ngx-dnd';
 import { environment } from '../environments/environment';
 import { ModulesComponent } from './components/modules/modules.component';
 import { RolesComponent } from './components/roles/roles.component';
+import { MainComponent } from './components/main/main.component';
 
 @NgModule({
 	declarations: [
@@ -26,6 +27,7 @@ import { RolesComponent } from './components/roles/roles.component';
 			DashboardComponent,
 			ModulesComponent,
 			RolesComponent,
+			MainComponent,
 	],
 	imports: [
 		BrowserModule,
