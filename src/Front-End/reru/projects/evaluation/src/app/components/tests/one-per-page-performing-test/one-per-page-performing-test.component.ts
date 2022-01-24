@@ -17,8 +17,6 @@ import { TestTypeSettings } from '../../../utils/models/test-types/test-type-set
 import { AddTestQuestion } from '../../../utils/models/test-questions/add-test-question.model';
 import { SafeHtmlPipe } from '../../../utils/pipes/safe-html.pipe';
 import { ConfirmModalComponent } from '@erp/shared';
-import { CloudFileService } from '../../../utils/services/cloud-file/cloud-file.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
@@ -73,14 +71,10 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   imageUrl: any;
   audioUrl: any;
   videoUrl: any;
-  filenames: any;
-  fileName: string;
   fileId: string;
 
   optionFileId = [];
   isLoadingOptionMedia:  boolean = true;
-  optionFilenames: any;
-  optionFileName: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -325,13 +319,6 @@ export class OnePerPagePerformingTestComponent implements OnInit {
         (res) => {
           this.questionUnit = res.data;
           this.testOptionsList = res.data.options;
-          this.testOptionsList.map ( (option) => {
-						// TODO add type Option -> options = array<Option>
-						  option.videoUrl = null
-						  option.imageUrl = null
-						  option.audioUrl = null
-						  return option;
-					  })
           this.hashedOptions = res.data.hashedOptions;
           this.fileId = res.data.mediaFileId;
           this.isLoadingMedia = false;

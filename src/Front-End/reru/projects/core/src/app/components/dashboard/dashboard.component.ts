@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
 
 	subscribeForAuthChange(): void {
 		this.userSubject.userChange.subscribe(() => (this.modules = this.moduleService.get()));
+		console.log(this.modules);
 	}
 
 	list(): void {

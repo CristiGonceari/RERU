@@ -23,20 +23,44 @@ const routes: Routes = [
 		component: DashboardComponent,
 		canActivate: [AuthenticationGuard]
 	},
-	{ path: 'personal-profile', loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule),canActivate: [AuthenticationGuard] },
-	{ path: 'user-profile', loadChildren: () => import('./components/users/user-profile/user-profile.module').then(m => m.UserProfileModule),canActivate: [AuthenticationGuard] },
-	{ path: 'modules', loadChildren: () => import('./components/modules/modules.module').then(m => m.ModulesModule),canActivate: [AuthenticationGuard] },
-	{ path: 'users', loadChildren: () => import('./components/users/users.module').then(m => m.UsersModule),canActivate: [AuthenticationGuard] },
-	{ path: 'roles', loadChildren: () => import('./components/roles/roles.module').then(m => m.RolesModule),canActivate: [AuthenticationGuard] },
-	{ path: 'my-profile', loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule),canActivate: [AuthenticationGuard] },
-	{ path: '404', component: Exception404Component},
+	{ 
+		path: 'personal-profile', 
+		loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule), 
+		canActivate: [AuthenticationGuard]
+	},
+	{ 
+		path: 'user-profile', 
+		loadChildren: () => import('./components/users/user-profile/user-profile.module').then(m => m.UserProfileModule),
+		canActivate: [AuthenticationGuard] 
+	},
+	{ 
+		path: 'modules', 
+		loadChildren: () => import('./components/modules/modules.module').then(m => m.ModulesModule),
+		canActivate: [AuthenticationGuard]
+	},
+	{ 
+		path: 'users', 
+		loadChildren: () => import('./components/users/users.module').then(m => m.UsersModule),
+		canActivate: [AuthenticationGuard]
+	},
+	{ 
+		path: 'roles', 
+		loadChildren: () => import('./components/roles/roles.module').then(m => m.RolesModule),
+		canActivate: [AuthenticationGuard]
+	},
+	{ 
+		path: 'my-profile', 
+		loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule),
+		canActivate: [AuthenticationGuard]
+	},
+	{ path: '404', component: Exception404Component },
 	{ path: '**', redirectTo: '404' }
 ];
 
 @NgModule({
 	imports: [
-		ModulesRoutingModule,
-		MyProfileRoutingModule,
+		// ModulesRoutingModule,
+		// MyProfileRoutingModule,
 		RouterModule.forRoot(routes, {
 			useHash: true,
 			scrollPositionRestoration: 'enabled',

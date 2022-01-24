@@ -6,6 +6,19 @@
   z-index: 98;
   min-width: 220px;
 
+  .aside-menu {
+    margin-right: -10px;
+    &::-webkit-scrollbar {
+      width: 5px !important;
+    }
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #bcd6f1; 
+    }
+  }
+
   .aside-menu .menu-nav > .menu-item.btn-margin {
     padding: 0 25px;
   }

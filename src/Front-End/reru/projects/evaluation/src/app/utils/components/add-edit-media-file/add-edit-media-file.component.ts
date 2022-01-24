@@ -6,6 +6,8 @@ import { CloudFileService } from '../../services/cloud-file/cloud-file.service';
 import { NotificationUtil } from '../../util/notification.util';
 import { forkJoin } from 'rxjs';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ShowImageModalComponent } from '../show-image-modal/show-image-modal.component';
 
 @Component({
   selector: 'app-add-edit-media-file',
@@ -40,6 +42,7 @@ export class AddEditMediaFileComponent implements OnInit {
     private notificationService: NotificationsService,
     private fileService: CloudFileService,
     public translate: I18nService,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
@@ -55,7 +58,6 @@ export class AddEditMediaFileComponent implements OnInit {
       this.reportProggress(res);
     })
   }
-
 
   onSelect(event) {
     event.addedFiles.forEach((element) => {
@@ -166,6 +168,14 @@ export class AddEditMediaFileComponent implements OnInit {
   updateStatus(loaded: number, total: number | undefined, requestType: string) {
     this.fileStatus.requestType = requestType;
     this.fileStatus.percent = Math.round(100 * loaded / total);
+  }
+
+  showImage(url): void {
+    const modalRef = this.modalService.open(ShowImageModalComponent, { centered: true, size: 'xl' });
+    modalRef.componentInstance.imageUrl = url;
+		modalRef.result.then(
+			() => { }
+		);
   }
 
 }
