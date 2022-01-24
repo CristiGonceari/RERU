@@ -18,9 +18,6 @@ import { Exception404Component } from './utils/exceptions/404/404.component';
 
 const routes: Routes = [
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent},
-	{ path: '404', component: Exception404Component },
-	{ path: '**', redirectTo: '404' },
-	
 	{
 		path: '',
 		component: DashboardComponent,
@@ -55,7 +52,9 @@ const routes: Routes = [
 		path: 'my-profile', 
 		loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule),
 		canActivate: [AuthenticationGuard]
-	}
+	},
+	{ path: '404', component: Exception404Component },
+	{ path: '**', redirectTo: '404' }
 ];
 
 @NgModule({
