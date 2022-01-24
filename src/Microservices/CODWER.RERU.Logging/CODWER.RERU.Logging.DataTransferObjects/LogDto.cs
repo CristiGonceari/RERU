@@ -10,6 +10,7 @@ namespace CODWER.RERU.Logging.DataTransferObjects
         public string UserIdentifier { get; set; }
         public string Event { get; set; }
         public string EventMessage { get; set; }
+        public string JsonMessage { get; set; }
         public DateTime Date { get; set; }
     }
 }
