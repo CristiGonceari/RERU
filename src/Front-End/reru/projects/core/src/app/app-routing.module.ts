@@ -17,7 +17,6 @@ import { Exception404Component } from './utils/exceptions/404/404.component';
 
 
 const routes: Routes = [
-	{ path: '404', component: Exception404Component },
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent },
 	{
 		path: '',
@@ -30,13 +29,14 @@ const routes: Routes = [
 	{ path: 'users', loadChildren: () => import('./components/users/users.module').then(m => m.UsersModule) },
 	{ path: 'roles', loadChildren: () => import('./components/roles/roles.module').then(m => m.RolesModule) },
 	{ path: 'my-profile', loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule) },
+	{ path: '404', component: Exception404Component },
 	{ path: '**', redirectTo: '404' }
 ];
 
 @NgModule({
 	imports: [
-		ModulesRoutingModule,
-		MyProfileRoutingModule,
+		// ModulesRoutingModule,
+		// MyProfileRoutingModule,
 		RouterModule.forRoot(routes, {
 			useHash: true,
 			scrollPositionRestoration: 'enabled',
