@@ -9,8 +9,6 @@ import { TestVerificationProcessService } from '../../../utils/services/test-ver
 import { TestService } from '../../../utils/services/test/test.service';
 import { TestQuestionService } from '../../../utils/services/test-question/test-question.service';
 import { HashOptionInputComponent } from '../../../utils/components/hash-option-input/hash-option-input.component';
-import { CloudFileService } from '../../../utils/services/cloud-file/cloud-file.service';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-view-test-result',
@@ -43,16 +41,10 @@ export class ViewTestResultComponent implements OnInit {
   maxPoints: number;
   accumulatedPoints: number;
 	isLoadingMedia: boolean;
-	imageUrl: any;
-	audioUrl: any;
-	videoUrl: any;
-	fileName: string;
 	fileId: string;
 
   optionFileId = [];
   isLoadingOptionMedia:  boolean = true;
-  optionFilenames: any;
-  optionFileName: string;
   
   constructor(
     private verifyService: TestVerificationProcessService,
@@ -131,13 +123,6 @@ export class ViewTestResultComponent implements OnInit {
           this.answer = res.data.answerText;
           this.comment = res.data.comment;
           this.options = res.data.options;
-          this.options.map ( (option) => {
-            // TODO add type Option -> options = array<Option>
-              option.videoUrl = null
-              option.imageUrl = null
-              option.audioUrl = null
-              return option;
-          })
           this.correct = res.data.isCorrect;
           if (this.correct == null) this.correct = false;
           this.index = index;

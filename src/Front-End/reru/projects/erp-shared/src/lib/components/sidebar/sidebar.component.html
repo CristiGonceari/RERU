@@ -80,10 +80,12 @@
 		<!--begin::Menu Container-->
 		<div
 			id="kt_aside_menu"
-			class="aside-menu my-4 scroll ps ps--active-y"
+			class="aside-menu my-4"
 			data-menu-vertical="1"
 			data-menu-scroll="1"
 			data-menu-dropdown-timeout="500"
+			[style.height]="sidebarHeight"
+			style="text-overflow: ellipsis !important; overflow: scroll !important;"
 		>
 			<!--begin::Menu Nav-->
 			<ul class="menu-nav">

@@ -147,6 +147,9 @@ export class AddEditQuestionComponent implements OnInit {
 				});
       this.backClicked();
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+    }, () => {
+      this.disableBtn = false;
+      this.backClicked();
     });
   }
 

@@ -16,6 +16,7 @@ export class SidebarComponent implements OnInit {
 	sidebarView = SidebarView;
 	sidebarItemType = SidebarItemType;
 	isActiveTab: boolean[] = [true];
+	sidebarHeight: string;
 	@Input() title: string;
 	@Input() menuItems: any[] = [];
 	@Output() navigate: EventEmitter<number> = new EventEmitter<number>();
@@ -26,6 +27,8 @@ export class SidebarComponent implements OnInit {
 		if (!this.menuItems || !this.menuItems.length) {
 			this.sidebarService.toggle(SidebarView.SIDEBAR, null);
 		}
+		let height = window.innerWidth-360
+		this.sidebarHeight = `${height}px`;
 	}
 
 	subscribeForSidebarChanges(): void {
