@@ -21,12 +21,15 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
         private readonly INotificationService _notificationService;
         private readonly IInternalNotificationService _internalNotificationService;
 
-        public AssignEvaluatorToEventCommandHandler(AppDbContext appDbContext, IMapper mapper, INotificationService notificationService, IInternalNotificationService internalMotificationService)
+        public AssignEvaluatorToEventCommandHandler(AppDbContext appDbContext,
+            IMapper mapper,
+            INotificationService notificationService,
+            IInternalNotificationService internalNotificationService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _notificationService = notificationService;
-            _internalNotificationService = internalMotificationService;
+            _internalNotificationService = internalNotificationService;
         }
 
         public async Task<Unit> Handle(AssignEvaluatorToEventCommand request, CancellationToken cancellationToken)
@@ -61,7 +64,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
                 .Replace("{user_name}", user.Evaluator.FirstName + " " + user.Evaluator.LastName)
                 .Replace("{email_message}", await GetTableContent(eventEvaluator.Event.Name));
 
-            var emailData = new EmailData()
+            var emailData = new EmailData
             {
                 subject = "Invitație la eveniment",
                 body = template,

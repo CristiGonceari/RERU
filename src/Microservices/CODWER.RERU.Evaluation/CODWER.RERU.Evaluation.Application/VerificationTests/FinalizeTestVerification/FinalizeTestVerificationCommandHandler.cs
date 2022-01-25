@@ -22,12 +22,12 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.FinalizeTestVerif
         private readonly INotificationService _notificationService;
         private readonly IInternalNotificationService _internalNotificationService;
 
-        public FinalizeTestVerificationCommandHandler(AppDbContext appDbContext, IMediator mediator, INotificationService notificationService, IInternalNotificationService internalMotificationService)
+        public FinalizeTestVerificationCommandHandler(AppDbContext appDbContext, IMediator mediator, INotificationService notificationService, IInternalNotificationService internalNotificationService)
         {
             _appDbContext = appDbContext;
             _mediator = mediator;
             _notificationService = notificationService;
-            _internalNotificationService = internalMotificationService;
+            _internalNotificationService = internalNotificationService;
         }
 
         public async Task<Unit> Handle(FinalizeTestVerificationCommand request, CancellationToken cancellationToken)

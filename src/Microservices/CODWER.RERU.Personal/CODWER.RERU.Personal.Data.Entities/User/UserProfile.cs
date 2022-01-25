@@ -7,7 +7,7 @@ namespace CODWER.RERU.Personal.Data.Entities.User
         public int? ContractorId { get; set; }
         public Contractor Contractor { get; set; }
 
-        public string UserId { get; set; }
         public string Email { get; set; }
+        public string Idnp { get; set; }
     }
 }
