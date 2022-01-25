@@ -25,7 +25,7 @@ namespace CODWER.RERU.Personal.Application.DependencyInjection
         public static void ConfigureValidatorServices(this IServiceCollection services, IHostingEnvironment currentEnvironment)
         {
             services
-                .AddScoped(typeof(IModulePermissionProvider), typeof(ModulePermissionProvider))
+                .AddScoped(typeof(IModulePermissionProvider), typeof(Permissions.ModulePermissionProvider))
                 //.AddScoped(typeof(IUserProfileService), typeof(UserProfileService))
                 .AddScoped(typeof(IContractorService), typeof(ContractorService))
                 .AddScoped(typeof(IVacationIntervalService), typeof(VacationIntervalService))
