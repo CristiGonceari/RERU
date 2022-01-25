@@ -6,6 +6,8 @@ import { UserService } from '../../../utils/services/user.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { SetPassword } from '../../../utils/models/set-password.model';
 import { Location } from '@angular/common';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n.service';
 
 @Component({
   selector: 'app-set-password',
@@ -18,9 +20,14 @@ export class SetPasswordComponent implements OnInit {
   setPasswordData: SetPassword;
   userId: any;
   userData: any;
+  title: string;
+	description: string;
+	no: string;
+	yes: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
+		public translate: I18nService,
     private fb: FormBuilder,
     private userService: UserService,
     private notificationService: NotificationsService,
@@ -73,19 +80,37 @@ export class SetPasswordComponent implements OnInit {
     if (setPassword.password == setPassword.repeatNewPassword) {
       this.userService.setPassword(setPassword).subscribe(
         (res) => {
-          this.notificationService.success('Success',
-            `Password for ${this.userData.name} ${this.userData.lastName} has been set successfully!`,
-            NotificationUtil.getDefaultMidConfig()
-          );
+            forkJoin([
+              this.translate.get('modal.success'),
+              this.translate.get('set-password.succes-set-password'),
+            ]).subscribe(([title, description]) => {
+              this.title = title;
+              this.description = description;
+            });
+          this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
           this.back();
         },
         (err) => {
-          this.notificationService.error('Errror', 'An error occured!', NotificationUtil.getDefaultMidConfig());
+            forkJoin([
+              this.translate.get('notification.title.error'),
+              this.translate.get('notification.body.error'),
+            ]).subscribe(([title, description]) => {
+              this.title = title;
+              this.description = description;
+            });
+          this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
         }
       );
     }
     else {
-      this.notificationService.warn('Warning', 'New password and Repeat password are not the same!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('notification.title.warning'),
+        this.translate.get('set-password.pass-is-not-the-same'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.warn(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.isLoading = false;
     }
   }

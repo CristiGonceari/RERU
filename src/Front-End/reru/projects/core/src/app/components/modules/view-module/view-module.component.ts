@@ -6,6 +6,8 @@ import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { ConfirmModalComponent, IconService } from '@erp/shared';
 import { IconModel } from 'projects/core/src/app/utils/models/icon.model';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n.service';
 
 @Component({
   selector: 'app-view-module',
@@ -17,9 +19,15 @@ export class ViewModuleComponent implements OnInit {
   isLoading = false;
   module: any;
   moduleId: number;
+  title: string;
+	description: string;
+	no: string;
+	yes: string;
+
   constructor(private route: ActivatedRoute,
     private moduleService: ModulesService,
     private router: Router,
+		public translate: I18nService,
     private ngZone: NgZone,
     private modalService: NgbModal,
     private notificationService: NotificationsService,
@@ -52,16 +60,36 @@ export class ViewModuleComponent implements OnInit {
   }
 
   openConfirmationDeleteModal(): void {
+    forkJoin([
+			this.translate.get('modal.delete'),
+			this.translate.get('pages.modules.delete-msg'),
+			this.translate.get('modal.no'),
+			this.translate.get('modal.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
     const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
-    modalRef.componentInstance.title = 'Delete';
-    modalRef.componentInstance.description = 'Are you sure you want to delete it?';
+    modalRef.componentInstance.title = this.title;
+		modalRef.componentInstance.description = this.description;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
     modalRef.result.then(() => this.delete(), () => { });
   }
 
   delete(): void {
     this.isLoading = true;
     this.moduleService.delete(this.module.id).subscribe(response => {
-      this.notificationService.success('Success', 'Module has been successfully deleted!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('modules.succes-delete-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.ngZone.run(() => this.router.navigate(['../'], { relativeTo: this.route }));
     });
   }

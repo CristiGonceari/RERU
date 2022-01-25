@@ -5,6 +5,8 @@ import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n.service';
 
 @Component({
   selector: 'app-add',
@@ -13,12 +15,15 @@ import { Location } from '@angular/common';
 })
 export class AddComponent implements OnInit {
   userForm: FormGroup;
+  title: string;
+	description: string;
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
     private notificationService: NotificationsService,
     private router: Router,
+		public translate: I18nService,
     private ngZone: NgZone,
     private route: ActivatedRoute,
 		private location: Location
@@ -51,10 +56,24 @@ export class AddComponent implements OnInit {
 
   addUser(): void {
     this.userService.createUser(this.userForm.value).subscribe(res => {
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('user.succes-create'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
       this.ngZone.run(() => this.router.navigate(['../'], { relativeTo: this.route }));
-      this.notificationService.success('Success', 'User has been created successfully!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, () => {
-      this.notificationService.error('Error', 'A server error occured', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('notification.title.error'),
+				this.translate.get('notification.body.error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 

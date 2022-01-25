@@ -6,6 +6,8 @@ import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n.service';
 
 @Component({
 	selector: 'app-edit',
@@ -16,10 +18,13 @@ export class EditComponent implements OnInit {
 	userForm: FormGroup;
 	isLoading: boolean = true;
 	userId: string;
+	title: string;
+	description: string;
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private fb: FormBuilder,
+		public translate: I18nService,
 		private userService: UserService,
 		private notificationService: NotificationsService,
 		private router: Router,
@@ -77,11 +82,14 @@ export class EditComponent implements OnInit {
 	editUser(): void {
 		this.userService.editUserPersonalDetails(this.userForm.value).subscribe(
 			res => {
-				this.notificationService.success(
-					'Success',
-					`User ${this.userForm.value.name} ${this.userForm.value.lastName} has been updated successfully!`,
-					NotificationUtil.getDefaultMidConfig()
-				);
+				forkJoin([
+					this.translate.get('modal.success'),
+					this.translate.get('user.succes-edit'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
+					});
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 				this.back();
 			}
 		);

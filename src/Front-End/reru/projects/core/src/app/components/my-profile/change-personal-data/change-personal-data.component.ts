@@ -4,6 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { PersonalData } from '../../../utils/models/personal-data.model';
 import { UserService } from '../../../utils/services/user.service';
+import { NotificationUtil } from '../../../utils/util/notification.util';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n.service';
 
 @Component({
 	selector: 'app-change-personal-data',
@@ -13,9 +16,12 @@ import { UserService } from '../../../utils/services/user.service';
 export class ChangePersonalDataComponent implements OnInit {
 	personalDataForm: FormGroup;
 	isLoading: boolean = true;
+	title: string;
+	description: string;
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
+		public translate: I18nService,
 		private fb: FormBuilder,
 		private userService: UserService,
 		private notificationService: NotificationsService,
@@ -75,10 +81,14 @@ export class ChangePersonalDataComponent implements OnInit {
 
 		this.userService.changePersonalData(personalDataForUpdate).subscribe(
 			res => {
-				this.notificationService.success(
-					'Success',
-					'User has been updated successfully!'
-				);
+				forkJoin([
+					this.translate.get('modal.success'),
+					this.translate.get('user.succes-edit'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
+					});
+				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 				window.location.reload();
 			},
 			err => {

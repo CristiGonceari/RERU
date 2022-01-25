@@ -5,6 +5,8 @@ import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from '../../../../../utils/util/notification.util';
 import { ModuleRolesService } from 'projects/core/src/app/utils/services/module-roles.service';
 import { UserProfileService } from 'projects/core/src/app/utils/services/user-profile.service';
+import { forkJoin } from 'rxjs';
+import { I18nService } from 'projects/core/src/app/utils/services/i18n.service';
 
 @Component({
   selector: 'app-add-edit-module-access',
@@ -18,10 +20,13 @@ moduleId: number;
 roles: any;
 role: string;
 userData: any;
+title: string;
+description: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private moduleRoleService: ModuleRolesService,
+		public translate: I18nService,
     private location: Location,
     private notificationService: NotificationsService,
     private userProfileService: UserProfileService
@@ -75,12 +80,26 @@ userData: any;
       roleId: +this.role
     }
     this.userProfileService.giveModuleAccessRole(params).subscribe(() => this.back());
-    this.notificationService.success('Success', 'Module access role is updated!', NotificationUtil.getDefaultMidConfig());
+    forkJoin([
+      this.translate.get('modal.success'),
+      this.translate.get('module-access.module-role-upd'),
+    ]).subscribe(([title, description]) => {
+      this.title = title;
+      this.description = description;
+      });
+    this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
   }
 
   submit(): void {
     if(this.role === 'null') {
-      this.notificationService.warn('Warning', 'Please select role!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('notification.title.warning'),
+        this.translate.get('notification.body.pls-select-role'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+        });
+      this.notificationService.warn(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     } else {
       this.giveRole();
     }
