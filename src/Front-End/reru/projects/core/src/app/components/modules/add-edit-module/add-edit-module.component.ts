@@ -8,6 +8,8 @@ import { IconModel } from 'projects/core/src/app/utils/models/icon.model';
 import { SafeHtmlPipe } from 'projects/core/src/app/utils/pipes/safe-html.pipe';
 import { IconService } from '@erp/shared';
 import { NotificationUtil } from '../../../utils/util/notification.util';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n.service';
 
 @Component({
 	selector: 'app-add-edit-module',
@@ -20,10 +22,14 @@ export class AddEditModuleComponent implements OnInit {
 	moduleForm: FormGroup;
 	isLoading = true;
 	id: number;
+	title: string;
+	description: string;
+
 	constructor(
 		private fb: FormBuilder,
 		private moduleService: ModulesService,
 		private router: Router,
+		public translate: I18nService,
 		private ngZone: NgZone,
 		private route: ActivatedRoute,
 		private notificationService: NotificationsService,
@@ -81,33 +87,53 @@ export class AddEditModuleComponent implements OnInit {
 		if (this.id) {
 			this.moduleService.edit(this.parseRequest(this.moduleForm.value)).subscribe(
 				() => {
-					this.notificationService.success(
-						'Success',
-						'Module has been added successfully!',
-						NotificationUtil.getDefaultConfig()
-					);
+					forkJoin([
+						this.translate.get('modal.success'),
+						this.translate.get('pages.modules.success-edit'),
+					]).subscribe(([title, description]) => {
+						this.title = title;
+						this.description = description;
+						});
+					this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultConfig());
 					this.isLoading = false;
 					this.back();
 				},
 				() => {
 					this.isLoading = false;
-					this.notificationService.error('Error', 'An error ocurred!', NotificationUtil.getDefaultConfig());
+					forkJoin([
+						this.translate.get('notification.title.error'),
+						this.translate.get('notification.body.error'),
+					]).subscribe(([title, description]) => {
+						this.title = title;
+						this.description = description;
+						});
+					this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultConfig());
 				}
 			);
 		} else {
 			this.moduleService.add(this.parseRequest(this.moduleForm.value)).subscribe(
 				() => {
-					this.notificationService.success(
-						'Success',
-						'Module has been added successfully!',
-						NotificationUtil.getDefaultConfig()
-					);
+					forkJoin([
+						this.translate.get('modal.success'),
+						this.translate.get('pages.modules.succes-create'),
+					]).subscribe(([title, description]) => {
+						this.title = title;
+						this.description = description;
+						});
+					this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultConfig());
 					this.isLoading = false;
 					this.back();
 				},
 				() => {
 					this.isLoading = false;
-					this.notificationService.error('Error', 'An error ocurred!', NotificationUtil.getDefaultConfig());
+					forkJoin([
+						this.translate.get('notification.title.error'),
+						this.translate.get('notification.body.error'),
+					]).subscribe(([title, description]) => {
+						this.title = title;
+						this.description = description;
+						});
+					this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultConfig());
 				}
 			);
 		}

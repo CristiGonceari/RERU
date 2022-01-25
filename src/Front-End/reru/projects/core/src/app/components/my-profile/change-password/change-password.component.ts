@@ -5,6 +5,8 @@ import { UserService } from '../../../utils/services/user.service';
 import { ChangePassword } from '../../../utils/models/change-password.model';
 import { Router } from '@angular/router';
 import { NotificationUtil } from '../../../utils/util/notification.util';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n.service';
 
 @Component({
   selector: 'app-change-password',
@@ -16,9 +18,12 @@ export class ChangePasswordComponent implements OnInit {
   passwordForm: FormGroup;
   isLoading = true;
   changePasswordData: ChangePassword;
+  title: string;
+	description: string;
 
   constructor(
     private fb: FormBuilder,
+		public translate: I18nService,
     private userService: UserService,
     private notificationService: NotificationsService,
     private router: Router
@@ -61,14 +66,35 @@ export class ChangePasswordComponent implements OnInit {
         (res) => {
           console.warn('response', res);
           this.router.navigateByUrl('personal-profile/overview')
-          this.notificationService.success('Success', 'Password has been updated!', NotificationUtil.getDefaultMidConfig());
+          forkJoin([
+            this.translate.get('modal.success'),
+            this.translate.get('set-password.upd-password'),
+          ]).subscribe(([title, description]) => {
+            this.title = title;
+            this.description = description;
+            });
+          this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
           this.isLoading = false;
         })
       } else if (passwordForUpdate.newPassword !== passwordForUpdate.repeatPassword){
-        this.notificationService.warn('Warning', 'New password and Repeat password are not the same!', NotificationUtil.getDefaultMidConfig());
+        forkJoin([
+          this.translate.get('notification.title.warning'),
+          this.translate.get('set-password.pass-is-not-the-same'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+          });
+        this.notificationService.warn(this.title, this.description, NotificationUtil.getDefaultMidConfig());
         this.isLoading = false;
       } else if (passwordForUpdate.oldPassword === passwordForUpdate.newPassword){
-        this.notificationService.warn('Warning', 'New password and Old password are the same!', NotificationUtil.getDefaultMidConfig());
+        forkJoin([
+          this.translate.get('notification.title.warning'),
+          this.translate.get('set-password.new-old-pass-the-same'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+          });
+        this.notificationService.warn(this.title, this.description, NotificationUtil.getDefaultMidConfig());
         this.isLoading = false;
       }
   }
@@ -78,7 +104,14 @@ export class ChangePasswordComponent implements OnInit {
     if (this.passwordForm.touched && this.passwordForm.valid) {
       this.checkPassword();
     } else {
-      this.notificationService.warn('Warning', 'Fill in all the fields correctly!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('notification.title.warning'),
+        this.translate.get('set-password.fill-corectly'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+        });
+      this.notificationService.warn(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.isLoading = false;
     }
     this.isLoading = false;

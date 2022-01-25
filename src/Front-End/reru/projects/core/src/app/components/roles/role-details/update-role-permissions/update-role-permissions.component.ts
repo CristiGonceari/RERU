@@ -9,6 +9,8 @@ import { ModuleRolePermissionsService } from 'projects/core/src/app/utils/servic
 import { NotificationUtil } from 'projects/core/src/app/utils/util/notification.util';
 import { ModuleRolesService } from 'projects/core/src/app/utils/services/module-roles.service';
 import { RoleModel } from 'projects/core/src/app/utils/models/role.model';
+import { forkJoin } from 'rxjs';
+import { I18nService } from 'projects/core/src/app/utils/services/i18n.service';
 
 @Component({
 	selector: 'app-update-role-permissions',
@@ -23,11 +25,14 @@ export class UpdateRolePermissionsComponent implements OnInit {
 	permissions: PermissionModel[];
 	moduleRolePermissions: ModuleRolePermissionsModel;
 	permissionsForUpdate2 = [];
+	title: string;
+	description: string;
 
 	constructor(
 		private permissionServise: ModuleRolePermissionsService,
 		private moduleRoleServise: ModuleRolesService,
 		private activatedRoute: ActivatedRoute,
+		public translate: I18nService,
 		private fb: FormBuilder,
 		private notificationService: NotificationsService,
 		private router: Router,
@@ -104,11 +109,25 @@ export class UpdateRolePermissionsComponent implements OnInit {
 
 		this.permissionServise.updateRolePermission(this.moduleRolePermissions).subscribe(
 			(res) => {
-				this.notificationService.success('Success', 'Permissions for Module Role has been updated successfully!', NotificationUtil.getDefaultMidConfig());
+				forkJoin([
+					this.translate.get('modal.success'),
+					this.translate.get('pages.roles.success-upd-permissions'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
+					});
+				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 				this.back();
 			},
 			(err) => {
-				this.notificationService.error('Errror', 'An error occured!', NotificationUtil.getDefaultMidConfig());
+				forkJoin([
+					this.translate.get('notification.title.error'),
+					this.translate.get('notification.body.error'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
+					});
+				this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			}
 		);
 	}

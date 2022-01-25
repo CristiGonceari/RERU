@@ -9,6 +9,8 @@ import { UserService } from '../../../utils/services/user.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ConfirmModalComponent } from '@erp/shared';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n.service';
 
 @Component({
 	selector: 'app-user-profile',
@@ -21,6 +23,10 @@ export class UserProfileComponent implements OnInit {
 	oneColumn: boolean;
 	avatarString: string;
 	avatar: any;
+	title: string;
+	description: string;
+	no: string;
+	yes: string;
 
 	@Input() user: any;
 	@Input() isCustomHeader: boolean;
@@ -29,6 +35,7 @@ export class UserProfileComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private userService: UserService,
 		private userProfileService: UserProfileService,
+		public translate: I18nService,
 		private router: Router,
 		private route: ActivatedRoute,
 		private notificationService: NotificationsService,
@@ -91,30 +98,57 @@ export class UserProfileComponent implements OnInit {
 	}
 
 	openResetPasswordModal(id: string): void {
+		forkJoin([
+			this.translate.get('reset-password.title'),
+			this.translate.get('reset-password.reset-pass-msg'),
+			this.translate.get('modal.no'),
+			this.translate.get('modal.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
-		modalRef.componentInstance.title = 'Reset';
-		modalRef.componentInstance.description = 'Are you sure you want to reset the password?';
-		modalRef.result.then(
-			() => this.reset(id),
-			() => { }
-		);
+		modalRef.componentInstance.title = this.title;
+		modalRef.componentInstance.description = this.description;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
+		modalRef.result.then(() => this.reset(id), () => { });
 	}
 
 	reset(id: string): void {
 		this.userService.resetPassword(id).subscribe(response => {
-			this.notificationService.success(
-				'Success',
-				'Password has been send to your email',
-				NotificationUtil.getDefaultMidConfig()
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('reset-password.success-reset'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+			this.notificationService.success(this.title,this.description, NotificationUtil.getDefaultMidConfig()
 			);
 			this.ngZone.run(() => this.router.navigate(['../'], { relativeTo: this.route }));
 		});
 	}
 
 	openActivateUserModal(id: string): void {
+		forkJoin([
+			this.translate.get('activate-user.title'),
+			this.translate.get('activate-user.activate-msg'),
+			this.translate.get('modal.no'),
+			this.translate.get('modal.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
-		modalRef.componentInstance.title = 'Activate';
-		modalRef.componentInstance.description = 'Are you sure you want to activate this user?';
+		modalRef.componentInstance.title = this.title;
+		modalRef.componentInstance.description = this.description;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
 		modalRef.result.then(
 			() => this.activateUser(id),
 			() => { }
@@ -122,9 +156,22 @@ export class UserProfileComponent implements OnInit {
 	}
 
 	openDeactivateUserModal(id: string): void {
+		forkJoin([
+			this.translate.get('deactivate-user.title'),
+			this.translate.get('deactivate-user.deactivate-msg'),
+			this.translate.get('modal.no'),
+			this.translate.get('modal.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
-		modalRef.componentInstance.title = 'Deactivate';
-		modalRef.componentInstance.description = 'Are you sure you want to deactivate this user?';
+		modalRef.componentInstance.title = this.title;
+		modalRef.componentInstance.description = this.description;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
 		modalRef.result.then(
 			() => this.deactivateUser(id),
 			() => { }
@@ -133,14 +180,28 @@ export class UserProfileComponent implements OnInit {
 
 	activateUser(id: string): void {
 		this.userService.blockUnblockUser(id).subscribe(response => {
-			this.notificationService.success('Success', 'User has been activated', NotificationUtil.getDefaultMidConfig());
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('activate-user.success-activate'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			window.location.reload();
 		});
 	}
 
 	deactivateUser(id: string): void {
 		this.userService.blockUnblockUser(id).subscribe(response => {
-			this.notificationService.success('Success', 'User has been deactivated', NotificationUtil.getDefaultMidConfig());
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('deactivate-user.success-deactivate'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			window.location.reload();
 		});
 	}

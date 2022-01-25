@@ -22,7 +22,7 @@
     "password": "Password",
     "password-is-required": "Password is required",
     "forgot-password": "Forgot Password?",
-    "recover-email-sent": "The recover email has been sent!"
+    "recover-email-sent": "The recover email has been sent!" 
   },
   "notification": {
     "title": {
@@ -37,7 +37,8 @@
         "delete": "Has been deleted successfully",
         "login": "Login successfully!"
       },
-      "error": "There has been an error!"
+      "error": "There has been an error!",
+      "pls-select-role": "Please select a role!"
     }
   },
   "modules": {
@@ -57,6 +58,17 @@
     "modules": "Modules",
     "users": "Users",
     "access-roles": "Roles access"
+  },
+  "modal":{
+    "delete": "Delete",
+    "success": "Success",
+    "error": "Error",
+    "finish-test": "Finish test",
+    "finish-poll": "Finish poll",
+    "finish-verification": "Finish test verification",
+    "delete-msg": "Are you sure you want to delete this",
+    "yes": "Yes",
+    "no": "No"
   },
   "button": {
     "change": "Change",
@@ -133,7 +145,10 @@
     "edit-title": "Edit User",
     "delete-title": "Delete User",
     "block-title": "Block/Unblock",
-    "remove-sure": "Are you sure you want to remove this user?"
+    "remove-sure": "Are you sure you want to remove this user?",
+    "succes-remove": "User was successfully removed!",
+    "succes-edit": "User has been successfully updated!",
+    "succes-create": "User has been created successfully!"
   },
   "word": {
     "search": "Search"
@@ -141,12 +156,19 @@
   "set-password": {
     "title": "Set Password",
     "subheader": "Insert new password for user",
-    "password": "Password"
+    "password": "Password",
+    "succes-set-password": "Password has been set successfully!",
+    "pass-is-not-the-same": "New password and Repeat password are not the same!",
+    "upd-password": "Password has been updated",
+    "new-old-pass-the-same": "New password and Old password are the same",
+    "fill-corectly": "Fill in all the fields correctly"
   },
   "reset-password": {
     "title": "Reset Password",
     "subheader": "Confirm your action",
-    "sure": "Are you sure you want to reset password for user"
+    "reset-pass-msg": "Are you sure you want to reset password for user",
+    "success-reset-password": "Password has been send to your email",
+    "success-reset": "Password was reseted successfully!"
   },
   "change-password-comp": {
     "title": "Change password",
@@ -166,11 +188,15 @@
   },
   "deactivate-user": {
     "title": "Deactivate user",
-    "sure": "Are you sure you want to deactivate "
+    "deactivate": "Are you sure you want to deactivate this user?",
+    "deactivate-msg": "Are you sure you want to deactivate user",
+    "success-deactivate": "User was deactivated successfully!"
   },
   "activate-user": {
     "title": "Activate user",
-    "sure": "Are you sure you want to activate "
+    "activate": "Are you sure you want to activate this user?",
+    "activate-msg": "Are you sure you want to activate user ",
+    "success-activate": "User was successfully activated!"
   },
   "module-access": {
     "title": "User's access to modules",
@@ -180,7 +206,8 @@
     "module-access-info": "Module Access Info",
     "user-name": "User's Name",
     "select": "Select",
-    "remove-access-message": "Are you sure you want to remove access to this module?"
+    "remove-access-message": "Are you sure you want to remove access to this module?",
+    "module-role-upd": "Module access role is updated!"
   },
   "remove-module": {
     "title": "Remove module",
@@ -214,7 +241,11 @@
       "navigate": "Navigate to module",
       "remove": "Remove module",
       "development": "Modules development",
-      "info": "Module info"
+      "info": "Module info",
+      "delete-msg": "Are you sure you want to delete this module",
+      "succes-delete-msg": "Module was successfully deleted!",
+      "succes-create": "Module has been successfully created!",
+      "success-edit": "Module has been successfully updated!"
     },
     "access-roles": {
       "title": "Manage application acceess roles"
@@ -236,7 +267,14 @@
       "update-permissions": "Update permissions",
       "management": "Roles management",
       "name": "Role name",
-      "use-as-default": "Use as default role"
+      "use-as-default": "Use as default role",
+      "delete-msg": "Are you sure you want to delete this role",
+      "succes-delete-msg": "Role was successfully deleted!",
+      "success-upd": "Role has been edited successfully!",
+      "success-create": "Role has been created successfully!",
+      "error-create": "Role has not been created!",
+      "error-edit": "Role has not been edited!",
+      "success-upd-permissions": "Permissions for Module Role has been successfully updated!"
     }
   },
   "upload-avatar": {
