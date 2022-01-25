@@ -21,11 +21,14 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
         private readonly IInternalNotificationService _internalNotificationService;
         private readonly INotificationService _notificationService;
 
-        public AssignResponsiblePersonToEventCommandHandler(AppDbContext appDbContext, IMapper mapper, INotificationService notificationService, IInternalNotificationService internalMotificationService)
+        public AssignResponsiblePersonToEventCommandHandler(AppDbContext appDbContext,
+            IMapper mapper,
+            INotificationService notificationService,
+            IInternalNotificationService internalNotificationService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
-            _internalNotificationService = internalMotificationService;
+            _internalNotificationService = internalNotificationService;
             _notificationService = notificationService;
         }
 

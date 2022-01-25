@@ -23,7 +23,6 @@ namespace CODWER.RERU.Evaluation.Data.Entities
         public string Patronymic { get; set; }
         public string Idnp { get; set; }
         public string Email { get; set; }
-        public List<UserProfileIdentity> Identities { set; get; }
 
         public virtual ICollection<Test> Tests { get; set; }
         public virtual ICollection<Test> TestsWithEvaluator { get; set; }

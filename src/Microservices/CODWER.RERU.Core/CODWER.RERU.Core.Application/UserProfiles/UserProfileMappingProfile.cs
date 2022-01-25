@@ -13,14 +13,14 @@ namespace CODWER.RERU.Core.Application.UserProfiles
     {
         public UserProfileMappingProfile()
         {
-            CreateMap<Data.Entities.UserProfile, UserProfileDto>();
+            CreateMap<UserProfile, UserProfileDto>();
 
-            CreateMap<UserProfileDto, Data.Entities.UserProfile>()
+            CreateMap<UserProfileDto, UserProfile>()
                 .ForMember(x => x.Id, options => options.Ignore());
 
-            CreateMap<Data.Entities.UserProfile, UserForRemoveDto>();
+            CreateMap<UserProfile, UserForRemoveDto>();
 
-            CreateMap<UserForRemoveDto, Data.Entities.UserProfile>();
+            CreateMap<UserForRemoveDto, UserProfile>();
 
             CreateMap<UserProfile, ApplicationUser>()
                 .ForMember(destinationMember => destinationMember.Id, opts => opts.MapFrom(sourceMember => sourceMember.Id.ToString()))

@@ -118,8 +118,9 @@ namespace CODWER.RERU.Evaluation.API
 
             services.AddERPModuleServices(Configuration);
             services.AddCommonModuleApplication();
-            services.AddModuleApplicationServices()
-                .AddCommonLoggingContext(Configuration);
+            services.AddModuleApplicationServices();
+
+            services.AddCommonLoggingContext(Configuration);
 
             services.AddHangfire(config =>
                 config.UseSqlServerStorage(Configuration.GetConnectionString("Default")));

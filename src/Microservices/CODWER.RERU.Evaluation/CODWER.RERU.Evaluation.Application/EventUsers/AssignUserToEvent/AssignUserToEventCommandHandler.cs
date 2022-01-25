@@ -21,12 +21,15 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
         private readonly INotificationService _notificationService;
         private readonly IInternalNotificationService _internalNotificationService;
 
-        public AssignUserToEventCommandHandler(AppDbContext appDbContext, IMapper mapper, INotificationService notificationService, IInternalNotificationService internalMotificationService)
+        public AssignUserToEventCommandHandler(AppDbContext appDbContext,
+            IMapper mapper,
+            INotificationService notificationService,
+            IInternalNotificationService internalNotificationService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _notificationService = notificationService;
-            _internalNotificationService = internalMotificationService;
+            _internalNotificationService = internalNotificationService;
         }
 
         public async Task<Unit> Handle(AssignUserToEventCommand request, CancellationToken cancellationToken)

@@ -6,7 +6,6 @@ using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Module.Application.Providers;
-using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 {
@@ -30,7 +29,6 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             if (coreUser != null)
             {
                 currentUserProfile = _appDbContext.UserProfiles
-                    .Include(s => s.Identities)
                     .FirstOrDefault(x => x.CoreUserId == coreUser.Id);
 
 
