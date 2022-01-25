@@ -16,7 +16,9 @@ namespace CODWER.RERU.Core.Application.Users.GetPersonalData {
         private readonly UserManager<ERPIdentityUser> _userManager;
         private readonly ICurrentApplicationUserProvider _userProvider;
 
-        public GetPersonalDataQueryHandler (ICommonServiceProvider commonServicepProvider, ICurrentApplicationUserProvider userProvider, UserManager<ERPIdentityUser> userManager) : base (commonServicepProvider) 
+        public GetPersonalDataQueryHandler (ICommonServiceProvider commonServiceProvider,
+            ICurrentApplicationUserProvider userProvider,
+            UserManager<ERPIdentityUser> userManager) : base (commonServiceProvider) 
         {
             _userManager = userManager;
             _userProvider = userProvider;

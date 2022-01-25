@@ -121,7 +121,7 @@ data:
           "HttpHandlerOptions": {
             "UseTracing": true
           },
-          "DownstreamPathTemplate": "/{all}",
+          "DownstreamPathTemplate": "/{everything}",
           "DownstreamScheme": "http",
           "DownstreamHostAndPorts": [
             {
@@ -129,14 +129,14 @@ data:
               "Port": 8080
             }
           ],
-          "UpstreamPathTemplate": "/reru-evaluation/{all}"
+          "UpstreamPathTemplate": "/reru-evaluation{everything}"
         },
 
         {
           "HttpHandlerOptions": {
             "UseTracing": true
           },
-          "DownstreamPathTemplate": "/{all}",
+          "DownstreamPathTemplate": "/{everything}",
           "DownstreamScheme": "http",
           "DownstreamHostAndPorts": [
             {
@@ -144,7 +144,7 @@ data:
               "Port": 8080
             }
           ],
-          "UpstreamPathTemplate": "/reru-logging/{all}"
+          "UpstreamPathTemplate": "/reru-logging{everything}"
         },
 
         {
@@ -520,7 +520,7 @@ data:
         "CLIENT_ID": "RERU-Web-client",
         "SERVER_URL": "http://reru-stage.codwer.com/ms/reru-evaluation",
         "CORE_URL": "http://reru-stage.codwer.com/ms/reru-core",
-        "APP_BASE_URL": "http://reru-stage.codwer.com/reru-personal/#",
+        "APP_BASE_URL": "http://reru-stage.codwer.com/reru-evaluation/#",
         "production": true
     }
 
@@ -532,6 +532,6 @@ data:
         "CLIENT_ID": "RERU-Web-client",
         "SERVER_URL": "http://reru-stage.codwer.com/ms/reru-logging",
         "CORE_URL": "http://reru-stage.codwer.com/ms/reru-core",
-        "APP_BASE_URL": "http://reru-stage.codwer.com/reru-personal/#",
+        "APP_BASE_URL": "http://reru-stage.codwer.com/reru-logging/#",
         "production": true
     }
