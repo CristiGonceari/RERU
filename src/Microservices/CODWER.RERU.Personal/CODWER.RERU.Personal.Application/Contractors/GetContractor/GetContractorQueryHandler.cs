@@ -71,7 +71,8 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
 
         private async Task<bool> GetUserProfile(UserProfile userProfile)
         {
-            return userProfile != null && await _coreClient.ExistUserInCore(userProfile.UserId);
+            //return userProfile != null && await _coreClient.ExistUserInCore(userProfile.UserId);
+            return true;
         }
     }
 }
