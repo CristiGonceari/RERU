@@ -1,7 +1,7 @@
 ﻿using CODWER.RERU.Personal.Application.Validation;
+using CODWER.RERU.Personal.Application.Validators;
 using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
 using CODWER.RERU.Personal.Data.Persistence.Context;
-using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 
