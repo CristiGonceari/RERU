@@ -5,6 +5,8 @@ import { UserService } from '../../../utils/services/user.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { Location } from '@angular/common';
 import { UserForRemove } from '../../../utils/models/user-for-remove.model';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n.service';
 
 @Component({
 	selector: 'app-remove',
@@ -15,12 +17,17 @@ export class RemoveComponent implements OnInit {
 	isLoading = false;
 	userId: number;
 	userData: UserForRemove;
+	title: string;
+	description: string;
+	no: string;
+	yes: string;
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private location: Location,
 		private userService: UserService,
 		private ngZone: NgZone,
+		public translate: I18nService,
 		private router: Router,
 		private route: ActivatedRoute,
 		private notificationService: NotificationsService
@@ -47,15 +54,25 @@ export class RemoveComponent implements OnInit {
 	removeUser(): void {
 		this.userService.removeUser(this.userId).subscribe(
 			res => {
-				this.notificationService.success(
-					'Success',
-					`User ${this.userData.name} ${this.userData.lastName} has been removed successfully!`,
-					NotificationUtil.getDefaultMidConfig()
-				);
+				forkJoin([
+					this.translate.get('modal.success'),
+					this.translate.get('user.succes-remove'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
+					});
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 				this.ngZone.run(() => this.router.navigate(['../../list'], { relativeTo: this.route }));
 			},
 			err => {
-				this.notificationService.error('Errror', 'An error occured!', NotificationUtil.getDefaultMidConfig());
+				forkJoin([
+					this.translate.get('notification.title.error'),
+					this.translate.get('notification.body.error'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
+					});
+				this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			}
 		);
 	}

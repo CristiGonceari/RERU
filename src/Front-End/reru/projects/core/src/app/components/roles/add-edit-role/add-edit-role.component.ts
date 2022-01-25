@@ -6,6 +6,8 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModuleRolesService } from '../../../utils/services/module-roles.service';
 import { RoleModel } from '../../../utils/models/role.model';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n.service';
 
 @Component({
 	selector: 'app-add-edit-role',
@@ -18,10 +20,13 @@ export class AddEditRoleComponent implements OnInit {
 	roleId: number;
 	roleName: string;
 	isLoading = true;
+	title: string;
+	description: string;
 
 	constructor(
 		private fb: FormBuilder,
 		private notificationService: NotificationsService,
+		public translate: I18nService,
 		private router: Router,
 		private route: ActivatedRoute,
 		private roleServise: ModuleRolesService,
@@ -88,15 +93,25 @@ export class AddEditRoleComponent implements OnInit {
 		} as RoleModel;
 		this.roleServise.addRole(addRoleModel).subscribe(
 			() => {
-				this.notificationService.success(
-					'Success',
-					'Role has been created successfully!',
-					NotificationUtil.getDefaultMidConfig()
-				);
+				forkJoin([
+					this.translate.get('modal.success'),
+					this.translate.get('pages.roles.success-create'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
+					});
+				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 				this.router.navigate(['../../', this.moduleId, 'roles'], { relativeTo: this.route });
 			},
 			() => {
-				this.notificationService.error('Error', 'Role has not been created!', NotificationUtil.getDefaultMidConfig());
+				forkJoin([
+					this.translate.get('notification.title.error'),
+					this.translate.get('pages.roles.error-create'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
+					});
+				this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			}
 		);
 	}
@@ -110,15 +125,25 @@ export class AddEditRoleComponent implements OnInit {
 		} as RoleModel;
 		this.roleServise.editRole(editRoleModel).subscribe(
 			() => {
-				this.notificationService.success(
-					'Success',
-					'Role has been edited successfully!',
-					NotificationUtil.getDefaultMidConfig()
-				);
+				forkJoin([
+					this.translate.get('modal.success'),
+					this.translate.get('pages.roles.success-upd'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
+					});
+				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 				this.back();
 			},
 			() => {
-				this.notificationService.error('Error', 'Role has not been edited!', NotificationUtil.getDefaultMidConfig());
+				forkJoin([
+					this.translate.get('modal.success'),
+					this.translate.get('pages.roles.error-edit'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
+					});
+				this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			}
 		);
 	}

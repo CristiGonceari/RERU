@@ -9,6 +9,8 @@ import { ConfirmModalComponent, PermissionCheckerService } from '@erp/shared';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { NotificationsService } from 'angular2-notifications';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n.service';
 
 @Component({
 	selector: 'app-list-module',
@@ -22,9 +24,14 @@ export class ListModuleComponent implements OnInit {
 	pagination: PaginationSummary = new PaginationSummary();
 	pager: number[] = [];
 	viewDetails: boolean = false;
+	title: string;
+	description: string;
+	no: string;
+	yes: string;
 
 	constructor(
 		private moduleService: ModulesService,
+		public translate: I18nService,
 		private router: Router, 
 		private route: ActivatedRoute,
 		public permissionService: PermissionCheckerService,
@@ -69,19 +76,35 @@ export class ListModuleComponent implements OnInit {
 	}
 
 	openRemoveModal(id: number, name): void {
+		forkJoin([
+			this.translate.get('modal.delete'),
+			this.translate.get('pages.modules.delete-msg'),
+			this.translate.get('modal.no'),
+			this.translate.get('modal.yes'),
+		]).subscribe(([title, description, no, yes]) => {
+			this.title = title;
+			this.description = description;
+			this.no = no;
+			this.yes = yes;
+			});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
-		modalRef.componentInstance.title = 'Remove';
-		modalRef.componentInstance.description = `Are you sure you want to delete this ${name}?`;
+		modalRef.componentInstance.title = this.title;
+		modalRef.componentInstance.description = `${this.description} (${name})?`;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
 		modalRef.result.then(() => this.removeModule(id, name), () => {});
 	}
 
 	removeModule(id: number, name): void {
-		this.moduleService.delete(id).subscribe(
-			res => {
-				this.notificationService.success(
-					'Success',
-					`Module ${name} has been removed successfully!`,
-					NotificationUtil.getDefaultMidConfig(),
+		this.moduleService.delete(id).subscribe(res => {
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('modules.succes-delete-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+			this.notificationService.success(this.title,`${name} ${this.description}`, NotificationUtil.getDefaultMidConfig(),
 		 			this.getModules()
 				);
 			},
