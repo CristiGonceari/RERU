@@ -64,7 +64,7 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
             splicedEventName.Remove("Handler");
             splicedEventName.Remove("Query");
 
-            return String.Join(" ", splicedEventName.ToArray());
+            return string.Join(" ", splicedEventName.ToArray());
         }
     }
 }
