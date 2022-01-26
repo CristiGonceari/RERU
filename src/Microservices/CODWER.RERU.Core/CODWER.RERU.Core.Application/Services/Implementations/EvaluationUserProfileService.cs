@@ -21,12 +21,12 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
     {
         private readonly IRestClient _restClient;
         const string UserProfileBasePath = "/internaluserprofile";
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        //private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public EvaluationUserProfileService(IRestClient restClient, IOptions<ModuleConfiguration> moduleConfiguration, IHttpContextAccessor httpContextAccessor)
+        public EvaluationUserProfileService(IRestClient restClient, IOptions<ModuleConfiguration> moduleConfiguration/*, IHttpContextAccessor httpContextAccessor*/)
         {
             _restClient = restClient;
-            _httpContextAccessor = httpContextAccessor;
+            //_httpContextAccessor = httpContextAccessor;
             _restClient.BaseUrl = new Uri(moduleConfiguration.Value.EvaluationClient.BaseUrl);
         }
 
@@ -36,10 +36,10 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             var json = JsonSerializer.Serialize(userProfile);
             request.AddParameter("application/json; charset=utf-8", json, ParameterType.RequestBody);
 
-            foreach (var el in _httpContextAccessor?.HttpContext?.Request.Headers)
-            {
-                request.AddHeader(el.Key, el.Value);
-            }
+            //foreach (var el in _httpContextAccessor?.HttpContext?.Request.Headers)
+            //{
+            //    request.AddHeader(el.Key, el.Value);
+            //}
 
             var response = await _restClient.PostAsync<Response<Unit>>(request, new CancellationToken());
 
