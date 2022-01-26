@@ -16,34 +16,34 @@
     <div class="card-header border-0 pt-0 pb-0 pr-5">
       <div class="row w-100">
         <div class="col-lg-3 col-12 mb-2">
-          <app-search-by-department (handleDepartment)="personalTable.setFilter('departmentId', $event)"></app-search-by-department>
+          <app-search-by-department (handleDepartment)="contractorsTable.setFilter('departmentId', $event)"></app-search-by-department>
         </div>
         <div class="col-lg-3 col-12 mb-2">
-          <app-employee-from-date [placeholder]="'entity.role.from-date' | translate" (handleFrom)="personalTable.setFilter('employmentDateFrom', $event)"></app-employee-from-date>
+          <app-employee-from-date [placeholder]="'entity.role.from-date' | translate" (handleFrom)="contractorsTable.setFilter('employmentDateFrom', $event)"></app-employee-from-date>
         </div>
         <div class="col-lg-3 col-12 mb-2">
-          <app-employee-to-date [placeholder]="'entity.role.to-date' | translate" (handleTo)="personalTable.setFilter('employmentDateTo', $event)"></app-employee-to-date>
+          <app-employee-to-date [placeholder]="'entity.role.to-date' | translate" (handleTo)="contractorsTable.setFilter('employmentDateTo', $event)"></app-employee-to-date>
         </div>
         <div class="col-lg-3 col-12 mb-lg-0 mb-2">
-          <app-employee-position (handleChangeRole)="personalTable.setFilter('organizationRoleId', $event)"></app-employee-position>
+          <app-employee-position (handleChangeRole)="contractorsTable.setFilter('organizationRoleId', $event)"></app-employee-position>
         </div>
       </div>
       <div class="row w-100">
         <div class="col-lg-5 col-12">
-          <app-search (handleRewrite)="personalTable.setKeyword($event)" (handleSearch)="personalTable.list({keyword: $event, page: 1})"></app-search>
+          <app-search (handleRewrite)="contractorsTable.setKeyword($event)" (handleSearch)="contractorsTable.list({keyword: $event, page: 1})"></app-search>
         </div>
         <div class="col-lg-5 col-12 mt-lg-0 mt-3">
-          <app-filter-employee-state (filter)="personalTable.employerStates = $event.target.value"></app-filter-employee-state>
+          <app-filter-employee-state (filter)="contractorsTable.employerStates = $event.target.value"></app-filter-employee-state>
         </div>
         <div class="col-lg-2 col-12 mt-lg-0 mt-3">
           <div class="row justify-content-lg-end justify-content-center confirmation-container">
-            <app-confirm-button (handle)="personalTable.list({page: 1})" [value]="'button.apply-filter' | translate" ></app-confirm-button>
+            <app-confirm-button (handle)="contractorsTable.list({page: 1})" [value]="'button.apply-filter' | translate" ></app-confirm-button>
           </div>
         </div>
       </div>
     </div>
     <div class="card-body pt-0">
-      <app-personal-table #personalTable></app-personal-table>
+      <app-contractors-table #contractorsTable></app-contractors-table>
     </div>
   </div>
 </app-content>

@@ -15,11 +15,11 @@ import { TransferNewPositionModalComponent } from '../../../utils/modals/transfe
 import { AddOldPositionModalComponent } from '../../../utils/modals/add-old-position-modal/add-old-position-modal.component';
 
 @Component({
-  selector: 'app-personal-table',
-  templateUrl: './personal-table.component.html',
-  styleUrls: ['./personal-table.component.scss']
+  selector: 'app-contractors-table',
+  templateUrl: './contractors-table.component.html',
+  styleUrls: ['./contractors-table.component.scss']
 })
-export class PersonalTableComponent implements OnInit {
+export class ContractorsTableComponent implements OnInit {
   contractors: Contractor[];
   pagedSummary = {
     totalCount: 0,
@@ -201,4 +201,5 @@ export class PersonalTableComponent implements OnInit {
   setFilter(field: string, value): void {
     this.filters[field] = value;
   }
+
 }

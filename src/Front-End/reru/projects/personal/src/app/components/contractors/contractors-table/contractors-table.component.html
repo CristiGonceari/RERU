@@ -11,7 +11,7 @@
                 <th>&nbsp;</th>
             </tr>
         </thead>
-        <tbody> 
+        <tbody>
             <tr *ngFor="let item of contractors; let i = index; let even = even">
                 <td><app-list-dropdown [index]="i" [contractor]="item"></app-list-dropdown></td>
                 <td class="text-center">
