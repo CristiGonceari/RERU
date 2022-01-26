@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CODWER.RERU.Evaluation.API.Controllers.Internal
 {
-    [Route("api/[controller]")]
+    [Route("internal/api/[controller]")]
     [ApiController]
     public class InternalUserProfileController : BaseController
     {
