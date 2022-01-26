@@ -103,14 +103,17 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 if (eventEvaluator != null)
                 {
                     testDto.ShowUserName = eventEvaluator.ShowUserName;
+                    testDto.IsEvaluator = true;
                 }
                 else if (testEvaluator != null && testEvaluator.ShowUserName != null)
                 {
                     testDto.ShowUserName = (bool)testEvaluator.ShowUserName;
+                    testDto.IsEvaluator = true;
                 }
                 else
                 {
                     testDto.ShowUserName = true;
+                    testDto.IsEvaluator = false;
                 }
             }
 

@@ -132,7 +132,8 @@ export class TestVerificationProcessComponent implements OnInit {
 	processTestQuestion(index: number): void {
 		const testData = {
 			testId: +this.testId,
-			questionIndex: index
+			questionIndex: index,
+			toEvaluate: true
 		};
 		this.verifyService.getTest(testData).subscribe(
 			(res) => {
