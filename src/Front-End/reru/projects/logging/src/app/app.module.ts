@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SimpleNotificationsModule } from 'angular2-notifications';
-import { LayoutsComponent } from './components/layouts/layouts.component';
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { UtilsModule } from './utils/utils.module';
@@ -20,7 +19,6 @@ import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-dat
 @NgModule({
   declarations: [
     AppComponent,
-    LayoutsComponent,
     DashboardComponent
   ],
   imports: [
