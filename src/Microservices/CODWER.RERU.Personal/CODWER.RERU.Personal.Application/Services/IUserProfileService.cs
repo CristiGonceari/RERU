@@ -1,6 +1,6 @@
-﻿using CODWER.RERU.Personal.Data.Entities;
+﻿using System.Threading.Tasks;
+using CODWER.RERU.Personal.Data.Entities;
 using CODWER.RERU.Personal.Data.Entities.User;
-using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.Services
 {

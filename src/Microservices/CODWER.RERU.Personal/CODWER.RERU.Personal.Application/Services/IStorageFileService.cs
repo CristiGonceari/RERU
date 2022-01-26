@@ -11,5 +11,6 @@ namespace CODWER.RERU.Personal.Application.Services
         public Task<int> AddFile(AddFileDto dto);
         public Task<Unit> RemoveFile(int fileId);
         public Task<FileDataDto> GetFile(int fileId);
+        public Task<Unit> SignFile(SignFileDto dto);
     }
 }

@@ -31,10 +31,9 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
                 return null;
             }
 
-            var userProfile = new UserProfile();
-            //var userProfile = await _appDbContext.UserProfiles
-            //    .Include(x => x.Contractor)
-            //    .FirstOrDefaultAsync(x => x.UserId == user.Id);
+            var userProfile = await _appDbContext.UserProfiles
+                .Include(x => x.Contractor)
+                .FirstOrDefaultAsync(x => x.UserId == user.Id);
 
             if (userProfile == null)
             {
@@ -78,7 +77,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             var userProfile = new UserProfile
             {
                 ContractorId = null,
-               // Idnp = appUser.Id,
+                UserId = appUser.Id,
                 Email = appUser.Email
             };
 

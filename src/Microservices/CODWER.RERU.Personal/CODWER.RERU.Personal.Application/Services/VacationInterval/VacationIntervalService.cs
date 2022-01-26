@@ -1,14 +1,14 @@
-﻿using CODWER.RERU.Personal.Application.Validation;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using CODWER.RERU.Personal.Application.Validation;
 using CODWER.RERU.Personal.Data.Entities;
 using CODWER.RERU.Personal.Data.Entities.Configurations;
 using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
 using CODWER.RERU.Personal.Data.Entities.Enums;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.Services.VacationInterval
 {
@@ -110,31 +110,31 @@ namespace CODWER.RERU.Personal.Application.Services.VacationInterval
                     return await CalculateDaysByConfigurations(currentPosition, contractor, _configuration.ChildBirthLeaveDays, VacationType.BirthOfTheChild);
 
                 case (int)VacationType.Studies:
-
+                    
                     return await CalculateDaysByConfigurations(currentPosition, contractor, _configuration.StudyLeaveDays, VacationType.Studies);
 
                 case (int)VacationType.Death:
-
+                   
                     return await CalculateDaysByConfigurations(currentPosition, contractor, _configuration.DeathLeaveDays, VacationType.Death);
 
                 case (int)VacationType.ChildCare:
-
+                   
                     return await CalculateDaysByConfigurations(currentPosition, contractor, _configuration.ChildCareLeaveDays, VacationType.ChildCare);
 
                 case (int)VacationType.Marriage:
-
+                   
                     return await CalculateDaysByConfigurations(currentPosition, contractor, _configuration.MarriageLeaveDays, VacationType.Marriage);
 
                 case (int)VacationType.Paternal:
-
+                   
                     return await CalculateDaysByConfigurations(currentPosition, contractor, _configuration.PaternalistLeaveDays, VacationType.Paternal);
 
                 case (int)VacationType.OwnVacation:
-
+                    
                     return await CalculateDaysByConfigurations(currentPosition, contractor, _configuration.NonPaidLeaveDays, VacationType.OwnVacation);
 
                 case (int)VacationType.PaidAnnual:
-
+                    
                     return await CalculateDaysByConfigurations(currentPosition, contractor, contract.VacationDays, VacationType.PaidAnnual);
 
             }
@@ -149,10 +149,10 @@ namespace CODWER.RERU.Personal.Application.Services.VacationInterval
             return contractorTotalVacationDays - contractorUsedDays;
         }
 
-        private async Task<double> CalculateDaysByConfigurations(Position currentPosition, Contractor contractor, int configurationCoefficient, VacationType vacationType)
+        private async Task<double> CalculateDaysByConfigurations(Position currentPosition, Contractor contractor, int configurationCoeficient, VacationType vacationType)
         {
             var contractorAvailableDays = (DateTime.Now - currentPosition.FromDate).Value.Days
-                                       * configurationCoefficient / 356;
+                                       * configurationCoeficient / 356;
 
             var usedDays = contractor.Vacations
                 .Where(x => x.Status == StageStatusEnum.Approved && x.VacationType == vacationType)
@@ -193,18 +193,18 @@ namespace CODWER.RERU.Personal.Application.Services.VacationInterval
             var holidays = HolidayCounter(current);
             var offDay = OffDayCounter(current);
 
-            if (holidays == -1 && offDay == -1)
-            {
-                return -1;
-            }
-            else if (holidays == -1)
-            {
-                return -1;
-            }
-            else if (offDay == -1)
-            {
-                return -1;
-            }
+                if (holidays == -1 && offDay == -1)
+                {
+                    return -1;
+                }
+                else if (holidays == -1)
+                {
+                    return -1;
+                }
+                else if (offDay == -1)
+                {
+                    return -1;
+                }
             return 0;
         }
         private int HolidayCounter(DateTime current)
@@ -225,44 +225,43 @@ namespace CODWER.RERU.Personal.Application.Services.VacationInterval
             switch (day)
             {
                 case DayOfWeek.Monday:
-                    {
-                        if (_configuration.MondayIsWorkDay) return 0;
-                        break;
-                    }
+                {
+                    if (_configuration.MondayIsWorkDay) return 0;
+                    break;
+                }
                 case DayOfWeek.Tuesday:
-                    {
-                        if (_configuration.TuesdayIsWorkDay) return 0;
-                        break;
-                    }
+                {
+                    if (_configuration.TuesdayIsWorkDay) return 0;
+                    break;
+                }
                 case DayOfWeek.Wednesday:
-                    {
-                        if (_configuration.WednesdayIsWorkDay) return 0;
-                        break;
-                    }
+                {
+                    if (_configuration.WednesdayIsWorkDay) return 0;
+                    break;
+                }
                 case DayOfWeek.Thursday:
-                    {
-                        if (_configuration.ThursdayIsWorkDay) return 0;
-                        break;
-                    }
+                {
+                    if (_configuration.ThursdayIsWorkDay) return 0;
+                    break;
+                }
                 case DayOfWeek.Friday:
-                    {
-                        if (_configuration.FridayIsWorkDay) return 0;
-                        break;
-                    }
+                {
+                    if (_configuration.FridayIsWorkDay) return 0;
+                    break;
+                }
                 case DayOfWeek.Saturday:
-                    {
-                        if (_configuration.SaturdayIsWorkDay) return 0;
-                        break;
-                    }
+                {
+                    if (_configuration.SaturdayIsWorkDay) return 0;
+                    break;
+                }
                 case DayOfWeek.Sunday:
-                    {
-                        if (_configuration.SundayIsWorkDay) return 0;
-                        break;
-                    }
+                {
+                    if (_configuration.SundayIsWorkDay) return 0;
+                    break;
+                }
             }
 
             return -1;
         }
     }
-
 }

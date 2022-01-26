@@ -125,7 +125,7 @@ export class PlansListComponent implements OnInit {
     const monthWithZero = month.toString().length > 1 ? month : '0' + month;
     const year = date && date.getFullYear() || -1;
 
-    return `${year}-${monthWithZero}-${dayWithZero}`;
+    return `${dayWithZero}/${monthWithZero}/${year}`;
 
   }
 

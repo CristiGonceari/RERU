@@ -7,6 +7,7 @@ namespace CODWER.RERU.Personal.Data.Entities.Files
     {
         public ByteArrayFile()
         {
+            Signatures = new HashSet<FileSignature>();
         }
 
         public string UniqueFileName { get; set; }
@@ -18,6 +19,9 @@ namespace CODWER.RERU.Personal.Data.Entities.Files
 
         public int ContractorId { get; set; }
         public Contractor Contractor { get; set; }
+
+        public virtual ICollection<FileSignature> Signatures { get; set; }
+
     }
 
 }

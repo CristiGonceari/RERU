@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CODWER.RERU.Personal.Application.Permissions;
-using CODWER.RERU.Personal.Application.Services;
+﻿using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Application.Services.Implementations;
+using CODWER.RERU.Personal.Application.Services.Implementations.Storage;
 using CODWER.RERU.Personal.Application.Services.VacationInterval;
 using CVU.ERP.Module.Common.Providers;
 using Microsoft.AspNetCore.Hosting;
@@ -26,18 +21,18 @@ namespace CODWER.RERU.Personal.Application.DependencyInjection
         {
             services
                 .AddScoped(typeof(IModulePermissionProvider), typeof(Permissions.ModulePermissionProvider))
-                //.AddScoped(typeof(IUserProfileService), typeof(UserProfileService))
+                .AddScoped(typeof(IUserProfileService), typeof(UserProfileService))
                 .AddScoped(typeof(IContractorService), typeof(ContractorService))
                 .AddScoped(typeof(IVacationIntervalService), typeof(VacationIntervalService))
 
                 //.AddScoped(typeof(IRecordMapper), typeof(RecordMapper))
                 //.AddScoped(typeof(ITemplateConvertor), typeof(TemplateConvertor))
-                //.AddScoped(typeof(IExcelImporter), typeof(ExcelImporter))
-                //.AddScoped(typeof(IVacationTemplateParserService), typeof(VacationTemplateParserService))
+                .AddScoped(typeof(IExcelImporter), typeof(ExcelImporter))
+                .AddScoped(typeof(IVacationTemplateParserService), typeof(VacationTemplateParserService))
 
-                //.AddScoped(typeof(IDismissalTemplateParserService), typeof(DismissalTemplateParserService))
-                //.AddScoped(typeof(ITimeSheetTableService), typeof(TimeSheetTableService))
-                //.AddScoped(typeof(IStorageFileService), currentEnvironment.IsDevelopment() ? typeof(CloudStorageFileService) : typeof(DbStorageFileService))
+                .AddScoped(typeof(IDismissalTemplateParserService), typeof(DismissalTemplateParserService))
+                .AddScoped(typeof(ITimeSheetTableService), typeof(TimeSheetTableService))
+                .AddScoped(typeof(IStorageFileService), currentEnvironment.IsDevelopment() ? typeof(CloudStorageFileService) : typeof(DbStorageFileService))
                 ;
         }
     }

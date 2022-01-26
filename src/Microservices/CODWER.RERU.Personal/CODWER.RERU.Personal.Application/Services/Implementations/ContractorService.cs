@@ -1,7 +1,7 @@
-﻿using CODWER.RERU.Personal.Data.Entities;
+﻿using System.Threading.Tasks;
+using CODWER.RERU.Personal.Data.Entities;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.Services.Implementations
 {
@@ -20,7 +20,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         {
             var currentUserProfile = await _userProfileService.GetCurrentUserProfile();
 
-            if (currentUserProfile == null)
+            if (currentUserProfile == null) 
             {
                 return null;
             }
@@ -31,5 +31,4 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             return currentContractor;
         }
     }
-
 }
