@@ -1,0 +1,23 @@
+<div class="row my-5">
+    <div class="col">
+        <h4>{{'personal.upload-identity-documents' | translate}}</h4>
+    </div>
+</div>
+<div *ngIf="isLoading" class="row justify-content-center align-items-center h-100">
+    <div class="col">
+        <app-loading-spinner contentHeight="20rem" height="5rem" width="5rem" colorClass="text-primary"></app-loading-spinner>
+    </div>
+</div>
+<div *ngIf="!isLoading" class="row">
+    <div class="col">
+        <ngx-dropzone accept="image/jpeg,image/jpg,image/png,.doc,.docx,.txt,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" [expandable]="true" (change)="onSelect($event)" class="font-weight-light">
+            <ngx-dropzone-label>
+                <h4>{{'document.drag-identity-into-delimited-zone' | translate}}</h4>
+                <p class="text-muted">{{'document.bulletin-diplome-documents' | translate}}</p>
+            </ngx-dropzone-label>
+            <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+            </ngx-dropzone-preview>
+        </ngx-dropzone>
+    </div>
+</div>

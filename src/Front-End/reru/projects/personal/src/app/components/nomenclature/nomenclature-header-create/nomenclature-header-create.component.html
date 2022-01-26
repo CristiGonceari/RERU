@@ -1,0 +1,33 @@
+<div class="card card-custom">
+  <div class="card-header flex-wrap border-0 pt-6 pb-0">
+    <div class="card-title">
+      <h3 class="card-label font-weight-bolder">{{'nomenclature.create-header-nomenclature' | translate}}</h3>
+    </div>
+  </div>
+  <div class="card-body">
+      <app-loading-spinner *ngIf="isLoading" contentHeight="5rem" [height]="'5rem'" [width]="'5rem'" [colorClass]="'text-primary'"></app-loading-spinner>
+      <div *ngIf="!isLoading" [formGroup]="nomenclatureColumnForm" class="table-responsive">
+          <table class="nomenclature-header-table">
+              <thead formArrayName="nomenclatureColumns">
+                  <tr *ngIf="!nomenclatureColumnForm.controls.nomenclatureColumns.controls.length">
+                      <th>{{'entity.nomenclature.name' | translate}}</th>
+                      <th><button class="btn btn-primary" (click)="addColumn()">+</button></th>
+                  </tr>
+                  <tr *ngIf="nomenclatureColumnForm.controls.nomenclatureColumns.controls.length" ngxDroppable (drop)="handle($event)"> 
+                      <th>{{'entity.nomenclature.name' | translate}}</th>
+                      <th ngxDraggable class="position-relative" *ngFor="let item of nomenclatureColumnForm.controls.nomenclatureColumns.controls; let i = index">
+                          <span class="pointer remove-icon" (click)="removeHeader(i)">&times;</span>
+                          <span class="pointer" (click)="openCreateHeaderModal(item, i)">{{item.get('name').value}}</span>
+                      </th>
+                      <th [ngStyle]="{'padding.px': 10 }">
+                        <button class="btn btn-primary" (click)="addColumn()">+</button>
+                      </th>
+                  </tr>
+              </thead>
+          </table>
+        </div>
+      <div class="row justify-content-end">
+          <button [disabled]="isLoading" class="btn btn-success" (click)="submit()">{{'button.apply-modifications' | translate}}</button>
+      </div>
+  </div>
+</div>

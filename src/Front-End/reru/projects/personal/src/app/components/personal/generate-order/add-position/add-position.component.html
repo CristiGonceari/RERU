@@ -1,0 +1,106 @@
+<app-loading-spinner *ngIf="isLoading" contentHeight="20rem" height="5rem" width="5rem" colorClass="text-primary"></app-loading-spinner>
+<form *ngIf="positionForm && !isLoading" class="col-md-8 col-sm-12 col-12 mx-auto" [formGroup]="positionForm">
+    <div class="row my-5">
+        <div class="col">
+            <h4>{{'entity.position.title' | translate}}</h4>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.position.from-date' | translate}}</label>
+        <div class="col-lg-9 col-xl-9">
+            <app-date [parent]="positionForm" [date]="'fromDate'" [placeholder]="'personal.insert-from-date' | translate"></app-date>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.position.generated-date' | translate}}</label>
+        <div class="col-lg-9 col-xl-9">
+            <app-date [parent]="positionForm" [date]="'generatedDate'" [placeholder]="'personal.insert-generated-day' | translate"></app-date>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.position.probation-day-period' | translate}}</label>
+        <div class="col-lg-9 col-xl-9">
+            <input type="text" 
+                formControlName="probationDayPeriod" 
+                [placeholder]="'word.days' | translate" 
+                autocomplete="off" 
+                [ngClass]="{'is-invalid': isTouched('probationDayPeriod') && isInvalidPattern('probationDayPeriod') }"
+                class="form-control form-control-solid" >
+                <div *ngIf="isInvalidPattern('probationDayPeriod')" class="invalid-feedback d-block">{{'validations.only-numbers' | translate}}</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.position.work-place' | translate}}</label>
+        <div class="col-lg-9 col-xl-9">
+            <input type="text" 
+                formControlName="workPlace" 
+                [placeholder]="'personal.insert-work-place' | translate" 
+                autocomplete="off" 
+                [ngClass]="{'is-invalid': isTouched('workPlace') && isInvalidPattern('workPlace') }"
+                class="form-control form-control-solid" >
+                <div *ngIf="isInvalidPattern('workPlace')" class="invalid-feedback d-block">{{'validations.only-letters-numbers-and-some-symbols' | translate}}</div>    
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.position.work-hours' | translate}}</label>
+        <div class="col-lg-9 col-xl-9">
+            <select formControlName="workHours" class="form-control form-control-solid">
+                <option value="null">{{'button.select' | translate}}</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.position.title' | translate}}</label>
+        <div class="col-lg-9 col-xl-9">
+            <input class="form-control form-control-solid"  
+                type="text" 
+                [editable]='false'
+                [placeholder]="'button.select' | translate" 
+                [(ngModel)]="selectedRole"
+                (ngModelChange)="selectRole($event)"
+                [ngModelOptions]="{ standalone: true }"
+                [ngbTypeahead]="searchRole" 
+                (focus)="focus$.next($any($event).target.value)"
+                (click)="click$.next($any($event).target.value)"
+                #instance="ngbTypeahead"
+                container="body"
+                [inputFormatter]="formatter" 
+                [resultFormatter]="formatter" >
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.position.department' | translate}}</label>
+        <div class="col-lg-9 col-xl-9">
+            <input class="form-control form-control-lg form-control-solid" 
+                type="text" 
+                [editable]='false'
+                [placeholder]="'personal.select-department' | translate" 
+                [(ngModel)]="selectedDepartment"
+                (ngModelChange)="selectDepartment($event)"
+                [ngModelOptions]="{ standalone: true }"
+                [ngbTypeahead]="searchDepartment" 
+                (focus)="focus1$.next($any($event).target.value)"
+                (click)="click1$.next($any($event).target.value)"
+                #instance1="ngbTypeahead"
+                container="body"
+                [inputFormatter]="formatter" 
+                [resultFormatter]="formatter" />
+        </div>
+    </div>
+    <div class="row">
+    <div class="col offset-3"><p class="form-text text-muted pt-2">{{'personal.add-position-description' | translate}}
+        <a href="javascript:;" class="font-weight-bold">{{'word.learn-more' | translate}}</a>.</p></div>
+    </div>
+</form>

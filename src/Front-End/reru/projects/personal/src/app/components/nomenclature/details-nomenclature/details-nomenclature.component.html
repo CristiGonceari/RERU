@@ -1,0 +1,65 @@
+<app-page-title [title]="'pages.nomenclature.title' | translate"></app-page-title>
+<app-loading-spinner *ngIf="isLoading" contentHeight="5rem" [width]="'5rem'" [height]="'5rem'"></app-loading-spinner>
+<app-content *ngIf="!isLoading" classes="details-page">
+    <div class="card card-custom gutter-bs">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">{{nomenclature?.name || '-'}}
+                    <span class="d-block subheader-text pt-2">{{'nomenclature.nomenclature-details' | translate}}</span>
+                </h3>
+            </div>
+            <div class="card-toolbar">
+                <app-nomenclature-dropdown-details [nomenclature]="nomenclature" (disable)="openDisableModal()"></app-nomenclature-dropdown-details>
+            </div>
+        </div>
+    
+        <div class="card-body mb-0">
+            <div class="tab-content pt-5">
+                <form class="form">
+                    <div class="form-group row align-items-center">
+                        <label class="col-xl-3 col-lg-3 col-form-label text-lg-right">{{'nomenclature.nomenclature-name' | translate}}</label>
+                        <div class="col-lg-9 col-xl-6 font-weight-bolder">{{nomenclature.name || '-'}}</div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label class="col-xl-3 col-lg-3 col-form-label text-lg-right">{{'entity.nomenclature.status' | translate}}</label>
+                        <div class="col-lg-9 col-xl-6 font-weight-bolder">
+                            <app-nomenclature-status-label [nomenclature]="nomenclature"></app-nomenclature-status-label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card-body mt-0 column-record-body">
+            <div class="tab-content">
+                <!-- <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <label class="col-auto">{{'nomenclature.columns-view' | translate}}</label>
+                            <div class="col">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="isRecordView">
+                                    <label class="custom-control-label" for="customSwitch1">{{'nomenclature.records-view' | translate}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="row">
+                    <div class="col">
+                        <!-- <div class="card card-custom card-stretched shadow">
+                            <div class="card-body p-0" *ngIf="!isRecordView">
+                                <app-nomenclature-header-create (created)="isRecordView = true"></app-nomenclature-header-create>
+                            </div>
+                            <div class="card-body p-0" *ngIf="isRecordView">
+                                <app-nomenclature-record-create></app-nomenclature-record-create>
+                            </div>
+                        </div> -->
+                        <app-nomenclature-record></app-nomenclature-record>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</app-content>
+

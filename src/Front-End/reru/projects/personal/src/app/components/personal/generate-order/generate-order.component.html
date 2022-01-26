@@ -1,0 +1,21 @@
+<app-page-title [title]="'personal.generate-order' | translate"></app-page-title>
+<app-content *ngIf="!isLoading">
+  <div class="card card-custom">
+    <div class="card-body">
+      <mat-horizontal-stepper linear #stepper>
+        <mat-step [completed]="completedEvents[0]" [stepControl]="firstForm" [label]="'personal.add-position' | translate" [editable]="isEditable">
+          <app-add-position></app-add-position>
+          <div class="row justify-content-end">
+            <button class="btn btn-success" matStepperNext [disabled]="isDisabledButton || firstForm && firstForm.invalid" (click)="createPosition()">{{'button.next' | translate}}</button>
+          </div>
+        </mat-step>
+        <mat-step [completed]="completedEvents[1]" [stepControl]="secondForm" [label]="'personal.individual-contract-request' | translate" [editable]="isEditable">
+          <app-individual-contract-request [contractorId]="contractorId"></app-individual-contract-request>
+          <div class="row justify-content-end mt-5">
+            <button class="btn btn-primary" [disabled]="isDisabledButton || secondForm && secondForm.invalid" (click)="createContract()">{{'button.finish' | translate}}</button>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </div>
+</app-content>

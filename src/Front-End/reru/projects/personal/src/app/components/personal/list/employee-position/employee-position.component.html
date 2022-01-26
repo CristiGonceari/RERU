@@ -1,0 +1,14 @@
+<input class="form-control form-control-solid"  
+                type="text" 
+                [editable]='false'
+                [placeholder]="'entity.position.title' | translate"
+                [(ngModel)]="selectedRole"
+                (ngModelChange)="selectRole($event)"
+                [ngModelOptions]="{ standalone: true }"
+                [ngbTypeahead]="searchRole" 
+                (focus)="focus$.next($any($event).target.value)"
+                (click)="click$.next($any($event).target.value)"
+                #instance="ngbTypeahead"
+                container="body"
+                [inputFormatter]="formatter" 
+                [resultFormatter]="formatter" >

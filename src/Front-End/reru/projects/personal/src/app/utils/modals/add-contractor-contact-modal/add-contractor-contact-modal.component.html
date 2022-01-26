@@ -1,0 +1,31 @@
+<div class="modal-header border-0">
+    <h3 class="font-size-h3 font-weight-bolder modal-title">{{'personal.add-contractor-contact' | translate}}</h3>
+</div>
+<app-loading-spinner [contentHeight]="'10rem'" *ngIf="isLoading" [colorClass]="'text-primary'"></app-loading-spinner>
+<div *ngIf="!isLoading" class="modal-body py-1 px-7">
+    <form [formGroup]="contactForm" autocomplete="off">
+        <div class="form-group row">
+            <label class="col-xl-3 col-lg-3 col-form-label" for="type">{{'personal.contact-type' | translate}}</label>
+            <div class="col-lg-9 col-xl-9">
+                <select class="form-control" name="type" id="type" formControlName="type">
+                    <option value="null">{{'personal.select-contact-type' | translate}}</option>
+                    <option *ngFor="let item of types" [value]="item.value">{{item.label}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-xl-3 col-lg-3 col-form-label" for="value">{{'personal.the-contact' | translate}}</label>
+            <div class="col-lg-9 col-xl-9">
+                <input class="form-control" type="text" name="value" id="value" formControlName="value"
+                    [placeholder]="'personal.contact-type' | translate">
+                <span *ngIf="contactForm?.get('value')?.errors?.email" class="invalid-feedback d-block">{{'validations.valid-email' | translate}}</span>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer border-0 pt-0">
+    <button [disabled]="isLoading" type="button" class="btn btn-secondary"
+        (click)="dismiss()">{{'button.cancel' | translate}}</button>
+    <button [disabled]="isLoading || contactForm.invalid" type="button" class="btn btn-success"
+        (click)="submit()">{{'button.add-contact' | translate}}</button>
+</div>

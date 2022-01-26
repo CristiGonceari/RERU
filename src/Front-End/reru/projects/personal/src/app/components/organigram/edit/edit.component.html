@@ -1,0 +1,52 @@
+<app-page-title [title]="'pages.organigram.title' | translate"></app-page-title>
+<div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class=" container ">
+            <div class="card card-custom gutter-b">
+                <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+                <div *ngIf="!isLoading" class="card-body p-0">
+                    <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first"
+                        data-wizard-clickable="true">
+                        <div class="row justify-content-center my-5 px-8 my-lg-7 px-lg-10">
+                            <div class="col">
+                                <form class="form" id="kt_contact_add_form" [formGroup]="organigramForm" autocomplete="off">
+                                    <div class="pb-5">
+                                        <h3 class="mb-10 font-weight-bolder text-dark">
+                                            {{'organigram.edit-organigram' | translate}}</h3>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group row">
+                                                    <label for="samplename" class="col-xl-2 col-lg-3 col-form-label">{{'organigram.organigram-name' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-10">
+                                                        <input autocomplete="off" class="form-control form-control-solid" id="samplename" name="samplename" type="text" formControlName="name" [placeholder]="'organigram.organigram-name' | translate">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="fromDate"
+                                                        class="col-xl-2 col-lg-3 col-form-label">{{'vacation.start-date' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-10">
+                                                        <app-date [parent]="organigramForm" [date]="'fromDate'"
+                                                                    [placeholder]="'vacation.type-start-date' | translate"></app-date>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" (click)="location.back()" class="btn btn-secondary font-weight-bold mr-2">
+                                            {{'button.cancel' | translate}}
+                                        </button>
+                                        <button type="button" class="btn btn-success font-weight-bold"
+                                            [disabled]="organigramForm.invalid" (click)="submit()">
+                                            {{'organigram.edit-organigram' | translate}}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

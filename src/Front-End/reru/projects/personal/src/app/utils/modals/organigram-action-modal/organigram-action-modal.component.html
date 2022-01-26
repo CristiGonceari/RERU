@@ -1,0 +1,79 @@
+<div class="modal-header" style="background-color: #007bff; cursor: pointer;" (click)="navigationContainer(container)">
+    <h2 class="m-auto modal-title text-white">{{container.name}}</h2>
+</div>
+<div class="modal-header border-0 pb-0">
+    <h3 *ngIf="!mode" class="modal-title">{{'organigram.select-an-action' | translate}}:</h3>
+    <h3 *ngIf="mode === 1" class="modal-title">{{'organigram.add-sub-item' | translate}}:</h3>
+    <h3 *ngIf="mode === 2" class="modal-title">{{'word.confirmation' | translate}}</h3>
+</div>
+<div *ngIf="!mode" class="modal-body py-3 px-7">
+    <div class="list-group">
+        <button type="button" class="list-group-item list-group-item-action" (click)="mode = 1">{{'organigram.add-sub-item' | translate}}</button>
+        <button type="button" class="list-group-item list-group-item-action" (click)="mode = 2">{{'organigram.delete-current-item' | translate}}</button>
+    </div>
+    <div>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>{{'entity.organigram.name' | translate}}</th>
+                    <th>{{'entity.organigram.position' | translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let item of list" >
+                    <tr *ngFor="let contractor of item.contractorIds">
+                        <td><a (click)="close()" [routerLink]="['personal', contractor.value]">{{contractor.label}}</a></td>
+                        <td style="cursor: pointer; color: #FFA800;" (click)="navigationContainer(item)">{{item.organizationRoleName}}</td>
+                    </tr>
+                </ng-container>
+                <tr *ngIf="!list || list && !list.length">
+                    <td class="text-center" colspan="2">{{'word.there-are-no-records-at-the-moment' | translate}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div *ngIf="mode === 1" class="modal-body py-3 px-7">
+    <form [formGroup]="organigramForm" autocomplete="off">
+        <div class="form-group row">
+            <label for="relationType" class="col-xl-2 col-lg-3 col-form-label">{{'organigram.link-type' | translate}}</label>
+            <div class="col-lg-9 col-xl-10">
+                <select class="form-control form-control-solid" formControlName="relationType">
+                    <option value="null">{{'button.select' | translate}}</option>
+                    <option *ngIf="type === 1" value="1">{{'organigram.department-department' | translate}}</option>
+                    <option *ngIf="type === 1" value="2">{{'organigram.department-role' | translate}}</option>
+                    <option *ngIf="type === 2" value="3">{{'organigram.role-department' | translate}}</option>
+                    <option *ngIf="type === 2" value="4">{{'organigram.role-role' | translate}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-xl-2 col-lg-3 col-form-label">{{'organigram.sub-item' | translate}}</label>
+            <div class="col-lg-9 col-xl-10">
+                <input class="form-control form-control-solid"
+                type="text"
+                [editable]='false'
+                [placeholder]="'organigram.organigram-head' | translate" 
+                [(ngModel)]="selectedItem"
+                (ngModelChange)="selectHead($event)"
+                [ngModelOptions]="{ standalone: true }"
+                [ngbTypeahead]="searchHead" 
+                (focus)="focus$.next($any($event).target.value)"
+                (click)="clickEvents($event, instance)"
+                #instance="ngbTypeahead"
+                [inputFormatter]="formatter" 
+                [resultFormatter]="formatter" />
+            </div>
+        </div>
+    </form>
+</div>
+<div *ngIf="mode === 2" class="modal-body py-3 px-7">
+    <p>{{'organigram.are-you-sure-want-to-delete-item' | translate}}?</p>
+</div>
+<div class="modal-footer border-0 pt-0">
+    <button *ngIf="!mode" type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.close' | translate}}</button>
+    <button *ngIf="mode === 1" type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.close' | translate}}</button>
+    <button *ngIf="mode === 2" type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.no' | translate}}</button>
+    <button *ngIf="mode === 1" [disabled]="organigramForm.invalid" type="button" class="btn btn-primary" (click)="close()">{{'button.confirm' | translate}}</button>
+    <button *ngIf="mode === 2" type="button" class="btn btn-primary" (click)="close()">{{'button.yes' | translate}}</button>
+</div>

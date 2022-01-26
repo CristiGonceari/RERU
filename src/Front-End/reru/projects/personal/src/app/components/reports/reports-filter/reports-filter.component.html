@@ -1,0 +1,35 @@
+<form [formGroup]="filterForm">
+    <div class="row">
+        <div class="col-lg col-12">
+            <select class="form-control" formControlName="type">
+                <option value="0">{{'word.all' | translate}}</option>
+                <option value="3">{{'document-fileType.3' | translate}}</option>
+                <option value="4">{{'document-fileType.4' | translate}}</option>
+                <option value="5">{{'document-fileType.5' | translate}}</option>
+            </select>
+        </div>
+        <div class="col-lg col-5 mt-lg-0 mt-2">
+            <input formControlName="name" class="form-control" type="text" [placeholder]="'entity.reports.name' | translate">
+        </div>
+        <div class="col-lg col-5 mt-lg-0 mt-2">
+            <input formControlName="contractorName" class="form-control" type="text" [placeholder]="'entity.reports.search-full-name' | translate">
+        </div>
+        <div class="col-lg col-5 mt-lg-0 mt-2">
+            <app-filter-by-departments (handleDepartment)="updateDepartmentId($event)" #filterByDepartment></app-filter-by-departments>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-lg-4 col-12">
+            <app-date [parent]="filterForm" [date]="'fromDate'" [placeholder]="'entity.role.from-date' | translate"></app-date>
+        </div>
+        <div class="col-lg-4 col-12 mt-lg-0 mt-2">
+            <app-date [parent]="filterForm" [date]="'toDate'" [placeholder]="'entity.role.to-date' | translate"></app-date>
+        </div>
+        <div class="col-lg-2 col-12 mt-lg-0 mt-2">
+            <button type="reset" class="btn btn-light-warning" (click)="resetForm()">{{'button.reset' | translate}}</button>
+        </div>
+        <div class="col-lg-2 col-12 mt-lg-0 mt-2">
+            <app-confirm-button class="float-right" (handle)="apply()">{{'button.search' | translate}}</app-confirm-button>
+        </div>
+    </div>
+</form>

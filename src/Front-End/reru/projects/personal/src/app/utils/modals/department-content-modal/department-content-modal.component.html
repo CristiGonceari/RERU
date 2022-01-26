@@ -1,0 +1,40 @@
+<div class="modal-header border-0 pb-0">
+    <h3 class="modal-title">{{'roles.adding-role' | translate}}</h3>
+</div>
+<app-loading-spinner [contentHeight]="'10rem'" *ngIf="isLoading" [colorClass]="'text-primary'"></app-loading-spinner>
+<div *ngIf="!isLoading" class="modal-body py-1 px-7">
+    <form [formGroup]="departmentForm" autocomplete="off">
+        <div class="form-group row">
+            <label for="organizationRoleId" class="col-xl-2 col-lg-3 col-form-label">{{'organigram.role' | translate}}</label>
+            <div class="col-lg-9 col-xl-10">
+                <input class="form-control form-control-solid" 
+                              name="organizationRoleId" 
+                              type="text" 
+                              [editable]='false'
+                              [placeholder]="'button.select' | translate" 
+                              id="organizationRoleId"
+                              [(ngModel)]="selectedItem"
+                              (ngModelChange)="selectRole($event)"
+                              [ngModelOptions]="{ standalone: true }"
+                              [ngbTypeahead]="searchRole" 
+                              (focus)="focus$.next($any($event).target.value)"
+                              (click)="clickEvents($event, instance)"
+                              #instance="ngbTypeahead"
+                              [inputFormatter]="formatter" 
+                              [resultFormatter]="formatter" />
+                <span class="form-text text-muted">{{'organigram.role' | translate}}</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="organizationRoleCount" class="col-xl-2 col-lg-3 col-form-label">{{'department-content.count' | translate}}</label>
+            <div class="col-lg-9 col-xl-10">
+                <input class="form-control" placeholder="0" type="number" name="organizationRoleCount" id="organizationRoleCount" formControlName="organizationRoleCount">
+                <span class="form-text text-muted">{{'department-content.count' | translate}}</span>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer border-0 pt-0">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+    <button type="button" class="btn btn-primary" [disabled]="departmentForm && departmentForm.invalid" (click)="close()">{{'button.add' | translate}}</button>
+</div>

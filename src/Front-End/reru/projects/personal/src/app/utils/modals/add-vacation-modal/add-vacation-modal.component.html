@@ -1,0 +1,84 @@
+<div class="modal-header border-0 pb-0">
+    <h3 class="modal-title">{{'vacation.add-vacation' | translate}}</h3>
+</div>
+<div class="modal-body py-1 px-7">
+    <form [formGroup]="vacationForm">
+        <div class="separator separator-dashed my-5"></div>
+        <div class="row">
+            <div class="col text-center">{{'vacation.available-days' | translate}}</div>
+            <div class="col text-center">{{'vacation.interval-days' | translate}}</div>
+        </div>
+        <div class="row">
+            <div class="col text-center">{{availableDays || '0'}}</div>
+            <div class="col text-center">{{intervalDays || '0'}}</div>
+        </div>
+        <div class="separator separator-dashed my-5"></div>
+        <div class="form-group row align-items-center">
+            <label for="oneDay" class="col-form-label col-lg-3">{{'vacation.apply-one-day' | translate}}</label>
+            <div class="col-lg-9">
+                <label class="checkbox checkbox-lg checkbox-square">
+                    <input type="checkbox" name="oneDay" id="oneDay" (change)="changeVacationDuration($event)">
+                    <span></span>
+                </label>
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-lg-3 col-form-label">{{'vacation.vacation-type' | translate}}</label>
+            <div class="col-lg-9">
+                <select class="form-control form-control-solid" formControlName="vacationType" name="vacationType" id="vacantionTypes" (ngModelChange)="availableDaysForTypesOfVacantion($event)" >
+                    <option value="null">{{'button.select' | translate}}</option>
+                    <option value="1">{{'vacation-type.1' | translate}}</option>
+                    <option value="2">{{'vacation-type.2' | translate}}</option> 
+                    <option value="3">{{'vacation-type.3' | translate}}</option>
+                    <option value="4">{{'vacation-type.4' | translate}}</option>
+                    <option value="5">{{'vacation-type.5' | translate}}</option>
+                    <option value="6">{{'vacation-type.6' | translate}}</option>
+                    <option value="7">{{'vacation-type.7' | translate}}</option>
+                    <option value="8">{{'vacation-type.8' | translate}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label for="fromDate"
+                class="col-lg-3 col-form-label">{{'vacation.start-date' | translate}}</label>
+            <div class="col-lg-9">
+                <app-date [parent]="vacationForm" [date]="'fromDate'"
+                          [placeholder]="'vacation.type-start-date' | translate"></app-date>
+            </div>
+        </div>
+        <div *ngIf="!isSingleDay" class="form-group row required">
+            <label for="toDate"
+                class="col-lg-3 col-form-label">{{'vacation.end-date' | translate}}</label>
+            <div class="col-lg-9">
+                <app-date [parent]="vacationForm" [date]="'toDate'"
+                          [placeholder]="'vacation.type-end-date' | translate"></app-date>
+            </div>
+        </div>
+        <div *ngIf="vacationForm.get('vacationType').value == vacationTypes.Studies" class="form-group row required">
+            <label for="toDate" class="col-lg-3 col-form-label">{{'entity.study.institution' | translate}}</label>
+            <div class="col-lg-9">
+                <input type="text" class="form-control" formControlName="institution" [placeholder]="'entity.study.institution' | translate">
+            </div>
+        </div>
+        <div *ngIf="vacationForm.get('vacationType').value == vacationTypes.ChildCare" class="form-group row required">
+            <label for="toDate" class="col-lg-3 col-form-label">{{'vacation.child-age' | translate}}</label>
+            <div class="col-lg-9">
+                <input type="text" class="form-control" formControlName="childAge"
+                [ngClass]="{'is-invalid': isTouched('childAge') && isInvalidPattern('childAge') }"
+                [placeholder]="'vacation.child-age' | translate">
+                <div *ngIf="isInvalidPattern('childAge')" class="invalid-feedback d-block">{{'validations.only-numbers' | translate}}</div>
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label for="toDate" class="col-lg-3 col-form-label">{{'vacation.mentions' | translate}}</label>
+            <div class="col-lg-9">
+                <textarea class="form-control" formControlName="mentions" rows="5" cols="10"></textarea>
+            </div>
+        </div>
+        <app-ck-editor-config [selectedType]=3 (editedCkeditorValue)="retriveDocumentValueFromComponent($event)" style="padding: 20px;"></app-ck-editor-config>
+    </form>
+</div>
+<div class="modal-footer border-0 pt-0">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+    <button type="button" class="btn btn-success" [disabled]="vacationForm.invalid" (click)="close()">{{'button.add' | translate}}</button>
+</div>
