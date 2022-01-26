@@ -49,6 +49,51 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="ContractorTemplates\codwerlogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ContractorTemplates\Contract Individual De Munca.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ContractorTemplates\Orders\Ordin Cu Privire La Angajare.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ContractorTemplates\Orders\Ordin Cu Privire La Concediu.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ContractorTemplates\Orders\Ordin Cu Privire La Demisionare.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ContractorTemplates\Reports\Report List.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ContractorTemplates\Requests\Cerere Cu Privire La Demisionare.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ContractorTemplates\VacationsRequests\Cerere de acordare Concediu Anual Platit.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ContractorTemplates\VacationsRequests\Cerere de acordare Concediu Cont Propriu.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ContractorTemplates\VacationsRequests\Cerere de acordare Concediu de Casatorie.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ContractorTemplates\VacationsRequests\Cerere de acordare Concediu de Deces.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ContractorTemplates\VacationsRequests\Cerere de acordare Concediu de Paternitate.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ContractorTemplates\VacationsRequests\Cerere de acordare Concediu de Studii.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ContractorTemplates\VacationsRequests\Cerere de acordare Concediu Ingrijirea Copilului.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ContractorTemplates\VacationsRequests\Cerere de acordare Concediu Pentru Nasterea Copilului.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Rotativa\Linux\wkhtmltopdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -58,10 +103,6 @@
     <None Update="Rotativa\Windows\wkhtmltopdf.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>
