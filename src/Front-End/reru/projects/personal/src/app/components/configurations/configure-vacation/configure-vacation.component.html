@@ -1,1 +1,238 @@
-<p>configure-vacation works!</p>
+<app-loading-spinner contentHeight="20rem" height="5rem" width="5rem" *ngIf="isLoading"></app-loading-spinner>
+<form [formGroup]="vacationForm" *ngIf="!isLoading" autocomplete="off">
+    <div class="row">
+        <div class="col-12 d-flex flex-wrap">
+            <!-- <div class="card individualCard">
+                <div class="card-body">
+                    <label for="paidLeaveDays" class="col-form-label col-12">{{'vacation.paid-vacation-days' |translate}}</label>
+                    <div class="col-md col-12">
+                        <input autocomplete="off" class="form-control" type="number" name="paidLeaveDays"
+                            id="paidLeaveDays" formControlName="paidLeaveDays">
+                        <span class="form-text text-muted">{{'vacation.type-number-of-days' | translate}}</span>
+                    </div>
+                </div>
+            </div> -->
+            <div class="row m-auto">
+                <div class="card individualCard">
+                    <div class="card-body">
+                        <label for="nonPaidLeaveDays" class="col-form-label col-12">{{'vacation.unpaid-vacation-days'
+                            |translate}}</label>
+                        <div class="col-md col-12">
+                            <input autocomplete="off" class="form-control" type="number" name="nonPaidLeaveDays"
+                                id="nonPaidLeaveDays" formControlName="nonPaidLeaveDays">
+                            <span class="form-text text-muted">{{'vacation.type-number-of-days' | translate}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card individualCard">
+                    <div class="card-body">
+                        <label for="studyLeaveDays" class="col-form-label col-12">{{'vacation.study-vacation-days'
+                            |translate}}</label>
+                        <div class="col-md col-12">
+                            <input autocomplete="off" class="form-control" type="number" name="studyLeaveDays"
+                                id="studyLeaveDays" formControlName="studyLeaveDays">
+                            <span class="form-text text-muted">{{'vacation.type-number-of-days' | translate}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card individualCard">
+                    <div class="card-body">
+                        <label for="deathLeaveDays" class="col-form-label col-12">{{'vacation.death-vacation-days'
+                            |translate}}</label>
+                        <div class="col-md col-12">
+                            <input autocomplete="off" class="form-control" type="number" name="deathLeaveDays"
+                                id="deathLeaveDays" formControlName="deathLeaveDays">
+                            <span class="form-text text-muted">{{'vacation.type-number-of-days' | translate}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card individualCard">
+                    <div class="card-body">
+                        <label for="childCareLeaveDays" class="col-form-label col-12">
+                            {{'vacation.childcare-vacation-days' |translate}}</label>
+                        <div class="col-md col-12">
+                            <input autocomplete="off" class="form-control" type="number" name="childCareLeaveDays"
+                                id="childCareLeaveDays" formControlName="childCareLeaveDays">
+                            <span class="form-text text-muted">{{'vacation.type-number-of-days' | translate}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-auto">
+                <div class="card individualCard">
+                    <div class="card-body">
+                        <label for="childBirthLeaveDays"
+                            class="col-form-label col-12">{{'vacation.child-birth-vacation-days' |translate}}</label>
+                        <div class="col-md col-12">
+                            <input autocomplete="off" class="form-control" type="number" name="childBirthLeaveDays"
+                                id="childBirthLeaveDays" formControlName="childBirthLeaveDays">
+                            <span class="form-text text-muted">{{'vacation.type-number-of-days' | translate}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card individualCard">
+                    <div class="card-body">
+                        <label for="marriageLeaveDays" class="col-form-label col-12">{{'vacation.marriage-vacation-days'
+                            |translate}}</label>
+                        <div class="col-md col-12">
+                            <input autocomplete="off" class="form-control" type="number" name="marriageLeaveDays"
+                                id="marriageLeaveDays" formControlName="marriageLeaveDays">
+                            <span class="form-text text-muted">{{'vacation.type-number-of-days' | translate}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card individualCard">
+                    <div class="card-body">
+                        <label for="paternalistLeaveDays"
+                            class="col-form-label col-12">{{'vacation.paternal-vacation-days' |translate}}</label>
+                        <div class="col-md col-12">
+                            <input autocomplete="off" class="form-control" type="number" name="paternalistLeaveDays"
+                                id="paternalistLeaveDays" formControlName="paternalistLeaveDays">
+                            <span class="form-text text-muted">{{'vacation.type-number-of-days' | translate}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-4 card mr-3">
+                    <div class="card-body m-auto">
+                        <div style="display: inline-block;" class="pl-4">
+                            <div class="form-group row align-items-center">
+                                <label for="includeOffDays"
+                                    class="col-form-label col-auto">{{'vacation.include-off-days' | translate}}</label>
+                                <div class="col">
+                                    <label class="checkbox checkbox-lg checkbox-square w-25">
+                                        <input type="checkbox" name="includeOffDays" id="includeOffDays"
+                                            formControlName="includeOffDays">
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-center">
+                                <label for="includeOffDays"
+                                    class="col-form-label col-auto">{{'vacation.include-holidays' |translate}}</label>
+                                <div class="col">
+                                    <label class="checkbox checkbox-lg checkbox-square">
+                                        <input type="checkbox" name="includeHolidayDays" id="includeHolidayDays"
+                                            formControlName="includeHolidayDays">
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-7 card">
+                    <div class="card-body m-auto">
+                        <div class="container">
+                            <div class="form-group row">
+                                {{'vacation.working-week-holidays' | translate}}
+                            </div>
+                            <div class="form-check form-check-inline mr-10 personalCheck">
+                                <div class="form-group row align-items-center ">
+                                    <label for="mondayIsWorkDay" class="col-form-label col-auto p-0">{{'vacation.monday'
+                                        |translate}}</label>
+                                    <div class="col">
+                                        <label class="checkbox checkbox-lg checkbox-square">
+                                            <input type="checkbox" name="mondayIsWorkDay" id="mondayIsWorkDay"
+                                                formControlName="mondayIsWorkDay">
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-check form-check-inline mr-10 personalCheck">
+                                <div class="form-group row align-items-center ">
+                                    <label for="tuesdayIsWorkDay"
+                                        class="col-form-label col-auto p-0">{{'vacation.tuesday' |translate}}</label>
+                                    <div class="col">
+                                        <label class="checkbox checkbox-lg checkbox-square">
+                                            <input type="checkbox" name="tuesdayIsWorkDay" id="tuesdayIsWorkDay"
+                                                formControlName="tuesdayIsWorkDay">
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-check form-check-inline mr-10 personalCheck">
+                                <div class="form-group row align-items-center ">
+                                    <label for="wednesdayIsWorkDay"
+                                        class="col-form-label col-auto p-0">{{'vacation.wednesday' |translate}}</label>
+                                    <div class="col">
+                                        <label class="checkbox checkbox-lg checkbox-square">
+                                            <input type="checkbox" name="wednesdayIsWorkDay" id="wednesdayIsWorkDay"
+                                                formControlName="wednesdayIsWorkDay">
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-check form-check-inline mr-10 personalCheck">
+                                <div class="form-group row align-items-center ">
+                                    <label for="thursdayIsWorkDay"
+                                        class="col-form-label col-auto p-0">{{'vacation.thursday' |translate}}</label>
+                                    <div class="col">
+                                        <label class="checkbox checkbox-lg checkbox-square">
+                                            <input type="checkbox" name="thursdayIsWorkDay" id="thursdayIsWorkDay"
+                                                formControlName="thursdayIsWorkDay">
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-check form-check-inline mr-10 personalCheck">
+                                <div class="form-group row align-items-center ">
+                                    <label for="fridayIsWorkDay" class="col-form-label col-auto p-0">{{'vacation.friday'
+                                        |translate}}</label>
+                                    <div class="col">
+                                        <label class="checkbox checkbox-lg checkbox-square">
+                                            <input type="checkbox" name="fridayIsWorkDay" id="fridayIsWorkDay"
+                                                formControlName="fridayIsWorkDay">
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-check form-check-inline mr-10 personalCheck">
+                                <div class="form-group row align-items-center ">
+                                    <label for="saturdayIsWorkDay"
+                                        class="col-form-label col-auto p-0">{{'vacation.saturday' |translate}}</label>
+                                    <div class="col">
+                                        <label class="checkbox checkbox-lg checkbox-square">
+                                            <input type="checkbox" name="saturdayIsWorkDay" id="saturdayIsWorkDay"
+                                                formControlName="saturdayIsWorkDay">
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-check form-check-inline mr-10 personalCheck">
+                                <div class="form-group row align-items-center ">
+                                    <label for="sundayIsWorkDay" class="col-form-label col-auto">{{'vacation.sunday'
+                                        |translate}}</label>
+                                    <div class="col">
+                                        <label class="checkbox checkbox-lg checkbox-square pl-0">
+                                            <input type="checkbox" name="sundayIsWorkDay" id="sundayIsWorkDay"
+                                                formControlName="sundayIsWorkDay">
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl col-12">
+            <div class="row h-100 justify-content-end align-items-end">
+                <button class="btn btn-secondary mr-3" [disabled]="isLoading"
+                    (click)="resetConfiguration()">{{'button.cancel' | translate}}</button>
+                <app-confirm-button (handle)="submit()" [disabled]="isLoading || isSameConfiguration()">{{'button.save'|
+                    translate}}</app-confirm-button>
+            </div>
+        </div>
+    </div>
+</form>

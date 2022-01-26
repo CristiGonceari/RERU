@@ -1,0 +1,86 @@
+<div *ngIf="type === contentType.Template" class="card card-custom card-stretched shadow">
+    <div class="card-header">
+        <h2 class="card-title font-weight-bolder text-dark">{{'department-content.template' | translate}}</h2>
+    </div>
+    <div class="card-body pt-1">
+        <div class="row" *ngFor="let item of entry.roles">
+            <div class="col-sm col-12">
+                <span class="text-dark-75 font-weight-bold text-hover-primary font-size-lg px-0" [routerLink]="['../../roles', item.organizationRoleId]">
+                    <span class="pointer mr-2 mt-2">{{item.organizationRoleName}}</span>
+                </span>
+            </div>
+            <div class="col-sm col-12 text-right">
+                <span class="label label-light-success">x{{item.organizationRoleCount}}</span>
+                <button class="btn btn-icon" (click)="delete.emit(item)">
+                    <span class="navi-icon"><i class="la la-remove text-dark-65"></i></span>
+                </button>
+            </div>
+        </div>
+        <div class="row col text-center" *ngIf="!entry || !entry.roles || !entry.roles.length">{{'word.there-are-no-records-at-the-moment' | translate}}</div>
+        <div class="mt-2 row col">
+            <app-add-button (handle)="openModal.emit()" [value]="'button.add' | translate"></app-add-button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="type === contentType.Actual" class="card card-custom card-stretched shadow">
+    <div class="card-header">
+        <h2 class="card-title font-weight-bolder text-dark">{{'department-content.actual' | translate}}</h2>
+    </div>
+    <div class="card-body pt-0">
+        <div class="row" *ngFor="let item of entry.roles">
+            <div class="col-lg col-12 py-3">
+                <span class="text-dark-75 font-weight-bold text-hover-primary font-size-lg px-0" [routerLink]="['../../roles', item.organizationRoleId]" >
+                    <span class="pointer mr-2 mt-2">{{item.organizationRoleName}}</span> - <span class="label label-light-success">x{{item.organizationRoleCount}}</span>
+                </span>
+            </div>
+            <div class="col-lg col-12 py-lg-0 py-4 text-right">
+                <ng-container *ngFor="let contractor of item.contractorIds; let i = index">
+                    <span class="label label-lg label-light-success label-inline font-weight-bold pointer mr-2 mt-2" [routerLink]="['../../personal', contractor.value]">
+                        {{contractor.label}} 
+                    </span>
+                </ng-container>
+            </div>
+        </div>
+        <div class="row" *ngIf="!entry || !entry.roles || !entry.roles.length">
+            La moment nu sunt înregistrări!
+        </div>
+    </div>
+</div>
+
+<div *ngIf="type === contentType.Summary" class="card card-custom card-stretched shadow">
+    <div class="card-header">
+        <h2 class="card-title font-weight-bolder text-dark">{{'department-content.summary' | translate}}</h2>
+    </div>
+    <div class="card-body pt-0">
+        <div class="row" *ngFor="let item of entry.roles">
+            <div class="col-lg col-12 py-3">
+                <span class="text-dark-75 font-weight-bold text-hover-primary font-size-lg px-0" [routerLink]="['../../roles', item.organizationRoleId]">
+                    <span class="pointer mr-2 mt-2">{{item.organizationRoleName}}</span>
+                    <span class="label pointer" 
+                    [ngClass]="{
+                        'label-light-warning':  item.organizationRoleCount > 0,
+                        'label-light-success':  item.organizationRoleCount === 0,
+                        'label-light-danger': item.organizationRoleCount < 0}">
+                        <ng-container *ngIf="item.organizationRoleCount > 0">+{{item.organizationRoleCount}}</ng-container>
+                        <ng-container *ngIf="(item.organizationRoleCount > 0) === false">{{item.organizationRoleCount}}</ng-container>
+                    </span>
+                </span>
+            </div>
+            <div class="col-lg col-12 py-lg-0 py-4 text-right">
+                <ng-container *ngFor="let contractor of item.contractorIds; let i = index">
+                    <span class="label label-lg label-inline font-weight-bold pointer mr-2 mt-2" [routerLink]="['../../personal', contractor.value]"
+                    [ngClass]="{
+                        'label-light-warning':  item.organizationRoleCount > 0,
+                        'label-light-success':  item.organizationRoleCount === 0,
+                        'label-light-danger': item.organizationRoleCount < 0}">
+                        {{contractor.label}} 
+                    </span>
+                </ng-container>
+            </div>
+        </div>
+        <div class="row" *ngIf="!entry || !entry.roles || !entry.roles.length">
+            La moment nu sunt înregistrări!
+        </div>
+    </div>
+</div>

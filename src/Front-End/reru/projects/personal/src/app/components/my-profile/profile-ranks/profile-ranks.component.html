@@ -1,0 +1,28 @@
+<div class="card card-custom">
+    <div class="card-header py-3">
+      <div class="card-title align-items-start flex-column">
+        <h3 class="card-label font-weight-bolder text-dark">{{'personal.ranks' | translate}}</h3>
+        <span class="text-muted font-weight-bold font-size-sm mt-1">{{'personal.view-account-details' | translate}}</span>
+      </div>
+    </div>
+    <div *ngIf="isLoading"  class="card-body">
+      <app-loading-spinner [contentHeight]="'20rem'" [height]="'5rem'" [width]="'5rem'" [colorClass]="'text-primary'"></app-loading-spinner>
+    </div>
+    <div *ngIf="!isLoading" class="card-body">
+        <app-profile-ranks-card *ngFor="let rank of ranks"
+                        [rank]="rank">
+        </app-profile-ranks-card>
+    <div class="row" *ngIf="!ranks?.length">
+        <div class="col text-center">
+            {{'word.there-are-no-records-at-the-moment' | translate}}
+        </div>
+    </div>
+    <div class="row" *ngIf="ranks?.length">
+        <div class="col datatable datatable-default">
+            <div pagination [page]="pagedSummary.currentPage" [total]="pagedSummary.totalPages" [size]="pagedSummary.pageSize" (sizeChange)="retriveRanks({ page: pagedSummary.currentPage, itemsPerPage: $event })"
+                class="datatable-pager datatable-paging-loaded" (pageChange)="retriveRanks({ page: $event })">
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

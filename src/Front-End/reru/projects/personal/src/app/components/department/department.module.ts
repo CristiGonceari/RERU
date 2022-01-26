@@ -9,11 +9,25 @@ import { UtilsModule } from '../../utils/utils.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '@erp/shared';
 import { DepartmentRoutingModule } from './department-routing.module';
-
-
+import { EditComponent } from './edit/edit.component';
+import { DepartmentDropdownDetailsComponent } from './department-dropdown-details/department-dropdown-details.component';
+import { DepartmentPositionTableComponent } from './department-position-table/department-position-table.component';
+import { DepartmentContentCardComponent } from './department-content-card/department-content-card.component';
+import { ListComponent } from './list/list.component';
+import { DepartmentTableComponent } from './department-table/department-table.component';
+import { AddComponent } from './add/add.component';
+import { DetailsComponent } from './details/details.component';
 @NgModule({
   declarations: [
     DepartmentComponent,
+    ListComponent,
+    DepartmentTableComponent,
+    AddComponent,
+    DetailsComponent,
+    EditComponent,
+    DepartmentDropdownDetailsComponent,
+    DepartmentPositionTableComponent,
+    DepartmentContentCardComponent
   ],
   imports: [
     CommonModule,
