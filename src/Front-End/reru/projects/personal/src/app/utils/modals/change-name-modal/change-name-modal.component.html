@@ -1,0 +1,35 @@
+<div class="modal-header border-0">
+    <h3 class="font-size-h3 font-weight-bolder modal-title">{{'personal.change-contractor-name' | translate}}</h3>
+</div>
+<div class="modal-body py-1 px-7">
+    <form #userForm="ngForm" autocomplete="off">
+        <div class="form-group row">
+            <label for="samplelastname"
+                class="col-12 col-sm-3 col-form-label text-right">{{'entity.personal.last-name' | translate}}</label>
+            <div class="col-12 col-sm-9">
+                <input type="text" class="form-control" [(ngModel)]="user.lastName" name="samplelastname" #lastName="ngModel"
+                    required id="samplelastname" [placeholder]="'personal.insert-personal-last-name' | translate"
+                    minlength="1">
+                <span class="form-text text-muted">{{'personal.employee-last-name' | translate}}</span>
+                <span class="form-text text-danger"
+                    [hidden]="lastName.valid || lastName.pristine">{{'validations.minimum-one-character' | translate}}</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="samplefirstname"
+                class="col-12 col-sm-3 col-form-label text-right">{{'entity.personal.first-name' | translate}}</label>
+            <div class="col-12 col-sm-9">
+                <input type="text" class="form-control" [(ngModel)]="user.firstName" name="samplefirstname" id="firstName"
+                    required #firstName="ngModel" [placeholder]="'personal.insert-personal-last-name' | translate"
+                    minlength="1">
+                <span class="form-text text-muted">{{'personal.employee-first-name' | translate}}</span>
+                <span class="form-text text-danger"
+                    [hidden]="firstName.valid || firstName.pristine">{{'validations.minimum-one-character' | translate}}</span>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer pt-0 border-0">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+    <button type="button" class="btn edit-button" (click)="close()">{{'button.confirm' | translate}}</button>
+</div>

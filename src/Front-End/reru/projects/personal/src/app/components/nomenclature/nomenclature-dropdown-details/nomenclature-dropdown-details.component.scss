@@ -1,0 +1,12 @@
+.btn-hover-default:hover:not(:disabled),
+    .show>.btn.btn-hover-default.dropdown-toggle.dropdown-toggle {
+      color: #B5B5C3;
+      background-color: #F3F6F9;
+      border-color: #F3F6F9;
+    }
+  
+    .dropdown.dropdown-inline {
+      a.dropdown-toggle::after {
+        display: none;
+      }
+    }

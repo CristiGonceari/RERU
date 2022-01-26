@@ -1,0 +1,83 @@
+.text-multiselect{
+    margin-right: 4rem;
+}
+.month-container{
+    padding: 30px;
+}
+.text-month{
+    font-size: medium;
+}
+.text-end{
+    text-align: end;
+}
+
+svg:hover{
+    background-color:  #B5B5C3;
+}
+:host {
+    width: 100%;
+    .input-group {
+        width: 100%;
+    }
+}
+
+.row{
+    margin-top: 1%;
+}
+.custom-btn {
+    width: 130px;
+    height: 2.5rem;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+     box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+     7px 7px 20px 0px rgba(0,0,0,.1),
+     4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+  }
+  /* 5 */
+.btn-5 {
+  width: 130px;
+  padding: 0;
+  border: none;
+  background: #dc3545;
+background: linear-gradient(0deg, #dc3545 0%, #dc3545 100%);
+}
+.btn-5:hover {
+  color: #dc3545;
+  background: transparent;
+   box-shadow:none;
+}
+.btn-5:before,
+.btn-5:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #dc3545;
+  box-shadow:
+   -1px -1px 5px 0px #fff,
+   7px 7px 20px 0px #0003,
+   4px 4px 5px 0px #0002;
+  transition:400ms ease all;
+}
+.btn-5:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.btn-5:hover:before,
+.btn-5:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}

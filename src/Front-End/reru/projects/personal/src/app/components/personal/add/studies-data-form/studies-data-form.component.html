@@ -1,0 +1,136 @@
+<app-loading-spinner *ngIf="isLoading" contentHeight="20rem" height="5rem" width="5rem" colorClass="text-primary"></app-loading-spinner>
+<form *ngIf="studyForm && !isLoading" class="col" [formGroup]="studyForm">
+    <div class="row my-5">
+        <div class="col">
+            <h4>{{'personal.studies' | translate}}</h4>
+        </div>
+    </div>
+    <div formArrayName="studies">
+        <div class="box-square" 
+        [ngClass]="{'more': studyForm.controls.studies.controls.length > 1  &&
+                            (studyForm.controls.studies.controls.length - 1) !== i}" 
+        *ngFor="let study of studyForm.controls.studies.controls;let i = index">
+            <div [formGroupName]="i">
+                <div class="row">
+                    <div class="col-xl-6 col-12">
+                        <div class="form-group row align-items-center">
+                            <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.study.student' | translate}}</label>
+                            <div class="col-lg-9 col-xl-9">
+                                <label class="checkbox checkbox-square">
+                                    <input class="form-control" type="checkbox" formControlName="isActiveStudy" (change)="handleStudyChange($event, study)">
+                                    <span></span>
+                                </label>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6 col-12">
+                        <div class="form-group row required">
+                          <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.study.institution' | translate}}</label>
+                          <div class="col-lg-9 col-xl-9">
+                            <input formControlName="institution" autocomplete="off"  class="form-control form-control-solid" type="text" 
+                                   [placeholder]="'personal.insert-institution' | translate"/>
+                            <div *ngIf="isInvalidPattern(study, 'institution')" class="invalid-feedback d-block">{{'validations.only-letters-and-dash' | translate}}</div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-12">
+                        <div class="form-group row required">
+                            <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.study.study-frequency' | translate}}</label>
+                            <div class="col-lg-9 col-xl-9">
+                            <select formControlName="studyFrequency" class="form-control">
+                                <option value="null">{{'personal.insert-study-frequency' | translate}}</option>
+                                <option value="1">{{'personal.daily' | translate}}</option>
+                                <option value="2">{{'personal.part-time' | translate}}</option>
+                            </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6 col-12">
+                        <div class="form-group row required">
+                            <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.study.faculty' | translate}}</label>
+                            <div class="col-lg-9 col-xl-9">
+                            <input formControlName="faculty" autocomplete="off"  class="form-control form-control-solid" type="text" [placeholder]="'personal.insert-faculty' | translate"/>
+                            <div *ngIf="isInvalidPattern(study, 'faculty')" class="invalid-feedback d-block">{{'validations.only-letters-and-dash' | translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-12">
+                        <div class="form-group row required">
+                            <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.study.specialty' | translate}}</label>
+                            <div class="col-lg-9 col-xl-9">
+                            <input formControlName="specialty" autocomplete="off"  class="form-control form-control-solid" type="text" [placeholder]="'personal.insert-specialty' | translate"/>
+                            <div *ngIf="isInvalidPattern(study, 'specialty')" class="invalid-feedback d-block">{{'validations.only-letters-and-dash' | translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6 col-12">
+                        <div class="form-group row required">
+                            <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.study.qualification' | translate}}</label>
+                            <div class="col-lg-9 col-xl-9">
+                                <input formControlName="qualification" autocomplete="off"  class="form-control form-control-solid" type="text" [placeholder]="'personal.insert-qualification' | translate"/>
+                                <div *ngIf="isInvalidPattern(study, 'qualification')" class="invalid-feedback d-block">{{'validations.only-letters-and-dash' | translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-12">
+                        <div class="form-group row required">
+                          <label class="col-xl-3 col-lg-3 col-form-label"
+                            for="studyTypeId">{{'entity.study.study-type' | translate}}</label>
+                          <div class="col-lg-9 col-xl-9">
+                            <input class="form-control form-control-solid"  
+                              autocomplete="off" 
+                              type="text" 
+                              [editable]="false"
+                              [placeholder]="'personal.insert-study-type' | translate" 
+                              [(ngModel)]="selectedItems[i]"
+                              (ngModelChange)="selectStudyType($event, i)"
+                              [ngModelOptions]="{ standalone: true }"
+                              [ngbTypeahead]="searchStudyType(i, $text)" 
+                              (focus)="focus$[i].next($any($event).target.value)"
+                              (click)="click$[i].next($any($event).target.value)"
+                              #instance="ngbTypeahead"
+                              container="body"
+                              [inputFormatter]="formatter" 
+                              [resultFormatter]="formatter" />
+                          </div>
+                        </div>
+                      </div>
+
+                </div>
+                <div *ngIf="!study.get('isActiveStudy').value" class="row">
+                    <div class="col-xl-6 col-12">
+                        <div class="form-group row required">
+                            <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.study.diploma-number' | translate}}</label>
+                            <div class="col-lg-9 col-xl-9">
+                            <input formControlName="diplomaNumber" autocomplete="off"  class="form-control form-control-solid" type="text" [placeholder]="'personal.insert-diploma-number' | translate"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-12">
+                        <div class="form-group row required">
+                            <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.study.diploma-release-day' | translate}}</label>
+                            <div class="col-lg-9 col-xl-9">
+                                <app-date [parent]="study" [date]="'diplomaReleaseDay'" [placeholder]="'personal.insert-diploma-release-day' | translate"></app-date>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="i > 0" class="row justify-content-end mb-3">
+                <button class="btn btn-icon" (click)="removeStudy(i)">
+                    <span class="font-size-18px">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-between">
+        <button class="btn btn-icon" (click)="addStudy()"><span class="font-size-18px">+</span></button>
+    </div>
+</form>

@@ -1,0 +1,27 @@
+
+<app-page-title [title]="'pages.reports.title' | translate"></app-page-title>
+<app-content>
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label font-weight-bolder">
+                    {{ 'reports.title-description-list' | translate }}
+                </h3>
+            </div>
+            <div class="card-toolbar">
+                <button [disabled]="isLoadingButton" type="button" (click)="print(reportsTable.filter)" class="btn btn-success py-0">
+                    <i class="far fa-file-pdf" *ngIf="!isLoadingButton"></i>
+                    <span class="text-white ml-2 font-weight-normal" *ngIf="!isLoadingButton">{{ 'personal.print-list' | translate}}</span>
+                    <span class="text-white mr-2 font-weight-normal" *ngIf="isLoadingButton">{{'button.loading' | translate}}</span>
+                    <div *ngIf="isLoadingButton" class="spinner-border spinner-border-sm text-white" role="status"></div>
+                </button>
+            </div>
+        </div>
+        <div class="card-header flex-wrap border-0">
+            <app-reports-filter (applyFilter)="reportsTable.filter = $event; reportsTable.list($event)" (reset)="reportsTable.resetList()"></app-reports-filter>
+        </div>
+        <div class="card-body pt-0">
+            <app-reports-table #reportsTable></app-reports-table>
+        </div>
+    </div>
+</app-content>

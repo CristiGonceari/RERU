@@ -1,0 +1,81 @@
+<app-page-title [title]="'pages.organigram.title' | translate"></app-page-title>
+<div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class=" container ">
+            <div class="card card-custom gutter-b">
+                <div class="card-body p-0">
+                    <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first"
+                        data-wizard-clickable="true">
+                        <div class="row justify-content-center my-5 px-8 my-lg-7 px-lg-10">
+                            <div class="col">
+                                <form class="form" id="kt_contact_add_form" [formGroup]="organigramForm" autocomplete="off">
+                                    <div class="pb-5">
+                                        <h3 class="mb-10 font-weight-bolder text-dark">
+                                            {{'organigram.new-organigram' | translate}}</h3>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group row">
+                                                    <label class="col-xl-2 col-lg-3 col-form-label">{{'organigram.organigram-name' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-10">
+                                                        <input class="form-control form-control-solid" type="text" formControlName="name" [placeholder]="'organigram.organigram-name' | translate" autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="type" class="col-xl-2 col-lg-3 col-form-label">{{'organigram.organgiram-head-type' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-10">
+                                                        <select autocomplete="off" class="form-control form-control-solid" name="type" id="type" formControlName="type">
+                                                            <option value="null">Selectează</option>
+                                                            <option value="1">Departament</option>
+                                                            <option value="2">Funcție</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="headId" class="col-xl-2 col-lg-3 col-form-label ">{{'organigram.organigram-head' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-10">
+                                                        <input class="form-control form-control-solid ngb-typeahead-window" 
+                                                        name="headId" 
+                                                        autocomplete="off" 
+                                                        type="text" 
+                                                        [editable]='false'
+                                                        [placeholder]="'organigram.organigram-head'  | translate" 
+                                                        id="headId"
+                                                        [(ngModel)]="selectedItem"
+                                                        (ngModelChange)="selectHead($event)"
+                                                        [ngModelOptions]="{ standalone: true }"
+                                                        [ngbTypeahead]="searchHead" 
+                                                        (focus)="focus$.next($any($event).target.value)"
+                                                        (click)="click$.next($any($event).target.value)"
+                                                        #instance="ngbTypeahead"
+                                                        [inputFormatter]="formatter" 
+                                                        [resultFormatter]="formatter" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="fromDate"
+                                                        class="col-xl-2 col-lg-3 col-form-label">{{'vacation.start-date' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-10">
+                                                        <app-date [parent]="organigramForm" [date]="'fromDate'" [placeholder]="'vacation.type-start-date' | translate"></app-date>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" routerLink="../" class="btn btn-secondary font-weight-bold mr-2">
+                                            {{'button.cancel' | translate}}
+                                        </button>
+                                        <button type="button" class="btn btn-success font-weight-bold"
+                                            [disabled]="organigramForm.invalid" (click)="submit()">
+                                            {{'organigram.add-organigram' | translate}}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

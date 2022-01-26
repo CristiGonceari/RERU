@@ -1,0 +1,10 @@
+<div class="modal-header pb-0 border-0">
+    <h3 class="modal-title">{{'word.confirmation' | translate}}</h3>
+</div>
+<div class="modal-body py-1 px-7">
+    <p [innerHTML]="'contractor-type.are-you-sure-you-want-to-delete-contractor-type' | translate : { name : name }"></p>
+</div>
+<div class="modal-footer border-0 pt-0">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.no' | translate}}</button>
+    <button type="button" class="btn btn-primary" (click)="close()">{{'button.yes' | translate}}</button>
+</div>

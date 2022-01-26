@@ -1,0 +1,43 @@
+   <div class="modal-header border-0">
+     <h4 class="font-size-h5 font-weight-bolder modal-title">{{contractor.contractorName}} </h4>
+     <h4 class="font-size-h5 modal-title">{{value.date | date: 'dd/MM/yyyy'}} </h4>
+   </div>
+   <div *ngIf="isLoading" class="modal-body px-7">
+     <app-loading-spinner [contentHeight]="'10rem'" [colorClass]="'text-primary'"></app-loading-spinner>
+   </div>
+   <div class="modal-body px-7" *ngIf="!isLoading" autocomplete="off">
+     <form [formGroup]="generalForm">
+       <div class="form-group row required">
+         <label class="col-xl-4 col-lg-2 col-form-label text-center"
+           for="departmentId">{{ 'timesheet-table.time-values'  | translate}}</label>
+         <div>
+           <button *ngFor="let item of timeSheet" type="button" class="btn btn-light" style="margin: 1px;"
+             (click)="submit(item, contractor.contractorId, value.date)">{{ item.label }}</button>
+         </div>
+       </div>
+     </form>
+     <p class="form-text text-muted pt-2" (click)="openInfo()" *ngIf="!infoBtn">
+      <a href="javascript:;" class="font-weight-bold">{{'word.learn-more' | translate}}</a>...</p>
+     <div *ngIf="infoBtn">
+       <div class="separator separator-dashed my-5"></div>
+       <div>
+         <p class="text">1-24 - {{ 'timesheet-table.hours-value'  | translate}}</p>
+         <p class="text">Cn – {{ 'timesheet-table.unpaid-leave-value'  | translate}}</p>
+         <p class="text">Sp – {{ 'timesheet-table.suspension-of-contract-value'  | translate}}</p>
+         <p class="text">R – {{ 'timesheet-table.rest-days-value'  | translate}}</p>
+         <p class="text">Cs – {{ 'timesheet-table.study-leave'  | translate}}</p>
+         <p class="text">Şt – {{ 'timesheet-table.technical-unemployment'  | translate}}</p>
+         <p class="text">Sn – {{ 'timesheet-table.non-working-holidays'  | translate}}</p>
+         <p class="text">Cm – {{ 'timesheet-table.sick-leave'  | translate}}</p>
+         <p class="text">St – {{ 'timesheet-table.stationary'  | translate}}</p>
+         <p class="text">Ls – {{ 'timesheet-table.days-off-with-salary-maintenance'  | translate}}</p>
+         <p class="text">Cc – {{ 'timesheet-table.maternity-leave-childcare-leave-paternity-leave'  | translate}}</p>
+         <p class="text">Dt – {{ 'timesheet-table.detachment'  | translate}}</p>
+         <p class="text">C – {{ 'timesheet-table.paid-leave'  | translate}}</p>
+         <p class="text">D – {{ 'timesheet-table.displacement'  | translate}}</p>
+         <p class="text">A – {{ 'timesheet-table.absent'  | translate}}</p>
+         <p class="text">Dh – {{ 'timesheet-table.days-off-for-death'  | translate}}</p>
+         <p class="text">M – {{ 'timesheet-table.days-off-for-marriage'  | translate}}</p>
+       </div>
+     </div>
+   </div>

@@ -1,0 +1,145 @@
+<div *ngIf="isLoading" class="row justify-content-center align-items-center h-100">
+  <div class="col">
+    <app-loading-spinner contentHeight="20rem" height="5rem" width="5rem" colorClass="text-primary">
+    </app-loading-spinner>
+  </div>
+</div>
+<form *ngIf="individualContractForm && !isLoading" class="col mx-auto" [formGroup]="individualContractForm">
+  <div class="row my-5">
+    <div class="col-sm-5 col-12">
+      <h4>{{'personal.cim' | translate}}</h4>
+    </div>
+    <div class="col-sm-7 col-12 d-sm-flex d-none">
+      <h4>{{'personal.first-instruction' | translate}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-5 col-12">
+      <div class="form-group row">
+        <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.individual-contract.superior' | translate}}</label>
+        <div class="col-lg-9 col-xl-9">
+          <input class="form-control form-control-solid" type="text" [editable]='false'
+            [placeholder]="'button.select' | translate" [(ngModel)]="selectedSuperior"
+            (ngModelChange)="selectSuperior($event)" [ngModelOptions]="{ standalone: true }"
+            [ngbTypeahead]="searchSuperior" (focus)="focus$.next($any($event).target.value)"
+            (click)="click$.next($any($event).target.value)" #instance="ngbTypeahead" container="body"
+            [inputFormatter]="formatter" [resultFormatter]="formatter">
+        </div>
+      </div>
+      <div class="form-group row required">
+        <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.individual-contract.net-salary' | translate}}</label>
+        <div class="col-lg-9 col-xl-9">
+          <input autocomplete="off" 
+                class="form-control form-control-solid" 
+                type="text" 
+                formControlName="netSalary"
+                [ngClass]="{'is-invalid': isTouched('netSalary') && isInvalidPattern('netSalary') }" 
+                [placeholder]="'personal.insert-net-salary' | translate">
+                <div *ngIf="isInvalidPattern('netSalary')" class="invalid-feedback d-block">{{'validations.only-numbers' | translate}}</div>
+        </div>
+      </div>
+      <div class="form-group row required">
+        <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.individual-contract.brut-salary' | translate}}</label>
+        <div class="col-lg-9 col-xl-9">
+          <input autocomplete="off" 
+                class="form-control form-control-solid" 
+                type="text" 
+                formControlName="brutSalary"
+                [ngClass]="{'is-invalid': isTouched('brutSalary') && isInvalidPattern('brutSalary') }" 
+                [placeholder]="'personal.insert-brut-salary' | translate">
+          <div *ngIf="isInvalidPattern('brutSalary')" class="invalid-feedback d-block">{{'validations.only-numbers' | translate}}</div>
+        </div>
+      </div>
+      <div class="form-group row required">
+        <label class="col-xl-3 col-lg-3 col-form-label">{{'personal.currency' | translate}}</label>
+        <div class="col-lg-9 col-xl-9">
+          <input class="form-control form-control-solid"  
+            autocomplete="off" 
+            type="text" 
+            [editable]="false"
+            [placeholder]="'personal.select-currency' | translate" 
+            [(ngModel)]="selectedCurrency"
+            (ngModelChange)="selectCurrency($event)"
+            [ngModelOptions]="{ standalone: true }"
+            [ngbTypeahead]="searchCurrency" 
+            (focus)="focus1$.next($any($event).target.value)"
+            (click)="click1$.next($any($event).target.value)"
+            #instance1="ngbTypeahead"
+            container="body"
+            [inputFormatter]="formatter" 
+            [resultFormatter]="formatter" />
+        </div>
+      </div>
+      <div class="form-group row required">
+        <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.individual-contract.vacation-days' | translate}}</label>
+        <div class="col-lg-9 col-xl-9">
+          <input autocomplete="off" class="form-control" type="number" formControlName="vacationDays" [placeholder]="'personal.insert-vacation-days' | translate">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-7 col-12">
+      <div formGroupName="instruction">
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.individual-contract.thematic' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <input type="text" 
+                  formControlName="thematic" 
+                  autocomplete="off"
+                  class="form-control form-control-solid" 
+                  [ngClass]="{'is-invalid': isTouched('thematic') && isInvalidInstructionPattern('thematic') }" 
+                  [placeholder]="'personal.insert-thematic' | translate">
+            <div *ngIf="isInvalidInstructionPattern('thematic')" class="invalid-feedback d-block">{{'validations.only-letters-numbers-and-symbols' | translate}}</div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label
+            class="col-xl-3 col-lg-3 col-form-label">{{'entity.individual-contract.instructor-last-name' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <input class="form-control" 
+                  type="text" 
+                  formControlName="instructorLastName" 
+                  autocomplete="off"
+                  class="form-control form-control-solid"
+                  [ngClass]="{'is-invalid': isTouched('instructorLastName') && isInvalidInstructionPattern('instructorLastName') }" 
+                  [placeholder]="'personal.insert-instructor-last-name' | translate">
+            <div *ngIf="isInvalidInstructionPattern('instructorLastName')" class="invalid-feedback d-block">{{'validations.only-letters-and-dash' | translate}}</div>      
+          </div>
+        </div>
+        <div class="form-group row">
+          <label
+            class="col-xl-3 col-lg-3 col-form-label">{{'entity.individual-contract.instructor-name' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <input class="form-control" 
+                  type="text" 
+                  formControlName="instructorName" 
+                  autocomplete="off"
+                  class="form-control form-control-solid" 
+                  [ngClass]="{'is-invalid': isTouched('instructorName') && isInvalidInstructionPattern('instructorName') }" 
+                  [placeholder]="'personal.insert-instructor-name' | translate">
+                  <div *ngIf="isInvalidInstructionPattern('instructorName')" class="invalid-feedback d-block">{{'validations.only-letters-and-dash' | translate}}</div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.individual-contract.duration' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <input class="form-control"
+                  type="text" 
+                  formControlName="duration" 
+                  autocomplete="off"
+                  class="form-control form-control-solid" 
+                  [ngClass]="{'is-invalid': isTouched('duration') && isInvalidInstructionPattern('duration') }" 
+                  [placeholder]="'personal.insert-duration' | translate">
+              <div *ngIf="isInvalidInstructionPattern('duration')" class="invalid-feedback d-block">{{'validations.only-numbers' | translate}}</div>      
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.individual-contract.date' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <app-date [parent]="individualContractForm.get('instruction')" [date]="'date'"
+              [placeholder]="'personal.insert-date' | translate"></app-date>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

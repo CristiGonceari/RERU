@@ -1,0 +1,31 @@
+<app-loading-spinner *ngIf="isLoading" contentHeight="20rem" height="5rem" width="5rem" colorClass="text-primary"></app-loading-spinner>
+<div *ngIf="!isLoading" class="table-responsive datatable datatable-default">
+    <table class="table erp-table">
+        <thead>
+            <tr>
+                <th>{{'entity.vacation.name' | translate}}</th>
+                <th class="text-center">{{'entity.vacation.from-date' | translate}}</th>
+                <th class="text-center">{{'entity.vacation.to-date' | translate}}</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of vacations; let i = index; let even = even">
+                <td class="font-weight-bolder pointer" [routerLink]="['../', item.id]">{{item.vacationTypeName}}</td>
+                <td class="text-center">{{item.fromDate | date: 'dd.MM.yyyy'}}</td>
+                <td class="text-center">{{item.toDate | date: 'dd.MM.yyyy'}}</td>
+                <td class="text-right">
+                    <app-vacation-dropdown-details 
+                        [index]="i" 
+                        (delete)="openVacationDeleteModal(item.id)"
+                        [editLink]="['../edit', item.id]">
+                    </app-vacation-dropdown-details>
+                </td>
+            </tr>
+            <tr *ngIf="!vacations || !vacations.length"><td colspan="4" class="text-center">{{'word.there-are-no-records-at-the-moment' | translate}}</td></tr>
+        </tbody>
+    </table>
+    <div pagination [page]="pagedSummary.currentPage" [total]="pagedSummary.totalPages" (sizeChange)="list({ page: pagedSummary.currentPage, itemsPerPage: $event })"
+        class="datatable-pager datatable-paging-loaded" (pageChange)="list({ page: $event })">
+    </div>
+</div>

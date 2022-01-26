@@ -1,0 +1,37 @@
+<div class="modal-header border-0">
+    <h3 class="modal-title">{{'personal.leave-request' | translate}}</h3>
+</div>
+<div class="modal-body py-1 px-7">
+    <form [formGroup]="requestForm">
+        <div class="form-group row">
+            <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.request.leave-date-request' | translate}}</label>
+            <div class="col-lg-9 col-xl-9">
+            <app-date [parent]="requestForm" [date]="'from'" [placeholder]="'personal.insert-leave-date-request' | translate"></app-date>
+            </div>
+        </div>
+        <div class="row paper">
+            <div class="col">
+                <div class="row mb-10">
+                    <div class="col">
+                        <h4 class="text-center">{{'personal.leave-request' | translate}}</h4>
+                    </div>
+                </div>
+                <div class="row my-40">
+                    <div class="col">
+                        <p>Subsemnatul/a <b>{{contractor?.firstName}} {{contractor?.lastName}}</b>, angajat/ă în funcție
+                            de <b>{{contractor?.organizationRoleName}}</b>, rog să-mi acceptaţi demisia din funcţia ocupată
+                            din <b>{{requestForm.get('from').value | date: 'dd.MM.yyyy'}}</b>, din inițiativă proprie.</p>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col">{{today | date: 'dd.MM.yyyy'}}</div>
+                    <div class="col text-right text-nowrap">_______________/{{contractor?.firstName}} {{contractor?.lastName}}</div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer border-0 pt-0">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+    <button type="button" class="btn btn-success" (click)="close()">{{'button.add' | translate}}</button>
+</div>

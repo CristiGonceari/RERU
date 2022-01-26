@@ -1,0 +1,85 @@
+<div class="card card-custom">
+    <div class="card-header py-3">
+      <div class="card-title align-items-start flex-column">
+        <h3 class="card-label font-weight-bolder text-dark">{{'personal.permission-settings' | translate}}</h3>
+        <span class="text-muted font-weight-bold font-size-sm mt-1">{{'personal.change-permissions' | translate}}</span>
+      </div>
+      <div class="card-toolbar">
+        <button type="button" [disabled]="isLoading" (click)="submit()" class="btn btn-success mr-2">{{'button.save' | translate}}</button>
+        <button type="button" [disabled]="isLoading" (click)="resetPermissions()" class="btn btn-secondary">{{'button.cancel' | translate}}</button>
+      </div>
+    </div>
+    <div *ngIf="isLoading"  class="card">
+      <app-loading-spinner [contentHeight]="'20rem'" [height]="'5rem'" [width]="'5rem'" [colorClass]="'text-primary'"></app-loading-spinner>
+    </div>
+    <form *ngIf="!isLoading"  class="form" [formGroup]="permissionForm">
+      <div class="card-body">
+        <div class="row">
+          <label class="col-xl-3"></label>
+          <div class="col-lg-9 col-xl-6">
+            <h5 class="font-weight-bold mb-6">{{'personal.general-data' | translate}}:</h5>
+          </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right pt-0">{{'personal.has-right' | translate}}:</label>
+            <div class="col-lg-9 col-xl-6">
+                <div class="checkbox-list">
+                    <label class="checkbox">
+                    <input type="checkbox" formControlName="getGeneralData">
+                    <span></span>{{'personal.get-general-data' | translate}}</label>
+                    <label class="checkbox">
+                    <input type="checkbox" formControlName="getBulletinData">
+                    <span></span>{{'personal.get-bulletin-data' | translate}}</label>
+                    <label class="checkbox">
+                    <input type="checkbox" formControlName="getStudiesData">
+                    <span></span>{{'personal.get-studies-data' | translate}}</label>
+                    <label class="checkbox">
+                    <input type="checkbox" formControlName="getCimData">
+                    <span></span>{{'personal.get-cim-data' | translate}}</label>
+                    <label class="checkbox">
+                    <input type="checkbox" formControlName="getPositionsData">
+                    <span></span>{{'personal.get-positions-data' | translate}}</label>
+                    <label class="checkbox">
+                    <input type="checkbox" formControlName="getRanksData">
+                    <span></span>{{'personal.get-ranks-data' | translate}}</label>
+                    <label class="checkbox">
+                    <input type="checkbox" formControlName="getFamilyComponentData">
+                    <span></span>{{'personal.get-family-data' | translate}}</label>
+                    <label class="checkbox">
+                    <input type="checkbox" formControlName="getTimeSheetTableData">
+                    <span></span>{{'personal.get-timesheet-table-data' | translate}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="separator separator-dashed my-10"></div>
+        <div class="row">
+            <label class="col-xl-3"></label>
+            <div class="col-lg-9 col-xl-6">
+              <h5 class="font-weight-bold mb-6">{{'personal.documents' | translate}}:</h5>
+            </div>
+          </div>
+        <div class="form-group row">
+            <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right pt-0">{{'personal.has-right' | translate}}:</label>
+            <div class="col-lg-9 col-xl-6">
+                <div class="checkbox-list">
+                    <label class="checkbox">
+                    <input type="checkbox" formControlName="getDocumentsDataIdentity">
+                    <span></span>{{'personal.get-documents-data-identity' | translate}}</label>
+                    <label class="checkbox">
+                    <input type="checkbox" formControlName="getDocumentsDataOrders">
+                    <span></span>{{'personal.get-documents-data-orders' | translate}}</label>
+                    <label class="checkbox">
+                    <input type="checkbox" formControlName="getDocumentsDataCim">
+                    <span></span>{{'personal.get-documents-data-cim' | translate}}</label>
+                    <label class="checkbox">
+                    <input type="checkbox" formControlName="getDocumentsDataRequest">
+                    <span></span>{{'personal.get-documents-data-request' | translate}}</label>
+                    <label class="checkbox">
+                    <input type="checkbox" formControlName="getDocumentsDataVacation">
+                    <span></span>{{'personal.get-documents-data-vacation' | translate}}</label>
+                </div>
+            </div>
+        </div>
+      </div>
+    </form>
+</div>

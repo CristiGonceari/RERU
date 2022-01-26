@@ -1,0 +1,23 @@
+<div class="modal-header border-0">
+    <h3 class="modal-title">{{'word.sign' | translate}}</h3>
+</div>
+<div class="modal-body py-1 px-7">
+    <form>
+        <div class="form-group row">
+            <div class="col">
+                <ngx-dropzone [multiple]="false" [expandable]="true" (change)="onSelectDocument($event)" class="font-weight-light">
+                    <ngx-dropzone-label>
+                        <h4>{{'personal.documents' | translate}}</h4>
+                    </ngx-dropzone-label>
+                    <ngx-dropzone-preview *ngFor="let d of documents" [removable]="true" (removed)="onRemoveDocument(d)">
+                        <ngx-dropzone-label>{{ d.name }}</ngx-dropzone-label>
+                    </ngx-dropzone-preview>
+                  </ngx-dropzone>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer border-0 pt-0">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+    <button type="button" class="btn btn-success" (click)="close()">{{'word.sign' | translate}}</button>
+</div>

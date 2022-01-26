@@ -1,0 +1,27 @@
+<div ngbDropdown class="dropdown dropdown-inline" container="body" placement="bottom-right">
+    <a ngbDropdownToggle [id]="'rolesDropdown'+index"
+        class="btn btn-sm btn-hover-default btn-icon mr-2" data-toggle="dropdown">
+        <span class="svg-icon svg-icon-dark-25 svg-icon-md">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                <g stroke="none" stroke-width="1">
+                    <rect x="14" y="9" width="6" height="6" rx="3" fill="black" />
+                    <rect x="3" y="9" width="6" height="6" rx="3" fill="black"
+                        fill-opacity="0.7" />
+                </g>
+            </svg>
+        </span>
+    </a>
+    <div ngbDropdownMenu [attr.aria-labelledby]="'rolesDropdown'+index"
+        class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+        <ul class="navi flex-column navi-hover py-2">
+            <li class="navi-item"> <a [routerLink]="editLink" class="navi-link">
+                    <span class="navi-icon"><i class="la la-edit text-dark-65"></i></span>
+                    <span class="navi-text text-dark-65">{{'button.edit' | translate}}</span>
+                </a> </li>
+            <li class="navi-item"> <a href="javascript:;" (click)="delete.emit()" class="navi-link"> <span
+                        class="navi-icon"><i class="la la-remove text-dark-65"></i></span>
+                    <span class="navi-text text-dark-65">{{'button.delete' | translate}}</span>
+                </a> </li>
+        </ul>
+    </div>
+</div>

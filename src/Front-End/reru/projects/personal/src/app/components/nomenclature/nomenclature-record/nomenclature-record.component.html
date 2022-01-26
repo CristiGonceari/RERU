@@ -1,0 +1,61 @@
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+      <div class="card-title">
+        <h3 class="card-label font-weight-bolder">Tabel nomenclator</h3>
+      </div>
+    </div>
+    <div class="card-body">
+        <app-loading-spinner *ngIf="isLoading" contentHeight="5rem" [height]="'5rem'" [width]="'5rem'" [colorClass]="'text-primary'"></app-loading-spinner>
+        <div *ngIf="!isLoading" [formGroup]="nomenclatureForm" class="table-responsive datatable datatable-default">
+            <table class="nomenclature-header-table">
+                <thead formArrayName="nomenclatureColumns">
+                    <tr *ngIf="!nomenclatureForm.controls.nomenclatureColumns.controls.length">
+                        <th>{{'entity.nomenclature.name' | translate}}</th>
+                        <th><button class="btn btn-primary" (click)="addColumn()">+</button></th>
+                    </tr>
+                    <tr *ngIf="nomenclatureForm.controls.nomenclatureColumns.controls.length"> 
+                        <th>{{'entity.nomenclature.name' | translate}}</th>
+                        <th class="position-relative" *ngFor="let item of nomenclatureForm.controls.nomenclatureColumns.controls; let i = index">
+                            <span class="pointer remove-icon" (click)="openDeleteColumnModal(i)">&times;</span>
+                            <span class="pointer" (click)="openCreateHeaderModal(item, i, true)">{{item.get('name').value}}</span>
+                        </th>
+                        <th [ngStyle]="{'padding.px': 10 }">
+                          <button class="btn btn-primary" (click)="addColumn()">+</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody formArrayName="columns">
+                  <tr *ngFor="let item of nomenclatureForm.controls.columns.controls; let i = index;">
+                    <ng-container [formGroupName]="i">
+                      <td>
+                        {{item.get('name').value}}
+                      </td>
+                      <ng-container formArrayName="recordValues">
+                        <td *ngFor="let record of item.get('recordValues').controls; let j = index;" class="text-center">
+                          <ng-container [formGroupName]="j">
+                            <app-record-text-generator [type]="getColumnType(record.get('nomenclatureColumnId').value)" [text]="record.get('stringValue').value"></app-record-text-generator>
+                          </ng-container>
+                        </td>
+                        <td>
+                          <button *ngIf="item.get('id').value" class="btn btn-outline" (click)="openRecordModal(item, true)">
+                            <i class="la la-edit text-primary"></i>
+                          </button>
+                        </td>
+                      </ng-container>
+                    </ng-container>
+                  </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-primary" (click)="addRecord()">{{'nomenclature.add-record' | translate}}</button>
+            <div pagination [page]="pagedSummary.currentPage" [total]="pagedSummary.totalPages" (sizeChange)="retrieveRecordList({ page: pagedSummary.currentPage, itemsPerPage: $event })"
+            class="datatable-pager datatable-paging-loaded" (pageChange)="retrieveRecordList({ page: $event })">
+        </div>
+          </div>
+          
+        <!-- <div class="row justify-content-end">
+            <button [disabled]="isLoading" class="btn btn-success" (click)="submit()">{{'button.apply-modifications' | translate}}</button>
+        </div> -->
+       
+    </div>
+  </div>
+  

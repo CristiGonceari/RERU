@@ -136,6 +136,39 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations.Storage
             return null;
         }
 
+        public async Task<Unit> SignFile(SignFileDto dto)
+        {
+            try
+            {
+                var dbFile = await _appDbContext.ByteFiles.FirstOrDefaultAsync(x => x.Id == dto.Id);
+
+                if (dbFile != null)
+                {
+                    //delete old document
+                    var path = $"{_folderPath}/{dbFile.UniqueFileName}";
+                    File.Delete(path);
+
+                    //create new document
+                    await using var ms = new MemoryStream();
+                    await dto.File.CopyToAsync(ms);
+                    await File.WriteAllBytesAsync(path, ms.ToArray());
+
+                    dbFile.Signatures.Add(new FileSignature
+                    {
+                        ContractorId = await _userProfileService.GetCurrentContractorId(),
+                    });
+
+                    await _appDbContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"FILE ERROR SIGN: {e.Message}");
+            }
+
+            return Unit.Value;
+        }
+
         private string GetUniqueFilePrefix()
         {
             string guidString;

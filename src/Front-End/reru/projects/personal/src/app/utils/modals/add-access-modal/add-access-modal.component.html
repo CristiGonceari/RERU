@@ -1,0 +1,51 @@
+<div class="modal-header border-0 pb-0">
+  <h3 class="modal-title">{{'personal.create-access' | translate}}</h3>
+</div>
+<div *ngIf="isLoading" class="modal-body px-7">
+  <app-loading-spinner height="5rem" width="5rem" contentHeight="10rem" colorClass="text-primary"></app-loading-spinner>
+</div>
+<div *ngIf="!isLoading" class="modal-body px-7">
+  <form [formGroup]="accessForm" autocomplete="off">
+    <div class="form-group mb-0 row align-items-center">
+      <div class="radio-list" *ngIf="!contractorEmail">
+        <label class="radio" *ngFor="let email of contractorEmails">
+          <input type="radio" name="radios1" [value]="email.value" (change)="handleEmailChange($event, email.label)"/>
+          <span class="radios-class"></span>
+          {{ email.label }}
+        </label>
+      </div>
+    </div>
+    <div class="form-group row email">
+      <label for="sampleemail" class="col-form-label col-sm-3 col-12">Email:</label>
+      <div class="col">
+        <input autocomplete="off" class="form-control" type="text" formControlName="email" placeholder="Email" (ngModelChange)="clearInput($event)"
+          [(ngModel)]="contractorEmail">
+        <span *ngIf="accessForm?.get('email')?.errors?.email"
+          class="invalid-feedback d-block">{{'validations.valid-email' | translate}}</span>
+      </div>
+    </div>
+    <div class="form-group row mt-3">
+      <div class="d-flex w-100">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills col-sm-3 col-12" orientation="vertical">
+          <li *ngFor="let module of roleModules" [ngbNavItem]="module">
+            <a ngbNavLink>{{module.name}}</a>
+            <ng-template ngbNavContent>
+              <div class="radio-list">
+                <label class="radio" *ngFor="let role of module.roles">
+                  <input type="radio" [value]="role.value" (change)="handleChange($event, module.id)"
+                    [checked]="isChecked(role.value)" [name]="module.name">
+                  <span></span>{{role.label}}</label>
+              </div>
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="nav" class="col"></div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer border-0 pt-0">
+  <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+  <button type="button" class="btn btn-primary" (click)="close()"
+    [disabled]="accessForm?.invalid">{{'personal.create-access' | translate}}</button>
+</div>

@@ -53,5 +53,4 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             return !_appDbContext.Contractors.Any(x => x.Code == code);
         }
     }
-
 }
