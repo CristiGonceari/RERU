@@ -14,6 +14,7 @@ namespace CVU.ERP.Module.Application.Models {
         public bool IsAnonymous => string.IsNullOrEmpty(Id);
         public string Name { set; get; }
         public string Email { set; get; }
+        public string Idnp { set; get; }
         public IEnumerable<ApplicationUserModule> Modules { set; get; }
         public IEnumerable<string> Permissions => Modules.SelectMany (m => m.Permissions);
 
