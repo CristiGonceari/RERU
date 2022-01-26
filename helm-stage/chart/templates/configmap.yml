@@ -332,7 +332,19 @@ data:
           "RequireHttpsMetadata": false
         },
         "IsCore": true,
-        "InternalGatewayBaseUrl": "http://reru-internal-gateway-service:8080"
+        "InternalGatewayBaseUrl": "http://reru-internal-gateway-service:8080",
+        "CoreClient": {
+          "BaseUrl": "http://reru-internal-gateway-service:8080/reru-core/api"
+        },
+        "EvaluationClient": {
+          "BaseUrl": "http://reru-internal-gateway-service:8080/reru-evaluation/api"
+        },
+        "PersonalClient": {
+          "BaseUrl": "http://reru-internal-gateway-service:8080/reru-personal/api"
+        },
+        "LoggingClient": {
+          "BaseUrl": "http://reru-internal-gateway-service:8080/reru-logging/api"
+        }
       },
 
         "CoreSettings": {
@@ -398,6 +410,15 @@ data:
           },
           "CoreClient": {
             "BaseUrl": "http://reru-internal-gateway-service:8080/reru-core/api"
+          },
+          "EvaluationClient": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-evaluation/api"
+          },
+          "PersonalClient": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-personal/api"
+          },
+          "LoggingClient": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-logging/api"
           }
         }
     }
@@ -421,6 +442,15 @@ data:
           },
           "CoreClient": {
             "BaseUrl": "http://reru-internal-gateway-service:8080/reru-core/api"
+          },
+          "EvaluationClient": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-evaluation/api"
+          },
+          "PersonalClient": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-personal/api"
+          },
+          "LoggingClient": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-logging/api"
           }
         }
     }
@@ -469,8 +499,17 @@ data:
              "Authority":"http://reru-identity-new-service:8080/ms/reru-identity-new",
              "RequireHttpsMetadata":false
           },
-          "CoreClient":{
-             "BaseUrl":"http://reru-internal-gateway-service:8080/reru-core/api"
+          "CoreClient": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-core/api"
+          },
+          "EvaluationClient": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-evaluation/api"
+          },
+          "PersonalClient": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-personal/api"
+          },
+          "LoggingClient": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-logging/api"
           }
        },
        "DocumentOptions":{

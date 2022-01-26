@@ -24,7 +24,10 @@ namespace CODWER.RERU.Core.Application.UserProfiles
 
             CreateMap<UserProfile, ApplicationUser>()
                 .ForMember(destinationMember => destinationMember.Id, opts => opts.MapFrom(sourceMember => sourceMember.Id.ToString()))
-                .ForMember(destinationMember => destinationMember.Name, opts => opts.MapFrom(sourceMember => $"{sourceMember.Name} {sourceMember.LastName}"))
+                .ForMember(destinationMember => destinationMember.FirstName, opts => opts.MapFrom(sourceMember => sourceMember.Name))
+                .ForMember(destinationMember => destinationMember.LastName, opts => opts.MapFrom(sourceMember => sourceMember.LastName))
+                .ForMember(destinationMember => destinationMember.FatherName, opts => opts.MapFrom(sourceMember => sourceMember.FatherName))
+                .ForMember(destinationMember => destinationMember.Idnp, opts => opts.MapFrom(sourceMember => sourceMember.Idnp))
                 .ForMember(destinationMember => destinationMember.Modules, opts => opts.MapFrom(sourceMember => sourceMember.ModuleRoles));
             //.ForMember (destinationMember => destinationMember.Permissions, opts => opts.MapFrom (sourceMember => sourceMember.ModuleRoles.SelectMany (mr => mr.ModuleRole.Permissions.Select (p => p.Permission.Code))));
 
@@ -49,6 +52,14 @@ namespace CODWER.RERU.Core.Application.UserProfiles
             CreateMap<InternalUserProfileCreate, UserProfile>()
             .ForMember(x => x.IsActive, opts => opts.MapFrom(x => true))
             .ForMember(x => x.ModuleRoles, opts => opts.Ignore());
+
+            CreateMap<UserProfile, BaseUserProfile>()
+                .ForMember(destinationMember => destinationMember.CoreUserId, opts => opts.MapFrom(sourceMember => sourceMember.Id.ToString()))
+                .ForMember(destinationMember => destinationMember.FirstName, opts => opts.MapFrom(sourceMember => sourceMember.Name))
+                .ForMember(destinationMember => destinationMember.LastName, opts => opts.MapFrom(sourceMember => sourceMember.LastName))
+                .ForMember(destinationMember => destinationMember.FatherName, opts => opts.MapFrom(sourceMember => sourceMember.FatherName))
+                .ForMember(destinationMember => destinationMember.Email, opts => opts.MapFrom(sourceMember => sourceMember.Email))
+                .ForMember(destinationMember => destinationMember.Idnp, opts => opts.MapFrom(sourceMember => sourceMember.Idnp));
         }
     }
 }

@@ -45,7 +45,7 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
             {
                 Id = Guid.NewGuid().ToString(),
                 Project = data.Project,
-                UserName = coreUser.Name,
+                UserName = $"{coreUser.LastName} {coreUser.FirstName} {coreUser.FatherName}",
                 UserIdentifier = coreUser.Id,
                 Event = !string.IsNullOrWhiteSpace(data.Event) ? data.Event : ParseName(),
                 EventMessage = data.EventMessage,

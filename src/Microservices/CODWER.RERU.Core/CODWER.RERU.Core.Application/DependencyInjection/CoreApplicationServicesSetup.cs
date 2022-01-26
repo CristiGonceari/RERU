@@ -5,6 +5,8 @@ using CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer;
 using CODWER.RERU.Core.Application.Common.Services.PasswordGenerator;
 using CODWER.RERU.Core.Application.Module.Providers;
 using CODWER.RERU.Core.Application.Permissions;
+using CODWER.RERU.Core.Application.Services;
+using CODWER.RERU.Core.Application.Services.Implementations;
 using CVU.ERP.Module.Application.DependencyInjection;
 using CVU.ERP.Module.Application.Providers;
 using CVU.ERP.Module.Common.ExceptionHandlers;
@@ -33,6 +35,9 @@ namespace CODWER.RERU.Core.Application.DependencyInjection
             services.AddTransient<IResponseExceptionHandler, CreateIdentityFailedExceptionHandler>();
 
             //end exception handlers
+
+            services.AddTransient<IEvaluationUserProfileService, EvaluationUserProfileService>();
+
             return services;
         }
     }

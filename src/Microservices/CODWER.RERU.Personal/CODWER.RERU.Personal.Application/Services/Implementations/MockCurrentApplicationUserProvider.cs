@@ -26,7 +26,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             return new()
             {
                 Id = "827d8e7c-4526-4965-b376-50ff9bf2cf5d",
-                Name = "Andrian Hubencu",
+                FirstName = "Andrian Hubencu",
                 Email = "hubencu.andrian@gmail.com",
                 Modules = new List<ApplicationUserModule>()
                 {

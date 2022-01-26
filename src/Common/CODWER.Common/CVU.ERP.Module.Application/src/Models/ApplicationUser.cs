@@ -12,9 +12,15 @@ namespace CVU.ERP.Module.Application.Models {
         }
         public string Id { set; get; }
         public bool IsAnonymous => string.IsNullOrEmpty(Id);
-        public string Name { set; get; }
+        //public string Name { set; get; }
+        
+        public string FirstName { set; get; }
+        public string LastName { get; set; }
+        public string FatherName { get; set; }
+
         public string Email { set; get; }
         public string Idnp { set; get; }
+
         public IEnumerable<ApplicationUserModule> Modules { set; get; }
         public IEnumerable<string> Permissions => Modules.SelectMany (m => m.Permissions);
 
