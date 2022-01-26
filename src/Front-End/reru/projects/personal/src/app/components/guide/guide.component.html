@@ -1,1 +1,31 @@
-<p>guide works!</p>
+
+<app-page-title [title]="'guide.title' | translate"></app-page-title>
+<app-content>
+<div class="request-box card card-header shadow-sm my-5">
+    <div class="card card-custom">
+        <div class="flex-grow-1 p-10 card-rounded flex-grow-1 bgi-no-repeat" style="background-position: calc(96% + -0.5rem) top; background-size: 14% auto;">
+        <h2 *ngIf="profile?.email" class="text-dark pb-5 font-weight-bolder">{{'my-profile.hello-username' | translate: {username: profile?.email || '-'} }} ☀️</h2>
+        <h2 *ngIf="!profile?.email" class="text-dark pb-5 font-weight-bolder">{{'my-profile.hello-username' | translate: {username: '' } }} ☀️</h2>
+    </div>
+        <blockquote class="blockquote text-center">
+            <p class="text-dark-50 font-size-h6">
+            <strong>{{'guide.heading1' | translate}}</strong><br>
+            <strong>{{'guide.heading2' | translate}}</strong><br>
+            <strong>{{'guide.heading3' | translate}}</strong><br>
+            <strong>{{'guide.heading4' | translate}}</strong><br>
+            <strong>{{'guide.heading5' | translate}}</strong>
+        </p>
+        </blockquote>  
+        <div class="card-body">
+            <blockquote class="blockquote text-center">
+             <button [disabled]="isLoadingButton" type="button" (click)="downloadFile()" class="btn btn-success py-0">
+                <i class="far fa-file-pdf" *ngIf="!isLoadingButton"></i>
+                <span class="text-white ml-2 font-weight-normal" *ngIf="!isLoadingButton">{{ 'guide.title' | translate}}</span>
+                <span class="text-white mr-2 font-weight-normal" *ngIf="isLoadingButton">{{'button.loading' | translate}}</span>
+                <div *ngIf="isLoadingButton" class="spinner-border spinner-border-sm text-white" role="status"></div>
+            </button>
+        </blockquote>
+        </div>
+      </div>
+    </div>
+</app-content>

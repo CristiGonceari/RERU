@@ -1,1 +1,27 @@
-<p>configurations works!</p>
+<app-page-title [title]="'pages.configurations.title' | translate"></app-page-title>
+<app-content>
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label font-weight-bolder">{{ 'vacation.configure-vacations' | translate }}</h3>
+            </div>
+        </div>
+        <div class="card-body pt-0">
+            <app-configure-vacation></app-configure-vacation>
+        </div>
+    </div>
+    <div class="card card-custom my-10">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label font-weight-bolder">{{ 'holidays.national-holidays' | translate }}</h3>
+            </div>
+            <div class="card-toolbar">
+                <a (click)="openAddHolidayModal()" class="btn btn-success font-weight-bolder">{{ 'holidays.add-holiday' | translate}}</a>
+            </div>
+        </div>
+        <div class="card-body pt-0">
+            <app-configure-holiday></app-configure-holiday>
+        </div>
+    </div>
+</app-content>
+

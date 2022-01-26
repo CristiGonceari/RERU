@@ -1,0 +1,69 @@
+.data-picker {
+  width: 200px;
+}
+:host {
+
+  .btn-hover-default:hover:not(:disabled),
+  .show>.btn.btn-hover-default.dropdown-toggle.dropdown-toggle {
+    color: #B5B5C3;
+    background-color: #F3F6F9;
+    border-color: #F3F6F9;
+    border: 2px solid #EBEDF3
+  }
+
+  .dropdown.dropdown-inline {
+    a.dropdown-toggle::after {
+      display: none;
+    }
+  }
+
+  table thead tr th {
+    color: #b5b5c3;
+    font-size: .8rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: .1rem;
+  }
+
+  td:hover {
+    background-color: #B5B5C3;
+  }
+}
+
+.text-month {
+  font-size: medium;
+}
+
+.text-end {
+  text-align: end;
+}
+
+svg:hover {
+  background-color: #B5B5C3;
+}
+
+:host {
+  width: 100%;
+
+  .input-group {
+    width: 100%;
+  }
+}
+
+.row {
+  margin-top: 1%;
+}
+
+.table {
+  margin-top: 75px;
+  letter-spacing: 0;
+}
+
+.text-center{
+  font-size: 9px;
+}
+
+.table-responsive{
+  overflow-x: hidden;
+  overflow-y: hidden;
+}

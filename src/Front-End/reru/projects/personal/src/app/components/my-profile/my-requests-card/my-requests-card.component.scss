@@ -1,0 +1,13 @@
+.request-box {
+    label {
+        color: #b5b5c3;
+        font-size: .9rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: .1rem;
+        span {
+            text-transform: initial;
+            word-break: break-all;
+        }
+    }
+}

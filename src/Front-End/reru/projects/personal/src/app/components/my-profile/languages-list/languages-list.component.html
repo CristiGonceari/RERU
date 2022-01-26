@@ -1,0 +1,39 @@
+<div class="card card-custom gutter-b">
+    <div class="card-header border-0 pt-5">
+      <h3 class="card-title align-items-start flex-column">
+        <span class="font-weight-bolder text-dark">{{'languages-list.title' |translate}}</span>
+        <span class="text-muted mt-3 font-weight-bold font-size-sm">{{'languages-list.subtitle' |translate}}</span>
+      </h3>
+    </div>
+
+    <div class="card-body">
+      <app-loading-spinner *ngIf="isLoading" contentHeight="20rem" height="5rem" width="5rem" colorClass="'text-primary'"></app-loading-spinner>
+      <div *ngIf="!isLoading" class="table-responsive">
+        <table class="table table-light table-light-success">
+          <thead>
+            <tr>
+              <th>{{'languages-list.name'| translate}}</th>
+              <th class="text-center">{{'languages-list.actions'| translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of list; let i = index;">
+              <td>{{item.name}}</td>
+              <td class="text-right">
+                  <app-languages-dropdown-details
+                      [editLink]="['../nomenclature/edit', item.id]"
+                      [paramId]="type"
+                      (delete)="openDeleteNomenclatureModal(item.id)"
+                      [index]="i">
+                  </app-languages-dropdown-details>
+              </td>
+            </tr>
+            <tr *ngIf="!list || !list.length">
+              <td colspan="100" class="text-center">{{'word.there-are-no-records-at-the-moment' | translate}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>  
+

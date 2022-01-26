@@ -1,0 +1,10 @@
+table thead th:first-child,
+table tbody td:first-child {
+    width: 100px; 
+    max-width: 100px; 
+    min-width: 100px;
+}
+::ng-deep .my-class .modal-dialog { 
+    max-width: 47%;
+    width: 47%;
+}

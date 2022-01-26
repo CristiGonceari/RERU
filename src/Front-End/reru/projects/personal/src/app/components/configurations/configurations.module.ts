@@ -17,7 +17,8 @@ import { HolidayDropdownDetailsComponent } from './holiday-dropdown-details/holi
     declarations: [
       ConfigurationsComponent, 
       ConfigureVacationComponent, 
-      ConfigureHolidayComponent, HolidayDropdownDetailsComponent
+      ConfigureHolidayComponent, 
+      HolidayDropdownDetailsComponent
     ],
     imports: [
       CommonModule,
