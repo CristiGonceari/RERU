@@ -85,5 +85,26 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations.Storage
 
             return null;
         }
+
+        public async Task<Unit> SignFile(SignFileDto dto)
+        {
+            var dbFile = await _appDbContext.ByteFiles.FirstOrDefaultAsync(x => x.Id == dto.Id);
+
+            if (dbFile != null)
+            {
+                await using var ms = new MemoryStream();
+                await dto.File.CopyToAsync(ms);
+
+                dbFile.Content = ms.ToArray();
+                dbFile.Signatures.Add(new FileSignature
+                {
+                    ContractorId = await _userProfileService.GetCurrentContractorId(),
+                });
+
+                await _appDbContext.SaveChangesAsync();
+            }
+
+            return Unit.Value;
+        }
     }
 }

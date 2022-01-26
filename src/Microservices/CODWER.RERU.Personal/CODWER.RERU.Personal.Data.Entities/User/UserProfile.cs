@@ -9,5 +9,6 @@ namespace CODWER.RERU.Personal.Data.Entities.User
 
         public string Email { get; set; }
         public string Idnp { get; set; }
+        public string UserId { get; set; }
     }
 }

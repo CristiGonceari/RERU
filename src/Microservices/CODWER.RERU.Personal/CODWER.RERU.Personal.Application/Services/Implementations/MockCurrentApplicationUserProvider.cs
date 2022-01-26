@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Providers;
@@ -40,5 +38,4 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             };
         }
     }
-
 }
