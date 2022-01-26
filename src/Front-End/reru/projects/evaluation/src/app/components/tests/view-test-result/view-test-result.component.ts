@@ -112,7 +112,8 @@ export class ViewTestResultComponent implements OnInit {
 
     const testData = {
       testId: +this.testId,
-      questionIndex: this.index
+      questionIndex: this.index,
+      toEvaluate: false
     };
 
     this.verifyService.getTest(testData).subscribe(
@@ -135,7 +136,7 @@ export class ViewTestResultComponent implements OnInit {
       },
       (err) => {
         err.error.messages.some(x => {
-          if (x.code === '03001609')
+          if (x.code === '03001610')
             this.router.navigate(['../../../tests'], { relativeTo: this.activatedRoute })
         })
       }

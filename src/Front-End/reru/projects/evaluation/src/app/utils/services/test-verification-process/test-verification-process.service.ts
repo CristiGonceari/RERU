@@ -21,7 +21,7 @@ export class TestVerificationProcessService extends AbstractService {
 
 	getTest(data): Observable<any> {
 		return this.client.get<Test>(
-			`${this.baseUrl}/${this.urlRoute}?TestId=${data.testId}&QuestionIndex=${data.questionIndex}`
+			`${this.baseUrl}/${this.urlRoute}?TestId=${data.testId}&QuestionIndex=${data.questionIndex}&ToEvaluate=${data.toEvaluate}`
 		);
 	}
 

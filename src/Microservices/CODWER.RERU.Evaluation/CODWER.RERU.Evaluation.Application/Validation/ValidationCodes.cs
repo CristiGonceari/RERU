@@ -96,6 +96,7 @@
         public static string WAIT_THE_START_TIME = "03001607";
         public static string INVALID_ANSWER_STATUS = "03001608";
         public static string INVALID_EVALUATOR_FOR_THIS_TEST = "03001609";
+        public static string CANT_VIEW_TEST_RESULT = "03001610";
 
         //test type
         public static string INVALID_STATUS = "03001701";
