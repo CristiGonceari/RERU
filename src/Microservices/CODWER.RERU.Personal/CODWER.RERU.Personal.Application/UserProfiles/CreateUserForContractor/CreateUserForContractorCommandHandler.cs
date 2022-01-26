@@ -84,6 +84,8 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
             {
                 Name = currentContractor.FirstName,
                 LastName = currentContractor.LastName,
+                //FatherName = currentContractor.FatherName,
+                //Idnp = currentContractor.Bulletin.Idnp,
                 Email = request.Email,
                 NotifyAccountCreated = true,
                 ModuleRoles = request.ModuleRoles

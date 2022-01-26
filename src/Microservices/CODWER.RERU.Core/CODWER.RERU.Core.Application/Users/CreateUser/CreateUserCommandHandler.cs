@@ -10,6 +10,9 @@ using CVU.ERP.Logging.Models;
 using CVU.ERP.Module.Application.LoggerServices;
 using MediatR;
 using System.Text.Json;
+using AutoMapper;
+using CODWER.RERU.Core.Application.Services;
+using CVU.ERP.Module.Application.Models.Internal;
 
 namespace CODWER.RERU.Core.Application.Users.CreateUser
 {
@@ -17,14 +20,18 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
     {
         private readonly IEnumerable<IIdentityService> _identityServices;
         private readonly ILoggerService<CreateUserCommandHandler> _loggerService;
+        private readonly IEvaluationUserProfileService _evaluationUserProfileService;
+        private readonly IMapper _mapper;
 
         public CreateUserCommandHandler(ICommonServiceProvider commonServiceProvider,
             IEnumerable<IIdentityService> identityServices, 
-            ILoggerService<CreateUserCommandHandler> loggerService)
+            ILoggerService<CreateUserCommandHandler> loggerService, IEvaluationUserProfileService evaluationUserProfileService, IMapper mapper)
             : base(commonServiceProvider)
         {
             _identityServices = identityServices;
             _loggerService = loggerService;
+            _evaluationUserProfileService = evaluationUserProfileService;
+            _mapper = mapper;
         }
 
         public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -61,6 +68,8 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
             await CoreDbContext.SaveChangesAsync();
 
             await LogAction(userProfile);
+
+            await _evaluationUserProfileService.Sync(_mapper.Map<BaseUserProfile>(userProfile));
 
             return userProfile.Id;
         }
