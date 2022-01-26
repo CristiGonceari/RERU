@@ -1,0 +1,12 @@
+<div class="modal-header border-0 pb-0">
+    <h3 class="modal-title">{{'word.confirmation' | translate}}</h3>
+</div>
+<div class="modal-body py-1 px-7">
+    <p [innerHTML]="'personal.are-you-sure-you-want-to-dismiss-contractor' | translate: {
+        'name': contractor.firstName + ' ' + contractor.lastName    
+    } | safeHtml"></p>
+</div>
+<div class="modal-footer border-0 pt-0">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.no' | translate}}</button>
+    <button type="button" class="btn btn-primary" (click)="close()">{{'button.yes' | translate}}</button>
+</div>

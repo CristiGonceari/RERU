@@ -1,0 +1,5 @@
+<select class="form-control" name="employeeState" id="employeeState" (change)="filter.emit($event)">
+    <option value="0">{{'personal.all-contractors' | translate}}</option>
+    <option value="1" selected>{{'personal.active-contractors' | translate}}</option>
+    <option value="2">{{'personal.dismissed-contractors' | translate}}</option>
+</select>

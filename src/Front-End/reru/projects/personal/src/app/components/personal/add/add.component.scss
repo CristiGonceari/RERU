@@ -1,0 +1,29 @@
+::ng-deep ngb-typeahead-window {
+    max-height: 380px;
+    width: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  } 
+
+:host {
+  .card.card-custom > .card-body {
+    min-height: 600px;
+  }
+  
+  ::ng-deep {
+    div.form-group {
+      margin-bottom: 0.5rem;
+    }
+    .mat-step-header .mat-step-icon {
+      background: #3699ff;
+    }
+    .mat-step-header .mat-step-icon .mat-step-icon-content .mat-icon,
+    .mat-step-header .mat-step-icon-selected span,
+    .mat-step-header .mat-step-icon span {
+      color: #FFF;
+    }
+    button.btn {
+      font-weight: 400!important;
+    }
+  }
+}

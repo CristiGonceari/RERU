@@ -1,0 +1,212 @@
+<div class="card card-custom">
+  <div class="card-header py-3">
+    <div class="card-title align-items-start flex-column">
+      <h3 class="card-label font-weight-bolder text-dark">{{'personal.cim' | translate}}</h3>
+      <span class="text-muted font-weight-bold font-size-sm mt-1">{{'personal.change-your-account-details' | translate}}</span>
+    </div>
+    <div class="card-toolbar">
+      <button type="button" [disabled]="isLoading" (click)="submit()" class="btn btn-success mr-2">{{'button.save' | translate}}</button>
+      <button type="button" [disabled]="isLoading" (click)="resetCim()" class="btn btn-secondary">{{'button.cancel' | translate}}</button>
+    </div>
+  </div>
+  <div *ngIf="isLoading"  class="card">
+    <app-loading-spinner [contentHeight]="'20rem'" [height]="'5rem'" [width]="'5rem'" [colorClass]="'text-primary'"></app-loading-spinner>
+  </div>
+  <form *ngIf="!isLoading"  class="form" [formGroup]="individualContractForm">
+    <div class="card-body">
+      <div class="row">
+        <label class="col-xl-3"></label>
+        <div class="col-lg-9 col-xl-6">
+          <h5 class="font-weight-bold mb-6">{{'personal.individual-contract-request' | translate}}:</h5>
+        </div>
+      </div>
+      <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label d-flex align-items-center">
+            <span class="svg-icon svg-icon-2x mr-2">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <rect x="0" y="0" width="24" height="24"/>
+                  <path d="M13,5 L15,5 L15,20 L13,20 L13,5 Z M5,5 L5,20 L3,20 C2.44771525,20 2,19.5522847 2,19 L2,6 C2,5.44771525 2.44771525,5 3,5 L5,5 Z M16,5 L18,5 L18,20 L16,20 L16,5 Z M20,5 L21,5 C21.5522847,5 22,5.44771525 22,6 L22,19 C22,19.5522847 21.5522847,20 21,20 L20,20 L20,5 Z" fill="#000000"/>
+                  <polygon fill="#000000" opacity="0.3" points="9 5 9 20 7 20 7 5"/>
+              </g>
+          </svg>
+        </span>
+            {{'entity.individual-contract.no' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <input autocomplete="off" class="form-control" type="text" formControlName="no" placeholder="No">
+          </div>
+        </div>
+      <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label d-flex align-items-center">
+            <span class="svg-icon svg-icon-2x mr-2">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <polygon points="0 0 24 0 24 24 0 24"/>
+                  <path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+                  <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero"/>
+              </g>
+          </svg>
+        </span>
+            {{'entity.individual-contract.superior' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+              <input class="form-control form-control-solid" 
+              type="text" 
+              [editable]='false'
+              [placeholder]="'button.select' | translate" 
+              [(ngModel)]="selectedSuperior"
+              (ngModelChange)="selectSuperior($event)" 
+              [ngModelOptions]="{ standalone: true }"
+              [ngbTypeahead]="searchSuperior" 
+              (focus)="focus$.next($any($event).target.value)"
+              (click)="click$.next($any($event).target.value)" 
+              #instance="ngbTypeahead" 
+              container="body"
+              [inputFormatter]="formatter" 
+              [resultFormatter]="formatter">
+          </div>
+      </div>
+      <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label d-flex align-items-center">
+            <span class="svg-icon svg-icon-2x mr-2">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <rect x="0" y="0" width="24" height="24"/>
+                  <path d="M2,6 L21,6 C21.5522847,6 22,6.44771525 22,7 L22,17 C22,17.5522847 21.5522847,18 21,18 L2,18 C1.44771525,18 1,17.5522847 1,17 L1,7 C1,6.44771525 1.44771525,6 2,6 Z M11.5,16 C13.709139,16 15.5,14.209139 15.5,12 C15.5,9.790861 13.709139,8 11.5,8 C9.290861,8 7.5,9.790861 7.5,12 C7.5,14.209139 9.290861,16 11.5,16 Z" fill="#000000" opacity="0.3" transform="translate(11.500000, 12.000000) rotate(-345.000000) translate(-11.500000, -12.000000) "/>
+                  <path d="M2,6 L21,6 C21.5522847,6 22,6.44771525 22,7 L22,17 C22,17.5522847 21.5522847,18 21,18 L2,18 C1.44771525,18 1,17.5522847 1,17 L1,7 C1,6.44771525 1.44771525,6 2,6 Z M11.5,16 C13.709139,16 15.5,14.209139 15.5,12 C15.5,9.790861 13.709139,8 11.5,8 C9.290861,8 7.5,9.790861 7.5,12 C7.5,14.209139 9.290861,16 11.5,16 Z M11.5,14 C12.6045695,14 13.5,13.1045695 13.5,12 C13.5,10.8954305 12.6045695,10 11.5,10 C10.3954305,10 9.5,10.8954305 9.5,12 C9.5,13.1045695 10.3954305,14 11.5,14 Z" fill="#000000"/>
+              </g>
+          </svg>
+        </span>
+            {{'entity.individual-contract.net-salary' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <input autocomplete="off" class="form-control form-control-solid" type="number" formControlName="netSalary"
+              [placeholder]="'personal.insert-net-salary' | translate">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label d-flex align-items-center">
+            <span class="svg-icon svg-icon-2x mr-2">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <rect x="0" y="0" width="24" height="24"/>
+                  <path d="M2,6 L21,6 C21.5522847,6 22,6.44771525 22,7 L22,17 C22,17.5522847 21.5522847,18 21,18 L2,18 C1.44771525,18 1,17.5522847 1,17 L1,7 C1,6.44771525 1.44771525,6 2,6 Z M11.5,16 C13.709139,16 15.5,14.209139 15.5,12 C15.5,9.790861 13.709139,8 11.5,8 C9.290861,8 7.5,9.790861 7.5,12 C7.5,14.209139 9.290861,16 11.5,16 Z" fill="#000000" opacity="0.3" transform="translate(11.500000, 12.000000) rotate(-345.000000) translate(-11.500000, -12.000000) "/>
+                  <path d="M2,6 L21,6 C21.5522847,6 22,6.44771525 22,7 L22,17 C22,17.5522847 21.5522847,18 21,18 L2,18 C1.44771525,18 1,17.5522847 1,17 L1,7 C1,6.44771525 1.44771525,6 2,6 Z M11.5,16 C13.709139,16 15.5,14.209139 15.5,12 C15.5,9.790861 13.709139,8 11.5,8 C9.290861,8 7.5,9.790861 7.5,12 C7.5,14.209139 9.290861,16 11.5,16 Z M11.5,14 C12.6045695,14 13.5,13.1045695 13.5,12 C13.5,10.8954305 12.6045695,10 11.5,10 C10.3954305,10 9.5,10.8954305 9.5,12 C9.5,13.1045695 10.3954305,14 11.5,14 Z" fill="#000000"/>
+              </g>
+          </svg>
+        </span>
+            {{'entity.individual-contract.brut-salary' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <input autocomplete="off" class="form-control form-control-solid" type="number" formControlName="brutSalary"
+              [placeholder]="'personal.insert-brut-salary' | translate">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label d-flex align-items-center">
+            <span class="svg-icon svg-icon-2x mr-2">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <rect x="0" y="0" width="24" height="24"/>
+                  <path d="M4.3618034,10.2763932 L4.8618034,9.2763932 C4.94649941,9.10700119 5.11963097,9 5.30901699,9 L15.190983,9 C15.4671254,9 15.690983,9.22385763 15.690983,9.5 C15.690983,9.57762255 15.6729105,9.65417908 15.6381966,9.7236068 L15.1381966,10.7236068 C15.0535006,10.8929988 14.880369,11 14.690983,11 L4.80901699,11 C4.53287462,11 4.30901699,10.7761424 4.30901699,10.5 C4.30901699,10.4223775 4.32708954,10.3458209 4.3618034,10.2763932 Z M14.6381966,13.7236068 L14.1381966,14.7236068 C14.0535006,14.8929988 13.880369,15 13.690983,15 L4.80901699,15 C4.53287462,15 4.30901699,14.7761424 4.30901699,14.5 C4.30901699,14.4223775 4.32708954,14.3458209 4.3618034,14.2763932 L4.8618034,13.2763932 C4.94649941,13.1070012 5.11963097,13 5.30901699,13 L14.190983,13 C14.4671254,13 14.690983,13.2238576 14.690983,13.5 C14.690983,13.5776225 14.6729105,13.6541791 14.6381966,13.7236068 Z" fill="#000000" opacity="0.3"/>
+                  <path d="M17.369,7.618 C16.976998,7.08599734 16.4660031,6.69750122 15.836,6.4525 C15.2059968,6.20749878 14.590003,6.085 13.988,6.085 C13.2179962,6.085 12.5180032,6.2249986 11.888,6.505 C11.2579969,6.7850014 10.7155023,7.16999755 10.2605,7.66 C9.80549773,8.15000245 9.45550123,8.72399671 9.2105,9.382 C8.96549878,10.0400033 8.843,10.7539961 8.843,11.524 C8.843,12.3360041 8.96199881,13.0779966 9.2,13.75 C9.43800119,14.4220034 9.7774978,14.9994976 10.2185,15.4825 C10.6595022,15.9655024 11.1879969,16.3399987 11.804,16.606 C12.4200031,16.8720013 13.1129962,17.005 13.883,17.005 C14.681004,17.005 15.3879969,16.8475016 16.004,16.5325 C16.6200031,16.2174984 17.1169981,15.8010026 17.495,15.283 L19.616,16.774 C18.9579967,17.6000041 18.1530048,18.2404977 17.201,18.6955 C16.2489952,19.1505023 15.1360064,19.378 13.862,19.378 C12.6999942,19.378 11.6325049,19.1855019 10.6595,18.8005 C9.68649514,18.4154981 8.8500035,17.8765035 8.15,17.1835 C7.4499965,16.4904965 6.90400196,15.6645048 6.512,14.7055 C6.11999804,13.7464952 5.924,12.6860058 5.924,11.524 C5.924,10.333994 6.13049794,9.25950479 6.5435,8.3005 C6.95650207,7.34149521 7.5234964,6.52600336 8.2445,5.854 C8.96550361,5.18199664 9.8159951,4.66400182 10.796,4.3 C11.7760049,3.93599818 12.8399943,3.754 13.988,3.754 C14.4640024,3.754 14.9609974,3.79949954 15.479,3.8905 C15.9970026,3.98150045 16.4939976,4.12149906 16.97,4.3105 C17.4460024,4.49950095 17.8939979,4.7339986 18.314,5.014 C18.7340021,5.2940014 19.0909985,5.62999804 19.385,6.022 L17.369,7.618 Z" fill="#000000"/>
+              </g>
+          </svg>
+        </span>
+            {{'entity.individual-contract.currencyType' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <input class="form-control form-control-solid"
+              autocomplete="off" 
+              type="text"
+              [editable]="false"
+              [placeholder]="'personal.select-currencyType' | translate" 
+              [(ngModel)]="selectedCurrency"
+              (ngModelChange)="selectCurrencyType($event)"
+              [ngModelOptions]="{ standalone: true }"
+              [ngbTypeahead]="searchCurrencyType" 
+              (focus)="focus1$.next($any($event).target.value)"
+              (click)="click1$.next($any($event).target.value)"
+              #instance1="ngbTypeahead"
+              container="body"
+              [inputFormatter]="formatter" 
+              [resultFormatter]="formatter">
+          </div>
+        </div>
+      <div class="form-group row">
+        <label class="col-xl-3 col-lg-3 col-form-label d-flex align-items-center">
+          <span class="svg-icon svg-icon-2x mr-2">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <polygon points="0 0 24 0 24 24 0 24"/>
+                <path d="M13,16 C10.790861,16 9,14.209139 9,12 C9,9.790861 10.790861,8 13,8 C15.209139,8 17,9.790861 17,12 C17,14.209139 15.209139,16 13,16 Z M20.5,10.5 L22,10.5 C22.8284271,10.5 23.5,11.1715729 23.5,12 C23.5,12.8284271 22.8284271,13.5 22,13.5 L20.5,13.5 C19.6715729,13.5 19,12.8284271 19,12 C19,11.1715729 19.6715729,10.5 20.5,10.5 Z M17.0606602,5.87132034 L18.1213203,4.81066017 C18.7071068,4.22487373 19.6568542,4.22487373 20.2426407,4.81066017 C20.8284271,5.39644661 20.8284271,6.34619408 20.2426407,6.93198052 L19.1819805,7.99264069 C18.5961941,8.57842712 17.6464466,8.57842712 17.0606602,7.99264069 C16.4748737,7.40685425 16.4748737,6.45710678 17.0606602,5.87132034 Z M13,1.5 C13.8284271,1.5 14.5,2.17157288 14.5,3 L14.5,4.5 C14.5,5.32842712 13.8284271,6 13,6 C12.1715729,6 11.5,5.32842712 11.5,4.5 L11.5,3 C11.5,2.17157288 12.1715729,1.5 13,1.5 Z M5.81066017,4.81066017 C6.39644661,4.22487373 7.34619408,4.22487373 7.93198052,4.81066017 L8.99264069,5.87132034 C9.57842712,6.45710678 9.57842712,7.40685425 8.99264069,7.99264069 C8.40685425,8.57842712 7.45710678,8.57842712 6.87132034,7.99264069 L5.81066017,6.93198052 C5.22487373,6.34619408 5.22487373,5.39644661 5.81066017,4.81066017 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+                <path d="M4.74714567,20.0425758 C3.09410362,18.9740356 2,17.1147886 2,15 C2,11.6862915 4.6862915,9 8,9 C10.7957591,9 13.1449096,10.9121592 13.8109738,13.5 L16.25,13.5 C18.3210678,13.5 20,15.1789322 20,17.25 C20,19.3210678 18.3210678,21 16.25,21 L7.25,21 C6.28817895,21 5.41093178,20.6378962 4.74714567,20.0425758 Z" fill="#000000"/>
+            </g>
+        </svg>
+      </span>
+          {{'entity.individual-contract.vacation-days' | translate}}</label>
+        <div class="col-lg-9 col-xl-9">
+          <input autocomplete="off" class="form-control" type="number" formControlName="vacationDays" [placeholder]="'personal.insert-vacation-days' | translate">
+        </div>
+      </div>
+      <div class="separator separator-dashed my-5"></div>
+      <div class="row">
+        <label class="col-xl-3"></label>
+        <div class="col-lg-9 col-xl-6">
+          <h5 class="font-weight-bold mb-6">{{'personal.instructions' | translate}}:</h5>
+        </div>
+        <div class="col-xl-3">
+            <button style="float: right;" type="button" [disabled]="isLoading" (click)="openAddInstructionModal()" class="btn btn-success">{{'button.add-instruction' | translate}}</button>
+        </div>
+      </div>
+      <div formArrayName="instructions">
+        <div *ngFor="let instruction of individualContractForm.controls.instructions.controls; let i = index">
+          <div [formGroupName]="i">
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.individual-contract.thematic' | translate}}</label>
+              <div class="col-lg-9 col-xl-9">
+                <input class="form-control" type="text" formControlName="thematic" autocomplete="off"
+                  class="form-control form-control-solid" [placeholder]="'personal.insert-thematic' | translate">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label
+                class="col-xl-3 col-lg-3 col-form-label">{{'entity.individual-contract.instructor-name' | translate}}</label>
+              <div class="col-lg-9 col-xl-9">
+                <input class="form-control" type="text" formControlName="instructorName" autocomplete="off"
+                  class="form-control form-control-solid" [placeholder]="'personal.insert-instructor-name' | translate">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label
+                class="col-xl-3 col-lg-3 col-form-label">{{'entity.individual-contract.instructor-last-name' | translate}}</label>
+              <div class="col-lg-9 col-xl-9">
+                <input class="form-control" type="text" formControlName="instructorLastName" autocomplete="off"
+                  class="form-control form-control-solid"
+                  [placeholder]="'personal.insert-instructor-last-name' | translate">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.individual-contract.duration' | translate}}</label>
+              <div class="col-lg-9 col-xl-9">
+                <input class="form-control" type="number" formControlName="duration" autocomplete="off"
+                  class="form-control form-control-solid" [placeholder]="'personal.insert-duration' | translate">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.individual-contract.date' | translate}}</label>
+              <div class="col-lg-9 col-xl-9">
+                <app-date [isDisabled]="true" [parent]="instruction" [date]="'date'"
+                  [placeholder]="'personal.insert-date' | translate"></app-date>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-end mb-3">
+            <button  type="button" (click)="openDeleteInstructionModal(instruction.get('id').value)" class="btn btn-light-primary mr-3" >{{'button.delete-instruction' | translate}}</button>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="!individualContractForm.controls.instructions.controls.length">
+        <div class="col">
+            {{'entity.individual-contract.no-instruction'| translate}}
+        </div>
+    </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,168 @@
+<div class="card card-custom">
+    <div class="card-header py-3">
+      <div class="card-title align-items-start flex-column">
+        <h3 class="card-label font-weight-bolder text-dark">{{'personal.general-data' | translate}}</h3>
+        <span class="text-muted font-weight-bold font-size-sm mt-1">{{'personal.change-your-account-details' | translate}}</span>
+      </div>
+      <div class="card-toolbar">
+        <button type="button" [disabled]="isLoading" (click)="submit()" class="btn btn-success mr-2">{{'button.save' | translate}}</button>
+        <button type="button" [disabled]="isLoading" (click)="resetContractor()" class="btn btn-secondary">{{'button.cancel' | translate}}</button>
+      </div>
+    </div>
+    <div *ngIf="isLoading"  class="card">
+      <app-loading-spinner [contentHeight]="'20rem'" [height]="'5rem'" [width]="'5rem'" [colorClass]="'text-primary'"></app-loading-spinner>
+    </div>
+    <form *ngIf="!isLoading"  class="form" [formGroup]="generalForm">
+      <div class="card-body">
+        <div class="row">
+          <label class="col-xl-3"></label>
+          <div class="col-lg-9 col-xl-6">
+            <h5 class="font-weight-bold mb-6">{{'personal.my-profile' | translate}}:</h5>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label d-flex align-items-center">
+            <span class="svg-icon  svg-icon-2x mr-2"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo5/dist/../src/media/svg/icons/General/User.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <polygon points="0 0 24 0 24 24 0 24"/>
+                  <path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+                  <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero"/>
+              </g>
+          </svg><!--end::Svg Icon--></span>
+            {{'entity.personal.last-name' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <input formControlName="lastName" class="form-control form-control-solid" type="text" [placeholder]="'personal.insert-personal-last-name' | translate">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label d-flex align-items-center">
+            <span class="svg-icon  svg-icon-2x mr-2"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo5/dist/../src/media/svg/icons/General/User.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <polygon points="0 0 24 0 24 24 0 24"/>
+                  <path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+                  <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero"/>
+              </g>
+          </svg><!--end::Svg Icon--></span>
+            {{'entity.personal.first-name' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <input formControlName="firstName" autocomplete="off" class="form-control form-control-solid" type="text" [placeholder]="'personal.insert-personal-first-name' | translate" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label d-flex align-items-center">
+            <span class="svg-icon  svg-icon-2x mr-2"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo5/dist/../src/media/svg/icons/General/User.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <polygon points="0 0 24 0 24 24 0 24"/>
+                  <path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+                  <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero"/>
+              </g>
+          </svg><!--end::Svg Icon--></span>
+            {{'entity.personal.patronymic' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <input formControlName="fatherName" class="form-control form-control-solid" autocomplete="off" type="text" [placeholder]="'personal.insert-personal-patronymic' | translate" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label d-flex align-items-center">
+            <span class="svg-icon svg-icon-2x mr-2"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo5/dist/../src/media/svg/icons/Home/Clock.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <rect x="0" y="0" width="24" height="24"/>
+                  <path d="M12,22 C7.02943725,22 3,17.9705627 3,13 C3,8.02943725 7.02943725,4 12,4 C16.9705627,4 21,8.02943725 21,13 C21,17.9705627 16.9705627,22 12,22 Z" fill="#000000" opacity="0.3"/>
+                  <path d="M11.9630156,7.5 L12.0475062,7.5 C12.3043819,7.5 12.5194647,7.69464724 12.5450248,7.95024814 L13,12.5 L16.2480695,14.3560397 C16.403857,14.4450611 16.5,14.6107328 16.5,14.7901613 L16.5,15 C16.5,15.2109164 16.3290185,15.3818979 16.1181021,15.3818979 C16.0841582,15.3818979 16.0503659,15.3773725 16.0176181,15.3684413 L11.3986612,14.1087258 C11.1672824,14.0456225 11.0132986,13.8271186 11.0316926,13.5879956 L11.4644883,7.96165175 C11.4845267,7.70115317 11.7017474,7.5 11.9630156,7.5 Z" fill="#000000"/>
+              </g>
+          </svg><!--end::Svg Icon--></span>
+            {{'entity.personal.date-birth' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <app-date [isReverse]="true" [parent]="generalForm" [date]="'birthDate'" [placeholder]="'personal.insert-date-birth' | translate"></app-date>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label d-flex align-items-center" >
+            <span class="svg-icon  svg-icon-2x mr-2"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo5/dist/../src/media/svg/icons/Shopping/MC.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <rect x="0" y="0" width="24" height="24"/>
+                  <path d="M10.8226874,8.36941377 L12.7324324,9.82298668 C13.4112512,8.93113547 14.4592942,8.4 15.6,8.4 C17.5882251,8.4 19.2,10.0117749 19.2,12 C19.2,13.9882251 17.5882251,15.6 15.6,15.6 C14.5814697,15.6 13.6363389,15.1780547 12.9574041,14.4447676 L11.1963369,16.075302 C12.2923051,17.2590082 13.8596186,18 15.6,18 C18.9137085,18 21.6,15.3137085 21.6,12 C21.6,8.6862915 18.9137085,6 15.6,6 C13.6507856,6 11.9186648,6.9294879 10.8226874,8.36941377 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+                  <path d="M8.4,18 C5.0862915,18 2.4,15.3137085 2.4,12 C2.4,8.6862915 5.0862915,6 8.4,6 C11.7137085,6 14.4,8.6862915 14.4,12 C14.4,15.3137085 11.7137085,18 8.4,18 Z" fill="#000000"/>
+              </g>
+          </svg><!--end::Svg Icon--></span>
+            {{'personal.sex' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <select class="form-control" formControlName="sex">
+                <option value="null">{{'personal.select-sex' | translate}}</option>
+                <option value="1">{{'entity.sex.male' | translate}}</option>
+                <option value="2">{{'entity.sex.female' | translate}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label d-flex align-items-center">
+            <span class="svg-icon svg-icon-2x mr-2"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo5/dist/../src/media/svg/icons/General/Heart.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <polygon points="0 0 24 0 24 24 0 24"/>
+                  <path d="M16.5,4.5 C14.8905,4.5 13.00825,6.32463215 12,7.5 C10.99175,6.32463215 9.1095,4.5 7.5,4.5 C4.651,4.5 3,6.72217984 3,9.55040872 C3,12.6834696 6,16 12,19.5 C18,16 21,12.75 21,9.75 C21,6.92177112 19.349,4.5 16.5,4.5 Z" fill="#000000" fill-rule="nonzero"/>
+              </g>
+          </svg><!--end::Svg Icon--></span>
+            {{'personal.blood-type' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <input class="form-control form-control-solid"  
+              autocomplete="off" 
+              type="text" 
+              [editable]="false"
+              [placeholder]="'personal.select-blood-type' | translate" 
+              [(ngModel)]="selectedItem"
+              (ngModelChange)="selectBloodType($event)"
+              [ngModelOptions]="{ standalone: true }"
+              [ngbTypeahead]="searchBloodType" 
+              (focus)="focus$.next($any($event).target.value)"
+              (click)="click$.next($any($event).target.value)"
+              #instance="ngbTypeahead"
+              container="body"
+              [inputFormatter]="formatter" 
+              [resultFormatter]="formatter" />
+          </div>
+        </div>
+        <div class="separator separator-dashed my-5"></div>
+        <div class="row">
+          <label class="col-xl-3"></label>
+          <div class="col-lg-9 col-xl-6">
+            <h5 class="font-weight-bold mb-6">{{'personal.account' | translate}}:</h5>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label">{{'personal.access' | translate}}</label>
+          <div class="col-lg-9 col-xl-6">
+            <button [disabled]="isLoadingAccessButton" *ngIf="!contractor.hasUserProfile" (click)="openAccessModal()" type="button" class="btn btn-light-primary text-hover-white btn-sm pulse pulse-primary">
+              <span *ngIf="isLoadingAccessButton" class="mr-2 font-weight-normal">{{'button.loading' | translate}}</span>
+              <span *ngIf="isLoadingAccessButton" class="spinner-border spinner-border-sm text-white" role="status"></span>
+              <span *ngIf="!isLoadingAccessButton">{{'personal.create-access' | translate}}</span>
+              <span *ngIf="!isLoadingAccessButton" class="pulse-ring"></span>
+            </button>
+            <p class="mt-2 mb-0" *ngIf="contractor.hasUserProfile">{{'personal.user-has-access-on-system' | translate}}</p>
+            <p class="mt-2 mb-0" *ngIf="!contractor.hasUserProfile">{{'personal.user-hasnt-access-on-system' | translate}}</p>
+            <p class="form-text text-muted pt-2">{{'personal.add-access-description' | translate}}
+            <a href="javascript:;" class="font-weight-bold">{{'word.learn-more' | translate}}</a>.</p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label">{{'personal.profile-photo' | translate}}</label>
+          <div class="col-lg-9 col-xl-6">
+            <button (click)="openUploadProfilePhoto()" type="button" class="btn btn-light-primary font-weight-bold btn-sm">{{'button.upload' | translate}}</button>
+          </div>
+        </div>
+        <div *ngIf="!contractor.hasCim || !contractor.hasPositions" class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label">{{'personal.order' | translate}}</label>
+          <div class="col-lg-9 col-xl-6">
+            <button (click)="openGenerateOrderModal()" type="button" class="btn btn-light-primary font-weight-bold btn-sm pulse pulse-primary">{{'personal.generate-order' | translate}}<span class="pulse-ring"></span></button>
+          </div>
+        </div>
+        <div *ngIf="contractor.hasUserProfile" class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label">{{'personal.reset-password-information' | translate}}</label>
+          <div class="col-lg-9 col-xl-6">
+            <button (click)="openResetPasswordModal()" type="button" class="btn btn-light-primary font-weight-bold btn-sm">{{'personal.reset-password' | translate}}</button>
+            <p class="form-text text-muted py-2">{{'personal.reset-password-description' | translate}} 
+              <a href="javascript:;" class="font-weight-boldk">{{'word.learn-more' | translate}}</a>.</p>
+          </div>
+        </div>
+      </div>
+    </form>
+</div>

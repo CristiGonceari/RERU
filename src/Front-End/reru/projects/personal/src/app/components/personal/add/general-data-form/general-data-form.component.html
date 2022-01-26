@@ -1,0 +1,104 @@
+<app-loading-spinner *ngIf="isLoading" contentHeight="20rem" height="5rem" width="5rem" colorClass="text-primary"></app-loading-spinner>
+<div *ngIf="generalForm && !isLoading && !contractorId" class="mt-5">
+  <form class="col-lg col-md-8 col-sm-12 col-12 mx-auto" [formGroup]="generalForm">
+    <div class="row mb-5">
+      <div class="col">
+          <h4>{{'personal.general-data' | translate}}</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-6 col-12">
+        <div class="form-group row required">
+          <label class="col-xl-3 col-lg-3 col-form-label text-nowrap">{{'entity.personal.last-name' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <input formControlName="lastName" 
+                  [ngClass]="{'is-invalid': isTouched('lastName') && isInvalidPattern('lastName') }" 
+                  autocomplete="off"  
+                  class="form-control form-control-solid" 
+                  type="text" 
+                  [placeholder]="'personal.insert-personal-last-name' | translate"/>
+            <div *ngIf="isInvalidPattern('lastName')" class="invalid-feedback d-block">{{'validations.only-letters-and-dash' | translate}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-12">
+        <div class="form-group row required">
+          <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.personal.first-name' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <input  formControlName="firstName" 
+                    autocomplete="off" 
+                    class="form-control form-control-solid" 
+                    type="text" 
+                    [ngClass]="{'is-invalid': isTouched('firstName') && isInvalidPattern('firstName') }"
+                    [placeholder]="'personal.insert-personal-first-name' | translate" />
+            <div *ngIf="isTouched('firstName')">
+              <div *ngIf="isInvalidPattern('firstName')" class="invalid-feedback d-block">{{'validations.only-letters-and-dash' | translate}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-6 col-12">
+        <div class="form-group row required">
+          <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.personal.patronymic' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <input formControlName="fatherName"
+            [ngClass]="{'is-invalid': isTouched('fatherName') && isInvalidPattern('fatherName') }"
+            class="form-control form-control-solid" autocomplete="off" type="text" [placeholder]="'personal.insert-personal-patronymic' | translate" />
+            <div *ngIf="isTouched('fatherName')">
+              <div *ngIf="isInvalidPattern('fatherName')" class="invalid-feedback d-block">{{'validations.only-letters-and-dash' | translate}}</div>
+            </div>
+          </div>
+      </div>
+      </div>
+      <div class="col-xl-6 col-12">
+        <div class="form-group row required">
+          <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.personal.date-birth' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <app-date [parent]="generalForm" [date]="'birthDate'" [placeholder]="'personal.insert-date-birth' | translate"></app-date>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-6 col-12">
+        <div class="form-group row required">
+          <label class="col-xl-3 col-lg-3 col-form-label"
+            for="departmentId">{{'personal.blood-type' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <input class="form-control form-control-solid"  
+              autocomplete="off" 
+              type="text" 
+              [editable]="false"
+              [placeholder]="'personal.select-blood-type' | translate" 
+              [(ngModel)]="selectedItem"
+              (ngModelChange)="selectBloodType($event)"
+              [ngModelOptions]="{ standalone: true }"
+              [ngbTypeahead]="searchBloodType" 
+              (focus)="focus$.next($any($event).target.value)"
+              (click)="click$.next($any($event).target.value)"
+              #instance="ngbTypeahead"
+              container="body"
+              [inputFormatter]="formatter" 
+              [resultFormatter]="formatter" />
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-12">
+        <div class="form-group row required">
+          <label class="col-xl-3 col-lg-3 col-form-label" >{{'personal.sex' | translate}}</label>
+          <div class="col-lg-9 col-xl-9">
+            <select class="form-control" formControlName="sex">
+                <option value="null">{{'personal.select-sex' | translate}}</option>
+                <option value="1">{{'entity.sex.male' | translate}}</option>
+                <option value="2">{{'entity.sex.female' | translate}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </form>
+  </div>
+  

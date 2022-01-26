@@ -1,0 +1,47 @@
+<div class="modal-header border-0 pb-0">
+    <h3 *ngIf="form.get('id').value" class="modal-title">{{'nomenclature.edit-record' | translate}}</h3>
+    <h3 *ngIf="!form.get('id').value" class="modal-title">{{'nomenclature.add-record' | translate}}</h3>
+</div>
+<div class="modal-body px-7">
+    <form [formGroup]="form" autocomplete="off">
+        <div class="form-group row">
+            <label class="col-form-label col-md-3 col-12">{{'entity.nomenclature.value' | translate}}:</label>
+            <div class="col-md col-12">
+                <input class="form-control" type="text" formControlName="name">
+            </div>
+        </div>
+        <div class="form-group row align-items-center">
+            <label for="isActive" class="col-form-label col-md-3 col-12">{{'entity.nomenclature.status' | translate}}:</label>
+            <div class="col-md col-12">
+                <div class="checbox-inline">
+                    <label class="checkbox checkbox-square">
+                        <input name="isActive" type="checkbox" formControlName="isActive" id="isActive">
+                        <span class="mr-2"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col">
+                <h4>{{'nomenclature.records' | translate}}</h4>
+            </div>
+        </div>
+        <ng-container formArrayName="recordValues">
+            <ng-container *ngFor="let item of form.get('recordValues')?.controls; let i = index;">
+                <div class="form-group row align-items-center" [formGroupName]="i">
+                    <div class="col-md-3 col-12">
+                        <label class="col-form-label font-weight-bold">{{getColumnName(item.get('nomenclatureColumnId').value)}}:</label>
+                    </div>
+                    <div class="col-md col-12">
+                        <app-field-generator [type]="getColumnType(item.get('nomenclatureColumnId').value)" [form]="item" field="stringValue"></app-field-generator>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </form>
+</div>
+<div class="modal-footer border-0 pt-0">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+    <button *ngIf="form.get('id').value" type="button" class="btn btn-success" [disabled]="form.invalid" (click)="close()">{{'nomenclature.update-record' | translate}}</button>
+    <button *ngIf="!form.get('id').value" type="button" class="btn btn-success" [disabled]="form.invalid" (click)="close()">{{'nomenclature.add-record' | translate}}</button>
+</div>

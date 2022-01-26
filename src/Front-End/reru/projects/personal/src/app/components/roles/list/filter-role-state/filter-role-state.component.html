@@ -1,0 +1,6 @@
+<select class="form-control" (change)="filter.emit($event.target.value)">
+    <option value="null" selected>{{'word.all' | translate }}</option>
+    <option value="name">{{'entity.role.name' | translate}}</option>
+    <option value="code">{{'entity.role.code' | translate}}</option>
+    <option value="shortCode">{{'entity.role.short-code' | translate}}</option>
+</select>

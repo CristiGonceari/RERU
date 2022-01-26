@@ -1,0 +1,46 @@
+
+<app-page-title [title]="'personal.adding-personal' | translate"></app-page-title>
+<app-content>
+  <div class="card card-custom">
+    <div class="card-body">
+      <mat-horizontal-stepper linear #stepper>
+        <mat-step [completed]="completedEvents[0]" [stepControl]="firstForm" [label]="'personal.general-data' | translate" [editable]="isEditable">
+          <app-general-data-form></app-general-data-form>
+          <div class="row justify-content-end">
+            <button class="btn btn-success" matStepperNext [disabled]="isDisabledButton || firstForm && firstForm.invalid" (click)="createContractor()">{{'button.next' | translate}}</button>
+          </div>
+        </mat-step>
+        <mat-step [completed]="completedEvents[1]" [stepControl]="secondForm" [label]="'personal.bulletin' | translate" [editable]="isEditable">
+          <app-bulletin-data-form></app-bulletin-data-form>
+          <div class="row justify-content-end">
+            <button class="btn btn-success" matStepperNext [disabled]="isDisabledButton || secondForm && secondForm.invalid" (click)="createBulletin()">{{'button.next' | translate}}</button>
+          </div>
+        </mat-step>
+        <mat-step [completed]="completedEvents[2]" [stepControl]="thirdForm" [label]="'personal.studies' | translate" [editable]="isEditable">
+          <app-studies-data-form></app-studies-data-form>
+          <div class="row justify-content-end">
+            <button class="btn btn-success" matStepperNext [disabled]="isDisabledButton || thirdForm && thirdForm.invalid" (click)="createStudies()">{{'button.next' | translate}}</button>
+          </div>
+        </mat-step>
+        <mat-step [completed]="completedEvents[3]" [stepControl]="fourthForm" [label]="'personal.picture' | translate" [editable]="isEditable">
+          <app-picture-data-form></app-picture-data-form>
+          <div class="row justify-content-end">
+            <button class="btn btn-success" matStepperNext [disabled]="isDisabledButton || fourthForm && fourthForm.invalid" (click)="addPicture()">{{'button.next' | translate}}</button>
+          </div>
+        </mat-step>
+        <mat-step [completed]="completedEvents[4]" [stepControl]="fifthForm" [label]="'personal.request' | translate" [editable]="isEditable">
+          <app-request-to-employ-data-form [ContractorId]="this.contractorId"></app-request-to-employ-data-form>
+          <div class="row justify-content-end">
+            <button class="btn btn-success" matStepperNext [disabled]="isDisabledButton || fifthForm && fifthForm.invalid" (click)="addRequestToEmploy()">{{'button.next' | translate}}</button>
+          </div>
+        </mat-step>
+        <mat-step [completed]="completedEvents[5]" [label]="'personal.upload-identity-documents' | translate" [editable]="isEditable">
+          <app-upload-data-form></app-upload-data-form>
+          <div class="row justify-content-end mt-5">
+            <button class="btn btn-primary"  (click)="createFiles()" >{{'button.finish' | translate}}</button>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </div>
+</app-content>

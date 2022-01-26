@@ -1,0 +1,14 @@
+<input class="form-control form-control-lg form-control-solid" 
+        type="text" 
+        [editable]='false'
+        [placeholder]="'personal.select-department' | translate" 
+        [(ngModel)]="selectedDepartment"
+        (ngModelChange)="selectDepartment($event)"
+        [ngModelOptions]="{ standalone: true }"
+        [ngbTypeahead]="searchDepartment" 
+        (focus)="focus$.next($any($event).target.value)"
+        (click)="click$.next($any($event).target.value)"
+        #instance="ngbTypeahead"
+        container="body"
+        [inputFormatter]="formatter" 
+        [resultFormatter]="formatter" />

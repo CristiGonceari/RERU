@@ -1,0 +1,43 @@
+<div class="modal-header border-0 pb-0">
+    <h3 class="modal-title">{{'personal.add-rank' | translate}}</h3>
+</div>
+<div class="modal-body px-7">
+    <form [formGroup]="rankForm" autocomplete="off">
+        <div class="form-group row">
+            <label class="col-xl-3 col-lg-3 col-form-label d-flex align-items-center">{{'entity.rank.name' | translate}}</label>
+            <div class="col-lg-9 col-xl-9">
+              <input class="form-control form-control-solid"
+                autocomplete="off" 
+                type="text"
+                tabindex="-1"
+                [editable]="false"
+                [placeholder]="'personal.select-rank' | translate" 
+                [(ngModel)]="selectedRank"
+                (ngModelChange)="selectRank($event)"
+                [ngModelOptions]="{ standalone: true }"
+                [ngbTypeahead]="searchRank" 
+                (focus)="focus$.next($any($event).target.value)"
+                (click)="click$.next($any($event).target.value)"
+                #instance="ngbTypeahead"
+                [inputFormatter]="formatter" 
+                [resultFormatter]="formatter">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-form-label col-sm-3 col-12">{{'entity.role.from-date' | translate}}:</label>
+            <div class="col">
+                <app-date [parent]="rankForm" [date]="'from'" [placeholder]="'entity.role.from-date' | translate"></app-date>
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-form-label col-sm-3 col-12">{{'entity.rank.mentions' | translate}}:</label>
+            <div class="col">
+                <textarea [placeholder]="'entity.rank.mentions' | translate" formControlName="mentions" class="form-control" cols="30" rows="10"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer border-0 pt-0">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+    <button type="button" class="btn btn-primary" [disabled]="rankForm.invalid" (click)="close()">{{'personal.add-rank' | translate}}</button>
+</div>

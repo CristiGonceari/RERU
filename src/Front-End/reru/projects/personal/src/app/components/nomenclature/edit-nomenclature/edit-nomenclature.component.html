@@ -1,0 +1,31 @@
+<app-page-title [title]="'pages.nomenclature.title' | translate" [subTitle]="'pages.nomenclature.subtitle' | translate">
+</app-page-title>
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'20rem'" [width]="'5rem'" [height]="'5rem'"></app-loading-spinner>
+<app-content *ngIf="!isLoading">
+    <div class="card card-custom gutter-bs">
+        <div class="card-body py-5 px-0">
+            <div class="tab-content pt-5">
+                <div class="tab-pane active" id="kt_apps_projects_view_tab_2" role="tabpanel">
+                    <form [formGroup]="nomenclatureForm" class="form" autocomplete="off" >
+                        <div class="row justify-content-start">
+                            <div class="col pl-15">
+                                <h3 class="font-size-h6 font-weight-bolder text-dark mb-5">{{'nomenclature.edit-nomenclature' | translate}}</h3>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="samplename" class="col-xl-3 col-lg-3 col-form-label text-right">{{'nomenclature.nomenclature-name' | translate}}</label>
+                            <div class="col-lg-9 col-xl-6">
+                                <input autocomplete="off"  class="form-control form-control-solid" type="text" [placeholder]="'nomenclature.nomenclature-name' | translate" id="samplename" name="samplename" formControlName="name">
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end pr-15">
+                            <button type="button" class="btn btn-secondary mr-2" (click)="location.back()">{{'button.cancel' | translate}}</button>
+                            <app-confirm-button class="btn" [disabled]="nomenclatureForm.invalid" [value]="'nomenclature.edit-nomenclature' | translate" (handle)="submit()"></app-confirm-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</app-content>

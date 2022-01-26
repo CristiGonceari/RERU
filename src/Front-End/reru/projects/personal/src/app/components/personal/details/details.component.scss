@@ -1,0 +1,7 @@
+:host {
+  div.dropdown::ng-deep {
+    a.dropdown-toggle::after {
+      display: none;
+    }
+  }
+}

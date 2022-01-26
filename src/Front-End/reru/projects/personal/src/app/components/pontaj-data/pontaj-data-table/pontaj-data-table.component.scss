@@ -1,0 +1,98 @@
+:host {
+
+  .btn-hover-default:hover:not(:disabled),
+  .show>.btn.btn-hover-default.dropdown-toggle.dropdown-toggle {
+    color: #B5B5C3;
+    background-color: #F3F6F9;
+    border-color: #F3F6F9;
+    border: 2px solid #EBEDF3
+  }
+
+  .dropdown.dropdown-inline {
+    a.dropdown-toggle::after {
+      display: none;
+    }
+  }
+
+  table thead tr th {
+    color: #b5b5c3;
+    font-size: .8rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: .1rem;
+  }
+
+  table thead tr th:first-child,
+  table tbody tr td:first-child {
+    width: 230px;
+    max-width: 230px;
+  }
+
+  td:hover {
+    background-color: #B5B5C3;
+  }
+
+  td {
+    border: 0.1px solid #EBEDF3;
+  }
+
+}
+
+.text-month {
+  font-size: medium;
+}
+
+.text-end {
+  text-align: end;
+}
+
+svg:hover {
+  background-color: #B5B5C3;
+}
+
+:host {
+  width: 100%;
+
+  .input-group {
+    width: 100%;
+  }
+}
+
+.row {
+  margin-top: 1%;
+}
+
+.table-overflow {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.header-split {
+  background: linear-gradient(to top right, rgb(255, 255, 255) 49.5%, #b7b7c5 49.5%, #b7b7c5 50.5%, rgb(255, 255, 255) 50.5%);
+  line-height: 0.2;
+}
+
+.department-header {
+  margin-left: 2em;
+  text-align: right;
+}
+
+.role-header {
+  margin-top: 11%;
+  margin-right: 2em;
+  text-align: left;
+}
+
+.department-text-header {
+  font-size: 10px;
+  color: #000000
+}
+
+.role-text-header {
+  font-size: 10px;
+  color: #000000
+}
+
+.tooltip-text{
+  font-size: 12px;
+}

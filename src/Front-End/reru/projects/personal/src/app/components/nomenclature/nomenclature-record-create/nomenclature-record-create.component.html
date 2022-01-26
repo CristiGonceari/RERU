@@ -1,0 +1,53 @@
+<div class="card card-custom">
+  <div class="card-header flex-wrap border-0 pt-6 pb-0">
+    <div class="card-title">
+      <h3 class="card-label font-weight-bolder">{{'nomenclature.create-record-nomenclature' | translate}}</h3>
+    </div>
+  </div>
+  <div class="card-body">
+      <app-loading-spinner *ngIf="isLoading" contentHeight="5rem" [height]="'5rem'" [width]="'5rem'"
+          [colorClass]="'text-primary'">
+      </app-loading-spinner>
+      <div *ngIf="!isLoading" class="table-responsive" [formGroup]="nomenclatureRecordForm">
+          <table class="nomenclature-header-table">
+            <thead>
+                <tr *ngIf="!columns.length">
+                    <th>{{'entity.nomenclature.name' | translate}}</th>
+                </tr>
+                <tr *ngIf="columns.length"> 
+                    <th>{{'entity.nomenclature.name' | translate}}</th>
+                    <th *ngFor="let item of columns; let i = index">{{item.name}}</th>
+                    <th>{{'entity.nomenclature.actions' | translate}}</th>
+                </tr>
+            </thead>
+            <tbody formArrayName="columns">
+              <tr *ngFor="let item of nomenclatureRecordForm.controls.columns.controls; let i = index;">
+                <ng-container [formGroupName]="i">
+                  <td>
+                    <input autocomplete="off"  class="form-control" type="text" formControlName="samplename" id="samplename" placeholder="Name" name="samplename">
+                  </td>
+                  <ng-container formArrayName="recordValues">
+                    <td *ngFor="let record of item.get('recordValues').controls; let j = index;">
+                      <ng-container [formGroupName]="j">
+                        <app-field-generator [type]="getColumnType(record.get('nomenclatureColumnId').value)" [form]="record" field="stringValue"></app-field-generator>
+                      </ng-container>
+                    </td>
+                    <td>
+                      <button *ngIf="item.get('id').value" class="btn btn-outline" (click)="openEditRecordModal(item, i)">
+                        <i class="la la-edit text-primary"></i>
+                      </button>
+                    </td>
+                  </ng-container>
+                </ng-container>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="mt-2">
+          <button class="btn btn-primary" (click)="addRecord()">{{'nomenclature.add-record' | translate}}</button>
+        </div>
+      <div class="row justify-content-end">
+          <button [disabled]="isLoading" class="btn btn-success" (click)="submit()">{{'button.apply-modifications' | translate}}</button>
+      </div>
+  </div>
+</div>

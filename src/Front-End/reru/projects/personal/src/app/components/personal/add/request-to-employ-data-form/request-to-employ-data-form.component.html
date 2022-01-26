@@ -1,0 +1,25 @@
+<app-loading-spinner *ngIf="isLoading" contentHeight="20rem" height="5rem" width="5rem" colorClass="text-primary">
+</app-loading-spinner>
+<form *ngIf="requestToEmployForm && !isLoading" class="col" [formGroup]="requestToEmployForm">
+  <div class="row">
+    <div class="col-md required">
+      <h4>{{'personal.add-request-to-employ' | translate}}</h4>
+    </div>
+    <div>
+    </div>
+  </div>
+  <div class="row py-8">
+    <div class="col-md-12">
+      <ngx-dropzone
+        accept="image/jpeg,image/jpg,image/png,.doc,.docx,.txt,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        [multiple]="false" [expandable]="true" (change)="onSelect($event)" class="font-weight-light">
+        <ngx-dropzone-label>
+          <h4>{{'personal.request-to-employ' | translate}}</h4>
+        </ngx-dropzone-label>
+        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+          <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+        </ngx-dropzone-preview>
+      </ngx-dropzone>
+    </div>
+  </div>
+</form>
