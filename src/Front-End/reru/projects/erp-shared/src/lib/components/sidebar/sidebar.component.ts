@@ -32,9 +32,7 @@ export class SidebarComponent implements OnInit {
 	}
 
 	subscribeForSidebarChanges(): void {
-		this.sidebarService.sidebar$.subscribe(response => {
-			(this.isOpen = response)
-		});
+		this.sidebarService.sidebar$.subscribe(response => (this.isOpen = response));
 	}
 
 	navigateTo(index: number): void {
