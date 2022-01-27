@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AbstractService, AppSettingsService } from 'dist/erp-shared';
+import { AbstractService, AppSettingsService } from '@erp/shared';
 import { Observable } from 'rxjs';
-import saveAs from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
