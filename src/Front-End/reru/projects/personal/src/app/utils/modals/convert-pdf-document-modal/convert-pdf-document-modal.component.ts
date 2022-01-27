@@ -18,12 +18,7 @@ export class ConvertPdfDocumentModalComponent implements OnInit {
   isLoading: boolean = true;
   documents: any[] = [];
 
-  pagedSummary: PagedSummary = {
-    totalCount: 0,
-    pageSize: 0,
-    currentPage: 1,
-    totalPages: 1
-  };
+  pagedSummary: PagedSummary = new PagedSummary();
 
   constructor(private documentService: DocumentsTemplateService,
               private documentGeneratorService: DocumentGeneratorService,

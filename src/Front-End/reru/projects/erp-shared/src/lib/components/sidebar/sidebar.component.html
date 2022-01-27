@@ -75,46 +75,41 @@
 		<!--end::Toolbar-->
 	</div>
 	<!--end::Brand-->
-	<!--begin::Aside Menu-->
-	<div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
-		<!--begin::Menu Container-->
-		<div
-			id="kt_aside_menu"
-			class="aside-menu my-4"
-			data-menu-vertical="1"
-			data-menu-scroll="1"
-			data-menu-dropdown-timeout="500"
-			[style.height]="sidebarHeight"
-			style="text-overflow: ellipsis !important; overflow-y: scroll !important;"
+	<!--begin::Menu Container-->
+	<div
+		id="kt_aside_menu"
+		class="aside-menu my-4"
+		data-menu-vertical="1"
+		data-menu-scroll="1"
+		data-menu-dropdown-timeout="500"
+		[style.height]="sidebarHeight"
 		>
-			<!--begin::Menu Nav-->
-			<ul class="menu-nav">
-				<ng-container *ngFor="let menuItem of menuItems; let i = index">
-					<li
-						*ngIf="menuItem.type === sidebarItemType.ITEM && hasPermission(menuItem)"
-						class="menu-item"
-						[ngClass]="{ 'menu-item-active': isActiveTab[i] }"
-						aria-haspopup="true"
-					>
-						<a class="menu-link" (click)="navigateTo(i)">
-							<span class="svg-icon svg-default menu-icon" [innerHTML]="menuItem.icon | safeHtml"></span>
-							<span class="menu-text">{{ menuItem.name }}</span>
-						</a>
-					</li>
-					<li *ngIf="menuItem.type === sidebarItemType.SECTION" class="menu-section">
-						<h4 class="menu-text">{{ menuItem.name }}</h4>
-						<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-					</li>
-					<li *ngIf="menuItem.type === sidebarItemType.BUTTON && hasPermission(menuItem)" class="menu-item btn-margin">
-						<button (click)="navigateTo(i)" class="btn btn-success">
-							{{ menuItem.name }}
-						</button>
-					</li>
-				</ng-container>
-			</ul>
-			<!--end::Menu Nav-->
-		</div>
-		<!--end::Menu Container-->
+		<!--begin::Menu Nav-->
+		<ul class="menu-nav">
+			<ng-container *ngFor="let menuItem of menuItems; let i = index">
+				<li
+					*ngIf="menuItem.type === sidebarItemType.ITEM && hasPermission(menuItem)"
+					class="menu-item"
+					[ngClass]="{ 'menu-item-active': isActiveTab[i] }"
+					aria-haspopup="true"
+				>
+					<a class="menu-link" (click)="navigateTo(i)">
+						<span class="svg-icon svg-default menu-icon" [innerHTML]="menuItem.icon | safeHtml"></span>
+						<span class="menu-text">{{ menuItem.name }}</span>
+					</a>
+				</li>
+				<li *ngIf="menuItem.type === sidebarItemType.SECTION" class="menu-section">
+					<h4 class="menu-text">{{ menuItem.name }}</h4>
+					<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+				</li>
+				<li *ngIf="menuItem.type === sidebarItemType.BUTTON && hasPermission(menuItem)" class="menu-item btn-margin">
+					<button (click)="navigateTo(i)" class="btn btn-success">
+						{{ menuItem.name }}
+					</button>
+				</li>
+			</ng-container>
+		</ul>
+		<!--end::Menu Nav-->
 	</div>
-	<!--end::Aside Menu-->
+	<!--end::Menu Container-->
 </div>

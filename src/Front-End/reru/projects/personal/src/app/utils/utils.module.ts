@@ -10,7 +10,6 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { NgbDateFRParserFormatter } from './services/date-parse-formatter.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { DeleteDepartmentModalComponent } from './modals/delete-department-modal/delete-department-modal.component';
 import { ChangeNameModalComponent } from './modals/change-name-modal/change-name-modal.component';
 import { ChangeCurrentPositionModalComponent } from './modals/change-current-position-modal/change-current-position-modal.component';
@@ -78,7 +77,7 @@ import { ConvertPdfDocumentModalComponent } from './modals/convert-pdf-document-
 import { CkEditorConfigComponent } from './components/ck-editor-config/ck-editor-config.component'
 import { CKEditorModule } from 'ngx-ckeditor';
 import { MaterialModule } from '../material.module';
-
+import { SharedModule } from '@erp/shared';
 
 
 const commonComponents = [
@@ -87,7 +86,6 @@ const commonComponents = [
   DateComponent,
   ConfirmModalComponent,
   PaginationComponent,
-  LoadingSpinnerComponent,
   DeleteDepartmentModalComponent,
   ChangeNameModalComponent,
   ChangeCurrentPositionModalComponent,
@@ -165,7 +163,8 @@ const commonComponents = [
     ReactiveFormsModule,
     NgxDropzoneModule,
     CKEditorModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ],
   exports: [
     TranslateModule,

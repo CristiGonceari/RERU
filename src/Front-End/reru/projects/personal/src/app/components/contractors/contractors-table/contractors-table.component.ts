@@ -13,6 +13,7 @@ import { ConfirmationDeleteContractorComponent } from '../../../utils/modals/con
 import { ObjectUtil } from '../../../utils/util/object.util';
 import { TransferNewPositionModalComponent } from '../../../utils/modals/transfer-new-position-modal/transfer-new-position-modal.component';
 import { AddOldPositionModalComponent } from '../../../utils/modals/add-old-position-modal/add-old-position-modal.component';
+import { PagedSummary } from '../../../utils/models/paged-summary.model';
 
 @Component({
   selector: 'app-contractors-table',
@@ -21,12 +22,7 @@ import { AddOldPositionModalComponent } from '../../../utils/modals/add-old-posi
 })
 export class ContractorsTableComponent implements OnInit {
   contractors: Contractor[];
-  pagedSummary = {
-    totalCount: 0,
-    pageSize: 0,
-    currentPage: 1,
-    totalPages: 1
-  };
+  pagedSummary: PagedSummary = new PagedSummary();
   isLoading: boolean = true;
   employerStates: number;
   keyword: string;

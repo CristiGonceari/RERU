@@ -35,12 +35,7 @@ export class StudyDetailsComponent implements OnInit {
   click$: Subject<string>[] = [new Subject<string>()];
   selectedItems: SelectItem[] = [{label:"", value:""}];
 
-  pagedSummary: PagedSummary = {
-    totalCount: 1,
-    totalPages: 1,
-    pageSize: 10,
-    currentPage: 1
-  }
+  pagedSummary: PagedSummary = new PagedSummary();
   constructor(private fb: FormBuilder,
               private studyService: StudyService,
               private modalService: NgbModal,
