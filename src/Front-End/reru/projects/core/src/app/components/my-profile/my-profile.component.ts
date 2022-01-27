@@ -24,6 +24,10 @@ export class MyProfileComponent implements OnInit {
 	deleteMsg: string;
 	logoutTitle: string;
 	logoutMsg: string;
+	no: string;
+    yes: string;
+	buttonNo: string;
+    buttonYes: string;
 
 	@Input() user: any;
 	@Input() isCustomHeader: boolean;
@@ -56,14 +60,23 @@ export class MyProfileComponent implements OnInit {
 	}
 
 	openRemoveAvatarModal(): void {
-		forkJoin([this.translate.get('upload-avatar.remove'), this.translate.get('upload-avatar.sure-remove-msg')])
-			.subscribe(([deleteTitle, deleteMsg]) => {
+		forkJoin([
+			this.translate.get('upload-avatar.remove'), 
+			this.translate.get('upload-avatar.sure-remove-msg'),
+			this.translate.get('button.no'),
+			this.translate.get('button.yes')
+		])
+			.subscribe(([deleteTitle, deleteMsg, buttonNo, buttonYes]) => {
 				this.deleteTitle = deleteTitle;
 				this.deleteMsg = deleteMsg;
+				this.buttonNo = buttonNo;
+				this.buttonYes = buttonYes;
 			});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
 		modalRef.componentInstance.title = this.deleteTitle;
 		modalRef.componentInstance.description = this.deleteMsg;
+		modalRef.componentInstance.buttonNo = this.buttonNo;
+		modalRef.componentInstance.buttonYes = this.buttonYes;
 		modalRef.result.then(
 			() => {
 				this.removeAvatar();
@@ -78,14 +91,23 @@ export class MyProfileComponent implements OnInit {
 	}
 
 	openLogoutModal(): void {
-		forkJoin([this.translate.get('user-profile.logout'), this.translate.get('user-profile.logout-msg')])
-			.subscribe(([logoutTitle, logoutMsg]) => {
+		forkJoin([
+			this.translate.get('user-profile.logout'), 
+			this.translate.get('user-profile.logout-msg'),
+			this.translate.get('button.no'),
+			this.translate.get('button.yes')
+		])
+			.subscribe(([logoutTitle, logoutMsg, no, yes]) => {
 				this.logoutTitle = logoutTitle;
 				this.logoutMsg = logoutMsg;
+				this.no = no;
+				this.yes = yes;
 			});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
 		modalRef.componentInstance.title = this.logoutTitle;
 		modalRef.componentInstance.description = this.logoutMsg;
+		modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
 		modalRef.result.then(
 			() => this.logout(),
 			() => {}

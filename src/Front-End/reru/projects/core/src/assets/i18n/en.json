@@ -108,6 +108,8 @@
     "name": "Name",
     "email":"Email",
     "lastName": "Last name",
+    "father-name": "Patronymic",
+    "idnp": "IDNP",
     "role": "Role",
     "actions": "Actions",
     "type": "Type",

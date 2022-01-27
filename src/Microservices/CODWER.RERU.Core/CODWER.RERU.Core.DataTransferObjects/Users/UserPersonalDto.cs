@@ -5,5 +5,6 @@ namespace CODWER.RERU.Core.DataTransferObjects.Users
     {
         public string Name { set; get; }
         public string LastName { set; get; }
+        public string FatherName { set; get; }
     }
 }

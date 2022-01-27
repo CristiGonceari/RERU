@@ -11,6 +11,10 @@ export class UserOverviewComponent implements OnInit {
   isLoading = true;
   id: string;
   email: string;
+  name: string;
+  lastName: string;
+  fatherName: string;
+  idnp: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -32,6 +36,10 @@ export class UserOverviewComponent implements OnInit {
 
   getUserInfo(): void {
     this.userService.getUser(this.id).subscribe(res => {
+      this.name = res.data.name;
+      this.lastName = res.data.lastName;
+      this.fatherName = res.data.fatherName;
+      this.idnp = res.data.idnp;
       this.email = res.data.email;
       this.isLoading = false;
     });

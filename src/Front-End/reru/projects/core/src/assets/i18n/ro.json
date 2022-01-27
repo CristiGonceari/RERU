@@ -107,6 +107,8 @@
     "name": "Nume",
     "email":"Poștă electronică",
     "lastName": "Prenume",
+    "father-name": "Patronimic",
+    "idnp": "IDNP",
     "role": "Rolul",
     "actions": "Acțiuni",
     "type": "Tip",

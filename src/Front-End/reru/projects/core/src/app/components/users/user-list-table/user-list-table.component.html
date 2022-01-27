@@ -12,6 +12,9 @@
           {{ 'table.name' | translate }}
           <app-sort-button *ngIf="filter.sort === 'name'" [desc]="filter.order"></app-sort-button>
         </th>
+        <th scope="col" class="pointer">
+          {{ 'table.idnp' | translate }}
+        </th>
         <th scope="col" class="pointer" (click)="sortedList({ sort: 'username' })">
           {{ 'table.username' | translate }}
           <app-sort-button *ngIf="filter.sort === 'username'" [desc]="filter.order"></app-sort-button>
@@ -31,8 +34,11 @@
         </td>
         <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
           <a [routerLink]="['../../user-profile', user.id, 'overview']" class="font-size-lg text-dark-50 text-hover-dark-75" >
-            {{ user.lastName }} {{ user.name }}
+            {{ user.lastName }} {{ user.name }} {{user.fatherName}}
         </a>
+        </td>
+        <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+          {{ user.idnp }}
         </td>
         <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
           {{ user.email }}
