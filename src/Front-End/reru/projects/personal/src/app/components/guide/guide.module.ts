@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UtilsModule } from '../../utils/utils.module';
-import { SharedModule } from 'dist/erp-shared';
+import { SharedModule } from '@erp/shared';
 
 
 @NgModule({
