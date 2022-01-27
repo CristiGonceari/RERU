@@ -32,9 +32,11 @@ namespace CODWER.RERU.Core.Application.Users.GetUsers
             return paginatedModel;
         }
 
-        private IQueryable<ERPIdentityUser> Filter (IQueryable<ERPIdentityUser> items, GetUsersQuery request) {
+        private IQueryable<ERPIdentityUser> Filter (IQueryable<ERPIdentityUser> items, GetUsersQuery request) 
+        {
             // common search by name and/or lastName
-            if (!string.IsNullOrEmpty (request.Keyword)) {
+            if (!string.IsNullOrEmpty (request.Keyword)) 
+            {
                 var toSearch = request.Keyword.Split (' ').ToList ();
 
                 if (toSearch.Count == 1) {
