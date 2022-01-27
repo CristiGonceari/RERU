@@ -5,6 +5,8 @@ export class MyProfile {
     email: string;
     name: string;
     lastName: string;
+    fatherName: string;
+    idnp: string;
     isActive: boolean;
     modules: UserModule[];
 }
