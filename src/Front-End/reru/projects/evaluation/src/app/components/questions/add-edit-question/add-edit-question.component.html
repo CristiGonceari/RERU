@@ -36,7 +36,7 @@
                       <div class="col-lg-9 col-xl-9">
                         <select name="questionType" class="form-control form-control-lg form-control-solid"
                           [formControl]="questionForm.controls['questionType']">
-                          <option value="0">{{'questions.select' | translate}}</option>
+                          <option value="">{{'questions.select' | translate}}</option>
                           <option *ngFor="let item of types" [value]="item.value">
                             {{'statuses.' + item.label | translate}} </option>
                         </select>
@@ -53,7 +53,7 @@
                       <div class="col-lg-9 col-xl-9">
                         <select class="form-control form-control-lg form-control-solid" name="questionCategoryId"
                           [formControl]="questionForm.controls['questionCategoryId']">
-                          <option value="0">{{'questions.select' | translate}}</option>
+                          <option value="">{{'questions.select' | translate}}</option>
                           <option *ngFor="let item of categories" [value]="item.value">{{ item.label }}</option>
                         </select>
                         <div *ngIf="hasErrors('questionCategoryId')" class="fv-plugins-message-container">
