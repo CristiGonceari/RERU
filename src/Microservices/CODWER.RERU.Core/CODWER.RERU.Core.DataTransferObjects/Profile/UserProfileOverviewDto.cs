@@ -5,6 +5,8 @@ namespace CODWER.RERU.Core.DataTransferObjects.Profile {
         public string Email { set; get; }
         public string Name { set; get; }
         public string LastName { set; get; }
+        public string FatherName { set; get; }
+        public string Idnp { set; get; }
         public string Avatar { set; get; }
         public IEnumerable<UserProfileModuleRowDto> Modules { set; get; }
     }
