@@ -8,6 +8,8 @@
 
   .aside-menu {
     margin-right: -10px;
+    text-overflow: ellipsis !important;
+    overflow-y: scroll !important;
     &::-webkit-scrollbar {
       width: 5px !important;
     }

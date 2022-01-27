@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -13,8 +13,12 @@ export class ShowImageModalComponent {
     public activeModal: NgbActiveModal,
   ) { }
 
-  dismiss(){
+  dismiss(): void {
 		this.activeModal.close();
 	}
+
+  // ngOnDestroy(): void {
+  //   this.dismiss();
+  // }
 
 }

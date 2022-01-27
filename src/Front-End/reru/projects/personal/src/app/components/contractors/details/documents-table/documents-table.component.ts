@@ -25,12 +25,7 @@ export class DocumentsTableComponent implements OnInit {
   @Input() contractor: Contractor;
   @Output() update: EventEmitter<void> = new EventEmitter<void>();
   documents: any[] = [];
-  pagedSummary: PagedSummary = {
-    currentPage: 1,
-    totalCount: 0,
-    totalPages: 0,
-    pageSize: 10
-  }
+  pagedSummary: PagedSummary = new PagedSummary();
   isLoading: boolean;
   selectedType: number = 4;
   constructor(private fileService: FileService,

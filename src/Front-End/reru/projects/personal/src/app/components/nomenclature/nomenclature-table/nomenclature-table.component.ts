@@ -18,12 +18,7 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 export class NomenclatureTableComponent implements OnInit {
   isLoading: boolean = true;
   list: NomenclatureTypeModel[] = [];
-  pagedSummary: PagedSummary = {
-    totalCount: 0,
-    pageSize: 10,
-    currentPage: 1,
-    totalPages: 1
-  };
+  pagedSummary: PagedSummary = new PagedSummary();
   notification: any = {
     success: 'Success',
     error: 'Error',

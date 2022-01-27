@@ -16,12 +16,7 @@ import { ObjectUtil } from '../../../utils/util/object.util';
 export class VacationTableComponent implements OnInit {
   isLoading: boolean = true;
   vacations: VacationModel[] = [];
-  pagedSummary: PagedSummary = {
-    totalCount: 0,
-    pageSize: 0,
-    currentPage: 1,
-    totalPages: 1
-  };
+  pagedSummary: PagedSummary = new PagedSummary();
   constructor(private vacationService: VacationService,
               private modalService: NgbModal,
               private notificationService: NotificationsService) { }

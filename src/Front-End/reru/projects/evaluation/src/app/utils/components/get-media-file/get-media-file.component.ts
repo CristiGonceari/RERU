@@ -107,7 +107,8 @@ export class GetMediaFileComponent implements OnInit, OnChanges {
     const modalRef = this.modalService.open(ShowImageModalComponent, { centered: true, size: 'xl' });
     modalRef.componentInstance.imageUrl = url;
 		modalRef.result.then(
-			() => { }
+			() => { },
+      () => {modalRef.close()}
 		);
   }
   

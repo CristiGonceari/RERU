@@ -15,12 +15,7 @@ import { ObjectUtil } from '../../../utils/util/object.util';
 export class OrganigramTableComponent implements OnInit {
   isLoading: boolean = true;
   organigrams: any[] = [];
-  pagedSummary: PagedSummary = {
-    totalCount: 0,
-    pageSize: 0,
-    currentPage: 1,
-    totalPages: 1
-  };
+  pagedSummary: PagedSummary = new PagedSummary();
   constructor(private organigramService: OrganigramService,
               private notificationService: NotificationsService,
               private modalService: NgbModal) { }

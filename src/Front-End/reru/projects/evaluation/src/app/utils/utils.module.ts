@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { NgbDateFRParserFormatter } from './services/date-formater/date-parse-formatter.service';
 import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
-import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +19,6 @@ import { ShowImageModalComponent } from './components/show-image-modal/show-imag
 
 @NgModule({
   declarations: [
-    LoadingSpinnerComponent,
     DateComponent,
     HashOptionInputComponent,
     SafeHtmlPipe,
@@ -43,13 +41,11 @@ import { ShowImageModalComponent } from './components/show-image-modal/show-imag
   ],
   providers: [
     { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter },
-    LoadingSpinnerComponent,
     SafeHtmlPipe,
     AddEditMediaFileComponent,
     GetMediaFileComponent
   ],
   exports: [
-    LoadingSpinnerComponent,
     SafeHtmlPipe,
     TranslateModule,
     DateComponent,

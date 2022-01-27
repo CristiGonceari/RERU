@@ -29,12 +29,7 @@ export class NomenclatureRecordComponent implements OnInit {
   nomenclatureForm: FormGroup;
   nomenclatureRecordForm: FormArray;
   nomenclatureTypeId: number;
-  pagedSummary: PagedSummary = {
-    totalCount: 0,
-    pageSize: 0,
-    currentPage: 1,
-    totalPages: 1
-  };
+  pagedSummary: PagedSummary = new PagedSummary();
   constructor(private fb: FormBuilder,
               private route: ActivatedRoute,
               private nomenclatureColumnService: NomenclatureColumnService,

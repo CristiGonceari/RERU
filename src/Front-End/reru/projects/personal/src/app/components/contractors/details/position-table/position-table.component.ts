@@ -25,12 +25,7 @@ export class PositionTableComponent implements OnInit {
   contractorId: number;
   isLoading: boolean = true;
   positions: PositionModel;
-  pagedSummary: PagedSummary = {
-    pageSize: 10,
-    currentPage: 1,
-    totalCount: 0,
-    totalPages: 0
-  };
+  pagedSummary: PagedSummary = new PagedSummary();
   constructor(private positionService: PositionService,
               private notificationService: NotificationsService,
               private route: ActivatedRoute,
