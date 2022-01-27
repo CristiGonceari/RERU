@@ -28,6 +28,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles
                 .ForMember(destinationMember => destinationMember.LastName, opts => opts.MapFrom(sourceMember => sourceMember.LastName))
                 .ForMember(destinationMember => destinationMember.FatherName, opts => opts.MapFrom(sourceMember => sourceMember.FatherName))
                 .ForMember(destinationMember => destinationMember.Idnp, opts => opts.MapFrom(sourceMember => sourceMember.Idnp))
+                .ForMember(destinationMember => destinationMember.Email, opts => opts.MapFrom(sourceMember => sourceMember.Email))
                 .ForMember(destinationMember => destinationMember.Modules, opts => opts.MapFrom(sourceMember => sourceMember.ModuleRoles));
             //.ForMember (destinationMember => destinationMember.Permissions, opts => opts.MapFrom (sourceMember => sourceMember.ModuleRoles.SelectMany (mr => mr.ModuleRole.Permissions.Select (p => p.Permission.Code))));
 
