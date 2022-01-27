@@ -694,6 +694,7 @@
     "03001607": "Wait for the start time",
     "03001608": "Invalid answer status",
     "03001609": "Invalid evaluator for this test",
+    "03001610": "You can not view test result",
     "03001701": "Invalid status",
     "03001702": "Invalid test type",
     "03001703": "Insufficient questions in category",

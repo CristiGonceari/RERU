@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using CODWER.RERU.Personal.Application.Validation;
+using CODWER.RERU.Personal.Application.Validators;
 using CODWER.RERU.Personal.Data.Entities.IdentityDocuments;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Bulletin;
-using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
 using FluentValidation;

@@ -16,7 +16,6 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Context
         }
 
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
-        public virtual DbSet<UserProfileIdentity> UserProfileIdentities { get; set; }
         public virtual DbSet<QuestionCategory> QuestionCategories { get; set; }
         public virtual DbSet<TestTypeQuestionCategory> TestTypeQuestionCategories { get; set; }
         public virtual DbSet<TestType> TestTypes { get; set; }

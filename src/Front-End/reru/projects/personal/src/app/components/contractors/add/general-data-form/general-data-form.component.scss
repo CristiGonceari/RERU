@@ -1,0 +1,5 @@
+.required h4::after {
+    content: "*";
+    color: red;
+    padding: 0 0 0 4px;
+}

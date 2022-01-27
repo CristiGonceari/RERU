@@ -1,0 +1,79 @@
+<app-loading-spinner *ngIf="isLoading" contentHeight="20rem" width="5rem" height="5rem"></app-loading-spinner>
+<div *ngIf="!isLoading" class="content  d-flex flex-column flex-column-fluid" id="kt_content">
+    <app-page-title [title]="'roles.title' | translate"></app-page-title>
+
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="card card-custom gutter-bs">
+                <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                    <div class="card-title">
+                        <h3 class="card-label">{{role.name || '-'}}
+                            <span
+                                class="d-block subheader-text pt-2">{{'roles.role-details' | translate}}</span>
+                        </h3>
+                    </div>
+                    <div class="card-toolbar">
+                        <div ngbDropdown class="dropdown dropdown-inline" container="body" placement="bottom-right">
+                            <a ngbDropdownToggle id="departmentDropdown"
+                                class="btn btn-sm btn-hover-default btn-icon mr-2" data-toggle="dropdown">
+                                <span class="svg-icon svg-icon-dark-25 svg-icon-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1">
+                                            <rect x="14" y="9" width="6" height="6" rx="3" fill="black" />
+                                            <rect x="3" y="9" width="6" height="6" rx="3" fill="black"
+                                                fill-opacity="0.7" />
+                                        </g>
+                                    </svg>
+                                </span>
+                            </a>
+                            <div ngbDropdownMenu aria-labelledby="departmentDropdown"
+                                class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                <ul class="navi flex-column navi-hover py-2">
+                                    <li class="navi-item"> <a [routerLink]="['../edit', role.id]" class="navi-link">
+                                            <span class="navi-icon"><i class="la la-edit text-dark-65"></i></span>
+                                            <span class="navi-text text-dark-65">{{'button.edit' | translate}}</span>
+                                        </a> </li>
+                                    <li class="navi-item"> <a href="javascript:;"
+                                            (click)="openConfirmationDeleteModal()" class="navi-link">
+                                            <span class="navi-icon"><i class="la la-remove text-dark-65"></i></span>
+                                            <span class="navi-text text-dark-65">{{'button.delete' | translate}}</span>
+                                        </a> </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="tab-content pt-5">
+                        <div class="tab-pane active" id="kt_apps_projects_view_tab_2" role="tabpanel">
+                            <form class="form">
+                                <div class="form-group row align-items-center">
+                                    <label
+                                        class="col-xl-3 col-lg-3 col-form-label text-lg-right">{{'entity.role.name' | translate}}</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        {{role.name || '-'}}
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label
+                                        class="col-xl-3 col-lg-3 col-form-label text-lg-right">{{'entity.role.code' | translate}}</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        {{role.code || '-'}}
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label
+                                        class="col-xl-3 col-lg-3 col-form-label text-lg-right">{{'entity.role.short-code' | translate}}</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        {{role.shortCode || '-'}}
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

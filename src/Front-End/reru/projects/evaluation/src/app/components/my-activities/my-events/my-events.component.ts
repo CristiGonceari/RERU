@@ -22,6 +22,7 @@ export class MyEventsComponent implements OnInit {
   displayMonth: string;
   displayYear: number;
   countedEvents: Events[] = [];
+  displayDate;
 
   constructor(private eventService: EventService) { }
 
@@ -70,12 +71,25 @@ export class MyEventsComponent implements OnInit {
 
   }
 
+  parseDatesForTable(date) {
+
+    const day = date && date.getDate() || -1;
+    const dayWithZero = day.toString().length > 1 ? day : '0' + day;
+    const month = date && date.getMonth() + 1 || -1;
+    const monthWithZero = month.toString().length > 1 ? month : '0' + month;
+    const year = date && date.getFullYear() || -1;
+
+    return `${dayWithZero}/${monthWithZero}/${year}`;
+
+  }
+
   getListByDate(data: any = {}): void {
     
     this.isLoading = true;
 
     if (data.date != null) {
       this.selectedDay = this.parseDates(data.date);
+      this.displayDate = this.parseDatesForTable(data.date);
     }
 
     const request = {

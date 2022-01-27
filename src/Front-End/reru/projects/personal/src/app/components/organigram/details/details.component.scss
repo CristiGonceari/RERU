@@ -1,0 +1,57 @@
+:host {
+    .btn-hover-default:hover:not(:disabled),
+    .show>.btn.btn-hover-default.dropdown-toggle.dropdown-toggle {
+      color: #B5B5C3;
+      background-color: #F3F6F9;
+      border-color: #F3F6F9;
+    }
+  
+    .dropdown.dropdown-inline {
+      a.dropdown-toggle::after {
+        display: none;
+      }
+    }
+  
+    .card.card-custom > .card-header .card-title .card-label {
+      font-size: 18px;
+      color: #1B283F;
+      font-weight: 700;
+      span.subheader-text {
+        font-size: 14px;
+        color: #80808F;
+        font-weight: 400;
+      }
+    }
+  
+  
+    label.col-form-label,
+    label.col-form-label + div {
+        color: #464E5F;
+    }
+  
+    label.col-form-label {
+      font-size: 12px;
+      font-weight: 400;
+    }
+  
+    label.col-form-label + div {
+      font-size: 14px;
+    }
+
+    .chart-container {
+      max-width: 100%;
+      max-height: 100%;
+      overflow: auto;
+      &.full {
+        position: relative;
+        min-height: 300px;
+        margin: 25px 0 0 0;
+         ngx-org-chart::ng-deep {
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+      }
+    }
+  }
+  

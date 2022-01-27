@@ -1,0 +1,25 @@
+table.nomenclature-header-table {
+    border: 1px solid #c7c7c7;
+    margin-bottom: 20px;
+    thead th {
+        padding: 10px 20px 10px 20px;
+        border-right: 1px solid #c7c7c7;
+    }
+
+    .remove-icon {
+        position: absolute;
+        top: -5px;
+        right: 3px;
+        font-size: 20px;
+    }
+
+    border: 1px solid #c7c7c7;
+    thead tr th {
+        border: 1px solid #c7c7c7;
+    }
+
+    tbody tr td {
+        padding: 0 10px;
+        border: 1px solid #c7c7c7;
+    }
+}

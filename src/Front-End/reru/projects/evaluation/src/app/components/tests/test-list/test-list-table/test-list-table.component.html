@@ -62,7 +62,7 @@
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                                 <div ngbDropdownMenu aria-labelledby="action1">
                                     <button *ngIf="item.testStatus === status.Terminated" ngbDropdownItem
-                                        [routerLink]="['verify-test', item.id]"
+                                        [routerLink]="['verify-test', item.id]" [disabled]="!item.isEvaluator"
                                         class="navi-link align-items-baseline px-6">
                                         {{ 'button.verify' | translate }}
                                     </button>

@@ -8,12 +8,13 @@ using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CODWER.RERU.Core.Application.UserProfiles.GetUserProfile {
+namespace CODWER.RERU.Core.Application.UserProfiles.GetUserProfile 
+{
     public class GetUserProfileQueryHandler : BaseHandler, IRequestHandler<GetUserProfileQuery, UserProfileDto> 
     {
         private readonly IDocumentStorageService _documentService;
 
-        public GetUserProfileQueryHandler (ICommonServiceProvider commonServicepProvider, IDocumentStorageService documentService) : base (commonServicepProvider)
+        public GetUserProfileQueryHandler (ICommonServiceProvider commonServiceProvider, IDocumentStorageService documentService) : base (commonServiceProvider)
         {
             _documentService = documentService;
         }

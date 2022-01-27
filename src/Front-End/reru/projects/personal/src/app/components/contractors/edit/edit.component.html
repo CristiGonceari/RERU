@@ -1,0 +1,111 @@
+<div *ngIf="isLoading" class="content  d-flex flex-column flex-column-fluid" id="kt_content">
+  <app-loading-spinner [contentHeight]="'20rem'" [width]="'5rem'" [height]="'5rem'" [classColor]="'text-primary'">
+  </app-loading-spinner>
+</div>
+<!--begin::Content-->
+<div *ngIf="!isLoading" class="content  d-flex flex-column flex-column-fluid" id="kt_content">
+  <app-page-title [title]="'pages.personal.title' | translate"></app-page-title>
+
+  <!--begin::Entry-->
+  <div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class=" container ">
+
+      <!--begin::Card-->
+      <div class="card card-custom gutter-bs">
+        <!--Begin::Body-->
+        <div class="card-body">
+          <div class="wizard wizard-1">
+            <div class="row justify-content-center my-5 px-8 my-lg-7 px-lg-10">
+              <div class="col-12">
+                <h3 class="font-weight-bolder">{{'entity.personal.single' | translate}}</h3>
+              </div>
+              <div class="col-xl-12 col-xxl-7">
+                <!--begin::Form Wizard Form-->
+                <form class="form" [formGroup]="contractorForm" autocomplete="off" >
+                  <!--begin::Form Wizard Step 1-->
+                  <div class="pb-5">
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="form-group row">
+                          <label class="col-xl-3 col-lg-3 col-form-label" for="samplelastname">Nume</label>
+                          <div class="col-lg-9 col-xl-9">
+                            <input autocomplete="off"  class="form-control form-control-solid" id="samplelastname" name="samplelastname" type="text"
+                              placeholder="Nume" formControlName="lastName" />
+                            <span class="form-text text-muted">Introdu numele noului angajat</span>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="samplefirstname" class="col-xl-3 col-lg-3 col-form-label">Prenume</label>
+                          <div class="col-lg-9 col-xl-9">
+                            <input autocomplete="off"  class="form-control form-control-solid" id="samplefirstname" name="samplefirstname" type="text"
+                              placeholder="Prenume" formControlName="firstName" />
+                            <span class="form-text text-muted">Introdu prenumele noului angajat</span>
+                          </div>
+                        </div>
+                        <div formGroupName="currentPosition">
+                          <div class="form-group row">
+                            <label class="col-xl-3 col-lg-3 col-form-label">Data angajarii</label>
+                            <div class="col-lg-9 col-xl-9">
+                              <app-date [parent]="contractorForm.get('currentPosition')" [date]="'fromDate'"
+                                [placeholder]="'Introdu data angajarii'"></app-date>
+                              <span class="form-text text-muted">Introdu data angajarii</span>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-xl-3 col-lg-3 col-form-label" for="departmentId">Departamentul</label>
+                            <div class="col-lg-9 col-xl-9">
+                              <select autocomplete="off"  class="form-control" name="departmentId" id="departmentId"
+                                formControlName="departmentId">
+                                <option value="null">Selecteaza departamentul</option>
+                                <option *ngFor="let item of departments" [value]="item.value">{{item.label}}</option>
+                              </select>
+                              <span class="form-text text-muted">Selectează departamentul</span>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-xl-3 col-lg-3 col-form-label" for="organizationRoleId">Rolul</label>
+                            <div class="col-lg-9 col-xl-9">
+                              <select autocomplete="off"  class="form-control" name="organizationRoleId" id="organizationRoleId"
+                                formControlName="organizationRoleId">
+                                <option value="null">Selecteaza rolul</option>
+                                <option *ngFor="let item of roles" [value]="item.value">{{item.label}}</option>
+                              </select>
+                              <span class="form-text text-muted">Selectează rolul</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--end::Form Wizard Step 1-->
+                  <!--begin::Wizard Actions-->
+                  <div class="d-flex justify-content-end">
+                    <div class="mr-2">
+                      <button routerLink="../../" type="button" class="btn btn-secondary font-weight-bold">
+                        {{'button.cancel' | translate}}
+                      </button>
+                    </div>
+                    <div>
+                      <button type="button" class="btn edit-button font-weight-bold" [disabled]="contractorForm.invalid"
+                        (click)="editContractor()">
+                        {{'button.apply-modifications' | translate}}
+                      </button>
+                    </div>
+                  </div>
+                  <!--end::Wizard Actions-->
+                </form>
+                <!--end::Form Wizard Form-->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end::Body-->
+      </div>
+      <!--end::Card-->
+    </div>
+    <!--end::Container-->
+  </div>
+  <!--end::Entry-->
+</div>
+<!--end::Content-->

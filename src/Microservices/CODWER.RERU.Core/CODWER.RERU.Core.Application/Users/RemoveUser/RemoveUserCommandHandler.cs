@@ -7,16 +7,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Core.Data.Entities;
+using CVU.ERP.Logging.Models;
+using CVU.ERP.Module.Application.LoggerServices;
 
 namespace CODWER.RERU.Core.Application.Users.RemoveUser
 {
     public class RemoveUserCommandHandler : BaseHandler, IRequestHandler<RemoveUserCommand, Unit>
     {
         private readonly IEnumerable<IIdentityService> _identityServices;
+        private readonly ILoggerService<RemoveUserCommandHandler> _loggerService;
 
-        public RemoveUserCommandHandler(ICommonServiceProvider commonServicepProvider, IEnumerable<IIdentityService> identityServices) : base(commonServicepProvider)
+        public RemoveUserCommandHandler(ICommonServiceProvider commonServiceProvider,
+            IEnumerable<IIdentityService> identityServices,
+            ILoggerService<RemoveUserCommandHandler> loggerService) : base(commonServiceProvider)
         {
             _identityServices = identityServices;
+            _loggerService = loggerService;
         }
 
         public async Task<Unit> Handle(RemoveUserCommand request, CancellationToken cancellationToken)
@@ -35,7 +42,14 @@ namespace CODWER.RERU.Core.Application.Users.RemoveUser
 
             await CoreDbContext.SaveChangesAsync();
 
+            await LogAction(userProfile);
+
             return Unit.Value;
+        }
+
+        private async Task LogAction(UserProfile userProfile)
+        {
+            await _loggerService.Log(LogData.AsCore($"User {userProfile.Name} {userProfile.LastName} was removed", userProfile));
         }
     }
 }

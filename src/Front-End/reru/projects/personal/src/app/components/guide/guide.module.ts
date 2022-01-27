@@ -8,20 +8,20 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UtilsModule } from '../../utils/utils.module';
-import { SharedModule } from 'dist/erp-shared';
+import { SharedModule } from '@erp/shared';
 
 
 @NgModule({
   declarations: [GuideComponent],
   imports: [
-    // CommonModule,
-    // GuideRoutingModule,
-    // RouterModule,
-    // HttpClientModule,
-    // NgbModule,
-    // TranslateModule,
-    // UtilsModule,
-    // SharedModule
+    CommonModule,
+    GuideRoutingModule,
+    RouterModule,
+    HttpClientModule,
+    NgbModule,
+    TranslateModule,
+    UtilsModule,
+    SharedModule
   ]
 })
 export class GuideModule { }

@@ -1,0 +1,13 @@
+:host {
+    .confirmation-container {
+        @media screen and (max-width: 992px) {
+            margin: 0;
+        }
+    }
+    ::ng-deep {
+        app-confirm-button,
+        app-confirm-button button {
+            width: 100%;
+        }
+    }
+}

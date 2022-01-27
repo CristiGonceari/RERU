@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.Plans.AddPlan
 
         private async Task LogAction(Plan item)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Event was added", item));
+            await _loggerService.Log(LogData.AsEvaluation($"Plan was added", item));
         }
     }
 }

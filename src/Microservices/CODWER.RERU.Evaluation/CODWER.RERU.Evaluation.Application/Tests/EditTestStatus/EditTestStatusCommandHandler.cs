@@ -14,9 +14,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.EditTestStatus
         private readonly AppDbContext _appDbContex;
         private readonly IInternalNotificationService _internalNotificationService;
 
-        public EditTestStatusCommandHandler(AppDbContext appDbContex, IInternalNotificationService internalMotificationService)
+        public EditTestStatusCommandHandler(AppDbContext appDbContex, IInternalNotificationService internalNotificationService)
         {
-            _internalNotificationService = internalMotificationService;
+            _internalNotificationService = internalNotificationService;
             _appDbContex = appDbContex;
         }
 

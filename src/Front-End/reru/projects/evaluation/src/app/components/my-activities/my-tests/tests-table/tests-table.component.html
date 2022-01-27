@@ -10,7 +10,7 @@
 
     <div class="card" *ngIf="!isLoading">
         <div class="card-header text-center" *ngIf="selectedDay != null">
-            {{ 'calendar.selected-date' | translate }}: {{selectedDay}}
+            {{ 'calendar.selected-date' | translate }}: {{displayDate}}
         </div>
         <div class="card-body">
             <table for="kt_datatable" class="datatable table" style="overflow: visible">

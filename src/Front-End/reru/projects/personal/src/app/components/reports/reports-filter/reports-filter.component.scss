@@ -1,0 +1,8 @@
+:host {
+    width: 100%;
+    button,
+    app-confirm-button,
+    app-confirm-button::ng-deep button {
+        width: 100%;
+    }
+}

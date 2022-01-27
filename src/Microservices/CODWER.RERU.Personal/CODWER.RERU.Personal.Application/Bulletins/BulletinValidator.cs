@@ -1,5 +1,6 @@
 ﻿using CODWER.RERU.Personal.Application.Addresses;
 using CODWER.RERU.Personal.Application.Validation;
+using CODWER.RERU.Personal.Application.Validators.Bulletin;
 using CODWER.RERU.Personal.DataTransferObjects.Bulletin;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
@@ -10,8 +11,8 @@ namespace CODWER.RERU.Personal.Application.Bulletins
     {
         public BulletinValidator()
         {
-            //RuleFor(x => x.Idnp)
-            //    .SetValidator(new IdnpValidator());
+            RuleFor(x => x.Idnp)
+                .SetValidator(new IdnpValidator());
 
             RuleFor(x => x.Series)
                 .NotEmpty()

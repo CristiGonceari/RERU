@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ListComponent } from './list/list.component';
 import { PontajData } from './pontaj-data.component';
 
 const routes: Routes = [
   { path: '',
-    component: PontajData
+    component: PontajData, children: [
+      { path: '', component: ListComponent }
+    ]
   }
 ];
 

@@ -1,0 +1,28 @@
+:host {
+  .btn-hover-default:hover:not(:disabled),
+  .show>.btn.btn-hover-default.dropdown-toggle.dropdown-toggle {
+    color: #B5B5C3;
+    background-color: #F3F6F9;
+    border-color: #F3F6F9;
+  }
+
+  .dropdown.dropdown-inline {
+    a.dropdown-toggle::after {
+      display: none;
+    }
+  }
+  table thead tr th {
+    color: #b5b5c3;
+    font-size: .9rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: .1rem;
+  }
+  table thead tr th:first-child,
+  table tbody tr td:first-child {
+    width: 250px;
+    max-width: 250px;
+    padding: 3px;
+  }
+}
+  

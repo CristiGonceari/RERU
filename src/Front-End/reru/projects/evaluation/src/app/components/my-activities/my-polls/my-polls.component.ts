@@ -23,6 +23,7 @@ export class MyPollsComponent implements OnInit {
   displayMonth: string;
   displayYear: number;
   countedEvents: Events[] = [];
+  displayDate;
 
   constructor(private eventService: EventService) { }
 
@@ -71,7 +72,19 @@ export class MyPollsComponent implements OnInit {
     const monthWithZero = month.toString().length > 1 ? month : '0' + month;
     const year = date && date.getFullYear() || -1;
 
-    return `${year}-${monthWithZero}-${dayWithZero}`;
+    return `${year}-${monthWithZero}-${dayWithZero}`;;
+
+  }
+
+  parseDatesForTable(date) {
+
+    const day = date && date.getDate() || -1;
+    const dayWithZero = day.toString().length > 1 ? day : '0' + day;
+    const month = date && date.getMonth() + 1 || -1;
+    const monthWithZero = month.toString().length > 1 ? month : '0' + month;
+    const year = date && date.getFullYear() || -1;
+
+    return `${dayWithZero}/${monthWithZero}/${year}`;
 
   }
 
@@ -81,6 +94,7 @@ export class MyPollsComponent implements OnInit {
 
     if (data.date != null) {
       this.selectedDay = this.parseDates(data.date);
+      this.displayDate = this.parseDatesForTable(data.date)
     }
 
     const request = {

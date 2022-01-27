@@ -88,6 +88,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
             if (user != null)
             {
                 var response = await _userManager.DeleteAsync(user);
+
                 if (response.Errors.Any())
                 {
                     throw new Exception("User was not deleted");
@@ -121,7 +122,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                     to = user.Email
                 };
 
-                await _notificationService.Notify(emailData, NotificationType.LocalNotification);
+                await _notificationService.Notify(emailData, NotificationType.Both);
             }
         }
     }

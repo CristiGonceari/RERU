@@ -1,4 +1,6 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+
 namespace CVU.ERP.Logging.Models
 {
     public class LogData
@@ -24,6 +26,12 @@ namespace CVU.ERP.Logging.Models
         public static LogData AsCore(string message) => new(message, Projects.CORE);
         public static LogData AsCore<T>(string message, T obj) => new(message, Projects.CORE, Serialize(obj));
 
-        private static string Serialize<T>(T obj) => obj != null ? JsonSerializer.Serialize(obj) : string.Empty;
+        private static string Serialize<T>(T obj) => 
+            obj != null 
+                ? JsonSerializer.Serialize(obj,new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve
+                }) 
+                : string.Empty;
     }
 }

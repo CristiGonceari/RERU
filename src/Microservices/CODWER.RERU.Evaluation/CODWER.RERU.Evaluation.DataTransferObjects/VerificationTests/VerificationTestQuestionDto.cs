@@ -8,5 +8,6 @@
         public string Comment { get; set; }
         public int EvaluatorPoints { get; set; }
         public int QuestionUnitId { get; set; }
+        public bool? ToEvaluate { get; set; }
     }
 }

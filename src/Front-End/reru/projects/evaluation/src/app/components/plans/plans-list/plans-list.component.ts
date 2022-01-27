@@ -48,6 +48,7 @@ export class PlansListComponent implements OnInit {
 
   displayMonth: string;
   displayYear: number;
+  displayDate;
 
   constructor(private planService: PlanService,
               private router: Router,
@@ -65,6 +66,7 @@ export class PlansListComponent implements OnInit {
 
     if (data.date != null) {
       this.selectedDay = this.parseDates(data.date);
+      this.displayDate = this.parseDatesForTable(data.date)
     }
 
     this.isLoading = true;
@@ -124,8 +126,20 @@ export class PlansListComponent implements OnInit {
     const month = date && date.getMonth() + 1 || -1;
     const monthWithZero = month.toString().length > 1 ? month : '0' + month;
     const year = date && date.getFullYear() || -1;
-
+     
     return `${year}-${monthWithZero}-${dayWithZero}`;
+
+  }
+
+  parseDatesForTable(date) {
+
+    const day = date && date.getDate() || -1;
+    const dayWithZero = day.toString().length > 1 ? day : '0' + day;
+    const month = date && date.getMonth() + 1 || -1;
+    const monthWithZero = month.toString().length > 1 ? month : '0' + month;
+    const year = date && date.getFullYear() || -1;
+     
+    return `${dayWithZero}/${monthWithZero}/${year}`;
 
   }
 

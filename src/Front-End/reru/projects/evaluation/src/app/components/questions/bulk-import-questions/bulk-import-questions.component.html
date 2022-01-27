@@ -25,7 +25,7 @@
             <label class="no-wrap my-auto">{{'questions.type' | translate}}</label>
             <select name="type" class="form-control w-50 mx-7" [(ngModel)]="selectedTypeName"
               (ngModelChange)="selectType($event)">
-              <option value="{{ item }}" *ngFor="let item of qType">{{ item }}</option>
+              <option value="{{ item }}" *ngFor="let item of questionTypes">{{ item }}</option>
             </select>
             <app-confirm-button class="btn" (handle)="downloadTemplate(selectedTypeId)"
               [value]="'button.download' | translate"></app-confirm-button>
@@ -36,7 +36,7 @@
       </div>
     </div>
   
-    <div class="form-group row mt-10" *ngIf="hasTemplate">
+    <div class="form-group row mt-10">
       <label class="col-form-label col-3 text-right">{{'message.bulk-uploadMsg' | translate}}:</label>
       <div class="col-9">
         <ngx-dropzone (change)="onSelect($event)" class="font-weight-light justify-content-center" [multiple]="false" accept=".xlsx" [disabled]="files.length > 0">

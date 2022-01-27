@@ -12,8 +12,7 @@ import { saveAs } from 'file-saver';
 export class BulkImportQuestionsComponent implements OnInit {
   selectedTypeName: string = QuestionUnitTypeEnum[1];
 	selectedTypeId = 1;
-	qType: string[];
-	hasTemplate: boolean;
+	questionTypes: string[];
 	files: File[] = [];
 
 	constructor(
@@ -22,8 +21,7 @@ export class BulkImportQuestionsComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-		this.hasTemplate = false;
-		this.qType = Object.keys(QuestionUnitTypeEnum)
+		this.questionTypes = Object.keys(QuestionUnitTypeEnum)
 			.map(key => QuestionUnitTypeEnum[key])
 			.filter(value => typeof value === 'string') as string[];
 	}
@@ -44,9 +42,6 @@ export class BulkImportQuestionsComponent implements OnInit {
 			() => {
 				console.error('error in getting template');
 			},
-			() => {
-				this.hasTemplate = true;
-			}
 		);
 	}
 

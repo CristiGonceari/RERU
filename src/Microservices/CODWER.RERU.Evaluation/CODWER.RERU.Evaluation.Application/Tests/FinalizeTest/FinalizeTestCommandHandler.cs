@@ -24,12 +24,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
         private readonly INotificationService _notificationService;
         private readonly IInternalNotificationService _internalNotificationService;
 
-        public FinalizeTestCommandHandler(AppDbContext appDbContext, IMediator mediator, INotificationService notificationService, IInternalNotificationService internalMotificationService)
+        public FinalizeTestCommandHandler(AppDbContext appDbContext, IMediator mediator, INotificationService notificationService, IInternalNotificationService internalNotificationService)
         {
             _appDbContext = appDbContext;
             _mediator = mediator;
             _notificationService = notificationService;
-            _internalNotificationService = internalMotificationService;
+            _internalNotificationService = internalNotificationService;
         }
 
         public async Task<Unit> Handle(FinalizeTestCommand request, CancellationToken cancellationToken)
@@ -117,7 +117,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
                 to = user.Email
             };
 
-            await _notificationService.Notify(emailData, NotificationType.LocalNotification);
+            await _notificationService.Notify(emailData, NotificationType.Both);
 
             return Unit.Value;
         }

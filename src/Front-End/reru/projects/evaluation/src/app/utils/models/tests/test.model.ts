@@ -22,6 +22,7 @@ export class Test {
     rules: string;
     verificationProgress: string;
     showUserName: boolean;
+    isEvaluator: boolean;
     testStatus: TestStatusEnum;
     modeStatus: TestTypeModeEnum;
     result: TestResultStatusEnum;

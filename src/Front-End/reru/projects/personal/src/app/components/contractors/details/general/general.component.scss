@@ -1,0 +1,9 @@
+button.btn.btn-light-primary {
+    span {
+        color: #F64E60;
+    }
+    &:hover span,
+    &:focus span {
+        color: white;
+    }
+}

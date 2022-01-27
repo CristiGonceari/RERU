@@ -1,0 +1,10 @@
+.table-responsive {
+    max-height: 150px;
+    position: relative;
+    thead th {
+        top: 0;
+        background: #FFF;
+        position: sticky;
+        z-index: 1;
+    }
+}

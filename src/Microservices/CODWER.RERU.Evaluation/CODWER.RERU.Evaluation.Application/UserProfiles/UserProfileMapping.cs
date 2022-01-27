@@ -20,28 +20,28 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles
                 .ForMember(x => x.Name, opts => opts.MapFrom(src => src.FirstName))
                 .ForMember(x => x.Email, opts => opts.MapFrom(src => src.Email));
 
-            CreateMap<UserProfileIdentity, UserProfileIdentityDto>();
-
             CreateMap<UserProfileDto, UserProfile>()
-                .ForMember(x => x.Id, opts => opts.Ignore());
-
-            CreateMap<UserProfileIdentityDto, UserProfileIdentity>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
 
             CreateMap<ApplicationUser, UserProfile>()
                 .ForMember(x => x.Id, opts => opts.Ignore())
                 .ForMember(x => x.CoreUserId, opts => opts.MapFrom(src => src.Id))
-                .ForMember(x => x.FirstName, opts => opts.MapFrom(src => src.Name))
+                .ForMember(x => x.FirstName, opts => opts.MapFrom(src => src.FirstName))
                 .ForMember(x => x.Email, opts => opts.MapFrom(src => src.Email));
-
-            CreateMap<ApplicationUserIdentity, UserProfileIdentity>()
-                .ForMember(x => x.Id, opts => opts.Ignore())
-                .ForMember(x => x.Type, opts => opts.MapFrom(src => src.Type))
-                .ForMember(x => x.Identificator, opts => opts.MapFrom(src => src.Identificator));
 
             CreateMap<UserProfile, SelectItem>()
                 .ForMember(x => x.Value, opts => opts.MapFrom(u => u.Id))
                 .ForMember(x => x.Label, opts => opts.MapFrom(u => u.FirstName + " " + u.LastName));
+
+
+            CreateMap<BaseUserProfile, UserProfile>()
+                .ForMember(x => x.Id, opts => opts.Ignore())
+                .ForMember(x => x.CoreUserId, opts => opts.MapFrom(u => u.CoreUserId))
+                .ForMember(x => x.FirstName, opts => opts.MapFrom(u => u.FirstName))
+                .ForMember(x => x.LastName, opts => opts.MapFrom(u => u.LastName))
+                .ForMember(x => x.Patronymic, opts => opts.MapFrom(u => u.FatherName))
+                .ForMember(x => x.Idnp, opts => opts.MapFrom(u => u.Idnp))
+                .ForMember(x => x.Email, opts => opts.MapFrom(u => u.Email));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace CODWER.RERU.Core.Data.Persistence.Migrations
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.2");
+                .HasAnnotation("ProductVersion", "5.0.11");
 
             modelBuilder.Entity("CODWER.RERU.Core.Data.Entities.Document", b =>
                 {
@@ -265,6 +265,12 @@ namespace CODWER.RERU.Core.Data.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FatherName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Idnp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")

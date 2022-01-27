@@ -28,7 +28,8 @@ namespace CVU.ERP.Notifications.Services.Implementations
             }
             else if (type == NotificationType.Both)
             {
-                // to do
+                result = await _emailService.QuickSendAsync(data.subject, data.body, data.from, data.to);
+                //+ MNotification todo Service
             }
 
             return result;

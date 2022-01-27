@@ -1,0 +1,44 @@
+<div class="modal-header border-0 pb-0">
+    <h3 *ngIf="form.get('id') && form.get('id').value" class="modal-title">{{'nomenclature.edit-column' | translate}}</h3>
+    <h3 *ngIf="!form.get('id')" class="modal-title">{{'nomenclature.add-column' | translate}}</h3>
+</div>
+<div class="modal-body px-7">
+    <form [formGroup]="form" autocomplete="off">
+        <div class="form-group row">
+            <label for="samplename" class="col-form-label col-md-3 col-12">{{'entity.nomenclature.name' | translate}}:</label>
+            <div class="col-md col-12">
+                <input class="form-control" type="text" formControlName="name" name="samplename" id="samplename">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="type" class="col-form-label col-md-3 col-12">{{'entity.nomenclature.type' | translate}}:</label>
+            <div class="col-md col-12">
+                <select class="form-control" name="type" id="type" formControlName="type">
+                    <option value="1">Text</option>
+                    <option value="2">Character</option>
+                    <option value="3">Integer</option>
+                    <option value="4">Double</option>
+                    <option value="5">Boolean</option>
+                    <option value="6">Date</option>
+                    <option value="7">DateTime</option>
+                    <option value="8">Email</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row align-items-center">
+            <label for="isMandatory" class="col-form-label col-md-3 col-12">{{'entity.nomenclature.required' | translate}}:</label>
+            <div class="col-md col-12">
+                <div class="checbox-inline">
+                    <label class="checkbox checkbox-square">
+                        <input name="isMandatory" type="checkbox" formControlName="isMandatory" id="isMandatory">
+                        <span class="mr-2"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer border-0 pt-0">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+    <button type="button" class="btn btn-success" [disabled]="form.invalid" (click)="close()">Update column</button>
+</div>

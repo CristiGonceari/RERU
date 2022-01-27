@@ -4,4 +4,5 @@ import { Component } from '@angular/core';
   selector: '',
   template: '<router-outlet></router-outlet>'
 })
+
 export class RolesComponent { }

@@ -64,6 +64,7 @@ namespace CODWER.RERU.Personal.Data.Persistence.Context
 
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<ByteArrayFile> ByteFiles { get; set; }
+        public virtual DbSet<FileSignature> FileSignatures { get; set; }
         public virtual DbSet<DepartmentRoleContent> DepartmentRoleContents { get; set; }
 
 

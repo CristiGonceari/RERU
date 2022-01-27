@@ -1286,29 +1286,6 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.ToTable("UserProfiles");
                 });
 
-            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.UserProfileIdentity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Identificator")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserProfileId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserProfileId");
-
-                    b.ToTable("UserProfileIdentities");
-                });
-
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.AnswerStatusEnum>", b =>
                 {
                     b.Property<int>("Id")
@@ -2177,17 +2154,6 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.UserProfileIdentity", b =>
-                {
-                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.UserProfile", "UserProfile")
-                        .WithMany("Identities")
-                        .HasForeignKey("UserProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UserProfile");
-                });
-
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Event", b =>
                 {
                     b.Navigation("EventEvaluators");
@@ -2269,8 +2235,6 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.Navigation("EventResponsiblePersons");
 
                     b.Navigation("EventUsers");
-
-                    b.Navigation("Identities");
 
                     b.Navigation("LocationResponsiblePersons");
 

@@ -1,0 +1,247 @@
+<app-page-title [title]="'pages.personal.title' | translate"></app-page-title>
+<app-loading-spinner *ngIf="isLoading" [colorClass]="'text-primary'" [contentHeight]="'20rem'" [height]="'5rem'" [width]="'5rem'">
+</app-loading-spinner>
+<app-content *ngIf="!isLoading">
+  <div class="d-flex flex-row">
+    <div class="flex-row-auto offcanvas-mobile w-300px w-xl-350px" id="kt_profile_aside">
+      <div class="card card-custom card-stretch">
+        <div class="card-body pt-4">
+          <div class="d-flex justify-content-end">
+            <app-personal-dropdown-details [index]="1"
+              (addContact)="openAddContactModal()" 
+              (delete)="openConfirmationDeleteModal()">
+            </app-personal-dropdown-details>
+          </div>
+
+          <div class="d-flex align-items-start">
+            <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
+              <app-loading-spinner *ngIf="avatarLoading" [colorClass]="'text-primary'" [contentHeight]="'5rem'" [height]="'2rem'" [width]="'2rem'"></app-loading-spinner>
+              <app-details-avatar *ngIf="!avatarLoading" [contractor]="avatarBase64"></app-details-avatar>
+              <app-badge-state [state]="contractor.employerState"></app-badge-state>
+            </div>
+            <div>
+              <a href="javascript:;" (click)="openChangeNameModal()"
+                class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
+                {{contractor.lastName}} {{contractor.firstName}} {{contractor.fatherName}}
+              </a>
+              <div class="mb-2 pointer" (click)="openChangeCurrentPositionModal()">
+                <app-last-organization-role-label [item]="contractor"></app-last-organization-role-label>
+              </div>
+              <div class="text-muted pointer" (click)="openChangeCurrentPositionModal()">
+                <app-last-department-label [item]="contractor"></app-last-department-label>
+              </div>
+            </div>
+          </div>
+          <div class="pt-5">
+            <ng-container *ngFor="let contact of contractor.contacts">
+              <app-view-contact (update)="getUser(contractor.id)"
+                                [contact]="contact"
+                                [contractor]="contractor">
+              </app-view-contact>
+            </ng-container>
+            <div *ngIf="!contractor.hasEmploymentRequest || !contractor.hasIdentityDocuments || !contractor.hasStudies || !contractor.hasBulletin || !contractor.hasPositions || !contractor.hasCim" 
+            class="alert alert-custom alert-light-warning fade show px-6 py-3" role="alert">
+              <div class="alert-icon">
+                <i class="flaticon-warning"></i>
+              </div>
+              <div class="alert-text">{{'personal.profile-incomplete' | translate}}</div>
+              <div class="alert-close">
+                <button type="button" (click)="redirect()" class="close pulse pulse-warning" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">
+                    <i class="ki ki-arrow-next"></i>
+                    <span class="pulse-ring"></span>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="navi navi-bold navi-hover navi-active">
+            <div class="navi-item mb-2">
+              <a routerLink="./" class="navi-link py-4">
+                <span class="navi-icon mr-2">
+                  <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                        <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero"></path>
+                        <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3"></path>
+                      </g>
+                    </svg>
+                  </span>
+                </span>
+                <span class="navi-text font-size-lg">{{'personal.general-data' | translate}}</span>
+              </a>
+            </div>
+            <div class="navi-item mb-2">
+              <a [routerLink]="!contractor.hasBulletin ? null : './bulletin'" class="navi-link py-4" [class.disabled]="!contractor.hasBulletin">
+                <span class="navi-icon mr-2">
+                  <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <rect x="0" y="0" width="24" height="24"/>
+                          <circle fill="#000000" opacity="0.3" cx="20.5" cy="12.5" r="1.5"/>
+                          <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 6.500000) rotate(-15.000000) translate(-12.000000, -6.500000) " x="3" y="3" width="18" height="7" rx="1"/>
+                          <path d="M22,9.33681558 C21.5453723,9.12084552 21.0367986,9 20.5,9 C18.5670034,9 17,10.5670034 17,12.5 C17,14.4329966 18.5670034,16 20.5,16 C21.0367986,16 21.5453723,15.8791545 22,15.6631844 L22,18 C22,19.1045695 21.1045695,20 20,20 L4,20 C2.8954305,20 2,19.1045695 2,18 L2,6 C2,4.8954305 2.8954305,4 4,4 L20,4 C21.1045695,4 22,4.8954305 22,6 L22,9.33681558 Z" fill="#000000"/>
+                      </g>
+                  </svg>
+                  </span>
+                </span>
+                <span class="navi-text font-size-lg">{{'personal.bulletin' | translate}}</span>
+              </a>
+            </div>
+            <div class="navi-item mb-2">
+              <a [routerLink]="!contractor.hasStudies ? null : './studies'" class="navi-link py-4" [class.disabled]="!contractor.hasStudies">
+                <span class="navi-icon mr-2">
+                  <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <rect x="0" y="0" width="24" height="24"/>
+                          <path d="M13.6855025,18.7082217 C15.9113859,17.8189707 18.682885,17.2495635 22,17 C22,16.9325178 22,13.1012863 22,5.50630526 L21.9999762,5.50630526 C21.9999762,5.23017604 21.7761292,5.00632908 21.5,5.00632908 C21.4957817,5.00632908 21.4915635,5.00638247 21.4873465,5.00648922 C18.658231,5.07811173 15.8291155,5.74261533 13,7 C13,7.04449645 13,10.79246 13,18.2438906 L12.9999854,18.2438906 C12.9999854,18.520041 13.2238496,18.7439052 13.5,18.7439052 C13.5635398,18.7439052 13.6264972,18.7317946 13.6855025,18.7082217 Z" fill="#000000"/>
+                          <path d="M10.3144829,18.7082217 C8.08859955,17.8189707 5.31710038,17.2495635 1.99998542,17 C1.99998542,16.9325178 1.99998542,13.1012863 1.99998542,5.50630526 L2.00000925,5.50630526 C2.00000925,5.23017604 2.22385621,5.00632908 2.49998542,5.00632908 C2.50420375,5.00632908 2.5084219,5.00638247 2.51263888,5.00648922 C5.34175439,5.07811173 8.17086991,5.74261533 10.9999854,7 C10.9999854,7.04449645 10.9999854,10.79246 10.9999854,18.2438906 L11,18.2438906 C11,18.520041 10.7761358,18.7439052 10.4999854,18.7439052 C10.4364457,18.7439052 10.3734882,18.7317946 10.3144829,18.7082217 Z" fill="#000000" opacity="0.3"/>
+                      </g>
+                    </svg>
+                  </span>
+                </span>
+                <span class="navi-text font-size-lg">{{'personal.studies' | translate}}</span>
+              </a>
+            </div>
+            <div class="navi-item mb-2">
+              <a routerLink="./ranks" class="navi-link py-4">
+                <span class="navi-icon mr-2">
+                  <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <polygon points="0 0 24 0 24 24 0 24"/>
+                          <path d="M12,18 L7.91561963,20.1472858 C7.42677504,20.4042866 6.82214789,20.2163401 6.56514708,19.7274955 C6.46280801,19.5328351 6.42749334,19.309867 6.46467018,19.0931094 L7.24471742,14.545085 L3.94038429,11.3241562 C3.54490071,10.938655 3.5368084,10.3055417 3.92230962,9.91005817 C4.07581822,9.75257453 4.27696063,9.65008735 4.49459766,9.61846284 L9.06107374,8.95491503 L11.1032639,4.81698575 C11.3476862,4.32173209 11.9473121,4.11839309 12.4425657,4.36281539 C12.6397783,4.46014562 12.7994058,4.61977315 12.8967361,4.81698575 L14.9389263,8.95491503 L19.5054023,9.61846284 C20.0519472,9.69788046 20.4306287,10.2053233 20.351211,10.7518682 C20.3195865,10.9695052 20.2170993,11.1706476 20.0596157,11.3241562 L16.7552826,14.545085 L17.5353298,19.0931094 C17.6286908,19.6374458 17.263103,20.1544017 16.7187666,20.2477627 C16.5020089,20.2849396 16.2790408,20.2496249 16.0843804,20.1472858 L12,18 Z" fill="#000000"/>
+                      </g>
+                    </svg>
+                  </span>
+                </span>
+                <span class="navi-text font-size-lg">{{'personal.ranks' | translate}}</span>
+              </a>
+            </div>
+            <div class="navi-item mb-2">
+              <a routerLink="./family" class="navi-link py-4">
+                <span class="navi-icon mr-2">
+                  <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <polygon points="0 0 24 0 24 24 0 24"/>
+                        <path d="M18,14 C16.3431458,14 15,12.6568542 15,11 C15,9.34314575 16.3431458,8 18,8 C19.6568542,8 21,9.34314575 21,11 C21,12.6568542 19.6568542,14 18,14 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+                        <path d="M17.6011961,15.0006174 C21.0077043,15.0378534 23.7891749,16.7601418 23.9984937,20.4 C24.0069246,20.5466056 23.9984937,21 23.4559499,21 L19.6,21 C19.6,18.7490654 18.8562935,16.6718327 17.6011961,15.0006174 Z M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z" fill="#000000" fill-rule="nonzero"/>
+                    </g>
+                </svg>
+            </span>
+                </span>
+                <span class="navi-text font-size-lg">{{'personal.family-component' | translate}}</span>
+              </a>
+            </div>
+            <div class="navi-item mb-2">
+              <a [routerLink]="!contractor.hasCim ? null : './cim'"  class="navi-link py-4" [class.disabled]="!contractor.hasCim">
+                <span class="navi-icon mr-2">
+                  <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <rect x="0" y="0" width="24" height="24"/>
+                          <path d="M13.6855025,18.7082217 C15.9113859,17.8189707 18.682885,17.2495635 22,17 C22,16.9325178 22,13.1012863 22,5.50630526 L21.9999762,5.50630526 C21.9999762,5.23017604 21.7761292,5.00632908 21.5,5.00632908 C21.4957817,5.00632908 21.4915635,5.00638247 21.4873465,5.00648922 C18.658231,5.07811173 15.8291155,5.74261533 13,7 C13,7.04449645 13,10.79246 13,18.2438906 L12.9999854,18.2438906 C12.9999854,18.520041 13.2238496,18.7439052 13.5,18.7439052 C13.5635398,18.7439052 13.6264972,18.7317946 13.6855025,18.7082217 Z" fill="#000000"/>
+                          <path d="M10.3144829,18.7082217 C8.08859955,17.8189707 5.31710038,17.2495635 1.99998542,17 C1.99998542,16.9325178 1.99998542,13.1012863 1.99998542,5.50630526 L2.00000925,5.50630526 C2.00000925,5.23017604 2.22385621,5.00632908 2.49998542,5.00632908 C2.50420375,5.00632908 2.5084219,5.00638247 2.51263888,5.00648922 C5.34175439,5.07811173 8.17086991,5.74261533 10.9999854,7 C10.9999854,7.04449645 10.9999854,10.79246 10.9999854,18.2438906 L11,18.2438906 C11,18.520041 10.7761358,18.7439052 10.4999854,18.7439052 C10.4364457,18.7439052 10.3734882,18.7317946 10.3144829,18.7082217 Z" fill="#000000" opacity="0.3"/>
+                      </g>
+                    </svg>
+                  </span>
+                </span>
+                <span class="navi-text font-size-lg">{{'personal.cim' | translate}}</span>
+              </a>
+            </div>
+            <div class="navi-item mb-2">
+              <a [routerLink]="!contractor.hasPositions ? null : './positions'" class="navi-link py-4" [class.disabled]="!contractor.hasPositions">
+                <span class="navi-icon mr-2">
+                  <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                        <path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                        <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero"></path>
+                      </g>
+                    </svg>
+                  </span>
+                </span>
+                <span class="navi-text font-size-lg">{{'personal.positions-held' | translate}}</span>
+              </a>
+            </div>
+            <div class="navi-item mb-2">
+              <a [routerLink]="!contractor.hasStudies ? null : './vacantions'" class="navi-link py-4" [class.disabled]="!contractor.hasStudies">
+                <span class="navi-icon mr-2">
+                  <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                        <path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                        <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero"></path>
+                      </g>
+                    </svg>
+                  </span>
+                </span>
+                <span class="navi-text font-size-lg">{{'personal.vacantions' | translate}}</span>
+              </a>
+            </div>
+            <div class="navi-item mb-2">
+              <a [routerLink]="!contractor.hasIdentityDocuments ? null : './documents'" class="navi-link py-4" [class.disabled]="!contractor.hasIdentityDocuments">
+                <span class="navi-icon mr-2">
+                  <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <polygon points="0 0 24 0 24 24 0 24"/>
+                          <path d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+                          <rect fill="#000000" x="6" y="11" width="9" height="2" rx="1"/>
+                          <rect fill="#000000" x="6" y="15" width="5" height="2" rx="1"/>
+                      </g>
+                    </svg>
+                  </span>
+                </span>
+                <span class="navi-text font-size-lg">{{'personal.documents-held' | translate}}</span>
+              </a>
+            </div>
+            <div class="navi-item mb-2">
+              <a routerLink="./dismissal" class="navi-link py-4">
+                <span class="navi-icon mr-2">
+                  <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <rect x="0" y="0" width="24" height="24"/>
+                        <path d="M5.5,2 L18.5,2 C19.3284271,2 20,2.67157288 20,3.5 L20,6.5 C20,7.32842712 19.3284271,8 18.5,8 L5.5,8 C4.67157288,8 4,7.32842712 4,6.5 L4,3.5 C4,2.67157288 4.67157288,2 5.5,2 Z M11,4 C10.4477153,4 10,4.44771525 10,5 C10,5.55228475 10.4477153,6 11,6 L13,6 C13.5522847,6 14,5.55228475 14,5 C14,4.44771525 13.5522847,4 13,4 L11,4 Z" fill="#000000" opacity="0.3"/>
+                        <path d="M5.5,9 L18.5,9 C19.3284271,9 20,9.67157288 20,10.5 L20,13.5 C20,14.3284271 19.3284271,15 18.5,15 L5.5,15 C4.67157288,15 4,14.3284271 4,13.5 L4,10.5 C4,9.67157288 4.67157288,9 5.5,9 Z M11,11 C10.4477153,11 10,11.4477153 10,12 C10,12.5522847 10.4477153,13 11,13 L13,13 C13.5522847,13 14,12.5522847 14,12 C14,11.4477153 13.5522847,11 13,11 L11,11 Z M5.5,16 L18.5,16 C19.3284271,16 20,16.6715729 20,17.5 L20,20.5 C20,21.3284271 19.3284271,22 18.5,22 L5.5,22 C4.67157288,22 4,21.3284271 4,20.5 L4,17.5 C4,16.6715729 4.67157288,16 5.5,16 Z M11,18 C10.4477153,18 10,18.4477153 10,19 C10,19.5522847 10.4477153,20 11,20 L13,20 C13.5522847,20 14,19.5522847 14,19 C14,18.4477153 13.5522847,18 13,18 L11,18 Z" fill="#000000"/>
+                    </g>
+                </svg>
+              </span>
+                </span>
+                <span class="navi-text font-size-lg">{{'personal.dismissal-request' | translate}}</span>
+              </a>
+            </div>
+            <div class="navi-item mb-2">
+              <a [routerLink]="'./permissions'" class="navi-link py-4">
+              <!-- <a [routerLink]="!contractor.hasUserProfile ? null : './permissions'" class="navi-link py-4" [class.disabled]="!contractor.hasUserProfile"> -->
+                <span class="navi-icon mr-2">
+                  <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                      height="24px" viewBox="0 0 24 24" version="1.1">
+                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <rect x="0" y="0" width="24" height="24" />
+                        <path
+                          d="M5,8.6862915 L5,5 L8.6862915,5 L11.5857864,2.10050506 L14.4852814,5 L19,5 L19,9.51471863 L21.4852814,12 L19,14.4852814 L19,19 L14.4852814,19 L11.5857864,21.8994949 L8.6862915,19 L5,19 L5,15.3137085 L1.6862915,12 L5,8.6862915 Z M12,15 C13.6568542,15 15,13.6568542 15,12 C15,10.3431458 13.6568542,9 12,9 C10.3431458,9 9,10.3431458 9,12 C9,13.6568542 10.3431458,15 12,15 Z"
+                          fill="#000000" />
+                      </g>
+                    </svg>
+                  </span>
+                </span>
+                <span class="navi-text font-size-lg">{{'personal.permission-settings' | translate}}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex-row-fluid ml-lg-8">
+      <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
+    </div>
+  </div>
+</app-content>
