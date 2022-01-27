@@ -88,6 +88,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
             if (user != null)
             {
                 var response = await _userManager.DeleteAsync(user);
+
                 if (response.Errors.Any())
                 {
                     throw new Exception("User was not deleted");
