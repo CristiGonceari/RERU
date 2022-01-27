@@ -71,7 +71,7 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
                 to = user.UserProfile.Email
             };
 
-            await _notificationService.Notify(emailData, NotificationType.LocalNotification);
+            await _notificationService.Notify(emailData, NotificationType.Both);
 
             return Unit.Value;
         }

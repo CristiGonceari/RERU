@@ -117,7 +117,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
                 to = user.Email
             };
 
-            await _notificationService.Notify(emailData, NotificationType.LocalNotification);
+            await _notificationService.Notify(emailData, NotificationType.Both);
 
             return Unit.Value;
         }
