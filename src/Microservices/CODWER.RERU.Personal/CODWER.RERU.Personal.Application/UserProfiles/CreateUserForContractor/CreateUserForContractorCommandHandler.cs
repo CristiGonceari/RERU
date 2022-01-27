@@ -6,7 +6,9 @@ using CODWER.RERU.Personal.Data.Entities;
 using CODWER.RERU.Personal.Data.Entities.Enums;
 using CODWER.RERU.Personal.Data.Entities.User;
 using CODWER.RERU.Personal.Data.Persistence.Context;
+using CVU.ERP.Logging.Models;
 using CVU.ERP.Module.Application.Clients;
+using CVU.ERP.Module.Application.LoggerServices;
 using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Models.Internal;
 using MediatR;
@@ -18,11 +20,15 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
     {
         private readonly ICoreClient _coreClient;
         private readonly AppDbContext _appDbContext;
+        private ILoggerService<CreateUserForContractorCommandHandler> _loggerService;
 
-        public CreateUserForContractorCommandHandler(ICoreClient coreClient, AppDbContext appDbContext)
+        public CreateUserForContractorCommandHandler(ICoreClient coreClient,
+            AppDbContext appDbContext,
+            ILoggerService<CreateUserForContractorCommandHandler> loggerService)
         {
             _coreClient = coreClient;
             _appDbContext = appDbContext;
+            _loggerService = loggerService;
         }
 
         public async Task<int> Handle(CreateUserForContractorCommand request, CancellationToken cancellationToken)
@@ -30,6 +36,7 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
             try
             {
                 var currentContractor = await _appDbContext.Contractors
+                    .Include(x => x.Bulletin)
                     .Include(x => x.Permission)
                     .Include(x => x.UserProfile)
                     .FirstAsync(x => x.Id == request.ContractorId);
@@ -62,10 +69,13 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
         {
             await AddContractorContact((int)userProfile.ContractorId, coreUser.Email);
 
-            userProfile.Email = coreUser.Email;
             userProfile.UserId = coreUser.Id;
+            userProfile.Email = coreUser.Email;
+            userProfile.Idnp = coreUser.Idnp;
 
             await _appDbContext.SaveChangesAsync();
+
+            await LogAction(userProfile.Id);
 
             return userProfile.Id;
         }
@@ -84,8 +94,8 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
             {
                 Name = currentContractor.FirstName,
                 LastName = currentContractor.LastName,
-                //FatherName = currentContractor.FatherName,
-                //Idnp = currentContractor.Bulletin.Idnp,
+                FatherName = currentContractor.FatherName,
+                Idnp = currentContractor.Bulletin.Idnp,
                 Email = request.Email,
                 NotifyAccountCreated = true,
                 ModuleRoles = request.ModuleRoles
@@ -121,6 +131,15 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
 
                 await _appDbContext.Contacts.AddAsync(newContact);
             }
+        }
+
+        private async Task LogAction(int userProfileId)
+        {
+            var userProfile = await _appDbContext.UserProfiles
+                .Include(x => x.Contractor)
+                .FirstAsync(x => x.Id == userProfileId);
+
+            await _loggerService.Log(LogData.AsEvaluation($"UserProfile {userProfile.Contractor.FirstName} {userProfile.Contractor.LastName} was created/updated", userProfile));
         }
     }
 }

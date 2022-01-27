@@ -2,9 +2,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
-using CODWER.RERU.Core.Application.Services;
 using CODWER.RERU.Core.Data.Entities;
 using CVU.ERP.Logging.Models;
+using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.LoggerServices;
 using CVU.ERP.Module.Application.Models.Internal;
 using MediatR;
@@ -14,16 +14,15 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
 {
     public class EditUserPersonalDetailsCommandHandler : BaseHandler, IRequestHandler<EditUserPersonalDetailsCommand, Unit>
     {
-        private readonly IEvaluationUserProfileService _evaluationUserProfileService;
+        private readonly IEvaluationClient _evaluationClient;
         private readonly ILoggerService<EditUserPersonalDetailsCommandHandler> _loggerService;
 
-
         public EditUserPersonalDetailsCommandHandler(ICommonServiceProvider commonServiceProvider,
-            IEvaluationUserProfileService evaluationUserProfileService,
+            IEvaluationClient evaluationClient,
             ILoggerService<EditUserPersonalDetailsCommandHandler> loggerService) : base(
             commonServiceProvider)
         {
-            _evaluationUserProfileService = evaluationUserProfileService;
+            _evaluationClient = evaluationClient;
             _loggerService = loggerService;
         }
 
@@ -48,7 +47,7 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
 
         private async Task SyncUserProfile(UserProfile userProfile)
         {
-            await _evaluationUserProfileService.Sync(Mapper.Map<BaseUserProfile>(userProfile));
+            await _evaluationClient.SyncUserProfile(Mapper.Map<BaseUserProfile>(userProfile));
         }
     }
 }
