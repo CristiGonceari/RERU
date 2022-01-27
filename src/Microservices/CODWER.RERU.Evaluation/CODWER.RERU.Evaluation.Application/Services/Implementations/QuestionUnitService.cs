@@ -631,6 +631,12 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                     return null;
                 }
 
+                if (questionToAdd.QuestionType == QuestionTypeEnum.MultipleAnswers && questionToAdd.AddOptions.Where(x => x.OptionDto.IsCorrect == true).Count() < 1)
+                {
+                    _errors.Add($"{column}{questionToAdd.Row}", $"Question Type 'MultipleAnswers' should have more than 1 correct answer!");
+                    return null;
+                }
+
                 try
                 {
                     var questionId = await _mediator.Send(new AddQuestionUnitCommand { 
