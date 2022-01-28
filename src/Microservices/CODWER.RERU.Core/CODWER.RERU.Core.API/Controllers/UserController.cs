@@ -29,7 +29,8 @@ namespace CODWER.RERU.Core.API.Controllers
         public UserController(IMediator mediator) : base(mediator)
         {
 
-}
+        }
+
         [HttpGet ("{id:int}")]
         public Task<UserDetailsOverviewDto> GetUserDetails ([FromRoute] int id) 
         {
