@@ -59,7 +59,7 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
             await _localLoggingDbContext.Logs.AddAsync(toLog);
             await _localLoggingDbContext.SaveChangesAsync();
 
-            await WriteInConsole(toLog);
+            ConsoleWrite(toLog);
         }
 
         private string ParseName()
@@ -72,7 +72,7 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
             return string.Join(" ", splicedEventName.ToArray());
         }
 
-        private async Task WriteInConsole(Log log)
+        private void ConsoleWrite(Log log)
         {
             var consoleMessage = JsonSerializer.Serialize(log, new JsonSerializerOptions
             {

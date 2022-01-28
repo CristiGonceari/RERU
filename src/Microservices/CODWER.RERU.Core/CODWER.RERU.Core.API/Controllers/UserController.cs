@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.UserProfiles.GetUserForRemove;
 using CODWER.RERU.Core.Application.Users.ActivateUser;
 using CODWER.RERU.Core.Application.Users.BlockUser;
@@ -18,15 +19,17 @@ using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.API.Controllers
 {
     [ApiController]
     [Route ("api/[controller]")]
-    public class UserController : BaseController {
-        public UserController (IMediator mediator) : base (mediator) { }
+    public class UserController : BaseController 
+    {
+        public UserController(IMediator mediator) : base(mediator)
+        {
 
+}
         [HttpGet ("{id:int}")]
         public Task<UserDetailsOverviewDto> GetUserDetails ([FromRoute] int id) 
         {
