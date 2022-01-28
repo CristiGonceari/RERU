@@ -14,7 +14,7 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.Internal.AddUpdateUser
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
-        private ILoggerService<AddUpdateUserProfileCommandHandler> _loggerService;
+        private readonly ILoggerService<AddUpdateUserProfileCommandHandler> _loggerService;
 
         public AddUpdateUserProfileCommandHandler(AppDbContext appDbContext, IMapper mapper, ILoggerService<AddUpdateUserProfileCommandHandler> loggerService)
         {
