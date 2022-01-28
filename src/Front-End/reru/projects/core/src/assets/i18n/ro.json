@@ -315,6 +315,11 @@
     "MAR000007": "General Unknown",
     "MAR000008": "Nu e  api cerere",
     "MAP0000001": "Cerere către aplicație neautentificată",
-    "MAP0000002": "Cerere neautorizată. Nu sunt permisiuni."
+    "MAP0000002": "Cerere neautorizată. Nu sunt permisiuni.",
+    "01000001": "IDNP trebuie să conține 13 cifre!",
+    "01000002": "IDNP trebuie să conține doar cifre",
+    "01000003": "IDNP nu trebuie să conține doar zero",
+    "01000004": "IDNP nevalid!",
+    "01000005": "IDNP duplicat în sistem!"
   }
 }
