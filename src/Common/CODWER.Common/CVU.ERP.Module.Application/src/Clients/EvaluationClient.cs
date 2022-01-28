@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,14 +32,9 @@ namespace CVU.ERP.Module.Application.Clients
 
         public async Task SyncUserProfile(BaseUserProfile userProfile)
         {
-            var request = new RestRequest(UserProfileBasePath, DataFormat.Json);
+            var request = NewJsonRequest(UserProfileBasePath);
             var json = JsonSerializer.Serialize(userProfile);
             request.AddParameter("application/json; charset=utf-8", json, ParameterType.RequestBody);
-
-            foreach (var el in _httpContextAccessor?.HttpContext?.Request.Headers)
-            {
-                request.AddHeader(el.Key, el.Value);
-            }
 
             var response = await _restClient.PostAsync<Response<Unit>>(request, new CancellationToken());
 
@@ -45,6 +42,20 @@ namespace CVU.ERP.Module.Application.Clients
             {
                 throw new EvaluationClientResponseNotSuccessfulException(response.Messages);
             }
+        }
+
+        private RestRequest NewJsonRequest(string resource)
+        {
+            var request = new RestRequest(resource, DataFormat.Json);
+            request.AddHeaders(GetHeaders());
+
+            return request;
+        }
+
+        private List<KeyValuePair<string, string>> GetHeaders()
+        {
+            return _httpContextAccessor?.HttpContext?.Request.Headers.ToList()
+                .Select(h => new KeyValuePair<string, string>(h.Key, h.Value)).ToList();
         }
     }
 }
