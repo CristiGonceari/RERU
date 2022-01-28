@@ -19,6 +19,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public int QuestionCount { get; set; }
         public int AccumulatedPercentage { get; set; }
         public string UserName { get; set; }
+        public string Idnp { get; set; }
         public string TestTypeName { get; set; }
         public string Rules { get; set; }
         public string VerificationProgress { get; set; }

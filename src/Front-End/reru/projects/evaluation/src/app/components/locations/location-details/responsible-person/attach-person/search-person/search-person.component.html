@@ -2,7 +2,7 @@
     <input type="text" class="form-control" matInput [matAutocomplete]="auto" [formControl]="form">
     <mat-autocomplete class="form-control" #auto="matAutocomplete" [displayWith]="getTitle.bind(this)">
         <mat-option *ngFor="let option of list" [value]="option.id">
-            {{option.firstName}} {{option.lastName}}
+            {{option.firstName}} {{option.lastName}} {{option.patronymic}} ({{option.idnp}})
         </mat-option>
     </mat-autocomplete>
 

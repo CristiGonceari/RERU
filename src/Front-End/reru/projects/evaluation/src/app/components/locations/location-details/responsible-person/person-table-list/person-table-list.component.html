@@ -11,7 +11,7 @@
         </thead>
         <tbody class="datatable-body" *ngIf="persons.length">
             <tr *ngFor="let item of persons">
-                <td>{{item.firstName}} {{item.lastName}}</td>
+                <td>{{item.firstName}} {{item.lastName}} {{item.patronymic}}  ({{item.idnp}})</td>
                 <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
                     <div style="overflow: visible; position: relative; width: 0px">
                         <div ngbDropdown class="dropdown dropdown-inline">
