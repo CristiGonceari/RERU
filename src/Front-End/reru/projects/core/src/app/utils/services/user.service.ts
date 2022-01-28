@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-// import { AbstractService } from './abstract.service';
 import { User } from '../models/user.model';
 import { UserForRemove } from '../models/user-for-remove.model';
 import { EditUserPersonalDetails } from '../models/edit-user-personal-details.model';
@@ -16,10 +15,6 @@ export class UserService extends AbstractService {
 
 	constructor(protected configService: AppSettingsService, private http: HttpClient) {
 		super(configService);
-	}
-
-	getUsers(data): Observable<any> {
-		return this.http.get(`${this.coreUrl}/user`, { params: data });
 	}
 
 	getUserForRemove(id: number): Observable<Response<UserForRemove>> {
@@ -78,14 +73,6 @@ export class UserService extends AbstractService {
 
 	changePassword(data): Observable<any> {
 		return this.http.put(`${this.coreUrl}/${this.routeUrl}/change-my-password`, data);
-	}
-
-	resetPasswordByEmail(email: string): Observable<any> {
-		return this.http.put(`${this.coreUrl}/${this.routeUrl}/reset-password-by-email`, {}, { params: { email } });
-	}
-
-	resetPasswordByEmailToken(data): Observable<any> {
-		return this.http.put(`${this.coreUrl}/${this.routeUrl}/reset-password-by-email-token`, data);
 	}
 
 	setPassword(data): Observable<any> {
