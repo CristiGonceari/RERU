@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using CVU.ERP.Module.Application.Exceptions;
 using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Models.Internal;
 using CVU.ERP.Module.Common.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using RestSharp;
 
@@ -17,20 +19,23 @@ namespace CVU.ERP.Module.Application.Clients
     public class CoreClient : ICoreClient
     {
         private readonly IRestClient _restClient;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         const string UserProfileBasePath = "/user-profile";
         const string ModuleBasePath = "/module";
 
-        public CoreClient(IRestClient restClient, IOptions<ModuleConfiguration> moduleConfiguration)
+        public CoreClient(IRestClient restClient,
+            IOptions<ModuleConfiguration> moduleConfiguration,
+            IHttpContextAccessor httpContextAccessor)
         {
             _restClient = restClient;
+            _httpContextAccessor = httpContextAccessor;
             _restClient.BaseUrl = new Uri(moduleConfiguration.Value.CoreClient.BaseUrl);
         }
 
         public async Task<ApplicationUser> GetApplicationUser(string coreUserProfileId)
         {
             var resourceUrl = $"{UserProfileBasePath}/{coreUserProfileId}";
-
-            var request = new RestRequest(resourceUrl, DataFormat.Json);
+            var request = NewJsonRequest(resourceUrl);
 
             var response = await _restClient.GetAsync<Response<ApplicationUser>>(request, new CancellationToken());
             if (!response.Success)
@@ -43,8 +48,7 @@ namespace CVU.ERP.Module.Application.Clients
         public async Task<bool> ExistUserInCore(string coreUserProfileId)
         {
             var resourceUrl = $"{UserProfileBasePath}/{coreUserProfileId}";
-
-            var request = new RestRequest(resourceUrl, DataFormat.Json);
+            var request = NewJsonRequest(resourceUrl);
 
             var response = await _restClient.GetAsync<Response<ApplicationUser>>(request, new CancellationToken());
 
@@ -53,9 +57,10 @@ namespace CVU.ERP.Module.Application.Clients
 
         public async Task<ApplicationUser> CreateUserProfile(InternalUserProfileCreate userProfileDto)
         {
-            var request = new RestRequest(UserProfileBasePath, DataFormat.Json);
+            var request = NewJsonRequest(UserProfileBasePath);
             var json = JsonSerializer.Serialize(userProfileDto);
             request.AddParameter("application/json; charset=utf-8", json, ParameterType.RequestBody);
+
             var response = await _restClient.PostAsync<Response<ApplicationUser>>(request, new CancellationToken());
 
             if (!response.Success)
@@ -68,7 +73,8 @@ namespace CVU.ERP.Module.Application.Clients
 
         public async Task<ApplicationUser> CreateUser(CreateUserDto userDto)
         {
-            var request = new RestRequest(UserProfileBasePath, DataFormat.Json);
+            var request = NewJsonRequest(UserProfileBasePath);
+
             request.AddJsonBody(userDto);
             var response = await _restClient.PostAsync<Response<ApplicationUser>>(request, new CancellationToken());
 
@@ -82,8 +88,8 @@ namespace CVU.ERP.Module.Application.Clients
         public async Task<ApplicationUser> GetApplicationUserByIdentity(string id, string identityProvider)
         {
             var resourceUrl = $"{UserProfileBasePath}/{identityProvider}/{id}";
+            var request = NewJsonRequest(resourceUrl);
 
-            var request = new RestRequest(resourceUrl, DataFormat.Json);
             var response = await _restClient.GetAsync<Response<ApplicationUser>>(request, new CancellationToken());
 
             if (!response.Success)
@@ -95,7 +101,8 @@ namespace CVU.ERP.Module.Application.Clients
 
         public async Task ResetPassword(string coreUserProfileId)
         {
-            var request = new RestRequest($"{UserProfileBasePath}/{coreUserProfileId}/reset-password");
+            var request = NewRequest($"{UserProfileBasePath}/{coreUserProfileId}/deactivate");
+
             var response = await _restClient.PatchAsync<Response>(request);
 
             if (!response.Success)
@@ -106,7 +113,8 @@ namespace CVU.ERP.Module.Application.Clients
 
         public async Task DeactivateUserProfile(string coreUserProfileId)
         {
-            var request = new RestRequest($"{UserProfileBasePath}/{coreUserProfileId}/deactivate");
+            var request = NewRequest($"{UserProfileBasePath}/{coreUserProfileId}/deactivate");
+
             var response = await _restClient.PatchAsync<Response>(request);
 
             if (!response.Success)
@@ -124,8 +132,8 @@ namespace CVU.ERP.Module.Application.Clients
         public async Task<List<ModuleRolesDto>> GetModuleRoles()
         {
             var resourceUrl = $"{ModuleBasePath}";
+            var request = NewJsonRequest(resourceUrl);
 
-            var request = new RestRequest(resourceUrl, DataFormat.Json);
             var response = await _restClient.GetAsync<Response<List<ModuleRolesDto>>>(request, new CancellationToken());
 
             if (!response.Success)
@@ -133,6 +141,28 @@ namespace CVU.ERP.Module.Application.Clients
                 throw new CoreClientResponseNotSuccessfulException(response.Messages);
             }
             return response?.Data;
+        }
+
+        private RestRequest NewJsonRequest(string resource)
+        {
+            var request = new RestRequest(resource, DataFormat.Json);
+            request.AddHeaders(GetHeaders());
+
+            return request;
+        }
+
+        private RestRequest NewRequest(string resource)
+        {
+            var request = new RestRequest(resource);
+            request.AddHeaders(GetHeaders());
+
+            return request;
+        }
+
+        private List<KeyValuePair<string, string>> GetHeaders()
+        {
+            return _httpContextAccessor?.HttpContext?.Request.Headers.ToList()
+                .Select(h => new KeyValuePair<string, string>(h.Key, h.Value)).ToList();
         }
     }
 }

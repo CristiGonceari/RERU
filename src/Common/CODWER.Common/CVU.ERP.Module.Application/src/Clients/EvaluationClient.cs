@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.Common.DataTransferObjects.Response;
-using CVU.ERP.Infrastructure.Extensions;
 using CVU.ERP.Module.Application.Exceptions;
 using CVU.ERP.Module.Application.Models.Internal;
 using CVU.ERP.Module.Common.Models;
@@ -15,31 +13,28 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using RestSharp;
 
-namespace CODWER.RERU.Core.Application.Services.Implementations
+namespace CVU.ERP.Module.Application.Clients
 {
-    public class EvaluationUserProfileService : IEvaluationUserProfileService
+    public class EvaluationClient : IEvaluationClient
     {
         private readonly IRestClient _restClient;
         const string UserProfileBasePath = "/internaluserprofile";
-        //private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public EvaluationUserProfileService(IRestClient restClient, IOptions<ModuleConfiguration> moduleConfiguration/*, IHttpContextAccessor httpContextAccessor*/)
+        public EvaluationClient(IRestClient restClient,
+            IOptions<ModuleConfiguration> moduleConfiguration,
+            IHttpContextAccessor httpContextAccessor)
         {
             _restClient = restClient;
-            //_httpContextAccessor = httpContextAccessor;
             _restClient.BaseUrl = new Uri(moduleConfiguration.Value.EvaluationClient.BaseUrl);
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task Sync(BaseUserProfile userProfile)
+        public async Task SyncUserProfile(BaseUserProfile userProfile)
         {
-            var request = new RestRequest(UserProfileBasePath, DataFormat.Json);
+            var request = NewJsonRequest(UserProfileBasePath);
             var json = JsonSerializer.Serialize(userProfile);
             request.AddParameter("application/json; charset=utf-8", json, ParameterType.RequestBody);
-
-            //foreach (var el in _httpContextAccessor?.HttpContext?.Request.Headers)
-            //{
-            //    request.AddHeader(el.Key, el.Value);
-            //}
 
             var response = await _restClient.PostAsync<Response<Unit>>(request, new CancellationToken());
 
@@ -47,6 +42,20 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             {
                 throw new EvaluationClientResponseNotSuccessfulException(response.Messages);
             }
+        }
+
+        private RestRequest NewJsonRequest(string resource)
+        {
+            var request = new RestRequest(resource, DataFormat.Json);
+            request.AddHeaders(GetHeaders());
+
+            return request;
+        }
+
+        private List<KeyValuePair<string, string>> GetHeaders()
+        {
+            return _httpContextAccessor?.HttpContext?.Request.Headers.ToList()
+                .Select(h => new KeyValuePair<string, string>(h.Key, h.Value)).ToList();
         }
     }
 }

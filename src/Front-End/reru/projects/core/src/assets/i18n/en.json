@@ -108,6 +108,8 @@
     "name": "Name",
     "email":"Email",
     "lastName": "Last name",
+    "father-name": "Patronymic",
+    "idnp": "IDNP",
     "role": "Role",
     "actions": "Actions",
     "type": "Type",
@@ -139,7 +141,8 @@
     "logout-msg": "Are you sure you want to logout from the system?",
     "empty-name": "Insert at least one symbol",
     "wrong-name": "Wrong name , should start with symbol",
-    "available-modules": "Available modules"
+    "available-modules": "Available modules",
+    "idnp-length": "IDNP should consist of 13 numbers!"
   },
   "user": {
     "edit-title": "Edit User",

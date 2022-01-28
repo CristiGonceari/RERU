@@ -7,11 +7,10 @@ using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CODWER.RERU.Core.Data.Entities;
 using CVU.ERP.Logging.Models;
-using CVU.ERP.Module.Application.LoggerServices;
 using MediatR;
-using System.Text.Json;
 using AutoMapper;
-using CODWER.RERU.Core.Application.Services;
+using CVU.ERP.Logging;
+using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.Models.Internal;
 
 namespace CODWER.RERU.Core.Application.Users.CreateUser
@@ -20,17 +19,17 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
     {
         private readonly IEnumerable<IIdentityService> _identityServices;
         private readonly ILoggerService<CreateUserCommandHandler> _loggerService;
-        private readonly IEvaluationUserProfileService _evaluationUserProfileService;
+        private readonly IEvaluationClient _evaluationClient;
         private readonly IMapper _mapper;
 
         public CreateUserCommandHandler(ICommonServiceProvider commonServiceProvider,
             IEnumerable<IIdentityService> identityServices, 
-            ILoggerService<CreateUserCommandHandler> loggerService, IEvaluationUserProfileService evaluationUserProfileService, IMapper mapper)
+            ILoggerService<CreateUserCommandHandler> loggerService, IEvaluationClient evaluationClient, IMapper mapper)
             : base(commonServiceProvider)
         {
             _identityServices = identityServices;
             _loggerService = loggerService;
-            _evaluationUserProfileService = evaluationUserProfileService;
+            _evaluationClient = evaluationClient;
             _mapper = mapper;
         }
 
@@ -80,7 +79,7 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
         private async Task SyncUserProfile(UserProfile userProfile)
         {
-            await _evaluationUserProfileService.Sync(_mapper.Map<BaseUserProfile>(userProfile));
+            await _evaluationClient.SyncUserProfile(_mapper.Map<BaseUserProfile>(userProfile));
         }
     }
 }

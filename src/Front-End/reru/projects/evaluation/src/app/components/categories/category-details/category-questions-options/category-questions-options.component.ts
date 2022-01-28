@@ -9,12 +9,9 @@ import { OptionsService } from 'projects/evaluation/src/app/utils/services/optio
 import { QuestionService } from 'projects/evaluation/src/app/utils/services/question/question.service';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { Location } from '@angular/common';
-import { CloudFileService } from 'projects/evaluation/src/app/utils/services/cloud-file/cloud-file.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { forkJoin } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
-import { BulkImportQuestionsComponent } from '../../../questions/bulk-import-questions/bulk-import-questions.component';
 import { BulkImportOptionsComponent } from '../../bulk-import-options/bulk-import-options.component';
 
 @Component({
@@ -107,7 +104,7 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
     });
   }
 
-  parseEdit(element){
+  parseEdit(element) {
     const request = new FormData();
     
     if (this.attachedFile)
@@ -126,20 +123,23 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
   }
 
   updateOptions() {
-    this.options.forEach(element => {
-      this.optionService.edit(this.parseEdit(element)).subscribe(
-        () => {},
-        () => this.getOptions()
-      );
-      forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('options.succes-update-options-msg'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-				});
-    });
-    this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+    console.warn('this.options', this.options);
+    if (this.options.length) {
+      this.options.forEach(element => {
+        this.optionService.edit(this.parseEdit(element)).subscribe(
+          () => {},
+          () => this.getOptions()
+        );
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('options.succes-update-options-msg'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+          });
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+    }
   }
 
   getQuestion() {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace CVU.ERP.Logging.Entities
 {
@@ -11,6 +12,7 @@ namespace CVU.ERP.Logging.Entities
         public string Event { get; set; }
         public string EventMessage { get; set; }
         public DateTime Date { get; set; }
+        [JsonIgnore]
         public string JsonMessage { get; set; }
     }
 }

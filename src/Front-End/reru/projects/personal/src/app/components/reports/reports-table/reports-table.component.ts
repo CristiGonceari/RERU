@@ -16,12 +16,7 @@ import { saveAs } from 'file-saver';
 export class ReportsTableComponent implements OnInit {
   isLoading: boolean = true;
   reports: any[] = [];
-  pagedSummary: PagedSummary = {
-    totalCount: 0,
-    pageSize: 0,
-    currentPage: 1,
-    totalPages: 1
-  };
+  pagedSummary: PagedSummary = new PagedSummary();
   filter: ReportFilterModel = {};
   hasContractorId: any;
 

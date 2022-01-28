@@ -5,8 +5,11 @@ using CVU.ERP.Module.Application.Providers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using CVU.ERP.Logging;
 
 namespace CVU.ERP.Module.Application.LoggerServices.Implementations
 {
@@ -55,6 +58,8 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
 
             await _localLoggingDbContext.Logs.AddAsync(toLog);
             await _localLoggingDbContext.SaveChangesAsync();
+
+            ConsoleWrite(toLog);
         }
 
         private string ParseName()
@@ -65,6 +70,16 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
             splicedEventName.Remove("Query");
 
             return string.Join(" ", splicedEventName.ToArray());
+        }
+
+        private void ConsoleWrite(Log log)
+        {
+            var consoleMessage = JsonSerializer.Serialize(log, new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            });
+
+            Console.WriteLine($"Logged message :\n {consoleMessage}\n JSON Entity :\n {log.JsonMessage}\n");
         }
     }
 }

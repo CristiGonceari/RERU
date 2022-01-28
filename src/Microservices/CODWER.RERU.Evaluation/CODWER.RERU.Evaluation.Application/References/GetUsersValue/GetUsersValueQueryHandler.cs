@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using CODWER.RERU.Evaluation.Data.Entities;
+using CODWER.RERU.Evaluation.Data.Entities.StaticExtensions;
+using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -6,10 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Entities.StaticExtensions;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using RestSharp.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.References.GetUsersValue
 {
@@ -39,13 +38,13 @@ namespace CODWER.RERU.Evaluation.Application.References.GetUsersValue
         {
             if (!string.IsNullOrEmpty(request.Name))
             {
-                users = users.FilterByName(request.Name);
+                users = users.FilterByNameAndIdnp(request.Name);
             }
 
             return users.AsQueryable();
         }
 
-        private async Task<IQueryable<UserProfile>> FilterByEvent(GetUsersValueQuery request,IQueryable<UserProfile> users)
+        private async Task<IQueryable<UserProfile>> FilterByEvent(GetUsersValueQuery request, IQueryable<UserProfile> users)
         {
             if (request.EventId != null)
             {

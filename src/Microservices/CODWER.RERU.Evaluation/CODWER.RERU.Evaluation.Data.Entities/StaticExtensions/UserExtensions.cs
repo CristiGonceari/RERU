@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace CODWER.RERU.Evaluation.Data.Entities.StaticExtensions
 {
@@ -11,23 +7,22 @@ namespace CODWER.RERU.Evaluation.Data.Entities.StaticExtensions
         public static string GetFullName(this UserProfile user) => $"{user.FirstName} {user.LastName}";
 
         ///<summary>
-        ///common search by firstName and/or lastName
+        ///common search by firstName and/or lastName and/or patronymic and/or idnp
         ///</summary>
-        public static IQueryable<UserProfile> FilterByName(this IQueryable<UserProfile> items, string userName)
+        public static IQueryable<UserProfile> FilterByNameAndIdnp(this IQueryable<UserProfile> items, string userName)
         {
             var toSearch = userName.Split(' ').ToList();
 
-            return toSearch.Count switch
+            foreach (var item in toSearch)
             {
-                1 => items.Where(x => x.FirstName.Contains(toSearch.First()) || x.LastName.Contains(toSearch.First())),
-                2 => items.Where(x =>
-                    x.FirstName.Contains(toSearch.First()) || x.LastName.Contains(toSearch.First()) ||
-                    x.FirstName.Contains(toSearch.Last()) || x.LastName.Contains(toSearch.Last())),
-                3 => items.Where(x =>
-                    x.FirstName.Contains(toSearch.First()) || x.LastName.Contains(toSearch.First()) ||
-                    x.FirstName.Contains(toSearch.Last()) || x.LastName.Contains(toSearch.Last())),
-                _ => items
-            };
+                items = items.Where(x =>
+                    x.FirstName.Contains(item)
+                    || x.LastName.Contains(item)
+                    || x.Patronymic.Contains(item)
+                    || x.Idnp.Contains(item));
+            }
+
+            return items;
         }
     }
 }

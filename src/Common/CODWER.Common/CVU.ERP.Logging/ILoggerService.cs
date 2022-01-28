@@ -1,7 +1,7 @@
 ﻿using CVU.ERP.Logging.Models;
 using System.Threading.Tasks;
 
-namespace CVU.ERP.Module.Application.LoggerServices
+namespace CVU.ERP.Logging
 {
     public interface ILoggerService<T>
     {

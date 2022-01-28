@@ -52,9 +52,10 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AssignTagToQuestionUn
                 }
             }
 
-            if (request.Tags != null)
+            foreach (var tag in request.Tags)
             {
-                foreach (var tag in request.Tags)
+                var notEmptyTag = !string.IsNullOrEmpty(tag);
+                if (notEmptyTag)
                 {
                     if (existingQuestionUnitTags.Any(x => x.Tag.Name.Equals(tag)))
                     {
@@ -77,9 +78,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AssignTagToQuestionUn
                         TagId = existingTag.Id
                     });
                 }
-
             }
-
 
             if (questionUnitTagsToAdd.Count > 0)
             {

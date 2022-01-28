@@ -107,6 +107,8 @@
     "name": "Nume",
     "email":"Poștă electronică",
     "lastName": "Prenume",
+    "father-name": "Patronimic",
+    "idnp": "IDNP",
     "role": "Rolul",
     "actions": "Acțiuni",
     "type": "Tip",
@@ -138,7 +140,8 @@
     "logout-msg": "Sunteți sigur(-ă) că doriți să ieșiți din sistem?",
     "empty-name": "Camp este obligatorie, cel puțin 1 caracter",
     "wrong-name": "Camp trebue să incepe cu 1 caracter",
-    "available-modules": "Module disponibile"
+    "available-modules": "Module disponibile",
+    "idnp-length": "IDNP trebuie să conține 13 cifre!"
   },
   "user": {
     "edit-title": "Editarea utilizatorului",

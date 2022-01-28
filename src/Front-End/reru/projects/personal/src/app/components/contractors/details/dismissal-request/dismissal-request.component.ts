@@ -25,12 +25,7 @@ export class DismissalRequestComponent implements OnInit {
   dismissal: RequestProfileModel[] = [];
   requests: any[] = [];
 
-  pagedSummary: PagedSummary = {
-    totalCount: 1,
-    totalPages: 1,
-    pageSize: 10,
-    currentPage: 1
-  }
+  pagedSummary: PagedSummary = new PagedSummary();
 
   isLoading: boolean = false;
 

@@ -56,7 +56,8 @@ export class AddOptionComponent implements OnInit {
   }
 
   checkFile(event) {
-    this.attachedFile = event;
+    if (event != null) this.attachedFile = event;
+    else this.fileId = null;
   }
 
   add() {
@@ -109,7 +110,7 @@ export class AddOptionComponent implements OnInit {
 				});
       this.back();
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-    });
+    }, () => this.disableBtn = false);
   }
 
   confirm() {

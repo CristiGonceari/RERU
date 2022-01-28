@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using CVU.ERP.Common.Pagination;
 using CODWER.RERU.Core.Application.UserProfiles.GetUserForRemove;
 using CODWER.RERU.Core.Application.Users.ActivateUser;
 using CODWER.RERU.Core.Application.Users.BlockUser;
@@ -12,31 +11,24 @@ using CODWER.RERU.Core.Application.Users.EditUserPersonalDetails;
 using CODWER.RERU.Core.Application.Users.GetEditUserPersonalDetails;
 using CODWER.RERU.Core.Application.Users.GetPersonalData;
 using CODWER.RERU.Core.Application.Users.GetUserDetails;
-using CODWER.RERU.Core.Application.Users.GetUsers;
 using CODWER.RERU.Core.Application.Users.RemoveUser;
-using CODWER.RERU.Core.Application.Users.ResetPasswordByEmail;
-using CODWER.RERU.Core.Application.Users.ResetPasswordByEmailToken;
 using CODWER.RERU.Core.Application.Users.ResetUserPassword;
 using CODWER.RERU.Core.Application.Users.SetPassword;
 using CODWER.RERU.Core.DataTransferObjects.Password;
-using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
 using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CODWER.RERU.Core.API.Controllers 
+namespace CODWER.RERU.Core.API.Controllers
 {
     [ApiController]
     [Route ("api/[controller]")]
-    public class UserController : BaseController {
-        public UserController (IMediator mediator) : base (mediator) { }
-
-        [HttpGet]
-        public async Task<PaginatedModel<UserDto>> GetUsers ([FromQuery] GetUsersQuery query) 
+    public class UserController : BaseController 
+    {
+        public UserController(IMediator mediator) : base(mediator)
         {
-            var mediatorResponse = await Mediator.Send (query);
-            return mediatorResponse;
+
         }
 
         [HttpGet ("{id:int}")]
@@ -127,18 +119,6 @@ namespace CODWER.RERU.Core.API.Controllers
         public Task DeactivateUser ([FromRoute] int id) 
         {
             return Mediator.Send (new DeactivateUserCommand (id));
-        }
-
-        [HttpPut ("reset-password-by-email")]
-        public Task ResetPasswordByEmail ([FromQuery] string email) 
-        {
-            return Mediator.Send (new ResetPasswordByEmailCommand (email));
-        }
-
-        [HttpPut ("reset-password-by-email-token")]
-        public Task ResetPasswordByEmailToken ([FromBody] EmailConfirmationDto token)
-        {
-            return Mediator.Send (new ResetPasswordByEmailTokenCommand (token));
         }
     }
 }

@@ -18,12 +18,7 @@ import { RankService } from '../../../../utils/services/rank.service';
 export class RanksComponent implements OnInit {
   ranks: RankModel[];
   isLoading: boolean = true;
-  pagedSummary: PagedSummary = {
-    pageSize: 10,
-    currentPage: 1,
-    totalCount: 0,
-    totalPages: 0
-  };
+  pagedSummary: PagedSummary = new PagedSummary();
   contractorId: number;
   constructor(private route: ActivatedRoute,
               private rankService: RankService,

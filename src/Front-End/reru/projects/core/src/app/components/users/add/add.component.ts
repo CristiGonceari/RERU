@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
+import { ValidatorUtil } from '../../../utils/util/validator.util';
 
 @Component({
   selector: 'app-add',
@@ -49,9 +50,15 @@ export class AddComponent implements OnInit {
     this.userForm = this.fb.group({
       name: this.fb.control(null, [Validators.required,Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'),]),
       lastName: this.fb.control(null, [Validators.required,Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'),]),
+      fatherName: this.fb.control(null, [Validators.required,Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'),]),
+      idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
       email: this.fb.control(null, [Validators.required , Validators.email]),
       emailNotification: this.fb.control(false, [Validators.required])
     });
+  }
+
+  isIdnpLengthValidator(field: string): boolean {
+    return ValidatorUtil.isIdnpLengthValidator(this.userForm, field);
   }
 
   addUser(): void {

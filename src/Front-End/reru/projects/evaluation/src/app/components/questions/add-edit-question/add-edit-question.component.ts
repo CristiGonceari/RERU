@@ -9,7 +9,6 @@ import { SelectItem } from '../../../utils/models/select-item.model';
 import { QuestionByCategoryService } from '../../../utils/services/question-by-category/question-by-category.service';
 import { QuestionUnitStatusEnum } from '../../../utils/enums/question-unit-status.enum';
 import { ReferenceService } from '../../../utils/services/reference/reference.service';
-import { CloudFileService } from '../../../utils/services/cloud-file/cloud-file.service';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
@@ -45,8 +44,7 @@ export class AddEditQuestionComponent implements OnInit {
     private questionByCategory: QuestionByCategoryService,
 	  public translate: I18nService,
     private formBuilder: FormBuilder,
-		private notificationService: NotificationsService,
-    private fileService : CloudFileService,
+		private notificationService: NotificationsService
   ) {  }
 
   ngOnInit(): void {
@@ -149,7 +147,6 @@ export class AddEditQuestionComponent implements OnInit {
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, () => {
       this.disableBtn = false;
-      this.backClicked();
     });
   }
 
@@ -164,8 +161,7 @@ export class AddEditQuestionComponent implements OnInit {
   editQuestion(): void {
     this.disableBtn = true;
     const request = new FormData();
-    console.warn('this.tags', this.tags, this.items);
-    
+
     if (this.attachedFile) {
       this.fileType = '4';
       request.append('Data.FileDto.File', this.attachedFile);
@@ -177,6 +173,7 @@ export class AddEditQuestionComponent implements OnInit {
     request.append('Data.QuestionPoints', this.questionForm.value.questionPoints);
     request.append('Data.QuestionType', this.questionForm.value.questionType);
     request.append('Data.Status', this.questionForm.value.status);
+    request.append('Data.MediaFileId', this.fileId);
     request.append('Data.Tags', this.tags);
 
     this.questionService.edit(request).subscribe(() => {
@@ -192,7 +189,6 @@ export class AddEditQuestionComponent implements OnInit {
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, () => {
       this.disableBtn = false;
-      this.backClicked();
     });
   }
 
@@ -209,7 +205,8 @@ export class AddEditQuestionComponent implements OnInit {
   }
 
   checkFile(event) {
-    this.attachedFile = event;
+    if (event != null) this.attachedFile = event;
+    else this.fileId = null;
   }
 
 }

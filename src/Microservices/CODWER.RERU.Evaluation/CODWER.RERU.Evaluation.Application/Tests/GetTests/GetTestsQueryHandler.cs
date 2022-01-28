@@ -57,40 +57,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
             if (request != null)
             {
-                if (!string.IsNullOrWhiteSpace(request.TestTypeName))
-                {
-                    tests = tests.Where(x => EF.Functions.Like(x.TestType.Name, $"%{request.TestTypeName}%"));
-                }
-
-                if (!string.IsNullOrWhiteSpace(request.UserName))
-                {
-                    tests = tests.Where(x => x.UserProfile.FirstName.Contains(request.UserName) || x.UserProfile.LastName.Contains(request.UserName) || x.UserProfile.Patronymic.Contains(request.UserName));
-                }
-
-                if (request.TestStatus.HasValue)
-                {
-                    tests = tests.Where(x => x.TestStatus == request.TestStatus);
-                }
-
-                if (!string.IsNullOrWhiteSpace(request.LocationKeyword))
-                {
-                    tests = tests.Where(x => x.Location.Name.Contains(request.LocationKeyword) || x.Location.Address.Contains(request.LocationKeyword));
-                }
-
-                if (!string.IsNullOrWhiteSpace(request.EventName))
-                {
-                    tests = tests.Where(x =>x.Event.Name.Contains(request.EventName));
-                }
-
-                if (request.ProgrammedTimeFrom.HasValue)
-                {
-                    tests = tests.Where(x => x.ProgrammedTime >= request.ProgrammedTimeFrom);
-                }
-
-                if (request.ProgrammedTimeTo.HasValue)
-                {
-                    tests = tests.Where(x => x.ProgrammedTime <= request.ProgrammedTimeTo);
-                }
+                tests = await Filter(tests, request);
             }
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(tests, request);
@@ -118,6 +85,51 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
             }
 
             return paginatedModel;
+        }
+
+        private async Task<IQueryable<Test>> Filter(IQueryable<Test> tests, GetTestsQuery request)
+        {
+            if (!string.IsNullOrWhiteSpace(request.TestTypeName))
+            {
+                tests = tests.Where(x => EF.Functions.Like(x.TestType.Name, $"%{request.TestTypeName}%"));
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.UserName))
+            {
+                tests = tests.Where(x => x.UserProfile.FirstName.Contains(request.UserName) || x.UserProfile.LastName.Contains(request.UserName) || x.UserProfile.Patronymic.Contains(request.UserName));
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.Idnp))
+            {
+                tests = tests.Where(x => x.UserProfile.Idnp.Contains(request.Idnp));
+            }
+
+            if (request.TestStatus.HasValue)
+            {
+                tests = tests.Where(x => x.TestStatus == request.TestStatus);
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.LocationKeyword))
+            {
+                tests = tests.Where(x => x.Location.Name.Contains(request.LocationKeyword) || x.Location.Address.Contains(request.LocationKeyword));
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.EventName))
+            {
+                tests = tests.Where(x => x.Event.Name.Contains(request.EventName));
+            }
+
+            if (request.ProgrammedTimeFrom.HasValue)
+            {
+                tests = tests.Where(x => x.ProgrammedTime >= request.ProgrammedTimeFrom);
+            }
+
+            if (request.ProgrammedTimeTo.HasValue)
+            {
+                tests = tests.Where(x => x.ProgrammedTime <= request.ProgrammedTimeTo);
+            }
+
+            return tests;
         }
     }
 }

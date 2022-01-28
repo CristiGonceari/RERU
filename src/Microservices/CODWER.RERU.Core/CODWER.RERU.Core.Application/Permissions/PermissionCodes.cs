@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CODWER.RERU.Core.Application.Permissions
+﻿namespace CODWER.RERU.Core.Application.Permissions
 {
     public class PermissionCodes
     {
@@ -15,7 +9,6 @@ namespace CODWER.RERU.Core.Application.Permissions
         public const string REMOVE_MODULE = "P00000005";
         public const string ADD_MODULE_ROLE = "P00000006";
         public const string UPDATE_MODULE_ROLE_PERMISSIONS = "P00000007";
-        public const string EDIT_MODULE_ROLE = "P00000008";
         public const string REMOVE_MODULE_ROLE = "P00000009";
         public const string VIEW_ROLE_PERMISSIONS = "P00000010";
         public const string UPDATE_MODULE_ROLE = "P00000011";

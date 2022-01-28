@@ -8,6 +8,9 @@ namespace CODWER.RERU.Core.DataTransferObjects.Users
         public string Name { set; get; }
         public string LastName { set; get; }
         public string Email { get; set; }
+        public string FatherName { set; get; }
+        public string Idnp { set; get; }
+
         public List<UserModuleAccessDto>  ModuleAccess { set; get; }
     }
 }

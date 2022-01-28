@@ -66,6 +66,12 @@ export class ChangePersonalDataComponent implements OnInit {
 					'^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'
 				),
 			]),
+			fatherName: this.fb.control(oldPersonalData.fatherName, [
+				Validators.required,
+				Validators.pattern(
+					'^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'
+				),
+			]),
 		});
 		this.isLoading = false;
 	}

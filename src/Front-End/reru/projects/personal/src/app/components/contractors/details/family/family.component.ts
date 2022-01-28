@@ -18,12 +18,7 @@ import { FamilyService } from '../../../../utils/services/family.service';
 export class FamilyComponent implements OnInit {
   @Input() contractor: Contractor;
   families: FamilyModel[];
-  pagedSummary: PagedSummary = {
-    totalCount: 1,
-    totalPages: 1,
-    currentPage: 1,
-    pageSize: 10
-  };
+  pagedSummary: PagedSummary = new PagedSummary();
   isLoading: boolean = true;
   constructor(private familyService: FamilyService,
               private modalService: NgbModal,

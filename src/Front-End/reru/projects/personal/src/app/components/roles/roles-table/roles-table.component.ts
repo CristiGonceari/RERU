@@ -17,12 +17,7 @@ import { ObjectUtil } from '../../../utils/util/object.util';
 export class RolesTableComponent implements OnInit {
   isLoading: boolean = true;
   roles: RoleModel[] = [];
-  pagedSummary: PagedSummary = {
-    totalCount: 0,
-    pageSize: 0,
-    currentPage: 1,
-    totalPages: 1
-  };
+  pagedSummary: PagedSummary = new PagedSummary();
   searchWord: string;
   constructor(private roleService: RoleService,
     private modalService: NgbModal,
