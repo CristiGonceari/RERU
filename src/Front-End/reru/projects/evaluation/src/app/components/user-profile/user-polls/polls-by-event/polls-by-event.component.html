@@ -1,0 +1,40 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+<div *ngIf="!isLoading"
+    class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+    id="kt_datatable">
+    <table class="datatable table" style="overflow: visible">
+        <thead class="text-uppercase text-muted">
+            <tr>
+                <th scope="col" class="colored">{{'tests.name' | translate}}</th>
+                <th scope="col" style="width: 100px;">{{'tests.status' | translate}}</th>
+                <th scope="col" style="width: 170px;">{{'polls.voted-time' | translate}}</th>
+                <th scope="col" style="width: 150px;">{{'events.start-date' | translate}}</th>
+                <th scope="col" style="width: 150px;">{{'events.end-date' | translate}}</th>
+            </tr>
+        </thead>
+        <tbody class="datatable-body" *ngIf="polls.length">
+            <tr *ngFor="let poll of polls">
+                <td>{{ poll.testTypeName }}</td>
+                <td>{{'statuses.' + enum[poll.status] | translate}}</td>
+                <td *ngIf="poll.votedTime">{{ poll.votedTime | date: 'short' }}</td>
+                <td *ngIf="!poll.votedTime">-</td>
+                <td>{{ poll.startTime | date: 'short'}}</td>
+                <td>{{ poll.endTime | date: 'short' }}</td>
+            </tr>
+        </tbody>
+        <tbody class="datatable-body" *ngIf="!polls.length">
+            <tr>
+                <td colspan="6" class="text-center">
+                    {{ 'message.no-record' | translate }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
+        *ngIf="polls.length > 5" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
+        [size]="pagedSummary.pageSize"
+        (sizeChange)="getPolls({ page: pagedSummary.currentPage, itemsPerPage: $event })"
+        (pageChange)="getPolls({ page: $event })">
+    </div>
+</div>

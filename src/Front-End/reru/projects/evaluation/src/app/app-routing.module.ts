@@ -80,6 +80,11 @@ const routes: Routes = [
 		loadChildren: () => import('./components/my-activities/my-activities.module').then(m => m.MyActivitiesModule),
 		canActivate: [AuthenticationGuard]
 	},
+	{
+		path: 'user-profile', 
+		loadChildren: () => import('./components/user-profile/user-profile.module').then(m => m.UserProfileModule),
+		canActivate: [AuthenticationGuard]
+	},
 	{ path: '404', component: Exception404Component },
 	{ path: '**', redirectTo: '404' }
 ];

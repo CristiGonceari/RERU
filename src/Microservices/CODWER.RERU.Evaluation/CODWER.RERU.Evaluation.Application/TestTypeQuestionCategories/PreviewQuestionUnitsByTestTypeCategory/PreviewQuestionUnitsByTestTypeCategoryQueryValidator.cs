@@ -126,13 +126,24 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQ
         private bool IsPoll(QuestionCategoryPreviewDto data)
         {
             var testType = _appDbContext.TestTypes.FirstOrDefault(x => x.Id == data.TestTypeId);
+            var selectedQuestions = false;
 
-            if (testType != null && testType.Mode == TestTypeModeEnum.Poll && data.QuestionType != QuestionTypeEnum.OneAnswer)
+            if (testType != null && testType.Mode == TestTypeModeEnum.Poll)
             {
-                return false;
+                if (data.SelectedQuestions != null)
+                {
+                    selectedQuestions = data.SelectedQuestions
+                        .All(x => _appDbContext.QuestionUnits.FirstOrDefault(q => q.Id == x.Id).QuestionType == QuestionTypeEnum.OneAnswer);
+                }
+                
+                var questions = _appDbContext.QuestionUnits
+                    .Where(q => q.QuestionCategoryId == data.CategoryId)
+                    .All(q => q.QuestionType == QuestionTypeEnum.OneAnswer);
+
+                return selectedQuestions || questions || data.QuestionType == QuestionTypeEnum.OneAnswer;
             }
 
-            return true;
+            return false;
         }
     }
 }

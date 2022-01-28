@@ -22,7 +22,7 @@
             <tr *ngFor="let item of testType">
                 <td><span class="font-size-lg">{{ item.testTypeName }}</span></td>
                 <td>
-                    <span *ngIf="item.showUserName" class="font-size-lg">{{ item.userName }}</span>
+                    <p *ngIf="item.showUserName" class="font-size-lg cursor-pointer text-hover-primary" [routerLink]="['../user-profile', item.userId]">{{ item.userName }}</p>
                     <span *ngIf="!item.showUserName" class="font-size-lg">-</span>
                 </td>
                 <td>
@@ -35,8 +35,8 @@
                 </td>
                 <td>{{'statuses.' + status[item.testStatus] | translate}}</td>
                 <td>
-                    <a *ngIf="item.testStatus === status.Verified" [routerLink]="['../my-activities/test-result', item.id]">{{ item.verificationProgress }}</a>
-                    <a *ngIf="item.testStatus != status.Verified" style="text-decoration: none;">{{ item.verificationProgress }}</a>
+                    <p class="font-size-lg cursor-pointer text-hover-primary" *ngIf="item.testStatus === status.Verified" [routerLink]="['../my-activities/test-result', item.id]">{{ item.verificationProgress }}</p>
+                    <p class="font-size-lg cursor-pointer text-hover-primary" *ngIf="item.testStatus != status.Verified" style="text-decoration: none;">{{ item.verificationProgress }}</p>
                 </td>
                 <td>{{'verify-test.' + result[item.result] | translate}}</td>
                 <td>{{ item.accumulatedPercentage }}%</td>
