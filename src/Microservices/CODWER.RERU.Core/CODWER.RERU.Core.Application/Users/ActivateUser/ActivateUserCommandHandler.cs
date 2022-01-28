@@ -3,26 +3,27 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using CVU.ERP.Common.Interfaces;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CVU.ERP.Identity.Models;
+using CVU.ERP.Notifications.Email;
+using CVU.ERP.Notifications.Enums;
+using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Core.Application.Users.ActivateUser {
-    class ActivateUserCommandHandler : BaseHandler, IRequestHandler<ActivateUserCommand, Unit> {
+    class ActivateUserCommandHandler : BaseHandler, IRequestHandler<ActivateUserCommand, Unit> 
+    {
         private readonly UserManager<ERPIdentityUser> _userManager;
-        private readonly IEmailService _emailService;
+        private readonly INotificationService _notificationService;
 
-        public ActivateUserCommandHandler (
-            ICommonServiceProvider commonServicepProvider,
-            UserManager<ERPIdentityUser> userManager,
-            IEmailService emailService
-        ) : base (commonServicepProvider) {
+        public ActivateUserCommandHandler (ICommonServiceProvider commonServicepProvider, UserManager<ERPIdentityUser> userManager, INotificationService notificationService) 
+            : base (commonServicepProvider) 
+        {
             _userManager = userManager;
-            _emailService = emailService;
+            _notificationService = notificationService;
         }
 
         public async Task<Unit> Handle(ActivateUserCommand request, CancellationToken cancellationToken)
@@ -44,10 +45,15 @@ namespace CODWER.RERU.Core.Application.Users.ActivateUser {
                     template = template
                         .Replace("{FirstName}", userProfile.Name + ' ' + userProfile.LastName);
 
-                    await _emailService.QuickSendAsync(subject: "Account Activation",
-                        body: template,
-                        from: "Do Not Reply",
-                        to: userProfile.Email);
+                    var emailData = new EmailData()
+                    {
+                        subject = "Account Activation",
+                        body = template,
+                        from = "Do Not Reply",
+                        to = userProfile.Email
+                    };
+
+                    await _notificationService.Notify(emailData, NotificationType.Both);
                 }
                 catch (Exception e)
                 {
