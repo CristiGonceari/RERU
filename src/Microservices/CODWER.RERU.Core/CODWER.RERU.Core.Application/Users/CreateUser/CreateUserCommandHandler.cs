@@ -7,9 +7,9 @@ using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CODWER.RERU.Core.Data.Entities;
 using CVU.ERP.Logging.Models;
-using CVU.ERP.Module.Application.LoggerServices;
 using MediatR;
 using AutoMapper;
+using CVU.ERP.Logging;
 using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.Models.Internal;
 

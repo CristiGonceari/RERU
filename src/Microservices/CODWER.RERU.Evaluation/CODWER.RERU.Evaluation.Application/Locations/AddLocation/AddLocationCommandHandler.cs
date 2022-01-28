@@ -4,8 +4,8 @@ using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
-using CVU.ERP.Module.Application.LoggerServices;
 
 namespace CODWER.RERU.Evaluation.Application.Locations.AddLocation
 {
