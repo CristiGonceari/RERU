@@ -30,7 +30,10 @@
     "logout-msg": "Are you sure you want to logout from the system?",
     "empty-name": "Insert at least one symbol",
     "wrong-name": "Wrong name , should start with symbol",
-    "available-modules": "Available modules"
+    "available-modules": "Available modules",
+    "user-profile": "User's profile",
+    "user-details": "User profile overview",
+    "user-email": "E-mail"
   },
   "notification": {
     "title": {

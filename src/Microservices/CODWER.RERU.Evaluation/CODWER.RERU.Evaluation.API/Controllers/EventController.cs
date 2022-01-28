@@ -13,6 +13,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CODWER.RERU.Evaluation.Application.Events.GetMyEventsByDate;
 using CODWER.RERU.Evaluation.Application.Events.GetMyEventsCount;
 using System.Collections.Generic;
+using CODWER.RERU.Evaluation.Application.Events.GetUserEvents;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -68,6 +69,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         {
             var command = new DeleteEventCommand {Id = id};
             return await Mediator.Send(command);
+        }
+
+        [HttpGet("user-events")]
+        public async Task<PaginatedModel<EventDto>> GetUserEvents([FromQuery] GetUserEventsQuery query)
+        {
+            return await Mediator.Send(query);
         }
     }
 }

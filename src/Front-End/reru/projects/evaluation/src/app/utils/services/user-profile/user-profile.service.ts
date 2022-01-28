@@ -17,8 +17,8 @@ export class UserProfileService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/my`);
   }
 
-  getUser(params): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
+  getUser(id): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`);
   }
 
   getUserProfiles(params): Observable<any> {
