@@ -22,7 +22,6 @@
         </span>
         <b>{{ "tests.options" | translate }}</b>
       </div>
-      <span class="card-title font-weight-bolder"></span>
       <div class="card-toolbar" *ngIf="status == 0 && type == 2 || type == 3">
         <span *ngIf="fromCategory">
           <div class="card-toolbar">
@@ -149,16 +148,15 @@
                 </div>
               </td>
             </tr>
-            <tr *ngIf="options.length == 0">
-              <td></td>
-              <td style="text-align: center">
+            <tr *ngIf="!options.length">
+              <td colspan="3" style="text-align: center">
                 {{ "message.no-record" | translate }}
               </td>
             </tr>
           </tbody>
         </table>
-        <div class="d-flex align-items-center" style="float: right" *ngIf="status == 0">
-          <app-add-button class="btn" [value]="'button.save' | translate" (handle)="updateOptions()">
+        <div class="text-right" *ngIf="status == 0">
+          <app-add-button class="btn" [value]="'button.save' | translate" (handle)="updateOptions()" [disabled]="!options.length">
           </app-add-button>
         </div>
       </div>

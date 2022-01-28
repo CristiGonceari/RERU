@@ -50,7 +50,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit
             }
             else
             {
-                editQuestionUnit.MediaFileId = null;
+                editQuestionUnit.MediaFileId = request.Data.MediaFileId;
             }
 
             _mapper.Map(request.Data, editQuestionUnit);

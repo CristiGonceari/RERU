@@ -161,8 +161,7 @@ export class AddEditQuestionComponent implements OnInit {
   editQuestion(): void {
     this.disableBtn = true;
     const request = new FormData();
-    console.warn('this.tags', this.tags, this.items);
-    
+
     if (this.attachedFile) {
       this.fileType = '4';
       request.append('Data.FileDto.File', this.attachedFile);
@@ -174,6 +173,7 @@ export class AddEditQuestionComponent implements OnInit {
     request.append('Data.QuestionPoints', this.questionForm.value.questionPoints);
     request.append('Data.QuestionType', this.questionForm.value.questionType);
     request.append('Data.Status', this.questionForm.value.status);
+    request.append('Data.MediaFileId', this.fileId);
     request.append('Data.Tags', this.tags);
 
     this.questionService.edit(request).subscribe(() => {
@@ -205,7 +205,8 @@ export class AddEditQuestionComponent implements OnInit {
   }
 
   checkFile(event) {
-    this.attachedFile = event;
+    if (event != null) this.attachedFile = event;
+    else this.fileId = null;
   }
 
 }
