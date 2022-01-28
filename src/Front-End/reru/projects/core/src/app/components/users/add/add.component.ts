@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
+import { ValidatorUtil } from '../../../utils/util/validator.util';
 
 @Component({
   selector: 'app-add',
@@ -54,6 +55,10 @@ export class AddComponent implements OnInit {
       email: this.fb.control(null, [Validators.required , Validators.email]),
       emailNotification: this.fb.control(false, [Validators.required])
     });
+  }
+
+  isIdnpLengthValidator(field: string): boolean {
+    return ValidatorUtil.isIdnpLengthValidator(this.userForm, field);
   }
 
   addUser(): void {
