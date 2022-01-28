@@ -10,6 +10,7 @@ using CODWER.RERU.Core.Application.Users.EditUser;
 using CODWER.RERU.Core.Application.Users.EditUserPersonalDetails;
 using CODWER.RERU.Core.Application.Users.GetEditUserPersonalDetails;
 using CODWER.RERU.Core.Application.Users.GetPersonalData;
+using CODWER.RERU.Core.Application.Users.GetUserDetails;
 using CODWER.RERU.Core.Application.Users.RemoveUser;
 using CODWER.RERU.Core.Application.Users.ResetUserPassword;
 using CODWER.RERU.Core.Application.Users.SetPassword;
@@ -19,7 +20,7 @@ using CVU.ERP.Common.DataTransferObjects.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CODWER.RERU.Core.API.Controllers 
+namespace CODWER.RERU.Core.API.Controllers
 {
     [ApiController]
     [Route ("api/[controller]")]
@@ -28,6 +29,11 @@ namespace CODWER.RERU.Core.API.Controllers
         public UserController(IMediator mediator) : base(mediator)
         {
 
+}
+        [HttpGet ("{id:int}")]
+        public Task<UserDetailsOverviewDto> GetUserDetails ([FromRoute] int id) 
+        {
+            return Mediator.Send (new GetUserDetailsQuery (id));
         }
 
         [HttpGet ("{id:int}/for-remove")]

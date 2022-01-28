@@ -736,7 +736,8 @@
     "03030202": "Your test was verified",
     "03030203": "You were invited to event as a candidate",
     "03030204": "You have been invited to event as responsible person",
-    "03030205": "You were invited to the event as an evaluator"
+    "03030205": "You were invited to the event as an evaluator",
+    "03030206": "You were invited to the test as an evaluator"
   },
   "login": {
     "colaborator-id": "Collaborator ID",

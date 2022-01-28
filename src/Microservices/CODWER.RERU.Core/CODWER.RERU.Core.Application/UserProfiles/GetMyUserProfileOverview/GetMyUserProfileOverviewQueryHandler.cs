@@ -1,7 +1,3 @@
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services;
@@ -10,6 +6,9 @@ using CODWER.RERU.Core.DataTransferObjects.Profile;
 using CVU.ERP.Module.Application.Providers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.Application.UserProfiles.GetMyUserProfileOverview
 {
@@ -18,7 +17,10 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetMyUserProfileOverview
         private readonly ICurrentApplicationUserProvider _currentUserProvider;
         private readonly IDocumentStorageService _documentService;
 
-        public GetMyUserProfileOverviewQueryHandler(ICommonServiceProvider commonServicepProvider, ICurrentApplicationUserProvider currentApplicationUserProvider, IDocumentStorageService documentService) : base(commonServicepProvider)
+        public GetMyUserProfileOverviewQueryHandler(
+            ICommonServiceProvider commonServiceProvider, 
+            ICurrentApplicationUserProvider currentApplicationUserProvider, 
+            IDocumentStorageService documentService) : base(commonServiceProvider)
         {
             _currentUserProvider = currentApplicationUserProvider;
             _documentService = documentService;

@@ -735,7 +735,8 @@
     "03030202": "Testul dvs. a fost verificat", 
     "03030203": "Ați fost invitat la eveniment ca candidat",
     "03030204": "Ați fost invitat la eveniment ca persoana responsabilă",
-    "03030205": "Ați fost invitat la eveniment ca evaluator"
+    "03030205": "Ați fost invitat la eveniment ca evaluator",
+    "03030206": "Ați fost invitat la test ca evaluator"
   },
   "login": {
     "colaborator-id": "Colaborator ID",

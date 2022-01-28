@@ -41,6 +41,9 @@ namespace CODWER.RERU.Personal.API.Config
                 options.AddPolicy("AdminOnly", policy => policy.RequireClaim("IsAdmin", "true"));
             });
         }
+
+        #endregion
+
         #region DI
 
         public static void ConfigureInjection(IServiceCollection services, IHostingEnvironment currentEnvironment)
@@ -52,12 +55,11 @@ namespace CODWER.RERU.Personal.API.Config
 
             services.AddTransient<IContractorCodeGeneratorService, ContractorCodeGeneratorService>();
 
-            //services.AddScoped<ISession, Session>();
+            services.AddScoped<ISession, Session>();
 
             services.AddPersonalApplication(currentEnvironment);
         }
 
-        #endregion
         #endregion
     }
 }

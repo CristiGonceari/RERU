@@ -60,6 +60,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
             await _appDbContext.SaveChangesAsync();
 
             await _internalNotificationService.AddNotification(newTest.UserProfileId, NotificationMessages.YouHaveNewProgrammedTest);
+            await _internalNotificationService.AddNotification((int)newTest.EvaluatorId, NotificationMessages.YouWereInvitedToTestAsEvaluator);
 
             var user = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == newTest.UserProfileId);
             var testType = await _appDbContext.TestTypes.FirstOrDefaultAsync(x => x.Id == newTest.TestTypeId);
