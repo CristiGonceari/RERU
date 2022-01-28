@@ -8,8 +8,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Data.Entities;
+using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
-using CVU.ERP.Module.Application.LoggerServices;
 
 namespace CODWER.RERU.Core.Application.Users.RemoveUser
 {

@@ -10,8 +10,8 @@ using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Data.Entities.StaticExtensions;
+using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
-using CVU.ERP.Module.Application.LoggerServices;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 {

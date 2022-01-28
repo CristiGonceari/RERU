@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
-using CVU.ERP.Module.Application.LoggerServices;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

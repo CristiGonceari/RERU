@@ -2,15 +2,14 @@ using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CVU.ERP.Logging.Models;
-using CVU.ERP.Module.Application.LoggerServices;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Data.Entities;
+using CVU.ERP.Logging;
 
 namespace CODWER.RERU.Core.Application.Users.ResetUserPassword
 {
