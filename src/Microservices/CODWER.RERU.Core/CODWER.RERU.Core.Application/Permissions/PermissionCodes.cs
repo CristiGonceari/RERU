@@ -12,6 +12,7 @@
         public const string REMOVE_MODULE_ROLE = "P00000009";
         public const string VIEW_ROLE_PERMISSIONS = "P00000010";
         public const string UPDATE_MODULE_ROLE = "P00000011";
+        public const string VIEW_ALL_USERS = "P00000012";
         public const string ADD_USER = "P00000013";
         public const string EDIT_USER_DETAILS = "P00000014";
         public const string SET_USER_PASSWORD = "P00000015";
