@@ -31,7 +31,7 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles
 
             CreateMap<UserProfile, SelectItem>()
                 .ForMember(x => x.Value, opts => opts.MapFrom(u => u.Id))
-                .ForMember(x => x.Label, opts => opts.MapFrom(u => u.FirstName + " " + u.LastName));
+                .ForMember(x => x.Label, opts => opts.MapFrom(u => u.FirstName + " " + u.LastName + " " + u.Patronymic + " " + $"({u.Idnp})"));
 
 
             CreateMap<BaseUserProfile, UserProfile>()

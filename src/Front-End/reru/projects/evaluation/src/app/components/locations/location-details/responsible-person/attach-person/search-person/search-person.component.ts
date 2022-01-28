@@ -53,7 +53,19 @@ export class SearchPersonComponent implements OnInit {
         user.lastName = "";
       }
 
-      var name = user.firstName + " " + user.lastName;
+      if (user.firstName == null) {
+        user.firstName = "";
+      }
+
+      if (user.patronymic == null) {
+        user.patronymic = "";
+      }
+
+      if (user.idnp == null) {
+        user.idnp = "";
+      }
+
+      var name = `${user.firstName} ${user.lastName} ${user.patronymic}  (${user.idnp})`;
 
       return name;
     }
