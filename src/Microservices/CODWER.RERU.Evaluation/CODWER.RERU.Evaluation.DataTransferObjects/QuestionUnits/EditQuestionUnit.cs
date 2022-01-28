@@ -18,5 +18,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits
         public QuestionUnitStatusEnum Status { get; set; }
         public int QuestionPoints { get; set; }
         public AddFileDto FileDto { get; set; }
+        public string? MediaFileId { get; set; }
     }
 }
