@@ -102,4 +102,8 @@ export class TestService extends AbstractService {
 	getUsersPollsByEvent(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-polls-by-event`, { params });
 	}
+
+	getUserEvaluatedTests(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-evaluated-tests`, { params });
+	}
 }
