@@ -26,12 +26,12 @@
         <span *ngIf="fromCategory">
           <div class="card-toolbar">
             <div class="dropdown dropdown-inline my-auto" ngbDropdown>
-              <app-add-button class="btn my-auto" id="action1" ngbDropdownToggle 
+              <app-add-button *ngIf="status == 0" class="btn my-auto" id="action1" ngbDropdownToggle 
               [value]="'questions.add-option' | translate">
               </app-add-button>
               <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                 <div ngbDropdownMenu aria-labelledby="action1">
-                  <button class="navi-link align-items-center px-6" ngbDropdownItem
+                  <button *ngIf="status == 0" class="navi-link align-items-center px-6" ngbDropdownItem
                     [routerLink]="['../../option', questionId, 'add']">
                     <i class="la la-plus mr-2"></i> 
                     {{'questions.add-option' | translate}}
@@ -49,7 +49,7 @@
             </app-add-button> -->
         </span>
         <span *ngIf="!fromCategory">
-            <app-add-button class="btn" [value]="'questions.add-option' | translate"
+            <app-add-button *ngIf="status == 0" class="btn" [value]="'questions.add-option' | translate"
             [routerLink]="['../option', questionId, 'add']">
             </app-add-button>
         </span>
