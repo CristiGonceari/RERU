@@ -272,6 +272,7 @@
     "search-test-type": "Search by test template",
     "search-test-status": "Search by status",
     "search-student": "Search user",
+    "search-student-idnp": "Search by user idnp",
     "test-type-name": "Test template name",
     "student": "Student",
     "status": "Status",

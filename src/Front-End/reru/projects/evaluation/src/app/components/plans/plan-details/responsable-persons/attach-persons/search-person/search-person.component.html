@@ -3,6 +3,7 @@
     <mat-autocomplete class="form-control" #auto="matAutocomplete" [displayWith]="getTitle.bind(this)">
         <mat-option *ngFor="let option of list" [value]="option.id">
             {{option.firstName}} {{option.lastName}}
+            <span class="text-dark-50 font-size-lg font-weight-light">(idnp: {{option.idnp}})</span>
         </mat-option>
     </mat-autocomplete>
 

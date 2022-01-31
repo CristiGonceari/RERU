@@ -11,7 +11,10 @@
         </thead>
         <tbody class="datatable-body" *ngIf="persons.length">
             <tr *ngFor="let item of persons">
-                <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../user-profile', item.id]">{{item.firstName}} {{item.lastName}} {{item.patronymic}}  ({{item.idnp}})</td>
+                <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../user-profile', item.id]">
+                    {{item.firstName}} {{item.lastName}} {{item.patronymic}}
+                    <span class="text-dark-50 font-size-lg font-weight-light">(idnp: {{item.idnp}})</span>
+                </td>
                 <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
                     <div style="overflow: visible; position: relative; width: 0px">
                         <div ngbDropdown class="dropdown dropdown-inline">

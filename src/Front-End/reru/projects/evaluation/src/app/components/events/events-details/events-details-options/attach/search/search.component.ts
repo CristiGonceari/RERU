@@ -21,9 +21,8 @@ export class SearchComponent implements OnInit {
 
   list;
   form = new FormControl();
-  eventId;
-  id;
-  zizi: any;
+  eventId: number;
+  id: number;
 
   constructor(private locationService: LocationService,
     private eventService: EventService,
@@ -36,100 +35,98 @@ export class SearchComponent implements OnInit {
   }
 
   initData() {
-    this.eventId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.eventId = +this.activatedRoute.snapshot.paramMap.get('id');
     this.eventService.getEvent(this.eventId).subscribe(res => {
-
-      if(this.searchLocations == false){
-           this.form.setValue(res.data.locationId)
-          this.getTitle(res.data.locationId);
+      if (this.searchLocations == false) {
+        this.form.setValue(res.data.locationId)
+        this.getTitle(res.data.locationId);
       }
 
-      if(this.searchEvaluators == false){
+      if (this.searchEvaluators == false) {
         this.form.setValue(res.data.evaluatorId)
         this.getTitle(res.data.evaluatorId);
       }
-      
-      if(this.searchTestType == false){
+
+      if (this.searchTestType == false) {
         this.form.setValue(res.data.testTypeId)
         this.getTitle(res.data.testTypeId);
       }
 
-      if(this.searchPerson == false){
-         this.form.setValue(res.data.userProfileId)
-         this.getTitle(res.data.userProfileId);
+      if (this.searchPerson == false) {
+        this.form.setValue(res.data.userProfileId)
+        this.getTitle(res.data.userProfileId);
       }
 
-      if(this.searchUser == false){
+      if (this.searchUser == false) {
         this.form.setValue(null)
       }
-    })  
+    })
   }
 
   getList() {
-   this.initData();
+    this.initData();
     this.form.valueChanges.subscribe(term => {
-      
-      if(this.searchLocations == false){
-        if (!term){
+
+      if (this.searchLocations == false) {
+        if (!term) {
           this.locationService.getLocationsByEvent({ eventId: this.eventId }).subscribe(data => this.list = data.data);
         }
-        else if (term != ''){
+        else if (term != '') {
           this.locationService.getLocationsByEvent({ keyword: term, eventId: this.eventId }).subscribe(data => this.list = data.data);
         }
-        }
+      }
 
-      if(this.searchEvaluators == false){
+      if (this.searchEvaluators == false) {
         if (!term)
           this.userService.getUserProfilesByEvaluatorEvent({ eventId: this.eventId }).subscribe(data => this.list = data.data);
         else if (term != '')
           this.userService.getUserProfilesByEvaluatorEvent({ keyword: term, eventId: this.eventId }).subscribe(data => this.list = data.data);
       }
 
-      if(this.searchTestType == false){
+      if (this.searchTestType == false) {
         if (!term)
           this.testService.getTestTypeByEvent({ eventId: this.eventId }).subscribe(data => this.list = data.data);
         else if (term != '')
           this.testService.getTestTypeByEvent({ keyword: term, eventId: this.eventId }).subscribe(data => this.list = data.data);
       }
 
-      if(this.searchPerson == false){
+      if (this.searchPerson == false) {
         if (!term)
           this.userService.getUserProfilesByEvent({ eventId: this.eventId }).subscribe(res => this.list = res.data);
         else if (term != '')
           this.userService.getUserProfilesByEvent({ keyword: term, eventId: this.eventId }).subscribe(data => this.list = data.data);
-        }
+      }
 
-      if(this.searchUser == false){
+      if (this.searchUser == false) {
         if (!term)
           this.userService.getUserProfilesByAttachedUserEvent({ eventId: this.eventId }).subscribe(data => this.list = data.data);
         else if (term != '')
           this.userService.getUserProfilesByAttachedUserEvent({ keyword: term, eventId: this.eventId }).subscribe(data => this.list = data.data);
       }
       this.eventService.setData(term);
-        });
+    });
 
-      
+
   }
 
   getTitle(id) {
 
-    if (this.searchLocations == false && id){
+    if (this.searchLocations == false && id) {
       return this.list.find(u => u.id === id).name + ", " + this.list.find(u => u.id === id).address;
     }
 
-    if(this.searchTestType == false && id ){
+    if (this.searchTestType == false && id) {
       return this.list.find(u => u.id === id).name;
     }
-    
-    if((this.searchPerson == false || this.searchEvaluators == false || this.searchUser == false) && id){
-      var user =  this.list.find(u => u.id === id);
 
-      if(user.lastName == null)
-      {
+    if ((this.searchPerson == false || this.searchEvaluators == false || this.searchUser == false) && id) {
+      var user = this.list.find(u => u.id === id);
+
+      if (user.lastName == null) {
         user.lastName = "";
       }
 
-      var name = user.firstName +" "+ user.lastName;
+      var name = user.firstName + " " + user.lastName + ", " + user.idnp;
 
       return name;
     }

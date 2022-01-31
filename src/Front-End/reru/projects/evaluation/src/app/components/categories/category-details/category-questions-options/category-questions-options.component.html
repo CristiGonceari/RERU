@@ -97,9 +97,10 @@
                   <span></span>
                 </label>
               </td>
-              <td>{{ item.answer }}
-                <div class="form-group row align-items-center">
+              <td>
+                <div class="form-group row align-items-center mb-0">
                   <div class="col-lg-9 col-xl-6">
+                    {{ item.answer }}
                     <div *ngIf="item.mediaFileId">
                       <app-get-media-file [fileId]="item.mediaFileId"></app-get-media-file>
                     </div>
