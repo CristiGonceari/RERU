@@ -80,6 +80,8 @@
         public static string INVALID_QUESTION = "03001408";
         public static string INVALID_OPTION = "03001409";
         public static string EMPTY_CORRECT_OPTION = "03001419";
+        public static string TAGS_WRITTEN_WITH_MISTAKE_OR_MISSING_ANSWER_OPTION = "03001420";
+
 
         //tests
         public static string INVALID_TEST = "03001501";
