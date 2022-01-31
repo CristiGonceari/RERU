@@ -17,8 +17,4 @@ export class ShowImageModalComponent {
 		this.activeModal.close();
 	}
 
-  // ngOnDestroy(): void {
-  //   this.dismiss();
-  // }
-
 }

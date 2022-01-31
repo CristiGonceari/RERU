@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PaginationModel } from '../../utils/models/pagination.model';
 import { LoggingService } from '../../utils/services/logging-service/logging.service';
 import { FormGroup } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ViewJsonModalComponent } from '../../utils/modals/view-json-modal/view-json-modal.component';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -26,7 +28,8 @@ export class DashboardComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private loggingService: LoggingService) {}
+  constructor(private loggingService: LoggingService,
+		public modalService: NgbModal,) {}
 
   ngOnInit(): void {
     this.retriveDeopdowns();
@@ -83,5 +86,14 @@ export class DashboardComponent implements OnInit {
 
   atachEvent(item: any) {
     this.selectedEvent = item.target.value;
+  }
+
+  viewJSON(json): void {
+    const modalRef = this.modalService.open(ViewJsonModalComponent, { centered: true, size: 'lg' });
+    modalRef.componentInstance.json = json;
+		modalRef.result.then(
+			() => { },
+      () => {modalRef.close()}
+		);
   }
 }

@@ -30,7 +30,8 @@
     "user-identifier": "Identificator",
     "event-message": "Mesajul Eveniment",
     "json-message": "JSON",
-    "date": "Data"
+    "date": "Data",
+    "view-json": "Vizualizarea JSON"
    },
   "user-profile": {
     "overview": "Vizualizarea profilului personal",

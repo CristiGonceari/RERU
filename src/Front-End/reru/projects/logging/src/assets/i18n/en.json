@@ -30,7 +30,8 @@
    "user-identifier": "Identifier",
    "event-message": "Event Message",
    "json-message": "JSON",
-   "date": "Date"
+   "date": "Date",
+   "view-json": "View JSON"
   },
   "user-profile": {
     "overview": "Overview profile",
