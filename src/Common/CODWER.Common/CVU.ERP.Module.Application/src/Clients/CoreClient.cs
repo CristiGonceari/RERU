@@ -88,7 +88,7 @@ namespace CVU.ERP.Module.Application.Clients
         public async Task<ApplicationUser> GetApplicationUserByIdentity(string id, string identityProvider)
         {
             var resourceUrl = $"{UserProfileBasePath}/{identityProvider}/{id}";
-            var request = NewJsonRequest(resourceUrl);
+            var request = new RestRequest(resourceUrl, DataFormat.Json);
 
             var response = await _restClient.GetAsync<Response<ApplicationUser>>(request, new CancellationToken());
 
