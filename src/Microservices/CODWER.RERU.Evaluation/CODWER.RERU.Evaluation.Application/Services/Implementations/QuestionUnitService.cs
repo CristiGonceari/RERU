@@ -1,6 +1,7 @@
 using CODWER.RERU.Evaluation.Application.Options.AddOption;
 using CODWER.RERU.Evaluation.Application.Options.DeleteOption;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit;
+using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
@@ -135,7 +136,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 {
                     await RemoveUnusedOptions(counter, questionId);
                 }
-            }         
+            }
+            else
+            {
+                throw new Exception(ValidationCodes.TAGS_WRITTEN_WITH_MISTAKE_OR_MISSING_ANSWER_OPTION);
+            }
 
             return answer;
         }
