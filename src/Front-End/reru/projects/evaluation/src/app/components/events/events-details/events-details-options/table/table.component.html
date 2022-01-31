@@ -112,7 +112,7 @@
     </tbody>
     <tbody class="datatable-body" *ngIf="fields.length && !user">
       <tr *ngFor="let item of fields">
-        <td>{{item.firstName}} {{item.lastName}}</td>
+        <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../user-profile', item.id]">{{item.firstName}} {{item.lastName}}</td>
         <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
           <div style="overflow: visible; position: relative; width: 0px">
             <div ngbDropdown class="dropdown dropdown-inline">
@@ -145,7 +145,7 @@
     </tbody>
     <tbody class="datatable-body" *ngIf="fields.length && !evaluators">
       <tr *ngFor="let item of fields">
-        <td>{{item.firstName}} {{item.lastName}}</td>
+        <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../user-profile', item.id]">{{item.firstName}} {{item.lastName}}</td>
         <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
           <div style="overflow: visible; position: relative; width: 0px">
             <div ngbDropdown class="dropdown dropdown-inline">
@@ -178,7 +178,7 @@
     </tbody>
     <tbody class="datatable-body" *ngIf="fields.length && !person">
       <tr *ngFor="let item of fields">
-        <td>{{item.firstName}} {{item.lastName}}</td>
+        <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../user-profile', item.id]">{{item.firstName}} {{item.lastName}}</td>
         <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
           <div style="overflow: visible; position: relative; width: 0px">
             <div ngbDropdown class="dropdown dropdown-inline">

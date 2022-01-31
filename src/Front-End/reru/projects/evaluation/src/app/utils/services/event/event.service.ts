@@ -126,4 +126,8 @@ export class EventService extends AbstractService {
   detachEvaluator(eventId, evaluatorId) {
     return this.http.delete(`${this.baseUrl}/EventEvaluator/Event=${eventId}&&Evaluator=${evaluatorId}`);
   }
+
+  getUserEvents(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-events`, { params });
+  }
 }

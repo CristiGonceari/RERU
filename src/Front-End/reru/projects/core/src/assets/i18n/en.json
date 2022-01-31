@@ -317,6 +317,12 @@
     "MAR000007": "General Unknown",
     "MAR000008": "Not api request",
     "MAP0000001": "Unauthenticated application request",
-    "MAP0000002": "Unauthorized request"
+    "MAP0000002": "Unauthorized request",
+    "01000001": "IDNP should be 13 digits",
+    "01000002": "IDNP should consist only digits",
+    "01000003": "IDNP shout not consist only zeroes",
+    "01000004": "Invalid IDNP!",
+    "01000005": "Duplicate IDNP in the system!"
+    
   }
 }
