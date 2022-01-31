@@ -42,6 +42,7 @@ export class EventCalendarComponent implements OnInit {
   onChangeMonth;
   countedPlans: Events[] = [];
   onClickedDay;
+  dayValue: Date;
   
   currentMonth: boolean = false;
   isLoading: boolean = true;
@@ -58,10 +59,18 @@ export class EventCalendarComponent implements OnInit {
   }
 
   private generateCalendarDays(monthIndex: number): void {
-
+    
     this.calendar = [];
+    
+    if(monthIndex != 0){
+       this.dayValue = new Date(new Date().setDate(1));
+    }
+    else{
+      this.dayValue = new Date()
+    }
+    
+    let day: Date = new Date(this.dayValue.setMonth(new Date().getMonth() + monthIndex));
 
-    let day: Date = new Date(new Date().setMonth(new Date().getMonth() + monthIndex));
     this.onChangeMonth = day.getMonth()
 
     let data = {
