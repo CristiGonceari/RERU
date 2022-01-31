@@ -55,7 +55,7 @@ namespace CODWER.RERU.Core.Application.Users.ResetUserPassword
 
         private async Task LogAction(UserProfile userProfile)
         {
-            await _loggerService.Log(LogData.AsCore($" User {userProfile.Name} {userProfile.LastName}, password was reseted", userProfile));
+            await _loggerService.Log(LogData.AsCore($" User {userProfile.Name} {userProfile.LastName}, password was reset", userProfile));
         }
     }
 }
