@@ -5,11 +5,12 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ViewJsonModalComponent } from './modals/view-json-modal/view-json-modal.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [ViewJsonModalComponent],
   imports: [
     HttpClientModule,
     CommonModule,
