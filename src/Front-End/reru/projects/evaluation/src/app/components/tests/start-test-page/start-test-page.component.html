@@ -1,6 +1,5 @@
 <app-page-title title="{{'tests.test' | translate}}" subTitle="{{'tests.run-test' | translate}}"></app-page-title>
 
-<!--begin::Content-->
 <div class="content main-content content-bg" id="kt_content">
     <div class="d-flex flex-column-fluid">
         <div class="container">
@@ -14,7 +13,8 @@
                             </div>
                             <div class="card-title m-10">
                                 <h3 class="card-label text-muted">{{'verify-test.student' | translate}}:</h3>
-                                <h3 class="card-label">{{ testDto.userName }}</h3>
+                                <h3 class="card-label">{{ testDto.userName }} <br>
+                                <span class="text-dark-50 font-size-lg font-weight-light">(idnp: {{testDto.idnp}})</span></h3>
                             </div>
                             <div class="card-title m-10">
                                 <h3 class="card-label text-muted">{{'tests.time' | translate}}:</h3>
