@@ -21,12 +21,24 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Seq.Extensions.Logging" Version="6.0.0" />
+    <PackageReference Include="Wkhtmltopdf.NetCore" Version="3.0.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.MessageQueue\CVU.ERP.MessageQueue.csproj" />
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Module.API\src\CVU.ERP.Module.API.csproj" />
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Module\CVU.ERP.Module.csproj" />
     <ProjectReference Include="..\CODWER.RERU.Core.Application\CODWER.RERU.Core.Application.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Rotativa\Linux\wkhtmltopdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Rotativa\Mac\wkhtmltopdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Rotativa\Windows\wkhtmltopdf.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
