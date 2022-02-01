@@ -118,6 +118,9 @@ stages:
                       echo "##vso[task.setvariable variable=BuildPublicGateway]True"
                       echo "##vso[task.setvariable variable=BuildInternalGateway]True"
                     }
+                    
+                      echo "##vso[task.setvariable variable=BuildCore]True"
+                      echo "##vso[task.setvariable variable=BuildLogging]True"
                 }
 
           - task: CmdLine@2
