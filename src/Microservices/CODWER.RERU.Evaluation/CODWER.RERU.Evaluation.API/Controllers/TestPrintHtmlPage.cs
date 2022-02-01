@@ -5,6 +5,7 @@ using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
+using CVU.ERP.Common.DataTransferObjects.Files;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {

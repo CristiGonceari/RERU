@@ -1,4 +1,4 @@
-﻿namespace CODWER.RERU.Evaluation.DataTransferObjects.Files
+﻿namespace CVU.ERP.Common.DataTransferObjects.Files
 {
     public class FileDataDto
     {

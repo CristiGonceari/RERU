@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CVU.ERP.Common.DataTransferObjects.Files;
 using Wkhtmltopdf.NetCore;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations
@@ -50,6 +51,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             return await GetPdf(testTemplate);
         }
+
         public async Task<FileDataDto> PrintTestPdf(int testId)
         {
             var item = _appDbContext.Tests
@@ -66,6 +68,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             return await GetPdf(item);
         }
+
         public async Task<FileDataDto> PrintQuestionUnitPdf(int questionId)
         {
             var questions = _appDbContext.QuestionUnits
@@ -75,6 +78,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             return await GetPdf(questions);
         }
+
         public async Task<FileDataDto> PrintPerformingTestPdf(List<int> testsIds)
         {
             return await GetPdf(testsIds);
