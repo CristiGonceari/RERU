@@ -729,7 +729,7 @@
     "03001803": "Tip de selecție nevalid",
     "03001804": "Tip de secvență nevalid",
     "03001805": "Numărul de întrebări stabilit trebuie să fie egal cu numărul de întrebări selectate",
-    "03001806": "Sondajele acceptă doar întrebări cu un singur răspuns",
+    "03001806": "Alegeți tipul întrebării. Sondajele acceptă doar întrebări cu un singur răspuns",
     "03001901": "Rezultatul nu poate fi calculat",
     "03001902": "Numai testul terminat poate fi setat ca verificat",
     "03001903": "Nu toate răspunsurile sunt verificate",
