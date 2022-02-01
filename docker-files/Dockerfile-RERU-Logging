@@ -19,6 +19,6 @@ WORKDIR /app
 RUN addgroup --gid 1000 app && adduser --uid 1000 app --ingroup app
 USER 1000
 
-RUN chmod 755 /app/Rotativa/Linux/wkhtmltopdf
 COPY --chown=1000 --from=build /publish .
+RUN chmod 755 /app/Rotativa/Linux/wkhtmltopdf
 ENTRYPOINT ["dotnet", "CODWER.RERU.Logging.API.dll"]
