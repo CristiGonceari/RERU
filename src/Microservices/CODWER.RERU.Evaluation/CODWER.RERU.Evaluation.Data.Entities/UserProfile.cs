@@ -16,7 +16,6 @@ namespace CODWER.RERU.Evaluation.Data.Entities
             Notifications = new HashSet<Notification>();
         }
 
-        public int Id { get; set; }
         public string CoreUserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
