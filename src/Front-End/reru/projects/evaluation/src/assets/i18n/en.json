@@ -730,7 +730,7 @@
     "03001803": "Invalid selection type",
     "03001804": "Invalid sequence type",
     "03001805": "Established question coun must be equal to selected question count",
-    "03001806": "Polls accept only 'one answer' questions",
+    "03001806": "Please, select question type. Polls accept only 'one answer' questions",
     "03001901": "Can not calculate the result",
     "03001902": "Only terminated test can be set as verified",
     "03001903": "Not all answers are verified",
