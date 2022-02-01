@@ -12,7 +12,7 @@ export class ViewJsonModalComponent implements OnInit {
   constructor(private activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
-    this.json =  JSON.stringify(this.json, null, 2);
+    this.json = JSON.stringify(JSON.parse(this.json), null, 3);
   }
 
   dismiss(): void {

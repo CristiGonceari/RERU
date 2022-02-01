@@ -112,9 +112,6 @@ tbody {
 
 .text-wrapper {
   max-width: 500px;
-  overflow: hidden;
-  text-overflow: ellipsis;
   display: -webkit-box !important;
-  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
