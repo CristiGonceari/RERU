@@ -5,6 +5,8 @@ using CVU.ERP.Module.Application.ExceptionHandlers;
 using CVU.ERP.Module.Application.Infrastructure;
 using CVU.ERP.Module.Application.LoggerServices.Implementations;
 using CVU.ERP.Module.Application.Providers;
+using CVU.ERP.Module.Application.TablePrinterService;
+using CVU.ERP.Module.Application.TablePrinterService.Implementations;
 using CVU.ERP.Module.Common.ExceptionHandlers;
 using CVU.ERP.Module.Common.Models;
 using CVU.ERP.Notifications.DependencyInjection;
@@ -61,6 +63,9 @@ namespace CVU.ERP.Module.Application.DependencyInjection
 
             //log service 
             services.AddTransient(typeof(ILoggerService<>), typeof(LoggerService<>));
+
+            //print table service
+            services.AddTransient(typeof(ITablePrinter<,>), typeof(TablePrinter<,>));
 
             return services;
         }

@@ -27,7 +27,7 @@ namespace CODWER.RERU.Evaluation.Application.Articles.GetArticles
 
             if (!string.IsNullOrWhiteSpace(request.Name))
             {
-                articles = articles.Where(x => EF.Functions.Like(x.Name, $"%{request.Name}%"));
+                articles = articles.Where(x => x.Name.Contains(request.Name));
             }
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Article, ArticleDto>(articles, request);

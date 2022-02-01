@@ -8,6 +8,8 @@ using CODWER.RERU.Evaluation.Application.Articles.GetArticles;
 using CODWER.RERU.Evaluation.Application.Articles.AddEditArticle;
 using MediatR;
 using CODWER.RERU.Evaluation.Application.Articles.DeleteArticle;
+using CODWER.RERU.Evaluation.Application.Articles.PrintArticles;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -37,6 +39,17 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<Unit> DeleteArticle([FromRoute] int id)
         {
             return await Mediator.Send(new DeleteArticleCommand { Id = id });
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> GetQuestionPdf([FromBody] PrintArticlesCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }
