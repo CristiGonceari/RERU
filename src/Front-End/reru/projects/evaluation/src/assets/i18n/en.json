@@ -272,6 +272,7 @@
     "search-test-type": "Search by test template",
     "search-test-status": "Search by status",
     "search-student": "Search user",
+    "search-student-idnp": "Search by user idnp",
     "test-type-name": "Test template name",
     "student": "Student",
     "status": "Status",
@@ -315,7 +316,8 @@
     "points-must-be-greater": "If answer is correct, points must be greater than 0",
     "set-points-to-zero": "If answer is false, set points to 0",
     "finish-verification-msg": "Are you sure you want to complete test verification?",
-    "succes-verified-msg": "Test was successfully verified"
+    "succes-verified-msg": "Test was successfully verified",
+    "evaluated-tests": "Evaluated tests"
   },
   "dashboard": {
     "title": "Evaluation",
@@ -728,7 +730,7 @@
     "03001803": "Invalid selection type",
     "03001804": "Invalid sequence type",
     "03001805": "Established question coun must be equal to selected question count",
-    "03001806": "Polls accept only 'one answer' questions",
+    "03001806": "Please, select question type. Polls accept only 'one answer' questions",
     "03001901": "Can not calculate the result",
     "03001902": "Only terminated test can be set as verified",
     "03001903": "Not all answers are verified",

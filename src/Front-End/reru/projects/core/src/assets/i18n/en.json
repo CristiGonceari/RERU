@@ -22,7 +22,8 @@
     "password": "Password",
     "password-is-required": "Password is required",
     "forgot-password": "Forgot Password?",
-    "recover-email-sent": "The recover email has been sent!" 
+    "recover-email-sent": "The recover email has been sent!",
+    "idnp-is-required": "IDNP is required"
   },
   "notification": {
     "title": {
@@ -323,6 +324,5 @@
     "01000003": "IDNP shout not consist only zeroes",
     "01000004": "Invalid IDNP!",
     "01000005": "Duplicate IDNP in the system!"
-    
   }
 }

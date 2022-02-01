@@ -5,21 +5,16 @@
             <div *ngIf="searchLocations == false">
                 {{option.name}}, {{option.address}}
             </div>
-            <div *ngIf="searchEvaluators  ==false ">
+            <div *ngIf="searchEvaluators == false ">
                 {{option.firstName}} {{option.lastName}}
             </div>
-            <div *ngIf=" searchUser ==false">
-                <div *ngIf="option.firstName != null">
-                   {{option.firstName}}  
-                </div>
-                <div *ngIf="option.lastName != null">
-                    {{option.lastName}}
-                </div>
+            <div *ngIf=" searchUser == false">
+                {{option.firstName}} {{option.lastName}} ({{option.idnp}})
             </div>
-            <div *ngIf="searchPerson ==false">
-                {{option.firstName}} {{option.lastName}}
+            <div *ngIf="searchPerson == false">
+                {{option.firstName}} {{option.lastName}} ({{option.idnp}})
             </div>
-            <div *ngIf="searchTestType  ==false">
+            <div *ngIf="searchTestType == false">
                 {{option.name}}
             </div>
         </mat-option>

@@ -26,6 +26,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using NSwag;
 using NSwag.Generation.Processors.Security;
+using Wkhtmltopdf.NetCore;
 
 namespace CODWER.RERU.Core.API
 {
@@ -108,6 +109,7 @@ namespace CODWER.RERU.Core.API
 
             services.AddControllers()
                 .AddERPModuleControllers();
+            services.AddWkhtmltopdf();
 
             services.AddERPModuleServices(Configuration)
                 .AddCoreModuleApplication()

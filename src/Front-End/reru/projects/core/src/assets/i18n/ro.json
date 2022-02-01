@@ -22,7 +22,8 @@
     "password": "Parolă",
     "password-is-required": "Parola este obligatorie",
     "forgot-password": "Ai uitat parola?",
-    "recover-email-sent": "Mesajul de recuperare a fost trimis pe email!"
+    "recover-email-sent": "Mesajul de recuperare a fost trimis pe email!",
+    "idnp-is-required": "IDNP este obligatoriu"
   },
   "notification": {
     "title": {

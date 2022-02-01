@@ -49,6 +49,7 @@ export class TestListTableComponent implements OnInit {
   testPassEnum: TestStatusEnum;
   eventName;
   locationName;
+  idnp: string;
   isLoading: boolean = true;
 
   title: string;
@@ -101,6 +102,7 @@ export class TestListTableComponent implements OnInit {
     let params = {
       testTypeName: this.testToSearch || '',
       locationKeyword: this.locationName || '',
+      idnp: this.idnp || '',
       eventName: this.eventName || '',
       userName: this.userName || '',
       programmedTimeFrom: this.searchFrom,

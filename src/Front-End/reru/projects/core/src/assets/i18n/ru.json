@@ -22,7 +22,8 @@
     "password": "Пароль",
     "password-is-required": "Пароль обязателен",
     "forgot-password": "Забыл пароль?",
-    "recover-email-sent": "Письмо было выслано на электронную почту!"
+    "recover-email-sent": "Письмо было выслано на электронную почту!",
+    "idnp-is-required": "IDNP обязателен"
   },
   "notification": {
     "title": {

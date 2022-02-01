@@ -22,6 +22,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Common.Data.Persistence.EntityFramework\CVU.ERP.Common.Data.Persistence.EntityFramework.csproj" />
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Identity\CVU.ERP.Identity.csproj" />
     <ProjectReference Include="..\CODWER.RERU.Core.Data.Entities\CODWER.RERU.Core.Data.Entities.csproj" />
   </ItemGroup>

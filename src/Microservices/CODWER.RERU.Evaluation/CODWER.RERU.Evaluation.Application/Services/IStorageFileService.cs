@@ -1,10 +1,9 @@
 ﻿using CODWER.RERU.Evaluation.Data.Entities.Files;
 using CODWER.RERU.Evaluation.DataTransferObjects.Files;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CVU.ERP.Common.DataTransferObjects.Files;
 
 namespace CODWER.RERU.Evaluation.Application.Services
 {

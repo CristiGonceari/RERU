@@ -143,7 +143,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQ
                 return selectedQuestions || questions || data.QuestionType == QuestionTypeEnum.OneAnswer;
             }
 
-            return false;
+            return true;
         }
     }
 }

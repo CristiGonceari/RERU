@@ -1,5 +1,4 @@
-﻿using System;
-using FluentValidation;
+﻿using FluentValidation;
 using CODWER.RERU.Evaluation.Application.Validation;
 
 namespace CODWER.RERU.Evaluation.Application.Articles.AddEditArticle

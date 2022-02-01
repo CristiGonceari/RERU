@@ -22,6 +22,7 @@ using CVU.ERP.Common.Pagination;
 using MediatR;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEventByDate;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent;
+using CODWER.RERU.Evaluation.Application.Tests.GetUserEvaluatedTests;
 using CODWER.RERU.Evaluation.Application.Tests.GetUserPollsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.GetUserTests;
 using CODWER.RERU.Evaluation.Application.Tests.GetUserTestsByEvent;
@@ -132,6 +133,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpGet("user-polls-by-event")]
         public async Task<PaginatedModel<PollDto>> GetUserPollsByEvent([FromQuery] GetUserPollsByEventQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("user-evaluated-tests")]
+        public async Task<PaginatedModel<TestDto>> GetUserEvaluatedTests([FromQuery] GetUserEvaluatedTestsQuery query)
         {
             return await Mediator.Send(query);
         }

@@ -52,7 +52,7 @@ export class SearchPersonComponent implements OnInit {
       if (user.lastName == null)
         user.lastName = " ";
   
-      var name = user.firstName + " " + user.lastName;
+      var name = user.firstName + " " + user.lastName + ", " + user.idnp;
       return name;
     }
   }
