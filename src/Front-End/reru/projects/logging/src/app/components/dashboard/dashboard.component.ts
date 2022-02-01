@@ -88,7 +88,7 @@ export class DashboardComponent implements OnInit {
     this.selectedEvent = item.target.value;
   }
 
-  viewJSON(json): void {
+  viewJSON(json: JSON): void {
     const modalRef = this.modalService.open(ViewJsonModalComponent, { centered: true, size: 'lg' });
     modalRef.componentInstance.json = json;
 		modalRef.result.then(
