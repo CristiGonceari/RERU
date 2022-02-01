@@ -217,7 +217,7 @@
     "main-info": "Informații principale",
     "options": "Opțiuni",
     "search-test": "Caută test",
-    "search-status": "Căută după tipul testului",
+    "search-status": "Caută după statutul testului",
     "name": "Nume",
     "category-used-count": "Categorii",
     "questions-to-use-count": "Întrebări",
@@ -272,6 +272,7 @@
     "search-test-type": "Căutare după șablonul testului",
     "search-test-status": "Căutare după status",
     "search-student": "Caută utilizator",
+    "search-student-idnp": "Caută după idnp utilizatorului",
     "test-type-name": "Numele șablonului de test",
     "student": "Student",
     "status": "Status",
@@ -315,7 +316,8 @@
     "points-must-be-greater": "Dacă răspunsul este corect, punctele trebuie să fie mai mari decât 0",
     "set-points-to-zero": "Dacă răspunsul este fals, setați punctele la 0",
     "finish-verification-msg": "Sigur doriți să finalizați verificarea testului?",
-    "succes-verified-msg": "Testul a fost verificat cu succes"
+    "succes-verified-msg": "Testul a fost verificat cu succes",
+    "evaluated-tests": "Teste evaluate"
   },
   "dashboard": {
     "title": "Evaluare",

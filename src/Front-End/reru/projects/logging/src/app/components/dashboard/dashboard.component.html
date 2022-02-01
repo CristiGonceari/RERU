@@ -97,11 +97,17 @@
                             <td class="text-center">{{ item.userIdentifier }}</td>
                             <td class="text-center">{{ item.event }}</td>
                             <td class="text-center">{{ item.eventMessage }}</td>
-                            <td class="text-center">{{ item.jsonMessage}}</td>
+                            <td class="text-center">
+                              <p class="mb-0 text-wrapper font-size-sm cursor-pointer" 
+                                (click)="viewJSON(item.jsonMessage)" *ngIf="item.jsonMessage"
+                              >
+                                {{ item.jsonMessage }}
+                              </p>
+                            </td>
                             <td class="text-center">{{ item.date | date: 'dd/MM/yyyy, HH:mm'}}</td>
                           </tr>
                         </tbody>
-                        <tbody class="datatable-body"  >
+                        <tbody class="datatable-body">
                           <tr>
                               <td colspan="10" class="text-center" *ngIf="!loggingValues.length">
                                   {{ 'message.no-record' | translate }}

@@ -1,11 +1,12 @@
-using System;
-using System.Threading.Tasks;
 using CODWER.RERU.Core.Data.Entities;
+using CVU.ERP.Common.Data.Persistence.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using SpatialFocus.EntityFrameworkCore.Extensions;
 
-namespace CODWER.RERU.Core.Data.Persistence.Context {
-    public partial class CoreDbContext : DbContext {
+namespace CODWER.RERU.Core.Data.Persistence.Context
+{
+    public partial class CoreDbContext : ModuleDbContext
+    {
         public CoreDbContext () { }
 
         public CoreDbContext (DbContextOptions<CoreDbContext> options):
@@ -25,6 +26,8 @@ namespace CODWER.RERU.Core.Data.Persistence.Context {
         ) { }
 
         protected override void OnModelCreating (ModelBuilder modelBuilder) {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Module> ().HasKey (c => c.Id);
             modelBuilder.Entity<UserProfile> ().HasKey (c => c.Id);
 

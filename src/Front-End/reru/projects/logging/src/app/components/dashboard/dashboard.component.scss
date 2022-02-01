@@ -1,112 +1,117 @@
 :host {
-    .btn.profile-button {
-      line-height: 40px;
-      height: 40px;
+  .btn.profile-button {
+    line-height: 40px;
+    height: 40px;
+  }
+  ::ng-deep {
+    
+    .nav.nav-pills.nav-danger .nav-link:hover:not(.active) .nav-text,
+    .nav.nav-pills.nav-danger .nav-link:hover:not(.active) {
+      color: #FFF;
+      background: #3699FF;
     }
-    ::ng-deep {
-      
-      .nav.nav-pills.nav-danger .nav-link:hover:not(.active) .nav-text,
-      .nav.nav-pills.nav-danger .nav-link:hover:not(.active) {
-        color: #FFF;
+
+    .nav.nav-pills.nav-danger .nav-link:hover:not(.active) .nav-icon .svg-icon svg g [fill] {
+      fill: #FFF;
+    }
+
+    .card-custom .nav-item {
+      max-width: 100px;
+      max-height: 100px;
+
+      a.nav-link {
+        background: #f3f6f98c;
+
+        .nav-text {
+          max-width: 60px;
+        }
+
+        .nav-icon svg g [fill] {
+          fill: #3699FF;
+        }
+      }
+
+      a.nav-link:hover {
         background: #3699FF;
-      }
-  
-      .nav.nav-pills.nav-danger .nav-link:hover:not(.active) .nav-icon .svg-icon svg g [fill] {
-        fill: #FFF;
-      }
-  
-      .card-custom .nav-item {
-        max-width: 100px;
-        max-height: 100px;
-  
-        a.nav-link {
-          background: #f3f6f98c;
-  
-          .nav-text {
-            max-width: 60px;
-          }
-  
-          .nav-icon svg g [fill] {
-            fill: #3699FF;
-          }
-        }
-  
-        a.nav-link:hover {
-          background: #3699FF;
-  
-          .nav-text {
-            color: #FFF;
-          }
-  
-          .nav-icon svg g [fill] {
-            fill: #FFF;
-          }
-        }
-      }
-    }
-  
-    .slide-in-blurred-bottom {
-      -webkit-animation: slide-in-blurred-bottom 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
-              animation: slide-in-blurred-bottom 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
-    }
-  
-    @-webkit-keyframes slide-in-blurred-bottom {
-      0% {
-        -webkit-transform: translateY(1000px) scaleY(2.5) scaleX(0.2);
-                transform: translateY(1000px) scaleY(2.5) scaleX(0.2);
-        -webkit-transform-origin: 50% 100%;
-                transform-origin: 50% 100%;
-        -webkit-filter: blur(40px);
-                filter: blur(40px);
-        opacity: 0;
-      }
-      100% {
-        -webkit-transform: translateY(0) scaleY(1) scaleX(1);
-                transform: translateY(0) scaleY(1) scaleX(1);
-        -webkit-transform-origin: 50% 50%;
-                transform-origin: 50% 50%;
-        -webkit-filter: blur(0);
-                filter: blur(0);
-        opacity: 1;
-      }
-    }
-    @keyframes slide-in-blurred-bottom {
-      0% {
-        -webkit-transform: translateY(1000px) scaleY(2.5) scaleX(0.2);
-                transform: translateY(1000px) scaleY(2.5) scaleX(0.2);
-        -webkit-transform-origin: 50% 100%;
-                transform-origin: 50% 100%;
-        -webkit-filter: blur(40px);
-                filter: blur(40px);
-        opacity: 0;
-      }
-      100% {
-        -webkit-transform: translateY(0) scaleY(1) scaleX(1);
-                transform: translateY(0) scaleY(1) scaleX(1);
-        -webkit-transform-origin: 50% 50%;
-                transform-origin: 50% 50%;
-        -webkit-filter: blur(0);
-                filter: blur(0);
-        opacity: 1;
-      }
-    }
-  
-  }
-  
 
-  tbody {
-    tr {
-      td {
-        vertical-align: middle !important;
+        .nav-text {
+          color: #FFF;
+        }
+
+        .nav-icon svg g [fill] {
+          fill: #FFF;
+        }
       }
     }
   }
 
-  :host {
-    ::ng-deep {
-        app-confirm-button,
-        app-confirm-button button {
-            width: 100%;
-        }
+  .slide-in-blurred-bottom {
+    -webkit-animation: slide-in-blurred-bottom 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+            animation: slide-in-blurred-bottom 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+  }
+
+  @-webkit-keyframes slide-in-blurred-bottom {
+    0% {
+      -webkit-transform: translateY(1000px) scaleY(2.5) scaleX(0.2);
+              transform: translateY(1000px) scaleY(2.5) scaleX(0.2);
+      -webkit-transform-origin: 50% 100%;
+              transform-origin: 50% 100%;
+      -webkit-filter: blur(40px);
+              filter: blur(40px);
+      opacity: 0;
     }
+    100% {
+      -webkit-transform: translateY(0) scaleY(1) scaleX(1);
+              transform: translateY(0) scaleY(1) scaleX(1);
+      -webkit-transform-origin: 50% 50%;
+              transform-origin: 50% 50%;
+      -webkit-filter: blur(0);
+              filter: blur(0);
+      opacity: 1;
+    }
+  }
+  @keyframes slide-in-blurred-bottom {
+    0% {
+      -webkit-transform: translateY(1000px) scaleY(2.5) scaleX(0.2);
+              transform: translateY(1000px) scaleY(2.5) scaleX(0.2);
+      -webkit-transform-origin: 50% 100%;
+              transform-origin: 50% 100%;
+      -webkit-filter: blur(40px);
+              filter: blur(40px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(0) scaleY(1) scaleX(1);
+              transform: translateY(0) scaleY(1) scaleX(1);
+      -webkit-transform-origin: 50% 50%;
+              transform-origin: 50% 50%;
+      -webkit-filter: blur(0);
+              filter: blur(0);
+      opacity: 1;
+    }
+  }
+
+}
+
+tbody {
+  tr {
+    td {
+      vertical-align: middle !important;
+    }
+  }
+}
+
+:host {
+  ::ng-deep {
+    app-confirm-button,
+    app-confirm-button button {
+        width: 100%;
+    }
+  }
+}
+
+.text-wrapper {
+  max-width: 500px;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
 }

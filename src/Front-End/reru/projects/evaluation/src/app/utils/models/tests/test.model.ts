@@ -29,6 +29,7 @@ export class Test {
     programmedTime: string;
     endTime?: string;
     viewTestResult?: boolean;
+    idnp: string;
 }
 
 export class CreateTestModel {

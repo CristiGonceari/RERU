@@ -217,7 +217,7 @@
     "main-info": "Основная информация",
     "options": "Параметры",
     "search-test": "Поиск по названию теста",
-    "search-status": "Поиск по типу теста",
+    "search-status": "Поиск по статусу теста",
     "name": "Имя",
     "category-used-count": "Категории",
     "questions-to-use-count": "Вопросы",
@@ -272,6 +272,7 @@
     "search-test-type": "Поиск по шаблону теста",
     "search-test-status": "Поиск по статусу",
     "search-student": "Поиск по имени пользователя",
+    "search-student-idnp": "Поиск по idnp пользователя",
     "test-type-name": "Имя шаблона теста",
     "student": "Студент",
     "status": "Статус",
@@ -315,7 +316,8 @@
     "points-must-be-greater": "Если вопрос верный, количество пунктов долэно быть больше 0",
     "set-points-to-zero": "Если ответ неверный укажите количество пунктов 0",
     "finish-verification-msg": "Вы уверены, что хотите завершить проверку теста?",
-    "succes-verified-msg": "Тест был проверен успешно"
+    "succes-verified-msg": "Тест был проверен успешно",
+    "evaluated-tests": "Оценочные тесты"
   },
   "dashboard": {
     "title": "Оценивание",
