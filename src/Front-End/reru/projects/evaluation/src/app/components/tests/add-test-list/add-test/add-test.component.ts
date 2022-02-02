@@ -58,7 +58,6 @@ export class AddTestComponent implements OnInit {
   
   myControl = new FormControl();
 
-
   constructor(
     private referenceService: ReferenceService,
     private testTypeService: TestTypeService,
@@ -74,12 +73,17 @@ export class AddTestComponent implements OnInit {
     this.getEvents();
     this.getEvaluators();
   }
- 
 
-  getUsers() {
+  getUsers(id?: number) {
+    if (!id)
     this.referenceService.getUsers({name: this.key, eventId: this.event.value }).subscribe(res => {
-      this.usersList = res.data
-    });
+      this.usersList = res.data; 
+    }); 
+    else {
+      this.updateUserList(id);
+      this.key = '';
+      this.autoCompleteElement.openPanel();
+    }
   }
 
   getEvents() {
@@ -118,9 +122,12 @@ export class AddTestComponent implements OnInit {
     this.getUsers();
   }
 
-  checkIfIsOneAnswer($event) {
-    this.isTestTypeOneAnswer = this.selectActiveTests.find(x => x.testTypeId === $event).isOnlyOneAnswer;
-    this.printTest = this.selectActiveTests.find(x => x.testTypeId === $event).printTest;
+  checkIfIsOneAnswer(event) {
+    if (event) {
+      this.isTestTypeOneAnswer = this.selectActiveTests.find(x => x.testTypeId === event).isOnlyOneAnswer;
+      this.printTest = this.selectActiveTests.find(x => x.testTypeId === event).printTest;
+    }
+    else this.isTestTypeOneAnswer = false;
     
     if(!this.printTest) 
       this.messageText = "Acest test poate conține video sau audio!"
@@ -133,23 +140,26 @@ export class AddTestComponent implements OnInit {
   checkIfEventHasEvaluator($event) {
     this.hasEventEvaluator = this.eventsList.find(x => x.eventId === $event).isEventEvaluator
   }
- 
-  deleteFromList(index: any){
-    var deleteElement = this.displayUserNames[index];
-    var indexOfIdToDelete = this.userListToAdd.findIndex(x => x == deleteElement.value);
 
+  deleteFromList(user, index) {
+    let indexOfIdToDelete = this.userListToAdd.findIndex(x => x == this.displayUserNames[index].value);
     this.displayUserNames.splice(index, 1);
     this.userListToAdd.splice(indexOfIdToDelete, 1);
+    this.usersList.push( new AssignedUsers(user.value, user.label));
   }
 
-  addUserToList(id: number, name: string){
-    if(!this.userListToAdd.includes(+id)){
-      this.displayUserNames.push(
-        new AssignedUsers(id, name)
-      );
-      this.userListToAdd.push(+id);
-    }
-    this.autoCompleteElement.openPanel();
+  updateUserList(id?: number): void {
+    let indexToDelete = this.usersList.map(el => el.value).findIndex(x => x == id);
+    this.usersList.splice(indexToDelete, 1);
+  }
+
+  addUserToList(id: number, name: string) {
+    if(!this.userListToAdd.includes(+id))
+    this.displayUserNames.push(
+      new AssignedUsers(id, name)
+    );
+    this.userListToAdd.push(+id);
+    this.getUsers(id)
   }
 
   sortByName(){
@@ -161,7 +171,6 @@ export class AddTestComponent implements OnInit {
       this.isListOrderedAsc = false;
     }
   }
-
 
   parse() {
     this.setTimeToSearch();
