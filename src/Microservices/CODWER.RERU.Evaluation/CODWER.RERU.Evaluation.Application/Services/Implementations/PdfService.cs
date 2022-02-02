@@ -657,14 +657,18 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         }
         private async Task<string> GetTestMedia(string mediaId)
         {
+            var content = string.Empty;
             var image = await _storageFileService.GetFile(mediaId);
 
-            var result = Convert.ToBase64String(image.Content);
+            if (image != null)
+            {
+                var result = Convert.ToBase64String(image.Content);
 
-            var content = $@"<div style=""margin-bottom: 10px;"">
+                content = $@"<div style=""margin-bottom: 10px;"">
                                   <img style=""margin-left: 20px; max-width: 600px; max-height: 500px;""; src=""data:image/png;base64,{result}"" alt=""Red dot"" />
                               </div>";
-            return content;
+            }
+            return content; ;
         }
         private async Task<string> GetImageContent()
         {
