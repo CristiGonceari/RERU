@@ -15,7 +15,6 @@ namespace CODWER.RERU.Evaluation.Application.Articles.PrintArticles
         private readonly AppDbContext _appDbContext;
         private readonly ITablePrinter<Article, ArticleDto> _printer;
 
-
         public PrintArticlesCommandHandler(AppDbContext appDbContext, ITablePrinter<Article, ArticleDto> printer)
         {
             _appDbContext = appDbContext;
