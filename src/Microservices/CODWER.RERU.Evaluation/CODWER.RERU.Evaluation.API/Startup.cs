@@ -18,19 +18,30 @@ using CODWER.RERU.Evaluation.Application.Validation;
 using FluentValidation.AspNetCore;
 using MediatR;
 using System;
+using System.Reflection;
 using AutoMapper.EquivalencyExpression;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.Data.Persistence.Initializer;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
-using CODWER.RERU.Evaluation.DataTransferObjects.Files;
+using CVU.ERP.Common.Interfaces;
+using CVU.ERP.Logging;
+using CVU.ERP.Logging.Context;
 using CVU.ERP.Logging.DependencyInjection;
+using CVU.ERP.Module.Application.LoggerServices.Implementations;
 using CVU.ERP.Module.Application.StorageFileServices.Implementations;
+using CVU.ERP.Module.Application.TablePrinterService;
+using CVU.ERP.Module.Application.TablePrinterService.Implementations;
+using CVU.ERP.Notifications.Services;
+using CVU.ERP.Notifications.Services.Implementations;
 using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Context;
 using CVU.ERP.StorageService.DependencyInjection;
+using CVU.ERP.StorageService.Models;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Evaluation.API
 {
@@ -120,8 +131,10 @@ namespace CODWER.RERU.Evaluation.API
             services.AddWkhtmltopdf();
 
 
-            //services.AddTransient(typeof(IStorageFileService), typeof(StorageFileService));
-            //services.Configure<CVU.ERP.StorageService.Models.MinioSettings>(this.Configuration.GetSection("Minio"));
+            //start important when add migration
+            //services.ForAddMigration(Configuration);
+            //end important
+
             //services.AddCommonStorageContext(this.Configuration);
             //services.AddERPModuleServices(Configuration);
             //services.AddCommonModuleApplication(Configuration);
