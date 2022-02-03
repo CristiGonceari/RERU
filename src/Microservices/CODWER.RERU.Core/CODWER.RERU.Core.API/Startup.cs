@@ -111,8 +111,10 @@ namespace CODWER.RERU.Core.API
                 .AddERPModuleControllers();
             services.AddWkhtmltopdf();
 
+
+
             services.AddERPModuleServices(Configuration)
-                .AddCoreModuleApplication()
+                .AddCoreModuleApplication(Configuration)
                 .AddCommonLoggingContext(Configuration);
         }
 

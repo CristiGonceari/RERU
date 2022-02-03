@@ -10,16 +10,18 @@ using CVU.ERP.Module.Application.DependencyInjection;
 using CVU.ERP.Module.Application.Providers;
 using CVU.ERP.Module.Common.ExceptionHandlers;
 using CVU.ERP.Module.Common.Providers;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CODWER.RERU.Core.Application.DependencyInjection
 {
     public static class CoreApplicationServicesSetup
     {
-        public static IServiceCollection AddCoreModuleApplication(this IServiceCollection services)
+        public static IServiceCollection AddCoreModuleApplication(this IServiceCollection services, IConfiguration configuration)
         {
             // Use ERP.Module.Application
-            services.AddCommonModuleApplication();
+            services.AddCommonModuleApplication(configuration);
+
 
             //Module dependencies
             services.AddTransient<IApplicationUserProvider, CoreApplicationUserProvider>();
