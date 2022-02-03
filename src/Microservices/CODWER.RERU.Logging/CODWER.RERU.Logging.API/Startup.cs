@@ -54,7 +54,7 @@ namespace CODWER.RERU.Logging.API
             services.AddLoggingApplication();
 
             services.AddERPModuleServices(Configuration);
-            services.AddCommonModuleApplication();
+            services.AddCommonModuleApplication(Configuration);
             services.AddModuleApplicationServices();
 
 

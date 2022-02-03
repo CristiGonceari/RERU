@@ -6,9 +6,10 @@ using CODWER.RERU.Personal.Data.Persistence.Initializer;
 using CODWER.RERU.Personal.DataTransferObjects.Employers;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CVU.ERP.Infrastructure.Email;
+using CVU.ERP.Logging.DependencyInjection;
 using CVU.ERP.MessageQueue;
 using CVU.ERP.Module;
-using CVU.ERP.Module.Application.Providers;
+using CVU.ERP.Module.Application.DependencyInjection;
 using FluentValidation.AspNetCore;
 using Hangfire;
 using MediatR;
@@ -22,10 +23,8 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using NSwag;
 using NSwag.Generation.Processors.Security;
-using CVU.ERP.Module.Application.DependencyInjection;
 using System;
 using System.Text;
-using CVU.ERP.Logging.DependencyInjection;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Personal.API.Config.ServicesSetup;
@@ -107,7 +106,7 @@ namespace CODWER.RERU.Personal.API
             services.AddWkhtmltopdf();
 
             services.AddERPModuleServices(Configuration);
-            services.AddCommonModuleApplication();
+            services.AddCommonModuleApplication(Configuration);
             services.AddModuleApplicationServices()
                 .AddCommonLoggingContext(Configuration);
 
