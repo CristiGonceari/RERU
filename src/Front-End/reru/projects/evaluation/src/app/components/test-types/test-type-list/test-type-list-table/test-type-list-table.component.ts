@@ -121,7 +121,7 @@ export class TestTypeListTableComponent implements OnInit {
 		this.testTypeService.deleteTestType(id).subscribe(() => {
 			forkJoin([
 				this.translate.get('modal.success'),
-				this.translate.get('tests.succes-delete-msg'),
+				this.translate.get('test-template.succes-delete-msg'),
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
@@ -134,7 +134,7 @@ export class TestTypeListTableComponent implements OnInit {
 	openConfirmationDeleteModal(id): void {
 		forkJoin([
 			this.translate.get('modal.delete'),
-			this.translate.get('tests.delete-msg'),
+			this.translate.get('test-template.delete-msg'),
 			this.translate.get('modal.no'),
 			this.translate.get('modal.yes'),
 		]).subscribe(([title, description, no, yes]) => {
