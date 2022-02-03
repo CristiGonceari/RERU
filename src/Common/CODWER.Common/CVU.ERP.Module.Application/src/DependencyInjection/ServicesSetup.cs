@@ -10,9 +10,6 @@ using CVU.ERP.Module.Application.TablePrinterService.Implementations;
 using CVU.ERP.Module.Common.ExceptionHandlers;
 using CVU.ERP.Module.Common.Models;
 using CVU.ERP.Notifications.DependencyInjection;
-using CVU.ERP.StorageService;
-using CVU.ERP.StorageService.DependencyInjection;
-using CVU.ERP.StorageService.Models;
 using FluentValidation;
 using MediatR;
 using MediatR.Pipeline;
@@ -28,8 +25,11 @@ using CVU.ERP.Infrastructure.Email;
 using CVU.ERP.Logging.Context;
 using CVU.ERP.Notifications.Services;
 using CVU.ERP.Notifications.Services.Implementations;
-using CVU.ERP.StorageService.Context;
 using Microsoft.EntityFrameworkCore;
+using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Context;
+using CVU.ERP.StorageService.DependencyInjection;
+using CVU.ERP.StorageService.Models;
 
 namespace CVU.ERP.Module.Application.DependencyInjection
 {
