@@ -2,8 +2,9 @@
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.Files;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestCategoryQuestions;
+using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.StorageService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,10 +12,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.StorageService.Context;
 using Wkhtmltopdf.NetCore;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations
@@ -22,6 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
     public class PdfService : IPdfService
     {
         private readonly AppDbContext _appDbContext;
+        private readonly StorageDbContext _storageDbContext;
         private readonly IGeneratePdf _generatePdf;
         private readonly IMediator _mediator;
         private readonly IQuestionUnitService _questionUnitService;
@@ -30,13 +31,16 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         public PdfService(AppDbContext appDbContext,
             IGeneratePdf generatePdf, 
             IMediator mediator, 
-            IQuestionUnitService questionUnitService, IStorageFileService storageFileService)
+            IQuestionUnitService questionUnitService, 
+            IStorageFileService storageFileService, 
+            StorageDbContext storageDbContext)
         {
             _appDbContext = appDbContext;
             _generatePdf = generatePdf;
             _mediator = mediator;
             _questionUnitService = questionUnitService;
             _storageFileService = storageFileService;
+            _storageDbContext = storageDbContext;
         }
 
         public async Task<FileDataDto> PrintTestTemplatePdf(int testTemplateId)
@@ -77,7 +81,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 .Include(op => op.Options)
                 .FirstOrDefault(x => x.Id == questionId);
 
-            var files =  _appDbContext.Files.FirstOrDefault(f => f.Id.ToString() == questions.MediaFileId && f.Type.Contains("image"));
+            var files = _storageDbContext.Files.FirstOrDefault(f => f.Id.ToString() == questions.MediaFileId && f.Type.Contains("image"));
 
             FileDataDto getQuestionFile = null;
 

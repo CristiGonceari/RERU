@@ -26,6 +26,9 @@ using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
 using CODWER.RERU.Evaluation.DataTransferObjects.Files;
 using CVU.ERP.Logging.DependencyInjection;
+using CVU.ERP.Module.Application.StorageFileServices.Implementations;
+using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.DependencyInjection;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
@@ -116,11 +119,15 @@ namespace CODWER.RERU.Evaluation.API
                 .AddERPModuleControllers();
             services.AddWkhtmltopdf();
 
-            services.AddERPModuleServices(Configuration);
-            services.AddCommonModuleApplication(Configuration);
-            services.AddModuleApplicationServices();
 
-            services.AddCommonLoggingContext(Configuration);
+            //services.AddTransient(typeof(IStorageFileService), typeof(StorageFileService));
+            //services.Configure<CVU.ERP.StorageService.Models.MinioSettings>(this.Configuration.GetSection("Minio"));
+            //services.AddCommonStorageContext(this.Configuration);
+            //services.AddERPModuleServices(Configuration);
+            //services.AddCommonModuleApplication(Configuration);
+            //services.AddModuleApplicationServices();
+
+            //services.AddCommonLoggingContext(Configuration);
 
             services.AddHangfire(config =>
                 config.UseSqlServerStorage(Configuration.GetConnectionString("Default")));

@@ -1,10 +1,9 @@
 ﻿using CODWER.RERU.Evaluation.API.Config;
-using CODWER.RERU.Evaluation.Application.Services;
-using CODWER.RERU.Evaluation.Data.Entities.Files;
-using CODWER.RERU.Evaluation.DataTransferObjects.Files;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
+using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Entities;
+using CVU.ERP.StorageService.Models;
 using MediatR;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;

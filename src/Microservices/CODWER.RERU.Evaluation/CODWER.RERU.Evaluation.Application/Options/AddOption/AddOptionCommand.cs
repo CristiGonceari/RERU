@@ -1,6 +1,6 @@
 ﻿using CODWER.RERU.Evaluation.Application.Permissions;
-using CODWER.RERU.Evaluation.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.Attributes;
+using CVU.ERP.StorageService.Models;
 using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.Options.AddOption

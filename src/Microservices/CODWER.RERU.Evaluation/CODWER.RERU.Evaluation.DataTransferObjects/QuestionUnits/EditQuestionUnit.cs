@@ -1,10 +1,6 @@
 ﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CODWER.RERU.Evaluation.DataTransferObjects.Files;
-using System;
+using CVU.ERP.StorageService.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits
 {

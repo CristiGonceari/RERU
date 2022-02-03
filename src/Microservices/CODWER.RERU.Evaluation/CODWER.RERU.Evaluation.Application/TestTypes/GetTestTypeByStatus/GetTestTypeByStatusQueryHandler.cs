@@ -8,6 +8,7 @@ using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestTypes;
+using CVU.ERP.StorageService.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,14 +17,19 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypeByStatus
     public class GetTestTypeByStatusQueryHandler : IRequestHandler<GetTestTypeByStatusQuery, List<SelectTestTypeValueDto>>
     {
         private readonly AppDbContext _appDbContext;
+        private readonly StorageDbContext _storageDbContext;
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
 
-        public GetTestTypeByStatusQueryHandler(AppDbContext appDbContext, IMapper mapper, IMediator mediator)
+        public GetTestTypeByStatusQueryHandler(AppDbContext appDbContext, 
+            IMapper mapper, 
+            IMediator mediator, 
+            StorageDbContext storageDbContext)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _mediator = mediator;
+            _storageDbContext = storageDbContext;
         }
 
         public async Task<List<SelectTestTypeValueDto>> Handle(GetTestTypeByStatusQuery request, CancellationToken cancellationToken)
@@ -95,7 +101,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypeByStatus
             filesIdsList.AddRange(mediaOptionsIds);
             filesIdsList.AddRange(mediaQuestionsIds);
 
-            var files = _appDbContext.Files
+            var files = _storageDbContext.Files
                 .Where(f => filesIdsList.Contains(f.Id.ToString()))
                 .ToList();
 
