@@ -18,6 +18,8 @@ using CVU.ERP.Common.Pagination;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using CODWER.RERU.Evaluation.Application.QuestionUnits.PrintQuestionUnits;
+
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
     [ApiController]
@@ -88,6 +90,17 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         {
             byte[] answerBytes = await Mediator.Send(new BulkUploadQuestionUnitsCommand { Input = file }) as byte[];
             return File(answerBytes ?? new byte[0], "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ErrorList.xlsx");
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintQuestionUnits([FromBody] PrintQuestionUnitsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }

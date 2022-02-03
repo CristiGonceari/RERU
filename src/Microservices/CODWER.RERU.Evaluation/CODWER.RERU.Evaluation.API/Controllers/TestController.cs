@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.Tests.AddMyPoll;
-using CODWER.RERU.Evaluation.Application.Tests.AddTest;
 using CODWER.RERU.Evaluation.Application.Tests.AddTests;
 using CODWER.RERU.Evaluation.Application.Tests.DeleteTest;
 using CODWER.RERU.Evaluation.Application.Tests.EditTestStatus;
@@ -26,6 +25,8 @@ using CODWER.RERU.Evaluation.Application.Tests.GetUserEvaluatedTests;
 using CODWER.RERU.Evaluation.Application.Tests.GetUserPollsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.GetUserTests;
 using CODWER.RERU.Evaluation.Application.Tests.GetUserTestsByEvent;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
+using CODWER.RERU.Evaluation.Application.Tests.PrintTests;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -150,6 +151,17 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
             var timeStamp = DateTime.Now;
             return File(answerBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"AllTests_{timeStamp.Year}-{timeStamp.Month.ToString("00")}-{timeStamp.Day.ToString("00")}.xlsx");
+        }
+
+        [HttpPut("print-tests")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintUserTestsPdf([FromBody] PrintTestsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }
