@@ -1,0 +1,26 @@
+{{- if .Values.reru_storage_migrator.enabled -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.reru_storage_migrator.name }}
+  annotations: 
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded  
+spec:
+  backoffLimit: 2
+  activeDeadlineSeconds: 100
+  template:
+    spec:
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecret.name }}
+      restartPolicy: Never
+      containers:
+      - name: {{ .Values.reru_storage_migrator.name }}
+        image: {{ .Values.reru_storage_migrator.image.repository }}:{{ .Values.tag }}
+        imagePullPolicy: Always
+        env:
+        - name: TZ
+          value: {{ .Values.timeZone }} 
+        - name: ConnectionStrings__Default
+          value: {{ .Values.reru_storage_migrator.database.connection_string }}   
+{{- end }}
