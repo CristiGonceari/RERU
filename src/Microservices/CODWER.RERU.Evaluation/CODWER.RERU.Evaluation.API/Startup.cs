@@ -1,11 +1,22 @@
+using AutoMapper.EquivalencyExpression;
+using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CODWER.RERU.Evaluation.Data.Persistence.Initializer;
 using CVU.ERP.Infrastructure.Email;
+using CVU.ERP.Logging.DependencyInjection;
 using CVU.ERP.MessageQueue;
 using CVU.ERP.Module;
 using CVU.ERP.Module.Application.DependencyInjection;
+using CVU.ERP.StorageService.Models;
+using FluentValidation.AspNetCore;
 using Hangfire;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,35 +24,11 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using NSwag;
 using NSwag.Generation.Processors.Security;
-using System.Text;
-using CODWER.RERU.Evaluation.Application.Validation;
-using FluentValidation.AspNetCore;
-using MediatR;
 using System;
-using System.Reflection;
-using AutoMapper.EquivalencyExpression;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.Data.Persistence.Initializer;
+using System.Text;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
-using CVU.ERP.Common.Interfaces;
-using CVU.ERP.Logging;
-using CVU.ERP.Logging.Context;
-using CVU.ERP.Logging.DependencyInjection;
-using CVU.ERP.Module.Application.LoggerServices.Implementations;
-using CVU.ERP.Module.Application.StorageFileServices.Implementations;
-using CVU.ERP.Module.Application.TablePrinterService;
-using CVU.ERP.Module.Application.TablePrinterService.Implementations;
-using CVU.ERP.Notifications.Services;
-using CVU.ERP.Notifications.Services.Implementations;
-using CVU.ERP.StorageService;
-using CVU.ERP.StorageService.Context;
-using CVU.ERP.StorageService.DependencyInjection;
-using CVU.ERP.StorageService.Models;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Evaluation.API
 {
@@ -85,7 +72,6 @@ namespace CODWER.RERU.Evaluation.API
 
             services.Configure<SmtpOptions>(this.Configuration.GetSection("Smtp"));
             services.Configure<RabbitMq>(Configuration.GetSection("MessageQueue"));
-            services.Configure<MinioSettings>(this.Configuration.GetSection("Minio"));
 
 
             ServicesSetup.ConfigureEntity(services, Configuration);
@@ -135,12 +121,11 @@ namespace CODWER.RERU.Evaluation.API
             //services.ForAddMigration(Configuration);
             //end important
 
-            //services.AddCommonStorageContext(this.Configuration);
-            //services.AddERPModuleServices(Configuration);
-            //services.AddCommonModuleApplication(Configuration);
-            //services.AddModuleApplicationServices();
+            services.AddERPModuleServices(Configuration);
+            services.AddCommonModuleApplication(Configuration);
+            services.AddModuleApplicationServices();
 
-            //services.AddCommonLoggingContext(Configuration);
+            services.AddCommonLoggingContext(Configuration);
 
             services.AddHangfire(config =>
                 config.UseSqlServerStorage(Configuration.GetConnectionString("Default")));
