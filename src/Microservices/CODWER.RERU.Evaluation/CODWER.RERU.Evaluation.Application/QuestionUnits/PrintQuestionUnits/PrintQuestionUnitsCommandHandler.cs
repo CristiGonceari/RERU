@@ -1,34 +1,32 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using CODWER.RERU.Evaluation.Application.Services;
+﻿using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
-using CVU.ERP.Common.Pagination;
+using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.Module.Application.TablePrinterService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
+namespace CODWER.RERU.Evaluation.Application.QuestionUnits.PrintQuestionUnits
 {
-    public class GetQuestionUnitsQueryHandler : IRequestHandler<GetQuestionUnitsQuery, PaginatedModel<QuestionUnitDto>>
+    public class PrintQuestionUnitsCommandHandler : IRequestHandler<PrintQuestionUnitsCommand, FileDataDto>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly IMapper _mapper;
+        private readonly ITablePrinter<QuestionUnit, QuestionUnitDto> _printer;
         private readonly IQuestionUnitService _questionUnitService;
-        private readonly IPaginationService _paginationService;
 
-        public GetQuestionUnitsQueryHandler(AppDbContext appDbContext, IMapper mapper, IQuestionUnitService questionUnitService, IPaginationService paginationService)
+        public PrintQuestionUnitsCommandHandler(AppDbContext appDbContext, ITablePrinter<QuestionUnit, QuestionUnitDto> printer, IQuestionUnitService questionUnitService)
         {
             _appDbContext = appDbContext;
-            _mapper = mapper;
             _questionUnitService = questionUnitService;
-            _paginationService = paginationService;
+            _printer = printer;
         }
 
-        public async Task<PaginatedModel<QuestionUnitDto>> Handle(GetQuestionUnitsQuery request, CancellationToken cancellationToken)
+        public async Task<FileDataDto> Handle(PrintQuestionUnitsCommand request, CancellationToken cancellationToken)
         {
             var questions = _appDbContext.QuestionUnits
                 .Include(x => x.QuestionCategory)
@@ -61,22 +59,26 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
 
             questions = SelectOnlyReturnedFields(questions);
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<QuestionUnit, QuestionUnitDto>(questions, request);
-            var items = paginatedModel.Items.ToList();
+            var hashedQuestions = questions.Where(x => x.QuestionType == QuestionTypeEnum.HashedAnswer).ToList();
 
-            var hashedQuestions = items.Where(x => x.QuestionType == QuestionTypeEnum.HashedAnswer).ToList();
-
-            foreach (var unit in hashedQuestions)
-            {
-                items.Remove(unit);
-                var unhashedQuestion = await _questionUnitService.GetUnHashedQuestionUnit(unit.Id);
-                unhashedQuestion.Options = null;
-                items.Add(_mapper.Map<QuestionUnitDto>(unhashedQuestion));
+            if(hashedQuestions != null) 
+            { 
+                foreach (var unit in hashedQuestions)
+                {
+                    var unhashedQuestion = await _questionUnitService.GetUnHashedQuestionUnit(unit.Id);
+                    unhashedQuestion.Options = null;
+                }
             }
 
-            paginatedModel.Items = items;
+            var result = _printer.PrintTable(new TableData<QuestionUnit>
+            {
+                Name = request.TableName,
+                Items = questions,
+                Fields = request.Fields,
+                Orientation = request.Orientation
+            });
 
-            return paginatedModel;
+            return result;
         }
 
         private IQueryable<QuestionUnit> SelectOnlyReturnedFields(IQueryable<QuestionUnit> items)

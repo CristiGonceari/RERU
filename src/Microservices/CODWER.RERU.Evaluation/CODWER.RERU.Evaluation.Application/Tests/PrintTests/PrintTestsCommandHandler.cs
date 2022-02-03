@@ -1,30 +1,31 @@
-﻿using CVU.ERP.Common.Pagination;
+﻿using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Data.Entities;
+using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
+using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.Module.Application.TablePrinterService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Application.Services;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
+namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
 {
-    public class GetTestsQueryHandler : IRequestHandler<GetTestsQuery, PaginatedModel<TestDto>>
+    public class PrintTestsCommandHandler : IRequestHandler<PrintTestsCommand, FileDataDto>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly IPaginationService _paginationService;
+        private readonly ITablePrinter<Test, TestDto> _printer;
         private readonly IUserProfileService _userProfileService;
 
-        public GetTestsQueryHandler(AppDbContext appDbContext, IPaginationService paginationService, IUserProfileService userProfileService)
+        public PrintTestsCommandHandler(AppDbContext appDbContext, ITablePrinter<Test, TestDto> printer, IUserProfileService userProfileService)
         {
             _appDbContext = appDbContext;
-            _paginationService = paginationService;
+            _printer = printer;
             _userProfileService = userProfileService;
         }
 
-        public async Task<PaginatedModel<TestDto>> Handle(GetTestsQuery request, CancellationToken cancellationToken)
+        public async Task<FileDataDto> Handle(PrintTestsCommand request, CancellationToken cancellationToken)
         {
             var curUser = await _userProfileService.GetCurrentUser();
 
@@ -60,9 +61,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 tests = await Filter(tests, request);
             }
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(tests, request);
-
-            foreach (var testDto in paginatedModel.Items)
+            foreach (var testDto in tests)
             {
                 var eventEvaluator = _appDbContext.EventEvaluators.FirstOrDefault(x => x.EvaluatorId == curUser.Id && x.EventId == testDto.EventId);
                 var testEvaluator = _appDbContext.Tests.FirstOrDefault(x => x.EvaluatorId == curUser.Id && x.Id == testDto.Id);
@@ -70,24 +69,28 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 if (eventEvaluator != null)
                 {
                     testDto.ShowUserName = eventEvaluator.ShowUserName;
-                    testDto.IsEvaluator = true;
                 }
                 else if (testEvaluator != null && testEvaluator.ShowUserName != null)
                 {
                     testDto.ShowUserName = (bool)testEvaluator.ShowUserName;
-                    testDto.IsEvaluator = true;
                 }
                 else
                 {
                     testDto.ShowUserName = true;
-                    testDto.IsEvaluator = false;
                 }
             }
 
-            return paginatedModel;
+            var result = _printer.PrintTable(new TableData<Test>
+            {
+                Name = request.TableName,
+                Items = tests,
+                Fields = request.Fields,
+                Orientation = request.Orientation
+            });
+            return result;
         }
 
-        private async Task<IQueryable<Test>> Filter(IQueryable<Test> tests, GetTestsQuery request)
+        private async Task<IQueryable<Test>> Filter(IQueryable<Test> tests, PrintTestsCommand request)
         {
             if (!string.IsNullOrWhiteSpace(request.TestTypeName))
             {

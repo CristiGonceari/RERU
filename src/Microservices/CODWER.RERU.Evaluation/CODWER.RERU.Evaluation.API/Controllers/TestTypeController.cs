@@ -14,10 +14,12 @@ using CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypeByStatus;
 using CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypeRules;
 using CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypes;
 using CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypeSettings;
+using CODWER.RERU.Evaluation.Application.TestTypes.PrintTestTypes;
 using CODWER.RERU.Evaluation.Application.TestTypes.ValidateTestType;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestTypes;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -111,6 +113,17 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<int> CloneTestType([FromBody] CloneTestTypeCommand command)
         {
             return await Mediator.Send(command);
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintTestTypes([FromBody] PrintTestTypesCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }
