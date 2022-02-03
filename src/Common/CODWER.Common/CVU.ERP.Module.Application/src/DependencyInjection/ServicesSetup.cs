@@ -10,9 +10,6 @@ using CVU.ERP.Module.Application.TablePrinterService.Implementations;
 using CVU.ERP.Module.Common.ExceptionHandlers;
 using CVU.ERP.Module.Common.Models;
 using CVU.ERP.Notifications.DependencyInjection;
-using CVU.ERP.StorageService;
-using CVU.ERP.StorageService.DependencyInjection;
-using CVU.ERP.StorageService.Models;
 using FluentValidation;
 using MediatR;
 using MediatR.Pipeline;
@@ -22,6 +19,17 @@ using Microsoft.Extensions.Options;
 using RestSharp;
 using src.ExceptionHandlers;
 using System;
+using System.Reflection;
+using CVU.ERP.Common.Interfaces;
+using CVU.ERP.Infrastructure.Email;
+using CVU.ERP.Logging.Context;
+using CVU.ERP.Notifications.Services;
+using CVU.ERP.Notifications.Services.Implementations;
+using Microsoft.EntityFrameworkCore;
+using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Context;
+using CVU.ERP.StorageService.DependencyInjection;
+using CVU.ERP.StorageService.Models;
 
 namespace CVU.ERP.Module.Application.DependencyInjection
 {
@@ -79,11 +87,36 @@ namespace CVU.ERP.Module.Application.DependencyInjection
 
             return services;
         }
+
         public static IServiceCollection AddModuleApplicationServices(this IServiceCollection services)
         {
             //check if not core
             services.AddTransient<ICoreClient, CoreClient>();
             services.AddTransient<IApplicationUserProvider, ModuleApplicationUserProvider>();
+
+            return services;
+        }
+
+        public static IServiceCollection ForAddMigration(this IServiceCollection services, IConfiguration configuration)
+        {
+
+            services.AddTransient<IStorageFileService, StorageFileService>();
+
+            services.AddDbContext<StorageDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("Storage"),
+                    b => b.MigrationsAssembly(typeof(StorageDbContext).GetTypeInfo().Assembly.GetName().Name)));
+
+            services.AddTransient(typeof(IStorageFileService), typeof(StorageFileService));
+            services.Configure<MinioSettings>(configuration.GetSection("Minio"));
+
+
+            services.AddDbContext<LoggingDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("Log"),
+                    b => b.MigrationsAssembly(typeof(LoggingDbContext).GetTypeInfo().Assembly.GetName().Name)));
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<INotificationService, NotificationService>();
+            services.AddTransient(typeof(ILoggerService<>), typeof(LoggerService<>));
+            services.AddTransient(typeof(ITablePrinter<,>), typeof(TablePrinter<,>));
 
             return services;
         }

@@ -1,6 +1,5 @@
 ﻿using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.Files;
 using MediatR;
 using System;
 using System.Collections.Generic;
