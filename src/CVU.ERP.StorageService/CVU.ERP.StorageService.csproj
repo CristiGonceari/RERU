@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\CODWER.Common\CVU.ERP.Common.Data.Persistence.EntityFramework\CVU.ERP.Common.Data.Persistence.EntityFramework.csproj" />
+    <ProjectReference Include="..\Common\CODWER.DataTransferObjects\CVU.ERP.Common.DataTransferObjects.csproj" />
+  </ItemGroup>
+
+</Project>

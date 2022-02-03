@@ -27,12 +27,12 @@ namespace CODWER.RERU.Evaluation.Application.Locations.GetLocations
 
             if (!string.IsNullOrWhiteSpace(request.Name))
             {
-                locations = locations.Where(x => EF.Functions.Like(x.Name, $"%{request.Name}%"));
+                locations = locations.Where(x => x.Name.Contains(request.Name));
             }
 
             if (!string.IsNullOrWhiteSpace(request.Address))
             {
-                locations = locations.Where(x => EF.Functions.Like(x.Address, $"%{request.Address}%"));
+                locations = locations.Where(x => x.Address.Contains(request.Address));
             }
 
             return await _paginationService.MapAndPaginateModelAsync<Location, LocationDto>(locations, request);

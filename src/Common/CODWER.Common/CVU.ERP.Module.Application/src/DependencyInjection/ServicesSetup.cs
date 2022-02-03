@@ -1,28 +1,33 @@
-using System;
 using CVU.ERP.Logging;
 using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.ExceptionHandlers;
 using CVU.ERP.Module.Application.Infrastructure;
 using CVU.ERP.Module.Application.LoggerServices.Implementations;
 using CVU.ERP.Module.Application.Providers;
+using CVU.ERP.Module.Application.StorageFileServices.Implementations;
 using CVU.ERP.Module.Application.TablePrinterService;
 using CVU.ERP.Module.Application.TablePrinterService.Implementations;
 using CVU.ERP.Module.Common.ExceptionHandlers;
 using CVU.ERP.Module.Common.Models;
 using CVU.ERP.Notifications.DependencyInjection;
+using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.DependencyInjection;
+using CVU.ERP.StorageService.Models;
 using FluentValidation;
 using MediatR;
 using MediatR.Pipeline;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using RestSharp;
 using src.ExceptionHandlers;
+using System;
 
 namespace CVU.ERP.Module.Application.DependencyInjection
 {
     public static class ServicesSetup
     {
-        public static IServiceCollection AddCommonModuleApplication(this IServiceCollection services)
+        public static IServiceCollection AddCommonModuleApplication(this IServiceCollection services, IConfiguration configuration)
         {
             //Exception Handlers
             services.AddTransient<IResponseExceptionHandler, ApplicationRequestValidationResponseExceptionHandler>();
@@ -60,6 +65,11 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             services.AddTransient<IRestClient, RestClient>();
             services.AddTransient<IModuleClient, ModuleClient>();
             services.AddNotificationService();
+
+            //storage service
+            services.AddTransient(typeof(IStorageFileService), typeof(StorageFileService));
+            services.Configure<MinioSettings>(configuration.GetSection("Minio"));
+            services.AddCommonStorageContext(configuration);
 
             //log service 
             services.AddTransient(typeof(ILoggerService<>), typeof(LoggerService<>));

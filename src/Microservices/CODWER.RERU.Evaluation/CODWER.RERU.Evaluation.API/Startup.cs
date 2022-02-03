@@ -117,7 +117,7 @@ namespace CODWER.RERU.Evaluation.API
             services.AddWkhtmltopdf();
 
             services.AddERPModuleServices(Configuration);
-            services.AddCommonModuleApplication();
+            services.AddCommonModuleApplication(Configuration);
             services.AddModuleApplicationServices();
 
             services.AddCommonLoggingContext(Configuration);
