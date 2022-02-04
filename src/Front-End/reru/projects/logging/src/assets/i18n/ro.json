@@ -31,8 +31,12 @@
     "event-message": "Mesajul Eveniment",
     "json-message": "JSON",
     "date": "Data",
-    "view-json": "Vizualizarea JSON"
+    "view-details": "Vizualizare detalii"
    },
+   "details-modal":{
+    "details": "Detalii",
+    "file-json": "Fişier JSON"
+  },
   "user-profile": {
     "overview": "Vizualizarea profilului personal",
     "edit-title": "Editarea profilului personal",

@@ -31,8 +31,12 @@
     "event-message": "Действие",
     "json-message": "JSON",
     "date": "Дата",
-    "view-json": "Просмотр JSON"
+    "view-details": "Просмотр деталей"
    },
+   "details-modal":{
+    "details": "Подробности",
+    "file-json": "Файл JSON"
+  },
   "user-profile": {
     "overview": "Обзор профиля",
     "edit-title": "Обновить свой профиль",

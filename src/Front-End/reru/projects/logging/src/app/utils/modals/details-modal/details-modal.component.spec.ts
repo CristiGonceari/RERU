@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DetailsModalComponent } from './details-modal.component';
 
-import { ViewJsonModalComponent } from './view-json-modal.component';
 
-describe('ViewJsonModalComponent', () => {
-  let component: ViewJsonModalComponent;
-  let fixture: ComponentFixture<ViewJsonModalComponent>;
+describe('DetailsModalComponent', () => {
+  let component: DetailsModalComponent;
+  let fixture: ComponentFixture<DetailsModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewJsonModalComponent ]
+      declarations: [ DetailsModalComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ViewJsonModalComponent);
+    fixture = TestBed.createComponent(DetailsModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -99,7 +99,7 @@
                             <td class="text-center">{{ item.eventMessage }}</td>
                             <td class="text-center">
                               <p class="mb-0 text-wrapper font-size-sm cursor-pointer" 
-                                (click)="viewJSON(item.jsonMessage)" *ngIf="item.jsonMessage"
+                                (click)="viewJSON(item.id, loggingValues)" *ngIf="item.jsonMessage"
                               >
                                 {{ item.jsonMessage }}
                               </p>
