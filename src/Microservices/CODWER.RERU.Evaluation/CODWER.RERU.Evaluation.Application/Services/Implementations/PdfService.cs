@@ -234,7 +234,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             myDictionary.Add("{question_type}", EnumMessages.EnumMessages.GetQuestionType(items.QuestionType));
             myDictionary.Add("{question_points}", items.QuestionPoints.ToString());
             myDictionary.Add("{question_status}", EnumMessages.EnumMessages.GetQuestionStatus(items.Status));
-            myDictionary.Add("{answer_option}", GetTableContent(items));
+            myDictionary.Add("{answer_option}", await GetTableContent(items));
 
             var dictionary = new Dictionary<string, Image>();
 
@@ -339,7 +339,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             return content;
         }
-        private string GetTableContent(QuestionUnit questionOption)
+        private async Task<string> GetTableContent(QuestionUnit questionOption)
         {
             var content = string.Empty;
             if (questionOption.QuestionType == QuestionTypeEnum.MultipleAnswers || questionOption.QuestionType == QuestionTypeEnum.OneAnswer)
@@ -354,22 +354,79 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                     </tr>";
                     foreach (var option in options)
                     {
+                        var searchOptionFile = await  GetOptionFileToString(option);
+
                         if (option.IsCorrect)
-                        { content += $@"<tr>
-                            <th colspan='2' style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>{option.Answer}</th>
-                            <th style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>Corect</th>
-                            </tr>"; }
+                            if (searchOptionFile != null)
+                            {
+                                { content += $@"<tr>
+                                <th colspan='2' style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>
+                                    <div>
+                                        <div>
+                                            {option.Answer}
+                                        </div>
+                                        <img style='max-width: 100px' src='data:image/png;base64,{searchOptionFile}'>
+                                    </div>
+                                </th>
+                                <th style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>Corect</th>
+                                </tr>"; }
+                            }
+                            else
+                            {
+                                { content += $@"<tr>
+                                    <th colspan='2' style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>
+                                        {option.Answer}
+                                    </th>
+                                        <th style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>Corect</th>
+                                </tr>"; }
+                            }
                         else
                         {
-                            content += $@"<tr>
-                            <th colspan='2' style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>{option.Answer}</th>
-                            <th style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>Incorect</th>
-                            </tr>";
+                            if (searchOptionFile != null)
+                            {
+                                content +=
+                                   $@"<tr>
+                                         <th colspan='2' style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>
+                                            <div>
+                                                <div>
+                                                     {option.Answer}
+                                                </div>
+                                                <img style='max-width: 100px' src='data:image/png;base64,{searchOptionFile}'>
+                                            </div>
+                                         </th>
+                                         <th style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>Incorect</th>
+                                    </tr>";
+                            }
+                            else 
+                            {
+                               content += 
+                                    $@"<tr>
+                                         <th colspan='2' style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>{option.Answer}</th>
+                                         <th style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>Incorect</th>
+                                    </tr>"; 
+                            }
+                            
                         }
                     }
                 }
             }
             return content;
+        }
+        private async Task<string> GetOptionFileToString(Option option)
+        {
+
+            var optionFile = _appDbContext.Files.FirstOrDefault(f => f.Id.ToString() == option.MediaFileId && f.Type.Contains("image"));
+
+            string setOptionFile = null;
+
+            if (optionFile != null)
+            {
+                var getoptionFile = await _storageFileService.GetFile(optionFile.Id.ToString());
+
+                 setOptionFile = Convert.ToBase64String(getoptionFile.Content);
+            }
+
+            return setOptionFile;
         }
         private async Task<string> GetTableContent(List<int> testsIds)
         {
