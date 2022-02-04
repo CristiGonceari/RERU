@@ -48,6 +48,33 @@ namespace CVU.ERP.Module.Application.TablePrinterService.Implementations
             };
         }
 
+        public FileDataDto PrintListTable(TableListData<TSource> data)
+        {
+            var source = Html;
+            source = source
+                .Replace("{table_name}", data.Name)
+                .Replace("{table_header}", GetTableHeader(data.Fields.Select(x => x.Label).ToList()))
+                .Replace("{table_content}", GetTableContent(_mapper.Map<List<TDestination>>(data.Items), data.Fields.Select(x => x.Value).ToList()));
+
+            var options = new ConvertOptions
+            {
+                PageOrientation = data.Orientation == TableOrientation.Landscape
+                    ? Orientation.Landscape
+                    : Orientation.Portrait
+            };
+
+            _generatePdf.SetConvertOptions(options);
+
+            var parsed = _generatePdf.GetPDF(source);
+
+            return new FileDataDto
+            {
+                Content = parsed,
+                ContentType = "application/pdf",
+                Name = "PrintedTable.pdf"
+            };
+        }
+
         private string GetTableHeader(List<string> fields)
         {
             return $"<tr>{string.Join(" ", fields.Select(f => $"<th>{f}</th>"))}</tr>";
@@ -115,7 +142,7 @@ namespace CVU.ERP.Module.Application.TablePrinterService.Implementations
             return type.GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public);
         }
 
-        private object ParseByDataType(PropertyInfo propInfo, object item)
+        private string ParseByDataType(PropertyInfo propInfo, object item)
         {
             var result = propInfo.GetValue(item, null);
 
@@ -128,7 +155,7 @@ namespace CVU.ERP.Module.Application.TablePrinterService.Implementations
                 result = Convert.ToBoolean(result) ? "+" : "-";
             }
 
-            return result;
+            return result.ToString();
         }
     }
 }

@@ -19,8 +19,8 @@
       <tr *ngFor="let item of events" (dblclick)="navigate(item.id)">
         <td style="cursor: pointer;" [routerLink]="['event', item.id]">{{ item.name }}</td>
         <td style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{item.description}}</td>
-        <td>{{item.fromDate | date: 'd/M/yy, HH:mm'}}</td>
-        <td>{{item.tillDate | date: 'd/M/yy, HH:mm'}}</td>
+        <td>{{item.fromDate | date: 'dd/MM/yyyy, HH:mm'}}</td>
+        <td>{{item.tillDate | date: 'dd/MM/yyyy, HH:mm'}}</td>
         <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
           <div style="overflow: visible; position: relative; width: 0px">
             <div ngbDropdown class="dropdown dropdown-inline">
