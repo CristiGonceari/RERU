@@ -2,7 +2,7 @@
 using CVU.ERP.Common.Pagination;
 using MediatR;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.GetUserPollsByEvent
+namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPollsByEvent
 {
     public class GetUserPollsByEventQuery : PaginatedQueryParameter, IRequest<PaginatedModel<PollDto>>
     {

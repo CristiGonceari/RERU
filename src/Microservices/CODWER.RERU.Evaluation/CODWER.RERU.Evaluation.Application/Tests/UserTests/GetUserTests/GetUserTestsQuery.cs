@@ -2,7 +2,7 @@
 using CVU.ERP.Common.Pagination;
 using MediatR;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.GetUserTests
+namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTests
 {
     public class GetUserTestsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<TestDto>>
     {

@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
@@ -9,31 +8,31 @@ using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.GetUserEvaluatedTests
+namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTestsByEvent
 {
-    public class GetUserEvaluatedTestsQueryHandler : IRequestHandler<GetUserEvaluatedTestsQuery, PaginatedModel<TestDto>>
+    public class GetUserTestsByEventQueryHandler : IRequestHandler<GetUserTestsByEventQuery, PaginatedModel<TestDto>>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
-        private readonly IMapper _mapper;
 
-        public GetUserEvaluatedTestsQueryHandler(AppDbContext appDbContext, IPaginationService paginationService, IMapper mapper)
+        public GetUserTestsByEventQueryHandler(AppDbContext appDbContext, IPaginationService paginationService)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
-            _mapper = mapper;
         }
 
-        public async Task<PaginatedModel<TestDto>> Handle(GetUserEvaluatedTestsQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedModel<TestDto>> Handle(GetUserTestsByEventQuery request, CancellationToken cancellationToken)
         {
             var userTests = _appDbContext.Tests
                 .Include(t => t.TestType)
+                .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
+                .Include(t => t.Location)
                 .Include(t => t.Event)
-                .Where(t => t.EvaluatorId == request.UserId || 
-                            _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == request.UserId))
+                .Where(t => t.UserProfileId == request.UserId && t.Event.Id == request.EventId)
+                .OrderByDescending(x => x.ProgrammedTime)
                 .AsQueryable();
-            
+
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(userTests, request);
 
             return paginatedModel;

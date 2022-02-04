@@ -8,31 +8,29 @@ using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.GetUserTests
+namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluatedTests
 {
-    public class GetUserTestsQueryHandler : IRequestHandler<GetUserTestsQuery, PaginatedModel<TestDto>>
+    public class GetUserEvaluatedTestsQueryHandler : IRequestHandler<GetUserEvaluatedTestsQuery, PaginatedModel<TestDto>>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
 
-        public GetUserTestsQueryHandler(AppDbContext appDbContext, IPaginationService paginationService)
+        public GetUserEvaluatedTestsQueryHandler(AppDbContext appDbContext, IPaginationService paginationService)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
         }
 
-        public async Task<PaginatedModel<TestDto>> Handle(GetUserTestsQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedModel<TestDto>> Handle(GetUserEvaluatedTestsQuery request, CancellationToken cancellationToken)
         {
             var userTests = _appDbContext.Tests
                 .Include(t => t.TestType)
-                .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
-                .Include(t => t.Location)
                 .Include(t => t.Event)
-                .Where(t => t.UserProfileId == request.UserId && t.Event == null)
-                .OrderByDescending(x => x.ProgrammedTime)
+                .Where(t => t.EvaluatorId == request.UserId || 
+                            _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == request.UserId))
                 .AsQueryable();
-
+            
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(userTests, request);
 
             return paginatedModel;
