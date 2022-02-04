@@ -65,9 +65,9 @@ namespace CVU.ERP.Module.Application.TablePrinterService.Implementations
 
                 foreach (var field in fields)
                 {
-                    var propInfo = GetPropertyInfo(objType, field); 
+                    var propInfo = GetPropertyInfo(objType, field);
 
-                    records += $"<td>{propInfo.GetValue(item, null)}</td>";
+                    records += $"<td>{ParseByDataType(propInfo, item)}</td>";
                 }
 
                 records += "</tr>";
@@ -113,6 +113,22 @@ namespace CVU.ERP.Module.Application.TablePrinterService.Implementations
         public static PropertyInfo GetPropertyInfo(Type type, string propertyName)
         {
             return type.GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public);
+        }
+
+        private object ParseByDataType(PropertyInfo propInfo, object item)
+        {
+            var result = propInfo.GetValue(item, null);
+
+            if (propInfo.PropertyType == typeof(DateTime))
+            {
+                result = Convert.ToDateTime(result).ToString("dd/MM/yyyy, HH:mm");
+            }
+            else if (propInfo.PropertyType == typeof(bool))
+            {
+                result = Convert.ToBoolean(result) ? "+" : "-";
+            }
+
+            return result;
         }
     }
 }
