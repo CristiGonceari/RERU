@@ -13,6 +13,7 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="9.4.0" />
+    <PackageReference Include="Minio" Version="3.1.13" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Wkhtmltopdf.NetCore" Version="3.0.2" />
@@ -24,6 +25,7 @@
     <ProjectReference Include="..\..\CVU.ERP.Logging\CVU.ERP.Logging.csproj" />
     <ProjectReference Include="..\..\CVU.ERP.Module.Common\src\CVU.ERP.Module.Common.csproj" />
     <ProjectReference Include="..\..\CVU.ERP.Notifications\CVU.ERP.Notifications.csproj" />
+    <ProjectReference Include="..\..\CVU.ERP.StorageService\CVU.ERP.StorageService.csproj" />
   </ItemGroup>
 
 </Project>

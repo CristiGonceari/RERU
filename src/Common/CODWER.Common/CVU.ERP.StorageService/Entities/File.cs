@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace CODWER.RERU.Evaluation.Data.Entities.Files
+namespace CVU.ERP.StorageService.Entities
 {
-    public class File 
+    public class File
     {
         public Guid Id { get; set; }
         public string FileName { get; set; }
@@ -10,6 +10,5 @@ namespace CODWER.RERU.Evaluation.Data.Entities.Files
         public string Type { get; set; }
         public FileTypeEnum FileType { get; set; }
         public string BucketName { get; set; }
-
     }
 }

@@ -308,34 +308,6 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.ToTable("EventUsers");
                 });
 
-            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Files.File", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("BucketName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FileType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UniqueFileName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FileType");
-
-                    b.ToTable("Files");
-                });
-
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Location", b =>
                 {
                     b.Property<int>("Id")
@@ -1694,45 +1666,6 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Files.FileTypeEnum>", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique()
-                        .HasFilter("[Name] IS NOT NULL");
-
-                    b.ToTable("FileTypeEnum");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "question"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "testtemplate"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "test"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "media"
-                        });
-                });
-
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Event", b =>
                 {
                     b.HasOne("CODWER.RERU.Evaluation.Data.Entities.Plan", "Plan")
@@ -1835,15 +1768,6 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.Navigation("Event");
 
                     b.Navigation("UserProfile");
-                });
-
-            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Files.File", b =>
-                {
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Files.FileTypeEnum>", null)
-                        .WithMany()
-                        .HasForeignKey("FileType")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Location", b =>

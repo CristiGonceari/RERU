@@ -5,8 +5,10 @@ using CODWER.RERU.Evaluation.Application.QuestionCategories.EditQuestionCategory
 using CODWER.RERU.Evaluation.Application.QuestionCategories.GetQuestionCategories;
 using CODWER.RERU.Evaluation.Application.QuestionCategories.GetQuestionCategoriesNonPaginated;
 using CODWER.RERU.Evaluation.Application.QuestionCategories.GetQuestionCategory;
+using CODWER.RERU.Evaluation.Application.QuestionCategories.PrintQuestionCategories;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionCategory;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -52,6 +54,17 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<Unit> DeleteQuestionCategory([FromRoute] int id)
         {
             return await Mediator.Send(new DeleteQuestionCategoryCommand { Id = id });
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintQuestionCategories([FromBody] PrintQuestionCategoriesCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
 
     }

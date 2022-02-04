@@ -1,11 +1,11 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities.Files;
-using CODWER.RERU.Evaluation.DataTransferObjects.Files;
+﻿using CVU.ERP.StorageService.Entities;
+using CVU.ERP.StorageService.Models;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CVU.ERP.Common.DataTransferObjects.Files;
 
-namespace CODWER.RERU.Evaluation.Application.Services
+namespace CVU.ERP.StorageService
 {
     public interface IStorageFileService
     {

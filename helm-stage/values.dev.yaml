@@ -68,6 +68,7 @@ reru_core:
     connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Core-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
     identity_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Identity-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
     log_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Logging-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    storage_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Storage-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
 
 reru_identity_migrator:
   enabled: true
@@ -77,6 +78,15 @@ reru_identity_migrator:
     repository: cvuintell/reru-identity-migrator
   database:
     connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Identity-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+
+reru_storage_migrator:
+  enabled: true
+  name: "reru-storage-migrator"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-storage-migrator
+  database:
+    connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Storage-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
 
 reru_core_fe:
   name: "reru-core-fe"
@@ -98,6 +108,7 @@ reru_personal:
   database:
     connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Personal-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;MultipleActiveResultSets=True;
     log_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Logging-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    storage_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Storage-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
 
 reru_evaluation_fe:
   name: "reru-evaluation-fe"
@@ -113,6 +124,7 @@ reru_evaluation:
   database:
     connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Evaluation-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
     log_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Logging-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    storage_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Storage-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
 
 reru_logging_fe:
   name: "reru-logging-fe"

@@ -91,7 +91,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
         {
             if (!string.IsNullOrWhiteSpace(request.TestTypeName))
             {
-                tests = tests.Where(x => EF.Functions.Like(x.TestType.Name, $"%{request.TestTypeName}%"));
+                tests = tests.Where(x => x.TestType.Name.Contains(request.TestTypeName));
             }
 
             if (!string.IsNullOrWhiteSpace(request.UserName))

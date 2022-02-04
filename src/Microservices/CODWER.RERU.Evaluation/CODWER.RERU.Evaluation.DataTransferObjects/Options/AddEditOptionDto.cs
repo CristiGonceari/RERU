@@ -1,4 +1,4 @@
-﻿using CODWER.RERU.Evaluation.DataTransferObjects.Files;
+﻿using CVU.ERP.StorageService.Models;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.Options
 {

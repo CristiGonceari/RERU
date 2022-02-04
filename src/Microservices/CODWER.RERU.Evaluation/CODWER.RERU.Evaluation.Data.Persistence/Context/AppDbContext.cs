@@ -1,5 +1,4 @@
 ﻿using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Entities.Files;
 using CVU.ERP.Common.Data.Persistence.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,7 +40,6 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Context
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<QuestionUnitTag> QuestionUnitTags { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
-        public virtual DbSet<File> Files { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

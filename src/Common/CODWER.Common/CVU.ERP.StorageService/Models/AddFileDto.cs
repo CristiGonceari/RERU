@@ -1,7 +1,7 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities.Files;
+﻿using CVU.ERP.StorageService.Entities;
 using Microsoft.AspNetCore.Http;
 
-namespace CODWER.RERU.Evaluation.DataTransferObjects.Files
+namespace CVU.ERP.StorageService.Models
 {
     public class AddFileDto
     {

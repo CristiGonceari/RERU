@@ -12,6 +12,8 @@ using CVU.ERP.Common.Pagination;
 using CODWER.RERU.Evaluation.Application.Plans.GetPlansByDate;
 using CODWER.RERU.Evaluation.Application.Plans.GetCountedPlans;
 using System.Collections.Generic;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
+using CODWER.RERU.Evaluation.Application.Plans.PrintPlans;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -61,6 +63,17 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<int> UpdatePlan([FromBody] EditPlanCommand command)
         {
             return await Mediator.Send(command);
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintPlans([FromBody] PrintPlansCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }

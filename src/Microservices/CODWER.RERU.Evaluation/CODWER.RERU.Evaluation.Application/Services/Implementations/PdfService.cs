@@ -2,8 +2,9 @@
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.Files;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestCategoryQuestions;
+using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.StorageService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,7 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.StorageService.Context;
 using Wkhtmltopdf.NetCore;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations
@@ -21,6 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
     public class PdfService : IPdfService
     {
         private readonly AppDbContext _appDbContext;
+        private readonly StorageDbContext _storageDbContext;
         private readonly IGeneratePdf _generatePdf;
         private readonly IMediator _mediator;
         private readonly IQuestionUnitService _questionUnitService;
@@ -29,13 +31,16 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         public PdfService(AppDbContext appDbContext,
             IGeneratePdf generatePdf, 
             IMediator mediator, 
-            IQuestionUnitService questionUnitService, IStorageFileService storageFileService)
+            IQuestionUnitService questionUnitService, 
+            IStorageFileService storageFileService, 
+            StorageDbContext storageDbContext)
         {
             _appDbContext = appDbContext;
             _generatePdf = generatePdf;
             _mediator = mediator;
             _questionUnitService = questionUnitService;
             _storageFileService = storageFileService;
+            _storageDbContext = storageDbContext;
         }
 
         public async Task<FileDataDto> PrintTestTemplatePdf(int testTemplateId)
@@ -76,7 +81,16 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 .Include(op => op.Options)
                 .FirstOrDefault(x => x.Id == questionId);
 
-            return await GetPdf(questions);
+            var files = _storageDbContext.Files.FirstOrDefault(f => f.Id.ToString() == questions.MediaFileId && f.Type.Contains("image"));
+
+            FileDataDto getQuestionFile = null;
+
+            if (files != null)
+            {
+                getQuestionFile = await _storageFileService.GetFile(files.Id.ToString());
+            }
+
+            return await GetPdf(questions, getQuestionFile);
         }
 
         public async Task<FileDataDto> PrintPerformingTestPdf(List<int> testsIds)
@@ -122,23 +136,39 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 Name = "Test.pdf"
             };
         }
-        private async Task<FileDataDto> GetPdf(QuestionUnit items)
+        private async Task<FileDataDto> GetPdf(QuestionUnit items, FileDataDto getQuestionFile)
         {
+            string questionImage = "";
+            int imageConfig;
+
+            if (getQuestionFile != null)
+            {
+                questionImage = Convert.ToBase64String(getQuestionFile.Content);
+                imageConfig = 1;
+            }
+            else 
+            {
+                questionImage = "null";
+                imageConfig = 0;
+            }
+            
             var path = new FileInfo("PdfTemplates/one_multiple_question.html").FullName;
+
             var source = await File.ReadAllTextAsync(path);
 
-            var myDictionary = await GetDictionary(items);
+            var myDictionary = await GetDictionary(items, questionImage, imageConfig);
 
             source = ReplaceKeys(source, myDictionary);
 
             var res = Parse(source);
 
-            return new FileDataDto
+             return  new FileDataDto
             {
                 Content = res,
                 ContentType = "application/pdf",
                 Name = "Intrebarea.pdf"
             };
+
         }
         private async Task<FileDataDto> GetPdf(List<int> testsIds)
         {
@@ -193,19 +223,24 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             return myDictionary;
         }
-        private async Task<Dictionary<string, string>> GetDictionary(QuestionUnit items)
+        private async Task<Dictionary<string, string>> GetDictionary(QuestionUnit items, string questionImage, int imageConfig)
         {
             var myDictionary = new Dictionary<string, string>();
 
             myDictionary.Add("{question_name}", await GetQuestionName(items.Id));
+            myDictionary.Add("{question_image}", questionImage);
+            myDictionary.Add("'image_config'", imageConfig.ToString());
             myDictionary.Add("{category_name}", items.QuestionCategory.Name);
             myDictionary.Add("{question_type}", EnumMessages.EnumMessages.GetQuestionType(items.QuestionType));
             myDictionary.Add("{question_points}", items.QuestionPoints.ToString());
             myDictionary.Add("{question_status}", EnumMessages.EnumMessages.GetQuestionStatus(items.Status));
             myDictionary.Add("{answer_option}", GetTableContent(items));
 
+            var dictionary = new Dictionary<string, Image>();
+
             return myDictionary;
         }
+        
         private async Task<Dictionary<string, string>> GetDictionary(List<int> testsIds)
         {
             var myDictionary = new Dictionary<string, string>();
