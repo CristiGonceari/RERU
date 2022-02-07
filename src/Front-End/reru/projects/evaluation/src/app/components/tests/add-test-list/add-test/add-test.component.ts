@@ -74,21 +74,20 @@ export class AddTestComponent implements OnInit {
     this.getEvaluators();
   }
 
-  getUsers(id?: number) {
-    if (!id)
+  getUsers() {
     this.referenceService.getUsers({name: this.key, eventId: this.event.value }).subscribe(res => {
-      this.usersList = res.data; 
-    }); 
-    else {
-      this.updateUserList(id);
-      this.key = '';
-      this.autoCompleteElement.openPanel();
-    }
+      let initialArray = res.data.map(el => el.value);
+      this.usersList = res.data;
+      for( let i=0; i<initialArray.length; i++ ) {
+        if (this.displayUserNames.map(el => el.value).includes(initialArray[i]))
+          this.updateUserList(initialArray[i]);
+      }
+    });
   }
 
   getEvents() {
     this.referenceService.getEvents().subscribe(res => {
-      this.eventsList = res.data
+      this.eventsList = res.data;
       this.getActiveTestType();
     });
   }
@@ -96,8 +95,7 @@ export class AddTestComponent implements OnInit {
   getEvaluators() {
     if (this.needEvaluator === false && this.hasEventEvaluator === false) {
       this.referenceService.getUsers({ eventId: this.event.value }).subscribe(res => { this.evaluatorList = res.data });
-    }
-    else {
+    } else {
       this.evaluatorList = [];
       this.evaluator.value = null;
     };
@@ -117,7 +115,7 @@ export class AddTestComponent implements OnInit {
     }
 
     this.testTypeService.getTestTypeByStatus(params).subscribe((res) => {
-      this.selectActiveTests = res.data
+      this.selectActiveTests = res.data;
     })
     this.getUsers();
   }
@@ -126,19 +124,18 @@ export class AddTestComponent implements OnInit {
     if (event) {
       this.isTestTypeOneAnswer = this.selectActiveTests.find(x => x.testTypeId === event).isOnlyOneAnswer;
       this.printTest = this.selectActiveTests.find(x => x.testTypeId === event).printTest;
-    }
-    else this.isTestTypeOneAnswer = false;
+    } else this.isTestTypeOneAnswer = false;
     
-    if(!this.printTest) 
+    if (!this.printTest) 
       this.messageText = "Acest test poate conține video sau audio!"
 
-    if(this.isTestTypeOneAnswer){
+    if (this.isTestTypeOneAnswer) {
       this.evaluator.value = null;
     }
   }
 
-  checkIfEventHasEvaluator($event) {
-    this.hasEventEvaluator = this.eventsList.find(x => x.eventId === $event).isEventEvaluator
+  checkIfEventHasEvaluator(event) {
+    this.hasEventEvaluator = this.eventsList.find(x => x.eventId === event).isEventEvaluator;
   }
 
   deleteFromList(user, index) {
@@ -151,6 +148,8 @@ export class AddTestComponent implements OnInit {
   updateUserList(id?: number): void {
     let indexToDelete = this.usersList.map(el => el.value).findIndex(x => x == id);
     this.usersList.splice(indexToDelete, 1);
+    this.key = '';
+    this.autoCompleteElement.openPanel();
   }
 
   addUserToList(id: number, name: string) {
@@ -159,11 +158,11 @@ export class AddTestComponent implements OnInit {
       new AssignedUsers(id, name)
     );
     this.userListToAdd.push(+id);
-    this.getUsers(id)
+    this.updateUserList(id);
   }
 
-  sortByName(){
-    if(!this.isListOrderedAsc){
+  sortByName() {
+    if(!this.isListOrderedAsc) {
       this.displayUserNames.sort( (a,b)=> a.label > b.label ? 1:-1 );
       this.isListOrderedAsc = true;
     } else {
@@ -175,18 +174,18 @@ export class AddTestComponent implements OnInit {
   parse() {
     this.setTimeToSearch();
     return  new AddEditTest({
-        userProfileId: this.userListToAdd,
-        programmedTime: this.search,
-        eventId: +this.event.value || null,
-        evaluatorId: +this.evaluator.value || null,
-        testStatus: TestStatusEnum.Programmed,
-        testTypeId: +this.testType.value || 0,
-        showUserName: this.showName
-      })
+      userProfileId: this.userListToAdd,
+      programmedTime: this.search,
+      eventId: +this.event.value || null,
+      evaluatorId: +this.evaluator.value || null,
+      testStatus: TestStatusEnum.Programmed,
+      testTypeId: +this.testType.value || 0,
+      showUserName: this.showName
+    })
   }
 
   createTest() {
-    this.testService.createTest(this.parse()).subscribe((res) => {
+    this.testService.createTest(this.parse()).subscribe(() => {
       forkJoin([
 				this.translate.get('modal.success'),
 				this.translate.get('tests.tests-were-programmed'),
@@ -208,7 +207,7 @@ export class AddTestComponent implements OnInit {
 				this.title = title;
 				this.description = description;
 				});
-      this.performingTestPdf(res.data)
+      this.performingTestPdf(res.data);
       this.backClicked();
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
