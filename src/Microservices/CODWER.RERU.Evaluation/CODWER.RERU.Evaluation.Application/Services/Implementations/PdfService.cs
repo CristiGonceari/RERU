@@ -415,7 +415,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         private async Task<string> GetOptionFileToString(Option option)
         {
 
-            var optionFile = _appDbContext.Files.FirstOrDefault(f => f.Id.ToString() == option.MediaFileId && f.Type.Contains("image"));
+            var optionFile = _storageDbContext.Files.FirstOrDefault(f => f.Id.ToString() == option.MediaFileId && f.Type.Contains("image"));
 
             string setOptionFile = null;
 
