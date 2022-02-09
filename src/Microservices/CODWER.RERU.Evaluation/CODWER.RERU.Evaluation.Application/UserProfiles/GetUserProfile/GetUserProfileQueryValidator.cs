@@ -12,7 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfile
         public GetUserProfileQueryValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.Id)
-                .SetValidator(x => new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
+                .SetValidator(x => new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
         }
     }

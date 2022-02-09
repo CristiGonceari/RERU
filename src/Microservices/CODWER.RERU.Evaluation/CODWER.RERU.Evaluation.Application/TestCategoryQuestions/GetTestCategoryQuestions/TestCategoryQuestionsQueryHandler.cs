@@ -1,16 +1,16 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using AutoMapper;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestCategoryQuestions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace CODWER.RERU.Evaluation.Application.TestCategoryQuestions
+namespace CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCategoryQuestions
 {
     public class TestCategoryQuestionsQueryHandler : IRequestHandler<TestCategoryQuestionsQuery, TestCategoryQuestionContentDto>
     {
@@ -25,7 +25,7 @@ namespace CODWER.RERU.Evaluation.Application.TestCategoryQuestions
 
         public async Task<TestCategoryQuestionContentDto> Handle(TestCategoryQuestionsQuery request, CancellationToken cancellationToken)
         {
-            var testTypeQuestionCategory =await _appDbContext.TestTypeQuestionCategories
+            var testTypeQuestionCategory = await _appDbContext.TestTypeQuestionCategories
                                                                 .Include(ttqc => ttqc.QuestionCategory)
                                                                 .FirstAsync(x => x.Id == request.TestTypeQuestionCategoryId);
 

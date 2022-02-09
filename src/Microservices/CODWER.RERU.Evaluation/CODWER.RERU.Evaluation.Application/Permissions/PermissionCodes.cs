@@ -18,7 +18,7 @@
 
         public const string TEST_QUESTIONS_GENERAL_ACCESS = "P03000701";
 
-        public const string TEST_TYPES_GENERAL_ACCESS = "P03000801";
+        public const string TEST_TEMPLATES_GENERAL_ACCESS = "P03000801";
 
         public const string STATISTICS_GENERAL_ACCESS = "P03000901";
 

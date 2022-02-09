@@ -1,4 +1,4 @@
-﻿namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTypes
+﻿namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates
 {
     public class SelectTestTemplateValueDto
     {

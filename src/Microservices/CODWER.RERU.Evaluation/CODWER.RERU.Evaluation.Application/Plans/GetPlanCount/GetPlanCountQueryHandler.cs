@@ -1,5 +1,4 @@
-﻿using CODWER.RERU.Evaluation.Application.Plans.GetCountedPlans;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
+﻿using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Plans;
 using MediatR;
 using System.Collections.Generic;
@@ -30,7 +29,7 @@ namespace CODWER.RERU.Evaluation.Application.Plans.GetPlanCount
             
             for (var dt = request.FromDate.Date; dt <= request.TillDate.Date; dt = dt.AddDays(1))
             {
-                var count = plans.Where(p => p.FromDate.Date <= dt.Date && dt.Date <= p.TillDate.Date).Count();
+                var count = plans.Count(p => p.FromDate.Date <= dt.Date && dt.Date <= p.TillDate.Date);
 
                 var planCount = new PlanCount()
                 {

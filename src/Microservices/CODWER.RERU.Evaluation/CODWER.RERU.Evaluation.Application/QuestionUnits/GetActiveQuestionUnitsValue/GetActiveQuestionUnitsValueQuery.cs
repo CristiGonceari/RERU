@@ -7,7 +7,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetActiveQuestionUnitsValue
 {
-    [ModuleOperation(permission: PermissionCodes.TEST_TYPES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.TEST_TEMPLATES_GENERAL_ACCESS)]
     public class GetActiveQuestionUnitsValueQuery : PaginatedQueryParameter, IRequest<PaginatedModel<ActiveQuestionUnitValueDto>>
     {
         public QuestionTypeEnum? Type { get; set; }

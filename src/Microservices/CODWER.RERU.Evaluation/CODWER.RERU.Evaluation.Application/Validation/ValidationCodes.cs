@@ -102,7 +102,7 @@
 
         //test type
         public static string INVALID_STATUS = "03001701";
-        public static string INVALID_TEST_TYPE = "03001702";
+        public static string INVALID_TEST_TEMPLATE = "03001702";
         public static string INSUFFICIENT_QUESTIONS_IN_CATEGORY = "03001703";
         public static string INSUFFICIENT_QUESTIONS_IN_TEST_TYPE = "03001704";
         public static string INVALID_QUESTION_COUNT = "03001705";

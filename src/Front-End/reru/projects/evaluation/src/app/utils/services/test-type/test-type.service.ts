@@ -9,7 +9,7 @@ import { AbstractService, AppSettingsService } from '@erp/shared';
 
 export class TestTypeService extends AbstractService {
 
-  private readonly urlRoute = 'TestType';
+  private readonly urlRoute = 'TestTemplate';
   constructor(protected appConfigService: AppSettingsService, public http: HttpClient) {
     super(appConfigService);
   }

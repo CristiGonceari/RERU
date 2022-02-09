@@ -9,7 +9,7 @@ using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CVU.ERP.Common.EnumConverters;
-using CODWER.RERU.Evaluation.Application.References.GetTestTypeValue;
+using CODWER.RERU.Evaluation.Application.References.GetTestTemplatesValue;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -25,10 +25,10 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return items;
         }
 
-        [HttpGet("test-type/select-values")]
+        [HttpGet("test-template/select-values")]
         public async Task<List<SelectItem>> GetTestTypes()
         {
-            var query = new GetTestTypeValueQuery();
+            var query = new GetTestTemplatesValueQuery();
 
             return await Mediator.Send(query);
         }

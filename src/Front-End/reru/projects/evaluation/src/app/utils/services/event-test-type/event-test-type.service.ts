@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EventTestTypeService extends AbstractService {
-  private readonly urlRoute = 'EventTestType';
+  private readonly urlRoute = 'EventTestTemplate';
 
 	constructor(protected appConfigService: AppSettingsService, private http: HttpClient) {
 		super(appConfigService);

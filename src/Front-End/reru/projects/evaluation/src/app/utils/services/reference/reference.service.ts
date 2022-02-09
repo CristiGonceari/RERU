@@ -18,7 +18,7 @@ export class ReferenceService extends AbstractService {
   }
 
   getTestTypes(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-type/select-values`);
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-template/select-values`);
   }
 
   getQuestionTypeStatuses(): Observable<any> {

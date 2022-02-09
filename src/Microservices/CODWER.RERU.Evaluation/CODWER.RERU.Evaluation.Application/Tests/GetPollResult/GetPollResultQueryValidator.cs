@@ -15,7 +15,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetPollResult
         public GetPollResultQueryValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.TestTypeId)
-                .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
+                .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
 
             RuleFor(r => r.TestTypeId)

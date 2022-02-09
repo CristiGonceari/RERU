@@ -50,10 +50,10 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return File(result.Content, result.ContentType, result.Name);
         }
 
-        [HttpGet("print-test-type-{id}")]
+        [HttpGet("print-test-template-{id}")]
         [IgnoreResponseWrap]
 
-        public async Task<IActionResult> PrintTestTypePdf([FromRoute] int id)
+        public async Task<IActionResult> PrintTestTemplatePdf([FromRoute] int id)
         {
             var result = await _pdfService.PrintTestTemplatePdf(id);
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");

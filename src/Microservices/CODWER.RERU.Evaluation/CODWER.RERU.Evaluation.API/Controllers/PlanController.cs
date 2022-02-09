@@ -10,8 +10,8 @@ using CODWER.RERU.Evaluation.Application.Plans.GetPlans;
 using CODWER.RERU.Evaluation.DataTransferObjects.Plans;
 using CVU.ERP.Common.Pagination;
 using CODWER.RERU.Evaluation.Application.Plans.GetPlansByDate;
-using CODWER.RERU.Evaluation.Application.Plans.GetCountedPlans;
 using System.Collections.Generic;
+using CODWER.RERU.Evaluation.Application.Plans.GetPlanCount;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using CODWER.RERU.Evaluation.Application.Plans.PrintPlans;
 
