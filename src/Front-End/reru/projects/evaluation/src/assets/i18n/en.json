@@ -755,5 +755,13 @@
     "father-name": "Father name",
     "idnp": "IDNP",
     "logout": "Logout"
+  },
+  "print": {
+    "print-table": "Print table",
+    "orientation": "Orientation",
+    "portrait": "Portrait",
+    "landscape": "Landscape",
+    "fields": "Fields",
+    "print-msg": "Please specify the print orientation and necessary fields."
   }
 }

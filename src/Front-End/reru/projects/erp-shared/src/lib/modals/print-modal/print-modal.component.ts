@@ -8,8 +8,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PrintModalComponent implements OnInit {
 
-  @Input() tableData = {tableName: '', fields: [], orientation: 1};
   selectedFeilds = [];
+  @Input() tableData = {tableName: '', fields: [], orientation: 1};
+  @Input() translateData: Array<string>;
 
   constructor(private activeModal: NgbActiveModal) { }
 
