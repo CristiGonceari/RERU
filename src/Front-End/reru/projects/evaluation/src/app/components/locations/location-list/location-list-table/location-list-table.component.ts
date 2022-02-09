@@ -3,12 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { ConfirmModalComponent } from '@erp/shared';
+import { PrintModalComponent } from '@erp/shared';
 import { TestingLocationTypeEnum } from 'projects/evaluation/src/app/utils/enums/testing-location-type.enum';
 import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { LocationService } from '../../../../utils/services/location/location.service';
 import { forkJoin } from 'rxjs';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-location-list-table',
@@ -22,6 +24,7 @@ export class LocationListTableComponent implements OnInit {
 	pagination: PaginationModel = new PaginationModel();
 	enum = TestingLocationTypeEnum;
 	isLoading: boolean = true;
+	headersToPrint = [];
   
 	title: string;
 	description: string;
@@ -41,6 +44,32 @@ export class LocationListTableComponent implements OnInit {
 		this.list();
   	}
 
+	getHeaders(name: string): void {
+		let headersHtml = document.getElementsByTagName('th');
+		let headersDto = ['name', 'address', 'type', 'places'];
+		for (let i=0; i<headersHtml.length-1; i++) {
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+		}
+		let printData = {
+			tableName: name,
+			fields: this.headersToPrint,
+			orientation: 1
+		};
+		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'lg' });
+		modalRef.componentInstance.tableData = printData;
+		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
+		this.headersToPrint = [];
+	}
+
+	printTable(data): void {
+		this.locationService.print(data).subscribe(response => {
+			const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
+      		const blob = new Blob([response.body], { type: response.body.type });
+			const file = new File([blob], fileName, { type: response.body.type });
+      		saveAs(file);
+		});
+	}
+
   	list(data: any = {}) {
 		this.keyword = data.keyword;
 		let params = {
@@ -57,11 +86,11 @@ export class LocationListTableComponent implements OnInit {
 		});
 	}
 
-	navigate(id){
+	navigate(id: number) {
 		this.router.navigate(['location/', id, 'overview'], {relativeTo: this.route});
 	}
 
-	deleteLocation(id): void{
+	deleteLocation(id: number): void{
 		this.locationService.deleteLocation(id).subscribe(() => 
 		{
 			forkJoin([
@@ -76,7 +105,7 @@ export class LocationListTableComponent implements OnInit {
 		});
 	}
 
-	openConfirmationDeleteModal(id): void {
+	openConfirmationDeleteModal(id: number): void {
 		forkJoin([
 			this.translate.get('locations.remove'),
 			this.translate.get('locations.remove-msg'),
