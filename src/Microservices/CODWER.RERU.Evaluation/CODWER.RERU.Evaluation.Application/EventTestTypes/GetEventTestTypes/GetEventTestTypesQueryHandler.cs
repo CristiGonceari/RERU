@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Evaluation.Application.EventTestTypes.GetEventTestTypes
 {
-    public class GetEventTestTypesQueryHandler : IRequestHandler<GetEventTestTypesQuery, PaginatedModel<TestTypeDto>>
+    public class GetEventTestTypesQueryHandler : IRequestHandler<GetEventTestTypesQuery, PaginatedModel<TestTemplateDto>>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
@@ -21,7 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTypes.GetEventTestTypes
             _paginationService = paginationService;
         }
 
-        public async Task<PaginatedModel<TestTypeDto>> Handle(GetEventTestTypesQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedModel<TestTemplateDto>> Handle(GetEventTestTypesQuery request, CancellationToken cancellationToken)
         {
             var eventTestTypes = _appDbContext.EventTestTypes
                 .Include(x => x.TestType)
@@ -29,7 +29,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTypes.GetEventTestTypes
                 .Select(x => x.TestType)
                 .AsQueryable();
 
-            return await _paginationService.MapAndPaginateModelAsync<TestType, TestTypeDto>(eventTestTypes, request);
+            return await _paginationService.MapAndPaginateModelAsync<TestTemplate, TestTemplateDto>(eventTestTypes, request);
         }
     }
 }

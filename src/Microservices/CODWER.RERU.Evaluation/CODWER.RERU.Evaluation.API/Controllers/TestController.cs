@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.Tests.AddMyPoll;
-using CODWER.RERU.Evaluation.Application.Tests.AddTest;
 using CODWER.RERU.Evaluation.Application.Tests.AddTests;
 using CODWER.RERU.Evaluation.Application.Tests.DeleteTest;
 using CODWER.RERU.Evaluation.Application.Tests.EditTestStatus;
@@ -22,10 +21,16 @@ using CVU.ERP.Common.Pagination;
 using MediatR;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEventByDate;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent;
-using CODWER.RERU.Evaluation.Application.Tests.GetUserEvaluatedTests;
-using CODWER.RERU.Evaluation.Application.Tests.GetUserPollsByEvent;
-using CODWER.RERU.Evaluation.Application.Tests.GetUserTests;
-using CODWER.RERU.Evaluation.Application.Tests.GetUserTestsByEvent;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
+using CODWER.RERU.Evaluation.Application.Tests.PrintTests;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluatedTests;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPollsByEvent;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTests;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTestsByEvent;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserEvaluatedTests;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPollsByEvent;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTests;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTestsByEvent;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -150,6 +155,61 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
             var timeStamp = DateTime.Now;
             return File(answerBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"AllTests_{timeStamp.Year}-{timeStamp.Month.ToString("00")}-{timeStamp.Day.ToString("00")}.xlsx");
+        }
+
+        [HttpPut("print-tests")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintTestsPdf([FromBody] PrintTestsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-user-tests")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintUserTestsPdf([FromBody] PrintUserTestsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-user-evaluated-tests")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintUserEvaluatedTestsPdf([FromBody] PrintUserEvaluatedTestsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-user-tests-by-event")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintUserTestsByEventPdf([FromBody] PrintUserTestsByEventCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-user-polls")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintUserPollsByEventPdf([FromBody] PrintUserPollsByEventCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }

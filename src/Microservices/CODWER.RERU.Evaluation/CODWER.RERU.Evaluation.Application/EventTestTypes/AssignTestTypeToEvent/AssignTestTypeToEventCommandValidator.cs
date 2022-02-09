@@ -25,7 +25,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTypes.AssignTestTypeToEven
                         ValidationMessages.InvalidReference));
 
                 RuleFor(x => x.Data.TestTypeId)
-                    .SetValidator(x => new ItemMustExistValidator<TestType>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
+                    .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
                         ValidationMessages.InvalidReference));
 
                 RuleFor(r => r.Data)
@@ -33,7 +33,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTypes.AssignTestTypeToEven
                     .WithErrorCode(ValidationCodes.EXISTENT_TEST_TYPE_IN_EVENT);
 
 
-                When(r => appDbContext.TestTypes.First(l => l.Id == r.Data.TestTypeId).Mode == (int)TestTypeModeEnum.Test, () =>
+                When(r => appDbContext.TestTemplates.First(l => l.Id == r.Data.TestTypeId).Mode == (int)TestTypeModeEnum.Test, () =>
                 {
                     RuleFor(r => r.Data.MaxAttempts)
                     .Must(x => x > 0)
@@ -44,7 +44,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTypes.AssignTestTypeToEven
                     .WithErrorCode(ValidationCodes.ONLY_POLLS_OR_TESTS);
                 });
 
-                When(r => appDbContext.TestTypes.First(l => l.Id == r.Data.TestTypeId).Mode == TestTypeModeEnum.Poll, () =>
+                When(r => appDbContext.TestTemplates.First(l => l.Id == r.Data.TestTypeId).Mode == TestTypeModeEnum.Poll, () =>
                 {
                     RuleFor(r => r.Data.EventId)
                     .Must(x => !appDbContext.EventTestTypes.Include(x => x.TestType).Where(e => e.EventId == x).Any(tt => tt.TestType.Mode == (int)TestTypeModeEnum.Test))

@@ -26,11 +26,11 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQ
             When(r => r.Data != null, () =>
             {
                 RuleFor(x => x.Data.TestTypeId)
-                    .SetValidator(x => new ItemMustExistValidator<TestType>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
+                    .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
                         ValidationMessages.InvalidReference));
 
                 RuleFor(x => x.Data.TestTypeId)
-                    .Must(x => appDbContext.TestTypes.First(tt => tt.Id == x).Status == TestTypeStatusEnum.Draft)
+                    .Must(x => appDbContext.TestTemplates.First(tt => tt.Id == x).Status == TestTypeStatusEnum.Draft)
                     .WithErrorCode(ValidationCodes.ONLY_PENDING_TEST_CAN_BE_CHANGED);
 
                 RuleFor(x => x.Data.CategoryId)
@@ -80,13 +80,13 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQ
                 {
 
                     RuleFor(r => r.Data)
-                        .Must(x => appDbContext.QuestionCategories.Include(c => c.QuestionUnits).First(c => c.Id == x.CategoryId).QuestionUnits.Count >= (appDbContext.TestTypes.First(w => w.Id == x.TestTypeId).QuestionCount - appDbContext.TestTypes.Include(w => w.TestTypeQuestionCategories).First(w => w.Id == x.TestTypeId).TestTypeQuestionCategories.Sum(x => x.QuestionCount.Value)))
+                        .Must(x => appDbContext.QuestionCategories.Include(c => c.QuestionUnits).First(c => c.Id == x.CategoryId).QuestionUnits.Count >= (appDbContext.TestTemplates.First(w => w.Id == x.TestTypeId).QuestionCount - appDbContext.TestTemplates.Include(w => w.TestTypeQuestionCategories).First(w => w.Id == x.TestTypeId).TestTypeQuestionCategories.Sum(x => x.QuestionCount.Value)))
                         .WithErrorCode(ValidationCodes.INSUFFICIENT_QUESTIONS_IN_CATEGORY);
 
                     When(r => r.Data.QuestionType.HasValue, () =>
                     {
                         RuleFor(r => r.Data)
-                            .Must(x => appDbContext.QuestionCategories.Include(c => c.QuestionUnits).First(c => c.Id == x.CategoryId).QuestionUnits.Where(q => q.QuestionType == x.QuestionType.Value).Count() >= (appDbContext.TestTypes.First(w => w.Id == x.TestTypeId).QuestionCount - appDbContext.TestTypes.Include(w => w.TestTypeQuestionCategories).First(w => w.Id == x.TestTypeId).TestTypeQuestionCategories.Sum(x => x.QuestionCount.Value)))
+                            .Must(x => appDbContext.QuestionCategories.Include(c => c.QuestionUnits).First(c => c.Id == x.CategoryId).QuestionUnits.Where(q => q.QuestionType == x.QuestionType.Value).Count() >= (appDbContext.TestTemplates.First(w => w.Id == x.TestTypeId).QuestionCount - appDbContext.TestTemplates.Include(w => w.TestTypeQuestionCategories).First(w => w.Id == x.TestTypeId).TestTypeQuestionCategories.Sum(x => x.QuestionCount.Value)))
                             .WithErrorCode(ValidationCodes.INSUFFICIENT_QUESTIONS_IN_CATEGORY);
                     });
                 });
@@ -125,7 +125,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQ
 
         private bool IsPoll(QuestionCategoryPreviewDto data)
         {
-            var testType = _appDbContext.TestTypes.FirstOrDefault(x => x.Id == data.TestTypeId);
+            var testType = _appDbContext.TestTemplates.FirstOrDefault(x => x.Id == data.TestTypeId);
             var selectedQuestions = false;
 
             if (testType != null && testType.Mode == TestTypeModeEnum.Poll)

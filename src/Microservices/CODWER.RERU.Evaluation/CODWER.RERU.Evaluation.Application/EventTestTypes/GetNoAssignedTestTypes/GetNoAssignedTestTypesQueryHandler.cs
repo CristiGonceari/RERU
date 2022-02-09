@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Evaluation.Application.EventTestTypes.GetNoAssignedTestTypes
 {
-    public class GetNoAssignedTestTypesQueryHandler : IRequestHandler<GetNoAssignedTestTypesQuery, List<TestTypeDto>>
+    public class GetNoAssignedTestTypesQueryHandler : IRequestHandler<GetNoAssignedTestTypesQuery, List<TestTemplateDto>>
     {
         private readonly IMapper _mapper;
         private readonly AppDbContext _appDbContext;
@@ -21,9 +21,9 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTypes.GetNoAssignedTestTyp
             _appDbContext = appDbContext;
         }
 
-        public async Task<List<TestTypeDto>> Handle(GetNoAssignedTestTypesQuery request, CancellationToken cancellationToken)
+        public async Task<List<TestTemplateDto>> Handle(GetNoAssignedTestTypesQuery request, CancellationToken cancellationToken)
         {
-            var testTypes = _appDbContext.TestTypes
+            var testTypes = _appDbContext.TestTemplates
                 .Include(x => x.EventTestTypes)
                 .Where(x => !x.EventTestTypes.Any(e => e.EventId == request.EventId))
                 .AsQueryable();
@@ -34,7 +34,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTypes.GetNoAssignedTestTyp
             }
             var answer = await testTypes.ToListAsync();
 
-            return _mapper.Map<List<TestTypeDto>>(answer);
+            return _mapper.Map<List<TestTemplateDto>>(answer);
         }
     }
 }

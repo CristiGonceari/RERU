@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{translateData[0]}}: <b> {{tableData.tableName}} </b> </h3>
+</div>
+<div class="modal-body py-1 px-10">
+  <p class="m-7 text-center">{{translateData[5]}}</p>
+
+  <div class="form-group row">
+    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{translateData[1]}}</label>
+    <div class="col-lg-9 col-xl-9">
+      <select class="form-control form-control-lg form-control-solid" (change)="setOrientation($event)">
+        <option value="1" default-option>{{translateData[2]}}</option>
+        <option value="2">{{translateData[3]}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{translateData[4]}}</label>
+    <div class="col-lg-9 col-xl-9">
+      <tbody class="datatable-body">
+        <tr *ngFor="let item of tableData.fields">
+          <td>
+            <label class="checkbox checkbox-lg checkbox-inline m-5">
+              <input type="checkbox" value="{{ item.value }}"
+                (change)="onItemChange($event, item)" />
+              <span></span>
+            </label>
+          </td>
+          <td>
+            <p class="mb-0">
+							{{ item.label }}
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="dismiss()">{{translateData[6]}}</button>
+  <button type="button" class="btn btn-primary" (click)="close()">{{translateData[7]}}</button>
+</div>

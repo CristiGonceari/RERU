@@ -29,6 +29,8 @@ spec:
           value: {{ .Values.reru_core.database.identity_connection_string }}   
         - name: ConnectionStrings__Log
           value: {{ .Values.reru_core.database.log_connection_string }}   
+        - name: ConnectionStrings__Storage
+          value: {{ .Values.reru_core.database.storage_connection_string }}   
         - name: TZ
           value: {{ .Values.timeZone }}
         {{- if .Values.dotnet_microservice.deployment.env }}

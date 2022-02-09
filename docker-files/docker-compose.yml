@@ -83,6 +83,18 @@ services:
     depends_on:
       - db
 
+  reru-storage-migrator:
+    container_name: reru-storage-migrator
+    networks:
+      - my-network
+    build:
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-StorageMigrator
+    volumes:
+      - ./docker-settings/Identity/IdentityMigrator/appsettings.json:/app/appsettings.json
+    depends_on:
+      - db
+
   reru-identity-new:
     hostname: reru-identity-new
     networks:

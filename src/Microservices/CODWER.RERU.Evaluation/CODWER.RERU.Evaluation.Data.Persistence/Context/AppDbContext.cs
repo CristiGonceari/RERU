@@ -1,5 +1,4 @@
 ﻿using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Entities.Files;
 using CVU.ERP.Common.Data.Persistence.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +17,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Context
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<QuestionCategory> QuestionCategories { get; set; }
         public virtual DbSet<TestTypeQuestionCategory> TestTypeQuestionCategories { get; set; }
-        public virtual DbSet<TestType> TestTypes { get; set; }
+        public virtual DbSet<TestTemplate> TestTemplates { get; set; }
         public virtual DbSet<TestTypeSettings> TestTypeSettings { get; set; }
         public virtual DbSet<Test> Tests { get; set; }
         public virtual DbSet<QuestionUnit> QuestionUnits { get; set; }
@@ -41,7 +40,6 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Context
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<QuestionUnitTag> QuestionUnitTags { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
-        public virtual DbSet<File> Files { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

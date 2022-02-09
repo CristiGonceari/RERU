@@ -14,7 +14,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.EditCate
         public EditCategoriesSequenceTypeCommandValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.TestTypeId)
-                .SetValidator(x => new ItemMustExistValidator<TestType>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
+                .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
                     ValidationMessages.InvalidReference));
 
             RuleFor(r => r.CategoriesSequenceType)
@@ -23,7 +23,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.EditCate
                     .WithErrorCode(ValidationCodes.INVALID_SEQUENCE);
 
             RuleFor(x => x.TestTypeId)
-                .Must(x => appDbContext.TestTypes.First(tt => tt.Id == x).Status == TestTypeStatusEnum.Draft)
+                .Must(x => appDbContext.TestTemplates.First(tt => tt.Id == x).Status == TestTypeStatusEnum.Draft)
                 .WithErrorCode(ValidationCodes.ONLY_PENDING_TEST_CAN_BE_CHANGED);
         }
     }

@@ -26,7 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetTestVerificati
                 .Include(x => x.TestAnswers)
                 .Include(x => x.QuestionUnit)
                 .Include(x => x.Test)
-                .ThenInclude(x => x.TestType)
+                .ThenInclude(x => x.TestTemplates)
                 .Where(x => x.TestId == request.TestId)
                 .OrderBy(x => x.Index)
                 .AsQueryable();
@@ -35,8 +35,8 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetTestVerificati
             result.TestQuestions = await testQuestions.Select(x => _mapper.Map<VerificationTestQuestionSummaryDto>(x)).ToListAsync();
 
             result.CorrectAnswers = testQuestions.Where(x => (bool)x.IsCorrect).Count();
-            result.Points = testQuestions.Select(x => x.Test.TestType.MinPercent).First();
-            result.TotalQuestions = testQuestions.Select(x => x.Test.TestType.QuestionCount).First();
+            result.Points = testQuestions.Select(x => x.Test.TestTemplates.MinPercent).First();
+            result.TotalQuestions = testQuestions.Select(x => x.Test.TestTemplates.QuestionCount).First();
             result.Result = testQuestions.Select(x => x.Test.ResultStatus).First();
 
             return result;

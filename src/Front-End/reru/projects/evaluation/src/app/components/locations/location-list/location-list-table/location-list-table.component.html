@@ -1,16 +1,17 @@
-<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+<app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'10vh'" [height]="'5rem'" [width]="'5rem'"
     [colorClass]="'text-primary'">
 </app-loading-spinner>
+<h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
-<div *ngIf="!isLoading" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+<div *ngIf="!isLoading && !downloadFile" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
     <table class="datatable table font-size-lg" style="overflow: visible">
         <thead class="text-uppercase text-muted">
             <tr>
                 <th scope="col">{{'locations.name' | translate}}</th>
-                <th scope="col" style="width: 300px;" class="text-left">{{'locations.address' | translate}}</th>
-                <th scope="col" style="width: 200px;" class="text-left">{{'questions.type' | translate}}</th>
-                <th scope="col" style="width: 100px;" class="text-left">{{'locations.places' | translate}}</th>
+                <th scope="col" style="width: 300px;">{{'locations.address' | translate}}</th>
+                <th scope="col" style="width: 200px;">{{'questions.type' | translate}}</th>
+                <th scope="col" style="width: 100px;">{{'locations.places' | translate}}</th>
                 <th scope="col" style="width: 48px"></th>
             </tr>
         </thead>
@@ -76,4 +77,3 @@
         (pageChange)="list({ keyword: keyword, page: $event })">
     </div>
 </div>
-

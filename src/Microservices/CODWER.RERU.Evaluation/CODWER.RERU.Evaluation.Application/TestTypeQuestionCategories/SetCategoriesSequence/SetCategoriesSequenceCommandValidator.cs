@@ -14,11 +14,11 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.SetCateg
         public SetCategoriesSequenceCommandValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.TestTypeId)
-                .SetValidator(x => new ItemMustExistValidator<TestType>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
+                .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x)
-                .Must(x => appDbContext.TestTypes.FirstOrDefault(tt => tt.Id == x.TestTypeId).Status == TestTypeStatusEnum.Draft)
+                .Must(x => appDbContext.TestTemplates.FirstOrDefault(tt => tt.Id == x.TestTypeId).Status == TestTypeStatusEnum.Draft)
                 .WithErrorCode(ValidationCodes.ONLY_PENDING_TEST_CAN_BE_CHANGED);
 
             RuleFor(r => r.ItemsOrder)

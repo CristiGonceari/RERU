@@ -1,0 +1,78 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{'dashboard.view-details' | translate}}</h3>
+    <span class="h1 cursor-pointer mb-0" aria-hidden="true" (click)="dismiss()">&times;</span>
+</div>
+<div id="container">
+    <div class="buttonContainer">
+        <div class="centered-div">
+            <button [disabled]="itemIndex == 0"  (click)="decreaseModal()" type="button" class="arrowButton">
+                <svg  xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+                    <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <div>
+        <div class="modal-body py-5 px-7">
+            <table class="datatable table font-size-lg">
+                <thead class="text-uppercase text-muted">
+                    <tr>
+                        <th scope="col" class="text-center" colspan="2">{{'details-modal.details' | translate}}</th>
+                        <th scope="col" class="text-center" rowspan="4">{{'details-modal.file-json' | translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border">
+                        <td colspan="2" style="border-right: 1px solid #EBEDF3;">
+                    <tr>
+                        <td class="font-weight-bold border border-white">{{'dashboard.project' | translate }}:</td>
+                        <td class="border border-white">{{ item.project }}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold border border-white">{{'dashboard.user-name' | translate }}:</td>
+                        <td class="border border-white">{{ item.userName }}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold border border-white">{{'dashboard.user-identifier' | translate }}:
+                        </td>
+                        <td class="border border-white">{{ item.userIdentifier }}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold border border-white">{{'dashboard.event' | translate }}:</td>
+                        <td class="border border-white">{{ item.event }}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold border border-white">{{'dashboard.event-message' | translate }}:
+                        </td>
+                        <td class="border border-white">{{ item.eventMessage }}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold border border-white">{{'dashboard.date' | translate }}:</td>
+                        <td class="border border-white">{{ item.date | date: 'dd/MM/yyyy, HH:mm'}}</td>
+                    </tr>
+                    </td>
+                    <td rowspan="4" *ngIf="this.json != null">
+                        <pre style="margin: 30px;">
+                            {{ json }}
+                        </pre>
+                    </td>
+                    <td rowspan="4" class="json" *ngIf="this.json == null">
+                        <div>
+                            {{ 'message.no-record' | translate }}
+                        </div>
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="buttonContainer">
+        <div class="centered-div">
+            <button [disabled]="itemIndex == itemIndexLength" (click)="increaseModal()" type="button" class="arrowButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
+                    <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                  </svg>
+            </button>
+        </div>
+    </div>
+</div>

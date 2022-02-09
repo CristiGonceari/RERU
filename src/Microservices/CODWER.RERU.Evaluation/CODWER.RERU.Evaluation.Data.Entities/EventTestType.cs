@@ -8,6 +8,6 @@ namespace CODWER.RERU.Evaluation.Data.Entities
         public int TestTypeId { get; set; }
         public int MaxAttempts { get; set; }
         public Event Event { get; set; }
-        public TestType TestType { get; set; }
+        public TestTemplate TestType { get; set; }
     }
 }

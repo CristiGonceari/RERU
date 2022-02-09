@@ -37,14 +37,14 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.SaveTestQuestion
                             .FirstOrDefault(q => q.Index == x.QuestionIndex).Id))
                     .WithErrorCode(ValidationCodes.INVALID_TEST_QUESTION);
 
-                When(x => !appDbContext.Tests.Include(x => x.TestType).ThenInclude(x => x.Settings).FirstOrDefault(t => t.Id == x.Data.TestId).TestType.Settings.PossibleChangeAnswer, () =>
+                When(x => !appDbContext.Tests.Include(x => x.TestTemplates).ThenInclude(x => x.Settings).FirstOrDefault(t => t.Id == x.Data.TestId).TestTemplates.Settings.PossibleChangeAnswer, () =>
                 {
                     RuleFor(x => x.Data)
                         .Must(x => appDbContext.Tests.Include(x => x.TestQuestions).First(t => t.Id == x.TestId).TestQuestions.First(q => q.Index == x.QuestionIndex).AnswerStatus != AnswerStatusEnum.Answered)
                         .WithErrorCode(ValidationCodes.CANT_CHANGE_ANSWER);
                 });
 
-                When(x => !appDbContext.Tests.Include(x => x.TestType).ThenInclude(x => x.Settings).First(t => t.Id == x.Data.TestId).TestType.Settings.PossibleGetToSkipped, () =>
+                When(x => !appDbContext.Tests.Include(x => x.TestTemplates).ThenInclude(x => x.Settings).First(t => t.Id == x.Data.TestId).TestTemplates.Settings.PossibleGetToSkipped, () =>
                 {
                     RuleFor(x => x.Data)
                         .Must(x => appDbContext.Tests.Include(x => x.TestQuestions).First(t => t.Id == x.TestId).TestQuestions.First(q => q.Index == x.QuestionIndex).AnswerStatus != AnswerStatusEnum.Skipped)

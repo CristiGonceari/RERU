@@ -304,6 +304,11 @@ data:
           "Microsoft": "Information"
         }
       },
+      "Minio": {
+          "endpoint": "reru-app-stage-minio:9000",
+          "accessKey": "minioaccesskey",
+          "secretKey": "miniosecretkey"
+      },
       "SecurityKey": "TESTSECURITYKEY2018",
       "Smtp": {
         "FromName" : "CODWER RERU",
@@ -465,6 +470,11 @@ data:
              "Microsoft":"Information"
           }
        },
+      "Minio": {
+          "endpoint": "reru-app-stage-minio:9000",
+          "accessKey": "minioaccesskey",
+          "secretKey": "miniosecretkey"
+      },
        "SecurityKey":"TESTSECURITYKEY2018",
         "Smtp": {
           "FromName" : "CODWER RERU",

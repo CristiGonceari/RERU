@@ -5,6 +5,7 @@ using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
+using CVU.ERP.StorageService;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -60,7 +61,10 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit
                 await _questionUnitService.HashQuestionUnit(newQuestionUnit.Id);
             }
 
-            await _mediator.Send(new AssignTagToQuestionUnitCommand { QuestionUnitId = newQuestionUnit.Id, Tags = request.Tags });
+            if (request.Tags != null)
+            {
+                await _mediator.Send(new AssignTagToQuestionUnitCommand { QuestionUnitId = newQuestionUnit.Id, Tags = request.Tags });
+            }
 
             return newQuestionUnit.Id;
         }

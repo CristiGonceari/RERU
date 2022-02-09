@@ -26,15 +26,15 @@ namespace CODWER.RERU.Evaluation.Application.QuestionCategories.DeleteQuestionCa
 
         private bool IsInActiveTest(int id)
         {
-            var testTypes = _appDbContext.TestTypes
+            var testTypes = _appDbContext.TestTemplates
                 .Include(tt => tt.TestTypeQuestionCategories)
                 .Where(tt => tt.TestTypeQuestionCategories.Any(q => q.QuestionCategoryId == id))
                 .Any(tt => tt.Status == TestTypeStatusEnum.Active);
 
             var tests = _appDbContext.Tests
                 .Include(x => x.TestQuestions)
-                .Include(x => x.TestType)
-                .Where(t => t.TestType.TestTypeQuestionCategories.Any(q => q.QuestionCategoryId == id))
+                .Include(x => x.TestTemplates)
+                .Where(t => t.TestTemplates.TestTypeQuestionCategories.Any(q => q.QuestionCategoryId == id))
                 .Any(t => t.TestStatus != TestStatusEnum.Terminated && t.TestStatus != TestStatusEnum.Verified);
 
             if (testTypes || tests)

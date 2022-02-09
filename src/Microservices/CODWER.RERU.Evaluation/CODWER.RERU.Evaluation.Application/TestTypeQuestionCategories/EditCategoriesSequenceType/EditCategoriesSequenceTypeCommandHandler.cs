@@ -17,7 +17,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.EditCate
 
         public async Task<Unit> Handle(EditCategoriesSequenceTypeCommand request, CancellationToken cancellationToken)
         {
-            var testType = await _appDbContext.TestTypes.FirstAsync(x => x.Id == request.TestTypeId);
+            var testType = await _appDbContext.TestTemplates.FirstAsync(x => x.Id == request.TestTypeId);
 
             testType.CategoriesSequence = request.CategoriesSequenceType;
             await _appDbContext.SaveChangesAsync();
