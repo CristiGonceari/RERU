@@ -22,7 +22,7 @@ export class PrintTemplateService extends AbstractService {
   }
 
   getTestTemplatePdf(testTemplateId): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/print-test-type-${testTemplateId}`, { responseType: 'blob', observe: 'response' });
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/print-test-template-${testTemplateId}`, { responseType: 'blob', observe: 'response' });
   }
 
   getQuestionUnitPdf(questionId): Observable<any> {

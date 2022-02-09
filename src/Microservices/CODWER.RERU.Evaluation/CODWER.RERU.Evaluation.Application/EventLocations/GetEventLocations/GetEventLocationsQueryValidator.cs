@@ -7,9 +7,9 @@ using FluentValidation;
 
 namespace CODWER.RERU.Evaluation.Application.EventLocations.GetEventLocations
 {
-    public class GetEventTestTypesQueryValidator : AbstractValidator<GetEventLocationsQuery>
+    public class GetEventLocationsQueryValidator : AbstractValidator<GetEventLocationsQuery>
     {
-        public GetEventTestTypesQueryValidator(AppDbContext appDbContext)
+        public GetEventLocationsQueryValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.EventId)
                 .SetValidator(x => new ItemMustExistValidator<Event>(appDbContext, ValidationCodes.INVALID_EVENT,

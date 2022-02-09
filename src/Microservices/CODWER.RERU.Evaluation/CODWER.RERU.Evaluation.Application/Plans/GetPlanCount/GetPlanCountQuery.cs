@@ -1,9 +1,9 @@
-﻿using CODWER.RERU.Evaluation.DataTransferObjects.Plans;
-using MediatR;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using CODWER.RERU.Evaluation.DataTransferObjects.Plans;
+using MediatR;
 
-namespace CODWER.RERU.Evaluation.Application.Plans.GetCountedPlans
+namespace CODWER.RERU.Evaluation.Application.Plans.GetPlanCount
 {
     public class GetPlanCountQuery : IRequest<List<PlanCount>>
     {

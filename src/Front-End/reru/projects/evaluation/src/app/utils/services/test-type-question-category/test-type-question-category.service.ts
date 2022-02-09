@@ -7,7 +7,7 @@ import { AbstractService, AppSettingsService } from '@erp/shared';
 	providedIn: 'root',
 })
 export class TestTypeQuestionCategoryService extends AbstractService {
-	private readonly urlRoute = 'TestTypeQuestionCategory';
+	private readonly urlRoute = 'TestTemplateQuestionCategory';
 	constructor(protected appConfigService: AppSettingsService, public http: HttpClient) {
 		super(appConfigService);
 	}

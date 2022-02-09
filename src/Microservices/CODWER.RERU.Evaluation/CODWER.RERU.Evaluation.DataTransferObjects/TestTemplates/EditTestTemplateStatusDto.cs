@@ -1,6 +1,6 @@
 ﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
 
-namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTypes
+namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates
 {
     public class EditTestTemplateStatusDto
     {

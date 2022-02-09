@@ -117,7 +117,7 @@ namespace CODWER.RERU.Evaluation.API
             services.AddWkhtmltopdf();
 
 
-            //start important when add migration
+            //start IMPORTANT!!! when add migration
             //services.ForAddMigration(Configuration);
             //end important
 

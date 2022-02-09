@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypeByStatus;
+using CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStatus;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
@@ -24,7 +24,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             _mediator = mediator;
 
             RuleFor(x => x.TestTypeId)
-                .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
+                .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x.ProgrammedTime)
@@ -56,7 +56,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             When(r => r.EventId.HasValue && r.EvaluatorId.HasValue, () =>
             {
                 RuleFor(x => x)
-                    .Must(x => appDbContext.EventEvaluators.Where(e => e.EventId == x.EventId).Count() <= 0)
+                    .Must(x => !appDbContext.EventEvaluators.Any(e => e.EventId == x.EventId))
                     .WithErrorCode(ValidationCodes.EXISTENT_EVALUATOR_IN_EVENT);
             });
 

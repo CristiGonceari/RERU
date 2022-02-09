@@ -5,7 +5,7 @@ using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 
-namespace CODWER.RERU.Evaluation.Application.TestCategoryQuestions
+namespace CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCategoryQuestions
 {
     public class TestCategoryQuestionsQueryValidator : AbstractValidator<TestCategoryQuestionsQuery>
     {
