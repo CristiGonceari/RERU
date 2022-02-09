@@ -24,7 +24,9 @@ export class LocationListTableComponent implements OnInit {
 	pagination: PaginationModel = new PaginationModel();
 	enum = TestingLocationTypeEnum;
 	isLoading: boolean = true;
+	downloadFile: boolean = false;
 	headersToPrint = [];
+	printTranslates: any[];
   
 	title: string;
 	description: string;
@@ -45,6 +47,7 @@ export class LocationListTableComponent implements OnInit {
   	}
 
 	getHeaders(name: string): void {
+		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
 		let headersDto = ['name', 'address', 'type', 'places'];
 		for (let i=0; i<headersHtml.length-1; i++) {
@@ -57,16 +60,41 @@ export class LocationListTableComponent implements OnInit {
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'lg' });
 		modalRef.componentInstance.tableData = printData;
+		modalRef.componentInstance.translateData = this.printTranslates;
 		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
 		this.headersToPrint = [];
 	}
 
+	translateData(): void {
+		this.printTranslates = ['print-table', 'orientation', 'portrait', 'landscape', 'fields', 'print-msg', 'cancel', 'print']
+		forkJoin([
+			this.translate.get('print.print-table'),
+			this.translate.get('print.orientation'),
+			this.translate.get('print.portrait'),
+			this.translate.get('print.landscape'),
+			this.translate.get('print.fields'),
+			this.translate.get('print.print-msg'),
+			this.translate.get('button.cancel'),
+			this.translate.get('button.print')
+		]).subscribe(
+			(items) => {
+				for (let i=0; i<this.printTranslates.length; i++) {
+					this.printTranslates[i] = items[i];
+				}
+			}
+		);
+	}
+
 	printTable(data): void {
+		this.downloadFile = true;
 		this.locationService.print(data).subscribe(response => {
-			const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
-      		const blob = new Blob([response.body], { type: response.body.type });
-			const file = new File([blob], fileName, { type: response.body.type });
-      		saveAs(file);
+			if (response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], fileName, { type: response.body.type });
+				saveAs(file);
+				this.downloadFile = false;
+			}
 		});
 	}
 
@@ -91,8 +119,7 @@ export class LocationListTableComponent implements OnInit {
 	}
 
 	deleteLocation(id: number): void{
-		this.locationService.deleteLocation(id).subscribe(() => 
-		{
+		this.locationService.deleteLocation(id).subscribe(() => {
 			forkJoin([
 				this.translate.get('modal.success'),
 				this.translate.get('locations.succes-remove-location-msg'),

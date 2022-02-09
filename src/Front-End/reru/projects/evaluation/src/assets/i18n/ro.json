@@ -756,5 +756,13 @@
   "word": {
     "confirmation": "Confirmare",
     "search": "Căutare"
+  },
+  "print": {
+    "print-table": "Printare tabel",
+    "orientation": "Orientare",
+    "portrait": "Portret",
+    "landscape": "Peisaj",
+    "fields": "Câmpuri",
+    "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare."
   }
 }
