@@ -320,7 +320,6 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                     return null;
                 }
             }
-
         }
 
         private async Task<byte[]> GenerateErrorsReport(ExcelPackage p)
@@ -442,29 +441,32 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         private AddQuestionUnitExcelDto ParseQuestion(ExcelWorksheet ws, QuestionTypeEnum questionType, int row)
         {
+            var errors = "";
             var categoryText = (ws.Cells[row, 2].Value ?? string.Empty).ToString();
             var column = GetColumnFromType(questionType);
 
             if (string.IsNullOrWhiteSpace(categoryText))
             {
-                _errors.Add($"{column}{row}", "Category is empty");
-
-                return new AddQuestionUnitExcelDto() { Error = true };
+                errors = "Category is empty ";
             }
 
             var category = _appDbContext.QuestionCategories.FirstOrDefault(x => x.Name.ToLower() == categoryText.Trim().ToLower());
 
             if (category == null)
             {
-                _errors.Add($"{column}{row}", $"Cant' find Category '{ws.Cells[row, 2].Value}' in Database");
-                return new AddQuestionUnitExcelDto() { Error = true };
+                if (string.IsNullOrWhiteSpace(errors))
+                   errors =$"Cant' find Category '{ws.Cells[row, 2].Value}' in Database";
+                else
+                   errors += $"\nCant' find Category '{ws.Cells[row, 2].Value}' in Database ";
             }
 
             var questionText = ws.Cells[row, 3].Value.ToString().Trim();
             if (String.IsNullOrWhiteSpace(questionText))
             {
-                _errors.Add($"{column}{row}", "Question is empty");
-                return new AddQuestionUnitExcelDto() { Error = true };
+                if (string.IsNullOrWhiteSpace(errors))
+                    errors = $"Question is empty";
+                else
+                    errors += $"\nQuestion is empty ";
             }
 
             string pointsColumn = GetPointsColumn(questionType);
@@ -475,16 +477,25 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 questionPoints = int.Parse((ws.Cells[$"{pointsColumn}{row}"].Value).ToString());
                 if (questionPoints < 1)
                 {
-                    _errors.Add($"{column}{row}", "Points must be greater than 0");
-                    return new AddQuestionUnitExcelDto() { Error = true };
+                    if (string.IsNullOrWhiteSpace(errors))
+                        errors = $"Points must be greater than 0";
+                    else
+                        errors += $"\nPoints must be greater than 0 ";
                 }
             }
             else
             {
-                _errors.Add($"{column}{row}", "Enter numeric value for points");
-                return new AddQuestionUnitExcelDto() { Error = true };
+                if (string.IsNullOrWhiteSpace(errors))
+                    errors = $"Enter numeric value for points";
+                else
+                    errors += $"\nEnter numeric value for points ";
             }
 
+            if (!string.IsNullOrWhiteSpace(errors))
+            {
+                _errors.Add($"{column}{row}", errors);
+                return new AddQuestionUnitExcelDto() { Error = true };
+            }
             string tagColumn = GetTagColumn(questionType);
             var tagsString = (ws.Cells[$"{tagColumn}{row}"].Value ?? string.Empty).ToString();
             List<string> tagsToAdd = !string.IsNullOrWhiteSpace(tagsString) ? ParseTags(tagsString) : null;
@@ -532,14 +543,14 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 }
                 else
                 {
-                    _errors.Add($"{column}{row}", "Can't parse is Answer right or wrong. Only '1' and '0' are allowed!");
+                    _errors.Add($"{column}{row}", "Can't parse if Answer right or wrong. Only '1' and '0' are allowed!");
                     return new AddOptionExcelDto { Error = true };
                 }
                 
             }
             catch
             {
-                _errors.Add($"{column}{row}", "Can't parse is Answer right or wrong. Only '1' and '0' are allowed!");
+                _errors.Add($"{column}{row}", "Can't parse if Answer right or wrong. Only '1' and '0' are allowed!");
                 return new AddOptionExcelDto { Error = true };
             }
 

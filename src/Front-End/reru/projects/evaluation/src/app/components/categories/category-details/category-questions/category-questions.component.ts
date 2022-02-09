@@ -12,8 +12,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BulkImportQuestionsComponent } from '../../../questions/bulk-import-questions/bulk-import-questions.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { saveAs } from 'file-saver';
 import { QuestionByCategoryService } from 'projects/evaluation/src/app/utils/services/question-by-category/question-by-category.service';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
 
 @Component({
   selector: 'app-category-questions',
@@ -42,7 +44,8 @@ export class CategoryQuestionsComponent implements OnInit {
     public router: Router,
     private questionByCategory: QuestionByCategoryService,
 	public translate: I18nService,
-	private route: ActivatedRoute
+	private route: ActivatedRoute,
+	private printTemplateService: PrintTemplateService
   ) { }
 
   ngOnInit(): void {
@@ -86,6 +89,20 @@ export class CategoryQuestionsComponent implements OnInit {
 				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			}
 		)
+	}
+
+	printQuestionUnitPdf(questionId){
+		this.printTemplateService.getQuestionUnitPdf(questionId).subscribe((response : any) => {
+			let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+			
+			if (response.body.type === 'application/pdf') {
+			  fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
+			}
+	  
+			const blob = new Blob([response.body], { type: response.body.type });
+			const file = new File([blob], fileName, { type: response.body.type });
+			saveAs(file);
+			  });
 	}
 
   bulkImport(): void { 
