@@ -70,7 +70,8 @@
                                                     translate}}</span>
                                             </button>
                                         </span>
-                                        <button class="navi-link align-items-baseline px-6" ngbDropdownItem
+                                        <button *ngIf="testType.status == statusEnum.Draft"
+                                            class="navi-link align-items-baseline px-6" ngbDropdownItem
                                             (click)="openConfirmationDeleteModal(testType.id)">
                                             {{'button.delete' | translate}}
                                         </button>

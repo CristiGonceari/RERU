@@ -253,9 +253,9 @@
     "event-has-evaluator": "Evenimentul selectat are propriii evaluatori",
     "asignee": "Asigneaza",
     "user-list-to-add": "Lista de utilizatori asignati",
-    "delete-msg": "Sigur doriți să ștergeți acest șablon de test?",
-    "succes-delete-msg": "Șablon de test a fost șters cu succes",
-    "succes-add-msg": "Șablon de test a fost adăugat cu succes",
+    "delete-msg": "Sigur doriți să ștergeți acest test?",
+    "succes-delete-msg": "Testul a fost șters cu succes",
+    "succes-add-msg": "Testul a fost adăugat cu succes",
     "succes-update-msg": "Șablon de test a fost actualizat cu succes",
     "succes-update-status-msg": "Statutul șablonului de test a fost actualizat",
     "succes-add-rules-msg": "Regurile au fost adăugate cu succes",
@@ -598,6 +598,9 @@
   },
   "test-template":{
     "number-of-questions": "Numărul de întrebări",
+    "succes-delete-msg": "Șablon de test a fost șters cu succes",
+    "succes-add-msg": "Șablon de test a fost adăugat cu succes",
+    "delete-msg": "Sigur doriți să ștergeți acest șablon de test?",
     "order-of-questions": "Ordinea întrebărilor"
 },
   "plans": {
