@@ -46,11 +46,9 @@ import { AuthenticationService } from './services/authentication.service';
 import { AuthenticationCallbackComponent } from './components/authentication/authentication-callback/authentication-callback.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
-
-
+import { PrintModalComponent } from './modals/print-modal/print-modal.component';
 
 export const translateModule = TranslateModule.forChild();
-
 
 const commonExports = [
 	HeaderMobileComponent,
@@ -69,8 +67,8 @@ const commonExports = [
 	AuthenticationCallbackComponent,
 	PaginationComponent,
 	LoadingSpinnerComponent,
+	PrintModalComponent
 ];
-
 @NgModule({
 	declarations: [...commonExports, ViewIconComponent, ContentComponent],
 	imports: [

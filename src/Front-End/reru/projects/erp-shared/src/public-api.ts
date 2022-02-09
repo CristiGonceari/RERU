@@ -51,3 +51,4 @@ export * from './lib/factories/initializer.factory';
 export * from './lib/modules/svg.module';
 
 export * from './lib/modals/confirm-modal/confirm-modal.component';
+export * from './lib/modals/print-modal/print-modal.component';

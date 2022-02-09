@@ -44,14 +44,11 @@
               </div>
             </div>
           </div>
-            <!-- <app-add-button class="btn" [value]="'questions.add-option' | translate" ngbDropdownToggle
-                [routerLink]="['../../option', questionId, 'add']">
-            </app-add-button> -->
         </span>
         <span *ngIf="!fromCategory">
-            <app-add-button *ngIf="status == 0" class="btn" [value]="'questions.add-option' | translate"
-            [routerLink]="['../option', questionId, 'add']">
-            </app-add-button>
+          <app-add-button *ngIf="status == 0" class="btn" [value]="'questions.add-option' | translate"
+          [routerLink]="['../option', questionId, 'add']">
+          </app-add-button>
         </span>
       </div>
     </div>

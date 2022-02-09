@@ -65,4 +65,11 @@ export class LocationService extends AbstractService {
 	unassignedComputer(id): Observable<any> {
 		return this.http.delete(`${this.baseUrl}/${this.urlRoute3}/${id}`);
 	}
+
+	print(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }
