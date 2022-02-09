@@ -2,10 +2,9 @@
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionCategory;
 using CVU.ERP.Common.Pagination;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Data.Entities;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionCategories.GetQuestionCategories
 {
@@ -22,17 +21,9 @@ namespace CODWER.RERU.Evaluation.Application.QuestionCategories.GetQuestionCateg
 
         public async Task<PaginatedModel<QuestionCategoryDto>> Handle(GetQuestionCategoriesQuery request, CancellationToken cancellationToken)
         {
-            var categories = _appDbContext.QuestionCategories
-                .Include(x => x.QuestionUnits)
-                .OrderByDescending(x => x.CreateDate)
-                .AsQueryable();
+            var categories = GetAndFilterQuestionCategories.Filter(_appDbContext, request.Name);
 
-            if (request != null && !string.IsNullOrEmpty(request.Name))
-            {
-                categories = categories.Where(x => x.Name.Contains(request.Name));
-            }
-
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Evaluation.Data.Entities.QuestionCategory, QuestionCategoryDto>(categories, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<QuestionCategory, QuestionCategoryDto>(categories, request);
 
             return paginatedModel;
         }

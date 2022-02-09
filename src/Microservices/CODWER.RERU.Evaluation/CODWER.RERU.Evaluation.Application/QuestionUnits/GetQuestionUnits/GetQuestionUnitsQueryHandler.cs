@@ -9,7 +9,6 @@ using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using CVU.ERP.Common.Pagination;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
 {
@@ -30,34 +29,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
 
         public async Task<PaginatedModel<QuestionUnitDto>> Handle(GetQuestionUnitsQuery request, CancellationToken cancellationToken)
         {
-            var questions = _appDbContext.QuestionUnits
-                .Include(x => x.QuestionCategory)
-                .Include(x => x.Options)
-                .Include(x => x.TestQuestions)
-                .Include(x => x.QuestionUnitTags)
-                    .ThenInclude(x => x.Tag)
-                .OrderByDescending(x => x.Id)
-                .AsQueryable();
-
-            if (request.Type != null)
-            {
-                questions = questions.Where(x => x.QuestionType == request.Type.Value);
-            }
-
-            if (request.QuestionCategoryId != null)
-            {
-                questions = questions.Where(x => x.QuestionCategoryId == request.QuestionCategoryId.Value);
-            }
-
-            if (!string.IsNullOrWhiteSpace(request.QuestionName))
-            {
-                questions = questions.Where(x => x.Question.Contains(request.QuestionName) || x.QuestionUnitTags.Any(qu => qu.Tag.Name.Contains(request.QuestionName)));
-            }
-
-            if (!string.IsNullOrWhiteSpace(request.CategoryName))
-            {
-                questions = questions.Where(x => x.QuestionCategory.Name.Contains(request.CategoryName));
-            }
+            var questions = GetAndFilterQuestionUnits.Filter(_appDbContext, request.QuestionName, request.QuestionCategoryId, request.Type);
 
             questions = SelectOnlyReturnedFields(questions);
 
