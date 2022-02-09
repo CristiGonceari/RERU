@@ -25,7 +25,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTestsByEve
         public async Task<FileDataDto> Handle(PrintUserTestsByEventCommand request, CancellationToken cancellationToken)
         {
             var userTests = _appDbContext.Tests
-                .Include(t => t.TestType)
+                .Include(t => t.TestTemplates)
                 .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)

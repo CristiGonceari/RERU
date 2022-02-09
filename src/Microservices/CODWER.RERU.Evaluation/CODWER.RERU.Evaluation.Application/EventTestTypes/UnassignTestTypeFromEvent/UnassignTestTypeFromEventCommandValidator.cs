@@ -21,7 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTypes.UnassignTestTypeFrom
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x.TestTypeId)
-                .SetValidator(x => new ItemMustExistValidator<TestType>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
+                .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
                     ValidationMessages.InvalidReference));
         }
     }

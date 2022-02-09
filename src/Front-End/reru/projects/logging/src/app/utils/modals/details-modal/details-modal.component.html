@@ -48,13 +48,18 @@
                     </tr>
                     <tr>
                         <td class="font-weight-bold border border-white">{{'dashboard.date' | translate }}:</td>
-                        <td class="border border-white">{{ item.date }}</td>
+                        <td class="border border-white">{{ item.date | date: 'dd/MM/yyyy, HH:mm'}}</td>
                     </tr>
                     </td>
-                    <td rowspan="4">
+                    <td rowspan="4" *ngIf="this.json != null">
                         <pre style="margin: 30px;">
-                                   {{ json }}
-                               </pre>
+                            {{ json }}
+                        </pre>
+                    </td>
+                    <td rowspan="4" class="json" *ngIf="this.json == null">
+                        <div>
+                            {{ 'message.no-record' | translate }}
+                        </div>
                     </td>
                     </tr>
                 </tbody>

@@ -19,7 +19,7 @@ namespace CODWER.RERU.Evaluation.Data.Entities
         public int? TimeLimit { get; set; }
         public SelectionEnum SelectionType { get; set; }
         public SequenceEnum SequenceType { get; set; }
-        public TestType TestType { get; set; }
+        public TestTemplate TestTemplates { get; set; }
         public QuestionCategory QuestionCategory { get; set; }
 
         public virtual ICollection<TestCategoryQuestion> TestCategoryQuestions { get; set; }

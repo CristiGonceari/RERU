@@ -25,15 +25,15 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
         public async Task<Unit> Handle(GenerateTestQuestionsCommand request, CancellationToken cancellationToken)
         {
             var test = await _appDbContext.Tests
-                .Include(x => x.TestType)
+                .Include(x => x.TestTemplates)
                     .ThenInclude(x => x.TestTypeQuestionCategories)
-                .Include(x => x.TestType)
+                .Include(x => x.TestTemplates)
                     .ThenInclude(x => x.Settings)
                 .FirstAsync(x => x.Id == request.TestId);
 
-            var totalCount = test.TestType.QuestionCount;
+            var totalCount = test.TestTemplates.QuestionCount;
 
-            var testTypeQuestionCategoriesToUse = test.TestType.TestTypeQuestionCategories;
+            var testTypeQuestionCategoriesToUse = test.TestTemplates.TestTypeQuestionCategories;
             var categoriesCount = testTypeQuestionCategoriesToUse.Count;
 
             var allUsersTests = await _appDbContext.Tests
@@ -52,7 +52,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
             int questionsPerCategory = 0;
             var remainsCategoriesCount = categoriesCount;
 
-            if (test.TestType.CategoriesSequence == SequenceEnum.Strict)
+            if (test.TestTemplates.CategoriesSequence == SequenceEnum.Strict)
             {
                 testTypeQuestionCategoriesToUse = testTypeQuestionCategoriesToUse.OrderBy(x => x.CategoryIndex).ToList();
             }
@@ -89,18 +89,18 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                 remainsCategoriesCount--;
             }
 
-            if (test.TestType.Settings.StartAfterProgrammation)
+            if (test.TestTemplates.Settings.StartAfterProgrammation)
             {
                 test.StartTime = DateTime.Now;
-                test.EndTime = DateTime.Now.AddMinutes(test.TestType.Duration);
+                test.EndTime = DateTime.Now.AddMinutes(test.TestTemplates.Duration);
             }
             else
             {
                 test.StartTime = test.ProgrammedTime;
-                test.EndTime = test.ProgrammedTime.AddMinutes(test.TestType.Duration);
+                test.EndTime = test.ProgrammedTime.AddMinutes(test.TestTemplates.Duration);
             }
 
-            test.MaxErrors = test.TestType.Settings.MaxErrors;
+            test.MaxErrors = test.TestTemplates.Settings.MaxErrors;
 
             await _appDbContext.SaveChangesAsync();
 

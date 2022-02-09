@@ -26,7 +26,7 @@ namespace CODWER.RERU.Evaluation.Data.Entities
         public DateTime ProgrammedTime { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
-        public TestType TestType { get; set; }
+        public TestTemplate TestTemplates { get; set; }
         public UserProfile UserProfile { get; set; }
         public UserProfile Evaluator { get; set; }
         public Event Event { get; set; }

@@ -29,7 +29,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
             var curUser = await _userProfileService.GetCurrentUser();
 
             var tests = _appDbContext.Tests
-                .Include(t => t.TestType)
+                .Include(t => t.TestTemplates)
                 .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
@@ -39,7 +39,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 {
                     Id = t.Id,
                     UserProfile = t.UserProfile,
-                    TestType = t.TestType,
+                    TestTemplates = t.TestTemplates,
                     TestQuestions = t.TestQuestions,
                     Location = t.Location,
                     Event = t.Event,
@@ -91,7 +91,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
         {
             if (!string.IsNullOrWhiteSpace(request.TestTypeName))
             {
-                tests = tests.Where(x => x.TestType.Name.Contains(request.TestTypeName));
+                tests = tests.Where(x => x.TestTemplates.Name.Contains(request.TestTypeName));
             }
 
             if (!string.IsNullOrWhiteSpace(request.UserName))

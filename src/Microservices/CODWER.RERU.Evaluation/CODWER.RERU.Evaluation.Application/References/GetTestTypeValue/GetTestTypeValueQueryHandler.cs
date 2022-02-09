@@ -23,7 +23,7 @@ namespace CODWER.RERU.Evaluation.Application.References.GetTestTypeValue
         }
         public async Task<List<SelectItem>> Handle(GetTestTypeValueQuery request, CancellationToken cancellationToken)
         {
-            var testTypes = await _appDbContext.TestTypes
+            var testTypes = await _appDbContext.TestTemplates
                 .AsQueryable()
                 .Where(tt => (tt.Status == (int)TestTypeStatusEnum.Active || tt.Status == TestTypeStatusEnum.Canceled) && tt.Mode == (int)TestTypeModeEnum.Test)
                 .Select(tt => _mapper.Map<SelectItem>(tt))

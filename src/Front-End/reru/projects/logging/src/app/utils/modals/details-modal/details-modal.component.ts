@@ -12,7 +12,7 @@ export class DetailsModalComponent implements OnInit {
   @Input() items;
 
   item;
-  itemIndex: number = 0;
+  itemIndex: number;
   json;
   itemIndexLength;
 
@@ -26,6 +26,7 @@ export class DetailsModalComponent implements OnInit {
  
   selectedValue(id: number){
     const value = this.items.findIndex(x => x.id === id)
+    this.itemIndex = value;
     
     this.values(value);
   }
@@ -46,7 +47,6 @@ export class DetailsModalComponent implements OnInit {
   }
 
   decreaseModal(){
-
     this.itemIndex --;
 
     if (this.itemIndex <= this.itemIndexLength && this.itemIndex >= 0){
@@ -59,6 +59,12 @@ export class DetailsModalComponent implements OnInit {
 
   values(index){
      this.item = this.items[index]
-     this.json = JSON.stringify(JSON.parse(this.item.jsonMessage), null, 3);
+
+     if(this.item.jsonMessage != ""){
+        this.json = JSON.stringify(JSON.parse(this.item.jsonMessage), null, 3);
+     }
+     else{
+       this.json = null;
+     }
     }
   }

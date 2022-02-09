@@ -22,7 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetPollResult
         public async Task<PollResultDto> Handle(GetPollResultQuery request, CancellationToken cancellationToken)
         {
             var allTests = await _appDbContext.Tests
-                .Include(x => x.TestType)
+                .Include(x => x.TestTemplates)
                 .Include(x => x.Event)
                     .ThenInclude(x => x.EventUsers)
                 .Include(x => x.TestQuestions)

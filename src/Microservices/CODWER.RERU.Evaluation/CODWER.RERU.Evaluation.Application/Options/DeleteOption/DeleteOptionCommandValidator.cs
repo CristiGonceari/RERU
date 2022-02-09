@@ -35,13 +35,13 @@ namespace CODWER.RERU.Evaluation.Application.Options.DeleteOption
 
             var tests = _appDbContext.Tests
                 .Include(x => x.TestQuestions)
-                .Include(x => x.TestType)
+                .Include(x => x.TestTemplates)
                 .Where(t => t.TestQuestions.Any(q => q.QuestionUnitId == option.QuestionUnitId))
                 .ToList();
 
             foreach (var test in tests)
             {
-                if (test.TestType.Status == (int)TestTypeStatusEnum.Active)
+                if (test.TestTemplates.Status == (int)TestTypeStatusEnum.Active)
                 {
                     return true;
                 }

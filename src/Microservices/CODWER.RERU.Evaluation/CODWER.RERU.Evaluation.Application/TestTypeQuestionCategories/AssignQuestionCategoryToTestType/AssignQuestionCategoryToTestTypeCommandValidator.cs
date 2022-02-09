@@ -20,7 +20,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.AssignQu
             When(r => r.Data != null, () =>
             {
                 RuleFor(x => x.Data.TestTypeId)
-                    .SetValidator(x => new ItemMustExistValidator<TestType>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
+                    .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
                         ValidationMessages.InvalidReference));
 
                 RuleFor(x => x.Data.QuestionCategoryId)
@@ -30,13 +30,13 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.AssignQu
                 RuleFor(x => x.Data)
                     .Must(x => appDbContext.TestTypeQuestionCategories
                             .Where(q => q.TestTypeId == x.TestTypeId)
-                            .Sum(s => s.QuestionCount) < appDbContext.TestTypes.FirstOrDefault(t => t.Id == x.TestTypeId).QuestionCount)
+                            .Sum(s => s.QuestionCount) < appDbContext.TestTemplates.FirstOrDefault(t => t.Id == x.TestTypeId).QuestionCount)
                     .WithErrorCode(ValidationCodes.QUESTION_COUNT_REACHED_THE_LIMIT);
 
                 RuleFor(x => x.Data)
                     .Must(x => (appDbContext.TestTypeQuestionCategories
                             .Where(q => q.TestTypeId == x.TestTypeId)
-                            .Sum(s => s.QuestionCount) + x.QuestionCount) <= appDbContext.TestTypes.FirstOrDefault(t => t.Id == x.TestTypeId).QuestionCount)
+                            .Sum(s => s.QuestionCount) + x.QuestionCount) <= appDbContext.TestTemplates.FirstOrDefault(t => t.Id == x.TestTypeId).QuestionCount)
                     .WithErrorCode(ValidationCodes.INVALID_QUESTION_COUNT);
 
                 When(r => r.Data.QuestionCount.HasValue, () =>

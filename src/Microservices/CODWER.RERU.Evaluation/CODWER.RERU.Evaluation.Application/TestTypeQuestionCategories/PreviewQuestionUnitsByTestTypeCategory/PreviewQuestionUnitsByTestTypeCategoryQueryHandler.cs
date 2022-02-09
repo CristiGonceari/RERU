@@ -69,7 +69,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQ
                 }
                 else
                 {
-                    var testType = await _appDbContext.TestTypes
+                    var testType = await _appDbContext.TestTemplates
                         .Include(x => x.TestTypeQuestionCategories)
                         .FirstAsync(x => x.Id == request.Data.TestTypeId);
 

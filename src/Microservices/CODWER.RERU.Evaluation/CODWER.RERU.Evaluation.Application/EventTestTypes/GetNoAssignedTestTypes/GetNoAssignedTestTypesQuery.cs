@@ -8,7 +8,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTypes.GetNoAssignedTestTyp
 {
     [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
 
-    public class GetNoAssignedTestTypesQuery : IRequest<List<TestTypeDto>>
+    public class GetNoAssignedTestTypesQuery : IRequest<List<TestTemplateDto>>
     {
         public int EventId { get; set; }
         public string Keyword { get; set; }
