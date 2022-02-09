@@ -36,7 +36,7 @@
                     <i class="la la-plus mr-2"></i> 
                     {{'questions.add-option' | translate}}
                   </button>
-                  <button (click)="bulkImport()" class="navi-link align-items-baseline px-6" ngbDropdownItem *ngIf="questionType == 3" >
+                  <button (click)="bulkImport()" class="navi-link align-items-baseline px-6" ngbDropdownItem *ngIf="questionType == 3 || questionType == 2" >
                     <i class="la la-download mr-2"></i>
                     {{'options.bulk-import' | translate}}
                   </button>
@@ -46,9 +46,26 @@
           </div>
         </span>
         <span *ngIf="!fromCategory">
-          <app-add-button *ngIf="status == 0" class="btn" [value]="'questions.add-option' | translate"
-          [routerLink]="['../option', questionId, 'add']">
-          </app-add-button>
+          <div class="card-toolbar">
+            <div class="dropdown dropdown-inline my-auto" ngbDropdown>
+              <app-add-button *ngIf="status == 0" class="btn my-auto" id="action1" ngbDropdownToggle 
+              [value]="'questions.add-option' | translate">
+              </app-add-button>
+              <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                <div ngbDropdownMenu aria-labelledby="action1">
+                  <button *ngIf="status == 0" class="navi-link align-items-center px-6" ngbDropdownItem
+                    [routerLink]="['../../option', questionId, 'add']">
+                    <i class="la la-plus mr-2"></i> 
+                    {{'questions.add-option' | translate}}
+                  </button>
+                  <button (click)="bulkImport()" class="navi-link align-items-baseline px-6" ngbDropdownItem *ngIf="questionType == 3 || questionType == 2" >
+                    <i class="la la-download mr-2"></i>
+                    {{'options.bulk-import' | translate}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </span>
       </div>
     </div>
