@@ -41,7 +41,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions
         {
             var answer = false;
 
-            var testSettings = testQuestion.Test.TestType.Settings;
+            var testSettings = testQuestion.Test.TestTemplates.Settings;
 
             if (!testSettings.PossibleChangeAnswer && testQuestion.AnswerStatus == AnswerStatusEnum.Answered)
             {

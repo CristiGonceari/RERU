@@ -34,7 +34,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                         ValidationMessages.InvalidReference));
 
                 RuleFor(x => x.Data.TestTypeId)
-                    .SetValidator(x => new ItemMustExistValidator<TestType>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
+                    .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
                         ValidationMessages.InvalidReference));
 
                 RuleFor(x => x.Data.ProgrammedTime)
@@ -92,7 +92,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 
         private async Task<bool> IsOnlyOneAnswerTest(AddEditTestDto data)
         {
-            var dataList = await _mediator.Send(new GetTestTypeByStatusQuery { TestTypeStatus = TestTypeStatusEnum.Active });
+            var dataList = await _mediator.Send(new GetTestTemplateByStatusQuery { TestTypeStatus = TestTypeStatusEnum.Active });
 
             var result = dataList.FirstOrDefault(x => x.TestTypeId == data.TestTypeId);
 

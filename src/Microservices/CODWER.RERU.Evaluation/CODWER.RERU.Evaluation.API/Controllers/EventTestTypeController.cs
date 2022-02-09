@@ -17,13 +17,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     public class EventTestTypeController : BaseController
     {
         [HttpGet]
-        public async Task<PaginatedModel<TestTypeDto>> GetEventTestTypes([FromQuery] GetEventTestTypesQuery query)
+        public async Task<PaginatedModel<TestTemplateDto>> GetEventTestTypes([FromQuery] GetEventTestTypesQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpGet("no-assigned")]
-        public async Task<List<TestTypeDto>> GetNoAssignedTestTypes([FromQuery] GetNoAssignedTestTypesQuery query)
+        public async Task<List<TestTemplateDto>> GetNoAssignedTestTypes([FromQuery] GetNoAssignedTestTypesQuery query)
         {
             return await Mediator.Send(query);
         }

@@ -31,7 +31,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.GetTestT
                 .ToListAsync();
 
             var answer = _mapper.Map<List<TestTypeQuestionCategoryDto>>(questionCategories);
-            var testType = await _appDbContext.TestTypes.FirstAsync(x => x.Id == request.TestTypeId);
+            var testType = await _appDbContext.TestTemplates.FirstAsync(x => x.Id == request.TestTypeId);
 
             if (testType.CategoriesSequence == SequenceEnum.Strict)
             {

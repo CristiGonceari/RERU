@@ -32,7 +32,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
 
         public async Task<FileDataDto> PrintTestTemplatePdf(int testTemplateId)
         {
-            var testTemplate = await _appDbContext.TestTypes
+            var testTemplate = await _appDbContext.TestTemplates
                 .Include(x => x.TestTypeQuestionCategories)
                     .ThenInclude(x => x.TestCategoryQuestions)
                 .Include(x => x.TestTypeQuestionCategories)
@@ -44,7 +44,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             return await GetPdf(testTemplate);
         }
 
-        public async Task<FileDataDto> GetPdf(TestType testTemplate)
+        public async Task<FileDataDto> GetPdf(TestTemplate testTemplate)
         {
             var path = new FileInfo("PdfTemplates/TestTemplate.html").FullName;
             var source = await File.ReadAllTextAsync(path);
@@ -78,7 +78,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             }
         }
 
-        private async Task<Dictionary<string, string>> GetDictionary(TestType testTemplate)
+        private async Task<Dictionary<string, string>> GetDictionary(TestTemplate testTemplate)
         {
 
             var myDictionary = new Dictionary<string, string>();
@@ -155,7 +155,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
 
             return testTemplateRules;
         }
-        private string GetParsedSettingsForTestTemplate(TestType testTemplate)
+        private string GetParsedSettingsForTestTemplate(TestTemplate testTemplate)
         {
             var content = string.Empty;
 

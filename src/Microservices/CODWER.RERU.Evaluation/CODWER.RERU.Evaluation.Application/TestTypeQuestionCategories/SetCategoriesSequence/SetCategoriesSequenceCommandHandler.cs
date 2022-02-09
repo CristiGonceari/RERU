@@ -23,7 +23,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.SetCateg
                 .Where(x => x.TestTypeId == request.TestTypeId)
                 .ToListAsync();
 
-            var testType = await _appDbContext.TestTypes.FirstAsync(x => x.Id == request.TestTypeId);
+            var testType = await _appDbContext.TestTemplates.FirstAsync(x => x.Id == request.TestTypeId);
 
             testType.CategoriesSequence = request.SequenceType;
 

@@ -23,7 +23,7 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.AutoCheckTestScor
         {
             var test = await _appDbContext.Tests
                 .Include(x => x.TestQuestions)
-                .Include(x => x.TestType)
+                .Include(x => x.TestTemplates)
                 .FirstAsync(x => x.Id == request.TestId);
 
             var testquestions = _appDbContext.TestQuestions
@@ -40,7 +40,7 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.AutoCheckTestScor
 
                 test.AccumulatedPercentage = (int) Math.Round((double) (100 * evaluatorPointsSum) / questionPointsSum);
 
-                if (test.AccumulatedPercentage >= test.TestType.MinPercent)
+                if (test.AccumulatedPercentage >= test.TestTemplates.MinPercent)
                 {
                     test.ResultStatus = TestResultStatusEnum.Passed;
                 }
