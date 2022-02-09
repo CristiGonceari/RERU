@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using CVU.ERP.Common.DataTransferObjects.Files;
+﻿using CVU.ERP.Common.DataTransferObjects.Files;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,12 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.Articles.PrintArticles
 
         public async Task<FileDataDto> Handle(PrintArticlesCommand request, CancellationToken cancellationToken)
         {
-            var articles = _appDbContext.Articles.AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(request.Name))
-            {
-                articles = articles.Where(x => x.Name.Contains(request.Name));
-            }
+            var articles = GetAndFilterArticles.Filter(_appDbContext, request.Name);
 
             var result = _printer.PrintTable(new TableData<Article>
             {

@@ -48,13 +48,13 @@ namespace CVU.ERP.Module.Application.TablePrinterService.Implementations
             };
         }
 
-        public FileDataDto PrintListTable(TableListData<TSource> data)
+        public FileDataDto PrintListTable(TableListData<TDestination> data)
         {
             var source = Html;
             source = source
                 .Replace("{table_name}", data.Name)
                 .Replace("{table_header}", GetTableHeader(data.Fields.Select(x => x.Label).ToList()))
-                .Replace("{table_content}", GetTableContent(_mapper.Map<List<TDestination>>(data.Items), data.Fields.Select(x => x.Value).ToList()));
+                .Replace("{table_content}", GetTableContent(data.Items, data.Fields.Select(x => x.Value).ToList()));
 
             var options = new ConvertOptions
             {

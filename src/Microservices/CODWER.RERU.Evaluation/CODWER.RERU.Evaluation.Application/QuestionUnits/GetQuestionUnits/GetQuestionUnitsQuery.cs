@@ -12,7 +12,6 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
     public class GetQuestionUnitsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<QuestionUnitDto>>
     {
         public string QuestionName { get; set; }
-        public string CategoryName { get; set; }
         public int? QuestionCategoryId { get; set; }
         public QuestionTypeEnum? Type { get; set; }
     }

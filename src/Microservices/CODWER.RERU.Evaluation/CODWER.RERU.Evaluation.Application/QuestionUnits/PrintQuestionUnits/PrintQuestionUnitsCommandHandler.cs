@@ -28,34 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.PrintQuestionUnits
 
         public async Task<FileDataDto> Handle(PrintQuestionUnitsCommand request, CancellationToken cancellationToken)
         {
-            var questions = _appDbContext.QuestionUnits
-                .Include(x => x.QuestionCategory)
-                .Include(x => x.Options)
-                .Include(x => x.TestQuestions)
-                .Include(x => x.QuestionUnitTags)
-                    .ThenInclude(x => x.Tag)
-                .OrderByDescending(x => x.Id)
-                .AsQueryable();
-
-            if (request.Type != null)
-            {
-                questions = questions.Where(x => x.QuestionType == request.Type.Value);
-            }
-
-            if (request.QuestionCategoryId != null)
-            {
-                questions = questions.Where(x => x.QuestionCategoryId == request.QuestionCategoryId.Value);
-            }
-
-            if (!string.IsNullOrWhiteSpace(request.QuestionName))
-            {
-                questions = questions.Where(x => x.Question.Contains(request.QuestionName) || x.QuestionUnitTags.Any(qu => qu.Tag.Name.Contains(request.QuestionName)));
-            }
-
-            if (!string.IsNullOrWhiteSpace(request.CategoryName))
-            {
-                questions = questions.Where(x => x.QuestionCategory.Name.Contains(request.CategoryName));
-            }
+            var questions = GetAndFilterQuestionUnits.Filter(_appDbContext, request.QuestionName, request.QuestionCategoryId, request.Type);
 
             questions = SelectOnlyReturnedFields(questions);
 
