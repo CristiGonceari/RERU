@@ -758,10 +758,7 @@
   },
   "print": {
     "print-table": "Print table",
-    "orientation": "Orientation",
-    "portrait": "Portrait",
-    "landscape": "Landscape",
-    "fields": "Fields",
+    "error-msg": "Please select fields for print",
     "print-msg": "Please specify the print orientation and necessary fields."
   }
 }

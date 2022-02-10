@@ -1,42 +1,35 @@
 <div class="modal-header">
   <h3 class="modal-title">{{translateData[0]}}: <b> {{tableData.tableName}} </b> </h3>
 </div>
-<div class="modal-body py-1 px-10">
-  <p class="m-7 text-center">{{translateData[5]}}</p>
+<div class="modal-body px-10">
+  <h3 class="text-center my-5"> {{translateData[1]}} </h3>
 
-  <div class="form-group row">
-    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{translateData[1]}}</label>
-    <div class="col-lg-9 col-xl-9">
-      <select class="form-control form-control-lg form-control-solid" (change)="setOrientation($event)">
-        <option value="1" default-option>{{translateData[2]}}</option>
-        <option value="2">{{translateData[3]}}</option>
-      </select>
+  <div class="d-flex justify-content-center flex-wrap">
+    <div *ngFor="let item of tableData.fields" class="d-flex h-30px label label-light-secondary label-inline m-1">
+      <input type="checkbox" id="{{ item.value }}" class="hidden"
+        value="{{ item.value }}" (change)="onItemChange($event, item)" />
+      <label class="mb-0 d-flex cursor-pointer font-size-lg" for="{{ item.value }}">
+        {{ item.label }}
+        <span> &#10003; </span>
+      </label>
     </div>
   </div>
 
-  <div class="form-group row">
-    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{translateData[4]}}</label>
-    <div class="col-lg-9 col-xl-9">
-      <tbody class="datatable-body">
-        <tr *ngFor="let item of tableData.fields">
-          <td>
-            <label class="checkbox checkbox-lg checkbox-inline m-5">
-              <input type="checkbox" value="{{ item.value }}"
-                (change)="onItemChange($event, item)" />
-              <span></span>
-            </label>
-          </td>
-          <td>
-            <p class="mb-0">
-							{{ item.label }}
-            </p>
-          </td>
-        </tr>
-      </tbody>
+  <div class="my-10 d-flex justify-content-center" [class.disabled]="disabled">
+    <div class="mx-7 cursor-pointer">
+      <i (click)="setOrientation(1)"
+        class="far fa-file-pdf mx-3 px-7 py-10 border rounded portrait"
+        style="font-size: 5rem !important;"
+      ></i>
+    </div>
+    <div class="mx-7 cursor-pointer">
+      <i (click)="setOrientation(2)"
+        class="far fa-file-pdf mx-3 px-7 py-10 border rounded landscape"
+        style="transform: rotate(90deg) translateX(2px); font-size: 5rem !important;"
+      ></i>
     </div>
   </div>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-secondary" (click)="dismiss()">{{translateData[6]}}</button>
-  <button type="button" class="btn btn-primary" (click)="close()">{{translateData[7]}}</button>
+  <button type="button" class="btn btn-secondary" (click)="dismiss()">{{translateData[3]}}</button>
 </div>

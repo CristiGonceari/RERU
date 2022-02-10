@@ -9,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class PrintModalComponent implements OnInit {
 
   selectedFeilds = [];
+  disabled: boolean = true;
   @Input() tableData = {tableName: '', fields: [], orientation: 1};
   @Input() translateData: Array<string>;
 
@@ -18,7 +19,12 @@ export class PrintModalComponent implements OnInit {
   }
 
   setOrientation(event): void {
-    this.tableData.orientation = +event.target.value;
+    this.tableData.orientation = event;
+    this.close();
+  }
+
+  checkSelection(): void {
+    if (this.selectedFeilds.length) this.disabled = false;
   }
 
   onItemChange(event, item): void {
@@ -28,6 +34,7 @@ export class PrintModalComponent implements OnInit {
       let itemToExclude = event.target.value;
       this.selectedFeilds.splice(this.selectedFeilds.indexOf(itemToExclude), 1);
     }
+    this.checkSelection();
   }
 
   close(): void {

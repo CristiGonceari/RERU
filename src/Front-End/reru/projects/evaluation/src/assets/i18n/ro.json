@@ -762,10 +762,7 @@
   },
   "print": {
     "print-table": "Printare tabel",
-    "orientation": "Orientare",
-    "portrait": "Portret",
-    "landscape": "Peisaj",
-    "fields": "Câmpuri",
+    "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
     "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare."
   }
 }
