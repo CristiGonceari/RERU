@@ -65,10 +65,17 @@ reru_core:
   image:
     repository: cvuintell/reru-core
   database:
-    connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Core-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
-    identity_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Identity-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
-    log_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Logging-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
-    storage_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Storage-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    # connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Core-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Core-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
+
+    # identity_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Identity-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    identity_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
+
+    # log_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Logging-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
+
+    # storage_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Storage-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
 
 reru_identity_migrator:
   enabled: true
@@ -77,7 +84,8 @@ reru_identity_migrator:
   image:
     repository: cvuintell/reru-identity-migrator
   database:
-    connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Identity-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    # connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Identity-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
 
 reru_storage_migrator:
   enabled: true
@@ -86,7 +94,8 @@ reru_storage_migrator:
   image:
     repository: cvuintell/reru-storage-migrator
   database:
-    connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Storage-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    # connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Storage-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
 
 reru_core_fe:
   name: "reru-core-fe"
@@ -106,9 +115,14 @@ reru_personal:
   image:
     repository: cvuintell/reru-personal
   database:
-    connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Personal-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;MultipleActiveResultSets=True;
-    log_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Logging-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
-    storage_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Storage-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    # connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Personal-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;MultipleActiveResultSets=True;
+    connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Personal-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
+
+    # log_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Logging-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
+
+    # storage_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Storage-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
 
 reru_evaluation_fe:
   name: "reru-evaluation-fe"
@@ -122,9 +136,14 @@ reru_evaluation:
   image:
     repository: cvuintell/reru-evaluation
   database:
-    connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Evaluation-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
-    log_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Logging-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
-    storage_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Storage-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    # connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Evaluation-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Evaluation-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
+
+    # log_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Logging-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
+
+    # storage_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Storage-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
 
 reru_logging_fe:
   name: "reru-logging-fe"
@@ -138,7 +157,8 @@ reru_logging:
   image:
     repository: cvuintell/reru-logging
   database:
-    log_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Logging-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    # log_connection_string: server=prod-db-mssql.prod-mssql;database=RERU-Logging-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
 
 microservices:
   - test_saml:
@@ -195,7 +215,8 @@ microservices:
         - name: SAML_ENDPOINT
           value: "http://reru-stage.codwer.com"
         - name: ConnectionStrings__Default
-          value: "server=prod-db-mssql.prod-mssql;database=RERU-Identity-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;"
+          # value: "server=prod-db-mssql.prod-mssql;database=RERU-Identity-STAGE;User=sa;Password=FXW}t,HLjM:TSpR;"
+          value: "server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;"
         - name: IDENTITY_ISSUER_URI
           value: "http://reru-stage.codwer.com/ms/reru-identity-new"
         - name: IDENTITY_DISCOVERY_ENDPOINT_URI
