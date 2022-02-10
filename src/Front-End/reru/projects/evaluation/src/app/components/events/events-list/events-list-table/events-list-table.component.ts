@@ -23,6 +23,17 @@ export class EventsListTableComponent implements OnInit {
 	no: string;
 	yes: string;
 
+	displayMonth: string;
+	displayYear: number;
+	displayDate;
+
+	countedEvents;
+	fromDate;
+	tillDate;
+
+	selectedDay;
+	countedPlans;
+
 	constructor(
 		private service: EventService, 
 		private router: Router, 
@@ -34,10 +45,21 @@ export class EventsListTableComponent implements OnInit {
 		) { }
 
 	ngOnInit(): void {
-		this.list();
 	}
      
 	list(data: any = {}) {
+	this.selectedDay = null;
+    this.isLoading = true;
+    
+    if (data.fromDate != null && data.tillDate != null) {
+      this.tillDate = data.tillDate,
+        this.fromDate = data.fromDate
+    }
+    if (data.displayMonth != null && data.displayYear != null) {
+      this.displayMonth = data.displayMonth;
+      this.displayYear = data.displayYear;
+    }
+
 		let params = {
 			page: data.page || this.pagination.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10
@@ -48,11 +70,89 @@ export class EventsListTableComponent implements OnInit {
 				if (res && res.data) {
 					this.events = res.data.items;
 					this.pagination = res.data.pagedSummary;
+					
 					this.isLoading = false;
+					this.selectedDay = null;
 				}
 			}
 		)
 	}
+
+	getListByDate(data: any = {}): void {
+
+		if (data.date != null) {
+		  this.selectedDay = this.parseDates(data.date);
+		  this.displayDate = this.parseDatesForTable(data.date)
+		}
+	
+		this.isLoading = true;
+	
+		const request = {
+		  date:  this.selectedDay,
+		  page: data.page || this.pagination.currentPage,
+		  itemsPerPage: data.itemsPerPage || this.pagination.pageSize
+		}
+	
+		this.service.getEventByDate(request).subscribe(response => {
+		  if (response.success) {
+			this.events = response.data.items || [];
+			this.pagination = response.data.pagedSummary;
+
+			this.isLoading = false;
+		  }
+		});
+	  }
+
+	  parseDates(date) {
+
+		const day = date && date.getDate() || -1;
+		const dayWithZero = day.toString().length > 1 ? day : '0' + day;
+		const month = date && date.getMonth() + 1 || -1;
+		const monthWithZero = month.toString().length > 1 ? month : '0' + month;
+		const year = date && date.getFullYear() || -1;
+		 
+		return `${year}-${monthWithZero}-${dayWithZero}`;
+	
+	  }
+	
+	  parseDatesForTable(date) {
+	
+		const day = date && date.getDate() || -1;
+		const dayWithZero = day.toString().length > 1 ? day : '0' + day;
+		const month = date && date.getMonth() + 1 || -1;
+		const monthWithZero = month.toString().length > 1 ? month : '0' + month;
+		const year = date && date.getFullYear() || -1;
+		 
+		return `${dayWithZero}/${monthWithZero}/${year}`;
+	
+	  }
+
+	  getListOfCoutedEvents(data) {
+		const request = {
+		  fromDate: this.parseDates(data.fromDate),
+		  tillDate: this.parseDates(data.tillDate)
+		}
+		this.service.getEventCount(request).subscribe(response => {
+		  if (response.success) {
+			this.countedPlans = response.data;
+	
+			for (let calendar of data.calendar) {
+	
+			  let data = new Date(calendar.date);
+	
+			  for (let values of response.data) {
+	
+				let c = new Date(values.date);
+				let compararea = +data == +c;
+	
+				if (compararea) {
+				  calendar.count = values.count;
+				}
+			  }
+			}
+		  }
+		})
+	  }
 
 	openDeleteModal(id){
 		forkJoin([

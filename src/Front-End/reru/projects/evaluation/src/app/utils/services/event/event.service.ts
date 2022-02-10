@@ -24,6 +24,14 @@ export class EventService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
   }
 
+  getEventByDate(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/by-Date`, {params});
+  }
+
+  getEventCount(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/eventCount`, {params});
+  }
+
   getMyEvents(params): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-events`, { params });
   }
