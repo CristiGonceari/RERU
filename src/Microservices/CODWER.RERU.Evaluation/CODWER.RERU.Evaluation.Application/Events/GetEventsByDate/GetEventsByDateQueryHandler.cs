@@ -23,8 +23,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetEventsByDate
         public async Task<PaginatedModel<EventDto>> Handle(GetEventsByDateQuery request, CancellationToken cancellationToken)
         {
 
-            var events = _appDbContext.Events.Where(p => p.FromDate.Date <= request.Date && p.TillDate.Date >= request.Date)
-                                            .AsQueryable();
+            var events = _appDbContext.Events.Where(p => p.FromDate.Date <= request.Date && p.TillDate.Date >= request.Date).AsQueryable();
 
             return await _paginationService.MapAndPaginateModelAsync<Event, EventDto>(events, request);
 
