@@ -48,7 +48,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
 
             var fileId = await _storageFileService.AddFile(
                 parsedPdf.Name,
-                FileTypeEnum.Request,
+                FileTypeEnum.request,
                 parsedPdf.ContentType,
                 parsedPdf.Content);
 
@@ -71,7 +71,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
 
             var fileId = await _storageFileService.AddFile(
                 parsedPdf.Name,
-                FileTypeEnum.Order,
+                FileTypeEnum.order,
                 parsedPdf.ContentType,
                 parsedPdf.Content);
 

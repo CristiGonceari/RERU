@@ -25,7 +25,7 @@ namespace CODWER.RERU.Personal.API.Controllers
         }
 
         [HttpPost]
-        public async Task<string> CreateFile([FromForm] AddFileDto dto)
+        public async Task<string> CreateFile([FromForm] CreateFileDto dto)
         {
             var command = new AddContractorFileCommand { Data = dto };
 

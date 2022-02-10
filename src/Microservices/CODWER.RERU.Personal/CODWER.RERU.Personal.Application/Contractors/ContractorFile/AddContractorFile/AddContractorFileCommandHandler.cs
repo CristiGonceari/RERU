@@ -3,6 +3,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Personal.Data.Persistence.Context;
+using CVU.ERP.StorageService.Models;
 
 namespace CODWER.RERU.Personal.Application.Contractors.ContractorFile.AddContractorFile
 {
@@ -18,11 +19,17 @@ namespace CODWER.RERU.Personal.Application.Contractors.ContractorFile.AddContrac
 
         public async Task<string> Handle(AddContractorFileCommand request, CancellationToken cancellationToken)
         {
-            var addedFile = await _fileService.AddFile(request.Data);
+            var file = new AddFileDto
+            {
+                File = request.Data.File,
+                Type = request.Data.Type
+            };
+
+            var addedFile = await _fileService.AddFile(file);
 
             var fileToAdd = new Data.Entities.Files.ContractorFile
             {
-                ContractorId = request.ContractorId,
+                ContractorId = request.Data.ContractorId,
                 FileId = addedFile
             };
 

@@ -31,25 +31,25 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorFiles
             When(x => permission != null, () =>
             {
 
-                When(x => x.FileType == FileTypeEnum.Order, () =>
+                When(x => x.FileType == FileTypeEnum.order, () =>
                 {
                     RuleFor(x => permission.GetDocumentsDataOrders)
                         .Must(x => x);
                 });
 
-                When(x => x.FileType == FileTypeEnum.Cim, () =>
+                When(x => x.FileType == FileTypeEnum.cim, () =>
                 {
                     RuleFor(x => permission.GetDocumentsDataCim)
                         .Must(x => x);
                 });
 
-                When(x => x.FileType == FileTypeEnum.IdentityFiles, () =>
+                When(x => x.FileType == FileTypeEnum.identityfiles, () =>
                 {
                     RuleFor(x => permission.GetDocumentsDataIdentity)
                         .Must(x => x);
                 });
 
-                When(x => x.FileType == FileTypeEnum.Request, () =>
+                When(x => x.FileType == FileTypeEnum.request, () =>
                 {
                     RuleFor(x => permission.GetDocumentsDataRequest)
                         .Must(x => x);

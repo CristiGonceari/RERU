@@ -2,15 +2,15 @@
 {
     public enum FileTypeEnum
     {
-        Question = 1,
-        TestTemplate = 2,
-        Test = 3,
-        Media = 4,
-        Documents = 5, 
-        IdentityFiles = 6, 
-        Photos = 7,
-        Request = 8,
-        Order = 9,
-        Cim = 10
+        question = 1,
+        testtemplate = 2,
+        test = 3,
+        media = 4,
+        documents = 5, 
+        identityfiles = 6, 
+        photos = 7,
+        request = 8,
+        order = 9,
+        cim = 10
     }
 }

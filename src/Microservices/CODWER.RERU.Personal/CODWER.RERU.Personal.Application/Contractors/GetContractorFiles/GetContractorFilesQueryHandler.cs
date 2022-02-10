@@ -29,7 +29,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractorFiles
                 .Where(x => x.ContractorId == request.ContractorId);
 
             var files = _storageDbContext.Files
-                .Where(x => x.FileType == FileTypeEnum.IdentityFiles &&
+                .Where(x => x.FileType == FileTypeEnum.identityfiles &&
                             contractorFiles.Any(i => i.FileId == x.Id.ToString()))
                 .AsQueryable();
 

@@ -1,16 +1,15 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using CODWER.RERU.Personal.Data.Entities;
 using CODWER.RERU.Personal.Data.Entities.User;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Contractors;
 using CVU.ERP.Module.Application.Clients;
-using CVU.ERP.StorageService.Context;
-using CVU.ERP.StorageService.Entities;
+using CVU.ERP.StorageService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
 {
@@ -19,17 +18,17 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly ICoreClient _coreClient;
-        private readonly StorageDbContext _storageDbContext;
+        private readonly IPersonalStorageClient _personalStorageClient;
 
         public GetContractorQueryHandler(AppDbContext appDbContext, 
             IMapper mapper, 
             ICoreClient coreClient, 
-            StorageDbContext storageDbContext)
+            IPersonalStorageClient personalStorageClient)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _coreClient = coreClient;
-            _storageDbContext = storageDbContext;
+            _personalStorageClient = personalStorageClient;
         }
 
         public async Task<ContractorDetailsDto> Handle(GetContractorQuery request, CancellationToken cancellationToken)
@@ -46,7 +45,6 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
                 .Include(x => x.UserProfile)
                 .Include(x => x.Bulletin)
                 .Include(x => x.Avatar)
-                .Include(x => x.ContractorFiles)
                 .Select(c => new Contractor
                 {
                     Id = c.Id,
@@ -67,22 +65,12 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
                 })
                 .FirstAsync(rt => rt.Id == request.Id);
 
-            var files = _storageDbContext.Files
-                .Where(x => contractor.ContractorFiles.Any(i => i.FileId == x.Id.ToString()))
-                .Select(f => new File
-                {
-                    Id = f.Id,
-                    FileName = f.FileName,
-                    Type = f.Type,
-                    FileType = f.FileType
-                })
-                .AsQueryable();
 
             var mappedContractor = _mapper.Map<ContractorDetailsDto>(contractor);
 
             mappedContractor.HasUserProfile = await GetUserProfile(contractor.UserProfile);
-            mappedContractor.HasEmploymentRequest = files.Any(x => x.FileType == FileTypeEnum.Request);
-            mappedContractor.HasIdentityDocuments = files.Any(x => x.FileType == FileTypeEnum.IdentityFiles);
+            mappedContractor.HasEmploymentRequest = await _personalStorageClient.HasEmploymentRequest(request.Id);
+            mappedContractor.HasIdentityDocuments = await _personalStorageClient.HasIdentityDocuments(request.Id);
 
             return mappedContractor;
         }

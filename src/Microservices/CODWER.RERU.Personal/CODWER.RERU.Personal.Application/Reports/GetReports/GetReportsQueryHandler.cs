@@ -34,7 +34,7 @@ namespace CODWER.RERU.Personal.Application.Reports.GetReports
                 .AsQueryable();
 
             var files = _storageDbContext.Files
-                .Where(x => x.FileType == FileTypeEnum.IdentityFiles && 
+                .Where(x => x.FileType == FileTypeEnum.identityfiles && 
                             items.Any(i => i.FileId == x.Id.ToString()))
                 .Select(f => new File
                 {

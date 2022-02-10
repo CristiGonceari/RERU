@@ -56,7 +56,7 @@ namespace CODWER.RERU.Personal.Application.Profiles.Vacations.SubordinatesVacati
 
             return await _storageFileService.AddFile(
                 parsedPdf.Name,
-                FileTypeEnum.Order,
+                FileTypeEnum.order,
                 parsedPdf.ContentType,
                 parsedPdf.Content);
         }

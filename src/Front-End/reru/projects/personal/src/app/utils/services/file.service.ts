@@ -32,6 +32,7 @@ export class FileService extends AbstractService {
 	}
 
 	create(data): Observable<any> {
+		console.log("data:", data)
 		return this.http.post<any>(`${this.baseUrl}/${this.routeUrl}`, data);
 	}
 

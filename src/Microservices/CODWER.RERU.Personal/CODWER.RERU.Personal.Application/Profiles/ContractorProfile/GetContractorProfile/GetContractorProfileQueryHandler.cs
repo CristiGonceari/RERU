@@ -78,8 +78,8 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContrac
 
             var mappedContractor = _mapper.Map<ContractorProfileDto>(contractor);
 
-            mappedContractor.HasEmploymentRequest = files.Any(x => x.FileType == FileTypeEnum.Request);
-            mappedContractor.HasIdentityDocuments = files.Any(x => x.FileType == FileTypeEnum.IdentityFiles);
+            mappedContractor.HasEmploymentRequest = files.Any(x => x.FileType == FileTypeEnum.request);
+            mappedContractor.HasIdentityDocuments = files.Any(x => x.FileType == FileTypeEnum.identityfiles);
 
             return mappedContractor;
         }

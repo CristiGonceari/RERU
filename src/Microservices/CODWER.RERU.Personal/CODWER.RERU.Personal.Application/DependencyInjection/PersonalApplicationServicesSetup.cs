@@ -1,11 +1,11 @@
 ﻿using CODWER.RERU.Personal.Application.NomenclatureTypes.Services;
 using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Application.Services.Implementations;
-//using CODWER.RERU.Personal.Application.Services.Implementations.Storage;
 using CODWER.RERU.Personal.Application.Services.VacationInterval;
 using CODWER.RERU.Personal.Application.TemplateParsers;
 using CODWER.RERU.Personal.Application.TemplateParsers.Implementations;
 using CVU.ERP.Module.Common.Providers;
+using CVU.ERP.StorageService;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -35,7 +35,7 @@ namespace CODWER.RERU.Personal.Application.DependencyInjection
 
                 .AddScoped(typeof(IDismissalTemplateParserService), typeof(DismissalTemplateParserService))
                 .AddScoped(typeof(ITimeSheetTableService), typeof(TimeSheetTableService))
-                //.AddScoped(typeof(IStorageFileService), currentEnvironment.IsDevelopment() ? typeof(CloudStorageFileService) : typeof(DbStorageFileService))
+                .AddScoped(typeof(IPersonalStorageClient), typeof(PersonalStorageClient));
                 ;
         }
     }

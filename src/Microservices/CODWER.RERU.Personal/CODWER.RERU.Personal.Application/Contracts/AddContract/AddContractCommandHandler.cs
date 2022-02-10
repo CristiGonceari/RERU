@@ -58,7 +58,7 @@ namespace CODWER.RERU.Personal.Application.Contracts.AddContract
             var parsedPdf = await _templateConvertor.GetPdfFromHtml(myDictionary, fileName);
             return await _storageFileService.AddFile(
                 parsedPdf.Name, 
-                FileTypeEnum.Cim, 
+                FileTypeEnum.cim, 
                 parsedPdf.ContentType, 
                 parsedPdf.Content);
         }

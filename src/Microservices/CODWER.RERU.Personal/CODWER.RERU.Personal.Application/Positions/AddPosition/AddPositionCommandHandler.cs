@@ -55,7 +55,7 @@ namespace CODWER.RERU.Personal.Application.Positions.AddPosition
 
             return await _storageFileService.AddFile(
                 parsedPdf.Name,
-                FileTypeEnum.Order,
+                FileTypeEnum.order,
                 parsedPdf.ContentType,
                 parsedPdf.Content);
         }
