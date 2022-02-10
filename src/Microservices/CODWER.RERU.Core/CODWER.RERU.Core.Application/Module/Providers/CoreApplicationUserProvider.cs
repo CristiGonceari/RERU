@@ -31,17 +31,17 @@ namespace CODWER.RERU.Core.Application.Module.Providers
             var userProfile = await _coreDbContext.UserProfiles
                                          .IncludeBasic()
                                          .FirstOrDefaultAsync(up => up.Identities.Any(upi => upi.Identificator == id && upi.Type == identityProvider));
-            if (userProfile == null)
-            {
-                userProfile = new Data.Entities.UserProfile();
+            //if (userProfile == null)
+            //{
+            //    userProfile = new Data.Entities.UserProfile();
 
-                userProfile.IsActive = true;
-                userProfile.RequiresDataEntry = true;
-                userProfile.Identities.Add(new Data.Entities.UserProfileIdentity { Identificator = id, Type = identityProvider });
+            //    userProfile.IsActive = true;
+            //    userProfile.RequiresDataEntry = true;
+            //    userProfile.Identities.Add(new Data.Entities.UserProfileIdentity { Identificator = id, Type = identityProvider });
                 
-                _coreDbContext.UserProfiles.Add(userProfile);
-                await _coreDbContext.SaveChangesAsync();
-            }
+            //    _coreDbContext.UserProfiles.Add(userProfile);
+            //    await _coreDbContext.SaveChangesAsync();
+            //}
 
             if (userProfile.IsActive == false)
             {
