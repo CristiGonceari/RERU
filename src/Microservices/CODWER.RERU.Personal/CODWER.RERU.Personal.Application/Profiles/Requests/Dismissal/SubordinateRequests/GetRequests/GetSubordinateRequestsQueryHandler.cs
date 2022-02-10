@@ -8,6 +8,7 @@ using CODWER.RERU.Personal.DataTransferObjects.DismissalRequests;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
+using CVU.ERP.StorageService;
 
 namespace CODWER.RERU.Personal.Application.Profiles.Requests.Dismissal.SubordinateRequests.GetRequests
 {
@@ -16,12 +17,17 @@ namespace CODWER.RERU.Personal.Application.Profiles.Requests.Dismissal.Subordina
         private readonly AppDbContext _appDbContext;
         private readonly IUserProfileService _userProfileService;
         private readonly IPaginationService _paginationService;
+        private readonly IStorageFileService _storageFileService;
 
-        public GetSubordinateRequestsQueryHandler(AppDbContext appDbContext, IUserProfileService userProfileService, IPaginationService paginationService)
+        public GetSubordinateRequestsQueryHandler(AppDbContext appDbContext, 
+            IUserProfileService userProfileService, 
+            IPaginationService paginationService, 
+            IStorageFileService storageFileService)
         {
             _appDbContext = appDbContext;
             _userProfileService = userProfileService;
             _paginationService = paginationService;
+            _storageFileService = storageFileService;
         }
 
         public async Task<PaginatedModel<DismissalRequestDto>> Handle(GetSubordinateRequestsQuery request, CancellationToken cancellationToken)
@@ -34,14 +40,18 @@ namespace CODWER.RERU.Personal.Application.Profiles.Requests.Dismissal.Subordina
                 .Include(x => x.Contractor)
                     .ThenInclude(c => c.Positions)
                         .ThenInclude(p=>p.OrganizationRole)
-                .Include(x => x.Request)
-                .Include(x => x.Order)
                 .Where(x => x.Contractor.Contracts.Any(c => c.SuperiorId == contractorId));
 
-            var paginateModel =
+            var paginatedModel =
                await _paginationService.MapAndPaginateModelAsync<DismissalRequest, DismissalRequestDto>(items, request);
 
-            return paginateModel;
+            foreach (var item in paginatedModel.Items)
+            {
+                item.OrderName = await _storageFileService.GetFileName(item.OrderId);
+                item.RequestName = await _storageFileService.GetFileName(item.RequestId);
+            }
+
+            return paginatedModel;
         }
     }
 }

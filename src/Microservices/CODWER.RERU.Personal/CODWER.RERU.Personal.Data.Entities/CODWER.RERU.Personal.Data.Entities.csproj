@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Common.Data.Entities\CVU.ERP.Common.Data.Entities.csproj" />
+    <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.StorageService\CVU.ERP.StorageService.csproj" />
   </ItemGroup>
 
 </Project>

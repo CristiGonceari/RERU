@@ -5,6 +5,7 @@ using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Positions;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.StorageService.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,11 +15,13 @@ namespace CODWER.RERU.Personal.Application.Positions.GetPositions
     {
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
+        private readonly StorageDbContext _storageDbContext;
 
-        public GetPositionsHandler(AppDbContext appDbContext, IPaginationService paginationService)
+        public GetPositionsHandler(AppDbContext appDbContext, IPaginationService paginationService, StorageDbContext storageDbContext)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
+            _storageDbContext = storageDbContext;
         }
 
         public async Task<PaginatedModel<PositionDto>> Handle(GetPositionsQuery request, CancellationToken cancellationToken)
@@ -27,7 +30,6 @@ namespace CODWER.RERU.Personal.Application.Positions.GetPositions
                 .Include(x => x.Department)
                 .Include(x => x.OrganizationRole)
                 .Include(x => x.Contractor)
-                .Include(x => x.Order)
                 .AsQueryable();
 
             if (request.DepartmentId != null)

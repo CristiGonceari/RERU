@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using CODWER.RERU.Personal.API.Config;
+﻿using CODWER.RERU.Personal.API.Config;
 using CODWER.RERU.Personal.Application.Contractors.ContractorFile.AddContractorFile;
 using CODWER.RERU.Personal.Application.Contractors.ContractorFile.DeleteContractorFile;
 using CODWER.RERU.Personal.Application.Contractors.ContractorFile.GetContractorFile;
 using CODWER.RERU.Personal.Application.TemplateParsers;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
+using CVU.ERP.StorageService.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.API.Controllers
 {
@@ -24,7 +25,7 @@ namespace CODWER.RERU.Personal.API.Controllers
         }
 
         [HttpPost]
-        public async Task<int> CreateFile([FromForm] AddFileDto dto)
+        public async Task<string> CreateFile([FromForm] CreateFileDto dto)
         {
             var command = new AddContractorFileCommand { Data = dto };
 
@@ -34,7 +35,7 @@ namespace CODWER.RERU.Personal.API.Controllers
         }
 
         [HttpDelete("{fileId}")]
-        public async Task<Unit> DeleteFile([FromRoute] int fileId)
+        public async Task<Unit> DeleteFile([FromRoute] string fileId)
         {
             var command = new DeleteContractorFileCommand {FileId = fileId};
           
@@ -45,7 +46,7 @@ namespace CODWER.RERU.Personal.API.Controllers
 
         [HttpGet("{fileId}")]
         [IgnoreResponseWrap]
-        public async Task<IActionResult> GetFile([FromRoute] int fileId)
+        public async Task<IActionResult> GetFile([FromRoute] string fileId)
         {
             var command = new GetContractorFileQuery {FileId = fileId};
 

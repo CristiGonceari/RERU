@@ -8,12 +8,14 @@ namespace CODWER.RERU.Personal.Application.Reports
     {
         public ReportMappingProfile()
         {
-            CreateMap<ByteArrayFile, ReportItemDto>()
-                .ForMember(x => x.Id, opts => opts.MapFrom(op => op.Id))
-                .ForMember(x => x.Name, opts => opts.MapFrom(op => op.FileName))
+            CreateMap<ContractorFile, ReportItemDto>()
+                .ForMember(x => x.Id, opts => opts.MapFrom(op => op.FileId))
                 .ForMember(x => x.ContractorId, opts => opts.MapFrom(op => op.Contractor.Id))
-                .ForMember(x => x.ContractorName, 
-                opts => opts.MapFrom(op => $"{op.Contractor.LastName} {op.Contractor.FirstName} {op.Contractor.FatherName}"));
+                .ForMember(x => x.ContractorName,
+                    opts => opts.MapFrom(op =>
+                        $"{op.Contractor.LastName} {op.Contractor.FirstName} {op.Contractor.FatherName}"))
+                .ForMember(x => x.ContractorLastName, opts => opts.MapFrom(op => op.Contractor.LastName))
+                .ForMember(x => x.ContractorFatherName, opts => opts.MapFrom(op => op.Contractor.FatherName));
         }
     }
 }

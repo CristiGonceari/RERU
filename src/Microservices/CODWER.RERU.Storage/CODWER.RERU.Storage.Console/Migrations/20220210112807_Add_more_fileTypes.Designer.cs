@@ -4,14 +4,16 @@ using CVU.ERP.StorageService.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CODWER.RERU.Storage.Console.Migrations
 {
     [DbContext(typeof(StorageDbContext))]
-    partial class StorageDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220210112807_Add_more_fileTypes")]
+    partial class Add_more_fileTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,52 +87,52 @@ namespace CODWER.RERU.Storage.Console.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "question"
+                            Name = "Question"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "testtemplate"
+                            Name = "TestTemplate"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "test"
+                            Name = "Test"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "media"
+                            Name = "Media"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "documents"
+                            Name = "Documents"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "identityfiles"
+                            Name = "IdentityFiles"
                         },
                         new
                         {
                             Id = 7,
-                            Name = "photos"
+                            Name = "Photos"
                         },
                         new
                         {
                             Id = 8,
-                            Name = "request"
+                            Name = "Request"
                         },
                         new
                         {
                             Id = 9,
-                            Name = "order"
+                            Name = "Order"
                         },
                         new
                         {
                             Id = 10,
-                            Name = "cim"
+                            Name = "Cim"
                         });
                 });
 

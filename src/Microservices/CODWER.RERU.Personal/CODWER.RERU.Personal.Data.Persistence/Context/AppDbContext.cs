@@ -50,6 +50,7 @@ namespace CODWER.RERU.Personal.Data.Persistence.Context
 
         public virtual DbSet<OrganizationRole> OrganizationRoles { get; set; }
         public virtual DbSet<OrganizationalChart> OrganizationalCharts { get; set; }
+        public virtual DbSet<ContractorFile> ContractorFiles { get; set; }
 
 
         #region Organization-role relations
@@ -63,8 +64,7 @@ namespace CODWER.RERU.Personal.Data.Persistence.Context
         #endregion
 
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
-        public virtual DbSet<ByteArrayFile> ByteFiles { get; set; }
-        public virtual DbSet<FileSignature> FileSignatures { get; set; }
+       
         public virtual DbSet<DepartmentRoleContent> DepartmentRoleContents { get; set; }
 
 

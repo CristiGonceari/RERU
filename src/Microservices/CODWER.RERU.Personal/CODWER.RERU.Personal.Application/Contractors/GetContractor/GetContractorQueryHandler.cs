@@ -1,14 +1,15 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using CODWER.RERU.Personal.Data.Entities;
 using CODWER.RERU.Personal.Data.Entities.User;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Contractors;
 using CVU.ERP.Module.Application.Clients;
+using CVU.ERP.StorageService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
 {
@@ -17,13 +18,17 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly ICoreClient _coreClient;
+        private readonly IPersonalStorageClient _personalStorageClient;
 
-
-        public GetContractorQueryHandler(AppDbContext appDbContext, IMapper mapper, ICoreClient coreClient)
+        public GetContractorQueryHandler(AppDbContext appDbContext, 
+            IMapper mapper, 
+            ICoreClient coreClient, 
+            IPersonalStorageClient personalStorageClient)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _coreClient = coreClient;
+            _personalStorageClient = personalStorageClient;
         }
 
         public async Task<ContractorDetailsDto> Handle(GetContractorQuery request, CancellationToken cancellationToken)
@@ -36,7 +41,6 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
                 .Include(r => r.BloodType)
                 .Include(r => r.Studies)
                 .Include( r=> r.Contacts)
-                .Include(c => c.ByteArrayFiles)
                 .Include(x => x.Contracts)
                 .Include(x => x.UserProfile)
                 .Include(x => x.Bulletin)
@@ -54,7 +58,6 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
                     BloodTypeId = c.BloodTypeId,
                     Studies = c.Studies,
                     Contacts = c.Contacts,
-                    ByteArrayFiles = c.ByteArrayFiles,
                     Contracts = c.Contracts,
                     UserProfile = c.UserProfile,
                     Bulletin = c.Bulletin,
@@ -62,9 +65,12 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
                 })
                 .FirstAsync(rt => rt.Id == request.Id);
 
+
             var mappedContractor = _mapper.Map<ContractorDetailsDto>(contractor);
 
             mappedContractor.HasUserProfile = await GetUserProfile(contractor.UserProfile);
+            mappedContractor.HasEmploymentRequest = await _personalStorageClient.HasEmploymentRequest(request.Id);
+            mappedContractor.HasIdentityDocuments = await _personalStorageClient.HasIdentityDocuments(request.Id);
 
             return mappedContractor;
         }
@@ -74,5 +80,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
             //return userProfile != null && await _coreClient.ExistUserInCore(userProfile.UserId);
             return true;
         }
+
+        
     }
 }

@@ -11,8 +11,6 @@ namespace CODWER.RERU.Personal.Application.Profiles.Vacations.SubordinatesVacati
             CreateMap<Vacation, SubordinateVacationDto>()
                 .ForMember(x => x.ContractorName, opts => opts.MapFrom(x => x.Contractor.FirstName))
                 .ForMember(x => x.ContractorLastName, opts => opts.MapFrom(x => x.Contractor.LastName))
-                .ForMember(x => x.VacationRequestName, opts => opts.MapFrom(x => x.VacationRequest.FileName))
-                .ForMember(x => x.VacationOrderName, opts => opts.MapFrom(x => x.VacationOrder.FileName))
                 ;
         }
     }

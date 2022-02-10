@@ -1,8 +1,8 @@
 ﻿using CODWER.RERU.Personal.Application.Validation;
 using CODWER.RERU.Personal.Application.Validators.EnumValidators;
-using CODWER.RERU.Personal.Data.Entities.Files;
 using CODWER.RERU.Personal.DataTransferObjects.Documents;
 using CVU.ERP.Common.Validation;
+using CVU.ERP.StorageService.Entities;
 using FluentValidation;
 
 namespace CODWER.RERU.Personal.Application.DocumentTemplates

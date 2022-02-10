@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Positions;
+using CVU.ERP.StorageService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,11 +13,15 @@ namespace CODWER.RERU.Personal.Application.Positions.GetPosition
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly IStorageFileService _storageFileService;
 
-        public GetPositionQueryHandler(AppDbContext appDbContext, IMapper mapper)
+        public GetPositionQueryHandler(AppDbContext appDbContext, 
+            IMapper mapper, 
+            IStorageFileService storageFileService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _storageFileService = storageFileService;
         }
 
         public async Task<PositionDto> Handle(GetPositionQuery request, CancellationToken cancellationToken)
@@ -25,10 +30,11 @@ namespace CODWER.RERU.Personal.Application.Positions.GetPosition
                 .Include(x=>x.Department)
                 .Include(x=>x.OrganizationRole)
                 .Include(x => x.Contractor)
-                .Include(x => x.Order)
                 .FirstAsync(x => x.Id == request.Id);
 
             var mappedItem = _mapper.Map<PositionDto>(item);
+
+            mappedItem.OrderName = await _storageFileService.GetFileName(mappedItem.OrderId);
 
             return mappedItem;
         }

@@ -6,6 +6,7 @@ using CODWER.RERU.Personal.Data.Entities.Enums;
 using CODWER.RERU.Personal.Data.Entities.Files;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CVU.ERP.Module.Common.MessageCodes;
+using CVU.ERP.StorageService.Entities;
 using FluentValidation;
 
 namespace CODWER.RERU.Personal.Application.Profiles.ContractorFiles
@@ -14,10 +15,10 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorFiles
     {
         public GetContractorFilesQueryValidator(IUserProfileService userProfileService, AppDbContext appDbContext)
         {
-            RuleFor(x => (int)x.Type)
+            RuleFor(x => (int)x.FileType)
                 .SetValidator(new ExistInEnumValidator<FieldTypeEnum>());
 
-            RuleFor(x => x.Type)
+            RuleFor(x => x.FileType)
                 .Must(x => x != null)
                 .WithErrorCode(ValidationCodes.INVALID_FILE_TYPE)
                 .WithMessage(ValidationMessages.InvalidReference);
@@ -30,25 +31,25 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorFiles
             When(x => permission != null, () =>
             {
 
-                When(x => x.Type == FileTypeEnum.Order, () =>
+                When(x => x.FileType == FileTypeEnum.order, () =>
                 {
                     RuleFor(x => permission.GetDocumentsDataOrders)
                         .Must(x => x);
                 });
 
-                When(x => x.Type == FileTypeEnum.Cim, () =>
+                When(x => x.FileType == FileTypeEnum.cim, () =>
                 {
                     RuleFor(x => permission.GetDocumentsDataCim)
                         .Must(x => x);
                 });
 
-                When(x => x.Type == FileTypeEnum.Identity, () =>
+                When(x => x.FileType == FileTypeEnum.identityfiles, () =>
                 {
                     RuleFor(x => permission.GetDocumentsDataIdentity)
                         .Must(x => x);
                 });
 
-                When(x => x.Type == FileTypeEnum.Request, () =>
+                When(x => x.FileType == FileTypeEnum.request, () =>
                 {
                     RuleFor(x => permission.GetDocumentsDataRequest)
                         .Must(x => x);

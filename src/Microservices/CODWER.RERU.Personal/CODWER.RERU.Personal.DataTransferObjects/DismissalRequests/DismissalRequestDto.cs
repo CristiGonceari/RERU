@@ -13,10 +13,10 @@ namespace CODWER.RERU.Personal.DataTransferObjects.DismissalRequests
         public string ContractorName { get; set; }
         public string ContractorLastName { get; set; }
 
-        public int? RequestId { get; set; }
+        public string RequestId { get; set; }
         public string RequestName { get; set; }
 
-        public int? OrderId { get; set; }
+        public string OrderId { get; set; }
         public string OrderName { get; set; }
 
         public int PositionId { get; set; }

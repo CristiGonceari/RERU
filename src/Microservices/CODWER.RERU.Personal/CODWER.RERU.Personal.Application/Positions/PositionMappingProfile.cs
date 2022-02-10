@@ -19,8 +19,7 @@ namespace CODWER.RERU.Personal.Application.Positions
             CreateMap<Position, PositionDto>()
                 .ForMember(x => x.ContractorName, opts => opts.MapFrom(op => op.Contractor.GetFullName()))
                 .ForMember(x => x.DepartmentName, opts => opts.MapFrom(op => op.Department.Name))
-                .ForMember(x => x.OrganizationRoleName, opts => opts.MapFrom(op => op.OrganizationRole.Name))
-                .ForMember(x => x.OrderName, opts => opts.MapFrom(op => op.Order.FileName));
+                .ForMember(x => x.OrganizationRoleName, opts => opts.MapFrom(op => op.OrganizationRole.Name));
 
             CreateMap<AddEditPositionFromContractorDto, Position>()
                 .ForMember(x => x.Id, opts => opts.Ignore())

@@ -1,5 +1,5 @@
-﻿using CODWER.RERU.Personal.Data.Entities.Files;
-using CVU.ERP.Common.Data.Entities;
+﻿using CVU.ERP.Common.Data.Entities;
+using CVU.ERP.StorageService.Entities;
 
 namespace CODWER.RERU.Personal.Data.Entities.Documents
 {
