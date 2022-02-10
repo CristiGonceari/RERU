@@ -9,7 +9,8 @@ namespace CODWER.RERU.Core.Data.Persistence.Helpers
         public static IQueryable<UserProfile> IncludeBasic(this IQueryable<UserProfile> userProfiles)
         {
             return userProfiles
-            .Include(up => up.ModuleRoles.OrderByDescending(mr => mr.ModuleRole.Module.Priority))
+                .Include(up=>up.Identities)
+                .Include(up => up.ModuleRoles.OrderByDescending(mr => mr.ModuleRole.Module.Priority))
                 .ThenInclude(upmr => upmr.ModuleRole)
                 .ThenInclude(mr => mr.Module)
 
