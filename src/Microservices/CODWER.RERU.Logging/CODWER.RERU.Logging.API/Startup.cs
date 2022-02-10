@@ -34,7 +34,7 @@ namespace CODWER.RERU.Logging.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<LoggingDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("Log"),
+                    options.UseNpgsql(Configuration.GetConnectionString("Log"),
                             b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name)));
 
             services.AddTransient<IPaginationService, PaginationService>();

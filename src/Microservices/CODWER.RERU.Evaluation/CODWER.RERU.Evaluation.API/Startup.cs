@@ -7,7 +7,6 @@ using CVU.ERP.Logging.DependencyInjection;
 using CVU.ERP.MessageQueue;
 using CVU.ERP.Module;
 using CVU.ERP.Module.Application.DependencyInjection;
-using CVU.ERP.StorageService.Models;
 using FluentValidation.AspNetCore;
 using Hangfire;
 using MediatR;
@@ -16,7 +15,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,6 +24,7 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using System;
 using System.Text;
+using Hangfire.PostgreSql;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
@@ -128,7 +127,7 @@ namespace CODWER.RERU.Evaluation.API
             services.AddCommonLoggingContext(Configuration);
 
             services.AddHangfire(config =>
-                config.UseSqlServerStorage(Configuration.GetConnectionString("Default")));
+                config.UsePostgreSqlStorage(Configuration.GetConnectionString("Default")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

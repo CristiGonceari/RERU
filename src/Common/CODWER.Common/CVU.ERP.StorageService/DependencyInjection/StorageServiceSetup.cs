@@ -12,7 +12,7 @@ namespace CVU.ERP.StorageService.DependencyInjection
         {
 
             services.AddDbContext<StorageDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Storage"),
+                options.UseNpgsql(configuration.GetConnectionString("Storage"),
                     b => b.MigrationsAssembly(typeof(StorageDbContext).GetTypeInfo().Assembly.GetName().Name)));
 
             return services;

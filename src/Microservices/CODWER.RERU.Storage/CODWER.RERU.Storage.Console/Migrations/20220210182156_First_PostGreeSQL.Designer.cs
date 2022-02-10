@@ -3,62 +3,62 @@ using System;
 using CVU.ERP.StorageService.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CODWER.RERU.Storage.Console.Migrations
 {
     [DbContext(typeof(StorageDbContext))]
-    [Migration("20220210112807_Add_more_fileTypes")]
-    partial class Add_more_fileTypes
+    [Migration("20220210182156_First_PostGreeSQL")]
+    partial class First_PostGreeSQL
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("CVU.ERP.StorageService.Entities.File", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("BucketName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("CreateById")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("DeleteTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("FileType")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UniqueFileName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UpdateById")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -70,16 +70,15 @@ namespace CODWER.RERU.Storage.Console.Migrations
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CVU.ERP.StorageService.Entities.FileTypeEnum>", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
-                        .IsUnique()
-                        .HasFilter("[Name] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("FileTypeEnum");
 
@@ -87,52 +86,52 @@ namespace CODWER.RERU.Storage.Console.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Question"
+                            Name = "question"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "TestTemplate"
+                            Name = "testtemplate"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Test"
+                            Name = "test"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Media"
+                            Name = "media"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Documents"
+                            Name = "documents"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "IdentityFiles"
+                            Name = "identityfiles"
                         },
                         new
                         {
                             Id = 7,
-                            Name = "Photos"
+                            Name = "photos"
                         },
                         new
                         {
                             Id = 8,
-                            Name = "Request"
+                            Name = "request"
                         },
                         new
                         {
                             Id = 9,
-                            Name = "Order"
+                            Name = "order"
                         },
                         new
                         {
                             Id = 10,
-                            Name = "Cim"
+                            Name = "cim"
                         });
                 });
 

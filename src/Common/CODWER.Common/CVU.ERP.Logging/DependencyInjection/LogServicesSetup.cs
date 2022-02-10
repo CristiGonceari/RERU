@@ -12,7 +12,7 @@ namespace CVU.ERP.Logging.DependencyInjection
         {
 
             services.AddDbContext<LoggingDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Log"),
+                options.UseNpgsql(configuration.GetConnectionString("Log"),
                     b => b.MigrationsAssembly(typeof(LoggingDbContext).GetTypeInfo().Assembly.GetName().Name)));
 
             return services;
