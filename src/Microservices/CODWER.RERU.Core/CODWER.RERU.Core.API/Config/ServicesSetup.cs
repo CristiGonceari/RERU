@@ -18,29 +18,13 @@ namespace CODWER.RERU.Core.API.Config {
             //Add framework services.
             services
                 .AddDbContext<CoreDbContext> (options =>
-                    options
-                    .UseSqlServer (configuration
-                        .GetConnectionString ("Default"),
-                        b =>
-                        b
-                        .MigrationsAssembly (typeof (CoreDbContext)
-                            .GetTypeInfo ()
-                            .Assembly
-                            .GetName ()
-                            .Name)));
+                    options.UseNpgsql(configuration.GetConnectionString ("Default"),
+                        b => b.MigrationsAssembly (typeof (CoreDbContext).GetTypeInfo ().Assembly.GetName ().Name)));
 
             services
                 .AddDbContext<UserManagementDbContext> (options =>
-                    options
-                    .UseSqlServer (configuration
-                        .GetConnectionString ("Identity"),
-                        b =>
-                        b
-                        .MigrationsAssembly (typeof (UserManagementDbContext)
-                            .GetTypeInfo ()
-                            .Assembly
-                            .GetName ()
-                            .Name)));
+                    options.UseNpgsql(configuration.GetConnectionString ("Identity"),
+                        b => b.MigrationsAssembly (typeof (UserManagementDbContext).GetTypeInfo ().Assembly.GetName ().Name)));
 
         }
         #endregion

@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
+namespace CODWER.RERU.Storage.Console.Migrations
 {
-    public partial class AddFiles : Migration
+    public partial class First_PostGreeSQL : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,8 +11,8 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                 name: "FileTypeEnum",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -23,18 +23,18 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                 name: "Files",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UniqueFileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FileType = table.Column<int>(type: "int", nullable: false),
-                    BucketName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreateById = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdateById = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeleteTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    FileName = table.Column<string>(type: "text", nullable: true),
+                    UniqueFileName = table.Column<string>(type: "text", nullable: true),
+                    Type = table.Column<string>(type: "text", nullable: true),
+                    FileType = table.Column<int>(type: "integer", nullable: false),
+                    BucketName = table.Column<string>(type: "text", nullable: true),
+                    CreateById = table.Column<string>(type: "text", nullable: true),
+                    UpdateById = table.Column<string>(type: "text", nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    DeleteTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -52,10 +52,16 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 0, "Question" },
-                    { 1, "TestTemplate" },
-                    { 2, "Test" },
-                    { 3, "Media" }
+                    { 1, "question" },
+                    { 2, "testtemplate" },
+                    { 3, "test" },
+                    { 4, "media" },
+                    { 5, "documents" },
+                    { 6, "identityfiles" },
+                    { 7, "photos" },
+                    { 8, "request" },
+                    { 9, "order" },
+                    { 10, "cim" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -67,8 +73,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                 name: "IX_FileTypeEnum_Name",
                 table: "FileTypeEnum",
                 column: "Name",
-                unique: true,
-                filter: "[Name] IS NOT NULL");
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

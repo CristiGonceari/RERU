@@ -103,7 +103,7 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             services.AddTransient<IStorageFileService, StorageFileService>();
 
             services.AddDbContext<StorageDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Storage"),
+                options.UseNpgsql(configuration.GetConnectionString("Storage"),
                     b => b.MigrationsAssembly(typeof(StorageDbContext).GetTypeInfo().Assembly.GetName().Name)));
 
             services.AddTransient(typeof(IStorageFileService), typeof(StorageFileService));
@@ -111,7 +111,7 @@ namespace CVU.ERP.Module.Application.DependencyInjection
 
 
             services.AddDbContext<LoggingDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Log"),
+                options.UseNpgsql(configuration.GetConnectionString("Log"),
                     b => b.MigrationsAssembly(typeof(LoggingDbContext).GetTypeInfo().Assembly.GetName().Name)));
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<INotificationService, NotificationService>();

@@ -1,6 +1,5 @@
 using CVU.ERP.Module.API.DependencyInjection;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper;
-using CVU.ERP.Module.Common.ExceptionHandlers;
 using CVU.ERP.Module.Common.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -11,13 +10,16 @@ using Microsoft.Extensions.Options;
 namespace CVU.ERP.Module {
     public static class ERPModuleDependencyInjection {
 
-        public static IMvcBuilder AddERPModuleControllers (this IMvcBuilder builder) {
+        public static IMvcBuilder AddERPModuleControllers (this IMvcBuilder builder) 
+        {
             builder.AddCommonModuleControllers ();
             return builder;
         }
 
-        public static IServiceCollection AddERPModuleServices (this IServiceCollection services, IConfiguration configuration) {
+        public static IServiceCollection AddERPModuleServices (this IServiceCollection services, IConfiguration configuration) 
+        {
             services.Configure<ModuleConfiguration> (configuration.GetSection ("Module"));
+           
             var sp = services.BuildServiceProvider ();
             var erpConfiguration = sp.GetService<IOptions<ModuleConfiguration>> ()?.Value;
 
@@ -31,10 +33,12 @@ namespace CVU.ERP.Module {
                         config.RequireHttpsMetadata = erpConfiguration.Authentication.RequireHttpsMetadata;
                     });
             }
+
             return services;
         }
 
-        public static IApplicationBuilder UseERPMiddlewares (this IApplicationBuilder builder) {
+        public static IApplicationBuilder UseERPMiddlewares (this IApplicationBuilder builder) 
+        {
             builder.UseMiddleware<ResponseWrapperMiddleware> (new ResponseWrapperOptions ());
             return builder;
         }
