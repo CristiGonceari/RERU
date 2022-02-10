@@ -27,7 +27,7 @@ namespace CODWER.RERU.Personal.Data.Entities
             Ranks = new HashSet<Rank>();
             Vacations = new HashSet<Vacation>();
 
-            ByteArrayFiles = new HashSet<ByteArrayFile>();
+            //ByteArrayFiles = new HashSet<ByteArrayFile>();
 
             Studies = new HashSet<Study>();
 
@@ -64,7 +64,7 @@ namespace CODWER.RERU.Personal.Data.Entities
         public virtual ICollection<Vacation> Vacations { get; set; }
         public virtual ICollection<Contact> Contacts { get; set; }
 
-        public virtual ICollection<ByteArrayFile> ByteArrayFiles { get; set; }
+        //public virtual ICollection<ByteArrayFile> ByteArrayFiles { get; set; }
 
         public virtual ICollection<Study> Studies { get; set; }
 
@@ -72,6 +72,8 @@ namespace CODWER.RERU.Personal.Data.Entities
 
         public virtual ICollection<IndividualContract> Contracts { get; set; }
         public virtual ICollection<IndividualContract> Contractors { get; set; }
+
+        public virtual ICollection<ContractorFile> ContractorFiles { get; set; }
 
         public Position GetLastPosition() => Positions.OrderByDescending(x => x.FromDate).FirstOrDefault();
 

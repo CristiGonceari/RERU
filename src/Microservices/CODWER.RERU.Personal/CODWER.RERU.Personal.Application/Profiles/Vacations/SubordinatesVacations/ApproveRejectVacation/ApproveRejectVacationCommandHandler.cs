@@ -8,6 +8,8 @@ using CODWER.RERU.Personal.Application.TemplateParsers;
 using CODWER.RERU.Personal.Data.Entities.Enums;
 using CODWER.RERU.Personal.Data.Entities.Files;
 using CODWER.RERU.Personal.Data.Persistence.Context;
+using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,15 +49,15 @@ namespace CODWER.RERU.Personal.Application.Profiles.Vacations.SubordinatesVacati
             return Unit.Value;
         }
 
-        private async Task<int> SaveFile(int contractorId, int vacationId)
+        private async Task<string> SaveFile(int contractorId, int vacationId)
         {
             var myDictionary = await GetMyDictionary(contractorId, vacationId);
             var parsedPdf = await _templateConvertor.GetPdfFromHtml(myDictionary, _fileName);
 
-            return await _storageFileService.AddFile(contractorId,
+            return await _storageFileService.AddFile(
                 parsedPdf.Name,
-                parsedPdf.ContentType,
                 FileTypeEnum.Order,
+                parsedPdf.ContentType,
                 parsedPdf.Content);
         }
 

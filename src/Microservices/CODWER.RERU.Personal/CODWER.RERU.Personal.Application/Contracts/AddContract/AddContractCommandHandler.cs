@@ -1,19 +1,19 @@
-﻿using System;
+﻿using AutoMapper;
+using CODWER.RERU.Personal.Application.TemplateParsers;
+using CODWER.RERU.Personal.Data.Entities;
+using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
+using CODWER.RERU.Personal.Data.Persistence.Context;
+using CODWER.RERU.Personal.DataTransferObjects.Employers;
+using CVU.ERP.StorageService;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using CODWER.RERU.Personal.Application.Services;
-using CODWER.RERU.Personal.Application.TemplateParsers;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
-using CODWER.RERU.Personal.Data.Entities.Files;
-using CODWER.RERU.Personal.Data.Persistence.Context;
-using CODWER.RERU.Personal.DataTransferObjects.Employers;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using FileTypeEnum = CVU.ERP.StorageService.Entities.FileTypeEnum;
 
 namespace CODWER.RERU.Personal.Application.Contracts.AddContract
 {
@@ -50,17 +50,16 @@ namespace CODWER.RERU.Personal.Application.Contracts.AddContract
             return contract.Id;
         }
 
-        private async Task<int> SaveFile(int contractorId, IndividualContract contract)
+        private async Task<string> SaveFile(int contractorId, IndividualContract contract)
         {
             var myDictionary = await GetMyDictionary(contractorId, contract);
             var fileName = "ContractorTemplates/Contract Individual De Munca.html";
 
             var parsedPdf = await _templateConvertor.GetPdfFromHtml(myDictionary, fileName);
-
-            return await _storageFileService.AddFile(contractorId,
-                parsedPdf.Name,
-                parsedPdf.ContentType,
-                FileTypeEnum.Cim,
+            return await _storageFileService.AddFile(
+                parsedPdf.Name, 
+                FileTypeEnum.Cim, 
+                parsedPdf.ContentType, 
                 parsedPdf.Content);
         }
 

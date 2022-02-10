@@ -7,6 +7,6 @@ namespace CODWER.RERU.Personal.Application.Contractors.ContractorFile.DeleteCont
     [ModuleOperation(permission: PermissionCodes.CONTRACTOR_FILE_GENERAL_ACCESS)]
     public class DeleteContractorFileCommand : IRequest<Unit>
     {
-        public int FileId { get; set; }
+        public string FileId { get; set; }
     }
 }

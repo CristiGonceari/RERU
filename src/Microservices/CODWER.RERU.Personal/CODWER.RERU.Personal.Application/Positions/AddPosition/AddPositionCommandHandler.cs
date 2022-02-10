@@ -10,6 +10,8 @@ using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
 using CODWER.RERU.Personal.Data.Entities.Enums;
 using CODWER.RERU.Personal.Data.Entities.Files;
 using CODWER.RERU.Personal.Data.Persistence.Context;
+using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,16 +47,16 @@ namespace CODWER.RERU.Personal.Application.Positions.AddPosition
             return item.Id;
         }
 
-        private async Task<int> SaveFile(AddPositionCommand request, Position item)
+        private async Task<string> SaveFile(AddPositionCommand request, Position item)
         {
             var myDictionary = await GetMyDictionary(request.Data.ContractorId, item);
 
             var parsedPdf = await _templateConvertor.GetPdfFromHtml(myDictionary, _fileName);
 
-            return await _storageFileService.AddFile(request.Data.ContractorId,
+            return await _storageFileService.AddFile(
                 parsedPdf.Name,
-                parsedPdf.ContentType,
                 FileTypeEnum.Order,
+                parsedPdf.ContentType,
                 parsedPdf.Content);
         }
 

@@ -1,4 +1,4 @@
-﻿using CODWER.RERU.Personal.DataTransferObjects.Files;
+﻿using CVU.ERP.Common.DataTransferObjects.Files;
 using MediatR;
 
 namespace CODWER.RERU.Personal.Application.UserGuide.GetUserGuide

@@ -1,5 +1,4 @@
 ﻿using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Entities.Files;
 using CVU.ERP.Common.Data.Entities;
 using System;
 using System.Collections.Generic;
@@ -32,8 +31,7 @@ namespace CODWER.RERU.Personal.Data.Entities.ContractorEvents
         public int ContractorId { get; set; }
         public Contractor Contractor { get; set; }
 
-        public int? OrderId { get; set; }
-        public ByteArrayFile Order { get; set; }
+        public string OrderId { get; set; }
 
         public ICollection<DismissalRequest> DismissalRequests { get; set; }
     }

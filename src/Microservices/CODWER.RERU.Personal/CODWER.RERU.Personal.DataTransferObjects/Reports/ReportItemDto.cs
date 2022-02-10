@@ -1,13 +1,13 @@
-﻿using System;
-using CODWER.RERU.Personal.Data.Entities.Files;
+﻿using CVU.ERP.StorageService.Entities;
+using System;
 
 namespace CODWER.RERU.Personal.DataTransferObjects.Reports
 {
     public class ReportItemDto
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public FileTypeEnum Type { get; set; }
-        public string Name { get; set; }
+        public string FileName { get; set; }
         public int ContractorId { get; set; }
         public string ContractorName { get; set; }
         public string ContractorLastName { get; set; }

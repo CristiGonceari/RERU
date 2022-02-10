@@ -9,6 +9,8 @@ using CODWER.RERU.Personal.Data.Entities.Enums;
 using CODWER.RERU.Personal.Data.Entities.Files;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Employers;
+using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -39,28 +41,50 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             _fileNameRequest = "ContractorTemplates/Requests/Cerere Cu Privire La Demisionare.html";
             _fileNameOrder = "ContractorTemplates/Orders/Ordin Cu Privire La Demisionare.html";
         }
-        public async Task<int> SaveRequestFile(int contractorId, DateTime from)
+        public async Task<string> SaveRequestFile(int contractorId, DateTime from)
         {
             var myDictionary = await GetRequestDictionary(contractorId, from);
             var parsedPdf = await _templateConvertor.GetPdfFromHtml(myDictionary, _fileNameRequest);
 
-            return await _storageFileService.AddFile(contractorId,
+            var fileId = await _storageFileService.AddFile(
                 parsedPdf.Name,
-                parsedPdf.ContentType,
                 FileTypeEnum.Request,
+                parsedPdf.ContentType,
                 parsedPdf.Content);
+
+            var contractorFile = new ContractorFile
+            {
+                ContractorId = contractorId,
+                FileId = fileId
+            };
+
+            await _appDbContext.ContractorFiles.AddAsync(contractorFile);
+            await _appDbContext.SaveChangesAsync();
+
+            return fileId;
         }
 
-        public async Task<int> SaveOrderFile(int contractorId, DateTime from)
+        public async Task<string> SaveOrderFile(int contractorId, DateTime from)
         {
             var myDictionary = await GetOrderDictionary(contractorId, from);
             var parsedPdf = await _templateConvertor.GetPdfFromHtml(myDictionary, _fileNameOrder);
 
-            return await _storageFileService.AddFile(contractorId,
+            var fileId = await _storageFileService.AddFile(
                 parsedPdf.Name,
-                parsedPdf.ContentType,
                 FileTypeEnum.Order,
+                parsedPdf.ContentType,
                 parsedPdf.Content);
+
+            var contractorFile = new ContractorFile
+            {
+                ContractorId = contractorId,
+                FileId = fileId
+            };
+
+            await _appDbContext.ContractorFiles.AddAsync(contractorFile);
+            await _appDbContext.SaveChangesAsync();
+
+            return fileId;
         }
 
         private async Task<Dictionary<string, string>> GetRequestDictionary(int contractorId, DateTime from)

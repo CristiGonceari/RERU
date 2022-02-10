@@ -71,7 +71,7 @@ namespace CODWER.RERU.Personal.Data.Entities.StaticExtensions
             return items;
         }
 
-        public static IQueryable<ByteArrayFile> FilterOrdersByContractorName(this IQueryable<ByteArrayFile> items, string contractorName)
+        public static IQueryable<ContractorFile> FilterOrdersByContractorName(this IQueryable<ContractorFile> items, string contractorName)
         {
             var toSearch = contractorName.Split(' ').ToList();
 

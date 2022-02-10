@@ -1,6 +1,6 @@
-﻿using CODWER.RERU.Personal.Data.Entities.Files;
-using CODWER.RERU.Personal.DataTransferObjects.Documents;
+﻿using CODWER.RERU.Personal.DataTransferObjects.Documents;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.StorageService.Entities;
 using MediatR;
 
 namespace CODWER.RERU.Personal.Application.DocumentGenerator.GetFilteredByEnum

@@ -1,8 +1,9 @@
 ﻿using System;
+using CVU.ERP.Common.Data.Entities;
 
 namespace CVU.ERP.StorageService.Entities
 {
-    public class File
+    public class File : SoftDeleteBaseEntity
     {
         public Guid Id { get; set; }
         public string FileName { get; set; }

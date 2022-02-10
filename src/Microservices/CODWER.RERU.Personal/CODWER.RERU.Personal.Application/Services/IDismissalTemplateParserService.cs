@@ -5,7 +5,7 @@ namespace CODWER.RERU.Personal.Application.Services
 {
     public interface IDismissalTemplateParserService
     {
-        Task<int> SaveRequestFile(int contractorId, DateTime from);
-        Task<int> SaveOrderFile(int contractorId, DateTime from);
+        Task<string> SaveRequestFile(int contractorId, DateTime from);
+        Task<string> SaveOrderFile(int contractorId, DateTime from);
     }
 }

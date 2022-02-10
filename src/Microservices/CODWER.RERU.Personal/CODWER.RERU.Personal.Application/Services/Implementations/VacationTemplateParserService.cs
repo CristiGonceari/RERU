@@ -8,6 +8,8 @@ using CODWER.RERU.Personal.Data.Entities.Enums;
 using CODWER.RERU.Personal.Data.Entities.Files;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Employers;
+using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -35,16 +37,27 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         }
 
         #region Request
-        public async Task<int> SaveRequestFile(int contractorId, Vacation vacation)
+        public async Task<string> SaveRequestFile(int contractorId, Vacation vacation)
         {
             var myDictionary = await GetRequestDictionary(contractorId, vacation);
             var parsedPdf = await _templateConvertor.GetPdfFromHtml(myDictionary, GetFullRequestTemplateName(vacation.VacationType));
 
-            return await _storageFileService.AddFile(contractorId,
+            var fileId = await _storageFileService.AddFile(
                 parsedPdf.Name,
-                parsedPdf.ContentType,
                 FileTypeEnum.Request,
+                parsedPdf.ContentType,
                 parsedPdf.Content);
+
+            var contractorFile = new ContractorFile
+            {
+                ContractorId = contractorId,
+                FileId = fileId
+            };
+
+            await _appDbContext.ContractorFiles.AddAsync(contractorFile);
+            await _appDbContext.SaveChangesAsync();
+
+            return fileId;
         }
 
         private async Task<Dictionary<string, string>> GetRequestDictionary(int contractorId, Vacation vacation)
@@ -95,16 +108,27 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         #endregion
 
         #region Order
-        public async Task<int> SaveOrderFile(int contractorId, Vacation vacation)
+        public async Task<string> SaveOrderFile(int contractorId, Vacation vacation)
         {
             var myDictionary = await GetOrderDictionary(contractorId, vacation);
             var parsedPdf = await _templateConvertor.GetPdfFromHtml(myDictionary, _fileName);
 
-            return await _storageFileService.AddFile(contractorId,
+            var fileId = await _storageFileService.AddFile(
                 parsedPdf.Name,
-                parsedPdf.ContentType,
                 FileTypeEnum.Order,
+                parsedPdf.ContentType,
                 parsedPdf.Content);
+
+            var contractorFile = new ContractorFile
+            {
+                ContractorId = contractorId,
+                FileId = fileId
+            };
+
+            await _appDbContext.ContractorFiles.AddAsync(contractorFile);
+            await _appDbContext.SaveChangesAsync();
+
+            return fileId;
         }
 
         private async Task<Dictionary<string, string>> GetOrderDictionary(int contractorId, Vacation vacation)

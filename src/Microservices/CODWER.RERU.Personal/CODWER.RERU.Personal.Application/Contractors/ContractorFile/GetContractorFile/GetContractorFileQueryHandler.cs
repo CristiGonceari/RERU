@@ -1,8 +1,8 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using CODWER.RERU.Personal.Application.Services;
-using CODWER.RERU.Personal.DataTransferObjects.Files;
+﻿using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.StorageService;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.Contractors.ContractorFile.GetContractorFile
 {

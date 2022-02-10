@@ -1,8 +1,8 @@
-﻿using CODWER.RERU.Personal.Data.Entities.Files;
+﻿using CVU.ERP.StorageService.Entities;
 
 namespace CODWER.RERU.Personal.DataTransferObjects.Documents
 {
-   public class AddEditDocumentTemplateDto
+    public class AddEditDocumentTemplateDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

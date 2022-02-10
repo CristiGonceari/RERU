@@ -7,6 +7,8 @@ using CODWER.RERU.Personal.Data.Entities;
 using CODWER.RERU.Personal.Data.Entities.User;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Profiles;
+using CVU.ERP.StorageService.Context;
+using CVU.ERP.StorageService.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,11 +19,16 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContrac
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly UserProfile _userProfile;
+        private readonly StorageDbContext _storageDbContext;
 
-        public GetContractorProfileQueryHandler(AppDbContext appDbContext, IUserProfileService userProfileService, IMapper mapper)
+        public GetContractorProfileQueryHandler(AppDbContext appDbContext, 
+            IUserProfileService userProfileService, 
+            IMapper mapper, 
+            StorageDbContext storageDbContext)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _storageDbContext = storageDbContext;
             _userProfile = userProfileService.GetCurrentUserProfile().Result;
         }
 
@@ -35,7 +42,6 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContrac
                 .Include(r => r.BloodType)
                 .Include(r => r.Studies)
                 .Include(r => r.Contacts)
-                .Include(c => c.ByteArrayFiles)
                 .Include(x => x.Contracts)
                 .Include(x => x.UserProfile)
                 .Include(x => x.Bulletin)
@@ -53,14 +59,27 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContrac
                      BloodType = c.BloodType,
                      Studies = c.Studies,
                      Contacts = c.Contacts,
-                     ByteArrayFiles = c.ByteArrayFiles,
                      Contracts = c.Contracts,
                      UserProfile = c.UserProfile,
                      Bulletin = c.Bulletin
                  })
                 .FirstAsync(rt => rt.Id == _userProfile.ContractorId);
 
+            var files = _storageDbContext.Files
+                .Where(x => contractor.ContractorFiles.Any(i => i.FileId == x.Id.ToString()))
+                .Select(f => new File
+                {
+                    Id = f.Id,
+                    FileName = f.FileName,
+                    Type = f.Type,
+                    FileType = f.FileType
+                })
+                .AsQueryable();
+
             var mappedContractor = _mapper.Map<ContractorProfileDto>(contractor);
+
+            mappedContractor.HasEmploymentRequest = files.Any(x => x.FileType == FileTypeEnum.Request);
+            mappedContractor.HasIdentityDocuments = files.Any(x => x.FileType == FileTypeEnum.IdentityFiles);
 
             return mappedContractor;
         }
