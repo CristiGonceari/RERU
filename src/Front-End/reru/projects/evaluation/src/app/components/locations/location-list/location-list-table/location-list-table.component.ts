@@ -58,7 +58,7 @@ export class LocationListTableComponent implements OnInit {
 			fields: this.headersToPrint,
 			orientation: 1
 		};
-		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'lg' });
+		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.tableData = printData;
 		modalRef.componentInstance.translateData = this.printTranslates;
 		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
@@ -66,16 +66,12 @@ export class LocationListTableComponent implements OnInit {
 	}
 
 	translateData(): void {
-		this.printTranslates = ['print-table', 'orientation', 'portrait', 'landscape', 'fields', 'print-msg', 'cancel', 'print']
+		this.printTranslates = ['print-table', 'print-msg', 'cancel', 'error-msg']
 		forkJoin([
 			this.translate.get('print.print-table'),
-			this.translate.get('print.orientation'),
-			this.translate.get('print.portrait'),
-			this.translate.get('print.landscape'),
-			this.translate.get('print.fields'),
 			this.translate.get('print.print-msg'),
-			this.translate.get('button.cancel'),
-			this.translate.get('button.print')
+			this.translate.get('print.error-msg'),
+			this.translate.get('button.cancel')
 		]).subscribe(
 			(items) => {
 				for (let i=0; i<this.printTranslates.length; i++) {

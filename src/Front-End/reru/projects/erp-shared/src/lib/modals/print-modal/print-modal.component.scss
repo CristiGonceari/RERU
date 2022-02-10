@@ -1,0 +1,32 @@
+.hidden {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+}
+
+input[type=checkbox]+label {
+    span {
+        display: none;
+    }
+}
+
+input[type=checkbox]:checked+label {
+    span {
+        display: block;
+        margin-left: 4px;
+        font-size: 1em;
+    }
+}
+
+.portrait:hover {
+    color: #6cbad3 !important;
+}
+
+.landscape {
+    color: #6cbad3 !important;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.3;
+}
