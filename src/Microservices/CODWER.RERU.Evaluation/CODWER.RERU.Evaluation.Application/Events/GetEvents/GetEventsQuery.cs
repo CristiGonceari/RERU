@@ -3,6 +3,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
+using System;
 
 namespace CODWER.RERU.Evaluation.Application.Events.GetEvents
 {
@@ -11,5 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetEvents
     {
         public string Name { get; set; }
         public string LocationKeyword { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime TillDate { get; set; }
     }
 }

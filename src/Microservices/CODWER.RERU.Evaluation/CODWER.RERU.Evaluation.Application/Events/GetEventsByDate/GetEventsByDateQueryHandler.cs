@@ -1,0 +1,33 @@
+﻿using CODWER.RERU.Evaluation.Data.Entities;
+using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CODWER.RERU.Evaluation.DataTransferObjects.Events;
+using CVU.ERP.Common.Pagination;
+using MediatR;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace CODWER.RERU.Evaluation.Application.Events.GetEventsByDate
+{
+    public class GetEventsByDateQueryHandler : IRequestHandler<GetEventsByDateQuery, PaginatedModel<EventDto>>
+    {
+        private readonly IPaginationService _paginationService;
+        private readonly AppDbContext _appDbContext;
+
+        public GetEventsByDateQueryHandler(AppDbContext appDbContext, IPaginationService paginationService)
+        {
+            _paginationService = paginationService;
+            _appDbContext = appDbContext;
+        }
+
+        public async Task<PaginatedModel<EventDto>> Handle(GetEventsByDateQuery request, CancellationToken cancellationToken)
+        {
+
+            var events = _appDbContext.Events.Where(p => p.FromDate.Date <= request.Date && p.TillDate.Date >= request.Date)
+                                            .AsQueryable();
+
+            return await _paginationService.MapAndPaginateModelAsync<Event, EventDto>(events, request);
+
+        }
+    }
+}
