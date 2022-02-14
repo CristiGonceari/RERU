@@ -72,21 +72,24 @@ namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule
 
         private async Task AddAdministratorUserProfile()
         {
-            var userProfileModuleRoles = new UserProfileModuleRole
+            if (!CoreDbContext.UserProfileModuleRoles.Any())
             {
-                UserProfile = new UserProfile(),
-                ModuleRoleId = 1
-            };
+                var userProfileModuleRoles = new UserProfileModuleRole
+                {
+                    UserProfile = new UserProfile(),
+                    ModuleRoleId = 1
+                };
 
 
-            userProfileModuleRoles.UserProfile.Name = "Administrator";
-            userProfileModuleRoles.UserProfile.LastName = "Platforma";
-            userProfileModuleRoles.UserProfile.IsActive = true;
-            userProfileModuleRoles.UserProfile.RequiresDataEntry = true;
-            userProfileModuleRoles.UserProfile.Identities.Add(new UserProfileIdentity() { Identificator = UserManagementDbContext.Users.First().Id, Type = "local" });
+                userProfileModuleRoles.UserProfile.Name = "Administrator";
+                userProfileModuleRoles.UserProfile.LastName = "Platforma";
+                userProfileModuleRoles.UserProfile.IsActive = true;
+                userProfileModuleRoles.UserProfile.RequiresDataEntry = true;
+                userProfileModuleRoles.UserProfile.Identities.Add(new UserProfileIdentity { Identificator = UserManagementDbContext.Users.First().Id, Type = "local" });
 
-            CoreDbContext.UserProfileModuleRoles.Add(userProfileModuleRoles);
-            await CoreDbContext.SaveChangesAsync();
+                CoreDbContext.UserProfileModuleRoles.Add(userProfileModuleRoles);
+                await CoreDbContext.SaveChangesAsync();
+            }
         }
     }
 }
