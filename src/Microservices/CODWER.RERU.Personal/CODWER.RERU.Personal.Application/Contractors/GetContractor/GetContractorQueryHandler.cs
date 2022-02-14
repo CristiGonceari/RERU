@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.StorageService.Entities;
 
 namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
 {
@@ -69,8 +70,8 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
             var mappedContractor = _mapper.Map<ContractorDetailsDto>(contractor);
 
             mappedContractor.HasUserProfile = await GetUserProfile(contractor.UserProfile);
-            mappedContractor.HasEmploymentRequest = await _personalStorageClient.HasEmploymentRequest(request.Id);
-            mappedContractor.HasIdentityDocuments = await _personalStorageClient.HasIdentityDocuments(request.Id);
+            mappedContractor.HasEmploymentRequest = await _personalStorageClient.HasFile(request.Id, FileTypeEnum.request);
+            mappedContractor.HasIdentityDocuments = await _personalStorageClient.HasFile(request.Id, FileTypeEnum.identityfiles);
 
             return mappedContractor;
         }

@@ -19,9 +19,9 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorPositions.GetContr
         private readonly IUserProfileService _userProfileService;
         private readonly IStorageFileService _storageFileService;
 
-        public GetContractorPositionsQueryHandler(AppDbContext appDbContext, 
-            IPaginationService paginationService, 
-            IUserProfileService userProfileService, 
+        public GetContractorPositionsQueryHandler(AppDbContext appDbContext,
+            IPaginationService paginationService,
+            IUserProfileService userProfileService,
             IStorageFileService storageFileService)
         {
             _appDbContext = appDbContext;
@@ -38,10 +38,16 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorPositions.GetContr
                 .Include(x => x.Department)
                 .Include(x => x.OrganizationRole)
                 .Include(x => x.Contractor)
-                .Where(x=>x.ContractorId == contractorId);
+                .Where(x => x.ContractorId == contractorId);
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Position, PositionDto>(items, request);
 
+            paginatedModel = await GetOrderName(paginatedModel);
+
+            return paginatedModel;
+        }
+        private async Task<PaginatedModel<PositionDto>> GetOrderName(PaginatedModel<PositionDto> paginatedModel)
+        {
             foreach (var item in paginatedModel.Items)
             {
                 item.OrderName = await _storageFileService.GetFileName(item.OrderId);

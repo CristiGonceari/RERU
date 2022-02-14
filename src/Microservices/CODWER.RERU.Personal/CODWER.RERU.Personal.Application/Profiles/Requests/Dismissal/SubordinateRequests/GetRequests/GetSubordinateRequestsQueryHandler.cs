@@ -42,9 +42,15 @@ namespace CODWER.RERU.Personal.Application.Profiles.Requests.Dismissal.Subordina
                         .ThenInclude(p=>p.OrganizationRole)
                 .Where(x => x.Contractor.Contracts.Any(c => c.SuperiorId == contractorId));
 
-            var paginatedModel =
-               await _paginationService.MapAndPaginateModelAsync<DismissalRequest, DismissalRequestDto>(items, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<DismissalRequest, DismissalRequestDto>(items, request);
 
+            paginatedModel = await GetOrderAndRequestName(paginatedModel);
+
+            return paginatedModel;
+        }
+
+        private async Task<PaginatedModel<DismissalRequestDto>> GetOrderAndRequestName(PaginatedModel<DismissalRequestDto> paginatedModel)
+        {
             foreach (var item in paginatedModel.Items)
             {
                 item.OrderName = await _storageFileService.GetFileName(item.OrderId);

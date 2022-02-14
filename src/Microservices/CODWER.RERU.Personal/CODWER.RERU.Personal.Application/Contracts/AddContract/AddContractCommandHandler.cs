@@ -23,14 +23,21 @@ namespace CODWER.RERU.Personal.Application.Contracts.AddContract
         private readonly IMapper _mapper;
         private readonly ITemplateConvertor _templateConvertor;
         private readonly IStorageFileService _storageFileService;
+        private readonly IPersonalStorageClient _personalStorageClient;
         private readonly EmployerData _employerData;
 
-        public AddContractCommandHandler(AppDbContext appDbContext, IMapper mapper, ITemplateConvertor templateConvertor, IOptions<EmployerData> options, IStorageFileService storageFileService)
+        public AddContractCommandHandler(AppDbContext appDbContext, 
+            IMapper mapper, 
+            ITemplateConvertor templateConvertor, 
+            IOptions<EmployerData> options, 
+            IStorageFileService storageFileService, 
+            IPersonalStorageClient personalStorageClient)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _templateConvertor = templateConvertor;
             _storageFileService = storageFileService;
+            _personalStorageClient = personalStorageClient;
             _employerData = options.Value;
         }
 
@@ -56,11 +63,16 @@ namespace CODWER.RERU.Personal.Application.Contracts.AddContract
             var fileName = "ContractorTemplates/Contract Individual De Munca.html";
 
             var parsedPdf = await _templateConvertor.GetPdfFromHtml(myDictionary, fileName);
-            return await _storageFileService.AddFile(
-                parsedPdf.Name, 
-                FileTypeEnum.cim, 
-                parsedPdf.ContentType, 
+
+            var fileId = await _storageFileService.AddFile(
+                parsedPdf.Name,
+                FileTypeEnum.cim,
+                parsedPdf.ContentType,
                 parsedPdf.Content);
+
+            await _personalStorageClient.AddFileToContractor(contractorId, fileId);
+
+            return fileId;
         }
 
         private async Task<Dictionary<string, string>> GetMyDictionary(int contractorId, IndividualContract contract)

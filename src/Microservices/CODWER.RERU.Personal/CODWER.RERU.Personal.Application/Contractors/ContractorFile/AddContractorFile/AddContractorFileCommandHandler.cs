@@ -1,20 +1,19 @@
 ﻿using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Models;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Persistence.Context;
-using CVU.ERP.StorageService.Models;
 
 namespace CODWER.RERU.Personal.Application.Contractors.ContractorFile.AddContractorFile
 {
     public class AddContractorFileCommandHandler : IRequestHandler<AddContractorFileCommand, string>
     {
         private readonly IStorageFileService _fileService;
-        private readonly AppDbContext _appDbContext;
-        public AddContractorFileCommandHandler(IStorageFileService fileService, AppDbContext appDbContext)
+        private readonly IPersonalStorageClient _personalStorageClient;
+        public AddContractorFileCommandHandler(IStorageFileService fileService, IPersonalStorageClient personalStorageClient)
         {
             _fileService = fileService;
-            _appDbContext = appDbContext;
+            _personalStorageClient = personalStorageClient;
         }
 
         public async Task<string> Handle(AddContractorFileCommand request, CancellationToken cancellationToken)
@@ -25,18 +24,11 @@ namespace CODWER.RERU.Personal.Application.Contractors.ContractorFile.AddContrac
                 Type = request.Data.Type
             };
 
-            var addedFile = await _fileService.AddFile(file);
+            var fileId = await _fileService.AddFile(file);
 
-            var fileToAdd = new Data.Entities.Files.ContractorFile
-            {
-                ContractorId = request.Data.ContractorId,
-                FileId = addedFile
-            };
+            await _personalStorageClient.AddFileToContractor(request.Data.ContractorId, fileId);
 
-            await _appDbContext.ContractorFiles.AddAsync(fileToAdd);
-            await _appDbContext.SaveChangesAsync();
-
-            return addedFile;
+            return fileId;
         }
     }
 }

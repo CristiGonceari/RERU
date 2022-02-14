@@ -32,6 +32,13 @@ namespace CODWER.RERU.Personal.Application.DismissalRequests.GetDismissalByContr
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Data.Entities.ContractorEvents.DismissalRequest, MyDismissalRequestDto>(items, request);
 
+            paginatedModel = await GetOrderAndRequestName(paginatedModel);
+
+            return paginatedModel;
+        }
+
+        private async Task<PaginatedModel<MyDismissalRequestDto>> GetOrderAndRequestName(PaginatedModel<MyDismissalRequestDto> paginatedModel)
+        {
             foreach (var item in paginatedModel.Items)
             {
                 item.OrderName = await _storageFileService.GetFileName(item.OrderId);
