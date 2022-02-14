@@ -44,10 +44,16 @@ namespace CODWER.RERU.Personal.Application.Profiles.Vacations.MyVacations.GetVac
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Vacation, MyVacationDto>(items, request);
 
+            paginatedModel = await GetVacationOrderAndRequestName(paginatedModel);
+
+            return paginatedModel;
+        }
+        private async Task<PaginatedModel<MyVacationDto>> GetVacationOrderAndRequestName(PaginatedModel<MyVacationDto> paginatedModel)
+        {
             foreach (var item in paginatedModel.Items)
             {
                 item.VacationOrderName = await _storageFileService.GetFileName(item.VacationOrderId);
-                item.VacationRequestName = await _storageFileService.GetFileName(item.VacationRequestName);
+                item.VacationRequestName = await _storageFileService.GetFileName(item.VacationRequestId);
             }
 
             return paginatedModel;

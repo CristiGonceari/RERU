@@ -25,7 +25,6 @@ namespace CODWER.RERU.Personal.Application.Vacations.GetContractorsVacations
             _paginationService = paginationService;
             _storageFileService = storageFileService;
         }
-
         public async Task<PaginatedModel<VacationDto>> Handle(GetContractorVacationsQuery request, CancellationToken cancellationToken)
         {
             var itemVacation = _appDbContext.Vacations
@@ -35,13 +34,20 @@ namespace CODWER.RERU.Personal.Application.Vacations.GetContractorsVacations
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Vacation, VacationDto>(itemVacation, request);
 
+            paginatedModel = await GetVacationOrderAndRequestName(paginatedModel);
+
+            return paginatedModel;
+        }
+
+        private async Task<PaginatedModel<VacationDto>> GetVacationOrderAndRequestName(PaginatedModel<VacationDto> paginatedModel)
+        {
             foreach (var item in paginatedModel.Items)
             {
                 item.VacationOrderName = await _storageFileService.GetFileName(item.VacationOrderId);
                 item.VacationRequestName = await _storageFileService.GetFileName(item.VacationRequestId);
             }
-            return paginatedModel;
 
+            return paginatedModel;
         }
     }
 }

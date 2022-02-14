@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using CODWER.RERU.Personal.Application.Services;
+﻿using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Vacations;
@@ -10,6 +6,10 @@ using CVU.ERP.Common.Pagination;
 using CVU.ERP.StorageService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.Vacations.GetMyVacations
 {
@@ -50,6 +50,12 @@ namespace CODWER.RERU.Personal.Application.Vacations.GetMyVacations
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Vacation, VacationDto>(items, request);
 
+            paginatedModel = await GetVacationOrderAndRequestName(paginatedModel);
+
+            return paginatedModel;
+        }
+        private async Task<PaginatedModel<VacationDto>> GetVacationOrderAndRequestName(PaginatedModel<VacationDto> paginatedModel)
+        {
             foreach (var item in paginatedModel.Items)
             {
                 item.VacationOrderName = await _storageFileService.GetFileName(item.VacationOrderId);

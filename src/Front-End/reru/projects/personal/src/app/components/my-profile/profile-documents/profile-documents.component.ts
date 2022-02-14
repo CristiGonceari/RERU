@@ -73,8 +73,7 @@ export class ProfileDocumentsComponent implements OnInit {
     if (!this.permissions.getDocumentsDataOrders && this.selectedType ==  DocumentTypeEnum.Order ||
       !this.permissions.getDocumentsDataIdentity && this.selectedType ==  DocumentTypeEnum.Identity ||
       !this.permissions.getDocumentsDataCim && this.selectedType ==  DocumentTypeEnum.IEC ||
-      !this.permissions.getDocumentsDataRequest && this.selectedType ==  DocumentTypeEnum.Request ||
-      !this.permissions.getDocumentsDataVacation && this.selectedType == DocumentTypeEnum.Vacation) {
+      !this.permissions.getDocumentsDataRequest && this.selectedType ==  DocumentTypeEnum.Request ) {
       this.isNotFound = true;
       this.isLoading = false;
     } else {

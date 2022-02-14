@@ -2,7 +2,7 @@
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CVU.ERP.Common.Pagination;
-using CVU.ERP.StorageService.Context;
+using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Entities;
 using MediatR;
 using System.Linq;
@@ -16,27 +16,28 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorFiles
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
         private readonly IUserProfileService _userProfileService;
-        private readonly StorageDbContext _storageDbContext;
+        private readonly IPersonalStorageClient _personalStorageClient;
         public GetContractorFilesQueryHandler(AppDbContext appDbContext, 
             IPaginationService paginationService, 
             IUserProfileService userProfileService, 
-            StorageDbContext storageDbContext)
+            IPersonalStorageClient personalStorageClient)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
             _userProfileService = userProfileService;
-            _storageDbContext = storageDbContext;
+            _personalStorageClient = personalStorageClient;
         }
 
         public async Task<PaginatedModel<FileNameDto>> Handle(GetContractorFilesQuery request, CancellationToken cancellationToken)
         {
             var contractorId = await _userProfileService.GetCurrentContractorId();
 
-            var items = _appDbContext.ContractorFiles
+            var idList = _appDbContext.ContractorFiles
                 .Where(x=>x.ContractorId == contractorId)
-                .AsQueryable();
+                .Select(x => x.FileId)
+                .ToList();
 
-            var files = _storageDbContext.Files.Where(file => items.All(contractorFile => contractorFile.FileId == file.Id.ToString()));
+            var files = await _personalStorageClient.GetContractorFiles(idList);
 
             if (request.FileType != null)
             {

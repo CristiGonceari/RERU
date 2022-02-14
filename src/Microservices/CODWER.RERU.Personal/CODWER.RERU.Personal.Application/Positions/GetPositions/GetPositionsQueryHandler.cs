@@ -1,13 +1,13 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
+﻿using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Positions;
 using CVU.ERP.Common.Pagination;
-using CVU.ERP.StorageService.Context;
+using CVU.ERP.StorageService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.Positions.GetPositions
 {
@@ -15,13 +15,14 @@ namespace CODWER.RERU.Personal.Application.Positions.GetPositions
     {
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
-        private readonly StorageDbContext _storageDbContext;
+        private readonly IStorageFileService _storageFileService;
 
-        public GetPositionsHandler(AppDbContext appDbContext, IPaginationService paginationService, StorageDbContext storageDbContext)
+        public GetPositionsHandler(AppDbContext appDbContext, IPaginationService paginationService, 
+            IStorageFileService storageFileService)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
-            _storageDbContext = storageDbContext;
+            _storageFileService = storageFileService;
         }
 
         public async Task<PaginatedModel<PositionDto>> Handle(GetPositionsQuery request, CancellationToken cancellationToken)
@@ -48,6 +49,18 @@ namespace CODWER.RERU.Personal.Application.Positions.GetPositions
             }
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Position, PositionDto>(items, request);
+
+            paginatedModel = await GetOrderName(paginatedModel);
+
+            return paginatedModel;
+        }
+
+        private async Task<PaginatedModel<PositionDto>> GetOrderName(PaginatedModel<PositionDto> paginatedModel)
+        {
+            foreach (var item in paginatedModel.Items)
+            {
+                item.OrderName = await _storageFileService.GetFileName(item.OrderId);
+            }
 
             return paginatedModel;
         }
