@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CODWER.RERU.Personal.Application.Services;
-using CODWER.RERU.Personal.Application.Services.VacationInterval;
+﻿using CODWER.RERU.Personal.Application.Services.VacationInterval;
 using CODWER.RERU.Personal.Application.TemplateParsers;
 using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Entities.Files;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Employers;
 using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.Services.Implementations
 {
@@ -22,20 +20,23 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         private readonly ITemplateConvertor _templateConvertor;
         private readonly IStorageFileService _storageFileService;
         private readonly IVacationIntervalService _vacationIntervalService;
+        private readonly IPersonalStorageClient _personalStorageClient;
         private readonly EmployerData _employerData;
         private readonly string _fileNameRequest;
         private readonly string _fileNameOrder;
 
-        public DismissalTemplateParserService(AppDbContext appDbContext, 
+        public DismissalTemplateParserService(AppDbContext appDbContext,
             ITemplateConvertor templateConvertor,
-            IStorageFileService storageFileService, 
+            IStorageFileService storageFileService,
             IVacationIntervalService vacationIntervalService,
-            IOptions<EmployerData> options)
+            IOptions<EmployerData> options,
+            IPersonalStorageClient personalStorageClient)
         {
             _appDbContext = appDbContext;
             _templateConvertor = templateConvertor;
             _storageFileService = storageFileService;
             _vacationIntervalService = vacationIntervalService;
+            _personalStorageClient = personalStorageClient;
             _employerData = options.Value;
 
             _fileNameRequest = "ContractorTemplates/Requests/Cerere Cu Privire La Demisionare.html";
@@ -52,14 +53,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
                 parsedPdf.ContentType,
                 parsedPdf.Content);
 
-            var contractorFile = new ContractorFile
-            {
-                ContractorId = contractorId,
-                FileId = fileId
-            };
-
-            await _appDbContext.ContractorFiles.AddAsync(contractorFile);
-            await _appDbContext.SaveChangesAsync();
+            await _personalStorageClient.AddFileToContractor(contractorId, fileId);
 
             return fileId;
         }
@@ -75,14 +69,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
                 parsedPdf.ContentType,
                 parsedPdf.Content);
 
-            var contractorFile = new ContractorFile
-            {
-                ContractorId = contractorId,
-                FileId = fileId
-            };
-
-            await _appDbContext.ContractorFiles.AddAsync(contractorFile);
-            await _appDbContext.SaveChangesAsync();
+            await _personalStorageClient.AddFileToContractor(contractorId, fileId);
 
             return fileId;
         }

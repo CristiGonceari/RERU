@@ -1,13 +1,12 @@
-﻿using System.Linq;
-using CODWER.RERU.Personal.Application.Services;
+﻿using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Application.Validation;
 using CODWER.RERU.Personal.Application.Validators.EnumValidators;
 using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Entities.Files;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CVU.ERP.Module.Common.MessageCodes;
 using CVU.ERP.StorageService.Entities;
 using FluentValidation;
+using System.Linq;
 
 namespace CODWER.RERU.Personal.Application.Profiles.ContractorFiles
 {

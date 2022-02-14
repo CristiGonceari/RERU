@@ -3,10 +3,11 @@ using CODWER.RERU.Personal.Data.Entities.StaticExtensions;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Reports;
 using CVU.ERP.Common.Pagination;
-using CVU.ERP.StorageService.Context;
+using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,40 +18,72 @@ namespace CODWER.RERU.Personal.Application.Reports.GetReports
     {
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
-        private readonly StorageDbContext _storageDbContext;
-        public GetReportsQueryHandler(AppDbContext appDbContext, IPaginationService paginationService, StorageDbContext storageDbContext)
+        private readonly IPersonalStorageClient _personalStorageClient;
+        public GetReportsQueryHandler(AppDbContext appDbContext, 
+            IPaginationService paginationService, 
+            IPersonalStorageClient personalStorageClient)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
-            _storageDbContext = storageDbContext;
+            _personalStorageClient = personalStorageClient;
         }
+
 
         public async Task<PaginatedModel<ReportItemDto>> Handle(GetReportsQuery request, CancellationToken cancellationToken)
         {
-            var items = _appDbContext.ContractorFiles
+            var contractorFiles = _appDbContext.ContractorFiles
                 .Include(x => x.Contractor)
                     .ThenInclude(x => x.Positions)
                         .ThenInclude(x => x.Department)
+                .OrderBy(x => x.ContractorId)
                 .AsQueryable();
 
-            var files = _storageDbContext.Files
-                .Where(x => x.FileType == FileTypeEnum.identityfiles && 
-                            items.Any(i => i.FileId == x.Id.ToString()))
-                .Select(f => new File
-                {
-                    Id = f.Id,
-                    FileName = f.FileName,
-                    Type = f.Type,
-                    FileType = f.FileType
-                })
-                .AsQueryable();
+
+            contractorFiles = FilterContractors(contractorFiles, request);
+
+            var files = await _personalStorageClient.GetContractorFiles(contractorFiles.Select(x => x.FileId).ToList());
+
+            files = FilterFiles(files, request);
+
+            var paginatedList = await _paginationService.MapAndPaginateModelAsync<File, ReportItemDto>(files, request);
+
+            return await GetFileReport(paginatedList, contractorFiles.ToList());
+        }
+
+        private async Task<PaginatedModel<ReportItemDto>> GetFileReport(PaginatedModel<ReportItemDto> paginatedList, List<ContractorFile> contractorFiles)
+        {
+            foreach (var item in paginatedList.Items)
+            {
+               var contractor = contractorFiles.FirstOrDefault(x => x.FileId == item.Id);
+
+               item.ContractorId = contractor.ContractorId;
+               item.ContractorName = contractor.Contractor.FirstName;
+               item.ContractorLastName = contractor.Contractor.LastName;
+               item.ContractorFatherName = contractor.Contractor.FatherName;
+            }
+
+            return paginatedList;
+        }
+
+        private IQueryable<ContractorFile> FilterContractors(IQueryable<ContractorFile> contractorFiles, GetReportsQuery request)
+        {
 
             if (request.DepartmentId != null)
             {
-                items = items.Where(x =>
+                contractorFiles = contractorFiles.Where(x =>
                     x.Contractor.Positions.All(p => p.DepartmentId == request.DepartmentId));
             }
 
+            if (!string.IsNullOrEmpty(request.ContractorName))
+            {
+                contractorFiles = contractorFiles.FilterOrdersByContractorName(request.ContractorName);
+            }
+
+            return contractorFiles;
+        }
+
+        private IQueryable<File> FilterFiles(IQueryable<File> files, GetReportsQuery request)
+        {
             if (request.FileType != null)
             {
                 files = files.Where(x => x.FileType == request.FileType);
@@ -59,11 +92,6 @@ namespace CODWER.RERU.Personal.Application.Reports.GetReports
             if (!string.IsNullOrEmpty(request.Name))
             {
                 files = files.Where(x => x.FileName.Contains(request.Name));
-            }
-
-            if (!string.IsNullOrEmpty(request.ContractorName))
-            {
-                items = items.FilterOrdersByContractorName(request.ContractorName);
             }
 
             if (request.FromDate != null)
@@ -76,24 +104,7 @@ namespace CODWER.RERU.Personal.Application.Reports.GetReports
                 files = files.Where(x => x.CreateDate <= request.ToDate);
             }
 
-            var paginatedList = await _paginationService.MapAndPaginateModelAsync<ContractorFile, ReportItemDto>(items, request);
-
-            return await GetFileReport(paginatedList, files);
-        }
-
-        private async Task<PaginatedModel<ReportItemDto>> GetFileReport(PaginatedModel<ReportItemDto> paginatedList, IQueryable<File> files)
-        {
-            foreach (var item in paginatedList.Items)
-            {
-                var file = files.FirstOrDefault(x => x.Id.ToString() == item.Id);
-
-                if (file == null) continue;
-                item.Type = file.FileType;
-                item.FileName = file.FileName;
-                item.CreateDate = file.CreateDate;
-            }
-
-            return paginatedList;
+            return files;
         }
     }
 }

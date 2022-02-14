@@ -1,14 +1,14 @@
-﻿using System.Linq;
+﻿using CODWER.RERU.Personal.Application.Services;
+using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
+using CODWER.RERU.Personal.Data.Persistence.Context;
+using CODWER.RERU.Personal.DataTransferObjects.DismissalRequests;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.StorageService;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using CODWER.RERU.Personal.DataTransferObjects.DismissalRequests;
-using CODWER.RERU.Personal.Data.Persistence.Context;
-using CODWER.RERU.Personal.Application.Services;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
-using CVU.ERP.StorageService;
 
 namespace CODWER.RERU.Personal.Application.Profiles.Requests.Dismissal.MyRequests.GetDismissRequest
 {
@@ -38,6 +38,13 @@ namespace CODWER.RERU.Personal.Application.Profiles.Requests.Dismissal.MyRequest
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<DismissalRequest, MyDismissalRequestDto>(items, request);
 
+            paginatedModel = await GetOrderAndRequestName(paginatedModel);
+
+            return paginatedModel;
+        }
+
+        private async Task<PaginatedModel<MyDismissalRequestDto>> GetOrderAndRequestName(PaginatedModel<MyDismissalRequestDto> paginatedModel)
+        {
             foreach (var item in paginatedModel.Items)
             {
                 item.OrderName = await _storageFileService.GetFileName(item.OrderId);

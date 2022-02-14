@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CODWER.RERU.Personal.Application.TemplateParsers;
+﻿using CODWER.RERU.Personal.Application.TemplateParsers;
 using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
 using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Entities.Files;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Employers;
 using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.Services.Implementations
 {
@@ -20,6 +19,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         private readonly AppDbContext _appDbContext;
         private readonly ITemplateConvertor _templateConvertor;
         private readonly IStorageFileService _storageFileService;
+        private readonly IPersonalStorageClient _personalStorageClient;
         private readonly EmployerData _employerData;
         private readonly string _fileName;
 
@@ -27,11 +27,13 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             AppDbContext appDbContext, 
             ITemplateConvertor templateConvertor, 
             IStorageFileService storageFileService, 
-            IOptions<EmployerData> options)
+            IOptions<EmployerData> options, 
+            IPersonalStorageClient personalStorageClient)
         {
             _appDbContext = appDbContext;
             _templateConvertor = templateConvertor;
             _storageFileService = storageFileService;
+            _personalStorageClient = personalStorageClient;
             _employerData = options.Value;
             _fileName = "ContractorTemplates/Orders/Ordin Cu Privire La Concediu.html";
         }
@@ -48,14 +50,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
                 parsedPdf.ContentType,
                 parsedPdf.Content);
 
-            var contractorFile = new ContractorFile
-            {
-                ContractorId = contractorId,
-                FileId = fileId
-            };
-
-            await _appDbContext.ContractorFiles.AddAsync(contractorFile);
-            await _appDbContext.SaveChangesAsync();
+            await _personalStorageClient.AddFileToContractor(contractorId, fileId);
 
             return fileId;
         }
@@ -119,14 +114,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
                 parsedPdf.ContentType,
                 parsedPdf.Content);
 
-            var contractorFile = new ContractorFile
-            {
-                ContractorId = contractorId,
-                FileId = fileId
-            };
-
-            await _appDbContext.ContractorFiles.AddAsync(contractorFile);
-            await _appDbContext.SaveChangesAsync();
+            await _personalStorageClient.AddFileToContractor(contractorId, fileId);
 
             return fileId;
         }

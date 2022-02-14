@@ -33,12 +33,18 @@ namespace CODWER.RERU.Personal.Application.Profiles.Vacations.SubordinatesVacati
 
             var items = _appDbContext.Vacations
                 .Include(x => x.Contractor)
-                .ThenInclude(x=>x.Contracts)
+                .ThenInclude(x => x.Contracts)
                 .Where(x => x.Contractor.Contracts.Any(c => c.SuperiorId == contractorId));
 
             var paginatedModel =
                await _paginationService.MapAndPaginateModelAsync<Vacation, SubordinateVacationDto>(items, request);
 
+            paginatedModel = await GetVacationOrderAndRequestName(paginatedModel);
+
+            return paginatedModel;
+        }
+        private async Task<PaginatedModel<SubordinateVacationDto>> GetVacationOrderAndRequestName(PaginatedModel<SubordinateVacationDto> paginatedModel)
+        {
             foreach (var item in paginatedModel.Items)
             {
                 item.VacationOrderName = await _storageFileService.GetFileName(item.VacationOrderId);

@@ -7,8 +7,8 @@ namespace CVU.ERP.StorageService
 {
     public interface IPersonalStorageClient
     {
-        public Task<bool> HasEmploymentRequest(int id);
-        public Task<bool> HasIdentityDocuments(int id);
-        public Task<IQueryable<File>> GetContractorFiles(int id);
+        public Task<bool> HasFile(int contractorId, FileTypeEnum fileType);
+        public Task<IQueryable<File>> GetContractorFiles(List<string> idList);
+        public Task<int> AddFileToContractor(int contractorId, string fileId);
     }
 }

@@ -2,8 +2,8 @@
 using CODWER.RERU.Personal.Data.Entities.StaticExtensions;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Context;
-using CVU.ERP.StorageService.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,67 +21,32 @@ namespace CODWER.RERU.Personal.Application.Reports.PrintReports
     {
         private readonly AppDbContext _appDbContext;
         private readonly IGeneratePdf _generatePdf;
-        private readonly StorageDbContext _storageDbContext;
+        private readonly IPersonalStorageClient _personalStorageClient;
 
-        public PrintReportsCommandHandler(AppDbContext appDbContext, IGeneratePdf generatePdf, StorageDbContext storageDbContext)
+        public PrintReportsCommandHandler(AppDbContext appDbContext, 
+            IGeneratePdf generatePdf, 
+            IPersonalStorageClient personalStorageClient)
         {
             _appDbContext = appDbContext;
             _generatePdf = generatePdf;
-            _storageDbContext = storageDbContext;
+            _personalStorageClient = personalStorageClient;
         }
 
         public async Task<FileDataDto> Handle(PrintReportsCommand request, CancellationToken cancellationToken)
         {
-            var items = _appDbContext.ContractorFiles
+            var contractorFiles = _appDbContext.ContractorFiles
                 .Include(x => x.Contractor)
                 .ThenInclude(x => x.Positions)
                 .ThenInclude(x => x.Department)
                 .AsQueryable();
 
-            var files = _storageDbContext.Files
-                .Where(x => x.FileType == FileTypeEnum.identityfiles &&
-                            items.Any(i => i.FileId == x.Id.ToString()))
-                .Select(f => new CVU.ERP.StorageService.Entities.File
-                {
-                    Id = f.Id,
-                    FileName = f.FileName,
-                    Type = f.Type,
-                    FileType = f.FileType
-                })
-                .AsQueryable();
+            contractorFiles = FilterContractors(contractorFiles, request);
 
-            if (request.FileType != null)
-            {
-                files = files.Where(x => x.FileType == request.FileType);
-            }
+            var files = await _personalStorageClient.GetContractorFiles(contractorFiles.Select(x => x.FileId).ToList());
 
-            if (!string.IsNullOrEmpty(request.Name))
-            {
-                files = files.Where(x => x.FileName.Contains(request.Name));
-            }
+            files = FilterFiles(files, request);
 
-            if (!string.IsNullOrEmpty(request.ContractorName))
-            {
-                items = items.FilterOrdersByContractorName(request.ContractorName);
-            }
-
-            if (request.DepartmentId != null)
-            {
-                items = items.Where(x =>
-                    x.Contractor.Positions.All(p => p.DepartmentId == request.DepartmentId));
-            }
-
-            if (request.FromDate != null)
-            {
-                files = files.Where(x => x.CreateDate >= request.FromDate);
-            }
-
-            if (request.ToDate != null)
-            {
-                files = files.Where(x => x.CreateDate <= request.ToDate);
-            }
-
-            return await GetPdf(request, items.ToList(), files);
+            return await GetPdf(request, contractorFiles.ToList(), files);
         }
 
         private string GetTableContent(List<ContractorFile> contractorFiles, IQueryable<CVU.ERP.StorageService.Entities.File> files)
@@ -162,5 +127,48 @@ namespace CODWER.RERU.Personal.Application.Reports.PrintReports
                 Name = "Report_List.pdf"
             };
         }
+
+        private IQueryable<ContractorFile> FilterContractors(IQueryable<ContractorFile> contractorFiles, PrintReportsCommand request)
+        {
+
+            if (request.DepartmentId != null)
+            {
+                contractorFiles = contractorFiles.Where(x =>
+                    x.Contractor.Positions.All(p => p.DepartmentId == request.DepartmentId));
+            }
+
+            if (!string.IsNullOrEmpty(request.ContractorName))
+            {
+                contractorFiles = contractorFiles.FilterOrdersByContractorName(request.ContractorName);
+            }
+
+            return contractorFiles;
+        }
+
+        private IQueryable<CVU.ERP.StorageService.Entities.File> FilterFiles(IQueryable<CVU.ERP.StorageService.Entities.File> files, PrintReportsCommand request)
+        {
+            if (request.FileType != null)
+            {
+                files = files.Where(x => x.FileType == request.FileType);
+            }
+
+            if (!string.IsNullOrEmpty(request.Name))
+            {
+                files = files.Where(x => x.FileName.Contains(request.Name));
+            }
+
+            if (request.FromDate != null)
+            {
+                files = files.Where(x => x.CreateDate >= request.FromDate);
+            }
+
+            if (request.ToDate != null)
+            {
+                files = files.Where(x => x.CreateDate <= request.ToDate);
+            }
+
+            return files;
+        }
+
     }
 }

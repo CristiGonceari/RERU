@@ -1,7 +1,7 @@
 ﻿using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CVU.ERP.Common.Pagination;
-using CVU.ERP.StorageService.Context;
+using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Entities;
 using MediatR;
 using System.Linq;
@@ -12,26 +12,24 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractorFiles
 {
     public class GetContractorFilesQueryHandler : IRequestHandler<GetContractorFilesQuery, PaginatedModel<FileNameDto>>
     {
-        private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
-        private readonly StorageDbContext _storageDbContext;
+        private readonly IPersonalStorageClient _personalStorageClient;
+        private readonly AppDbContext _appDbContext;
 
-        public GetContractorFilesQueryHandler(AppDbContext appDbContext, IPaginationService paginationService, StorageDbContext storageDbContext)
+        public GetContractorFilesQueryHandler(IPaginationService paginationService, IPersonalStorageClient personalStorageClient, AppDbContext appDbContext)
         {
-            _appDbContext = appDbContext;
             _paginationService = paginationService;
-            _storageDbContext = storageDbContext;
+            _personalStorageClient = personalStorageClient;
+            _appDbContext = appDbContext;
         }
 
         public async Task<PaginatedModel<FileNameDto>> Handle(GetContractorFilesQuery request, CancellationToken cancellationToken)
         {
-            var contractorFiles = _appDbContext.ContractorFiles
-                .Where(x => x.ContractorId == request.ContractorId);
+            var fileIdList = _appDbContext.ContractorFiles
+                .Where(x => x.ContractorId == request.ContractorId)
+                .Select(x => x.FileId).ToList();
 
-            var files = _storageDbContext.Files
-                .Where(x => x.FileType == FileTypeEnum.identityfiles &&
-                            contractorFiles.Any(i => i.FileId == x.Id.ToString()))
-                .AsQueryable();
+            var files = await _personalStorageClient.GetContractorFiles(fileIdList);
 
             if (request.FileType != null)
             {
