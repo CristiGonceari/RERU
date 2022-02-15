@@ -30,6 +30,9 @@ using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Context;
 using CVU.ERP.StorageService.DependencyInjection;
 using CVU.ERP.StorageService.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace CVU.ERP.Module.Application.DependencyInjection
 {
@@ -75,9 +78,7 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             services.AddNotificationService();
 
             //storage service
-            services.AddTransient(typeof(IStorageFileService), typeof(StorageFileService));
-            services.Configure<MinioSettings>(configuration.GetSection("Minio"));
-            services.AddCommonStorageContext(configuration);
+            services.AddStorageService(configuration);
 
             //log service 
             services.AddTransient(typeof(ILoggerService<>), typeof(LoggerService<>));
@@ -117,6 +118,35 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient(typeof(ILoggerService<>), typeof(LoggerService<>));
             services.AddTransient(typeof(ITablePrinter<,>), typeof(TablePrinter<,>));
+
+            return services;
+        }
+
+        private static IServiceCollection AddStorageService(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<KestrelServerOptions>(options =>
+                {
+                    options.AllowSynchronousIO = true;
+                    //options.Limits.MaxRequestBodySize = null; --did not worked
+                    options.Limits.MaxRequestBodySize = int.MaxValue;
+                })
+                // If using IIS:
+                .Configure<IISServerOptions>(options =>
+                {
+                    options.AllowSynchronousIO = true;
+                    //options.MaxRequestBodySize = null;
+                    options.MaxRequestBodySize = int.MaxValue;
+                })
+                .Configure<FormOptions>(options =>
+                {
+                    options.ValueLengthLimit = int.MaxValue;
+                    options.MultipartBodyLengthLimit = int.MaxValue; // if don't set default value is: 128 MB
+                    options.MultipartHeadersLengthLimit = int.MaxValue;
+                });
+
+            services.AddTransient(typeof(IStorageFileService), typeof(StorageFileService));
+            services.Configure<MinioSettings>(configuration.GetSection("Minio"));
+            services.AddCommonStorageContext(configuration);
 
             return services;
         }

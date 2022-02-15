@@ -377,7 +377,8 @@
     "succes-add-msg": "Question was successfully added",
     "succes-add-multiple-msg": "Questions were successfully added",
     "succes-update-msg": "Question was successfully updated",
-    "succes-update-status-msg": "Question status was updated"
+    "succes-update-status-msg": "Question status was updated",
+    "search-by-status": "Select question status"
   },
   "answers": {
     "option-settings": "Option Settions",

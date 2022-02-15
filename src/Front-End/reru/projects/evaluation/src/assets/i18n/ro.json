@@ -377,7 +377,8 @@
     "succes-add-msg": "Întrebarea a fost adăugată cu succes",
     "succes-add-multiple-msg": "Întrebarile au fost adăugate cu succes",
     "succes-update-msg": "Întrebarea a fost actualizată cu succes",
-    "succes-update-status-msg": "Statutul intrebării a fost actualizat"
+    "succes-update-status-msg": "Statutul intrebării a fost actualizat",
+    "search-by-status": "Selecteaza statutul intrebării"
   },
   "answers": {
     "option-settings": "Setări Opțiuni",

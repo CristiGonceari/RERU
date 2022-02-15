@@ -377,7 +377,9 @@
     "succes-add-msg": "Вопрос был успешно добавлен",
     "succes-add-multiple-msg": "Вопросы были успешно добавлены",
     "succes-update-msg": "Вопрос был успешно обновлён",
-    "succes-update-status-msg": "Статус вопроса был успешно обновлён"
+    "succes-update-status-msg": "Статус вопроса был успешно обновлён",
+    "search-by-status": "Выберите статус вопроса"
+
   },
   "answers": {
     "option-settings": "Настройка Опции",
