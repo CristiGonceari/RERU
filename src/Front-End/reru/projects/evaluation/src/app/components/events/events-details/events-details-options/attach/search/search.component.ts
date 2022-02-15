@@ -5,6 +5,7 @@ import { EventService } from 'projects/evaluation/src/app/utils/services/event/e
 import { TestTypeService } from 'projects/evaluation/src/app/utils/services/test-type/test-type.service';
 import { LocationService } from 'projects/evaluation/src/app/utils/services/location/location.service';
 import { UserProfileService } from 'projects/evaluation/src/app/utils/services/user-profile/user-profile.service';
+import { EventTestTypeService } from 'projects/evaluation/src/app/utils/services/event-test-type/event-test-type.service';
 
 @Component({
   selector: 'app-search',
@@ -26,6 +27,7 @@ export class SearchComponent implements OnInit {
 
   constructor(private locationService: LocationService,
     private eventService: EventService,
+    private eventTestTypeService: EventTestTypeService,
     private activatedRoute: ActivatedRoute,
     private userService: UserProfileService,
     private testService: TestTypeService,) { }
@@ -85,9 +87,9 @@ export class SearchComponent implements OnInit {
 
       if (this.searchTestType == false) {
         if (!term)
-          this.testService.getTestTypeByEvent({ eventId: this.eventId }).subscribe(data => this.list = data.data);
+          this.eventTestTypeService.getTestTypeByEvent({ eventId: this.eventId }).subscribe(data => this.list = data.data);
         else if (term != '')
-          this.testService.getTestTypeByEvent({ keyword: term, eventId: this.eventId }).subscribe(data => this.list = data.data);
+          this.eventTestTypeService.getTestTypeByEvent({ keyword: term, eventId: this.eventId }).subscribe(data => this.list = data.data);
       }
 
       if (this.searchPerson == false) {

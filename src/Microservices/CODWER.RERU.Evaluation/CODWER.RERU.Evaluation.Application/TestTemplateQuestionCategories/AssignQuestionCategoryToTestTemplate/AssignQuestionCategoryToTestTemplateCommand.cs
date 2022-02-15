@@ -3,7 +3,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 
-namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.AssignQuestionCategoryToTestTemplate
+namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.AssignQuestionCategoryToTestTemplate
 {
     [ModuleOperation(permission: PermissionCodes.TEST_TEMPLATES_GENERAL_ACCESS)]
     public class AssignQuestionCategoryToTestTemplateCommand : IRequest<int>

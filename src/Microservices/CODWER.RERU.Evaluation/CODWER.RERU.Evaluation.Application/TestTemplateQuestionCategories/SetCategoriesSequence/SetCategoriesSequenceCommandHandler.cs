@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 
-namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.SetCategoriesSequence
+namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.SetCategoriesSequence
 {
     public class SetCategoriesSequenceCommandHandler : IRequestHandler<SetCategoriesSequenceCommand, Unit>
     {

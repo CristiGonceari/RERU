@@ -7,7 +7,7 @@ using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 
-namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.EditCategoriesSequenceType
+namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.EditCategoriesSequenceTemplate
 {
     public class EditCategoriesSequenceTemplateCommandValidator : AbstractValidator<EditCategoriesSequenceTemplateCommand>
     {
