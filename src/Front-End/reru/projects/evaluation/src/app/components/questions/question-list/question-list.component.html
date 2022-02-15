@@ -32,9 +32,38 @@
 								</div>
 							</div>
 						</div>
-						<div class="card-header border-0 pt-0 pb-0 mt-3" style="min-height: 100%;">
-							<app-search-question style="width: 100%;" (handleSearch)="questionsTable.list({keyword: $event, page: 1})"></app-search-question>
-						</div>
+						<div class="card-header border-0 mt-5 pr-5" style="min-height: 100%;">
+							<div class="row w-100">
+							  <div class="col">
+								<div class="input-group input-group-sm input-group-solid">
+								<app-search-question style="width: 100%;" (handleSearch)="questionsTable.list({keyword: $event, page: 1})"></app-search-question>
+								</div>
+							  </div>
+							  <div class="col">
+								<div class="input-group input-group-sm input-group-solid">
+								  <input type="text" class="form-control"  [placeholder]="'questions.search-category' | translate" name="categoryName" [(ngModel)]="questionsTable.categoryName">
+								</div>
+							  </div>
+							  <div class="col">
+								<div class="input-group input-group-sm input-group-solid">
+								  <input type="text" class="form-control"  [placeholder]="'questions.tags' | translate" name="questionTag" [(ngModel)]="questionsTable.questionTag">
+								</div>
+							  </div>
+							</div>
+							<div class="row w-100" style="margin-top: 1%;">
+								<div class="col">
+									<app-search-by-question-status (filter)="questionsTable.questionStatus = $event.target.value"></app-search-by-question-status>
+								  </div>
+								  <div class="col">
+									<app-search-by-question-type (filter)="questionsTable.questionType = $event.target.value"></app-search-by-question-type>
+								  </div>
+								  <div class="col pr-lg-0">
+									<div class="w-100">
+									  <app-confirm-button (handle)="questionsTable.list({page: 1})" [value]="'button.search' | translate" [width]="'100%'"></app-confirm-button>
+									</div>
+								  </div>
+							</div>
+						  </div>
 						<div class="card-body">
 							<app-question-list-table #questionsTable></app-question-list-table>
 						</div>

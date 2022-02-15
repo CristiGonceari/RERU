@@ -17,6 +17,8 @@ import { TagInputModule } from 'ngx-chips';
 import { QuestionOverviewComponent } from './question-details/question-overview/question-overview.component';
 import { SearchQuestionComponent } from './question-list/search-question/search-question.component'
 import { QuestionListTableComponent } from './question-list/question-list-table/question-list-table.component';
+import { SearchByQuestionStatusComponent } from './question-list/search-by-question-status/search-by-question-status.component';
+import { SearchByQuestionTypeComponent } from './question-list/search-by-question-type/search-by-question-type.component';
 
 @NgModule({
 	declarations: [
@@ -27,6 +29,8 @@ import { QuestionListTableComponent } from './question-list/question-list-table/
     QuestionOverviewComponent,
     SearchQuestionComponent,
     QuestionListTableComponent,
+    SearchByQuestionStatusComponent,
+    SearchByQuestionTypeComponent,
   ],
 	imports: [
 	  CommonModule,

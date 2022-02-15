@@ -22,7 +22,6 @@ const routes: Routes = [
       { path: 'option/:id/edit/:id2', component: AddOptionComponent } 
     ]
   },
-
 ];
 
 @NgModule({

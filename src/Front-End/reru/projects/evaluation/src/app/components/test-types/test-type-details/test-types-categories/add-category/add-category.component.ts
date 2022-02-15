@@ -43,7 +43,7 @@ export class AddCategoryComponent implements OnInit {
   }
 
   getQuestionTypeValueForDropdown() {
-    this.referenceService.getQuestionTypeStatuses().subscribe(res => this.questionTypeEnumList = res.data);
+    this.referenceService.getQuestionType().subscribe(res => this.questionTypeEnumList = res.data);
   }
 
   onSelect() {

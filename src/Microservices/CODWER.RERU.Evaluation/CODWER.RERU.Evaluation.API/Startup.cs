@@ -49,26 +49,6 @@ namespace CODWER.RERU.Evaluation.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<KestrelServerOptions>(options =>
-                {
-                    options.AllowSynchronousIO = true;
-                    //options.Limits.MaxRequestBodySize = null; --did not worked
-                    options.Limits.MaxRequestBodySize = int.MaxValue;
-                })
-                // If using IIS:
-                .Configure<IISServerOptions>(options =>
-                {
-                    options.AllowSynchronousIO = true;
-                    //options.MaxRequestBodySize = null;
-                    options.MaxRequestBodySize = int.MaxValue;
-                })
-                .Configure<FormOptions>(options =>
-                {
-                    options.ValueLengthLimit = int.MaxValue;
-                    options.MultipartBodyLengthLimit = int.MaxValue; // if don't set default value is: 128 MB
-                    options.MultipartHeadersLengthLimit = int.MaxValue;
-                });
-
             services.Configure<SmtpOptions>(this.Configuration.GetSection("Smtp"));
             services.Configure<RabbitMq>(Configuration.GetSection("MessageQueue"));
 

@@ -113,7 +113,7 @@ export class AddEditQuestionComponent implements OnInit {
 	}
 
   getQuestionTypeValueForDropdown() {
-    this.referenceService.getQuestionTypeStatuses().subscribe((res) => this.types = res.data);
+    this.referenceService.getQuestionType().subscribe((res) => this.types = res.data);
   }
 
   getQuestionCategories() {
