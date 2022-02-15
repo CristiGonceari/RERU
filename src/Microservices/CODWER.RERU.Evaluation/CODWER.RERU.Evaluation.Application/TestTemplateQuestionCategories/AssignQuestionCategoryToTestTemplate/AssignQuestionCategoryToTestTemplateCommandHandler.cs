@@ -7,7 +7,7 @@ using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 
-namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.AssignQuestionCategoryToTestTemplate
+namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.AssignQuestionCategoryToTestTemplate
 {
     public class AssignQuestionCategoryToTestTemplateCommandHandler : IRequestHandler<AssignQuestionCategoryToTestTemplateCommand, int>
     {

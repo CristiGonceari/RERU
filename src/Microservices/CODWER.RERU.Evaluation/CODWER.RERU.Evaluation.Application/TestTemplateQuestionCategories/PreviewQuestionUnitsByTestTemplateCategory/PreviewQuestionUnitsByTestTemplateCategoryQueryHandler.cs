@@ -9,7 +9,7 @@ using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
 
-namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQuestionUnitsByTestTypeCategory
+namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.PreviewQuestionUnitsByTestTemplateCategory
 {
     public class PreviewQuestionUnitsByTestTemplateCategoryQueryHandler : IRequestHandler<PreviewQuestionUnitsByTestTemplateCategoryQuery, List<CategoryQuestionUnitDto>>
     {

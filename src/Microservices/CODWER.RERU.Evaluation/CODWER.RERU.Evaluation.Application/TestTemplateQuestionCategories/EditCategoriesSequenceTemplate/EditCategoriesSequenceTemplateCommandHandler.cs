@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 
-namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.EditCategoriesSequenceType
+namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.EditCategoriesSequenceTemplate
 {
     public class EditCategoriesSequenceTemplateCommandHandler : IRequestHandler<EditCategoriesSequenceTemplateCommand, Unit>
     {

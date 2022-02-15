@@ -9,7 +9,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 
-namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQuestionUnitsByTestTypeCategory
+namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.PreviewQuestionUnitsByTestTemplateCategory
 {
     public class PreviewQuestionUnitsByTestTemplateCategoryQueryValidator : AbstractValidator<PreviewQuestionUnitsByTestTemplateCategoryQuery>
     {

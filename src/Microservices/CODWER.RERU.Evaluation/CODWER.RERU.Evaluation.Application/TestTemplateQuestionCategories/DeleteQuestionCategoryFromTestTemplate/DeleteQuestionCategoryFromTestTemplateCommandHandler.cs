@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 
-namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.DeleteQuestionCategoryFromTestType
+namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.DeleteQuestionCategoryFromTestTemplate
 {
     public class DeleteQuestionCategoryFromTestTemplateCommandHandler : IRequestHandler<DeleteQuestionCategoryFromTestTemplateCommand, Unit>
     {
