@@ -8,37 +8,33 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PrintModalComponent implements OnInit {
 
-  selectedFeilds = [];
-  disabled: boolean = true;
-  @Input() tableData = {tableName: '', fields: [], orientation: 1};
+  selectedFields = [];
+  @Input() tableData = {tableName: '', fields: [], orientation: 2, name: ''};
   @Input() translateData: Array<string>;
 
   constructor(private activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
+    for (let i=0; i<this.tableData.fields.length; i++) {
+      this.selectedFields.push(this.tableData.fields[i]);
+    }
   }
 
   setOrientation(event): void {
     this.tableData.orientation = event;
-    this.close();
-  }
-
-  checkSelection(): void {
-    if (this.selectedFeilds.length) this.disabled = false;
+    this.print();
   }
 
   onItemChange(event, item): void {
     if (event.target.checked === true) {
-      this.selectedFeilds.push(item);
+      this.selectedFields.push(item);
     } else if (event.target.checked === false) {
-      let itemToExclude = event.target.value;
-      this.selectedFeilds.splice(this.selectedFeilds.indexOf(itemToExclude), 1);
+      this.selectedFields.splice(this.selectedFields.indexOf(item), 1);
     }
-    this.checkSelection();
   }
 
-  close(): void {
-    this.tableData.fields = this.selectedFeilds;
+  print(): void {
+    this.tableData.fields = this.selectedFields;
     this.activeModal.close(this.tableData);
   }
 

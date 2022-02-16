@@ -19,4 +19,19 @@ export class StatisticService extends AbstractService {
   getCategoryQuestions(params): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/questions-category`, { params });
   }
+
+  printByTestTemplate(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-test-question-statistic`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
+  printByCategory(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-category-question-statistic`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+  
 }

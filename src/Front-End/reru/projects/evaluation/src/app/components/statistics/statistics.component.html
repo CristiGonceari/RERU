@@ -10,7 +10,7 @@
                     <div class="card card-custom gutter-b">
                         <div class="card-header flex-wrap border-0 py-5">
                             <div class="card-title">
-                                <h3 class="card-label">{{'statistics.statistics' | translate}} </h3>
+                                <h3 class="card-label" id="title">{{'statistics.statistics' | translate}} </h3>
                             </div>
                         </div>
                         <div class="card-header border-0" style="min-height: 100%;">
@@ -60,12 +60,23 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-6 mt-3">
-                                <div class="w-100 h-100 mt-6">
-                                  <app-confirm-button  [value]="'button.search' | translate" [width]="'100%'" (handle)="table.getQuestions(send())" 
-                                    [disabled]="!(itemsPerPage && filterEnum && (testTypeId || categoryId))"></app-confirm-button>
+                            <div class="flex-column col-6 col-lg-2 mt-3">
+                                <div class="w-100 mt-6">
+                                    <app-confirm-button
+                                        [value]="'button.search' | translate" [width]="'100%'"
+                                        (handle)="table.getQuestions(send())" 
+                                        [disabled]="!(itemsPerPage && filterEnum && (testTypeId || categoryId))">
+                                    </app-confirm-button>
                                 </div>
-                              </div>
+                                <div class="w-100 mt-9">
+                                    <app-confirm-button class="btn d-block"
+                                        (click)="table.getHeaders(title)" [width]="'100%'"
+                                        [disabled]="!(itemsPerPage && filterEnum && (testTypeId || categoryId)) && send()">
+                                        <i class="far fa-file-pdf text-white"></i>
+                                        {{'button.print' | translate}}
+                                    </app-confirm-button>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <app-statisctics-table #table></app-statisctics-table>
