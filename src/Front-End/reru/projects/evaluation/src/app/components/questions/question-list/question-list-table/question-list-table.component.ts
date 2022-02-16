@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { ConfirmModalComponent } from '@erp/shared';
+import { PrintModalComponent } from '@erp/shared';
 import { forkJoin } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
@@ -37,6 +38,9 @@ export class QuestionListTableComponent implements OnInit {
   	description: string;
   	no: string;
   	yes: string;
+	downloadFile: boolean = false;
+	headersToPrint = [];
+	printTranslates: any[];
 
 	constructor(
 		private questionService: QuestionService,
@@ -54,6 +58,55 @@ export class QuestionListTableComponent implements OnInit {
 
 	subscribeForQuestions(): void {
 		this.questionService.uploadQuestions.subscribe(() => this.list());
+	}
+
+	getHeaders(name: string): void {
+		this.translateData();
+		let headersHtml = document.getElementsByTagName('th');
+		let headersDto = ['question', 'categoryName', 'questionType', 'status'];
+		for (let i=0; i<headersHtml.length-1; i++) {
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+		}
+		let printData = {
+			tableName: name,
+			fields: this.headersToPrint,
+			orientation: 2,
+			questionName: this.keyword || ''
+		};
+		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
+		modalRef.componentInstance.tableData = printData;
+		modalRef.componentInstance.translateData = this.printTranslates;
+		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
+		this.headersToPrint = [];
+	}
+
+	translateData(): void {
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
+		forkJoin([
+			this.translate.get('print.print-table'),
+			this.translate.get('print.print-msg'),
+			this.translate.get('print.sorted-by'),
+			this.translate.get('button.cancel')
+		]).subscribe(
+			(items) => {
+				for (let i=0; i<this.printTranslates.length; i++) {
+					this.printTranslates[i] = items[i];
+				}
+			}
+		);
+	}
+
+	printTable(data): void {
+		this.downloadFile = true;
+		this.questionService.print(data).subscribe(response => {
+			if (response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], fileName, { type: response.body.type });
+				saveAs(file);
+				this.downloadFile = false;
+			}
+		}, () => this.downloadFile = false);
 	}
 
 	list(data: any = {}): void {

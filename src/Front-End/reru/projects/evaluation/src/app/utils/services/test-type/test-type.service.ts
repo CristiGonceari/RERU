@@ -73,4 +73,11 @@ export class TestTypeService extends AbstractService {
   getTestTypeByStatus( params ): Observable<any>{
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/status`, { params });
   }
+
+  print(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }

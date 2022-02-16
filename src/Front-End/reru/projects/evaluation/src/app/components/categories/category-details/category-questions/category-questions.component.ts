@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
 import { QuestionCategoryService } from 'projects/evaluation/src/app/utils/services/question-category/question-category.service';
 import { QuestionService } from 'projects/evaluation/src/app/utils/services/question/question.service';
@@ -8,6 +8,7 @@ import { QuestionUnit } from '../../../../utils/models/question-units/question-u
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { ConfirmModalComponent } from '@erp/shared';
+import { PrintModalComponent } from '@erp/shared';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BulkImportQuestionsComponent } from '../../../questions/bulk-import-questions/bulk-import-questions.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,7 +23,7 @@ import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services
   templateUrl: './category-questions.component.html',
   styleUrls: ['./category-questions.component.scss']
 })
-export class CategoryQuestionsComponent implements OnInit {
+export class CategoryQuestionsComponent implements OnInit, AfterViewInit {
 
   @Input() categoryId;
   categoryList = [];
@@ -35,23 +36,79 @@ export class CategoryQuestionsComponent implements OnInit {
   description: string;
   no: string;
   yes: string;
+	downloadFile: boolean = false;
+	headersToPrint = [];
+	printTranslates: any[];
   
   constructor(
     private questionService: QuestionService,
     private categoryService: QuestionCategoryService,
-	private modalService: NgbModal,
-	private notificationService: NotificationsService,
+		private modalService: NgbModal,
+		private notificationService: NotificationsService,
     public router: Router,
     private questionByCategory: QuestionByCategoryService,
-	public translate: I18nService,
-	private route: ActivatedRoute,
-	private printTemplateService: PrintTemplateService
+		public translate: I18nService,
+		private route: ActivatedRoute,
+		private printTemplateService: PrintTemplateService
   ) { }
 
   ngOnInit(): void {
     this.categoryService.category.subscribe(x => this.categoryId = x);
     this.getAll();
   }
+
+  ngAfterViewInit(): void {
+	  this.title = document.getElementById('title').innerHTML;
+  }
+
+	getHeaders(name: string): void {
+		this.translateData();
+		let headersHtml = document.getElementsByTagName('th');
+		let headersDto = ['question', 'answersCount', 'status', 'questionType'];
+		for (let i=0; i<headersHtml.length-1; i++) {
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+		}
+		let printData = {
+			tableName: name,
+			fields: this.headersToPrint,
+			orientation: 2,
+			questionCategoryId: +this.categoryId
+		};
+		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
+		modalRef.componentInstance.tableData = printData;
+		modalRef.componentInstance.translateData = this.printTranslates;
+		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
+		this.headersToPrint = [];
+	}
+
+	translateData(): void {
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
+		forkJoin([
+			this.translate.get('print.print-table'),
+			this.translate.get('print.print-msg'),
+			this.translate.get('print.sorted-by'),
+			this.translate.get('button.cancel')
+		]).subscribe(
+			(items) => {
+				for (let i=0; i<this.printTranslates.length; i++) {
+					this.printTranslates[i] = items[i];
+				}
+			}
+		);
+	}
+
+	printTable(data): void {
+		this.downloadFile = true;
+		this.questionService.print(data).subscribe(response => {
+			if (response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], fileName, { type: response.body.type });
+				saveAs(file);
+				this.downloadFile = false;
+			}
+		}, () => this.downloadFile = false);
+	}
 
   getAll(data: any = {}){
     let params = {
@@ -152,7 +209,7 @@ export class CategoryQuestionsComponent implements OnInit {
 		modalRef.result.then(() => this.deleteQuestion(id), () => { });
 	}
 
-	goToQuestuionOptions(id){
+	goToQuestionOptions(id){
 		this.router.navigate(['../question-options', id], {relativeTo:this.route});
 	}
 }
