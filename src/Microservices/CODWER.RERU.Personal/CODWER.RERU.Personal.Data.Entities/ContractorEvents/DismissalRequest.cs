@@ -13,11 +13,9 @@ namespace CODWER.RERU.Personal.Data.Entities.ContractorEvents
         public int ContractorId { get; set; }
         public Contractor Contractor { get; set; }
 
-        public int? RequestId { get; set; }
-        public ByteArrayFile Request { get; set; }
+        public string RequestId { get; set; }
 
-        public int? OrderId { get; set; }
-        public ByteArrayFile Order { get; set; }
+        public string OrderId { get; set; }
 
         public int PositionId { get; set; }
         public Position Position { get; set; }

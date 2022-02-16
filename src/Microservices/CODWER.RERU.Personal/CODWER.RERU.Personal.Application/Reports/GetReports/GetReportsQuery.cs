@@ -1,14 +1,14 @@
-﻿using System;
-using CODWER.RERU.Personal.Data.Entities.Files;
-using CODWER.RERU.Personal.DataTransferObjects.Reports;
+﻿using CODWER.RERU.Personal.DataTransferObjects.Reports;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.StorageService.Entities;
 using MediatR;
+using System;
 
 namespace CODWER.RERU.Personal.Application.Reports.GetReports
 {
     public class GetReportsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<ReportItemDto>>
     {
-        public FileTypeEnum? Type { get; set; }
+        public FileTypeEnum? FileType { get; set; }
         public string Name { get; set; }
         public string ContractorName { get; set; }
         public int? DepartmentId { get; set; }

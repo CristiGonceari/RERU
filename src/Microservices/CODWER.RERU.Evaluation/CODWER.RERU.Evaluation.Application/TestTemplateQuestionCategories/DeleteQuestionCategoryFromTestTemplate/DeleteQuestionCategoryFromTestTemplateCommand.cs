@@ -2,7 +2,7 @@
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 
-namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.DeleteQuestionCategoryFromTestType
+namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.DeleteQuestionCategoryFromTestTemplate
 {
     [ModuleOperation(permission: PermissionCodes.TEST_TEMPLATES_GENERAL_ACCESS)]
     public class DeleteQuestionCategoryFromTestTemplateCommand : IRequest<Unit>

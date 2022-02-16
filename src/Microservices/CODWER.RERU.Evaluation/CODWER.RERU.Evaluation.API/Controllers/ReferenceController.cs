@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.API.Config;
+﻿using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.References.GetEventsValues;
 using CODWER.RERU.Evaluation.Application.References.GetQuestionCategoryValue;
+using CODWER.RERU.Evaluation.Application.References.GetTestTemplatesValue;
 using CODWER.RERU.Evaluation.Application.References.GetUsersValue;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CVU.ERP.Common.EnumConverters;
-using CODWER.RERU.Evaluation.Application.References.GetTestTemplatesValue;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -91,6 +91,14 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<List<SelectItem>> GetStatisticEnum()
         {
             var items = EnumConverter<StatisticsQuestionFilterEnum>.SelectValues;
+
+            return items;
+        }
+
+        [HttpGet("question-status/select-values")]
+        public List<SelectItem> GetQuestionStatuses()
+        {
+            var items = EnumConverter<QuestionUnitStatusEnum>.SelectValues;
 
             return items;
         }

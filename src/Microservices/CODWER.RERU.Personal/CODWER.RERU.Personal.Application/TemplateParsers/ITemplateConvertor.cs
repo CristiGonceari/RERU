@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
+using CVU.ERP.Common.DataTransferObjects.Files;
 using Microsoft.AspNetCore.Http;
 
 namespace CODWER.RERU.Personal.Application.TemplateParsers

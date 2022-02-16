@@ -123,7 +123,6 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
   }
 
   updateOptions() {
-    console.warn('this.options', this.options);
     if (this.options.length) {
       this.options.forEach(element => {
         this.optionService.edit(this.parseEdit(element)).subscribe(

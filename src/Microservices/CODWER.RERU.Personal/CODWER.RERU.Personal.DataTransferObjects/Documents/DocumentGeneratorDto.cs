@@ -1,4 +1,4 @@
-﻿using CODWER.RERU.Personal.Data.Entities.Files;
+﻿using CVU.ERP.StorageService.Entities;
 
 namespace CODWER.RERU.Personal.DataTransferObjects.Documents
 {

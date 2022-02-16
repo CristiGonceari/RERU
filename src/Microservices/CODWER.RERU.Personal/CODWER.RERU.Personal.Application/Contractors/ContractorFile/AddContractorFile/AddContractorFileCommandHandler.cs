@@ -1,22 +1,34 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using CODWER.RERU.Personal.Application.Services;
+﻿using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Models;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.Contractors.ContractorFile.AddContractorFile
 {
-    public class AddContractorFileCommandHandler : IRequestHandler<AddContractorFileCommand, int>
+    public class AddContractorFileCommandHandler : IRequestHandler<AddContractorFileCommand, string>
     {
         private readonly IStorageFileService _fileService;
-
-        public AddContractorFileCommandHandler(IStorageFileService fileService)
+        private readonly IPersonalStorageClient _personalStorageClient;
+        public AddContractorFileCommandHandler(IStorageFileService fileService, IPersonalStorageClient personalStorageClient)
         {
             _fileService = fileService;
+            _personalStorageClient = personalStorageClient;
         }
 
-        public async Task<int> Handle(AddContractorFileCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(AddContractorFileCommand request, CancellationToken cancellationToken)
         {
-            return await _fileService.AddFile(request.Data);
+            var file = new AddFileDto
+            {
+                File = request.Data.File,
+                Type = request.Data.Type
+            };
+
+            var fileId = await _fileService.AddFile(file);
+
+            await _personalStorageClient.AddFileToContractor(request.Data.ContractorId, fileId);
+
+            return fileId;
         }
     }
 }

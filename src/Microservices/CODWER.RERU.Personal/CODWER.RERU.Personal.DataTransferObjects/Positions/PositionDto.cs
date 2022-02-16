@@ -22,7 +22,7 @@ namespace CODWER.RERU.Personal.DataTransferObjects.Positions
         public int? ContractorId { get; set; }
         public string ContractorName { get; set; }
 
-        public int OrderId { get; set; }
+        public string OrderId { get; set; }
         public string OrderName { get; set; }
     }
 }

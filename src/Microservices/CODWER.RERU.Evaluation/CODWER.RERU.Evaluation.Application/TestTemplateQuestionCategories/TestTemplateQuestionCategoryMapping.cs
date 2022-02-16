@@ -2,7 +2,7 @@
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
 
-namespace CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories
+namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories
 {
     public class TestTemplateQuestionCategoryMapping : Profile
     {

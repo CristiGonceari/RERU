@@ -29,7 +29,8 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
 
         public async Task<PaginatedModel<QuestionUnitDto>> Handle(GetQuestionUnitsQuery request, CancellationToken cancellationToken)
         {
-            var questions = GetAndFilterQuestionUnits.Filter(_appDbContext, request.QuestionName, request.QuestionCategoryId, request.Type);
+            var questions = GetAndFilterQuestionUnits
+                .Filter(_appDbContext, request.QuestionName, request.CategoryName, request.QuestionTags, request.Type, request.Status);
 
             questions = SelectOnlyReturnedFields(questions);
 

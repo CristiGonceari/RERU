@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.API.Config;
-using CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.AssignQuestionCategoryToTestTemplate;
-using CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.DeleteQuestionCategoryFromTestType;
-using CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.EditCategoriesSequenceType;
-using CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.GetTestTypeCategories;
-using CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.PreviewQuestionUnitsByTestTypeCategory;
-using CODWER.RERU.Evaluation.Application.TestTypeQuestionCategories.SetCategoriesSequence;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
+using CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.DeleteQuestionCategoryFromTestTemplate;
+using CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.PreviewQuestionUnitsByTestTemplateCategory;
+using CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.SetCategoriesSequence;
+using CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.EditCategoriesSequenceTemplate;
+using CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.AssignQuestionCategoryToTestTemplate;
+using CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.GetTestTemplateCategories;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {

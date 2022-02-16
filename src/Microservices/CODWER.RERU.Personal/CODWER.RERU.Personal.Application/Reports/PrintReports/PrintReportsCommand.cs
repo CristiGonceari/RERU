@@ -1,13 +1,13 @@
-﻿using System;
-using CODWER.RERU.Personal.Data.Entities.Files;
-using CODWER.RERU.Personal.DataTransferObjects.Files;
+﻿using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.StorageService.Entities;
 using MediatR;
+using System;
 
 namespace CODWER.RERU.Personal.Application.Reports.PrintReports
 {
     public class PrintReportsCommand : IRequest<FileDataDto>
     {
-        public FileTypeEnum? Type { get; set; }
+        public FileTypeEnum? FileType { get; set; }
         public string Name { get; set; }
         public string ContractorName { get; set; }
         public int? DepartmentId { get; set; }

@@ -1,15 +1,16 @@
-﻿using System;
+﻿using CODWER.RERU.Personal.Application.TemplateParsers;
+using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
+using CODWER.RERU.Personal.Data.Entities.Enums;
+using CODWER.RERU.Personal.Data.Persistence.Context;
+using CODWER.RERU.Personal.DataTransferObjects.Employers;
+using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Application.TemplateParsers;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
-using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Entities.Files;
-using CODWER.RERU.Personal.Data.Persistence.Context;
-using CODWER.RERU.Personal.DataTransferObjects.Employers;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace CODWER.RERU.Personal.Application.Services.Implementations
 {
@@ -18,6 +19,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         private readonly AppDbContext _appDbContext;
         private readonly ITemplateConvertor _templateConvertor;
         private readonly IStorageFileService _storageFileService;
+        private readonly IPersonalStorageClient _personalStorageClient;
         private readonly EmployerData _employerData;
         private readonly string _fileName;
 
@@ -25,26 +27,32 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             AppDbContext appDbContext, 
             ITemplateConvertor templateConvertor, 
             IStorageFileService storageFileService, 
-            IOptions<EmployerData> options)
+            IOptions<EmployerData> options, 
+            IPersonalStorageClient personalStorageClient)
         {
             _appDbContext = appDbContext;
             _templateConvertor = templateConvertor;
             _storageFileService = storageFileService;
+            _personalStorageClient = personalStorageClient;
             _employerData = options.Value;
             _fileName = "ContractorTemplates/Orders/Ordin Cu Privire La Concediu.html";
         }
 
         #region Request
-        public async Task<int> SaveRequestFile(int contractorId, Vacation vacation)
+        public async Task<string> SaveRequestFile(int contractorId, Vacation vacation)
         {
             var myDictionary = await GetRequestDictionary(contractorId, vacation);
             var parsedPdf = await _templateConvertor.GetPdfFromHtml(myDictionary, GetFullRequestTemplateName(vacation.VacationType));
 
-            return await _storageFileService.AddFile(contractorId,
+            var fileId = await _storageFileService.AddFile(
                 parsedPdf.Name,
+                FileTypeEnum.request,
                 parsedPdf.ContentType,
-                FileTypeEnum.Request,
                 parsedPdf.Content);
+
+            await _personalStorageClient.AddFileToContractor(contractorId, fileId);
+
+            return fileId;
         }
 
         private async Task<Dictionary<string, string>> GetRequestDictionary(int contractorId, Vacation vacation)
@@ -95,16 +103,20 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         #endregion
 
         #region Order
-        public async Task<int> SaveOrderFile(int contractorId, Vacation vacation)
+        public async Task<string> SaveOrderFile(int contractorId, Vacation vacation)
         {
             var myDictionary = await GetOrderDictionary(contractorId, vacation);
             var parsedPdf = await _templateConvertor.GetPdfFromHtml(myDictionary, _fileName);
 
-            return await _storageFileService.AddFile(contractorId,
+            var fileId = await _storageFileService.AddFile(
                 parsedPdf.Name,
+                FileTypeEnum.order,
                 parsedPdf.ContentType,
-                FileTypeEnum.Order,
                 parsedPdf.Content);
+
+            await _personalStorageClient.AddFileToContractor(contractorId, fileId);
+
+            return fileId;
         }
 
         private async Task<Dictionary<string, string>> GetOrderDictionary(int contractorId, Vacation vacation)

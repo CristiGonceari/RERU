@@ -1,12 +1,12 @@
-﻿using CODWER.RERU.Personal.Data.Entities.Files;
-using CODWER.RERU.Personal.DataTransferObjects.Files;
+﻿using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.StorageService.Entities;
 using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Profiles.ContractorFiles
 {
     public class GetContractorFilesQuery : PaginatedQueryParameter, IRequest<PaginatedModel<FileNameDto>>
     {
-        public FileTypeEnum? Type { get; set; }
+        public FileTypeEnum? FileType { get; set; }
     }
 }

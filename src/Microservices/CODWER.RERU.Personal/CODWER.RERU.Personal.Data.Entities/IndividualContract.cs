@@ -21,8 +21,7 @@ namespace CODWER.RERU.Personal.Data.Entities
         [ForeignKey("ContractorId")]
         public virtual Contractor Contractor { get; set; }
 
-        public int? FileId { get; set; }
-        public ByteArrayFile File { get; set; }
+        public string FileId { get; set; }
     }
 
 }

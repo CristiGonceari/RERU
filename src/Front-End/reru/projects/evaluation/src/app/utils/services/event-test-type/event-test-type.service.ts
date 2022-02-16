@@ -17,6 +17,10 @@ export class EventTestTypeService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}`, {params});
   }
 
+  getTestTypeByEvent(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}/EventTestTemplate/no-assigned`, { params });
+  }
+
   attachTestType(data){
     return this.http.post(`${this.baseUrl}/${this.urlRoute}`, data);
   }

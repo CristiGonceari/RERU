@@ -6,7 +6,6 @@ using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.TablePrinterService;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,7 +27,8 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.PrintQuestionUnits
 
         public async Task<FileDataDto> Handle(PrintQuestionUnitsCommand request, CancellationToken cancellationToken)
         {
-            var questions = GetAndFilterQuestionUnits.Filter(_appDbContext, request.QuestionName, request.QuestionCategoryId, request.Type);
+            var questions = GetAndFilterQuestionUnits
+                    .Filter(_appDbContext, request.QuestionName, request.CategoryName, request.QuestionTags, request.Type, request.Status);
 
             questions = SelectOnlyReturnedFields(questions);
 

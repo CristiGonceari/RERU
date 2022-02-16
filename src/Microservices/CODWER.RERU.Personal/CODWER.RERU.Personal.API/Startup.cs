@@ -25,6 +25,7 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using System;
 using System.Text;
+using Hangfire.PostgreSql;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Personal.API.Config.ServicesSetup;
@@ -116,7 +117,7 @@ namespace CODWER.RERU.Personal.API
             //{ 
 
             services.AddHangfire(config =>
-                config.UseSqlServerStorage(Configuration.GetConnectionString("Default")));
+                config.UsePostgreSqlStorage(Configuration.GetConnectionString("Default")));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext appDbContext)

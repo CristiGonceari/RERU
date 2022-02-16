@@ -1,18 +1,18 @@
 ﻿using CODWER.RERU.Personal.Application.Validation;
-using CODWER.RERU.Personal.Application.Validators;
-using CODWER.RERU.Personal.Data.Entities.Files;
-using CODWER.RERU.Personal.Data.Persistence.Context;
 using CVU.ERP.Common.Validation;
+using CVU.ERP.Module.Application.StorageFileServices.Validators;
+using CVU.ERP.StorageService.Context;
+using CVU.ERP.StorageService.Entities;
 using FluentValidation;
 
 namespace CODWER.RERU.Personal.Application.Contractors.ContractorFile.GetContractorFile
 {
     public class GetContractorFileQueryValidator : AbstractValidator<GetContractorFileQuery>
     {
-        public GetContractorFileQueryValidator(AppDbContext appDbContext)
+        public GetContractorFileQueryValidator(StorageDbContext storageDbContext)
         {
             RuleFor(x => x.FileId)
-                .SetValidator(new ItemMustExistValidator<ByteArrayFile>(appDbContext, ValidationCodes.FILE_NOT_FOUND, ValidationMessages.NotFound));
+                     .SetValidator(new StorageFileMustExistValidator<File>(storageDbContext, ValidationCodes.BONUS_NOT_FOUND, ValidationMessages.NotFound));
         }
     }
 }

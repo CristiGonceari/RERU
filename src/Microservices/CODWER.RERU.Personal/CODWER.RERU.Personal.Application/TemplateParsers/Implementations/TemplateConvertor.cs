@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
+using CVU.ERP.Common.DataTransferObjects.Files;
 using Microsoft.AspNetCore.Http;
 using Wkhtmltopdf.NetCore;
 

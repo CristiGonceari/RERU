@@ -27,7 +27,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.UploadAvatar
         public async Task<Unit> Handle(UploadAvatarCommand request, CancellationToken cancellationToken)
         {
             var currentUser = await _currentUserProvider.Get();
-            var userProfile = await CoreDbContext.UserProfiles.Include(up => up.Avatar).FirstOrDefaultAsync(up => up.Id == Convert.ToInt32(currentUser.Id));
+            var userProfile = await CoreDbContext.UserProfiles.Include(up => up.Avatar).FirstOrDefaultAsync(up => up.Id == int.Parse(currentUser.Id));
             var avatar = new Document();
             Guid oldDocumentId = new Guid();
             var hadAvatar = false;

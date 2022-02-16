@@ -25,7 +25,13 @@ export class QuestionListTableComponent implements OnInit {
 	pagedSummary: PaginationModel = new PaginationModel();
 	qType: string[];
 	questionEnum = QuestionUnitStatusEnum;
+
 	keyword: string;
+	categoryName: string;
+	questionTag: string;
+	questionStatus: string = '';
+	questionType: string = '';
+
 	type = QuestionUnitTypeEnum;
 	isLoading: boolean = true;
 	title: string;
@@ -107,9 +113,13 @@ export class QuestionListTableComponent implements OnInit {
 		this.keyword = data.keyword;
 		let params = {
 			questionName: this.keyword || '',
+			categoryName: this.categoryName || '',
+			questionTag: this.questionTag || '',
+			status: this.questionStatus,
+			type: this.questionType,
 			page: data.page || this.pagedSummary.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
-		}
+			}
 		this.questionService.getAll(params).subscribe((res) => {
 			if (res && res.data.items) {
 				this.questionList = res.data.items;
