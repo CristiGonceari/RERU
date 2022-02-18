@@ -9,6 +9,6 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.GetT
     [ModuleOperation(permission: PermissionCodes.TEST_TEMPLATES_GENERAL_ACCESS)]
     public class GetTestTemplateCategoriesQuery : IRequest<List<TestTypeQuestionCategoryDto>>
     {
-        public int TestTypeId { get; set; }
+        public int TestTemplateId { get; set; }
     }
 }

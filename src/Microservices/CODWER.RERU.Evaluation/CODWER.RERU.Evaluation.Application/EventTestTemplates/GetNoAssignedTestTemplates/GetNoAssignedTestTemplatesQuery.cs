@@ -4,7 +4,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 
-namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.GetNoAssignedTestTypes
+namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.GetNoAssignedTestTemplates
 {
     [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
 

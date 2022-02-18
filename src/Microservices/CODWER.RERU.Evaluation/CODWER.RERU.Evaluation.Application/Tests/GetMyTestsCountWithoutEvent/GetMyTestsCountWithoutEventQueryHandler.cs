@@ -26,7 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent
             var myUserProfile = await _userProfileService.GetCurrentUser();
 
             var myTests = _appDbContext.Tests
-                .Include(t => t.TestTemplates)
+                .Include(t => t.TestTemplate)
                 .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)

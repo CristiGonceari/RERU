@@ -57,13 +57,13 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit
         {
             var tests = _appDbContext.Tests
                 .Include(x => x.TestQuestions)
-                .Include(x => x.TestTemplates)
+                .Include(x => x.TestTemplate)
                 .Where(t => t.TestQuestions.Any(q => q.QuestionUnitId == questionUnitId))
                 .ToList();
 
             foreach (var test in tests)
             {
-                if (test.TestTemplates.Status == TestTypeStatusEnum.Active)
+                if (test.TestTemplate.Status == TestTypeStatusEnum.Active)
                 {
                     return true;
                 }

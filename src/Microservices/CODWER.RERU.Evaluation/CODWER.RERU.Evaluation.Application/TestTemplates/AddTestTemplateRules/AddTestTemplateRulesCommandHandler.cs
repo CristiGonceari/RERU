@@ -22,7 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddTestTemplateRules
             var plainTextBytes = Encoding.UTF8.GetBytes(request.Data.Rules);
             var rulesToAdd = Convert.ToBase64String(plainTextBytes);
 
-            var testType = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == request.Data.TestTypeId);
+            var testType = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == request.Data.TestTemplateId);
             testType.Rules = rulesToAdd;
 
             await _appDbContext.SaveChangesAsync();

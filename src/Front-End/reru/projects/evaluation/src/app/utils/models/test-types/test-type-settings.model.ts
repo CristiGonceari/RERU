@@ -1,5 +1,5 @@
 export class TestTypeSettings {
-    testTypeId: number;
+    testTemplateId: number;
     startWithoutConfirmation: boolean;
     startBeforeProgrammation: boolean;
     startAfterProgrammation: boolean;

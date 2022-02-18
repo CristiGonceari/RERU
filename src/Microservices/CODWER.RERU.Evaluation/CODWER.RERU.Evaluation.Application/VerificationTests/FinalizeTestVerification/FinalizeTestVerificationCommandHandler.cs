@@ -53,7 +53,7 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.FinalizeTestVerif
                 .FirstOrDefaultAsync(x => x.Id == testToFinalize.UserProfileId);
 
             var test = await _appDbContext.Tests
-                .Include(x => x.TestTemplates)
+                .Include(x => x.TestTemplate)
                 .FirstOrDefaultAsync(x => x.Id == testToFinalize.Id);
 
             var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
@@ -78,7 +78,7 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.FinalizeTestVerif
 
         private async Task<string> GetTableContent(Test test)
         {
-            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">Testul ""{test.TestTemplates.Name}"" a fost verificat.</p>
+            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">Testul ""{test.TestTemplate.Name}"" a fost verificat.</p>
                 <p style=""font-size: 22px;font-weight: 300;"">Ați acumulat {test.AccumulatedPercentage}% din 100 %.</p>
                 <p style=""font-size: 22px;font-weight: 300;"">Testul a fost trecut {EnumMessages.EnumMessages.GetTestResultStatus(test.ResultStatus)}.</p> ";
 

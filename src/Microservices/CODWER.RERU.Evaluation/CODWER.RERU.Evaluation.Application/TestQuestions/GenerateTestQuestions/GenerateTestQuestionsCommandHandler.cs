@@ -25,20 +25,20 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
         public async Task<Unit> Handle(GenerateTestQuestionsCommand request, CancellationToken cancellationToken)
         {
             var test = await _appDbContext.Tests
-                .Include(x => x.TestTemplates)
+                .Include(x => x.TestTemplate)
                     .ThenInclude(x => x.TestTypeQuestionCategories)
-                .Include(x => x.TestTemplates)
+                .Include(x => x.TestTemplate)
                     .ThenInclude(x => x.Settings)
                 .FirstAsync(x => x.Id == request.TestId);
 
-            var totalCount = test.TestTemplates.QuestionCount;
+            var totalCount = test.TestTemplate.QuestionCount;
 
-            var testTypeQuestionCategoriesToUse = test.TestTemplates.TestTypeQuestionCategories;
+            var testTypeQuestionCategoriesToUse = test.TestTemplate.TestTypeQuestionCategories;
             var categoriesCount = testTypeQuestionCategoriesToUse.Count;
 
             var allUsersTests = await _appDbContext.Tests
                 .Include(x => x.TestQuestions)
-                .Where(x => x.TestTypeId == test.TestTypeId && x.UserProfileId == test.UserProfileId)
+                .Where(x => x.TestTemplateId == test.TestTemplateId && x.UserProfileId == test.UserProfileId)
                 .ToListAsync();
 
             var usedInTestsQuestions = new List<int>();
@@ -52,7 +52,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
             int questionsPerCategory = 0;
             var remainsCategoriesCount = categoriesCount;
 
-            if (test.TestTemplates.CategoriesSequence == SequenceEnum.Strict)
+            if (test.TestTemplate.CategoriesSequence == SequenceEnum.Strict)
             {
                 testTypeQuestionCategoriesToUse = testTypeQuestionCategoriesToUse.OrderBy(x => x.CategoryIndex).ToList();
             }
@@ -89,18 +89,18 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                 remainsCategoriesCount--;
             }
 
-            if (test.TestTemplates.Settings.StartAfterProgrammation)
+            if (test.TestTemplate.Settings.StartAfterProgrammation)
             {
                 test.StartTime = DateTime.Now;
-                test.EndTime = DateTime.Now.AddMinutes(test.TestTemplates.Duration);
+                test.EndTime = DateTime.Now.AddMinutes(test.TestTemplate.Duration);
             }
             else
             {
                 test.StartTime = test.ProgrammedTime;
-                test.EndTime = test.ProgrammedTime.AddMinutes(test.TestTemplates.Duration);
+                test.EndTime = test.ProgrammedTime.AddMinutes(test.TestTemplate.Duration);
             }
 
-            test.MaxErrors = test.TestTemplates.Settings.MaxErrors;
+            test.MaxErrors = test.TestTemplate.Settings.MaxErrors;
 
             await _appDbContext.SaveChangesAsync();
 

@@ -14,18 +14,18 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetPollResult
     {
         public GetPollResultQueryValidator(AppDbContext appDbContext)
         {
-            RuleFor(x => x.TestTypeId)
+            RuleFor(x => x.TestTemplateId)
                 .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
 
-            RuleFor(r => r.TestTypeId)
-                 .Must(x => appDbContext.EventTestTypes.Any(t => t.TestTypeId == x))
+            RuleFor(r => r.TestTemplateId)
+                 .Must(x => appDbContext.EventTestTypes.Any(t => t.TestTemplateId == x))
                  .WithErrorCode(ValidationCodes.INEXISTENT_POLL_IN_EVENT);
 
-            When(r => !appDbContext.TestTypeSettings.First(x => x.TestTypeId == r.TestTypeId).CanViewPollProgress, () =>
+            When(r => !appDbContext.TestTypeSettings.First(x => x.TestTemplateId == r.TestTemplateId).CanViewPollProgress, () =>
             {
-                RuleFor(x => x.TestTypeId)
-                .Must(x => appDbContext.EventTestTypes.Include(s => s.Event).First(s => s.TestTypeId == x).Event.TillDate <= DateTime.Now)
+                RuleFor(x => x.TestTemplateId)
+                .Must(x => appDbContext.EventTestTypes.Include(s => s.Event).First(s => s.TestTemplateId == x).Event.TillDate <= DateTime.Now)
                 .WithErrorCode(ValidationCodes.POLL_ISNT_TERMINATED);
             });
         }

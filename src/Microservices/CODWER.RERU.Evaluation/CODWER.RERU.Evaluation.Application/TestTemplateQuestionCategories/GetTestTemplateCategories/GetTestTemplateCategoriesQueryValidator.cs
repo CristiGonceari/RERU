@@ -11,7 +11,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.GetT
     {
         public GetTestTemplateCategoriesQueryValidator(AppDbContext appDbContext)
         {
-            RuleFor(x => x.TestTypeId)
+            RuleFor(x => x.TestTemplateId)
                 .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
         }

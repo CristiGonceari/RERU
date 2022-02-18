@@ -21,7 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.EditTestTemplateStatu
 
         public async Task<Unit> Handle(EditTestTemplateStatusCommand request, CancellationToken cancellationToken)
         {
-            var updateTestType = await _appDbContext.TestTemplates.FirstAsync(x => x.Id == request.Data.TestTypeId);
+            var updateTestType = await _appDbContext.TestTemplates.FirstAsync(x => x.Id == request.Data.TestTemplateId);
             updateTestType.Status = request.Data.Status;
 
             await _appDbContext.SaveChangesAsync();

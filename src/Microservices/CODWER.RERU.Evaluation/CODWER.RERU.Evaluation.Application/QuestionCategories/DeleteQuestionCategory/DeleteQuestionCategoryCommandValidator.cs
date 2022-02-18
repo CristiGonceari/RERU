@@ -33,8 +33,8 @@ namespace CODWER.RERU.Evaluation.Application.QuestionCategories.DeleteQuestionCa
 
             var tests = _appDbContext.Tests
                 .Include(x => x.TestQuestions)
-                .Include(x => x.TestTemplates)
-                .Where(t => t.TestTemplates.TestTypeQuestionCategories.Any(q => q.QuestionCategoryId == id))
+                .Include(x => x.TestTemplate)
+                .Where(t => t.TestTemplate.TestTypeQuestionCategories.Any(q => q.QuestionCategoryId == id))
                 .Any(t => t.TestStatus != TestStatusEnum.Terminated && t.TestStatus != TestStatusEnum.Verified);
 
             if (testTypes || tests)

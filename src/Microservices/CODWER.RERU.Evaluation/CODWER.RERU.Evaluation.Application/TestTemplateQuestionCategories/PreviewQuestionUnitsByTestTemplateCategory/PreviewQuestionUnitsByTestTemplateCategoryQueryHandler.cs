@@ -71,7 +71,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Prev
                 {
                     var testType = await _appDbContext.TestTemplates
                         .Include(x => x.TestTypeQuestionCategories)
-                        .FirstAsync(x => x.Id == request.Data.TestTypeId);
+                        .FirstAsync(x => x.Id == request.Data.TestTemplateId);
 
                     count = testType.QuestionCount - testType.TestTypeQuestionCategories.Sum(x => x.QuestionCount.Value);
                 }

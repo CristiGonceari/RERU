@@ -8,7 +8,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.GetNoAssignedTestTypes
+namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.GetNoAssignedTestTemplates
 {
     public class GetNoAssignedTestTemplatesQueryHandler : IRequestHandler<GetNoAssignedTestTemplatesQuery, List<TestTemplateDto>>
     {

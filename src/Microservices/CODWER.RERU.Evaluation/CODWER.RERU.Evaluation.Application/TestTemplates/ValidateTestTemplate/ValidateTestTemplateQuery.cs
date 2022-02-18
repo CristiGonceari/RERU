@@ -8,6 +8,6 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.ValidateTestTemplate
 
     public class ValidateTestTemplateQuery : IRequest<Unit>
     {
-        public int TestTypeId { get; set; }
+        public int TestTemplateId { get; set; }
     }
 }

@@ -5,7 +5,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories
 {
     public class QuestionCategoryPreviewDto
     {
-        public int TestTypeId { get; set; }
+        public int TestTemplateId { get; set; }
         public int CategoryId { get; set; }
         public int? QuestionCount { get; set; }
         public QuestionTypeEnum? QuestionType { get; set; }

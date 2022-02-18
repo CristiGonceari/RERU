@@ -70,13 +70,13 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
     this.testService.getTest(this.testId).subscribe(
       res => {
         this.testDto = res.data;
-        this.getTestTypeSettings(res.data.testTypeId);
+        this.getTestTypeSettings(res.data.testTemplateId);
       }
     )
   }
 
   getTestTypeSettings(testTypeId) {
-    this.testTypeService.getTestTypeSettings({ testTypeId: testTypeId }).subscribe(res => {
+    this.testTypeService.getTestTypeSettings({ testTemplateId: testTypeId }).subscribe(res => {
       this.settings = res.data;
       this.getTestQuestions();
     });

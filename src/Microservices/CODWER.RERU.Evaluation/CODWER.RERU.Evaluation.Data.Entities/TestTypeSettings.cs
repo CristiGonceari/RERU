@@ -4,7 +4,7 @@ namespace CODWER.RERU.Evaluation.Data.Entities
 {
     public class TestTypeSettings : SoftDeleteBaseEntity
     {
-        public int TestTypeId { get; set; }
+        public int TestTemplateId { get; set; }
         public bool StartWithoutConfirmation { get; set; }
         public bool StartBeforeProgrammation { get; set; }
         public bool StartAfterProgrammation { get; set; }

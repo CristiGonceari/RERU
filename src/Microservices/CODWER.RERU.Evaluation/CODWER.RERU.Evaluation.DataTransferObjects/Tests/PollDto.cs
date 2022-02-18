@@ -6,7 +6,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
     public class PollDto
     {
         public int Id { get; set; }
-        public string TestTypeName { get; set; }
+        public string TestTemplateName { get; set; }
         public MyPollStatusEnum Status { get; set; }
         public TestStatusEnum? TestStatus { get; set; }
         public TestTypeStatusEnum TestTypeStatus { get; set; }

@@ -28,9 +28,9 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetMyEventsCount
              var myEvents = _appDbContext.Events
                    .Include(x => x.EventUsers)
                    .Include(x => x.EventTestTypes)
-                   .ThenInclude(x => x.TestType)
+                   .ThenInclude(x => x.TestTemplate)
                    .Where(x => x.EventUsers.Any(e => e.UserProfileId == curUser.Id) && 
-                               x.EventTestTypes.Any(e => e.TestType.Mode == request.TestTypeMode))
+                               x.EventTestTypes.Any(e => e.TestTemplate.Mode == request.TestTypeMode))
                    .AsQueryable();
 
                 myEvents.Where(x => x.FromDate.Date >= request.FromDate.Date && x.TillDate.Date <= request.TillDate ||

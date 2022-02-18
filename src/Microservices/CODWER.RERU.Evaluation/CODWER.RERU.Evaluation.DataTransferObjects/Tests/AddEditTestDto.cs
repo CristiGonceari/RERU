@@ -10,7 +10,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public int UserProfileId { get; set; }
         public int? EvaluatorId { get; set; }
         public bool? ShowUserName { get; set; }
-        public int TestTypeId { get; set; }
+        public int TestTemplateId { get; set; }
         public int? EventId { get; set; }
         public int? LocationId { get; set; }
         public TestStatusEnum TestStatus { get; set; }

@@ -161,7 +161,7 @@ export class AddEditTestTypesComponent implements OnInit {
 		let params;
 		if(this.modeId == TestTypeModeEnum.Poll){
 			params = {
-				testTypeId: this.testId,
+				testTemplateId: this.testId,
 				startWithoutConfirmation: true,
 				startBeforeProgrammation: true,
 				startAfterProgrammation: true,
@@ -174,7 +174,7 @@ export class AddEditTestTypesComponent implements OnInit {
 			}
 		} else {
 			params = {
-				testTypeId: this.testId,
+				testTemplateId: this.testId,
 				startWithoutConfirmation: false,
 				startBeforeProgrammation: false,
 				startAfterProgrammation: false,
@@ -186,7 +186,6 @@ export class AddEditTestTypesComponent implements OnInit {
 				showManyQuestionPerPage: false
 			}
 		}
-		
 		this.testTypeService.addEditTestTypeSettings({data: params}).subscribe(() => this.backClicked());
 	}
 

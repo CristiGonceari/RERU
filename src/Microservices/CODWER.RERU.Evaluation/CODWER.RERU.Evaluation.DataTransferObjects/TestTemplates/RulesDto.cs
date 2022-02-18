@@ -2,7 +2,7 @@
 {
     public class RulesDto
     {
-        public int TestTypeId { get; set; }
+        public int TestTemplateId { get; set; }
         public string Rules { get; set; }
     }
 }

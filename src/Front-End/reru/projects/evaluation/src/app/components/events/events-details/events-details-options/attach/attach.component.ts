@@ -97,7 +97,7 @@ export class AttachComponent implements OnInit {
       return {
         data: new AttachTestTypeToEventModel({
           eventId: +this.eventId,
-          testTypeId: +this.id,
+          testTemplateId: +this.id,
           maxAttempts: this.attempts
         })
       };

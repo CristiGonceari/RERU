@@ -59,7 +59,7 @@ export class AddTestTypeRulesComponent implements OnInit{
   parse() {
     return {
       data: new RulesModel({
-        testTypeId: this.id,
+        testTemplateId: this.id,
         rules: this.editorData
       })
     }

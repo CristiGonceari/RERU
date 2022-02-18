@@ -26,8 +26,8 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetUserEvents
             var userEvents = _appDbContext.Events
                 .Include(x => x.EventUsers)
                 .Include(x => x.EventTestTypes)
-                .ThenInclude(x => x.TestType)
-                .Where(x => x.EventUsers.Any(e => e.UserProfileId == request.UserId) && x.EventTestTypes.Any(e => e.TestType.Mode == request.TestTypeMode))
+                .ThenInclude(x => x.TestTemplate)
+                .Where(x => x.EventUsers.Any(e => e.UserProfileId == request.UserId) && x.EventTestTypes.Any(e => e.TestTemplate.Mode == request.TestTypeMode))
                 .AsQueryable();
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Event, EventDto>(userEvents, request);

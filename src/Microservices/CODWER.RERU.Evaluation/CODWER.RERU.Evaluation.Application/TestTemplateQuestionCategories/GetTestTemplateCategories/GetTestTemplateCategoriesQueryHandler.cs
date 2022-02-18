@@ -27,11 +27,11 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.GetT
         {
             var questionCategories = await _appDbContext.TestTypeQuestionCategories
                 .Include(x => x.QuestionCategory)
-                .Where(x => x.TestTypeId == request.TestTypeId)
+                .Where(x => x.TestTemplateId == request.TestTemplateId)
                 .ToListAsync();
 
             var answer = _mapper.Map<List<TestTypeQuestionCategoryDto>>(questionCategories);
-            var testType = await _appDbContext.TestTemplates.FirstAsync(x => x.Id == request.TestTypeId);
+            var testType = await _appDbContext.TestTemplates.FirstAsync(x => x.Id == request.TestTemplateId);
 
             if (testType.CategoriesSequence == SequenceEnum.Strict)
             {

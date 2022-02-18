@@ -118,7 +118,7 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
     this.selectedQuestions = [];
 
     let params = {
-      testTypeId: +this.testTypeId,
+      testTemplateId: +this.testTypeId,
       categoryId: this.questionCategoryId,
       questionCount: this.questionCount,
       questionType: this.questionType,
@@ -150,7 +150,7 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
     }
 
     let params = {
-      testTypeId: +this.testTypeId,
+      testTemplateId: +this.testTypeId,
       questionCategoryId: this.questionCategoryId,
       categoryIndex: 0,
       questionCount: this.questionCount,

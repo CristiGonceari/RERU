@@ -1,6 +1,6 @@
 import { TestTypeStatusEnum } from "../../enums/test-type-status.enum";
 
 export class EditTestTypeStatus {
-    testTypeId: number;
+    testTemplateId: number;
     status: TestTypeStatusEnum
 }

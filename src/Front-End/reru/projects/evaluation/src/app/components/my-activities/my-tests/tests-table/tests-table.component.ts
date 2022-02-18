@@ -129,13 +129,13 @@ export class TestsTableComponent implements OnInit {
   getTestById(testId: number) {
     this.testService.getTest(testId).subscribe(res => {
       this.testId = res.data.id;
-      this.getTestType(res.data.testTypeId);
+      this.getTestType(res.data.testTemplateId);
     })
   }
 
 
   getTestType(testTypeId) {
-    this.testTypeService.getTestTypeSettings({ testTypeId: testTypeId }).subscribe(res => {
+    this.testTypeService.getTestTypeSettings({ testTemplateId: testTypeId }).subscribe(res => {
       this.settings = res.data;
       this.goToTest();
     })

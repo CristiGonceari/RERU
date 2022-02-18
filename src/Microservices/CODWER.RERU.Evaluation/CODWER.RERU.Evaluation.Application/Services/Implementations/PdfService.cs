@@ -60,7 +60,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         public async Task<FileDataDto> PrintTestPdf(int testId)
         {
             var item = _appDbContext.Tests
-                .Include(t => t.TestTemplates)
+                .Include(t => t.TestTemplate)
                     .ThenInclude(tt => tt.TestTypeQuestionCategories)
                         .ThenInclude(tc => tc.QuestionCategory)
                             .ThenInclude(c => c.QuestionUnits)
@@ -211,10 +211,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             var myDictionary = new Dictionary<string, string>();
 
-            myDictionary.Add("{test_name}", item.TestTemplates.Name);
-            myDictionary.Add("{nr_test_question}", item.TestTemplates.QuestionCount.ToString());
+            myDictionary.Add("{test_name}", item.TestTemplate.Name);
+            myDictionary.Add("{nr_test_question}", item.TestTemplate.QuestionCount.ToString());
             myDictionary.Add("{test_time}", item.ProgrammedTime.ToString("dd/MM/yyyy, HH:mm"));
-            myDictionary.Add("{min_percentage}", item.TestTemplates.MinPercent.ToString());
+            myDictionary.Add("{min_percentage}", item.TestTemplate.MinPercent.ToString());
             myDictionary.Add("{event_name}", item.EventId != null ? item.Event.Name : "-");
             myDictionary.Add("{location_name}", item.LocationId != null ? item.Location.Name : "-");
             myDictionary.Add("{evaluat_name}", item.UserProfile.FirstName + " " + item.UserProfile.LastName);
@@ -297,7 +297,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             var content = string.Empty;
 
-            foreach (var testCategory in item.TestTemplates.TestTypeQuestionCategories)
+            foreach (var testCategory in item.TestTemplate.TestTypeQuestionCategories)
             {
                 content += $@"<tr>
                                     <th colspan=""2"" style=""border: 1px solid black; border-collapse: collapse; text-align: left;
@@ -329,7 +329,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                             </tr> ";
                 }
 
-                if (item.TestTemplates.TestTypeQuestionCategories.Count() >= 2)
+                if (item.TestTemplate.TestTypeQuestionCategories.Count() >= 2)
                 {
                     content += $@"<tr>
                                 <th colspan=""4"" style=""border: 1px solid black; border-collapse: collapse; background-color: rgba(223, 221, 221, 0.842); height: 35px;""></th>
@@ -441,7 +441,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 var item = _appDbContext.Tests
                     .Include(t => t.UserProfile)
                     .Include(t => t.Evaluator)
-                    .Include(t => t.TestTemplates)
+                    .Include(t => t.TestTemplate)
                     .Include(t => t.TestQuestions)
                     .ThenInclude(tq => tq.QuestionUnit)
                     .ThenInclude(q => q.Options)
@@ -764,11 +764,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             content += $@"
                 <div style=""padding-top: 150px;"">
                     <h2 style=""text-align: right; font-size: 18px; font-weight: 100;"">Numele, prenumele candidatului(ei): {item.UserProfile.FirstName} {item.UserProfile.LastName}</h2>
-                    <h2 style=""text-align: right; font-size: 18px; font-weight: 100;"">Procentul minim de trecere: {item.TestTemplates.MinPercent}</h2>
+                    <h2 style=""text-align: right; font-size: 18px; font-weight: 100;"">Procentul minim de trecere: {item.TestTemplate.MinPercent}</h2>
                 </div>
                 <div style=""margin-top: 50px;"">
-                    <h2 style=""text-align: center; font-size: 22px;"">{item.TestTemplates.Name}</h2>
-                    <h2 style=""text-align: center; font-size: 18px;""> Durata testului: {item.TestTemplates.Duration} min</h2>
+                    <h2 style=""text-align: center; font-size: 22px;"">{item.TestTemplate.Name}</h2>
+                    <h2 style=""text-align: center; font-size: 18px;""> Durata testului: {item.TestTemplate.Duration} min</h2>
                 </div>";
 
             return content;

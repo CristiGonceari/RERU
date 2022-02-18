@@ -7,7 +7,7 @@ export class Test {
     id: number;
     userId: number;
     evaluatorId?: number;
-    testTypeId: number;
+    testTemplateId: number;
     eventName: string;
     eventId: number;
     locationName: string;
@@ -18,7 +18,7 @@ export class Test {
     questionCount: number;
     accumulatedPercentage: number;
     userName: string;
-    testTypeName: string;
+    testTemplateName: string;
     rules: string;
     verificationProgress: string;
     showUserName: boolean;
@@ -35,7 +35,7 @@ export class Test {
 export class CreateTestModel {
     id?: number;
     userProfileId: number;
-    testTypeId: number;
+    testTemplateId: number;
     eventId?: number;
     testStatus: number;
     programmedTime: string;
@@ -49,7 +49,7 @@ export class CreateTestModel {
             this.eventId = testModel.eventId;
             this.programmedTime = testModel.programmedTime;
             this.testStatus = testModel.testStatus;
-            this.testTypeId = testModel.testTypeId;
+            this.testTemplateId = testModel.testTemplateId;
             this.evaluatorId = testModel.evaluatorId;
             this.showUserName = testModel.showUserName;
         } else {
@@ -57,7 +57,7 @@ export class CreateTestModel {
             this.userProfileId = null;
             this.programmedTime = null;
             this.testStatus = null;
-            this.testTypeId = null;
+            this.testTemplateId = null;
             this.eventId = null;
             this.evaluatorId = null;
             this.showUserName = null;

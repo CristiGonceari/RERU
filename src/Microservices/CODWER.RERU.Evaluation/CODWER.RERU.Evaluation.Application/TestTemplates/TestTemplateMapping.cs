@@ -30,11 +30,11 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates
                .ForMember(x => x.Label, opts => opts.MapFrom(tt => tt.Name));
 
             CreateMap<TestTemplate, SelectTestTemplateValueDto>()
-               .ForMember(x => x.TestTypeId, opts => opts.MapFrom(tt => tt.Id))
-               .ForMember(x => x.TestTypeName, opts => opts.MapFrom(tt => tt.Name));
+               .ForMember(x => x.TestTemplateId, opts => opts.MapFrom(tt => tt.Id))
+               .ForMember(x => x.TestTemplateName, opts => opts.MapFrom(tt => tt.Name));
 
             CreateMap<TestTemplate, RulesDto>()
-                .ForMember(x => x.TestTypeId, opts => opts.MapFrom(tt => tt.Id));
+                .ForMember(x => x.TestTemplateId, opts => opts.MapFrom(tt => tt.Id));
         }
     }
 }

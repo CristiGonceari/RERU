@@ -41,7 +41,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                     UserProfileId = id,
                     EvaluatorId = request.EvaluatorId,
                     ShowUserName = request.ShowUserName,
-                    TestTypeId = request.TestTypeId,
+                    TestTemplateId = request.TestTemplateId,
                     EventId = request.EventId,
                     LocationId = request.LocationId,
                     TestStatus = request.TestStatus,
@@ -74,7 +74,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
             var user = new UserProfile();
             var test = await _appDbContext.Tests
-                .Include(x => x.TestTemplates)
+                .Include(x => x.TestTemplate)
                 .FirstOrDefaultAsync(x => x.Id == testId);
 
             if (testCommand != null)
@@ -116,12 +116,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
             if (evaluat)
             {
-                content += $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la testul ""{item.TestTemplates.Name}"" în rol de candidat.</p>
+                content += $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la testul ""{item.TestTemplate.Name}"" în rol de candidat.</p>
                           <p style=""font-size: 22px; font-weight: 300;""> Testul va avea loc pe data: {item.ProgrammedTime.ToString("dd/MM/yyyy, HH:mm")}.</p> ";
             }
             else
             {
-                content += $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la testul ""{item.TestTemplates.Name}"" în rol de evaluator.</p>";
+                content += $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la testul ""{item.TestTemplate.Name}"" în rol de evaluator.</p>";
             }
 
             return content;

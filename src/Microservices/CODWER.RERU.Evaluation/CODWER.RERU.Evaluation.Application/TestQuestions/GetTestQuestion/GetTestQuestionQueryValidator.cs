@@ -20,28 +20,28 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
                .Any(t => t.Id == appDbContext.Tests.FirstOrDefault(ts => ts.Id == x.TestId).TestQuestions.FirstOrDefault(q => q.Index == x.QuestionIndex).Id))
                .WithErrorCode(ValidationCodes.INVALID_TEST_QUESTION);
 
-            When(x => appDbContext.Tests.Include(x => x.TestTemplates).ThenInclude(x => x.Settings).FirstOrDefault(t => t.Id == x.TestId).TestTemplates.Settings.MaxErrors.HasValue, () =>
+            When(x => appDbContext.Tests.Include(x => x.TestTemplate).ThenInclude(x => x.Settings).FirstOrDefault(t => t.Id == x.TestId).TestTemplate.Settings.MaxErrors.HasValue, () =>
             {
                 RuleFor(x => x)
                 .Must(x => ValidateMaxErrors(x.TestId))
                 .WithErrorCode(ValidationCodes.REACHED_ERRORS_LIMIT);
             });
 
-            When(x => !appDbContext.Tests.Include(x => x.TestTemplates).ThenInclude(x => x.Settings).FirstOrDefault(t => t.Id == x.TestId).TestTemplates.Settings.PossibleChangeAnswer, () =>
+            When(x => !appDbContext.Tests.Include(x => x.TestTemplate).ThenInclude(x => x.Settings).FirstOrDefault(t => t.Id == x.TestId).TestTemplate.Settings.PossibleChangeAnswer, () =>
             {
                 RuleFor(x => x)
                 .Must(x => appDbContext.Tests.Include(x => x.TestQuestions).First(t => t.Id == x.TestId).TestQuestions.First(q => q.Index == x.QuestionIndex).AnswerStatus != AnswerStatusEnum.Answered)
                 .WithErrorCode(ValidationCodes.CANT_CHANGE_ANSWER);
             });
 
-            When(x => !appDbContext.Tests.Include(x => x.TestTemplates).ThenInclude(x => x.Settings).First(t => t.Id == x.TestId).TestTemplates.Settings.PossibleGetToSkipped, () =>
+            When(x => !appDbContext.Tests.Include(x => x.TestTemplate).ThenInclude(x => x.Settings).First(t => t.Id == x.TestId).TestTemplate.Settings.PossibleGetToSkipped, () =>
             {
                 RuleFor(x => x)
                 .Must(x => appDbContext.Tests.Include(x => x.TestQuestions).First(t => t.Id == x.TestId).TestQuestions.First(q => q.Index == x.QuestionIndex).AnswerStatus != AnswerStatusEnum.Skipped)
                 .WithErrorCode(ValidationCodes.CANT_RETURN_TO_QUESTION);
             });
 
-            When(x => appDbContext.Tests.Include(x => x.TestTemplates).First(t => t.Id == x.TestId).TestTemplates.Mode == TestTypeModeEnum.Test, () =>
+            When(x => appDbContext.Tests.Include(x => x.TestTemplate).First(t => t.Id == x.TestId).TestTemplate.Mode == TestTypeModeEnum.Test, () =>
             {
                 RuleFor(x => x)
                     .Must(x => appDbContext.Tests.FirstOrDefault(t => t.Id == x.TestId).TestStatus == TestStatusEnum.InProgress

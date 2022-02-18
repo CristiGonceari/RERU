@@ -97,7 +97,7 @@ export class StartTestPageComponent implements OnInit {
   }
 
   getTestType() {
-    this.testTypeService.getTestTypeSettings({ testTypeId: this.testDto.testTypeId }).subscribe(
+    this.testTypeService.getTestTypeSettings({ testTemplateId: this.testDto.testTemplateId }).subscribe(
       res => {
         this.settings = res.data;
         if (this.settings.startBeforeProgrammation) this.startTest = true;

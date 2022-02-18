@@ -61,13 +61,13 @@ export class FinishPageComponent implements OnInit {
     this.testService.getTest(this.testId).subscribe(
       res => {
         this.testDto = res.data;
-        this.getTestTypeSettings(res.data.testTypeId);
+        this.getTestTypeSettings(res.data.testTemplateId);
       }
     )
   }
 
   getTestTypeSettings(testTypeId) {
-    this.testTypeService.getTestTypeSettings({ testTypeId: testTypeId }).subscribe(
+    this.testTypeService.getTestTypeSettings({ testTemplateId: testTypeId }).subscribe(
       res => {
         this.testTypeSettings = res.data;
         this.isLoading = false;

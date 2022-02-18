@@ -1,5 +1,5 @@
 export class SelectTestTypeValue {
-    testTypeId: number;
-    testTypeName: string;
+    testTemplateId: number;
+    testTemplateName: string;
     isOnlyOneAnswer: boolean;
 }

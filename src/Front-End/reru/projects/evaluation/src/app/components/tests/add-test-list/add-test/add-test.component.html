@@ -45,8 +45,8 @@
               <select class="form-control form-control-lg form-control-solid" name="test"
                 [(ngModel)]="testType.value" (ngModelChange)="checkIfIsOneAnswer($event)">
                 <option value="">{{'questions.select' | translate}}</option>
-                <option *ngFor="let testType of selectActiveTests" [ngValue]="testType.testTypeId">
-                  {{testType.testTypeName}}
+                <option *ngFor="let testType of selectActiveTests" [ngValue]="testType.testTemplateId">
+                  {{testType.testTemplateName}}
                 </option>
               </select>
             </div>

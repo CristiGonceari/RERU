@@ -46,7 +46,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
 
   send() {
     return {
-      testTypeId: this.testTypeId,
+      testTemplateId: this.testTypeId,
       categoryId: this.categoryId,
       itemsPerPage: this.itemsPerPage,
       filterEnum: this.filterEnum

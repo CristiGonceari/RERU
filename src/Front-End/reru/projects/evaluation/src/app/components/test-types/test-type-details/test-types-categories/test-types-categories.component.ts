@@ -65,7 +65,7 @@ export class TestTypesCategoriesComponent implements OnInit {
 
   getList(id?: number) {
     let testId = this.testTypeId ? this.testTypeId : id;
-    this.service.getQuestionCategoryByTestTypeId({ TestTypeId: testId }).subscribe(
+    this.service.getQuestionCategoryByTestTypeId({ testTemplateId: testId }).subscribe(
       res => {
         if (res && res.data) {
           this.categories = res.data;
@@ -78,7 +78,7 @@ export class TestTypesCategoriesComponent implements OnInit {
   checkEvent(event): void {
     this.sequence = event.target.checked;
     let sequenceData = {
-      testTypeId: +this.testTypeId,
+      testTemplateId: +this.testTypeId,
       categoriesSequenceType: this.sequence ? 1 : 0
     }
     this.service.categorySequenceType(sequenceData).subscribe(res => {
@@ -95,7 +95,7 @@ export class TestTypesCategoriesComponent implements OnInit {
     });
 
     let params = {
-      testTypeId: +this.testTypeId,
+      testTemplateId: +this.testTypeId,
       itemsOrder: this.order,
       sequenceType: this.sequence ? 1 : 0
     }

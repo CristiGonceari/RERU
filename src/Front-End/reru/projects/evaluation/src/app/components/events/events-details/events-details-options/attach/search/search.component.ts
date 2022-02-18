@@ -50,8 +50,8 @@ export class SearchComponent implements OnInit {
       }
 
       if (this.searchTestType == false) {
-        this.form.setValue(res.data.testTypeId)
-        this.getTitle(res.data.testTypeId);
+        this.form.setValue(res.data.testTemplateId)
+        this.getTitle(res.data.testTemplateId);
       }
 
       if (this.searchPerson == false) {
