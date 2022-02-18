@@ -42,10 +42,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.CloneTestTemplate
             await _appDbContext.SaveChangesAsync();
 
             var settingsToAdd = oldTestType.Settings == null
-                ? new TestTypeSettings() { TestTypeId = newTestType.Id }
+                ? new TestTypeSettings() { TestTemplateId = newTestType.Id }
                 : new TestTypeSettings()
                 {
-                    TestTypeId = newTestType.Id,
+                    TestTemplateId = newTestType.Id,
                     StartWithoutConfirmation = oldTestType.Settings.StartWithoutConfirmation,
                     StartBeforeProgrammation = oldTestType.Settings.StartBeforeProgrammation,
                     StartAfterProgrammation = oldTestType.Settings.StartAfterProgrammation,
@@ -69,7 +69,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.CloneTestTemplate
                 {
                     eventsToAdd.Add(new EventTestType()
                     {
-                        TestTypeId = newTestType.Id,
+                        TestTemplateId = newTestType.Id,
                         EventId = Event.Id
                     });
                 }
@@ -85,7 +85,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.CloneTestTemplate
                 {
                     questionCategoriesToAdd.Add(new TestTypeQuestionCategory()
                     {
-                        TestTypeId = newTestType.Id,
+                        TestTemplateId = newTestType.Id,
                         QuestionCategoryId = questionCategory.QuestionCategoryId,
                         CategoryIndex = questionCategory.CategoryIndex,
                         QuestionType = questionCategory.QuestionType,

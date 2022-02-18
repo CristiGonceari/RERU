@@ -5,7 +5,7 @@ using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 
-namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.GetNoAssignedTestTypes
+namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.GetNoAssignedTestTemplates
 {
     public class GetNoAssignedTestTemplatesQueryValidator : AbstractValidator<GetNoAssignedTestTemplatesQuery>
     {

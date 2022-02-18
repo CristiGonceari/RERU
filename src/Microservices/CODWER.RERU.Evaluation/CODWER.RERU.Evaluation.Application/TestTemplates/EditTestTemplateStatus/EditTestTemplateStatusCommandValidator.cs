@@ -12,18 +12,18 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.EditTestTemplateStatu
     {
         public EditTestTemplateStatusCommandValidator(AppDbContext appDbContext)
         {
-            RuleFor(x => x.Data.TestTypeId)
+            RuleFor(x => x.Data.TestTemplateId)
                 .SetValidator(x => new ItemMustExistValidator<Data.Entities.TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
 
-            When(x => appDbContext.TestTemplates.First(t => t.Id == x.Data.TestTypeId).Status == TestTypeStatusEnum.Active, () =>
+            When(x => appDbContext.TestTemplates.First(t => t.Id == x.Data.TestTemplateId).Status == TestTypeStatusEnum.Active, () =>
             {
                 RuleFor(x => x.Data.Status)
                     .Must(x => x == TestTypeStatusEnum.Canceled)
                     .WithErrorCode(ValidationCodes.ONLY_ACTIVE_TEST_CAN_BE_CLOSED);
             });
 
-            When(x => appDbContext.TestTemplates.First(t => t.Id == x.Data.TestTypeId).Status == TestTypeStatusEnum.Canceled, () =>
+            When(x => appDbContext.TestTemplates.First(t => t.Id == x.Data.TestTemplateId).Status == TestTypeStatusEnum.Canceled, () =>
             {
                 RuleFor(x => x.Data.Status)
                     .Must(x => x == TestTypeStatusEnum.Canceled)

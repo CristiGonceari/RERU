@@ -1,5 +1,5 @@
 export class EventTestType {
     eventId: number;
-	testTypeId: number;
+	testTemplateId: number;
     maxAttempts: number;
 }

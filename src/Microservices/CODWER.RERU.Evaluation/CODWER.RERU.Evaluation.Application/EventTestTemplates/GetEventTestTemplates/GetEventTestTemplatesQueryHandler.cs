@@ -24,9 +24,9 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.GetEventTestTemp
         public async Task<PaginatedModel<TestTemplateDto>> Handle(GetEventTestTemplatesQuery request, CancellationToken cancellationToken)
         {
             var eventTestTypes = _appDbContext.EventTestTypes
-                .Include(x => x.TestType)
+                .Include(x => x.TestTemplate)
                 .Where(x => x.EventId == request.EventId)
-                .Select(x => x.TestType)
+                .Select(x => x.TestTemplate)
                 .AsQueryable();
 
             return await _paginationService.MapAndPaginateModelAsync<TestTemplate, TestTemplateDto>(eventTestTypes, request);

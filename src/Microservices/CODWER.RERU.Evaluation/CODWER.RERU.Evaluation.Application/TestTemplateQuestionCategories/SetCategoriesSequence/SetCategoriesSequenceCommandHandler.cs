@@ -20,10 +20,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.SetC
         public async Task<Unit> Handle(SetCategoriesSequenceCommand request, CancellationToken cancellationToken)
         {
             var testTypeQuestionCategories = await _appDbContext.TestTypeQuestionCategories
-                .Where(x => x.TestTypeId == request.TestTypeId)
+                .Where(x => x.TestTemplateId == request.TestTemplateId)
                 .ToListAsync();
 
-            var testType = await _appDbContext.TestTemplates.FirstAsync(x => x.Id == request.TestTypeId);
+            var testType = await _appDbContext.TestTemplates.FirstAsync(x => x.Id == request.TestTemplateId);
 
             testType.CategoriesSequence = request.SequenceType;
 

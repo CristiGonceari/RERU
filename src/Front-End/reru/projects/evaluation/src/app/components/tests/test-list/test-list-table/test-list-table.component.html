@@ -20,7 +20,7 @@
         </thead>
         <tbody class="datatable-body" *ngIf="testType.length">
             <tr *ngFor="let item of testType">
-                <td><span class="font-size-lg">{{ item.testTypeName }}</span></td>
+                <td><span class="font-size-lg">{{ item.testTemplateName }}</span></td>
                 <td>
                     <p *ngIf="item.showUserName" class="font-size-lg cursor-pointer text-hover-primary mb-0" [routerLink]="['../user-profile', item.userId]">
                         {{ item.userName }} <br>

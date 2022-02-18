@@ -4,7 +4,7 @@ import { SequenceTypeEnum } from "../../enums/sequence-type.enum";
 import { TestCategoryQuestion } from "./test-category-question.model";
 
 export class AssignQuestionCategoryToTestType {
-    testTypeId: number;
+    testTemplateId: number;
     questionCategoryId: number;
     categoryIndex?: number;
     questionCount?: number;

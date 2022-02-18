@@ -45,7 +45,7 @@ export class PollsTableComponent implements OnInit {
   }
 
   createPoll(check: boolean, testTypeId?) {
-    this.testService.createMinePoll({testTypeId: testTypeId, eventId: this.id}).subscribe((res) => {
+    this.testService.createMinePoll({testTemplateId: testTypeId, eventId: this.id}).subscribe((res) => {
       if(check)
         this.router.navigate(['../../polls/start-poll-page', res.data], { relativeTo: this.route });
       else 

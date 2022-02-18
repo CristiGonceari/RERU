@@ -137,9 +137,9 @@ export class TestTypeListTableComponent implements OnInit {
 		let params;
 
 		if (status == TestTypeStatusEnum.Draft)
-			params = { testTypeId: id, status: TestTypeStatusEnum.Active }
+			params = { testTemplateId: id, status: TestTypeStatusEnum.Active }
 		else if (status == TestTypeStatusEnum.Active)
-			params = { testTypeId: id, status: TestTypeStatusEnum.Canceled }
+			params = { testTemplateId: id, status: TestTypeStatusEnum.Canceled }
 
 		this.testTypeService.changeStatus({ data: params }).subscribe(() => 
 		{
@@ -156,7 +156,7 @@ export class TestTypeListTableComponent implements OnInit {
 	}
 
 	validateTestType(id, status) {
-		this.testTypeService.validateTestType({ testTypeId: id }).subscribe(() => this.changeStatus(id, status));
+		this.testTypeService.validateTestType({ testTemplateId: id }).subscribe(() => this.changeStatus(id, status));
 	}
 
 	getStatusForDropdown() {

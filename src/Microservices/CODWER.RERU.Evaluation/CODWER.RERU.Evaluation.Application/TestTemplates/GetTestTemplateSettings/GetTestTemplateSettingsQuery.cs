@@ -5,6 +5,6 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateSettin
 {
     public class GetTestTemplateSettingsQuery : IRequest<TestTemplateSettingsDto>
     {
-        public int TestTypeId { get; set; }
+        public int TestTemplateId { get; set; }
     }
 }

@@ -122,8 +122,8 @@ export class AddTestComponent implements OnInit {
 
   checkIfIsOneAnswer(event) {
     if (event) {
-      this.isTestTypeOneAnswer = this.selectActiveTests.find(x => x.testTypeId === event).isOnlyOneAnswer;
-      this.printTest = this.selectActiveTests.find(x => x.testTypeId === event).printTest;
+      this.isTestTypeOneAnswer = this.selectActiveTests.find(x => x.testTemplateId === event).isOnlyOneAnswer;
+      this.printTest = this.selectActiveTests.find(x => x.testTemplateId === event).printTest;
     } else this.isTestTypeOneAnswer = false;
     
     if (!this.printTest) 
@@ -179,7 +179,7 @@ export class AddTestComponent implements OnInit {
       eventId: +this.event.value || null,
       evaluatorId: +this.evaluator.value || null,
       testStatus: TestStatusEnum.Programmed,
-      testTypeId: +this.testType.value || 0,
+      testTemplateId: +this.testType.value || 0,
       showUserName: this.showName
     })
   }

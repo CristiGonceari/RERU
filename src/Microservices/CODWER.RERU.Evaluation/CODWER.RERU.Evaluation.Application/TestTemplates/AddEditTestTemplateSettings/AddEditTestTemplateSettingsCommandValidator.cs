@@ -18,15 +18,15 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddEditTestTemplateSe
 
             When(r => r.Data != null, () =>
             {
-                RuleFor(x => x.Data.TestTypeId)
+                RuleFor(x => x.Data.TestTemplateId)
                     .SetValidator(x => new ItemMustExistValidator<Data.Entities.TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                         ValidationMessages.InvalidReference));
 
-                RuleFor(x => x.Data.TestTypeId)
+                RuleFor(x => x.Data.TestTemplateId)
                     .Must(x => appDbContext.TestTemplates.First(tt => tt.Id == x).Status == TestTypeStatusEnum.Draft)
                     .WithErrorCode(ValidationCodes.ONLY_PENDING_TEST_CAN_BE_CHANGED);
 
-                When(r => appDbContext.TestTemplates.First(tt => tt.Id == r.Data.TestTypeId).Mode == TestTypeModeEnum.Poll, () =>
+                When(r => appDbContext.TestTemplates.First(tt => tt.Id == r.Data.TestTemplateId).Mode == TestTypeModeEnum.Poll, () =>
                 {
                     RuleFor(x => x.Data.CanViewPollProgress)
                         .NotNull()

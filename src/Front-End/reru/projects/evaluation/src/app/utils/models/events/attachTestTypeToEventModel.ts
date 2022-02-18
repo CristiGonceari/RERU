@@ -1,16 +1,16 @@
 export class AttachTestTypeToEventModel {
     eventId: number;
-    testTypeId: number;
+    testTemplateId: number;
     maxAttempts?: number;
 
     constructor(model?: AttachTestTypeToEventModel) {
         if (model) {
             this.eventId = model.eventId;
-            this.testTypeId = model.testTypeId;
+            this.testTemplateId = model.testTemplateId;
             this.maxAttempts = model.maxAttempts;
         } else {
             this.eventId = null;
-            this.testTypeId = null;
+            this.testTemplateId = null;
             this.maxAttempts = null;
         }
     }

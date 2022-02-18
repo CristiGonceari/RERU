@@ -29,7 +29,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent
             var myUserProfile = await _userProfileService.GetCurrentUser();
 
             var myTests = _appDbContext.Tests
-                .Include(t => t.TestTemplates)
+                .Include(t => t.TestTemplate)
                 .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
@@ -50,7 +50,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent
             {
                 var testType = await _appDbContext.TestTemplates
                     .Include(tt => tt.Settings)
-                    .FirstOrDefaultAsync(tt => tt.Id == myTest.TestTypeId);
+                    .FirstOrDefaultAsync(tt => tt.Id == myTest.TestTemplateId);
 
                 if (testType.Settings.CanViewResultWithoutVerification)
                 {

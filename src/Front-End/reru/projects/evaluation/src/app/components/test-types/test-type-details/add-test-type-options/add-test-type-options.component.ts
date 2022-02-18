@@ -45,7 +45,7 @@ export class AddTestTypeOptionsComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.settingsForm = new FormGroup({
-			testTypeId: new FormControl(),
+			testTemplateId: new FormControl(),
 			startWithoutConfirmation: new FormControl(),
 			startBeforeProgrammation: new FormControl(),
 			startAfterProgrammation: new FormControl(),
@@ -66,7 +66,7 @@ export class AddTestTypeOptionsComponent implements OnInit {
 		this.activatedRoute.parent.params.subscribe(response => {
 			if (!(response && Object.keys(response).length === 0 && response.constructor === Object)) {
 				this.testId = response.id;
-				this.testTypeService.getTestTypeSettings({ testTypeId: this.testId }).subscribe(res => {
+				this.testTypeService.getTestTypeSettings({ testTemplateId: this.testId }).subscribe(res => {
 					this.get();
 					this.initForm(res.data);
 				})
@@ -92,7 +92,7 @@ export class AddTestTypeOptionsComponent implements OnInit {
 	initForm(test?: any): void {
 		if (test) {
 			this.settingsForm = this.formBuilder.group({
-				testTypeId: this.testId,
+				testTemplateId: this.testId,
 				startWithoutConfirmation: this.formBuilder.control((test && test.startWithoutConfirmation) || false),
 				startBeforeProgrammation: this.formBuilder.control((test && test.startBeforeProgrammation) || false),
 				startAfterProgrammation: this.formBuilder.control((test && test.startAfterProgrammation) || false),
@@ -113,7 +113,7 @@ export class AddTestTypeOptionsComponent implements OnInit {
 		}
 		else {
 			this.settingsForm = this.formBuilder.group({
-				testTypeId: this.testId,
+				testTemplateId: this.testId,
 				startWithoutConfirmation: this.formBuilder.control(false),
 				startBeforeProgrammation: this.formBuilder.control(false),
 				startAfterProgrammation: this.formBuilder.control(false),
@@ -146,7 +146,7 @@ export class AddTestTypeOptionsComponent implements OnInit {
 	}
 
 	getTestTypeSettings() {
-		this.testTypeService.getTestTypeSettings({ testTypeId: this.testId }).subscribe(
+		this.testTypeService.getTestTypeSettings({ testTemplateId: this.testId }).subscribe(
 			res => {
 				if (res && res.data) {
 					this.settingTestType = res.data;

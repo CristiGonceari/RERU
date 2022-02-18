@@ -44,7 +44,7 @@
                         </span>
                     </div>
                 </td>
-                <td><b>{{ test.testTypeName }}</b></td>
+                <td><b>{{ test.testTemplateName }}</b></td>
                 <td>
                     <b *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</b>
                     <b *ngIf="test.result != resultEnum.NoResult">{{ test.accumulatedPercentage }}% /

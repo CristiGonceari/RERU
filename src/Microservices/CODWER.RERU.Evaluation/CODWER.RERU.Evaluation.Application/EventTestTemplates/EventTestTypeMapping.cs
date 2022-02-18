@@ -2,11 +2,11 @@
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 
-namespace CODWER.RERU.Evaluation.Application.EventTestTypes
+namespace CODWER.RERU.Evaluation.Application.EventTestTemplates
 {
-    public class EventUserMapping : Profile
+    public class EventTestTemplateMapping : Profile
     {
-        public EventUserMapping()
+        public EventTestTemplateMapping()
         {
             CreateMap<AddEventTestTypeDto, EventTestType>();
         }

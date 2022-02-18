@@ -5,7 +5,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetPollResult
 {
     public class GetPollResultQuery : IRequest<PollResultDto>
     {
-        public int TestTypeId { get; set; }
+        public int TestTemplateId { get; set; }
         public int Index { get; set; }
     }
 }

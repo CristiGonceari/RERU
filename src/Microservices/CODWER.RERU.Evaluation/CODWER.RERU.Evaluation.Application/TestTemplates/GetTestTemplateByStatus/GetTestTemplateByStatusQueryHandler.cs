@@ -52,10 +52,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
             {
                 var testType = testTypes
                     .Include(tt => tt.TestTypeQuestionCategories)
-                    .FirstOrDefault(tt => tt.Id == x.TestTypeId);
+                    .FirstOrDefault(tt => tt.Id == x.TestTemplateId);
 
                 var testTypeCategories = testType.TestTypeQuestionCategories
-                    .Where(tt => tt.TestTypeId == testType.Id)
+                    .Where(tt => tt.TestTemplateId == testType.Id)
                     .ToList();
 
                 var questionsList = new List<QuestionUnitDto>();

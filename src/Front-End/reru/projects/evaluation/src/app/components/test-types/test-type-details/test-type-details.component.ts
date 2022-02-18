@@ -72,9 +72,9 @@ export class TestTypeDetailsComponent implements OnInit {
 		let params;
 
 		if (this.status == TestTypeStatusEnum.Draft)
-			params = { testTypeId: +this.testId, status: TestTypeStatusEnum.Active }
+			params = { testTemplateId: +this.testId, status: TestTypeStatusEnum.Active }
 		else if (this.status == TestTypeStatusEnum.Active)
-			params = { testTypeId: +this.testId, status: TestTypeStatusEnum.Canceled }
+			params = { testTemplateId: +this.testId, status: TestTypeStatusEnum.Canceled }
 
 		this.service.changeStatus({ data: params }).subscribe(() => { 
 			
@@ -92,7 +92,7 @@ export class TestTypeDetailsComponent implements OnInit {
 
 	validateTestType() {
     const params = {
-      testTypeId: +this.testId
+		testTemplateId: +this.testId
     }
 		this.service.validateTestType(params).subscribe(() => {
       this.changeStatus();

@@ -100,7 +100,7 @@ export class TestListTableComponent implements OnInit {
     this.isLoading = true;
 
     let params = {
-      testTypeName: this.testToSearch || '',
+      testTemplateName: this.testToSearch || '',
       locationKeyword: this.locationName || '',
       idnp: this.idnp || '',
       eventName: this.eventName || '',
@@ -116,7 +116,7 @@ export class TestListTableComponent implements OnInit {
       if (res && res.data) {
         this.testType = res.data.items;
         this.verificationProgress = res.data.items.map(el => el.verificationProgress);
-        this.testTypeName = res.data.items.map(it => it.testTypeName);
+        this.testTypeName = res.data.items.map(it => it.testTemplateName);
         this.score = res.data.items.map(s => s.score);
         this.pagination = res.data.pagedSummary;
         this.searchFrom = '';

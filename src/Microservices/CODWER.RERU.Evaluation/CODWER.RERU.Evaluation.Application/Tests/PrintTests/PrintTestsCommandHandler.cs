@@ -30,7 +30,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
 
             var filterData = new TestFiltersDto
             {
-                TestTypeName = request.TestTypeName,
+                TestTemplateName = request.TestTypeName,
                 UserName = request.UserName,
                 TestStatus = request.TestStatus,
                 LocationKeyword = request.LocationKeyword,

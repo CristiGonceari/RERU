@@ -16,11 +16,13 @@ namespace CODWER.RERU.Evaluation.Data.Entities
             EventEvaluators = new HashSet<EventEvaluator>();
         }
 
-        public int? PlanId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+
         public DateTime FromDate { get; set; }
         public DateTime TillDate { get; set; }
+
+        public int? PlanId { get; set; }
         public Plan Plan { get; set; }
 
         public virtual ICollection<Test> Tests { get; set; }

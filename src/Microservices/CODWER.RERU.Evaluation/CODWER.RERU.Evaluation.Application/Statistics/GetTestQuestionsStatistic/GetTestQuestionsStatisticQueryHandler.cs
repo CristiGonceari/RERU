@@ -24,7 +24,7 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.GetTestQuestionsStatisti
 
         public async Task<List<TestQuestionStatisticDto>> Handle(GetTestQuestionsStatisticQuery request, CancellationToken cancellationToken)
         {
-            var testTypeQuestionCategories = await _appDbContext.TestTypeQuestionCategories.Where(x => x.TestTypeId == request.TestTypeId).ToListAsync();
+            var testTypeQuestionCategories = await _appDbContext.TestTypeQuestionCategories.Where(x => x.TestTemplateId == request.TestTemplateId).ToListAsync();
 
             var testQuestionsId = new List<int>();
 
@@ -53,7 +53,7 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.GetTestQuestionsStatisti
 
             var questionsInTests = await _appDbContext.Tests
                 .Include(x => x.TestQuestions)
-                .Where(x => x.TestTypeId == request.TestTypeId)
+                .Where(x => x.TestTemplateId == request.TestTemplateId)
                 .SelectMany(x => x.TestQuestions)
                 .ToListAsync();
 

@@ -4,7 +4,7 @@ import { TestTypeStatusEnum } from "../../enums/test-type-status.enum";
 
 export class Poll {
     id: number;
-    testTypeName: string;
+    testTemplateName: string;
     status: MyPollStatusEnum;
     testStatus?: TestStatusEnum;
     testTypeStatus: TestTypeStatusEnum;

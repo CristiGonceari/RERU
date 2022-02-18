@@ -19,10 +19,12 @@ namespace CODWER.RERU.Evaluation.Data.Entities
         public int QuestionCount { get; set; }
         public int MinPercent { get; set; }
         public int Duration { get; set; }
+        public TestTypeSettings Settings { get; set; }
+
         public TestTypeStatusEnum Status { get; set; }
         public TestTypeModeEnum Mode { get; set; }
         public SequenceEnum CategoriesSequence { get; set; }
-        public TestTypeSettings Settings { get; set; }
+
         public Guid PdfFileId { get; set; }
 
         public virtual ICollection<Test> Tests { get; set; }

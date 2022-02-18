@@ -16,22 +16,22 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.ValidateTestTemplate
         {
             _appDbContext = appDbContext;
 
-            RuleFor(x => x.TestTypeId)
+            RuleFor(x => x.TestTemplateId)
                 .SetValidator(x => new ItemMustExistValidator<Data.Entities.TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
 
-            RuleFor(x => x.TestTypeId)
+            RuleFor(x => x.TestTemplateId)
                 .Must(x => IsEnoughtQuestionsInCategory(x))
                 .WithErrorCode(ValidationCodes.INSUFFICIENT_QUESTIONS_IN_CATEGORY);
 
-            RuleFor(x => x.TestTypeId)
+            RuleFor(x => x.TestTemplateId)
                 .Must(x => IsQuestionCountEqual(x) == true)
                 .WithErrorCode(ValidationCodes.QUESTION_COUNT_MUST_BE_EQUAL_TO_SELECTED_COUNT);
         }
 
         private bool IsEnoughtQuestionsInCategory(int testTypeId)
         {
-            var usedCategories = _appDbContext.TestTypeQuestionCategories.Where(x => x.TestTypeId == testTypeId).ToList();
+            var usedCategories = _appDbContext.TestTypeQuestionCategories.Where(x => x.TestTemplateId == testTypeId).ToList();
 
             foreach (var categoryConnection in usedCategories)
             {
@@ -53,13 +53,13 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.ValidateTestTemplate
             return true;
         }
 
-        private bool IsQuestionCountEqual(int testTypeId)
+        private bool IsQuestionCountEqual(int testTemplateId)
         {
-            var testType = _appDbContext.TestTemplates
+            var testTemplate = _appDbContext.TestTemplates
                 .Include(x => x.TestTypeQuestionCategories)
-                .First(x => x.Id == testTypeId);
+                .First(x => x.Id == testTemplateId);
 
-            var usedCategories = testType.TestTypeQuestionCategories.ToList();
+            var usedCategories = testTemplate.TestTypeQuestionCategories.ToList();
 
             if (usedCategories.Any(x => !x.QuestionCount.HasValue))
             {
@@ -68,12 +68,12 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.ValidateTestTemplate
 
                 int countDifference;
 
-                if (testType.QuestionCount == categoryWithCount)
+                if (testTemplate.QuestionCount == categoryWithCount)
                 {
                     return false;
                 }
 
-                countDifference = testType.QuestionCount - categoryWithCount.Value;
+                countDifference = testTemplate.QuestionCount - categoryWithCount.Value;
 
                 var questionUnitsQuery = _appDbContext.QuestionUnits.Where(x => x.QuestionCategoryId == categoryWithNoCount.Id && x.Status == QuestionUnitStatusEnum.Active);
 
@@ -92,7 +92,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.ValidateTestTemplate
                 return true;
             }
 
-            return usedCategories.Sum(x => x.QuestionCount) == testType.QuestionCount;
+            return usedCategories.Sum(x => x.QuestionCount) == testTemplate.QuestionCount;
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 
-namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTypeToEvent
+namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTemplateToEvent
 {
     public class AssignTestTemplateToEventCommandHandler : IRequestHandler<AssignTestTemplateToEventCommand, Unit>
     {

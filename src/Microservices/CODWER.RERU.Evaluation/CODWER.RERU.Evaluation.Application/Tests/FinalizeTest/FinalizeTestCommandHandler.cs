@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
         public async Task<Unit> Handle(FinalizeTestCommand request, CancellationToken cancellationToken)
         {
             var testToFinalize = await _appDbContext.Tests
-                .Include(x => x.TestTemplates)
+                .Include(x => x.TestTemplate)
                 .FirstAsync(x => x.Id == request.TestId);
 
             testToFinalize.TestStatus = TestStatusEnum.Terminated;
@@ -69,7 +69,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
                 .FirstOrDefaultAsync(x => x.Id == testToFinalize.UserProfileId);
 
             var test = await _appDbContext.Tests
-                .Include(x => x.TestTemplates)
+                .Include(x => x.TestTemplate)
                 .FirstOrDefaultAsync(x => x.Id == testToFinalize.Id);
 
             if (forEvaluator)
@@ -128,7 +128,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 
             if (forEvaluat)
             {
-                content += $@"<p style=""font-size: 22px; font-weight: 300;"">Testul ""{test.TestTemplates.Name}"" a fost verificat.</p>
+                content += $@"<p style=""font-size: 22px; font-weight: 300;"">Testul ""{test.TestTemplate.Name}"" a fost verificat.</p>
                             <p style=""font-size: 22px;font-weight: 300;"">Ați acumulat {test.AccumulatedPercentage}% din 100 %.</p>
                             <p style=""font-size: 22px;font-weight: 300;"">Testul a fost trecut {EnumMessages.EnumMessages.GetTestResultStatus(test.ResultStatus)}.</p>";
             }

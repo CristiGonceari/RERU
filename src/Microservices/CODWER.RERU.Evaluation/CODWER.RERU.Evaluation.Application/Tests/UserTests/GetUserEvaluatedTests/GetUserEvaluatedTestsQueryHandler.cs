@@ -24,7 +24,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluatedTes
         public async Task<PaginatedModel<TestDto>> Handle(GetUserEvaluatedTestsQuery request, CancellationToken cancellationToken)
         {
             var userTests = _appDbContext.Tests
-                .Include(t => t.TestTemplates)
+                .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Event)
                 .Where(t => t.EvaluatorId == request.UserId || 

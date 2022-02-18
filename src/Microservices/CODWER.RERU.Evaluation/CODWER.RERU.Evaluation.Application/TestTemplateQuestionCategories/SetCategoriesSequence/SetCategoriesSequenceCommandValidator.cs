@@ -13,12 +13,12 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.SetC
     {
         public SetCategoriesSequenceCommandValidator(AppDbContext appDbContext)
         {
-            RuleFor(x => x.TestTypeId)
+            RuleFor(x => x.TestTemplateId)
                 .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x)
-                .Must(x => appDbContext.TestTemplates.FirstOrDefault(tt => tt.Id == x.TestTypeId).Status == TestTypeStatusEnum.Draft)
+                .Must(x => appDbContext.TestTemplates.FirstOrDefault(tt => tt.Id == x.TestTemplateId).Status == TestTypeStatusEnum.Draft)
                 .WithErrorCode(ValidationCodes.ONLY_PENDING_TEST_CAN_BE_CHANGED);
 
             RuleFor(r => r.ItemsOrder)
@@ -27,7 +27,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.SetC
                     .WithErrorCode(ValidationCodes.INVALID_SEQUENCE);
 
             RuleFor(r => r)
-                    .Must(x => x.ItemsOrder.All(s => s.Id > 0 && appDbContext.TestTypeQuestionCategories.Where(t => t.TestTypeId == x.TestTypeId).Select(t => t.Id).Contains(s.Id) && s.Index > 0))
+                    .Must(x => x.ItemsOrder.All(s => s.Id > 0 && appDbContext.TestTypeQuestionCategories.Where(t => t.TestTemplateId == x.TestTemplateId).Select(t => t.Id).Contains(s.Id) && s.Index > 0))
                     .WithErrorCode(ValidationCodes.INVALID_RECORD);
 
             RuleFor(r => r)

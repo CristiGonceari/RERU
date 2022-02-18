@@ -36,7 +36,7 @@ export class StatiscticsTableComponent implements OnInit {
     this.data = data;
     if (data.categoryId)
       this.statisticService.getCategoryQuestions(data).subscribe((res) => { this.questionList = res.data });
-    else if (data.testTypeId)
+    else if (data.testTemplateId)
       this.statisticService.getTestTypeQuestions(data).subscribe((res) => { this.questionList = res.data });
   }
 
@@ -56,12 +56,12 @@ export class StatiscticsTableComponent implements OnInit {
         filterEnum: +this.data.filterEnum,
         itemsPerPage: +this.data.itemsPerPage
       };
-    } else if (this.data.testTypeId) {
+    } else if (this.data.testTemplateId) {
       this.printData = {
         tableName: name,
         fields: this.headersToPrint,
         orientation: 2,
-        testTypeId: +this.data.testTypeId,
+        testTemplateId: +this.data.testTypeId,
         filterEnum: +this.data.filterEnum,
         itemsPerPage: +this.data.itemsPerPage
       };
@@ -101,7 +101,7 @@ export class StatiscticsTableComponent implements OnInit {
           this.downloadFile = false;
         }
       }, () => this.downloadFile = false);
-    } else if (this.data.testTypeId) {
+    } else if (this.data.testTemplateId) {
       this.statisticService.printByTestTemplate(data).subscribe(response => {
         if (response) {
           const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];

@@ -6,9 +6,9 @@ using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using CODWER.RERU.Evaluation.Application.EventTestTemplates.GetEventTestTemplates;
-using CODWER.RERU.Evaluation.Application.EventTestTemplates.GetNoAssignedTestTypes;
-using CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTypeToEvent;
-using CODWER.RERU.Evaluation.Application.EventTestTemplates.UnassignTestTypeFromEvent;
+using CODWER.RERU.Evaluation.Application.EventTestTemplates.GetNoAssignedTestTemplates;
+using CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTemplateToEvent;
+using CODWER.RERU.Evaluation.Application.EventTestTemplates.UnassignTestTemplateFromEvent;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -37,7 +37,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         [HttpDelete("Event={eventId}&&TestType={testTypeId}")]
         public async Task<Unit> UnassignTestTypeFromEvent([FromRoute] int eventId, int testTypeId)
         {
-            var command = new UnassignTestTemplateFromEventCommand { EventId = eventId, TestTypeId = testTypeId };
+            var command = new UnassignTestTemplateFromEventCommand { EventId = eventId, TestTemplateId = testTypeId };
 
             return await Mediator.Send(command);
         }

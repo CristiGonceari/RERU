@@ -89,7 +89,7 @@
                           <label style="font-size: 13px;" class="mb-0"
                             *ngIf="question.status == 1">{{'statuses.inactivate' | translate}}</label>
                         </button>
-                        <button class="navi-link align-items-baseline px-6" ngbDropdownItem (click)="printQuestionUnitPdf(item.id)">
+                        <button class="navi-link align-items-baseline px-6" ngbDropdownItem (click)="printQuestionUnitPdf(question.id)">
                           {{ 'button.print' | translate }}
                         </button>
                         <button (click)="openConfirmationDeleteModal(question.id)"

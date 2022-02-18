@@ -10,7 +10,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.SetC
     [ModuleOperation(permission: PermissionCodes.TEST_TEMPLATES_GENERAL_ACCESS)]
     public class SetCategoriesSequenceCommand : IRequest<Unit>
     {
-        public int TestTypeId { get; set; }
+        public int TestTemplateId { get; set; }
         public List<TestTypeQuestionCategoryOrderDto> ItemsOrder { get; set; }
 
         public SequenceEnum SequenceType { get; set; }

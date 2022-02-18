@@ -34,8 +34,8 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetMyEvents
                 var myEvents = _appDbContext.Events
                     .Include(x => x.EventUsers)
                     .Include(x => x.EventTestTypes)
-                    .ThenInclude(x => x.TestType)
-                    .Where(x => x.EventUsers.Any(e => e.UserProfileId == curUser.Id) && x.EventTestTypes.Any(e => e.TestType.Mode == request.TestTypeMode))
+                    .ThenInclude(x => x.TestTemplate)
+                    .Where(x => x.EventUsers.Any(e => e.UserProfileId == curUser.Id) && x.EventTestTypes.Any(e => e.TestTemplate.Mode == request.TestTypeMode))
                     .AsQueryable();
 
                 if (request.FromDate != null && request.TillDate != null) 
