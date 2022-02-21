@@ -3,12 +3,13 @@ using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionUnits
 {
     public static class GetAndFilterQuestionUnits
     {
-        public static IQueryable<QuestionUnit> Filter(AppDbContext appDbContext, string questionName, string categoryName, string questionTags, QuestionTypeEnum? type, QuestionUnitStatusEnum? status)
+        public static IQueryable<QuestionUnit> Filter(AppDbContext appDbContext, QuestionFilterDto filterData)
         {
             var questions = appDbContext.QuestionUnits
                 .Include(x => x.QuestionCategory)
@@ -19,29 +20,34 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits
                 .OrderByDescending(x => x.Id)
                 .AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(questionName))
+            if (!string.IsNullOrWhiteSpace(filterData.QuestionName))
             {
-                questions = questions.Where(x => x.Question.Contains(questionName) || x.QuestionUnitTags.Any(qu => qu.Tag.Name.Contains(questionName)));
+                questions = questions.Where(x => x.Question.Contains(filterData.QuestionName) || x.QuestionUnitTags.Any(qu => qu.Tag.Name.Contains(filterData.QuestionName)));
             }
 
-            if (!string.IsNullOrWhiteSpace(categoryName))
+            if (!string.IsNullOrWhiteSpace(filterData.CategoryName))
             {
-                questions = questions.Where(x => x.QuestionCategory.Name.Contains(categoryName));
+                questions = questions.Where(x => x.QuestionCategory.Name.Contains(filterData.CategoryName));
             }
 
-            if (!string.IsNullOrWhiteSpace(questionTags))
+            if (!string.IsNullOrWhiteSpace(filterData.QuestionTags))
             {
-                questions = questions.Where(x => x.QuestionUnitTags.Any(qu => qu.Tag.Name.Contains(questionTags)));
+                questions = questions.Where(x => x.QuestionUnitTags.Any(qu => qu.Tag.Name.Contains(filterData.QuestionTags)));
             }
 
-            if (type != null)
+            if (filterData.Type != null)
             {
-                questions = questions.Where(x => x.QuestionType == type.Value);
+                questions = questions.Where(x => x.QuestionType == filterData.Type.Value);
             }
 
-            if (status != null)
+            if (filterData.Status != null)
             {
-                questions = questions.Where(x => x.Status == status.Value);
+                questions = questions.Where(x => x.Status == filterData.Status);
+            }
+
+            if (filterData.QuestionCategoryId != null)
+            {
+                questions = questions.Where(x => x.QuestionCategoryId == filterData.QuestionCategoryId);
             }
 
             return questions;
