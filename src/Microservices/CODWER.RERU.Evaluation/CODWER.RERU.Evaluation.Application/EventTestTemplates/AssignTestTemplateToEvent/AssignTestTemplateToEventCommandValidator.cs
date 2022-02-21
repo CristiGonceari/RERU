@@ -30,7 +30,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTempla
 
                 RuleFor(r => r.Data)
                     .Must(x => !appDbContext.EventTestTemplates.Any(l => l.TestTemplateId == x.TestTemplateId && l.EventId == x.EventId))
-                    .WithErrorCode(ValidationCodes.EXISTENT_TEST_TYPE_IN_EVENT);
+                    .WithErrorCode(ValidationCodes.EXISTENT_TEST_TEMPLATE_IN_EVENT);
 
 
                 When(r => appDbContext.TestTemplates.First(l => l.Id == r.Data.TestTemplateId).Mode == (int)TestTemplateModeEnum.Test, () =>

@@ -69,7 +69,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         [HttpGet("rules/{id}")]
         public async Task<RulesDto> GetTestTemplateRules([FromRoute] int id)
         {
-            var query = new GetTestTemplateRulesQuery() { testTemplateId = id };
+            var query = new GetTestTemplateRulesQuery() { TestTemplateId = id };
             return await Mediator.Send(query);
         }
 

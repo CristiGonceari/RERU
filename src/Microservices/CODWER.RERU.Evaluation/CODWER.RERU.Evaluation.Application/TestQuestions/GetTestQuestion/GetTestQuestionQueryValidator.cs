@@ -41,7 +41,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
                 .WithErrorCode(ValidationCodes.CANT_RETURN_TO_QUESTION);
             });
 
-            When(x => appDbContext.Tests.Include(x => x.TestTemplate).First(t => t.Id == x.TestId).TestTemplate.Mode == testTemplateModeEnum.Test, () =>
+            When(x => appDbContext.Tests.Include(x => x.TestTemplate).First(t => t.Id == x.TestId).TestTemplate.Mode == TestTemplateModeEnum.Test, () =>
             {
                 RuleFor(x => x)
                     .Must(x => appDbContext.Tests.FirstOrDefault(t => t.Id == x.TestId).TestStatus == TestStatusEnum.InProgress

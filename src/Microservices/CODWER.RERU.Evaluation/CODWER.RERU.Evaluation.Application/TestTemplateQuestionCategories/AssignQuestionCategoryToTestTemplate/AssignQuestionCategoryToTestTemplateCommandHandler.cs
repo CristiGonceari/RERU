@@ -24,7 +24,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Assi
         {
             var newQuestionCategorytestTemplate = _mapper.Map<TestTemplateQuestionCategory>(request.Data);
 
-            await _appDbContext.testTemplateQuestionCategories.AddAsync(newQuestionCategorytestTemplate);
+            await _appDbContext.TestTemplateQuestionCategories.AddAsync(newQuestionCategorytestTemplate);
             await _appDbContext.SaveChangesAsync();
 
             if (request.Data.SelectionType == SelectionEnum.Select)
@@ -32,7 +32,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Assi
                 var itemsList = request.Data.TestCategoryQuestions;
                 foreach (var item in itemsList)
                 {
-                    item.testTemplateQuestionCategoryId = newQuestionCategorytestTemplate.Id;
+                    item.TestTemplateQuestionCategoryId = newQuestionCategorytestTemplate.Id;
                 }
 
                 var itemsListToAdd = _mapper.Map<List<TestCategoryQuestion>>(itemsList);

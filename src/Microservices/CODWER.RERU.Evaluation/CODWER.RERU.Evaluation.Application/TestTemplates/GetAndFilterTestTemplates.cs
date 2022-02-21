@@ -8,12 +8,12 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates
 {
     public static class GetAndFilterTestTemplates
     {
-        public static IQueryable<TestTemplate> Filter(AppDbContext appDbContext, string name, string eventName, testTemplateStatusEnum? status)
+        public static IQueryable<TestTemplate> Filter(AppDbContext appDbContext, string name, string eventName, TestTemplateStatusEnum? status)
         {
             var testTemplates = appDbContext.TestTemplates
-                .Include(x => x.testTemplateQuestionCategories)
+                .Include(x => x.TestTemplateQuestionCategories)
                 .ThenInclude(x => x.QuestionCategory)
-                .Include(x => x.EventtestTemplates)
+                .Include(x => x.EventTestTemplates)
                 .ThenInclude(x => x.Event)
                 .OrderByDescending(x => x.CreateDate)
                 .AsQueryable();
@@ -25,7 +25,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates
 
             if (!string.IsNullOrEmpty(eventName))
             {
-                testTemplates = testTemplates.Where(x => x.EventtestTemplates.Any(x => x.Event.Name.Contains(eventName)));
+                testTemplates = testTemplates.Where(x => x.EventTestTemplates.Any(x => x.Event.Name.Contains(eventName)));
             }
 
             if (status.HasValue)

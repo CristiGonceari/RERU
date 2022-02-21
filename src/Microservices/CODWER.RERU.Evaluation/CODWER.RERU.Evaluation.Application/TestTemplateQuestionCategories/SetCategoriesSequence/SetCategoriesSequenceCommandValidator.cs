@@ -18,7 +18,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.SetC
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x)
-                .Must(x => appDbContext.TestTemplates.FirstOrDefault(tt => tt.Id == x.TestTemplateId).Status == testTemplateStatusEnum.Draft)
+                .Must(x => appDbContext.TestTemplates.FirstOrDefault(tt => tt.Id == x.TestTemplateId).Status == TestTemplateStatusEnum.Draft)
                 .WithErrorCode(ValidationCodes.ONLY_PENDING_TEST_CAN_BE_CHANGED);
 
             RuleFor(r => r.ItemsOrder)
@@ -27,7 +27,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.SetC
                     .WithErrorCode(ValidationCodes.INVALID_SEQUENCE);
 
             RuleFor(r => r)
-                    .Must(x => x.ItemsOrder.All(s => s.Id > 0 && appDbContext.testTemplateQuestionCategories.Where(t => t.TestTemplateId == x.TestTemplateId).Select(t => t.Id).Contains(s.Id) && s.Index > 0))
+                    .Must(x => x.ItemsOrder.All(s => s.Id > 0 && appDbContext.TestTemplateQuestionCategories.Where(t => t.TestTemplateId == x.TestTemplateId).Select(t => t.Id).Contains(s.Id) && s.Index > 0))
                     .WithErrorCode(ValidationCodes.INVALID_RECORD);
 
             RuleFor(r => r)

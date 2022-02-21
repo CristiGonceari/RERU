@@ -12,18 +12,18 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates
         public TestTemplateMapping()
         {
             CreateMap<TestTemplate, TestTemplateDto>()
-                .ForMember(x => x.CategoriesCount, opts => opts.MapFrom(tt => tt.testTemplateQuestionCategories.Select(x => x.QuestionCategory).Distinct().Count()))
+                .ForMember(x => x.CategoriesCount, opts => opts.MapFrom(tt => tt.TestTemplateQuestionCategories.Select(x => x.QuestionCategory).Distinct().Count()))
                 .ForMember(x => x.Status, opts => opts.MapFrom(tt => tt.Status));
 
             CreateMap<AddEditTestTemplateDto, TestTemplate>()
                 .ForMember(x => x.Id, opts => opts.Ignore())
-                .ForMember(x => x.Status, opts => opts.MapFrom(tt => (int)testTemplateStatusEnum.Draft))
+                .ForMember(x => x.Status, opts => opts.MapFrom(tt => (int)TestTemplateStatusEnum.Draft))
                 .ForMember(x => x.CategoriesSequence, opts => opts.MapFrom(tt => (int)SequenceEnum.Random));
 
-            CreateMap<TestTemplateSettingsDto, testTemplateSettings>()
+            CreateMap<TestTemplateSettingsDto, TestTemplateSettings>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
 
-            CreateMap<testTemplateSettings, TestTemplateSettingsDto>();
+            CreateMap<TestTemplateSettings, TestTemplateSettingsDto>();
 
             CreateMap<TestTemplate, SelectItem>()
                .ForMember(x => x.Value, opts => opts.MapFrom(tt => tt.Id))

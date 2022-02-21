@@ -24,7 +24,7 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.GetTestQuestionsStatisti
 
         public async Task<List<TestQuestionStatisticDto>> Handle(GetTestQuestionsStatisticQuery request, CancellationToken cancellationToken)
         {
-            var testTemplateQuestionCategories = await _appDbContext.testTemplateQuestionCategories.Where(x => x.TestTemplateId == request.TestTemplateId).ToListAsync();
+            var testTemplateQuestionCategories = await _appDbContext.TestTemplateQuestionCategories.Where(x => x.TestTemplateId == request.TestTemplateId).ToListAsync();
 
             var testQuestionsId = new List<int>();
 
@@ -40,7 +40,7 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.GetTestQuestionsStatisti
                 }
 
                 var questionIds = allQuestions.Select(x => x.Id);
-                var strictQuestionsToUse = _appDbContext.TestCategoryQuestions.Include(x => x.QuestionUnit).Where(x => x.testTemplateQuestionCategoryId == testTemplateQuestionCategory.Id).AsQueryable();
+                var strictQuestionsToUse = _appDbContext.TestCategoryQuestions.Include(x => x.QuestionUnit).Where(x => x.TestTemplateQuestionCategoryId == testTemplateQuestionCategory.Id).AsQueryable();
 
                 if (testTemplateQuestionCategory.SelectionType == SelectionEnum.Select)
                 {

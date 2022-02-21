@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.DataTransferObjects.testTemplateQuestionCategories;
+using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplateQuestionCategories;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories
 {

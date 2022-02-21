@@ -10,7 +10,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateRules
     {
         public GetTestTemplateRulesQueryValidator(AppDbContext appDbContext)
         {
-            RuleFor(x => x.testTemplateId)
+            RuleFor(x => x.TestTemplateId)
                 .SetValidator(x => new ItemMustExistValidator<Data.Entities.TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
         }

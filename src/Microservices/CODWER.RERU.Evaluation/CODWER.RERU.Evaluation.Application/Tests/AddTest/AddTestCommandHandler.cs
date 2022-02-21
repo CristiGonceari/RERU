@@ -40,14 +40,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 
             if (request.Data.EventId.HasValue)
             {
-                var eventtestTemplate = await _appDbContext.EventtestTemplates.FirstOrDefaultAsync(x => x.EventId == request.Data.EventId.Value && x.TestTemplateId == request.Data.TestTemplateId);
+                var eventtestTemplate = await _appDbContext.EventTestTemplates.FirstOrDefaultAsync(x => x.EventId == request.Data.EventId.Value && x.TestTemplateId == request.Data.TestTemplateId);
 
                 if (eventtestTemplate?.MaxAttempts != null)
                 {
-                    var attempts = _appDbContext.Tests
-                        .Where(x => x.UserProfileId == request.Data.UserProfileId 
-                                        && x.EventId == request.Data.EventId.Value 
-                                        && x.TestTemplateId == request.Data.TestTemplateId).Count();
+                    var attempts = _appDbContext.Tests.Count(x => x.UserProfileId == request.Data.UserProfileId 
+                                                                  && x.EventId == request.Data.EventId.Value 
+                                                                  && x.TestTemplateId == request.Data.TestTemplateId);
 
                     if (attempts >= eventtestTemplate?.MaxAttempts)
                     {

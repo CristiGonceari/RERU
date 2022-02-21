@@ -25,9 +25,9 @@ namespace CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCatego
 
         public async Task<TestCategoryQuestionContentDto> Handle(TestCategoryQuestionsQuery request, CancellationToken cancellationToken)
         {
-            var testTemplateQuestionCategory = await _appDbContext.testTemplateQuestionCategories
+            var testTemplateQuestionCategory = await _appDbContext.TestTemplateQuestionCategories
                                                                 .Include(ttqc => ttqc.QuestionCategory)
-                                                                .FirstAsync(x => x.Id == request.testTemplateQuestionCategoryId);
+                                                                .FirstAsync(x => x.Id == request.TestTemplateQuestionCategoryId);
 
             var result = new TestCategoryQuestionContentDto();
             result.SequenceType = testTemplateQuestionCategory.SequenceType;
@@ -49,9 +49,9 @@ namespace CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCatego
             {
 
                 var questionUnits = await _appDbContext.TestCategoryQuestions
-                                                            .Include(tcq => tcq.testTemplateQuestionCategory)
+                                                            .Include(tcq => tcq.TestTemplateQuestionCategory)
                                                             .Include(tcq => tcq.QuestionUnit)
-                                                            .Where(x => x.testTemplateQuestionCategoryId == request.testTemplateQuestionCategoryId)
+                                                            .Where(x => x.TestTemplateQuestionCategoryId == request.TestTemplateQuestionCategoryId)
                                                             .Select(x => x.QuestionUnit)
                                                             .ToListAsync();
 

@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.testTemplateQuestionCategories;
+using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplateQuestionCategories;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.GetTestTemplateCategories
 {
@@ -25,7 +25,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.GetT
 
         public async Task<List<TestTemplateQuestionCategoryDto>> Handle(GetTestTemplateCategoriesQuery request, CancellationToken cancellationToken)
         {
-            var questionCategories = await _appDbContext.testTemplateQuestionCategories
+            var questionCategories = await _appDbContext.TestTemplateQuestionCategories
                 .Include(x => x.QuestionCategory)
                 .Where(x => x.TestTemplateId == request.TestTemplateId)
                 .ToListAsync();
@@ -33,14 +33,9 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.GetT
             var answer = _mapper.Map<List<TestTemplateQuestionCategoryDto>>(questionCategories);
             var testTemplate = await _appDbContext.TestTemplates.FirstAsync(x => x.Id == request.TestTemplateId);
 
-            if (testTemplate.CategoriesSequence == SequenceEnum.Strict)
-            {
-                answer = answer.OrderBy(x => x.CategoryIndex).ToList();
-            }
-            else
-            {
-                answer = answer.OrderBy(x => Guid.NewGuid()).ToList();
-            }
+            answer = testTemplate.CategoriesSequence == SequenceEnum.Strict 
+                ? answer.OrderBy(x => x.CategoryIndex).ToList() 
+                : answer.OrderBy(x => Guid.NewGuid()).ToList();
 
             return answer;
         }

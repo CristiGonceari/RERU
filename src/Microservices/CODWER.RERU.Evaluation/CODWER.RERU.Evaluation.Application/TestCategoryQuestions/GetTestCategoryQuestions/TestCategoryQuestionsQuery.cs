@@ -5,6 +5,6 @@ namespace CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCatego
 {
     public class TestCategoryQuestionsQuery : IRequest<TestCategoryQuestionContentDto>
     {
-        public int testTemplateQuestionCategoryId { get; set; }
+        public int TestTemplateQuestionCategoryId { get; set; }
     }
 }

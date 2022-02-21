@@ -33,12 +33,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetPollResult
                 .Where(x => x.TestTemplateId == request.TestTemplateId)
                 .ToListAsync();
 
-            var eventtestTemplate = await _appDbContext.EventtestTemplates.Include(x => x.TestTemplate).Include(x => x.Event).ThenInclude(x => x.EventUsers).FirstAsync(x => x.TestTemplateId == request.TestTemplateId);
-            var thisEvent = eventtestTemplate.Event;
+            var eventTestTemplate = await _appDbContext.EventTestTemplates.Include(x => x.TestTemplate).Include(x => x.Event).ThenInclude(x => x.EventUsers).FirstAsync(x => x.TestTemplateId == request.TestTemplateId);
+            var thisEvent = eventTestTemplate.Event;
             var totalPollInvited = thisEvent.EventUsers?.Count;
             var totalPollVoted = allTests.Count();
-            var testTemplate = eventtestTemplate.TestTemplate;
-            var testEvent = eventtestTemplate.Event;
+            var testTemplate = eventTestTemplate.TestTemplate;
+            var testEvent = eventTestTemplate.Event;
 
             var questions = allTests.SelectMany(x => x.TestQuestions)
                 .GroupBy(x => x.QuestionUnitId)

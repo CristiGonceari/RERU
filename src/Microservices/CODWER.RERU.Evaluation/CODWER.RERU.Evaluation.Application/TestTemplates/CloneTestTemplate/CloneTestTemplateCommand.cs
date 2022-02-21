@@ -8,6 +8,6 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.CloneTestTemplate
 
     public class CloneTestTemplateCommand : IRequest<int>
     {
-        public int testTemplateId { get; set; }
+        public int TestTemplateId { get; set; }
     }
 }

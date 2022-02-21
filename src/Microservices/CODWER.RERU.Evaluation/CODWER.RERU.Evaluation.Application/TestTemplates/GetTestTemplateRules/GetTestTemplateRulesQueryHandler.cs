@@ -23,7 +23,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateRules
 
         public async Task<RulesDto> Handle(GetTestTemplateRulesQuery request, CancellationToken cancellationToken)
         {
-            var testTemplate = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == request.testTemplateId);
+            var testTemplate = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == request.TestTemplateId);
 
             var answer = _mapper.Map<RulesDto>(testTemplate);
 

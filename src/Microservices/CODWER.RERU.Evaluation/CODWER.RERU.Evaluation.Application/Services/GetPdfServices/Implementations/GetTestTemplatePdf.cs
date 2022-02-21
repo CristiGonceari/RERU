@@ -34,9 +34,9 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
         public async Task<FileDataDto> PrintTestTemplatePdf(int testTemplateId)
         {
             var testTemplate = await _appDbContext.TestTemplates
-                .Include(x => x.testTemplateQuestionCategories)
+                .Include(x => x.TestTemplateQuestionCategories)
                     .ThenInclude(x => x.TestCategoryQuestions)
-                .Include(x => x.testTemplateQuestionCategories)
+                .Include(x => x.TestTemplateQuestionCategories)
                     .ThenInclude(x => x.QuestionCategory)
                         .ThenInclude(x => x.QuestionUnits)
                 .Include(x => x.Settings)
@@ -91,7 +91,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             myDictionary.Add("{test_mode}", testTemplate.Mode.ToString());
             myDictionary.Add("{settings_replace}", GetParsedSettingsForTestTemplate(testTemplate));
             myDictionary.Add("{rules_name}", DecodeRules(testTemplate.Rules));
-            myDictionary.Add("{category_replace}", await GetTableContent(testTemplate.testTemplateQuestionCategories.ToList()));
+            myDictionary.Add("{category_replace}", await GetTableContent(testTemplate.TestTemplateQuestionCategories.ToList()));
 
             return  myDictionary;
         }
@@ -253,7 +253,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
         {
             var command = new TestCategoryQuestionsQuery
             {
-                testTemplateQuestionCategoryId = testTemplateQuestionCategoryId
+                TestTemplateQuestionCategoryId = testTemplateQuestionCategoryId
             };
 
             return  await _mediator.Send(command);

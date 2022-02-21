@@ -13,11 +13,11 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetQuestionsPreview
     {
         public GetQuestionsPreviewQueryValidator(AppDbContext appDbContext)
         {
-            RuleFor(x => x.testTemplateId)
+            RuleFor(x => x.TestTemplateId)
                 .SetValidator(x => new ItemMustExistValidator<Data.Entities.TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
 
-            RuleForEach(x => appDbContext.TestTemplates.Include(x => x.testTemplateQuestionCategories).First(t => t.Id == x.testTemplateId).testTemplateQuestionCategories)
+            RuleForEach(x => appDbContext.TestTemplates.Include(x => x.TestTemplateQuestionCategories).First(t => t.Id == x.TestTemplateId).TestTemplateQuestionCategories)
                 .Must(x => x.QuestionCount <= appDbContext.QuestionCategories.Include(x => x.QuestionUnits).FirstOrDefault(c => c.Id == x.QuestionCategoryId).QuestionUnits.Where(q => q.Status == QuestionUnitStatusEnum.Active).Count())
                 .WithErrorCode(ValidationCodes.INSUFFICIENT_QUESTIONS_IN_CATEGORY);
         }

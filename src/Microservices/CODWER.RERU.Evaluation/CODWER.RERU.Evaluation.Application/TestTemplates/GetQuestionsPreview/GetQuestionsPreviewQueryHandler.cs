@@ -31,13 +31,13 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetQuestionsPreview
         public async Task<List<QuestionUnitPreviewDto>> Handle(GetQuestionsPreviewQuery request, CancellationToken cancellationToken)
         {
             var testTemplate = await _appDbContext.TestTemplates
-                .Include(x => x.testTemplateQuestionCategories)
+                .Include(x => x.TestTemplateQuestionCategories)
                 .Include(x => x.Settings)
-                .FirstAsync(x => x.Id == request.testTemplateId);
+                .FirstAsync(x => x.Id == request.TestTemplateId);
 
             var totalCount = testTemplate.QuestionCount;
 
-            var testTemplateQuestionCategoriesToUse = testTemplate.testTemplateQuestionCategories;
+            var testTemplateQuestionCategoriesToUse = testTemplate.TestTemplateQuestionCategories;
             var categoriesCount = testTemplateQuestionCategoriesToUse.Count;
 
             var index = 1;
@@ -95,7 +95,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetQuestionsPreview
 
         private async Task<int> PreworkCategory(int testTemplateQuestionCategoryId, int questionCount, int index)
         {
-            var testTemplateQuestionCategory = await _appDbContext.testTemplateQuestionCategories.FirstAsync(x => x.Id == testTemplateQuestionCategoryId);
+            var testTemplateQuestionCategory = await _appDbContext.TestTemplateQuestionCategories.FirstAsync(x => x.Id == testTemplateQuestionCategoryId);
 
             var allQuestions = _appDbContext.QuestionUnits
                     .Where(x => x.QuestionCategoryId == testTemplateQuestionCategory.QuestionCategoryId && x.Status == QuestionUnitStatusEnum.Active)
@@ -109,7 +109,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetQuestionsPreview
             var questionIds = await allQuestions.Select(x => x.Id).ToListAsync();
             var strictQuestionsToUse = await _appDbContext.TestCategoryQuestions
                 .Include(x => x.QuestionUnit)
-                .Where(x => x.testTemplateQuestionCategoryId == testTemplateQuestionCategoryId)
+                .Where(x => x.TestTemplateQuestionCategoryId == testTemplateQuestionCategoryId)
                 .ToListAsync();
 
             if (testTemplateQuestionCategory.SelectionType == SelectionEnum.Select)

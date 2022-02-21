@@ -9,6 +9,6 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateRules
 
     public class GetTestTemplateRulesQuery : IRequest<RulesDto>
     {
-        public int testTemplateId { get; set; }
+        public int TestTemplateId { get; set; }
     }
 }

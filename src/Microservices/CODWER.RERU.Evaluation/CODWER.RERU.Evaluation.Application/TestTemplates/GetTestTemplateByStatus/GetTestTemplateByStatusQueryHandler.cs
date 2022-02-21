@@ -36,14 +36,14 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
         {
             var testTemplates = _appDbContext.TestTemplates
                 .Include(x => x.Settings)
-                .Where(x => x.Status == request.testTemplateStatus && x.Mode == (int)testTemplateModeEnum.Test)
+                .Where(x => x.Status == request.TestTemplateStatus && x.Mode == (int)TestTemplateModeEnum.Test)
                 .AsQueryable();
 
             if (request.EventId.HasValue)
             {
                 testTemplates = testTemplates
-                    .Include(x => x.EventtestTemplates)
-                    .Where(x => x.EventtestTemplates.Any(e => e.EventId == request.EventId));
+                    .Include(x => x.EventTestTemplates)
+                    .Where(x => x.EventTestTemplates.Any(e => e.EventId == request.EventId));
             }
 
             var onlyOneAnswerTests = testTemplates.Select(x => _mapper.Map<SelectTestTemplateValueDto>(x)).ToList();
@@ -51,10 +51,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
             foreach (var x in onlyOneAnswerTests)
             {
                 var testTemplate = testTemplates
-                    .Include(tt => tt.testTemplateQuestionCategories)
+                    .Include(tt => tt.TestTemplateQuestionCategories)
                     .FirstOrDefault(tt => tt.Id == x.TestTemplateId);
 
-                var testTemplateCategories = testTemplate.testTemplateQuestionCategories
+                var testTemplateCategories = testTemplate.TestTemplateQuestionCategories
                     .Where(tt => tt.TestTemplateId == testTemplate.Id)
                     .ToList();
 
@@ -62,7 +62,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
 
                 foreach (var testTemplateCategory in testTemplateCategories)
                 {
-                    var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { testTemplateQuestionCategoryId = testTemplateCategory.Id });
+                    var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { TestTemplateQuestionCategoryId = testTemplateCategory.Id });
 
                     questionsList.AddRange(testCategoryQuestionData.Questions);
                     x.IsOnlyOneAnswer = questionsList.All(x => x.QuestionType == QuestionTypeEnum.OneAnswer);

@@ -28,10 +28,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPollsByEve
         {
             var thisEvent = _appDbContext.Events.First(x => x.Id == request.EventId);
 
-            var myTestsTypes = await _appDbContext.EventtestTemplates
+            var myTestsTypes = await _appDbContext.EventTestTemplates
                 .Include(t => t.TestTemplate)
                 .ThenInclude(tt => tt.Settings)
-                .Where(t => t.TestTemplate.Mode == testTemplateModeEnum.Poll && t.Event.Id == request.EventId)
+                .Where(t => t.TestTemplate.Mode == TestTemplateModeEnum.Poll && t.Event.Id == request.EventId)
                 .Select(t => new PollDto
                     {
                         Id = t.TestTemplateId,
@@ -39,7 +39,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPollsByEve
                         EndTime = thisEvent.TillDate,
                         TestTemplateName = t.TestTemplate.Name,
                         Setting = t.TestTemplate.Settings.CanViewPollProgress,
-                        testTemplateStatus = t.TestTemplate.Status
+                        TestTemplateStatus = t.TestTemplate.Status
                     }
                 )
                 .ToListAsync();
@@ -62,7 +62,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPollsByEve
                     testTemplate.Status = MyPollStatusEnum.NotVoted;
                 }
 
-                if (testTemplate.testTemplateStatus == testTemplateStatusEnum.Active || testTemplate.Status == MyPollStatusEnum.Voted)
+                if (testTemplate.TestTemplateStatus == TestTemplateStatusEnum.Active || testTemplate.Status == MyPollStatusEnum.Voted)
                 {
                     answer.Add(testTemplate);
                 }

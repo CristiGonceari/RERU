@@ -23,10 +23,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddEditTestTemplateSe
                         ValidationMessages.InvalidReference));
 
                 RuleFor(x => x.Data.TestTemplateId)
-                    .Must(x => appDbContext.TestTemplates.First(tt => tt.Id == x).Status == testTemplateStatusEnum.Draft)
+                    .Must(x => appDbContext.TestTemplates.First(tt => tt.Id == x).Status == TestTemplateStatusEnum.Draft)
                     .WithErrorCode(ValidationCodes.ONLY_PENDING_TEST_CAN_BE_CHANGED);
 
-                When(r => appDbContext.TestTemplates.First(tt => tt.Id == r.Data.TestTemplateId).Mode == testTemplateModeEnum.Poll, () =>
+                When(r => appDbContext.TestTemplates.First(tt => tt.Id == r.Data.TestTemplateId).Mode == TestTemplateModeEnum.Poll, () =>
                 {
                     RuleFor(x => x.Data.CanViewPollProgress)
                         .NotNull()

@@ -31,7 +31,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.ValidateTestTemplate
 
         private bool IsEnoughtQuestionsInCategory(int testTemplateId)
         {
-            var usedCategories = _appDbContext.testTemplateQuestionCategories.Where(x => x.TestTemplateId == testTemplateId).ToList();
+            var usedCategories = _appDbContext.TestTemplateQuestionCategories.Where(x => x.TestTemplateId == testTemplateId).ToList();
 
             foreach (var categoryConnection in usedCategories)
             {
@@ -56,10 +56,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.ValidateTestTemplate
         private bool IsQuestionCountEqual(int testTemplateId)
         {
             var testTemplate = _appDbContext.TestTemplates
-                .Include(x => x.testTemplateQuestionCategories)
+                .Include(x => x.TestTemplateQuestionCategories)
                 .First(x => x.Id == testTemplateId);
 
-            var usedCategories = testTemplate.testTemplateQuestionCategories.ToList();
+            var usedCategories = testTemplate.TestTemplateQuestionCategories.ToList();
 
             if (usedCategories.Any(x => !x.QuestionCount.HasValue))
             {

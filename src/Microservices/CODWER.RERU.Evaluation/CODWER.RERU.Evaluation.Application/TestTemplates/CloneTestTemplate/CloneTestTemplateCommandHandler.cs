@@ -22,9 +22,9 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.CloneTestTemplate
         {
             var oldtestTemplate = await _appDbContext.TestTemplates
                 .Include(x => x.Settings)
-                .Include(x => x.testTemplateQuestionCategories)
-                .Include(x => x.EventtestTemplates)
-                .FirstAsync(x => x.Id == request.testTemplateId);
+                .Include(x => x.TestTemplateQuestionCategories)
+                .Include(x => x.EventTestTemplates)
+                .FirstAsync(x => x.Id == request.TestTemplateId);
 
             var newtestTemplate = new TestTemplate()
             {
@@ -33,7 +33,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.CloneTestTemplate
                 QuestionCount = oldtestTemplate.QuestionCount,
                 MinPercent = oldtestTemplate.MinPercent,
                 Duration = oldtestTemplate.Duration,
-                Status = testTemplateStatusEnum.Draft,
+                Status = TestTemplateStatusEnum.Draft,
                 Mode = oldtestTemplate.Mode,
                 CategoriesSequence = oldtestTemplate.CategoriesSequence
             };
@@ -42,8 +42,8 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.CloneTestTemplate
             await _appDbContext.SaveChangesAsync();
 
             var settingsToAdd = oldtestTemplate.Settings == null
-                ? new testTemplateSettings() { TestTemplateId = newtestTemplate.Id }
-                : new testTemplateSettings()
+                ? new TestTemplateSettings() { TestTemplateId = newtestTemplate.Id }
+                : new TestTemplateSettings()
                 {
                     TestTemplateId = newtestTemplate.Id,
                     StartWithoutConfirmation = oldtestTemplate.Settings.StartWithoutConfirmation,
@@ -59,13 +59,13 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.CloneTestTemplate
                     MaxErrors = oldtestTemplate.Settings.MaxErrors
                 };
 
-            await _appDbContext.testTemplateSettings.AddAsync(settingsToAdd);
+            await _appDbContext.TestTemplateSettings.AddAsync(settingsToAdd);
             await _appDbContext.SaveChangesAsync();
 
-            if (oldtestTemplate.EventtestTemplates?.Count > 0)
+            if (oldtestTemplate.EventTestTemplates?.Count > 0)
             {
                 var eventsToAdd = new List<EventTestTemplate>();
-                foreach (var Event in oldtestTemplate.EventtestTemplates)
+                foreach (var Event in oldtestTemplate.EventTestTemplates)
                 {
                     eventsToAdd.Add(new EventTestTemplate()
                     {
@@ -74,14 +74,14 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.CloneTestTemplate
                     });
                 }
 
-                await _appDbContext.EventtestTemplates.AddRangeAsync(eventsToAdd);
+                await _appDbContext.EventTestTemplates.AddRangeAsync(eventsToAdd);
                 await _appDbContext.SaveChangesAsync();
             }
 
-            if (oldtestTemplate.testTemplateQuestionCategories?.Count > 0)
+            if (oldtestTemplate.TestTemplateQuestionCategories?.Count > 0)
             {
                 var questionCategoriesToAdd = new List<TestTemplateQuestionCategory>();
-                foreach (var questionCategory in oldtestTemplate.testTemplateQuestionCategories)
+                foreach (var questionCategory in oldtestTemplate.TestTemplateQuestionCategories)
                 {
                     questionCategoriesToAdd.Add(new TestTemplateQuestionCategory()
                     {
@@ -96,7 +96,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.CloneTestTemplate
                     });
                 }
 
-                await _appDbContext.testTemplateQuestionCategories.AddRangeAsync(questionCategoriesToAdd);
+                await _appDbContext.TestTemplateQuestionCategories.AddRangeAsync(questionCategoriesToAdd);
                 await _appDbContext.SaveChangesAsync();
             }
 

@@ -48,7 +48,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit
                 {
                     RuleFor(x => x.Data.Id)
                     .Must(x => !IsQuestionInActiveTest(x))
-                    .WithErrorCode(ValidationCodes.QUESTION_IS_IN_ACTIVE_TEST_TYPE);
+                    .WithErrorCode(ValidationCodes.QUESTION_IS_IN_ACTIVE_TEST_TEMPLATE);
                 });
             });
         }
@@ -63,7 +63,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit
 
             foreach (var test in tests)
             {
-                if (test.TestTemplate.Status == testTemplateStatusEnum.Active)
+                if (test.TestTemplate.Status == TestTemplateStatusEnum.Active)
                 {
                     return true;
                 }

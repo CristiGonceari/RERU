@@ -26,7 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddTestTemplate
                     .IsInEnum()
                     .WithErrorCode(ValidationCodes.INVALID_TYPE);
 
-                When(r => r.Data.Mode == testTemplateModeEnum.Test, () =>
+                When(r => r.Data.Mode == TestTemplateModeEnum.Test, () =>
                 {
                     RuleFor(x => x.Data.Duration)
                         .Must(x => x > 0)
