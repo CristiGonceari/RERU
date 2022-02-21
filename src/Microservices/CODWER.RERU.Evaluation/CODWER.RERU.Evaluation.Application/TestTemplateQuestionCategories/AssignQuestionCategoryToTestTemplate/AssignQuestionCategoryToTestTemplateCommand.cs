@@ -1,5 +1,5 @@
 ﻿using CODWER.RERU.Evaluation.Application.Permissions;
-using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
+using CODWER.RERU.Evaluation.DataTransferObjects.testTemplateQuestionCategories;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 

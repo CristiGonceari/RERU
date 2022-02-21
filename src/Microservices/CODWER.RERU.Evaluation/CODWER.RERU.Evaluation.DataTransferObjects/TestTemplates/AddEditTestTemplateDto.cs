@@ -9,6 +9,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates
         public int QuestionCount { get; set; }
         public int? MinPercent { get; set; }
         public int? Duration { get; set; }
-        public TestTypeModeEnum Mode { get; set; }
+        public TestTemplateModeEnum Mode { get; set; }
     }
 }

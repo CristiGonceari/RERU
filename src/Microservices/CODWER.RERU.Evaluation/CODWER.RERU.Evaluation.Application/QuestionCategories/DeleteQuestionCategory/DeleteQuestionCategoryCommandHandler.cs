@@ -21,11 +21,11 @@ namespace CODWER.RERU.Evaluation.Application.QuestionCategories.DeleteQuestionCa
                 .Include(x => x.QuestionUnits)
                 .FirstOrDefaultAsync(x => x.Id == request.Id);
 
-            var testTypTesQuestionCategories = _appDbContext.TestTypeQuestionCategories
+            var testTypTesQuestionCategories = _appDbContext.testTemplateQuestionCategories
                 .Include(x=>x.TestCategoryQuestions)
                 .Where(x => x.QuestionCategoryId == request.Id);
 
-            _appDbContext.TestTypeQuestionCategories.RemoveRange(testTypTesQuestionCategories);
+            _appDbContext.testTemplateQuestionCategories.RemoveRange(testTypTesQuestionCategories);
             _appDbContext.QuestionCategories.Remove(questionCategory);
 
             await _appDbContext.SaveChangesAsync();

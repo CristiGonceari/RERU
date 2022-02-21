@@ -13,7 +13,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.UnassignTestTemp
         public UnassignTestTemplateFromEventCommandValidator(AppDbContext appDbContext)
         {
                 RuleFor(x => x)
-                .Must(x => appDbContext.EventTestTypes.Any(l => l.TestTemplateId == x.TestTemplateId && l.EventId == x.EventId))
+                .Must(x => appDbContext.EventTestTemplates.Any(l => l.TestTemplateId == x.TestTemplateId && l.EventId == x.EventId))
                 .WithErrorCode(ValidationCodes.INVALID_RECORD);
 
             RuleFor(x => x.EventId)

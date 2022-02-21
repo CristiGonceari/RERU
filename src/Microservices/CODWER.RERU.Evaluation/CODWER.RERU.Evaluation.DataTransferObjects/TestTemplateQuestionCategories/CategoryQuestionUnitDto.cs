@@ -1,6 +1,6 @@
 ﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
 
-namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories
+namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTemplateQuestionCategories
 {
     public class CategoryQuestionUnitDto
     {

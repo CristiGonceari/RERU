@@ -39,7 +39,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.DeleteQuestionUnit
 
             foreach (var test in tests)
             {
-                if (test.TestTemplate.Status == TestTypeStatusEnum.Active)
+                if (test.TestTemplate.Status == testTemplateStatusEnum.Active)
                 {
                     return true;
                 }

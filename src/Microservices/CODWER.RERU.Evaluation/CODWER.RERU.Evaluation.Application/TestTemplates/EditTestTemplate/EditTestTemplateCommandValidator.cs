@@ -31,10 +31,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.EditTestTemplate
                     .WithErrorCode(ValidationCodes.INVALID_QUESTION_COUNT);
 
                 RuleFor(x => x.Data.Id)
-                    .Must(x => appDbContext.TestTemplates.First(tt => tt.Id == x).Status == TestTypeStatusEnum.Draft)
+                    .Must(x => appDbContext.TestTemplates.First(tt => tt.Id == x).Status == testTemplateStatusEnum.Draft)
                     .WithErrorCode(ValidationCodes.ONLY_PENDING_TEST_CAN_BE_CHANGED);
 
-                When(r => appDbContext.TestTemplates.First(tt => tt.Id == r.Data.Id).Mode == (int)TestTypeModeEnum.Test, () =>
+                When(r => appDbContext.TestTemplates.First(tt => tt.Id == r.Data.Id).Mode == (int)testTemplateModeEnum.Test, () =>
                 {
                     RuleFor(x => x.Data.Duration)
                         .Must(x => x > 0)

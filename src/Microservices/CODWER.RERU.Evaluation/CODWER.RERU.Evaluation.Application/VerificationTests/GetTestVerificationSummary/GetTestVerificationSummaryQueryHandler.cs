@@ -34,7 +34,7 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetTestVerificati
             var result = new VerificationTestQuestionDataDto();
             result.TestQuestions = await testQuestions.Select(x => _mapper.Map<VerificationTestQuestionSummaryDto>(x)).ToListAsync();
 
-            result.CorrectAnswers = testQuestions.Where(x => (bool)x.IsCorrect).Count();
+            result.CorrectAnswers = testQuestions.Count(x => (bool)x.IsCorrect);
             result.Points = testQuestions.Select(x => x.Test.TestTemplate.MinPercent).First();
             result.TotalQuestions = testQuestions.Select(x => x.Test.TestTemplate.QuestionCount).First();
             result.Result = testQuestions.Select(x => x.Test.ResultStatus).First();

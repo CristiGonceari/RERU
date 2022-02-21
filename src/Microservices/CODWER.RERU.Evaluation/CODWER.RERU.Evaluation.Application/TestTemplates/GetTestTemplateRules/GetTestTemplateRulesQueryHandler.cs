@@ -23,13 +23,13 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateRules
 
         public async Task<RulesDto> Handle(GetTestTemplateRulesQuery request, CancellationToken cancellationToken)
         {
-            var testType = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == request.TestTypeId);
+            var testTemplate = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == request.testTemplateId);
 
-            var answer = _mapper.Map<RulesDto>(testType);
+            var answer = _mapper.Map<RulesDto>(testTemplate);
 
-            if (!string.IsNullOrEmpty(testType.Rules))
+            if (!string.IsNullOrEmpty(testTemplate.Rules))
             {
-                var base64EncodedBytes = Convert.FromBase64String(testType.Rules);
+                var base64EncodedBytes = Convert.FromBase64String(testTemplate.Rules);
                 answer.Rules = Encoding.UTF8.GetString(base64EncodedBytes);
             }
 

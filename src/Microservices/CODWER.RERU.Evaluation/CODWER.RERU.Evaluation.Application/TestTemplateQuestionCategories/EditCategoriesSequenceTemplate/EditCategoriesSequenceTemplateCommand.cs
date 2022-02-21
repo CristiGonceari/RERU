@@ -8,7 +8,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Edit
     [ModuleOperation(permission: PermissionCodes.TEST_TEMPLATES_GENERAL_ACCESS)]
     public class EditCategoriesSequenceTemplateCommand : IRequest<Unit>
     {
-        public int TestTypeId { get; set; }
+        public int testTemplateId { get; set; }
         public SequenceEnum CategoriesSequenceType { get; set; }
     }
 }

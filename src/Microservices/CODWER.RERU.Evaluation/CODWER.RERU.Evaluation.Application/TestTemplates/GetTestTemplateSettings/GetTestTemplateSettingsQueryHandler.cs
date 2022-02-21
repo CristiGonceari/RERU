@@ -21,7 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateSettin
 
         public async Task<TestTemplateSettingsDto> Handle(GetTestTemplateSettingsQuery request, CancellationToken cancellationToken)
         {
-            var settings = await _appDbContext.TestTypeSettings.FirstOrDefaultAsync(x => x.TestTemplateId == request.TestTemplateId);
+            var settings = await _appDbContext.testTemplateSettings.FirstOrDefaultAsync(x => x.TestTemplateId == request.TestTemplateId);
 
             return settings == null ? new TestTemplateSettingsDto() : _mapper.Map<TestTemplateSettingsDto>(settings);
         }

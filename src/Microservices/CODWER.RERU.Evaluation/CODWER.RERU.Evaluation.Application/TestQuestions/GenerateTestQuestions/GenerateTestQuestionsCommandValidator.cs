@@ -25,15 +25,15 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
 
             RuleForEach(x => appDbContext.Tests
                 .Include(x => x.TestTemplate)
-                    .ThenInclude(x => x.TestTypeQuestionCategories)
+                    .ThenInclude(x => x.testTemplateQuestionCategories)
                 .First(t => t.Id == x.TestId)
-                .TestTemplate.TestTypeQuestionCategories)
+                .TestTemplate.testTemplateQuestionCategories)
                 .Must(x => x.QuestionCount <= appDbContext.QuestionCategories.Include(x => x.QuestionUnits).FirstOrDefault(c => c.Id == x.QuestionCategoryId).QuestionUnits.Where(q => q.Status == QuestionUnitStatusEnum.Active).Count())
                 .WithErrorCode(ValidationCodes.INSUFFICIENT_QUESTIONS_IN_CATEGORY);
 
             When(x => appDbContext.Tests.Include(x => x.TestTemplate)
                 .First(t => t.Id == x.TestId)
-                .TestTemplate.Mode == TestTypeModeEnum.Test, () =>
+                .TestTemplate.Mode == testTemplateModeEnum.Test, () =>
                 {
                     When(x => !appDbContext.Tests
                          .Include(x => x.TestTemplate)

@@ -17,9 +17,9 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Dele
 
         public async Task<Unit> Handle(DeleteQuestionCategoryFromTestTemplateCommand request, CancellationToken cancellationToken)
         {
-            var result = await _appDbContext.TestTypeQuestionCategories.FirstOrDefaultAsync(x => x.Id == request.Id);
+            var result = await _appDbContext.testTemplateQuestionCategories.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-            _appDbContext.TestTypeQuestionCategories.Remove(result);
+            _appDbContext.testTemplateQuestionCategories.Remove(result);
             await _appDbContext.SaveChangesAsync();
 
             return Unit.Value;

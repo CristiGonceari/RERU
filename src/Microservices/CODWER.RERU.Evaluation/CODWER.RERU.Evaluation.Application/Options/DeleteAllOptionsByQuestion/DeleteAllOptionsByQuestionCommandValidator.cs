@@ -40,7 +40,7 @@ namespace CODWER.RERU.Evaluation.Application.Options.DeleteAllOptionsByQuestion
 
             foreach (var test in tests)
             {
-                if (test.TestTemplate.Status == (int)TestTypeStatusEnum.Active)
+                if (test.TestTemplate.Status == (int)testTemplateStatusEnum.Active)
                 {
                     return true;
                 }

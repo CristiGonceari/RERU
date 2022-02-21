@@ -10,7 +10,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
     [ModuleOperation(permission: PermissionCodes.TEST_TEMPLATES_GENERAL_ACCESS)]
     public class GetTestTemplateByStatusQuery : IRequest<List<SelectTestTemplateValueDto>>
     {
-        public TestTypeStatusEnum TestTypeStatus { get; set; }
+        public testTemplateStatusEnum testTemplateStatus { get; set; }
         public int? EventId { get; set; }
     }
 }

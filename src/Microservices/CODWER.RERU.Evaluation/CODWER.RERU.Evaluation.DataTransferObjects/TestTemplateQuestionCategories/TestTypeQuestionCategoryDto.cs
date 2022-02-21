@@ -1,9 +1,9 @@
 ﻿using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 
-namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories
+namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTemplateQuestionCategories
 {
-    public class TestTypeQuestionCategoryDto
+    public class TestTemplateQuestionCategoryDto
     {
         public int Id { get; set; }
         public int QuestionCategoryId { get; set; }

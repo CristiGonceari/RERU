@@ -25,38 +25,38 @@ namespace CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCatego
 
         public async Task<TestCategoryQuestionContentDto> Handle(TestCategoryQuestionsQuery request, CancellationToken cancellationToken)
         {
-            var testTypeQuestionCategory = await _appDbContext.TestTypeQuestionCategories
+            var testTemplateQuestionCategory = await _appDbContext.testTemplateQuestionCategories
                                                                 .Include(ttqc => ttqc.QuestionCategory)
-                                                                .FirstAsync(x => x.Id == request.TestTypeQuestionCategoryId);
+                                                                .FirstAsync(x => x.Id == request.testTemplateQuestionCategoryId);
 
             var result = new TestCategoryQuestionContentDto();
-            result.SequenceType = testTypeQuestionCategory.SequenceType;
-            result.QuestionCategoryName = testTypeQuestionCategory.QuestionCategory.Name;
+            result.SequenceType = testTemplateQuestionCategory.SequenceType;
+            result.QuestionCategoryName = testTemplateQuestionCategory.QuestionCategory.Name;
 
             
-            if (testTypeQuestionCategory.SequenceType == SequenceEnum.Random && testTypeQuestionCategory.SelectionType == SelectionEnum.All)
+            if (testTemplateQuestionCategory.SequenceType == SequenceEnum.Random && testTemplateQuestionCategory.SelectionType == SelectionEnum.All)
             {
 
                 var allQuestions = _appDbContext.QuestionUnits
-                                                    .Where(x => x.QuestionCategoryId == testTypeQuestionCategory.QuestionCategoryId && x.Status == QuestionUnitStatusEnum.Active)
+                                                    .Where(x => x.QuestionCategoryId == testTemplateQuestionCategory.QuestionCategoryId && x.Status == QuestionUnitStatusEnum.Active)
                                                     .AsQueryable();
 
                 result.Questions = _mapper.Map<List<QuestionUnitDto>>(allQuestions);
-                result.UsedQuestionCount = testTypeQuestionCategory.QuestionCount;
+                result.UsedQuestionCount = testTemplateQuestionCategory.QuestionCount;
 
             }
             else
             {
 
                 var questionUnits = await _appDbContext.TestCategoryQuestions
-                                                            .Include(tcq => tcq.TestTypeQuestionCategory)
+                                                            .Include(tcq => tcq.testTemplateQuestionCategory)
                                                             .Include(tcq => tcq.QuestionUnit)
-                                                            .Where(x => x.TestTypeQuestionCategoryId == request.TestTypeQuestionCategoryId)
+                                                            .Where(x => x.testTemplateQuestionCategoryId == request.testTemplateQuestionCategoryId)
                                                             .Select(x => x.QuestionUnit)
                                                             .ToListAsync();
 
                 result.Questions = _mapper.Map<List<QuestionUnitDto>>(questionUnits);
-                result.UsedQuestionCount = testTypeQuestionCategory.QuestionCount;
+                result.UsedQuestionCount = testTemplateQuestionCategory.QuestionCount;
             }
            
             return result;

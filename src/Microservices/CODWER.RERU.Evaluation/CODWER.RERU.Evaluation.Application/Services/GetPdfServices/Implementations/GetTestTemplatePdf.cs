@@ -34,9 +34,9 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
         public async Task<FileDataDto> PrintTestTemplatePdf(int testTemplateId)
         {
             var testTemplate = await _appDbContext.TestTemplates
-                .Include(x => x.TestTypeQuestionCategories)
+                .Include(x => x.testTemplateQuestionCategories)
                     .ThenInclude(x => x.TestCategoryQuestions)
-                .Include(x => x.TestTypeQuestionCategories)
+                .Include(x => x.testTemplateQuestionCategories)
                     .ThenInclude(x => x.QuestionCategory)
                         .ThenInclude(x => x.QuestionUnits)
                 .Include(x => x.Settings)
@@ -91,16 +91,16 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             myDictionary.Add("{test_mode}", testTemplate.Mode.ToString());
             myDictionary.Add("{settings_replace}", GetParsedSettingsForTestTemplate(testTemplate));
             myDictionary.Add("{rules_name}", DecodeRules(testTemplate.Rules));
-            myDictionary.Add("{category_replace}", await GetTableContent(testTemplate.TestTypeQuestionCategories.ToList()));
+            myDictionary.Add("{category_replace}", await GetTableContent(testTemplate.testTemplateQuestionCategories.ToList()));
 
             return  myDictionary;
         }
 
-        private async Task<string> GetTableContent(List<TestTypeQuestionCategory> testTypeQuestionCategories)
+        private async Task<string> GetTableContent(List<TestTemplateQuestionCategory> testTemplateQuestionCategories)
         {
             var content = string.Empty;
 
-            foreach (var item in testTypeQuestionCategories)
+            foreach (var item in testTemplateQuestionCategories)
             {
                 content += $@"
             <tr>
@@ -137,9 +137,9 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             return content;
         }
 
-        private string BuildHtmlContentForQuestions(TestCategoryQuestionContentDto testTypeQuestionCategory)
+        private string BuildHtmlContentForQuestions(TestCategoryQuestionContentDto testTemplateQuestionCategory)
         {
-            return testTypeQuestionCategory.Questions.Aggregate(string.Empty, (current, questionUnit)
+            return testTemplateQuestionCategory.Questions.Aggregate(string.Empty, (current, questionUnit)
                 =>
                 current + $@"
             <tr>
@@ -249,11 +249,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
         {
             return questionCount > 1 ? "intrebari" : "intrebare";
         }
-        private async Task<TestCategoryQuestionContentDto> GetQuestionsForCategoryContent(int testTypeQuestionCategoryId)
+        private async Task<TestCategoryQuestionContentDto> GetQuestionsForCategoryContent(int testTemplateQuestionCategoryId)
         {
             var command = new TestCategoryQuestionsQuery
             {
-                TestTypeQuestionCategoryId = testTypeQuestionCategoryId
+                testTemplateQuestionCategoryId = testTemplateQuestionCategoryId
             };
 
             return  await _mediator.Send(command);

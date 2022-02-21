@@ -7,7 +7,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
     {
         public GetTestTemplateByStatusQueryValidator()
         {
-            RuleFor(x => x.TestTypeStatus)
+            RuleFor(x => x.testTemplateStatus)
                 .IsInEnum()
                 .WithErrorCode(ValidationCodes.INVALID_STATUS);
         }

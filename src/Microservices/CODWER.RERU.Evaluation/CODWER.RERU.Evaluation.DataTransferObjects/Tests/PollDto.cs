@@ -9,7 +9,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public string TestTemplateName { get; set; }
         public MyPollStatusEnum Status { get; set; }
         public TestStatusEnum? TestStatus { get; set; }
-        public TestTypeStatusEnum TestTypeStatus { get; set; }
+        public TestTemplateStatusEnum TestTemplateStatus { get; set; }
         public bool Setting { get; set; }
         public DateTime? VotedTime { get; set; }
         public DateTime StartTime { get; set; }

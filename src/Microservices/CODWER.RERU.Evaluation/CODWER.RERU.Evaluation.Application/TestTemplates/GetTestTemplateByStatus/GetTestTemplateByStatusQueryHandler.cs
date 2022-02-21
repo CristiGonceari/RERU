@@ -34,41 +34,41 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
 
         public async Task<List<SelectTestTemplateValueDto>> Handle(GetTestTemplateByStatusQuery request, CancellationToken cancellationToken)
         {
-            var testTypes = _appDbContext.TestTemplates
+            var testTemplates = _appDbContext.TestTemplates
                 .Include(x => x.Settings)
-                .Where(x => x.Status == request.TestTypeStatus && x.Mode == (int)TestTypeModeEnum.Test)
+                .Where(x => x.Status == request.testTemplateStatus && x.Mode == (int)testTemplateModeEnum.Test)
                 .AsQueryable();
 
             if (request.EventId.HasValue)
             {
-                testTypes = testTypes
-                    .Include(x => x.EventTestTypes)
-                    .Where(x => x.EventTestTypes.Any(e => e.EventId == request.EventId));
+                testTemplates = testTemplates
+                    .Include(x => x.EventtestTemplates)
+                    .Where(x => x.EventtestTemplates.Any(e => e.EventId == request.EventId));
             }
 
-            var onlyOneAnswerTests = testTypes.Select(x => _mapper.Map<SelectTestTemplateValueDto>(x)).ToList();
+            var onlyOneAnswerTests = testTemplates.Select(x => _mapper.Map<SelectTestTemplateValueDto>(x)).ToList();
 
             foreach (var x in onlyOneAnswerTests)
             {
-                var testType = testTypes
-                    .Include(tt => tt.TestTypeQuestionCategories)
+                var testTemplate = testTemplates
+                    .Include(tt => tt.testTemplateQuestionCategories)
                     .FirstOrDefault(tt => tt.Id == x.TestTemplateId);
 
-                var testTypeCategories = testType.TestTypeQuestionCategories
-                    .Where(tt => tt.TestTemplateId == testType.Id)
+                var testTemplateCategories = testTemplate.testTemplateQuestionCategories
+                    .Where(tt => tt.TestTemplateId == testTemplate.Id)
                     .ToList();
 
                 var questionsList = new List<QuestionUnitDto>();
 
-                foreach (var testTypeCategory in testTypeCategories)
+                foreach (var testTemplateCategory in testTemplateCategories)
                 {
-                    var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { TestTypeQuestionCategoryId = testTypeCategory.Id });
+                    var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { testTemplateQuestionCategoryId = testTemplateCategory.Id });
 
                     questionsList.AddRange(testCategoryQuestionData.Questions);
                     x.IsOnlyOneAnswer = questionsList.All(x => x.QuestionType == QuestionTypeEnum.OneAnswer);
                 }
 
-                if (testTypeCategories.All(tt => tt.QuestionType == QuestionTypeEnum.OneAnswer))
+                if (testTemplateCategories.All(tt => tt.QuestionType == QuestionTypeEnum.OneAnswer))
                 {
                     x.IsOnlyOneAnswer = true;
                 }

@@ -1,6 +1,6 @@
 ﻿namespace CODWER.RERU.Evaluation.Data.Entities.Enums
 {
-    public enum TestTypeStatusEnum
+    public enum TestTemplateStatusEnum
     {
         Active = 0,
         Draft = 1,

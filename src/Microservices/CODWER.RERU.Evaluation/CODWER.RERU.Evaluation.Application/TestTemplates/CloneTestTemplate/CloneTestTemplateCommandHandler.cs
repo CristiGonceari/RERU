@@ -20,72 +20,72 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.CloneTestTemplate
 
         public async Task<int> Handle(CloneTestTemplateCommand request, CancellationToken cancellationToken)
         {
-            var oldTestType = await _appDbContext.TestTemplates
+            var oldtestTemplate = await _appDbContext.TestTemplates
                 .Include(x => x.Settings)
-                .Include(x => x.TestTypeQuestionCategories)
-                .Include(x => x.EventTestTypes)
-                .FirstAsync(x => x.Id == request.TestTypeId);
+                .Include(x => x.testTemplateQuestionCategories)
+                .Include(x => x.EventtestTemplates)
+                .FirstAsync(x => x.Id == request.testTemplateId);
 
-            var newTestType = new TestTemplate()
+            var newtestTemplate = new TestTemplate()
             {
-                Name = oldTestType.Name,
-                Rules = oldTestType.Rules,
-                QuestionCount = oldTestType.QuestionCount,
-                MinPercent = oldTestType.MinPercent,
-                Duration = oldTestType.Duration,
-                Status = TestTypeStatusEnum.Draft,
-                Mode = oldTestType.Mode,
-                CategoriesSequence = oldTestType.CategoriesSequence
+                Name = oldtestTemplate.Name,
+                Rules = oldtestTemplate.Rules,
+                QuestionCount = oldtestTemplate.QuestionCount,
+                MinPercent = oldtestTemplate.MinPercent,
+                Duration = oldtestTemplate.Duration,
+                Status = testTemplateStatusEnum.Draft,
+                Mode = oldtestTemplate.Mode,
+                CategoriesSequence = oldtestTemplate.CategoriesSequence
             };
 
-            await _appDbContext.TestTemplates.AddAsync(newTestType);
+            await _appDbContext.TestTemplates.AddAsync(newtestTemplate);
             await _appDbContext.SaveChangesAsync();
 
-            var settingsToAdd = oldTestType.Settings == null
-                ? new TestTypeSettings() { TestTemplateId = newTestType.Id }
-                : new TestTypeSettings()
+            var settingsToAdd = oldtestTemplate.Settings == null
+                ? new testTemplateSettings() { TestTemplateId = newtestTemplate.Id }
+                : new testTemplateSettings()
                 {
-                    TestTemplateId = newTestType.Id,
-                    StartWithoutConfirmation = oldTestType.Settings.StartWithoutConfirmation,
-                    StartBeforeProgrammation = oldTestType.Settings.StartBeforeProgrammation,
-                    StartAfterProgrammation = oldTestType.Settings.StartAfterProgrammation,
-                    PossibleGetToSkipped = oldTestType.Settings.PossibleGetToSkipped,
-                    PossibleChangeAnswer = oldTestType.Settings.PossibleChangeAnswer,
-                    CanViewResultWithoutVerification = oldTestType.Settings.CanViewResultWithoutVerification,
-                    CanViewPollProgress = oldTestType.Settings.CanViewPollProgress,
-                    HidePagination = oldTestType.Settings.HidePagination,
-                    ShowManyQuestionPerPage = oldTestType.Settings.ShowManyQuestionPerPage,
-                    QuestionsCountPerPage = oldTestType.Settings.QuestionsCountPerPage,
-                    MaxErrors = oldTestType.Settings.MaxErrors
+                    TestTemplateId = newtestTemplate.Id,
+                    StartWithoutConfirmation = oldtestTemplate.Settings.StartWithoutConfirmation,
+                    StartBeforeProgrammation = oldtestTemplate.Settings.StartBeforeProgrammation,
+                    StartAfterProgrammation = oldtestTemplate.Settings.StartAfterProgrammation,
+                    PossibleGetToSkipped = oldtestTemplate.Settings.PossibleGetToSkipped,
+                    PossibleChangeAnswer = oldtestTemplate.Settings.PossibleChangeAnswer,
+                    CanViewResultWithoutVerification = oldtestTemplate.Settings.CanViewResultWithoutVerification,
+                    CanViewPollProgress = oldtestTemplate.Settings.CanViewPollProgress,
+                    HidePagination = oldtestTemplate.Settings.HidePagination,
+                    ShowManyQuestionPerPage = oldtestTemplate.Settings.ShowManyQuestionPerPage,
+                    QuestionsCountPerPage = oldtestTemplate.Settings.QuestionsCountPerPage,
+                    MaxErrors = oldtestTemplate.Settings.MaxErrors
                 };
 
-            await _appDbContext.TestTypeSettings.AddAsync(settingsToAdd);
+            await _appDbContext.testTemplateSettings.AddAsync(settingsToAdd);
             await _appDbContext.SaveChangesAsync();
 
-            if (oldTestType.EventTestTypes?.Count > 0)
+            if (oldtestTemplate.EventtestTemplates?.Count > 0)
             {
-                var eventsToAdd = new List<EventTestType>();
-                foreach (var Event in oldTestType.EventTestTypes)
+                var eventsToAdd = new List<EventTestTemplate>();
+                foreach (var Event in oldtestTemplate.EventtestTemplates)
                 {
-                    eventsToAdd.Add(new EventTestType()
+                    eventsToAdd.Add(new EventTestTemplate()
                     {
-                        TestTemplateId = newTestType.Id,
+                        TestTemplateId = newtestTemplate.Id,
                         EventId = Event.Id
                     });
                 }
 
-                await _appDbContext.EventTestTypes.AddRangeAsync(eventsToAdd);
+                await _appDbContext.EventtestTemplates.AddRangeAsync(eventsToAdd);
                 await _appDbContext.SaveChangesAsync();
             }
 
-            if (oldTestType.TestTypeQuestionCategories?.Count > 0)
+            if (oldtestTemplate.testTemplateQuestionCategories?.Count > 0)
             {
-                var questionCategoriesToAdd = new List<TestTypeQuestionCategory>();
-                foreach (var questionCategory in oldTestType.TestTypeQuestionCategories)
+                var questionCategoriesToAdd = new List<TestTemplateQuestionCategory>();
+                foreach (var questionCategory in oldtestTemplate.testTemplateQuestionCategories)
                 {
-                    questionCategoriesToAdd.Add(new TestTypeQuestionCategory()
+                    questionCategoriesToAdd.Add(new TestTemplateQuestionCategory()
                     {
-                        TestTemplateId = newTestType.Id,
+                        TestTemplateId = newtestTemplate.Id,
                         QuestionCategoryId = questionCategory.QuestionCategoryId,
                         CategoryIndex = questionCategory.CategoryIndex,
                         QuestionType = questionCategory.QuestionType,
@@ -96,11 +96,11 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.CloneTestTemplate
                     });
                 }
 
-                await _appDbContext.TestTypeQuestionCategories.AddRangeAsync(questionCategoriesToAdd);
+                await _appDbContext.testTemplateQuestionCategories.AddRangeAsync(questionCategoriesToAdd);
                 await _appDbContext.SaveChangesAsync();
             }
 
-            return newTestType.Id;
+            return newtestTemplate.Id;
         }
     }
 }

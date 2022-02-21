@@ -28,13 +28,13 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Assi
                         ValidationMessages.InvalidReference));
 
                 RuleFor(x => x.Data)
-                    .Must(x => appDbContext.TestTypeQuestionCategories
+                    .Must(x => appDbContext.testTemplateQuestionCategories
                             .Where(q => q.TestTemplateId == x.TestTemplateId)
                             .Sum(s => s.QuestionCount) < appDbContext.TestTemplates.FirstOrDefault(t => t.Id == x.TestTemplateId).QuestionCount)
                     .WithErrorCode(ValidationCodes.QUESTION_COUNT_REACHED_THE_LIMIT);
 
                 RuleFor(x => x.Data)
-                    .Must(x => (appDbContext.TestTypeQuestionCategories
+                    .Must(x => (appDbContext.testTemplateQuestionCategories
                             .Where(q => q.TestTemplateId == x.TestTemplateId)
                             .Sum(s => s.QuestionCount) + x.QuestionCount) <= appDbContext.TestTemplates.FirstOrDefault(t => t.Id == x.TestTemplateId).QuestionCount)
                     .WithErrorCode(ValidationCodes.INVALID_QUESTION_COUNT);

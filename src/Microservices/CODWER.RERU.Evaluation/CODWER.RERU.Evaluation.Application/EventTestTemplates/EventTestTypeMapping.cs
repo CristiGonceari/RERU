@@ -8,7 +8,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates
     {
         public EventTestTemplateMapping()
         {
-            CreateMap<AddEventTestTypeDto, EventTestType>();
+            CreateMap<AddEventTestTemplateDto, EventTestTemplate>();
         }
     }
 }

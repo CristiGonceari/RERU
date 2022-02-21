@@ -12,12 +12,12 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.CloneTestTemplate
     {
         public CloneTestTemplateCommandValidator(AppDbContext appDbContext)
         {
-            RuleFor(x => x.TestTypeId)
+            RuleFor(x => x.testTemplateId)
                 .SetValidator(x => new ItemMustExistValidator<Data.Entities.TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
 
-            RuleFor(x => x.TestTypeId)
-                .Must(x => appDbContext.TestTemplates.First(tt => tt.Id == x).Status == TestTypeStatusEnum.Canceled)
+            RuleFor(x => x.testTemplateId)
+                .Must(x => appDbContext.TestTemplates.First(tt => tt.Id == x).Status == testTemplateStatusEnum.Canceled)
                 .WithErrorCode(ValidationCodes.ONLY_CLOSED_TEST_TYPE_CAN_BE_CLONED);
         }
     }

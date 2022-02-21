@@ -2,7 +2,7 @@
 
 namespace CODWER.RERU.Evaluation.Data.Entities
 {
-    public class EventTestType : SoftDeleteBaseEntity
+    public class EventTestTemplate : SoftDeleteBaseEntity
     {
         public int MaxAttempts { get; set; }
 

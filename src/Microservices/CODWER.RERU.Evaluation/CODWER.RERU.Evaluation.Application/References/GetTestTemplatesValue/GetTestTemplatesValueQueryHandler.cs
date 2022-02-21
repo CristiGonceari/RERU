@@ -23,13 +23,13 @@ namespace CODWER.RERU.Evaluation.Application.References.GetTestTemplatesValue
         }
         public async Task<List<SelectItem>> Handle(GetTestTemplatesValueQuery request, CancellationToken cancellationToken)
         {
-            var testTypes = await _appDbContext.TestTemplates
+            var testTemplates = await _appDbContext.TestTemplates
                 .AsQueryable()
-                .Where(tt => (tt.Status == (int)TestTypeStatusEnum.Active || tt.Status == TestTypeStatusEnum.Canceled) && tt.Mode == (int)TestTypeModeEnum.Test)
+                .Where(tt => (tt.Status == (int)testTemplateStatusEnum.Active || tt.Status == testTemplateStatusEnum.Canceled) && tt.Mode == (int)testTemplateModeEnum.Test)
                 .Select(tt => _mapper.Map<SelectItem>(tt))
                 .ToListAsync();
 
-            return testTypes;
+            return testTemplates;
         }
 
     }

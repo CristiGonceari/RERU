@@ -8,6 +8,6 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTempla
     [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
     public class AssignTestTemplateToEventCommand : IRequest<Unit>
     {
-        public AddEventTestTypeDto Data { get; set; }
+        public AddEventTestTemplateDto Data { get; set; }
     }
 }

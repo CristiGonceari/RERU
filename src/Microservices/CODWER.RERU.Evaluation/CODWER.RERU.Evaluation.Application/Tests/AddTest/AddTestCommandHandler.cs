@@ -40,16 +40,16 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 
             if (request.Data.EventId.HasValue)
             {
-                var eventTestType = await _appDbContext.EventTestTypes.FirstOrDefaultAsync(x => x.EventId == request.Data.EventId.Value && x.TestTemplateId == request.Data.TestTemplateId);
+                var eventtestTemplate = await _appDbContext.EventtestTemplates.FirstOrDefaultAsync(x => x.EventId == request.Data.EventId.Value && x.TestTemplateId == request.Data.TestTemplateId);
 
-                if (eventTestType?.MaxAttempts != null)
+                if (eventtestTemplate?.MaxAttempts != null)
                 {
                     var attempts = _appDbContext.Tests
                         .Where(x => x.UserProfileId == request.Data.UserProfileId 
                                         && x.EventId == request.Data.EventId.Value 
                                         && x.TestTemplateId == request.Data.TestTemplateId).Count();
 
-                    if (attempts >= eventTestType?.MaxAttempts)
+                    if (attempts >= eventtestTemplate?.MaxAttempts)
                     {
                         newTest.TestPassStatus = TestPassStatusEnum.Forbidden;
                     }
@@ -67,9 +67,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
             }
 
             var user = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == newTest.UserProfileId);
-            var testType = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == newTest.TestTemplateId);
+            var testTemplate = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == newTest.TestTemplateId);
 
-            await _loggerService.Log(LogData.AsEvaluation($"User {user.GetFullName()} was assigned to test with {testType.Name} test template at {newTest.ProgrammedTime:dd/MM/yyyy HH:mm}"));
+            await _loggerService.Log(LogData.AsEvaluation($"User {user.GetFullName()} was assigned to test with {testTemplate.Name} test template at {newTest.ProgrammedTime:dd/MM/yyyy HH:mm}"));
 
             return newTest.Id;
         }

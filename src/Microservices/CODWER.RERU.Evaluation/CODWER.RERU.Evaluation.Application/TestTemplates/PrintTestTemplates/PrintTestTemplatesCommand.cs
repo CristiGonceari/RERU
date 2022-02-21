@@ -12,6 +12,6 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.PrintTestTemplates
     {
         public string Name { get; set; }
         public string EventName { get; set; }
-        public TestTypeStatusEnum? Status { get; set; }
+        public testTemplateStatusEnum? Status { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Edit
     {
         public EditCategoriesSequenceTemplateCommandValidator(AppDbContext appDbContext)
         {
-            RuleFor(x => x.TestTypeId)
+            RuleFor(x => x.testTemplateId)
                 .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
 
@@ -22,8 +22,8 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Edit
                     .IsInEnum()
                     .WithErrorCode(ValidationCodes.INVALID_SEQUENCE);
 
-            RuleFor(x => x.TestTypeId)
-                .Must(x => appDbContext.TestTemplates.First(tt => tt.Id == x).Status == TestTypeStatusEnum.Draft)
+            RuleFor(x => x.testTemplateId)
+                .Must(x => appDbContext.TestTemplates.First(tt => tt.Id == x).Status == testTemplateStatusEnum.Draft)
                 .WithErrorCode(ValidationCodes.ONLY_PENDING_TEST_CAN_BE_CHANGED);
         }
     }

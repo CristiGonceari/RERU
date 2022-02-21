@@ -4,9 +4,9 @@ using CVU.ERP.Common.Data.Entities;
 
 namespace CODWER.RERU.Evaluation.Data.Entities
 {
-    public class TestTypeQuestionCategory : SoftDeleteBaseEntity
+    public class TestTemplateQuestionCategory : SoftDeleteBaseEntity
     {
-        public TestTypeQuestionCategory()
+        public TestTemplateQuestionCategory()
         {
             TestCategoryQuestions = new HashSet<TestCategoryQuestion>();
         }

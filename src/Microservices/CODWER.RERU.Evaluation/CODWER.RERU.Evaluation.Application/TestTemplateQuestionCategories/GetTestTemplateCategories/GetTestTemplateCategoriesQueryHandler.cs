@@ -8,11 +8,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
+using CODWER.RERU.Evaluation.DataTransferObjects.testTemplateQuestionCategories;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.GetTestTemplateCategories
 {
-    public class GetTestTemplateCategoriesQueryHandler : IRequestHandler<GetTestTemplateCategoriesQuery, List<TestTypeQuestionCategoryDto>>
+    public class GetTestTemplateCategoriesQueryHandler : IRequestHandler<GetTestTemplateCategoriesQuery, List<TestTemplateQuestionCategoryDto>>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
@@ -23,17 +23,17 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.GetT
             _mapper = mapper;
         }
 
-        public async Task<List<TestTypeQuestionCategoryDto>> Handle(GetTestTemplateCategoriesQuery request, CancellationToken cancellationToken)
+        public async Task<List<TestTemplateQuestionCategoryDto>> Handle(GetTestTemplateCategoriesQuery request, CancellationToken cancellationToken)
         {
-            var questionCategories = await _appDbContext.TestTypeQuestionCategories
+            var questionCategories = await _appDbContext.testTemplateQuestionCategories
                 .Include(x => x.QuestionCategory)
                 .Where(x => x.TestTemplateId == request.TestTemplateId)
                 .ToListAsync();
 
-            var answer = _mapper.Map<List<TestTypeQuestionCategoryDto>>(questionCategories);
-            var testType = await _appDbContext.TestTemplates.FirstAsync(x => x.Id == request.TestTemplateId);
+            var answer = _mapper.Map<List<TestTemplateQuestionCategoryDto>>(questionCategories);
+            var testTemplate = await _appDbContext.TestTemplates.FirstAsync(x => x.Id == request.TestTemplateId);
 
-            if (testType.CategoriesSequence == SequenceEnum.Strict)
+            if (testTemplate.CategoriesSequence == SequenceEnum.Strict)
             {
                 answer = answer.OrderBy(x => x.CategoryIndex).ToList();
             }

@@ -44,11 +44,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEventByDate
 
             foreach (var myTest in paginatedModel.Items)
             {
-                var testType = await _appDbContext.TestTemplates
+                var testTemplate = await _appDbContext.TestTemplates
                     .Include(tt => tt.Settings)
                     .FirstOrDefaultAsync(tt => tt.Id == myTest.TestTemplateId);
 
-                if (testType.Settings.CanViewResultWithoutVerification)
+                if (testTemplate.Settings.CanViewResultWithoutVerification)
                 {
                     myTest.ViewTestResult = true;
                 }

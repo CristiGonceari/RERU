@@ -7,7 +7,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.PrintUserEvents
 {
     public class PrintUserEventsCommand : TableParameter, IRequest<FileDataDto>
     {
-        public TestTypeModeEnum TestTypeMode { get; set; }
+        public TestTemplateModeEnum TestTemplateMode { get; set; }
         public int UserId { get; set; }
     }
 }
