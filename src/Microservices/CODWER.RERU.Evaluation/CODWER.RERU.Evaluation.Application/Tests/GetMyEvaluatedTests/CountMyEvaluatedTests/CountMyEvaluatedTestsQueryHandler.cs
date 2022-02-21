@@ -8,34 +8,29 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent
+namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.CountMyEvaluatedTests
 {
-    public class GetMyTestsCountWithoutEventQueryHandler : IRequestHandler<GetMyTestsCountWithoutEventQuery, List<TestCount>>
+    public class CountMyEvaluatedTestsQueryHandler : IRequestHandler<CountMyEvaluatedTestsQuery, List<TestCount>>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IUserProfileService _userProfileService;
 
-        public GetMyTestsCountWithoutEventQueryHandler(AppDbContext appDbContext, IUserProfileService userProfileService)
+        public CountMyEvaluatedTestsQueryHandler(AppDbContext appDbContext, IUserProfileService userProfileService)
         {
             _appDbContext = appDbContext;
             _userProfileService = userProfileService;
         }
 
-        public async Task<List<TestCount>> Handle(GetMyTestsCountWithoutEventQuery request, CancellationToken cancellationToken)
+        public async Task<List<TestCount>> Handle(CountMyEvaluatedTestsQuery request, CancellationToken cancellationToken)
         {
             var myUserProfile = await _userProfileService.GetCurrentUser();
 
             var myTests = _appDbContext.Tests
                 .Include(t => t.TestTemplate)
-                .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
-                .Include(t => t.Location)
                 .Include(t => t.Event)
-                .Where(t => t.UserProfileId == myUserProfile.Id && 
-                        t.Event == null &&
-                        (t.StartTime >= request.StartTime.Date && t.EndTime <= request.EndTime ||
-                         t.StartTime <= request.StartTime.Date && request.StartTime.Date <= t.EndTime && t.EndTime <= request.EndTime.Date ||
-                         t.StartTime >= request.StartTime.Date && t.StartTime <= request.EndTime.Date && t.EndTime >= request.EndTime.Date))
+                .Where(t => t.EvaluatorId == myUserProfile.Id ||
+                            _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == myUserProfile.Id))
                 .AsQueryable();
 
             var dates = new List<TestCount>();

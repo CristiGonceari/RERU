@@ -1,5 +1,4 @@
 ﻿using CODWER.RERU.Evaluation.Application.Services;
-using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
@@ -39,22 +38,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEventByDate
                 .OrderByDescending(x => x.ProgrammedTime)
                 .AsQueryable();
 
-
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myTests, request);
-
-            foreach (var myTest in paginatedModel.Items)
-            {
-                var testTemplate = await _appDbContext.TestTemplates
-                    .Include(tt => tt.Settings)
-                    .FirstOrDefaultAsync(tt => tt.Id == myTest.TestTemplateId);
-
-                if (testTemplate.Settings.CanViewResultWithoutVerification)
-                {
-                    myTest.ViewTestResult = true;
-                }
-            }
-
-            return paginatedModel;
+            return await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myTests, request); 
         }
     }
 }

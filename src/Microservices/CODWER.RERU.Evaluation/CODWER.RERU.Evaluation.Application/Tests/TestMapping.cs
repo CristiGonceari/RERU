@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using System.Linq;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
-using CVU.ERP.Module.Application.Models;
+using System.Linq;
 
 namespace CODWER.RERU.Evaluation.Application.Tests
 {
@@ -29,6 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.Rules, opts => opts.MapFrom(src => src.TestTemplate.Rules))
                 .ForMember(x => x.VerificationProgress, opts => opts.MapFrom(src => GetVerifiationStatus(src)))
                 .ForMember(x => x.Result, opts => opts.MapFrom(src => src.ResultStatus))
+                .ForMember(x => x.ViewTestResult, opts => opts.MapFrom((src => src.TestTemplate.Settings.CanViewResultWithoutVerification)))
                 .ForMember(x => x.ModeStatus, opts => opts.MapFrom(src => src.TestTemplate.Mode));
 
             CreateMap<AddEditTestDto, Test>()

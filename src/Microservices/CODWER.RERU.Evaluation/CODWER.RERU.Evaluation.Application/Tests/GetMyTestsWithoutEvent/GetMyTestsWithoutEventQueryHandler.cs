@@ -1,13 +1,13 @@
-﻿using CVU.ERP.Common.Pagination;
+﻿using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Data.Entities;
+using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
+using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Application.Services;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent
 {
@@ -38,27 +38,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent
                 .OrderByDescending(x => x.ProgrammedTime)
                 .AsQueryable();
 
-            if (request.startTime != null && request.endTime != null) {
-                myTests = myTests.Where(p => p.StartTime >= request.startTime && p.EndTime <= request.endTime ||
-                                                    (request.startTime <= p.StartTime && p.StartTime <= request.endTime) && (request.startTime <= p.EndTime && p.EndTime >= request.endTime) ||
-                                                    (request.startTime >= p.StartTime && p.StartTime <= request.endTime) && (request.startTime <= p.EndTime && p.EndTime <= request.endTime));
+
+            if (request.StartTime != null && request.EndTime != null) {
+                myTests = myTests.Where(p => p.StartTime >= request.StartTime && p.EndTime <= request.EndTime ||
+                                                    (request.StartTime <= p.StartTime && p.StartTime <= request.EndTime) && (request.StartTime <= p.EndTime && p.EndTime >= request.EndTime) ||
+                                                    (request.StartTime >= p.StartTime && p.StartTime <= request.EndTime) && (request.StartTime <= p.EndTime && p.EndTime <= request.EndTime));
             }
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myTests, request);
-
-            foreach (var myTest in paginatedModel.Items)
-            {
-                var testTemplate = await _appDbContext.TestTemplates
-                    .Include(tt => tt.Settings)
-                    .FirstOrDefaultAsync(tt => tt.Id == myTest.TestTemplateId);
-
-                if (testTemplate.Settings.CanViewResultWithoutVerification)
-                {
-                    myTest.ViewTestResult = true;
-                }
-            }
-
-            return paginatedModel;
+            return await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myTests, request); 
         }
     }
 }

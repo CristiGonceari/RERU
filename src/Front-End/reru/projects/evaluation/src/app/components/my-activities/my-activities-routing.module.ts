@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PerformingPollComponent } from '../polls/performing-poll/performing-poll.component';
-import { StartPollPageComponent } from '../polls/start-poll-page/start-poll-page.component';
 import { ViewPollProgressComponent } from '../polls/view-poll-progress/view-poll-progress.component';
 import { FinishPageComponent } from '../tests/finish-page/finish-page.component';
 import { MultiplePerPagePerformingTestComponent } from '../tests/multiple-per-page-performing-test/multiple-per-page-performing-test.component';
@@ -9,6 +7,7 @@ import { OnePerPagePerformingTestComponent } from '../tests/one-per-page-perform
 import { StartTestPageComponent } from '../tests/start-test-page/start-test-page.component';
 import { ViewTestResultComponent } from '../tests/view-test-result/view-test-result.component';
 import { MyActivitiesComponent } from './my-activities.component';
+import { MyEvaluatedTestsComponent } from './my-evaluated-tests/my-evaluated-tests.component';
 import { MyEventsComponent } from './my-events/my-events.component';
 import { MyPollsComponent } from './my-polls/my-polls.component';
 import { MyTestsComponent } from './my-tests/my-tests.component';
@@ -20,6 +19,7 @@ const routes: Routes = [
     { path: 'my-tests', component: MyTestsComponent },
     { path: 'my-events', component: MyEventsComponent },
     { path: 'my-polls', component: MyPollsComponent },
+    { path: 'my-evaluated-tests', component: MyEvaluatedTestsComponent },
   ]},
   { path: 'start-test/:id', component: StartTestPageComponent },
   { path: 'one-test-per-page/:id', component: OnePerPagePerformingTestComponent},

@@ -14,27 +14,13 @@
             <div class="col-xl-12 col-xxl-7">
               <div class="form" id="kt_contact_add_form" [formGroup]="questionForm">
                 <h3 class="mb-10 font-weight-bold text-dark">{{'questions.question-details' | translate}}</h3>
-                <div class="row">
+                <div class="row w-100">
                   <div class="col-xl-12">
-                    <div class="form-group row">
-                      <label
-                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'questions.question' | translate}}</label>
-                      <div class="col-lg-9 col-xl-9">
-                        <textarea type="text" class="form-control form-control-lg form-control-solid" name="question"
-                          placeholder="{{'questions.question' | translate}}" value="0" formControlName="question">
-                        </textarea>
-                        <div *ngIf="hasErrors('question')" class="fv-plugins-message-container">
-                          <div *ngIf="hasError('question', 'required')" data-field="question" data-validator="notEmpty"
-                            class="fv-help-block">
-                            {{ 'locations.empty-name' | translate }}</div>
-                        </div>
-                      </div>
-                    </div>
                     <div class="form-group row">
                       <label
                         class="col-xl-3 col-lg-3 col-form-label text-right">{{'questions.type' | translate}}</label>
                       <div class="col-lg-9 col-xl-9">
-                        <select name="questionType" class="form-control form-control-lg form-control-solid"
+                        <select name="questionType" class="form-control form-control-lg form-control-solid" (change)="setHashedAnswer()"
                           [formControl]="questionForm.controls['questionType']">
                           <option value="">{{'questions.select' | translate}}</option>
                           <option *ngFor="let item of types" [value]="item.value">
@@ -43,6 +29,21 @@
                         <div *ngIf="hasErrors('questionType')" class="fv-plugins-message-container">
                           <div *ngIf="hasError('questionType', 'required')" data-field="questionType"
                             data-validator="notEmpty" class="fv-help-block">
+                            {{ 'locations.empty-name' | translate }}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label
+                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'questions.question' | translate}}</label>
+                      <div class="col-lg-9 col-xl-9">
+                        <textarea type="text" #myTextArea class="form-control form-control-lg form-control-solid" name="question"
+                          placeholder="{{'questions.question' | translate}}" value="0" formControlName="question"
+                           (keyup)="getCaretPos(myTextArea)" (click)="getCaretPos(myTextArea)" >
+                        </textarea>
+                        <div *ngIf="hasErrors('question')" class="fv-plugins-message-container">
+                          <div *ngIf="hasError('question', 'required')" data-field="question" data-validator="notEmpty"
+                            class="fv-help-block">
                             {{ 'locations.empty-name' | translate }}</div>
                         </div>
                       </div>
@@ -106,6 +107,7 @@
                       </div>
                     </div>
                   </div>
+                 
                 </div>
                 <div class="text-right w-100 border-top pt-10">
                   <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
@@ -117,9 +119,19 @@
                 </div>
               </div>
             </div>
+            <div class="col-xs-4" style="margin-top: 10vh;" *ngIf="questionForm.value.questionType == 4">
+              <button (click)="insertQestionTag()" class="btn btn-secondary font-weight-bolder" >{{"questions.add-tags" | translate}}</button>
+              <button type="button" class="btn btn-icon" [ngbTooltip]="tooltip">
+                <i class="fas fa-question-circle ml-3"></i>
+              </button>
+
+             
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #tooltip><p style="font-size: 13px">Exemplu: Drapelul R. Moldova are <b>[answer]</b>3<b>[/answer]</b> culori </p></ng-template>

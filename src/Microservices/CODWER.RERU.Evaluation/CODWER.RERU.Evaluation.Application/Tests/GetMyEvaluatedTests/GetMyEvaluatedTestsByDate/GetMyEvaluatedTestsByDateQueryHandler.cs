@@ -9,36 +9,35 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsByEvent
+namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.GetMyEvaluatedTestsByDate
 {
-    public class GetMyTestsByEventQueryHandler : IRequestHandler<GetMyTestsByEventQuery, PaginatedModel<TestDto>>
+    public class GetMyEvaluatedTestsByDateQueryHandler : IRequestHandler<GetMyEvaluatedTestsByDateQuery, PaginatedModel<TestDto>>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
         private readonly IUserProfileService _userProfileService;
 
-        public GetMyTestsByEventQueryHandler(AppDbContext appDbContext, IUserProfileService userProfileService, IPaginationService paginationService)
+        public GetMyEvaluatedTestsByDateQueryHandler(AppDbContext appDbContext, IPaginationService paginationService, IUserProfileService userProfileService)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
             _userProfileService = userProfileService;
         }
 
-        public async Task<PaginatedModel<TestDto>> Handle(GetMyTestsByEventQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedModel<TestDto>> Handle(GetMyEvaluatedTestsByDateQuery request, CancellationToken cancellationToken)
         {
-            var myUserProfile = await _userProfileService.GetCurrentUser();
+            var currentUser = await _userProfileService.GetCurrentUser();
 
             var myTests = _appDbContext.Tests
                 .Include(t => t.TestTemplate)
-                .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
-                .Include(t => t.Location)
                 .Include(t => t.Event)
-                .Where(t => t.UserProfileId == myUserProfile.Id && t.Event.Id == request.EventId)
-                .OrderByDescending(x => x.ProgrammedTime)
+                .Where(t => t.EvaluatorId == currentUser.Id ||
+                            _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == currentUser.Id))
                 .AsQueryable();
 
-            return await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myTests, request); 
+
+            return await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myTests, request); ;
         }
     }
 }
