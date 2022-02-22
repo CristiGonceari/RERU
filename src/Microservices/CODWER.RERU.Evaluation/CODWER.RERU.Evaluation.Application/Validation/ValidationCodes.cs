@@ -35,7 +35,7 @@
         //event responsible person
         public static string USER_ISNT_RESPONSIBLE_FOR_THIS_EVENT = "03000501";
 
-        //event test type
+        //event test template
         public static string EXISTENT_TEST_TEMPLATE_IN_EVENT = "03000601";
 
         //event user
@@ -100,7 +100,7 @@
         public static string INVALID_EVALUATOR_FOR_THIS_TEST = "03001609";
         public static string CANT_VIEW_TEST_RESULT = "03001610";
 
-        //test type
+        //test template
         public static string INVALID_STATUS = "03001701";
         public static string INVALID_TEST_TEMPLATE = "03001702";
         public static string INSUFFICIENT_QUESTIONS_IN_CATEGORY = "03001703";
@@ -126,7 +126,7 @@
         public static string INVALID_POLL = "03001723";
         public static string ONLY_INACTIVE_TEST_CAN_BE_DELETED = "03001724";
 
-        //test type question category 
+        //test template question category 
         public static string QUESTION_COUNT_REACHED_THE_LIMIT = "03001801";
         public static string INVALID_SEQUENCE = "03001802";
         public static string INVALID_SELECTION_TYPE = "03001803";
