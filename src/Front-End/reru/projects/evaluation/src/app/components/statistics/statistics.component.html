@@ -19,9 +19,9 @@
                                     <div class="col-lg-6 col-6">
                                         <div class="d-flex flex-column">
                                             <label class="col-form-label pb-0 text-dark-50">{{'events.test-type-name' | translate}}</label>
-                                            <select class="form-control h-35px" name="testTypeId" [(ngModel)]="testTypeId" [disabled]="categoryId">
+                                            <select class="form-control h-35px" name="testTemplateId" [(ngModel)]="testTemplateId" [disabled]="categoryId">
                                                 <option class="default-option" selected [ngValue]="null">{{'questions.select' | translate }}</option>
-                                                <option *ngFor="let item of testTypes" [ngValue]="item.value">
+                                                <option *ngFor="let item of testTemplates" [ngValue]="item.value">
                                                     {{ item.label }}
                                                 </option>
                                             </select>
@@ -30,7 +30,7 @@
                                     <div class="col-lg-6 col-6">
                                         <div class="d-flex flex-column">
                                             <label class="col-form-label pb-0 text-dark-50">{{'questions.category' | translate}}</label>
-                                            <select class="form-control h-35px" name="categoryId" [(ngModel)]="categoryId" [disabled]="testTypeId">
+                                            <select class="form-control h-35px" name="categoryId" [(ngModel)]="categoryId" [disabled]="testTemplateId">
                                                 <option class="default-option" selected [ngValue]="null">{{'questions.select' | translate }}</option>
                                                 <option *ngFor="let item of categories" [ngValue]="item.value">
                                                     {{ item.label }}
@@ -65,13 +65,13 @@
                                     <app-confirm-button
                                         [value]="'button.search' | translate" [width]="'100%'"
                                         (handle)="table.getQuestions(send())" 
-                                        [disabled]="!(itemsPerPage && filterEnum && (testTypeId || categoryId))">
+                                        [disabled]="!(itemsPerPage && filterEnum && (testTemplateId || categoryId))">
                                     </app-confirm-button>
                                 </div>
                                 <div class="w-100 mt-9">
                                     <app-confirm-button class="btn d-block"
                                         (click)="table.getHeaders(title)" [width]="'100%'"
-                                        [disabled]="!(itemsPerPage && filterEnum && (testTypeId || categoryId)) && send()">
+                                        [disabled]="!(itemsPerPage && filterEnum && (testTemplateId || categoryId)) && send()">
                                         <i class="far fa-file-pdf text-white"></i>
                                         {{'button.print' | translate}}
                                     </app-confirm-button>

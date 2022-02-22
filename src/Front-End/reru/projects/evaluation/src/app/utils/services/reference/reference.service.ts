@@ -13,11 +13,11 @@ export class ReferenceService extends AbstractService {
     super(appConfigService);
   }
 
-  getTestTypeStatuses(): Observable<any> {
+  getTestTemplateStatuses(): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-type-statuses/select-values`);
   }
 
-  getTestTypes(): Observable<any> {
+  getTestTemplates(): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-template/select-values`);
   }
 
@@ -53,7 +53,7 @@ export class ReferenceService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-type-mode/select-values`);
   }
 
-  getTestTypeEvaluator(): Observable<any> {
+  getTestTemplateEvaluator(): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-type-with-evaluator-value/select-values`);
   }
 

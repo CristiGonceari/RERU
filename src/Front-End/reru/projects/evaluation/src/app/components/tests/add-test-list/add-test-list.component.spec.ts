@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddTestTypeComponent } from './add-test-type.component';
+import { AddTestListComponent } from './add-test-list.component';
 
-describe('AddTestTypeComponent', () => {
-  let component: AddTestTypeComponent;
-  let fixture: ComponentFixture<AddTestTypeComponent>;
+describe('AddTestListComponent', () => {
+  let component: AddTestListComponent;
+  let fixture: ComponentFixture<AddTestListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddTestTypeComponent ]
+      declarations: [ AddTestListComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddTestTypeComponent);
+    fixture = TestBed.createComponent(AddTestListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

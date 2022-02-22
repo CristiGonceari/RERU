@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { QuestionUnitTypeEnum } from '../../../utils/enums/question-unit-type.enum';
-import { TestTypeSettings } from '../../../utils/models/test-types/test-type-settings.model';
+import { TestTemplateSettings } from '../../../utils/models/test-templates/test-template-settings.model';
 import { Test } from '../../../utils/models/tests/test.model';
 import { TestQuestionService } from '../../../utils/services/test-question/test-question.service';
-import { TestTypeService } from '../../../utils/services/test-type/test-type.service';
+import { TestTemplateService } from '../../../utils/services/test-template/test-template.service';
 import { TestService } from '../../../utils/services/test/test.service';
 import { TestVerificationProcessService } from '../../../utils/services/test-verification-process/test-verification-process.service';
 
@@ -17,7 +17,7 @@ import { TestVerificationProcessService } from '../../../utils/services/test-ver
 export class FinishPageComponent implements OnInit {
 
   testDto = new Test();
-  testTypeSettings = new TestTypeSettings();
+  testTemplateeSettings = new TestTemplateSettings();
   isLoading: boolean = true;
   testId;
   correct;
@@ -28,7 +28,7 @@ export class FinishPageComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private testService: TestService,
-    private testTypeService: TestTypeService,
+    private testTemplateService: TestTemplateService,
     private verifyService: TestVerificationProcessService,
     private testQuestionService: TestQuestionService) { }
 
@@ -61,21 +61,21 @@ export class FinishPageComponent implements OnInit {
     this.testService.getTest(this.testId).subscribe(
       res => {
         this.testDto = res.data;
-        this.getTestTypeSettings(res.data.testTemplateId);
+        this.getTestTemplateSettings(res.data.testTemplateId);
       }
     )
   }
 
-  getTestTypeSettings(testTypeId) {
-    this.testTypeService.getTestTypeSettings({ testTemplateId: testTypeId }).subscribe(
+  getTestTemplateSettings(testTemplateId) {
+    this.testTemplateService.getTestTemplateSettings({ testTemplateId: testTemplateId }).subscribe(
       res => {
-        this.testTypeSettings = res.data;
+        this.testTemplateeSettings = res.data;
         this.isLoading = false;
         this.testQuestionService.summary(this.testId).subscribe(
           res => {
             if (res.data.some(x => x.questionType == QuestionUnitTypeEnum.FreeText || x.questionType == QuestionUnitTypeEnum.HashedAnswer))
               this.viewResult = false
-            else if (this.testTypeSettings.canViewResultWithoutVerification)
+            else if (this.testTemplateeSettings.canViewResultWithoutVerification)
               this.viewResult = true;
           });
       }

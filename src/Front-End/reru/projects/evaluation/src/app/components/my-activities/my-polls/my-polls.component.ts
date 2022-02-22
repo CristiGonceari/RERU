@@ -50,7 +50,7 @@ export class MyPollsComponent implements OnInit {
     }
 
     let params = {
-      testTypeMode: 1,
+      testTemplateMode: 1,
       page: data.page || this.pagedSummary.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize,
       fromDate: this.parseDates(this.fromDate),
@@ -99,7 +99,7 @@ export class MyPollsComponent implements OnInit {
 
     const request = {
       date: this.selectedDay,
-      testTypeMode: 1,
+      testTemplateMode: 1,
       page: data.page || this.pagedSummary.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
     }
@@ -116,7 +116,7 @@ export class MyPollsComponent implements OnInit {
   getListOfCoutedEvents(data) {
 
     const request = {
-      testTypeMode: 1,
+      testTemplateMode: 1,
       fromDate: this.parseDates(data.fromDate),
       tillDate: this.parseDates(data.tillDate)
     }

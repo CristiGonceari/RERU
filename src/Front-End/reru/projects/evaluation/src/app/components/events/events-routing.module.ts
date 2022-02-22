@@ -8,7 +8,7 @@ import { AttachComponent } from './events-details/events-details-options/attach/
 import { EventsDetailsComponent } from './events-details/events-details.component';
 import { LocationsListComponent } from './events-details/locations-list/locations-list.component';
 import { ResponsiblePersonsComponent } from './events-details/responsible-persons/responsible-persons.component';
-import { TestTypesListComponent } from './events-details/test-types-list/test-types-list.component';
+import { TestTemplatesListComponent } from './events-details/test-templates-list/test-templates-list.component';
 import { EventsListComponent } from './events-list/events-list.component';
 
 
@@ -25,7 +25,7 @@ const routes: Routes = [
       { path: 'overview', component: EventOverviewComponent },
       { path: 'persons', component: ResponsiblePersonsComponent},
       { path: 'locations', component: LocationsListComponent },
-      { path: 'test-types', component: TestTypesListComponent },
+      { path: 'test-types', component: TestTemplatesListComponent },
       { path: 'users', component: AttachedUsersListComponent },
       { path: 'evaluators', component: EvaluatorsComponent }
     ]

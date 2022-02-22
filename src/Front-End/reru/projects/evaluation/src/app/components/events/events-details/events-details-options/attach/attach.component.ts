@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
-import { AttachTestTypeToEventModel } from 'projects/evaluation/src/app/utils/models/events/attachTestTypeToEventModel';
+import { AttachTestTemplateToEventModel } from 'projects/evaluation/src/app/utils/models/events/attachTestTemplateToEventModel';
 import { NotificationsService } from 'angular2-notifications';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from 'projects/evaluation/src/app/utils/services/event/event.service';
-import { EventTestTypeService } from 'projects/evaluation/src/app/utils/services/event-test-type/event-test-type.service';
-import { AttachLocationToEventModel } from 'projects/evaluation/src/app/utils/models/locations/attachTestTypeToEventModel';
+import { EventTestTemplateService } from 'projects/evaluation/src/app/utils/services/event-test-template/event-test-template.service';
+import { AttachLocationToEventModel } from 'projects/evaluation/src/app/utils/models/locations/attachTestTemplateToEventModel';
 import { AttachPersonToEventModel } from 'projects/evaluation/src/app/utils/models/events/attachPersonToEventModel'
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { forkJoin } from 'rxjs';
@@ -27,7 +27,7 @@ export class AttachComponent implements OnInit {
   isLoading: boolean = true;
   person: boolean = true;
   locations: boolean = true;
-  testType: boolean = true;
+  testTemplate: boolean = true;
   evaluator: boolean = true;
   user: boolean = true;
 
@@ -44,7 +44,7 @@ export class AttachComponent implements OnInit {
     private notificationService: NotificationsService,
 		public translate: I18nService,
     private router: Router,
-    private eventTestTypeService: EventTestTypeService) { }
+    private eventTestTemplateService: EventTestTemplateService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(response => { this.eventId = response.id; this.get() });
@@ -64,7 +64,7 @@ export class AttachComponent implements OnInit {
     }
 
     if (this.url == "attach-test-type") {
-      this.testType = false;
+      this.testTemplate = false;
     }
 
     if (this.url == "attach-evaluator") {
@@ -93,9 +93,9 @@ export class AttachComponent implements OnInit {
       };
     }
 
-    if (this.testType == false) {
+    if (this.testTemplate == false) {
       return {
-        data: new AttachTestTypeToEventModel({
+        data: new AttachTestTemplateToEventModel({
           eventId: +this.eventId,
           testTemplateId: +this.id,
           maxAttempts: this.attempts
@@ -141,8 +141,8 @@ export class AttachComponent implements OnInit {
         this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       });
     }
-    if (this.testType == false) {
-      this.eventTestTypeService.attachTestType(this.parse()).subscribe(() => {
+    if (this.testTemplate == false) {
+      this.eventTestTemplateService.attachTestTemplate(this.parse()).subscribe(() => {
         forkJoin([
           this.translate.get('modal.success'),
           this.translate.get('events.succes-add-test-type-msg'),
