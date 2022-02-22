@@ -31,7 +31,12 @@
    "event-message": "Event Message",
    "json-message": "JSON",
    "date": "Date",
-   "view-details": "View details"
+   "view-details": "View details",
+   "delete-logs": "Delete Logs"
+  },
+  "delete-log-modal":{
+    "title": "Delete logs older than:",
+    "years": "Select the number of years"
   },
   "details-modal":{
     "details": "Details",

@@ -31,8 +31,14 @@
     "event-message": "Mesajul Eveniment",
     "json-message": "JSON",
     "date": "Data",
-    "view-details": "Vizualizare detalii"
+    "view-details": "Vizualizare detalii",
+    "delete-logs": "Ștergeți din jurnale"
+
    },
+   "delete-log-modal":{
+    "title": "Ştergerea jurnalelor mai vechi de:",
+    "years": "Selectați numărul de ani"
+  },
    "details-modal":{
     "details": "Detalii",
     "file-json": "Fişier JSON"

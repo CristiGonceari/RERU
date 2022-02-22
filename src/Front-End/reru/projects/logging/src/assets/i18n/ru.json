@@ -31,8 +31,13 @@
     "event-message": "Действие",
     "json-message": "JSON",
     "date": "Дата",
-    "view-details": "Просмотр деталей"
+    "view-details": "Просмотр деталей",
+    "delete-logs": "Удалить из журналов"
    },
+   "delete-log-modal":{
+    "title": "Удалить журналы старше:",
+    "years": "Выберите количество лет"
+  },
    "details-modal":{
     "details": "Подробности",
     "file-json": "Файл JSON"
