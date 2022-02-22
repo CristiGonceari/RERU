@@ -1,9 +1,14 @@
 ﻿using CODWER.RERU.Logging.API.Config;
+using CODWER.RERU.Logging.Application.DeleteLoggingValues;
 using CODWER.RERU.Logging.Application.GetLoggingValuesQuery;
 using CODWER.RERU.Logging.Application.GetSelectValues.GetEventSelectValues;
 using CODWER.RERU.Logging.Application.GetSelectValues.GetProjectSelectValues;
 using CODWER.RERU.Logging.DataTransferObjects;
+using CODWER.RERU.Logging.DataTransferObjects.Enums;
+using CVU.ERP.Common.DataTransferObjects.SelectValues;
+using CVU.ERP.Common.EnumConverters;
 using CVU.ERP.Common.Pagination;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -36,6 +41,12 @@ namespace CODWER.RERU.Logging.API.Controllers
             var result = await Mediator.Send(query);
 
             return result;
+        }
+
+        [HttpDelete("{years}")]
+        public async Task<Unit> DeletePlan([FromRoute] int years)
+        {
+            return await Mediator.Send(new DeleteLoggingValuesCommand { PeriodOfYears = years });
         }
     }
 }
