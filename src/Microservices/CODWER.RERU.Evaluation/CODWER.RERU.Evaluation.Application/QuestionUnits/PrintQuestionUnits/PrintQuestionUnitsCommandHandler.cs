@@ -6,7 +6,6 @@ using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.TablePrinterService;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,34 +27,17 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.PrintQuestionUnits
 
         public async Task<FileDataDto> Handle(PrintQuestionUnitsCommand request, CancellationToken cancellationToken)
         {
-            var questions = _appDbContext.QuestionUnits
-                .Include(x => x.QuestionCategory)
-                .Include(x => x.Options)
-                .Include(x => x.TestQuestions)
-                .Include(x => x.QuestionUnitTags)
-                    .ThenInclude(x => x.Tag)
-                .OrderByDescending(x => x.Id)
-                .AsQueryable();
-
-            if (request.Type != null)
+            var filterData = new QuestionFilterDto
             {
-                questions = questions.Where(x => x.QuestionType == request.Type.Value);
-            }
+                QuestionName = request.QuestionName,
+                CategoryName = request.CategoryName,
+                QuestionCategoryId = request.QuestionCategoryId,
+                QuestionTags = request.QuestionTags,
+                Type = request.Type,
+                Status = request.Status
+            };
 
-            if (request.QuestionCategoryId != null)
-            {
-                questions = questions.Where(x => x.QuestionCategoryId == request.QuestionCategoryId.Value);
-            }
-
-            if (!string.IsNullOrWhiteSpace(request.QuestionName))
-            {
-                questions = questions.Where(x => x.Question.Contains(request.QuestionName) || x.QuestionUnitTags.Any(qu => qu.Tag.Name.Contains(request.QuestionName)));
-            }
-
-            if (!string.IsNullOrWhiteSpace(request.CategoryName))
-            {
-                questions = questions.Where(x => x.QuestionCategory.Name.Contains(request.CategoryName));
-            }
+            var questions = GetAndFilterQuestionUnits.Filter(_appDbContext, filterData);
 
             questions = SelectOnlyReturnedFields(questions);
 

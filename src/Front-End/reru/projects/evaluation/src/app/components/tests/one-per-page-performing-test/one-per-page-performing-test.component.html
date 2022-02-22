@@ -6,7 +6,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="font-size-lg">
-                        {{ testDto.testTypeName }}
+                        {{ testDto.testTemplateName }}
                     </div>
                     <div>
                         <span class="svg-icon svg-icon-primary svg-icon-2x">
@@ -93,11 +93,11 @@
                     </div>
                     <div class="d-flex justify-content-between my-15">
                         <div class="d-flex">
-                            <button *ngIf="testTypeSettings.possibleChangeAnswer && testTypeSettings.hidePagination"
+                            <button *ngIf="testTemplateSettings.possibleChangeAnswer && testTemplateSettings.hidePagination"
                                 type="button" class="btn btn-secondary h6 mr-10 py-auto pb-9"
                                 (click)="getTestQuestions(questionIndex - 1)"
                                 [disabled]="questionIndex==1">{{'button.back' | translate}}</button>
-                            <button *ngIf="testTypeSettings.possibleGetToSkipped" type="button"
+                            <button *ngIf="testTemplateSettings.possibleGetToSkipped" type="button"
                                 class="btn btn-secondary h6 mr-10 py-auto pb-9" (click)="skipQuestion()">{{'button.skip'
                                 | translate}}</button>
                         </div>
@@ -110,7 +110,7 @@
                     <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
                     <div *ngIf="!isLoading">
                         <div class="card-body d-flex justify-content-between p-0"
-                            *ngIf="!testTypeSettings.hidePagination">
+                            *ngIf="!testTemplateSettings.hidePagination">
                             <div class="mx-auto">
                                 <div class="d-flex justify-content-between align-items-center flex-wrap mb-7">
                                     <div class="d-flex flex-wrap">

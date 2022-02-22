@@ -1,14 +1,16 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Data.Entities;
 using CODWER.RERU.Personal.Data.Entities.User;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Profiles;
+using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContractorProfile
 {
@@ -17,11 +19,15 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContrac
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly UserProfile _userProfile;
-
-        public GetContractorProfileQueryHandler(AppDbContext appDbContext, IUserProfileService userProfileService, IMapper mapper)
+        private readonly IPersonalStorageClient _personalStorageClient;
+        public GetContractorProfileQueryHandler(AppDbContext appDbContext, 
+            IUserProfileService userProfileService, 
+            IMapper mapper, 
+            IPersonalStorageClient personalStorageClient)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _personalStorageClient = personalStorageClient;
             _userProfile = userProfileService.GetCurrentUserProfile().Result;
         }
 
@@ -35,10 +41,10 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContrac
                 .Include(r => r.BloodType)
                 .Include(r => r.Studies)
                 .Include(r => r.Contacts)
-                .Include(c => c.ByteArrayFiles)
                 .Include(x => x.Contracts)
                 .Include(x => x.UserProfile)
                 .Include(x => x.Bulletin)
+                .Include(x => x.ContractorFiles)
                 .Select(c => new Contractor
                  {
                      Id = c.Id,
@@ -53,7 +59,6 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContrac
                      BloodType = c.BloodType,
                      Studies = c.Studies,
                      Contacts = c.Contacts,
-                     ByteArrayFiles = c.ByteArrayFiles,
                      Contracts = c.Contracts,
                      UserProfile = c.UserProfile,
                      Bulletin = c.Bulletin
@@ -61,6 +66,9 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContrac
                 .FirstAsync(rt => rt.Id == _userProfile.ContractorId);
 
             var mappedContractor = _mapper.Map<ContractorProfileDto>(contractor);
+
+            mappedContractor.HasEmploymentRequest = await _personalStorageClient.HasFile(_userProfile.ContractorId ?? 0, FileTypeEnum.request);
+            mappedContractor.HasIdentityDocuments = await _personalStorageClient.HasFile(_userProfile.ContractorId ?? 0, FileTypeEnum.identityfiles);
 
             return mappedContractor;
         }

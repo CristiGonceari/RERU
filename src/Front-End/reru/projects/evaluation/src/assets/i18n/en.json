@@ -254,9 +254,9 @@
     "asignee": "Assign",
     "user-list-to-add": "User list to add",
     "delete-msg": "Are you sure you want to delete this test template?",
-    "succes-delete-msg": "Test template  was successfully deleted",
+    "succes-delete-msg": "Test was successfully deleted",
     "succes-add-msg": "Test template was successfully added",
-    "succes-update-msg": "Test template was successfully updated",
+    "succes-update-msg": "Test was successfully updated",
     "succes-update-status-msg": "Test template status was updated",
     "succes-add-rules-msg": "Rules were successfully added",
     "succes-order-update": "Order was successfully updated",
@@ -332,7 +332,8 @@
     "min-score": "Min. Score",
     "hello-username": "Hello, {{username}}!",
     "have-a-good-day": "Welcome, have a good day!",
-    "my-activities": "My activities"
+    "my-activities": "My activities", 
+    "my-evaluated-tests": "My evaluated Tests"
   },
   "questions": {
     "count": "Question count",
@@ -377,7 +378,9 @@
     "succes-add-msg": "Question was successfully added",
     "succes-add-multiple-msg": "Questions were successfully added",
     "succes-update-msg": "Question was successfully updated",
-    "succes-update-status-msg": "Question status was updated"
+    "succes-update-status-msg": "Question status was updated",
+    "search-by-status": "Select question status",
+    "add-tags": "Add tags"
   },
   "answers": {
     "option-settings": "Option Settions",
@@ -598,9 +601,11 @@
     "succes-attach-evaluator-msg": "Evaluator was successfully attached",
     "succes-detach-evaluator-msg": "Evaluator was successfully detached"
   },
-  "test-template":{
-      "number-of-questions":"Number of questions",
-      "order-of-questions":"The order of the questions"
+  "test-template": {
+    "number-of-questions":"Number of questions",
+    "succes-delete-msg": "Test template  was successfully deleted",
+    "succes-add-msg": "Test template was successfully added",
+    "order-of-questions":"The order of the questions"
   },
   "plans": {
     "plans": "Plans",
@@ -753,5 +758,11 @@
     "father-name": "Father name",
     "idnp": "IDNP",
     "logout": "Logout"
+  },
+  "print": {
+    "print-table": "Print table",
+    "sorted-by": "Sorted by",
+    "error-msg": "Please select fields for print",
+    "print-msg": "Please specify the print orientation and necessary fields."
   }
 }

@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.API.Config;
+﻿using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.References.GetEventsValues;
 using CODWER.RERU.Evaluation.Application.References.GetQuestionCategoryValue;
+using CODWER.RERU.Evaluation.Application.References.GetTestTemplatesValue;
 using CODWER.RERU.Evaluation.Application.References.GetUsersValue;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CVU.ERP.Common.EnumConverters;
-using CODWER.RERU.Evaluation.Application.References.GetTestTypeValue;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -25,10 +25,10 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return items;
         }
 
-        [HttpGet("test-type/select-values")]
-        public async Task<List<SelectItem>> GetTestTypes()
+        [HttpGet("test-template/select-values")]
+        public async Task<List<SelectItem>> GetTestTemplates()
         {
-            var query = new GetTestTypeValueQuery();
+            var query = new GetTestTemplatesValueQuery();
 
             return await Mediator.Send(query);
         }
@@ -42,9 +42,9 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("test-type-statuses/select-values")]
-        public async Task<List<SelectItem>> GetTestTypeStatueses()
+        public async Task<List<SelectItem>> GetTestTemplateStatueses()
         {
-            var items = EnumConverter<TestTypeStatusEnum>.SelectValues;
+            var items = EnumConverter<TestTemplateStatusEnum>.SelectValues;
 
             return items;
         }
@@ -52,7 +52,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         [HttpGet("test-type-mode/select-values")]
         public async Task<List<SelectItem>> GetMode()
         {
-            var items = EnumConverter<TestTypeModeEnum>.SelectValues;
+            var items = EnumConverter<TestTemplateModeEnum>.SelectValues;
 
             return items;
         }
@@ -91,6 +91,14 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<List<SelectItem>> GetStatisticEnum()
         {
             var items = EnumConverter<StatisticsQuestionFilterEnum>.SelectValues;
+
+            return items;
+        }
+
+        [HttpGet("question-status/select-values")]
+        public List<SelectItem> GetQuestionStatuses()
+        {
+            var items = EnumConverter<QuestionUnitStatusEnum>.SelectValues;
 
             return items;
         }

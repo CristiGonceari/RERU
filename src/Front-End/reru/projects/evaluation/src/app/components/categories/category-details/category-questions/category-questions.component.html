@@ -1,8 +1,12 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
   <div class="card card-custom mb-7 ml-5">
     <div class="card-header flex-wrap border-0 py-5">
-      <div class="card-title font-weight-bolder">{{'questions.questions' | translate}}</div>
+      <div class="card-title font-weight-bolder" id="title">{{'questions.questions' | translate}}</div>
       <div class="card-toolbar">
+        <app-confirm-button class="btn mr-3" (click)="getHeaders(title)">
+          <i class="far fa-file-pdf text-white"></i>
+          {{'button.print' | translate}}
+        </app-confirm-button>
         <div class="dropdown dropdown-inline my-auto" ngbDropdown>
           <app-add-button class="btn my-auto" id="action1" ngbDropdownToggle
             [value]="'questions.add-question' | translate">
@@ -41,7 +45,7 @@
           </thead>
           <tbody class="text-dark-75" *ngIf="questionList.length">
             <tr *ngFor="let question of questionList">
-              <td style="cursor: pointer;" scope="col" (click)="goToQuestuionOptions(question.id)">{{ question.question }}</td>
+              <td style="cursor: pointer;" scope="col" (click)="goToQuestionOptions(question.id)">{{ question.question }}</td>
               <td *ngIf="question.questionType == 1 || question.questionType == 4" scope="col" class="text-center" style="width: 150px" > - </td>
               <td *ngIf="question.questionType == 2 || question.questionType == 3" scope="col" class="text-center" style="width: 150px" >{{ question.optionsCount }}</td>
               <td class="text-right" scope="col" style="width: 100px">
@@ -74,23 +78,19 @@
                           class="navi-link align-items-center px-6" ngbDropdownItem>
                           {{'categories.view-details' | translate}}
                         </button>
-                        <button class="navi-link align-items-baseline px-6"
-                          [routerLink]="['../../../../questions/edit-question', question.id]" ngbDropdownItem>
-                          {{'button.edit' | translate}}
+                        <button class="navi-link align-items-baseline px-6" *ngIf="question.status == 0 || question.status == 2"
+                            [routerLink]="['edit-question', question.id]" ngbDropdownItem>
+                            {{'button.edit' | translate}}
                         </button>
-                        <!-- <div *ngIf="question.status !== 2">
-                          <button class="navi-link align-items-center px-6" 
-                          (click)="changeStatus(question.id, question.status)" ngbDropdownItem>
-                          <span class="font-size-lg" *ngIf="question.status == 0">{{'statuses.activate' | translate}}</span>
-                          <span class="font-size-lg" *ngIf="question.status == 1">{{'statuses.inactivate' | translate}}</span>
-                      </button>
-                      </div> -->
                         <button *ngIf="question.status !== 2" class="navi-link align-items-center px-6 text-muted"
                           (click)="changeStatus(question.id, question.status)" ngbDropdownItem>
                           <label style="font-size: 13px;" class="mb-0" *ngIf="question.status == 0 || question.status == 2">{{'statuses.activate'
                               | translate}}</label>
                           <label style="font-size: 13px;" class="mb-0"
                             *ngIf="question.status == 1">{{'statuses.inactivate' | translate}}</label>
+                        </button>
+                        <button class="navi-link align-items-baseline px-6" ngbDropdownItem (click)="printQuestionUnitPdf(question.id)">
+                          {{ 'button.print' | translate }}
                         </button>
                         <button (click)="openConfirmationDeleteModal(question.id)"
                           class="navi-link align-items-baseline px-6" ngbDropdownItem>

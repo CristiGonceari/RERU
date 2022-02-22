@@ -26,7 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.Options.DeleteAllOptionsByQuestion
             {
                 RuleFor(x => x.QuestionUnitId)
                 .Must(x => IsQuestionInActiveTest(x) == false)
-                .WithErrorCode(ValidationCodes.QUESTION_IS_IN_ACTIVE_TEST_TYPE);
+                .WithErrorCode(ValidationCodes.QUESTION_IS_IN_ACTIVE_TEST_TEMPLATE);
             });
         }
 
@@ -34,13 +34,13 @@ namespace CODWER.RERU.Evaluation.Application.Options.DeleteAllOptionsByQuestion
         {
             var tests = _appDbContext.Tests
                 .Include(x => x.TestQuestions)
-                .Include(x => x.TestType)
+                .Include(x => x.TestTemplate)
                 .Where(t => t.TestQuestions.Any(q => q.QuestionUnitId == questionUnitId))
                 .ToList();
 
             foreach (var test in tests)
             {
-                if (test.TestType.Status == (int)TestTypeStatusEnum.Active)
+                if (test.TestTemplate.Status == (int)TestTemplateStatusEnum.Active)
                 {
                     return true;
                 }

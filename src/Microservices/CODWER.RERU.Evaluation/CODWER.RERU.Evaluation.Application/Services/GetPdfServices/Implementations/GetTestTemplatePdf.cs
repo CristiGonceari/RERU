@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCategoryQuestions;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using Wkhtmltopdf.NetCore;
 
@@ -32,10 +33,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
 
         public async Task<FileDataDto> PrintTestTemplatePdf(int testTemplateId)
         {
-            var testTemplate = await _appDbContext.TestTypes
-                .Include(x => x.TestTypeQuestionCategories)
+            var testTemplate = await _appDbContext.TestTemplates
+                .Include(x => x.TestTemplateQuestionCategories)
                     .ThenInclude(x => x.TestCategoryQuestions)
-                .Include(x => x.TestTypeQuestionCategories)
+                .Include(x => x.TestTemplateQuestionCategories)
                     .ThenInclude(x => x.QuestionCategory)
                         .ThenInclude(x => x.QuestionUnits)
                 .Include(x => x.Settings)
@@ -44,7 +45,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             return await GetPdf(testTemplate);
         }
 
-        public async Task<FileDataDto> GetPdf(TestType testTemplate)
+        public async Task<FileDataDto> GetPdf(TestTemplate testTemplate)
         {
             var path = new FileInfo("PdfTemplates/TestTemplate.html").FullName;
             var source = await File.ReadAllTextAsync(path);
@@ -78,7 +79,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             }
         }
 
-        private async Task<Dictionary<string, string>> GetDictionary(TestType testTemplate)
+        private async Task<Dictionary<string, string>> GetDictionary(TestTemplate testTemplate)
         {
 
             var myDictionary = new Dictionary<string, string>();
@@ -90,16 +91,16 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             myDictionary.Add("{test_mode}", testTemplate.Mode.ToString());
             myDictionary.Add("{settings_replace}", GetParsedSettingsForTestTemplate(testTemplate));
             myDictionary.Add("{rules_name}", DecodeRules(testTemplate.Rules));
-            myDictionary.Add("{category_replace}", await GetTableContent(testTemplate.TestTypeQuestionCategories.ToList()));
+            myDictionary.Add("{category_replace}", await GetTableContent(testTemplate.TestTemplateQuestionCategories.ToList()));
 
             return  myDictionary;
         }
 
-        private async Task<string> GetTableContent(List<TestTypeQuestionCategory> testTypeQuestionCategories)
+        private async Task<string> GetTableContent(List<TestTemplateQuestionCategory> testTemplateQuestionCategories)
         {
             var content = string.Empty;
 
-            foreach (var item in testTypeQuestionCategories)
+            foreach (var item in testTemplateQuestionCategories)
             {
                 content += $@"
             <tr>
@@ -136,9 +137,9 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             return content;
         }
 
-        private string BuildHtmlContentForQuestions(TestCategoryQuestionContentDto testTypeQuestionCategory)
+        private string BuildHtmlContentForQuestions(TestCategoryQuestionContentDto testTemplateQuestionCategory)
         {
-            return testTypeQuestionCategory.Questions.Aggregate(string.Empty, (current, questionUnit)
+            return testTemplateQuestionCategory.Questions.Aggregate(string.Empty, (current, questionUnit)
                 =>
                 current + $@"
             <tr>
@@ -155,7 +156,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
 
             return testTemplateRules;
         }
-        private string GetParsedSettingsForTestTemplate(TestType testTemplate)
+        private string GetParsedSettingsForTestTemplate(TestTemplate testTemplate)
         {
             var content = string.Empty;
 
@@ -248,11 +249,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
         {
             return questionCount > 1 ? "intrebari" : "intrebare";
         }
-        private async Task<TestCategoryQuestionContentDto> GetQuestionsForCategoryContent(int testTypeQuestionCategoryId)
+        private async Task<TestCategoryQuestionContentDto> GetQuestionsForCategoryContent(int testTemplateQuestionCategoryId)
         {
             var command = new TestCategoryQuestionsQuery
             {
-                TestTypeQuestionCategoryId = testTypeQuestionCategoryId
+                TestTemplateQuestionCategoryId = testTemplateQuestionCategoryId
             };
 
             return  await _mediator.Send(command);

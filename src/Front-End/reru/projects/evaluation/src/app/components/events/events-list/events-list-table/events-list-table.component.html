@@ -1,11 +1,24 @@
-<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+<app-event-calendar 
+(onDatePicked)="getListByDate($event)" 
+(listOfDates)="list($event)"
+(listOfCountedEvents)="getListOfCoutedEvents($event)"
+>
+</app-event-calendar>
+
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'10vh'" [height]="'5rem'" [width]="'5rem'"
   [colorClass]="'text-primary'">
 </app-loading-spinner>
+<h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
-<div *ngIf="!isLoading"
+<div *ngIf="!isLoading && !downloadFile"
   class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
   id="kt_datatable">
-  <table class="datatable table font-size-lg" style="overflow: visible">
+  <div class="card">
+    <div class="card-header text-center" *ngIf="selectedDay != null">
+      {{ 'calendar.selected-date' | translate }}: {{displayDate}}
+    </div>
+    <div class="card-body">
+  <table class="datatable table font-size-lg" style="overflow: visible" id="eventsTable">
     <thead class="text-uppercase text-muted">
       <tr>
         <th scope="col" style="width: 400px;">{{'events.name' | translate}}</th>
@@ -19,8 +32,8 @@
       <tr *ngFor="let item of events" (dblclick)="navigate(item.id)">
         <td style="cursor: pointer;" [routerLink]="['event', item.id]">{{ item.name }}</td>
         <td style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{item.description}}</td>
-        <td>{{item.fromDate | date: 'd/M/yy, HH:mm'}}</td>
-        <td>{{item.tillDate | date: 'd/M/yy, HH:mm'}}</td>
+        <td>{{item.fromDate | date: 'dd/MM/yyyy, HH:mm'}}</td>
+        <td>{{item.tillDate | date: 'dd/MM/yyyy, HH:mm'}}</td>
         <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
           <div style="overflow: visible; position: relative; width: 0px">
             <div ngbDropdown class="dropdown dropdown-inline">
@@ -66,8 +79,16 @@
       </tr>
     </tbody>
   </table>
-  <div pagination class="datatable-pager datatable-paging-loaded" *ngIf="events.length" [page]="pagination.currentPage"
-    [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
-    (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event})" (pageChange)="list({ page: $event})">
+</div>
+  </div>
+  <div pagination class="datatable-pager datatable-paging-loaded" *ngIf="events.length && selectedDay != null"
+    [page]="pagination.currentPage" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount"
+    [size]="pagination.pageSize" (sizeChange)="getListByDate({ page: pagination.currentPage, itemsPerPage: $event})"
+    (pageChange)="getListByDate({ page: $event})">
+  </div>
+  <div pagination class="datatable-pager datatable-paging-loaded" *ngIf="events.length && selectedDay == null"
+    [page]="pagination.currentPage" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount"
+    [size]="pagination.pageSize" (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event})"
+    (pageChange)="list({ page: $event})">
   </div>
 </div>

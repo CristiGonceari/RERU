@@ -1,4 +1,9 @@
-<div *ngIf="questionList.length">
+<app-loading-spinner *ngIf="downloadFile" [contentHeight]="'10vh'" [height]="'5rem'" [width]="'5rem'"
+    [colorClass]="'text-primary'">
+</app-loading-spinner>
+<h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
+
+<div *ngIf="questionList.length && !downloadFile">
     <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable">
         <table class="datatable table font-size-lg" style="overflow: visible">
             <thead class="text-uppercase text-muted">
@@ -6,10 +11,14 @@
                     <th scope="col">{{'questions.question' | translate}}</th>
                     <th scope="col" class="text-left" style="width: 200px">{{'questions.category' | translate}}</th>
                     <th scope="col" class="text-left" style="width: 200px">{{'statistics.total-used' | translate}}</th>
-                    <th scope="col" class="text-left" style="width: 200px">
-                        <span class="text-muted" *ngIf="data.filterEnum == enum.Correct">{{'statistics.correct-percent' | translate}}</span>
-                        <span class="text-muted" *ngIf="data.filterEnum == enum.NotCorrect">{{'statistics.not-correct-percent' | translate}}</span>
-                        <span class="text-muted" *ngIf="data.filterEnum == enum.Skipped">{{'statistics.skipped-percent' | translate}}</span>
+                    <th scope="col" class="text-left" style="width: 200px" *ngIf="data.filterEnum == enum.Correct">
+                        {{'statistics.correct-percent' | translate}}
+                    </th>
+                    <th scope="col" class="text-left" style="width: 200px" *ngIf="data.filterEnum == enum.NotCorrect">
+                        {{'statistics.not-correct-percent' | translate}}
+                    </th>
+                    <th scope="col" class="text-left" style="width: 200px" *ngIf="data.filterEnum == enum.Skipped">
+                        {{'statistics.skipped-percent' | translate}}
                     </th>
                 </tr>
             </thead>

@@ -8,12 +8,12 @@ import { QuestionUnitTypeEnum } from '../../../utils/enums/question-unit-type.en
 import { TestQuestionSummary } from '../../../utils/models/test-questions/test-question-summary.model';
 import { Test } from '../../../utils/models/tests/test.model';
 import { TestQuestionService } from '../../../utils/services/test-question/test-question.service';
-import { TestTypeService } from '../../../utils/services/test-type/test-type.service';
+import { TestTemplateService } from '../../../utils/services/test-template/test-template.service';
 import { TestService } from '../../../utils/services/test/test.service';
 import { TestQuestion } from '../../../utils/models/test-questions/test-question.model';
 import { TestAnswer } from '../../../utils/models/test-questions/test-answer.model';
-import { TestType } from '../../../utils/models/test-types/test-type.model';
-import { TestTypeSettings } from '../../../utils/models/test-types/test-type-settings.model';
+import { TestTemplate } from '../../../utils/models/test-templates/test-template.model';
+import { TestTemplateSettings } from '../../../utils/models/test-templates/test-template-settings.model';
 import { AddTestQuestion } from '../../../utils/models/test-questions/add-test-question.model';
 import { SafeHtmlPipe } from '../../../utils/pipes/safe-html.pipe';
 import { ConfirmModalComponent } from '@erp/shared';
@@ -53,8 +53,8 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   questionUnit = new TestQuestion();
   testAnswersInput: TestAnswer[] = [];
   testQuestion: AddTestQuestion[] = [];
-  testTypeModel = new TestType();
-  testTypeSettings = new TestTypeSettings();
+  testTemplateModel = new TestTemplate();
+  testTemplateSettings = new TestTemplateSettings();
   hashedOptions;
 
   textAnswer: string;
@@ -65,7 +65,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   disable: number[] = [];
   disableNext = false;
   isLoading = true;
-  testtypeId;
+  testTemplateId;
 
   isLoadingMedia: boolean;
   imageUrl: any;
@@ -84,7 +84,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     private modalService: NgbModal,
 	  public translate: I18nService,
     private router: Router,
-    private testTypeService: TestTypeService,
+    private testTemplateService: TestTemplateService,
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
@@ -165,7 +165,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     this.testService.getTest(this.testId).subscribe(
       res => {
         this.testDto = res.data;
-        this.getTestTypeSettings(res.data.testTypeId);
+        this.getTestTemplateSettings(res.data.testTemplateId);
       }
     )
   }
@@ -253,12 +253,12 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     return this.testQuestionSummary.find(x => x.index == index).isClosed;
   }
 
-  getTestTypeSettings(testTypeId) {
-    this.testTypeService.getTestTypeSettings({ testTypeId: testTypeId }).subscribe(
+  getTestTemplateSettings(testTemplateId) {
+    this.testTemplateService.getTestTemplateSettings({ testTemplateId: testTemplateId }).subscribe(
       res => {
-        this.testTypeSettings = res.data;
+        this.testTemplateSettings = res.data;
         this.isLoading = false;
-        if (res.data == null) this.testTypeSettings = new TestTypeSettings();
+        if (res.data == null) this.testTemplateSettings = new TestTemplateSettings();
       }
     );
   }
@@ -281,7 +281,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
 
             if (this.testQuestionSummary.every(x => x.isClosed === true))
               this.submitTest();
-            else if (!this.testTypeSettings.possibleChangeAnswer || !this.testTypeSettings.possibleGetToSkipped) {
+            else if (!this.testTemplateSettings.possibleChangeAnswer || !this.testTemplateSettings.possibleGetToSkipped) {
               var isNotClosedAnswers = this.testQuestionSummary.filter(x => x.isClosed === false);
 
               this.questionIndex = isNotClosedAnswers.some(x => x.index > this.questionIndex) ?

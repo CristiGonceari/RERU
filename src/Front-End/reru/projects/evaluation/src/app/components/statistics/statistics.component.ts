@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { SelectItem } from '../../utils/models/select-item.model';
 import { ReferenceService } from '../../utils/services/reference/reference.service';
 
@@ -7,15 +7,16 @@ import { ReferenceService } from '../../utils/services/reference/reference.servi
   templateUrl: './statistics.component.html',
   styleUrls: ['./statistics.component.scss']
 })
-export class StatisticsComponent implements OnInit {
+export class StatisticsComponent implements OnInit, AfterViewInit {
 
   statisticEnum: SelectItem[] = [{ label: "", value: "" }];
-  testTypes: SelectItem[] = [{ label: "", value: "" }];
+  testTemplates: SelectItem[] = [{ label: "", value: "" }];
   categories: SelectItem[] = [{ label: "", value: "" }];
   filterEnum = 3;
-  testTypeId;
+  testTemplateId;
   itemsPerPage;
   categoryId;
+  title: string;
   
   constructor(
     private referenceService: ReferenceService
@@ -23,16 +24,20 @@ export class StatisticsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStatisticType();
-    this.getTestTypes();
+    this.getTestTemplates();
     this.getQuestionCategories();
+  }
+
+  ngAfterViewInit(): void {
+    this.title = document.getElementById('title').innerHTML;
   }
 
   getStatisticType() {
     this.referenceService.getStatisticEnum().subscribe((res) => this.statisticEnum = res.data);
   }
 
-  getTestTypes() {
-    this.referenceService.getTestTypes().subscribe((res) => this.testTypes = res.data);
+  getTestTemplates() {
+    this.referenceService.getTestTemplates().subscribe((res) => this.testTemplates = res.data);
   }
 
   getQuestionCategories() {
@@ -41,7 +46,7 @@ export class StatisticsComponent implements OnInit {
 
   send() {
     return {
-      testTypeId: this.testTypeId,
+      testTemplateId: this.testTemplateId,
       categoryId: this.categoryId,
       itemsPerPage: this.itemsPerPage,
       filterEnum: this.filterEnum

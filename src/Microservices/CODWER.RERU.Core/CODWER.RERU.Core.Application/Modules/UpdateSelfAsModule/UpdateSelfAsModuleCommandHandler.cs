@@ -9,20 +9,22 @@ using CVU.ERP.Module.Common.Providers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule {
+namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule 
+{
     public class UpdateSelfAsModuleCommandHandler : BaseHandler, IRequestHandler<UpdateSelfAsModuleCommand, Unit> 
     {
         private IEnumerable<IModulePermissionProvider> _permissionProviders;
+
         public UpdateSelfAsModuleCommandHandler (
-            ICommonServiceProvider commonServicepProvider,
+            ICommonServiceProvider commonServiceProvider,
             IEnumerable<IModulePermissionProvider> permissionProviders
-        ) : base (commonServicepProvider) {
+        ) : base (commonServiceProvider) {
             _permissionProviders = permissionProviders;
         }
 
         public async Task<Unit> Handle (UpdateSelfAsModuleCommand request, CancellationToken cancellationToken) 
         {
-            var moduleCode = "00"; // Take this value from appsettings;
+            var moduleCode = "00";
             var superAdministratorCode = "R00000001";
             var selfModule = await CoreDbContext.Modules
                 .Include (m => m.Permissions)
@@ -33,7 +35,7 @@ namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule {
             if (selfModule == null) {
                 selfModule = new Data.Entities.Module ();
                 selfModule.Code = moduleCode;
-                selfModule.Name = "Core/Dashboard"; //TODO: Take this value from appsettings
+                selfModule.Name = "Core/Dashboard";
                 selfModule.Permissions = new List<ModulePermission> ();
                 selfModule.Roles = new List<ModuleRole> ();
                 selfModule.Type = Data.Entities.Enums.ModuleTypeEnum.Default;
@@ -41,6 +43,7 @@ namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule {
             }
 
             var allModulePermissions = new List<CVU.ERP.Module.Common.Models.ModulePermission> ();
+
             foreach (var permissionProvider in _permissionProviders) {
                 allModulePermissions.AddRange (await permissionProvider.Get ());
             }
@@ -62,7 +65,31 @@ namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule {
             superAdministratorRole.Permissions.AddRange (selfModule.Permissions.Where (mp => superAdministratorRole.Permissions.All (mrp => mrp.Permission.Code != mp.Code)).Select (mp => new ModuleRolePermission { Permission = mp }));
             await CoreDbContext.SaveChangesAsync ();
 
+            await AddAdministratorUserProfile();
+
             return Unit.Value;
+        }
+
+        private async Task AddAdministratorUserProfile()
+        {
+            if (!CoreDbContext.UserProfileModuleRoles.Any())
+            {
+                var userProfileModuleRoles = new UserProfileModuleRole
+                {
+                    UserProfile = new UserProfile(),
+                    ModuleRoleId = 1
+                };
+
+
+                userProfileModuleRoles.UserProfile.Name = "Administrator";
+                userProfileModuleRoles.UserProfile.LastName = "Platforma";
+                userProfileModuleRoles.UserProfile.IsActive = true;
+                userProfileModuleRoles.UserProfile.RequiresDataEntry = true;
+                userProfileModuleRoles.UserProfile.Identities.Add(new UserProfileIdentity { Identificator = UserManagementDbContext.Users.First().Id, Type = "local" });
+
+                CoreDbContext.UserProfileModuleRoles.Add(userProfileModuleRoles);
+                await CoreDbContext.SaveChangesAsync();
+            }
         }
     }
 }

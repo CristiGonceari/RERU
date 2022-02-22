@@ -1,0 +1,52 @@
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="card card-custom mb-7 ml-5">
+        <div class="card-header flex-wrap border-0 py-5">
+            <div class="card-title font-weight-bolder">{{'categories.overview' | translate}}</div>
+        </div>
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+        <div *ngIf="!isLoading" class="card-body">
+            <div class="form-group row align-items-center mb-2">
+                <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                    {{'tests.mode' | translate}}:</label>
+                <div class="col-lg-9 col-xl-6">
+                    <p class="font-size-lg m-0">{{'statuses.' + testEnum[testTemplate.mode] | translate}}</p>
+                </div>
+            </div>
+            <div class="form-group row align-items-center mb-2">
+                <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                    {{'tests.name' | translate}}:</label>
+                <div class="col-lg-9 col-xl-6">
+                    <p class="font-size-lg m-0">{{testTemplate.name}}</p>
+                </div>
+            </div>
+            <div class="form-group row align-items-center mb-2">
+                <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                    {{'tests.questions' | translate}}:</label>
+                <div class="col-lg-9 col-xl-6">
+                    <p class="font-size-lg m-0">{{testTemplate.questionCount}}</p>
+                </div>
+            </div>
+            <div class="form-group row align-items-center mb-2" *ngIf="testTemplate.mode == 0">
+                <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                    {{'tests.time' | translate}}:</label>
+                <div class="col-lg-9 col-xl-6">
+                    <p class="font-size-lg m-0">{{testTemplate.duration}} min</p>
+                </div>
+            </div>
+            <div class="form-group row align-items-center mb-2" *ngIf="testTemplate.mode == 0">
+                <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                    {{'tests.min-percentage' | translate}}:</label>
+                <div class="col-lg-9 col-xl-6">
+                    <p class="font-size-lg m-0">{{testTemplate.minPercent}} %</p>
+                </div>
+            </div>
+            <div class="form-group row align-items-center mb-2">
+                <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                    {{'tests.status' | translate}}:</label>
+                <div class="col-lg-9 col-xl-6">
+                    <p class="font-size-lg m-0">{{'statuses.' + status | translate}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

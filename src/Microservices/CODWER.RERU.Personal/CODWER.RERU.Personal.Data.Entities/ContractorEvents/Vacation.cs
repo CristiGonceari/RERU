@@ -1,7 +1,6 @@
-﻿using System;
-using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Entities.Files;
+﻿using CODWER.RERU.Personal.Data.Entities.Enums;
 using CVU.ERP.Common.Data.Entities;
+using System;
 
 namespace CODWER.RERU.Personal.Data.Entities.ContractorEvents
 {
@@ -19,12 +18,9 @@ namespace CODWER.RERU.Personal.Data.Entities.ContractorEvents
 
         public VacationType VacationType { get; set; }
 
-        public int? VacationRequestId { get; set; }
-        public ByteArrayFile VacationRequest { get; set; }
+        public string VacationRequestId { get; set; }
 
-        public int? VacationOrderId { get; set; }
-        public ByteArrayFile VacationOrder { get; set; }
-
+        public string VacationOrderId { get; set; }
 
         //specific fields
         public string Institution { get; set; } // for study type

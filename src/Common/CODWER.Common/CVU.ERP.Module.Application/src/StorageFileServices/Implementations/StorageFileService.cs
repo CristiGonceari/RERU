@@ -163,6 +163,13 @@ namespace CVU.ERP.Module.Application.StorageFileServices.Implementations
             return list;
         }
 
+        public async Task<string> GetFileName(string fileId)
+        {
+            var name = _appDbContext.Files.FirstOrDefault(x => x.Id.ToString() == fileId).FileName;
+            
+            return name;
+        }
+
         private async Task FileUpload(string bucketName, string objectName, byte[] ms)
         {
             try

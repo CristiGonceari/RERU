@@ -55,9 +55,9 @@ export class AddComponent implements OnInit {
     this.getListOfKeys();
   }
  
-  addWordButtonToCkEditor(cuvint){
+  addWordButtonToCkEditor(word){
     this.isAdded = true;
-    this.wordButton = cuvint;
+    this.wordButton = word;
     
   }
   public ckEditorFocusCursor(event) : void {

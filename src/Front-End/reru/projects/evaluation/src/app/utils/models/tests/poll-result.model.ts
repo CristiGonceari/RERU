@@ -2,7 +2,7 @@ import { PollQuestion } from "./poll-question.model";
 
 export class PollResult {
     id: number;
-    testTypeName: string;
+    testTemplateName: string;
     eventName: string;
     totalInvited?: number;
     totalVotedCount: number;

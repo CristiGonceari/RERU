@@ -28,11 +28,11 @@ namespace CODWER.RERU.Core.Application.Validators.IDNP
                 return;
             }
 
-            if (value.ElementAt(0) != '0' && value.ElementAt(0) != '2')
-            {
-                context.AddFail(ValidationCodes.VALIDATION_IDNP_SHOULD_BE_ONLY_DIGITS, MessageCodes.INVALID_INPUT);
-                return;
-            }
+            //if (value.ElementAt(0) != '0' && value.ElementAt(0) != '2')
+            //{
+            //    context.AddFail(ValidationCodes.VALIDATION_IDNP_SHOULD_BE_ONLY_DIGITS, MessageCodes.INVALID_INPUT);
+            //    return;
+            //}
 
             if (value == "0000000000000")
             {

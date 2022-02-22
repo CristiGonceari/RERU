@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{translateData[0]}}: <b> {{tableData.tableName}} </b> </h3>
+</div>
+<div class="modal-body px-10">
+  <h3 class="text-center my-5"> {{translateData[1]}} </h3>
+  <h5 class="text-center my-5" *ngIf="tableData.name">{{translateData[2]}}: "{{tableData.name}}" </h5>
+
+  <div class="d-flex justify-content-center flex-wrap">
+    <div *ngFor="let item of tableData.fields" class="d-flex h-30px label label-light-secondary label-inline m-1">
+      <input type="checkbox" id="{{ item.value }}" class="hidden" [checked]="true"
+        value="{{ item.value }}" (change)="onItemChange($event, item)" />
+      <label class="mb-0 d-flex cursor-pointer font-size-lg" for="{{ item.value }}">
+        {{ item.label }}
+        <span> &#10003; </span>
+      </label>
+    </div>
+  </div>
+
+  <div class="my-10 d-flex justify-content-center" [class.disabled]="!selectedFields.length">
+    <div class="mx-7 cursor-pointer">
+      <i (click)="setOrientation(1)"
+        class="far fa-file-pdf mx-3 px-7 py-10 border rounded portrait"
+        style="font-size: 5rem !important;"
+      ></i>
+    </div>
+    <div class="mx-7 cursor-pointer">
+      <i (click)="setOrientation(2)"
+        class="far fa-file-pdf mx-3 px-7 py-10 border rounded landscape"
+        style="transform: rotate(90deg) translateX(2px); font-size: 5rem !important;"
+      ></i>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="dismiss()">{{translateData[3]}}</button>
+</div>

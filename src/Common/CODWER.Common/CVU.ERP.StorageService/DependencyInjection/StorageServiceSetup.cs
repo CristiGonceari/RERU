@@ -10,9 +10,8 @@ namespace CVU.ERP.StorageService.DependencyInjection
     {
         public static IServiceCollection AddCommonStorageContext(this IServiceCollection services, IConfiguration configuration)
         {
-
             services.AddDbContext<StorageDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Storage"),
+                options.UseNpgsql(configuration.GetConnectionString("Storage"),
                     b => b.MigrationsAssembly(typeof(StorageDbContext).GetTypeInfo().Assembly.GetName().Name)));
 
             return services;

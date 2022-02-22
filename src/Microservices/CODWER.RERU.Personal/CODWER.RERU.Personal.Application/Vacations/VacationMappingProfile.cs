@@ -15,9 +15,7 @@ namespace CODWER.RERU.Personal.Application.Vacations
                 .ForMember(x => x.CountDays, opts => opts.Ignore())
                 .ForMember(x => x.Contractor, opts => opts.Ignore())
                 .ForMember(x => x.VacationRequestId, opts => opts.Ignore())
-                .ForMember(x => x.VacationRequest, opts => opts.Ignore())
                 .ForMember(x => x.VacationOrderId, opts => opts.Ignore())
-                .ForMember(x => x.VacationOrder, opts => opts.Ignore())
                 .ForMember(x => x.Status, opts => opts.MapFrom(op => StageStatusEnum.New))
             ;
 
@@ -26,8 +24,6 @@ namespace CODWER.RERU.Personal.Application.Vacations
                 .ForMember(x => x.ContractorName, opts => opts.MapFrom(op => op.Contractor.GetFullName()))
                 .ForMember(x => x.VacationTypeName, opts => opts.MapFrom(op => op.VacationType))
                 .ForMember(x => x.VacationTypeId, opts => opts.MapFrom(op => op.VacationType))
-                .ForMember(x => x.VacationRequestName, opts => opts.MapFrom(op => op.VacationRequest.FileName))
-                .ForMember(x => x.VacationOrderName,opts => opts.MapFrom(op => op.VacationOrder.FileName))
                 ;
         }
     }

@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { EventService } from 'projects/evaluation/src/app/utils/services/event/event.service';
-import { TestTypeService } from 'projects/evaluation/src/app/utils/services/test-type/test-type.service';
+import { TestTemplateService } from 'projects/evaluation/src/app/utils/services/test-template/test-template.service';
 import { LocationService } from 'projects/evaluation/src/app/utils/services/location/location.service';
 import { UserProfileService } from 'projects/evaluation/src/app/utils/services/user-profile/user-profile.service';
+import { EventTestTemplateService } from 'projects/evaluation/src/app/utils/services/event-test-template/event-test-template.service';
 
 @Component({
   selector: 'app-search',
@@ -15,7 +16,7 @@ export class SearchComponent implements OnInit {
 
   @Input() searchLocations: boolean;
   @Input() searchEvaluators: boolean;
-  @Input() searchTestType: boolean;
+  @Input() searchTestTemplate: boolean;
   @Input() searchPerson: boolean;
   @Input() searchUser: boolean;
 
@@ -26,9 +27,10 @@ export class SearchComponent implements OnInit {
 
   constructor(private locationService: LocationService,
     private eventService: EventService,
+    private eventTestTemplateService: EventTestTemplateService,
     private activatedRoute: ActivatedRoute,
     private userService: UserProfileService,
-    private testService: TestTypeService,) { }
+    private testService: TestTemplateService,) { }
 
   ngOnInit() {
     this.getList();
@@ -47,9 +49,9 @@ export class SearchComponent implements OnInit {
         this.getTitle(res.data.evaluatorId);
       }
 
-      if (this.searchTestType == false) {
-        this.form.setValue(res.data.testTypeId)
-        this.getTitle(res.data.testTypeId);
+      if (this.searchTestTemplate == false) {
+        this.form.setValue(res.data.testTemplateId)
+        this.getTitle(res.data.testTemplateId);
       }
 
       if (this.searchPerson == false) {
@@ -83,11 +85,11 @@ export class SearchComponent implements OnInit {
           this.userService.getUserProfilesByEvaluatorEvent({ keyword: term, eventId: this.eventId }).subscribe(data => this.list = data.data);
       }
 
-      if (this.searchTestType == false) {
+      if (this.searchTestTemplate == false) {
         if (!term)
-          this.testService.getTestTypeByEvent({ eventId: this.eventId }).subscribe(data => this.list = data.data);
+          this.eventTestTemplateService.getTestTemplateByEvent({ eventId: this.eventId }).subscribe(data => this.list = data.data);
         else if (term != '')
-          this.testService.getTestTypeByEvent({ keyword: term, eventId: this.eventId }).subscribe(data => this.list = data.data);
+          this.eventTestTemplateService.getTestTemplateByEvent({ keyword: term, eventId: this.eventId }).subscribe(data => this.list = data.data);
       }
 
       if (this.searchPerson == false) {
@@ -115,7 +117,7 @@ export class SearchComponent implements OnInit {
       return this.list.find(u => u.id === id).name + ", " + this.list.find(u => u.id === id).address;
     }
 
-    if (this.searchTestType == false && id) {
+    if (this.searchTestTemplate == false && id) {
       return this.list.find(u => u.id === id).name;
     }
 

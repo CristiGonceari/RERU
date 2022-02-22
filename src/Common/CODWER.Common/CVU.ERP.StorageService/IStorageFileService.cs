@@ -14,5 +14,6 @@ namespace CVU.ERP.StorageService
         public Task<Unit> RemoveFile(string fileId);
         public Task<FileDataDto> GetFile(string fileId);
         public Task<List<File>> GetDemoList();
+        public Task<string> GetFileName(string fileId);
     }
 }

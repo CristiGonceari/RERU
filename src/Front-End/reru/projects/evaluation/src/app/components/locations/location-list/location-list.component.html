@@ -9,9 +9,13 @@
 					<div class="card card-custom gutter-b">
 						<div class="card-header flex-wrap border-0 py-5">
 							<div class="card-title">
-								<h3 class="card-label">{{'locations.locations' | translate}} </h3>
+								<h3 class="card-label" id="title">{{'locations.locations' | translate}}</h3>
 							</div>
 							<div class="card-toolbar">
+								<app-confirm-button class="btn mr-3" (click)="locationsTable.getHeaders(title)">
+									<i class="far fa-file-pdf text-white"></i>
+									{{'button.print' | translate}}
+								</app-confirm-button>
 								<app-add-button class="btn" [value]="'locations.add-location' | translate" [routerLink]="['add-location']"></app-add-button>
 							</div>
 						</div>
@@ -27,4 +31,3 @@
 		</div>
 	</div>
 </div>
-

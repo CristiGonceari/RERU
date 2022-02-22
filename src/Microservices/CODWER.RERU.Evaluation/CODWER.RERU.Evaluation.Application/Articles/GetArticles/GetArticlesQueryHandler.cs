@@ -3,8 +3,6 @@ using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Articles;
 using CVU.ERP.Common.Pagination;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,12 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.Articles.GetArticles
 
         public async Task<PaginatedModel<ArticleDto>> Handle(GetArticlesQuery request, CancellationToken cancellationToken)
         {
-            var articles = _appDbContext.Articles.AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(request.Name))
-            {
-                articles = articles.Where(x => x.Name.Contains(request.Name));
-            }
+            var articles = GetAndFilterArticles.Filter(_appDbContext, request.Name);
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Article, ArticleDto>(articles, request);
 

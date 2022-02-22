@@ -29,4 +29,11 @@ export class ArticlesService extends AbstractService {
 	create(data: ArticleModel): Observable<ArticleModel> {
 		return this.client.post<ArticleModel>(`${this.baseUrl}/${this.urlRoute}`, data);
 	}
+
+	print(data): Observable<any> {
+		return this.client.put(`${this.baseUrl}/${this.urlRoute}/print`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }

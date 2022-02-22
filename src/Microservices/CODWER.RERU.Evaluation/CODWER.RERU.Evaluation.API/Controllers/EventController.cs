@@ -15,7 +15,10 @@ using CODWER.RERU.Evaluation.Application.Events.GetMyEventsCount;
 using System.Collections.Generic;
 using CODWER.RERU.Evaluation.Application.Events.GetUserEvents;
 using CODWER.RERU.Evaluation.Application.Events.PrintEvents;
+using CODWER.RERU.Evaluation.Application.Events.PrintUserEvents;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
+using CODWER.RERU.Evaluation.Application.Events.GetEventsByDate;
+using CODWER.RERU.Evaluation.Application.Events.GetEventCount;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -32,6 +35,18 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpGet]
         public async Task<PaginatedModel<EventDto>> GetEvents([FromQuery] GetEventsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("by-Date")]
+        public async Task<PaginatedModel<EventDto>> GetEventsByDate([FromQuery] GetEventsByDateQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("eventCount")]
+        public async Task<List<EventCount>> GetEventCount([FromQuery] GetEventCountQuery query)
         {
             return await Mediator.Send(query);
         }
@@ -79,9 +94,20 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
-        [HttpPut("print")]
+        [HttpPut("print-events")]
         [IgnoreResponseWrap]
         public async Task<IActionResult> PrintEventsPdf([FromBody] PrintEventsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-user-events")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintUserEventsPdf([FromBody] PrintUserEventsCommand command)
         {
             var result = await Mediator.Send(command);
 

@@ -21,7 +21,7 @@
         <tbody class="datatable-body" *ngIf="tests.length">
             <tr *ngFor="let test of tests">
                 <td>
-                    <span class="d-block mb-0"> {{ test.programmedTime | date:'dd.MM.yyyy'}} </span>
+                    <span class="d-block mb-0"> {{ test.programmedTime | date: 'dd/MM/yyyy, HH:mm'}} </span>
                     <div>
                         <span class="text-dark-50" *ngIf="test.testStatus == enum.AlowedToStart">
                             {{'statuses.AlowedToStart' | translate}}
@@ -43,7 +43,7 @@
                         </span>
                     </div>
                 </td>
-                <td> {{ test.testTypeName }} </td>
+                <td> {{ test.testTemplateName }} </td>
                 <td>
                     <span *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</span>
                     <span *ngIf="test.result != resultEnum.NoResult">{{ test.accumulatedPercentage }}% / {{test.minPercent}}%</span>

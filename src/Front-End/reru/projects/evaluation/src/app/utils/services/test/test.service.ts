@@ -106,4 +106,16 @@ export class TestService extends AbstractService {
 	getUserEvaluatedTests(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-evaluated-tests`, { params });
 	}
+
+	getMyEvaluatedTests(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-tests-evaluated`, { params });
+	}
+
+	getMyEvaluatedTestsCount(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-evaluated-tests-count`, { params });
+	}
+
+	getMyEvaluatedTestsByDate(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-tests-evaluated-by-date`, { params });
+	}
 }

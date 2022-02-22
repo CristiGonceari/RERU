@@ -24,11 +24,11 @@ import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18
 })
 export class TestListTableComponent implements OnInit {
   pagination: PaginationModel = new PaginationModel();
-  testTypeName = [];
+  testTemplateName = [];
   testToSearch;
   userName;
-  testTypeId: number;
-  testType = [];
+  testTemplateId: number;
+  testTemplate = [];
   pager: number[] = [];
   statusList = [];
   resultStatusList = [];
@@ -100,7 +100,7 @@ export class TestListTableComponent implements OnInit {
     this.isLoading = true;
 
     let params = {
-      testTypeName: this.testToSearch || '',
+      testTemplateName: this.testToSearch || '',
       locationKeyword: this.locationName || '',
       idnp: this.idnp || '',
       eventName: this.eventName || '',
@@ -114,9 +114,9 @@ export class TestListTableComponent implements OnInit {
 
     this.testService.getTests(params).subscribe(res => {
       if (res && res.data) {
-        this.testType = res.data.items;
+        this.testTemplate = res.data.items;
         this.verificationProgress = res.data.items.map(el => el.verificationProgress);
-        this.testTypeName = res.data.items.map(it => it.testTypeName);
+        this.testTemplateName = res.data.items.map(it => it.testTemplateName);
         this.score = res.data.items.map(s => s.score);
         this.pagination = res.data.pagedSummary;
         this.searchFrom = '';

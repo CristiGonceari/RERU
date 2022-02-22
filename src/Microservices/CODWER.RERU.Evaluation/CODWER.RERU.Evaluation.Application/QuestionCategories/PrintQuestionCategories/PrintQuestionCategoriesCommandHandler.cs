@@ -4,8 +4,6 @@ using CODWER.RERU.Evaluation.DataTransferObjects.QuestionCategory;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.TablePrinterService;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,15 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionCategories.PrintQuestionCat
 
         public async Task<FileDataDto> Handle(PrintQuestionCategoriesCommand request, CancellationToken cancellationToken)
         {
-            var categories = _appDbContext.QuestionCategories
-                .Include(x => x.QuestionUnits)
-                .OrderByDescending(x => x.CreateDate)
-                .AsQueryable();
-
-            if (request != null && !string.IsNullOrEmpty(request.Name))
-            {
-                categories = categories.Where(x => x.Name.Contains(request.Name));
-            }
+            var categories = GetAndFilterQuestionCategories.Filter(_appDbContext, request.Name);
 
             var result = _printer.PrintTable(new TableData<QuestionCategory>
             { 

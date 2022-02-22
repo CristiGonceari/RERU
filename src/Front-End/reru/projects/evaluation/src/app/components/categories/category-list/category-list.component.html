@@ -9,11 +9,16 @@
 					<div class="card card-custom gutter-b">
 						<div class="card-header flex-wrap border-0 py-5">
 							<div class="card-title">
-								<h3 class="card-label">{{'categories.title' | translate}}</h3>
+								<h3 class="card-label" id="title">{{'categories.title' | translate}}</h3>
 							</div>
 							<div class="card-toolbar">
+								<app-confirm-button class="btn mr-3" (click)="categoriesTable.getHeaders(title)">
+									<i class="far fa-file-pdf text-white"></i>
+									{{'button.print' | translate}}
+								</app-confirm-button>
 								<app-add-button class="btn" [routerLink]="['add-category']" 
-									[value]="'categories.new-category' | translate"></app-add-button>
+									[value]="'categories.new-category' | translate">
+								</app-add-button>
 							</div>
 						</div>
 						<div class="card-header border-0 pt-0 pb-0 mt-3" style="min-height: 100%;">

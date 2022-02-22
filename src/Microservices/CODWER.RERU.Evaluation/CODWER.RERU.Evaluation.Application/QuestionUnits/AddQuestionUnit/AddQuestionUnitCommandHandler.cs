@@ -61,7 +61,10 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit
                 await _questionUnitService.HashQuestionUnit(newQuestionUnit.Id);
             }
 
-            await _mediator.Send(new AssignTagToQuestionUnitCommand { QuestionUnitId = newQuestionUnit.Id, Tags = request.Tags });
+            if (request.Tags != null)
+            {
+                await _mediator.Send(new AssignTagToQuestionUnitCommand { QuestionUnitId = newQuestionUnit.Id, Tags = request.Tags });
+            }
 
             return newQuestionUnit.Id;
         }

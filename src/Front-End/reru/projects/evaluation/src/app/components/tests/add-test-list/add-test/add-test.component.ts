@@ -3,9 +3,9 @@ import { NotificationsService } from 'angular2-notifications';
 import { Location } from '@angular/common';
 import { SelectItem } from 'projects/evaluation/src/app/utils/models/select-item.model';
 import { ReferenceService } from 'projects/evaluation/src/app/utils/services/reference/reference.service';
-import { TestTypeService } from 'projects/evaluation/src/app/utils/services/test-type/test-type.service';
+import { TestTemplateService } from 'projects/evaluation/src/app/utils/services/test-template/test-template.service';
 import { TestService } from 'projects/evaluation/src/app/utils/services/test/test.service';
-import { TestTypeStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-type-status.enum';
+import { TestTemplateStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-template-status.enum';
 import { TestStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-status.enum';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { AddEditTest } from '../../../../utils/models/tests/add-edit-test.model';
@@ -29,7 +29,7 @@ export class AddTestComponent implements OnInit {
   usersList: any;
   eventsList: any;
   selectActiveTests: any;
-  testTypeEvaluator: any;
+  testTemplateEvaluator: any;
   eventEvaluator: any;
 
   title: string;
@@ -41,11 +41,11 @@ export class AddTestComponent implements OnInit {
 
   user = new SelectItem();
   event = new SelectItem();
-  testType = new SelectItem();
+  testTemplate = new SelectItem();
   evaluator = new SelectItem();
   
   showName: boolean = false;
-  isTestTypeOneAnswer: boolean = false;
+  isTestTemplateOneAnswer: boolean = false;
   printTest: boolean = true;
   needEvaluator: boolean = false;
   hasEventEvaluator: boolean = false;
@@ -58,10 +58,9 @@ export class AddTestComponent implements OnInit {
   
   myControl = new FormControl();
 
-
   constructor(
     private referenceService: ReferenceService,
-    private testTypeService: TestTypeService,
+    private testTemplateService: TestTemplateService,
     private testService: TestService,
 	  public translate: I18nService,
     private location: Location,
@@ -74,26 +73,29 @@ export class AddTestComponent implements OnInit {
     this.getEvents();
     this.getEvaluators();
   }
- 
 
   getUsers() {
     this.referenceService.getUsers({name: this.key, eventId: this.event.value }).subscribe(res => {
-      this.usersList = res.data
+      let initialArray = res.data.map(el => el.value);
+      this.usersList = res.data;
+      for( let i=0; i<initialArray.length; i++ ) {
+        if (this.displayUserNames.map(el => el.value).includes(initialArray[i]))
+          this.updateUserList(initialArray[i]);
+      }
     });
   }
 
   getEvents() {
     this.referenceService.getEvents().subscribe(res => {
-      this.eventsList = res.data
-      this.getActiveTestType();
+      this.eventsList = res.data;
+      this.getActiveTestTemplate();
     });
   }
 
   getEvaluators() {
     if (this.needEvaluator === false && this.hasEventEvaluator === false) {
       this.referenceService.getUsers({ eventId: this.event.value }).subscribe(res => { this.evaluatorList = res.data });
-    }
-    else {
+    } else {
       this.evaluatorList = [];
       this.evaluator.value = null;
     };
@@ -106,54 +108,61 @@ export class AddTestComponent implements OnInit {
     }
   }
 
-  getActiveTestType() {
+  getActiveTestTemplate() {
     let params = {
-      testTypeStatus: TestTypeStatusEnum.Active,
+      testTemplateStatus: TestTemplateStatusEnum.Active,
       eventId: this.event.value
     }
 
-    this.testTypeService.getTestTypeByStatus(params).subscribe((res) => {
-      this.selectActiveTests = res.data
+    this.testTemplateService.getTestTemplateByStatus(params).subscribe((res) => {
+      this.selectActiveTests = res.data;
     })
     this.getUsers();
   }
 
-  checkIfIsOneAnswer($event) {
-    this.isTestTypeOneAnswer = this.selectActiveTests.find(x => x.testTypeId === $event).isOnlyOneAnswer;
-    this.printTest = this.selectActiveTests.find(x => x.testTypeId === $event).printTest;
+  checkIfIsOneAnswer(event) {
+    if (event) {
+      this.isTestTemplateOneAnswer = this.selectActiveTests.find(x => x.testTemplateId === event).isOnlyOneAnswer;
+      this.printTest = this.selectActiveTests.find(x => x.testTemplateId === event).printTest;
+    } else this.isTestTemplateOneAnswer = false;
     
-    if(!this.printTest) 
+    if (!this.printTest) 
       this.messageText = "Acest test poate conține video sau audio!"
 
-    if(this.isTestTypeOneAnswer){
+    if (this.isTestTemplateOneAnswer) {
       this.evaluator.value = null;
     }
   }
 
-  checkIfEventHasEvaluator($event) {
-    this.hasEventEvaluator = this.eventsList.find(x => x.eventId === $event).isEventEvaluator
+  checkIfEventHasEvaluator(event) {
+    this.hasEventEvaluator = this.eventsList.find(x => x.eventId === event).isEventEvaluator;
   }
- 
-  deleteFromList(index: any){
-    var deleteElement = this.displayUserNames[index];
-    var indexOfIdToDelete = this.userListToAdd.findIndex(x => x == deleteElement.value);
 
+  deleteFromList(user, index) {
+    let indexOfIdToDelete = this.userListToAdd.findIndex(x => x == this.displayUserNames[index].value);
     this.displayUserNames.splice(index, 1);
     this.userListToAdd.splice(indexOfIdToDelete, 1);
+    this.usersList.push( new AssignedUsers(user.value, user.label));
   }
 
-  addUserToList(id: number, name: string){
-    if(!this.userListToAdd.includes(+id)){
-      this.displayUserNames.push(
-        new AssignedUsers(id, name)
-      );
-      this.userListToAdd.push(+id);
-    }
+  updateUserList(id?: number): void {
+    let indexToDelete = this.usersList.map(el => el.value).findIndex(x => x == id);
+    this.usersList.splice(indexToDelete, 1);
+    this.key = '';
     this.autoCompleteElement.openPanel();
   }
 
-  sortByName(){
-    if(!this.isListOrderedAsc){
+  addUserToList(id: number, name: string) {
+    if(!this.userListToAdd.includes(+id))
+    this.displayUserNames.push(
+      new AssignedUsers(id, name)
+    );
+    this.userListToAdd.push(+id);
+    this.updateUserList(id);
+  }
+
+  sortByName() {
+    if(!this.isListOrderedAsc) {
       this.displayUserNames.sort( (a,b)=> a.label > b.label ? 1:-1 );
       this.isListOrderedAsc = true;
     } else {
@@ -162,22 +171,21 @@ export class AddTestComponent implements OnInit {
     }
   }
 
-
   parse() {
     this.setTimeToSearch();
     return  new AddEditTest({
-        userProfileId: this.userListToAdd,
-        programmedTime: this.search,
-        eventId: +this.event.value || null,
-        evaluatorId: +this.evaluator.value || null,
-        testStatus: TestStatusEnum.Programmed,
-        testTypeId: +this.testType.value || 0,
-        showUserName: this.showName
-      })
+      userProfileId: this.userListToAdd,
+      programmedTime: this.search,
+      eventId: +this.event.value || null,
+      evaluatorId: +this.evaluator.value || null,
+      testStatus: TestStatusEnum.Programmed,
+      testTemplateId: +this.testTemplate.value || 0,
+      showUserName: this.showName
+    })
   }
 
   createTest() {
-    this.testService.createTest(this.parse()).subscribe((res) => {
+    this.testService.createTest(this.parse()).subscribe(() => {
       forkJoin([
 				this.translate.get('modal.success'),
 				this.translate.get('tests.tests-were-programmed'),
@@ -199,7 +207,7 @@ export class AddTestComponent implements OnInit {
 				this.title = title;
 				this.description = description;
 				});
-      this.performingTestPdf(res.data)
+      this.performingTestPdf(res.data);
       this.backClicked();
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });

@@ -1,5 +1,4 @@
-﻿using CODWER.RERU.Evaluation.Application.Plans.GetCountedPlans;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
+﻿using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Plans;
 using MediatR;
 using System.Collections.Generic;
@@ -22,15 +21,19 @@ namespace CODWER.RERU.Evaluation.Application.Plans.GetPlanCount
         public async Task<List<PlanCount>> Handle(GetPlanCountQuery request, CancellationToken cancellationToken)
         {
 
-            var plans =  _appDbContext.Plans.Where(p => p.FromDate.Date >= request.FromDate.Date && p.TillDate.Date <= request.TillDate ||
-                                                    (request.FromDate.Date <= p.FromDate.Date && p.FromDate.Date <= request.TillDate.Date) && (request.FromDate.Date <= p.TillDate.Date && p.TillDate.Date >= request.TillDate.Date) ||
-                                                    (request.FromDate.Date >= p.FromDate.Date && p.FromDate.Date <= request.TillDate.Date) && ( request.FromDate.Date <= p.TillDate.Date && p.TillDate.Date <= request.TillDate.Date)).AsQueryable();
+            var plans =  _appDbContext.Plans
+                .Where(p => p.FromDate.Date >= request.FromDate.Date && p.TillDate.Date <= request.TillDate || 
+                            (request.FromDate.Date <= p.FromDate.Date && p.FromDate.Date <= request.TillDate.Date) && 
+                            (request.FromDate.Date <= p.TillDate.Date && p.TillDate.Date >= request.TillDate.Date) ||
+                            (request.FromDate.Date >= p.FromDate.Date && p.FromDate.Date <= request.TillDate.Date) && 
+                            ( request.FromDate.Date <= p.TillDate.Date && p.TillDate.Date <= request.TillDate.Date))
+                .AsQueryable();
 
             var dates = new List<PlanCount>();
             
             for (var dt = request.FromDate.Date; dt <= request.TillDate.Date; dt = dt.AddDays(1))
             {
-                var count = plans.Where(p => p.FromDate.Date <= dt.Date && dt.Date <= p.TillDate.Date).Count();
+                var count = plans.Count(p => p.FromDate.Date <= dt.Date && dt.Date <= p.TillDate.Date);
 
                 var planCount = new PlanCount()
                 {
@@ -43,7 +46,6 @@ namespace CODWER.RERU.Evaluation.Application.Plans.GetPlanCount
             }
 
             return dates;
-            
         }
 
     }

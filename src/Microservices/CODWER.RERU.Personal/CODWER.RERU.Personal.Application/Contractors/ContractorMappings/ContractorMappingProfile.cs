@@ -1,15 +1,15 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Entities.Files;
 using CODWER.RERU.Personal.Data.Entities.StaticExtensions;
 using CODWER.RERU.Personal.DataTransferObjects.Avatars;
 using CODWER.RERU.Personal.DataTransferObjects.Contractors;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using Microsoft.AspNetCore.Http;
+using System;
+using System.IO;
+using System.Linq;
+using File = CVU.ERP.StorageService.Entities.File;
 
 namespace CODWER.RERU.Personal.Application.Contractors.ContractorMappings
 {
@@ -47,19 +47,17 @@ namespace CODWER.RERU.Personal.Application.Contractors.ContractorMappings
                 .ForMember(x => x.EmployerState, opts => opts.ConvertUsing(new EmployerStateConverter(), op => op))
 
                 .ForMember(x => x.HasUserProfile, opts => opts.MapFrom(op => op.UserProfile != null))
-                .ForMember(x => x.HasEmploymentRequest, opts => opts.MapFrom(op => op.ByteArrayFiles.Any(x => x.Type == FileTypeEnum.Request)))
                 .ForMember(x => x.HasAvatar, opts => opts.MapFrom(op => op.Avatar.AvatarBase64.Any()))
                 .ForMember(x => x.HasBulletin, opts => opts.MapFrom(op => op.Bulletin != null))
                 .ForMember(x => x.HasStudies, opts => opts.MapFrom(op => op.Studies.Any()))
-                .ForMember(x => x.HasIdentityDocuments, opts => opts.MapFrom(op => op.ByteArrayFiles.Any(x => x.Type == FileTypeEnum.Identity)))
                 .ForMember(x => x.HasPositions, opts => opts.MapFrom(op => op.Positions.Any()))
                 .ForMember(x => x.HasCim, opts => opts.MapFrom(op => op.Contracts.Any()));
 
             CreateMap<ContractorAvatar, ContractorAvatarDetailsDto>();
                 
-            //.ForMember(x => x.Files, opts => opts.MapFrom(op => op.ByteArrayFiles.Where(x=>x.Type == FileTypeEnum.Identity).ToList()));
+            //.ForMember(x => x.ContractorFiles, opts => opts.MapFrom(op => op.ByteArrayFiles.Where(x=>x.FileType == FileTypeEnum.Identity).ToList()));
 
-            CreateMap<ByteArrayFile, FileNameDto>()
+            CreateMap<File, FileNameDto>()
                 .ForMember(x => x.Id, opts => opts.MapFrom(op => op.Id))
                 .ForMember(x => x.Name, opts => opts.MapFrom(op => $"{op.FileName}"));
 

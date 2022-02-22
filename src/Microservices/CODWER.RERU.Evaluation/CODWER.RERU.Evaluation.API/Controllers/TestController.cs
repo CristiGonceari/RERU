@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.API.Config;
+﻿using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.Tests.AddMyPoll;
 using CODWER.RERU.Evaluation.Application.Tests.AddTests;
 using CODWER.RERU.Evaluation.Application.Tests.DeleteTest;
@@ -11,22 +7,33 @@ using CODWER.RERU.Evaluation.Application.Tests.ExportTests;
 using CODWER.RERU.Evaluation.Application.Tests.FinalizeTest;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyPollsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsByEvent;
+using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent;
+using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent;
+using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEventByDate;
 using CODWER.RERU.Evaluation.Application.Tests.GetPollResult;
 using CODWER.RERU.Evaluation.Application.Tests.GetTest;
 using CODWER.RERU.Evaluation.Application.Tests.GetTests;
+using CODWER.RERU.Evaluation.Application.Tests.PrintTests;
 using CODWER.RERU.Evaluation.Application.Tests.SetConfirmationToStartTest;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluatedTests;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPollsByEvent;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTests;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTestsByEvent;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserEvaluatedTests;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPollsByEvent;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTests;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTestsByEvent;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Common.Pagination;
-using MediatR;
-using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEventByDate;
-using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent;
-using CODWER.RERU.Evaluation.Application.Tests.GetUserEvaluatedTests;
-using CODWER.RERU.Evaluation.Application.Tests.GetUserPollsByEvent;
-using CODWER.RERU.Evaluation.Application.Tests.GetUserTests;
-using CODWER.RERU.Evaluation.Application.Tests.GetUserTestsByEvent;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
-using CODWER.RERU.Evaluation.Application.Tests.PrintTests;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.CountMyEvaluatedTests;
+using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.GetMyEvaluatedTestsByDate;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -68,6 +75,24 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpGet("my-tests-by-event")]
         public async Task<PaginatedModel<TestDto>> GetMyTestsByEvent([FromQuery] GetMyTestsByEventQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("my-evaluated-tests-count")]
+        public async Task<List<TestCount>> GetMyEvaluatedTestsCount([FromQuery] CountMyEvaluatedTestsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("my-tests-evaluated")]
+        public async Task<PaginatedModel<TestDto>> GetMyEvaluatedTests([FromQuery] GetMyEvaluatedTestsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("my-tests-evaluated-by-date")]
+        public async Task<PaginatedModel<TestDto>> GetMyEvaluatedTestsByDate([FromQuery] GetMyEvaluatedTestsByDateQuery query)
         {
             return await Mediator.Send(query);
         }
@@ -150,12 +175,58 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             byte[] answerBytes = await Mediator.Send(new ExportTestsQuery()) as byte[];
 
             var timeStamp = DateTime.Now;
-            return File(answerBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"AllTests_{timeStamp.Year}-{timeStamp.Month.ToString("00")}-{timeStamp.Day.ToString("00")}.xlsx");
+            return File(answerBytes, 
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", 
+                $"AllTests_{timeStamp.Year}-{timeStamp.Month.ToString("00")}-{timeStamp.Day.ToString("00")}.xlsx");
         }
 
         [HttpPut("print-tests")]
         [IgnoreResponseWrap]
-        public async Task<IActionResult> PrintUserTestsPdf([FromBody] PrintTestsCommand command)
+        public async Task<IActionResult> PrintTestsPdf([FromBody] PrintTestsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-user-tests")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintUserTestsPdf([FromBody] PrintUserTestsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-user-evaluated-tests")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintUserEvaluatedTestsPdf([FromBody] PrintUserEvaluatedTestsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-user-tests-by-event")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintUserTestsByEventPdf([FromBody] PrintUserTestsByEventCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-user-polls")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintUserPollsByEventPdf([FromBody] PrintUserPollsByEventCommand command)
         {
             var result = await Mediator.Send(command);
 

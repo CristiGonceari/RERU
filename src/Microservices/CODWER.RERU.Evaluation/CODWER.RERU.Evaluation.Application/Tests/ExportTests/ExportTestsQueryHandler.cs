@@ -21,7 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.ExportTests
         public async Task<byte[]> Handle(ExportTestsQuery request, CancellationToken cancellationToken)
         {
             var tests = await _appDbContext.Tests
-                .Include(x => x.TestType)
+                .Include(x => x.TestTemplate)
                 .Include(x => x.TestQuestions)
                 .Include(x => x.UserProfile)
                 .ToListAsync();
@@ -61,7 +61,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.ExportTests
                     ws.Cells[i, 2].Value = test.UserProfile.LastName;
                     ws.Cells[i, 3].Value = test.UserProfile.FirstName;
                     ws.Cells[i, 4].Value = test.UserProfile.Patronymic;
-                    ws.Cells[i, 5].Value = test.TestType.Name;
+                    ws.Cells[i, 5].Value = test.TestTemplate.Name;
                     ws.Cells[i, 6].Value = $"{test.ProgrammedTime.Hour}:{test.ProgrammedTime.Minute} {test.ProgrammedTime.Day.ToString("00")}.{test.ProgrammedTime.Month.ToString("00")}.{test.ProgrammedTime.Year}";
                     ws.Cells[i, 7].Value = rezultStatus;
                     ws.Cells[i, 8].Value = test.TestQuestions.Count(x => x.IsCorrect.HasValue && x.IsCorrect == true);

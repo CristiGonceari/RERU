@@ -3,7 +3,7 @@ import { PaginationModel } from '../../utils/models/pagination.model';
 import { LoggingService } from '../../utils/services/logging-service/logging.service';
 import { FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ViewJsonModalComponent } from '../../utils/modals/view-json-modal/view-json-modal.component';
+import { DetailsModalComponent } from '../../utils/modals/details-modal/details-modal.component';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -88,9 +88,10 @@ export class DashboardComponent implements OnInit {
     this.selectedEvent = item.target.value;
   }
 
-  viewJSON(json: JSON): void {
-    const modalRef = this.modalService.open(ViewJsonModalComponent, { centered: true, size: 'lg' });
-    modalRef.componentInstance.json = json;
+  viewJSON(id, items): void {
+    const modalRef = this.modalService.open(DetailsModalComponent, { centered: true,  size : <any>'xl' });
+    modalRef.componentInstance.id = id;
+    modalRef.componentInstance.items = items;
 		modalRef.result.then(
 			() => { },
       () => {modalRef.close()}

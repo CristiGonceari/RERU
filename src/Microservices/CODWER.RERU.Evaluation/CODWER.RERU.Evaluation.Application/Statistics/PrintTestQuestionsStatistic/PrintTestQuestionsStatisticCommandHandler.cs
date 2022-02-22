@@ -25,25 +25,25 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.PrintTestQuestionsStatis
 
         public async Task<FileDataDto> Handle(PrintTestQuestionsStatisticCommand request, CancellationToken cancellationToken)
         {
-            var testTypeQuestionCategories = await _appDbContext.TestTypeQuestionCategories.Where(x => x.TestTypeId == request.TestTypeId).ToListAsync();
+            var testTemplateQuestionCategories = await _appDbContext.TestTemplateQuestionCategories.Where(x => x.TestTemplateId == request.TestTemplateId).ToListAsync();
 
             var testQuestionsId = new List<int>();
 
-            foreach (var testTypeQuestionCategory in testTypeQuestionCategories)
+            foreach (var testTemplateQuestionCategory in testTemplateQuestionCategories)
             {
                 var allQuestions = _appDbContext.QuestionUnits
-                    .Where(x => x.QuestionCategoryId == testTypeQuestionCategory.QuestionCategoryId && x.Status == QuestionUnitStatusEnum.Active)
+                    .Where(x => x.QuestionCategoryId == testTemplateQuestionCategory.QuestionCategoryId && x.Status == QuestionUnitStatusEnum.Active)
                     .AsQueryable();
 
-                if (testTypeQuestionCategory.QuestionType.HasValue)
+                if (testTemplateQuestionCategory.QuestionType.HasValue)
                 {
-                    allQuestions = allQuestions.Where(x => x.QuestionType == testTypeQuestionCategory.QuestionType.Value);
+                    allQuestions = allQuestions.Where(x => x.QuestionType == testTemplateQuestionCategory.QuestionType.Value);
                 }
 
                 var questionIds = allQuestions.Select(x => x.Id);
-                var strictQuestionsToUse = _appDbContext.TestCategoryQuestions.Include(x => x.QuestionUnit).Where(x => x.TestTypeQuestionCategoryId == testTypeQuestionCategory.Id).AsQueryable();
+                var strictQuestionsToUse = _appDbContext.TestCategoryQuestions.Include(x => x.QuestionUnit).Where(x => x.TestTemplateQuestionCategoryId == testTemplateQuestionCategory.Id).AsQueryable();
 
-                if (testTypeQuestionCategory.SelectionType == SelectionEnum.Select)
+                if (testTemplateQuestionCategory.SelectionType == SelectionEnum.Select)
                 {
                     questionIds = strictQuestionsToUse.Select(x => x.QuestionUnitId);
                 }
@@ -53,15 +53,15 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.PrintTestQuestionsStatis
 
             var questionsInTests = await _appDbContext.Tests
                 .Include(x => x.TestQuestions)
-                .Where(x => x.TestTypeId == request.TestTypeId)
+                .Where(x => x.TestTemplateId == request.TestTemplateId)
                 .SelectMany(x => x.TestQuestions)
                 .ToListAsync();
 
-            var questionInTestType = await _appDbContext.QuestionUnits.Include(x => x.QuestionCategory).Where(x => testQuestionsId.Contains(x.Id)).ToListAsync();
+            var questionIntestTemplate = await _appDbContext.QuestionUnits.Include(x => x.QuestionCategory).Where(x => testQuestionsId.Contains(x.Id)).ToListAsync();
 
             var answer = new List<TestQuestionStatisticDto>();
 
-            foreach (var questionToAnalize in questionInTestType)
+            foreach (var questionToAnalize in questionIntestTemplate)
             {
                 if (!questionsInTests.Any(x => x.QuestionUnitId == questionToAnalize.Id))
                 {

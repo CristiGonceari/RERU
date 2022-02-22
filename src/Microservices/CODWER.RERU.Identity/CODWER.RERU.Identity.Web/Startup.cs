@@ -44,7 +44,7 @@ namespace CODWER.RERU.Identity.Web
             services.AddControllersWithViews();
 
             services.AddDbContext<IdentityDbContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("Default"),
+                        options.UseNpgsql(Configuration.GetConnectionString("Default"),
                             b => b.MigrationsAssembly(typeof(IdentityDbContext).GetTypeInfo().Assembly.GetName().Name)));
 
             services.AddIdentity<ERPIdentityUser, IdentityRole>()

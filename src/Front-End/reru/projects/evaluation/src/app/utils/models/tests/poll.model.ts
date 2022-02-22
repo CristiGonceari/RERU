@@ -1,13 +1,13 @@
 import { MyPollStatusEnum } from "../../enums/my-poll-status.enum";
 import { TestStatusEnum } from "../../enums/test-status.enum";
-import { TestTypeStatusEnum } from "../../enums/test-type-status.enum";
+import { TestTemplateStatusEnum } from "../../enums/test-Template-status.enum";
 
 export class Poll {
     id: number;
-    testTypeName: string;
+    testTemplateName: string;
     status: MyPollStatusEnum;
     testStatus?: TestStatusEnum;
-    testTypeStatus: TestTypeStatusEnum;
+    testTemplateStatus: TestTemplateStatusEnum;
     settings: boolean;
     votedTime?: string;
     startTime: string;

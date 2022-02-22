@@ -253,9 +253,9 @@
     "event-has-evaluator": "Evenimentul selectat are propriii evaluatori",
     "asignee": "Asigneaza",
     "user-list-to-add": "Lista de utilizatori asignati",
-    "delete-msg": "Sigur doriți să ștergeți acest șablon de test?",
-    "succes-delete-msg": "Șablon de test a fost șters cu succes",
-    "succes-add-msg": "Șablon de test a fost adăugat cu succes",
+    "delete-msg": "Sigur doriți să ștergeți acest test?",
+    "succes-delete-msg": "Testul a fost șters cu succes",
+    "succes-add-msg": "Testul a fost adăugat cu succes",
     "succes-update-msg": "Șablon de test a fost actualizat cu succes",
     "succes-update-status-msg": "Statutul șablonului de test a fost actualizat",
     "succes-add-rules-msg": "Regurile au fost adăugate cu succes",
@@ -332,7 +332,9 @@
     "min-score": "Scorul Min.",
     "hello-username": "Salut, {{username}}!",
     "have-a-good-day": "Bine ai venit!",
-    "my-activities": "Activitățile mele"
+    "my-activities": "Activitățile mele",
+    "my-evaluated-tests": "Testele personal evaluate"
+
   },
   "questions": {
     "count": "Număr de întrebări",
@@ -377,7 +379,9 @@
     "succes-add-msg": "Întrebarea a fost adăugată cu succes",
     "succes-add-multiple-msg": "Întrebarile au fost adăugate cu succes",
     "succes-update-msg": "Întrebarea a fost actualizată cu succes",
-    "succes-update-status-msg": "Statutul intrebării a fost actualizat"
+    "succes-update-status-msg": "Statutul intrebării a fost actualizat",
+    "search-by-status": "Selecteaza statutul intrebării",
+    "add-tags": "Insereaza taguri"
   },
   "answers": {
     "option-settings": "Setări Opțiuni",
@@ -598,6 +602,9 @@
   },
   "test-template":{
     "number-of-questions": "Numărul de întrebări",
+    "succes-delete-msg": "Șablon de test a fost șters cu succes",
+    "succes-add-msg": "Șablon de test a fost adăugat cu succes",
+    "delete-msg": "Sigur doriți să ștergeți acest șablon de test?",
     "order-of-questions": "Ordinea întrebărilor"
 },
   "plans": {
@@ -756,5 +763,11 @@
   "word": {
     "confirmation": "Confirmare",
     "search": "Căutare"
+  },
+  "print": {
+    "print-table": "Printare tabel",
+    "sorted-by": "Sortat după",
+    "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
+    "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare."
   }
 }

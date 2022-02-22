@@ -3,14 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { createCustomElement } from '@angular/elements';
 import { ConfirmModalComponent } from '@erp/shared';
-import { TestTypeService } from '../../../utils/services/test-type/test-type.service';
+import { TestTemplateService } from '../../../utils/services/test-template/test-template.service';
 import { TestQuestionService } from '../../../utils/services/test-question/test-question.service';
 import { TestService } from '../../../utils/services/test/test.service';
 import { Test } from '../../../utils/models/tests/test.model';
 import { TestOptions } from '../../../utils/models/test-questions/test-options.model';
 import { TestAnswer } from '../../../utils/models/test-questions/test-answer.model';
 import { AddTestQuestion } from '../../../utils/models/test-questions/add-test-question.model';
-import { TestTypeSettings } from '../../../utils/models/test-types/test-type-settings.model';
+import { TestTemplateSettings } from '../../../utils/models/test-templates/test-template-settings.model';
 import { QuestionUnitTypeEnum } from '../../../utils/enums/question-unit-type.enum';
 import { AnswerStatusEnum } from '../../../utils/enums/answer-status.enum';
 import { HashOptionInputComponent } from '../../../utils/components/hash-option-input/hash-option-input.component';
@@ -35,7 +35,7 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
   testOptionsList: TestOptions[] = [];
   testQuestions: TestOptions[] = [];
   testAnswersInput: TestAnswer[] = [];
-  settings = new TestTypeSettings();
+  settings = new TestTemplateSettings();
 
   questionTypeEnum = QuestionUnitTypeEnum;
   answerStatusEnum = AnswerStatusEnum;
@@ -52,7 +52,7 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
     private modalService: NgbModal,
 	  public translate: I18nService,
     private router: Router,
-    private testTypeService: TestTypeService,
+    private testTemplateService: TestTemplateService,
     private injector: Injector
   ) {
     this.activatedRoute.params.subscribe(params => {
@@ -70,13 +70,13 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
     this.testService.getTest(this.testId).subscribe(
       res => {
         this.testDto = res.data;
-        this.getTestTypeSettings(res.data.testTypeId);
+        this.getTestTemplateSettings(res.data.testTemplateId);
       }
     )
   }
 
-  getTestTypeSettings(testTypeId) {
-    this.testTypeService.getTestTypeSettings({ testTypeId: testTypeId }).subscribe(res => {
+  getTestTemplateSettings(testTemplateId) {
+    this.testTemplateService.getTestTemplateSettings({ testTemplateId: testTemplateId }).subscribe(res => {
       this.settings = res.data;
       this.getTestQuestions();
     });

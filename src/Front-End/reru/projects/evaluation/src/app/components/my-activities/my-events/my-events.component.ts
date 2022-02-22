@@ -45,7 +45,7 @@ export class MyEventsComponent implements OnInit {
     }
 
     let params = {
-      testTypeMode: 0,
+      testTemplateMode: 0,
       page: data.page || this.pagedSummary.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize,
       fromDate: this.parseDates(this.fromDate),
@@ -94,7 +94,7 @@ export class MyEventsComponent implements OnInit {
 
     const request = {
       date: this.selectedDay,
-      testTypeMode: 0,
+      testTemplateMode: 0,
       page: data.page || this.pagedSummary.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
     }
@@ -111,7 +111,7 @@ export class MyEventsComponent implements OnInit {
   getListOfCoutedEvents(data) {
 
     const request = {
-      testTypeMode: 0,
+      testTemplateMode: 0,
       fromDate: this.parseDates(data.fromDate),
       tillDate: this.parseDates(data.tillDate)
     }

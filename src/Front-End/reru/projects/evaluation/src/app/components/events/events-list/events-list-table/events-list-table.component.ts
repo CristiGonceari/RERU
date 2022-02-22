@@ -8,6 +8,8 @@ import { EventService } from 'projects/evaluation/src/app/utils/services/event/e
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { forkJoin } from 'rxjs';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { PrintModalComponent } from '@erp/shared';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-events-list-table',
@@ -22,6 +24,20 @@ export class EventsListTableComponent implements OnInit {
 	description: string;
 	no: string;
 	yes: string;
+	downloadFile: boolean = false;
+	headersToPrint = [];
+	printTranslates: any[];
+
+	displayMonth: string;
+	displayYear: number;
+	displayDate;
+
+	countedEvents;
+	fromDate;
+	tillDate;
+
+	selectedDay;
+	countedPlans;
 
 	constructor(
 		private service: EventService, 
@@ -34,10 +50,21 @@ export class EventsListTableComponent implements OnInit {
 		) { }
 
 	ngOnInit(): void {
-		this.list();
 	}
      
 	list(data: any = {}) {
+	this.selectedDay = null;
+    this.isLoading = true;
+    
+    if (data.fromDate != null && data.tillDate != null) {
+      this.tillDate = data.tillDate,
+        this.fromDate = data.fromDate
+    }
+    if (data.displayMonth != null && data.displayYear != null) {
+      this.displayMonth = data.displayMonth;
+      this.displayYear = data.displayYear;
+    }
+
 		let params = {
 			page: data.page || this.pagination.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10
@@ -48,11 +75,89 @@ export class EventsListTableComponent implements OnInit {
 				if (res && res.data) {
 					this.events = res.data.items;
 					this.pagination = res.data.pagedSummary;
+					
 					this.isLoading = false;
+					this.selectedDay = null;
 				}
 			}
 		)
 	}
+
+	getListByDate(data: any = {}): void {
+
+		if (data.date != null) {
+		  this.selectedDay = this.parseDates(data.date);
+		  this.displayDate = this.parseDatesForTable(data.date)
+		}
+	
+		this.isLoading = true;
+	
+		const request = {
+		  date:  this.selectedDay,
+		  page: data.page || this.pagination.currentPage,
+		  itemsPerPage: data.itemsPerPage || this.pagination.pageSize
+		}
+	
+		this.service.getEventByDate(request).subscribe(response => {
+		  if (response.success) {
+			this.events = response.data.items || [];
+			this.pagination = response.data.pagedSummary;
+
+			this.isLoading = false;
+		  }
+		});
+	  }
+
+	  parseDates(date) {
+
+		const day = date && date.getDate() || -1;
+		const dayWithZero = day.toString().length > 1 ? day : '0' + day;
+		const month = date && date.getMonth() + 1 || -1;
+		const monthWithZero = month.toString().length > 1 ? month : '0' + month;
+		const year = date && date.getFullYear() || -1;
+		 
+		return `${year}-${monthWithZero}-${dayWithZero}`;
+	
+	  }
+	
+	  parseDatesForTable(date) {
+	
+		const day = date && date.getDate() || -1;
+		const dayWithZero = day.toString().length > 1 ? day : '0' + day;
+		const month = date && date.getMonth() + 1 || -1;
+		const monthWithZero = month.toString().length > 1 ? month : '0' + month;
+		const year = date && date.getFullYear() || -1;
+		 
+		return `${dayWithZero}/${monthWithZero}/${year}`;
+	
+	  }
+
+	  getListOfCoutedEvents(data) {
+		const request = {
+		  fromDate: this.parseDates(data.fromDate),
+		  tillDate: this.parseDates(data.tillDate)
+		}
+		this.service.getEventCount(request).subscribe(response => {
+		  if (response.success) {
+			this.countedPlans = response.data;
+	
+			for (let calendar of data.calendar) {
+	
+			  let data = new Date(calendar.date);
+	
+			  for (let values of response.data) {
+	
+				let c = new Date(values.date);
+				let compararea = +data == +c;
+	
+				if (compararea) {
+				  calendar.count = values.count;
+				}
+			  }
+			}
+		  }
+		})
+	  }
 
 	openDeleteModal(id){
 		forkJoin([
@@ -90,5 +195,54 @@ export class EventsListTableComponent implements OnInit {
 	
 	navigate(id) {
 		this.router.navigate(['event/', id, 'overview'], { relativeTo: this.route });
+	}
+
+	getHeaders(name: string): void {
+		this.translateData();
+		let eventsTable = document.getElementById('eventsTable')
+		let headersHtml = eventsTable.getElementsByTagName('th');
+		let headersDto = ['name', 'description', 'fromDate', 'tillDate'];
+		for (let i=0; i<headersHtml.length-1; i++) {
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+		}
+		let printData = {
+			tableName: name,
+			fields: this.headersToPrint,
+			orientation: 2
+		};
+		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
+		modalRef.componentInstance.tableData = printData;
+		modalRef.componentInstance.translateData = this.printTranslates;
+		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
+		this.headersToPrint = [];
+	}
+
+	translateData(): void {
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
+		forkJoin([
+			this.translate.get('print.print-table'),
+			this.translate.get('print.print-msg'),
+			this.translate.get('print.sorted-by'),
+			this.translate.get('button.cancel')
+		]).subscribe(
+			(items) => {
+				for (let i=0; i<this.printTranslates.length; i++) {
+					this.printTranslates[i] = items[i];
+				}
+			}
+		);
+	}
+
+	printTable(data): void {
+		this.downloadFile = true;
+		this.eventService.print(data).subscribe(response => {
+			if (response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], fileName, { type: response.body.type });
+				saveAs(file);
+				this.downloadFile = false;
+			}
+		}, () => this.downloadFile = false);
 	}
 }

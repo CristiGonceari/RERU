@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
@@ -7,7 +6,6 @@ using CODWER.RERU.Evaluation.DataTransferObjects.Locations;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.TablePrinterService;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Evaluation.Application.Locations.PrintLocations
 {
@@ -24,17 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.Locations.PrintLocations
 
         public async Task<FileDataDto> Handle(PrintLocationCommand request, CancellationToken cancellationToken)
         {
-            var locations = _appDbContext.Locations.AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(request.Name))
-            {
-                locations = locations.Where(x => x.Name.Contains(request.Name));
-            }
-
-            if (!string.IsNullOrWhiteSpace(request.Address))
-            {
-                locations = locations.Where(x => x.Address.Contains(request.Address));
-            }
+            var locations = GetAndFilterLocations.Filter(_appDbContext, request.Name, request.Address);
 
             var result = _printer.PrintTable(new TableData<Location>
             {

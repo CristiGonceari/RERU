@@ -7,7 +7,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent
 {
     public class GetMyTestsWithoutEventQuery : PaginatedQueryParameter, IRequest<PaginatedModel<TestDto>>
     {
-        public DateTime? startTime { get; set; }
-        public DateTime? endTime { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
     }
 }

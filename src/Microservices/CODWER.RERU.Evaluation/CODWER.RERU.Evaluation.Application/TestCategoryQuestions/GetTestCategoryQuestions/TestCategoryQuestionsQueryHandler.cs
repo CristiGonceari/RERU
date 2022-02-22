@@ -1,16 +1,16 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using AutoMapper;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestCategoryQuestions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace CODWER.RERU.Evaluation.Application.TestCategoryQuestions
+namespace CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCategoryQuestions
 {
     public class TestCategoryQuestionsQueryHandler : IRequestHandler<TestCategoryQuestionsQuery, TestCategoryQuestionContentDto>
     {
@@ -25,38 +25,38 @@ namespace CODWER.RERU.Evaluation.Application.TestCategoryQuestions
 
         public async Task<TestCategoryQuestionContentDto> Handle(TestCategoryQuestionsQuery request, CancellationToken cancellationToken)
         {
-            var testTypeQuestionCategory =await _appDbContext.TestTypeQuestionCategories
+            var testTemplateQuestionCategory = await _appDbContext.TestTemplateQuestionCategories
                                                                 .Include(ttqc => ttqc.QuestionCategory)
-                                                                .FirstAsync(x => x.Id == request.TestTypeQuestionCategoryId);
+                                                                .FirstAsync(x => x.Id == request.TestTemplateQuestionCategoryId);
 
             var result = new TestCategoryQuestionContentDto();
-            result.SequenceType = testTypeQuestionCategory.SequenceType;
-            result.QuestionCategoryName = testTypeQuestionCategory.QuestionCategory.Name;
+            result.SequenceType = testTemplateQuestionCategory.SequenceType;
+            result.QuestionCategoryName = testTemplateQuestionCategory.QuestionCategory.Name;
 
             
-            if (testTypeQuestionCategory.SequenceType == SequenceEnum.Random && testTypeQuestionCategory.SelectionType == SelectionEnum.All)
+            if (testTemplateQuestionCategory.SequenceType == SequenceEnum.Random && testTemplateQuestionCategory.SelectionType == SelectionEnum.All)
             {
 
                 var allQuestions = _appDbContext.QuestionUnits
-                                                    .Where(x => x.QuestionCategoryId == testTypeQuestionCategory.QuestionCategoryId && x.Status == QuestionUnitStatusEnum.Active)
+                                                    .Where(x => x.QuestionCategoryId == testTemplateQuestionCategory.QuestionCategoryId && x.Status == QuestionUnitStatusEnum.Active)
                                                     .AsQueryable();
 
                 result.Questions = _mapper.Map<List<QuestionUnitDto>>(allQuestions);
-                result.UsedQuestionCount = testTypeQuestionCategory.QuestionCount;
+                result.UsedQuestionCount = testTemplateQuestionCategory.QuestionCount;
 
             }
             else
             {
 
                 var questionUnits = await _appDbContext.TestCategoryQuestions
-                                                            .Include(tcq => tcq.TestTypeQuestionCategory)
+                                                            .Include(tcq => tcq.TestTemplateQuestionCategory)
                                                             .Include(tcq => tcq.QuestionUnit)
-                                                            .Where(x => x.TestTypeQuestionCategoryId == request.TestTypeQuestionCategoryId)
+                                                            .Where(x => x.TestTemplateQuestionCategoryId == request.TestTemplateQuestionCategoryId)
                                                             .Select(x => x.QuestionUnit)
                                                             .ToListAsync();
 
                 result.Questions = _mapper.Map<List<QuestionUnitDto>>(questionUnits);
-                result.UsedQuestionCount = testTypeQuestionCategory.QuestionCount;
+                result.UsedQuestionCount = testTemplateQuestionCategory.QuestionCount;
             }
            
             return result;

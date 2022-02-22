@@ -27,7 +27,7 @@
                         <tr *ngFor="let test of testRowList">
                             <td>
                                 <span class="colored d-block mb-0">
-                                    <b>{{ test.programmedTime | date:'dd.MM.yyyy'}}</b>
+                                    <b>{{ test.programmedTime | date: 'dd/MM/yyyy, HH:mm'}}</b>
                                 </span>
                                 <div class="font-size-sm">
                                     <span class="text-dark-50" *ngIf="test.testStatus == enum.AlowedToStart">
@@ -50,7 +50,7 @@
                                     </span>
                                 </div>
                             </td>
-                            <td><b>{{ test.testTypeName }}</b></td>
+                            <td><b>{{ test.testTemplateName }}</b></td>
                             <td>
                                 <b *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</b>
                                 <b *ngIf="test.result != resultEnum.NoResult">{{ test.accumulatedPercentage }}% /

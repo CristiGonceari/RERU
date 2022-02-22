@@ -26,7 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestionsSumma
             var testQuestions = await _appDbContext.TestQuestions
                 .Include(x => x.QuestionUnit)
                 .Include(x => x.Test)
-                    .ThenInclude(x => x.TestType)
+                    .ThenInclude(x => x.TestTemplate)
                         .ThenInclude(x => x.Settings)
                 .Where(x => x.TestId == request.TestId)
                 .OrderBy(x => x.Index)

@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Common.Pagination;
@@ -24,14 +23,14 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetUserEvents
 
         public async Task<PaginatedModel<EventDto>> Handle(GetUserEventsQuery request, CancellationToken cancellationToken)
         {
-            var myEvents = _appDbContext.Events
+            var userEvents = _appDbContext.Events
                 .Include(x => x.EventUsers)
-                .Include(x => x.EventTestTypes)
-                .ThenInclude(x => x.TestType)
-                .Where(x => x.EventUsers.Any(e => e.UserProfileId == request.UserId) && x.EventTestTypes.Any(e => e.TestType.Mode == request.TestTypeMode))
+                .Include(x => x.EventTestTemplates)
+                .ThenInclude(x => x.TestTemplate)
+                .Where(x => x.EventUsers.Any(e => e.UserProfileId == request.UserId) && x.EventTestTemplates.Any(e => e.TestTemplate.Mode == request.TestTemplateMode))
                 .AsQueryable();
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Event, EventDto>(myEvents, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Event, EventDto>(userEvents, request);
 
             return paginatedModel;
         }

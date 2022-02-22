@@ -24,14 +24,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddMyPoll
         {
             var curUser = await _userProfileService.GetCurrentUser();
 
-            var myPoll = _appDbContext.Tests.FirstOrDefault(x => x.TestTypeId == request.TestTypeId && x.UserProfileId == curUser.Id);
+            var myPoll = _appDbContext.Tests.FirstOrDefault(x => x.TestTemplateId == request.TestTemplateId && x.UserProfileId == curUser.Id);
 
             if (myPoll == null)
             {
                 myPoll = new Test()
                 {
                     UserProfileId = curUser.Id,
-                    TestTypeId = request.TestTypeId,
+                    TestTemplateId = request.TestTemplateId,
                     ProgrammedTime = DateTime.Now,
                     EventId = request.EventId
                 };

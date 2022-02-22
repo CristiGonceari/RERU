@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router, ActivatedRoute, CanActivate } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { ConfirmModalComponent } from 'projects/erp-shared/src/lib/modals/confirm-modal/confirm-modal.component';
@@ -11,8 +11,8 @@ import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { EventCalendarComponent } from '../../../utils/components/event-calendar/event-calendar.component';
 import { CalendarDay } from '../../../utils/models/calendar/calendarDay';
-import { Events } from '../../../utils/models/calendar/events';
-import { NullTemplateVisitor } from '@angular/compiler';
+import { PrintModalComponent } from '@erp/shared';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-plans-list',
@@ -31,6 +31,9 @@ export class PlansListComponent implements OnInit {
   date: Date;
 
   isLoading: boolean = true;
+	downloadFile: boolean = false;
+	headersToPrint = [];
+	printTranslates: any[];
 
   plans: any[] = [];
   pagination: PaginationModel = new PaginationModel();
@@ -99,7 +102,6 @@ export class PlansListComponent implements OnInit {
       this.displayYear = data.displayYear;
     }
 
-    
     const request = {
       fromDate: this.parseDates(this.fromDate),
       tillDate: this.parseDates(this.tillDate),
@@ -120,7 +122,6 @@ export class PlansListComponent implements OnInit {
   }
 
   parseDates(date) {
-
     const day = date && date.getDate() || -1;
     const dayWithZero = day.toString().length > 1 ? day : '0' + day;
     const month = date && date.getMonth() + 1 || -1;
@@ -132,7 +133,6 @@ export class PlansListComponent implements OnInit {
   }
 
   parseDatesForTable(date) {
-
     const day = date && date.getDate() || -1;
     const dayWithZero = day.toString().length > 1 ? day : '0' + day;
     const month = date && date.getMonth() + 1 || -1;
@@ -142,6 +142,55 @@ export class PlansListComponent implements OnInit {
     return `${dayWithZero}/${monthWithZero}/${year}`;
 
   }
+
+  getHeaders(name: string): void {
+		this.translateData();
+    let table = document.getElementById('plans-table');
+		let headersHtml = table.getElementsByTagName('th');
+		let headersDto = ['name', 'description', 'fromDate', 'tillDate'];
+		for (let i=0; i<headersHtml.length-1; i++) {
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+		}
+		let printData = {
+			tableName: name,
+			fields: this.headersToPrint,
+			orientation: 2
+		};
+		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
+		modalRef.componentInstance.tableData = printData;
+		modalRef.componentInstance.translateData = this.printTranslates;
+		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
+		this.headersToPrint = [];
+	}
+
+	translateData(): void {
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
+		forkJoin([
+			this.translate.get('print.print-table'),
+			this.translate.get('print.print-msg'),
+			this.translate.get('print.sorted-by'),
+			this.translate.get('button.cancel')
+		]).subscribe(
+			(items) => {
+				for (let i=0; i<this.printTranslates.length; i++) {
+					this.printTranslates[i] = items[i];
+				}
+			}
+		);
+	}
+
+	printTable(data): void {
+		this.downloadFile = true;
+		this.planService.print(data).subscribe(response => {
+			if (response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], fileName, { type: response.body.type });
+				saveAs(file);
+				this.downloadFile = false;
+			}
+		});
+	}
 
   openDeleteModal(id){
     forkJoin([

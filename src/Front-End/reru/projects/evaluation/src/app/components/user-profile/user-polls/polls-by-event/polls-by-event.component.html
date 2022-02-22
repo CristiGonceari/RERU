@@ -15,12 +15,12 @@
         </thead>
         <tbody class="datatable-body" *ngIf="polls.length">
             <tr *ngFor="let poll of polls">
-                <td>{{ poll.testTypeName }}</td>
+                <td>{{ poll.testTemplateName }}</td>
                 <td>{{'statuses.' + enum[poll.status] | translate}}</td>
-                <td *ngIf="poll.votedTime">{{ poll.votedTime | date: 'short' }}</td>
+                <td *ngIf="poll.votedTime">{{ poll.votedTime | date: 'dd/MM/yyyy, HH:mm' }}</td>
                 <td *ngIf="!poll.votedTime">-</td>
-                <td>{{ poll.startTime | date: 'short'}}</td>
-                <td>{{ poll.endTime | date: 'short' }}</td>
+                <td>{{ poll.startTime | date: 'dd/MM/yyyy, HH:mm'}}</td>
+                <td>{{ poll.endTime | date: 'dd/MM/yyyy, HH:mm' }}</td>
             </tr>
         </tbody>
         <tbody class="datatable-body" *ngIf="!polls.length">

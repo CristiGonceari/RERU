@@ -9,7 +9,7 @@
         <th scope="col">{{'events.name' | translate}}</th>
         <th scope="col" style="width: 48px"></th>
       </tr>
-      <tr *ngIf="!testTypes">
+      <tr *ngIf="!testTemplates">
         <th scope="col">{{'events.test-type-name' | translate}}</th>
         <th scope="col" style="width: 120px;" class="text-left">{{'tests.questions-to-use-count' | translate}}</th>
         <th scope="col" style="width: 100px;" class="text-left">{{'tests.time' | translate}}</th>
@@ -75,7 +75,7 @@
         </td>
       </tr>
     </tbody>
-    <tbody class="datatable-body" *ngIf="fields.length && !testTypes">
+    <tbody class="datatable-body" *ngIf="fields.length && !testTemplates">
       <tr *ngFor="let item of fields">
         <td>{{item.name}}</td>
         <td>{{item.questionCount}}</td>

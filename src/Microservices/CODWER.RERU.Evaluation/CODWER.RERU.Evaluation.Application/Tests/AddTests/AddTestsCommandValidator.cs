@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Application.TestTypes.GetTestTypeByStatus;
+using CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStatus;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
@@ -23,8 +23,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             _appDbContext = appDbContext;
             _mediator = mediator;
 
-            RuleFor(x => x.TestTypeId)
-                .SetValidator(x => new ItemMustExistValidator<TestType>(appDbContext, ValidationCodes.INVALID_TEST_TYPE,
+            RuleFor(x => x.TestTemplateId)
+                .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x.ProgrammedTime)
@@ -38,8 +38,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                         ValidationMessages.InvalidReference));
 
                 RuleFor(x => x)
-                    .Must(x => appDbContext.EventTestTypes.Any(et => et.EventId == x.EventId && et.TestTypeId == x.TestTypeId))
-                    .WithErrorCode(ValidationCodes.INEXISTENT_TEST_TYPE_IN_EVENT);
+                    .Must(x => appDbContext.EventTestTemplates.Any(et => et.EventId == x.EventId && et.TestTemplateId == x.TestTemplateId))
+                    .WithErrorCode(ValidationCodes.INEXISTENT_TEST_TEMPLATE_IN_EVENT);
 
                 RuleFor(x => x)
                     .MustAsync((x, cancellation) => ExistentCandidateInEvent(x))
@@ -56,7 +56,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             When(r => r.EventId.HasValue && r.EvaluatorId.HasValue, () =>
             {
                 RuleFor(x => x)
-                    .Must(x => appDbContext.EventEvaluators.Where(e => e.EventId == x.EventId).Count() <= 0)
+                    .Must(x => !appDbContext.EventEvaluators.Any(e => e.EventId == x.EventId))
                     .WithErrorCode(ValidationCodes.EXISTENT_EVALUATOR_IN_EVENT);
             });
 
@@ -81,9 +81,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
         private async Task<bool> IsOnlyOneAnswerTest(AddTestsCommand data)
         {
-            var dataList = await _mediator.Send(new GetTestTypeByStatusQuery { TestTypeStatus = TestTypeStatusEnum.Active });
+            var dataList = await _mediator.Send(new GetTestTemplateByStatusQuery { TestTemplateStatus = TestTemplateStatusEnum.Active });
 
-            var result = dataList.FirstOrDefault(x => x.TestTypeId == data.TestTypeId);
+            var result = dataList.FirstOrDefault(x => x.TestTemplateId == data.TestTemplateId);
 
             return result.IsOnlyOneAnswer;
         }

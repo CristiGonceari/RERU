@@ -28,7 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTest
             var curUser = await _userProfileService.GetCurrentUser();
 
             var test = await _appDbContext.Tests
-                .Include(t => t.TestType)
+                .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
                 .FirstOrDefaultAsync(x => x.Id == request.Id);
 

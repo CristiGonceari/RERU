@@ -16,7 +16,7 @@ namespace CODWER.RERU.Personal.Application.Profiles.Requests.Dismissal.Subordina
         private readonly AppDbContext _appDbContext;
         private readonly IDismissalTemplateParserService _dismissalTemplateParserService;
 
-        public ApproveRejectRequestCommandHandler(AppDbContext appDbContext, ITemplateConvertor templateConvertor, IStorageFileService storageFileService, IVacationIntervalService vacationIntervalService, IDismissalTemplateParserService dismissalTemplateParserService)
+        public ApproveRejectRequestCommandHandler(AppDbContext appDbContext, IDismissalTemplateParserService dismissalTemplateParserService)
         {
             _appDbContext = appDbContext;
             _dismissalTemplateParserService = dismissalTemplateParserService;

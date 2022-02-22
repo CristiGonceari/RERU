@@ -8,6 +8,9 @@
         media = 4,
         documents = 5, 
         identityfiles = 6, 
-        photos = 7
+        photos = 7,
+        request = 8,
+        order = 9,
+        cim = 10
     }
 }

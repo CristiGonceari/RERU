@@ -2,12 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
 import { EventService } from 'projects/evaluation/src/app/utils/services/event/event.service';
-import { EventTestTypeService } from 'projects/evaluation/src/app/utils/services/event-test-type/event-test-type.service';
+import { EventTestTemplateService } from 'projects/evaluation/src/app/utils/services/event-test-template/event-test-template.service';
 import { TestingLocationTypeEnum } from 'projects/evaluation/src/app/utils/enums/testing-location-type.enum';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
-import { AttachLocationToEventModel } from 'projects/evaluation/src/app/utils/models/locations/attachTestTypeToEventModel';
 import { ConfirmModalComponent } from 'projects/erp-shared/src/lib/modals/confirm-modal/confirm-modal.component';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { forkJoin } from 'rxjs';
@@ -23,7 +22,7 @@ export class TableComponent implements OnInit {
   
   pagination: PaginationModel = new PaginationModel();
   isLoading: boolean = true;
-  testTypes: boolean = true;
+  testTemplates: boolean = true;
   locations: boolean = true;
   evaluators: boolean = true;
   person: boolean = true;
@@ -42,7 +41,7 @@ export class TableComponent implements OnInit {
     private route: ActivatedRoute,
 		public translate: I18nService,
     private router: Router,
-    private eventTestTypeService: EventTestTypeService,
+    private eventTestTemplateService: EventTestTemplateService,
     private modalService: NgbModal,
     private notificationService: NotificationsService,
   ) { }
@@ -71,12 +70,12 @@ export class TableComponent implements OnInit {
     }
 
     if (this.category == "test-types") {
-      this.eventTestTypeService.getTestTypes(params).subscribe(res => {
+      this.eventTestTemplateService.getTestTemplates(params).subscribe(res => {
         if (res && res.data) {
           this.fields = res.data.items;
           this.pagination = res.data.pagedSummary;
           this.isLoading = false;
-          this.testTypes = false;
+          this.testTemplates = false;
         }
       });
     }
@@ -141,8 +140,8 @@ export class TableComponent implements OnInit {
       modalRef.result.then(() => this.detachLocation(eventId, itemId), () => { });
     }
 
-    if (this.testTypes == false) {
-      modalRef.result.then(() => this.detachTestType(eventId, itemId), () => { });
+    if (this.testTemplates == false) {
+      modalRef.result.then(() => this.detachTestTemplate(eventId, itemId), () => { });
     }
 
     if (this.user == false) {
@@ -172,8 +171,8 @@ export class TableComponent implements OnInit {
     });
   }
 
-  detachTestType(eventId, testTypeId) {
-    this.eventTestTypeService.detachTestType(eventId, testTypeId).subscribe(() => {
+  detachTestTemplate(eventId, testTemplateId) {
+    this.eventTestTemplateService.detachTestTemplate(eventId, testTemplateId).subscribe(() => {
       forkJoin([
         this.translate.get('modal.success'),
         this.translate.get('events.succes-remove-test-type-msg'),
@@ -227,8 +226,4 @@ export class TableComponent implements OnInit {
       this.list();
     });
   }
-
-
-
-
 }

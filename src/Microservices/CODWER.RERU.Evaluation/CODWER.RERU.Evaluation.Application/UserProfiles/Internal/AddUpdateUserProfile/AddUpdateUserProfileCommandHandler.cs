@@ -25,7 +25,7 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.Internal.AddUpdateUser
 
         public async Task<Unit> Handle(AddUpdateUserProfileCommand request, CancellationToken cancellationToken)
         {
-            var userProfileInEvaluation = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.CoreUserId == request.Data.CoreUserId);
+            var userProfileInEvaluation = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Idnp == request.Data.Idnp);
 
             if (userProfileInEvaluation != null)
             {

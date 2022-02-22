@@ -1,0 +1,6 @@
+<select class="form-control h-35px" name="selectedStatus" id="selectedStatus" (change)="filter.emit($event)">
+    <option class="default-option text-muted" selected value="">{{ 'questions.search-by-status' | translate }}</option>
+    <option *ngFor="let item of questionStatusList" [value]="item.value">
+        {{'statuses.' + item.label | translate}}
+    </option>
+</select>

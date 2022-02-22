@@ -13,15 +13,15 @@ export class ReferenceService extends AbstractService {
     super(appConfigService);
   }
 
-  getTestTypeStatuses(): Observable<any> {
+  getTestTemplateStatuses(): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-type-statuses/select-values`);
   }
 
-  getTestTypes(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-type/select-values`);
+  getTestTemplates(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-template/select-values`);
   }
 
-  getQuestionTypeStatuses(): Observable<any> {
+  getQuestionType(): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/question-types-value/select-values`);
   }
 
@@ -41,10 +41,6 @@ export class ReferenceService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-statuses/select-values`);
   }
 
-  getQuestionStatus(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/question-status-value/select-values`);
-  }
-
   getLocationType(): Observable<any>{
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/locations/select-values`);
   }
@@ -57,11 +53,15 @@ export class ReferenceService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-type-mode/select-values`);
   }
 
-  getTestTypeEvaluator(): Observable<any> {
+  getTestTemplateEvaluator(): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-type-with-evaluator-value/select-values`);
   }
 
   getEventEvaluator(): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/events-with-evaluator-value/select-values`);
+  }
+
+  getQuestionStatus(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/question-status/select-values`);
   }
 }

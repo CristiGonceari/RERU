@@ -1,14 +1,16 @@
-<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+<app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'10vh'" [height]="'5rem'" [width]="'5rem'"
     [colorClass]="'text-primary'">
 </app-loading-spinner>
+<h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
-<div *ngIf="!isLoading"
+<div *ngIf="!isLoading && !downloadFile"
     class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
     <table class="datatable table font-size-lg" style="overflow: visible">
         <thead class="text-uppercase text-muted">
             <tr>
                 <th scope="col">{{'faq.name' | translate}}</th>
+                <th scope="col" class="d-none">{{'faq.content' | translate}}</th>
                 <th scope="col" style="width: 48px"></th>
             </tr>
         </thead>

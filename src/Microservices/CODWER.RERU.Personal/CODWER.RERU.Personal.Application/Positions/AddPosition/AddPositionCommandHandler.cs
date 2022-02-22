@@ -1,17 +1,17 @@
-﻿using System;
+﻿using AutoMapper;
+using CODWER.RERU.Personal.Application.TemplateParsers;
+using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
+using CODWER.RERU.Personal.Data.Entities.Enums;
+using CODWER.RERU.Personal.Data.Persistence.Context;
+using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Entities;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using CODWER.RERU.Personal.Application.Services;
-using CODWER.RERU.Personal.Application.TemplateParsers;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
-using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Entities.Files;
-using CODWER.RERU.Personal.Data.Persistence.Context;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Personal.Application.Positions.AddPosition
 {
@@ -21,14 +21,16 @@ namespace CODWER.RERU.Personal.Application.Positions.AddPosition
         private readonly IMapper _mapper;
         private readonly ITemplateConvertor _templateConvertor;
         private readonly IStorageFileService _storageFileService;
+        private readonly IPersonalStorageClient _personalStorageClient;
         private readonly string _fileName;
 
-        public AddPositionCommandHandler(AppDbContext appDbContext, IMapper mapper, ITemplateConvertor templateConvertor, IStorageFileService storageFileService)
+        public AddPositionCommandHandler(AppDbContext appDbContext, IMapper mapper, ITemplateConvertor templateConvertor, IStorageFileService storageFileService, IPersonalStorageClient personalStorageClient)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _templateConvertor = templateConvertor;
             _storageFileService = storageFileService;
+            _personalStorageClient = personalStorageClient;
             _fileName = "ContractorTemplates/Orders/Ordin Cu Privire La Angajare.html";
         }
 
@@ -45,17 +47,21 @@ namespace CODWER.RERU.Personal.Application.Positions.AddPosition
             return item.Id;
         }
 
-        private async Task<int> SaveFile(AddPositionCommand request, Position item)
+        private async Task<string> SaveFile(AddPositionCommand request, Position item)
         {
             var myDictionary = await GetMyDictionary(request.Data.ContractorId, item);
 
             var parsedPdf = await _templateConvertor.GetPdfFromHtml(myDictionary, _fileName);
 
-            return await _storageFileService.AddFile(request.Data.ContractorId,
+            var fileId = await _storageFileService.AddFile(
                 parsedPdf.Name,
+                FileTypeEnum.order,
                 parsedPdf.ContentType,
-                FileTypeEnum.Order,
                 parsedPdf.Content);
+
+            await _personalStorageClient.AddFileToContractor(request.Data.ContractorId, fileId);
+
+            return fileId;
         }
 
         private async Task<Dictionary<string, string>> GetMyDictionary(int contractorId, Position position)

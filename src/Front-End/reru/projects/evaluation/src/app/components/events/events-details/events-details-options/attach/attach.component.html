@@ -10,7 +10,7 @@
   subTitle="{{'events.attach-evaluator' | translate}}">
 </app-page-title>
 
-<app-page-title *ngIf="!testType" title="{{'events.manage-events' | translate}}"
+<app-page-title *ngIf="!testTemplate" title="{{'events.manage-events' | translate}}"
   subTitle="{{'events.attach-test-type-to-event' | translate}}">
 </app-page-title>
 
@@ -33,7 +33,7 @@
               <h3 class="mb-10 font-weight-bold text-dark" *ngIf="!user">{{'events.attach-user' | translate}}</h3>
               <h3 class="mb-10 font-weight-bold text-dark" *ngIf="!evaluator">{{'events.attach-evaluator' | translate}}</h3>
               <h3 class="mb-10 font-weight-bold text-dark" *ngIf="!person">{{'locations.attach-res' | translate}}</h3>
-              <h3 class="mb-10 font-weight-bold text-dark" *ngIf="!testType">{{'events.attach-test-type' | translate}}</h3>
+              <h3 class="mb-10 font-weight-bold text-dark" *ngIf="!testTemplate">{{'events.attach-test-type' | translate}}</h3>
               <div class="col-xl-12 mb-10">
                 <div class="form-group row m-1">
                   <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.name' | translate}}:</label>
@@ -83,12 +83,12 @@
                     </div>
                   </div>
                 </div>
-                <div *ngIf="!testType">
+                <div *ngIf="!testTemplate">
                   <div class="form-group row mt-4">
                     <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.test-type-name' |
                       translate}}:</label>
                     <div class="col-lg-9 col-xl-9">
-                      <app-search [searchTestType]="testType"></app-search>
+                      <app-search [searchTestTemplate]="testTemplate"></app-search>
                     </div>
                   </div>
                   <div class="form-group row mb-10">

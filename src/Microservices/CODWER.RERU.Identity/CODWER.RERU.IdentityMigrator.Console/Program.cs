@@ -27,7 +27,7 @@ namespace CODWER.RERU.IdentityMigrator.Console
                 config.AddEnvironmentVariables();
             })
             .ConfigureServices((hostingContext, services) => services.AddDbContext<IdentityDbContext>(options =>
-                options.UseSqlServer(hostingContext.Configuration.GetConnectionString("Default"),
+                options.UseNpgsql(hostingContext.Configuration.GetConnectionString("Default"),
                         b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName))));
 
         static void Migrate(IServiceProvider services)

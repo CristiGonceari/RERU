@@ -19,10 +19,10 @@ namespace CODWER.RERU.Personal.DataTransferObjects.Vacations
 
         public VacationType VacationType { get; set; }
 
-        public int? VacationRequestId { get; set; }
+        public string VacationRequestId { get; set; }
         public string VacationRequestName { get; set; }
 
-        public int? VacationOrderId { get; set; }
+        public string VacationOrderId { get; set; }
         public string VacationOrderName { get; set; }
 
 

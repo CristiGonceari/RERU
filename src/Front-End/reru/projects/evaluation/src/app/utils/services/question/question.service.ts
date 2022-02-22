@@ -78,5 +78,12 @@ export class QuestionService extends AbstractService {
 	
 	getActiveQuestions(params): Observable<any> {
 		return this.client.get(`${this.baseUrl}/${this.urlRoute}/active-question`, {params});
-	  }
+	}
+
+	print(data): Observable<any> {
+		return this.client.put(`${this.baseUrl}/${this.urlRoute}/print`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }

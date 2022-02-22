@@ -26,7 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent
             var myUserProfile = await _userProfileService.GetCurrentUser();
 
             var myTests = _appDbContext.Tests
-                .Include(t => t.TestType)
+                .Include(t => t.TestTemplate)
                 .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
@@ -42,7 +42,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent
 
             for (var dt = request.StartTime.Date; dt <= request.EndTime.Date; dt = dt.AddDays(1))
             {
-                var count = myTests.Where(t => t.ProgrammedTime.Date == dt.Date.Date).Count();
+                var count = myTests.Count(t => t.ProgrammedTime.Date == dt.Date.Date);
 
                 var testCount = new TestCount()
                 {
@@ -51,7 +51,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent
                 };
 
                 dates.Add(testCount);
-
             }
 
             return dates;

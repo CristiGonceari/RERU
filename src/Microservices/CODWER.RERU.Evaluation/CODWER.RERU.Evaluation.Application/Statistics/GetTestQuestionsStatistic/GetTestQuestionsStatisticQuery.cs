@@ -10,7 +10,7 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.GetTestQuestionsStatisti
     [ModuleOperation(permission: PermissionCodes.STATISTICS_GENERAL_ACCESS)]
     public class GetTestQuestionsStatisticQuery : IRequest<List<TestQuestionStatisticDto>>
     {
-        public int TestTypeId { get; set; }
+        public int TestTemplateId { get; set; }
         public int ItemsPerPage { get; set; }
         public StatisticsQuestionFilterEnum FilterEnum { get; set; }
     }

@@ -1,10 +1,11 @@
-﻿using CODWER.RERU.Evaluation.Application.TestCategoryQuestions;
+﻿using CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCategoryQuestions;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestCategoryQuestions;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,7 +15,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CVU.ERP.StorageService.Context;
 using Wkhtmltopdf.NetCore;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations
@@ -45,10 +45,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         public async Task<FileDataDto> PrintTestTemplatePdf(int testTemplateId)
         {
-            var testTemplate = await _appDbContext.TestTypes
-                .Include(x => x.TestTypeQuestionCategories)
+            var testTemplate = await _appDbContext.TestTemplates
+                .Include(x => x.TestTemplateQuestionCategories)
                     .ThenInclude(x => x.TestCategoryQuestions)
-                .Include(x => x.TestTypeQuestionCategories)
+                .Include(x => x.TestTemplateQuestionCategories)
                     .ThenInclude(x => x.QuestionCategory)
                         .ThenInclude(x => x.QuestionUnits)
                 .Include(x => x.Settings)
@@ -60,8 +60,8 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         public async Task<FileDataDto> PrintTestPdf(int testId)
         {
             var item = _appDbContext.Tests
-                .Include(t => t.TestType)
-                    .ThenInclude(tt => tt.TestTypeQuestionCategories)
+                .Include(t => t.TestTemplate)
+                    .ThenInclude(tt => tt.TestTemplateQuestionCategories)
                         .ThenInclude(tc => tc.QuestionCategory)
                             .ThenInclude(c => c.QuestionUnits)
                 .Include(t => t.UserProfile)
@@ -100,7 +100,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         #region GetPdf
 
-        private async Task<FileDataDto> GetPdf(TestType testTemplate)
+        private async Task<FileDataDto> GetPdf(TestTemplate testTemplate)
         {
             var path = new FileInfo("PdfTemplates/TestTemplate.html").FullName;
             var source = await File.ReadAllTextAsync(path);
@@ -192,7 +192,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         #region GetDictionary
 
-        private async Task<Dictionary<string, string>> GetDictionary(TestType testTemplate)
+        private async Task<Dictionary<string, string>> GetDictionary(TestTemplate testTemplate)
         {
             var myDictionary = new Dictionary<string, string>();
 
@@ -203,7 +203,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             myDictionary.Add("{test_mode}", testTemplate.Mode.ToString());
             myDictionary.Add("{settings_replace}", GetParsedSettingsForTestTemplate(testTemplate));
             myDictionary.Add("{rules_name}", DecodeRules(testTemplate.Rules));
-            myDictionary.Add("{category_replace}", await GetTableContent(testTemplate.TestTypeQuestionCategories.ToList()));
+            myDictionary.Add("{category_replace}", await GetTableContent(testTemplate.TestTemplateQuestionCategories.ToList()));
 
             return myDictionary;
         }
@@ -211,10 +211,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             var myDictionary = new Dictionary<string, string>();
 
-            myDictionary.Add("{test_name}", item.TestType.Name);
-            myDictionary.Add("{nr_test_question}", item.TestType.QuestionCount.ToString());
+            myDictionary.Add("{test_name}", item.TestTemplate.Name);
+            myDictionary.Add("{nr_test_question}", item.TestTemplate.QuestionCount.ToString());
             myDictionary.Add("{test_time}", item.ProgrammedTime.ToString("dd/MM/yyyy, HH:mm"));
-            myDictionary.Add("{min_percentage}", item.TestType.MinPercent.ToString());
+            myDictionary.Add("{min_percentage}", item.TestTemplate.MinPercent.ToString());
             myDictionary.Add("{event_name}", item.EventId != null ? item.Event.Name : "-");
             myDictionary.Add("{location_name}", item.LocationId != null ? item.Location.Name : "-");
             myDictionary.Add("{evaluat_name}", item.UserProfile.FirstName + " " + item.UserProfile.LastName);
@@ -234,7 +234,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             myDictionary.Add("{question_type}", EnumMessages.EnumMessages.GetQuestionType(items.QuestionType));
             myDictionary.Add("{question_points}", items.QuestionPoints.ToString());
             myDictionary.Add("{question_status}", EnumMessages.EnumMessages.GetQuestionStatus(items.Status));
-            myDictionary.Add("{answer_option}", GetTableContent(items));
+            myDictionary.Add("{answer_option}", await GetTableContent(items));
 
             var dictionary = new Dictionary<string, Image>();
 
@@ -253,11 +253,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         #region GetTableContent
 
-        private async Task<string> GetTableContent(List<TestTypeQuestionCategory> testTypeQuestionCategories)
+        private async Task<string> GetTableContent(List<TestTemplateQuestionCategory> testTemplateQuestionCategories)
         {
             var content = string.Empty;
 
-            foreach (var item in testTypeQuestionCategories)
+            foreach (var item in testTemplateQuestionCategories)
             {
                 content += $@"
             <tr>
@@ -297,7 +297,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             var content = string.Empty;
 
-            foreach (var testCategory in item.TestType.TestTypeQuestionCategories)
+            foreach (var testCategory in item.TestTemplate.TestTemplateQuestionCategories)
             {
                 content += $@"<tr>
                                     <th colspan=""2"" style=""border: 1px solid black; border-collapse: collapse; text-align: left;
@@ -319,7 +319,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                                     <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; background-color: #1f3864; color: white; height: 30px;"">Tipul întrebării</th>
                                 </tr>";
 
-                var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { TestTypeQuestionCategoryId = testCategory.Id });
+                var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { TestTemplateQuestionCategoryId = testCategory.Id });
 
                 foreach (var question in testCategoryQuestionData.Questions)
                 {
@@ -329,7 +329,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                             </tr> ";
                 }
 
-                if (item.TestType.TestTypeQuestionCategories.Count() >= 2)
+                if (item.TestTemplate.TestTemplateQuestionCategories.Count() >= 2)
                 {
                     content += $@"<tr>
                                 <th colspan=""4"" style=""border: 1px solid black; border-collapse: collapse; background-color: rgba(223, 221, 221, 0.842); height: 35px;""></th>
@@ -339,7 +339,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             return content;
         }
-        private string GetTableContent(QuestionUnit questionOption)
+        private async Task<string> GetTableContent(QuestionUnit questionOption)
         {
             var content = string.Empty;
             if (questionOption.QuestionType == QuestionTypeEnum.MultipleAnswers || questionOption.QuestionType == QuestionTypeEnum.OneAnswer)
@@ -354,22 +354,79 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                     </tr>";
                     foreach (var option in options)
                     {
+                        var searchOptionFile = await  GetOptionFileToString(option);
+
                         if (option.IsCorrect)
-                        { content += $@"<tr>
-                            <th colspan='2' style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>{option.Answer}</th>
-                            <th style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>Corect</th>
-                            </tr>"; }
+                            if (searchOptionFile != null)
+                            {
+                                { content += $@"<tr>
+                                <th colspan='2' style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>
+                                    <div>
+                                        <div>
+                                            {option.Answer}
+                                        </div>
+                                        <img style='max-width: 100px' src='data:image/png;base64,{searchOptionFile}'>
+                                    </div>
+                                </th>
+                                <th style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>Corect</th>
+                                </tr>"; }
+                            }
+                            else
+                            {
+                                { content += $@"<tr>
+                                    <th colspan='2' style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>
+                                        {option.Answer}
+                                    </th>
+                                        <th style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>Corect</th>
+                                </tr>"; }
+                            }
                         else
                         {
-                            content += $@"<tr>
-                            <th colspan='2' style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>{option.Answer}</th>
-                            <th style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>Incorect</th>
-                            </tr>";
+                            if (searchOptionFile != null)
+                            {
+                                content +=
+                                   $@"<tr>
+                                         <th colspan='2' style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>
+                                            <div>
+                                                <div>
+                                                     {option.Answer}
+                                                </div>
+                                                <img style='max-width: 100px' src='data:image/png;base64,{searchOptionFile}'>
+                                            </div>
+                                         </th>
+                                         <th style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>Incorect</th>
+                                    </tr>";
+                            }
+                            else 
+                            {
+                               content += 
+                                    $@"<tr>
+                                         <th colspan='2' style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>{option.Answer}</th>
+                                         <th style='border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px;'>Incorect</th>
+                                    </tr>"; 
+                            }
+                            
                         }
                     }
                 }
             }
             return content;
+        }
+        private async Task<string> GetOptionFileToString(Option option)
+        {
+
+            var optionFile = _storageDbContext.Files.FirstOrDefault(f => f.Id.ToString() == option.MediaFileId && f.Type.Contains("image"));
+
+            string setOptionFile = null;
+
+            if (optionFile != null)
+            {
+                var getoptionFile = await _storageFileService.GetFile(optionFile.Id.ToString());
+
+                 setOptionFile = Convert.ToBase64String(getoptionFile.Content);
+            }
+
+            return setOptionFile;
         }
         private async Task<string> GetTableContent(List<int> testsIds)
         {
@@ -384,7 +441,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 var item = _appDbContext.Tests
                     .Include(t => t.UserProfile)
                     .Include(t => t.Evaluator)
-                    .Include(t => t.TestType)
+                    .Include(t => t.TestTemplate)
                     .Include(t => t.TestQuestions)
                     .ThenInclude(tq => tq.QuestionUnit)
                     .ThenInclude(q => q.Options)
@@ -427,9 +484,9 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 throw new Exception(e.Message);
             }
         }
-        private string BuildHtmlContentForQuestions(TestCategoryQuestionContentDto testTypeQuestionCategory)
+        private string BuildHtmlContentForQuestions(TestCategoryQuestionContentDto testTemplateQuestionCategory)
         {
-            return testTypeQuestionCategory.Questions.Aggregate(string.Empty, (current, questionUnit)
+            return testTemplateQuestionCategory.Questions.Aggregate(string.Empty, (current, questionUnit)
                 =>
                 current + $@"
             <tr>
@@ -446,7 +503,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             return testTemplateRules;
         }
-        private string GetParsedSettingsForTestTemplate(TestType testTemplate)
+        private string GetParsedSettingsForTestTemplate(TestTemplate testTemplate)
         {
             var content = string.Empty;
 
@@ -539,11 +596,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             return questionCount > 1 ? "intrebari" : "intrebare";
         }
-        private async Task<TestCategoryQuestionContentDto> GetQuestionsForCategoryContent(int testTypeQuestionCategoryId)
+        private async Task<TestCategoryQuestionContentDto> GetQuestionsForCategoryContent(int testTemplateQuestionCategoryId)
         {
             var command = new TestCategoryQuestionsQuery
             {
-                TestTypeQuestionCategoryId = testTypeQuestionCategoryId
+                TestTemplateQuestionCategoryId = testTemplateQuestionCategoryId
             };
 
             return await _mediator.Send(command);
@@ -707,11 +764,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             content += $@"
                 <div style=""padding-top: 150px;"">
                     <h2 style=""text-align: right; font-size: 18px; font-weight: 100;"">Numele, prenumele candidatului(ei): {item.UserProfile.FirstName} {item.UserProfile.LastName}</h2>
-                    <h2 style=""text-align: right; font-size: 18px; font-weight: 100;"">Procentul minim de trecere: {item.TestType.MinPercent}</h2>
+                    <h2 style=""text-align: right; font-size: 18px; font-weight: 100;"">Procentul minim de trecere: {item.TestTemplate.MinPercent}</h2>
                 </div>
                 <div style=""margin-top: 50px;"">
-                    <h2 style=""text-align: center; font-size: 22px;"">{item.TestType.Name}</h2>
-                    <h2 style=""text-align: center; font-size: 18px;""> Durata testului: {item.TestType.Duration} min</h2>
+                    <h2 style=""text-align: center; font-size: 22px;"">{item.TestTemplate.Name}</h2>
+                    <h2 style=""text-align: center; font-size: 18px;""> Durata testului: {item.TestTemplate.Duration} min</h2>
                 </div>";
 
             return content;

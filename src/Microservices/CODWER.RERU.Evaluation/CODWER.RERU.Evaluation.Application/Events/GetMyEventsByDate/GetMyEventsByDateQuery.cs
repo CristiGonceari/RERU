@@ -8,7 +8,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetMyEventsByDate
 {
     public class GetMyEventsByDateQuery : PaginatedQueryParameter, IRequest<PaginatedModel<EventDto>>
     {
-        public TestTypeModeEnum TestTypeMode { get; set; }
+        public TestTemplateModeEnum TestTemplateMode { get; set; }
         public DateTime Date { get; set; }
     }
 }

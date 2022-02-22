@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Personal.Data.Persistence.Context;
+using CVU.ERP.StorageService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,10 +11,12 @@ namespace CODWER.RERU.Personal.Application.Contractors.RemoveContractor
     public class RemoveContractorCommandHandler : IRequestHandler<RemoveContractorCommand, Unit>
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IStorageFileService _storageFileService;
 
-        public RemoveContractorCommandHandler(AppDbContext appDbContext)
+        public RemoveContractorCommandHandler(AppDbContext appDbContext, IStorageFileService storageFileService)
         {
             _appDbContext = appDbContext;
+            _storageFileService = storageFileService;
         }
 
         public async Task<Unit> Handle(RemoveContractorCommand request, CancellationToken cancellationToken)
@@ -36,9 +39,15 @@ namespace CODWER.RERU.Personal.Application.Contractors.RemoveContractor
         }
 
         private void RemoveAllData(int contractorId)
-        {
-            var contractorFiles = _appDbContext.ByteFiles.Where(x => x.ContractorId == contractorId);
-            _appDbContext.ByteFiles.RemoveRange(contractorFiles);
+        { 
+            var contractorFiles = _appDbContext.ContractorFiles.Where(x => x.ContractorId == contractorId);
+
+            foreach (var item in contractorFiles)
+            {
+                _storageFileService.RemoveFile(item.FileId);
+            }
+
+            _appDbContext.ContractorFiles.RemoveRange(contractorFiles);
 
             var contractorBulletins = _appDbContext.Bulletins.Where(x => x.ContractorId == contractorId);
             _appDbContext.Bulletins.RemoveRange(contractorBulletins);

@@ -112,7 +112,8 @@ services:
       - SAML_METADATA_ENDPOINT=http://reru-saml2:8080/simplesaml/saml2/idp/metadata.php
       - SAML_ENTITY_ID=http://localhost:10000
       - SAML_ENDPOINT=http://reru-saml2:8080
-      - ConnectionStrings__Default=server=db;database=RERU-Identity;User=sa;Password=Your_password123;
+      # - ConnectionStrings__Default=server=db;database=RERU-Identity;User=sa;Password=Your_password123;
+      - ConnectionStrings__Default=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Identity;
       - IDENTITY_ISSUER_URI=http://reru-identity-new:8080/ms/reru-identity-new
       - IDENTITY_DISCOVERY_ENDPOINT_URI=http://localhost:10000
     volumes:
@@ -175,7 +176,8 @@ services:
     environment:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Log=server=db;database=RERU-Logging;User=sa;Password=Your_password123;
+      # - ConnectionStrings__Log=server=db;database=RERU-Logging;User=sa;Password=Your_password123;
+      - ConnectionStrings__Log=server=db;Port=5432;Database=RERU-Logging;Username=postgres;Password=postgres;
     volumes:
       - ./docker-settings/Logging/appsettings.json:/app/appsettings.json
     depends_on:
@@ -203,9 +205,12 @@ services:
     environment:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=server=db;database=RERU-Core;User=sa;Password=Your_password123;
-      - ConnectionStrings__Identity=server=db;database=RERU-Identity;User=sa;Password=Your_password123;
-      - ConnectionStrings__Log=server=db;database=RERU-Logging;User=sa;Password=Your_password123;
+      - ConnectionStrings__Default=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Core;
+      - ConnectionStrings__Identity=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Identity;
+      - ConnectionStrings__Log=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Logging;
+      # - ConnectionStrings__Default=server=db;database=RERU-Core;User=sa;Password=Your_password123;
+      # - ConnectionStrings__Identity=server=db;database=RERU-Identity;User=sa;Password=Your_password123;
+      # - ConnectionStrings__Log=server=db;database=RERU-Logging;User=sa;Password=Your_password123;
     depends_on:
       - db
       - reru-identity-migrator
@@ -234,8 +239,11 @@ services:
     environment:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__Default=server=db;database=RERU-Personal;User=sa;Password=Your_password123;
-      - ConnectionStrings__Log=server=db;database=RERU-Logging;User=sa;Password=Your_password123;
+      - ConnectionStrings__Default=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Personal;
+      - ConnectionStrings__Log=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Logging;
+
+      # - ConnectionStrings__Default=server=db;database=RERU-Personal;User=sa;Password=Your_password123;
+      # - ConnectionStrings__Log=server=db;database=RERU-Logging;User=sa;Password=Your_password123;
     volumes:
       - ./docker-settings/Personal/appsettings.json:/app/appsettings.json
 
@@ -261,9 +269,13 @@ services:
     environment:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=server=db;database=RERU-Evaluation;User=sa;Password=Your_password123;
-      - ConnectionStrings__HangfireConnection=server=db;database=RERU-Evaluation;User=sa;Password=Your_password123;
-      - ConnectionStrings__Log=server=db;database=RERU-Logging;User=sa;Password=Your_password123;
+      - ConnectionStrings__Default=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Evaluation;
+      - ConnectionStrings__HangfireConnection=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Evaluation;
+      - ConnectionStrings__Log=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Logging;
+
+      # - ConnectionStrings__Default=server=db;database=RERU-Evaluation;User=sa;Password=Your_password123;
+      # - ConnectionStrings__HangfireConnection=server=db;database=RERU-Evaluation;User=sa;Password=Your_password123;
+      # - ConnectionStrings__Log=server=db;database=RERU-Logging;User=sa;Password=Your_password123;
     volumes:
       - ./docker-settings/Evaluation/appsettings.json:/app/appsettings.json
     depends_on:
@@ -280,16 +292,28 @@ services:
     volumes:
       - ./docker-settings/Evaluation-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
 
+  # db:
+  #   container_name: erp-sql-server
+  #   networks:
+  #     - my-network
+  #   image: "mcr.microsoft.com/mssql/server"
+  #   environment:
+  #     SA_PASSWORD: "Your_password123"
+  #     ACCEPT_EULA: "Y"
+  #   ports:
+  #     - 1444:1433
+
   db:
-    container_name: erp-sql-server
+    container_name: erp-sql-postgres
     networks:
       - my-network
-    image: "mcr.microsoft.com/mssql/server"
+    image: postgres
+    restart: always
     environment:
-      SA_PASSWORD: "Your_password123"
-      ACCEPT_EULA: "Y"
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     ports:
-      - 1444:1433
+      - '5432:5432'
 
   ubuntu:
     container_name: ubuntu

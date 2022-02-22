@@ -8,6 +8,8 @@ using CODWER.RERU.Personal.Application.TemplateParsers;
 using CODWER.RERU.Personal.Data.Entities.Enums;
 using CODWER.RERU.Personal.Data.Entities.Files;
 using CODWER.RERU.Personal.Data.Persistence.Context;
+using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,13 +20,18 @@ namespace CODWER.RERU.Personal.Application.Profiles.Vacations.SubordinatesVacati
         private readonly AppDbContext _appDbContext;
         private readonly ITemplateConvertor _templateConvertor;
         private readonly IStorageFileService _storageFileService;
+        private readonly IPersonalStorageClient _personalStorageClient;
         private readonly string _fileName;
 
-        public ApproveRejectVacationCommandHandler(AppDbContext appDbContext, ITemplateConvertor templateConvertor, IStorageFileService storageFileService)
+        public ApproveRejectVacationCommandHandler(AppDbContext appDbContext, 
+            ITemplateConvertor templateConvertor, 
+            IStorageFileService storageFileService, 
+            IPersonalStorageClient personalStorageClient)
         {
             _appDbContext = appDbContext;
             _templateConvertor = templateConvertor;
             _storageFileService = storageFileService;
+            _personalStorageClient = personalStorageClient;
             _fileName = "ContractorTemplates/Orders/Ordin Cu Privire La Concediu.html";
         }
 
@@ -47,16 +54,20 @@ namespace CODWER.RERU.Personal.Application.Profiles.Vacations.SubordinatesVacati
             return Unit.Value;
         }
 
-        private async Task<int> SaveFile(int contractorId, int vacationId)
+        private async Task<string> SaveFile(int contractorId, int vacationId)
         {
             var myDictionary = await GetMyDictionary(contractorId, vacationId);
             var parsedPdf = await _templateConvertor.GetPdfFromHtml(myDictionary, _fileName);
 
-            return await _storageFileService.AddFile(contractorId,
+             var fileId = await _storageFileService.AddFile(
                 parsedPdf.Name,
+                FileTypeEnum.order,
                 parsedPdf.ContentType,
-                FileTypeEnum.Order,
                 parsedPdf.Content);
+
+            await _personalStorageClient.AddFileToContractor(contractorId, fileId);
+
+            return fileId;
         }
 
         private async Task<Dictionary<string, string>> GetMyDictionary(int contractorId, int vacationId)
