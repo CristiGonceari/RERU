@@ -30,69 +30,69 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     public class TestTemplateController : BaseController
     {
         [HttpGet("{id}")]
-        public async Task<TestTemplateDto> GetTestType([FromRoute] int id)
+        public async Task<TestTemplateDto> GetTestTemplate([FromRoute] int id)
         {
             var query = new GetTestTemplateQuery { Id = id };
             return await Mediator.Send(query);
         }
 
         [HttpGet]
-        public async Task<PaginatedModel<TestTemplateDto>> GetTestTypes([FromQuery] GetTestTemplatesQuery query)
+        public async Task<PaginatedModel<TestTemplateDto>> GetTestTemplates([FromQuery] GetTestTemplatesQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpPost]
-        public async Task<int> AddTestType([FromBody] AddTestTemplateCommand command)
+        public async Task<int> AddTestTemplate([FromBody] AddTestTemplateCommand command)
         {
             return await Mediator.Send(command);
         }
 
         [HttpPatch]
-        public async Task<int> EditTestType([FromBody] EditTestTemplateCommand command)
+        public async Task<int> EditTestTemplate([FromBody] EditTestTemplateCommand command)
         {
             return await Mediator.Send(command);
         }
 
         [HttpDelete("{id}")]
-        public async Task<Unit> DeleteTestType([FromRoute] int id)
+        public async Task<Unit> DeleteTestTemplate([FromRoute] int id)
         {
             return await Mediator.Send(new DeleteTestTemplateCommand { Id = id });
         }
 
         [HttpGet("settings")]
-        public async Task<TestTemplateSettingsDto> GetTestTypeSettings([FromQuery] GetTestTemplateSettingsQuery query)
+        public async Task<TestTemplateSettingsDto> GetTestTemplateSettings([FromQuery] GetTestTemplateSettingsQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpGet("rules/{id}")]
-        public async Task<RulesDto> GetTestTypeRules([FromRoute] int id)
+        public async Task<RulesDto> GetTestTemplateRules([FromRoute] int id)
         {
-            var query = new GetTestTemplateRulesQuery() { TestTypeId = id };
+            var query = new GetTestTemplateRulesQuery() { TestTemplateId = id };
             return await Mediator.Send(query);
         }
 
         [HttpGet("status")]
-        public async Task<List<SelectTestTemplateValueDto>> GetTestTypeByStatus([FromQuery] GetTestTemplateByStatusQuery query)
+        public async Task<List<SelectTestTemplateValueDto>> GetTestTemplateByStatus([FromQuery] GetTestTemplateByStatusQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpPatch("settings")]
-        public async Task<Unit> ChangeTestTypeSettings([FromBody] AddEditTestTemplateSettingsCommand command)
+        public async Task<Unit> ChangeTestTemplateSettings([FromBody] AddEditTestTemplateSettingsCommand command)
         {
             return await Mediator.Send(command);
         }
 
         [HttpPatch("rules")]
-        public async Task<Unit> AddRulesToTestType([FromBody] AddTestTemplateRulesCommand command)
+        public async Task<Unit> AddRulesToTestTemplate([FromBody] AddTestTemplateRulesCommand command)
         {
             return await Mediator.Send(command);
         }
 
         [HttpPatch("status")]
-        public async Task<Unit> ChangeTestTypeStatus([FromBody] EditTestTemplateStatusCommand command)
+        public async Task<Unit> ChangeTestTemplateStatus([FromBody] EditTestTemplateStatusCommand command)
         {
             return await Mediator.Send(command);
         }
@@ -104,20 +104,20 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("validate")]
-        public async Task<Unit> ValidateTestType([FromQuery] ValidateTestTemplateQuery query)
+        public async Task<Unit> ValidateTestTemplate([FromQuery] ValidateTestTemplateQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpPost("clone")]
-        public async Task<int> CloneTestType([FromBody] CloneTestTemplateCommand command)
+        public async Task<int> CloneTestTemplate([FromBody] CloneTestTemplateCommand command)
         {
             return await Mediator.Send(command);
         }
 
         [HttpPut("print")]
         [IgnoreResponseWrap]
-        public async Task<IActionResult> PrintTestTypes([FromBody] PrintTestTemplatesCommand command)
+        public async Task<IActionResult> PrintTestTemplates([FromBody] PrintTestTemplatesCommand command)
         {
             var result = await Mediator.Send(command);
 

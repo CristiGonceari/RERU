@@ -4,9 +4,9 @@ using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 
 namespace CODWER.RERU.Evaluation.Application.EventLocations
 {
-    public class EventTestTypeMapping : Profile
+    public class EventTestTemplateMapping : Profile
     {
-        public EventTestTypeMapping()
+        public EventTestTemplateMapping()
         {
             CreateMap<AddEventLocationDto, EventLocation>();
         }

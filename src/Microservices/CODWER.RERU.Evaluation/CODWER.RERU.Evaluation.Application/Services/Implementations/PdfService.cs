@@ -46,9 +46,9 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         public async Task<FileDataDto> PrintTestTemplatePdf(int testTemplateId)
         {
             var testTemplate = await _appDbContext.TestTemplates
-                .Include(x => x.TestTypeQuestionCategories)
+                .Include(x => x.TestTemplateQuestionCategories)
                     .ThenInclude(x => x.TestCategoryQuestions)
-                .Include(x => x.TestTypeQuestionCategories)
+                .Include(x => x.TestTemplateQuestionCategories)
                     .ThenInclude(x => x.QuestionCategory)
                         .ThenInclude(x => x.QuestionUnits)
                 .Include(x => x.Settings)
@@ -61,7 +61,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             var item = _appDbContext.Tests
                 .Include(t => t.TestTemplate)
-                    .ThenInclude(tt => tt.TestTypeQuestionCategories)
+                    .ThenInclude(tt => tt.TestTemplateQuestionCategories)
                         .ThenInclude(tc => tc.QuestionCategory)
                             .ThenInclude(c => c.QuestionUnits)
                 .Include(t => t.UserProfile)
@@ -203,7 +203,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             myDictionary.Add("{test_mode}", testTemplate.Mode.ToString());
             myDictionary.Add("{settings_replace}", GetParsedSettingsForTestTemplate(testTemplate));
             myDictionary.Add("{rules_name}", DecodeRules(testTemplate.Rules));
-            myDictionary.Add("{category_replace}", await GetTableContent(testTemplate.TestTypeQuestionCategories.ToList()));
+            myDictionary.Add("{category_replace}", await GetTableContent(testTemplate.TestTemplateQuestionCategories.ToList()));
 
             return myDictionary;
         }
@@ -253,11 +253,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         #region GetTableContent
 
-        private async Task<string> GetTableContent(List<TestTypeQuestionCategory> testTypeQuestionCategories)
+        private async Task<string> GetTableContent(List<TestTemplateQuestionCategory> testTemplateQuestionCategories)
         {
             var content = string.Empty;
 
-            foreach (var item in testTypeQuestionCategories)
+            foreach (var item in testTemplateQuestionCategories)
             {
                 content += $@"
             <tr>
@@ -297,7 +297,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             var content = string.Empty;
 
-            foreach (var testCategory in item.TestTemplate.TestTypeQuestionCategories)
+            foreach (var testCategory in item.TestTemplate.TestTemplateQuestionCategories)
             {
                 content += $@"<tr>
                                     <th colspan=""2"" style=""border: 1px solid black; border-collapse: collapse; text-align: left;
@@ -319,7 +319,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                                     <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; background-color: #1f3864; color: white; height: 30px;"">Tipul întrebării</th>
                                 </tr>";
 
-                var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { TestTypeQuestionCategoryId = testCategory.Id });
+                var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { TestTemplateQuestionCategoryId = testCategory.Id });
 
                 foreach (var question in testCategoryQuestionData.Questions)
                 {
@@ -329,7 +329,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                             </tr> ";
                 }
 
-                if (item.TestTemplate.TestTypeQuestionCategories.Count() >= 2)
+                if (item.TestTemplate.TestTemplateQuestionCategories.Count() >= 2)
                 {
                     content += $@"<tr>
                                 <th colspan=""4"" style=""border: 1px solid black; border-collapse: collapse; background-color: rgba(223, 221, 221, 0.842); height: 35px;""></th>
@@ -484,9 +484,9 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 throw new Exception(e.Message);
             }
         }
-        private string BuildHtmlContentForQuestions(TestCategoryQuestionContentDto testTypeQuestionCategory)
+        private string BuildHtmlContentForQuestions(TestCategoryQuestionContentDto testTemplateQuestionCategory)
         {
-            return testTypeQuestionCategory.Questions.Aggregate(string.Empty, (current, questionUnit)
+            return testTemplateQuestionCategory.Questions.Aggregate(string.Empty, (current, questionUnit)
                 =>
                 current + $@"
             <tr>
@@ -596,11 +596,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             return questionCount > 1 ? "intrebari" : "intrebare";
         }
-        private async Task<TestCategoryQuestionContentDto> GetQuestionsForCategoryContent(int testTypeQuestionCategoryId)
+        private async Task<TestCategoryQuestionContentDto> GetQuestionsForCategoryContent(int testTemplateQuestionCategoryId)
         {
             var command = new TestCategoryQuestionsQuery
             {
-                TestTypeQuestionCategoryId = testTypeQuestionCategoryId
+                TestTemplateQuestionCategoryId = testTemplateQuestionCategoryId
             };
 
             return await _mediator.Send(command);

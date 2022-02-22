@@ -29,9 +29,9 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.ValidateTestTemplate
                 .WithErrorCode(ValidationCodes.QUESTION_COUNT_MUST_BE_EQUAL_TO_SELECTED_COUNT);
         }
 
-        private bool IsEnoughtQuestionsInCategory(int testTypeId)
+        private bool IsEnoughtQuestionsInCategory(int testTemplateId)
         {
-            var usedCategories = _appDbContext.TestTypeQuestionCategories.Where(x => x.TestTemplateId == testTypeId).ToList();
+            var usedCategories = _appDbContext.TestTemplateQuestionCategories.Where(x => x.TestTemplateId == testTemplateId).ToList();
 
             foreach (var categoryConnection in usedCategories)
             {
@@ -56,10 +56,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.ValidateTestTemplate
         private bool IsQuestionCountEqual(int testTemplateId)
         {
             var testTemplate = _appDbContext.TestTemplates
-                .Include(x => x.TestTypeQuestionCategories)
+                .Include(x => x.TestTemplateQuestionCategories)
                 .First(x => x.Id == testTemplateId);
 
-            var usedCategories = testTemplate.TestTypeQuestionCategories.ToList();
+            var usedCategories = testTemplate.TestTemplateQuestionCategories.ToList();
 
             if (usedCategories.Any(x => !x.QuestionCount.HasValue))
             {

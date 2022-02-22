@@ -10,11 +10,11 @@ import { TestAnswer } from '../../../utils/models/test-questions/test-answer.mod
 import { TestOptions } from '../../../utils/models/test-questions/test-options.model';
 import { TestQuestionSummary } from '../../../utils/models/test-questions/test-question-summary.model';
 import { TestQuestion } from '../../../utils/models/test-questions/test-question.model';
-import { TestTypeSettings } from '../../../utils/models/test-types/test-type-settings.model';
-import { TestType } from '../../../utils/models/test-types/test-type.model';
+import { TestTemplateSettings } from '../../../utils/models/test-templates/test-template-settings.model';
+import { TestTemplate } from '../../../utils/models/test-templates/test-template.model';
 import { Test } from '../../../utils/models/tests/test.model';
 import { TestQuestionService } from '../../../utils/services/test-question/test-question.service';
-import { TestTypeService } from '../../../utils/services/test-type/test-type.service';
+import { TestTemplateService } from '../../../utils/services/test-template/test-template.service';
 import { TestService } from '../../../utils/services/test/test.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { NotificationsService } from 'angular2-notifications';
@@ -53,8 +53,8 @@ export class PerformingPollComponent implements OnInit {
   questionsList: QuestionUnit[] = [];
   testAnswersInput: TestAnswer[] = [];
   testQuestion: TestQuestion[] = [];
-  testTypeModel = new TestType();
-  testTypeSettings = new TestTypeSettings();
+  testTemplateModel = new TestTemplate();
+  testTemplateSettings = new TestTemplateSettings();
   hashedOptions;
 
   textAnswer: string;
@@ -72,7 +72,7 @@ export class PerformingPollComponent implements OnInit {
     private modalService: NgbModal,
 	  public translate: I18nService,
     private router: Router,
-    private testTypeService: TestTypeService,
+    private testTemplateService: TestTemplateService,
 		private notificationService: NotificationsService
   ) { 
     this.activatedRoute.params.subscribe(params => {
@@ -90,13 +90,13 @@ export class PerformingPollComponent implements OnInit {
     this.testService.getTest(this.testId).subscribe(
       res => {
         this.testDto = res.data;
-        this.getTestType(res.data.testTypeId);
+        this.getTestTemplate(res.data.testTemplateId);
       }
     )
   }
 
-  getTestType(testTypeId) {
-    this.testTypeService.getTestType(testTypeId ).subscribe(res => this.getTestTypeSettings(res.data.id))
+  getTestTemplate(testTemplateId) {
+    this.testTemplateService.getTestTemplate(testTemplateId ).subscribe(res => this.getTestTemplateSettings(res.data.id))
   }
 
   summary() {
@@ -110,7 +110,7 @@ export class PerformingPollComponent implements OnInit {
         this.viewed = res.data.filter(st => st.answerStatus === 1).map(id => id.index);
         this.skipped = res.data.filter(st => st.answerStatus === 2).map(id => id.index);
         this.answered = res.data.filter(st => st.answerStatus === 3).map(id => id.index);
-        if (!this.testTypeSettings.possibleChangeAnswer || !this.testTypeSettings.possibleGetToSkipped)
+        if (!this.testTemplateSettings.possibleChangeAnswer || !this.testTemplateSettings.possibleGetToSkipped)
           this.disable = res.data.filter(st => (st.answerStatus === 3 || st.answerStatus === 2)).map(id => id.index);
         this.getTestQuestions();
       });
@@ -175,11 +175,11 @@ export class PerformingPollComponent implements OnInit {
     this.postAnswer(+this.answerStatusEnum.Answered);
   }
 
-  getTestTypeSettings(testTypeId) {
-    this.testTypeService.getTestTypeSettings({ testTypeId: testTypeId }).subscribe(
+  getTestTemplateSettings(testTemplateId) {
+    this.testTemplateService.getTestTemplateSettings({ testTemplateId: testTemplateId }).subscribe(
       res => {
-        this.testTypeSettings = res.data;
-        if (res.data == null) this.testTypeSettings = new TestTypeSettings();
+        this.testTemplateSettings = res.data;
+        if (res.data == null) this.testTemplateSettings = new TestTemplateSettings();
       }
     );
   }
@@ -195,12 +195,12 @@ export class PerformingPollComponent implements OnInit {
             this.viewed = res.data.filter(st => st.answerStatus === 1).map(id => id.index);
             this.skipped = res.data.filter(st => st.answerStatus === 2).map(id => id.index);
             this.answered = res.data.filter(st => st.answerStatus === 3).map(id => id.index);
-            if (!this.testTypeSettings.possibleChangeAnswer)
+            if (!this.testTemplateSettings.possibleChangeAnswer)
               this.disable = res.data.filter(st => (st.answerStatus === 3 || st.answerStatus === 2)).map(id => id.index);
 
             if (this.testQuestionSummary.every(x => x.isClosed === true)) {
               this.submitTest();
-            } else if (!this.testTypeSettings.possibleChangeAnswer || !this.testTypeSettings.possibleGetToSkipped) {
+            } else if (!this.testTemplateSettings.possibleChangeAnswer || !this.testTemplateSettings.possibleGetToSkipped) {
               var isNotClosedAnswers = this.testQuestionSummary.filter(x => x.isClosed === false);
 
               this.questionIndex = isNotClosedAnswers.some(x => x.index > this.questionIndex) ?
@@ -230,7 +230,7 @@ export class PerformingPollComponent implements OnInit {
       this.questionIndex = this.testQuestionSummary.find(x => x.isClosed === false).index;
     }
 
-    if (this.testQuestionSummary.find(x => x.index === this.questionIndex).isClosed && !this.testTypeSettings.possibleChangeAnswer) {
+    if (this.testQuestionSummary.find(x => x.index === this.questionIndex).isClosed && !this.testTemplateSettings.possibleChangeAnswer) {
       this.questionIndex = this.testQuestionSummary.find(x => x.isClosed === false).index
       questionIndex = this.testQuestionSummary.find(x => x.isClosed === false).index
     }

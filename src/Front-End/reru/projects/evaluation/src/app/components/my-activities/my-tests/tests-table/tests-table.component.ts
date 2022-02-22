@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TestResultStatusEnum } from '../../../../utils/enums/test-result-status.enum';
 import { TestStatusEnum } from '../../../../utils/enums/test-status.enum';
 import { Test } from '../../../../utils/models/tests/test.model';
-import { TestTypeService } from 'projects/evaluation/src/app/utils/services/test-type/test-type.service';
+import { TestTemplateService } from 'projects/evaluation/src/app/utils/services/test-template/test-template.service';
 import { TestService } from 'projects/evaluation/src/app/utils/services/test/test.service';
 import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
 import { Events } from 'projects/evaluation/src/app/utils/models/calendar/events';
@@ -40,7 +40,7 @@ export class TestsTableComponent implements OnInit {
   displayDate;
 
   constructor(private testService: TestService,
-    private testTypeService: TestTypeService,
+    private testTemplateService: TestTemplateService,
     private router: Router,
   ) { }
 
@@ -129,13 +129,13 @@ export class TestsTableComponent implements OnInit {
   getTestById(testId: number) {
     this.testService.getTest(testId).subscribe(res => {
       this.testId = res.data.id;
-      this.getTestType(res.data.testTemplateId);
+      this.getTestTemplate(res.data.testTemplateId);
     })
   }
 
 
-  getTestType(testTypeId) {
-    this.testTypeService.getTestTypeSettings({ testTemplateId: testTypeId }).subscribe(res => {
+  getTestTemplate(testTemplateId) {
+    this.testTemplateService.getTestTemplateSettings({ testTemplateId: testTemplateId }).subscribe(res => {
       this.settings = res.data;
       this.goToTest();
     })

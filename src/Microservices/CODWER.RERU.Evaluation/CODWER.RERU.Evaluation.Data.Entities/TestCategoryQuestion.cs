@@ -6,8 +6,8 @@ namespace CODWER.RERU.Evaluation.Data.Entities
     {
         public int Index { get; set; }
 
-        public int TestTypeQuestionCategoryId { get; set; }
-        public TestTypeQuestionCategory TestTypeQuestionCategory { get; set; }
+        public int TestTemplateQuestionCategoryId { get; set; }
+        public TestTemplateQuestionCategory TestTemplateQuestionCategory { get; set; }
 
         public int QuestionUnitId { get; set; }
         public QuestionUnit QuestionUnit { get; set; }

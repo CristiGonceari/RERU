@@ -1,7 +1,7 @@
 import { TestPassStatusEnum } from "../../enums/test-pass-status.enum";
 import { TestResultStatusEnum } from "../../enums/test-result-status.enum";
 import { TestStatusEnum } from "../../enums/test-status.enum";
-import { TestTypeModeEnum } from "../../enums/test-type-mode.enum";
+import { TestTemplateModeEnum } from "../../enums/test-template-mode.enum";
 
 export class Test {
     id: number;
@@ -24,7 +24,7 @@ export class Test {
     showUserName: boolean;
     isEvaluator: boolean;
     testStatus: TestStatusEnum;
-    modeStatus: TestTypeModeEnum;
+    modeStatus: TestTemplateModeEnum;
     result: TestResultStatusEnum;
     programmedTime: string;
     endTime?: string;

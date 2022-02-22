@@ -332,7 +332,8 @@
     "min-score": "Min. Score",
     "hello-username": "Hello, {{username}}!",
     "have-a-good-day": "Welcome, have a good day!",
-    "my-activities": "My activities"
+    "my-activities": "My activities", 
+    "my-evaluated-tests": "My evaluated Tests"
   },
   "questions": {
     "count": "Question count",
@@ -378,7 +379,8 @@
     "succes-add-multiple-msg": "Questions were successfully added",
     "succes-update-msg": "Question was successfully updated",
     "succes-update-status-msg": "Question status was updated",
-    "search-by-status": "Select question status"
+    "search-by-status": "Select question status",
+    "add-tags": "Add tags"
   },
   "answers": {
     "option-settings": "Option Settions",

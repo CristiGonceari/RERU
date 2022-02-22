@@ -1,0 +1,109 @@
+<app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'10vh'" [height]="'5rem'" [width]="'5rem'"
+    [colorClass]="'text-primary'">
+</app-loading-spinner>
+<h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
+
+<div *ngIf="!isLoading && !downloadFile">
+    <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+        id="kt_datatable">
+        <table class="datatable table font-size-lg" style="overflow: visible">
+            <thead class="text-uppercase text-muted">
+                <tr>
+                    <th scope="col">{{'tests.name' | translate}}</th>
+                    <th scope="col" class="text-left" style="width: 100px">{{'tests.category-used-count' | translate}}
+                    </th>
+                    <th scope="col" class="text-left" style="width: 100px">{{'tests.questions-to-use-count' |
+                        translate}}</th>
+                    <th scope="col" class="text-left" style="width: 75px">{{'tests.time' | translate}}</th>
+                    <th scope="col" class="text-left" style="width: 75px">{{'verify-test.min-points' | translate}}</th>
+                    <th scope="col" class="text-left" style="width: 75px">{{'tests.mode' | translate}}</th>
+                    <th scope="col" class="text-left" style="width: 100px">{{'tests.status' | translate}}</th>
+                    <th scope="col" style="width: 48px"></th>
+                </tr>
+            </thead>
+            <tbody class="datatable-body" *ngIf="testTemplateList.length">
+                <tr *ngFor="let testTemplate of testTemplateList" (dblclick)="navigate(testTemplate.id)">
+                    <td style="cursor: pointer;" [routerLink]="['type-details', testTemplate.id]">{{testTemplate.name}}</td>
+                    <td>{{ testTemplate.categoriesCount }}</td>
+                    <td>{{ testTemplate.questionCount }}</td>
+                    <td>{{ testTemplate.duration }}</td>
+                    <td>{{ testTemplate.minPercent }} %</td>
+                    <td>{{'statuses.' + modeEnum[testTemplate.mode] | translate}}</td>
+                    <td>{{'statuses.' + statusEnum[testTemplate.status] | translate}}</td>
+                    <td data-field="Actions" data-autohide-disabled="false"
+                        class="datatable-cell datatable-cell-sort p-3">
+                        <div style="overflow: visible; position: relative; width: 0px">
+                            <div ngbDropdown class="dropdown dropdown-inline">
+                                <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                                    <span class="svg-icon svg-icon-md" ngbDropdownToggle>
+                                        <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                            viewBox="0 0 24 24" version="1.1">
+                                            <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
+                                                <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3"
+                                                    fill="black">
+                                                </rect>
+                                                <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3"
+                                                    fill="black" fill-opacity="0.7"></rect>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                                    <div ngbDropdownMenu aria-labelledby="action1">
+                                        <button [routerLink]="['type-details', testTemplate.id]"
+                                            class="navi-link align-items-center px-6" ngbDropdownItem>
+                                            {{'categories.view-details' | translate}}
+                                        </button>
+                                        <button [routerLink]="['edit-test-type', testTemplate.id]"
+                                            [disabled]="testTemplate.status == statusEnum.Active || testTemplate.status == statusEnum.Canceled"
+                                            class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                                            {{ 'button.edit' | translate }}
+                                        </button>
+                                        <span *ngIf="testTemplate.status != statusEnum.Canceled">
+                                            <button (click)="validateTestTemplate(testTemplate.id, testTemplate.status)"
+                                                class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                                                <span style="font-size: 13px;"
+                                                    *ngIf="testTemplate.status == 1">{{'statuses.activate' |
+                                                    translate}}</span>
+                                                <span style="font-size: 13px;"
+                                                    *ngIf="testTemplate.status == 0">{{'statuses.canceled' |
+                                                    translate}}</span>
+                                            </button>
+                                        </span>
+                                        <button *ngIf="testTemplate.status == statusEnum.Draft"
+                                            class="navi-link align-items-baseline px-6" ngbDropdownItem
+                                            (click)="openConfirmationDeleteModal(testTemplate.id)">
+                                            {{'button.delete' | translate}}
+                                        </button>
+                                        <span *ngIf="testTemplate.status == statusEnum.Canceled">
+                                            <button (click)="cloneTestTemplate(testTemplate.id)"
+                                                class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                                                <span style="font-size: 13px;">{{'statuses.clone' | translate}}</span>
+                                            </button>
+                                        </span>
+                                            <button (click)="printTestTemplate(testTemplate.id)" class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                                            {{ 'button.print' | translate }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody class="datatable-body" *ngIf="!testTemplateList.length">
+                <tr>
+                    <td colspan="7" class="text-center">
+                        {{ 'message.no-record' | translate }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
+            [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
+            (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event })"
+            (pageChange)="list({ keyword: keyword, page: $event })">
+        </div>
+    </div>
+</div>

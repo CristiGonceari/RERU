@@ -28,10 +28,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPollsByEve
         {
             var thisEvent = _appDbContext.Events.First(x => x.Id == request.EventId);
 
-            var myTestsTypes = await _appDbContext.EventTestTypes
+            var myTestsTypes = await _appDbContext.EventTestTemplates
                 .Include(t => t.TestTemplate)
                 .ThenInclude(tt => tt.Settings)
-                .Where(t => t.TestTemplate.Mode == TestTypeModeEnum.Poll && t.Event.Id == request.EventId)
+                .Where(t => t.TestTemplate.Mode == TestTemplateModeEnum.Poll && t.Event.Id == request.EventId)
                 .Select(t => new PollDto
                     {
                         Id = t.TestTemplateId,
@@ -39,7 +39,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPollsByEve
                         EndTime = thisEvent.TillDate,
                         TestTemplateName = t.TestTemplate.Name,
                         Setting = t.TestTemplate.Settings.CanViewPollProgress,
-                        TestTypeStatus = t.TestTemplate.Status
+                        TestTemplateStatus = t.TestTemplate.Status
                     }
                 )
                 .ToListAsync();
@@ -47,24 +47,24 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPollsByEve
 
             var answer = new List<PollDto>();
 
-            foreach (var testType in myTestsTypes)
+            foreach (var testTemplate in myTestsTypes)
             {
-                var myPoll = await _appDbContext.Tests.Include(x => x.TestQuestions).FirstOrDefaultAsync(x => x.TestTemplateId == testType.Id && x.UserProfileId == request.UserId);
-                testType.TestStatus = myPoll?.TestStatus;
+                var myPoll = await _appDbContext.Tests.Include(x => x.TestQuestions).FirstOrDefaultAsync(x => x.TestTemplateId == testTemplate.Id && x.UserProfileId == request.UserId);
+                testTemplate.TestStatus = myPoll?.TestStatus;
 
                 if (myPoll != null && myPoll.TestStatus >= TestStatusEnum.Terminated)
                 {
-                    testType.VotedTime = myPoll.ProgrammedTime;
-                    testType.Status = MyPollStatusEnum.Voted;
+                    testTemplate.VotedTime = myPoll.ProgrammedTime;
+                    testTemplate.Status = MyPollStatusEnum.Voted;
                 }
                 else
                 {
-                    testType.Status = MyPollStatusEnum.NotVoted;
+                    testTemplate.Status = MyPollStatusEnum.NotVoted;
                 }
 
-                if (testType.TestTypeStatus == TestTypeStatusEnum.Active || testType.Status == MyPollStatusEnum.Voted)
+                if (testTemplate.TestTemplateStatus == TestTemplateStatusEnum.Active || testTemplate.Status == MyPollStatusEnum.Voted)
                 {
-                    answer.Add(testType);
+                    answer.Add(testTemplate);
                 }
             }
 

@@ -3,7 +3,7 @@ using MediatR;
 using System.Collections.Generic;
 using CODWER.RERU.Evaluation.Application.Permissions;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
+using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplateQuestionCategories;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.SetCategoriesSequence
 {
@@ -11,7 +11,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.SetC
     public class SetCategoriesSequenceCommand : IRequest<Unit>
     {
         public int TestTemplateId { get; set; }
-        public List<TestTypeQuestionCategoryOrderDto> ItemsOrder { get; set; }
+        public List<TestTemplateQuestionCategoryOrderDto> ItemsOrder { get; set; }
 
         public SequenceEnum SequenceType { get; set; }
     }

@@ -9,7 +9,7 @@ namespace CODWER.RERU.Evaluation.Data.Entities
         public Event()
         {
             Tests = new HashSet<Test>();
-            EventTestTypes = new HashSet<EventTestType>();
+            EventTestTemplates = new HashSet<EventTestTemplate>();
             EventResponsiblePersons = new HashSet<EventResponsiblePerson>();
             EventUsers = new HashSet<EventUser>();
             EventLocations = new HashSet<EventLocation>();
@@ -26,7 +26,7 @@ namespace CODWER.RERU.Evaluation.Data.Entities
         public Plan Plan { get; set; }
 
         public virtual ICollection<Test> Tests { get; set; }
-        public virtual ICollection<EventTestType> EventTestTypes { get; set; }
+        public virtual ICollection<EventTestTemplate> EventTestTemplates { get; set; }
         public virtual ICollection<EventResponsiblePerson> EventResponsiblePersons { get; set; }
         public virtual ICollection<EventUser> EventUsers { get; set; }
         public virtual ICollection<EventLocation> EventLocations { get; set; }

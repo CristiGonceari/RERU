@@ -30,34 +30,34 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetQuestionsPreview
 
         public async Task<List<QuestionUnitPreviewDto>> Handle(GetQuestionsPreviewQuery request, CancellationToken cancellationToken)
         {
-            var testType = await _appDbContext.TestTemplates
-                .Include(x => x.TestTypeQuestionCategories)
+            var testTemplate = await _appDbContext.TestTemplates
+                .Include(x => x.TestTemplateQuestionCategories)
                 .Include(x => x.Settings)
-                .FirstAsync(x => x.Id == request.TestTypeId);
+                .FirstAsync(x => x.Id == request.TestTemplateId);
 
-            var totalCount = testType.QuestionCount;
+            var totalCount = testTemplate.QuestionCount;
 
-            var testTypeQuestionCategoriesToUse = testType.TestTypeQuestionCategories;
-            var categoriesCount = testTypeQuestionCategoriesToUse.Count;
+            var testTemplateQuestionCategoriesToUse = testTemplate.TestTemplateQuestionCategories;
+            var categoriesCount = testTemplateQuestionCategoriesToUse.Count;
 
             var index = 1;
             int questionsPerCategory = 0;
             var remainsCategoriesCount = categoriesCount;
 
-            if (testType.CategoriesSequence == SequenceEnum.Strict)
+            if (testTemplate.CategoriesSequence == SequenceEnum.Strict)
             {
-                testTypeQuestionCategoriesToUse = testTypeQuestionCategoriesToUse.OrderBy(x => x.CategoryIndex).ToList();
+                testTemplateQuestionCategoriesToUse = testTemplateQuestionCategoriesToUse.OrderBy(x => x.CategoryIndex).ToList();
             }
             else
             {
-                testTypeQuestionCategoriesToUse = testTypeQuestionCategoriesToUse.OrderBy(x => Guid.NewGuid()).ToList();
+                testTemplateQuestionCategoriesToUse = testTemplateQuestionCategoriesToUse.OrderBy(x => Guid.NewGuid()).ToList();
             }
 
-            if (testTypeQuestionCategoriesToUse.Any(x => x.QuestionCount == 0))
+            if (testTemplateQuestionCategoriesToUse.Any(x => x.QuestionCount == 0))
             {
-                questionsPerCategory = (totalCount - testTypeQuestionCategoriesToUse.Where(x => x.QuestionCount.HasValue).Sum(x => x.QuestionCount.Value)) / testTypeQuestionCategoriesToUse.Where(x => !x.QuestionCount.HasValue).Count();
+                questionsPerCategory = (totalCount - testTemplateQuestionCategoriesToUse.Where(x => x.QuestionCount.HasValue).Sum(x => x.QuestionCount.Value)) / testTemplateQuestionCategoriesToUse.Where(x => !x.QuestionCount.HasValue).Count();
             }
-            foreach (var category in testTypeQuestionCategoriesToUse)
+            foreach (var category in testTemplateQuestionCategoriesToUse)
             {
                 int categoryQuestionsCount;
                 if (category.QuestionCount.HasValue)
@@ -68,7 +68,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetQuestionsPreview
                 {
                     if (remainsCategoriesCount == 1)
                     {
-                        categoryQuestionsCount = questionsPerCategory + (totalCount - testTypeQuestionCategoriesToUse.Where(x => x.QuestionCount.HasValue).Sum(x => x.QuestionCount.Value) - testTypeQuestionCategoriesToUse.Where(x => !x.QuestionCount.HasValue).Count() * questionsPerCategory);
+                        categoryQuestionsCount = questionsPerCategory + (totalCount - testTemplateQuestionCategoriesToUse.Where(x => x.QuestionCount.HasValue).Sum(x => x.QuestionCount.Value) - testTemplateQuestionCategoriesToUse.Where(x => !x.QuestionCount.HasValue).Count() * questionsPerCategory);
                     }
                     else
                     {
@@ -93,26 +93,26 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetQuestionsPreview
             return answer.OrderBy(x => x.Index).ToList();
         }
 
-        private async Task<int> PreworkCategory(int testTypeQuestionCategoryId, int questionCount, int index)
+        private async Task<int> PreworkCategory(int testTemplateQuestionCategoryId, int questionCount, int index)
         {
-            var testTypeQuestionCategory = await _appDbContext.TestTypeQuestionCategories.FirstAsync(x => x.Id == testTypeQuestionCategoryId);
+            var testTemplateQuestionCategory = await _appDbContext.TestTemplateQuestionCategories.FirstAsync(x => x.Id == testTemplateQuestionCategoryId);
 
             var allQuestions = _appDbContext.QuestionUnits
-                    .Where(x => x.QuestionCategoryId == testTypeQuestionCategory.QuestionCategoryId && x.Status == QuestionUnitStatusEnum.Active)
+                    .Where(x => x.QuestionCategoryId == testTemplateQuestionCategory.QuestionCategoryId && x.Status == QuestionUnitStatusEnum.Active)
                     .AsQueryable();
 
-            if (testTypeQuestionCategory.QuestionType.HasValue) //&& Enum.IsDefined(typeof(QuestionTypeEnum), questionType)
+            if (testTemplateQuestionCategory.QuestionType.HasValue) //&& Enum.IsDefined(typeof(QuestionTypeEnum), questionType)
             {
-                allQuestions = allQuestions.Where(x => x.QuestionType == testTypeQuestionCategory.QuestionType.Value);
+                allQuestions = allQuestions.Where(x => x.QuestionType == testTemplateQuestionCategory.QuestionType.Value);
             }
 
             var questionIds = await allQuestions.Select(x => x.Id).ToListAsync();
             var strictQuestionsToUse = await _appDbContext.TestCategoryQuestions
                 .Include(x => x.QuestionUnit)
-                .Where(x => x.TestTypeQuestionCategoryId == testTypeQuestionCategoryId)
+                .Where(x => x.TestTemplateQuestionCategoryId == testTemplateQuestionCategoryId)
                 .ToListAsync();
 
-            if (testTypeQuestionCategory.SelectionType == SelectionEnum.Select)
+            if (testTemplateQuestionCategory.SelectionType == SelectionEnum.Select)
             {
                 questionIds = strictQuestionsToUse.Select(x => x.QuestionUnitId).ToList();
             }
@@ -120,7 +120,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetQuestionsPreview
             for (int i = 1; i <= questionCount; i++)
             {
                 int questionId;
-                if (testTypeQuestionCategory.SequenceType == SequenceEnum.Random)
+                if (testTemplateQuestionCategory.SequenceType == SequenceEnum.Random)
                 {
                     questionId = RandomThis(questionIds);
                     questionIds.Remove(questionId);

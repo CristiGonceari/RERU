@@ -19,17 +19,17 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.SetC
 
         public async Task<Unit> Handle(SetCategoriesSequenceCommand request, CancellationToken cancellationToken)
         {
-            var testTypeQuestionCategories = await _appDbContext.TestTypeQuestionCategories
+            var testTemplateQuestionCategories = await _appDbContext.TestTemplateQuestionCategories
                 .Where(x => x.TestTemplateId == request.TestTemplateId)
                 .ToListAsync();
 
-            var testType = await _appDbContext.TestTemplates.FirstAsync(x => x.Id == request.TestTemplateId);
+            var testTemplate = await _appDbContext.TestTemplates.FirstAsync(x => x.Id == request.TestTemplateId);
 
-            testType.CategoriesSequence = request.SequenceType;
+            testTemplate.CategoriesSequence = request.SequenceType;
 
             if (request.SequenceType == SequenceEnum.Strict)
             {
-                foreach (var category in testTypeQuestionCategories)
+                foreach (var category in testTemplateQuestionCategories)
                 {
                     var newData = request.ItemsOrder.First(x => x.Id == category.Id);
                     category.CategoryIndex = newData.Index;
@@ -37,7 +37,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.SetC
             }
             else
             {
-                foreach (var category in testTypeQuestionCategories)
+                foreach (var category in testTemplateQuestionCategories)
                 {
                     category.CategoryIndex = 0;
                 }

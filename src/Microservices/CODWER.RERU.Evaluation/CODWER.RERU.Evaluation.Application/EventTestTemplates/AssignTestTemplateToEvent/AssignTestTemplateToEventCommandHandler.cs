@@ -20,9 +20,9 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTempla
 
         public async Task<Unit> Handle(AssignTestTemplateToEventCommand request, CancellationToken cancellationToken)
         {
-            var eventTestType = _mapper.Map<EventTestType>(request.Data);
+            var eventTestTemplate = _mapper.Map<EventTestTemplate>(request.Data);
 
-            await _appDbContext.EventTestTypes.AddAsync(eventTestType);
+            await _appDbContext.EventTestTemplates.AddAsync(eventTestTemplate);
             await _appDbContext.SaveChangesAsync();
 
             return Unit.Value;

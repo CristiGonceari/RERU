@@ -21,9 +21,9 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplate
 
         public async Task<TestTemplateDto> Handle(GetTestTemplateQuery request, CancellationToken cancellationToken)
         {
-            var testType = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == request.Id);
+            var testTemplate = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-            return _mapper.Map<TestTemplateDto>(testType);
+            return _mapper.Map<TestTemplateDto>(testTemplate);
         }
     }
 }

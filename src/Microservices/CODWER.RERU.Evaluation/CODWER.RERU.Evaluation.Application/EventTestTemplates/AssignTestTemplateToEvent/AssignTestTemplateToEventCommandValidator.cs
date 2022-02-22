@@ -29,25 +29,25 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTempla
                         ValidationMessages.InvalidReference));
 
                 RuleFor(r => r.Data)
-                    .Must(x => !appDbContext.EventTestTypes.Any(l => l.TestTemplateId == x.TestTemplateId && l.EventId == x.EventId))
-                    .WithErrorCode(ValidationCodes.EXISTENT_TEST_TYPE_IN_EVENT);
+                    .Must(x => !appDbContext.EventTestTemplates.Any(l => l.TestTemplateId == x.TestTemplateId && l.EventId == x.EventId))
+                    .WithErrorCode(ValidationCodes.EXISTENT_TEST_TEMPLATE_IN_EVENT);
 
 
-                When(r => appDbContext.TestTemplates.First(l => l.Id == r.Data.TestTemplateId).Mode == (int)TestTypeModeEnum.Test, () =>
+                When(r => appDbContext.TestTemplates.First(l => l.Id == r.Data.TestTemplateId).Mode == (int)TestTemplateModeEnum.Test, () =>
                 {
                     RuleFor(r => r.Data.MaxAttempts)
                     .Must(x => x > 0)
                     .WithErrorCode(ValidationCodes.INVALID_MAX_ATTEMPTS);
 
                     RuleFor(r => r.Data.EventId)
-                    .Must(x => !appDbContext.EventTestTypes.Include(x => x.TestTemplate).Where(e => e.EventId == x).Any(tt => tt.TestTemplate.Mode == TestTypeModeEnum.Poll))
+                    .Must(x => !appDbContext.EventTestTemplates.Include(x => x.TestTemplate).Where(e => e.EventId == x).Any(tt => tt.TestTemplate.Mode == TestTemplateModeEnum.Poll))
                     .WithErrorCode(ValidationCodes.ONLY_POLLS_OR_TESTS);
                 });
 
-                When(r => appDbContext.TestTemplates.First(l => l.Id == r.Data.TestTemplateId).Mode == TestTypeModeEnum.Poll, () =>
+                When(r => appDbContext.TestTemplates.First(l => l.Id == r.Data.TestTemplateId).Mode == TestTemplateModeEnum.Poll, () =>
                 {
                     RuleFor(r => r.Data.EventId)
-                    .Must(x => !appDbContext.EventTestTypes.Include(x => x.TestTemplate).Where(e => e.EventId == x).Any(tt => tt.TestTemplate.Mode == (int)TestTypeModeEnum.Test))
+                    .Must(x => !appDbContext.EventTestTemplates.Include(x => x.TestTemplate).Where(e => e.EventId == x).Any(tt => tt.TestTemplate.Mode == (int)TestTemplateModeEnum.Test))
                     .WithErrorCode(ValidationCodes.ONLY_POLLS_OR_TESTS);
                 });
 

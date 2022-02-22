@@ -1,13 +1,13 @@
-﻿using CVU.ERP.Common.Pagination;
+﻿using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Data.Entities;
+using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
+using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Application.Services;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsByEvent
 {
@@ -38,21 +38,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsByEvent
                 .OrderByDescending(x => x.ProgrammedTime)
                 .AsQueryable();
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myTests, request);
-
-            foreach (var myTest in paginatedModel.Items)
-            {
-                var testType = await _appDbContext.TestTemplates
-                    .Include(tt => tt.Settings)
-                    .FirstOrDefaultAsync(tt => tt.Id == myTest.TestTemplateId);
-
-                if (testType.Settings.CanViewResultWithoutVerification)
-                {
-                    myTest.ViewTestResult = true;
-                }
-            }
-
-            return paginatedModel;
+            return await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myTests, request); 
         }
     }
 }

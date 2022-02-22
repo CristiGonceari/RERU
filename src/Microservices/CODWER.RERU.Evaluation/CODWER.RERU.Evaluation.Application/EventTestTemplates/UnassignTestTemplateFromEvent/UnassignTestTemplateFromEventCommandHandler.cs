@@ -17,9 +17,9 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.UnassignTestTemp
 
         public async Task<Unit> Handle(UnassignTestTemplateFromEventCommand request, CancellationToken cancellationToken)
         {
-            var eventTestType = await _appDbContext.EventTestTypes.FirstAsync(x => x.TestTemplateId == request.TestTemplateId && x.EventId == request.EventId);
+            var eventTestTemplate = await _appDbContext.EventTestTemplates.FirstAsync(x => x.TestTemplateId == request.TestTemplateId && x.EventId == request.EventId);
 
-            _appDbContext.EventTestTypes.Remove(eventTestType);
+            _appDbContext.EventTestTemplates.Remove(eventTestTemplate);
 
             await _appDbContext.SaveChangesAsync();
 

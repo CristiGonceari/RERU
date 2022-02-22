@@ -10,6 +10,6 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetQuestionsPreview
 
     public class GetQuestionsPreviewQuery : IRequest<List<QuestionUnitPreviewDto>>
     {
-        public int TestTypeId { get; set; }
+        public int TestTemplateId { get; set; }
     }
 }

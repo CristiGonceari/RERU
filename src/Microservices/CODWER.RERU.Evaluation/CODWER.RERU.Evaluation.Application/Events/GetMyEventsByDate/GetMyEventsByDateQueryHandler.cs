@@ -35,10 +35,10 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetMyEventsByDate
             {
                 var myEvents = _appDbContext.Events
                     .Include(x => x.EventUsers)
-                    .Include(x => x.EventTestTypes)
+                    .Include(x => x.EventTestTemplates)
                     .ThenInclude(x => x.TestTemplate)
                     .Where(x => x.EventUsers.Any(e => e.UserProfileId == curUser.Id) 
-                                                    && x.EventTestTypes.Any(e => e.TestTemplate.Mode == request.TestTypeMode) 
+                                                    && x.EventTestTemplates.Any(e => e.TestTemplate.Mode == request.TestTemplateMode) 
                                                     && x.FromDate.Date <= request.Date && x.TillDate.Date >= request.Date)
                     .AsQueryable();
 

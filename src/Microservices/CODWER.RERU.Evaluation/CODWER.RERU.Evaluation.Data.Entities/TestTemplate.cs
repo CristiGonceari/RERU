@@ -10,8 +10,8 @@ namespace CODWER.RERU.Evaluation.Data.Entities
         public TestTemplate()
         {
             Tests = new HashSet<Test>();
-            TestTypeQuestionCategories = new HashSet<TestTypeQuestionCategory>();
-            EventTestTypes = new HashSet<EventTestType>();
+            TestTemplateQuestionCategories = new HashSet<TestTemplateQuestionCategory>();
+            EventTestTemplates = new HashSet<EventTestTemplate>();
         }
 
         public string Name { get; set; }
@@ -19,16 +19,16 @@ namespace CODWER.RERU.Evaluation.Data.Entities
         public int QuestionCount { get; set; }
         public int MinPercent { get; set; }
         public int Duration { get; set; }
-        public TestTypeSettings Settings { get; set; }
+        public TestTemplateSettings Settings { get; set; }
 
-        public TestTypeStatusEnum Status { get; set; }
-        public TestTypeModeEnum Mode { get; set; }
+        public TestTemplateStatusEnum Status { get; set; }
+        public TestTemplateModeEnum Mode { get; set; }
         public SequenceEnum CategoriesSequence { get; set; }
 
         public Guid PdfFileId { get; set; }
 
         public virtual ICollection<Test> Tests { get; set; }
-        public virtual ICollection<TestTypeQuestionCategory> TestTypeQuestionCategories { get; set; }
-        public virtual ICollection<EventTestType> EventTestTypes { get; set; }
+        public virtual ICollection<TestTemplateQuestionCategory> TestTemplateQuestionCategories { get; set; }
+        public virtual ICollection<EventTestTemplate> EventTestTemplates { get; set; }
     }
 }

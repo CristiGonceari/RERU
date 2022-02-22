@@ -38,8 +38,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                         ValidationMessages.InvalidReference));
 
                 RuleFor(x => x)
-                    .Must(x => appDbContext.EventTestTypes.Any(et => et.EventId == x.EventId && et.TestTemplateId == x.TestTemplateId))
-                    .WithErrorCode(ValidationCodes.INEXISTENT_TEST_TYPE_IN_EVENT);
+                    .Must(x => appDbContext.EventTestTemplates.Any(et => et.EventId == x.EventId && et.TestTemplateId == x.TestTemplateId))
+                    .WithErrorCode(ValidationCodes.INEXISTENT_TEST_TEMPLATE_IN_EVENT);
 
                 RuleFor(x => x)
                     .MustAsync((x, cancellation) => ExistentCandidateInEvent(x))
@@ -81,7 +81,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
         private async Task<bool> IsOnlyOneAnswerTest(AddTestsCommand data)
         {
-            var dataList = await _mediator.Send(new GetTestTemplateByStatusQuery { TestTypeStatus = TestTypeStatusEnum.Active });
+            var dataList = await _mediator.Send(new GetTestTemplateByStatusQuery { TestTemplateStatus = TestTemplateStatusEnum.Active });
 
             var result = dataList.FirstOrDefault(x => x.TestTemplateId == data.TestTemplateId);
 

@@ -25,7 +25,7 @@ namespace CODWER.RERU.Evaluation.Application.Options.DeleteOption
             {
                 RuleFor(x => x.Id)
                 .Must(x => IsQuestionInActiveTest(x) == false)
-                .WithErrorCode(ValidationCodes.QUESTION_IS_IN_ACTIVE_TEST_TYPE);
+                .WithErrorCode(ValidationCodes.QUESTION_IS_IN_ACTIVE_TEST_TEMPLATE);
             });
         }
 
@@ -41,7 +41,7 @@ namespace CODWER.RERU.Evaluation.Application.Options.DeleteOption
 
             foreach (var test in tests)
             {
-                if (test.TestTemplate.Status == (int)TestTypeStatusEnum.Active)
+                if (test.TestTemplate.Status == (int)TestTemplateStatusEnum.Active)
                 {
                     return true;
                 }

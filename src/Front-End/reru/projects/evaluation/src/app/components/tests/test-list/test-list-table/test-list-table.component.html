@@ -18,8 +18,8 @@
                 <th scope="col" style="width: 48px"></th>
             </tr>
         </thead>
-        <tbody class="datatable-body" *ngIf="testType.length">
-            <tr *ngFor="let item of testType">
+        <tbody class="datatable-body" *ngIf="testTemplate.length">
+            <tr *ngFor="let item of testTemplate">
                 <td><span class="font-size-lg">{{ item.testTemplateName }}</span></td>
                 <td>
                     <p *ngIf="item.showUserName" class="font-size-lg cursor-pointer text-hover-primary mb-0" [routerLink]="['../user-profile', item.userId]">
@@ -104,7 +104,7 @@
                 </td>
             </tr>
         </tbody>
-        <tbody class="datatable-body" *ngIf="!testType.length">
+        <tbody class="datatable-body" *ngIf="!testTemplate.length">
             <tr>
                 <td colspan="10" class="text-center">
                     {{ 'message.no-record' | translate }}
@@ -113,7 +113,7 @@
         </tbody>
     </table>
     <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage" 
-    *ngIf="testType.length" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
+    *ngIf="testTemplate.length" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
     (sizeChange)="getTests({page: pagination.currentPage, itemsPerPage: $event})"
     (pageChange)="getTests({ page: $event})">
   </div>

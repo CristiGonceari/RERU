@@ -332,7 +332,8 @@
     "min-score": "Мин. Балл",
     "hello-username": "Здравствуйте, {{username}}!",
     "have-a-good-day": "Добро пожаловать!",
-    "my-activities": "Мои действия"
+    "my-activities": "Мои действия",
+    "my-evaluated-tests": "Тесты проверенные мною "
   },
   "questions": {
     "count": "Количество вопросов",
@@ -378,7 +379,8 @@
     "succes-add-multiple-msg": "Вопросы были успешно добавлены",
     "succes-update-msg": "Вопрос был успешно обновлён",
     "succes-update-status-msg": "Статус вопроса был успешно обновлён",
-    "search-by-status": "Выберите статус вопроса"
+    "search-by-status": "Выберите статус вопроса",
+    "add-tags": "Добавить тэги"
 
   },
   "answers": {

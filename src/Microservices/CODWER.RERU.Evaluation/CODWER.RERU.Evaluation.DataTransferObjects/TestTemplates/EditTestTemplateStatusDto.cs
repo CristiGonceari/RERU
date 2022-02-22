@@ -5,6 +5,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates
     public class EditTestTemplateStatusDto
     {
         public int TestTemplateId { get; set; }
-        public TestTypeStatusEnum Status { get; set; }
+        public TestTemplateStatusEnum Status { get; set; }
     }
 }

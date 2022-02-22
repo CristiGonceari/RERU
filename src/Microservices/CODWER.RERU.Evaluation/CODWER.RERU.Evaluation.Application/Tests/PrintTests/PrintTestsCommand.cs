@@ -11,7 +11,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
     [ModuleOperation(permission: PermissionCodes.TESTS_GENERAL_ACCESS)]
     public class PrintTestsCommand : TableParameter, IRequest<FileDataDto>
     {
-        public string TestTypeName { get; set; }
+        public string TestTemplateName { get; set; }
         public string UserName { get; set; }
         public TestStatusEnum? TestStatus { get; set; }
         public string LocationKeyword { get; set; }

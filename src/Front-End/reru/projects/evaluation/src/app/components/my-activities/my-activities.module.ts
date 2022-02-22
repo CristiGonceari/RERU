@@ -18,6 +18,8 @@ import { TestsTableComponent } from './my-tests/tests-table/tests-table.componen
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MaterialModule } from '../../material.module';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { MyEvaluatedTestsComponent } from './my-evaluated-tests/my-evaluated-tests.component';
+import { EvaluatedTestsTableComponent } from './my-evaluated-tests/evaluated-tests-table/evaluated-tests-table.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     EventsTableComponent,
     PollsTableComponent,
     TestsTableComponent,
+    MyEvaluatedTestsComponent,
+    EvaluatedTestsTableComponent,
   ],
   imports: [
     CommonModule,

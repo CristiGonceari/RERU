@@ -32,7 +32,7 @@ export class UserPollsComponent implements OnInit {
 
   getEvents(data: any = {}){
     const params = {
-      testTypeMode: 1,
+      testTemplateMode: 1,
       userId: this.userId,
       page: data.page || this.pagedSummary.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize

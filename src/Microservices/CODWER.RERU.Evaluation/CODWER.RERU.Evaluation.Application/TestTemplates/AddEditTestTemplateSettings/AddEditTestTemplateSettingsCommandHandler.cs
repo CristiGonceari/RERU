@@ -21,12 +21,12 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddEditTestTemplateSe
 
         public async Task<Unit> Handle(AddEditTestTemplateSettingsCommand request, CancellationToken cancellationToken)
         {
-            var existingSettings = await _appDbContex.TestTypeSettings.FirstOrDefaultAsync(x => x.TestTemplateId == request.Data.TestTemplateId);
+            var existingSettings = await _appDbContex.TestTemplateSettings.FirstOrDefaultAsync(x => x.TestTemplateId == request.Data.TestTemplateId);
 
             if (existingSettings == null)
             {
-                var settingsToAdd = _mapper.Map<TestTypeSettings>(request.Data);
-                _appDbContex.TestTypeSettings.Add(settingsToAdd);
+                var settingsToAdd = _mapper.Map<TestTemplateSettings>(request.Data);
+                _appDbContex.TestTemplateSettings.Add(settingsToAdd);
             }
             else
             {

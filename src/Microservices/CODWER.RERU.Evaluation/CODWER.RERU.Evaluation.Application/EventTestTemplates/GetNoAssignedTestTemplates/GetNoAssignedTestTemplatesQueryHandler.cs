@@ -23,16 +23,16 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.GetNoAssignedTes
 
         public async Task<List<TestTemplateDto>> Handle(GetNoAssignedTestTemplatesQuery request, CancellationToken cancellationToken)
         {
-            var testTypes = _appDbContext.TestTemplates
-                .Include(x => x.EventTestTypes)
-                .Where(x => !x.EventTestTypes.Any(e => e.EventId == request.EventId))
+            var testTemplates = _appDbContext.TestTemplates
+                .Include(x => x.EventTestTemplates)
+                .Where(x => !x.EventTestTemplates.Any(e => e.EventId == request.EventId))
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(request.Keyword))
             {
-                testTypes = testTypes.Where(x => x.Name.Contains(request.Keyword));
+                testTemplates = testTemplates.Where(x => x.Name.Contains(request.Keyword));
             }
-            var answer = await testTypes.ToListAsync();
+            var answer = await testTemplates.ToListAsync();
 
             return _mapper.Map<List<TestTemplateDto>>(answer);
         }

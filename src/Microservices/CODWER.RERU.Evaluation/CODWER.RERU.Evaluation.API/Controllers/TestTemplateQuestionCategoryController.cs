@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.API.Config;
-using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
+using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplateQuestionCategories;
 using CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.DeleteQuestionCategoryFromTestTemplate;
 using CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.PreviewQuestionUnitsByTestTemplateCategory;
 using CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.SetCategoriesSequence;
@@ -18,13 +18,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     public class TestTemplateQuestionCategoryController : BaseController
     {
         [HttpGet]
-        public async Task<List<TestTypeQuestionCategoryDto>> GetTestTypeCategories([FromQuery] GetTestTemplateCategoriesQuery query)
+        public async Task<List<TestTemplateQuestionCategoryDto>> GetTestTemplateCategories([FromQuery] GetTestTemplateCategoriesQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpPost]
-        public async Task<int> AssignQuestionCategoryToTestType([FromBody] AssignQuestionCategoryToTestTemplateCommand command)
+        public async Task<int> AssignQuestionCategoryToTestTemplate([FromBody] AssignQuestionCategoryToTestTemplateCommand command)
         {
             return await Mediator.Send(command);
         }
@@ -42,13 +42,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpPost("preview")]
-        public async Task<List<CategoryQuestionUnitDto>> PreviewQuestionUnitsByTestTypeCategory([FromBody] PreviewQuestionUnitsByTestTemplateCategoryQuery command)
+        public async Task<List<CategoryQuestionUnitDto>> PreviewQuestionUnitsByTestTemplateCategory([FromBody] PreviewQuestionUnitsByTestTemplateCategoryQuery command)
         {
             return await Mediator.Send(command);
         }
 
         [HttpDelete]
-        public async Task<Unit> DeleteQuestionCategoryFromTestTypeId([FromQuery] DeleteQuestionCategoryFromTestTemplateCommand command)
+        public async Task<Unit> DeleteQuestionCategoryFromTestTemplateId([FromQuery] DeleteQuestionCategoryFromTestTemplateCommand command)
         {
             return await Mediator.Send(command);
         }

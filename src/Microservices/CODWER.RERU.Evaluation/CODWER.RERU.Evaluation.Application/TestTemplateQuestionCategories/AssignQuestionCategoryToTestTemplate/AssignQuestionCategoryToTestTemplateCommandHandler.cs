@@ -22,9 +22,9 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Assi
 
         public async Task<int> Handle(AssignQuestionCategoryToTestTemplateCommand request, CancellationToken cancellationToken)
         {
-            var newQuestionCategoryTestType = _mapper.Map<TestTypeQuestionCategory>(request.Data);
+            var newQuestionCategorytestTemplate = _mapper.Map<TestTemplateQuestionCategory>(request.Data);
 
-            await _appDbContext.TestTypeQuestionCategories.AddAsync(newQuestionCategoryTestType);
+            await _appDbContext.TestTemplateQuestionCategories.AddAsync(newQuestionCategorytestTemplate);
             await _appDbContext.SaveChangesAsync();
 
             if (request.Data.SelectionType == SelectionEnum.Select)
@@ -32,7 +32,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Assi
                 var itemsList = request.Data.TestCategoryQuestions;
                 foreach (var item in itemsList)
                 {
-                    item.TestTypeQuestionCategoryId = newQuestionCategoryTestType.Id;
+                    item.TestTemplateQuestionCategoryId = newQuestionCategorytestTemplate.Id;
                 }
 
                 var itemsListToAdd = _mapper.Map<List<TestCategoryQuestion>>(itemsList);
@@ -41,7 +41,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Assi
                 await _appDbContext.SaveChangesAsync();
             }
 
-            return newQuestionCategoryTestType.Id;
+            return newQuestionCategorytestTemplate.Id;
         }
     }
 }

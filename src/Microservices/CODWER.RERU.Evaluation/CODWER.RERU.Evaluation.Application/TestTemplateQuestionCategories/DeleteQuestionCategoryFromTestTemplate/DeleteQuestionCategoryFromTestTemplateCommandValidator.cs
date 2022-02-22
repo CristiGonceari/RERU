@@ -12,7 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Dele
         public DeleteQuestionCategoryFromTestTemplateCommandValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.Id)
-                .SetValidator(x => new ItemMustExistValidator<TestTypeQuestionCategory>(appDbContext, ValidationCodes.INVALID_ID,
+                .SetValidator(x => new ItemMustExistValidator<TestTemplateQuestionCategory>(appDbContext, ValidationCodes.INVALID_ID,
                     ValidationMessages.InvalidReference));
         }
     }

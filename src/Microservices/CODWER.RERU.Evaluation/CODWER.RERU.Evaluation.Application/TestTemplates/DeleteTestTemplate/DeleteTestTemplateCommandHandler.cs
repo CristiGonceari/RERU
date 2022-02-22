@@ -21,13 +21,13 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.DeleteTestTemplate
 
         public async Task<Unit> Handle(DeleteTestTemplateCommand request, CancellationToken cancellationToken)
         {
-            var testType = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == request.Id);
+            var testTemplate = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-            _appDbContext.TestTemplates.Remove(testType);
+            _appDbContext.TestTemplates.Remove(testTemplate);
 
             await _appDbContext.SaveChangesAsync();
 
-            await LogAction(testType);
+            await LogAction(testTemplate);
 
             return Unit.Value;
         }

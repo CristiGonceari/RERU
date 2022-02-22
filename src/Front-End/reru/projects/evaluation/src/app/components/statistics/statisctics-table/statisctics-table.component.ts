@@ -37,7 +37,7 @@ export class StatiscticsTableComponent implements OnInit {
     if (data.categoryId)
       this.statisticService.getCategoryQuestions(data).subscribe((res) => { this.questionList = res.data });
     else if (data.testTemplateId)
-      this.statisticService.getTestTypeQuestions(data).subscribe((res) => { this.questionList = res.data });
+      this.statisticService.getTestTemplateQuestions(data).subscribe((res) => { this.questionList = res.data });
   }
 
   getHeaders(name: string): void {
@@ -61,7 +61,7 @@ export class StatiscticsTableComponent implements OnInit {
         tableName: name,
         fields: this.headersToPrint,
         orientation: 2,
-        testTemplateId: +this.data.testTypeId,
+        testTemplateId: +this.data.testTemplateId,
         filterEnum: +this.data.filterEnum,
         itemsPerPage: +this.data.itemsPerPage
       };
