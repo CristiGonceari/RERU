@@ -18,6 +18,7 @@ import { I18nService } from '../../../utils/services/i18n.service';
 	styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
+	userId: any;
 	acronym: string;
 	isLoading = false;
 	oneColumn: boolean;
@@ -93,6 +94,7 @@ export class UserProfileComponent implements OnInit {
 	getUserById(id: number) {
 		this.userProfileService.getUserProfile(id).subscribe(response => {
 			this.subscribeForUserChanges(response);
+			this.userId = response.data.id;
 			this.isLoading = false;
 		});
 	}
@@ -114,11 +116,11 @@ export class UserProfileComponent implements OnInit {
 		modalRef.componentInstance.description = this.description;
 		modalRef.componentInstance.buttonNo = this.no;
 		modalRef.componentInstance.buttonYes = this.yes;
-		modalRef.result.then(() => this.reset(id), () => { });
+		modalRef.result.then(() => this.reset(this.userId), () => { });
 	}
 
 	reset(id: string): void {
-		this.userService.resetPassword(id).subscribe(response => {
+		this.userService.resetPassword(this.userId).subscribe(response => {
 			forkJoin([
 				this.translate.get('modal.success'),
 				this.translate.get('reset-password.success-reset'),
@@ -126,9 +128,8 @@ export class UserProfileComponent implements OnInit {
 				this.title = title;
 				this.description = description;
 				});
-			this.notificationService.success(this.title,this.description, NotificationUtil.getDefaultMidConfig()
-			);
-			this.ngZone.run(() => this.router.navigate(['../'], { relativeTo: this.route }));
+			this.notificationService.success(this.title,this.description, NotificationUtil.getDefaultMidConfig());
+			window.location.reload();
 		});
 	}
 
@@ -150,7 +151,7 @@ export class UserProfileComponent implements OnInit {
 		modalRef.componentInstance.buttonNo = this.no;
 		modalRef.componentInstance.buttonYes = this.yes;
 		modalRef.result.then(
-			() => this.activateUser(id),
+			() => this.activateUser(this.userId),
 			() => { }
 		);
 	}
@@ -173,13 +174,13 @@ export class UserProfileComponent implements OnInit {
 		modalRef.componentInstance.buttonNo = this.no;
 		modalRef.componentInstance.buttonYes = this.yes;
 		modalRef.result.then(
-			() => this.deactivateUser(id),
+			() => this.deactivateUser(this.userId),
 			() => { }
 		);
 	}
 
 	activateUser(id: string): void {
-		this.userService.blockUnblockUser(id).subscribe(response => {
+		this.userService.activateUser(this.userId).subscribe(response => {
 			forkJoin([
 				this.translate.get('modal.success'),
 				this.translate.get('activate-user.success-activate'),
@@ -193,7 +194,7 @@ export class UserProfileComponent implements OnInit {
 	}
 
 	deactivateUser(id: string): void {
-		this.userService.blockUnblockUser(id).subscribe(response => {
+		this.userService.deactivateUser(this.userId).subscribe(response => {
 			forkJoin([
 				this.translate.get('modal.success'),
 				this.translate.get('deactivate-user.success-deactivate'),
