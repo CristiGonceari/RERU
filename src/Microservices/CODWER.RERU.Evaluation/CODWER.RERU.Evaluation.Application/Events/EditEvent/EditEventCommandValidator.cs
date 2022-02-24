@@ -38,6 +38,10 @@ namespace CODWER.RERU.Evaluation.Application.Events.EditEvent
                 RuleFor(r => r.Data)
                       .Must(x => x.TillDate > x.FromDate)
                       .WithErrorCode(ValidationCodes.INVALID_TIME_RANGE);
+
+                RuleFor(r => r.Data)
+                    .Must(x => x.FromDate >= DateTime.Today)
+                    .WithErrorCode(ValidationCodes.START_DAY_CANT_BE_FROM_PAST);
             });
         }
     }

@@ -139,8 +139,8 @@
     "change-personal-details": "Schimbare datelor profilului personal:",
     "logout": "Ieșire",
     "logout-msg": "Sunteți sigur(-ă) că doriți să ieșiți din sistem?",
-    "empty-name": "Camp este obligatorie, cel puțin 1 caracter",
-    "wrong-name": "Camp trebue să incepe cu 1 caracter",
+    "empty-name": "Câmpul trebuie sa conțină doar litere latine",
+    "wrong-name": "Câmpul trebuie sa conțină doar litere latine",
     "available-modules": "Module disponibile",
     "idnp-length": "IDNP trebuie să conține 13 cifre!"
   },
@@ -154,7 +154,8 @@
     "succes-create": "Utilizatorul a fost creat cu succes!"
   },
   "word": {
-    "search": "Căutarea"
+    "search": "Căutarea după N.P.P. sau e-mail",
+    "search-idnp": "Căutarea după IDNP"
   },
   "set-password": {
     "title": "Setarea Parolei",

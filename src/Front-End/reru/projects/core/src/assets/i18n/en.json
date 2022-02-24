@@ -140,8 +140,8 @@
     "change-personal-details": "Change personal profile details:",
     "logout": "Logout",
     "logout-msg": "Are you sure you want to logout from the system?",
-    "empty-name": "Insert at least one symbol",
-    "wrong-name": "Wrong name , should start with symbol",
+    "empty-name": "The field must contain only Latin letters",
+    "wrong-name": "The field must contain only Latin letters",
     "available-modules": "Available modules",
     "idnp-length": "IDNP should consist of 13 numbers!"
   },
@@ -155,7 +155,8 @@
     "succes-create": "User has been created successfully!"
   },
   "word": {
-    "search": "Search"
+    "search": "Search by full name or e-mail",
+    "search-idnp": "Search by IDNP"
   },
   "set-password": {
     "title": "Set Password",

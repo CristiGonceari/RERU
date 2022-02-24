@@ -23,6 +23,7 @@
         public static string ONLY_POLLS_OR_TESTS = "03000205";
         public static string INEXISTENT_TEST_TEMPLATE_IN_EVENT = "03000206";
         public static string MUST_ADD_EVENT_OR_EVALUATOR = "03000207";
+        public static string START_DAY_CANT_BE_FROM_PAST = "03000208";
 
         //event evaluator
         public static string EXISTENT_EVALUATOR_IN_EVENT = "03000301";
