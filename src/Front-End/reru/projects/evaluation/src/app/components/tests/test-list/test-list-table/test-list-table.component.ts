@@ -11,6 +11,7 @@ import { TestStatusEnum } from '../../../../utils/enums/test-status.enum'
 import { TestResultStatusEnum } from '../../../../utils/enums/test-result-status.enum'
 import { saveAs } from 'file-saver';
 import { ConfirmModalComponent } from '@erp/shared';
+import { PrintModalComponent } from '@erp/shared';
 import { NotificationUtil } from '../../../../utils/util/notification.util';
 import { forkJoin } from 'rxjs';
 import { NotificationsService } from 'angular2-notifications';
@@ -51,6 +52,9 @@ export class TestListTableComponent implements OnInit {
   locationName;
   idnp: string;
   isLoading: boolean = true;
+	downloadFile: boolean = false;
+	headersToPrint = [];
+	printTranslates: any[];
 
   title: string;
 	description: string;
@@ -119,8 +123,8 @@ export class TestListTableComponent implements OnInit {
         this.testTemplateName = res.data.items.map(it => it.testTemplateName);
         this.score = res.data.items.map(s => s.score);
         this.pagination = res.data.pagedSummary;
-        this.searchFrom = '';
-        this.searchTo = '';
+        // this.searchFrom = '';
+        // this.searchTo = '';
         this.isLoading = false;
 
         for (let i = 1; i <= this.pagination.totalCount; i++) {
@@ -270,4 +274,61 @@ export class TestListTableComponent implements OnInit {
       saveAs(file);
     });
   }
+
+  getHeaders(name: string): void {
+		this.translateData();
+		let headersHtml = document.getElementsByTagName('th');
+		let headersDto = ['testTemplateName', 'userName', 'eventName', 'locationName', 'testStatus', 'verificationProgress', 'result', 'accumulatedPercentage', 'minPercent'];
+		for (let i=0; i<headersHtml.length-1; i++) {
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+		}
+    
+		let printData = {
+			tableName: name,
+			fields: this.headersToPrint,
+			orientation: 2,
+			testStatus: +this.selectedStatus,
+			testTemplateName: this.testToSearch || '',
+			userName: this.userName || '',
+      locationKeyword: this.locationName || '',
+      eventName: this.eventName || '',
+      idnp: this.idnp || '',
+      programmedTimeFrom: this.searchFrom || null,
+      programmedTimeTo: this.searchTo || null
+		};
+		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
+		modalRef.componentInstance.tableData = printData;
+		modalRef.componentInstance.translateData = this.printTranslates;
+		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
+		this.headersToPrint = [];
+	}
+
+	translateData(): void {
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
+		forkJoin([
+			this.translate.get('print.print-table'),
+			this.translate.get('print.print-msg'),
+			this.translate.get('print.sorted-by'),
+			this.translate.get('button.cancel')
+		]).subscribe(
+			(items) => {
+				for (let i=0; i<this.printTranslates.length; i++) {
+					this.printTranslates[i] = items[i];
+				}
+			}
+		);
+	}
+
+	printTable(data): void {
+		this.downloadFile = true;
+		this.testService.print(data).subscribe(response => {
+			if (response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], fileName, { type: response.body.type });
+				saveAs(file);
+				this.downloadFile = false;
+			}
+		}, () => this.downloadFile = false);
+	}
 }

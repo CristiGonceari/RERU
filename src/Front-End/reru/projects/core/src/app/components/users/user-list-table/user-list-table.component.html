@@ -9,18 +9,18 @@
       <tr>
         <th scope="col" style="width: 50px"></th>
         <th scope="col" class="pointer" (click)="sortedList({ sort: 'name' })">
-          {{ 'table.name' | translate }}
+          {{ 'table.full-name' | translate }}
           <app-sort-button *ngIf="filter.sort === 'name'" [desc]="filter.order"></app-sort-button>
         </th>
-        <th scope="col" class="pointer">
+        <th scope="col">
           {{ 'table.idnp' | translate }}
         </th>
         <th scope="col" class="pointer" (click)="sortedList({ sort: 'username' })">
-          {{ 'table.username' | translate }}
+          {{ 'table.email' | translate }}
           <app-sort-button *ngIf="filter.sort === 'username'" [desc]="filter.order"></app-sort-button>
         </th>
         <th scope="col" style="width: 75px; text-align: center; vertical-align: middle">
-          {{ 'table.active' | translate }}
+          {{ 'table.status' | translate }}
         </th>
         <th scope="col w-50px"></th>
       </tr>

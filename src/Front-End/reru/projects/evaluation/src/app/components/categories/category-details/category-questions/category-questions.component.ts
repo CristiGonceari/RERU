@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
 import { QuestionCategoryService } from 'projects/evaluation/src/app/utils/services/question-category/question-category.service';
 import { QuestionService } from 'projects/evaluation/src/app/utils/services/question/question.service';
@@ -23,7 +23,8 @@ import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services
   templateUrl: './category-questions.component.html',
   styleUrls: ['./category-questions.component.scss'],
 })
-export class CategoryQuestionsComponent implements OnInit, AfterViewInit {
+export class CategoryQuestionsComponent implements OnInit {
+
   @Input() categoryId;
   categoryList = [];
   questionList: QuestionUnit[] = [];
@@ -54,10 +55,6 @@ export class CategoryQuestionsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.categoryService.category.subscribe((x) => (this.categoryId = x));
     this.getAll();
-  }
-
-  ngAfterViewInit(): void {
-    this.title = document.getElementById('title').innerHTML;
   }
 
   getHeaders(name: string): void {
@@ -121,6 +118,11 @@ export class CategoryQuestionsComponent implements OnInit, AfterViewInit {
       () => (this.downloadFile = false)
     );
   }
+
+  getTitle(): string {
+		this.title = document.getElementById('title').innerHTML;
+		return this.title
+	}
 
   getAll(data: any = {}) {
     let params = {

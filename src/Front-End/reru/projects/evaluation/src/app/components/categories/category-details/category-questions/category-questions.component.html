@@ -3,7 +3,7 @@
     <div class="card-header flex-wrap border-0 py-5">
       <div class="card-title font-weight-bolder" id="title">{{'questions.questions' | translate}}</div>
       <div class="card-toolbar">
-        <app-confirm-button class="btn mr-3" (click)="getHeaders(title)">
+        <app-confirm-button class="btn mr-3" (click)="getHeaders(getTitle())">
           <i class="far fa-file-pdf text-white"></i>
           {{'button.print' | translate}}
         </app-confirm-button>
@@ -15,7 +15,7 @@
             <div ngbDropdownMenu aria-labelledby="action1">
               <button class="navi-link align-items-center px-6" ngbDropdownItem
               (click)="addQuestion()">
-                <i class="la la-plus mr-2"></i> 
+                <i class="la la-plus mr-2"></i>
                 {{'questions.add-question' | translate}}
               </button>
               <button class="navi-link align-items-baseline px-6" ngbDropdownItem

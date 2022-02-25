@@ -107,6 +107,7 @@
     "icon": "Icon",
     "module": "Module name",
     "name": "Name",
+    "full-name": "Full name",
     "email":"Email",
     "lastName": "Last name",
     "father-name": "Patronymic",
@@ -124,7 +125,8 @@
     "description": "Description",
     "permission": "Permission",
     "default": "Default",
-    "priority":"Priority"
+    "priority":"Priority",
+    "status": "Status"
   },
   "menu": {
     "menu-sections": {
@@ -150,9 +152,9 @@
     "delete-title": "Delete User",
     "block-title": "Block/Unblock",
     "remove-sure": "Are you sure you want to remove this user?",
-    "succes-remove": "User was successfully removed!",
-    "succes-edit": "User has been successfully updated!",
-    "succes-create": "User has been created successfully!"
+    "succes-remove": "User profile was successfully removed!",
+    "succes-edit": "User profile has been successfully updated!",
+    "succes-create": "User profile has been successfully created!"
   },
   "word": {
     "search": "Search by full name or e-mail",
@@ -195,13 +197,13 @@
     "title": "Deactivate user",
     "deactivate": "Are you sure you want to deactivate this user?",
     "deactivate-msg": "Are you sure you want to deactivate user",
-    "success-deactivate": "User was deactivated successfully!"
+    "success-deactivate": "User profile was deactivated successfully!"
   },
   "activate-user": {
     "title": "Activate user",
     "activate": "Are you sure you want to activate this user?",
-    "activate-msg": "Are you sure you want to activate user ",
-    "success-activate": "User was successfully activated!"
+    "activate-msg": "Are you sure you want to activate user",
+    "success-activate": "User profile was successfully activated!"
   },
   "module-access": {
     "title": "User's access to modules",

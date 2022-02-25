@@ -26,7 +26,7 @@
                 <mat-form-field class="example-full-width" appearance="fill">
                   <mat-label>{{'tests.asignee' | translate}}</mat-label>
                   <input #autoCompleteInput type="text" matInput [formControl]="myControl" [(ngModel)]="key"
-                    [matAutocomplete]="auto" (ngModelChange)="getUsers()">
+                    [matAutocomplete]="auto" (ngModelChange)="getUsers()" (click)="getUsers()">
                   <mat-autocomplete #auto="matAutocomplete" ariaLabel="aria-label"
                     [autoActiveFirstOption]="true">
                     <mat-option *ngFor="let option of usersList"
