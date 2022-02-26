@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { QuestionByCategoryService } from '../../../utils/services/question-by-category/question-by-category.service';
@@ -9,7 +9,7 @@ import { BulkImportQuestionsComponent } from '../bulk-import-questions/bulk-impo
   templateUrl: './question-list.component.html',
   styleUrls: ['./question-list.component.scss']
 })
-export class QuestionListComponent implements OnInit, AfterViewInit {
+export class QuestionListComponent implements OnInit {
 	title: string;
 
   	constructor( private modalService: NgbModal,
@@ -19,9 +19,10 @@ export class QuestionListComponent implements OnInit, AfterViewInit {
 	ngOnInit(): void {
 	}
 
-	ngAfterViewInit(): void {
+	getTitle(): string {
 		this.title = document.getElementById('title').innerHTML;
-	}	
+		return this.title
+	}
 
 	bulkImport(): void { 
 		const modalRef = this.modalService.open(BulkImportQuestionsComponent, { centered: true, size: 'lg' });

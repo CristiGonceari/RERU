@@ -106,6 +106,7 @@
     "icon": "Iconiță",
     "module": "Titlul modulului",
     "name": "Nume",
+    "full-name": "NPP",
     "email":"Poștă electronică",
     "lastName": "Prenume",
     "father-name": "Patronimic",
@@ -123,7 +124,8 @@
     "description": "Descripție",
     "permission": "Permisiune",
     "default": "Implicit",
-    "priority":"Prioritate"
+    "priority":"Prioritate",
+    "status": "Statut"
   },
   "menu": {
     "menu-sections": {

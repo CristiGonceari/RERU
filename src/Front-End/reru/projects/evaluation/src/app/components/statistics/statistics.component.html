@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="w-100 mt-9">
                                     <app-confirm-button class="btn d-block"
-                                        (click)="table.getHeaders(title)" [width]="'100%'"
+                                        (click)="table.getHeaders(getTitle())" [width]="'100%'"
                                         [disabled]="!(itemsPerPage && filterEnum && (testTemplateId || categoryId)) && send()">
                                         <i class="far fa-file-pdf text-white"></i>
                                         {{'button.print' | translate}}

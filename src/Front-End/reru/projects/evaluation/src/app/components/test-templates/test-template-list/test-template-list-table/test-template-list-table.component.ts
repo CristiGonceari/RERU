@@ -141,18 +141,17 @@ export class TestTemplateListTableComponent implements OnInit {
 		else if (status == TestTemplateStatusEnum.Active)
 			params = { testTemplateId: id, status: TestTemplateStatusEnum.Canceled }
 
-		this.testTemplateService.changeStatus({ data: params }).subscribe(() => 
-		{
+		this.testTemplateService.changeStatus({ data: params }).subscribe(() => {
+			this.list();
 			forkJoin([
 				this.translate.get('modal.success'),
-				this.translate.get('questions.succes-update-status-msg'),
+				this.translate.get('tests.succes-update-status-msg'),
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
 				});
-			this.list()
-			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-		});
+				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+			});
 	}
 
 	validateTestTemplate(id, status) {

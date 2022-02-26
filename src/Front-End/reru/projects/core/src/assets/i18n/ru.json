@@ -111,6 +111,7 @@
     "icon": "Иконка",
     "module": "Название модуля",
     "name": "Имя",
+    "full-name": "ФИО",
     "email":"Электронная почта",
     "lastName": "Фамилия",
     "father-name": "Отчество",
@@ -128,7 +129,8 @@
     "description": "Описание",
     "permission": "Право доступа",
     "default": "Стандартый",
-    "priority":"Приоритет"
+    "priority":"Приоритет",
+    "status": "Статус"
   },
   "word": {
     "search": "Поиск по Ф.И.О. или e-mail",

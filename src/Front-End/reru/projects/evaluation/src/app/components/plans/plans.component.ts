@@ -1,20 +1,18 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-plans',
   templateUrl: './plans.component.html',
   styleUrls: ['./plans.component.scss']
 })
-export class PlansComponent implements OnInit, AfterViewInit {
+export class PlansComponent {
   title: string;
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
-  ngAfterViewInit(): void {
-    this.title = document.getElementById('title').innerHTML;
-  }
+  getTitle(): string {
+		this.title = document.getElementById('title').innerHTML;
+		return this.title
+	}
 
 }
