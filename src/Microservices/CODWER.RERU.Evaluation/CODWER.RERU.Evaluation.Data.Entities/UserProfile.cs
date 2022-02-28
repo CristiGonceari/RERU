@@ -14,6 +14,7 @@ namespace CODWER.RERU.Evaluation.Data.Entities
             PlanResponsiblePersons = new HashSet<PlanResponsiblePerson>();
             EventUsers = new HashSet<EventUser>();
             Notifications = new HashSet<Notification>();
+            EmailTestNotifications = new HashSet<EmailTestNotification>();
         }
 
         public string CoreUserId { get; set; }
@@ -30,5 +31,7 @@ namespace CODWER.RERU.Evaluation.Data.Entities
         public virtual ICollection<PlanResponsiblePerson> PlanResponsiblePersons { get; set; }
         public virtual ICollection<EventUser> EventUsers { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
+        public virtual ICollection<EmailTestNotification> EmailTestNotifications { get; set; }
+
     }
 }

@@ -24,6 +24,7 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using System;
 using System.Text;
+using CODWER.RERU.Evaluation.Application.CronJobs;
 using Hangfire.PostgreSql;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
@@ -126,8 +127,10 @@ namespace CODWER.RERU.Evaluation.API
 
             DatabaseSeeder.SeedDb(appDbContext);
 
-            //app.UseHangfireDashboard();
-            //app.UseHangfireServer();
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
+
+            RecurringJob.AddOrUpdate<SendEmailNotificationBeforeTest>(x => x.SendNotificationBeforeTest(), "* * * * *");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
