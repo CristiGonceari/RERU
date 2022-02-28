@@ -120,6 +120,8 @@ namespace CODWER.RERU.Personal.Application.CronJobs
 
                             CheckCurrentDay(el.Id, TimeSheetValueEnum.Cc);
                             break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
                 }
 
