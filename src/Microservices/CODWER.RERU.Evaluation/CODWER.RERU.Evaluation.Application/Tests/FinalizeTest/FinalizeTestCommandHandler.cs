@@ -44,15 +44,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 
             await _mediator.Send(new AutoVerificationTestQuestionsCommand { TestId = request.TestId });
 
-            if (testToFinalize.TestQuestions.All(x => x.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer))
+            if (testToFinalize.TestQuestions.All(x => x.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer || x.QuestionUnit.QuestionType == QuestionTypeEnum.MultipleAnswers))
             {
                 await _mediator.Send(new AutoCheckTestScoreCommand { TestId = request.TestId });
                 testToFinalize.TestStatus = TestStatusEnum.Verified;
                 await _appDbContext.SaveChangesAsync();
 
                 await _internalNotificationService.AddNotification(testToFinalize.UserProfileId, NotificationMessages.YourTestWasVerified);
-
-                await SendEmailNotification(testToFinalize);
             }
 
             await SendEmailNotification(testToFinalize);
@@ -64,7 +62,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
         {
             var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
             var template = await File.ReadAllTextAsync(path);
-
            
             var test = await _appDbContext.Tests
                 .Include(x => x.TestTemplate)

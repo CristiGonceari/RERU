@@ -432,7 +432,10 @@
     "clone": "Clone",
     "Select": "Select",
     "Random": "Random",
-    "Strict": "Strict"
+    "Strict": "Strict",
+    "ZeroPercent": "Wrong answer = 0%",
+    "OneDivideCountPercent": "Wrong answer = 1/n% (n-total number of options)",
+    "MinusCorrectOption": "Wrong answer = (-1) * correct answer%"
   },
   "options": {
     "start-without-confirmation": "Possible to start test without confirmation",
@@ -454,7 +457,10 @@
     "succes-add-msg": "Option was successfully added",
     "succes-update-msg": "Option was successfully updated",
     "succes-update-options-msg": "Question status was updated",
-    "bulk-import":"Bulk Import Options"
+    "bulk-import":"Bulk Import Options",
+    "formula-for-one-answer": "Calculation formula for questions with one answer",
+    "formula-for-multiple-answers": "Calculation formula for questions with multiple answers",
+    "negative-score": "Allow negative score"
   },
   "tooltips": {
     "option1": "User have the possibility to start test without administrator confirmation",
@@ -731,6 +737,7 @@
     "03001722": "Invalid time",
     "03001723": "Invalid poll",
     "03001724": "Only draft tests can be deleted",
+    "03001725": "Empty formula",
     "03001801": "Question count reached the limit",
     "03001802": "Invalid sequence",
     "03001803": "Invalid selection type",

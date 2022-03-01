@@ -4,15 +4,16 @@
       <div class="card-title"><b>{{'questions.settings' | translate}}</b></div>
     </div>
     <div class="card-body">
-      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-      <div *ngIf="!isLoading" class="row justify-content-center">
-        <div class="form" id="kt_contact_add_form" [formGroup]="settingsForm">
-          <div class="row" *ngIf="mode == 0">
-            <div class="d-inline-flex">
+      <div class="container">
+
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+        <div *ngIf="!isLoading" class="row justify-content-center">
+          <div class="form" id="kt_contact_add_form" [formGroup]="settingsForm">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
                 <input type="checkbox" name="startWithoutConfirmation" formControlName="startWithoutConfirmation">
                 <span></span>
-                <div class="font-size-lg ml-3">
+                <div class="col-form-label p-0 ml-3">
                   {{'options.start-without-confirmation' | translate}}
                   <button type="button" class="btn btn-icon" ngbTooltip="{{'tooltips.option1' | translate}}">
                     <i class="fas fa-question-circle ml-3"></i>
@@ -20,13 +21,11 @@
                 </div>
               </label>
             </div>
-          </div>
-          <div class="row" *ngIf="mode == 0">
-            <div class="d-inline-flex">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
                 <input type="checkbox" name="startBeforeProgrammation" formControlName="startBeforeProgrammation">
                 <span></span>
-                <div class="font-size-lg ml-3">
+                <div class="col-form-label p-0 ml-3">
                   {{'options.start-before-programmed-time' | translate}}
                   <button type="button" class="btn btn-icon" ngbTooltip="{{'tooltips.option2' | translate}}">
                     <i class="fas fa-question-circle"></i>
@@ -34,13 +33,11 @@
                 </div>
               </label>
             </div>
-          </div>
-          <div class="row" *ngIf="mode == 0">
-            <div class="d-inline-flex">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
                 <input type="checkbox" name="startAfterProgrammation" formControlName="startAfterProgrammation">
                 <span></span>
-                <div class="font-size-lg ml-3">
+                <div class="col-form-label p-0 ml-3">
                   {{'options.start-after-programmed-time' | translate}}
                   <button type="button" class="btn btn-icon" ngbTooltip="{{'tooltips.option3' | translate}}">
                     <i class="fas fa-question-circle"></i>
@@ -48,14 +45,12 @@
                 </div>
               </label>
             </div>
-          </div>
-          <div class="row" *ngIf="mode == 0 && !showManyQuestionPerPage">
-            <div class="d-inline-flex">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0 && !showManyQuestionPerPage">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
                 <input type="checkbox" name="possibleGetToSkipped" formControlName="possibleGetToSkipped"
                   (ngModelChange)="possibleGetToSkippedChange($event)">
                 <span></span>
-                <div class="font-size-lg ml-3">
+                <div class="col-form-label p-0 ml-3">
                   {{'options.skipped-answer' | translate}}
                   <button type="button" class="btn btn-icon" ngbTooltip="{{'tooltips.option4' | translate}}">
                     <i class="fas fa-question-circle"></i>
@@ -63,14 +58,12 @@
                 </div>
               </label>
             </div>
-          </div>
-          <div class="row" *ngIf="mode == 0 && !showManyQuestionPerPage">
-            <div class="d-inline-flex">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0 && !showManyQuestionPerPage">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
                 <input type="checkbox" name="possibleChangeAnswer" formControlName="possibleChangeAnswer"
                   (ngModelChange)="possibleChangeAnswerChange($event)">
                 <span></span>
-                <div class="font-size-lg ml-3">
+                <div class="col-form-label p-0 ml-3">
                   {{'options.change-answer' | translate}}
                   <button type="button" class="btn btn-icon" ngbTooltip="{{'tooltips.option5' | translate}}">
                     <i class="fas fa-question-circle"></i>
@@ -78,14 +71,12 @@
                 </div>
               </label>
             </div>
-          </div>
-          <div class="row" *ngIf="mode == 0">
-            <div class="d-inline-flex">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
                 <input type="checkbox" name="canViewResultWithoutVerification"
                   formControlName="canViewResultWithoutVerification">
                 <span></span>
-                <div class="font-size-lg ml-3">
+                <div class="col-form-label p-0 ml-3">
                   {{'options.view-result' | translate}}
                   <button type="button" class="btn btn-icon" ngbTooltip="{{'tooltips.option6' | translate}}">
                     <i class="fas fa-question-circle"></i>
@@ -93,13 +84,11 @@
                 </div>
               </label>
             </div>
-          </div>
-          <div class="row" *ngIf="mode == 1">
-            <div class="d-inline-flex">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 1">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
                 <input type="checkbox" name="canViewPollProgress" formControlName="canViewPollProgress">
                 <span></span>
-                <div class="font-size-lg ml-3">
+                <div class="col-form-label p-0 ml-3">
                   {{'options.poll-progress' | translate}}
                   <button type="button" class="btn btn-icon" ngbTooltip="{{'tooltips.option7' | translate}}">
                     <i class="fas fa-question-circle"></i>
@@ -107,14 +96,12 @@
                 </div>
               </label>
             </div>
-          </div>
-          <div class="row" *ngIf="mode == 0 && !showManyQuestionPerPage">
-            <div class="d-inline-flex">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0 && !showManyQuestionPerPage">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
                 <input type="checkbox" name="hidePagination" (ngModelChange)="hidePaginationChange($event)"
                   formControlName="hidePagination">
                 <span></span>
-                <div class="font-size-lg ml-3">
+                <div class="col-form-label p-0 ml-3">
                   {{'options.hide-pagination' | translate}}
                   <button type="button" class="btn btn-icon" ngbTooltip="{{'tooltips.option8' | translate}}">
                     <i class="fas fa-question-circle"></i>
@@ -122,15 +109,13 @@
                 </div>
               </label>
             </div>
-          </div>
-          <div class="row"
-            *ngIf="mode == 0 && !(possibleChangeAnswer || possibleGetToSkipped || hidePagination || setMaxErrors)">
-            <div class="d-inline-flex">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12"
+              *ngIf="mode == 0 && !(possibleChangeAnswer || possibleGetToSkipped || hidePagination || setMaxErrors)">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
                 <input type="checkbox" name="showManyQuestionPerPage"
                   (ngModelChange)="showManyQuestionPerPageChange($event)" formControlName="showManyQuestionPerPage">
                 <span></span>
-                <div class="font-size-lg ml-3">
+                <div class="col-form-label p-0 ml-3">
                   {{'options.show-many-questions' | translate}}
                   <button type="button" class="btn btn-icon" ngbTooltip="{{'tooltips.option9' | translate}}">
                     <i class="fas fa-question-circle"></i>
@@ -141,14 +126,12 @@
                 class="form-control form-control-solid h-30px mt-1" style="width: 70px;" type="number"
                 name="questionsCountPerPage" min="0" formControlName="questionsCountPerPage">
             </div>
-          </div>
-          <div class="row" *ngIf="mode == 0 && !showManyQuestionPerPage">
-            <div class="d-inline-flex">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0 && !showManyQuestionPerPage">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
                 <input type="checkbox" name="showManyQuestionPerPage" [(ngModel)]="setMaxErrors"
                   [ngModelOptions]="{standalone: true}">
                 <span></span>
-                <div class="font-size-lg ml-3">
+                <div class="col-form-label p-0 ml-3">
                   {{'options.set-max-errors' | translate}}
                   <button type="button" class="btn btn-icon" ngbTooltip="{{'tooltips.option10' | translate}}">
                     <i class="fas fa-question-circle"></i>
@@ -158,6 +141,59 @@
               <input *ngIf="setMaxErrors" [ngClass]="{'disabled-area': disable}"
                 class="form-control form-control-solid h-30px mt-1" style="width: 70px;" type="number" name="maxErrors"
                 min="0" formControlName="maxErrors">
+            </div>
+
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0" >
+              <label class="col-form-label p-0" style="white-space: nowrap; display: inline-flex;">
+                <span class="my-4 mr-3">{{'options.formula-for-one-answer' | translate}}</span>
+              <select class="form-control form-control-sm form-control-solid mt-2" name="formulaForOneAnswer"
+                (ngModelChange)="selectScoreFormulaOneAnswer($event)"  formControlName="formulaForOneAnswer">
+                <option value="">{{'questions.select' | translate}}</option>
+                <option *ngFor="let item of scoreFormulas" [value]="item.value">
+                  {{'statuses.' + item.label | translate}}</option>
+              </select>
+            </label>
+            </div>
+
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 ml-3" *ngIf="showNegativeInputOneAnswer">
+              <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
+                <input type="checkbox" name="negativeScoreForOneAnswer" formControlName="negativeScoreForOneAnswer"
+                  [ngModelOptions]="{standalone: true}">
+                <span></span>
+                <div class="col-form-label p-0 ml-3">
+                  {{'options.negative-score' | translate}}
+                  <button type="button" class="btn btn-icon" ngbTooltip="to do">
+                    <i class="fas fa-question-circle"></i>
+                  </button>
+                </div>
+              </label>
+            </div>
+
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0">
+              <label class="col-form-label p-0" style="white-space: nowrap; display: inline-flex;">
+                <span class="my-2 mr-3">{{'options.formula-for-multiple-answers' | translate}}</span>
+              <select class="form-control form-control-sm form-control-solid" name="formulaForMultipleAnswers"
+                (ngModelChange)="selectScoreFormulaMultipleAnswers($event)"
+                formControlName="formulaForMultipleAnswers">
+                <option value="">{{'questions.select' | translate}}</option>
+                <option *ngFor="let item of scoreFormulas" [value]="item.value">
+                  {{'statuses.' + item.label | translate}}</option>
+              </select>
+            </label>
+            </div>
+
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 ml-3" *ngIf="showNegativeInputMultipleAnswers">
+              <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
+                <input type="checkbox" name="negativeScoreForMultipleAnswers"
+                formControlName="negativeScoreForMultipleAnswers" [ngModelOptions]="{standalone: true}">
+                <span></span>
+                <div class="col-form-label p-0 ml-3">
+                  {{'options.negative-score' | translate}}
+                  <button type="button" class="btn btn-icon" ngbTooltip="to do">
+                    <i class="fas fa-question-circle"></i>
+                  </button>
+                </div>
+              </label>
             </div>
           </div>
         </div>

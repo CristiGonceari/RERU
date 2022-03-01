@@ -1,4 +1,6 @@
-﻿namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates
+﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
+
+namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates
 {
     public class TestTemplateSettingsDto
     {
@@ -14,5 +16,9 @@
         public bool? ShowManyQuestionPerPage { get; set; }
         public int? QuestionsCountPerPage { get; set; }
         public int? MaxErrors { get; set; }
+        public ScoreFormulaEnum? FormulaForOneAnswer { get; set; }
+        public bool? NegativeScoreForOneAnswer { get; set; }
+        public ScoreFormulaEnum? FormulaForMultipleAnswers { get; set; }
+        public bool? NegativeScoreForMultipleAnswers { get; set; }
     }
 }

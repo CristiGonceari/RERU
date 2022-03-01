@@ -3,15 +3,17 @@ using System;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220222130936_Add_Score_Formula_For_Tests")]
+    partial class Add_Score_Formula_For_Tests
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,46 +55,6 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Articles");
-                });
-
-            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.EmailTestNotification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("CreateById")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime?>("DeleteTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("TestId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("UpdateById")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("UserProfileId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TestId");
-
-                    b.HasIndex("UserProfileId");
-
-                    b.ToTable("EmailTestNotifications");
                 });
 
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Event", b =>
@@ -1743,25 +1705,6 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.EmailTestNotification", b =>
-                {
-                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.Test", "Test")
-                        .WithMany("EmailTestNotifications")
-                        .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.UserProfile", "UserProfile")
-                        .WithMany("EmailTestNotifications")
-                        .HasForeignKey("UserProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Test");
-
-                    b.Navigation("UserProfile");
-                });
-
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Event", b =>
                 {
                     b.HasOne("CODWER.RERU.Evaluation.Data.Entities.Plan", "Plan")
@@ -2238,8 +2181,6 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Test", b =>
                 {
-                    b.Navigation("EmailTestNotifications");
-
                     b.Navigation("TestQuestions");
                 });
 
@@ -2266,8 +2207,6 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.UserProfile", b =>
                 {
-                    b.Navigation("EmailTestNotifications");
-
                     b.Navigation("EventResponsiblePersons");
 
                     b.Navigation("EventUsers");

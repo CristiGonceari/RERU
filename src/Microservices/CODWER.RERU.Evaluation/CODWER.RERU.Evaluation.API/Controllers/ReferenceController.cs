@@ -102,5 +102,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
             return items;
         }
+
+        [HttpGet("score-formula/select-values")]
+        public List<SelectItem> GetScoreFormulas()
+        {
+            var items = EnumConverter<ScoreFormulaEnum>.SelectValues;
+
+            return items;
+        }
     }
 }

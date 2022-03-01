@@ -65,10 +65,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
                     var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { TestTemplateQuestionCategoryId = testTemplateCategory.Id });
 
                     questionsList.AddRange(testCategoryQuestionData.Questions);
-                    x.IsOnlyOneAnswer = questionsList.All(x => x.QuestionType == QuestionTypeEnum.OneAnswer);
+                    x.IsOnlyOneAnswer = questionsList.All(x => x.QuestionType == QuestionTypeEnum.OneAnswer || x.QuestionType == QuestionTypeEnum.MultipleAnswers);
                 }
 
-                if (testTemplateCategories.All(tt => tt.QuestionType == QuestionTypeEnum.OneAnswer))
+                if (testTemplateCategories.All(tt => tt.QuestionType == QuestionTypeEnum.OneAnswer || tt.QuestionType == QuestionTypeEnum.MultipleAnswers))
                 {
                     x.IsOnlyOneAnswer = true;
                 }

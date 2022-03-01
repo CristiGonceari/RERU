@@ -27,6 +27,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent
 
             var myTests = _appDbContext.Tests
                 .Include(t => t.TestTemplate)
+                    .ThenInclude(tt => tt.Settings)
                 .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)

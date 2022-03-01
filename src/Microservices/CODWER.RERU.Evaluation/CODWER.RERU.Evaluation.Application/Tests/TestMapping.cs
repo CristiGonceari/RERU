@@ -28,7 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.Rules, opts => opts.MapFrom(src => src.TestTemplate.Rules))
                 .ForMember(x => x.VerificationProgress, opts => opts.MapFrom(src => GetVerifiationStatus(src)))
                 .ForMember(x => x.Result, opts => opts.MapFrom(src => src.ResultStatus))
-                .ForMember(x => x.ViewTestResult, opts => opts.MapFrom((src => src.TestTemplate.Settings.CanViewResultWithoutVerification)))
+                .ForMember(x => x.ViewTestResult, opts => opts.MapFrom(src => src.TestTemplate.Settings.CanViewResultWithoutVerification))
                 .ForMember(x => x.ModeStatus, opts => opts.MapFrom(src => src.TestTemplate.Mode));
 
             CreateMap<AddEditTestDto, Test>()
