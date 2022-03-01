@@ -5,15 +5,12 @@ import { createCustomElement } from '@angular/elements';
 import { NotificationsService } from 'angular2-notifications';
 import { HashOptionInputComponent } from '../../../utils/components/hash-option-input/hash-option-input.component';
 import { QuestionUnitTypeEnum } from '../../../utils/enums/question-unit-type.enum';
-import { OptionModel } from '../../../utils/models/options/option.model';
 import { Test } from '../../../utils/models/tests/test.model';
 import { TestQuestionService } from '../../../utils/services/test-question/test-question.service';
 import { TestVerificationProcessService } from '../../../utils/services/test-verification-process/test-verification-process.service';
 import { TestService } from '../../../utils/services/test/test.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { ConfirmModalComponent } from '@erp/shared';
-import { CloudFileService } from '../../../utils/services/cloud-file/cloud-file.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
@@ -45,6 +42,7 @@ export class TestVerificationProcessComponent implements OnInit {
 	questionUnitId: number;
 	isLoadingMedia: boolean;
 	fileId: string;
+	accumulatedPoints: number;
 
 	title: string;
 	description: string;
@@ -144,10 +142,12 @@ export class TestVerificationProcessComponent implements OnInit {
 					this.comment = res.data.comment;
 					this.options = res.data.options;
 					this.correct = res.data.isCorrect;
+          			if (this.correct == null) this.correct = false;
 					this.index = index;
 					this.questionType = res.data.questionType;
 					this.isLoading = false;
 					this.maxPoints = res.data.questionMaxPoints;
+					this.accumulatedPoints = res.data.evaluatorPoints;
 					this.questionUnitId = res.data.questionUnitId;
 					this.points = (res.data.evaluatorPoints === 0) ? '' : res.data.evaluatorPoints;
 					this.fileId = res.data.questionUnitMediaFileId;

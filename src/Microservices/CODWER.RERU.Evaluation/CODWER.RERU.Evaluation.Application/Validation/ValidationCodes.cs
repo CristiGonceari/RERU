@@ -126,6 +126,7 @@
         public static string INVALID_TIME = "03001722";
         public static string INVALID_POLL = "03001723";
         public static string ONLY_INACTIVE_TEST_CAN_BE_DELETED = "03001724";
+        public static string EMPTY_FORMULA = "03001725";
 
         //test template question category 
         public static string QUESTION_COUNT_REACHED_THE_LIMIT = "03001801";

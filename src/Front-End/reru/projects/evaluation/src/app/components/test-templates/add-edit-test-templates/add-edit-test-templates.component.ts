@@ -151,42 +151,9 @@ export class AddEditTestTemplateComponent implements OnInit {
 				this.description = description;
 				});
 			this.testId = res.data; 
-			this.settings();
-			// this.backClicked()
+			this.backClicked()
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 		});
-	}
-
-	settings(){
-		let params;
-		if(this.modeId == TestTemplateModeEnum.Poll){
-			params = {
-				testTemplateId: this.testId,
-				startWithoutConfirmation: true,
-				startBeforeProgrammation: true,
-				startAfterProgrammation: true,
-				possibleGetToSkipped: true,
-				possibleChangeAnswer: false,
-				canViewResultWithoutVerification: false,
-				canViewPollProgress: false,
-				hidePagination: false,
-				showManyQuestionPerPage: false
-			}
-		} else {
-			params = {
-				testTemplateId: this.testId,
-				startWithoutConfirmation: false,
-				startBeforeProgrammation: false,
-				startAfterProgrammation: false,
-				possibleGetToSkipped: false,
-				possibleChangeAnswer: false,
-				canViewResultWithoutVerification: false,
-				canViewPollProgress: false,
-				hidePagination: false,
-				showManyQuestionPerPage: false
-			}
-		}
-		this.testTemplateService.addEditTestTemplateSettings({data: params}).subscribe(() => this.backClicked());
 	}
 
 	backClicked() {

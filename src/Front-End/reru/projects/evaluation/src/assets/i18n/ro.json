@@ -433,7 +433,10 @@
     "clone": "Clonați",
     "Select": "Selectați",
     "Random": "Aleatorie",
-    "Strict": "Strictă"
+    "Strict": "Strictă",
+    "ZeroPercent": "Răspuns greșit = 0%",
+    "OneDivideCountPercent": "Răspuns greșit = 1/n% (n-nr total de opțiuni)",
+    "MinusCorrectOption": "Răspuns greșit = (-1) * răspuns corect%"
   },
   "options": {
     "start-without-confirmation": "Este posibil să porniți testul fără confirmare",
@@ -455,7 +458,10 @@
     "succes-add-msg": "Opțiunea a fost adăugată cu succes",
     "succes-update-msg": "Opțiunea a fost actualizată cu succes",
     "succes-update-options-msg": "Opțiunile au fost actualizate cu succes",
-    "bulk-import": "Bulk Import"
+    "bulk-import": "Bulk Import",
+    "formula-for-one-answer": "Formula de calcul pentru întrebări cu un răspuns",
+    "formula-for-multiple-answers": "Formula de calcul pentru intrebari cu răspunsuri multiple",
+    "negative-score": "Permite scor negativ"
   },
   "tooltips": {
     "option1": "Utilizatorul are posibilitatea de a începe testul fără confirmarea administratorului",
@@ -732,6 +738,7 @@
     "03001722": "Ora nevalidă",
     "03001723": "Sondaj nevalid",
     "03001724": "Doar testul in status maculator poate fi sters",
+    "03001725": "Formulă necompletată",
     "03001801": "Numărul de întrebări a atins limita",
     "03001802": "Secvență nevalidă",
     "03001803": "Tip de selecție nevalid",

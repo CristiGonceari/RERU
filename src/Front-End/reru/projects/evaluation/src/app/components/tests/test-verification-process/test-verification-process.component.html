@@ -28,11 +28,10 @@
             <span *ngIf="questionType == enum.HashedAnswer" class="font-size-lg">{{'verify-test.user-answer' |
               translate}}:</span>
             <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
-                [colorClass]="'text-primary'">
+              [colorClass]="'text-primary'">
             </app-loading-spinner>
             <div *ngIf="!isLoadingMedia" class="data-container mb-7 bg-gray-100 text-center rounded p-7">
-              <p class="font-size-h2"
-                  [innerHTML]="question | safeHtml">
+              <p class="font-size-h2" [innerHTML]="question | safeHtml">
               </p>
               <div *ngIf="fileId">
                 <app-get-media-file [fileId]="fileId"></app-get-media-file>
@@ -78,7 +77,24 @@
               </div>
             </div>
           </div>
-          <div class="d-flex justify-content-between" *ngIf="questionType != enum.OneAnswer">
+          <div class="d-flex justify-content-between" *ngIf="questionType == enum.OneAnswer || questionType == enum.MultipleAnswers">
+            <div class="d-flex">
+              <span class="label label-lg label-light-success label-inline h-35px px-5" *ngIf="correct===true">
+                {{'verify-test.correct' | translate}}
+              </span>
+              <span class="label label-lg label-light-primary label-inline h-35px px-5" *ngIf="correct===false">
+                {{'verify-test.not-correct' | translate}}
+              </span>
+              <span class="label label-lg label-light label-inline h-35px px-5 ml-5">
+                {{accumulatedPoints}} / {{maxPoints}}
+              </span>
+            </div>
+            <div>
+              <app-confirm-button class="btn" (handle)="next()" [value]="'verify-test.next-question' | translate">
+              </app-confirm-button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between" *ngIf="questionType != enum.OneAnswer && questionType != enum.MultipleAnswers">
             <div class="d-flex">
               <div class="btn-group btn-group-toggle mr-5" ngbRadioGroup name="radioBasic" [(ngModel)]="correct">
                 <label ngbButtonLabel class="btn-light-success" [class.active]="correct===true">
@@ -92,8 +108,8 @@
                 </label>
               </div>
               <div class="input-group">
-                <input type="text" class="form-control h-40px" placeholder="{{'questions.points' | translate}}" value="points"
-                  [(ngModel)]="points">
+                <input type="text" class="form-control h-40px" placeholder="{{'questions.points' | translate}}"
+                  value="points" [(ngModel)]="points">
                 <div class="input-group-append">
                   <span class="input-group-text text-dark">{{maxPoints}}</span>
                 </div>
@@ -105,10 +121,6 @@
                 {{'verify-test.verify' | translate}}
               </button>
             </div>
-          </div>
-          <div class="d-flex flex-row-reverse" *ngIf="questionType == enum.OneAnswer">
-            <app-confirm-button class="btn" (handle)="next()" [value]="'verify-test.next-question' | translate">
-            </app-confirm-button>
           </div>
         </div>
         <div class="mx-auto">
