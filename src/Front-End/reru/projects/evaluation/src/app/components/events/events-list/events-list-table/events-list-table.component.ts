@@ -215,7 +215,7 @@ export class EventsListTableComponent implements OnInit {
 		modalRef.componentInstance.translateData = this.printTranslates;
 		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
 		this.headersToPrint = [];
-	}
+	} 
 
 	translateData(): void {
 		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']

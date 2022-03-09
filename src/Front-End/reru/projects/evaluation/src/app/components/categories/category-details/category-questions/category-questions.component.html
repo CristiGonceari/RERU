@@ -79,7 +79,7 @@
                           {{'categories.view-details' | translate}}
                         </button>
                         <button class="navi-link align-items-baseline px-6" *ngIf="question.status == 0 || question.status == 2"
-                            [routerLink]="['edit-question', question.id]" ngbDropdownItem>
+                            [routerLink]="['../../../../questions/edit-question', question.id]" ngbDropdownItem>
                             {{'button.edit' | translate}}
                         </button>
                         <button *ngIf="question.status !== 2" class="navi-link align-items-center px-6 text-muted"

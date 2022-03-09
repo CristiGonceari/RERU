@@ -13,6 +13,7 @@ export class UserPollsComponent implements OnInit {
   isLoading: boolean = true;
   pagedSummary: PaginationModel = new PaginationModel();
   userId;
+  title: string;
 
   constructor(private eventService: EventService, private activatedRoute: ActivatedRoute) { }
 
@@ -44,4 +45,9 @@ export class UserPollsComponent implements OnInit {
       this.isLoading = false;
     });
   }
+
+  getTitle(): string {
+		this.title = document.getElementById('title').innerHTML;
+		return this.title
+	}
 }

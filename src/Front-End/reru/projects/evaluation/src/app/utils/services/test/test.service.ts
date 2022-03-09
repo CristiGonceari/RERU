@@ -125,4 +125,32 @@ export class TestService extends AbstractService {
 			observe: 'response',
 		});
 	}
+
+	printUserTests(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-user-tests`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
+	printUserPolls(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-user-polls`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
+	printUserTestsByEvent(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-user-tests-by-event`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
+	printUserEvaluatedTests(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-user-evaluated-tests`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }

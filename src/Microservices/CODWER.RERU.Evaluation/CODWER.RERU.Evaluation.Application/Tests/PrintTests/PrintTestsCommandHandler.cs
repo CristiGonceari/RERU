@@ -42,7 +42,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
 
             var tests = GetAndFilterTests.Filter(_appDbContext, filterData);
 
-            foreach (var testDto in tests)
+            foreach (var testDto in tests.ToList())
             {
                 var eventEvaluator = _appDbContext.EventEvaluators.FirstOrDefault(x => x.EvaluatorId == curUser.Id && x.EventId == testDto.EventId);
                 var testEvaluator = _appDbContext.Tests.FirstOrDefault(x => x.EvaluatorId == curUser.Id && x.Id == testDto.Id);
@@ -68,6 +68,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
                 Fields = request.Fields,
                 Orientation = request.Orientation
             });
+
             return result;
         }
     }

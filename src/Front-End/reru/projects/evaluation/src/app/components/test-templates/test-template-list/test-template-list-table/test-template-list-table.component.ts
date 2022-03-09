@@ -145,14 +145,14 @@ export class TestTemplateListTableComponent implements OnInit {
 			this.list();
 			forkJoin([
 				this.translate.get('modal.success'),
-				this.translate.get('tests.succes-update-status-msg'),
+				this.translate.get('tests.succes-update-test-status-msg'),
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
 				});
 				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			});
-	}
+	} 
 
 	validateTestTemplate(id, status) {
 		this.testTemplateService.validateTestTemplate({ testTemplateId: id }).subscribe(() => this.changeStatus(id, status));

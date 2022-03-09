@@ -81,7 +81,7 @@ export class TestTemplateDetailsComponent implements OnInit {
 			this.get(); this.router.navigate(['test-type/type-details', this.testId, 'overview'])
 			forkJoin([
 				this.translate.get('modal.success'),
-				this.translate.get('questions.succes-update-status-msg'),
+				this.translate.get('tests.succes-update-test-status-msg'),
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;

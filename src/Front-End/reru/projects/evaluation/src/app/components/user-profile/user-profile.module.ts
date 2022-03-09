@@ -18,6 +18,7 @@ import { TestsTableComponent } from './user-tests/tests-table/tests-table.compon
 import { TestsByEventComponent } from './user-events/tests-by-event/tests-by-event.component';
 import { PollsByEventComponent } from './user-polls/polls-by-event/polls-by-event.component';
 import { UserEvaluatedTestsComponent } from './user-evaluated-tests/user-evaluated-tests.component';
+import { UserEvaluatedTestsListComponent } from './user-evaluated-tests/user-evaluated-tests-list/user-evaluated-tests-list.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { UserEvaluatedTestsComponent } from './user-evaluated-tests/user-evaluat
     TestsTableComponent,
     TestsByEventComponent,
     PollsByEventComponent,
-    UserEvaluatedTestsComponent
+    UserEvaluatedTestsComponent,
+    UserEvaluatedTestsListComponent,
   ],
   imports: [
     CommonModule,
