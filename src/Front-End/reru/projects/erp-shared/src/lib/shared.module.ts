@@ -47,6 +47,7 @@ import { AuthenticationCallbackComponent } from './components/authentication/aut
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { PrintModalComponent } from './modals/print-modal/print-modal.component';
+import { LocationBackButtonComponent } from './components/location-back-button/location-back-button.component';
 
 export const translateModule = TranslateModule.forChild();
 
@@ -67,7 +68,8 @@ const commonExports = [
 	AuthenticationCallbackComponent,
 	PaginationComponent,
 	LoadingSpinnerComponent,
-	PrintModalComponent
+	PrintModalComponent,
+	LocationBackButtonComponent
 ];
 @NgModule({
 	declarations: [...commonExports, ViewIconComponent, ContentComponent],
