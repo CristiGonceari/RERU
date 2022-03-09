@@ -3,7 +3,7 @@ import { SidebarItemType } from './utils/models/sidebar.model';
 import { Router } from '@angular/router';
 import { LocalizeRouterService } from '@gilsdav/ngx-translate-router';
 import { forkJoin } from 'rxjs';
-import { AppSettingsService, IAppSettings, AuthenticationService } from '@erp/shared';
+import { AppSettingsService, IAppSettings, AuthenticationService, NavigationService } from '@erp/shared';
 import { I18nService } from './utils/services/i18n.service';
 
 @Component({
@@ -190,9 +190,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private localize: LocalizeRouterService,
 		private appConfigService: AppSettingsService,
 		private cd: ChangeDetectorRef,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+	public navigation: NavigationService
 	) {
 		this.appSettings = this.appConfigService.settings;
+		this.navigation.startSaveHistory();
 	}
 
 	ngOnInit(): void {

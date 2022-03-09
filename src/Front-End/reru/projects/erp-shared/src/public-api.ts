@@ -17,6 +17,7 @@ export * from './lib/components/buttons/delete-button/delete-button.component';
 export * from './lib/components/svg-icon/svg-icon.component';
 export * from './lib/components/pagination/pagination.component';
 export * from './lib/components/loading-spinner/loading-spinner.component';
+export * from './lib/components/location-back-button/location-back-button.component';
 export * from './lib/components/authentication/authentication-callback/authentication-callback.component';
 
 export * from './lib/services/sidebar.service';
@@ -24,6 +25,7 @@ export * from './lib/services/icon.service';
 export * from './lib/services/application-user.service';
 export * from './lib/services/modules.service';
 export * from './lib/services/available-modules.service';
+export * from './lib/services/navigation/navigation.service';
 // export * from './lib/services/auth.service';
 export * from './lib/services/i18n.service';
 export * from './lib/services/permission-checker.service';
