@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PrintModalComponent } from '@erp/shared';
 import { TestResultStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-result-status.enum';
 import { TestStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-status.enum';
 import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { TestService } from 'projects/evaluation/src/app/utils/services/test/test.service';
-import { PrintModalComponent } from '@erp/shared';
 import { saveAs } from 'file-saver';
 import { forkJoin } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-tests-table',
-  templateUrl: './tests-table.component.html',
-  styleUrls: ['./tests-table.component.scss']
+  selector: 'app-user-evaluated-tests-list',
+  templateUrl: './user-evaluated-tests-list.component.html',
+  styleUrls: ['./user-evaluated-tests-list.component.scss']
 })
-export class TestsTableComponent implements OnInit {
+export class UserEvaluatedTestsListComponent implements OnInit {
+
   testRowList: [] = [];
   pagedSummary: PaginationModel = new PaginationModel();
   userId: number;
@@ -25,13 +26,14 @@ export class TestsTableComponent implements OnInit {
   downloadFile: boolean = false;
   headersToPrint = [];
   printTranslates: any[];
-
+  title: string;
+  
   constructor(
     private testService: TestService, 
     private activatedRoute: ActivatedRoute,
-	public translate: I18nService,
-	private modalService: NgbModal
-    ) { }
+    public translate: I18nService,
+	  private modalService: NgbModal
+  ) { }
 
   ngOnInit(): void {
     this.subsribeForParams();
@@ -54,7 +56,7 @@ export class TestsTableComponent implements OnInit {
 			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
     }
 
-    this.testService.getUsersTests(params).subscribe(
+    this.testService.getUserEvaluatedTests(params).subscribe(
       res => {
         if (res && res.data) {
           this.testRowList = res.data.items;
@@ -67,8 +69,8 @@ export class TestsTableComponent implements OnInit {
 
   getHeaders(name: string): void {
 		this.translateData();
-		let testTable = document.getElementById('testsTable')
-		let headersHtml = testTable.getElementsByTagName('th');
+		let evaluatedTestTable = document.getElementById('evaluatedTestTable')
+		let headersHtml = evaluatedTestTable.getElementsByTagName('th');
 		let headersDto = ['programmedTime', 'testStatus', 'testTemplateName', 'accumulatedPercentage', 'result'];
 		for (let i=0; i<headersHtml.length; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
@@ -86,6 +88,7 @@ export class TestsTableComponent implements OnInit {
 		this.headersToPrint = [];
 	}
 
+  
 	translateData(): void {
 		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
 		forkJoin([
@@ -104,7 +107,7 @@ export class TestsTableComponent implements OnInit {
 
 	printTable(data): void {
 		this.downloadFile = true;
-		this.testService.printUserTests(data).subscribe(response => {
+		this.testService.printUserEvaluatedTests(data).subscribe(response => {
 			if (response) {
 				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
 				const blob = new Blob([response.body], { type: response.body.type });

@@ -9,10 +9,12 @@ import { EventService } from '../../../utils/services/event/event.service';
   styleUrls: ['./user-events.component.scss']
 })
 export class UserEventsComponent implements OnInit {
+  
   events = [];
   isLoading: boolean = true;
   pagedSummary: PaginationModel = new PaginationModel();
   userId;
+  title: string;
 
   constructor(private eventService: EventService, private activatedRoute: ActivatedRoute) { }
 
@@ -44,4 +46,9 @@ export class UserEventsComponent implements OnInit {
       this.isLoading = false;
     });
   }
+
+  getTitle(): string {
+		this.title = document.getElementById('title').innerHTML;
+		return this.title
+	}
 }
