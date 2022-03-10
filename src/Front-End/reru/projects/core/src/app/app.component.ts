@@ -14,5 +14,6 @@ export class AppComponent {
 		lastOnBottom: true;
 		showProgressBar: true;
 	};
+	
 	constructor(public navigation: NavigationService) { this.navigation.startSaveHistory()}
 }

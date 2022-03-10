@@ -1,17 +1,25 @@
+using CVU.ERP.Module.Application.Clients;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
-namespace CODWER.RERU.Core.API.Controllers.Internal {
+namespace CODWER.RERU.Core.API.Controllers.Internal
+{
     [ApiController]
     [Route ("internal/api/[controller]")]
-    public class ApplicationController : BaseController {
-        public ApplicationController (IMediator mediator) : base (mediator) { }
+    public class ApplicationController : BaseController
+    {
+        private readonly IEvaluationClient _evaluationClient;
+        public ApplicationController (IMediator mediator, IEvaluationClient evaluationClient) : base (mediator)
+        {
+            _evaluationClient = evaluationClient;
+        }
 
-        // [HttpGet ("user/{identityId}")]
-        // public async Task<ApplicationUser> GetApplicationUser (string identityId)
-        // {
-        //     return await Mediator.Send (new GetApplicationUserQuery (identityId));
-        // }
+        [HttpGet]
+        public async Task<int> GetTestId()
+        {
+            return await _evaluationClient.GetTestIdToStartTest();
+        }
 
         // [HttpPost ("user")]
         // public async Task<ApplicationUser> CreateUser ([FromBody] CreateUserDto userDto) 
