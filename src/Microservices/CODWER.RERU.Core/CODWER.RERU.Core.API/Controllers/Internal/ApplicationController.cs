@@ -2,6 +2,7 @@ using CVU.ERP.Module.Application.Clients;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using CVU.ERP.Common.DataTransferObjects.TestDatas;
 
 namespace CODWER.RERU.Core.API.Controllers.Internal
 {
@@ -16,7 +17,7 @@ namespace CODWER.RERU.Core.API.Controllers.Internal
         }
 
         [HttpGet]
-        public async Task<int> GetTestId()
+        public async Task<TestDataDto> GetTestId()
         {
             return await _evaluationClient.GetTestIdToStartTest();
         }

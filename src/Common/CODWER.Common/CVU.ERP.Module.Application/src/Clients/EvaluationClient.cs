@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Common.DataTransferObjects.TestDatas;
 
 namespace CVU.ERP.Module.Application.Clients
 {
@@ -49,13 +50,13 @@ namespace CVU.ERP.Module.Application.Clients
             }
         }
 
-        public async Task<int> GetTestIdToStartTest()
+        public async Task<TestDataDto> GetTestIdToStartTest()
         {
             var user = await _currentApplicationUserProvider.Get();
 
             var request = NewJsonRequest($"{TestBasePath}/{user.Id}");
 
-            var response = await _restClient.GetAsync<Response<int>>(request, new CancellationToken());
+            var response = await _restClient.GetAsync<Response<TestDataDto>>(request, new CancellationToken());
 
             if (!response.Success)
             {

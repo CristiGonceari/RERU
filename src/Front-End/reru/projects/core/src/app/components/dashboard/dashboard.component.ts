@@ -21,7 +21,10 @@ export class DashboardComponent implements OnInit {
   type: string;
   messageText: string;
   modules: ApplicationUserModuleModel[];
+
   testId: number;
+  showMultipleQuestionsPerPega: boolean;
+
   constructor(
     private moduleService: AvailableModulesService,
     private userSubject: ApplicationUserService,
@@ -55,8 +58,10 @@ export class DashboardComponent implements OnInit {
 
   getTestId() {
     this.internalService.getTestIdForFastStart().subscribe((res) => {
-      if (res && +res.data != 0) {
-        this.testId = +res.data;
+      if (res && +res.data.testId != 0) {
+        console.error("data:", res.data)
+        this.testId = +res.data.testId;
+        this.showMultipleQuestionsPerPega = res.data.showManyQuestionPerPage;
         this.type = res.type;
         this.messageText = res.message;
         forkJoin([
@@ -70,7 +75,7 @@ export class DashboardComponent implements OnInit {
               timeOut: 29000,
               showProgressBar: true,
             })
-            .click.subscribe(() => this.router.navigate(['/reru-evaluation/#/my-activities/my-tests']));
+            .click.subscribe(() => this.router.navigateByUrl(`http://reru.codwer.com/reru-evaluation/#/my-activities/start-test/${this.testId}`));
         });
       }
     });
