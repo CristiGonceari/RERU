@@ -4,6 +4,7 @@ using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using System.Linq;
+using CVU.ERP.Common.DataTransferObjects.TestDatas;
 
 namespace CODWER.RERU.Evaluation.Application.Tests
 {
@@ -35,6 +36,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.Id, opts => opts.Ignore());
 
             CreateMap<UserProfile, UserProfileDto>();
+
+            CreateMap<Test, TestDataDto>()
+                .ForMember(x => x.TestId, opts => opts.MapFrom(src => src.Id))
+                .ForMember(x => x.ShowManyQuestionPerPage, opts => opts.MapFrom(src => src.TestTemplate.Settings.ShowManyQuestionPerPage));
 
             CreateMap<Test, TestResultDto>()
                 .ForMember(x => x.MinPercent, opts => opts.MapFrom(src => src.TestTemplate.MinPercent))
