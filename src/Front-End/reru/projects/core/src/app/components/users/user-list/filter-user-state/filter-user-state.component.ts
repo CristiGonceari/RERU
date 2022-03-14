@@ -6,7 +6,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./filter-user-state.component.scss']
 })
 export class FilterUserStateComponent {
-  @Output() filter: EventEmitter<void> = new EventEmitter<void>();
+  userState: string = '0';
+  @Output() filter: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }
 

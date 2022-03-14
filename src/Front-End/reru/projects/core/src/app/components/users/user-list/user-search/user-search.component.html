@@ -1,21 +1,21 @@
-<div class="row w-100">
-<div class="col-lg-6 col-12">
-  <div class="input-group input-group-sm input-group-solid">
-    <input type="text" class="form-control" id="kt_subheader_search_form"
-      [placeholder]="'word.search' | translate"
-      (keydown.enter)="searchOnEnter.emit($event.target.value)"
-      (change)="handleSearch.emit($event)">
+<form class="row w-100" [formGroup]="searchForm">
+  <div class="col-lg-6 col-12">
+    <div class="input-group input-group-sm input-group-solid">
+      <input type="text" class="form-control" id="kt_subheader_search_form"
+        formControlName="name"
+        [placeholder]="'word.search' | translate"
+        (input)="searchOnChange.emit($event.target.value)"
+        (change)="handleSearch.emit($event)">
+    </div>
   </div>
-</div>
-<div class="col-lg-6 col-12">
-  <div class="input-group input-group-sm input-group-solid">
-    <input type="text" class="form-control" id="kt_subheader_search_form"
-        name="idnp" maxlength="13" minlength="13" 
+  <div class="col-lg-6 col-12">
+    <div class="input-group input-group-sm input-group-solid">
+      <input type="text" class="form-control" id="kt_subheader_search_form"
+        formControlName="idnp" name="idnp" maxlength="13" minlength="13" 
         onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off" type="text" formControlName="idnp"
-      [placeholder]="'word.search-idnp' | translate"
-      (keydown.enter)="searchOnEnter.emit($event.target.value)"
-      (change)="handleSearch.emit($event)">
+        [placeholder]="'word.search-idnp' | translate"
+        (input)="searchOnChange.emit($event.target.value)"
+        (change)="handleSearch.emit($event)">
+    </div>
   </div>
-</div>
-</div>
-
+</form>

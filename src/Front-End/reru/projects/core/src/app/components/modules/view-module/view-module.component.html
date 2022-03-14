@@ -31,7 +31,7 @@
             <div class="card-body" *ngIf="module">
                 <p class="font-weight-bolder text-center font-size-h5 text-dark-75 m-0">{{module.name}}</p>
                 <p class="text-muted font-size-lg text-center" *ngIf="module.status === false">
-                  <span style="vertical-align: text-bottom;">
+                  <span>
                     <svg-icon key='error' [width]="16" [height]="16"
                       data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Offline">
                     </svg-icon>
@@ -39,7 +39,7 @@
                   Offline
                 </p>
                 <p class="text-muted font-size-lg text-center" *ngIf="module.status === true">
-                  <span style="vertical-align: text-bottom;">
+                  <span>
                     <svg-icon key='success' [width]="16" [height]="16"
                       data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Online">
                     </svg-icon>

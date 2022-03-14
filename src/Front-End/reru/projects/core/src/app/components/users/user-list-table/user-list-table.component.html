@@ -8,14 +8,14 @@
     <thead class="text-uppercase text-muted">
       <tr>
         <th scope="col" style="width: 50px"></th>
-        <th scope="col" class="pointer" (click)="sortedList({ sort: 'name' })">
+        <th scope="col" class="cursor-pointer" (click)="sortedList({ sort: 'name' })">
           {{ 'table.full-name' | translate }}
           <app-sort-button *ngIf="filter.sort === 'name'" [desc]="filter.order"></app-sort-button>
         </th>
         <th scope="col">
           {{ 'table.idnp' | translate }}
         </th>
-        <th scope="col" class="pointer" (click)="sortedList({ sort: 'username' })">
+        <th scope="col" class="cursor-pointer" (click)="sortedList({ sort: 'username' })">
           {{ 'table.email' | translate }}
           <app-sort-button *ngIf="filter.sort === 'username'" [desc]="filter.order"></app-sort-button>
         </th>

@@ -1,4 +1,10 @@
-<div class="input-group input-group-sm input-group-solid">
-    <input type="text" class="form-control" id="kt_subheader_search_form" (keydown.enter)="search(key)" [placeholder]="'word.search' | translate" [(ngModel)]="key">
+<div class="d-flex">
+    <div class="input-group input-group-sm input-group-solid mr-5">
+        <input type="text" class="form-control" id="kt_subheader_search_form"
+            (input)="search(key)" [(ngModel)]="key"
+            [placeholder]="'button.search' | translate"
+            >
+        <i class="ki ki-close mx-3 icon-md text-muted cursor-pointer" (click)="resetInput()"></i>
+    </div>
     <app-confirm-button (click)="search(key)" [value]="'button.filter' | translate" ></app-confirm-button>
 </div>

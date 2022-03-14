@@ -68,8 +68,8 @@ export class UserListTableComponent implements OnInit {
 			...data,
 			page: data.page || this.pagination.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
-			keyword: data.keyword || this.searchValue,
-			status: this.userState
+			keyword: data.keyword,
+			status: data.userState
 		};
 		this.isLoading = true;
 		this.userProfileService.getUserProfiles(ObjectUtil.preParseObject(data)).subscribe(response => {
@@ -89,8 +89,7 @@ export class UserListTableComponent implements OnInit {
 		if (sort === this.filter.sort) {
 			this.filter.order = !this.filter.order;
 			return
-		}
-		if (sort !== this.filter.sort) {
+		} else if (sort !== this.filter.sort) {
 			this.filter.sort = sort;
 			this.filter.order = false;
 		}
@@ -100,11 +99,11 @@ export class UserListTableComponent implements OnInit {
 		this.prepareFilter(data.sort, data.order);
 		data = {
 			...data,
-			keyword: this.keyword,
+			keyword: this.keyword || this.searchValue,
 			order: this.filter.order ? 'desc' : 'asc',
 			sort: this.filter.sort,
 			page: data.page || this.pagedSummary.currentPage,
-			status: this.userState
+			status: data.userState || this.userState
 		};
 		this.isLoading = true;
 		this.userProfileService.getUserProfiles(ObjectUtil.preParseObject(data)).subscribe(response => {
