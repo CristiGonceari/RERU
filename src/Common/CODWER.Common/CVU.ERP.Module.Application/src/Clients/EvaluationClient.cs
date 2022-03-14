@@ -22,7 +22,7 @@ namespace CVU.ERP.Module.Application.Clients
         private readonly IRestClient _restClient;
         private readonly ICurrentApplicationUserProvider _currentApplicationUserProvider;
         const string UserProfileBasePath = "/internaluserprofile";
-        private const string TestBasePath = "internalgettestid";
+        private const string TestBasePath = "/internalgettestid";
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public EvaluationClient(IRestClient restClient,
