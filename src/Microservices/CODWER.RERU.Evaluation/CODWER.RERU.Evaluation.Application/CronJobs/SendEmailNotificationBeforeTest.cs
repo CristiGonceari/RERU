@@ -15,27 +15,37 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
     {
         private readonly AppDbContext _appDbContext;
         private readonly INotificationService _notificationService;
-        private readonly DateTime _timeRange;
+        private readonly DateTime _timeRangeBeforeStart;
+        private readonly DateTime _timeRangeAfterStart;
+        private readonly int MinutesBeforeStart = 15;
 
         public SendEmailNotificationBeforeTest(AppDbContext appDbContext, INotificationService notificationService)
         {
             _appDbContext = appDbContext;
             _notificationService = notificationService;
-            _timeRange = DateTime.Now.AddMinutes(15);
+            _timeRangeBeforeStart = DateTime.Now.AddMinutes(MinutesBeforeStart);
+            _timeRangeAfterStart = DateTime.Now.AddMinutes(-1);
         }
 
         public async Task SendNotificationBeforeTest()
         {
             var tests = _appDbContext.Tests
                 .Include(x => x.UserProfile)
-                    .Where(test => test.ProgrammedTime <= _timeRange &&
-                                   !test.EmailTestNotifications
-                                       .Any(notification => notification.TestId == test.Id && notification.UserProfileId == test.UserProfileId))
+                    .Where(test => test.ProgrammedTime <= _timeRangeBeforeStart && 
+                                   test.ProgrammedTime >= _timeRangeAfterStart && 
+                                   test.StartTime == null &&  
+                                       !test.EmailTestNotifications
+                                           .Any(notification => notification.TestId == test.Id && notification.UserProfileId == test.UserProfileId))
                 .Select(x => new Test
                 {
                     Id = x.Id,
-                    UserProfile = x.UserProfile,
-                    UserProfileId = x.UserProfileId
+                    UserProfileId = x.UserProfileId,
+                    UserProfile = new UserProfile
+                    {
+                        FirstName = x.UserProfile.FirstName,
+                        LastName = x.UserProfile.LastName,
+                        Email = x.UserProfile.Email
+                    }
                 })
                 .AsQueryable();
 
@@ -56,7 +66,7 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
                     UserProfileId = test.UserProfileId
                 };
 
-                _appDbContext.EmailTestNotifications.Add(emailTestNotification);
+               await _appDbContext.EmailTestNotifications.AddAsync(emailTestNotification);
             }
 
             await _appDbContext.SaveChangesAsync();
@@ -68,7 +78,7 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
 
             template = template
                 .Replace("{user_name}", test.UserProfile.FirstName + " " + test.UserProfile.LastName)
-                .Replace("{email_message}", await GetTableContent());
+                .Replace("{email_message}", GetTableContent());
 
             var emailData = new EmailData()
             {
@@ -81,11 +91,11 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
             await _notificationService.Notify(emailData, NotificationType.Both);
         }
 
-        private async Task<string> GetTableContent()
+        private string GetTableContent()
         {
             var content = string.Empty;
 
-            content += $@"<p style=""font-size: 22px; font-weight: 300;"">Iti reamintim ca in decurs de 15 se va incepe testul ca care ai fost asignat, poti accesa linkul: </p>
+            content += $@"<p style=""font-size: 22px; font-weight: 300;"">Iti reamintim ca in decurs de 15 minute se va incepe testul la care ai fost asignat, poti accesa linkul: </p>
                             <p style=""font-size: 22px;font-weight: 300;"">http://reru.codwer.com</p>";
 
             return content;

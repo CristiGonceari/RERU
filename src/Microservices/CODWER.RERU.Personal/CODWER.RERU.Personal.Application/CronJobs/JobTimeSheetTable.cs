@@ -194,8 +194,8 @@ namespace CODWER.RERU.Personal.Application.CronJobs
                 }
                
             }
-                 _appDbContext.TimeSheetTables.AddRange(NewValues);
-                 _appDbContext.SaveChanges();
+            _appDbContext.TimeSheetTables.AddRange(NewValues);
+            _appDbContext.SaveChanges();
         }
         private void CheckCurrentDay(int contractorId, TimeSheetValueEnum value)
         {
