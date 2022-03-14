@@ -7,7 +7,7 @@ using CVU.ERP.Common.DataTransferObjects.TestDatas;
 namespace CODWER.RERU.Core.API.Controllers.Internal
 {
     [ApiController]
-    [Route ("internal/api/[controller]")]
+    [Route ("/api/[controller]/internal")]
     public class ApplicationController : BaseController
     {
         private readonly IEvaluationClient _evaluationClient;
