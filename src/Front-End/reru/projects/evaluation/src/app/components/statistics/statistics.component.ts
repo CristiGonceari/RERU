@@ -14,7 +14,7 @@ export class StatisticsComponent implements OnInit {
   categories: SelectItem[] = [{ label: "", value: "" }];
   filterEnum = 3;
   testTemplateId;
-  itemsPerPage;
+  itemsPerPage = 10;
   categoryId;
   title: string;
   
