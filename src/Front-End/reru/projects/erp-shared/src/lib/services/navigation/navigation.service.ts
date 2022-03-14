@@ -20,15 +20,15 @@ export class NavigationService {
 
             if (event instanceof NavigationEnd) 
             {
-                
-                  this.history.push(event.urlAfterRedirects)
+                if(event.urlAfterRedirects.includes("token") == false){
+                    this.history.push(event.urlAfterRedirects)
+                }
             }
         })
     }
 
     public getHistory(): string[] {
         
-        console.log("gethistory", this.history);
         return this.history;
     }
 
@@ -52,7 +52,6 @@ export class NavigationService {
         if (this.history.length > 0) 
         {
             var value =  this.history[this.history.length - 2];
-            console.log("value", value);
             
             if (value == "/"){
                 return 'Home'
