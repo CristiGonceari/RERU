@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.CronJobs
 {
@@ -17,13 +18,12 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
         private readonly INotificationService _notificationService;
         private readonly DateTime _timeRangeBeforeStart;
         private readonly DateTime _timeRangeAfterStart;
-        private readonly int MinutesBeforeStart = 15;
 
         public SendEmailNotificationBeforeTest(AppDbContext appDbContext, INotificationService notificationService)
         {
             _appDbContext = appDbContext;
             _notificationService = notificationService;
-            _timeRangeBeforeStart = DateTime.Now.AddMinutes(MinutesBeforeStart);
+            _timeRangeBeforeStart = DateTime.Now.AddMinutes(15);
             _timeRangeAfterStart = DateTime.Now.AddMinutes(-1);
         }
 
@@ -32,8 +32,8 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
             var tests = _appDbContext.Tests
                 .Include(x => x.UserProfile)
                     .Where(test => test.ProgrammedTime <= _timeRangeBeforeStart && 
-                                   test.ProgrammedTime >= _timeRangeAfterStart && 
-                                   test.StartTime == null &&  
+                                   test.ProgrammedTime >= _timeRangeAfterStart &&
+                                   test.TestStatus == TestStatusEnum.Programmed || test.TestStatus == TestStatusEnum.AlowedToStart &&
                                        !test.EmailTestNotifications
                                            .Any(notification => notification.TestId == test.Id && notification.UserProfileId == test.UserProfileId))
                 .Select(x => new Test

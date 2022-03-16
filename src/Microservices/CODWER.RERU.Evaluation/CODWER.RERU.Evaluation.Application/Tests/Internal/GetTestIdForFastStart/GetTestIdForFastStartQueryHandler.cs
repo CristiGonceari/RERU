@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CVU.ERP.Common.DataTransferObjects.TestDatas;
 using MediatR;
@@ -16,13 +17,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStar
         private readonly DateTime _timeRangeBeforeStart;
         private readonly DateTime _timeRangeAfterStart;
         private readonly IMapper _mapper;
-        private readonly int MinutesBeforeStart = 15;
 
         public GetTestIdForFastStartQueryHandler(AppDbContext appDbContext, IMapper mapper)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
-            _timeRangeBeforeStart = DateTime.Now.AddMinutes(MinutesBeforeStart);
+            _timeRangeBeforeStart = DateTime.Now.AddMinutes(15);
             _timeRangeAfterStart = DateTime.Now.AddMinutes(-1);
         }
 
@@ -33,7 +33,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStar
                 .Include(x => x.TestTemplate.Settings)
                 .Where(test => test.ProgrammedTime <= _timeRangeBeforeStart &&
                                test.ProgrammedTime >= _timeRangeAfterStart &&
-                               test.StartTime == null)
+                               test.TestStatus == TestStatusEnum.Programmed || test.TestStatus == TestStatusEnum.AlowedToStart)
                 .FirstOrDefault(x => x.UserProfile.CoreUserId == request.CoreUserProfileId);
 
             return test == null ? new TestDataDto() : _mapper.Map<TestDataDto>(test);
