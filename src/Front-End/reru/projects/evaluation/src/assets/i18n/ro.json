@@ -165,7 +165,8 @@
     "bulk-beSureMsg": "Asigurați-vă că încărcați șablonul necesar",
     "status-msg": "Sigur doriți să atribuiți această stare testului dvs.",
     "edit-options": "Nu puteți edita opțiunile.",
-    "no-record": "Nu a fost găsită nicio înregistrare."
+    "no-record": "Nu a fost găsită nicio înregistrare.",
+    "negative-message": "Această întrebare nu poate avea punctaj negativ."
   },
   "categories": {
     "settings": "Setări",
@@ -759,7 +760,8 @@
     "03030203": "Ați fost invitat la eveniment ca candidat",
     "03030204": "Ați fost invitat la eveniment ca persoana responsabilă",
     "03030205": "Ați fost invitat la eveniment ca evaluator",
-    "03030206": "Ați fost invitat la test ca evaluator"
+    "03030206": "Ați fost invitat la test ca evaluator",
+    "03030207": "Toți candidații din eveniment au terminat testul"
   },
   "login": {
     "colaborator-id": "Colaborator ID",

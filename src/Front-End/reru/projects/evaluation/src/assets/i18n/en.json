@@ -165,7 +165,8 @@
     "bulk-beSureMsg": "Be sure that you upload the needed template",
     "status-msg": "Are you sure you want to assign this status to your test",
     "edit-options": "You can't edit options.",
-    "no-record": "No record found."
+    "no-record": "No record found.",
+    "negative-message": "This question cannot be negative."
   },
   "categories": {
     "settings": "Settings",
@@ -758,7 +759,8 @@
     "03030203": "You were invited to event as a candidate",
     "03030204": "You have been invited to event as responsible person",
     "03030205": "You were invited to the event as an evaluator",
-    "03030206": "You were invited to the test as an evaluator"
+    "03030206": "You were invited to the test as an evaluator",
+    "03030207": "All candidates from event finished test"
   },
   "login": {
     "colaborator-id": "Collaborator ID",

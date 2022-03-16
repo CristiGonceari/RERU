@@ -73,42 +73,43 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
                     .Where(x => x.EventId == testToFinalize.EventId)
                     .ToListAsync();
 
-                foreach (var evaluator in eventEvaluators)
+            foreach (var evaluator in eventEvaluators)
+            {
+                var userTests = _appDbContext.EventUsers
+                    .Include(x => x.Event)
+                    .Include(x => x.UserProfile)
+                        .ThenInclude(x => x.Tests)
+                    .Where(x => x.EventId == testToFinalize.EventId)
+                    .All(x => x.UserProfile.TestsWithEvaluator
+                                    .Where(x => x.EventId == testToFinalize.EventId)
+                                    .All(t => t.TestStatus == TestStatusEnum.Terminated) && 
+                                x.UserProfile.TestsWithEvaluator
+                                    .Where(x => x.EventId == testToFinalize.EventId)
+                                    .Any(t => t.UserProfileId == x.UserProfileId));
+
+                if (userTests)
                 {
-                    var userTests = _appDbContext.EventUsers
-                        .Include(x => x.Event)
-                        .Include(x => x.UserProfile)
-                            .ThenInclude(x => x.Tests)
-                        .Where(x => x.EventId == testToFinalize.EventId)
-                        .All(x => x.UserProfile.Tests
-                                      .Where(x => x.EventId == testToFinalize.EventId)
-                                      .All(t => t.TestStatus == TestStatusEnum.Terminated) && 
-                                  x.UserProfile.Tests
-                                      .Where(x => x.EventId == testToFinalize.EventId)
-                                      .Any(t => t.UserProfileId == x.UserProfileId));
+                    template = template
+                        .Replace("{user_name}", evaluator.Evaluator.FirstName + " " + evaluator.Evaluator.LastName)
+                        .Replace("{email_message}", await GetTableContent(test));
 
-                    if (userTests)
+                    var emailData = new EmailData()
                     {
-                        template = template
-                            .Replace("{user_name}", evaluator.Evaluator.FirstName + " " + evaluator.Evaluator.LastName)
-                            .Replace("{email_message}", await GetTableContent(test));
+                        subject = "Rezultatul testului",
+                        body = template,
+                        from = "Do Not Reply",
+                        to = evaluator.Evaluator.Email
+                    };
 
-                        var emailData = new EmailData()
-                        {
-                            subject = "Rezultatul testului",
-                            body = template,
-                            from = "Do Not Reply",
-                            to = evaluator.Evaluator.Email
-                        };
+                    await _notificationService.Notify(emailData, NotificationType.Both);
 
-                        await _notificationService.Notify(emailData, NotificationType.Both);
-
-                    }
-                    else
-                    {
-                        return Unit.Value;
-                    }
+                    await _internalNotificationService.AddNotification(evaluator.EvaluatorId, NotificationMessages.AllCandidatesFinishedTest);
                 }
+                else
+                {
+                    return Unit.Value;
+                }
+            }
          
             return Unit.Value;
         }

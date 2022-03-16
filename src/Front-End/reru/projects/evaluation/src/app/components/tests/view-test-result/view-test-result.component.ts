@@ -42,6 +42,7 @@ export class ViewTestResultComponent implements OnInit {
   accumulatedPoints: number;
 	isLoadingMedia: boolean;
 	fileId: string;
+  showNegativeMessage: boolean;
 
   optionFileId = [];
   isLoadingOptionMedia:  boolean = true;
@@ -125,6 +126,7 @@ export class ViewTestResultComponent implements OnInit {
           this.comment = res.data.comment;
           this.options = res.data.options;
           this.correct = res.data.isCorrect;
+          this.showNegativeMessage = res.data.showNegativeMessage;
           if (this.correct == null) this.correct = false;
           this.index = index;
           this.questionType = res.data.questionType;
