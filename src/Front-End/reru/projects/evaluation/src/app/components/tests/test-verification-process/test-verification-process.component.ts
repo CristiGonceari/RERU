@@ -43,6 +43,7 @@ export class TestVerificationProcessComponent implements OnInit {
 	isLoadingMedia: boolean;
 	fileId: string;
 	accumulatedPoints: number;
+	showNegativeMessage: boolean;
 
 	title: string;
 	description: string;
@@ -142,6 +143,7 @@ export class TestVerificationProcessComponent implements OnInit {
 					this.comment = res.data.comment;
 					this.options = res.data.options;
 					this.correct = res.data.isCorrect;
+					this.showNegativeMessage = res.data.showNegativeMessage;
           			if (this.correct == null) this.correct = false;
 					this.index = index;
 					this.questionType = res.data.questionType;

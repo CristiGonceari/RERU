@@ -13,5 +13,6 @@ namespace CODWER.RERU.Evaluation.Application.Validation
         public const string YouWereInvitedToEventAsResponsiblePerson = "03030204";
         public const string YouWereInvitedToEventAsEvaluator = "03030205";
         public const string YouWereInvitedToTestAsEvaluator = "03030206";
+        public const string AllCandidatesFinishedTest = "03030207";
     }
 }
