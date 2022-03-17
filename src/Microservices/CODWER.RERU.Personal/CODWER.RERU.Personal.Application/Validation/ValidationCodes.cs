@@ -176,6 +176,11 @@
 
         //documents
         public static string DOCUMENTS_NOT_FOUND = "02015001";
+
+        //article
+        public static string EMPTY_CONTENT = "02016001";
+        public static string EMPTY_NAME = "02016002";
+        public static string ARTICLE_NOT_FOUND = "02016003";
     }
 
 }

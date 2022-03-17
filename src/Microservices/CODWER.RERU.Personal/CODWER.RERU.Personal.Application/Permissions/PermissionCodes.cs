@@ -59,5 +59,7 @@
         public const string TIME_SHEET_TABLE_GENERAL_ACCESS = "P02002701";
 
         public const string DOCUMENTS_TEMPLATE_GENERAL_ACCESS = "P02002801";
+
+        public const string ARTICLES_GENERAL_ACCESS = "P02002901";
     }
 }
