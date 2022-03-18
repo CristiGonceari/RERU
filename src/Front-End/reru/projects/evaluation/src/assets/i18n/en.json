@@ -776,5 +776,8 @@
     "sorted-by": "Sorted by",
     "error-msg": "Please select fields for print",
     "print-msg": "Please specify the print orientation and necessary fields."
+  },
+  "guide": {
+    "title": "User Guide"
   }
 }
