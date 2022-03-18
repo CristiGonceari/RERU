@@ -39,13 +39,13 @@
                       </button>
                       <span *permission="'P00000017'">
                         <button *ngIf="user?.data?.isActive === false" (click)="openActivateUserModal(id)"
-                          class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem>
+                          class="navi-link align-items-center font-size-lg py-2 px-6 my-2" ngbDropdownItem>
                           {{ 'button.activate-user' | translate }}
                         </button>
                       </span>
                       <span *permission="'P00000018'">
                         <button *ngIf="user?.data?.isActive === true" (click)="openDeactivateUserModal(id)"
-                          class="navi-link align-items-center px-6" ngbDropdownItem>
+                          class="navi-link align-items-center font-size-lg px-6" ngbDropdownItem>
                           {{ 'button.deactivate-user' | translate }}
                         </button>
                       </span>
