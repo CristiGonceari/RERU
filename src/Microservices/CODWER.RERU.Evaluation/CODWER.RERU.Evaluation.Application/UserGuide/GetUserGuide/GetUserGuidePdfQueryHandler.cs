@@ -4,13 +4,13 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CODWER.RERU.Personal.Application.UserGuide.GetUserGuide
+namespace CODWER.RERU.Evaluation.Application.UserGuide.GetUserGuide
 {
     public class GetUserGuidePdfQueryHandler : IRequestHandler<GetUserGuidePdfQuery, FileDataDto>
     {
         public async Task<FileDataDto> Handle(GetUserGuidePdfQuery request, CancellationToken cancellationToken)
         {
-            var path = new FileInfo("UserGuide/GhidPersonal.pdf").FullName;
+            var path = new FileInfo("UserGuide/GhidEvaluare.pdf").FullName;
             var bytes = await File.ReadAllBytesAsync(path);
 
             return new FileDataDto

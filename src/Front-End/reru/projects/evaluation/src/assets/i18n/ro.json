@@ -781,5 +781,8 @@
     "sorted-by": "Sortat după",
     "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
     "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare."
+  },
+  "guide": {
+    "title": "Ghidul Utilizatorului"
   }
 }

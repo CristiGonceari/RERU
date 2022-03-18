@@ -10,7 +10,6 @@ import { GuideService } from '../../../utils/services/guide.service'
 export class FaqListComponent {
   title: string;
   isLoadingButton: boolean;
-  profile;
   isLoading: boolean = true;
 
   constructor(private guideService: GuideService) { }
