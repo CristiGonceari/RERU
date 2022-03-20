@@ -48,6 +48,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { PrintModalComponent } from './modals/print-modal/print-modal.component';
 import { LocationBackButtonComponent } from './components/location-back-button/location-back-button.component';
+import { SearchInputComponent } from './components/search-input/search-input.component';
 
 export const translateModule = TranslateModule.forChild();
 
@@ -69,7 +70,8 @@ const commonExports = [
 	PaginationComponent,
 	LoadingSpinnerComponent,
 	PrintModalComponent,
-	LocationBackButtonComponent
+	LocationBackButtonComponent,
+	SearchInputComponent
 ];
 @NgModule({
 	declarations: [...commonExports, ViewIconComponent, ContentComponent],

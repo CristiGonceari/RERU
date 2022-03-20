@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationModel } from '../../../../utils/models/pagination.model';
@@ -55,6 +55,7 @@ export class TestListTableComponent implements OnInit {
 	downloadFile: boolean = false;
 	headersToPrint = [];
 	printTranslates: any[];
+  filters: any = {};
 
   title: string;
 	description: string;
@@ -92,8 +93,7 @@ export class TestListTableComponent implements OnInit {
     if (this.dateTimeFrom) {
       const date = new Date(this.dateTimeFrom);
       this.searchFrom = new Date(date.getTime() - (new Date(this.dateTimeFrom).getTimezoneOffset() * 60000)).toISOString();
-    }
-    if (this.dateTimeTo) {
+    } else if (this.dateTimeTo) {
       const date = new Date(this.dateTimeTo);
       this.searchTo = new Date(date.getTime() - (new Date(this.dateTimeTo).getTimezoneOffset() * 60000)).toISOString();
     }
@@ -104,16 +104,17 @@ export class TestListTableComponent implements OnInit {
     this.isLoading = true;
 
     let params = {
-      testTemplateName: this.testToSearch || '',
-      locationKeyword: this.locationName || '',
-      idnp: this.idnp || '',
-      eventName: this.eventName || '',
-      userName: this.userName || '',
+      testTemplateName: this.filters.testName || this.testToSearch || '',
+      locationKeyword: this.filters.testLocation || this.locationName || '',
+      idnp: this.filters.idnp ||this.idnp || '',
+      eventName: this.filters.testEvent || this.eventName || '',
+      userName: this.filters.userName || this.userName || '',
       programmedTimeFrom: this.searchFrom,
       programmedTimeTo: this.searchTo,
-      testStatus: data.selectedStatus || this.selectedStatus,
+      testStatus: this.filters.selectedStatus || this.selectedStatus,
       page: data.page || this.pagination.currentPage,
-      itemsPerPage: data.itemsPerPage || this.pagination.pageSize
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+      ...this.filters
     }
 
     this.testService.getTests(params).subscribe(res => {
@@ -123,8 +124,6 @@ export class TestListTableComponent implements OnInit {
         this.testTemplateName = res.data.items.map(it => it.testTemplateName);
         this.score = res.data.items.map(s => s.score);
         this.pagination = res.data.pagedSummary;
-        // this.searchFrom = '';
-        // this.searchTo = '';
         this.isLoading = false;
 
         for (let i = 1; i <= this.pagination.totalCount; i++) {
@@ -287,12 +286,12 @@ export class TestListTableComponent implements OnInit {
 			tableName: name,
 			fields: this.headersToPrint,
 			orientation: 2,
-			testStatus: +this.selectedStatus,
-			testTemplateName: this.testToSearch || '',
-			userName: this.userName || '',
-      locationKeyword: this.locationName || '',
-      eventName: this.eventName || '',
-      idnp: this.idnp || '',
+      testStatus: this.filters.selectedStatus || this.selectedStatus,
+      testTemplateName: this.filters.testName || this.testToSearch || '',
+      locationKeyword: this.filters.testLocation || this.locationName || '',
+      idnp: this.filters.idnp ||this.idnp || '',
+      eventName: this.filters.testEvent || this.eventName || '',
+      userName: this.filters.userName || this.userName || '',
       programmedTimeFrom: this.searchFrom || null,
       programmedTimeTo: this.searchTo || null
 		};
@@ -330,5 +329,15 @@ export class TestListTableComponent implements OnInit {
 				this.downloadFile = false;
 			}
 		}, () => this.downloadFile = false);
+	}
+
+  setFilter(field: string, value): void {
+		this.filters[field] = value;
+		this.getTests();
+	}
+
+	resetFilters(): void {
+		this.filters = {};
+		this.getTests();
 	}
 }
