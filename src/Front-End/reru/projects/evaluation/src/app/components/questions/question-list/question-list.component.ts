@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { QuestionByCategoryService } from '../../../utils/services/question-by-category/question-by-category.service';
@@ -11,13 +11,19 @@ import { BulkImportQuestionsComponent } from '../bulk-import-questions/bulk-impo
 })
 export class QuestionListComponent implements OnInit {
 	title: string;
+	@ViewChild('question') searchQuestion: any;
+	@ViewChild('category') searchCategory: any;
+	@ViewChild('type') searchType: any;
+	@ViewChild('tags') searchTags: any;
+	@ViewChild('status') searchStatus: any;
+	
+  	constructor(
+		private modalService: NgbModal,
+		private router: Router,
+		private questionByCategory: QuestionByCategoryService
+	) { }
 
-  	constructor( private modalService: NgbModal,
-			private router: Router,
-			private questionByCategory: QuestionByCategoryService) { }
-
-	ngOnInit(): void {
-	}
+	ngOnInit(): void { }
 
 	getTitle(): string {
 		this.title = document.getElementById('title').innerHTML;
@@ -35,4 +41,13 @@ export class QuestionListComponent implements OnInit {
 		this.questionByCategory.setValue(false);
 		this.router.navigate(['questions/add-question']);
 	}
+
+	clearFields() {
+		this.searchQuestion.clear();
+		this.searchCategory.clear();
+		this.searchTags.clear();
+		this.searchStatus.getQuestionStatus();
+		this.searchType.getQuestionType();
+	}
+
 }

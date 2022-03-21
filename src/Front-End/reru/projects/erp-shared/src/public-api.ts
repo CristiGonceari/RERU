@@ -19,6 +19,7 @@ export * from './lib/components/pagination/pagination.component';
 export * from './lib/components/loading-spinner/loading-spinner.component';
 export * from './lib/components/location-back-button/location-back-button.component';
 export * from './lib/components/authentication/authentication-callback/authentication-callback.component';
+export * from './lib/components/search-input/search-input.component';
 
 export * from './lib/services/sidebar.service';
 export * from './lib/services/icon.service';

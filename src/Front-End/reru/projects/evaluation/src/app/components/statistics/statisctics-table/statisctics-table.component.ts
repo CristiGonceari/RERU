@@ -43,7 +43,7 @@ export class StatiscticsTableComponent implements OnInit {
   getHeaders(name: string): void {
 		this.translateData();
     let headersHtml = document.getElementsByTagName('th');
-    let headersDto = ['question', 'categoryName', 'totalUsed', 'percentCorrect'];
+    let headersDto = ['question', 'categoryName', 'totalUsed', 'percent'];
     for (let i=0; i<headersHtml.length; i++) {
       this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
     }

@@ -46,6 +46,7 @@ export class TestTemplateListTableComponent implements OnInit {
 	downloadFile: boolean = false;
 	headersToPrint = [];
 	printTranslates: any[];
+	filters: any = {}
 
 	constructor(
 		public referenceService: ReferenceService,
@@ -74,9 +75,9 @@ export class TestTemplateListTableComponent implements OnInit {
 			tableName: name,
 			fields: this.headersToPrint,
 			orientation: 2,
-			name: this.testName || '',
-			eventName: this.eventName || '',
-			status: +this.status || ''
+			name: this.filters.name || this.testName || '',
+			eventName: this.filters.eventName || this.eventName || '',
+			status: +this.filters.status || ''
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.tableData = printData;
@@ -119,9 +120,10 @@ export class TestTemplateListTableComponent implements OnInit {
 		let params: any = {
 			name: this.testName || '',
 			eventName: this.eventName || '',
-			status: this.status,
+			status: this.status || '',
 			page: data.page || this.pagination.currentPage,
-			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+			...this.filters
 		}
 
 		this.testTemplateService.getTestTemplates(params).subscribe(res => {
@@ -131,6 +133,18 @@ export class TestTemplateListTableComponent implements OnInit {
 				this.pagination = res.data.pagedSummary;
 			}
 		});
+	}
+
+	resetFilters(): void {
+		this.filters = {};
+		this.status = '';
+		this.list();
+	}
+
+	setFilter(field: string, value): void {
+		this.filters[field] = value;
+		this.status = this.filters.status
+		this.list();
 	}
 
 	changeStatus(id, status) {

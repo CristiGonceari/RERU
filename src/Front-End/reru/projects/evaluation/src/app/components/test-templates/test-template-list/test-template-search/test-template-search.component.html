@@ -1,4 +1,4 @@
-<select class="form-control h-35px" name="selectedStatus" id="selectedStatus" (change)="filter.emit($event)">
+<select class="form-control h-35px" name="selectedStatus" id="selectedStatus" (change)="filter.emit($event.target.value)">
     <option class="default-option text-muted" selected value="">{{ 'tests.search-status' | translate }}</option>
     <option *ngFor="let item of testStatusesList" [value]="item.value">
         {{'statuses.' + item.label | translate}}

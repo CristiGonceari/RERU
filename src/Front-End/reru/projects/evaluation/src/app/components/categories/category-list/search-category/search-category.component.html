@@ -1,7 +1,7 @@
 <div class="input-group input-group-sm input-group-solid">
-    <input type="text" class="form-control" id="kt_subheader_search_form" (keydown.enter)="search(key)" [placeholder]="'button.search' | translate" [(ngModel)]="key">
+    <input type="text" class="form-control" id="kt_subheader_search_form" (input)="search(key)" [placeholder]="'button.search' | translate" [(ngModel)]="key">
     <div class="input-group-append">
-        <span class="input-group-text cursor-pointer" (click)="search(key)">
+        <span class="input-group-text cursor-pointer" *ngIf="!key">
             <span class="svg-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -12,5 +12,6 @@
                 </svg>
             </span>
         </span>
+        <i class="ki ki-close mx-3 icon-sm text-muted cursor-pointer" *ngIf="key" (click)="clearSearch()"></i>
     </div>
 </div>
