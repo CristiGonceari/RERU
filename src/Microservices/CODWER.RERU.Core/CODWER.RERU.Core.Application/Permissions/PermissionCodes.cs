@@ -25,5 +25,6 @@
         public const string GIVE_USER_ACCESS_TO_A_MODULE = "P00000022";
         public const string REMOVE_USER_ACCESS_TO_A_MODULE = "P00000023";
         public const string UPDATE_USER_MODULE_ACCESS = "P00000024";
+        public const string ARTICLES_GENERAL_ACCESS = "P00000025";
     }
 }
