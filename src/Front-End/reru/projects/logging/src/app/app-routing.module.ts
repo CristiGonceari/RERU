@@ -7,10 +7,17 @@ import { Exception404Component } from './utils/exceptions/404/404.component';
 import { TranslateService } from '@ngx-translate/core';
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { Location } from '@angular/common';
+import { PermissionRouteGuard } from '@erp/shared';
 
 const routes: Routes = [
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent },
 	{ path: '', component: DashboardComponent },
+	{
+		path: 'faq',
+		loadChildren: () => import('./components/faq/faq.module').then(m => m.FAQModule),
+		data: { permission: 'P04000002' },
+		canActivate: [PermissionRouteGuard]
+	},
 	{ path: '404', component: Exception404Component },
 	{ path: '**', redirectTo: '404' }
 ];
