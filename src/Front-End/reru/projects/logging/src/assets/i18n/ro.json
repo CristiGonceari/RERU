@@ -262,5 +262,42 @@
   "word": {
     "confirmation": "Confirmare",
     "search": "Căutare"
+  },
+  "faq": {
+    "help": "Ajutor",
+    "faq": "FAQ",
+    "subtitle": "Întrebări frecvente",
+    "manage-faq": "Gestionarea FAQ",
+    "new-article": "Adaugă Articol",
+    "delete-article": "Șterge Articol",
+    "article-title": "Titlul Articolului",
+    "name": "Nume",
+    "content": "Conţinut",
+    "remove": "Ștergeți articol",
+    "remove-msg": "Sigur doriți să ștergeți acest articol?",
+    "succes-remove-msg": "Articol a fost șters cu succes",
+    "succes-add-msg": "Articol a fost adăugat cu succes",
+    "succes-edit-msg": "Articol a fost editat cu succes",
+    "overview": "Prezentare generală"
+  },
+  "guide": {
+    "title": "Ghidul Utilizatorului"
+  },
+  "modal":{
+    "delete": "Șterge",
+    "success": "Succes",
+    "error": "Eroare",
+    "finish-test": "Terminați testul",
+    "finish-poll": "Terminați sondajul",
+    "finish-verification": "Terminați verificarea testului",
+    "delete-msg": "Sigur doriți să ștergeți acest/aceasta",
+    "yes": "Da",
+    "no": "Nu"
+  },
+  "print": {
+    "print-table": "Printare tabel",
+    "sorted-by": "Sortat după",
+    "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
+    "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare."
   }
 }
