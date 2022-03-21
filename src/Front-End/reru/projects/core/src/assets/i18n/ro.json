@@ -96,7 +96,8 @@
     "filter": "Filtrează",
     "yes": "Da",
     "no": "Nu",
-    "attach": "Atașează"
+    "attach": "Atașează",
+    "print": "Imprimă"
   },
   "pagination": {
     "displaing": "Se afișează",
@@ -327,6 +328,36 @@
     "01000002": "IDNP trebuie să conține doar cifre",
     "01000003": "IDNP nu trebuie să conține doar zero",
     "01000004": "IDNP nevalid!",
-    "01000005": "IDNP duplicat în sistem!"
+    "01000005": "IDNP duplicat în sistem!",
+    "01000201": "Nume necompletat!",
+    "01000202": "Conținut necompletat!",
+    "01000203": "Date nevalide!",
+    "01000204": "Id nevalid!"
+  },
+  "print": {
+    "print-table": "Printare tabel",
+    "sorted-by": "Sortat după",
+    "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
+    "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare."
+  },
+  "guide": {
+    "title": "Ghidul Utilizatorului"
+  },
+  "faq": {
+    "overview": "Prezentare generală",
+    "help": "Ajutor",
+    "faq": "FAQ",
+    "subtitle": "Întrebări frecvente",
+    "manage-faq": "Gestionarea FAQ",
+    "new-article": "Adaugă Articol",
+    "delete-article": "Șterge Articol",
+    "article-title": "Titlul Articolului",
+    "name": "Nume",
+    "content": "Conţinut",
+    "remove": "Ștergeți articol",
+    "remove-msg": "Sigur doriți să ștergeți acest articol?",
+    "succes-remove-msg": "Articol a fost șters cu succes",
+    "succes-add-msg": "Articol a fost adăugat cu succes",
+    "succes-edit-msg": "Articol a fost editat cu succes"
   }
 }

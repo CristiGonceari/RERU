@@ -7,7 +7,7 @@
       "module": { "name": "Personal" },
       "role": "test role",
       "permissions": [
-
+        "P00000025",
         "P02000001",
         "P02000101",
         "P02000201",

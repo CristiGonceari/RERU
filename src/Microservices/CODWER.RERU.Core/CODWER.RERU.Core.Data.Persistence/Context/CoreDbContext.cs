@@ -18,6 +18,7 @@ namespace CODWER.RERU.Core.Data.Persistence.Context
         public DbSet<ModuleRolePermission> ModuleRolePermissions { set; get; }
         public DbSet<UserProfileModuleRole> UserProfileModuleRoles { set; get; }
         public DbSet<UserProfile> UserProfiles { set; get; }
+        public DbSet<Article> Articles { set; get; }
 
         protected override void OnConfiguring (
             DbContextOptionsBuilder optionsBuilder
