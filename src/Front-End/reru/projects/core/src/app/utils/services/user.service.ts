@@ -21,7 +21,7 @@ export class UserService extends AbstractService {
 		return this.http.get<Response<UserForRemove>>(`${this.coreUrl}/${this.routeUrl}/${id}/for-remove`);
 	}
 
-	createUser(data: User): Observable<any> {
+	createUser(data): Observable<any> {
 		return this.http.post(`${this.coreUrl}/${this.routeUrl}`, data);
 	}
 

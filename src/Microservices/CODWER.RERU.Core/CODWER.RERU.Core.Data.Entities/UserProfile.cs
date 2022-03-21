@@ -18,10 +18,10 @@ namespace CODWER.RERU.Core.Data.Entities
         public string FatherName { set; get; }
         public string Email { set; get; }
         public string Idnp { set; get; }
+        public string? MediaFileId { get; set; }
 
         public string Token { set; get; }
         public bool IsActive { set; get; }
-        public Document Avatar { get; set; }
         public DateTime? TokenLifetime { get; set; }
         public List<UserProfileModuleRole> ModuleRoles { set; get; }
         public List<UserProfileIdentity> Identities { set; get; }

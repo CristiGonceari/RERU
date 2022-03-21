@@ -9,7 +9,7 @@
 </div>
 <div *ngIf="!isLoadingMedia">
     <div *ngIf="imageUrl">
-        <img [src]="imageUrl" class="h-200px rounded" style="cursor: zoom-in;" (click)="showImage(imageUrl)">
+        <img [src]="imageUrl" class="h-200px rounded" style="cursor: zoom-in; max-width: -webkit-fill-available;" (click)="showImage(imageUrl)">
     </div>
     <video *ngIf="videoUrl" class="h-200px rounded" controls>
         <source [src]="videoUrl">
@@ -18,3 +18,4 @@
         <source [src]="audioUrl" type="audio/mpeg">
     </audio>
 </div>
+ 

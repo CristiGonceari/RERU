@@ -16,7 +16,6 @@ using CODWER.RERU.Core.Application.Users.ResetUserPassword;
 using CODWER.RERU.Core.Application.Users.SetPassword;
 using CODWER.RERU.Core.DataTransferObjects.Password;
 using CODWER.RERU.Core.DataTransferObjects.Users;
-using CVU.ERP.Common.DataTransferObjects.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,9 +49,9 @@ namespace CODWER.RERU.Core.API.Controllers
         }
 
         [HttpPut ("personal-details")]
-        public Task UpdateUserPersonalDetails ([FromBody] EditUserPersonalDetailsDto dto) 
+        public Task UpdateUserPersonalDetails ([FromForm] EditUserPersonalDetailsCommand command) 
         {
-            return Mediator.Send (new EditUserPersonalDetailsCommand (dto));
+            return Mediator.Send(command);
         }
 
         [HttpGet ("get-personal-data")]
@@ -62,9 +61,9 @@ namespace CODWER.RERU.Core.API.Controllers
         }
 
         [HttpPost]
-        public Task<int> CreateUser ([FromBody] CreateUserDto user) 
+        public Task<int> CreateUser ([FromForm] CreateUserCommand command) 
         {
-            return Mediator.Send (new CreateUserCommand (user));
+            return Mediator.Send(command);
         }
 
         [HttpPut]

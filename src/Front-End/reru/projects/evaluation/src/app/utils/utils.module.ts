@@ -11,11 +11,8 @@ import { HashOptionInputComponent } from './components/hash-option-input/hash-op
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { EventCalendarComponent } from './components/event-calendar/event-calendar.component';
 import { CalendarChunkPipe } from './pipes/calendar-chunk.pipe';
-import { AddEditMediaFileComponent } from './components/add-edit-media-file/add-edit-media-file.component';
-import { GetMediaFileComponent } from './components/get-media-file/get-media-file.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SharedModule } from '@erp/shared';
-import { ShowImageModalComponent } from './components/show-image-modal/show-image-modal.component';
 
 @NgModule({
   declarations: [
@@ -24,9 +21,6 @@ import { ShowImageModalComponent } from './components/show-image-modal/show-imag
     SafeHtmlPipe,
     EventCalendarComponent,
     CalendarChunkPipe,
-    AddEditMediaFileComponent,
-    GetMediaFileComponent,
-    ShowImageModalComponent,
   ],
   imports: [
     HttpClientModule,
@@ -42,16 +36,14 @@ import { ShowImageModalComponent } from './components/show-image-modal/show-imag
   providers: [
     { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter },
     SafeHtmlPipe,
-    AddEditMediaFileComponent,
-    GetMediaFileComponent
+
   ],
   exports: [
     SafeHtmlPipe,
     TranslateModule,
     DateComponent,
     EventCalendarComponent,
-    AddEditMediaFileComponent,
-    GetMediaFileComponent
+    
   ]
 })
 export class UtilsModule { }

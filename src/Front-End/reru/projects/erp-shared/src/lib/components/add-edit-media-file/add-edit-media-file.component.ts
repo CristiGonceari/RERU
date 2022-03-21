@@ -1,13 +1,12 @@
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NotificationsService } from 'angular2-notifications';
-import { CloudFileService } from '../../services/cloud-file/cloud-file.service';
-import { NotificationUtil } from '../../util/notification.util';
-import { forkJoin } from 'rxjs';
-import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ShowImageModalComponent } from '../show-image-modal/show-image-modal.component';
+import { NotificationsService } from 'angular2-notifications';
+import { CloudFileService } from '../../services/cloud-file.service';
+import { I18nService } from '../../services/i18n.service';
+import { NotificationUtil } from '../../utils/notification.util';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-add-edit-media-file',
@@ -15,6 +14,7 @@ import { ShowImageModalComponent } from '../show-image-modal/show-image-modal.co
   styleUrls: ['./add-edit-media-file.component.scss']
 })
 export class AddEditMediaFileComponent implements OnInit {
+
   imageFiles: File[] = [];
   videoFiles: File[] = [];
   audioFiles: File[] = [];
@@ -37,13 +37,13 @@ export class AddEditMediaFileComponent implements OnInit {
   @Input() fileId: string;
   @Output() handleFile: EventEmitter<File> = new EventEmitter<File>();
   @Output() disableBtn: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  constructor(private sanitizer: DomSanitizer,
+  constructor(
+    private sanitizer: DomSanitizer,
     private notificationService: NotificationsService,
     private fileService: CloudFileService,
     public translate: I18nService,
     private modalService: NgbModal,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.fileId != undefined && this.fileId !='null') {
@@ -51,7 +51,7 @@ export class AddEditMediaFileComponent implements OnInit {
       this.getMediaFile(this.fileId);
     }
   }
-
+  
   getMediaFile(fileId) {
     this.isLoadingMedia = true;
     this.fileService.get(fileId).subscribe(res => {
@@ -170,12 +170,12 @@ export class AddEditMediaFileComponent implements OnInit {
     this.fileStatus.percent = Math.round(100 * loaded / total);
   }
 
-  showImage(url): void {
-    const modalRef = this.modalService.open(ShowImageModalComponent, { centered: true, size: 'xl' });
-    modalRef.componentInstance.imageUrl = url;
-		modalRef.result.then(
-			() => { }
-		);
-  }
+  // showImage(url): void {
+  //   const modalRef = this.modalService.open(ShowImageModalComponent, { centered: true, size: 'xl' });
+  //   modalRef.componentInstance.imageUrl = url;
+	// 	modalRef.result.then(
+	// 		() => { }
+	// 	);
+  // }
 
 }

@@ -1,16 +1,17 @@
 import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CloudFileService } from '../../services/cloud-file/cloud-file.service';
-import { ShowImageModalComponent } from '../show-image-modal/show-image-modal.component';
+import { ShowImageModalComponent } from '../../modals/show-image-modal/show-image-modal.component';
+import { CloudFileService } from '../../services/cloud-file.service';
 
 @Component({
   selector: 'app-get-media-file',
   templateUrl: './get-media-file.component.html',
   styleUrls: ['./get-media-file.component.scss']
 })
-export class GetMediaFileComponent implements OnInit, OnChanges {
+export class GetMediaFileComponent implements OnInit {
+
   imageUrl: any;
   audioUrl: any;
   videoUrl: any;
@@ -21,21 +22,21 @@ export class GetMediaFileComponent implements OnInit, OnChanges {
   fileStatus = { requestType: '', percent: 1 }
 
   @Input() fileId: string;
-
   constructor(
     private sanitizer: DomSanitizer,
     private fileService: CloudFileService,
     private modalService: NgbModal,
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
   ngOnChanges( changes: SimpleChanges ) {
     if (this.fileId != 'null' && changes.fileId.previousValue != this.fileId) {
       this.getMediaFile(this.fileId);
     }
   }
-
+  
   getMediaFile(fileId) {
     this.isLoadingMedia = true;
     this.fileService.get(fileId).subscribe( res => {
@@ -111,5 +112,4 @@ export class GetMediaFileComponent implements OnInit, OnChanges {
       () => {modalRef.close()}
 		);
   }
-  
 }

@@ -1,7 +1,7 @@
 import { UserModule } from './user-module.model';
 
 export class MyProfile {
-    avatar: string;
+    mediaFileId?: string;
     email: string;
     name: string;
     lastName: string;

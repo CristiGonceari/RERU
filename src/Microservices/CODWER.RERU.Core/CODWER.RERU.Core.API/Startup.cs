@@ -57,8 +57,6 @@ namespace CODWER.RERU.Core.API
             services.Configure<TenantDto>(Configuration.GetSection("CoreSettings").GetSection("Tenant"));
             services.Configure<ActiveTimeDto>(Configuration.GetSection("CoreSettings").GetSection("ActiveTime"));
 
-            services.AddScoped<IDocumentStorageService, DBDocumentStorageService>();
-
             ServicesSetup.ConfigureEntity(services, Configuration);
             ServicesSetup.ConfigureInjection(services);
 

@@ -1,3 +1,4 @@
+
 <div *ngIf="isLoadingMedia && fileStatus.percent != (0 || 100)">
     <mat-progress-bar mode="indeterminate" *ngIf="isLoadingMedia" ></mat-progress-bar>
     <div class="progress mt-2 h-25px" >
@@ -30,3 +31,4 @@
         <p *ngIf="imageUrl || videoUrl || audioUrl" class="mx-5 my-auto h1 cursor-pointer" (click)="onRemoved()"> &#215; </p>
     </div>
 </div>
+ 

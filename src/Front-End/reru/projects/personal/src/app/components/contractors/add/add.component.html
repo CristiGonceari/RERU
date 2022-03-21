@@ -22,12 +22,28 @@
             <button class="btn btn-success" matStepperNext [disabled]="isDisabledButton || thirdForm && thirdForm.invalid" (click)="createStudies()">{{'button.next' | translate}}</button>
           </div>
         </mat-step>
+
         <mat-step [completed]="completedEvents[3]" [stepControl]="fourthForm" [label]="'personal.picture' | translate" [editable]="isEditable">
-          <app-picture-data-form></app-picture-data-form>
-          <div class="row justify-content-end">
-            <button class="btn btn-success" matStepperNext [disabled]="isDisabledButton || fourthForm && fourthForm.invalid" (click)="addPicture()">{{'button.next' | translate}}</button>
+          <div class="row justify-content-center">
+            <div class="flex-container">  
+            <div>
+                <h4 style="padding-top: 8px;">{{'personal.add-profile-photo' | translate}}</h4>
+            </div>
+            <div>
+              <div *ngIf="fileId">
+                <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)"></app-add-edit-media-file>
+              </div>
+              <div *ngIf="!fileId">
+                <app-add-edit-media-file (handleFile)="checkFile($event)"></app-add-edit-media-file>
+              </div>
+            </div>
           </div>
-        </mat-step>
+          </div>
+         <div class="row justify-content-end">
+           <button class="btn btn-success" matStepperNext [disabled]="isDisabledButton || fourthForm" (click)="addPicture()">{{'button.next' | translate}}</button>
+         </div>
+       </mat-step>
+
         <mat-step [completed]="completedEvents[4]" [stepControl]="fifthForm" [label]="'personal.request' | translate" [editable]="isEditable">
           <app-request-to-employ-data-form [ContractorId]="this.contractorId"></app-request-to-employ-data-form>
           <div class="row justify-content-end">

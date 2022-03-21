@@ -96,7 +96,8 @@
     "search":"Search",
     "filter": "Filter",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "attach": "Attach"
   },
   "pagination": {
     "displaing": "Displaying",
@@ -127,7 +128,8 @@
     "permission": "Permission",
     "default": "Default",
     "priority":"Priority",
-    "status": "Status"
+    "status": "Status",
+    "profile-photo": "Profile Photo"
   },
   "menu": {
     "menu-sections": {

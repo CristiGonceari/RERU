@@ -44,6 +44,7 @@ import { DisableNomenclatureModalComponent } from './modals/disable-nomenclature
 import { AddNomenclatureHeaderModalComponent } from './modals/add-nomenclature-header-modal/add-nomenclature-header-modal.component';
 import { AddNomenclatureRecordModalComponent } from './modals/add-nomenclature-record-modal/add-nomenclature-record-modal.component';
 import { AddDocumentModalComponent } from './modals/add-document-modal/add-document-modal.component';
+import { AddPhotoModalComponent } from './modals/add-photo-modal/add-photo-modal.component';
 import { FieldGeneratorComponent } from './components/field-generator/field-generator.component';
 import { ConfirmationDeleteDocumentComponent } from './modals/confirmation-delete-document/confirmation-delete-document.component';
 import { RecordTextGeneratorComponent } from './components/record-text-generator/record-text-generator.component';
@@ -119,6 +120,7 @@ const commonComponents = [
   AddNomenclatureHeaderModalComponent,
   AddNomenclatureRecordModalComponent,
   AddDocumentModalComponent,
+  AddPhotoModalComponent,
   FieldGeneratorComponent,
   ConfirmationDeleteDocumentComponent,
   RecordTextGeneratorComponent,
