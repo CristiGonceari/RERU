@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PictureDataFormComponent } from './picture-data-form.component';
+import { AddPhotoModalComponent } from './add-photo-modal.component';
 
-describe('PictureDataFormComponent', () => {
-  let component: PictureDataFormComponent;
-  let fixture: ComponentFixture<PictureDataFormComponent>;
+describe('AddPhotoModalComponent', () => {
+  let component: AddPhotoModalComponent;
+  let fixture: ComponentFixture<AddPhotoModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PictureDataFormComponent ]
+      declarations: [ AddPhotoModalComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PictureDataFormComponent);
+    fixture = TestBed.createComponent(AddPhotoModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

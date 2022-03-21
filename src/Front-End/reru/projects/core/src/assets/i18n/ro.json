@@ -95,7 +95,8 @@
     "search":"Căutarea",
     "filter": "Filtrează",
     "yes": "Da",
-    "no": "Nu"
+    "no": "Nu",
+    "attach": "Atașează"
   },
   "pagination": {
     "displaing": "Se afișează",
@@ -126,7 +127,8 @@
     "permission": "Permisiune",
     "default": "Implicit",
     "priority":"Prioritate",
-    "status": "Statut"
+    "status": "Statut",
+    "profile-photo": "Poza de profil"
   },
   "menu": {
     "menu-sections": {

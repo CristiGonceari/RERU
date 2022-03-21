@@ -67,7 +67,7 @@ namespace CODWER.RERU.Personal.Application.CronJobs
                         SundayIsWorkDay = vc.SundayIsWorkDay
                     });
 
-            foreach (var el in contractor)
+            foreach (var el in contractor.ToList())
             {
                 var vacation = el.Vacations.FirstOrDefault(x =>
                     x.FromDate <= Now

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -6,15 +6,13 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './show-image-modal.component.html',
   styleUrls: ['./show-image-modal.component.scss']
 })
-export class ShowImageModalComponent {
+export class ShowImageModalComponent{
+  
   @Input() imageUrl: string;
 
-  constructor(
-    public activeModal: NgbActiveModal,
-  ) { }
+  constructor(public activeModal: NgbActiveModal) { }
 
   dismiss(): void {
 		this.activeModal.close();
 	}
-
 }

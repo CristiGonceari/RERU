@@ -92,7 +92,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetOrganizati
                         });
                     }
 
-                    foreach (var dr in departmentRoles)
+                    foreach (var dr in departmentRoles.ToList())
                     {
                         listResult.Add(new OrganizationalChartContentDto
                         {

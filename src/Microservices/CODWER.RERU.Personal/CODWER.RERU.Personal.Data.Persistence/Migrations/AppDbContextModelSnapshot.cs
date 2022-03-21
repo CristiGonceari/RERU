@@ -328,11 +328,11 @@ namespace CODWER.RERU.Personal.Data.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("AvatarBase64")
-                        .HasColumnType("text");
-
                     b.Property<int>("ContractorId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("MediaFileId")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

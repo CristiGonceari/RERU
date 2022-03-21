@@ -206,8 +206,8 @@
     "are-you-sure-you-want-to-delete-member": "Вы уверены, что хотите удалить члена семьи {{name}}?",
     "quick-access": "Быстрый доступ",
     "department-component": "Состав отдела",
-    "dismissal-request": "Заявление об увольнении"
-
+    "dismissal-request": "Заявление об увольнении",
+    "add-photo": "Добавить фото профиля"
   },
   "nomenclature": {
     "title": "Номенклатура",

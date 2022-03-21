@@ -12,18 +12,14 @@
         <div class="flex-row-auto offcanvas-mobile w-300px w-xl-350px" id="kt_profile_aside">
           <div class="card card-custom mb-7">
             <div class="card-body pt-4">
-              <div class="d-flex align-items-center">
+
+              <div class="d-flex flex-column" class="my-3" *ngIf="fileId">
+                <app-get-media-file *ngIf="!avatarLoading" [fileId]="fileId"></app-get-media-file>
+                <p  class="font-weight-bolder font-size-h5 text-dark-75 pt-8">{{userProfile?.name}} {{userProfile?.lastName}}</p>
+              </div>
+              <div class="d-flex align-items-center" *ngIf="!fileId">
                 <div class="btn flex-shrink-0 mr-7">
-                  <div class="symbol symbol-100 symbol-sm-s" *ngIf="avatarString" (click)="openUploadAvatarModal()">
-                    <img [src]="avatar">
-                  </div>
-                  <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow avatar-img"
-                    data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel avatar" *ngIf="avatarString"
-                    (click)="openRemoveAvatarModal()"
-                  >
-                    <i class="ki ki-bold-close icon-xs text-muted"></i>
-                  </span>
-                  <div class="symbol symbol-100 symbol-sm-s symbol-light-success" *ngIf="!avatarString" (click)="openUploadAvatarModal()">
+                  <div class="symbol symbol-100 symbol-sm-s symbol-light-success">
                     <span class="font-size-h3 symbol-label font-weight-boldest">{{acronym}}</span>
                   </div>
                 </div>

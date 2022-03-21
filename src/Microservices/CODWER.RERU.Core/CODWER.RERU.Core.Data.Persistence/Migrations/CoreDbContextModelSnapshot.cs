@@ -19,53 +19,6 @@ namespace CODWER.RERU.Core.Data.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
 
-            modelBuilder.Entity("CODWER.RERU.Core.Data.Entities.Document", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("CreateById")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<Guid>("DocumentStorageId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("text");
-
-                    b.Property<string>("UpdateById")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Documents");
-                });
-
-            modelBuilder.Entity("CODWER.RERU.Core.Data.Entities.DocumentBody", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<byte[]>("Content")
-                        .HasColumnType("bytea");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DocumentBodies");
-                });
-
             modelBuilder.Entity("CODWER.RERU.Core.Data.Entities.Module", b =>
                 {
                     b.Property<int>("Id")
@@ -252,9 +205,6 @@ namespace CODWER.RERU.Core.Data.Persistence.Migrations
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<int?>("AvatarId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("CreateById")
                         .HasColumnType("text");
 
@@ -282,6 +232,9 @@ namespace CODWER.RERU.Core.Data.Persistence.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
+                    b.Property<string>("MediaFileId")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -301,8 +254,6 @@ namespace CODWER.RERU.Core.Data.Persistence.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AvatarId");
 
                     b.ToTable("UserProfiles");
                 });
@@ -518,15 +469,6 @@ namespace CODWER.RERU.Core.Data.Persistence.Migrations
                     b.Navigation("Permission");
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("CODWER.RERU.Core.Data.Entities.UserProfile", b =>
-                {
-                    b.HasOne("CODWER.RERU.Core.Data.Entities.Document", "Avatar")
-                        .WithMany()
-                        .HasForeignKey("AvatarId");
-
-                    b.Navigation("Avatar");
                 });
 
             modelBuilder.Entity("CODWER.RERU.Core.Data.Entities.UserProfileIdentity", b =>

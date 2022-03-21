@@ -131,14 +131,14 @@
         <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label">{{'personal.access' | translate}}</label>
           <div class="col-lg-9 col-xl-6">
-            <button [disabled]="isLoadingAccessButton" *ngIf="!contractor.hasUserProfile" (click)="openAccessModal()" type="button" class="btn btn-light-primary text-hover-white btn-sm pulse pulse-primary">
+            <button [disabled]="isLoadingAccessButton" *ngIf="contractor.hasUserProfile" (click)="openAccessModal()" type="button" class="btn btn-light-primary text-hover-white btn-sm pulse pulse-primary">
               <span *ngIf="isLoadingAccessButton" class="mr-2 font-weight-normal">{{'button.loading' | translate}}</span>
               <span *ngIf="isLoadingAccessButton" class="spinner-border spinner-border-sm text-white" role="status"></span>
               <span *ngIf="!isLoadingAccessButton">{{'personal.create-access' | translate}}</span>
               <span *ngIf="!isLoadingAccessButton" class="pulse-ring"></span>
             </button>
-            <p class="mt-2 mb-0" *ngIf="contractor.hasUserProfile">{{'personal.user-has-access-on-system' | translate}}</p>
-            <p class="mt-2 mb-0" *ngIf="!contractor.hasUserProfile">{{'personal.user-hasnt-access-on-system' | translate}}</p>
+            <p class="mt-2 mb-0" *ngIf="!contractor.hasUserProfile">{{'personal.user-has-access-on-system' | translate}}</p>
+            <p class="mt-2 mb-0" *ngIf="contractor.hasUserProfile">{{'personal.user-hasnt-access-on-system' | translate}}</p>
             <p class="form-text text-muted pt-2">{{'personal.add-access-description' | translate}}
             <a href="javascript:;" class="font-weight-bold">{{'word.learn-more' | translate}}</a>.</p>
           </div>

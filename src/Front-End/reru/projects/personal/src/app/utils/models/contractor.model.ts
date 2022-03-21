@@ -1,4 +1,5 @@
 import { ContactModel } from './contact.model';
+import { AvatarModel } from './avatar.model'; 
 
 export interface Contractor {
     id?: number;
@@ -27,7 +28,7 @@ export interface Contractor {
     fromDate?: string;
     toDate?: string;
     departmentId?: number;
-    avatarBase64?: string;
+    avatar?: AvatarModel[];
 
     currentPosition?: {
         id?: number;

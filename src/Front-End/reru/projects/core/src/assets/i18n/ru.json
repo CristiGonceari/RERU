@@ -100,7 +100,8 @@
     "search": "Поиск",
     "filter": "Фильтровать",
     "yes": "Да",
-    "no": "Нет"
+    "no": "Нет",
+    "attach": "Прикрепить"
   },
   "pagination": {
     "displaing": "Показано",
@@ -131,7 +132,8 @@
     "permission": "Право доступа",
     "default": "Стандартый",
     "priority":"Приоритет",
-    "status": "Статус"
+    "status": "Статус",
+    "profile-photo": "Фото профиля"
   },
   "word": {
     "search": "Поиск по Ф.И.О. или e-mail",

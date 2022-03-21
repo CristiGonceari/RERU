@@ -2,6 +2,7 @@
 using CODWER.RERU.Personal.API.Config;
 using CODWER.RERU.Personal.Application.Contractors.AddContractor;
 using CODWER.RERU.Personal.Application.Contractors.AddUpdateContractorPermissions;
+using CODWER.RERU.Personal.Application.Contractors.EditContractorAvatar;
 using CODWER.RERU.Personal.Application.Contractors.GetContractor;
 using CODWER.RERU.Personal.Application.Contractors.GetContractorAvatar;
 using CODWER.RERU.Personal.Application.Contractors.GetContractorFiles;
@@ -11,7 +12,6 @@ using CODWER.RERU.Personal.Application.Contractors.RemoveContractor;
 using CODWER.RERU.Personal.Application.Contractors.SetContractorAvatar;
 using CODWER.RERU.Personal.Application.Contractors.UpdateContractor;
 using CODWER.RERU.Personal.Application.Contractors.UpdateContractorName;
-using CODWER.RERU.Personal.DataTransferObjects.Avatars;
 using CODWER.RERU.Personal.DataTransferObjects.Contractors;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CVU.ERP.Common.Pagination;
@@ -92,11 +92,15 @@ namespace CODWER.RERU.Personal.API.Controllers
         }
 
         [HttpPatch("avatar")]
-        public async Task<Unit> SetContractorAvatar([FromForm] ContractorAvatarDto dto)
+        public async Task<Unit> SetContractorAvatar([FromForm] SetContractorAvatarCommand command)
         {
-            var command = new SetContractorAvatarCommand(dto);
+            return await Mediator.Send(command); 
+        }
 
-            return await Mediator.Send(command);
+        [HttpPatch("edit-avatar")]
+        public async Task<Unit> EditContractorAvatar([FromForm] EditContractorAvatarCommand command)
+        {
+            return await Mediator.Send(command); 
         }
 
         [HttpPut("contractor-permissions")]

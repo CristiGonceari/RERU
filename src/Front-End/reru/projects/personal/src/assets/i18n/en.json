@@ -206,7 +206,8 @@
     "are-you-sure-you-want-to-delete-member": "Are you sure you want to delete family member {{name}}?",
     "quick-access": "Quick access",
     "department-component": "Department component",
-    "dismissal-request": "Dismissal request"
+    "dismissal-request": "Dismissal request",
+    "add-photo": "Add profile photo"
   },
   "nomenclature": {
     "title": "Nomenclature",

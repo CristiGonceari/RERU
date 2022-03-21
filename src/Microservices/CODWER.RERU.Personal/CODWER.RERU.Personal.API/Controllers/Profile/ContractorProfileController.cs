@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
 using CODWER.RERU.Personal.API.Config;
-using CODWER.RERU.Personal.Application.Bulletins.GetContractorBulletin;
-using CODWER.RERU.Personal.Application.Contractors.GetContractorAvatar;
-using CODWER.RERU.Personal.Application.Contractors.GetContractorFiles;
-using CODWER.RERU.Personal.Application.Contractors.GetContractorPermissions;
+using CODWER.RERU.Personal.Application.Profiles.ContractorBulletin.GetContractorBulletin;
 using CODWER.RERU.Personal.Application.Profiles.ContractorCim.GetContractorCim;
 using CODWER.RERU.Personal.Application.Profiles.ContractorFamilyMembers.GetContractorFamilyMembers;
+using CODWER.RERU.Personal.Application.Profiles.ContractorFiles;
 using CODWER.RERU.Personal.Application.Profiles.ContractorPositions.GetContractorPositions;
+using CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContractorAvatar;
+using CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContractorPermissions;
 using CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContractorProfile;
 using CODWER.RERU.Personal.Application.Profiles.ContractorRanks.GetContractorRanks;
 using CODWER.RERU.Personal.Application.Profiles.ContractorStudies.GetContractorStudies;
