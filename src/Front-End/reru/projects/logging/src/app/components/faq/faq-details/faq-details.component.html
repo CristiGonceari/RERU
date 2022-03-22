@@ -1,4 +1,4 @@
-<app-page-title [title]="'categories.overview' | translate"> </app-page-title>
+<app-page-title [title]="'faq.overview' | translate"> </app-page-title>
 
 <app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
     [colorClass]="'text-primary'">
@@ -32,7 +32,7 @@
 										<div ngbDropdownMenu aria-labelledby="action1">
 											<button [routerLink]="['../../faq-details', articleId]"
 												class="navi-link align-items-center px-6" ngbDropdownItem>
-												{{'categories.view-details' | translate}}
+												{{'dashboard.view-details' | translate}}
 											</button>
 											<button [routerLink]="['../../edit-article', articleId]"
 												class="navi-link align-items-baseline px-6" ngbDropdownItem>
