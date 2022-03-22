@@ -34,11 +34,10 @@
             <span *ngIf="questionType == enum.HashedAnswer" class="font-size-lg">{{'verify-test.your-answer' |
               translate}}:</span>
             <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
-                [colorClass]="'text-primary'">
+              [colorClass]="'text-primary'">
             </app-loading-spinner>
             <div *ngIf="!isLoadingMedia" class="data-container mb-7 bg-gray-100 text-center rounded p-7">
-              <p class="font-size-h2"
-                  [innerHTML]="question | safeHtml">
+              <p class="font-size-h2" [innerHTML]="question | safeHtml">
               </p>
               <div *ngIf="fileId">
                 <app-get-media-file [fileId]="fileId"></app-get-media-file>
@@ -59,18 +58,18 @@
               <span class="font-size-lg">{{'verify-test.comment' | translate}}:</span>
               <p class="border rounded border-secondary p-7 my-7">{{comment}}</p>
             </div>
-            <div *ngIf="questionType == enum.MultipleAnswers || questionType == enum.OneAnswer">
+            <div class="container-fluid" *ngIf="questionType == enum.MultipleAnswers || questionType == enum.OneAnswer">
               <span class="h4">{{'tests.options' | translate}}:</span>
-              <div *ngFor="let item of options" class="border border-secondary rounded p-5 my-4 d-flex"
+              <div *ngFor="let item of options" class="d-flex border border-secondary rounded d-flex py-3 my-5"
                 [class.bg-successTransparent]="item.isSelected && item.isCorrect"
                 [class.bg-dangerTransparent]="item.isSelected && !item.isCorrect"
                 [class.bg-light-warning]="!item.isSelected && item.isCorrect">
-                <label class="checkbox checkbox-lg checkbox-inline mr-5" style="pointer-events: none;">
+                <label class="px-4 checkbox checkbox-lg checkbox-inline" style="pointer-events: none;">
                   <input type="checkbox" value="{{ item.id }}" name="option" [checked]="item.isSelected" />
                   <span [class.bg-success]="item.isSelected && item.isCorrect"></span>
                 </label>
-                <div>
-                <p class="mb-0 font-size-lg option-label">{{item.answer}}</p>
+                <div class="p-2 h-20px">
+                  <p class="mb-0 font-size-lg option-label">{{item.answer}}</p>
                   <div class="form-group align-items-center">
                     <div class="col-lg-6 col-xl-3 w-100 d-flex">
                       <div *ngIf="item.optionMediaFileId">
@@ -79,6 +78,16 @@
                     </div>
                   </div>
                 </div>
+                <div class="ml-auto p-2">
+                  <p class="mb-0 font-size-lg option-label mr-5">{{item.points}}p. ({{item.percentages}}%)</p>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid" *ngIf="questionType == enum.MultipleAnswers || questionType == enum.OneAnswer">
+              <div *ngIf="showNegativeMessage">
+                <p class="text-muted">
+                  {{'message.negative-message' | translate}}
+                </p>
               </div>
             </div>
             <div class="d-flex justify-content-between">
@@ -151,4 +160,3 @@
     </div>
   </div>
 </div>
-

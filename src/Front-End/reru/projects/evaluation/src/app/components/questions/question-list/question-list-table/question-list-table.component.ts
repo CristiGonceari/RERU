@@ -41,6 +41,7 @@ export class QuestionListTableComponent implements OnInit {
 	downloadFile: boolean = false;
 	headersToPrint = [];
 	printTranslates: any[];
+	filters: any = {}
 
 	constructor(
 		private questionService: QuestionService,
@@ -71,7 +72,11 @@ export class QuestionListTableComponent implements OnInit {
 			tableName: name,
 			fields: this.headersToPrint,
 			orientation: 2,
-			questionName: this.keyword || ''
+			questionName: this.filters.questionName,
+			categoryName: this.filters.categoryName,
+			questionTags: this.filters.questionTags,
+			status: +this.filters.questionStatus,
+			type: +this.filters.questionType
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.tableData = printData;
@@ -110,15 +115,15 @@ export class QuestionListTableComponent implements OnInit {
 	}
 
 	list(data: any = {}): void {
-		this.keyword = data.keyword;
 		let params = {
 			questionName: this.keyword || '',
 			categoryName: this.categoryName || '',
-			questionTag: this.questionTag || '',
+			questionTags: this.questionTag || '',
 			status: this.questionStatus,
 			type: this.questionType,
 			page: data.page || this.pagedSummary.currentPage,
-			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
+			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize,
+			...this.filters
 			}
 		this.questionService.getAll(params).subscribe((res) => {
 			if (res && res.data.items) {
@@ -130,6 +135,18 @@ export class QuestionListTableComponent implements OnInit {
 				this.isLoading = false;
 			}
 		});
+	}
+
+	setFilter(field: string, value): void {
+		this.filters[field] = value;
+		this.list();
+	}
+
+	resetFilters(): void {
+		this.filters = {};
+		this.questionStatus = '';
+		this.questionType = '';
+		this.list();
 	}
 
 	changeStatus(id, status) {

@@ -5,9 +5,11 @@ import { NgbModal, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { AddAccessModalComponent } from 'projects/personal/src/app/utils/modals/add-access-modal/add-access-modal.component';
 import { AddDocumentModalComponent } from 'projects/personal/src/app/utils/modals/add-document-modal/add-document-modal.component';
+import { AddPhotoModalComponent } from 'projects/personal/src/app/utils/modals/add-photo-modal/add-photo-modal.component';
 import { AskGenerateOrderModalComponent } from 'projects/personal/src/app/utils/modals/ask-generate-order-modal/ask-generate-order-modal.component';
 import { ConfirmResetPasswordModalComponent } from 'projects/personal/src/app/utils/modals/confirm-reset-password-modal/confirm-reset-password-modal.component';
 import { ApiResponse } from 'projects/personal/src/app/utils/models/api-response.model';
+import { AvatarModel } from 'projects/personal/src/app/utils/models/avatar.model';
 import { ContactModel } from 'projects/personal/src/app/utils/models/contact.model';
 import { Contractor } from 'projects/personal/src/app/utils/models/contractor.model';
 import { SelectItem } from 'projects/personal/src/app/utils/models/select-item.model';
@@ -30,6 +32,7 @@ export class GeneralComponent implements OnInit {
   
   originalContractor: Contractor;
   contacts: ContactModel[];
+  avatar: AvatarModel[];
   generalForm: FormGroup;
   bloodTypes: SelectItem[];
   focus$ = new Subject<string>();
@@ -37,6 +40,12 @@ export class GeneralComponent implements OnInit {
   isLoading: boolean = true;
   selectedItem: SelectItem;
   isLoadingAccessButton: boolean;
+  fileId: string;
+  fileType: string = null;
+  attachedFile: File;
+  contractorId: any;
+  mediaFileId: string;
+
   constructor(private fb: FormBuilder,
     private contractorService: ContractorService,
     private notificationService: NotificationsService,
@@ -55,8 +64,10 @@ export class GeneralComponent implements OnInit {
   getUser(id: number): void {
     this.contractorService.get(id).subscribe((response: ApiResponse<Contractor>) => {
       this.isLoading = false;
+      this.contractorId == response.data.id;
       this.contractor = response.data;
       this.contacts = response.data.contacts;
+      this.avatar = response.data.avatar;
       this.initForm(this.contractor);
     });
   }
@@ -164,17 +175,12 @@ export class GeneralComponent implements OnInit {
   }
 
   openUploadProfilePhoto(): void {
-    const modalRef = this.modalService.open(AddDocumentModalComponent, { centered: true, backdrop: 'static' });
-    modalRef.result.then(response => this.uploadPhoto(response), () => { });
+    const modalRef = this.modalService.open(AddPhotoModalComponent, { centered: true, backdrop: 'static' });
+    modalRef.componentInstance.contractorId = this.originalContractor.id;
   }
 
-  uploadPhoto(data): void {
-    const form = new FormData();
-    form.append('contractorId', `${this.contractor.id}`);
-    form.append('avatar', data.file);
-    this.contractorService.uploadPhoto(form).subscribe(() => {
-      this.contractorService.fetchContractor.next();
-      this.notificationService.success('Success', 'Photo updated!', NotificationUtil.getDefaultConfig());
-    });
+  checkFile(event) {
+    if (event != null) this.attachedFile = event;
+    else this.fileId = null;
   }
 }

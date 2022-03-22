@@ -19,6 +19,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.VerificationTests
         public int QuestionMaxPoints { get; set; }
         public int EvaluatorPoints { get; set; }
         public string QuestionUnitMediaFileId { get; set; }
+        public bool? ShowNegativeMessage { get; set; }
 
         public QuestionTypeEnum QuestionType { get; set; }
         public List<VerificationTestOptionsDto> Options { get; set; }

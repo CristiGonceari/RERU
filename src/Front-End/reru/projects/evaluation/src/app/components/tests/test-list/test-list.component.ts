@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-test-list',
@@ -8,6 +8,12 @@ import { Component } from '@angular/core';
 export class TestListComponent {
 
   title: string;
+  @ViewChild('testName') testName: any;
+  @ViewChild('testEvent') testEvent: any;
+  @ViewChild('testLocation') testLocation: any;
+  @ViewChild('userName') userName: any;
+  @ViewChild('idnp') idnp: any;
+  @ViewChild('selectedStatus') selectedStatus: any;
 
   constructor() { }
 
@@ -15,4 +21,13 @@ export class TestListComponent {
 		this.title = document.getElementById('title').innerHTML;
 		return this.title
 	}
+
+  clearFields() {
+		this.testName.key = '';
+		this.testEvent.key = '';
+		this.testLocation.key = '';
+    this.userName.key = '';
+    this.idnp.key = '';
+    this.selectedStatus.getTestStatuses();
+  }
 }

@@ -19,7 +19,7 @@
                                     <div class="col-lg-6 col-6">
                                         <div class="d-flex flex-column">
                                             <label class="col-form-label pb-0 text-dark-50">{{'events.test-type-name' | translate}}</label>
-                                            <select class="form-control h-35px" name="testTemplateId" [(ngModel)]="testTemplateId" [disabled]="categoryId">
+                                            <select class="form-control h-35px" name="testTemplateId" [(ngModel)]="testTemplateId" (ngModelChange)="table.getQuestions(send())" [disabled]="categoryId">
                                                 <option class="default-option" selected [ngValue]="null">{{'questions.select' | translate }}</option>
                                                 <option *ngFor="let item of testTemplates" [ngValue]="item.value">
                                                     {{ item.label }}
@@ -30,7 +30,7 @@
                                     <div class="col-lg-6 col-6">
                                         <div class="d-flex flex-column">
                                             <label class="col-form-label pb-0 text-dark-50">{{'questions.category' | translate}}</label>
-                                            <select class="form-control h-35px" name="categoryId" [(ngModel)]="categoryId" [disabled]="testTemplateId">
+                                            <select class="form-control h-35px" name="categoryId" [(ngModel)]="categoryId" (ngModelChange)="table.getQuestions(send())" [disabled]="testTemplateId">
                                                 <option class="default-option" selected [ngValue]="null">{{'questions.select' | translate }}</option>
                                                 <option *ngFor="let item of categories" [ngValue]="item.value">
                                                     {{ item.label }}
@@ -44,7 +44,7 @@
                                         <div class="d-flex flex-column">
                                             <label class="col-form-label pb-0 text-dark-50">{{'questions.type' | translate}}</label>
                                             <select class="form-control h-35px" name="filterEnum"
-                                                [(ngModel)]="filterEnum">
+                                                [(ngModel)]="filterEnum" (ngModelChange)="table.getQuestions(send())">
                                                 <option *ngFor="let item of statisticEnum" [value]="item.value">
                                                     {{'statuses.' + item.label | translate}}
                                                 </option>
@@ -55,20 +55,13 @@
                                         <div class="d-flex flex-column">
                                           <label class="col-form-label pb-0 text-dark-50">{{'statistics.items-per-page' | translate}}</label>
                                           <input type="number" class="form-control form-control-lg  h-35px" [(ngModel)]="itemsPerPage"
-                                            name="itemsPerPage" placeholder="{{'statistics.items-per-page' | translate}}">
+                                            name="itemsPerPage" placeholder="{{'statistics.items-per-page' | translate}}" (ngModelChange)="table.getQuestions(send())">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="flex-column col-6 col-lg-2 mt-3">
-                                <div class="w-100 mt-6">
-                                    <app-confirm-button
-                                        [value]="'button.search' | translate" [width]="'100%'"
-                                        (handle)="table.getQuestions(send())" 
-                                        [disabled]="!(itemsPerPage && filterEnum && (testTemplateId || categoryId))">
-                                    </app-confirm-button>
-                                </div>
-                                <div class="w-100 mt-9">
+                                <div class="w-100 mt-8">
                                     <app-confirm-button class="btn d-block"
                                         (click)="table.getHeaders(getTitle())" [width]="'100%'"
                                         [disabled]="!(itemsPerPage && filterEnum && (testTemplateId || categoryId)) && send()">

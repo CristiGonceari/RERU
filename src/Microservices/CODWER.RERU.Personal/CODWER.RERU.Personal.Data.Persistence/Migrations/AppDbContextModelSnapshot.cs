@@ -67,6 +67,42 @@ namespace CODWER.RERU.Personal.Data.Persistence.Migrations
                     b.ToTable("Addresses");
                 });
 
+            modelBuilder.Entity("CODWER.RERU.Personal.Data.Entities.Article", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Articles");
+                });
+
             modelBuilder.Entity("CODWER.RERU.Personal.Data.Entities.Configurations.Holiday", b =>
                 {
                     b.Property<int>("Id")
@@ -292,11 +328,11 @@ namespace CODWER.RERU.Personal.Data.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("AvatarBase64")
-                        .HasColumnType("text");
-
                     b.Property<int>("ContractorId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("MediaFileId")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

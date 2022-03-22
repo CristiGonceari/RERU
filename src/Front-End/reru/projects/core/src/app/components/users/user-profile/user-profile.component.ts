@@ -28,6 +28,8 @@ export class UserProfileComponent implements OnInit {
 	description: string;
 	no: string;
 	yes: string;
+	fileId: string;
+	avatarLoading: boolean = true;
 
 	@Input() user: any;
 	@Input() isCustomHeader: boolean;
@@ -61,7 +63,6 @@ export class UserProfileComponent implements OnInit {
 		this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
 			this.setRouteView();
 		})
-
 	}
 
 	subsribeForParams() {
@@ -95,6 +96,8 @@ export class UserProfileComponent implements OnInit {
 		this.userProfileService.getUserProfile(id).subscribe(response => {
 			this.subscribeForUserChanges(response);
 			this.userId = response.data.id;
+			this.fileId = response.data.mediaFileId;
+      		this.avatarLoading = false;
 			this.isLoading = false;
 		});
 	}

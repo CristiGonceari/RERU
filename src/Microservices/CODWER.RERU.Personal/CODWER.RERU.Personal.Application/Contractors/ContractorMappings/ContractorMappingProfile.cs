@@ -18,8 +18,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.ContractorMappings
         public ContractorMappingProfile()
         {
             CreateMap<ContractorAvatarDto, ContractorAvatar>()
-                .ForMember(x => x.ContractorId, opts => opts.MapFrom(op=>op.ContractorId))
-                .ForMember(x => x.AvatarBase64, opts => opts.MapFrom(op => ConvertToBase64(op.Avatar)));
+                .ForMember(x => x.ContractorId, opts => opts.MapFrom(op=>op.ContractorId));
 
             CreateMap<AddEditContractorDto, Contractor>()
                 .ForMember(r => r.Id, opts => opts.Ignore())
@@ -47,7 +46,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.ContractorMappings
                 .ForMember(x => x.EmployerState, opts => opts.ConvertUsing(new EmployerStateConverter(), op => op))
 
                 .ForMember(x => x.HasUserProfile, opts => opts.MapFrom(op => op.UserProfile != null))
-                .ForMember(x => x.HasAvatar, opts => opts.MapFrom(op => op.Avatar.AvatarBase64.Any()))
+                .ForMember(x => x.HasAvatar, opts => opts.MapFrom(op => op.Avatar.MediaFileId.Any()))
                 .ForMember(x => x.HasBulletin, opts => opts.MapFrom(op => op.Bulletin != null))
                 .ForMember(x => x.HasStudies, opts => opts.MapFrom(op => op.Studies.Any()))
                 .ForMember(x => x.HasPositions, opts => opts.MapFrom(op => op.Positions.Any()))

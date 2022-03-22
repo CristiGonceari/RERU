@@ -25,7 +25,6 @@ import { TestVerificationProcessComponent } from './test-verification-process/te
 import { AddTestListComponent } from './add-test-list/add-test-list.component';
 import { TestListTableComponent } from './test-list/test-list-table/test-list-table.component';
 
-
 @NgModule({
   declarations: [
     AddTestComponent,

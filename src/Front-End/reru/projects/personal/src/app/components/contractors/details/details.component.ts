@@ -23,11 +23,13 @@ import { AddOldPositionModalComponent } from '../../../utils/modals/add-old-posi
 })
 export class DetailsComponent implements OnInit {
   contractor: Contractor;
-  avatarBase64: string;
+  fileId: string;
   isLoading: boolean = true;
   avatarLoading: boolean = true;
   sexEnum = SexEnum;
-  constructor(private route: ActivatedRoute,
+
+  constructor(
+    private route: ActivatedRoute,
     private contractorService: ContractorService,
     private modalService: NgbModal,
     private notificationService: NotificationsService,
@@ -57,8 +59,8 @@ export class DetailsComponent implements OnInit {
       this.contractor = response.data;
       this.contractorService.contractor.next(response.data);
     });
-    this.contractorService.getAvatar(id).subscribe((response: ApiResponse<string>)=>{
-      this.avatarBase64 = response.data;
+    this.contractorService.getAvatar(id).subscribe((response: ApiResponse<any>)=>{
+      this.fileId = response.data.mediaFileId;
       this.avatarLoading = false;
     })
   }

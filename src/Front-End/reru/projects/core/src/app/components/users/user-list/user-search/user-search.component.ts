@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-user-search',
@@ -7,7 +8,13 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class UserSearchComponent {
   @Output() handleSearch: EventEmitter<string> = new EventEmitter<string>();
-  @Output() searchOnEnter: EventEmitter<string> = new EventEmitter<string>();
+  @Output() searchOnChange: EventEmitter<string> = new EventEmitter<string>();
+
+  searchForm = new FormGroup ({
+    name: new FormControl(''),
+    idnp: new FormControl('')
+  });
+
   constructor() { }
 
 }

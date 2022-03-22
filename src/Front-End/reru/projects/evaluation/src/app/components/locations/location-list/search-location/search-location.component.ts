@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-search-location',
@@ -16,10 +16,9 @@ export class SearchLocationComponent {
     this.handleSearch.emit(value);
   }
 
-  clearSearch(value: string): void {
-    if (!value) {
-      this.handleSearch.emit('');
-    }
+  clearSearch(): void {
+    this.key = '';
+    this.handleSearch.emit('');
   }
 
 }

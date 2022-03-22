@@ -1,15 +1,11 @@
-﻿using CODWER.RERU.Personal.DataTransferObjects.Avatars;
+﻿using CVU.ERP.StorageService.Models;
 using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Contractors.SetContractorAvatar
 {
     public class SetContractorAvatarCommand : IRequest<Unit>
     {
-        public SetContractorAvatarCommand(ContractorAvatarDto dto)
-        {
-            Data = dto;
-        }
-
-        public ContractorAvatarDto Data { get; set; }
+        public int ContractorId { get; set; }
+        public AddFileDto FileDto { get; set; }
     }
 }

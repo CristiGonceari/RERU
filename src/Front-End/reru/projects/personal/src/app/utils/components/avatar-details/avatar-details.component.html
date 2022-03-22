@@ -1,5 +1,4 @@
-<div *ngIf="!contractor?.avatarBase64">
+<div>
     <span class="symbol-label font-size-h1 font-weight-bold">{{renderText(contractor)}}</span>
     <i class="symbol-badge bg-success"></i>
 </div>
-<div *ngIf="contractor?.avatarBase64" [title]="contractor?.lastName+' '+contractor?.firstName" class="photo-profile" [ngStyle]="{'backgroundImage': 'url('+contractor.avatarBase64+')'}"></div>

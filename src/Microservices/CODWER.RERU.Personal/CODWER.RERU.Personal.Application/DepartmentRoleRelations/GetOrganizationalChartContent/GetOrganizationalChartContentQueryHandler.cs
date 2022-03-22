@@ -80,7 +80,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetOrganizati
                         .Include(x => x.ChildOrganizationRole)
                         .Where(x => x.OrganizationalChartId == organizationalChartId && x.ParentDepartmentId == parentId);
 
-                    foreach (var dd in departmentDepartments)
+                    foreach (var dd in departmentDepartments.ToList())
                     {
                         listResult.Add(new OrganizationalChartContentDto
                         {
@@ -92,7 +92,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetOrganizati
                         });
                     }
 
-                    foreach (var dr in departmentRoles)
+                    foreach (var dr in departmentRoles.ToList())
                     {
                         listResult.Add(new OrganizationalChartContentDto
                         {
@@ -117,7 +117,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetOrganizati
                         .Include(x => x.ChildOrganizationRole)
                         .Where(x => x.OrganizationalChartId == organizationalChartId && x.ParentOrganizationRoleId == parentId);
 
-                    foreach (var rd in roleDepartments)
+                    foreach (var rd in roleDepartments.ToList())
                     {
                         listResult.Add(new OrganizationalChartContentDto
                         {
@@ -129,7 +129,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetOrganizati
                         });
                     }
 
-                    foreach (var rr in roleRoles)
+                    foreach (var rr in roleRoles.ToList())
                     {
                         listResult.Add(new OrganizationalChartContentDto
                         {

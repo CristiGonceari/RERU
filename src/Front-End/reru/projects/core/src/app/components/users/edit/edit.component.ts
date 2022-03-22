@@ -1,4 +1,3 @@
-import { User } from './../../../utils/models/user.model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../../utils/services/user.service';
@@ -20,6 +19,10 @@ export class EditComponent implements OnInit {
 	userId: string;
 	title: string;
 	description: string;
+
+  	fileId: string;
+  	fileType: string = null;
+  	attachedFile: File;
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -86,19 +89,35 @@ export class EditComponent implements OnInit {
 	}
 
 	editUser(): void {
-		this.userService.editUserPersonalDetails(this.userForm.value).subscribe(
-			res => {
-				forkJoin([
-					this.translate.get('modal.success'),
-					this.translate.get('user.succes-edit'),
-				]).subscribe(([title, description]) => {
-					this.title = title;
-					this.description = description;
-					});
+	const request = new FormData();
+    if (this.attachedFile) {
+      this.fileType = '7';
+      request.append('Data.FileDto.File', this.attachedFile);
+      request.append('Data.FileDto.Type', this.fileType);
+    }
+	request.append('Data.Id', this.userForm.value.id);
+    request.append('Data.Name', this.userForm.value.name);
+    request.append('Data.LastName', this.userForm.value.lastName);
+    request.append('Data.FatherName', this.userForm.value.fatherName);
+
+	this.userService.editUserPersonalDetails(request).subscribe(
+		res => {
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('user.succes-edit'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 				this.back();
 			}
 		);
+	}
+
+	checkFile(event) {
+		if (event != null) this.attachedFile = event;
+		else this.fileId = null;
 	}
 
 	back(): void {

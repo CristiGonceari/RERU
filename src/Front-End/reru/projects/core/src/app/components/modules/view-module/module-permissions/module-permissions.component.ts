@@ -47,7 +47,8 @@ export class ModulePermissionsComponent implements OnInit {
 		};
 		this.list(data);
 	}
-	list(data){
+
+	list(data): void {
 		this.permissionServise.get(this.moduleId, ObjectUtil.preParseObject(data)).subscribe(res => {
 			if (res && res.data.items.length) {
 				this.result = true;
@@ -64,6 +65,5 @@ export class ModulePermissionsComponent implements OnInit {
 		});
 		this.isLoading = true;
 	}
-
 
 }

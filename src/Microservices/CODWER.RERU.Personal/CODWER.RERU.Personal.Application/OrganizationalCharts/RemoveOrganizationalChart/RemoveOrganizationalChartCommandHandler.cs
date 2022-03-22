@@ -1,6 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Personal.Data.Entities;
 using CODWER.RERU.Personal.Data.Persistence.Context;
+using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,10 +12,12 @@ namespace CODWER.RERU.Personal.Application.OrganizationalCharts.RemoveOrganizati
     public class RemoveOrganizationalChartCommandHandler : IRequestHandler<RemoveOrganizationalChartCommand, Unit>
     {
         private readonly AppDbContext _appDbContext;
+        private readonly ILoggerService<RemoveOrganizationalChartCommand> _loggerService;
 
-        public RemoveOrganizationalChartCommandHandler(AppDbContext appDbContext)
+        public RemoveOrganizationalChartCommandHandler(AppDbContext appDbContext, ILoggerService<RemoveOrganizationalChartCommand> loggerService)
         {
             _appDbContext = appDbContext;
+            _loggerService = loggerService;
         }
 
         public async Task<Unit> Handle(RemoveOrganizationalChartCommand request, CancellationToken cancellationToken)
@@ -22,7 +27,14 @@ namespace CODWER.RERU.Personal.Application.OrganizationalCharts.RemoveOrganizati
             _appDbContext.OrganizationalCharts.Remove(toRemove);
             await _appDbContext.SaveChangesAsync();
 
+            await LogAction(toRemove);
+
             return Unit.Value;
+        }
+
+        private async Task LogAction(OrganizationalChart organizationalChart)
+        {
+            await _loggerService.Log(LogData.AsPersonal($"{organizationalChart.Name} was removed from Organigram list", organizationalChart));
         }
     }
 }

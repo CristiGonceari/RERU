@@ -92,10 +92,13 @@
     "back": "Back",
     "navigate": "Navigate to",
     "update": "Update",
+    "reset": "Reset",
     "search":"Search",
     "filter": "Filter",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "attach": "Attach",
+    "print": "Print"
   },
   "pagination": {
     "displaing": "Displaying",
@@ -126,7 +129,8 @@
     "permission": "Permission",
     "default": "Default",
     "priority":"Priority",
-    "status": "Status"
+    "status": "Status",
+    "profile-photo": "Profile Photo"
   },
   "menu": {
     "menu-sections": {
@@ -326,6 +330,36 @@
     "01000002": "IDNP should consist only digits",
     "01000003": "IDNP shout not consist only zeroes",
     "01000004": "Invalid IDNP!",
-    "01000005": "Duplicate IDNP in the system!"
+    "01000005": "Duplicate IDNP in the system!",
+    "01000201": "Empty name!",
+    "01000202": "Empty content!",
+    "01000203": "Invalid input!",
+    "01000204": "Invalid id!"
+  },
+  "print": {
+    "print-table": "Print table",
+    "sorted-by": "Sorted by",
+    "error-msg": "Please select fields for print",
+    "print-msg": "Please specify the print orientation and necessary fields."
+  },
+  "guide": {
+    "title": "User Guide"
+  },
+  "faq": {
+    "overview": "Overview",
+    "help": "Help",
+    "faq": "FAQ",
+    "subtitle": "Frequently Asked Questions",
+    "manage-faq": "Manage FAQ",
+    "new-article": "Add Article",
+    "delete-article": "Delete Article",
+    "article-title": "Article Titile",
+    "name": "Name",
+    "content": "Content",
+    "remove": "Remove article",
+    "remove-msg": "Are you sure you want to remove this article?",
+    "succes-remove-msg": "Article was successfully deleted",
+    "succes-add-msg": "Article was successfully added",
+    "succes-edit-msg": "Article was successfully edited"
   }
 }

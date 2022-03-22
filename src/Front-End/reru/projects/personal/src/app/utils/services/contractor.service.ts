@@ -53,6 +53,10 @@ export class ContractorService extends AbstractService {
 		return this.http.patch(`${this.baseUrl}/${this.routeUrl}/avatar`, data);
 	}
 
+	editAvatar(data): Observable<any> {
+		return this.http.patch(`${this.baseUrl}/${this.routeUrl}/edit-avatar`, data);
+	}
+	
 	updatePermissions(data: PermissionModel): Observable<ApiResponse<number>> {
 		return this.http.put<ApiResponse<number>>(`${this.baseUrl}/${this.routeUrl}/contractor-permissions`, data);
 	}

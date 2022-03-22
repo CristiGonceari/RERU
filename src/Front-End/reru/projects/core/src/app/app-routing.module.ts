@@ -15,6 +15,7 @@ import { ModulesRoutingModule } from './components/modules/modules-routing.modul
 import { MyProfileRoutingModule } from './components/my-profile/my-profile-routing.module';
 import { Exception404Component } from './utils/exceptions/404/404.component';
 import { MainComponent } from './components/main/main.component';
+import { PermissionRouteGuard } from '@erp/shared';
 
 
 const routes: Routes = [
@@ -52,6 +53,12 @@ const routes: Routes = [
 			{ 
 				path: 'my-profile', 
 				loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule)
+			},
+			{
+				path: 'faq',
+				loadChildren: () => import('./components/faq/faq.module').then(m => m.FAQModule),
+				data: { permission: 'P00000025' },
+				canActivate: [PermissionRouteGuard, AuthenticationGuard]
 			},
 		],
 	},

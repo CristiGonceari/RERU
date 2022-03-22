@@ -9,16 +9,16 @@
         <table class="datatable table font-size-lg" style="overflow: visible">
             <thead class="text-uppercase text-muted">
                 <tr>
-                    <th scope="col">{{'tests.name' | translate}}</th>
-                    <th scope="col" class="text-left" style="width: 100px">{{'tests.category-used-count' | translate}}
+                    <th scope="col">{{'tests.template-name' | translate}}</th>
+                    <th scope="col" class="text-left" style="width: 100px">{{'tests.category-used-count' | translate}}</th>
+                    <th scope="col" class="text-left" style="width: 100px">
+                        {{'tests.questions-to-use-count' | translate}}
                     </th>
-                    <th scope="col" class="text-left" style="width: 100px">{{'tests.questions-to-use-count' |
-                        translate}}</th>
                     <th scope="col" class="text-left" style="width: 75px">{{'tests.time' | translate}}</th>
                     <th scope="col" class="text-left" style="width: 75px">{{'verify-test.min-points' | translate}}</th>
                     <th scope="col" class="text-left" style="width: 75px">{{'tests.mode' | translate}}</th>
                     <th scope="col" class="text-left" style="width: 100px">{{'tests.status' | translate}}</th>
-                    <th scope="col" style="width: 48px"></th>
+                    <th scope="col" style="width: 48px"></th> 
                 </tr>
             </thead>
             <tbody class="datatable-body" *ngIf="testTemplateList.length">

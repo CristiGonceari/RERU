@@ -9,6 +9,7 @@ import { SafeHtml } from '@angular/platform-browser';
 export class ButtonComponent implements OnInit {
   @Input() value: string; 
   @Input() icon: string;
+  @Input() width: string;
   @Input() disabled: boolean;
   @Output() handle: EventEmitter<void> = new EventEmitter<void>();
 

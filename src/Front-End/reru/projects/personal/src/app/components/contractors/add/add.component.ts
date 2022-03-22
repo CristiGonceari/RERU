@@ -16,7 +16,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { DocumentTypeEnum } from '../../../utils/models/document-type.enum';
-import { PictureDataFormComponent } from './picture-data-form/picture-data-form.component';
 import { RequestToEmployDataFormComponent } from './request-to-employ-data-form/request-to-employ-data-form.component';
 
 @Component({
@@ -27,7 +26,6 @@ import { RequestToEmployDataFormComponent } from './request-to-employ-data-form/
 export class AddComponent implements AfterViewInit {
   @ViewChild(GeneralDataFormComponent) generalDataFormComponent: GeneralDataFormComponent;
   @ViewChild(BulletinDataFormComponent) bulletinDataFormComponent: BulletinDataFormComponent;
-  @ViewChild(PictureDataFormComponent) pictureDataFormComponent: PictureDataFormComponent;
   @ViewChild(RequestToEmployDataFormComponent) requestToEmployDataFormComponent: RequestToEmployDataFormComponent;
   @ViewChild(StudiesDataFormComponent) studiesDataFormComponent: StudiesDataFormComponent;
   @ViewChild(UploadDataFormComponent) uploadDataFormComponent: UploadDataFormComponent;
@@ -35,9 +33,14 @@ export class AddComponent implements AfterViewInit {
   isEditable: boolean = false;
   isLoading: boolean;
   isDisabledButton: boolean;
-  contractorId: number;
+  contractorId: any;
   completedEvents = [];
   queryContractorId: number;
+
+  photoDataFormComponent: boolean;
+  fileId: string;
+  fileType: string = null;
+  attachedFile: File;
 
   constructor(private contractorService: ContractorService,
               private notificationService: NotificationsService,
@@ -133,13 +136,14 @@ export class AddComponent implements AfterViewInit {
   }
 
   addPicture(): void {
-    this.pictureDataFormComponent.isLoading = true;
+    this.isLoading = true;
     this.buildPhotoRequest(this.contractorId).subscribe(response => {
       if(response)
       {
-        this.completedEvents[2] = true;
+        this.completedEvents[3] = true;
         this.notificationService.success('Success', 'Picture added!', NotificationUtil.getDefaultMidConfig());
-        this.pictureDataFormComponent.isLoading = false;
+        this.isLoading = false;
+        this.photoDataFormComponent = true;
       }
 
       if (this.queryContractorId)
@@ -147,9 +151,9 @@ export class AddComponent implements AfterViewInit {
         this.router.navigate(['../../', this.queryContractorId], { relativeTo: this.route });
       }
     }, error =>{
-      this.completedEvents[2] = true;
+      this.completedEvents[3] = true;
       this.notificationService.error('Failure', 'Picture was not added!', NotificationUtil.getDefaultMidConfig());
-      this.pictureDataFormComponent.isLoading = false;
+      this.isLoading = false;
     });
   }
 
@@ -158,7 +162,7 @@ export class AddComponent implements AfterViewInit {
     this.buildEmployeRequest(this.contractorId).subscribe(response => {
       if(response)
       {
-        this.completedEvents[3] = true;
+        this.completedEvents[4] = true;
         this.notificationService.success('Success', 'Request added!', NotificationUtil.getDefaultMidConfig());
         this.requestToEmployDataFormComponent.isLoading = false;
       }
@@ -168,7 +172,7 @@ export class AddComponent implements AfterViewInit {
         this.router.navigate(['../../', this.queryContractorId], { relativeTo: this.route });
       }
     }, error => {
-        this.completedEvents[3] = true;
+        this.completedEvents[4] = true;
         this.notificationService.error('Failure', 'Request was not added!', NotificationUtil.getDefaultMidConfig());
         this.requestToEmployDataFormComponent.isLoading = false;
     });
@@ -179,7 +183,7 @@ export class AddComponent implements AfterViewInit {
     this.buildStudiesForm().subscribe(response => {
       if(response)
       {
-        this.completedEvents[4] = true;
+        this.completedEvents[3] = true;
         this.notificationService.success('Success', 'Studies added!', NotificationUtil.getDefaultMidConfig());
         this.studiesDataFormComponent.isLoading = false;
       }
@@ -189,7 +193,7 @@ export class AddComponent implements AfterViewInit {
         this.router.navigate(['../../', this.queryContractorId], { relativeTo: this.route });
       }
     }, error => {
-      this.completedEvents[4] = true;
+      this.completedEvents[3] = true;
         this.notificationService.error('Failure', 'Studies was not added!', NotificationUtil.getDefaultMidConfig());
         this.studiesDataFormComponent.isLoading = false;
     });
@@ -221,7 +225,6 @@ export class AddComponent implements AfterViewInit {
     this.completedEvents.length = 0;
     this.generalDataFormComponent.generalForm.reset();
     this.bulletinDataFormComponent.bulletinForm.reset();
-    this.pictureDataFormComponent.pictureForm.reset();
     this.requestToEmployDataFormComponent.requestToEmployForm.reset();
     this.studiesDataFormComponent.studyForm.reset();
   }
@@ -255,8 +258,21 @@ export class AddComponent implements AfterViewInit {
   }
 
   buildPhotoRequest(id: number): Observable<any> {
-      const request = ContractorParser.parsePhoto(this.pictureDataFormComponent.pictureForm.get('photo').value, id);
+      const request = new FormData();
+
+    if (this.attachedFile) {
+      this.fileType = '7';
+      request.append('FileDto.File', this.attachedFile);
+      request.append('FileDto.Type', this.fileType);
+    }
+      request.append('ContractorId', this.contractorId);
+
       return this.contractorService.uploadPhoto(request);
+  }
+
+  checkFile(event) {
+    if (event != null) this.attachedFile = event;
+    else this.fileId = null;
   }
 
   get firstForm() {
@@ -278,7 +294,7 @@ export class AddComponent implements AfterViewInit {
   set thirdForm(data) {}
 
   get fourthForm(){
-    return this.pictureDataFormComponent && this.pictureDataFormComponent.pictureForm;
+    return this.photoDataFormComponent;
   }
 
   set fourthForm(data) {}

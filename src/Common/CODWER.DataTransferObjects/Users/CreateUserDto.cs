@@ -7,6 +7,7 @@ namespace CVU.ERP.Common.DataTransferObjects.Users
         public string FatherName{get;set;}
         public string Email{get;set;} 
         public string Idnp{get;set; }
+        public string MediaFileId { get; set; }
         public bool EmailNotification { get; set; }
     }
 }

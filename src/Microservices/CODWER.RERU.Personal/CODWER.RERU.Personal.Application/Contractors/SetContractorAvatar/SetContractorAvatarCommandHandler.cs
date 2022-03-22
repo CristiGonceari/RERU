@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Personal.Data.Entities;
 using CODWER.RERU.Personal.Data.Persistence.Context;
+using CODWER.RERU.Personal.DataTransferObjects.Avatars;
+using CVU.ERP.StorageService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,27 +14,30 @@ namespace CODWER.RERU.Personal.Application.Contractors.SetContractorAvatar
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly IStorageFileService _storageFileService;
 
-        public SetContractorAvatarCommandHandler(AppDbContext appDbContext, IMapper mapper)
+        public SetContractorAvatarCommandHandler(AppDbContext appDbContext, IMapper mapper, IStorageFileService storageFileService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _storageFileService = storageFileService;
         }
 
         public async Task<Unit> Handle(SetContractorAvatarCommand request, CancellationToken cancellationToken)
         {
-            var image = await _appDbContext.Avatars
-                .FirstOrDefaultAsync(x => x.ContractorId == request.Data.ContractorId);
+            var storage = await _storageFileService.AddFile(request.FileDto);
 
-            if (image != null)
+            var image = await _appDbContext.Avatars
+                .FirstOrDefaultAsync(x => x.ContractorId == request.ContractorId);
+
+            var newAvatar = new ContractorAvatarDto()
             {
-                _mapper.Map(request.Data, image);
-            }
-            else
-            {
-                var contractorAvatar = _mapper.Map<ContractorAvatar>(request.Data);
-                await _appDbContext.Avatars.AddAsync(contractorAvatar);
-            }
+                ContractorId = request.ContractorId,
+                MediaFileId  = storage,
+            };
+
+            var contractorAvatar = _mapper.Map<ContractorAvatar>(newAvatar);
+            await _appDbContext.Avatars.AddAsync(contractorAvatar);
 
             await _appDbContext.SaveChangesAsync();
 

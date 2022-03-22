@@ -18,13 +18,26 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
         {
             _coreDbContext = coreDbContext;
 
-            RuleFor(x => x.User)
-                .SetValidator(createUserDto);
+            RuleFor(x => x.Name).NotEmpty()
+                .WithMessage(ValidationMessages.InvalidInput)
+                .WithErrorCode(ValidationCodes.EMPTY_USER_NAME);
 
-            RuleFor(x => x.User.Idnp)
+            RuleFor(x => x.LastName).NotEmpty()
+                .WithMessage(ValidationMessages.InvalidInput)
+                .WithErrorCode(ValidationCodes.EMPTY_USER_LAST_NAME);
+
+            RuleFor(x => x.FatherName).NotEmpty()
+                .WithMessage(ValidationMessages.InvalidInput)
+                .WithErrorCode(ValidationCodes.EMPTY_USER_FATHER_NAME);
+
+            RuleFor(x => x.Email).NotEmpty()
+                .WithMessage(ValidationMessages.InvalidInput)
+                .WithErrorCode(ValidationCodes.EMPTY_USER_EMAIL);
+
+            RuleFor(x => x.Idnp)
                 .SetValidator(new IdnpValidator());
 
-            RuleFor(x => x.User.Idnp)
+            RuleFor(x => x.Idnp)
               .Custom(CheckIfUniqueIdnpOnCreate);
 
         }

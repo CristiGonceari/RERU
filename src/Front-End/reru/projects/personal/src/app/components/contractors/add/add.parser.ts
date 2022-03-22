@@ -75,13 +75,6 @@ export class ContractorParser {
         return request;
     }
 
-    public static parsePhoto(data, id:number): FormData {
-      const form = new FormData();
-      form.append('contractorId', `${id}`);
-      form.append('avatar', data.file || data);
-      return form;
-    }
-
     public static renderAddressOrder(data: AddressModel): string {
         if (this.hasCountryOnly(data)) {
           return data.country;
