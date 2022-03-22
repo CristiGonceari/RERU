@@ -3,15 +3,17 @@ using System;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CODWER.RERU.Personal.Data.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220322095824_Add_DocumentTemplate_Category_and_Key")]
+    partial class Add_DocumentTemplate_Category_and_Key
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,42 +67,6 @@ namespace CODWER.RERU.Personal.Data.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Addresses");
-                });
-
-            modelBuilder.Entity("CODWER.RERU.Personal.Data.Entities.Article", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Content")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CreateById")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime?>("DeleteTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("UpdateById")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Articles");
                 });
 
             modelBuilder.Entity("CODWER.RERU.Personal.Data.Entities.Configurations.Holiday", b =>
@@ -328,11 +294,11 @@ namespace CODWER.RERU.Personal.Data.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("AvatarBase64")
+                        .HasColumnType("text");
+
                     b.Property<int>("ContractorId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("MediaFileId")
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

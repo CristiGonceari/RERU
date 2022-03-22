@@ -2,10 +2,11 @@ export class DocumentsTemplateListOfKeys
 {
     id: number;
     name: string;
-    keys: Keys;
+    keys: DocumentTemplateKeys;
 }
-class Keys {
+class DocumentTemplateKeys {
   id: number;
   keyName: string;
   description: string;
+  documentCategoriesId: number;
 }
