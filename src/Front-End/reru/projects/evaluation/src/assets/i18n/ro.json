@@ -650,6 +650,9 @@
     "not-correct-percent": "Procentul incorect",
     "skipped-percent": "Procentul omis"
   },
+  "select-format":{
+    "please-select-format": "Selectati formatul necesar"
+  },
   "message-code": {
     "MAP0000001": "Cerere către aplicație neautentificată",
     "MAP0000002": "Cerere neautorizată. Nu sunt permisiuni.",

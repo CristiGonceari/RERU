@@ -75,7 +75,9 @@ export class DashboardComponent implements OnInit {
               timeOut: 29000,
               showProgressBar: true,
             })
-            .click.subscribe(() => this.router.navigateByUrl(`http://reru.codwer.com/reru-evaluation/#/my-activities/start-test/${this.testId}`));
+            .click.subscribe(() => this.router.navigate(['../reru-evaluation/#/my-activities/start-test/', this.testId]));
+            // .click.subscribe(() => this.router.navigate(['reru-evaluation/#/my-activities/start-test/', this.testId]));
+            // .click.subscribe(() => this.router.navigateByUrl(`http://reru.codwer.com/reru-evaluation/#/my-activities/start-test/${this.testId}`));
         });
       }
     });

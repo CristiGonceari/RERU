@@ -3,7 +3,7 @@ using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Common.DataTransferObjects.Files;
-using CVU.ERP.Module.Application.TablePrinterService;
+using CVU.ERP.Module.Application.TableExportServices;
 using MediatR;
 using System.Linq;
 using System.Threading;
@@ -14,10 +14,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
     public class PrintTestsCommandHandler : IRequestHandler<PrintTestsCommand, FileDataDto>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ITablePrinter<Test, TestDto> _printer;
+        private readonly IExportData<Test, TestDto> _printer;
         private readonly IUserProfileService _userProfileService;
 
-        public PrintTestsCommandHandler(AppDbContext appDbContext, ITablePrinter<Test, TestDto> printer, IUserProfileService userProfileService)
+        public PrintTestsCommandHandler(AppDbContext appDbContext, IExportData<Test, TestDto> printer, IUserProfileService userProfileService)
         {
             _appDbContext = appDbContext;
             _printer = printer;
@@ -61,12 +61,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
                 }
             }
 
-            var result = _printer.PrintTable(new TableData<Test>
+            var result = _printer.ExportTableSpecificFormat(new TableData<Test>
             {
                 Name = request.TableName,
                 Items = tests,
                 Fields = request.Fields,
-                Orientation = request.Orientation
+                Orientation = request.Orientation,
+                ExportFormat = request.TableExportFormat
             });
 
             return result;

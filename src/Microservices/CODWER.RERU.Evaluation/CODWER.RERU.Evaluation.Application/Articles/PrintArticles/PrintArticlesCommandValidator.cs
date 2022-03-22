@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using CODWER.RERU.Evaluation.Application.Validation;
+﻿using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.DataTransferObjects.Articles;
 using CVU.ERP.Common.Validation;
-using CVU.ERP.Module.Application.TablePrinterService.Validators;
+using CVU.ERP.Module.Application.TableExportServices.Validators;
 using FluentValidation;
+using System.Linq;
 
 namespace CODWER.RERU.Evaluation.Application.Articles.PrintArticles
 {
@@ -12,7 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.Articles.PrintArticles
         public PrintArticlesCommandValidator()
         {
             RuleFor(x => x.Fields.Select(x=>x.Value).ToList())
-                .SetValidator(new TablePrinterValidator<ArticleDto>(ValidationMessages.InvalidInput, ValidationCodes.INVALID_INPUT));
+                .SetValidator(new TableExporterValidator<ArticleDto>(ValidationMessages.InvalidInput, ValidationCodes.INVALID_INPUT));
         }
     }
 }

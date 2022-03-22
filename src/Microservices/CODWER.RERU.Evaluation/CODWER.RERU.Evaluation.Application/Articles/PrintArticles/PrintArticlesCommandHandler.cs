@@ -1,20 +1,20 @@
-﻿using CVU.ERP.Common.DataTransferObjects.Files;
+﻿using CODWER.RERU.Evaluation.Data.Entities;
+using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CODWER.RERU.Evaluation.DataTransferObjects.Articles;
+using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.Module.Application.TableExportServices;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.Articles;
-using CVU.ERP.Module.Application.TablePrinterService;
 
 namespace CODWER.RERU.Evaluation.Application.Articles.PrintArticles
 {
     public class PrintArticlesCommandHandler : IRequestHandler<PrintArticlesCommand, FileDataDto>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ITablePrinter<Article, ArticleDto> _printer;
+        private readonly IExportData<Article, ArticleDto> _printer;
 
-        public PrintArticlesCommandHandler(AppDbContext appDbContext, ITablePrinter<Article, ArticleDto> printer)
+        public PrintArticlesCommandHandler(AppDbContext appDbContext, IExportData<Article, ArticleDto> printer)
         {
             _appDbContext = appDbContext;
             _printer = printer;
@@ -24,12 +24,13 @@ namespace CODWER.RERU.Evaluation.Application.Articles.PrintArticles
         {
             var articles = GetAndFilterArticles.Filter(_appDbContext, request.Name);
 
-            var result = _printer.PrintTable(new TableData<Article>
+            var result = _printer.ExportTableSpecificFormat(new TableData<Article>
             {
                 Name = request.TableName,
                 Items = articles,
                 Fields = request.Fields,
-                Orientation = request.Orientation
+                Orientation = request.Orientation,
+                ExportFormat = request.TableExportFormat
             });
 
             return result;

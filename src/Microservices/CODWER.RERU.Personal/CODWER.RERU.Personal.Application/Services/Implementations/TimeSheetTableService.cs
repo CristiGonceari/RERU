@@ -110,7 +110,6 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
 
         public async Task<ExportTimeSheetDto> PrintTimeSheetTableData(PaginatedModel<ContractorTimeSheetTableDto> data, DateTime from, DateTime to)
         {
-
             using var package = new ExcelPackage();
             var workSheet = package.Workbook.Worksheets.Add("Sheet1");
 

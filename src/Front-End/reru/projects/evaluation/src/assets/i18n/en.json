@@ -650,6 +650,9 @@
     "not-correct-percent": "Incorrect percent",
     "skipped-percent": "Skipped percent"
   },
+  "select-format":{
+    "please-select-format": "Please select format"
+  },
   "message-code": {
     "MAP0000001": "Unauthenticated application request",
     "MAP0000002": "Unauthorized request. You do not have permmissions",

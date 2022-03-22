@@ -2,10 +2,9 @@
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Statistics;
 using CVU.ERP.Common.DataTransferObjects.Files;
-using CVU.ERP.Module.Application.TablePrinterService;
+using CVU.ERP.Module.Application.TableExportServices;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -16,10 +15,10 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.PrintCategoryQuestionsSt
     public class PrintCategoryQuestionsStatisticCommandHandler : IRequestHandler<PrintCategoryQuestionsStatisticCommand, FileDataDto>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ITablePrinter<TestQuestionStatisticDto, TestQuestionStatisticDto> _printer;
+        private readonly IExportData<TestQuestionStatisticDto, TestQuestionStatisticDto> _printer;
 
 
-        public PrintCategoryQuestionsStatisticCommandHandler(AppDbContext appDbContext, ITablePrinter<TestQuestionStatisticDto, TestQuestionStatisticDto> printer)
+        public PrintCategoryQuestionsStatisticCommandHandler(AppDbContext appDbContext, IExportData<TestQuestionStatisticDto, TestQuestionStatisticDto> printer)
         {
             _appDbContext = appDbContext;
             _printer = printer;
@@ -133,12 +132,13 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.PrintCategoryQuestionsSt
 
             var statisctica = answer.OrderByDescending(x => x.CountByFilter).Take(request.ItemsPerPage).AsQueryable();
 
-            var result = _printer.PrintTable(new TableData<TestQuestionStatisticDto>
+            var result = _printer.ExportTableSpecificFormat(new TableData<TestQuestionStatisticDto>
             {
                 Name = request.TableName,
                 Items = statisctica,
                 Fields = request.Fields,
-                Orientation = request.Orientation
+                Orientation = request.Orientation,
+                ExportFormat = request.TableExportFormat
             });
 
             return result;

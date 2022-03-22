@@ -4,7 +4,7 @@ using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using CVU.ERP.Common.DataTransferObjects.Files;
-using CVU.ERP.Module.Application.TablePrinterService;
+using CVU.ERP.Module.Application.TableExportServices;
 using MediatR;
 using System.Linq;
 using System.Threading;
@@ -15,10 +15,10 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.PrintQuestionUnits
     public class PrintQuestionUnitsCommandHandler : IRequestHandler<PrintQuestionUnitsCommand, FileDataDto>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ITablePrinter<QuestionUnit, QuestionUnitDto> _printer;
+        private readonly IExportData<QuestionUnit, QuestionUnitDto> _printer;
         private readonly IQuestionUnitService _questionUnitService;
 
-        public PrintQuestionUnitsCommandHandler(AppDbContext appDbContext, ITablePrinter<QuestionUnit, QuestionUnitDto> printer, IQuestionUnitService questionUnitService)
+        public PrintQuestionUnitsCommandHandler(AppDbContext appDbContext, IExportData<QuestionUnit, QuestionUnitDto> printer, IQuestionUnitService questionUnitService)
         {
             _appDbContext = appDbContext;
             _questionUnitService = questionUnitService;
@@ -52,12 +52,13 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.PrintQuestionUnits
                 }
             }
 
-            var result = _printer.PrintTable(new TableData<QuestionUnit>
+            var result = _printer.ExportTableSpecificFormat(new TableData<QuestionUnit>
             {
                 Name = request.TableName,
                 Items = questions,
                 Fields = request.Fields,
-                Orientation = request.Orientation
+                Orientation = request.Orientation,
+                ExportFormat = request.TableExportFormat
             });
 
             return result;

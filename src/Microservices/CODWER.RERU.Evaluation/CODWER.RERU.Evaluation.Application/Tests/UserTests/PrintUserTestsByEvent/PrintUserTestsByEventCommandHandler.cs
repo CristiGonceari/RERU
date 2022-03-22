@@ -1,22 +1,22 @@
-﻿using System.Linq;
-using CVU.ERP.Common.DataTransferObjects.Files;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Data.Entities;
+﻿using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
-using CVU.ERP.Module.Application.TablePrinterService;
+using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.Module.Application.TableExportServices;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTestsByEvent
 {
     public class PrintUserTestsByEventCommandHandler : IRequestHandler<PrintUserTestsByEventCommand, FileDataDto>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ITablePrinter<Test, TestDto> _printer;
+        private readonly IExportData<Test, TestDto> _printer;
 
-        public PrintUserTestsByEventCommandHandler(AppDbContext appDbContext, ITablePrinter<Test, TestDto> printer)
+        public PrintUserTestsByEventCommandHandler(AppDbContext appDbContext, IExportData<Test, TestDto> printer)
         {
             _appDbContext = appDbContext;
             _printer = printer;
@@ -34,12 +34,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTestsByEve
                 .OrderByDescending(x => x.ProgrammedTime)
                 .AsQueryable();
 
-            var result = _printer.PrintTable(new TableData<Test>
+            var result = _printer.ExportTableSpecificFormat(new TableData<Test>
             {
                 Name = request.TableName,
                 Items = userTests,
                 Fields = request.Fields,
-                Orientation = request.Orientation
+                Orientation = request.Orientation,
+                ExportFormat = request.TableExportFormat
             });
 
             return result;

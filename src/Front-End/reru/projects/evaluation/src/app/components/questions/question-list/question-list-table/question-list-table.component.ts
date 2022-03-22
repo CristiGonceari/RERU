@@ -105,7 +105,7 @@ export class QuestionListTableComponent implements OnInit {
 		this.downloadFile = true;
 		this.questionService.print(data).subscribe(response => {
 			if (response) {
-				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
+				let fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
 				const blob = new Blob([response.body], { type: response.body.type });
 				const file = new File([blob], fileName, { type: response.body.type });
 				saveAs(file);
@@ -178,7 +178,6 @@ export class QuestionListTableComponent implements OnInit {
 	printQuestionUnitPdf(questionId){
 		this.printTemplateService.getQuestionUnitPdf(questionId).subscribe((response : any) => {
 			let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
-			
 			if (response.body.type === 'application/pdf') {
 			  fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
 			}
