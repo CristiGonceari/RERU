@@ -3,7 +3,7 @@ import { SidebarItemType } from './utils/models/sidebar.model';
 import { Router } from '@angular/router';
 import { LocalizeRouterService } from '@gilsdav/ngx-translate-router';
 import { forkJoin } from 'rxjs';
-import { AppSettingsService, IAppSettings, AuthenticationService } from '@erp/shared';
+import { AppSettingsService, IAppSettings, AuthenticationService, NavigationService } from '@erp/shared';
 import { I18nService } from './utils/services/i18n.service';
 
 @Component({
@@ -170,17 +170,27 @@ export class AppComponent implements OnInit, AfterViewInit {
 			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"> <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <rect x="0" y="0" width="24" height="24"/> <path d="M5,8.6862915 L5,5 L8.6862915,5 L11.5857864,2.10050506 L14.4852814,5 L19,5 L19,9.51471863 L21.4852814,12 L19,14.4852814 L19,19 L14.4852814,19 L11.5857864,21.8994949 L8.6862915,19 L5,19 L5,15.3137085 L1.6862915,12 L5,8.6862915 Z M12,15 C13.6568542,15 15,13.6568542 15,12 C15,10.3431458 13.6568542,9 12,9 C10.3431458,9 9,10.3431458 9,12 C9,13.6568542 10.3431458,15 12,15 Z" fill="#000000"/> </g></svg>`,
 		},
 		{
-			type: SidebarItemType.ITEM,
-			url: '/guide',
+			type: SidebarItemType.SECTION,
+			url: '',
 			name: '',
-			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-			<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-				<rect x="0" y="0" width="24" height="24"/>
-				<path d="M3.5,3 L9.5,3 C10.3284271,3 11,3.67157288 11,4.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L3.5,20 C2.67157288,20 2,19.3284271 2,18.5 L2,4.5 C2,3.67157288 2.67157288,3 3.5,3 Z M9,9 C8.44771525,9 8,9.44771525 8,10 L8,12 C8,12.5522847 8.44771525,13 9,13 C9.55228475,13 10,12.5522847 10,12 L10,10 C10,9.44771525 9.55228475,9 9,9 Z" fill="#000000" opacity="0.3"/>
-				<path d="M14.5,3 L20.5,3 C21.3284271,3 22,3.67157288 22,4.5 L22,18.5 C22,19.3284271 21.3284271,20 20.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,4.5 C13,3.67157288 13.6715729,3 14.5,3 Z M20,9 C19.4477153,9 19,9.44771525 19,10 L19,12 C19,12.5522847 19.4477153,13 20,13 C20.5522847,13 21,12.5522847 21,12 L21,10 C21,9.44771525 20.5522847,9 20,9 Z" fill="#000000" transform="translate(17.500000, 11.500000) scale(-1, 1) translate(-17.500000, -11.500000) "/>
-			</g>
-		</svg>`,
 		},
+		{
+			type: SidebarItemType.ITEM,
+			url: '/faq',
+			name: '',
+			//permission: 'P02002901',
+			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+			    viewBox="0 0 24 24" version="1.1">
+			    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+			    <rect x="0" y="0" width="24" height="24"/>
+			    <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10"/>
+			    <path d="M12,16 C12.5522847,16 13,16.4477153 13,17 C13,17.5522847 12.5522847,18 12,18 C11.4477153,18 11,17.5522847 11,17 C11,16.4477153
+			    11.4477153,16 12,16 Z M10.591,14.868 L10.591,13.209 L11.851,13.209 C13.447,13.209 14.602,11.991 14.602,10.395 C14.602,8.799 13.447,7.581
+			    11.851,7.581 C10.234,7.581 9.121,8.799 9.121,10.395 L7.336,10.395 C7.336,7.875 9.31,5.922 11.851,5.922 C14.392,5.922 16.387,7.875 16.387,10.395
+			    C16.387,12.915 14.392,14.868 11.851,14.868 L10.591,14.868 Z" fill="#000000"/>
+			    </g>
+			</svg>`,
+		}
 	];
 	appSettings: IAppSettings;
 	isCollapsed: boolean;
@@ -190,9 +200,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private localize: LocalizeRouterService,
 		private appConfigService: AppSettingsService,
 		private cd: ChangeDetectorRef,
-    private authenticationService: AuthenticationService
+		private authenticationService: AuthenticationService,
+		public navigation: NavigationService
 	) {
 		this.appSettings = this.appConfigService.settings;
+		this.navigation.startSaveHistory();
 	}
 
 	ngOnInit(): void {
@@ -227,7 +239,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.translate.get('sidebar.configuration'),
 			this.translate.get('sidebar.nomenclatures'),
 			this.translate.get('sidebar.configurations'),
-			this.translate.get('sidebar.guide'),
+			this.translate.get('sidebar.help'),
+			this.translate.get('sidebar.faq')
 		]).subscribe(
 			([
 				home,
@@ -243,7 +256,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 				documentsTemplates,
 				nomenclatures,
 				configurations,
-				guide,
+				help,
+				faq
 			]) => {
 				this.sidebarItems[0].name = home;
 				this.sidebarItems[1].name = myProfile;
@@ -258,7 +272,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 				this.sidebarItems[10].name = documentsTemplates;
 				this.sidebarItems[11].name = nomenclatures;
 				this.sidebarItems[12].name = configurations;
-				this.sidebarItems[13].name = guide;
+				this.sidebarItems[13].name = help;
+				this.sidebarItems[14].name = faq;
 			}
 		);
 	}

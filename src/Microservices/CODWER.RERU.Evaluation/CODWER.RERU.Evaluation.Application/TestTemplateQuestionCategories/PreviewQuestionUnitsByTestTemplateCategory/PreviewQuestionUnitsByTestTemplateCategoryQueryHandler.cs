@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
+using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplateQuestionCategories;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.PreviewQuestionUnitsByTestTemplateCategory
 {
@@ -69,11 +69,11 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Prev
                 }
                 else
                 {
-                    var testType = await _appDbContext.TestTemplates
-                        .Include(x => x.TestTypeQuestionCategories)
-                        .FirstAsync(x => x.Id == request.Data.TestTypeId);
+                    var testTemplate = await _appDbContext.TestTemplates
+                        .Include(x => x.TestTemplateQuestionCategories)
+                        .FirstAsync(x => x.Id == request.Data.TestTemplateId);
 
-                    count = testType.QuestionCount - testType.TestTypeQuestionCategories.Sum(x => x.QuestionCount.Value);
+                    count = testTemplate.QuestionCount - testTemplate.TestTemplateQuestionCategories.Sum(x => x.QuestionCount.Value);
                 }
 
                 var questionIds = questionsToUse.Select(x => x.Id).ToList();

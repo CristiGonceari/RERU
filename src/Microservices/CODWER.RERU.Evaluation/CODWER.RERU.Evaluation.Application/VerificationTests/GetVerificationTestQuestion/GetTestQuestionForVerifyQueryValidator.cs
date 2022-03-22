@@ -44,7 +44,7 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
             var isEvaluator = false;
 
             var test = _appDbContext.Tests
-                .Include(t => t.TestTemplates)
+                .Include(t => t.TestTemplate)
                     .ThenInclude(tt => tt.Settings)
                 .Include(t => t.TestQuestions)
                     .ThenInclude(tq => tq.QuestionUnit)
@@ -72,13 +72,13 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
             var isCandidate = false;
 
             var test = _appDbContext.Tests
-                .Include(t => t.TestTemplates)
+                .Include(t => t.TestTemplate)
                     .ThenInclude(tt => tt.Settings)
                 .Include(t => t.TestQuestions)
                     .ThenInclude(tq => tq.QuestionUnit)
                 .FirstOrDefault(t => t.Id == data.TestId);
 
-            if (test != null && test.TestTemplates.Settings.CanViewResultWithoutVerification)
+            if (test != null && test.TestTemplate.Settings.CanViewResultWithoutVerification)
             {
                 isCandidate = _appDbContext.Tests.Any(t => t.Id == test.Id && t.UserProfileId == currentUser.Id);
             }

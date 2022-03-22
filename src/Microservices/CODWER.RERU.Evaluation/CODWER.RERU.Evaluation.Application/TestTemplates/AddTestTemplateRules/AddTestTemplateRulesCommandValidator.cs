@@ -20,7 +20,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddTestTemplateRules
                     .NotEmpty()
                     .WithErrorCode(ValidationCodes.EMPTY_RULES);
 
-                RuleFor(x => x.Data.TestTypeId)
+                RuleFor(x => x.Data.TestTemplateId)
                     .SetValidator(x => new ItemMustExistValidator<Data.Entities.TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                         ValidationMessages.InvalidReference));
             });

@@ -51,4 +51,11 @@ export class QuestionCategoryService extends AbstractService{
   edit(data: QuestionCategory): Observable<QuestionCategory> {
     return this.client.patch<QuestionCategory>(`${this.baseUrl}/${this.urlRoute}`, data);
   }
+
+  print(data): Observable<any> {
+		return this.client.put(`${this.baseUrl}/${this.urlRoute}/print`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }

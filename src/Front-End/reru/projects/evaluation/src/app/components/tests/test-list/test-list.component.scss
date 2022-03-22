@@ -1,8 +1,10 @@
 :host {
-    ::ng-deep {
-        app-confirm-button,
-        app-confirm-button button {
-            width: 100%;
+    .search-btn {
+        ::ng-deep {
+            app-confirm-button,
+            app-confirm-button button {
+                width: 100%;
+            }
         }
     }
 }

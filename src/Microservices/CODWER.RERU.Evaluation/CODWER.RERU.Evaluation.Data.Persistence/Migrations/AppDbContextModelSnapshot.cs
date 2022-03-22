@@ -55,6 +55,46 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.ToTable("Articles");
                 });
 
+            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.EmailTestNotification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("TestId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("EmailTestNotifications");
+                });
+
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Event", b =>
                 {
                     b.Property<int>("Id")
@@ -225,7 +265,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.ToTable("EventResponsiblePersons");
                 });
 
-            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.EventTestType", b =>
+            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.EventTestTemplate", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -250,7 +290,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.Property<int>("MaxAttempts")
                         .HasColumnType("integer");
 
-                    b.Property<int>("TestTypeId")
+                    b.Property<int>("TestTemplateId")
                         .HasColumnType("integer");
 
                     b.Property<string>("UpdateById")
@@ -263,9 +303,9 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.HasIndex("TestTypeId");
+                    b.HasIndex("TestTemplateId");
 
-                    b.ToTable("EventTestTypes");
+                    b.ToTable("EventTestTemplates");
                 });
 
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.EventUser", b =>
@@ -830,10 +870,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.Property<int>("TestStatus")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TestTemplatesId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TestTypeId")
+                    b.Property<int>("TestTemplateId")
                         .HasColumnType("integer");
 
                     b.Property<string>("UpdateById")
@@ -859,7 +896,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 
                     b.HasIndex("TestStatus");
 
-                    b.HasIndex("TestTemplatesId");
+                    b.HasIndex("TestTemplateId");
 
                     b.HasIndex("UserProfileId");
 
@@ -934,7 +971,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.Property<int>("QuestionUnitId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("TestTypeQuestionCategoryId")
+                    b.Property<int>("TestTemplateQuestionCategoryId")
                         .HasColumnType("integer");
 
                     b.Property<string>("UpdateById")
@@ -947,7 +984,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 
                     b.HasIndex("QuestionUnitId");
 
-                    b.HasIndex("TestTypeQuestionCategoryId");
+                    b.HasIndex("TestTemplateQuestionCategoryId");
 
                     b.ToTable("TestCategoryQuestions");
                 });
@@ -1060,9 +1097,6 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.Property<string>("Rules")
                         .HasColumnType("text");
 
-                    b.Property<int?>("SettingsId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
@@ -1078,14 +1112,12 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 
                     b.HasIndex("Mode");
 
-                    b.HasIndex("SettingsId");
-
                     b.HasIndex("Status");
 
                     b.ToTable("TestTemplates");
                 });
 
-            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.TestTypeQuestionCategory", b =>
+            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.TestTemplateQuestionCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1122,10 +1154,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.Property<int>("SequenceType")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TestTemplatesId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TestTypeId")
+                    b.Property<int>("TestTemplateId")
                         .HasColumnType("integer");
 
                     b.Property<int?>("TimeLimit")
@@ -1147,12 +1176,12 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 
                     b.HasIndex("SequenceType");
 
-                    b.HasIndex("TestTemplatesId");
+                    b.HasIndex("TestTemplateId");
 
-                    b.ToTable("TestTypeQuestionCategories");
+                    b.ToTable("TestTemplateQuestionCategories");
                 });
 
-            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.TestTypeSettings", b =>
+            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.TestTemplateSettings", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1174,6 +1203,12 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<int>("FormulaForMultipleAnswers")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("FormulaForOneAnswer")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("HidePagination")
                         .HasColumnType("boolean");
 
@@ -1182,6 +1217,12 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 
                     b.Property<int?>("MaxErrors")
                         .HasColumnType("integer");
+
+                    b.Property<bool?>("NegativeScoreForMultipleAnswers")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("NegativeScoreForOneAnswer")
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("PossibleChangeAnswer")
                         .HasColumnType("boolean");
@@ -1204,7 +1245,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.Property<bool>("StartWithoutConfirmation")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("TestTypeId")
+                    b.Property<int>("TestTemplateId")
                         .HasColumnType("integer");
 
                     b.Property<string>("UpdateById")
@@ -1215,7 +1256,14 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TestTypeSettings");
+                    b.HasIndex("FormulaForMultipleAnswers");
+
+                    b.HasIndex("FormulaForOneAnswer");
+
+                    b.HasIndex("TestTemplateId")
+                        .IsUnique();
+
+                    b.ToTable("TestTemplateSettings");
                 });
 
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.UserProfile", b =>
@@ -1372,6 +1420,39 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                         {
                             Id = 2,
                             Name = "Inactive"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.ScoreFormulaEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ScoreFormulaEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 0,
+                            Name = "ZeroPercent"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Name = "OneDivideCountPercent"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "MinusCorrectOption"
                         });
                 });
 
@@ -1540,7 +1621,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.TestTypeModeEnum>", b =>
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.TestTemplateModeEnum>", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("integer");
@@ -1553,7 +1634,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("TestTypeModeEnum");
+                    b.ToTable("TestTemplateModeEnum");
 
                     b.HasData(
                         new
@@ -1568,7 +1649,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.TestTypeStatusEnum>", b =>
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.TestTemplateStatusEnum>", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("integer");
@@ -1581,7 +1662,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("TestTypeStatusEnum");
+                    b.ToTable("TestTemplateStatusEnum");
 
                     b.HasData(
                         new
@@ -1662,6 +1743,25 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.EmailTestNotification", b =>
+                {
+                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.Test", "Test")
+                        .WithMany("EmailTestNotifications")
+                        .HasForeignKey("TestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.UserProfile", "UserProfile")
+                        .WithMany("EmailTestNotifications")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Test");
+
+                    b.Navigation("UserProfile");
+                });
+
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Event", b =>
                 {
                     b.HasOne("CODWER.RERU.Evaluation.Data.Entities.Plan", "Plan")
@@ -1728,23 +1828,23 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.Navigation("UserProfile");
                 });
 
-            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.EventTestType", b =>
+            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.EventTestTemplate", b =>
                 {
                     b.HasOne("CODWER.RERU.Evaluation.Data.Entities.Event", "Event")
-                        .WithMany("EventTestTypes")
+                        .WithMany("EventTestTemplates")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.TestTemplate", "TestType")
-                        .WithMany("EventTestTypes")
-                        .HasForeignKey("TestTypeId")
+                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.TestTemplate", "TestTemplate")
+                        .WithMany("EventTestTemplates")
+                        .HasForeignKey("TestTemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Event");
 
-                    b.Navigation("TestType");
+                    b.Navigation("TestTemplate");
                 });
 
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.EventUser", b =>
@@ -1919,9 +2019,11 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.TestTemplate", "TestTemplates")
+                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.TestTemplate", "TestTemplate")
                         .WithMany("Tests")
-                        .HasForeignKey("TestTemplatesId");
+                        .HasForeignKey("TestTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CODWER.RERU.Evaluation.Data.Entities.UserProfile", "UserProfile")
                         .WithMany("TestsWithEvaluator")
@@ -1935,7 +2037,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 
                     b.Navigation("Location");
 
-                    b.Navigation("TestTemplates");
+                    b.Navigation("TestTemplate");
 
                     b.Navigation("UserProfile");
                 });
@@ -1965,15 +2067,15 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.TestTypeQuestionCategory", "TestTypeQuestionCategory")
+                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.TestTemplateQuestionCategory", "TestTemplateQuestionCategory")
                         .WithMany("TestCategoryQuestions")
-                        .HasForeignKey("TestTypeQuestionCategoryId")
+                        .HasForeignKey("TestTemplateQuestionCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("QuestionUnit");
 
-                    b.Navigation("TestTypeQuestionCategory");
+                    b.Navigation("TestTemplateQuestionCategory");
                 });
 
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.TestQuestion", b =>
@@ -2014,26 +2116,20 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.TestTypeModeEnum>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.TestTemplateModeEnum>", null)
                         .WithMany()
                         .HasForeignKey("Mode")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.TestTypeSettings", "Settings")
-                        .WithMany()
-                        .HasForeignKey("SettingsId");
-
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.TestTypeStatusEnum>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.TestTemplateStatusEnum>", null)
                         .WithMany()
                         .HasForeignKey("Status")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Settings");
                 });
 
-            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.TestTypeQuestionCategory", b =>
+            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.TestTemplateQuestionCategory", b =>
                 {
                     b.HasOne("CODWER.RERU.Evaluation.Data.Entities.QuestionCategory", "QuestionCategory")
                         .WithMany()
@@ -2058,13 +2154,36 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.TestTemplate", "TestTemplates")
-                        .WithMany("TestTypeQuestionCategories")
-                        .HasForeignKey("TestTemplatesId");
+                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.TestTemplate", "TestTemplate")
+                        .WithMany("TestTemplateQuestionCategories")
+                        .HasForeignKey("TestTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("QuestionCategory");
 
-                    b.Navigation("TestTemplates");
+                    b.Navigation("TestTemplate");
+                });
+
+            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.TestTemplateSettings", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.ScoreFormulaEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("FormulaForMultipleAnswers")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.ScoreFormulaEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("FormulaForOneAnswer")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.TestTemplate", null)
+                        .WithOne("Settings")
+                        .HasForeignKey("CODWER.RERU.Evaluation.Data.Entities.TestTemplateSettings", "TestTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Event", b =>
@@ -2075,7 +2194,7 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 
                     b.Navigation("EventResponsiblePersons");
 
-                    b.Navigation("EventTestTypes");
+                    b.Navigation("EventTestTemplates");
 
                     b.Navigation("EventUsers");
 
@@ -2119,6 +2238,8 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Test", b =>
                 {
+                    b.Navigation("EmailTestNotifications");
+
                     b.Navigation("TestQuestions");
                 });
 
@@ -2129,20 +2250,24 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
 
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.TestTemplate", b =>
                 {
-                    b.Navigation("EventTestTypes");
+                    b.Navigation("EventTestTemplates");
+
+                    b.Navigation("Settings");
 
                     b.Navigation("Tests");
 
-                    b.Navigation("TestTypeQuestionCategories");
+                    b.Navigation("TestTemplateQuestionCategories");
                 });
 
-            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.TestTypeQuestionCategory", b =>
+            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.TestTemplateQuestionCategory", b =>
                 {
                     b.Navigation("TestCategoryQuestions");
                 });
 
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.UserProfile", b =>
                 {
+                    b.Navigation("EmailTestNotifications");
+
                     b.Navigation("EventResponsiblePersons");
 
                     b.Navigation("EventUsers");

@@ -21,8 +21,9 @@
         public static string INVALID_EVENT = "03000203";
         public static string FINISHED_EVENT = "03000204";
         public static string ONLY_POLLS_OR_TESTS = "03000205";
-        public static string INEXISTENT_TEST_TYPE_IN_EVENT = "03000206";
+        public static string INEXISTENT_TEST_TEMPLATE_IN_EVENT = "03000206";
         public static string MUST_ADD_EVENT_OR_EVALUATOR = "03000207";
+        public static string START_DAY_CANT_BE_FROM_PAST = "03000208";
 
         //event evaluator
         public static string EXISTENT_EVALUATOR_IN_EVENT = "03000301";
@@ -35,8 +36,8 @@
         //event responsible person
         public static string USER_ISNT_RESPONSIBLE_FOR_THIS_EVENT = "03000501";
 
-        //event test type
-        public static string EXISTENT_TEST_TYPE_IN_EVENT = "03000601";
+        //event test template
+        public static string EXISTENT_TEST_TEMPLATE_IN_EVENT = "03000601";
 
         //event user
         public static string INEXISTENT_CANDIDATE_IN_EVENT = "03000701";
@@ -72,7 +73,7 @@
         //question
         public static string EMPTY_QUESTION = "03001401";
         public static string EMPTY_QUESTION_TYPE = "03001402";
-        public static string QUESTION_IS_IN_ACTIVE_TEST_TYPE = "03001403";
+        public static string QUESTION_IS_IN_ACTIVE_TEST_TEMPLATE = "03001403";
         public static string EMPTY_FILE = "03001404";
         public static string ONLY_XLSX_FORMAT = "03001405";
         public static string EMPTY_QUESTION_STATUS = "03001406";
@@ -100,16 +101,16 @@
         public static string INVALID_EVALUATOR_FOR_THIS_TEST = "03001609";
         public static string CANT_VIEW_TEST_RESULT = "03001610";
 
-        //test type
+        //test template
         public static string INVALID_STATUS = "03001701";
         public static string INVALID_TEST_TEMPLATE = "03001702";
         public static string INSUFFICIENT_QUESTIONS_IN_CATEGORY = "03001703";
-        public static string INSUFFICIENT_QUESTIONS_IN_TEST_TYPE = "03001704";
+        public static string INSUFFICIENT_QUESTIONS_IN_TEST_TEMPLATE = "03001704";
         public static string INVALID_QUESTION_COUNT = "03001705";
         public static string ONLY_PENDING_TEST_CAN_BE_CHANGED = "03001706";
         public static string EMPTY_RULES = "03001707";
         public static string ONLY_ACTIVE_TEST_CAN_BE_CLOSED = "03001708";
-        public static string CLOSED_TEST_TYPE_CANT_BE_CHANGED = "03001709";
+        public static string CLOSED_TEST_TEMPLATE_CANT_BE_CHANGED = "03001709";
         public static string INVALID_DURATION = "03001710";
         public static string INVALID_MIN_PERCENT = "03001711";
         public static string INVALID_MAX_ATTEMPTS = "03001712";
@@ -121,12 +122,13 @@
         public static string INVALID_COMBINATION = "03001718";
         public static string MISMATCH_QUESTION_COUNT_AND_SELECTED = "03001719";
         public static string INVALID_MAX_ERRORS = "03001720";
-        public static string ONLY_CLOSED_TEST_TYPE_CAN_BE_CLONED = "03001721";
+        public static string ONLY_CLOSED_TEST_TEMPLATE_CAN_BE_CLONED = "03001721";
         public static string INVALID_TIME = "03001722";
         public static string INVALID_POLL = "03001723";
         public static string ONLY_INACTIVE_TEST_CAN_BE_DELETED = "03001724";
+        public static string EMPTY_FORMULA = "03001725";
 
-        //test type question category 
+        //test template question category 
         public static string QUESTION_COUNT_REACHED_THE_LIMIT = "03001801";
         public static string INVALID_SEQUENCE = "03001802";
         public static string INVALID_SELECTION_TYPE = "03001803";
@@ -143,6 +145,6 @@
 
         //user
         public static string INVALID_USER = "03002001";
-        public static string INVALID_TEST_TYPE_QUESTION_CATEGORY = "03002002";
+        public static string INVALID_TEST_TEMPLATE_QUESTION_CATEGORY = "03002002";
     }
 }

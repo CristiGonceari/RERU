@@ -24,7 +24,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'test-type',
-		loadChildren: () => import('./components/test-types/test-types.module').then(m => m.TestTypesModule),
+		loadChildren: () => import('./components/test-templates/test-templates.module').then(m => m.TestTemplatesModule),
 		data: { permission: 'P03000801' },
 		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},

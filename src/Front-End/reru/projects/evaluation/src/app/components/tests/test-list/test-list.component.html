@@ -9,66 +9,66 @@
           <div class="card card-custom gutter-b">
             <div class="card-header flex-wrap border-0 py-5">
               <div class="card-title">
-                <h3 class="card-label">{{'verify-test.title' | translate}}</h3>
+                <h3 class="card-label" id="title">{{'verify-test.title' | translate}}</h3>
               </div>
               <div class="card-toolbar">
+								<app-confirm-button class="btn mr-3" (click)="testsTable.getHeaders(getTitle())">
+									<i class="far fa-file-pdf text-white"></i>
+									{{'button.print' | translate}}
+								</app-confirm-button>
                 <app-add-button class="btn my-auto mr-5" [routerLink]="['add-test']" 
                   [value]="'tests.new-test' | translate"></app-add-button>
               </div>
             </div> 
             <div class="card-header border-0 pt-0 pb-0 pr-5" style="min-height: 100%;"> 
               <div class="row w-100">
-                <div class="col-lg-3 col-12">
-                  <div class="input-group input-group-sm input-group-solid">
-                    <input type="text" class="form-control" [placeholder]="'tests.search-test' | translate" name="testToSearch" [(ngModel)]="testsTable.testToSearch">
-                  </div>
-                </div>
-                <div class="col-lg-3 col-12 mt-lg-0 mt-3">
-                  <div class="input-group input-group-sm input-group-solid">
-                    <input type="text" class="form-control" [placeholder]="'events.search-event' | translate" name="eventName" [(ngModel)]="testsTable.eventName">
-                  </div>
-                </div>
-                <div class="col-lg-3 col-12 mt-lg-0 mt-3">
-                  <div class="input-group input-group-sm input-group-solid">
-                    <input type="text" class="form-control" [placeholder]="'events.search-location' | translate" name="locationName" [(ngModel)]="testsTable.locationName">
-                  </div>
-                </div>
-                <div class="col-lg-3 col-12 mt-lg-0 mt-3">
-                  <div class="input-group input-group-sm input-group-solid">
-                    <input type="text" class="form-control" [placeholder]="'verify-test.search-student' | translate" name="userName" [(ngModel)]="testsTable.userName">
-                  </div>
-                </div>
+							  <div class="col">
+									<erp-shared-search-input (handleSearch)="testsTable.setFilter('testName', $event)" [placeholder]="'tests.search-test' | translate" #testName></erp-shared-search-input>
+							  </div>
+							  <div class="col">
+									<erp-shared-search-input (handleSearch)="testsTable.setFilter('testEvent', $event)" [placeholder]="'events.search-event' | translate" #testEvent></erp-shared-search-input>
+							  </div>
+							  <div class="col">
+									<erp-shared-search-input (handleSearch)="testsTable.setFilter('testLocation', $event)" [placeholder]="'events.search-location' | translate" #testLocation></erp-shared-search-input>
+							  </div>
+							  <div class="col">
+									<erp-shared-search-input (handleSearch)="testsTable.setFilter('userName', $event)" [placeholder]="'verify-test.search-student' | translate" #userName></erp-shared-search-input>
+							  </div>
               </div>
-              <div class="row w-100">
-                <div class="col-lg-3 col-12 mt-3">
-                  <app-search-status (filter)="testsTable.selectedStatus = $event.target.value"></app-search-status>
+              <div class="row w-100 mt-3">
+                <div class="col-lg-3 col-12">
+                  <app-search-status (filter)="testsTable.setFilter('selectedStatus', $event)" #selectedStatus></app-search-status>
                 </div>
-
-                <div class="col-lg-3 col-12 mt-3">
+							  <div class="col">
+									<erp-shared-search-input (handleSearch)="testsTable.setFilter('idnp', $event)" [placeholder]="'verify-test.search-student-idnp' | translate" #idnp></erp-shared-search-input>
+							  </div>
+                <!-- <div class="col-lg-3 col-12 mt-3">
+                  <app-search-test (handleSearch)="testsTable.setFilter('idnp', $event)" [placeholder]="'verify-test.search-student-idnp' | translate" #idnp></app-search-test>
+                </div> -->
+                <div class="col-lg-2 col-12">
                   <div class="input-group input-group-sm input-group-solid">
-                    <input type="text" class="form-control" [placeholder]="'verify-test.search-student-idnp' | translate" name="idnp" [(ngModel)]="testsTable.idnp">
-                  </div>
-                </div>
-
-                <div class="col-lg-2 col-12 mt-3">
-                  <div class="input-group input-group-sm input-group-solid">
-                    <input class="form-control" [owlDateTime]="dtFrom" [owlDateTimeTrigger]="dtFrom" [placeholder]="'events.search-from' | translate" [(ngModel)]="testsTable.dateTimeFrom" autocomplete="off">
+                    <input class="form-control" [owlDateTime]="dtFrom" [owlDateTimeTrigger]="dtFrom"
+                      [placeholder]="'events.search-from' | translate" (ngModelChange)="testsTable.getTests()"
+                      [(ngModel)]="testsTable.dateTimeFrom" autocomplete="off">
                     <owl-date-time #dtFrom></owl-date-time>
                   </div>
                 </div>
-                <div class="col-lg-2 col-12 mt-3">
+                <div class="col-lg-2 col-12">
                   <div class="input-group input-group-sm input-group-solid">
-                    <input class="form-control" [owlDateTime]="toDate" [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate" [(ngModel)]="testsTable.dateTimeTo" autocomplete="off">
+                    <input class="form-control" [owlDateTime]="toDate" (ngModelChange)="testsTable.getTests()"
+                      [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate"
+                      [(ngModel)]="testsTable.dateTimeTo" autocomplete="off">
                     <owl-date-time #toDate></owl-date-time>
                   </div>
                 </div>
-                <div class="col-lg-2 col-12 mt-3 px-8">
-                  <div class="row justify-content-lg-end justify-content-center confirmation-container">
-                    <app-confirm-button (handle)="testsTable.getTests({page: 1})" [value]="'button.search' | translate" ></app-confirm-button>
+                <div class="col-lg-2 col-12 pr-4">
+                  <div class="text-right">
+										<app-button (handle)="clearFields(); testsTable.resetFilters()" [value]="'button.reset' | translate" class="mr-5"></app-button>
+                    <app-confirm-button (handle)="testsTable.getTests({page: 1})" [value]="'button.search' | translate"></app-confirm-button>
                   </div>
                 </div>
               </div>
-            </div>
+            </div>  
             <div class="card-body">
               <app-test-list-table #testsTable></app-test-list-table>
             </div>

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
+using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplateQuestionCategories;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories
 {
@@ -8,11 +8,11 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories
     {
         public TestTemplateQuestionCategoryMapping()
         {
-            CreateMap<AssignQuestionCategoryToTestTemplateDto, TestTypeQuestionCategory>()
+            CreateMap<AssignQuestionCategoryToTestTemplateDto, TestTemplateQuestionCategory>()
                 .ForMember(x => x.Id, opts => opts.Ignore())
                 .ForMember(x => x.TestCategoryQuestions, opts => opts.Ignore());
 
-            CreateMap<TestTypeQuestionCategory, TestTypeQuestionCategoryDto>()
+            CreateMap<TestTemplateQuestionCategory, TestTemplateQuestionCategoryDto>()
                 .ForMember(x => x.CategoryName, opts => opts.MapFrom(qc => qc.QuestionCategory.Name));
 
             CreateMap<TestCategoryQuestionDto, TestCategoryQuestion>()

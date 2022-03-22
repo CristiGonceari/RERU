@@ -11,7 +11,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates
         public int Duration { get; set; }
         public int? CategoriesCount { get; set; }
         public SequenceEnum CategoriesSequence { get; set; }
-        public TestTypeStatusEnum Status { get; set; }
-        public TestTypeModeEnum Mode { get; set; }
+        public TestTemplateStatusEnum Status { get; set; }
+        public TestTemplateModeEnum Mode { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using AutoMapper.EquivalencyExpression;
+using CODWER.RERU.Evaluation.Application.CronJobs;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.Data.Persistence.Initializer;
@@ -9,12 +10,11 @@ using CVU.ERP.Module;
 using CVU.ERP.Module.Application.DependencyInjection;
 using FluentValidation.AspNetCore;
 using Hangfire;
+using Hangfire.PostgreSql;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,7 +24,6 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using System;
 using System.Text;
-using Hangfire.PostgreSql;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
@@ -126,8 +125,10 @@ namespace CODWER.RERU.Evaluation.API
 
             DatabaseSeeder.SeedDb(appDbContext);
 
-            //app.UseHangfireDashboard();
-            //app.UseHangfireServer();
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
+
+            RecurringJob.AddOrUpdate<SendEmailNotificationBeforeTest>(x => x.SendNotificationBeforeTest(), "*/5 * * * *");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

@@ -7,6 +7,7 @@ using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.Models.Internal;
+using CVU.ERP.StorageService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,13 +17,15 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
     {
         private readonly IEvaluationClient _evaluationClient;
         private readonly ILoggerService<EditUserPersonalDetailsCommandHandler> _loggerService;
+        private readonly IStorageFileService _storageFileService;
 
         public EditUserPersonalDetailsCommandHandler(ICommonServiceProvider commonServiceProvider,
             IEvaluationClient evaluationClient,
-            ILoggerService<EditUserPersonalDetailsCommandHandler> loggerService) : base(
-            commonServiceProvider)
+            ILoggerService<EditUserPersonalDetailsCommandHandler> loggerService,
+            IStorageFileService storageFileService) : base(commonServiceProvider)
         {
             _evaluationClient = evaluationClient;
+            _storageFileService = storageFileService;
             _loggerService = loggerService;
         }
 
@@ -31,9 +34,24 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
             var userProfile = await CoreDbContext.UserProfiles
                 .FirstOrDefaultAsync (up => up.Id == request.Data.Id);
 
-            Mapper.Map (request.Data, userProfile);
-            await CoreDbContext.SaveChangesAsync ();
+            if (request.Data.FileDto != null)
+            {
+                var addFile = await _storageFileService.AddFile(request.Data.FileDto);
 
+                userProfile.MediaFileId = addFile;
+            }
+            else
+            {
+                userProfile.MediaFileId = request.Data.MediaFileId;
+            }
+
+            userProfile.Id = request.Data.Id;
+            userProfile.Name = request.Data.Name;
+            userProfile.LastName = request.Data.LastName;
+            userProfile.FatherName = request.Data.FatherName;
+
+            await CoreDbContext.SaveChangesAsync ();
+             
             await LogAction(userProfile);
             await SyncUserProfile(userProfile);
 

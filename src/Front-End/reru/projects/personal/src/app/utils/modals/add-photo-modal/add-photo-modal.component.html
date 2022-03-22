@@ -1,0 +1,18 @@
+<div class="modal-header border-0 pb-0">
+    <h3 class="modal-title">{{'personal.add-photo' | translate}}</h3>
+</div>
+<app-loading-spinner [contentHeight]="'10rem'" *ngIf="isLoading" [colorClass]="'text-primary'"></app-loading-spinner>
+<div class="form-group row mb-10">
+    <div class="col-lg-9 col-xl-9 pt-4 pl-10">
+      <div *ngIf="fileId">
+        <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)" (disableBtn)="disableBtn"></app-add-edit-media-file>
+      </div>
+      <div *ngIf="!fileId">
+        <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn"></app-add-edit-media-file>
+      </div>
+    </div>
+  </div>
+<div class="modal-footer border-0 pt-0">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+    <button type="button" class="btn btn-success" (click)="addPhoto()">{{'button.add' | translate}}</button>
+</div>

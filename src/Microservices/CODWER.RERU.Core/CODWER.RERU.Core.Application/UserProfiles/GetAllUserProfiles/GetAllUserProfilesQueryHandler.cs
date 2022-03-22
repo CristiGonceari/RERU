@@ -20,9 +20,9 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
 
         public async Task<PaginatedModel<UserProfileDto>> Handle (GetAllUserProfilesQuery request, CancellationToken cancellationToken) 
         {
-            var userProfiles = CoreDbContext.UserProfiles.AsQueryable ();
+            var userProfiles = CoreDbContext.UserProfiles.AsQueryable();
 
-            userProfiles = Filter (userProfiles, request);
+            userProfiles = Filter(userProfiles, request);
             userProfiles = Sort(userProfiles, request);
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto> (userProfiles, request);
@@ -34,11 +34,16 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
         {
             // common search by name and/or lastName
             if (!string.IsNullOrEmpty (request.Keyword)) {
-                var toSearch = request.Keyword.Split (' ').ToList ();
+                var toSearch = request.Keyword.Split (' ').ToList();
 
                 foreach (var s in toSearch)
                 {
-                    items = items.Where(p => p.Name.Contains(s) || p.LastName.Contains(s) || p.Email.Contains(s));
+                    items = items.Where(p =>
+                        p.Name.ToLower().Contains(s.ToLower())
+                        || p.LastName.ToLower().Contains(s.ToLower())
+                        || p.FatherName.ToLower().Contains(s.ToLower())
+                        || p.Email.Contains(s)
+                        || p.Idnp.Contains(s));
                 }
             }
 

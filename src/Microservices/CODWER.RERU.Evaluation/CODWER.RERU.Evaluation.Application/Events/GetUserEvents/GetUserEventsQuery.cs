@@ -7,7 +7,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetUserEvents
 {
     public class GetUserEventsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<EventDto>>
     {
-        public TestTypeModeEnum TestTypeMode { get; set; }
+        public TestTemplateModeEnum TestTemplateMode { get; set; }
         public int UserId { get; set; }
     }
 }

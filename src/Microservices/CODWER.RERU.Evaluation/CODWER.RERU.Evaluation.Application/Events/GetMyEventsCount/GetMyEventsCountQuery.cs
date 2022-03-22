@@ -8,7 +8,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetMyEventsCount
 {
     public class GetMyEventsCountQuery : IRequest<List<EventCount>>
     {
-        public TestTypeModeEnum TestTypeMode { get; set; }
+        public TestTemplateModeEnum TestTemplateMode { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime TillDate { get; set; }
     }

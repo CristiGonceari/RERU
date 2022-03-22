@@ -18,6 +18,8 @@ export class MyProfileComponent implements OnInit {
   acronym: string;
   isNotFound: boolean;
   permissions: PermissionModel;
+  fileId: string;
+
   constructor(private contractorProfileService: ContractorProfileService,
               private contractorService: ContractorService,
               private initializerProfileService: InitializerUserProfileService) { }
@@ -54,7 +56,7 @@ export class MyProfileComponent implements OnInit {
       this.isLoading = false;
     })
     this.contractorProfileService.getProfileAvatar({}).subscribe((response: any) =>{
-      this.avatarBase64 = response.data;
+      this.fileId = response.data.mediaFileId;
       this.avatarIsLoading = false;
     })
   }

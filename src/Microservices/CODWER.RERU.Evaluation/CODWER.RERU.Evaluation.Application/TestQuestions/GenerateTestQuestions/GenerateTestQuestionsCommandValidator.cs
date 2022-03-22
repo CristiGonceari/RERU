@@ -24,22 +24,22 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                 .WithErrorCode(ValidationCodes.QUESTIONS_ARE_GENERATED_FOR_THIS_TEST);
 
             RuleForEach(x => appDbContext.Tests
-                .Include(x => x.TestTemplates)
-                    .ThenInclude(x => x.TestTypeQuestionCategories)
+                .Include(x => x.TestTemplate)
+                    .ThenInclude(x => x.TestTemplateQuestionCategories)
                 .First(t => t.Id == x.TestId)
-                .TestTemplates.TestTypeQuestionCategories)
+                .TestTemplate.TestTemplateQuestionCategories)
                 .Must(x => x.QuestionCount <= appDbContext.QuestionCategories.Include(x => x.QuestionUnits).FirstOrDefault(c => c.Id == x.QuestionCategoryId).QuestionUnits.Where(q => q.Status == QuestionUnitStatusEnum.Active).Count())
                 .WithErrorCode(ValidationCodes.INSUFFICIENT_QUESTIONS_IN_CATEGORY);
 
-            When(x => appDbContext.Tests.Include(x => x.TestTemplates)
+            When(x => appDbContext.Tests.Include(x => x.TestTemplate)
                 .First(t => t.Id == x.TestId)
-                .TestTemplates.Mode == TestTypeModeEnum.Test, () =>
+                .TestTemplate.Mode == TestTemplateModeEnum.Test, () =>
                 {
                     When(x => !appDbContext.Tests
-                         .Include(x => x.TestTemplates)
+                         .Include(x => x.TestTemplate)
                              .ThenInclude(x => x.Settings)
                          .First(t => t.Id == x.TestId)
-                         .TestTemplates.Settings.StartWithoutConfirmation, () =>
+                         .TestTemplate.Settings.StartWithoutConfirmation, () =>
                          {
                              RuleFor(x => x.TestId)
                              .Must(x => appDbContext.Tests.First(t => t.Id == x).TestStatus == TestStatusEnum.AlowedToStart)
@@ -47,10 +47,10 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                          });
 
                     When(x => !appDbContext.Tests
-                        .Include(x => x.TestTemplates)
+                        .Include(x => x.TestTemplate)
                             .ThenInclude(x => x.Settings)
                         .First(t => t.Id == x.TestId)
-                        .TestTemplates.Settings.StartBeforeProgrammation, () =>
+                        .TestTemplate.Settings.StartBeforeProgrammation, () =>
                         {
                             RuleFor(x => x.TestId)
                             .Must(x => appDbContext.Tests.First(t => t.Id == x).ProgrammedTime <= DateTime.Now)
@@ -58,10 +58,10 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                         });
 
                     When(x => !appDbContext.Tests
-                        .Include(x => x.TestTemplates)
+                        .Include(x => x.TestTemplate)
                             .ThenInclude(x => x.Settings)
                         .First(t => t.Id == x.TestId)
-                        .TestTemplates.Settings.StartBeforeProgrammation, () =>
+                        .TestTemplate.Settings.StartBeforeProgrammation, () =>
                         {
                             RuleFor(x => x.TestId)
                             .Must(x => appDbContext.Tests.First(t => t.Id == x).ProgrammedTime <= DateTime.Now)

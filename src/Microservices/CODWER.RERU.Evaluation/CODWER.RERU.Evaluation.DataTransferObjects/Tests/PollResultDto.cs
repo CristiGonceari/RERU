@@ -6,7 +6,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
     public class PollResultDto
     {
         public int Id { get; set; }
-        public string TestTypeName { get; set; }
+        public string TestTemplateName { get; set; }
         public string EventName { get; set; }
         public int? TotalInvited { get; set; }
         public int TotalVotedCount { get; set; }

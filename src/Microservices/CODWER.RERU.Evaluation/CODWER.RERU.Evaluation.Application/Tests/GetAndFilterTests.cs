@@ -11,7 +11,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
         public static IQueryable<Test> Filter(AppDbContext appDbContext, TestFiltersDto request)
         {
             var tests = appDbContext.Tests
-                .Include(t => t.TestTemplates)
+                .Include(t => t.TestTemplate)
                 .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
@@ -21,7 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 {
                     Id = t.Id,
                     UserProfile = t.UserProfile,
-                    TestTemplates = t.TestTemplates,
+                    TestTemplate = t.TestTemplate,
                     TestQuestions = t.TestQuestions,
                     Location = t.Location,
                     Event = t.Event,
@@ -32,14 +32,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                     TestStatus = t.TestStatus,
                     ProgrammedTime = t.ProgrammedTime,
                     EndTime = t.EndTime,
-                    TestTypeId = t.TestTypeId,
+                    TestTemplateId = t.TestTemplateId,
                     TestPassStatus = t.TestPassStatus
                 })
                 .AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(request.TestTypeName))
+            if (!string.IsNullOrWhiteSpace(request.TestTemplateName))
             {
-                tests = tests.Where(x => x.TestTemplates.Name.Contains(request.TestTypeName));
+                tests = tests.Where(x => x.TestTemplate.Name.Contains(request.TestTemplateName));
             }
 
             if (!string.IsNullOrWhiteSpace(request.UserName))

@@ -8,5 +8,7 @@
         public bool? IsSelected { get; set; }
         public bool IsCorrect { get; set; }
         public string OptionMediaFileId { get; set; }
+        public string Points { get; set; }
+        public int Percentages { get; set; }
     }
 }

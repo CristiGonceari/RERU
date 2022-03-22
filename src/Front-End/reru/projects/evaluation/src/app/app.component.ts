@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { LocalizeRouterService } from '@gilsdav/ngx-translate-router';
 import { forkJoin } from 'rxjs';
 import { SidebarItemType } from '../app/utils/models/sidebar.model';
-import { AppSettingsService, IAppSettings, AuthenticationService } from '@erp/shared';
+import { AppSettingsService, IAppSettings, AuthenticationService, NavigationService } from '@erp/shared';
 // import { IAppConfig } from '../../utils/models/app-config.model';
 
 @Component({
@@ -230,9 +230,11 @@ export class AppComponent {
 		public translate: I18nService,
 		private localize: LocalizeRouterService,
 		private appSettingsService: AppSettingsService,
-		private authenticationService: AuthenticationService
+		private authenticationService: AuthenticationService,
+		public navigation: NavigationService
 	) {
 		this.appSettings = this.appSettingsService.settings;
+		this.navigation.startSaveHistory();
 	}
 
 	ngOnInit(): void {

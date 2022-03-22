@@ -11,7 +11,7 @@ import { TestService } from '../../../utils/services/test/test.service';
 })
 export class ViewPollProgressComponent implements OnInit {
 
-  testTypeId: number;
+  testTemplateId: number;
   pollResult: PollResult = new PollResult();
   options: PollOption[] = [];
   isLoading: boolean = true;
@@ -24,7 +24,7 @@ export class ViewPollProgressComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.testTypeId = params.id;
+      this.testTemplateId = params.id;
       this.getPollResult();
     })
   }
@@ -32,7 +32,7 @@ export class ViewPollProgressComponent implements OnInit {
   getPollResult(page?){
     this.pageNumber = page == null ? this.pageNumber : page;
     this.isLoading = true;
-    this.testService.pollProgress({testTypeId: this.testTypeId, index: this.pageNumber}).subscribe((res) => {
+    this.testService.pollProgress({testTemplateId: this.testTemplateId, index: this.pageNumber}).subscribe((res) => {
       this.pollResult = res.data;
       this.isLoading = false;
       this.options = this.pollResult.questions[0].options;

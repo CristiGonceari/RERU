@@ -8,7 +8,7 @@
         public string FatherName { set; get; }
         public string Email { get; set; }
         public string Idnp { get; set; }
-        public string Avatar { get; set; }
+        public string? MediaFileId { get; set; }
         public bool IsActive { set; get; }
     }
 }

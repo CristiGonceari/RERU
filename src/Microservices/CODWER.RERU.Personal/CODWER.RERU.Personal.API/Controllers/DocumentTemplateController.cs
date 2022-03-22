@@ -7,6 +7,7 @@ using CODWER.RERU.Personal.Application.DocumentTemplates.GetDocumentTemplates;
 using CODWER.RERU.Personal.Application.DocumentTemplates.GetDoucmentKeys;
 using CODWER.RERU.Personal.Application.DocumentTemplates.RemoveDocumentTemplate;
 using CODWER.RERU.Personal.Application.DocumentTemplates.UpdateDocumentTemplate;
+using CODWER.RERU.Personal.Data.Entities.Documents;
 using CODWER.RERU.Personal.DataTransferObjects.Documents;
 using CVU.ERP.Common.Pagination;
 using MediatR;
@@ -26,12 +27,13 @@ namespace CODWER.RERU.Personal.API.Controllers
             return result;
         }
 
-        [HttpGet("keys")]
-        public async Task<List<Category>> GetKeys([FromQuery] GetDocumentCommandKeys query)
-        {
-            var result = await Mediator.Send(query);
 
-            return result;
+        [HttpGet("keys")]
+        public async Task<List<DocumentTemplateCategoryDto>> GetKeys()
+        {
+            var query = new GetDocumentKeysQuery();
+
+            return await Mediator.Send(query);
         }
 
         [HttpGet("{id:int}")]

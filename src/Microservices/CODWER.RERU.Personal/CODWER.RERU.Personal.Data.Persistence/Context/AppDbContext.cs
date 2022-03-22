@@ -47,6 +47,8 @@ namespace CODWER.RERU.Personal.Data.Persistence.Context
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<TimeSheetTable> TimeSheetTables { get; set; }
         public virtual DbSet<DocumentTemplate> DocumentTemplates { get; set; }
+        public virtual DbSet<DocumentTemplateCategory> DocumentTemplateCategories { get; set; }
+        public virtual DbSet<DocumentTemplateKey> DocumentTemplateKeys { get; set; }
 
         public virtual DbSet<OrganizationRole> OrganizationRoles { get; set; }
         public virtual DbSet<OrganizationalChart> OrganizationalCharts { get; set; }
@@ -99,7 +101,7 @@ namespace CODWER.RERU.Personal.Data.Persistence.Context
 
         public virtual DbSet<IndividualContract> Contracts { get; set; }
         public virtual DbSet<Instruction> Instructions { get; set; }
-
+        public virtual DbSet<Article> Articles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

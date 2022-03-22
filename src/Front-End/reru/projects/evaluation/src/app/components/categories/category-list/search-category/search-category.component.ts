@@ -16,10 +16,9 @@ export class SearchCategoryComponent{
     this.handleSearch.emit(value);
   }
 
-  clearSearch(value: string): void {
-    if (!value) {
-      this.handleSearch.emit('');
-    }
+  clearSearch(): void {
+    this.key = '';
+    this.handleSearch.emit('');
   }
 
 }

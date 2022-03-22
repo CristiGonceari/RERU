@@ -20,7 +20,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.DeleteTestTemplate
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x.Id)
-                .Must(x => appDbContext.TestTemplates.First(tt => tt.Id == x).Status == TestTypeStatusEnum.Draft)
+                .Must(x => appDbContext.TestTemplates.First(tt => tt.Id == x).Status == TestTemplateStatusEnum.Draft)
                 .WithErrorCode(ValidationCodes.ONLY_INACTIVE_TEST_CAN_BE_DELETED);
         }
     }

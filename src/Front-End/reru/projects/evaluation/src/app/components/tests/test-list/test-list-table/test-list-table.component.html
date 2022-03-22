@@ -1,8 +1,9 @@
-<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+<app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
   [colorClass]="'text-primary'">
 </app-loading-spinner>
+<h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
-<div *ngIf="!isLoading" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable">
+<div *ngIf="!isLoading && !downloadFile" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable">
     <table class="datatable table font-size-lg" style="overflow: visible">
         <thead class="text-uppercase text-muted">
             <tr>
@@ -12,18 +13,22 @@
                 <th scope="col" class="text-left" style="width: 150px">{{ 'events.location' | translate }}</th>
                 <th scope="col" class="text-left" style="width: 150px">{{ 'verify-test.status' | translate }}</th>
                 <th scope="col" class="text-left" style="width: 100px">{{ 'verify-test.verified-progress' | translate }}</th>
-                <th scope="col" class="text-left" style="width: 120px">{{ 'verify-test.result' | translate }}</th>
-                <th scope="col" class="text-left" style="width: 100px">{{ 'verify-test.score' | translate }}</th>
-                <th scope="col" class="text-left" style="width: 100px">{{ 'verify-test.min-points' | translate }}</th>
+                <th scope="col" class="text-left" style="width: 100px">{{ 'verify-test.result' | translate }}</th>
+                <th scope="col" class="text-left" style="width: 80px">{{ 'verify-test.score' | translate }}</th>
+                <th scope="col" class="text-left" style="width: 70px">{{ 'verify-test.min-points' | translate }}</th>
                 <th scope="col" style="width: 48px"></th>
             </tr>
         </thead>
-        <tbody class="datatable-body" *ngIf="testType.length">
-            <tr *ngFor="let item of testType">
-                <td><span class="font-size-lg">{{ item.testTypeName }}</span></td>
+        <tbody class="datatable-body" *ngIf="testTemplate.length">
+            <tr *ngFor="let item of testTemplate">
+                <td><span class="font-size-lg">{{ item.testTemplateName }}</span></td>
                 <td>
-                    <p *ngIf="item.showUserName" class="font-size-lg cursor-pointer text-hover-primary mb-0" [routerLink]="['../user-profile', item.userId]">
-                        {{ item.userName }} <br>
+                    <p *ngIf="item.showUserName"
+                        class="font-size-lg cursor-pointer text-hover-primary mb-0"
+                        [routerLink]="['../user-profile', item.userId]"
+                        style="white-space: nowrap;">
+                            {{ item.userName }}
+                        <br>
                         <span class="text-dark-50 font-size-lg font-weight-light">{{ item.idnp }}</span>
                     </p>
                     <span *ngIf="!item.showUserName" class="font-size-lg">-</span>
@@ -104,7 +109,7 @@
                 </td>
             </tr>
         </tbody>
-        <tbody class="datatable-body" *ngIf="!testType.length">
+        <tbody class="datatable-body" *ngIf="!testTemplate.length">
             <tr>
                 <td colspan="10" class="text-center">
                     {{ 'message.no-record' | translate }}
@@ -113,7 +118,7 @@
         </tbody>
     </table>
     <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage" 
-    *ngIf="testType.length" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
+    *ngIf="testTemplate.length" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
     (sizeChange)="getTests({page: pagination.currentPage, itemsPerPage: $event})"
     (pageChange)="getTests({ page: $event})">
   </div>

@@ -1,5 +1,5 @@
 export class AddMyTest {
-    testTypeId: number;
+    testTemplateId: number;
     eventId?: number;
     locationId?: number;
     programmedTime: string;

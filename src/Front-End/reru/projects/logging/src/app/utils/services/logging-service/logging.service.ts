@@ -25,5 +25,10 @@ export class LoggingService extends AbstractService {
   getLoggingValues(params) : Observable<any>{
     return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
   }
+
+  deleteLogs(years) : Observable<any>{
+   
+    return this.http.delete(`${this.baseUrl}/${this.urlRoute}/${years}`);
+  }
   
 }

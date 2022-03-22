@@ -18,15 +18,16 @@
         </div>
         <div class="card-header border-0 py-0 pr-5" style="min-height: 100%;">
           <div class="row w-100">
-            <div class="col-lg-5 col-12">
-              <app-user-search (searchOnEnter)="userTable.list({keyword: $event, page: 1})" (handleSearch)="userTable.searchValue = $event.target.value"></app-user-search>
+            <div class="col-lg-7 col-12">
+              <app-user-search (searchOnChange)="userTable.list({keyword: $event, page: 1})" (handleSearch)="userTable.searchValue = $event.target.value"></app-user-search>
             </div>
-            <div class="col-lg-5 col-12 mt-lg-0 mt-3 h-35px">
-              <app-filter-user-state (filter)="userTable.userState = $event.target.value"></app-filter-user-state>
+            <div class="col-lg-3 col-12 mt-lg-0 mt-8 h-35px">
+              <app-filter-user-state (filter)="userTable.list({userState: $event})" (handleSearch)="userTable.searchValue = $event.target.value"></app-filter-user-state>
             </div>
             <div class="col-lg-2 col-12 mt-lg-0 mt-3 pr-0">
-              <div class="w-100">
-                <app-confirm-button (handle)="userTable.list({keyword: $event, page: 1})" [value]="'button.search' | translate" [width]="'100%'"></app-confirm-button>
+              <div class="w-100 text-right">
+                <app-button (click)="resetFilters(); userTable.list()" [value]="'button.reset' | translate" class="mr-5"></app-button>
+                <app-confirm-button (handle)="userTable.list({keyword: $event, page: 1})" [value]="'button.search' | translate"></app-confirm-button>
               </div>
             </div>
           </div>

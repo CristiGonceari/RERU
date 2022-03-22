@@ -9,15 +9,19 @@
 					<div class="card card-custom gutter-b">
 						<div class="card-header flex-wrap border-0 py-5">
 							<div class="card-title">
-								<h3 class="card-label">{{'events.events' | translate}}</h3>
+								<h3 class="card-label" id="title">{{'events.events' | translate}}</h3>
 							</div>
 							<div class="card-toolbar">
+								<app-confirm-button class="btn mr-3" (click)="eventsTable.getHeaders(getTitle())">
+									<i class="far fa-file-pdf text-white"></i>
+									{{'button.print' | translate}}
+								</app-confirm-button>
 								<app-add-button class="btn" [value]="'events.add-event' | translate" [routerLink]="['add-event']"></app-add-button>
 							</div>
 						</div>
 						
 						<div class="card-body">
-							<app-events-list-table></app-events-list-table>
+							<app-events-list-table #eventsTable></app-events-list-table>
 						</div>
 					</div>
 				</div>

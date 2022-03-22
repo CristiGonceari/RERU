@@ -15,7 +15,7 @@ import { EventsDetailsComponent } from './events-details/events-details.componen
 import { EventOverviewComponent } from './events-details/event-overview/event-overview.component';
 import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-datetime';
 import { LocationsListComponent } from './events-details/locations-list/locations-list.component';
-import { TestTypesListComponent } from './events-details/test-types-list/test-types-list.component';
+import { TestTemplatesListComponent } from './events-details/test-templates-list/test-templates-list.component';
 import { AttachedUsersListComponent } from './events-details/attached-users-list/attached-users-list.component';
 import { ResponsiblePersonsComponent } from './events-details/responsible-persons/responsible-persons.component';
 import { MaterialModule } from '../../material.module';
@@ -33,7 +33,7 @@ import { EvaluatorsComponent } from './events-details/evaluators/evaluators.comp
     EventsDetailsComponent,
     EventOverviewComponent,
     LocationsListComponent,
-    TestTypesListComponent,
+    TestTemplatesListComponent,
     AttachedUsersListComponent,
     ResponsiblePersonsComponent,
     TableComponent,

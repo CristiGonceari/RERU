@@ -6,9 +6,9 @@ using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using CODWER.RERU.Evaluation.Application.EventTestTemplates.GetEventTestTemplates;
-using CODWER.RERU.Evaluation.Application.EventTestTemplates.GetNoAssignedTestTypes;
-using CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTypeToEvent;
-using CODWER.RERU.Evaluation.Application.EventTestTemplates.UnassignTestTypeFromEvent;
+using CODWER.RERU.Evaluation.Application.EventTestTemplates.GetNoAssignedTestTemplates;
+using CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTemplateToEvent;
+using CODWER.RERU.Evaluation.Application.EventTestTemplates.UnassignTestTemplateFromEvent;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -23,21 +23,21 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("no-assigned")]
-        public async Task<List<TestTemplateDto>> GetNoAssignedTestTypes([FromQuery] GetNoAssignedTestTemplatesQuery query)
+        public async Task<List<TestTemplateDto>> GetNoAssignedTestTemplates([FromQuery] GetNoAssignedTestTemplatesQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpPost]
-        public async Task<Unit> AssignTestTypeToEvent([FromBody] AssignTestTemplateToEventCommand command)
+        public async Task<Unit> AssignTestTemplateToEvent([FromBody] AssignTestTemplateToEventCommand command)
         {
             return await Mediator.Send(command);
         }
 
-        [HttpDelete("Event={eventId}&&TestType={testTypeId}")]
-        public async Task<Unit> UnassignTestTypeFromEvent([FromRoute] int eventId, int testTypeId)
+        [HttpDelete("Event={eventId}&&testTemplate={testTemplateId}")]
+        public async Task<Unit> UnassignTestTemplateFromEvent([FromRoute] int eventId, int testTemplateId)
         {
-            var command = new UnassignTestTemplateFromEventCommand { EventId = eventId, TestTypeId = testTypeId };
+            var command = new UnassignTestTemplateFromEventCommand { EventId = eventId, TestTemplateId = testTemplateId };
 
             return await Mediator.Send(command);
         }

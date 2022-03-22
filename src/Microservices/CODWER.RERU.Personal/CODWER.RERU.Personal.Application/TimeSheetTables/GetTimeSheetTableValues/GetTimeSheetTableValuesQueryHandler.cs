@@ -8,6 +8,8 @@ using CODWER.RERU.Personal.Data.Entities.StaticExtensions;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.TimeSheetTables;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,16 +20,20 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.GetTimeSheetTableValu
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
         private readonly ITimeSheetTableService _timeSheetTableService;
+        private readonly ILoggerService<GetTimeSheetTableValuesQuery> _loggerService;
+        private readonly IUserProfileService _userProfileService;
 
         public GetTimeSheetTableValuesQueryHandler(AppDbContext appDbContext,
             IPaginationService paginationService,
-            ITimeSheetTableService timeSheetTableService
-           )
+            ITimeSheetTableService timeSheetTableService,
+            ILoggerService<GetTimeSheetTableValuesQuery> loggerService,
+            IUserProfileService userProfileService)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
             _timeSheetTableService = timeSheetTableService;
-           
+            _loggerService = loggerService;
+            _userProfileService = userProfileService;
         }
         public async Task<PaginatedModel<ContractorTimeSheetTableDto>> Handle(GetTimeSheetTableValuesQuery request, CancellationToken cancellationToken)
         {
@@ -83,7 +89,15 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.GetTimeSheetTableValu
                 contractor.FreeHours = await _timeSheetTableService.GetFreeHoursForContractor(contractor.ContractorId, contractor.WorkedHours, request.FromDate, request.ToDate, contractor.WorkingDays);
             }
 
+            await LogAction(contractors);
+
             return paginatedModel;
+        }
+        private async Task LogAction(IQueryable<Contractor> contractors)
+        {
+            var contractorId = await _userProfileService.GetCurrentUserProfile();
+
+            await _loggerService.Log(LogData.AsPersonal($"TimeSheetTable was viewed by {contractorId.Contractor.GetFullName()}", contractors));
         }
 
         private async Task<IQueryable<Contractor>> FilterByName(GetTimeSheetTableValuesQuery request, IQueryable<Contractor> contractors)

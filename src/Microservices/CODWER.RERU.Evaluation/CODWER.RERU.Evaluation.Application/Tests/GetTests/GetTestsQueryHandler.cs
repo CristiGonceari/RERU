@@ -29,7 +29,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
             var filterData = new TestFiltersDto
             {
-                TestTypeName = request.TestTypeName,
+                TestTemplateName = request.TestTemplateName,
                 UserName = request.UserName,
                 TestStatus = request.TestStatus,
                 LocationKeyword = request.LocationKeyword,

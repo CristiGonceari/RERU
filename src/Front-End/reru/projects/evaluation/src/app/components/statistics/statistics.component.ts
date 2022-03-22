@@ -10,12 +10,13 @@ import { ReferenceService } from '../../utils/services/reference/reference.servi
 export class StatisticsComponent implements OnInit {
 
   statisticEnum: SelectItem[] = [{ label: "", value: "" }];
-  testTypes: SelectItem[] = [{ label: "", value: "" }];
+  testTemplates: SelectItem[] = [{ label: "", value: "" }];
   categories: SelectItem[] = [{ label: "", value: "" }];
   filterEnum = 3;
-  testTypeId;
-  itemsPerPage;
+  testTemplateId;
+  itemsPerPage = 10;
   categoryId;
+  title: string;
   
   constructor(
     private referenceService: ReferenceService
@@ -23,16 +24,21 @@ export class StatisticsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStatisticType();
-    this.getTestTypes();
+    this.getTestTemplates();
     this.getQuestionCategories();
   }
+
+  getTitle(): string {
+		this.title = document.getElementById('title').innerHTML;
+		return this.title
+	}
 
   getStatisticType() {
     this.referenceService.getStatisticEnum().subscribe((res) => this.statisticEnum = res.data);
   }
 
-  getTestTypes() {
-    this.referenceService.getTestTypes().subscribe((res) => this.testTypes = res.data);
+  getTestTemplates() {
+    this.referenceService.getTestTemplates().subscribe((res) => this.testTemplates = res.data);
   }
 
   getQuestionCategories() {
@@ -41,7 +47,7 @@ export class StatisticsComponent implements OnInit {
 
   send() {
     return {
-      testTypeId: this.testTypeId,
+      testTemplateId: this.testTemplateId,
       categoryId: this.categoryId,
       itemsPerPage: this.itemsPerPage,
       filterEnum: this.filterEnum

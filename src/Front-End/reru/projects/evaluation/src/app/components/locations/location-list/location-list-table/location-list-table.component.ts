@@ -56,7 +56,8 @@ export class LocationListTableComponent implements OnInit {
 		let printData = {
 			tableName: name,
 			fields: this.headersToPrint,
-			orientation: 1
+			orientation: 2,
+			name: this.keyword || ''
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.tableData = printData;
@@ -66,11 +67,11 @@ export class LocationListTableComponent implements OnInit {
 	}
 
 	translateData(): void {
-		this.printTranslates = ['print-table', 'print-msg', 'cancel', 'error-msg']
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
 		forkJoin([
 			this.translate.get('print.print-table'),
 			this.translate.get('print.print-msg'),
-			this.translate.get('print.error-msg'),
+			this.translate.get('print.sorted-by'),
 			this.translate.get('button.cancel')
 		]).subscribe(
 			(items) => {
@@ -91,7 +92,7 @@ export class LocationListTableComponent implements OnInit {
 				saveAs(file);
 				this.downloadFile = false;
 			}
-		});
+		}, () => this.downloadFile = false);
 	}
 
   	list(data: any = {}) {

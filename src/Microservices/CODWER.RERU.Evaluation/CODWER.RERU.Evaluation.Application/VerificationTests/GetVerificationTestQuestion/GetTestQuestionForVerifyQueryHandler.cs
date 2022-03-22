@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.VerificationTests;
@@ -25,13 +27,13 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
             _questionUnitService = questionUnitService;
         }
 
-        public async Task<VerificationTestQuestionUnitDto> Handle(GetTestQuestionForVerifyQuery request,
-            CancellationToken cancellationToken)
+        public async Task<VerificationTestQuestionUnitDto> Handle(GetTestQuestionForVerifyQuery request, CancellationToken cancellationToken)
         {
             var test = await _appDbContext.Tests
+                .Include(t => t.TestTemplate)
                 .Include(t => t.TestQuestions)
-                .ThenInclude(t => t.QuestionUnit)
-                .ThenInclude(x => x.Options)
+                    .ThenInclude(t => t.QuestionUnit)
+                        .ThenInclude(x => x.Options)
                 .FirstAsync(x => x.Id == request.Data.TestId);
 
             var testQuestion = test.TestQuestions.FirstOrDefault(x => x.Index == request.Data.QuestionIndex);
@@ -82,7 +84,71 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
                 }
             }
 
+            CalculateOptionsScoreByFormula(testQuestion, test.TestTemplate, answer);
+
             return answer;
+        }
+
+        private void CalculateOptionsScoreByFormula(TestQuestion testQuestion, TestTemplate testTemplate, VerificationTestQuestionUnitDto answer)
+        {
+            var correctOptions = testQuestion.QuestionUnit.Options.Where(x => x.IsCorrect).Count();
+
+            foreach(var option in answer.Options)
+            {
+                var percentOfOneCorrectAnswer = (int)Math.Round((double)(100 / correctOptions));
+                var percentOfOneInCorrectAnswer = 0;
+                double pointOfOneCorrectAnswer = (double)answer.QuestionMaxPoints / correctOptions;
+                double pointOfOneInCorrectAnswer = 0;
+
+
+                if (testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer)
+                {
+                    if (testTemplate.Settings.FormulaForOneAnswer == ScoreFormulaEnum.MinusCorrectOption)
+                    {
+                        percentOfOneInCorrectAnswer = percentOfOneCorrectAnswer * (-1);
+                        pointOfOneInCorrectAnswer = pointOfOneCorrectAnswer * (-1);
+                    }
+                    else if (testTemplate.Settings.FormulaForOneAnswer == ScoreFormulaEnum.OneDivideCountPercent)
+                    {
+                        percentOfOneInCorrectAnswer = (int)Math.Round(((double)1 / testQuestion.QuestionUnit.Options.Count()) * 100) * -1;
+                        pointOfOneInCorrectAnswer = (double)answer.QuestionMaxPoints * percentOfOneInCorrectAnswer / 100;
+                    }
+
+                    if(testTemplate.Settings.NegativeScoreForOneAnswer == false)
+                    {
+                        answer.ShowNegativeMessage = true;
+                    }
+                }
+                else if (testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.MultipleAnswers)
+                {
+                    if (testTemplate.Settings.FormulaForMultipleAnswers == ScoreFormulaEnum.MinusCorrectOption)
+                    {
+                        percentOfOneInCorrectAnswer = percentOfOneCorrectAnswer * (-1);
+                        pointOfOneInCorrectAnswer = pointOfOneCorrectAnswer * (-1);
+                    }
+                    else if (testTemplate.Settings.FormulaForMultipleAnswers == ScoreFormulaEnum.OneDivideCountPercent)
+                    {
+                        percentOfOneInCorrectAnswer = (int)Math.Round((double)1 / testQuestion.QuestionUnit.Options.Count() * 100) * -1;
+                        pointOfOneInCorrectAnswer = (double)answer.QuestionMaxPoints * percentOfOneInCorrectAnswer / 100;
+                    }
+
+                    if (testTemplate.Settings.NegativeScoreForMultipleAnswers == false)
+                    {
+                        answer.ShowNegativeMessage = true;
+                    }
+                }
+
+                if (option.IsCorrect)
+                {
+                    option.Percentages = percentOfOneCorrectAnswer;
+                    option.Points = String.Format("{0:0.00}", pointOfOneCorrectAnswer); 
+                } 
+                else if (!option.IsCorrect)
+                {
+                    option.Percentages = percentOfOneInCorrectAnswer;
+                    option.Points = String.Format("{0:0.00}", pointOfOneInCorrectAnswer);
+                }
+            }
         }
     }
 }

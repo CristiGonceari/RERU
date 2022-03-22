@@ -23,7 +23,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.EditTestStatus
         public async Task<Unit> Handle(EditTestStatusCommand request, CancellationToken cancellationToken)
         {
             var test = await _appDbContex.Tests
-                .Include(x => x.TestTemplates)
+                .Include(x => x.TestTemplate)
                 .FirstAsync(x => x.Id == request.TestId);
 
             test.TestStatus = request.Status;

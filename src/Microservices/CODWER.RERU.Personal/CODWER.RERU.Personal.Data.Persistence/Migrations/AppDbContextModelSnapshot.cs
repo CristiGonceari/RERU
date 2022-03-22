@@ -67,6 +67,42 @@ namespace CODWER.RERU.Personal.Data.Persistence.Migrations
                     b.ToTable("Addresses");
                 });
 
+            modelBuilder.Entity("CODWER.RERU.Personal.Data.Entities.Article", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Articles");
+                });
+
             modelBuilder.Entity("CODWER.RERU.Personal.Data.Entities.Configurations.Holiday", b =>
                 {
                     b.Property<int>("Id")
@@ -292,11 +328,11 @@ namespace CODWER.RERU.Personal.Data.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("AvatarBase64")
-                        .HasColumnType("text");
-
                     b.Property<int>("ContractorId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("MediaFileId")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -1005,6 +1041,80 @@ namespace CODWER.RERU.Personal.Data.Persistence.Migrations
                     b.HasIndex("FileType");
 
                     b.ToTable("DocumentTemplates");
+                });
+
+            modelBuilder.Entity("CODWER.RERU.Personal.Data.Entities.Documents.DocumentTemplateCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DocumentTemplateCategories");
+                });
+
+            modelBuilder.Entity("CODWER.RERU.Personal.Data.Entities.Documents.DocumentTemplateKey", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<int>("DocumentCategoriesId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("KeyName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentCategoriesId");
+
+                    b.ToTable("DocumentTemplateKeys");
                 });
 
             modelBuilder.Entity("CODWER.RERU.Personal.Data.Entities.FamilyMember", b =>
@@ -2685,6 +2795,17 @@ namespace CODWER.RERU.Personal.Data.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("CODWER.RERU.Personal.Data.Entities.Documents.DocumentTemplateKey", b =>
+                {
+                    b.HasOne("CODWER.RERU.Personal.Data.Entities.Documents.DocumentTemplateCategory", "DocumentCategories")
+                        .WithMany("DocumentKeys")
+                        .HasForeignKey("DocumentCategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DocumentCategories");
+                });
+
             modelBuilder.Entity("CODWER.RERU.Personal.Data.Entities.FamilyMember", b =>
                 {
                     b.HasOne("CODWER.RERU.Personal.Data.Entities.Contractor", "Contractor")
@@ -2991,6 +3112,11 @@ namespace CODWER.RERU.Personal.Data.Persistence.Migrations
             modelBuilder.Entity("CODWER.RERU.Personal.Data.Entities.Department", b =>
                 {
                     b.Navigation("DepartmentRoleContents");
+                });
+
+            modelBuilder.Entity("CODWER.RERU.Personal.Data.Entities.Documents.DocumentTemplateCategory", b =>
+                {
+                    b.Navigation("DocumentKeys");
                 });
 
             modelBuilder.Entity("CODWER.RERU.Personal.Data.Entities.NomenclatureType.NomenclatureRecords.NomenclatureRecord", b =>

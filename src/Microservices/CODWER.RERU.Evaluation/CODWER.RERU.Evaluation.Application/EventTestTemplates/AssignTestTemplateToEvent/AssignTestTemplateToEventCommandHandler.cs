@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 
-namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTypeToEvent
+namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTemplateToEvent
 {
     public class AssignTestTemplateToEventCommandHandler : IRequestHandler<AssignTestTemplateToEventCommand, Unit>
     {
@@ -20,9 +20,9 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTypeTo
 
         public async Task<Unit> Handle(AssignTestTemplateToEventCommand request, CancellationToken cancellationToken)
         {
-            var eventTestType = _mapper.Map<EventTestType>(request.Data);
+            var eventTestTemplate = _mapper.Map<EventTestTemplate>(request.Data);
 
-            await _appDbContext.EventTestTypes.AddAsync(eventTestType);
+            await _appDbContext.EventTestTemplates.AddAsync(eventTestTemplate);
             await _appDbContext.SaveChangesAsync();
 
             return Unit.Value;

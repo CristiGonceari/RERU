@@ -62,7 +62,7 @@ export class AddAccessModalComponent extends EnterSubmitListener implements OnIn
       this.contractorEmails = response.data;
       this.isLoading = false;
     }, () => {
-      this.isLoading = false;
+      this.isLoading = false; 
     });
   }
 

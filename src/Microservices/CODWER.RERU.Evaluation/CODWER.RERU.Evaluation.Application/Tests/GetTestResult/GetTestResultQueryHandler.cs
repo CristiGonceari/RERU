@@ -22,7 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTestResult
         public async Task<TestResultDto> Handle(GetTestResultQuery request, CancellationToken cancellationToken)
         {
             var test = await _appDbContext.Tests
-                .Include(x => x.TestTemplates)
+                .Include(x => x.TestTemplate)
                 .Include(x => x.TestQuestions)
                 .FirstOrDefaultAsync(x => x.Id == request.TestId);
 

@@ -11,7 +11,7 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.PrintTestQuestionsStatis
     {
         [ModuleOperation(permission: PermissionCodes.STATISTICS_GENERAL_ACCESS)]
 
-        public int TestTypeId { get; set; }
+        public int TestTemplateId { get; set; }
         public int ItemsPerPage { get; set; }
         public StatisticsQuestionFilterEnum FilterEnum { get; set; }
     }

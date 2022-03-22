@@ -16,9 +16,9 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Context
 
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<QuestionCategory> QuestionCategories { get; set; }
-        public virtual DbSet<TestTypeQuestionCategory> TestTypeQuestionCategories { get; set; }
+        public virtual DbSet<TestTemplateQuestionCategory> TestTemplateQuestionCategories { get; set; }
         public virtual DbSet<TestTemplate> TestTemplates { get; set; }
-        public virtual DbSet<TestTypeSettings> TestTypeSettings { get; set; }
+        public virtual DbSet<TestTemplateSettings> TestTemplateSettings { get; set; }
         public virtual DbSet<Test> Tests { get; set; }
         public virtual DbSet<QuestionUnit> QuestionUnits { get; set; }
         public virtual DbSet<Option> Options { get; set; }
@@ -33,13 +33,14 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Context
         public virtual DbSet<EventUser> EventUsers { get; set; }
         public virtual DbSet<EventLocation> EventLocations { get; set; }
         public virtual DbSet<EventEvaluator> EventEvaluators { get; set; }
-        public virtual DbSet<EventTestType> EventTestTypes { get; set; }
+        public virtual DbSet<EventTestTemplate> EventTestTemplates { get; set; }
         public virtual DbSet<TestCategoryQuestion> TestCategoryQuestions { get; set; }
         public virtual DbSet<Plan> Plans { get; set; }
         public virtual DbSet<PlanResponsiblePerson> PlanResponsiblePersons { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<QuestionUnitTag> QuestionUnitTags { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
+        public virtual DbSet<EmailTestNotification> EmailTestNotifications { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

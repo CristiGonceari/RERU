@@ -67,7 +67,7 @@ namespace CODWER.RERU.Personal.Application.CronJobs
                         SundayIsWorkDay = vc.SundayIsWorkDay
                     });
 
-            foreach (var el in contractor)
+            foreach (var el in contractor.ToList())
             {
                 var vacation = el.Vacations.FirstOrDefault(x =>
                     x.FromDate <= Now
@@ -120,6 +120,8 @@ namespace CODWER.RERU.Personal.Application.CronJobs
 
                             CheckCurrentDay(el.Id, TimeSheetValueEnum.Cc);
                             break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
                 }
 
@@ -192,8 +194,8 @@ namespace CODWER.RERU.Personal.Application.CronJobs
                 }
                
             }
-                 _appDbContext.TimeSheetTables.AddRange(NewValues);
-                 _appDbContext.SaveChanges();
+            _appDbContext.TimeSheetTables.AddRange(NewValues);
+            _appDbContext.SaveChanges();
         }
         private void CheckCurrentDay(int contractorId, TimeSheetValueEnum value)
         {

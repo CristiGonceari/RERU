@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Test } from '../../../utils/models/tests/test.model';
 import { TestQuestionService } from '../../../utils/services/test-question/test-question.service';
-import { TestTypeService } from '../../../utils/services/test-type/test-type.service';
+import { TestTemplateService } from '../../../utils/services/test-template/test-template.service';
 import { TestService } from '../../../utils/services/test/test.service';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { TestStatusEnum } from '../../../utils/enums/test-status.enum';
@@ -31,7 +31,7 @@ export class StartTestPageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private testQuestionService: TestQuestionService,
     private testService: TestService,
-    private testTypeService: TestTypeService,
+    private testTemplateService: TestTemplateService,
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
@@ -80,7 +80,7 @@ export class StartTestPageComponent implements OnInit {
     this.testService.getTest(testId).subscribe(
       res => {
         this.testDto = res.data;
-        this.getTestType();
+        this.getTestTemplate();
         if (this.testDto.rules == null) {
           this.testDto.rules == '';
         } else {
@@ -96,8 +96,8 @@ export class StartTestPageComponent implements OnInit {
     }).join(''));
   }
 
-  getTestType() {
-    this.testTypeService.getTestTypeSettings({ testTypeId: this.testDto.testTypeId }).subscribe(
+  getTestTemplate() {
+    this.testTemplateService.getTestTemplateSettings({ testTemplateId: this.testDto.testTemplateId }).subscribe(
       res => {
         this.settings = res.data;
         if (this.settings.startBeforeProgrammation) this.startTest = true;

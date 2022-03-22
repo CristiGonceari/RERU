@@ -1,5 +1,5 @@
-<select class="form-control h-35px" name="status" id="status" (change)="filter.emit($event)">
-    <option value="0" selected>All</option>
-    <option value="true">Active</option>
-    <option value="false">Inactive</option>
+<select class="form-control h-35px" name="status" id="status" [(ngModel)]="userState" (change)="filter.emit(userState)">
+	<option value="0" selected>All</option>
+	<option value="true">Active</option>
+	<option value="false">Inactive</option>
 </select>

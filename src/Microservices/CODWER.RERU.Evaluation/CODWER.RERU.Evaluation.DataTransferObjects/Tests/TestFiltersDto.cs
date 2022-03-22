@@ -5,7 +5,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
 {
     public class TestFiltersDto
     {
-        public string TestTypeName { get; set; }
+        public string TestTemplateName { get; set; }
         public string UserName { get; set; }
         public TestStatusEnum? TestStatus { get; set; }
         public string LocationKeyword { get; set; }

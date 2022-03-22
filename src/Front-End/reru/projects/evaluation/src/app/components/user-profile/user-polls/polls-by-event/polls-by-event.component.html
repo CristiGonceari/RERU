@@ -3,7 +3,7 @@
 <div *ngIf="!isLoading"
     class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
-    <table class="datatable table" style="overflow: visible">
+    <table class="datatable table" style="overflow: visible" id="pollsTable">
         <thead class="text-uppercase text-muted">
             <tr>
                 <th scope="col" class="colored">{{'tests.name' | translate}}</th>
@@ -15,7 +15,7 @@
         </thead>
         <tbody class="datatable-body" *ngIf="polls.length">
             <tr *ngFor="let poll of polls">
-                <td>{{ poll.testTypeName }}</td>
+                <td>{{ poll.testTemplateName }}</td>
                 <td>{{'statuses.' + enum[poll.status] | translate}}</td>
                 <td *ngIf="poll.votedTime">{{ poll.votedTime | date: 'dd/MM/yyyy, HH:mm' }}</td>
                 <td *ngIf="!poll.votedTime">-</td>

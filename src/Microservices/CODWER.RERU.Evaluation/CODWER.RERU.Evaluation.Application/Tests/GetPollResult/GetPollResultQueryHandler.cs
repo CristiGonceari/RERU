@@ -22,7 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetPollResult
         public async Task<PollResultDto> Handle(GetPollResultQuery request, CancellationToken cancellationToken)
         {
             var allTests = await _appDbContext.Tests
-                .Include(x => x.TestTemplates)
+                .Include(x => x.TestTemplate)
                 .Include(x => x.Event)
                     .ThenInclude(x => x.EventUsers)
                 .Include(x => x.TestQuestions)
@@ -30,15 +30,15 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetPollResult
                         .ThenInclude(x => x.Options)
                 .Include(x => x.TestQuestions)
                     .ThenInclude(x => x.TestAnswers)
-                .Where(x => x.TestTypeId == request.TestTypeId)
+                .Where(x => x.TestTemplateId == request.TestTemplateId)
                 .ToListAsync();
 
-            var eventTestType = await _appDbContext.EventTestTypes.Include(x => x.TestType).Include(x => x.Event).ThenInclude(x => x.EventUsers).FirstAsync(x => x.TestTypeId == request.TestTypeId);
-            var thisEvent = eventTestType.Event;
+            var eventTestTemplate = await _appDbContext.EventTestTemplates.Include(x => x.TestTemplate).Include(x => x.Event).ThenInclude(x => x.EventUsers).FirstAsync(x => x.TestTemplateId == request.TestTemplateId);
+            var thisEvent = eventTestTemplate.Event;
             var totalPollInvited = thisEvent.EventUsers?.Count;
             var totalPollVoted = allTests.Count();
-            var testType = eventTestType.TestType;
-            var testEvent = eventTestType.Event;
+            var testTemplate = eventTestTemplate.TestTemplate;
+            var testEvent = eventTestTemplate.Event;
 
             var questions = allTests.SelectMany(x => x.TestQuestions)
                 .GroupBy(x => x.QuestionUnitId)
@@ -50,8 +50,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetPollResult
 
             var answer = new PollResultDto()
             {
-                Id = request.TestTypeId,
-                TestTypeName = testType.Name,
+                Id = request.TestTemplateId,
+                TestTemplateName = testTemplate.Name,
                 EventName = testEvent.Name,
                 TotalInvited = totalPollInvited,
                 TotalVotedCount = totalPollVoted,

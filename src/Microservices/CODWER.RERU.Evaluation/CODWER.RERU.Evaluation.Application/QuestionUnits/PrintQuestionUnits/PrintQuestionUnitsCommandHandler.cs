@@ -27,8 +27,17 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.PrintQuestionUnits
 
         public async Task<FileDataDto> Handle(PrintQuestionUnitsCommand request, CancellationToken cancellationToken)
         {
-            var questions = GetAndFilterQuestionUnits
-                    .Filter(_appDbContext, request.QuestionName, request.CategoryName, request.QuestionTags, request.Type, request.Status);
+            var filterData = new QuestionFilterDto
+            {
+                QuestionName = request.QuestionName,
+                CategoryName = request.CategoryName,
+                QuestionCategoryId = request.QuestionCategoryId,
+                QuestionTags = request.QuestionTags,
+                Type = request.Type,
+                Status = request.Status
+            };
+
+            var questions = GetAndFilterQuestionUnits.Filter(_appDbContext, filterData);
 
             questions = SelectOnlyReturnedFields(questions);
 

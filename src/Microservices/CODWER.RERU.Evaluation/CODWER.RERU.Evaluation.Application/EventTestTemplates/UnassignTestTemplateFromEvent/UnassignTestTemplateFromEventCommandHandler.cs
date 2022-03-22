@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 
-namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.UnassignTestTypeFromEvent
+namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.UnassignTestTemplateFromEvent
 {
     public class UnassignTestTemplateFromEventCommandHandler : IRequestHandler<UnassignTestTemplateFromEventCommand, Unit>
     {
@@ -17,9 +17,9 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.UnassignTestType
 
         public async Task<Unit> Handle(UnassignTestTemplateFromEventCommand request, CancellationToken cancellationToken)
         {
-            var eventTestType = await _appDbContext.EventTestTypes.FirstAsync(x => x.TestTypeId == request.TestTypeId && x.EventId == request.EventId);
+            var eventTestTemplate = await _appDbContext.EventTestTemplates.FirstAsync(x => x.TestTemplateId == request.TestTemplateId && x.EventId == request.EventId);
 
-            _appDbContext.EventTestTypes.Remove(eventTestType);
+            _appDbContext.EventTestTemplates.Remove(eventTestTemplate);
 
             await _appDbContext.SaveChangesAsync();
 

@@ -30,8 +30,8 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
         public async Task<FileDataDto> PrintTestPdf(int testId)
         {
             var item = _appDbContext.Tests
-                .Include(t => t.TestTemplates)
-                    .ThenInclude(tt => tt.TestTypeQuestionCategories)
+                .Include(t => t.TestTemplate)
+                    .ThenInclude(tt => tt.TestTemplateQuestionCategories)
                         .ThenInclude(tc => tc.QuestionCategory)
                             .ThenInclude(c => c.QuestionUnits)
                 .Include(t => t.UserProfile)
@@ -48,7 +48,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
         {
             var content = string.Empty;
 
-            foreach (var testCategory in item.TestTemplates.TestTypeQuestionCategories)
+            foreach (var testCategory in item.TestTemplate.TestTemplateQuestionCategories)
             {
                 content += $@"<tr>
                                     <th colspan=""2"" style=""border: 1px solid black; border-collapse: collapse; text-align: left;
@@ -70,7 +70,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
                                     <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; background-color: #1f3864; color: white; height: 30px;"">Tipul întrebării</th>
                                 </tr>";
 
-                var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { TestTypeQuestionCategoryId = testCategory.Id });
+                var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { TestTemplateQuestionCategoryId = testCategory.Id });
                 
                 foreach (var question in testCategoryQuestionData.Questions)
                 {
@@ -80,7 +80,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
                             </tr> ";
                 }
 
-                if (item.TestTemplates.TestTypeQuestionCategories.Count() >= 2)
+                if (item.TestTemplate.TestTemplateQuestionCategories.Count() >= 2)
                 {
                     content += $@"<tr>
                                 <th colspan=""4"" style=""border: 1px solid black; border-collapse: collapse; background-color: rgba(223, 221, 221, 0.842); height: 35px;""></th>
@@ -104,10 +104,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
                 source = source.Replace(key, value);
             }
 
-            //source = source.Replace("{test_name}", item.TestType.Name);
-            //source = source.Replace("{nr_test_question}", item.TestType.QuestionCount.ToString());
+            //source = source.Replace("{test_name}", item.TestTemplate.Name);
+            //source = source.Replace("{nr_test_question}", item.TestTemplate.QuestionCount.ToString());
             //source = source.Replace("{test_time}", item.ProgrammedTime.ToString("dd/MM/yyyy, HH:mm"));
-            //source = source.Replace("{min_percentage}", item.TestType.MinPercent.ToString());
+            //source = source.Replace("{min_percentage}", item.TestTemplate.MinPercent.ToString());
             //source = source.Replace("{event_name}", item.EventId != null ? item.Event.Name : "-");
             //source = source.Replace("{location_name}", item.LocationId != null ? item.Location.Name : "-");
             //source = source.Replace("{evaluat_name}", item.UserProfile.FirstName + " " + item.UserProfile.LastName);
@@ -141,10 +141,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
 
             var myDictionary = new Dictionary<string, string>();
 
-            myDictionary.Add("{test_name}", item.TestTemplates.Name);
-            myDictionary.Add("{nr_test_question}", item.TestTemplates.QuestionCount.ToString());
+            myDictionary.Add("{test_name}", item.TestTemplate.Name);
+            myDictionary.Add("{nr_test_question}", item.TestTemplate.QuestionCount.ToString());
             myDictionary.Add("{test_time}", item.ProgrammedTime.ToString("dd/MM/yyyy, HH:mm"));
-            myDictionary.Add("{min_percentage}", item.TestTemplates.MinPercent.ToString());
+            myDictionary.Add("{min_percentage}", item.TestTemplate.MinPercent.ToString());
             myDictionary.Add("{event_name}", item.EventId != null ? item.Event.Name : "-");
             myDictionary.Add("{location_name}", item.LocationId != null ? item.Location.Name : "-");
             myDictionary.Add("{evaluat_name}", item.UserProfile.FirstName + " " + item.UserProfile.LastName);

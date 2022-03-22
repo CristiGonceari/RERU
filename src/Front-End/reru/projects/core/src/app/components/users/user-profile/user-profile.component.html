@@ -33,22 +33,19 @@
                         *permission="'P00000015'">
                         {{ 'change-password-comp.title' | translate }}
                       </button>
-                      <button [routerLink]="['../../users/reset', user?.data?.id]"
-                        class="navi-link align-items-baseline px-6" ngbDropdownItem
-                        *permission="'P00000016'">
+                      <button (click)="openResetPasswordModal(id)" class="navi-link align-items-baseline py-2 px-6 my-2"
+                        ngbDropdownItem *permission="'P00000016'">
                         {{ 'reset-password.title' | translate }}
                       </button>
                       <span *permission="'P00000017'">
-                        <button *ngIf="user?.data?.isActive === false"
-                          [routerLink]="['../../users/activate', user?.data?.id]"
-                          class="navi-link align-items-center px-6" ngbDropdownItem>
+                        <button *ngIf="user?.data?.isActive === false" (click)="openActivateUserModal(id)"
+                          class="navi-link align-items-center font-size-lg py-2 px-6 my-2" ngbDropdownItem>
                           {{ 'button.activate-user' | translate }}
                         </button>
                       </span>
                       <span *permission="'P00000018'">
-                        <button *ngIf="user?.data?.isActive === true"
-                          [routerLink]="['../../users/deactivate', user?.data?.id]"
-                          class="navi-link align-items-center px-6" ngbDropdownItem>
+                        <button *ngIf="user?.data?.isActive === true" (click)="openDeactivateUserModal(id)"
+                          class="navi-link align-items-center font-size-lg px-6" ngbDropdownItem>
                           {{ 'button.deactivate-user' | translate }}
                         </button>
                       </span>
@@ -64,16 +61,37 @@
                   </div>
                 </div>
               </div>
-              <div class="d-flex align-items-center">
-                <div class="btn flex-shrink-0 mr-7">
-                  <div class="symbol symbol-100 symbol-sm-s" *ngIf="avatarString">
-                    <img [src]="avatar">
-                  </div>
-                  <div class="symbol symbol-100 symbol-sm-s symbol-light-success" *ngIf="!avatarString">
+              
+              <div class="d-flex align-items-center"  *ngIf="!fileId">
+                <div class="btn flex-shrink-0 mr-7" >
+                  <div class="symbol symbol-100 symbol-sm-s symbol-light-success">
                     <span class="font-size-h3 symbol-label font-weight-boldest">{{ acronym }}</span>
                   </div>
                 </div>
                 <div class="d-flex flex-column">
+                <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
+                  {{ user?.data.name + ' ' + user?.data.lastName }}
+                </a>
+                <p class="text-muted mt-3" *ngIf="user?.data.isActive === true">
+                  <span class="mr-2">
+                    <svg-icon key="success" [width]="16" [height]="16"></svg-icon>
+                  </span>
+                  Active
+                </p>
+                <p class="text-muted mt-3" *ngIf="user?.data.isActive === false">
+                  <span class="mr-2">
+                    <svg-icon key="error" [width]="16" [height]="16"></svg-icon>
+                  </span>
+                  Inactive
+                </p>
+                </div>
+              </div>
+
+                <div class="d-flex flex-column" *ngIf="fileId">
+                    <app-loading-spinner *ngIf="avatarLoading" [colorClass]="'text-primary'" [contentHeight]="'5rem'" [height]="'2rem'" [width]="'2rem'"></app-loading-spinner>
+                    <div  class="my-3">
+                      <app-get-media-file *ngIf="!avatarLoading" [fileId]="fileId"></app-get-media-file>
+                    </div>
                   <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
                     {{ user?.data.name + ' ' + user?.data.lastName }}
                   </a>
@@ -90,7 +108,7 @@
                     Inactive
                   </p>
                 </div>
-              </div>
+
               <div class="py-9">
                 <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
                   <div class="navi-item mb-2" >

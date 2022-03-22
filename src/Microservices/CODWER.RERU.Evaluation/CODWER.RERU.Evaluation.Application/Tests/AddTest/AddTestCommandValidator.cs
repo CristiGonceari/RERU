@@ -33,7 +33,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                     .SetValidator(x => new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.INVALID_USER,
                         ValidationMessages.InvalidReference));
 
-                RuleFor(x => x.Data.TestTypeId)
+                RuleFor(x => x.Data.TestTemplateId)
                     .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                         ValidationMessages.InvalidReference));
 
@@ -48,8 +48,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                             ValidationMessages.InvalidReference));
 
                     RuleFor(x => x.Data)
-                        .Must(x => appDbContext.EventTestTypes.Any(et => et.EventId == x.EventId && et.TestTypeId == x.TestTypeId))
-                        .WithErrorCode(ValidationCodes.INEXISTENT_TEST_TYPE_IN_EVENT);
+                        .Must(x => appDbContext.EventTestTemplates.Any(et => et.EventId == x.EventId && et.TestTemplateId == x.TestTemplateId))
+                        .WithErrorCode(ValidationCodes.INEXISTENT_TEST_TEMPLATE_IN_EVENT);
 
                     RuleFor(x => x.Data)
                         .Must(x => appDbContext.EventUsers.Any(et => et.EventId == x.EventId && et.UserProfileId == x.UserProfileId))
@@ -92,9 +92,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 
         private async Task<bool> IsOnlyOneAnswerTest(AddEditTestDto data)
         {
-            var dataList = await _mediator.Send(new GetTestTemplateByStatusQuery { TestTypeStatus = TestTypeStatusEnum.Active });
+            var dataList = await _mediator.Send(new GetTestTemplateByStatusQuery { TestTemplateStatus = TestTemplateStatusEnum.Active });
 
-            var result = dataList.FirstOrDefault(x => x.TestTypeId == data.TestTypeId);
+            var result = dataList.FirstOrDefault(x => x.TestTemplateId == data.TestTemplateId);
 
             return result.IsOnlyOneAnswer;
         }

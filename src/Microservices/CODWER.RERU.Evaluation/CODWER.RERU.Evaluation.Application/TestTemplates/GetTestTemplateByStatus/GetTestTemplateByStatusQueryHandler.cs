@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCategoryQuestions;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
@@ -11,6 +7,10 @@ using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates;
 using CVU.ERP.StorageService.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStatus
 {
@@ -34,41 +34,41 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
 
         public async Task<List<SelectTestTemplateValueDto>> Handle(GetTestTemplateByStatusQuery request, CancellationToken cancellationToken)
         {
-            var testTypes = _appDbContext.TestTemplates
+            var testTemplates = _appDbContext.TestTemplates
                 .Include(x => x.Settings)
-                .Where(x => x.Status == request.TestTypeStatus && x.Mode == (int)TestTypeModeEnum.Test)
+                .Where(x => x.Status == request.TestTemplateStatus && x.Mode == (int)TestTemplateModeEnum.Test)
                 .AsQueryable();
 
             if (request.EventId.HasValue)
             {
-                testTypes = testTypes
-                    .Include(x => x.EventTestTypes)
-                    .Where(x => x.EventTestTypes.Any(e => e.EventId == request.EventId));
+                testTemplates = testTemplates
+                    .Include(x => x.EventTestTemplates)
+                    .Where(x => x.EventTestTemplates.Any(e => e.EventId == request.EventId));
             }
 
-            var onlyOneAnswerTests = testTypes.Select(x => _mapper.Map<SelectTestTemplateValueDto>(x)).ToList();
+            var onlyOneAnswerTests = testTemplates.Select(x => _mapper.Map<SelectTestTemplateValueDto>(x)).ToList();
 
             foreach (var x in onlyOneAnswerTests)
             {
-                var testType = testTypes
-                    .Include(tt => tt.TestTypeQuestionCategories)
-                    .FirstOrDefault(tt => tt.Id == x.TestTypeId);
+                var testTemplate = testTemplates
+                    .Include(tt => tt.TestTemplateQuestionCategories)
+                    .FirstOrDefault(tt => tt.Id == x.TestTemplateId);
 
-                var testTypeCategories = testType.TestTypeQuestionCategories
-                    .Where(tt => tt.TestTypeId == testType.Id)
+                var testTemplateCategories = testTemplate.TestTemplateQuestionCategories
+                    .Where(tt => tt.TestTemplateId == testTemplate.Id)
                     .ToList();
 
                 var questionsList = new List<QuestionUnitDto>();
 
-                foreach (var testTypeCategory in testTypeCategories)
+                foreach (var testTemplateCategory in testTemplateCategories)
                 {
-                    var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { TestTypeQuestionCategoryId = testTypeCategory.Id });
+                    var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { TestTemplateQuestionCategoryId = testTemplateCategory.Id });
 
                     questionsList.AddRange(testCategoryQuestionData.Questions);
-                    x.IsOnlyOneAnswer = questionsList.All(x => x.QuestionType == QuestionTypeEnum.OneAnswer);
+                    x.IsOnlyOneAnswer = questionsList.All(x => x.QuestionType == QuestionTypeEnum.OneAnswer || x.QuestionType == QuestionTypeEnum.MultipleAnswers);
                 }
 
-                if (testTypeCategories.All(tt => tt.QuestionType == QuestionTypeEnum.OneAnswer))
+                if (testTemplateCategories.All(tt => tt.QuestionType == QuestionTypeEnum.OneAnswer || tt.QuestionType == QuestionTypeEnum.MultipleAnswers))
                 {
                     x.IsOnlyOneAnswer = true;
                 }
@@ -82,7 +82,6 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
         private async Task<bool> CanPrintTest(List<QuestionUnitDto> questionsList)
         {
             var mediaList = new List<string>() { "video", "audio" };
-            bool result;
             var filesIdsList = new List<string>();
 
             var mediaOptionsIds = await _appDbContext.Options
@@ -105,7 +104,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
                 .Where(f => filesIdsList.Contains(f.Id.ToString()))
                 .ToList();
 
-            result = !files.Any(x => mediaList.Any(m => x.Type.Contains(m)));
+            var result = !files.Any(x => mediaList.Any(m => x.Type.Contains(m)));
 
             return result;
         }

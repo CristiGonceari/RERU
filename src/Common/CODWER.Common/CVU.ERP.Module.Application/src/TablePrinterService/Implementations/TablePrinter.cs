@@ -154,6 +154,10 @@ namespace CVU.ERP.Module.Application.TablePrinterService.Implementations
             {
                 result = Convert.ToBoolean(result) ? "+" : "-";
             }
+            else if (result == null)
+            {
+                result = "-";
+            }
 
             return result.ToString();
         }

@@ -8,7 +8,7 @@
             <label class="col-xl-3 col-lg-3 col-form-label text-right">
               {{'events.event' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
-              <select class="form-control form-control-lg form-control-solid" (change)="getActiveTestType()"
+              <select class="form-control form-control-lg form-control-solid" (change)="getActiveTestTemplate()"
                 (ngModelChange)="checkIfEventHasEvaluator($event)" [(ngModel)]="event.value"
                 name="searchEvent">
                 <option value="">{{'questions.select' | translate}}</option>
@@ -26,7 +26,7 @@
                 <mat-form-field class="example-full-width" appearance="fill">
                   <mat-label>{{'tests.asignee' | translate}}</mat-label>
                   <input #autoCompleteInput type="text" matInput [formControl]="myControl" [(ngModel)]="key"
-                    [matAutocomplete]="auto" (ngModelChange)="getUsers()">
+                    [matAutocomplete]="auto" (ngModelChange)="getUsers()" (click)="getUsers()">
                   <mat-autocomplete #auto="matAutocomplete" ariaLabel="aria-label"
                     [autoActiveFirstOption]="true">
                     <mat-option *ngFor="let option of usersList"
@@ -43,10 +43,10 @@
               class="col-xl-3 col-lg-3 col-form-label text-right">{{'verify-test.select-test-type' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
               <select class="form-control form-control-lg form-control-solid" name="test"
-                [(ngModel)]="testType.value" (ngModelChange)="checkIfIsOneAnswer($event)">
+                [(ngModel)]="testTemplate.value" (ngModelChange)="checkIfIsOneAnswer($event)">
                 <option value="">{{'questions.select' | translate}}</option>
-                <option *ngFor="let testType of selectActiveTests" [ngValue]="testType.testTypeId">
-                  {{testType.testTypeName}}
+                <option *ngFor="let testTemplate of selectActiveTests" [ngValue]="testTemplate.testTemplateId">
+                  {{testTemplate.testTemplateName}}
                 </option>
               </select>
             </div>
@@ -55,7 +55,7 @@
             <label class="col-xl-3 col-lg-3 col-form-label text-right">
               {{'events.evaluator' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
-              <select *ngIf="!(hasEventEvaluator || isTestTypeOneAnswer)"
+              <select *ngIf="!(hasEventEvaluator || isTestTemplateOneAnswer)"
                 class="form-control form-control-lg form-control-solid" [(ngModel)]="evaluator.value"
                 name="searchEvaluator">
                 <option [value]="null" [selected]="true">{{'questions.select' | translate}}</option>
@@ -63,17 +63,17 @@
                   {{ item.label }}
                 </option>
               </select>
-              <span *ngIf="isTestTypeOneAnswer"
+              <span *ngIf="isTestTemplateOneAnswer"
                 class="label label-lg label-light label-inline h-45px px-5 w-100">
                 {{'tests.test-type-autoverify' | translate}}
               </span>
-              <span *ngIf="hasEventEvaluator && !isTestTypeOneAnswer"
+              <span *ngIf="hasEventEvaluator && !isTestTemplateOneAnswer"
                 class="label label-lg label-light label-inline h-45px px-5 w-100">
                 {{'tests.event-has-evaluator' | translate}}
               </span>
             </div>
           </div>
-          <div class="form-group row" *ngIf="!(hasEventEvaluator || isTestTypeOneAnswer)">
+          <div class="form-group row" *ngIf="!(hasEventEvaluator || isTestTemplateOneAnswer)">
             <label
               class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.show-candidate' | translate}}:</label>
             <div class="ml-5 w-auto my-auto">
@@ -136,7 +136,6 @@
           </span>
         </span>
       </h3>
-
       <div class="align-items-vertical">
         <div class="form-group mb-0 row align-items-center"
           *ngFor="let user of displayUserNames; let i = index">

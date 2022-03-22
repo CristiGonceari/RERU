@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Personal.Data.Entities.Documents;
 using CODWER.RERU.Personal.Data.Persistence.Context;
+using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
 using MediatR;
 
 namespace CODWER.RERU.Personal.Application.DocumentTemplates.AddDocumentTemplate
@@ -11,11 +13,16 @@ namespace CODWER.RERU.Personal.Application.DocumentTemplates.AddDocumentTemplate
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly ILoggerService<AddDocumentTemplateCommand> _loggerService;
 
-        public AddDocumentTemplateCommandHandler(AppDbContext appDbContext, IMapper mapper)
+        public AddDocumentTemplateCommandHandler(
+            AppDbContext appDbContext, 
+            IMapper mapper,
+            ILoggerService<AddDocumentTemplateCommand> loggerService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _loggerService = loggerService;
         }
 
         public async Task<int> Handle(AddDocumentTemplateCommand request, CancellationToken cancellationToken)
@@ -25,7 +32,14 @@ namespace CODWER.RERU.Personal.Application.DocumentTemplates.AddDocumentTemplate
             await _appDbContext.DocumentTemplates.AddAsync(mapperData);
             await _appDbContext.SaveChangesAsync();
 
+            await LogAction(mapperData);
+
             return mapperData.Id;
+        }
+
+        private async Task LogAction(DocumentTemplate documentTemplate)
+        {
+            await _loggerService.Log(LogData.AsPersonal($"{documentTemplate.Name} was added to document templates list", documentTemplate));
         }
     }
 }

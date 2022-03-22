@@ -5,7 +5,7 @@ using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
+using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplateQuestionCategories;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 
@@ -25,12 +25,12 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Prev
 
             When(r => r.Data != null, () =>
             {
-                RuleFor(x => x.Data.TestTypeId)
+                RuleFor(x => x.Data.TestTemplateId)
                     .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                         ValidationMessages.InvalidReference));
 
-                RuleFor(x => x.Data.TestTypeId)
-                    .Must(x => appDbContext.TestTemplates.First(tt => tt.Id == x).Status == TestTypeStatusEnum.Draft)
+                RuleFor(x => x.Data.TestTemplateId)
+                    .Must(x => appDbContext.TestTemplates.First(tt => tt.Id == x).Status == TestTemplateStatusEnum.Draft)
                     .WithErrorCode(ValidationCodes.ONLY_PENDING_TEST_CAN_BE_CHANGED);
 
                 RuleFor(x => x.Data.CategoryId)
@@ -80,13 +80,13 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Prev
                 {
 
                     RuleFor(r => r.Data)
-                        .Must(x => appDbContext.QuestionCategories.Include(c => c.QuestionUnits).First(c => c.Id == x.CategoryId).QuestionUnits.Count >= (appDbContext.TestTemplates.First(w => w.Id == x.TestTypeId).QuestionCount - appDbContext.TestTemplates.Include(w => w.TestTypeQuestionCategories).First(w => w.Id == x.TestTypeId).TestTypeQuestionCategories.Sum(x => x.QuestionCount.Value)))
+                        .Must(x => appDbContext.QuestionCategories.Include(c => c.QuestionUnits).First(c => c.Id == x.CategoryId).QuestionUnits.Count >= (appDbContext.TestTemplates.First(w => w.Id == x.TestTemplateId).QuestionCount - appDbContext.TestTemplates.Include(w => w.TestTemplateQuestionCategories).First(w => w.Id == x.TestTemplateId).TestTemplateQuestionCategories.Sum(x => x.QuestionCount.Value)))
                         .WithErrorCode(ValidationCodes.INSUFFICIENT_QUESTIONS_IN_CATEGORY);
 
                     When(r => r.Data.QuestionType.HasValue, () =>
                     {
                         RuleFor(r => r.Data)
-                            .Must(x => appDbContext.QuestionCategories.Include(c => c.QuestionUnits).First(c => c.Id == x.CategoryId).QuestionUnits.Where(q => q.QuestionType == x.QuestionType.Value).Count() >= (appDbContext.TestTemplates.First(w => w.Id == x.TestTypeId).QuestionCount - appDbContext.TestTemplates.Include(w => w.TestTypeQuestionCategories).First(w => w.Id == x.TestTypeId).TestTypeQuestionCategories.Sum(x => x.QuestionCount.Value)))
+                            .Must(x => appDbContext.QuestionCategories.Include(c => c.QuestionUnits).First(c => c.Id == x.CategoryId).QuestionUnits.Where(q => q.QuestionType == x.QuestionType.Value).Count() >= (appDbContext.TestTemplates.First(w => w.Id == x.TestTemplateId).QuestionCount - appDbContext.TestTemplates.Include(w => w.TestTemplateQuestionCategories).First(w => w.Id == x.TestTemplateId).TestTemplateQuestionCategories.Sum(x => x.QuestionCount.Value)))
                             .WithErrorCode(ValidationCodes.INSUFFICIENT_QUESTIONS_IN_CATEGORY);
                     });
                 });
@@ -125,10 +125,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Prev
 
         private bool IsPoll(QuestionCategoryPreviewDto data)
         {
-            var testType = _appDbContext.TestTemplates.FirstOrDefault(x => x.Id == data.TestTypeId);
+            var testTemplate = _appDbContext.TestTemplates.FirstOrDefault(x => x.Id == data.TestTemplateId);
             var selectedQuestions = false;
 
-            if (testType != null && testType.Mode == TestTypeModeEnum.Poll)
+            if (testTemplate != null && testTemplate.Mode == TestTemplateModeEnum.Poll)
             {
                 if (data.SelectedQuestions != null)
                 {

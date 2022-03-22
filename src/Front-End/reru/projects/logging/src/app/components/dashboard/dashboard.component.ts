@@ -4,6 +4,9 @@ import { LoggingService } from '../../utils/services/logging-service/logging.ser
 import { FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DetailsModalComponent } from '../../utils/modals/details-modal/details-modal.component';
+import { DeleteLogsModalComponent } from '../../utils/modals/delete-logs-modal/delete-logs-modal.component';
+
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -29,7 +32,7 @@ export class DashboardComponent implements OnInit {
   form: FormGroup;
 
   constructor(private loggingService: LoggingService,
-		public modalService: NgbModal,) {}
+		public modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.retriveDeopdowns();
@@ -97,4 +100,13 @@ export class DashboardComponent implements OnInit {
       () => {modalRef.close()}
 		);
   }
+
+  openDeleteModal(): void{
+    const modalRef = this.modalService.open(DeleteLogsModalComponent, { centered: true,  size : 'md' });
+    modalRef.result.then(
+			() => {},
+      () => {modalRef.close()}
+		);
+  }
+
 }

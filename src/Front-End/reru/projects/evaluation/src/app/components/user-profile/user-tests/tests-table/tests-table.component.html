@@ -1,15 +1,14 @@
 <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
 <div *ngIf="!isLoading"
     class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
-    <table for="kt_datatable" class="datatable table" style="overflow: visible">
+    <table for="kt_datatable" class="datatable table" style="overflow: visible" id="testsTable">
         <thead class="text-uppercase text-muted">
             <tr>
-                <th scope="col" class="colored">
-                    <b>{{'dashboard.date-status' | translate}}</b>
-                    <i class="fas fa-arrow-down ml-1 colored"></i>
-                </th>
+                <th scope="col">{{'dashboard.date' | translate}}</th>
+                <th scope="col">{{'dashboard.status' | translate}}</th>
                 <th scope="col">{{'dashboard.test' | translate}}</th>
                 <th scope="col" style="width: 170px;">
                     {{'dashboard.score' | translate}} / {{'dashboard.min-score' | translate}}
@@ -23,6 +22,8 @@
                     <span class="colored d-block mb-0">
                         <b>{{ test.programmedTime | date: 'dd/MM/yyyy, HH:mm'}}</b>
                     </span>
+                </td>
+                <td>
                     <div class="font-size-sm">
                         <span class="text-dark-50" *ngIf="test.testStatus == enum.AlowedToStart">
                             {{'statuses.AlowedToStart' | translate}}
@@ -44,7 +45,7 @@
                         </span>
                     </div>
                 </td>
-                <td><b>{{ test.testTypeName }}</b></td>
+                <td><b>{{ test.testTemplateName }}</b></td>
                 <td>
                     <b *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</b>
                     <b *ngIf="test.result != resultEnum.NoResult">{{ test.accumulatedPercentage }}% /

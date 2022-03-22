@@ -1,7 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using CODWER.RERU.Personal.Data.Entities;
 using CODWER.RERU.Personal.Data.Persistence.Context;
+using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,11 +14,16 @@ namespace CODWER.RERU.Personal.Application.Departments.UpdateDepartment
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly ILoggerService<UpdateDepartmentCommand> _loggerService;
 
-        public UpdateDepartmentCommandHandler(AppDbContext appDbContext, IMapper mapper)
+        public UpdateDepartmentCommandHandler(
+            AppDbContext appDbContext, 
+            IMapper mapper,
+            ILoggerService<UpdateDepartmentCommand> loggerService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _loggerService = loggerService;
         }
 
         public async Task<Unit> Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken)
@@ -25,7 +33,14 @@ namespace CODWER.RERU.Personal.Application.Departments.UpdateDepartment
             _mapper.Map(request.Data, item);
             await _appDbContext.SaveChangesAsync();
 
+            await LogAction(item);
+
             return Unit.Value;
+        }
+
+        private async Task LogAction(Department department)
+        {
+            await _loggerService.Log(LogData.AsPersonal($"{department.Name} was edited", department));
         }
     }
 }

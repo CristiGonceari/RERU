@@ -26,7 +26,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("test-template/select-values")]
-        public async Task<List<SelectItem>> GetTestTypes()
+        public async Task<List<SelectItem>> GetTestTemplates()
         {
             var query = new GetTestTemplatesValueQuery();
 
@@ -42,9 +42,9 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("test-type-statuses/select-values")]
-        public async Task<List<SelectItem>> GetTestTypeStatueses()
+        public async Task<List<SelectItem>> GetTestTemplateStatueses()
         {
-            var items = EnumConverter<TestTypeStatusEnum>.SelectValues;
+            var items = EnumConverter<TestTemplateStatusEnum>.SelectValues;
 
             return items;
         }
@@ -52,7 +52,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         [HttpGet("test-type-mode/select-values")]
         public async Task<List<SelectItem>> GetMode()
         {
-            var items = EnumConverter<TestTypeModeEnum>.SelectValues;
+            var items = EnumConverter<TestTemplateModeEnum>.SelectValues;
 
             return items;
         }
@@ -99,6 +99,14 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public List<SelectItem> GetQuestionStatuses()
         {
             var items = EnumConverter<QuestionUnitStatusEnum>.SelectValues;
+
+            return items;
+        }
+
+        [HttpGet("score-formula/select-values")]
+        public List<SelectItem> GetScoreFormulas()
+        {
+            var items = EnumConverter<ScoreFormulaEnum>.SelectValues;
 
             return items;
         }

@@ -1,0 +1,49 @@
+<app-page-title title="{{'tests.settings' | translate}}" subTitle="{{'tests.subtitle' | translate}}">
+</app-page-title>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+  <div class="d-flex flex-column-fluid">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="card card-custom gutter-b">
+            <div class="card-header flex-wrap border-0 py-5">
+              <div class="card-title">
+                <h3 class="card-label" id="title">{{'tests.title' | translate}}</h3>
+              </div>
+              <div class="card-toolbar">
+                <app-confirm-button class="btn mr-3" (click)="testTable.getHeaders(getTitle())">
+									<i class="far fa-file-pdf text-white"></i>
+									{{'button.print' | translate}}
+								</app-confirm-button>
+                <app-add-button class="btn" [routerLink]="['add-test-type']" [value]="'tests.add-test-template' | translate"></app-add-button>
+              </div>
+            </div>
+            <div class="card-header border-0 mt-5 pr-5" style="min-height: 100%;">
+              <div class="row w-100">
+                <div class="col">
+									<erp-shared-search-input (handleSearch)="testTable.setFilter('name', $event)" [placeholder]="'tests.search-test' | translate" #templateName></erp-shared-search-input>
+							  </div>
+                <div class="col">
+									<erp-shared-search-input (handleSearch)="testTable.setFilter('eventName', $event)" [placeholder]="'events.search-event' | translate" #eventName></erp-shared-search-input>
+							  </div>
+                <div class="col-lg-3 col-12">
+                  <app-test-template-search (filter)="testTable.setFilter('status', $event)" #status></app-test-template-search>
+                </div>
+                <div class="col-lg-3 col-12">
+                  <div class="w-100 text-right">
+										<app-button (handle)="clearFields(); testTable.resetFilters()" [value]="'button.reset' | translate" class="mr-5"></app-button>
+                    <app-confirm-button (handle)="testTable.list({page: 1})" [value]="'button.search' | translate"></app-confirm-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <app-test-template-list-table #testTable></app-test-template-list-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

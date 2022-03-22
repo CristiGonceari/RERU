@@ -2,7 +2,7 @@
 using MediatR;
 using System.Collections.Generic;
 using CODWER.RERU.Evaluation.Application.Permissions;
-using CODWER.RERU.Evaluation.DataTransferObjects.TestTypeQuestionCategories;
+using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplateQuestionCategories;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.PreviewQuestionUnitsByTestTemplateCategory
 {
