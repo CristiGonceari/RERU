@@ -58,7 +58,7 @@ const routes: Routes = [
 				path: 'faq',
 				loadChildren: () => import('./components/faq/faq.module').then(m => m.FAQModule),
 				data: { permission: 'P00000025' },
-				canActivate: [PermissionRouteGuard, AuthenticationGuard]
+				canActivate: [PermissionRouteGuard]
 			},
 		],
 	},
