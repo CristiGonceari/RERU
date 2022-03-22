@@ -18,6 +18,7 @@ import { environment } from '../environments/environment';
 import { ModulesComponent } from './components/modules/modules.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { MainComponent } from './components/main/main.component';
+import { RegistrationPageComponent } from './components/registration-page/registration-page.component';
 
 @NgModule({
 	declarations: [
@@ -28,6 +29,7 @@ import { MainComponent } from './components/main/main.component';
 			ModulesComponent,
 			RolesComponent,
 			MainComponent,
+			RegistrationPageComponent,
 	],
 	imports: [
 		BrowserModule,
