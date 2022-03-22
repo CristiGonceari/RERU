@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using CVU.ERP.Common.DataTransferObjects.SelectValues;
+﻿using CVU.ERP.Common.DataTransferObjects.SelectValues;
+using System.Collections.Generic;
 
-namespace CVU.ERP.Module.Application.TablePrinterService
+namespace CVU.ERP.Module.Application.TableExportServices
 {
     public class TableParameter
     {
@@ -9,5 +9,6 @@ namespace CVU.ERP.Module.Application.TablePrinterService
         public TableOrientation Orientation { get; set; }
         // field name and column header
         public List<SelectItem> Fields { get; set; }
+        public TableExportFormat TableExportFormat { get; set; }
     }
 }

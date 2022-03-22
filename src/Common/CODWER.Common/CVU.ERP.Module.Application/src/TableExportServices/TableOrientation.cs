@@ -1,4 +1,4 @@
-﻿namespace CVU.ERP.Module.Application.TablePrinterService
+﻿namespace CVU.ERP.Module.Application.TableExportServices
 {
     public enum TableOrientation
     {

@@ -1,24 +1,23 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CVU.ERP.Common.DataTransferObjects.Files;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
+﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
-using CVU.ERP.Module.Application.TablePrinterService;
+using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.Module.Application.TableExportServices;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPollsByEvent
 {
     public class PrintUserPollsByEventCommandHandler : IRequestHandler<PrintUserPollsByEventCommand, FileDataDto>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ITablePrinter<PollDto, PollDto> _printer;
+        private readonly IExportData<PollDto, PollDto> _printer;
 
-        public PrintUserPollsByEventCommandHandler(AppDbContext appDbContext, ITablePrinter<PollDto, PollDto> printer)
+        public PrintUserPollsByEventCommandHandler(AppDbContext appDbContext, IExportData<PollDto, PollDto> printer)
         {
             _appDbContext = appDbContext;
             _printer = printer;
@@ -68,12 +67,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPollsByEve
                 }
             }
 
-            var result = _printer.PrintListTable(new TableListData<PollDto>
+            var result = _printer.ExportTableSpecificFormatList(new TableListData<PollDto>
             {
                 Name = request.TableName,
                 Items = myTestsTypes,
                 Fields = request.Fields,
-                Orientation = request.Orientation
+                Orientation = request.Orientation,
+                ExportFormat = request.TableExportFormat
             });
 
             return result;

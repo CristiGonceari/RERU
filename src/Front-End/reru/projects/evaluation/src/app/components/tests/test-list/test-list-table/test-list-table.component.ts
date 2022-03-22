@@ -278,7 +278,10 @@ export class TestListTableComponent implements OnInit {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
 		let headersDto = ['testTemplateName', 'userName', 'eventName', 'locationName', 'testStatus', 'verificationProgress', 'result', 'accumulatedPercentage', 'minPercent'];
-		for (let i=0; i<headersHtml.length-1; i++) {
+		for (let i = 0; i < headersHtml.length - 1; i++) {
+      if(i == 2){
+        this.headersToPrint.push({ value: "idnp", label: "Idnp"})
+      }
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
 		}
     
@@ -311,7 +314,7 @@ export class TestListTableComponent implements OnInit {
 			this.translate.get('button.cancel')
 		]).subscribe(
 			(items) => {
-				for (let i=0; i<this.printTranslates.length; i++) {
+				for (let i = 0; i < this.printTranslates.length; i++) {
 					this.printTranslates[i] = items[i];
 				}
 			}

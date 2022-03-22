@@ -1,19 +1,19 @@
-﻿using System;
+﻿using AutoMapper;
+using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.Module.Application.TableExportServices.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using AutoMapper;
-using CVU.ERP.Common.DataTransferObjects.Files;
 using Wkhtmltopdf.NetCore;
 using Wkhtmltopdf.NetCore.Options;
 
-namespace CVU.ERP.Module.Application.TablePrinterService.Implementations
+namespace CVU.ERP.Module.Application.TableExportServices.Implementations
 {
     public class TablePrinter<TSource, TDestination> : ITablePrinter<TSource, TDestination> 
     {
         private readonly IMapper _mapper;
         private readonly IGeneratePdf _generatePdf;
-
 
         public TablePrinter(IMapper mapper, IGeneratePdf generatePdf)
         {
@@ -21,7 +21,7 @@ namespace CVU.ERP.Module.Application.TablePrinterService.Implementations
             _generatePdf = generatePdf;
         }
 
-        public FileDataDto PrintTable(TableData<TSource> data)
+        public FileDataDto ExportTable(TableData<TSource> data)
         {
             var source = Html;
             source = source
@@ -44,11 +44,11 @@ namespace CVU.ERP.Module.Application.TablePrinterService.Implementations
             {
                 Content = parsed,
                 ContentType = "application/pdf",
-                Name = "PrintedTable.pdf"
+                Name = $"{data.Name}"
             };
         }
 
-        public FileDataDto PrintListTable(TableListData<TDestination> data)
+        public FileDataDto ExportListTable(TableListData<TDestination> data)
         {
             var source = Html;
             source = source
@@ -71,7 +71,7 @@ namespace CVU.ERP.Module.Application.TablePrinterService.Implementations
             {
                 Content = parsed,
                 ContentType = "application/pdf",
-                Name = "PrintedTable.pdf"
+                Name = $"{data.Name}"
             };
         }
 

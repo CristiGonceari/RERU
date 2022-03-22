@@ -1,18 +1,32 @@
+using CVU.ERP.Common.Interfaces;
+using CVU.ERP.Infrastructure.Email;
 using CVU.ERP.Logging;
+using CVU.ERP.Logging.Context;
 using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.ExceptionHandlers;
 using CVU.ERP.Module.Application.Infrastructure;
 using CVU.ERP.Module.Application.LoggerServices.Implementations;
 using CVU.ERP.Module.Application.Providers;
 using CVU.ERP.Module.Application.StorageFileServices.Implementations;
-using CVU.ERP.Module.Application.TablePrinterService;
-using CVU.ERP.Module.Application.TablePrinterService.Implementations;
+using CVU.ERP.Module.Application.TableExportServices;
+using CVU.ERP.Module.Application.TableExportServices.Implementations;
+using CVU.ERP.Module.Application.TableExportServices.Interfaces;
 using CVU.ERP.Module.Common.ExceptionHandlers;
 using CVU.ERP.Module.Common.Models;
 using CVU.ERP.Notifications.DependencyInjection;
+using CVU.ERP.Notifications.Services;
+using CVU.ERP.Notifications.Services.Implementations;
+using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Context;
+using CVU.ERP.StorageService.DependencyInjection;
+using CVU.ERP.StorageService.Models;
 using FluentValidation;
 using MediatR;
 using MediatR.Pipeline;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -20,19 +34,6 @@ using RestSharp;
 using src.ExceptionHandlers;
 using System;
 using System.Reflection;
-using CVU.ERP.Common.Interfaces;
-using CVU.ERP.Infrastructure.Email;
-using CVU.ERP.Logging.Context;
-using CVU.ERP.Notifications.Services;
-using CVU.ERP.Notifications.Services.Implementations;
-using Microsoft.EntityFrameworkCore;
-using CVU.ERP.StorageService;
-using CVU.ERP.StorageService.Context;
-using CVU.ERP.StorageService.DependencyInjection;
-using CVU.ERP.StorageService.Models;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace CVU.ERP.Module.Application.DependencyInjection
 {
@@ -83,8 +84,8 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             //log service 
             services.AddTransient(typeof(ILoggerService<>), typeof(LoggerService<>));
 
-            //print table service
-            services.AddTransient(typeof(ITablePrinter<,>), typeof(TablePrinter<,>));
+            //export data table services 
+            services.AddExportTableServices();
 
             return services;
         }
@@ -117,7 +118,6 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient(typeof(ILoggerService<>), typeof(LoggerService<>));
-            services.AddTransient(typeof(ITablePrinter<,>), typeof(TablePrinter<,>));
 
             return services;
         }
@@ -147,6 +147,16 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             services.AddTransient(typeof(IStorageFileService), typeof(StorageFileService));
             services.Configure<MinioSettings>(configuration.GetSection("Minio"));
             services.AddCommonStorageContext(configuration);
+
+            return services;
+        }
+
+        private static IServiceCollection AddExportTableServices(this IServiceCollection services)
+        {
+            services.AddTransient(typeof(IExportData<,>), typeof(ExportData<,>));
+            services.AddTransient(typeof(ITablePrinter<,>), typeof(TablePrinter<,>));
+            services.AddTransient(typeof(ITableExcelExport<,>), typeof(TableExcelExport<,>));
+            services.AddTransient(typeof(ITableXmlExport<,>), typeof(TableXmlExport<,>));
 
             return services;
         }

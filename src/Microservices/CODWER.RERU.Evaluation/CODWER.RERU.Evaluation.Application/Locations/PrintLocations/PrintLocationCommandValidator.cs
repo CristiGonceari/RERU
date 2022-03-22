@@ -2,7 +2,7 @@
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.DataTransferObjects.Locations;
 using CVU.ERP.Common.Validation;
-using CVU.ERP.Module.Application.TablePrinterService.Validators;
+using CVU.ERP.Module.Application.TableExportServices.Validators;
 using FluentValidation;
 
 namespace CODWER.RERU.Evaluation.Application.Locations.PrintLocations
@@ -12,7 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.Locations.PrintLocations
         public PrintLocationCommandValidator()
         {
             RuleFor(x => x.Fields.Select(x => x.Value).ToList())
-                .SetValidator(new TablePrinterValidator<LocationDto>(ValidationMessages.InvalidInput, ValidationCodes.INVALID_INPUT));
+                .SetValidator(new TableExporterValidator<LocationDto>(ValidationMessages.InvalidInput, ValidationCodes.INVALID_INPUT));
         }
     }
 }

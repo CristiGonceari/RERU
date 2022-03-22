@@ -2,7 +2,7 @@
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Common.Validation;
-using CVU.ERP.Module.Application.TablePrinterService.Validators;
+using CVU.ERP.Module.Application.TableExportServices.Validators;
 using FluentValidation;
 
 namespace CODWER.RERU.Evaluation.Application.Events.PrintEvents
@@ -12,7 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.PrintEvents
         public PrintEventsCommandValidator()
         {
             RuleFor(x => x.Fields.Select(x => x.Value).ToList())
-                .SetValidator(new TablePrinterValidator<EventDto>(ValidationMessages.InvalidInput, ValidationCodes.INVALID_INPUT));
+                .SetValidator(new TableExporterValidator<EventDto>(ValidationMessages.InvalidInput, ValidationCodes.INVALID_INPUT));
         }
     }
 }

@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using CVU.ERP.Common.Extensions;
+﻿using CVU.ERP.Common.Extensions;
 using FluentValidation;
 using FluentValidation.Validators;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 
-namespace CVU.ERP.Module.Application.TablePrinterService.Validators
+namespace CVU.ERP.Module.Application.TableExportServices.Validators
 {
-    public class TablePrinterValidator<T> : AbstractValidator<List<string>>
+    public class TableExporterValidator<T> : AbstractValidator<List<string>>
     {
-        public TablePrinterValidator(string errorMessage, string errorCode)
+        public TableExporterValidator(string errorMessage, string errorCode)
         {
             RuleFor(x => x).Custom((f, c) => ValidateFields(f, errorMessage, errorCode, c));
         }
