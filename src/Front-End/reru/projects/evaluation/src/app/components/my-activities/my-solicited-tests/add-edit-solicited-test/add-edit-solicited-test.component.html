@@ -1,0 +1,74 @@
+<app-page-title title="{{ 'solicited-test.subtitle' | translate }}" subTitle="{{ 'solicited-test.test-data' | translate }}">
+</app-page-title>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="card card-custom gutter-b">
+                <div class="card-body p-0">
+                    <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first"
+                        data-wizard-clickable="true">
+                        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+                            <div class="col-xl-12 col-xxl-7">
+                                <div class="form" id="kt_contact_add_form">
+                                    <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                                        <h3 class="mb-10 font-weight-bold text-dark">{{'solicited-test.test-details' |
+                                            translate}}</h3>
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="form-group row">
+                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                        {{'events.event' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-9">
+                                                        <select class="form-control form-control-lg form-control-solid"
+                                                            (change)="getActiveTestTemplate()" [(ngModel)]="event.value"
+                                                            name="searchEvent">
+                                                            <option value="">{{'questions.select' | translate}}</option>
+                                                            <option *ngFor="let item of eventsList"
+                                                                [ngValue]="item.eventId">
+                                                                {{ item.eventName }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'verify-test.select-test-type' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-9">
+                                                        <select class="form-control form-control-lg form-control-solid"
+                                                            name="test" [(ngModel)]="testTemplate.value">
+                                                            <option value="">{{'questions.select' | translate}}</option>
+                                                            <option *ngFor="let testTemplate of selectActiveTests"
+                                                                [ngValue]="testTemplate.testTemplateId">
+                                                                {{testTemplate.testTemplateName}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-10">
+                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'solicited-test.solicited-time' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-9">
+                                                        <input id="from" [owlDateTime]="dtFrom"
+                                                            [owlDateTimeTrigger]="dtFrom" placeholder="Date Time"
+                                                            class="form-control form-control-lg form-control-solid"
+                                                            name="date" [(ngModel)]="date" autocomplete="off" />
+                                                        <owl-date-time #dtFrom></owl-date-time>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-right border-top pt-10">
+                                            <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
+                                            </app-button>
+                                            <app-add-button class="btn mr-2" [value]="'button.confirm' | translate" (handle)="onSave()">
+                                            </app-add-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

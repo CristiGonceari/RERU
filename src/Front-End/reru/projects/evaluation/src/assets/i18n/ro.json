@@ -440,7 +440,12 @@
     "Strict": "Strictă",
     "ZeroPercent": "Răspuns greșit = 0%",
     "OneDivideCountPercent": "Răspuns greșit = 1/n% (n-nr total de opțiuni)",
-    "MinusCorrectOption": "Răspuns greșit = (-1) * răspuns corect%"
+    "MinusCorrectOption": "Răspuns greșit = (-1) * răspuns corect%",
+    "New": "Nou",
+    "Refused": "Refuzat",
+    "Approved": "Aprobat",
+    "approve": "Aprobă",
+    "refuse": "Refuză"
   },
   "options": {
     "start-without-confirmation": "Este posibil să porniți testul fără confirmare",
@@ -788,5 +793,21 @@
   },
   "guide": {
     "title": "Ghidul Utilizatorului"
+  },
+  "solicited-test": {
+    "solicited-tests": "Teste solicitate",
+    "my-solicited-tests": "Testele mele solicitate",
+    "solicited-time": "Timp solicitat",
+    "add-test": "Adăugă testul solicitat",
+    "remove": "Ștergeți testul solicitat",
+    "remove-msg": "Sigur doriți să ștergeți acest test solicitat?",
+    "succes-remove-msg": "Testul solicitat a fost șters cu succes",
+    "subtitle": "Gestionarea testelor solicitate",
+    "test-data": "Introduceți detaliile testului solicitat și confirmați",
+    "test-details": "Detaliile testului solicitat",
+    "succes-add-msg": "Testul solicitat a fost adăugat cu succes",
+    "succes-edit-msg": "Testul solicitat a fost editat cu succes",
+    "change-status": "Schimba statutul",
+    "refuse-msg": "Sigur doriți să refuzați acest test solicitat?"
   }
 }

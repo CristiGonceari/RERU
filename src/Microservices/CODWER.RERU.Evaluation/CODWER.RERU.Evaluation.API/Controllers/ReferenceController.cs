@@ -110,5 +110,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
             return items;
         }
+
+        [HttpGet("solicited-test-status/select-values")]
+        public List<SelectItem> GetSolicitedTestStatus()
+        {
+            var items = EnumConverter<SolicitedTestStatusEnum>.SelectValues;
+
+            return items;
+        }
     }
 }

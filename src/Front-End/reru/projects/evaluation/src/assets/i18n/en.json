@@ -439,7 +439,12 @@
     "Strict": "Strict",
     "ZeroPercent": "Wrong answer = 0%",
     "OneDivideCountPercent": "Wrong answer = 1/n% (n-total number of options)",
-    "MinusCorrectOption": "Wrong answer = (-1) * correct answer%"
+    "MinusCorrectOption": "Wrong answer = (-1) * correct answer%",
+    "New": "New",
+    "Refused": "Refused",
+    "Approved": "Approved",
+    "approve": "Approve",
+    "refuse": "Refuse"
   },
   "options": {
     "start-without-confirmation": "Possible to start test without confirmation",
@@ -783,5 +788,21 @@
   },
   "guide": {
     "title": "User Guide"
+  },
+  "solicited-test": {
+    "solicited-tests": "Solicited tests",
+    "my-solicited-tests": "My solicited tests",
+    "solicited-time": "Solicited time",
+    "add-test": "Add solicited test",
+    "remove": "Remove solicited test",
+    "remove-msg": "Are you sure you want to remove this solicited test?",
+    "succes-remove-msg": "Solicited test was successfully deleted",
+    "subtitle": "Manage solicited tests",
+    "test-data": "Enter the solicited test details and confirm",
+    "test-details": "Solicited test details",
+    "succes-add-msg": "Solicited test was successfully added",
+    "succes-edit-msg": "Solicited test was successfully edited",
+    "change-status": "Change status",
+    "refuse-msg": "Are you sure you want to refuse this solicited test?"
   }
 }

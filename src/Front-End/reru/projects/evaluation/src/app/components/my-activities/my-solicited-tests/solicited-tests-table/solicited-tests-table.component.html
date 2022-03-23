@@ -1,0 +1,75 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
+
+<div *ngIf="!isLoading"
+    class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+    id="kt_datatable">
+    <table for="kt_datatable" class="datatable table" style="overflow: visible" id="testsTable">
+        <thead class="text-uppercase text-muted">
+            <tr>
+                <th scope="col">{{'dashboard.test' | translate}}</th>
+                <th scope="col">{{'events.event' | translate}}</th>
+                <th scope="col">{{'solicited-test.solicited-time' | translate}}</th>
+                <th scope="col">{{'verify-test.status' | translate}}</th>
+                <th scope="col" style="width: 48px"></th>
+            </tr>
+        </thead>
+        <tbody class="datatable-body" *ngIf="solicitedTests.length">
+            <tr *ngFor="let item of solicitedTests">
+                <td>{{ item.testTemplateName }}</td>
+                <td>
+                    <span *ngIf="item.eventName">{{ item.eventName }}</span>
+                    <span *ngIf="!item.eventName">-</span>
+                </td>
+                <td>{{ item.solicitedTime | date: 'dd/MM/yyyy, HH:mm'}}</td>
+                <td>{{'statuses.' + enum[item.solicitedTestStatus] | translate }}</td>
+                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
+                    <div style="overflow: visible; position: relative; width: 0px">
+                        <div ngbDropdown class="dropdown dropdown-inline">
+                            <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                                <span class="svg-icon svg-icon-md" ngbDropdownToggle>
+                                    <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                        viewBox="0 0 24 24" version="1.1">
+                                        <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
+                                            <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3"
+                                                fill="black">
+                                            </rect>
+                                            <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3"
+                                                fill="black" fill-opacity="0.7"></rect>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                                <div ngbDropdownMenu aria-labelledby="action1">
+                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem 
+                                        [routerLink]="['../edit-solicited-test', item.id]" [disabled]="item.solicitedTestStatus != enum.New">
+                                        {{ 'button.edit' | translate }}
+                                    </button>
+                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem 
+                                        (click)="openDeleteModal(item.id)" [disabled]="item.solicitedTestStatus != enum.New">
+                                        {{'button.delete' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tbody class="datatable-body" *ngIf="!solicitedTests.length">
+            <tr>
+                <td colspan="6" class="text-center">
+                    {{ 'message.no-record' | translate }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
+        *ngIf="solicitedTests.length > 5" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
+        [size]="pagedSummary.pageSize"
+        (sizeChange)="getMySolicitedTests({ page: pagedSummary.currentPage, itemsPerPage: $event })"
+        (pageChange)="getMySolicitedTests({ page: $event })">
+    </div>
+</div>

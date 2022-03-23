@@ -88,7 +88,6 @@ export class MainComponent implements OnInit {
 			name: '',
 		},
 		{
-			permission: 'P00000025',
 			type: SidebarItemType.ITEM,
 			url: '/faq',
 			name: '',

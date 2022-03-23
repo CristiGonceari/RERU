@@ -146,5 +146,10 @@
         //user
         public static string INVALID_USER = "03002001";
         public static string INVALID_TEST_TEMPLATE_QUESTION_CATEGORY = "03002002";
+
+        //solicited tests
+        public static string INVALID_SOLICITED_TEST = "03002101";
+        public static string ONLY_NEW_SOLICITED_TEST_CAN_BE_UPDATED = "03002102";
+        public static string ONLY_NEW_SOLICITED_TEST_CAN_BE_DELETED = "03002103";
     }
 }

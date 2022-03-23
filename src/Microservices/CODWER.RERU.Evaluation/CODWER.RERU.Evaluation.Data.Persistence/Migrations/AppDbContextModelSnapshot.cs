@@ -782,6 +782,59 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.ToTable("QuestionUnitTags");
                 });
 
+            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.SolicitedTest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("EventId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("SolicitedTestStatus")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("SolicitedTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("TestTemplateId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("SolicitedTestStatus");
+
+                    b.HasIndex("TestTemplateId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("SolicitedTests");
+                });
+
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Tag", b =>
                 {
                     b.Property<int>("Id")
@@ -1512,6 +1565,39 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.SolicitedTestStatusEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("SolicitedTestStatusEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 0,
+                            Name = "New"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Name = "Refused"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Approved"
+                        });
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.TestPassStatusEnum>", b =>
                 {
                     b.Property<int>("Id")
@@ -1986,6 +2072,37 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.Navigation("QuestionUnit");
 
                     b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.SolicitedTest", b =>
+                {
+                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.Event", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId");
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.SolicitedTestStatusEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("SolicitedTestStatus")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.TestTemplate", "TestTemplate")
+                        .WithMany()
+                        .HasForeignKey("TestTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CODWER.RERU.Evaluation.Data.Entities.UserProfile", "UserProfile")
+                        .WithMany()
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("TestTemplate");
+
+                    b.Navigation("UserProfile");
                 });
 
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Test", b =>
