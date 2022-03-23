@@ -1,4 +1,4 @@
-<app-page-title title="{{'sidebar.test' | translate}}" subTitle="{{'verify-test.subtitle' | translate}}">
+<app-page-title title="{{ 'sidebar.test' | translate }}" subTitle="{{ 'verify-test.subtitle' | translate }}">
 </app-page-title>
 
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -9,18 +9,20 @@
           <div class="card card-custom gutter-b">
             <div class="card-header flex-wrap border-0 py-5">
               <div class="card-title">
-                <h3 class="card-label" id="title">{{'verify-test.title' | translate}}</h3>
+                <h3 class="card-label" id="title">
+                  {{ "verify-test.title" | translate }}
+                </h3>
               </div>
               <div class="card-toolbar">
                 <app-confirm-button class="btn mr-3" (click)="testsTable.getHeaders(getTitle())">
                   <i class="far fa-file-pdf text-white"></i>
-                  {{'button.print' | translate}}
+                  {{ "button.print" | translate }}
                 </app-confirm-button>
                 <app-add-button class="btn my-auto mr-5" [routerLink]="['add-test']"
                   [value]="'tests.new-test' | translate"></app-add-button>
               </div>
             </div>
-            <div class="card-header border-0 pt-0 pb-0 pr-5" style="min-height: 100%;">
+            <div class="card-header border-0 pt-0 pb-0 pr-5" style="min-height: 100%">
               <div class="row w-100">
                 <div class="col">
                   <erp-shared-search-input (handleSearch)="testsTable.setFilter('testName', $event)"
@@ -31,8 +33,9 @@
                     [placeholder]="'events.search-event' | translate" #testEvent></erp-shared-search-input>
                 </div>
                 <div class="col">
-                  <erp-shared-search-input (handleSearch)="testsTable.setFilter('testLocation', $event)"
-                    [placeholder]="'events.search-location' | translate" #testLocation></erp-shared-search-input>
+                  <erp-shared-search-input (handleSearch)="
+                      testsTable.setFilter('testLocation', $event)
+                    " [placeholder]="'events.search-location' | translate" #testLocation></erp-shared-search-input>
                 </div>
                 <div class="col">
                   <erp-shared-search-input (handleSearch)="testsTable.setFilter('userName', $event)"
@@ -45,14 +48,15 @@
                   </app-search-status>
                 </div>
                 <div class="col">
-                  <erp-shared-search-input (handleSearch)="testsTable.setFilter('idnp', $event)"
-                    [placeholder]="'verify-test.search-student-idnp' | translate" #idnp></erp-shared-search-input>
+                  <erp-shared-search-input (handleSearch)="testsTable.setFilter('idnp', $event)" [placeholder]="
+                      'verify-test.search-student-idnp' | translate
+                    " #idnp></erp-shared-search-input>
                 </div>
                 <div class="col-lg-2 col-12">
                   <div class="input-group input-group-sm input-group-solid">
                     <input class="form-control" [owlDateTime]="dtFrom" [owlDateTimeTrigger]="dtFrom"
                       [placeholder]="'events.search-from' | translate" (ngModelChange)="testsTable.getTests()"
-                      [(ngModel)]="testsTable.dateTimeFrom" autocomplete="off">
+                      [(ngModel)]="testsTable.dateTimeFrom" autocomplete="off" />
                     <owl-date-time #dtFrom></owl-date-time>
                   </div>
                 </div>
@@ -60,7 +64,7 @@
                   <div class="input-group input-group-sm input-group-solid">
                     <input class="form-control" [owlDateTime]="toDate" (ngModelChange)="testsTable.getTests()"
                       [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate"
-                      [(ngModel)]="testsTable.dateTimeTo" autocomplete="off">
+                      [(ngModel)]="testsTable.dateTimeTo" autocomplete="off" />
                     <owl-date-time #toDate></owl-date-time>
                   </div>
                 </div>
@@ -68,7 +72,8 @@
                   <div class="text-right">
                     <app-button (handle)="clearFields(); testsTable.resetFilters()" [value]="'button.reset' | translate"
                       class="mr-5"></app-button>
-                    <app-confirm-button (handle)="testsTable.getTests({page: 1})" [value]="'button.search' | translate">
+                    <app-confirm-button (handle)="testsTable.getTests({ page: 1 })"
+                      [value]="'button.search' | translate">
                     </app-confirm-button>
                   </div>
                 </div>

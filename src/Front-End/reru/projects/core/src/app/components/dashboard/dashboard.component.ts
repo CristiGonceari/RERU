@@ -59,7 +59,6 @@ export class DashboardComponent implements OnInit {
   getTestId() {
     this.internalService.getTestIdForFastStart().subscribe((res) => {
       if (res && +res.data.testId != 0) {
-        console.error('data:', res.data);
         this.testId = +res.data.testId;
         this.showMultipleQuestionsPerPega = res.data.showManyQuestionPerPage;
         this.type = res.type;
@@ -76,10 +75,7 @@ export class DashboardComponent implements OnInit {
               showProgressBar: true,
             })
             .click.subscribe(() =>
-              this.router.navigate([
-                '../reru-evaluation/#/my-activities/start-test/',
-                this.testId,
-              ])
+              this.router.navigate(['../reru-evaluation/#/my-activities/start-test/', this.testId])
             );
           // .click.subscribe(() => this.router.navigate(['reru-evaluation/#/my-activities/start-test/', this.testId]));
           // .click.subscribe(() => this.router.navigateByUrl(`http://reru.codwer.com/reru-evaluation/#/my-activities/start-test/${this.testId}`));
