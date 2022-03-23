@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using CODWER.RERU.Personal.API.Config;
+﻿using CODWER.RERU.Personal.API.Config;
 using CODWER.RERU.Personal.Application.Positions.AddPosition;
 using CODWER.RERU.Personal.Application.Positions.AddPreviousPosition;
 using CODWER.RERU.Personal.Application.Positions.DismissFromPosition;
@@ -14,6 +13,7 @@ using CODWER.RERU.Personal.DataTransferObjects.Positions;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.API.Controllers
 {

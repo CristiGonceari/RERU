@@ -47,7 +47,6 @@ namespace CODWER.RERU.Core.API.Controllers
         public async Task<IActionResult> PrintArticlesPdf([FromBody] PrintArticlesCommand command)
         {
             var result = await Mediator.Send(command);
-
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);

@@ -17,7 +17,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
         private readonly IExportData<Test, TestDto> _printer;
         private readonly IUserProfileService _userProfileService;
 
-        public PrintTestsCommandHandler(AppDbContext appDbContext, IExportData<Test, TestDto> printer, IUserProfileService userProfileService)
+        public PrintTestsCommandHandler(AppDbContext appDbContext, 
+            IExportData<Test, TestDto> printer, 
+            IUserProfileService userProfileService)
         {
             _appDbContext = appDbContext;
             _printer = printer;

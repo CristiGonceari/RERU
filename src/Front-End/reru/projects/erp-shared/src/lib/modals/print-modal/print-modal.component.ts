@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbActiveModal,
+  NgbTypeaheadSelectItemEvent,
+} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'erp-shared-print-modal',
@@ -24,7 +27,15 @@ export class PrintModalComponent implements OnInit {
 
   selectedFormat: number = 0;
   selectedFields = [];
-  @Input() tableData = { tableName: '', fields: [], orientation: 2, name: '', tableExportFormat: 0 };
+
+  @Input() tableData = {
+    tableName: '',
+    fields: [],
+    orientation: 2,
+    name: '',
+    tableExportFormat: 0,
+  };
+  
   @Input() translateData: Array<string>;
 
   constructor(private activeModal: NgbActiveModal) {}
