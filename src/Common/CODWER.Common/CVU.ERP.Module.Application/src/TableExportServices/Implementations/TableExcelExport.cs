@@ -80,6 +80,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                     SetBordersStyleOnCells(workSheet, i + 2, j + 1 );
                 }
             }
+
         }
 
         private static PropertyInfo GetPropertyInfo(Type type, string propertyName)

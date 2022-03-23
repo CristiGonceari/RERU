@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit {
     this.getTestId();
     this.list();
     this.subscribeForAuthChange();
-		this.setIntrvl();
+    this.setIntrvl();
   }
 
   subscribeForAuthChange(): void {
@@ -53,13 +53,13 @@ export class DashboardComponent implements OnInit {
   }
 
   setIntrvl() {
-		setInterval(() => this.getTestId(), 100000);
-	}
+    setInterval(() => this.getTestId(), 100000);
+  }
 
   getTestId() {
     this.internalService.getTestIdForFastStart().subscribe((res) => {
       if (res && +res.data.testId != 0) {
-        console.error("data:", res.data)
+        console.error('data:', res.data);
         this.testId = +res.data.testId;
         this.showMultipleQuestionsPerPega = res.data.showManyQuestionPerPage;
         this.type = res.type;
@@ -75,9 +75,14 @@ export class DashboardComponent implements OnInit {
               timeOut: 29000,
               showProgressBar: true,
             })
-            .click.subscribe(() => this.router.navigate(['../reru-evaluation/#/my-activities/start-test/', this.testId]));
-            // .click.subscribe(() => this.router.navigate(['reru-evaluation/#/my-activities/start-test/', this.testId]));
-            // .click.subscribe(() => this.router.navigateByUrl(`http://reru.codwer.com/reru-evaluation/#/my-activities/start-test/${this.testId}`));
+            .click.subscribe(() =>
+              this.router.navigate([
+                '../reru-evaluation/#/my-activities/start-test/',
+                this.testId,
+              ])
+            );
+          // .click.subscribe(() => this.router.navigate(['reru-evaluation/#/my-activities/start-test/', this.testId]));
+          // .click.subscribe(() => this.router.navigateByUrl(`http://reru.codwer.com/reru-evaluation/#/my-activities/start-test/${this.testId}`));
         });
       }
     });
