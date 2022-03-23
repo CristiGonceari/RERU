@@ -20,10 +20,10 @@ import { RegistrationPageComponent } from './components/registration-page/regist
 
 
 const routes: Routes = [
-	{ path: '', component: RegistrationPageComponent},
+	{ path: 'registration-page', component: RegistrationPageComponent},
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent},
 	{
-		path: 'core',
+		path: '',
 		component: MainComponent,
 		canActivate: [AuthenticationGuard],
 		children: [
