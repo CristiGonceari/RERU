@@ -22,7 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.GetSolicitedTests
 
         public async Task<PaginatedModel<SolicitedTestDto>> Handle(GetSolicitedTestsQuery request, CancellationToken cancellationToken)
         {
-            var solicitedTests = GetAndFilterSolicitedTests.Filter(_appDbContext);
+            var solicitedTests = GetAndFilterSolicitedTests.Filter(_appDbContext, request.EventName, request.UserName, request.TestName);
 
             return await _paginationService.MapAndPaginateModelAsync<SolicitedTest, SolicitedTestDto>(solicitedTests, request);
         }

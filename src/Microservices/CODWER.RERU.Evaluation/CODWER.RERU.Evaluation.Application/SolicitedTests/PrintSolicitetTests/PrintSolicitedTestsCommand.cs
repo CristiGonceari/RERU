@@ -9,5 +9,8 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.PrintSolicitetTests
     [ModuleOperation(permission: PermissionCodes.SOLICITED_TESTS_GENERAL_ACCESS)]
     public class PrintSolicitedTestsCommand : TableParameter, IRequest<FileDataDto>
     {
+        public string EventName { get; set; }
+        public string UserName { get; set; }
+        public string TestName { get; set; }
     }
 }

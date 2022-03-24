@@ -40,9 +40,9 @@ export class SolicitedTestsTableComponent implements OnInit {
 	list(data: any = {}) {
 		this.isLoading = true;
 		let params: any = {
-			// name: this.testName || '',
-			// eventName: this.eventName || '',
-			// status: this.status || '',
+			eventName: this.filters.eventName || '',
+			userName: this.filters.userName || '',
+			testName: this.filters.testName || '',
 			page: data.page || this.pagination.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
 		}
@@ -96,7 +96,10 @@ export class SolicitedTestsTableComponent implements OnInit {
 			tableName: name,
 			fields: this.headersToPrint,
 			orientation: 2,
-			status: +this.filters.status || ''
+			status: +this.filters.status || '',
+			eventName: this.filters.eventName,
+			userName: this.filters.userName,
+			testName: this.filters.testName
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.tableData = printData;
@@ -132,5 +135,15 @@ export class SolicitedTestsTableComponent implements OnInit {
 				this.downloadFile = false;
 			}
 		}, () => this.downloadFile = false);
+	}
+
+	setFilter(field: string, value): void {
+		this.filters[field] = value;
+		this.list();
+	}
+
+	resetFilters(): void {
+		this.filters = {};
+		this.list();
 	}
 }
