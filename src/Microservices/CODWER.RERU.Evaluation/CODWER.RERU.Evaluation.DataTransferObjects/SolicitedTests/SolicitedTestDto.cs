@@ -10,6 +10,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests
         public string EventName { get; set; }
         public int? UserProfileId { get; set; }
         public string UserProfileName { get; set; }
+        public string UserProfileIdnp { get; set; }
         public int TestTemplateId { get; set; }
         public string TestTemplateName { get; set; }
         public DateTime SolicitedTime { get; set; }

@@ -22,7 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.PrintSolicitetTests
 
         public async Task<FileDataDto> Handle(PrintSolicitedTestsCommand request, CancellationToken cancellationToken)
         {
-            var solicitedTests = GetAndFilterSolicitedTests.Filter(_appDbContext);
+            var solicitedTests = GetAndFilterSolicitedTests.Filter(_appDbContext, request.EventName, request.UserName, request.TestName);
 
             var result = _printer.ExportTableSpecificFormat(new TableData<Data.Entities.SolicitedTest>
             {

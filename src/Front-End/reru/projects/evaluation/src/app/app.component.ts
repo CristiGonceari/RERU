@@ -121,6 +121,7 @@ export class AppComponent {
 			name: '',
 		},
 		{
+			permission: 'P03001101',
 			type: SidebarItemType.ITEM,
 			url: '/solicited-tests',
 			name: '',

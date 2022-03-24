@@ -1,13 +1,32 @@
 <app-page-title title="{{'dashboard.title' | translate}}" subTitle="{{'dashboard.subtitle' | translate}}">
 </app-page-title>
 
-<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+    [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
 	<div class="d-flex flex-column-fluid">
 		<div class="container">
 			<div class="d-flex flex-row">
 				<div class="flex-row-auto offcanvas-mobile w-300px w-xl-350px mb-7" id="kt_profile_aside">
 					<div class="card card-custom">
 						<div class="card-body pt-4">
+							<div class="d-flex align-items-center">
+                                <div class="btn flex-shrink-0 mr-7">
+                                    <!-- <div class="symbol symbol-100 symbol-sm-s" *ngIf="avatarString">
+                                        <img [src]="avatar">
+                                    </div> -->
+                                    <div class="symbol symbol-100 symbol-sm-s symbol-light-success">
+                                        <span class="font-size-h3 symbol-label font-weight-boldest">{{ acronym }}</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <p class="font-weight-bolder font-size-h5 text-dark-75">
+                                        {{ user.firstName }} {{user.lastName}}
+                                    </p>
+                                </div>
+                            </div>
 							<div class="py-9">
 								<div class="navi navi-bold navi-hover navi-active navi-link-rounded">
 									<div class="navi-item mb-2">
