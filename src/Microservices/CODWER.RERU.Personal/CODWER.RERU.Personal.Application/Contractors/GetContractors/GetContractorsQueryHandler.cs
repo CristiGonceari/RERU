@@ -57,9 +57,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
 
         private async Task LogAction(IQueryable<Contractor> contractors)
         {
-            var contractorId = await _userProfileService.GetCurrentUserProfile();
-
-            await _loggerService.Log(LogData.AsPersonal($"Contractors list was viewed by {contractorId.Contractor.GetFullName()}", contractors));
+            await _loggerService.Log(LogData.AsPersonal($"Contractors list was viewed", contractors));
         }
 
         private IQueryable<Contractor> Filter(IQueryable<Contractor> items, GetContractorsQuery request)

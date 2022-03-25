@@ -95,9 +95,7 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.GetTimeSheetTableValu
         }
         private async Task LogAction(IQueryable<Contractor> contractors)
         {
-            var contractorId = await _userProfileService.GetCurrentUserProfile();
-
-            await _loggerService.Log(LogData.AsPersonal($"TimeSheetTable was viewed by {contractorId.Contractor.GetFullName()}", contractors));
+            await _loggerService.Log(LogData.AsPersonal($"TimeSheetTable was viewed", contractors));
         }
 
         private async Task<IQueryable<Contractor>> FilterByName(GetTimeSheetTableValuesQuery request, IQueryable<Contractor> contractors)

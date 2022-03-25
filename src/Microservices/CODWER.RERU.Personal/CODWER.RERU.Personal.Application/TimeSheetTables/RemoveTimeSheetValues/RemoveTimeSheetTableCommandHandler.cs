@@ -49,9 +49,7 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.RemoveTimeSheetValues
 
         private async Task LogAction(IQueryable<TimeSheetTable> timeSheetTable)
         {
-            var contractorId = await _userProfileService.GetCurrentUserProfile();
-
-            await _loggerService.Log(LogData.AsPersonal($"TimeSheetTable values were removed by {contractorId.Contractor.GetFullName()}", timeSheetTable));
+            await _loggerService.Log(LogData.AsPersonal($"TimeSheetTable values were removed", timeSheetTable));
         }
     }
 }
