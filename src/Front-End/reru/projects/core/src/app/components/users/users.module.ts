@@ -13,7 +13,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserListComponent } from '././user-list/user-list.component';
 import { UserListTableComponent } from '././user-list-table/user-list-table.component';
 import { UsersComponent } from './users.component';
-import { UserSearchComponent } from '././user-list/user-search/user-search.component';
 import { EditUserComponent } from '././user-profile/edit-user/edit-user.component';
 import { SetPasswordUserComponent } from '././user-profile/set-password-user/set-password-user.component';
 import { SortButtonComponent } from '././user-list-table/sort-button/sort-button.component';
@@ -39,7 +38,6 @@ import { RemoveComponent } from './remove/remove.component';
     AddComponent,
     EditComponent,
     SetPasswordComponent,
-    UserSearchComponent,
     EditUserComponent,
     SetPasswordUserComponent,
     SortButtonComponent,

@@ -12,12 +12,12 @@ namespace CODWER.RERU.Evaluation.Application.Locations
 
             if (!string.IsNullOrWhiteSpace(name))
             {
-                locations = locations.Where(x => x.Name.Contains(name));
+                locations = locations.Where(x => x.Name.ToLower().Contains(name.ToLower()));
             }
 
             if (!string.IsNullOrWhiteSpace(address))
             {
-                locations = locations.Where(x => x.Address.Contains(address));
+                locations = locations.Where(x => x.Address.ToLower().Contains(address.ToLower()));
             }
 
             return locations;

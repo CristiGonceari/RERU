@@ -43,29 +43,29 @@ namespace CODWER.RERU.Personal.Data.Entities.StaticExtensions
             if (toSearch.Count == 1)
             {
                 return items.Where(x =>
-                    x.FirstName.Contains(toSearch.First())
-                    || x.LastName.Contains(toSearch.First())
-                    || x.FatherName.Contains(toSearch.First()));
+                    x.FirstName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.LastName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.FatherName.ToLower().Contains(toSearch.First().ToLower()));
             }
 
             if (toSearch.Count == 2)
             {
                 return items.Where(x =>
-                    x.FirstName.Contains(toSearch.First())
-                    || x.LastName.Contains(toSearch.First())
-                    || x.FirstName.Contains(toSearch.Last())
-                    || x.LastName.Contains(toSearch.Last()));
+                    x.FirstName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.LastName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.FirstName.ToLower().Contains(toSearch.Last().ToLower())
+                    || x.LastName.ToLower().Contains(toSearch.Last().ToLower()));
             }
 
             if (toSearch.Count == 3)
             {
                 return items.Where(x =>
-                    x.FirstName.Contains(toSearch.First())
-                    || x.LastName.Contains(toSearch.First())
-                    || x.FatherName.Contains(toSearch.First())
-                    || x.FirstName.Contains(toSearch.Last())
-                    || x.LastName.Contains(toSearch.Last())
-                    || x.FatherName.Contains(toSearch.Last()));
+                    x.FirstName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.LastName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.FatherName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.FirstName.ToLower().Contains(toSearch.Last().ToLower())
+                    || x.LastName.ToLower().Contains(toSearch.Last().ToLower())
+                    || x.FatherName.ToLower().Contains(toSearch.Last().ToLower()));
             }
 
             return items;
@@ -78,29 +78,29 @@ namespace CODWER.RERU.Personal.Data.Entities.StaticExtensions
             if (toSearch.Count == 1)
             {
                 return items.Where(x =>
-                    x.Contractor.FirstName.Contains(toSearch.First())
-                    || x.Contractor.LastName.Contains(toSearch.First())
-                    || x.Contractor.FatherName.Contains(toSearch.First()));
+                    x.Contractor.FirstName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.Contractor.LastName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.Contractor.FatherName.ToLower().Contains(toSearch.First().ToLower()));
             }
 
             if (toSearch.Count == 2)
             {
                 return items.Where(x =>
-                    x.Contractor.FirstName.Contains(toSearch.First())
-                    || x.Contractor.LastName.Contains(toSearch.Last())
-                    || x.Contractor.FirstName.Contains(toSearch.Last())
-                    || x.Contractor.LastName.Contains(toSearch.First()));
+                    x.Contractor.FirstName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.Contractor.LastName.ToLower().Contains(toSearch.Last().ToLower())
+                    || x.Contractor.FirstName.ToLower().Contains(toSearch.Last().ToLower())
+                    || x.Contractor.LastName.ToLower().Contains(toSearch.First().ToLower()));
             }
 
             if (toSearch.Count == 3)
             {
                 return items.Where(x =>
-                    x.Contractor.FirstName.Contains(toSearch.First())
-                    || x.Contractor.LastName.Contains(toSearch.Last())
-                    || x.Contractor.FatherName.Contains(toSearch.First())
-                    || x.Contractor.FirstName.Contains(toSearch.Last())
-                    || x.Contractor.LastName.Contains(toSearch.First())
-                    || x.Contractor.FatherName.Contains(toSearch.Last()));
+                    x.Contractor.FirstName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.Contractor.LastName.ToLower().Contains(toSearch.Last().ToLower())
+                    || x.Contractor.FatherName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.Contractor.FirstName.ToLower().Contains(toSearch.Last().ToLower())
+                    || x.Contractor.LastName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.Contractor.FatherName.ToLower().Contains(toSearch.Last().ToLower()));
             }
 
             return items;

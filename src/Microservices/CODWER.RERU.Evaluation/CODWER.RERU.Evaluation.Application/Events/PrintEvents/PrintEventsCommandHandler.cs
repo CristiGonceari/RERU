@@ -22,7 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.PrintEvents
 
         public async Task<FileDataDto> Handle(PrintEventsCommand request, CancellationToken cancellationToken)
         {
-            var events = GetAndFilterEvents.Filter(_appDbContext, request.Name, request.LocationKeyword);
+            var events = GetAndFilterEvents.Filter(_appDbContext, request.Name, request.LocationKeyword, request.FromDate, request.TillDate);
 
             var result = _printer.ExportTableSpecificFormat(new TableData<Event>
             {

@@ -17,7 +17,7 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./events-list-table.component.scss']
 })
 export class EventsListTableComponent implements OnInit {
-  events: Event;
+  	events: Event;
 	pagination: PaginationModel = new PaginationModel();
 	isLoading: boolean = true;
 	title: string;
@@ -36,6 +36,12 @@ export class EventsListTableComponent implements OnInit {
 	fromDate;
 	tillDate;
 
+	dateTimeFrom: string;
+	dateTimeTo: string;
+	searchFrom: string;
+	searchTo: string;
+	filters: any = {};
+
 	selectedDay;
 	countedPlans;
 
@@ -51,13 +57,44 @@ export class EventsListTableComponent implements OnInit {
 
 	ngOnInit(): void {
 	}
+
+	setTimeToSearch(): void {
+		if (this.dateTimeFrom) {
+		  const date = new Date(this.dateTimeFrom);
+		  this.searchFrom = new Date(date.getTime() - (new Date(this.dateTimeFrom).getTimezoneOffset() * 60000)).toISOString();
+		} else if (this.dateTimeTo) {
+		  const date = new Date(this.dateTimeTo);
+		  this.searchTo = new Date(date.getTime() - (new Date(this.dateTimeTo).getTimezoneOffset() * 60000)).toISOString();
+		}
+	  }
+
+	  getFilteredEvents(data: any = {}) :void {
+		this.setTimeToSearch();
+
+		let params = {
+			fromDate: this.searchFrom,
+			tillDate: this.searchTo,
+			page: data.page || this.pagination.currentPage,
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10
+		}
+		if(this.searchFrom != null || this.searchTo != null){
+			this.eventService.getEvents(params).subscribe(res =>{
+				if(res && res.data){
+					this.fromDate = res.data.fromDate;
+					this.tillDate = res.data.tillDate;
+					this.events = res.data.items || [];
+					this.pagination = res.data.pagedSummary;
+				}
+			})
+		}
+	  }
      
 	list(data: any = {}) {
 	this.selectedDay = null;
     this.isLoading = true;
     
     if (data.fromDate != null && data.tillDate != null) {
-      this.tillDate = data.tillDate,
+      	this.tillDate = data.tillDate,
         this.fromDate = data.fromDate
     }
     if (data.displayMonth != null && data.displayYear != null) {
@@ -208,7 +245,9 @@ export class EventsListTableComponent implements OnInit {
 		let printData = {
 			tableName: name,
 			fields: this.headersToPrint,
-			orientation: 2
+			orientation: 2,
+			fromDate: this.searchFrom || null,
+			tillDate: this.searchTo || null
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.tableData = printData;

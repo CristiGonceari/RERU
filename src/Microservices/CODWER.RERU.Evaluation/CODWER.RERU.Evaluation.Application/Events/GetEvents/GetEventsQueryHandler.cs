@@ -22,15 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetEvents
 
         public async Task<PaginatedModel<EventDto>> Handle(GetEventsQuery request, CancellationToken cancellationToken)
         {
-            var events = GetAndFilterEvents.Filter(_appDbContext, request.Name, request.LocationKeyword);
-
-            if (request.FromDate != null && request.TillDate != null)
-            {
-                events = events.Where(p => p.FromDate.Date >= request.FromDate && p.TillDate.Date <= request.TillDate ||
-                                                    (request.FromDate <= p.FromDate.Date && p.FromDate.Date <= request.TillDate) && (request.FromDate <= p.TillDate.Date && p.TillDate.Date >= request.TillDate) ||
-                                                    (request.FromDate >= p.FromDate.Date && p.FromDate.Date <= request.TillDate) && (request.FromDate <= p.TillDate.Date && p.TillDate.Date <= request.TillDate));
-            }
-
+            var events = GetAndFilterEvents.Filter(_appDbContext, request.Name, request.LocationKeyword, request.FromDate, request.TillDate);
 
             return await _paginationService.MapAndPaginateModelAsync<Event, EventDto>(events, request);
         }

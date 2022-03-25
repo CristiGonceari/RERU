@@ -25,11 +25,15 @@ export class UserListTableComponent implements OnInit {
 	asc: boolean;
 	order: string;
 	keyword: string;
+	email: string;
+	idnp: string;
 	viewDetails: boolean = false;
 	filter = {
 		sort: 'name',
 		order: true
 	}
+
+	filters: any = {}
 
 	isLoading = true;
 	module: any;
@@ -63,14 +67,22 @@ export class UserListTableComponent implements OnInit {
 		this.checkPermission();
 	}
 
-	list(data: any = {}): void {
+	getFilteredUsers(data: any = {}): void {
+		this.keyword = data.keyword;
+		this.email = data.email;
+		this.idnp = data.idnp;
 		data = {
 			...data,
-			page: data.page || this.pagination.currentPage,
+			keyword: this.keyword,
+			email: this.email,
+			idnp: this.idnp,
 			itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
-			keyword: data.keyword,
 			status: data.userState
 		};
+		this.list(data);
+	}
+
+	list(data: any = {}): void {
 		this.isLoading = true;
 		this.userProfileService.getUserProfiles(ObjectUtil.preParseObject(data)).subscribe(response => {
 			if (response && response.data.items.length) {
@@ -100,6 +112,8 @@ export class UserListTableComponent implements OnInit {
 		data = {
 			...data,
 			keyword: this.keyword || this.searchValue,
+			email: this.email || this.searchValue,
+			idnp: this.idnp || this.searchValue,
 			order: this.filter.order ? 'desc' : 'asc',
 			sort: this.filter.sort,
 			page: data.page || this.pagedSummary.currentPage,

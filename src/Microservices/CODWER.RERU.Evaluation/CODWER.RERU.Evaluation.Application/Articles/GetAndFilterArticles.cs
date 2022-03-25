@@ -12,7 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.Articles
 
             if (!string.IsNullOrWhiteSpace(name))
             {
-                articles = articles.Where(x => x.Name.Contains(name));
+                articles = articles.Where(x => x.Name.ToLower().Contains(name.ToLower()));
             }
 
             return articles;

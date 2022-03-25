@@ -23,7 +23,7 @@ namespace CODWER.RERU.Evaluation.Application.Plans.PrintPlans
 
         public async Task<FileDataDto> Handle(PrintPlansCommand request, CancellationToken cancellationToken)
         {
-            var plans = GetAndFilterPlans.Filter(_appDbContext, request.Name, request.TillDate, request.FromDate);
+            var plans = GetAndFilterPlans.Filter(_appDbContext, request.Name, request.FromDate, request.TillDate);
 
             var result = _printer.ExportTableSpecificFormat(new TableData<Plan>
             {
