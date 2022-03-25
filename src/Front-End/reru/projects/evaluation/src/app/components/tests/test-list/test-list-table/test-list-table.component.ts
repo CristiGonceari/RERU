@@ -101,8 +101,8 @@ export class TestListTableComponent implements OnInit {
 
   getTests(data: any = {}) {
     this.setTimeToSearch();
-    this.isLoading = true;
-
+    this.isLoading = true; 
+    
     let params = {
       testTemplateName: this.filters.testName || this.testToSearch || '',
       locationKeyword: this.filters.testLocation || this.locationName || '',

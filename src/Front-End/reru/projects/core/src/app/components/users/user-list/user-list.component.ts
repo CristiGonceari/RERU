@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { FilterUserStateComponent } from './filter-user-state/filter-user-state.component';
-import { UserSearchComponent } from './user-search/user-search.component';
 
 @Component({
   selector: 'app-user-list',
@@ -8,13 +7,18 @@ import { UserSearchComponent } from './user-search/user-search.component';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent {
-  @ViewChild(UserSearchComponent) userSearch: UserSearchComponent;
-  @ViewChild(FilterUserStateComponent) userState: FilterUserStateComponent;
+ // @ViewChild(UserSearchComponent) userSearch: UserSearchComponent;
+ @ViewChild('keyword') searchKeyword: any;
+ @ViewChild('email') searchEmail: any;
+ @ViewChild('idnp') searchIdnp: any;
+ @ViewChild(FilterUserStateComponent) userState: FilterUserStateComponent;
 
   constructor() { }
 
   resetFilters(): void {
-    this.userSearch.searchForm.reset();
+    this.searchKeyword.clear();
+		this.searchEmail.clear();
+		this.searchIdnp.clear();
     this.userState.userState = '0';
   }
 }

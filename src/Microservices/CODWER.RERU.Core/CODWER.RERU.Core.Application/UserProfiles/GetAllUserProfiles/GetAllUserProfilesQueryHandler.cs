@@ -41,10 +41,22 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
                     items = items.Where(p =>
                         p.Name.ToLower().Contains(s.ToLower())
                         || p.LastName.ToLower().Contains(s.ToLower())
-                        || p.FatherName.ToLower().Contains(s.ToLower())
-                        || p.Email.Contains(s)
-                        || p.Idnp.Contains(s));
+                        || p.FatherName.ToLower().Contains(s.ToLower()));
                 }
+            }
+
+            if (!string.IsNullOrEmpty(request.Email))
+            {
+                var toSearch = request.Email.Split(' ').ToList();
+
+                items = items.Where(p => p.Email.ToLower().Contains(toSearch.First().ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(request.Idnp))
+            {
+                var toSearch = request.Idnp.Split(' ').ToList();
+
+                items = items.Where(p => p.Idnp.ToLower().Contains(toSearch.First().ToLower()));
             }
 
             if (request.Status.HasValue)

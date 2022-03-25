@@ -241,7 +241,10 @@
       "email": "E-mail",
       "give-module-access": "Dați accesul",
       "update-module-access": "Actualizați accesul",
-      "remove-module-access": "Eliminați accesul"
+      "remove-module-access": "Eliminați accesul",
+      "search-name": "Căutarea după N.P.P.",
+      "search-email": "Căutarea după email",
+      "search-idnp": "Căutarea după IDNP"
     },
     "modules": {
       "title": "Module",
@@ -269,7 +272,9 @@
       "title": "Detaliile modulului",
       "overview": "Vizualizarea modulului",
       "roles": "Rolurile modulului",
-      "permissions": "Permisiunile modulului"
+      "permissions": "Permisiunile modulului",
+      "search-by-code": "Căutare după codul permisiunii",
+      "search-by-description": "Căutare după numele permisiunii"
     },
     "roles": {
       "view-permissions": "Vizualizați permisiunile",

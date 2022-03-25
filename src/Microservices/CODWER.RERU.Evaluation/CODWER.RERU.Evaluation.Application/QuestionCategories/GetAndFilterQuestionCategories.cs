@@ -16,7 +16,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionCategories
 
             if (!string.IsNullOrEmpty(name))
             {
-                categories = categories.Where(x => x.Name.Contains(name));
+                categories = categories.Where(x => x.Name.ToLower().Contains(name.ToLower()));
             }
 
             return categories;

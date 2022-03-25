@@ -243,7 +243,10 @@
       "email": "Электронная почта",
       "give-module-access": "Дать доступ",
       "update-module-access": "Обновить доступ",
-      "remove-module-access": "Убрать доступ"
+      "remove-module-access": "Убрать доступ",
+      "search-name": "Поиск по ФИО",
+      "search-email": "Поиск по email",
+      "search-idnp": "Поиск по IDNP"
     },
     "modules": {
       "title": "Модули",
@@ -271,7 +274,9 @@
       "title": "Детали модуля",
       "overview": "Обзор модуля",
       "roles": "Роли модуля",
-      "permissions": "Права доступа модуля"
+      "permissions": "Права доступа модуля",
+      "search-by-code": "Поиск по коду",
+      "search-by-description": "Поиск по названию"
     },
     "roles": {
       "view-permissions": "Просмотр прав доступа",

@@ -10,6 +10,8 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
     public class GetAllUserProfilesQuery : PaginatedQueryParameter, IRequest<PaginatedModel<UserProfileDto>>
     {
         public string Keyword { get; set; }
+        public string Email { get; set; }
+        public string Idnp { get; set; }
         public string Order { get; set; }
         public string Sort { get; set; }
         public bool? Status { get; set; }

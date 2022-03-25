@@ -3,6 +3,7 @@ using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.Attributes;
 using CVU.ERP.Module.Application.TableExportServices;
 using MediatR;
+using System;
 
 namespace CODWER.RERU.Evaluation.Application.Events.PrintEvents
 {
@@ -11,5 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.PrintEvents
     {
         public string Name { get; set; }
         public string LocationKeyword { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? TillDate { get; set; }
     }
 }

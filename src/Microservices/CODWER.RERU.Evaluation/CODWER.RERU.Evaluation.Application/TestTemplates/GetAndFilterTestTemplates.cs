@@ -20,12 +20,12 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates
 
             if (!string.IsNullOrEmpty(name))
             {
-                testTemplates = testTemplates.Where(x => x.Name.Contains(name));
+                testTemplates = testTemplates.Where(x => x.Name.ToLower().Contains(name.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(eventName))
             {
-                testTemplates = testTemplates.Where(x => x.EventTestTemplates.Any(x => x.Event.Name.Contains(eventName)));
+                testTemplates = testTemplates.Where(x => x.EventTestTemplates.Any(x => x.Event.Name.ToLower().Contains(eventName.ToLower())));
             }
 
             if (status.HasValue)

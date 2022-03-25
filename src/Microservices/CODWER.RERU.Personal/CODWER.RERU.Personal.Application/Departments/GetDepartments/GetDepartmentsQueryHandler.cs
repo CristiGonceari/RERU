@@ -27,7 +27,7 @@ namespace CODWER.RERU.Personal.Application.Departments.GetDepartments
 
             if (!string.IsNullOrEmpty(request.Name))
             {
-                items = items.Where(x => x.Name.Contains(request.Name));
+                items = items.Where(x => x.Name.ToLower().Contains(request.Name.ToLower()));
             }
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Department, DepartmentDto>(items, request);

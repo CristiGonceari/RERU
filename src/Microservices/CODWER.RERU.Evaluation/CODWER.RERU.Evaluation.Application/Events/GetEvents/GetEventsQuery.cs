@@ -12,7 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetEvents
     {
         public string Name { get; set; }
         public string LocationKeyword { get; set; }
-        public DateTime FromDate { get; set; }
-        public DateTime TillDate { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? TillDate { get; set; }
     }
 }
