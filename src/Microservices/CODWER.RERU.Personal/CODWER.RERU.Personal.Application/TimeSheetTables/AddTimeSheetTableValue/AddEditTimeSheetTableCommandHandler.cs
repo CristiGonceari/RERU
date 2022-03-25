@@ -57,9 +57,7 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.AddTimeSheetTableValu
 
         private async Task LogAction(TimeSheetTable timeSheetTable)
         {
-            var contractorId = await _userProfileService.GetCurrentUserProfile();
-
-            await _loggerService.Log(LogData.AsPersonal($"TimeSheetTable values were added/editet by {contractorId.Contractor.GetFullName()}", timeSheetTable));
+            await _loggerService.Log(LogData.AsPersonal($"TimeSheetTable values were added/editet", timeSheetTable));
         }
     }
 }
