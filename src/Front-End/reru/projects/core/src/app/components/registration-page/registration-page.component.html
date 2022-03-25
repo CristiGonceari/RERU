@@ -1,110 +1,185 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" >
-      <img src="../../../assets/logo.png" alt="..." class="img-thumbnail" style="max-height: 40px;">
-    </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<div class="container-xxl bg-white p-0">
+  <div class="container-xxl position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-light p-4">
+      <div class="row">
+        <div class="col d-flex p-0" style="justify-content: center; align-items: center;">
+          <img src="../../../assets/logo.png" alt="..." class="img-thumbnail" style="max-height: 40px;">
+        </div>
+        <div class="col pl-0">
+          <h1 class="m-0">{{ 'right-sidebar.registration' | translate }}</h1>
+        </div>
+      </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="fa fa-bars"></span>
+      </button>
+      <div class="collapse navbar-collapse" style="justify-content: end;" id="navbarCollapse">
+        <a class="btn rounded-pill py-2 px-4 ms-3 d-none d-lg-block float-right" [routerLink]="['../']">{{ 'login.login'
+          | translate}}</a>
+      </div>
+    </nav>
+    <div class="container-xxl bg-info hero-header">
+      <div class="container px-lg-5" *ngIf="!success">
+        <div class="row g-5" style="justify-content: center;">
+          <form style="min-width: 1000px;" [formGroup]="userForm">
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="inputEmail4">{{ 'table.name' | translate }}</label>
+                <input class="form-control form-control-lg form-control-solid" name="name" type="text"
+                  formControlName="name"
+                  [ngClass]="{'is-invalid': hasErrors('name'), 'is-valid': userForm.get('name').valid}" />
+                <div *ngIf="hasErrors('name')" class="fv-plugins-message-container">
+                  <div *ngIf="hasError('name', 'required')" data-field="name" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'user-profile.empty-name' | translate }}</div>
+                  <div *ngIf="hasError('name', 'pattern')" data-field="name" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'user-profile.wrong-name' | translate }}</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputPassword4">{{ 'table.lastName' | translate }}</label>
+                <input class="form-control form-control-lg form-control-solid" name="lastName" type="text"
+                  formControlName="lastName"
+                  [ngClass]="{'is-invalid': hasErrors('lastName'), 'is-valid': userForm.get('lastName').valid}" />
+                <div *ngIf="hasErrors('lastName')" class="fv-plugins-message-container">
+                  <div *ngIf="hasError('lastName', 'required')" data-field="lastName" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'user-profile.empty-name' | translate }}</div>
+                  <div *ngIf="hasError('lastName', 'pattern')" data-field="lastName" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'user-profile.wrong-name' | translate }}</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputPassword4">{{ 'table.father-name' | translate }}</label>
+                <input class="form-control form-control-lg form-control-solid" name="fatherName" type="text"
+                  formControlName="fatherName"
+                  [ngClass]="{'is-invalid': hasErrors('fatherName'), 'is-valid': userForm.get('fatherName').valid}" />
+                <div *ngIf="hasErrors('fatherName')" class="fv-plugins-message-container">
+                  <div *ngIf="hasError('fatherName', 'required')" data-field="fatherName" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'user-profile.empty-name' | translate }}</div>
+                  <div *ngIf="hasError('fatherName', 'pattern')" data-field="fatherName" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'user-profile.wrong-name' | translate }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputEmail4">{{ 'table.idnp' | translate }}</label>
+                <input class="form-control form-control-lg form-control-solid" name="idnp" maxlength="13" minlength="13"
+                  onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off" type="text"
+                  formControlName="idnp"
+                  [ngClass]="{'is-invalid': hasErrors('idnp'), 'is-valid': userForm.get('idnp').valid }" />
+                <div *ngIf="isIdnpLengthValidator('idnp')" class="invalid-feedback d-block">{{'user-profile.idnp-length'
+                  | translate}}</div>
+                <div *ngIf="hasErrors('idnp')" class="fv-plugins-message-container">
+                  <div *ngIf="hasError('idnp', 'required')" data-field="idnp" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'user-profile.idnp-length' | translate }}</div>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputPassword4">{{ 'table.email' | translate }}</label>
+                <input class="form-control form-control-lg form-control-solid" name="email" type="email"
+                  formControlName="email"
+                  [ngClass]="{'is-invalid': hasErrors('email'), 'is-valid': userForm.get('email').valid}" />
+                <div *ngIf="hasErrors('email')" class="fv-plugins-message-container">
+                  <div *ngIf="hasError('email', 'required')" data-field="email" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'login.email-is-required' | translate }}</div>
+                  <div *ngIf="hasError('email', 'email')" data-field="email" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'login.please-use-valid-email' | translate }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group photo-upload">
+              <label for="inputAddress">{{ 'table.profile-photo' | translate }}</label>
+              <div *ngIf="fileId">
+                <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
+                </app-add-edit-media-file>
+              </div>
+              <div *ngIf="!fileId">
+                <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
+                </app-add-edit-media-file>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" (click)="addUser()">{{ 'button.confirm' | translate
+              }}</button>
+          </form>
+        </div>
+      </div>
+      <div *ngIf="success">
+        <div class="alert alert-dark" role="alert">
+          You have successfully registered, your password has been sent to your email !!
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-xxl py-5">
+    <div class="container py-5 px-lg-5">
+      <div class="row g-5 align-items-center">
+        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s"
+          style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" >Home <span class="sr-only">(current)</span></a>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <div class="col">
-        <div ngbDropdown class="d-inline-block float_left">
-          <button type="button" class="btn btn-outline-success" ngbDropdownToggle>Profile</button>
-          <div ngbDropdownMenu style="margin-left: -70px;">
-            <button ngbDropdownItem [routerLink]="['../']">Login</button>
-            <button ngbDropdownItem>Register</button>
+          <h1 class=" mb-4 animated slideInDown">About Us</h1>
+          <p class=" pb-3 animated slideInDown">Tempor rebum no at dolore lorem clita rebum rebum ipsum rebum stet dolor
+            sed justo kasd. Ut dolor sed magna dolor sea diam. Sit diam sit justo amet ipsum vero ipsum clita lorem</p>
+          <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque non eveniet reiciendis voluptatibus
+            dicta temporibus tenetur, soluta distinctio culpa beatae nobis, nam magnam. Temporibus quibusdam quasi,
+            exercitationem accusamus architecto beatae.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos ipsam esse, eveniet saepe suscipit commodi
+            quis maxime sapiente dolorum, expedita nostrum enim iure exercitationem repudiandae omnis. Est harum quae
+            voluptatem!
+          </p>
+        </div>
+        <div class="col-lg-6">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2720.028347693455!2d28.836176615791832!3d47.020048579150114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c97c307d536dd5%3A0x3aa9e3993d05a6c!2z0JzQuNC90LjRgdGC0LXRgNGB0YLQstC-INCy0L3Rg9GC0YDQtdC90L3QuNGFINC00LXQuw!5e0!3m2!1sru!2s!4v1647866771697!5m2!1sru!2s"
+            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid bg-info text-light footer wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5 px-lg-5">
+      <div class="row g-5">
+        <div class="col-md-6 col-lg-3">
+          <p class="section-title text-white h5 mb-4">Address<span></span></p>
+          <p><i class="fa fa-map-marker-alt me-3 mr-4"></i>Bulevardul Ștefan cel Mare și Sfînt 75,</p>
+          <p><i class="fa fa-phone-alt me-3 mr-4"></i>022225333</p>
+          <p><i class="fa fa-envelope me-3 mr-4"></i>http://www.mai.gov.md/</p>
+          <div class="d-flex pt-2">
+            <a class="btn btn-outline-light btn-social mr-4" href=""><i class="fab fa-twitter"></i></a>
+            <a class="btn btn-outline-light btn-social mr-4" href=""><i class="fab fa-facebook-f"></i></a>
+            <a class="btn btn-outline-light btn-social mr-4" href=""><i class="fab fa-instagram"></i></a>
+            <a class="btn btn-outline-light btn-social mr-4" href=""><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <p class="section-title text-white h5 mb-4">Quick Link<span></span></p>
+          <a class="btn btn-link" href="">About Us</a>
+          <a class="btn btn-link" href="">Contact Us</a>
+          <a class="btn btn-link" href="">Privacy Policy</a>
+          <a class="btn btn-link" href="">Terms & Condition</a>
+          <a class="btn btn-link" href="">Career</a>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <p class="section-title text-white h5 mb-4">Newsletter<span></span></p>
+          <p>Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulpu</p>
+          <div class="position-relative w-100 mt-3">
+            <input class="form-control border-0 rounded-pill w-100 ps-4 pe-5" type="text" placeholder="Your Email"
+              style="height: 48px;">
+            <button type="button" class="btn shadow-none position-absolute top-0 end-0 mt-1 me-2"><i
+                class="fa fa-paper-plane text-primary fs-4"></i></button>
           </div>
         </div>
       </div>
-    </form>
-  </div>
-</nav>
-<!-- <img src="../../../assets/exam.png" class="img-fluid w-100 " style="background-size: cover;"> -->
-<img src="../../../assets/5.jpg" class="img-fluid w-100" style="background-size: cover;" />
-<div class="container-fluid py-4" style="background-color: #eff1f3; color: #142b3e; font-family: Georgia, serif;">
-    <h1 class="text-center">About us</h1>
-    <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sit amet mattis neque.
-        Aenean interdum dui in ornare pretium. Praesent vel purus sit amet enim ultrices blandit et quis nisl.
-        Phasellus ullamcorper vestibulum gravida. Aenean ut hendrerit magna. Ut accumsan feugiat nunc quis mattis.
-        Fusce cursus lacus bibendum erat rutrum, sed pretium nulla maximus. Donec egestas nec nulla sit amet auctor.
-    </p>
-    <p class="text-justify">Duis quis risus dictum metus gravida venenatis pretium et nisl. Aenean sit amet massa
-        lectus. In hac habitasse platea dictumst. Nam vitae turpis eu odio semper convallis vitae sed metus. Aliquam
-        tempus laoreet diam eu faucibus. Nulla ultrices pellentesque mattis. Nam rutrum tempor tortor, sed rhoncus
-        erat ultricies vel. Sed non porta elit. Nulla egestas feugiat ligula non tempus. Ut rutrum, ligula sit amet
-        auctor tincidunt, dui urna pulvinar metus, sed blandit lorem eros nec nulla. Maecenas eu nisi non lorem
-        congue pellentesque. Suspendisse lacinia lacus velit.</p>
-    <p class="text-justify">In aliquam ut justo id vehicula. Donec euismod lectus at risus tincidunt vulputate.
-        Phasellus tincidunt mollis dui a euismod. Morbi venenatis lobortis nulla a dictum. Vestibulum ante ipsum
-        primis in faucibus orci luctus et ultrices posuere cubilia curae; Morbi tempor porttitor justo varius
-        congue. Aliquam suscipit odio lorem, sed congue tortor mattis vitae. Pellentesque commodo, odio consectetur
-        blandit pellentesque, orci dolor tincidunt urna, sit amet consectetur quam lorem ut metus. Fusce a posuere
-        purus. Ut euismod dolor bibendum elementum faucibus. In vitae metus eget dui luctus mollis. Integer iaculis
-        tempor nisl, sit amet sodales augue. Pellentesque sodales ipsum at quam vestibulum commodo.</p>
-</div>
-
-<div class="container-fluid" style="background-color: #eff1f3;">
-    <div class="container py-4" style="font-family: Georgia, serif;">
-        <h1 class="text-center mb-4">Our coordinates</h1>
-        <div class="row p-3">
-            <div class="col-sm"
-                style="border: 1px solid #212529; border-radius: 9px; padding: 11px; margin-bottom: 7px;">
-                <h4 class="text-center">Datele pentru inregistrare</h4>
-                <form class="row g-3">
-                    <div class="col-12">
-                        <label for="inputAddress" class="form-label">Nume</label>
-                        <input type="text" class="form-control" id="inputAddress">
-                    </div>
-                    <div class="col-12">
-                        <label for="inputAddress" class="form-label">Prenume</label>
-                        <input type="text" class="form-control" id="inputAddress">
-                    </div>
-                    <div class="col-12">
-                        <label for="inputAddress" class="form-label">Patronimic</label>
-                        <input type="text" class="form-control" id="inputAddress">
-                    </div>
-                    <div class="col-6">
-                        <label for="inputEmail4" class="form-label">IDNP</label>
-                        <input type="email" class="form-control" id="inputEmail4">
-                    </div>
-                    <div class="col-6">
-                        <label for="inputEmail4" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="inputEmail4">
-                    </div>
-                    <div class="col-12">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                            <label class="form-check-label" for="gridCheck">
-                                Confirmati procesarea datelor cu caracter personal
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-12 text-center">
-                        <button type="submit" class="btn btn-dark text-light px-2 ">Confirmati</button>
-                    </div>
-                </form>
-            </div>
-            <div class="col-sm">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2720.028347693455!2d28.836176615791832!3d47.020048579150114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c97c307d536dd5%3A0x3aa9e3993d05a6c!2z0JzQuNC90LjRgdGC0LXRgNGB0YLQstC-INCy0L3Rg9GC0YDQtdC90L3QuNGFINC00LXQuw!5e0!3m2!1sru!2s!4v1647866771697!5m2!1sru!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-        </div>
     </div>
-</div>
-<div class="container-fluid bg-dark navbar-dark sticky-bottom">
-    <footer class="py-3 my-4">
-        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
-        </ul>
-        <p class="text-center text-muted">&copy; 2021 Company, Inc</p>
-    </footer>
+  </div>
 </div>

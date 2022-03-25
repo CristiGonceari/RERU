@@ -8,7 +8,9 @@
     "header": "Профиль пользователя",
     "my-profile": "Мой профиль",
     "change-password": "Смена пароля",
-    "logout": "Выход"
+    "logout": "Выход",
+    "registration": "Core pегистрация"
+
   },
   "login": {
     "admin-panel": "Панель управления",

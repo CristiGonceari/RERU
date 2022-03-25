@@ -8,7 +8,9 @@
     "header": "User profile",
     "my-profile": "My profile",
     "change-password": "Change password",
-    "logout": "Logout"
+    "logout": "Logout",
+    "registration": "Core Registration"
+
   },
   "login": {
     "admin-panel": "Administration Panel",
