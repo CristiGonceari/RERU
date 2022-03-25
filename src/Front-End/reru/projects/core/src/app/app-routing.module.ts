@@ -16,11 +16,13 @@ import { MyProfileRoutingModule } from './components/my-profile/my-profile-routi
 import { Exception404Component } from './utils/exceptions/404/404.component';
 import { MainComponent } from './components/main/main.component';
 import { PermissionRouteGuard } from '@erp/shared';
-import { RegistrationPageComponent } from './components/registration-page/registration-page.component';
 
 
 const routes: Routes = [
-	{ path: 'registration-page', component: RegistrationPageComponent},
+	{
+		 path: 'registration-page',
+		 loadChildren: () => import('./components/registration-page/registration-page.module').then(m => m.RegistrationPageModule)
+	},
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent},
 	{
 		path: '',

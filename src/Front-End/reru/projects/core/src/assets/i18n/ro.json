@@ -8,7 +8,9 @@
     "header": "Profilul utilizatorului",
     "my-profile": "Profilul meu",
     "change-password": "Schimbarea parolei",
-    "logout": "Ieșire"
+    "logout": "Ieșire",
+    "registration": "Înregistrare Core"
+
   },
   "login": {
     "admin-panel": "Panou de Administrare",
