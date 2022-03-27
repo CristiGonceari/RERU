@@ -43,7 +43,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                     ShowUserName = request.ShowUserName,
                     TestTemplateId = request.TestTemplateId,
                     EventId = request.EventId,
-                    LocationId = request.LocationId,
                     TestStatus = request.TestStatus,
                     ProgrammedTime = request.ProgrammedTime
                 }

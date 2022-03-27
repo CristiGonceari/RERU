@@ -138,7 +138,7 @@ export class AddEditQuestionComponent implements OnInit {
     request.append('QuestionPoints', this.questionForm.value.questionPoints);
     request.append('QuestionType', this.questionForm.value.questionType);
     request.append('QuestionStatus', this.questionForm.value.status);
-    request.append('Tags', this.tags);
+    request.append('Tags', (this.tags === undefined) ? this.tags = '' : this.tags);
 
     this.questionService.create(request).subscribe(() => {
       forkJoin([
@@ -179,7 +179,7 @@ export class AddEditQuestionComponent implements OnInit {
     request.append('Data.QuestionType', this.questionForm.value.questionType);
     request.append('Data.Status', this.questionForm.value.status);
     request.append('Data.MediaFileId', this.fileId);
-    request.append('Data.Tags', this.tags);
+    request.append('Data.Tags', (this.tags === undefined) ? this.tags = '' : this.tags);
 
     this.questionService.edit(request).subscribe(() => {
       forkJoin([

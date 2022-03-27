@@ -38,8 +38,8 @@
                     <span class="font-size-lg" *ngIf="!item.eventName">-</span>
                 </td>
                 <td>
-                    <span class="font-size-lg" *ngIf="item.locationName">{{ item.locationName }}</span>
-                    <span class="font-size-lg" *ngIf="!item.locationName">-</span>
+                    <span class="font-size-lg" *ngIf="item.locationNames">{{ item.locationNames }}</span>
+                    <span class="font-size-lg" *ngIf="!item.locationNames">-</span>
                 </td>
                 <td>{{'statuses.' + status[item.testStatus] | translate}}</td>
                 <td>

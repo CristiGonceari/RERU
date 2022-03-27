@@ -6,9 +6,9 @@
 		<div class="card-body pt-0">
 			<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 			<div *ngIf="!isLoading">
-				<ngb-accordion *ngFor="let event of events; let i = index">
-					<ngb-panel [id]="i">
-						<ng-template ngbPanelTitle style="color: black; font-size: 14px; display: flex;">
+				<ngb-accordion [activeIds]="activeIds">
+					<ngb-panel [id]="'panel'+event.id" *ngFor="let event of events; let i = index">
+						<ng-template ngbPanelTitle  class="w-100 text-left">
 							<span class="svg-icon svg-icon-primary">
 								<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 									width="24px" height="24px" viewBox="0 0 24 24" version="1.1">

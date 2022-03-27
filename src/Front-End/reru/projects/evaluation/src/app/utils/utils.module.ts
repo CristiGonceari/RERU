@@ -13,6 +13,7 @@ import { EventCalendarComponent } from './components/event-calendar/event-calend
 import { CalendarChunkPipe } from './pipes/calendar-chunk.pipe';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SharedModule } from '@erp/shared';
+import { AttachUserModalComponent } from './components/attach-user-modal/attach-user-modal.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SharedModule } from '@erp/shared';
     SafeHtmlPipe,
     EventCalendarComponent,
     CalendarChunkPipe,
+    AttachUserModalComponent,
   ],
   imports: [
     HttpClientModule,

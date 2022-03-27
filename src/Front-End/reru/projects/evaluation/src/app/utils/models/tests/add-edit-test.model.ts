@@ -3,7 +3,7 @@ import { TestStatusEnum } from "../../enums/test-status.enum";
 export class AddEditTest {
     id?: number;
     userProfileId: number[];
-    evaluatorId?: number;
+    evaluatorId?: any;
     showUserName?: boolean;
     testTemplateId: number;
     eventId?: number;

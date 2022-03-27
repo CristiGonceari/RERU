@@ -14,6 +14,7 @@ export class UserPollsComponent implements OnInit {
   pagedSummary: PaginationModel = new PaginationModel();
   userId;
   title: string;
+  activeIds = [];
 
   constructor(private eventService: EventService, private activatedRoute: ActivatedRoute) { }
 
@@ -41,6 +42,7 @@ export class UserPollsComponent implements OnInit {
 
     this.eventService.getUserEvents(params).subscribe(res => {
       this.events = res.data.items;
+      this.activeIds = this.events.map(el => 'panel'+el.id);
       this.pagedSummary = res.data.pagedSummary;
       this.isLoading = false;
     });

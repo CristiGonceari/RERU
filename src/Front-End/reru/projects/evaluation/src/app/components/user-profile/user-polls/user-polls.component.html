@@ -7,9 +7,8 @@
 			<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
             
             <div *ngIf="!isLoading">
-                <ngb-accordion  
-                    *ngFor="let event of events; let i = index">
-                    <ngb-panel [id]="i">
+                <ngb-accordion [activeIds]="activeIds">
+                    <ngb-panel *ngFor="let event of events; let i = index" [id]="'panel'+event.id" >
                         <ng-template ngbPanelTitle style="color: black; font-size: 14px; display: flex;">
                             <span class="svg-icon svg-icon-primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
