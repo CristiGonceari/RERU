@@ -28,10 +28,9 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Edi
                 .GreaterThan(new DateTime(2000, 1, 1))
                 .WithErrorCode(ValidationCodes.INVALID_TIME);
 
-            //RuleFor(x => x.Data.SolicitedTestStatus)
-            //    .IsInEnum()
-            //    .Must(x => x == SolicitedTestStatusEnum.New)
-            //    .WithErrorCode(ValidationCodes.ONLY_NEW_SOLICITED_TEST_CAN_BE_UPDATED);
+            RuleFor(x => x.Data.SolicitedTestStatus)
+                .Must(x => x == SolicitedTestStatusEnum.New)
+                .WithErrorCode(ValidationCodes.ONLY_NEW_SOLICITED_TEST_CAN_BE_UPDATED);
         }
     }
 }

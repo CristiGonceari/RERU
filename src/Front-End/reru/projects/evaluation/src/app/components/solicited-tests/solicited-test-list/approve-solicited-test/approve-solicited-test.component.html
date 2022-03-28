@@ -2,7 +2,11 @@
     subTitle="{{ 'solicited-test.test-data' | translate }}">
 </app-page-title>
 
-<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <div class="d-flex flex-column-fluid">
         <div class="container">
             <div class="card card-custom gutter-b">
@@ -23,9 +27,6 @@
                                                     <div class="col-lg-9 col-xl-9">
                                                         <p *ngIf="solicitedTest.eventName" class="pt-3 px-4"><b>{{solicitedTest.eventName}}</b></p>
                                                         <p *ngIf="!solicitedTest.eventName" class="pt-3 px-4"><b>-</b></p>
-                                                        <!-- <input id="from" placeholder="Event name" [disabled]="true"
-                                                            class="form-control form-control-lg form-control-solid"
-                                                            name="event" [(ngModel)]="solicitedTest.eventName" autocomplete="off" /> -->
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -33,18 +34,12 @@
                                                         {{'verify-test.select-user' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <p class="pt-3 px-4"><b>{{solicitedTest.userProfileName}}</b></p>
-                                                        <!-- <input id="from" placeholder="User name" [disabled]="true"
-                                                            class="form-control form-control-lg form-control-solid"
-                                                            name="user" [(ngModel)]="solicitedTest.userProfileName" autocomplete="off" /> -->
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'verify-test.select-test-type' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <p class="pt-3 px-4"><b>{{solicitedTest.testTemplateName}}</b></p>
-                                                        <!-- <input id="from" placeholder="Test template name" [disabled]="true"
-                                                            class="form-control form-control-lg form-control-solid"
-                                                            name="testTemplate" [(ngModel)]="solicitedTest.testTemplateName" autocomplete="off" /> -->
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">

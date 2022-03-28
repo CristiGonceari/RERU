@@ -63,8 +63,16 @@ export class ApproveSolicitedTestComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.initData();
     this.getEvaluators();
+    this.getEvents();
+  }
+
+  getEvents() {
+    this.referenceService.getEvents().subscribe(res => {
+      this.eventsList = res.data;
+    this.getActiveTestTemplate();
+
+    });
   }
 
   initData(): void {
@@ -87,6 +95,17 @@ export class ApproveSolicitedTestComponent implements OnInit {
     });
   }
 
+  getActiveTestTemplate() {
+    let params = {
+      testTemplateStatus: TestTemplateStatusEnum.Active
+    }
+
+    this.testTemplateService.getTestTemplateByStatus(params).subscribe((res) => {
+      this.selectActiveTests = res.data;
+      this.initData();
+    })
+  }
+
   getEvaluators() {
     if (this.needEvaluator === false && this.hasEventEvaluator === false) {
       this.referenceService.getUsers({ eventId: this.event.value }).subscribe(res => { this.evaluatorList = res.data });
@@ -98,10 +117,8 @@ export class ApproveSolicitedTestComponent implements OnInit {
 
   checkIfIsOneAnswer(testTemplateId) {
     if (testTemplateId) {
-      this.testTemplateService.getTestTemplate(testTemplateId).subscribe(res => {
-        this.isTestTemplateOneAnswer = res.data.isOnlyOneAnswer;
-        this.printTest = res.data.printTest;
-      })
+      this.isTestTemplateOneAnswer = this.selectActiveTests.find(x => x.testTemplateId === testTemplateId).isOnlyOneAnswer;
+      console.log(testTemplateId, this.isTestTemplateOneAnswer)
     } else {
       this.isTestTemplateOneAnswer = false;
     }
@@ -118,9 +135,10 @@ export class ApproveSolicitedTestComponent implements OnInit {
     this.showName = event.target.checked;
   }
 
-  checkIfEventHasEvaluator(eventId) {
-    if(eventId){
-      this.eventService.getEvent(eventId).subscribe(res => this.hasEventEvaluator = res.data.isEventEvaluator)
+  checkIfEventHasEvaluator(event) {
+    if(event){
+      this.hasEventEvaluator = this.eventsList.find(x => x.eventId === event).isEventEvaluator;
+      console.log(event, this.hasEventEvaluator)
     }
   }
 
