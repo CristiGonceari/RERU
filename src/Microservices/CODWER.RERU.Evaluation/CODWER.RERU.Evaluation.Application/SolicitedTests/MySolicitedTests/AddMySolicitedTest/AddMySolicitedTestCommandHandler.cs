@@ -3,6 +3,8 @@ using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,12 +16,14 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Add
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly IUserProfileService _userProfileService;
+        private readonly ILoggerService<AddMySolicitedTestCommandHandler> _loggerService;
 
-        public AddMySolicitedTestCommandHandler(AppDbContext appDbContext, IMapper mapper, IUserProfileService userProfileService)
+        public AddMySolicitedTestCommandHandler(AppDbContext appDbContext, IMapper mapper, IUserProfileService userProfileService, ILoggerService<AddMySolicitedTestCommandHandler> loggerService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _userProfileService = userProfileService;
+            _loggerService = loggerService;
         }
 
         public async Task<int> Handle(AddMySolicitedTestCommand request, CancellationToken cancellationToken)
@@ -32,8 +36,14 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Add
 
             await _appDbContext.SolicitedTests.AddAsync(solicitedTest);
             await _appDbContext.SaveChangesAsync();
+            await LogAction(solicitedTest);
 
             return solicitedTest.Id;
+        }
+
+        private async Task LogAction(SolicitedTest item)
+        {
+            await _loggerService.Log(LogData.AsEvaluation($"Solicited test was created", item));
         }
     }
 }
