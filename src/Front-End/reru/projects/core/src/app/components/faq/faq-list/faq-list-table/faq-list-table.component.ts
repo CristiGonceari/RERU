@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleModel } from '../../../../utils/models/article.model';
-import { PaginationSummary } from '../../../../utils/models/pagination-summary.model';
+import { PaginationSummary } from 'projects/core/src/app/utils/models/pagination-summary.model';
 import { ArticlesService } from '../../../../utils/services/articles.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
@@ -18,7 +18,7 @@ import { saveAs } from 'file-saver';
 	styleUrls: ['./faq-list-table.component.scss']
 })
 export class FaqListTableComponent implements OnInit {
-	articles: ArticleModel;
+	articles: ArticleModel[] = [];
 	keyword: string;
 	pagedSummary: PaginationSummary = new PaginationSummary();
 	isLoading: boolean = true;
@@ -50,11 +50,9 @@ export class FaqListTableComponent implements OnInit {
 		}
 
 		this.articleService.getList(params).subscribe(res => {
-			if (res && res.data) {
-				this.articles = res.data.items;
-				this.pagedSummary = res.data.pagedSummary;
-				this.isLoading = false;
-			}
+			this.articles = res.data.items;
+			this.pagedSummary = res.data.pagedSummary;
+			this.isLoading = false;
 		});
 	}
 
