@@ -1,8 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {
-  NgbActiveModal,
-  NgbTypeaheadSelectItemEvent,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'erp-shared-print-modal',

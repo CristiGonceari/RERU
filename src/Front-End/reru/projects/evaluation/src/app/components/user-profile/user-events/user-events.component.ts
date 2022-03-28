@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgbAccordion, NgbNavConfig } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationModel } from '../../../utils/models/pagination.model';
 import { EventService } from '../../../utils/services/event/event.service';
 
@@ -15,6 +16,7 @@ export class UserEventsComponent implements OnInit {
   pagedSummary: PaginationModel = new PaginationModel();
   userId;
   title: string;
+  activeIds = [];
 
   constructor(private eventService: EventService, private activatedRoute: ActivatedRoute) { }
 
@@ -32,7 +34,7 @@ export class UserEventsComponent implements OnInit {
     });
   }
 
-  getEvents(data: any = {}){
+  getEvents(data: any = {}) {
     const params = {
       testTemplateMode: 0,
       userId: this.userId,
@@ -42,6 +44,7 @@ export class UserEventsComponent implements OnInit {
 
     this.eventService.getUserEvents(params).subscribe(res => {
       this.events = res.data.items;
+      this.activeIds = this.events.map(el => 'panel'+el.id);
       this.pagedSummary = res.data.pagedSummary;
       this.isLoading = false;
     });

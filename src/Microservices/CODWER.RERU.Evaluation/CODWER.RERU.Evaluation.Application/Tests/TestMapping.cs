@@ -20,7 +20,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.QuestionCount, opts => opts.MapFrom(src => src.TestTemplate.QuestionCount))
                 .ForMember(x => x.AccumulatedPercentage, opts => opts.MapFrom(src => src.AccumulatedPercentage))
                 .ForMember(x => x.TestTemplateName, opts => opts.MapFrom(src => src.TestTemplate.Name))
-                .ForMember(x => x.LocationName, opts => opts.MapFrom(src => src.Location.Name))
+                .ForMember(x => x.LocationNames, opts => opts.MapFrom(src => src.Event.EventLocations.Select(el => el.Location.Name)))
                 .ForMember(x => x.EventName, opts => opts.MapFrom(src => src.Event.Name))
                 .ForMember(x => x.EvaluatorId, opts => opts.MapFrom(src => src.EvaluatorId))
                 .ForMember(x => x.EventId, opts => opts.MapFrom(src => src.EventId))

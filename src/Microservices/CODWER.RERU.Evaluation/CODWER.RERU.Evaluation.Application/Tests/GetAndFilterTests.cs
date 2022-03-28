@@ -15,7 +15,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
-                .Include(t => t.Event)
+                .Include(t => t.Event).ThenInclude(l => l.EventLocations).ThenInclude(l => l.Location)
                 .OrderByDescending(x => x.CreateDate)
                 .Select(t => new Test
                 {

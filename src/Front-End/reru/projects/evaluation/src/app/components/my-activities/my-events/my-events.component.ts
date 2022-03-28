@@ -12,7 +12,7 @@ export class MyEventsComponent implements OnInit {
   events = [];
   isLoading: boolean = true;
   pagedSummary: PaginationModel = new PaginationModel();
-  show: boolean = false;
+  show: boolean = true;
 
   testId: number;
   selectedDay;
@@ -23,15 +23,12 @@ export class MyEventsComponent implements OnInit {
   displayYear: number;
   countedEvents: Events[] = [];
   displayDate;
+  activeIds = [];
 
   constructor(private eventService: EventService) { }
 
   ngOnInit(): void {
-  }
-
-  toggleShow(id): void {
-    id == this.testId ? this.show = !this.show : this.show = true;
-    this.testId = id;
+    this.getEvents();
   }
 
   getEvents(data: any = {}) {
@@ -54,13 +51,13 @@ export class MyEventsComponent implements OnInit {
 
     this.eventService.getMyEvents(params).subscribe(res => {
       this.events = res.data.items;
+      this.activeIds = this.events.map(el => 'panel'+el.id);
       this.pagedSummary = res.data.pagedSummary;
       this.isLoading = false;
     });
   }
 
   parseDates(date) {
-
     const day = date && date.getDate() || -1;
     const dayWithZero = day.toString().length > 1 ? day : '0' + day;
     const month = date && date.getMonth() + 1 || -1;
@@ -68,11 +65,9 @@ export class MyEventsComponent implements OnInit {
     const year = date && date.getFullYear() || -1;
 
     return `${year}-${monthWithZero}-${dayWithZero}`;
-
   }
 
   parseDatesForTable(date) {
-
     const day = date && date.getDate() || -1;
     const dayWithZero = day.toString().length > 1 ? day : '0' + day;
     const month = date && date.getMonth() + 1 || -1;
@@ -80,11 +75,9 @@ export class MyEventsComponent implements OnInit {
     const year = date && date.getFullYear() || -1;
 
     return `${dayWithZero}/${monthWithZero}/${year}`;
-
   }
 
   getListByDate(data: any = {}): void {
-    
     this.isLoading = true;
 
     if (data.date != null) {
@@ -109,7 +102,6 @@ export class MyEventsComponent implements OnInit {
   }
 
   getListOfCoutedEvents(data) {
-
     const request = {
       testTemplateMode: 0,
       fromDate: this.parseDates(data.fromDate),
@@ -117,17 +109,13 @@ export class MyEventsComponent implements OnInit {
     }
 
     this.eventService.getMyEventsCount(request).subscribe(response => {
-
       if (response.success) {
-
         this.countedEvents = response.data;
 
         for (let calendar of data.calendar) {
-
           let data = new Date(calendar.date);
 
           for (let values of response.data) {
-
             let c = new Date(values.date);
             let compararea = +data == +c;
 
@@ -135,8 +123,11 @@ export class MyEventsComponent implements OnInit {
               calendar.count = values.count;
             }
           }
+
         }
+
       }
     })
+
   }
 }
