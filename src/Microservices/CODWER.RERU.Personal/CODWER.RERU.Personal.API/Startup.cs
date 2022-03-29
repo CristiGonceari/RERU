@@ -135,20 +135,21 @@ namespace CODWER.RERU.Personal.API
                 app.UseHsts();
             }
 
+            // if (env.IsDevelopment())
+            // {
+            DatabaseSeeder.SeedDb(appDbContext);
+            // }
+
             app.UseHangfireDashboard();
             app.UseHangfireServer();
 
-            RecurringJob.AddOrUpdate<JobTimeSheetTable>(x => x.JobForNationalHolidays(), "00 20 * * *");
-            RecurringJob.AddOrUpdate<JobTimeSheetTable>(x => x.JobForWorkedHours(), "0 4 * * *");
+            RecurringJob.AddOrUpdate<JobTimeSheetTable>(x => x.JobForNationalHolidays(), "*/2 * * * *");
+            RecurringJob.AddOrUpdate<JobTimeSheetTable>(x => x.JobForWorkedHours(), "*/5 * * * *");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
 
-            // if (env.IsDevelopment())
-            // {
-            DatabaseSeeder.SeedDb(appDbContext);
-            // }
 
             if (env.IsDevelopment())
             {
