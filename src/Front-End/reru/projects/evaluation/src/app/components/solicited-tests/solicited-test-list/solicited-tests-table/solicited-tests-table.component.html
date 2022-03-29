@@ -52,25 +52,15 @@
                                         </svg>
                                     </span>
                                 </div>
-                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left" *ngIf="item.solicitedTestStatus == enum.New">
                                     <div ngbDropdownMenu aria-labelledby="action1">
-                                        <!-- <button [routerLink]="['edit-test-type', testTemplate.id]"
-                                            [disabled]="testTemplate.status == statusEnum.Active || testTemplate.status == statusEnum.Canceled"
-                                            class="navi-link align-items-baseline px-6" ngbDropdownItem>
-                                            {{ 'button.edit' | translate }}
-                                        </button> -->
                                         <button class="navi-link align-items-baseline px-6" ngbDropdownItem 
-                                            *ngIf="item.solicitedTestStatus == enum.New"
                                             (click)="openConfirmationChangeModal(item.id)">
                                             {{'statuses.refuse' | translate}}
                                         </button>
                                         <button class="navi-link align-items-baseline px-6" ngbDropdownItem
-                                            *ngIf="item.solicitedTestStatus == enum.New"
                                             [routerLink]="['approve', item.id]">
                                             {{'statuses.approve' | translate}}
-                                        </button>
-                                        <button class="navi-link align-items-baseline px-6" ngbDropdownItem>
-                                            {{'button.delete' | translate}}
                                         </button>
                                     </div>
                                 </div>
