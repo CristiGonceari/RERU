@@ -7,7 +7,6 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStatus
 {
-    [ModuleOperation(permission: PermissionCodes.TEST_TEMPLATES_GENERAL_ACCESS)]
     public class GetTestTemplateByStatusQuery : IRequest<List<SelectTestTemplateValueDto>>
     {
         public TestTemplateStatusEnum TestTemplateStatus { get; set; }
