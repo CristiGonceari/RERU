@@ -10,7 +10,12 @@
     "change-password": "Change password",
     "logout": "Logout",
     "registration": "Core Registration"
-
+  },
+  "registration-page":{
+    "about-us": "About Us",
+    "registration": "Registration",
+    "success-message": "You have successfully registered, your password has been sent to your email !!",
+    "registration-datas": "Registration data"
   },
   "login": {
     "admin-panel": "Administration Panel",

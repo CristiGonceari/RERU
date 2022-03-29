@@ -10,7 +10,12 @@
     "change-password": "Schimbarea parolei",
     "logout": "Ieșire",
     "registration": "Înregistrare Core"
-
+  },
+  "registration-page":{
+    "about-us": "Despre noi",
+    "registration": "Înregistrare",
+    "success-message": "Te-ai inregistrat cu succes, parola ta a fost trimisa pe email !!",
+    "registration-datas": "Date de înregistrare"
   },
   "login": {
     "admin-panel": "Panou de Administrare",
