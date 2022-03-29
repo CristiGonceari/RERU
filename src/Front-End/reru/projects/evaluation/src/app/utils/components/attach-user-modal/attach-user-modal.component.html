@@ -51,14 +51,15 @@
 				<tr *ngFor="let user of users">
 					<td>
 						<label class="checkbox checkbox-lg checkbox-inline">
-							<input type="checkbox" value="{{ user.id }}" name="option"
-								[checked]="attachedItems.includes(user.id)" (change)="onItemChange($event)" />
+							<input type="{{inputType}}" value="{{ user.id }}" name="option"
+								[checked]="attachedItems.includes(user.id)" (change)="checkInput($event)" />
 							<span></span>
 						</label>
+
 					</td>
 					<td> {{ user.firstName }} </td>
 					<td> {{ user.lastName }} </td>
-					<td> {{user.patronymic}} </td>
+					<td> {{ user.patronymic }} </td>
 					<td> {{ user.idnp }} </td>
 					<td> {{ user.email }} </td>
 				</tr>
@@ -77,8 +78,8 @@
 			(pageChange)="getUsers({ page: $event})">
 		</div>
 	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
-		<button type="button" class="btn btn-primary" (click)="confirm()">{{'button.confirm' | translate}}</button>
-	</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+	<button type="button" class="btn btn-primary" (click)="confirm()">{{'button.confirm' | translate}}</button>
 </div>

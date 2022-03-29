@@ -174,21 +174,22 @@ export class AddTestComponent implements OnInit {
 
   attachEvaluators(): void {
     this.exceptUserIds = this.userListToAdd;
-    this.openUsersModal('evaluator', this.evaluatorList);
+    this.openUsersModal(this.evaluatorList, 'radio');
   }
 
   attachUsers(): void {
     this.exceptUserIds = this.evaluatorList;
-    this.openUsersModal('user', this.userListToAdd);
+    this.openUsersModal(this.userListToAdd, 'checkbox');
   }
 
-  openUsersModal(userRole, attachedItems): void {
+  openUsersModal(attachedItems, inputType): void {
     const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
     modalRef.componentInstance.exceptUserIds = this.exceptUserIds;
     modalRef.componentInstance.attachedItems = attachedItems;
+    modalRef.componentInstance.inputType = inputType;
     modalRef.result.then(() => {
-      if (userRole == 'evaluator') this.evaluatorList = modalRef.result.__zone_symbol__value;
-      else if (userRole == 'user') this.userListToAdd = modalRef.result.__zone_symbol__value;
+      if (inputType == 'radio') this.evaluatorList = modalRef.result.__zone_symbol__value;
+      else if (inputType == 'checkbox') this.userListToAdd = modalRef.result.__zone_symbol__value;
     }, () => { });
   }
 

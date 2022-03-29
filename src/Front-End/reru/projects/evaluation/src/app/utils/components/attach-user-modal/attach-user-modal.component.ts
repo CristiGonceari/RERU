@@ -21,6 +21,7 @@ export class AttachUserModalComponent implements OnInit {
   @ViewChild('email') email: any;
   @Input() exceptUserIds: any;
   @Input() attachedItems: number[];
+  @Input() inputType: string;
 
   constructor(private userService: UserProfileService, private activeModal: NgbActiveModal) { }
 
@@ -28,11 +29,11 @@ export class AttachUserModalComponent implements OnInit {
     this.getUsers();
   }
 
-  getUsers(): void {
+  getUsers(data: any = {}): void {
     let exceptIds = this.exceptUserIds.length ? this.exceptUserIds : 0;
     let params = {
-      page: this.pagination.currentPage,
-      itemsPerPage: this.pagination.pageSize,
+      page: data.page || this.pagination.currentPage,
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
       exceptUserIds: exceptIds,
       ...this.filters
     }
@@ -51,6 +52,13 @@ export class AttachUserModalComponent implements OnInit {
 
   confirm(): void {
     this.activeModal.close(this.attachedItems);
+  }
+
+  checkInput(event): void {
+    if (this.inputType == 'checkbox') this.onItemChange(event);
+    else {
+      this.attachedItems[0] = +event.target.value;
+    }
   }
 
   onItemChange(event): void {
