@@ -10,7 +10,12 @@
     "change-password": "Смена пароля",
     "logout": "Выход",
     "registration": "Core pегистрация"
-
+  },
+  "registration-page":{
+    "about-us": "О нас",
+    "registration": "Регистрация",
+    "success-message": "Вы успешно зарегистрировались, Ваш пароль отправлен на Вашу электронную почту!!",
+    "registration-datas": "Регистрационные данные"
   },
   "login": {
     "admin-panel": "Панель управления",

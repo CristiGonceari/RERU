@@ -1,14 +1,14 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, EventEmitter, NgZone, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import {  FormGroup  } from '@angular/forms';
 import {  Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../utils/services/i18n.service';
 import { UserService } from '../../utils/services/user.service';
 import { NotificationUtil } from '../../utils/util/notification.util';
 import { ValidatorUtil } from '../../utils/util/validator.util';
+
 
 @Component({
   selector: 'app-registration-page',
@@ -27,6 +27,12 @@ success : boolean = false;
   fileType: string = null;
   attachedFile: File;
 
+  languageList = [
+    { code: 'en', label: 'English' },
+    { code: 'ro', label: 'Română' },
+    { code: 'ru', label: 'Русский' },
+  ];
+  currentLanguage: string;
 
   isCollapsed = true;
   
@@ -34,14 +40,22 @@ success : boolean = false;
     private fb: FormBuilder,
     private userService: UserService,
     private notificationService: NotificationsService,
-    private router: Router,
 		public translate: I18nService,
-    private ngZone: NgZone,
-    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
     this.initForm();
+    this.currentLanguage = this.translate.currentLanguage;
+  }
+
+  getLang(): string {
+    const value = this.languageList.find(l => l.code == this.currentLanguage);
+
+		return (value.label) || "Language";
+	}
+
+  useLanguage(language: string) {
+    this.translate.use(language);
   }
   
   hasErrors(field): boolean {

@@ -50,9 +50,12 @@ export class FaqListTableComponent implements OnInit {
 		}
 
 		this.articleService.getList(params).subscribe(res => {
-			this.articles = res.data.items;
-			this.pagedSummary = res.data.pagedSummary;
-			this.isLoading = false;
+			if(res && res.data) {
+				console.log("articles", res.data.items);
+				this.articles = res.data.items;
+				this.pagedSummary = res.data.pagedSummary;
+				this.isLoading = false;
+			}
 		});
 	}
 
