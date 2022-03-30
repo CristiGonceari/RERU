@@ -4,6 +4,7 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { TestQuestionService } from '../../../utils/services/test-question/test-question.service';
 import { TestService } from '../../../utils/services/test/test.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TestStatusEnum } from '../../../utils/enums/test-status.enum';
 
 
 @Component({
@@ -52,5 +53,11 @@ export class StartPollPageComponent implements OnInit {
 
   generatePoll(){
     this.testQuestionService.generate(this.pollId).subscribe(() => {this.router.navigate(['../../performing-poll', this.pollId], { relativeTo: this.activatedRoute })});
+  }
+
+  editTestStatus(){
+    this.testService.changeStatus({testId: this.pollId, status: TestStatusEnum.InProgress}).subscribe(() => {
+      this.generatePoll();
+    });
   }
 }
