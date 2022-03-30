@@ -6,6 +6,7 @@ using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
+using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 {
@@ -18,7 +19,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x.TestId)
-                .Must(x => appDbContext.Tests.FirstOrDefault(t => t.Id == x).TestStatus == TestStatusEnum.InProgress)
+                .Must(x => appDbContext.Tests.FirstOrDefault(t => t.Id == x).TestStatus == TestStatusEnum.InProgress &&
+                            appDbContext.Tests.Include(t => t.TestTemplate).FirstOrDefault(t => t.Id == x).TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .WithErrorCode(ValidationCodes.ONLY_IN_PROGRESS_TESTS_CAN_BE_TERMINATED);
         }
     }
