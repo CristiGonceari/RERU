@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Entities.StaticExtensions;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
@@ -30,14 +31,19 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetNoAssignedEvalua
                 .Select(x => x.Evaluator.Id)
                 .AsQueryable();
 
-            var userProfiles = _appDbContext.UserProfiles.AsQueryable();
+            var userProfiles = _appDbContext.UserProfiles
+                                            .Include(up => up.EventUsers)
+                                            .AsQueryable();
+
 
             if (!string.IsNullOrWhiteSpace(request.Keyword))
             {
                 userProfiles = userProfiles.FilterByNameAndIdnp(request.Keyword);
             }
 
-            userProfiles = userProfiles.Where(x => !evaluators.Any(e => e == x.Id));
+
+            userProfiles = userProfiles.Where(x => !evaluators.Any(e => e == x.Id) && !x.EventUsers.Any(eu => eu.UserProfileId == x.Id));
+
 
             return _mapper.Map<List<UserProfileDto>>(userProfiles.ToList());
         }
