@@ -34,6 +34,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.CountMyEvaluatedTests;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.GetMyEvaluatedTestsByDate;
+using CODWER.RERU.Evaluation.Application.Tests.GetTestSettings;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -45,6 +46,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<TestDto> GetTest([FromRoute] int id)
         {
             var query = new GetTestQuery {Id = id};
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("setting/{id}")]
+        public async Task<TestDto> GetTestSetting([FromRoute] int id)
+        {
+            var query = new GetTestSettingsQuery { Id = id };
             return await Mediator.Send(query);
         }
 
