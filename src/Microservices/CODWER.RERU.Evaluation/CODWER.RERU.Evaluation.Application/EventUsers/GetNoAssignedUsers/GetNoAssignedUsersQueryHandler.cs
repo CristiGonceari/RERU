@@ -30,14 +30,16 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.GetNoAssignedUsers
                 .Select(x => x.UserProfile.Id)
                 .AsQueryable();
 
-            var userProfiles = _appDbContext.UserProfiles.AsQueryable();
+            var userProfiles = _appDbContext.UserProfiles.Include(up => up.EventResponsiblePersons).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(request.Keyword))
             {
                 userProfiles = userProfiles.FilterByNameAndIdnp(request.Keyword);
             }
 
-            userProfiles = userProfiles.Where(x => !users.Any(s => s == x.Id));
+            var eventEvaluators = _appDbContext.EventEvaluators.AsQueryable();
+
+            userProfiles = userProfiles.Where(x => !users.Any(s => s == x.Id)! && !x.EventResponsiblePersons.Any(eu => eu.UserProfileId == x.Id) && !eventEvaluators.Any(u => u.EvaluatorId == x.Id) );
 
             return _mapper.Map<List<UserProfileDto>>(userProfiles.ToList());
         }
