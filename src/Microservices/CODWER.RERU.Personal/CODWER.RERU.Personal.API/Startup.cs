@@ -135,6 +135,11 @@ namespace CODWER.RERU.Personal.API
                 app.UseHsts();
             }
 
+            // if (env.IsDevelopment())
+            // {
+            DatabaseSeeder.SeedDb(appDbContext);
+            // }
+
             app.UseHangfireDashboard();
             app.UseHangfireServer();
 
@@ -145,10 +150,6 @@ namespace CODWER.RERU.Personal.API
             app.UseStaticFiles();
             app.UseAuthentication();
 
-            // if (env.IsDevelopment())
-            // {
-            DatabaseSeeder.SeedDb(appDbContext);
-            // }
 
             if (env.IsDevelopment())
             {

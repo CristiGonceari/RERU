@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -89,11 +90,12 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.GetTimeSheetTableValu
                 contractor.FreeHours = await _timeSheetTableService.GetFreeHoursForContractor(contractor.ContractorId, contractor.WorkedHours, request.FromDate, request.ToDate, contractor.WorkingDays);
             }
 
-            await LogAction(contractors);
+            await LogAction(paginatedModel.Items);
 
             return paginatedModel;
         }
-        private async Task LogAction(IQueryable<Contractor> contractors)
+
+        private async Task LogAction(IEnumerable<ContractorTimeSheetTableDto> contractors)
         {
             await _loggerService.Log(LogData.AsPersonal($"TimeSheetTable was viewed", contractors));
         }

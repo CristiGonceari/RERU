@@ -139,7 +139,7 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
                 .Include(x => x.Contractor)
                 .FirstAsync(x => x.Id == userProfileId);
 
-            await _loggerService.Log(LogData.AsEvaluation($"UserProfile {userProfile.Contractor.FirstName} {userProfile.Contractor.LastName} was created/updated", userProfile));
+            await _loggerService.Log(LogData.AsPersonal($"UserProfile {userProfile.Contractor.FirstName} {userProfile.Contractor.LastName} was created/updated", userProfile)); ; ;
         }
     }
 }

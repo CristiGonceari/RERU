@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ArticlesService } from 'projects/evaluation/src/app/utils/services/articles/articles.service';
+import { ArticlesService } from '../../../../utils/services/articles.service';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 @Component({
@@ -18,7 +18,7 @@ export class FaqOverviewComponent implements OnInit {
   public Editor = DecoupledEditor;
 
   constructor(
-		private faqService: ArticlesService,
+		private articleService: ArticlesService,
 		private activatedRoute: ActivatedRoute
   ) {  }
   
@@ -35,7 +35,7 @@ export class FaqOverviewComponent implements OnInit {
 	}
 
   getArticle(){
-    this.faqService.get(this.articleId).subscribe(res => {
+    this.articleService.get(this.articleId).subscribe(res => {
       if (res && res.data) {
         this.articleName = res.data.name;
         this.content = res.data.content;

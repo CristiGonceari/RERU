@@ -15,23 +15,23 @@ export class ArticlesService extends AbstractService {
 	}
 
 	get(id: number): Observable<any> {
-		return this.client.get<any>(`${this.baseUrl}/${this.urlRoute}/${id}`);
+		return this.client.get<any>(`${this.coreUrl}/${this.urlRoute}/${id}`);
 	}
 
 	getList(params): Observable<any> {
-		return this.client.get<any>(`${this.baseUrl}/${this.urlRoute}`, { params });
+		return this.client.get<any>(`${this.coreUrl}/${this.urlRoute}`, { params });
 	}
 
 	delete(id: number): Observable<ArticleModel> {
-		return this.client.delete<ArticleModel>(`${this.baseUrl}/${this.urlRoute}/${id}`);
+		return this.client.delete<ArticleModel>(`${this.coreUrl}/${this.urlRoute}/${id}`);
 	}
 
 	create(data: ArticleModel): Observable<ArticleModel> {
-		return this.client.post<ArticleModel>(`${this.baseUrl}/${this.urlRoute}`, data);
+		return this.client.post<ArticleModel>(`${this.coreUrl}/${this.urlRoute}`, data);
 	}
 
 	print(data): Observable<any> {
-		return this.client.put(`${this.baseUrl}/${this.urlRoute}/print`, data, {
+		return this.client.put(`${this.coreUrl}/${this.urlRoute}/print`, data, {
 			responseType: 'blob',
 			observe: 'response',
 		});

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,12 +51,12 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Contractor, ContractorDto>(contractors, request);
             
-            await LogAction(contractors);
+            await LogAction(paginatedModel.Items);
 
             return paginatedModel;
         }
 
-        private async Task LogAction(IQueryable<Contractor> contractors)
+        private async Task LogAction(IEnumerable<ContractorDto> contractors)
         {
             await _loggerService.Log(LogData.AsPersonal($"Contractors list was viewed", contractors));
         }

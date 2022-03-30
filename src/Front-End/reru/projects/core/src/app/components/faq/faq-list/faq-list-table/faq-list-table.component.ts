@@ -5,12 +5,12 @@ import { PaginationSummary } from 'projects/core/src/app/utils/models/pagination
 import { ArticlesService } from '../../../../utils/services/articles.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
-import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
+import { NotificationUtil } from 'projects/core/src/app/utils/util/notification.util';
 import { ConfirmModalComponent } from '@erp/shared';
 import { PrintModalComponent } from '@erp/shared';
 import { forkJoin } from 'rxjs';
-import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { saveAs } from 'file-saver';
+import { I18nService } from 'projects/core/src/app/utils/services/i18n.service';
 
 @Component({
 	selector: 'app-faq-list-table',
