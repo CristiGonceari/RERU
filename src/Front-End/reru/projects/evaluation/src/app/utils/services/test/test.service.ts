@@ -32,6 +32,10 @@ export class TestService extends AbstractService {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}
 
+	getTestSettings(id: number): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/setting/${id}`);
+	}
+
 	getUserTests(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/mine`, { params });
 	}

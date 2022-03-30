@@ -35,12 +35,13 @@ export class StartTestPageComponent implements OnInit {
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
-      this.getTestById(params.id);
     });
   }
 
   ngOnInit(): void {
     this.startTimer();
+    this.getTestById(this.testId);
+
   }
 
   startTimer() {
@@ -81,6 +82,15 @@ export class StartTestPageComponent implements OnInit {
       res => {
         this.testDto = res.data;
         this.getTestTemplate();
+      }
+    )
+    this.validateTest(testId);
+  }
+
+  validateTest(id): void {
+    this.testService.getTestSettings(id).subscribe(
+      res => {
+        this.testDto = res.data;
         if (this.testDto.rules == null) {
           this.testDto.rules == '';
         } else {

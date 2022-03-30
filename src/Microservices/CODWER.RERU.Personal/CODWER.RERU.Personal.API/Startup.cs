@@ -143,8 +143,8 @@ namespace CODWER.RERU.Personal.API
             app.UseHangfireDashboard();
             app.UseHangfireServer();
 
-            RecurringJob.AddOrUpdate<JobTimeSheetTable>(x => x.JobForNationalHolidays(), "*/2 * * * *");
-            RecurringJob.AddOrUpdate<JobTimeSheetTable>(x => x.JobForWorkedHours(), "*/5 * * * *");
+            RecurringJob.AddOrUpdate<JobTimeSheetTable>(x => x.JobForNationalHolidays(), "00 20 * * *");
+            RecurringJob.AddOrUpdate<JobTimeSheetTable>(x => x.JobForWorkedHours(), "0 4 * * *");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
