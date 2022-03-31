@@ -35,6 +35,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="DependencyInjection\Rotativa\Linux\wkhtmltopdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DependencyInjection\Rotativa\Mac\wkhtmltopdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DependencyInjection\Rotativa\Windows\wkhtmltopdf.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Templates\UserRegister.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

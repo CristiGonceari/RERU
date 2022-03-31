@@ -14,6 +14,9 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.Common.DataTransferObjects.TestDatas;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace CVU.ERP.Module.Application.Clients
 {
@@ -39,10 +42,10 @@ namespace CVU.ERP.Module.Application.Clients
         public async Task SyncUserProfile(BaseUserProfile userProfile)
         {
             var request = NewJsonRequest(UserProfileBasePath);
-            var json = JsonSerializer.Serialize(userProfile);
+            var json = JsonSerializer.Serialize<BaseUserProfile>(userProfile);
             request.AddParameter("application/json; charset=utf-8", json, ParameterType.RequestBody);
 
-            var response = await _restClient.PostAsync<Response<Unit>>(request, new CancellationToken());
+             var response = await _restClient.PostAsync<Response<Unit>>(request, new CancellationToken());
 
             if (!response.Success)
             {

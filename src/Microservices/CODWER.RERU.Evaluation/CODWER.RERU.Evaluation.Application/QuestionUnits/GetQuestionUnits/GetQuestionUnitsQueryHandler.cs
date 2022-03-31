@@ -52,7 +52,6 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
             {
                 items.Remove(unit);
                 var unhashedQuestion = await _questionUnitService.GetUnHashedQuestionUnit(unit.Id);
-                unhashedQuestion.Options = null;
                 items.Add(_mapper.Map<QuestionUnitDto>(unhashedQuestion));
             }
 

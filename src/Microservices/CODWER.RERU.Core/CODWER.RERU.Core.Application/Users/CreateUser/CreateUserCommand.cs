@@ -1,7 +1,6 @@
-using CVU.ERP.StorageService.Models;
 using MediatR;
 
-namespace CODWER.RERU.Core.Application.Users.CreateUser 
+namespace CODWER.RERU.Core.Application.Users.CreateUser
 {
 
     public class CreateUserCommand : IRequest<int> 
@@ -12,6 +11,5 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
         public string Email { get; set; }
         public string Idnp { get; set; }
         public bool EmailNotification { get; set; }
-        public AddFileDto FileDto { get; set; }
     }
 }

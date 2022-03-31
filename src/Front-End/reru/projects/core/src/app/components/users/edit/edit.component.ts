@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
+import { FileTypeEnum } from 'projects/erp-shared/src/lib/models/FileTypeEnum';
 
 @Component({
 	selector: 'app-edit',
@@ -20,9 +21,9 @@ export class EditComponent implements OnInit {
 	title: string;
 	description: string;
 
-  	fileId: string;
-  	fileType: string = null;
-  	attachedFile: File;
+	fileId: string;
+	fileType: FileTypeEnum = FileTypeEnum.Photos;
+	attachedFile: File;
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -32,7 +33,7 @@ export class EditComponent implements OnInit {
 		private notificationService: NotificationsService,
 		private router: Router,
 		private location: Location
-	) {}
+	) { }
 
 	ngOnInit(): void {
 		this.initData();
@@ -45,6 +46,7 @@ export class EditComponent implements OnInit {
 				this.userService.getEditUserPersonalDetails(response.id).subscribe(res => {
 					this.initForm(res.data);
 					this.isLoading = false;
+					this.fileId = res.data.mediaFileId;
 				});
 			} else {
 				this.initForm();
@@ -89,28 +91,45 @@ export class EditComponent implements OnInit {
 	}
 
 	editUser(): void {
-	const request = new FormData();
-    if (this.attachedFile) {
-      this.fileType = '7';
-      request.append('Data.FileDto.File', this.attachedFile);
-      request.append('Data.FileDto.Type', this.fileType);
-    }
-	request.append('Data.Id', this.userForm.value.id);
-    request.append('Data.Name', this.userForm.value.name);
-    request.append('Data.LastName', this.userForm.value.lastName);
-    request.append('Data.FatherName', this.userForm.value.fatherName);
+		this.isLoading = true;
+		let data = {
+			data: {
+				id: this.userForm.value.id,
+				name: this.userForm.value.name,
+				lastName: this.userForm.value.lastName,
+				fatherName: this.userForm.value.fatherName
+			}
+		}
 
-	this.userService.editUserPersonalDetails(request).subscribe(
-		res => {
-			forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('user.succes-edit'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
+		this.userService.editUserPersonalDetails(data).subscribe(
+			res => {
+				forkJoin([
+					this.translate.get('modal.success'),
+					this.translate.get('user.succes-edit'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
 				});
-			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-				this.back();
+
+				const request = new FormData();
+
+				if (this.attachedFile) {
+					request.append('Data.File.File', this.attachedFile);
+					request.append('Data.File.Type', this.fileType.toString());
+					request.append('Data.UserId', res.data);
+					this.userService.addUserAvatar(request).subscribe(() => {
+						this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+						this.isLoading = false;
+						this.back();
+					})
+				} else {
+					request.append('Data.UserId', res.data);
+					this.userService.addUserAvatar(request).subscribe(() => {
+						this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+						this.isLoading = false;
+						this.back();
+					})
+				}
 			}
 		);
 	}

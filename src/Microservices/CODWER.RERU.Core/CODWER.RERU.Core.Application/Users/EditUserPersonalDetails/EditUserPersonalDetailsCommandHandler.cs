@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails 
 {
-    public class EditUserPersonalDetailsCommandHandler : BaseHandler, IRequestHandler<EditUserPersonalDetailsCommand, Unit>
+    public class EditUserPersonalDetailsCommandHandler : BaseHandler, IRequestHandler<EditUserPersonalDetailsCommand, int>
     {
         private readonly IEvaluationClient _evaluationClient;
         private readonly ILoggerService<EditUserPersonalDetailsCommandHandler> _loggerService;
@@ -29,33 +29,33 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
             _loggerService = loggerService;
         }
 
-        public async Task<Unit> Handle (EditUserPersonalDetailsCommand request, CancellationToken cancellationToken) 
+        public async Task<int> Handle (EditUserPersonalDetailsCommand request, CancellationToken cancellationToken) 
         {
             var userProfile = await CoreDbContext.UserProfiles
                 .FirstOrDefaultAsync (up => up.Id == request.Data.Id);
 
-            if (request.Data.FileDto != null)
-            {
-                var addFile = await _storageFileService.AddFile(request.Data.FileDto);
+            //if (request.Data.FileDto != null)
+            //{
+            //    var addFile = await _storageFileService.AddFile(request.Data.FileDto);
 
-                userProfile.MediaFileId = addFile;
-            }
-            else
-            {
-                userProfile.MediaFileId = request.Data.MediaFileId;
-            }
+            //    userProfile.MediaFileId = addFile;
+            //}
+            //else
+            //{
+            //    userProfile.MediaFileId = request.Data.MediaFileId;
+            //}
 
             userProfile.Id = request.Data.Id;
             userProfile.Name = request.Data.Name;
             userProfile.LastName = request.Data.LastName;
             userProfile.FatherName = request.Data.FatherName;
 
-            await CoreDbContext.SaveChangesAsync ();
+            await CoreDbContext.SaveChangesAsync();
              
             await LogAction(userProfile);
             await SyncUserProfile(userProfile);
 
-            return Unit.Value;
+            return userProfile.Id;
         }
 
         private async Task LogAction(UserProfile userProfile)
