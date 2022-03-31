@@ -35,6 +35,7 @@ namespace CODWER.RERU.Core.Application.Users
                 .ForMember(destinationMember => destinationMember.Id, options => options.Ignore());
 
             CreateMap<UserProfile, EditUserPersonalDetailsDto>();
+
             CreateMap<EditUserPersonalDetailsDto, UserProfile>()
                 .ForMember(destinationMember => destinationMember.Id, options => options.Ignore());
         }

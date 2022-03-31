@@ -2,7 +2,11 @@
   subTitle="{{ 'pages.users.new' | translate }}">
 </app-page-title>
 
-<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
   <div class="d-flex flex-column-fluid">
     <div class="container">
       <div class="card card-custom gutter-b">

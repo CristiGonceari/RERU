@@ -90,7 +90,27 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.GetTimeSheetTableValu
                 contractor.FreeHours = await _timeSheetTableService.GetFreeHoursForContractor(contractor.ContractorId, contractor.WorkedHours, request.FromDate, request.ToDate, contractor.WorkingDays);
             }
 
-            await LogAction(paginatedModel.Items);
+            var contractorsList = paginatedModel.Items.Select(c => new ContractorTimeSheetTableDto
+            {
+                ContractorId = c.ContractorId,
+                ContractorName = c.ContractorName,
+                Department = c.Department,
+                Role = c.Role,
+                Content = c.Content.Select(x => new TimeSheetTableDto 
+                { 
+                    Date = x.Date,
+                    ContractorId = c.ContractorId,
+                    ValueId = x.ValueId, 
+                    Value = x.Value 
+                })
+                .Where(x => x.Date == DateTime.Today.AddDays(-1)).ToList(),
+                WorkedHours = c.WorkedHours,
+                FreeHours = c.FreeHours,
+                WorkingDays = c.WorkingDays
+
+            });
+
+            await LogAction(contractorsList);
 
             return paginatedModel;
         }

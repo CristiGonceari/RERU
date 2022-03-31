@@ -68,15 +68,15 @@
                   <input type="checkbox" value="{{ item.id }}" name="option" [checked]="item.isSelected" />
                   <span [class.bg-success]="item.isSelected && item.isCorrect"></span>
                 </label>
-                <div class="p-2 h-20px">
-                  <p class="mb-0 font-size-lg option-label">{{item.answer}}</p>
-                  <div class="form-group align-items-center">
-                    <div class="col-lg-6 col-xl-3 w-100 d-flex">
-                      <div *ngIf="item.optionMediaFileId">
-                        <app-get-media-file [fileId]="item.optionMediaFileId"></app-get-media-file>
+                <div class="ml-5 w-100">
+                  {{ item.answer }}
+                  <div class="form-group row align-items-center">
+                      <div class="col-lg-6 col-xl-3 w-100 d-flex">
+                        <div *ngIf="item.optionMediaFileId">
+                          <app-get-media-file [fileId]="item.optionMediaFileId"></app-get-media-file>
+                        </div>
                       </div>
                     </div>
-                  </div>
                 </div>
                 <div class="ml-auto p-2">
                   <p class="mb-0 font-size-lg option-label mr-5">{{item.points}}p. ({{item.percentages}}%)</p>

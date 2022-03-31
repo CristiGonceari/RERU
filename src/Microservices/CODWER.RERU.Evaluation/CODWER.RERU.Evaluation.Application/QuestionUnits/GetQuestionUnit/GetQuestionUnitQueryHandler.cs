@@ -36,7 +36,6 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnit
                 if (questionUnit.QuestionType == QuestionTypeEnum.HashedAnswer)
                 {
                     questionUnit = await _questionUnitService.GetUnHashedQuestionUnit(questionUnit.Id);
-                    questionUnit.Options = null;
                 }
             }
 
