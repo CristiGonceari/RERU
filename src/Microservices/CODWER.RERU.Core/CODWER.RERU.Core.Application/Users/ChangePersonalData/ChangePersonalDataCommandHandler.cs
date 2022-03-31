@@ -1,14 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using CODWER.RERU.Core.Application.Common.Handlers;
+﻿using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CVU.ERP.Identity.Models;
 using CVU.ERP.Module.Application.Providers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.Application.Users.ChangePersonalData
 {
@@ -17,7 +15,7 @@ namespace CODWER.RERU.Core.Application.Users.ChangePersonalData
         private readonly UserManager<ERPIdentityUser> _userManager;
         private readonly ICurrentApplicationUserProvider _userProvider;
 
-        public ChangePersonalDataCommandHandler(ICommonServiceProvider commonServicepProvider, ICurrentApplicationUserProvider userProvider, UserManager<ERPIdentityUser> userManager) : base(commonServicepProvider)
+        public ChangePersonalDataCommandHandler(ICommonServiceProvider commonServiceProvider, ICurrentApplicationUserProvider userProvider, UserManager<ERPIdentityUser> userManager) : base(commonServiceProvider)
         {
             _userManager = userManager;
             _userProvider = userProvider;

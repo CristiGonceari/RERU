@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import {  FormGroup  } from '@angular/forms';
 import {  Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
+import { FileTypeEnum } from 'projects/erp-shared/src/lib/models/FileTypeEnum';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../utils/services/i18n.service';
 import { UserService } from '../../utils/services/user.service';
@@ -24,7 +25,7 @@ success : boolean = false;
 
   userId: any;
   fileId: string;
-  fileType: string = null;
+  fileType: FileTypeEnum = FileTypeEnum.Photos;
   attachedFile: File;
 
   languageList = [
@@ -87,19 +88,17 @@ success : boolean = false;
 
   addUser(): void {
     const request = new FormData();
-    if (this.attachedFile) {
-      this.fileType = '7';
-      request.append('FileDto.File', this.attachedFile);
-      request.append('FileDto.Type', this.fileType);
-    }
-      request.append('Name', this.userForm.value.name);
-      request.append('LastName', this.userForm.value.lastName);
-      request.append('FatherName', this.userForm.value.fatherName);
-      request.append('Email', this.userForm.value.email);
-      request.append('Idnp', this.userForm.value.idnp);
-      request.append('EmailNotification', "true");
 
-    this.userService.createUser(request).subscribe(res => {
+    let data = {
+      name: this.userForm.value.name,
+      lastName: this.userForm.value.lastName,
+      fatherName: this.userForm.value.fatherName,
+      email: this.userForm.value.email,
+      idnp: this.userForm.value.idnp,
+      emailNotification: this.userForm.value.emailNotification = true
+    }
+
+    this.userService.createUser(data).subscribe(res => {
       forkJoin([
 				this.translate.get('modal.success'),
 				this.translate.get('user.succes-create'),
@@ -108,7 +107,17 @@ success : boolean = false;
 				this.description = description;
         this.success = true;
 				});
-      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+
+        if (this.attachedFile) {
+          request.append('Data.File.File', this.attachedFile);
+          request.append('Data.File.Type', this.fileType.toString());
+        }
+        request.append('Data.UserId', res.data);
+
+        this.userService.addUserAvatar(request).subscribe(() => {
+          this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+        })
+
     }, () => {
       forkJoin([
 				this.translate.get('notification.title.error'),

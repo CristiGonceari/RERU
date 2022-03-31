@@ -1,19 +1,19 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+using AutoMapper;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CODWER.RERU.Core.Data.Entities;
-using CVU.ERP.Logging.Models;
-using MediatR;
-using AutoMapper;
+using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
 using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.Models.Internal;
-using CVU.ERP.Common.DataTransferObjects.Users;
-using CVU.ERP.StorageService;
+using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.Application.Users.CreateUser
 {
@@ -22,35 +22,29 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
         private readonly IEnumerable<IIdentityService> _identityServices;
         private readonly ILoggerService<CreateUserCommandHandler> _loggerService;
         private readonly IEvaluationClient _evaluationClient;
-        private readonly IStorageFileService _storageFileService;
         private readonly IMapper _mapper;
 
         public CreateUserCommandHandler(ICommonServiceProvider commonServiceProvider,
             IEnumerable<IIdentityService> identityServices, 
             ILoggerService<CreateUserCommandHandler> loggerService, 
             IEvaluationClient evaluationClient, 
-            IMapper mapper, 
-            IStorageFileService storageFileService)
+            IMapper mapper)
             : base(commonServiceProvider)
         {
             _identityServices = identityServices;
             _loggerService = loggerService;
             _evaluationClient = evaluationClient;
-            _storageFileService = storageFileService;
             _mapper = mapper;
         }
 
         public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var storage = await _storageFileService.AddFile(request.FileDto);
-
             var newUser = new CreateUserDto()
             {
                 Name = request.Name,
                 LastName = request.LastName,
                 FatherName = request.FatherName,
                 Idnp = request.Idnp,
-                MediaFileId = storage,
                 Email = request.Email,
                 EmailNotification = request.EmailNotification,
             };
@@ -83,11 +77,22 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
             }
 
             CoreDbContext.UserProfiles.Add(userProfile);
-
             await CoreDbContext.SaveChangesAsync();
 
+            try
+            {
+                await SyncUserProfile(userProfile);
+            }
+            catch (Exception e)
+            {
+                CoreDbContext.UserProfiles.Remove(userProfile);
+                await CoreDbContext.SaveChangesAsync();
+
+                Console.WriteLine(e);
+                throw;
+            }
+
             await LogAction(userProfile);
-            await SyncUserProfile(userProfile);
 
             return userProfile.Id;
         }

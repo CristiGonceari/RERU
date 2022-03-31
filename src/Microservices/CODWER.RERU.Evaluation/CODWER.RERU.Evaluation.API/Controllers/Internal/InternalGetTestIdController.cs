@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.API.Config;
+﻿using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStart;
 using CVU.ERP.Common.DataTransferObjects.TestDatas;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.API.Controllers.Internal
 {

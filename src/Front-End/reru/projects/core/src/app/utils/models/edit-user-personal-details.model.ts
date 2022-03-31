@@ -3,4 +3,5 @@ export class EditUserPersonalDetails {
 	name: string;
 	lastName: string;
 	fatherName: string;
+	mediaFileId: string;
 }

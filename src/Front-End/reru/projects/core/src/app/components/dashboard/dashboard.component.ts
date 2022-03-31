@@ -35,7 +35,6 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getTestId();
     this.list();
     this.subscribeForAuthChange();
     this.setIntrvl();
