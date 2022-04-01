@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgbDateFRParserFormatter } from './services/date-formater/date-parse-formatter.service';
 import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,6 +14,7 @@ import { CalendarChunkPipe } from './pipes/calendar-chunk.pipe';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SharedModule } from '@erp/shared';
 import { AttachUserModalComponent } from './components/attach-user-modal/attach-user-modal.component';
+import { DateFilterPipe } from './pipes/date-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AttachUserModalComponent } from './components/attach-user-modal/attach-
     EventCalendarComponent,
     CalendarChunkPipe,
     AttachUserModalComponent,
+    DateFilterPipe,
   ],
   imports: [
     HttpClientModule,
@@ -38,14 +40,14 @@ import { AttachUserModalComponent } from './components/attach-user-modal/attach-
   providers: [
     { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter },
     SafeHtmlPipe,
-
+    DatePipe,
   ],
   exports: [
     SafeHtmlPipe,
     TranslateModule,
     DateComponent,
     EventCalendarComponent,
-    
+    DateFilterPipe,
   ]
 })
 export class UtilsModule { }
