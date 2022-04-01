@@ -25,18 +25,20 @@
                   <div class="form-group row">
                     <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.start-date' | translate}}</label>
                     <div class="col-lg-9 col-xl-9">
-                      <input id="start" [owlDateTime]="fromDate" [owlDateTimeTrigger]="fromDate"
-                        placeholder="Start Date" class="form-control form-control-lg form-control-solid"
-                        [(ngModel)]="startDate" name="startDate" autocomplete="off" />
+                      <input id="from" [owlDateTime]="fromDate" placeholder="Date Time" autocomplete="off"
+                        class="shadow-input" name="date" [(ngModel)]="startDate" />
+                      <input id="from" [owlDateTimeTrigger]="fromDate" placeholder="Date Time"
+                        class="form-control form-control-lg form-control-solid" [value]="startDate | dateFilter:'dd/MM/yy HH:mm'"/>
                       <owl-date-time #fromDate></owl-date-time>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.end-date' | translate}}</label>
                     <div class="col-lg-9 col-xl-9">
-                      <input id="end" [owlDateTime]="tillDate" [owlDateTimeTrigger]="tillDate" placeholder="End Date"
-                        class="form-control form-control-lg form-control-solid" name="endDate" [(ngModel)]="endDate"
-                        autocomplete="off" />
+                      <input id="tillDate" [owlDateTime]="tillDate" placeholder="Date Time"
+                        class="shadow-input" name="date" [(ngModel)]="endDate" />
+                      <input id="tillDate" [owlDateTimeTrigger]="tillDate" placeholder="Date Time"
+                        class="form-control form-control-lg form-control-solid" [value]="endDate | dateFilter:'dd/MM/yy HH:mm'"/>
                       <owl-date-time #tillDate></owl-date-time>
                     </div>
                   </div>
@@ -51,8 +53,8 @@
                   </div>
                 </div>
                 <div class="text-right border-top pt-10">
-                  <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
-                  </app-button>
+                  <app-button class="btn mr-2" (handle)="backClicked()"
+                    [value]="'button.cancel' | translate"></app-button>
                   <app-add-button class="btn" *ngIf="!eventId" (handle)="onSave()"
                     [value]="'button.confirm' | translate"></app-add-button>
                   <app-confirm-button class="btn" *ngIf="eventId" (handle)="onSave()"
