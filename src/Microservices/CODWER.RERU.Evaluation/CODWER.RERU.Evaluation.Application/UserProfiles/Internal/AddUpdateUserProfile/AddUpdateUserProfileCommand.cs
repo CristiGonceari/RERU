@@ -1,5 +1,4 @@
-﻿using CVU.ERP.Module.Application.Models;
-using CVU.ERP.Module.Application.Models.Internal;
+﻿using CVU.ERP.Module.Application.Models.Internal;
 using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.UserProfiles.Internal.AddUpdateUserProfile
