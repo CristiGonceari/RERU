@@ -10,6 +10,8 @@ using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CVU.ERP.Logging;
+using CVU.ERP.Module.Application.Models;
+using CODWER.RERU.Core.Data.Entities;
 
 namespace CVU.ERP.Module.Application.LoggerServices.Implementations
 {
@@ -26,6 +28,27 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
         public virtual async Task Log(LogData data)
         {
             await LocalLog(data);
+        }
+
+        public async Task LogWithoutUser(LogData data)
+        {
+            var user = JsonSerializer.Deserialize<UserProfile>(data.SerializedObject.ToString());
+            var toLog = new Log
+            {
+                Id = Guid.NewGuid().ToString(),
+                Project = data.Project,
+                UserName = $"{user.LastName} {user.Name} {user.FatherName}",
+                UserIdentifier = "",
+                Event = !string.IsNullOrWhiteSpace(data.Event) ? data.Event : ParseName(),
+                EventMessage = data.EventMessage,
+                Date = DateTime.Now,
+                JsonMessage = data.SerializedObject
+            };
+
+            await _localLoggingDbContext.Logs.AddAsync(toLog);
+            await _localLoggingDbContext.SaveChangesAsync();
+
+            ConsoleWrite(toLog);
         }
 
         private async Task LocalLog(LogData data)
@@ -81,5 +104,7 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
 
             Console.WriteLine($"Logged message :\n {consoleMessage}\n JSON Entity :\n {log.JsonMessage}\n");
         }
+
+        
     }
 }
