@@ -11,10 +11,12 @@ using CVU.ERP.Notifications.Services;
 using Microsoft.EntityFrameworkCore;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
+using System.Collections.Generic;
+using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 
 namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEvent
 {
-    public class AssignEvaluatorToEventCommandHandler : IRequestHandler<AssignEvaluatorToEventCommand, Unit>
+    public class AssignEvaluatorToEventCommandHandler : IRequestHandler<AssignEvaluatorToEventCommand, List<int>>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
@@ -32,22 +34,37 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
             _internalNotificationService = internalNotificationService;
         }
 
-        public async Task<Unit> Handle(AssignEvaluatorToEventCommand request, CancellationToken cancellationToken)
+        public async Task<List<int>> Handle(AssignEvaluatorToEventCommand request, CancellationToken cancellationToken)
         {
-            var eventEvaluator = _mapper.Map<EventEvaluator>(request.Data);
 
-            await _appDbContext.EventEvaluators.AddAsync(eventEvaluator);
-            await _appDbContext.SaveChangesAsync();
+            var eventEvaluatorIds = new List<int>();
 
-            var eventName = await _appDbContext.EventEvaluators
-                .Include(x => x.Event)
-                .FirstAsync(x => x.EventId == eventEvaluator.EventId && x.EvaluatorId == eventEvaluator.EvaluatorId);
+            foreach (var evaluatorId in request.EvaluatorId)
+            {
+                var eventEvaluator = new AddEventEvaluatorDto()
+                {
+                    EvaluatorId = evaluatorId,
+                    EventId = request.EventId,
+                    ShowUserName = request.ShowUserName
+                };
 
-            await _internalNotificationService.AddNotification(eventEvaluator.EvaluatorId, NotificationMessages.YouWereInvitedToEventAsEvaluator);
+                var result = _mapper.Map<EventEvaluator>(eventEvaluator);
 
-            await SendEmailNotification(eventEvaluator);
+                await _appDbContext.EventEvaluators.AddAsync(result);
+                await _appDbContext.SaveChangesAsync();
 
-            return Unit.Value;
+                var eventName = await _appDbContext.EventEvaluators
+                    .Include(x => x.Event)
+                    .FirstAsync(x => x.EventId == eventEvaluator.EventId && x.EvaluatorId == eventEvaluator.EvaluatorId);
+
+                eventEvaluatorIds.Add(eventName.Id);
+
+                await _internalNotificationService.AddNotification(eventEvaluator.EvaluatorId, NotificationMessages.YouWereInvitedToEventAsEvaluator);
+
+                await SendEmailNotification(result);
+            }
+
+            return eventEvaluatorIds;
         }
 
         private async Task<Unit> SendEmailNotification(EventEvaluator eventEvaluator)

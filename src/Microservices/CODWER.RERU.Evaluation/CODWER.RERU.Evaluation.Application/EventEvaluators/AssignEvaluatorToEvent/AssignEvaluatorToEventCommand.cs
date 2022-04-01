@@ -2,12 +2,15 @@
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
+using System.Collections.Generic;
 
 namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEvent
 {
     [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
-    public class AssignEvaluatorToEventCommand : IRequest<Unit>
+    public class AssignEvaluatorToEventCommand : IRequest<List<int>>
     {
-        public AddEventEvaluatorDto Data { get; set; }
+        public int EventId { get; set; }
+        public List<int> EvaluatorId { get; set; }
+        public bool ShowUserName { get; set; }
     }
 }

@@ -24,13 +24,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("no-assigned")]
-        public async Task<List<UserProfileDto>> GetNoAssignedUsers([FromQuery] GetNoAssignedUsersQuery query)
+        public async Task<PaginatedModel<UserProfileDto>> GetNoAssignedUsers([FromQuery] GetNoAssignedUsersQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpPost]
-        public async Task<Unit> AssignUserToEvent([FromBody] AssignUserToEventCommand command)
+        public async Task<List<int>> AssignUserToEvent([FromBody] AssignUserToEventCommand command)
         {
             return await Mediator.Send(command);
         }

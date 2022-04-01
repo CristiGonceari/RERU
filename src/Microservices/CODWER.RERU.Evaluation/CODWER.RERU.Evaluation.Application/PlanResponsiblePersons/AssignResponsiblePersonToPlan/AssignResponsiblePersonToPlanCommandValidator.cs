@@ -5,32 +5,78 @@ using System.Linq;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.AssignResponsiblePersonToPlan
 {
     public class AssignResponsiblePersonToPlanCommandValidator : AbstractValidator<AssignResponsiblePersonToPlanCommand>
     {
+        private readonly AppDbContext _appDbContext;
+
         public AssignResponsiblePersonToPlanCommandValidator(AppDbContext appDbContext)
         {
-            RuleFor(r => r.Data)
+            _appDbContext = appDbContext;
+
+            RuleFor(r => r)
                 .NotNull()
                 .WithErrorCode(ValidationCodes.NULL_OR_EMPTY_INPUT);
 
-            When(r => r.Data != null, () =>
+            When(r => r != null, () =>
             {
-                RuleFor(x => x.Data.PlanId)
+                RuleFor(x => x.PlanId)
                     .SetValidator(x => new ItemMustExistValidator<Plan>(appDbContext, ValidationCodes.INVALID_PLAN,
                         ValidationMessages.InvalidReference));
 
-                RuleFor(x => x.Data.UserProfileId)
-                    .SetValidator(x => new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.INVALID_USER,
-                        ValidationMessages.InvalidReference));
+                RuleFor(x => x)
+                    .MustAsync((x, cancellation) => ExistentUser(x))
+                    .WithErrorCode(ValidationCodes.INVALID_USER)
+                    .WithMessage(ValidationMessages.InvalidReference);
 
-                RuleFor(r => r.Data)
-                    .Must(x => !appDbContext.PlanResponsiblePersons.Any(l => l.PlanId == x.PlanId && l.UserProfileId == x.UserProfileId))
+                RuleFor(r => r)
+                    .Must(x => !ExistentAssignedUser(x))
                     .WithErrorCode(ValidationCodes.USER_ALREADY_ASSIGNED);
             });
         }
-    }
+        private async Task<bool> ExistentUser(AssignResponsiblePersonToPlanCommand data)
+        {
+            var listOfResults = new List<bool>();
 
+            foreach (var userId in data.UserProfileId)
+            {
+                var result = _appDbContext.UserProfiles.Any(up => up.Id == userId);
+
+                listOfResults.Add(result);
+
+            }
+
+            if (listOfResults.Contains(false))
+            {
+                return false;
+            }
+
+            return true;
+        }
+        private bool ExistentAssignedUser(AssignResponsiblePersonToPlanCommand data)
+        {
+            var listOfResults = new List<bool>();
+
+
+            foreach (var userId in data.UserProfileId)
+            {
+                var result = _appDbContext.PlanResponsiblePersons.Any(ev => ev.UserProfileId == userId && ev.PlanId == data.PlanId);
+
+                listOfResults.Add(result);
+            }
+
+            if (listOfResults.Contains(true))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
+    }
 }

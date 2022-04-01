@@ -1,28 +1,28 @@
-﻿using AutoMapper;
-using CODWER.RERU.Evaluation.Data.Entities.StaticExtensions;
+﻿using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
+using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.GetNoAssinedResponsiblePersons
 {
-    public class GetNoAssignedResponsiblePersonsQueryHandler : IRequestHandler<GetNoAssignedResponsiblePersonsQuery, List<UserProfileDto>>
+    public class GetNoAssignedResponsiblePersonsQueryHandler : IRequestHandler<GetNoAssignedResponsiblePersonsQuery, PaginatedModel<UserProfileDto>>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly IMapper _mapper;
+        private readonly IPaginationService _paginationService;
 
-        public GetNoAssignedResponsiblePersonsQueryHandler(AppDbContext appDbContext, IMapper mapper)
+        public GetNoAssignedResponsiblePersonsQueryHandler(AppDbContext appDbContext, IPaginationService paginationService)
         {
             _appDbContext = appDbContext;
-            _mapper = mapper;
+            _paginationService = paginationService;
+
         }
 
-        public async Task<List<UserProfileDto>> Handle(GetNoAssignedResponsiblePersonsQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedModel<UserProfileDto>> Handle(GetNoAssignedResponsiblePersonsQuery request, CancellationToken cancellationToken)
         {
             var responsiblePersons = _appDbContext.LocationResponsiblePersons
                 .Include(x => x.UserProfile)
@@ -32,14 +32,35 @@ namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.GetNoAss
 
             var userProfiles = _appDbContext.UserProfiles.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(request.Keyword))
-            {
-                userProfiles = userProfiles.FilterByNameAndIdnp(request.Keyword);
-            }
-
             userProfiles = userProfiles.Where(x => !responsiblePersons.Any(s => s == x.Id));
 
-            return _mapper.Map<List<UserProfileDto>>(userProfiles.ToList());
+            if (!string.IsNullOrEmpty(request.FirstName))
+            {
+                userProfiles = userProfiles.Where(x => x.FirstName.Contains(request.FirstName));
+            }
+
+            if (!string.IsNullOrEmpty(request.LastName))
+            {
+                userProfiles = userProfiles.Where(x => x.LastName.Contains(request.LastName));
+            }
+
+            if (!string.IsNullOrEmpty(request.Patronymic))
+            {
+                userProfiles = userProfiles.Where(x => x.Patronymic.Contains(request.Patronymic));
+            }
+
+            if (!string.IsNullOrEmpty(request.Email))
+            {
+                userProfiles = userProfiles.Where(x => x.Email.Contains(request.Email));
+            }
+
+            if (!string.IsNullOrEmpty(request.Idnp))
+            {
+                userProfiles = userProfiles.Where(x => x.Idnp.Contains(request.Idnp));
+            }
+
+            return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(userProfiles, request);
+
         }
     }
 }

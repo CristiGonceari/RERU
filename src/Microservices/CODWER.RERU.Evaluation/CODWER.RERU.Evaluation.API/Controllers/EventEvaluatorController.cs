@@ -24,13 +24,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("no-assigned")]
-        public async Task<List<UserProfileDto>> GetNoAssignedEvaluators([FromQuery] GetNoAssignedEvaluatorsQuery query)
+        public async Task<PaginatedModel<UserProfileDto>> GetNoAssignedEvaluators([FromQuery] GetNoAssignedEvaluatorsQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpPost]
-        public async Task<Unit> AssignEvaluatorToEvent([FromBody] AssignEvaluatorToEventCommand command)
+        public async Task<List<int>> AssignEvaluatorToEvent([FromBody] AssignEvaluatorToEventCommand command)
         {
             return await Mediator.Send(command);
         }
@@ -44,7 +44,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("assigned")]
-        public async Task<PaginatedModel<UserProfileDto>> GetNoAssignedUsers([FromQuery] GetAssignedEvaluatorsQuery query)
+        public async Task<PaginatedModel<UserProfileDto>> GetAssignedUsers([FromQuery] GetAssignedEvaluatorsQuery query)
         {
             return await Mediator.Send(query);
         }

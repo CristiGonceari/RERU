@@ -11,10 +11,12 @@ using CVU.ERP.Notifications.Services;
 using Microsoft.EntityFrameworkCore;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Application.Services;
+using System.Collections.Generic;
+using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 
 namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignResponsiblePersonToEvent
 {
-    public class AssignResponsiblePersonToEventCommandHandler : IRequestHandler<AssignResponsiblePersonToEventCommand, Unit>
+    public class AssignResponsiblePersonToEventCommandHandler : IRequestHandler<AssignResponsiblePersonToEventCommand, List<int>>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
@@ -32,21 +34,35 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
             _notificationService = notificationService;
         }
 
-        public async Task<Unit> Handle(AssignResponsiblePersonToEventCommand request, CancellationToken cancellationToken)
+        public async Task<List<int>> Handle(AssignResponsiblePersonToEventCommand request, CancellationToken cancellationToken)
         {
-            var eventResponsiblePerson = _mapper.Map<EventResponsiblePerson>(request.Data);
+            var eventUsersIds = new List<int>();
 
-            await _appDbContext.EventResponsiblePersons.AddAsync(eventResponsiblePerson);
-            await _appDbContext.SaveChangesAsync();
+            foreach (var userId in request.UserProfileId)
+            {
+                var eventResponsiblePerson = new AddEventPersonDto()
+                {
+                    UserProfileId = userId,
+                    EventId = request.EventId,
+                };
 
-            var eventName = await _appDbContext.EventResponsiblePersons
-                .Include(x => x.Event)
-                .FirstAsync(x => x.EventId == eventResponsiblePerson.EventId && x.UserProfileId == eventResponsiblePerson.UserProfileId);
+                var result = _mapper.Map<EventResponsiblePerson>(eventResponsiblePerson);
 
-            await _internalNotificationService.AddNotification(eventResponsiblePerson.UserProfileId, NotificationMessages.YouWereInvitedToEventAsResponsiblePerson);
-            await SendEmailNotification(eventResponsiblePerson);
+                await _appDbContext.EventResponsiblePersons.AddAsync(result);
+                await _appDbContext.SaveChangesAsync();
 
-            return Unit.Value;
+                var eventName = await _appDbContext.EventResponsiblePersons
+                    .Include(x => x.Event)
+                    .FirstAsync(x => x.EventId == eventResponsiblePerson.EventId && x.UserProfileId == eventResponsiblePerson.UserProfileId);
+
+                eventUsersIds.Add(eventName.Id);
+
+                await _internalNotificationService.AddNotification(eventResponsiblePerson.UserProfileId, NotificationMessages.YouWereInvitedToEventAsResponsiblePerson);
+                await SendEmailNotification(result);
+
+            }
+
+            return eventUsersIds;
         }
 
         private async Task<Unit> SendEmailNotification(EventResponsiblePerson eventResponsiblePerson)
