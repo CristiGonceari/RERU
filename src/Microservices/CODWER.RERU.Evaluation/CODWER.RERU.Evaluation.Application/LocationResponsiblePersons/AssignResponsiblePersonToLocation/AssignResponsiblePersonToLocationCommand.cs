@@ -1,12 +1,14 @@
-﻿using CODWER.RERU.Evaluation.DataTransferObjects.Locations;
-using CVU.ERP.Module.Application.Attributes;
+﻿using CVU.ERP.Module.Application.Attributes;
 using MediatR;
+using System.Collections.Generic;
 
 namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.AssignResponsiblePersonToLocation
 {
     [ModuleOperation(permission: Permissions.PermissionCodes.LOCATIONS_GENERAL_ACCESS)]
-    public class AssignResponsiblePersonToLocationCommand : IRequest<Unit>
+    public class AssignResponsiblePersonToLocationCommand : IRequest<List<int>>
     {
-        public AddLocationPersonDto Data { get; set; }
+        public int LocationId { get; set; }
+        public List<int> UserProfileId { get; set; }
+
     }
 }
