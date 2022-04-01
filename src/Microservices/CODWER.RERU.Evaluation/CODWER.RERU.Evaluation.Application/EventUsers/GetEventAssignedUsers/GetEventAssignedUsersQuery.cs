@@ -1,8 +1,6 @@
 ﻿using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.Pagination;
 using MediatR;
-using System.Collections.Generic;
-
 
 namespace CODWER.RERU.Evaluation.Application.EventUsers.GetEventAssignedUsers
 {

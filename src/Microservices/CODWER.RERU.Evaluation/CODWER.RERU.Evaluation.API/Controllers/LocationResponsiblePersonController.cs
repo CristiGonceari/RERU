@@ -23,13 +23,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("no-assigned")]
-        public async Task<List<UserProfileDto>> GetUserProfilesNotAttachedToLocation([FromQuery] GetNoAssignedResponsiblePersonsQuery query)
+        public async Task<PaginatedModel<UserProfileDto>> GetUserProfilesNotAttachedToLocation([FromQuery] GetNoAssignedResponsiblePersonsQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpPost]
-        public async Task<Unit> AssignPersonToLocation([FromBody] AssignResponsiblePersonToLocationCommand command)
+        public async Task<List<int>> AssignPersonToLocation([FromBody] AssignResponsiblePersonToLocationCommand command)
         {
             return await Mediator.Send(command);
         }

@@ -4,32 +4,78 @@ using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.AssignResponsiblePersonToLocation
 {
     public class AssignResponsiblePersonToLocationCommandValidator : AbstractValidator<AssignResponsiblePersonToLocationCommand>
     {
+        private readonly AppDbContext _appDbContext;
+
         public AssignResponsiblePersonToLocationCommandValidator(AppDbContext appDbContext)
         {
-            RuleFor(r => r.Data)
+            _appDbContext = appDbContext;
+
+            RuleFor(r => r)
                 .NotNull()
                 .WithErrorCode(ValidationCodes.NULL_OR_EMPTY_INPUT);
 
-            When(r => r.Data != null, () =>
+            When(r => r != null, () =>
             {
-                RuleFor(r => r.Data.LocationId)
+                RuleFor(r => r.LocationId)
                  .SetValidator(x => new ItemMustExistValidator<Location>(appDbContext, ValidationCodes.INVALID_LOCATION,
                         ValidationMessages.InvalidReference));
 
-                RuleFor(r => r.Data.UserProfileId)
-                .SetValidator(x => new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.INVALID_USER,
-                        ValidationMessages.InvalidReference));
+                RuleFor(r => r)
+                   .MustAsync((x, cancellation) => ExistentUser(x))
+                    .WithErrorCode(ValidationCodes.INVALID_USER)
+                    .WithMessage(ValidationMessages.InvalidReference);
 
-                RuleFor(r => r.Data)
-                    .Must(x => !appDbContext.LocationResponsiblePersons.Any(l => l.LocationId == x.LocationId && l.UserProfileId == x.UserProfileId))
+                RuleFor(r => r)
+                    .Must(x => !ExistentAssignedUser(x))
                     .WithErrorCode(ValidationCodes.EXISTENT_RESPONSIBLE_PERSON_IN_LOCATION);
             });
+        }
+        private async Task<bool> ExistentUser(AssignResponsiblePersonToLocationCommand data)
+        {
+            var listOfResults = new List<bool>();
+
+            foreach (var userId in data.UserProfileId)
+            {
+                var result = _appDbContext.UserProfiles.Any(up => up.Id == userId);
+
+                listOfResults.Add(result);
+
+            }
+
+            if (listOfResults.Contains(false))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ExistentAssignedUser(AssignResponsiblePersonToLocationCommand data)
+        {
+            var listOfResults = new List<bool>();
+
+
+            foreach (var userId in data.UserProfileId)
+            {
+                var result = _appDbContext.LocationResponsiblePersons.Any(ev => ev.UserProfileId == userId && ev.LocationId == data.LocationId);
+
+                listOfResults.Add(result);
+            }
+
+            if (listOfResults.Contains(true))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
