@@ -794,7 +794,7 @@
     "solicited-tests": "Solicited tests",
     "my-solicited-tests": "My solicited tests",
     "solicited-time": "Solicited time",
-    "add-test": "Add solicited test",
+    "add-test": "Solicit test",
     "remove": "Remove solicited test",
     "remove-msg": "Are you sure you want to remove this solicited test?",
     "succes-remove-msg": "Solicited test was successfully deleted",

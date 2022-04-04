@@ -12,10 +12,21 @@
     "registration": "Core Registration"
   },
   "registration-page":{
-    "about-us": "About Us",
+    "about-us": "Good to know",
     "registration": "Registration",
     "success-message": "You have successfully registered, your password has been sent to your email !!",
-    "registration-datas": "Registration data"
+    "registration-datas": "Registration data",
+    "to-add-new-candidate": "To register as a candidate, you need to fill in the form below.",
+    "after-registration-recive-email": "After registration, you will be sent an email with your credentials.",
+    "step1": "You must be logged in with these credentials. After authentication go to the „Evaluation and Testing” module. (Step 1)",
+    "step2": "Request a test in the „My Activities” section (Step 2)",
+    "step3": "„Tests Required” option (Step 3)",
+    "step4-step5": "Click the „Request Test” button (Step 4) and fill out the form with the desired data (Step 5)",
+    "event": " - Event",
+    "test": " - Test",
+    "time": " - Convenient time",
+    "step6": "Click the „Confirm” button (Step 6) to complete the procedure.",
+    "registration-candidate-page": "Candidate Registration Page"
   },
   "login": {
     "admin-panel": "Administration Panel",
