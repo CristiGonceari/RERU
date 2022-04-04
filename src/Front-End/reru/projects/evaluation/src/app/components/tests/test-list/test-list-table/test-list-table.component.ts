@@ -277,7 +277,7 @@ export class TestListTableComponent implements OnInit {
   getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['testTemplateName', 'userName', 'eventName', 'locationName', 'testStatus', 'verificationProgress', 'result', 'accumulatedPercentage', 'minPercent'];
+		let headersDto = ['testTemplateName', 'userName', 'eventName', 'locationNames', 'testStatus', 'verificationProgress', 'result', 'accumulatedPercentage', 'minPercent'];
 		for (let i = 0; i < headersHtml.length - 1; i++) {
       if(i == 2){
         this.headersToPrint.push({ value: "idnp", label: "Idnp"})
