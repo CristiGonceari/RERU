@@ -13,6 +13,7 @@ using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Application.Services;
 using System.Collections.Generic;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
+using System.Linq;
 
 namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 {
@@ -38,28 +39,49 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
         {
             var eventUsersIds = new List<int>();
 
+            var eventValues = await _appDbContext.EventUsers.ToListAsync();
+
             foreach (var userId in request.UserProfileId)
             {
-                var eventUser = new AddEventPersonDto()
+                var eventUser = eventValues.FirstOrDefault(l => l.UserProfileId == userId);
+
+                if (eventUser == null)
                 {
-                    UserProfileId = userId,
-                    EventId = request.EventId,
-                };
+                    var newEventUser = new AddEventPersonDto()
+                    {
+                        UserProfileId = userId,
+                        EventId = request.EventId,
+                    };
 
-                var result = _mapper.Map<EventUser>(eventUser);
+                    var result = _mapper.Map<EventUser>(newEventUser);
 
-                await _appDbContext.EventUsers.AddAsync(result);
+                    await _appDbContext.EventUsers.AddAsync(result);
+                    await _appDbContext.SaveChangesAsync();
+
+                    var eventName = await _appDbContext.EventUsers
+                       .Include(x => x.Event)
+                       .FirstAsync(x => x.EventId == eventUser.EventId && x.UserProfileId == eventUser.UserProfileId);
+
+                    eventUsersIds.Add(eventName.Id);
+
+                    await _internalNotificationService.AddNotification(eventUser.UserProfileId, NotificationMessages.YouWereInvitedToEventAsCandidate);
+
+                    await SendEmailNotification(result);
+                }
+                else
+                {
+                    eventUsersIds.Add(eventUser.Id);
+                }
+
+                eventValues = eventValues.Where(l => l.UserProfileId != userId).ToList();
+
+            }
+
+            if (eventValues.Count() > 0)
+            {
+
+                _appDbContext.EventUsers.RemoveRange(eventValues);
                 await _appDbContext.SaveChangesAsync();
-
-                var eventName = await _appDbContext.EventUsers
-                   .Include(x => x.Event)
-                   .FirstAsync(x => x.EventId == eventUser.EventId && x.UserProfileId == eventUser.UserProfileId);
-
-                eventUsersIds.Add(eventName.Id);
-
-                await _internalNotificationService.AddNotification(eventUser.UserProfileId, NotificationMessages.YouWereInvitedToEventAsCandidate);
-
-                await SendEmailNotification(result);
             }
 
             return eventUsersIds;

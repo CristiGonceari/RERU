@@ -34,10 +34,6 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
                      .WithMessage(ValidationMessages.InvalidReference);
 
                 RuleFor(r => r)
-                    .Must(x => !ExistentAssignedUser(x))
-                    .WithErrorCode(ValidationCodes.USER_ALREADY_ASSIGNED);
-
-                RuleFor(r => r)
                     .Must(x => !ExistentResponsiblePersonSameWithCandidate(x))
                     .WithErrorCode(ValidationCodes.CANDIDATE_AND_RESPONSIBLE_PERSON_CANT_BE_THE_SAME);
             });
@@ -60,26 +56,6 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
             }
 
             return true;
-        }
-
-        private bool ExistentAssignedUser(AssignResponsiblePersonToEventCommand data)
-        {
-            var listOfResults = new List<bool>();
-
-
-            foreach (var userId in data.UserProfileId)
-            {
-                var result = _appDbContext.EventResponsiblePersons.Any(ev => ev.UserProfileId == userId && ev.EventId == data.EventId);
-
-                listOfResults.Add(result);
-            }
-
-            if (listOfResults.Contains(true))
-            {
-                return true;
-            }
-
-            return false;
         }
 
         private bool ExistentResponsiblePersonSameWithCandidate(AssignResponsiblePersonToEventCommand data)

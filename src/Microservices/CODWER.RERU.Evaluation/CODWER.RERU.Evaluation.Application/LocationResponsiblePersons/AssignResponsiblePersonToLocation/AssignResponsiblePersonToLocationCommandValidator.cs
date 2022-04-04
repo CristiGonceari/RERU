@@ -33,9 +33,6 @@ namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.AssignRe
                     .WithErrorCode(ValidationCodes.INVALID_USER)
                     .WithMessage(ValidationMessages.InvalidReference);
 
-                RuleFor(r => r)
-                    .Must(x => !ExistentAssignedUser(x))
-                    .WithErrorCode(ValidationCodes.EXISTENT_RESPONSIBLE_PERSON_IN_LOCATION);
             });
         }
         private async Task<bool> ExistentUser(AssignResponsiblePersonToLocationCommand data)
@@ -56,26 +53,6 @@ namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.AssignRe
             }
 
             return true;
-        }
-
-        private bool ExistentAssignedUser(AssignResponsiblePersonToLocationCommand data)
-        {
-            var listOfResults = new List<bool>();
-
-
-            foreach (var userId in data.UserProfileId)
-            {
-                var result = _appDbContext.LocationResponsiblePersons.Any(ev => ev.UserProfileId == userId && ev.LocationId == data.LocationId);
-
-                listOfResults.Add(result);
-            }
-
-            if (listOfResults.Contains(true))
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 }
