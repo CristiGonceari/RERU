@@ -12,15 +12,26 @@
     "registration": "Înregistrare Core"
   },
   "registration-page":{
-    "about-us": "Despre noi",
+    "about-us": "E bine să știi",
     "registration": "Înregistrare",
     "success-message": "Te-ai inregistrat cu succes, parola ta a fost trimisa pe email !!",
-    "registration-datas": "Date de înregistrare"
+    "registration-datas": "Date de înregistrare",
+    "to-add-new-candidate": "Pentru a vă înregistra în calitate de candidat, este necesar să completați formularul de mai jos.",
+    "after-registration-recive-email": "După înregistrare, vi se va expedia un email cu credențialele dvs. ",
+    "step1": "Cu ajutorul acestor credențiale trebuie să vă autentificați. După autentificare mergeți la modulul „Evaluare și Testare”. (Pasul 1)",
+    "step2": "Solicitați un test din secțiunea „Activitățile mele”.(Pasul 2) ",
+    "step3": "Opțiunea „Teste  solicitate” (Pasul 3)",
+    "step4-step5": "Apăsați butonul „Solicită test” (Pasul 4) si completați formularul cu datele dorite (Pasul 5)",
+    "event": " - Eveniment",
+    "test": " - Test",
+    "time": " - Timpul comod",
+    "step6": "Apasăti butonul „Confirmă” (Pasul 6) pentru a finaliza procedura. ",
+    "registration-candidate-page": "Pagină de înregistrare a candidaților"
   },
   "login": {
     "admin-panel": "Panou de Administrare",
-    "signin": "Autentificare",
-    "login": "Logare",
+    "signin": "Conectare",
+    "login": "Autentificare",
     "email": "Email",
     "email-is-required": "Email este obligatoriu",
     "token": "Token",
@@ -30,8 +41,7 @@
     "password-is-required": "Parola este obligatorie",
     "forgot-password": "Ai uitat parola?",
     "recover-email-sent": "Mesajul de recuperare a fost trimis pe email!",
-    "idnp-is-required": "IDNP este obligatoriu"
-  },
+    "idnp-is-required": "IDNP este obligatoriu" },
   "notification": {
     "title": {
       "success": "Succes",
