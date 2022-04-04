@@ -6,7 +6,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DetailsModalComponent } from '../../utils/modals/details-modal/details-modal.component';
 import { DeleteLogsModalComponent } from '../../utils/modals/delete-logs-modal/delete-logs-modal.component';
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -36,6 +35,21 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.retriveDeopdowns();
+    this.getLoggingValues();
+  }
+
+  initFilters(){
+    this.dateTimeFrom = '';
+    this.dateTimeTo = '';
+    
+    this.searchFrom = '';
+    this.searchTo = '';
+
+    this.selectedProject = '';
+    this.selectedEvent = '';
+    this.userName = '';
+    this.userIdentifier = '';
+
     this.getLoggingValues();
   }
 
