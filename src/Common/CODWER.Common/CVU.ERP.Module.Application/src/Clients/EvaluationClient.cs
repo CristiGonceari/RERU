@@ -53,6 +53,20 @@ namespace CVU.ERP.Module.Application.Clients
             }
         }
 
+        public async Task SyncUserProfileByAnonymous(BaseUserProfile userProfile)
+        {
+            var request = NewJsonRequest($"{UserProfileBasePath}/by-anonymous");
+            var json = JsonSerializer.Serialize<BaseUserProfile>(userProfile);
+            request.AddParameter("application/json; charset=utf-8", json, ParameterType.RequestBody);
+
+            var response = await _restClient.PostAsync<Response<Unit>>(request, new CancellationToken());
+
+            if (!response.Success)
+            {
+                throw new EvaluationClientResponseNotSuccessfulException(response.Messages);
+            }
+        }
+
         public async Task<TestDataDto> GetTestIdToStartTest()
         {
             var user = await _currentApplicationUserProvider.Get();

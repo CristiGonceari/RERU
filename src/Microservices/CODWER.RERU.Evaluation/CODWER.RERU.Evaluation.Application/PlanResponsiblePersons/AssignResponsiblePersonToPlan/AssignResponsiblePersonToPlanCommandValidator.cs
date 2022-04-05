@@ -33,9 +33,6 @@ namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.AssignRespon
                     .WithErrorCode(ValidationCodes.INVALID_USER)
                     .WithMessage(ValidationMessages.InvalidReference);
 
-                RuleFor(r => r)
-                    .Must(x => !ExistentAssignedUser(x))
-                    .WithErrorCode(ValidationCodes.USER_ALREADY_ASSIGNED);
             });
         }
         private async Task<bool> ExistentUser(AssignResponsiblePersonToPlanCommand data)
@@ -57,26 +54,5 @@ namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.AssignRespon
 
             return true;
         }
-        private bool ExistentAssignedUser(AssignResponsiblePersonToPlanCommand data)
-        {
-            var listOfResults = new List<bool>();
-
-
-            foreach (var userId in data.UserProfileId)
-            {
-                var result = _appDbContext.PlanResponsiblePersons.Any(ev => ev.UserProfileId == userId && ev.PlanId == data.PlanId);
-
-                listOfResults.Add(result);
-            }
-
-            if (listOfResults.Contains(true))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-
     }
 }

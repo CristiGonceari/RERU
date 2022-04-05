@@ -24,9 +24,6 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 
             When(r => r != null, () =>
             {
-                RuleFor(r => r)
-                    .Must(x => !ExistentAssignedUser(x))
-                    .WithErrorCode(ValidationCodes.USER_ALREADY_ASSIGNED);
 
                 RuleFor(x => x.EventId)
                     .SetValidator(x => new ItemMustExistValidator<Event>(appDbContext, ValidationCodes.INVALID_EVENT,
@@ -64,26 +61,6 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
             }
 
             return true;
-        }
-
-        private bool ExistentAssignedUser(AssignUserToEventCommand data)
-        {
-            var listOfResults = new List<bool>();
-
-
-            foreach (var userId in data.UserProfileId)
-            {
-                var result = _appDbContext.EventUsers.Any(ev => ev.UserProfileId == userId && ev.EventId == data.EventId);
-
-                listOfResults.Add(result);
-            }
-
-            if (listOfResults.Contains(true))
-            {
-                return true;
-            }
-
-            return false;
         }
 
         private bool ExistentEvaluatorSameWithCandidate(AssignUserToEventCommand data)

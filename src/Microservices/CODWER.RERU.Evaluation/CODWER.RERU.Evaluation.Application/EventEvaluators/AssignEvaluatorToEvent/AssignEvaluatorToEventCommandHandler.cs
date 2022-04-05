@@ -13,6 +13,7 @@ using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
 using System.Collections.Generic;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
+using System.Linq;
 
 namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEvent
 {
@@ -39,29 +40,50 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
 
             var eventEvaluatorIds = new List<int>();
 
+            var eventValues = await _appDbContext.EventEvaluators.ToListAsync();
+
             foreach (var evaluatorId in request.EvaluatorId)
             {
-                var eventEvaluator = new AddEventEvaluatorDto()
+                var eventEvaluator = eventValues.FirstOrDefault(l => l.EvaluatorId == evaluatorId);
+
+                if (eventEvaluator == null)
                 {
-                    EvaluatorId = evaluatorId,
-                    EventId = request.EventId,
-                    ShowUserName = request.ShowUserName
-                };
+                    var newEventEvaluator = new AddEventEvaluatorDto()
+                    {
+                        EvaluatorId = evaluatorId,
+                        EventId = request.EventId,
+                        ShowUserName = request.ShowUserName
+                    };
 
-                var result = _mapper.Map<EventEvaluator>(eventEvaluator);
+                    var result = _mapper.Map<EventEvaluator>(newEventEvaluator);
 
-                await _appDbContext.EventEvaluators.AddAsync(result);
+                    await _appDbContext.EventEvaluators.AddAsync(result);
+                    await _appDbContext.SaveChangesAsync();
+
+                    var eventName = await _appDbContext.EventEvaluators
+                        .Include(x => x.Event)
+                        .FirstAsync(x => x.EventId == eventEvaluator.EventId && x.EvaluatorId == eventEvaluator.EvaluatorId);
+
+                    eventEvaluatorIds.Add(eventName.Id);
+
+                    await _internalNotificationService.AddNotification(eventEvaluator.EvaluatorId, NotificationMessages.YouWereInvitedToEventAsEvaluator);
+
+                    await SendEmailNotification(result);
+                }
+                else
+                {
+                    eventEvaluatorIds.Add(eventEvaluator.Id);
+                }
+
+                eventValues = eventValues.Where(l => l.EvaluatorId != evaluatorId).ToList();
+
+            }
+
+            if (eventValues.Count() > 0)
+            {
+
+                _appDbContext.EventEvaluators.RemoveRange(eventValues);
                 await _appDbContext.SaveChangesAsync();
-
-                var eventName = await _appDbContext.EventEvaluators
-                    .Include(x => x.Event)
-                    .FirstAsync(x => x.EventId == eventEvaluator.EventId && x.EvaluatorId == eventEvaluator.EvaluatorId);
-
-                eventEvaluatorIds.Add(eventName.Id);
-
-                await _internalNotificationService.AddNotification(eventEvaluator.EvaluatorId, NotificationMessages.YouWereInvitedToEventAsEvaluator);
-
-                await SendEmailNotification(result);
             }
 
             return eventEvaluatorIds;

@@ -5,3 +5,11 @@
 .table td {
 	vertical-align: baseline;
 }
+
+.shadow-input {
+	position: absolute;
+	top: 22px;
+	width: 0px;
+	height: 0px;
+	border: none;
+}

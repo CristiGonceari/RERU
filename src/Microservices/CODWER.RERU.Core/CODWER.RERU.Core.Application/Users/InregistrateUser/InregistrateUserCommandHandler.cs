@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
@@ -9,25 +9,24 @@ using CVU.ERP.Logging.Models;
 using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.Models.Internal;
 using MediatR;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CODWER.RERU.Core.Application.Users.CreateUser
+namespace CODWER.RERU.Core.Application.Users.InregistrateUser
 {
-    public class CreateUserCommandHandler : BaseHandler, IRequestHandler<CreateUserCommand, int>
+    public class InregistrateUserCommandHandler : BaseHandler, IRequestHandler<InregistrateUserCommand, int>
     {
         private readonly IEnumerable<IIdentityService> _identityServices;
-        private readonly ILoggerService<CreateUserCommandHandler> _loggerService;
+        private readonly ILoggerService<InregistrateUserCommandHandler> _loggerService;
         private readonly IEvaluationClient _evaluationClient;
         private readonly IMapper _mapper;
 
-        public CreateUserCommandHandler(ICommonServiceProvider commonServiceProvider,
-            IEnumerable<IIdentityService> identityServices, 
-            ILoggerService<CreateUserCommandHandler> loggerService, 
-            IEvaluationClient evaluationClient, 
+        public InregistrateUserCommandHandler(ICommonServiceProvider commonServiceProvider,
+            IEnumerable<IIdentityService> identityServices,
+            ILoggerService<InregistrateUserCommandHandler> loggerService,
+            IEvaluationClient evaluationClient,
             IMapper mapper)
             : base(commonServiceProvider)
         {
@@ -37,7 +36,7 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
             _mapper = mapper;
         }
 
-        public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(InregistrateUserCommand request, CancellationToken cancellationToken)
         {
             var newUser = new CreateUserDto()
             {
@@ -88,12 +87,12 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
         private async Task LogAction(UserProfile userProfile)
         {
-            await _loggerService.Log(LogData.AsCore($"User {userProfile.Name} {userProfile.LastName} was added to system", userProfile));
+            await _loggerService.LogWithoutUser(LogData.AsCore($"User {userProfile.Name} {userProfile.LastName} was inregistrated to system", userProfile));
         }
 
         private async Task SyncUserProfile(UserProfile userProfile)
         {
-            await _evaluationClient.SyncUserProfile(_mapper.Map<BaseUserProfile>(userProfile));
+            await _evaluationClient.SyncUserProfileByAnonymous(_mapper.Map<BaseUserProfile>(userProfile));
         }
     }
 }

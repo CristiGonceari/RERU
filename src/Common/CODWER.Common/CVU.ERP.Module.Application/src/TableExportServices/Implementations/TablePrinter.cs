@@ -150,6 +150,15 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             {
                 result = Convert.ToDateTime(result).ToString("dd/MM/yyyy, HH:mm");
             }
+            else if (propInfo.PropertyType == typeof(IEnumerable<string>))
+            {
+                result = string.Join(", ", (IEnumerable<string>)result);
+
+                if (result == "")
+                {
+                    result = "-";
+                }
+            }
             else if (propInfo.PropertyType == typeof(bool))
             {
                 result = Convert.ToBoolean(result) ? "+" : "-";

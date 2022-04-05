@@ -6,5 +6,6 @@ namespace CVU.ERP.Logging
     public interface ILoggerService<T>
     {
         public Task Log(LogData data);
+        public Task LogWithoutUser(LogData data);
     }
 }

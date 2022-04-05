@@ -57,8 +57,6 @@ export class AddEditEventsComponent implements OnInit {
 				this.isLoading = false;
 			}
 		});
-		console.log("id", id);
-		
 	}
 
 	onSave(): void {
