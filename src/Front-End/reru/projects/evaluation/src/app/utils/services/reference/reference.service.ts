@@ -64,4 +64,12 @@ export class ReferenceService extends AbstractService {
   getQuestionStatus(): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/question-status/select-values`);
   }
+
+  getScoreFormula(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/score-formula/select-values`);
+  }
+
+  getSolicitedTestStatus(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/solicited-test-status/select-values`);
+  }
 }

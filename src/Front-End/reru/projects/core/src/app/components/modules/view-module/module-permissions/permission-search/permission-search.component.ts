@@ -14,4 +14,9 @@ export class PermissionSearchComponent {
 	search(value: string): void {
 		this.handleSearch.emit(value);
 	}
+
+	resetInput(): void {
+		this.key = '';
+		this.handleSearch.emit('');
+	}
 }

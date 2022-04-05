@@ -1,5 +1,11 @@
 <div class="modal-header">
   <h3 class="modal-title">{{translateData[0]}}: <b> {{tableData.tableName}} </b> </h3>
+  <select class="form-control h-35px max-with" name="selectedFormat" id="selectedFormat" (change)="selectedFormat = $event.target.value">
+    <option class="default-option text-muted" selected value="0">{{ 'select-format.please-select-format' | translate }}</option>
+    <option *ngFor="let item of exportTableFormat" [value]="item.value">
+        {{ item.label }}
+    </option>
+</select>
 </div>
 <div class="modal-body px-10">
   <h3 class="text-center my-5"> {{translateData[1]}} </h3>
@@ -16,7 +22,7 @@
     </div>
   </div>
 
-  <div class="my-10 d-flex justify-content-center" [class.disabled]="!selectedFields.length">
+  <div class="my-10 d-flex justify-content-center" [class.disabled]="!selectedFields.length" *ngIf="selectedFormat == 0">
     <div class="mx-7 cursor-pointer">
       <i (click)="setOrientation(1)"
         class="far fa-file-pdf mx-3 px-7 py-10 border rounded portrait"
@@ -33,4 +39,5 @@
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-secondary" (click)="dismiss()">{{translateData[3]}}</button>
+  <button *ngIf="selectedFormat != 0" type="button" class="btn btn-primary" (click)="setOrientation(1)">Print</button>
 </div>

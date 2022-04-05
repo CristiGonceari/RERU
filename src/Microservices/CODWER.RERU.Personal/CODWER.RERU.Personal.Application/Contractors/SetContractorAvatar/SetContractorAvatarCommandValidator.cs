@@ -15,17 +15,9 @@ namespace CODWER.RERU.Personal.Application.Contractors.SetContractorAvatar
     {
         public SetContractorAvatarCommandValidator(AppDbContext appDbContext)
         {
-            RuleFor(x => x.Data.ContractorId)
+            RuleFor(x => x.ContractorId)
                 .SetValidator(new ItemMustExistValidator<Contractor>(appDbContext, ValidationCodes.CONTRACTOR_NOT_FOUND,
                     ValidationMessages.InvalidReference));
-
-            RuleFor(x => x.Data.Avatar.FileName)
-                .Custom((x, c) => ValidateExtension(x, ValidationMessages.InvalidInput, c));
-
-            RuleFor(x => x.Data.Avatar)
-                .Must(x => x.Length > 0)
-                .WithMessage(ValidationMessages.InvalidInput)
-                .WithErrorCode(ValidationCodes.FILE_IS_CORRUPTED);
         }
 
         private void ValidateExtension(string name, string errorMessage, CustomContext context)

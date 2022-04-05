@@ -27,7 +27,7 @@
                     <td>{{ item.question }}</td>
                     <td>{{ item.categoryName }}</td>
                     <td>{{ item.totalUsed }}</td>
-                    <td>
+                    <td *ngIf="data.filterEnum != enum.Select">
                         <span *ngIf="data.filterEnum == enum.Correct">{{ item.percentCorrect }}%</span>
                         <span *ngIf="data.filterEnum == enum.NotCorrect">{{ item.percentNotCorrect }}%</span>
                         <span *ngIf="data.filterEnum == enum.Skipped">{{ item.percentSkipped }}%</span>

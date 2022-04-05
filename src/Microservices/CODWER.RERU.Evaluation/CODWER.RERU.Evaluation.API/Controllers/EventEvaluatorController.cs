@@ -9,6 +9,7 @@ using CODWER.RERU.Evaluation.Application.EventEvaluators.UnassignEvaluatorFromEv
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.Pagination;
 using MediatR;
+using CODWER.RERU.Evaluation.Application.EventEvaluators.GetAssignedEvaluators;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -23,13 +24,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("no-assigned")]
-        public async Task<List<UserProfileDto>> GetNoAssignedEvaluators([FromQuery] GetNoAssignedEvaluatorsQuery query)
+        public async Task<PaginatedModel<UserProfileDto>> GetNoAssignedEvaluators([FromQuery] GetNoAssignedEvaluatorsQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpPost]
-        public async Task<Unit> AssignEvaluatorToEvent([FromBody] AssignEvaluatorToEventCommand command)
+        public async Task<List<int>> AssignEvaluatorToEvent([FromBody] AssignEvaluatorToEventCommand command)
         {
             return await Mediator.Send(command);
         }
@@ -40,6 +41,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             var command = new UnassignEvaluatorFromEventCommand { EventId = eventId, EvaluatorId = evaluatorId };
 
             return await Mediator.Send(command);
+        }
+
+        [HttpGet("assigned")]
+        public async Task<PaginatedModel<UserProfileDto>> GetAssignedUsers([FromQuery] GetAssignedEvaluatorsQuery query)
+        {
+            return await Mediator.Send(query);
         }
     }
 }

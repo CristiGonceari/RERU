@@ -1,4 +1,5 @@
-﻿using CVU.ERP.Common.Data.Entities;
+﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
+using CVU.ERP.Common.Data.Entities;
 
 namespace CODWER.RERU.Evaluation.Data.Entities
 {
@@ -16,5 +17,9 @@ namespace CODWER.RERU.Evaluation.Data.Entities
         public bool ShowManyQuestionPerPage { get; set; }
         public int QuestionsCountPerPage { get; set; }
         public int? MaxErrors { get; set; }
+        public ScoreFormulaEnum FormulaForOneAnswer { get; set; }
+        public bool? NegativeScoreForOneAnswer { get; set; }
+        public ScoreFormulaEnum FormulaForMultipleAnswers { get; set; }
+        public bool? NegativeScoreForMultipleAnswers { get; set; }
     }
 }

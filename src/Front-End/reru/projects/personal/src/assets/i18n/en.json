@@ -28,8 +28,9 @@
     "vacantions": "Vacations",
     "guide": "Guide",
     "guide-description": "User Guide",
-    "documentsTemplates" : "Document Templates"
-
+    "documentsTemplates" : "Document Templates",
+    "help": "Help",
+    "faq": "FAQ"
   },
   "my-profile":{
     "title": "My profile",
@@ -205,7 +206,8 @@
     "are-you-sure-you-want-to-delete-member": "Are you sure you want to delete family member {{name}}?",
     "quick-access": "Quick access",
     "department-component": "Department component",
-    "dismissal-request": "Dismissal request"
+    "dismissal-request": "Dismissal request",
+    "add-photo": "Add profile photo"
   },
   "nomenclature": {
     "title": "Nomenclature",
@@ -891,7 +893,10 @@
     "02008005": "The number of the diplom is empty",
     "02008006": "The realise day of the diplom is empty",
     "02008007": "Frequency of the study is invalid",
-    "02008008": "The studies were not found"
+    "02008008": "The studies were not found",
+    "02016001": "Empty content",
+    "02016002": "Empty name",
+    "02016003": "Article not found"
   },
   "expired-token": {
     "title": "Expired session",
@@ -937,5 +942,28 @@
     "empty-name": "Insert at least one symbol",
     "wrong-name": "Wrong name , should start with symbol",
     "available-modules": "Available modules"
+  },
+  "faq": {
+    "help": "Help",
+    "faq": "FAQ",
+    "subtitle": "Frequently Asked Questions",
+    "manage-faq": "Manage FAQ",
+    "new-article": "Add Article",
+    "delete-article": "Delete Article",
+    "article-title": "Article Titile",
+    "name": "Name",
+    "content": "Content",
+    "remove": "Remove article",
+    "remove-msg": "Are you sure you want to remove this article?",
+    "succes-remove-msg": "Article was successfully deleted",
+    "succes-add-msg": "Article was successfully added",
+    "succes-edit-msg": "Article was successfully edited",
+    "faq-details": "Article details"
+  },
+  "print": {
+    "print-table": "Print table",
+    "sorted-by": "Sorted by",
+    "error-msg": "Please select fields for print",
+    "print-msg": "Please specify the print orientation and necessary fields."
   }
 }

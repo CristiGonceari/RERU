@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgbDateFRParserFormatter } from './services/date-formater/date-parse-formatter.service';
 import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,11 +11,10 @@ import { HashOptionInputComponent } from './components/hash-option-input/hash-op
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { EventCalendarComponent } from './components/event-calendar/event-calendar.component';
 import { CalendarChunkPipe } from './pipes/calendar-chunk.pipe';
-import { AddEditMediaFileComponent } from './components/add-edit-media-file/add-edit-media-file.component';
-import { GetMediaFileComponent } from './components/get-media-file/get-media-file.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SharedModule } from '@erp/shared';
-import { ShowImageModalComponent } from './components/show-image-modal/show-image-modal.component';
+import { AttachUserModalComponent } from './components/attach-user-modal/attach-user-modal.component';
+import { DateFilterPipe } from './pipes/date-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -24,9 +23,8 @@ import { ShowImageModalComponent } from './components/show-image-modal/show-imag
     SafeHtmlPipe,
     EventCalendarComponent,
     CalendarChunkPipe,
-    AddEditMediaFileComponent,
-    GetMediaFileComponent,
-    ShowImageModalComponent,
+    AttachUserModalComponent,
+    DateFilterPipe,
   ],
   imports: [
     HttpClientModule,
@@ -42,16 +40,14 @@ import { ShowImageModalComponent } from './components/show-image-modal/show-imag
   providers: [
     { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter },
     SafeHtmlPipe,
-    AddEditMediaFileComponent,
-    GetMediaFileComponent
+    DatePipe,
   ],
   exports: [
     SafeHtmlPipe,
     TranslateModule,
     DateComponent,
     EventCalendarComponent,
-    AddEditMediaFileComponent,
-    GetMediaFileComponent
+    DateFilterPipe,
   ]
 })
 export class UtilsModule { }

@@ -15,7 +15,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
-                .Include(t => t.Event)
+                .Include(t => t.Event).ThenInclude(l => l.EventLocations).ThenInclude(l => l.Location)
                 .OrderByDescending(x => x.CreateDate)
                 .Select(t => new Test
                 {
@@ -39,12 +39,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests
 
             if (!string.IsNullOrWhiteSpace(request.TestTemplateName))
             {
-                tests = tests.Where(x => x.TestTemplate.Name.Contains(request.TestTemplateName));
+                tests = tests.Where(x => x.TestTemplate.Name.ToLower().Contains(request.TestTemplateName.ToLower()));
             }
 
             if (!string.IsNullOrWhiteSpace(request.UserName))
             {
-                tests = tests.Where(x => x.UserProfile.FirstName.Contains(request.UserName) || x.UserProfile.LastName.Contains(request.UserName) || x.UserProfile.Patronymic.Contains(request.UserName));
+                tests = tests.Where(x => x.UserProfile.FirstName.ToLower().Contains(request.UserName.ToLower()) || x.UserProfile.LastName.ToLower().Contains(request.UserName.ToLower()) || x.UserProfile.Patronymic.ToLower().Contains(request.UserName.ToLower()));
             }
 
             if (!string.IsNullOrWhiteSpace(request.Idnp))
@@ -59,12 +59,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests
 
             if (!string.IsNullOrWhiteSpace(request.LocationKeyword))
             {
-                tests = tests.Where(x => x.Location.Name.Contains(request.LocationKeyword) || x.Location.Address.Contains(request.LocationKeyword));
+                tests = tests.Where(x => x.Location.Name.ToLower().Contains(request.LocationKeyword.ToLower()) || x.Location.Address.ToLower().Contains(request.LocationKeyword.ToLower()));
             }
 
             if (!string.IsNullOrWhiteSpace(request.EventName))
             {
-                tests = tests.Where(x => x.Event.Name.Contains(request.EventName));
+                tests = tests.Where(x => x.Event.Name.ToLower().Contains(request.EventName.ToLower()));
             }
 
             if (request.ProgrammedTimeFrom.HasValue)

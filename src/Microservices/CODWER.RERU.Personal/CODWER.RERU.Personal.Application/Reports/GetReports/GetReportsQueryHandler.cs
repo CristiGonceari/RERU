@@ -91,7 +91,7 @@ namespace CODWER.RERU.Personal.Application.Reports.GetReports
 
             if (!string.IsNullOrEmpty(request.Name))
             {
-                files = files.Where(x => x.FileName.Contains(request.Name));
+                files = files.Where(x => x.FileName.ToLower().Contains(request.Name.ToLower()));
             }
 
             if (request.FromDate != null)

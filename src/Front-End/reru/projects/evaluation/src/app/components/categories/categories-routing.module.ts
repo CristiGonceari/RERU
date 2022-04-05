@@ -7,6 +7,7 @@ import { CategoryQuestionsComponent } from './category-details/category-question
 import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryQuestionsOptionsComponent } from './category-details/category-questions-options/category-questions-options.component';
 import { AddOptionComponent } from './category-details/category-questions-options/add-option/add-option.component';
+import { AddEditQuestionComponent } from '../questions/add-edit-question/add-edit-question.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: 'overview', component: CategoryOverviewComponent },
       { path: 'question-details', component: CategoryQuestionsComponent },
+      { path: 'edit-question/:id', component: AddEditQuestionComponent },
       { path: 'question-options/:id', component: CategoryQuestionsOptionsComponent},
       { path: 'option/:id/add', component: AddOptionComponent },
       { path: 'option/:id/edit/:id2', component: AddOptionComponent } 

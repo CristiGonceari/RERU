@@ -1,0 +1,14 @@
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+	<div class="card card-custom mb-7 ml-5">
+		<div class="card-header flex-wrap border-0 py-5">
+			<div class="card-title font-weight-bolder">{{'solicited-test.my-solicited-tests' | translate}}</div>
+			<div class="card-toolbar m-0">
+				<app-add-button class="btn" [value]="'solicited-test.add-test' | translate"
+				  [routerLink]="['../add-solicited-test']"></app-add-button>
+			  </div>
+		</div>
+		<div class="card-body">
+			<app-solicited-tests-table></app-solicited-tests-table>
+		</div>
+	</div>
+</div>

@@ -23,6 +23,7 @@
         public static string ONLY_POLLS_OR_TESTS = "03000205";
         public static string INEXISTENT_TEST_TEMPLATE_IN_EVENT = "03000206";
         public static string MUST_ADD_EVENT_OR_EVALUATOR = "03000207";
+        public static string START_DAY_CANT_BE_FROM_PAST = "03000208";
 
         //event evaluator
         public static string EXISTENT_EVALUATOR_IN_EVENT = "03000301";
@@ -35,7 +36,7 @@
         //event responsible person
         public static string USER_ISNT_RESPONSIBLE_FOR_THIS_EVENT = "03000501";
 
-        //event test type
+        //event test template
         public static string EXISTENT_TEST_TEMPLATE_IN_EVENT = "03000601";
 
         //event user
@@ -100,7 +101,7 @@
         public static string INVALID_EVALUATOR_FOR_THIS_TEST = "03001609";
         public static string CANT_VIEW_TEST_RESULT = "03001610";
 
-        //test type
+        //test template
         public static string INVALID_STATUS = "03001701";
         public static string INVALID_TEST_TEMPLATE = "03001702";
         public static string INSUFFICIENT_QUESTIONS_IN_CATEGORY = "03001703";
@@ -125,8 +126,9 @@
         public static string INVALID_TIME = "03001722";
         public static string INVALID_POLL = "03001723";
         public static string ONLY_INACTIVE_TEST_CAN_BE_DELETED = "03001724";
+        public static string EMPTY_FORMULA = "03001725";
 
-        //test type question category 
+        //test template question category 
         public static string QUESTION_COUNT_REACHED_THE_LIMIT = "03001801";
         public static string INVALID_SEQUENCE = "03001802";
         public static string INVALID_SELECTION_TYPE = "03001803";
@@ -144,5 +146,10 @@
         //user
         public static string INVALID_USER = "03002001";
         public static string INVALID_TEST_TEMPLATE_QUESTION_CATEGORY = "03002002";
+
+        //solicited tests
+        public static string INVALID_SOLICITED_TEST = "03002101";
+        public static string ONLY_NEW_SOLICITED_TEST_CAN_BE_UPDATED = "03002102";
+        public static string ONLY_NEW_SOLICITED_TEST_CAN_BE_DELETED = "03002103";
     }
 }

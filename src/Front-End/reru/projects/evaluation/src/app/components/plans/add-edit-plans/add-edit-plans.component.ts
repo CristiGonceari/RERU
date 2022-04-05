@@ -19,6 +19,8 @@ export class AddEditPlansComponent implements OnInit {
   planForm: FormGroup;
   isEditForm: boolean = false;
   isLoading: boolean;
+  fromData = '';
+  toData = '';
 
   title: string;
   description: string;
@@ -42,7 +44,7 @@ export class AddEditPlansComponent implements OnInit {
         this.isEditForm = true;
         this.retrievePlan(response.id);
       } else {
-         this.initForm();
+        this.initForm();
       }
     })
   }
@@ -50,10 +52,11 @@ export class AddEditPlansComponent implements OnInit {
   retrievePlan(id: number): void {
     this.planService.get(id).subscribe(response => {
       this.initForm(response.data);
+      this.fromData = response.data.fromDate;
+      this.toData = response.data.tillDate;
       this.isLoading = false;
     });
-  } 
-
+  }
 
   initForm(plan: Plan = <any>{}): void {
     this.planForm = this.fb.group({
@@ -72,7 +75,7 @@ export class AddEditPlansComponent implements OnInit {
 			this.editPlan();
 		}
 	}
-  
+
   addPlan(): void {
     this.planService.add({data: this.planForm.value}).subscribe(() => {
       forkJoin([

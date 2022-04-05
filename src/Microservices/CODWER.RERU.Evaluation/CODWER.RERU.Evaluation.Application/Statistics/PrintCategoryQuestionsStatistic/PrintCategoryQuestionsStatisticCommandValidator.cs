@@ -1,7 +1,7 @@
 ﻿using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.DataTransferObjects.Statistics;
 using CVU.ERP.Common.Validation;
-using CVU.ERP.Module.Application.TablePrinterService.Validators;
+using CVU.ERP.Module.Application.TableExportServices.Validators;
 using FluentValidation;
 using System.Linq;
 
@@ -12,7 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.PrintCategoryQuestionsSt
         public PrintCategoryQuestionsStatisticCommandValidator()
         {
             RuleFor(x => x.Fields.Select(x => x.Value).ToList())
-                .SetValidator(new TablePrinterValidator<TestQuestionStatisticDto>(ValidationMessages.InvalidInput, ValidationCodes.INVALID_INPUT));
+                .SetValidator(new TableExporterValidator<TestQuestionStatisticDto>(ValidationMessages.InvalidInput, ValidationCodes.INVALID_INPUT));
         }
     }
 }

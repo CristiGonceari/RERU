@@ -28,14 +28,14 @@ namespace CODWER.RERU.Personal.Application.OrganizationRoles.GetOrganizationRole
 
             if (!string.IsNullOrEmpty(request.SearchWord))
             {
-                items = items.Where(x => x.Name.Contains(request.SearchWord) 
-                                         || x.Code.Contains(request.SearchWord) 
-                                         || x.ShortCode.Contains(request.SearchWord));
+                items = items.Where(x => x.Name.ToLower().Contains(request.SearchWord.ToLower()) 
+                                         || x.Code.Contains(request.SearchWord.ToLower()) 
+                                         || x.ShortCode.Contains(request.SearchWord.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(request.Name))
             {
-                items = items.Where(x => x.Name.Contains(request.Name));
+                items = items.Where(x => x.Name.ToLower().Contains(request.Name.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(request.Code))

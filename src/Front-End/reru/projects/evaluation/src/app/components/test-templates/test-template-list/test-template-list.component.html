@@ -12,7 +12,7 @@
                 <h3 class="card-label" id="title">{{'tests.title' | translate}}</h3>
               </div>
               <div class="card-toolbar">
-                <app-confirm-button class="btn mr-3" (click)="testTable.getHeaders(title)">
+                <app-confirm-button class="btn mr-3" (click)="testTable.getHeaders(getTitle())">
 									<i class="far fa-file-pdf text-white"></i>
 									{{'button.print' | translate}}
 								</app-confirm-button>
@@ -21,22 +21,19 @@
             </div>
             <div class="card-header border-0 mt-5 pr-5" style="min-height: 100%;">
               <div class="row w-100">
-                <div class="col-lg-4 col-12">
-                  <div class="input-group input-group-sm input-group-solid">
-                    <input type="text" class="form-control"  [placeholder]="'tests.search-test' | translate" name="testToSearch" [(ngModel)]="testTable.testName">
-                  </div>
+                <div class="col">
+									<erp-shared-search-input (handleSearch)="testTable.setFilter('name', $event)" [placeholder]="'tests.search-test' | translate" #templateName></erp-shared-search-input>
+							  </div>
+                <div class="col">
+									<erp-shared-search-input (handleSearch)="testTable.setFilter('eventName', $event)" [placeholder]="'events.search-event' | translate" #eventName></erp-shared-search-input>
+							  </div>
+                <div class="col-lg-3 col-12">
+                  <app-test-template-search (filter)="testTable.setFilter('status', $event)" #status></app-test-template-search>
                 </div>
-                <div class="col-lg-4 col-12">
-                  <div class="input-group input-group-sm input-group-solid">
-                    <input type="text" class="form-control"  [placeholder]="'events.search-event' | translate" name="eventName" [(ngModel)]="testTable.eventName">
-                  </div>
-                </div>
-                <div class="col-lg-2 col-12">
-                  <app-test-template-search (filter)="testTable.status = $event.target.value"></app-test-template-search>
-                </div>
-                <div class="col-lg-2 col-12 pr-lg-0">
-                  <div class="w-100">
-                    <app-confirm-button (handle)="testTable.list({page: 1})" [value]="'button.search' | translate" [width]="'100%'"></app-confirm-button>
+                <div class="col-lg-3 col-12">
+                  <div class="w-100 text-right">
+										<app-button (handle)="clearFields(); testTable.resetFilters()" [value]="'button.reset' | translate" class="mr-5"></app-button>
+                    <app-confirm-button (handle)="testTable.list({page: 1})" [value]="'button.search' | translate"></app-confirm-button>
                   </div>
                 </div>
               </div>

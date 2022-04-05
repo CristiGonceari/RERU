@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Common\CVU.ERP.Common.csproj" />
+    <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Module.Application\src\CVU.ERP.Module.Application.csproj" />
     <ProjectReference Include="..\CODWER.RERU.Logging.DataTransferObjects\CODWER.RERU.Logging.DataTransferObjects.csproj" />
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Module.Common\src\CVU.ERP.Module.Common.csproj" />
     <ProjectReference Include="..\CODWER.RERU.Logging.Persistence\CODWER.RERU.Logging.Persistence.csproj" />

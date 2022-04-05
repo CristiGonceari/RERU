@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 import { PageTitleComponent } from './components/page-title/page-title.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ViewIconComponent } from './components/sidenav/components/view-icon/view-icon.component';
@@ -47,6 +48,11 @@ import { AuthenticationCallbackComponent } from './components/authentication/aut
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { PrintModalComponent } from './modals/print-modal/print-modal.component';
+import { LocationBackButtonComponent } from './components/location-back-button/location-back-button.component';
+import { SearchInputComponent } from './components/search-input/search-input.component';
+import { GetMediaFileComponent } from './components/get-media-file/get-media-file.component';
+import { ShowImageModalComponent } from './modals/show-image-modal/show-image-modal.component';
+import { AddEditMediaFileComponent } from '../public-api';
 
 export const translateModule = TranslateModule.forChild();
 
@@ -67,7 +73,12 @@ const commonExports = [
 	AuthenticationCallbackComponent,
 	PaginationComponent,
 	LoadingSpinnerComponent,
-	PrintModalComponent
+	PrintModalComponent,
+	LocationBackButtonComponent,
+	SearchInputComponent,
+	AddEditMediaFileComponent,
+	GetMediaFileComponent,
+	ShowImageModalComponent
 ];
 @NgModule({
 	declarations: [...commonExports, ViewIconComponent, ContentComponent],
@@ -80,6 +91,7 @@ const commonExports = [
 		LocalizeRouterModule,
 		SharedPipesModule,
 		SvgModule,
+		NgxDropzoneModule
 	],
 	exports: [...commonExports],
 	providers: [

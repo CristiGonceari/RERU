@@ -4,8 +4,20 @@
       <div class="card-title">{{'pages.modules-details.permissions' | translate}}</div>
     </div>
     <div class="card-header border-0 pt-0 pb-0" style="min-height: 100%;">
-      <app-permission-search style="width: 100%;" (handleSearch)="getPermissions({keyword: $event, page: 1})">
-      </app-permission-search>
+      <div class="row w-100"> 
+        <div class="col">
+          <erp-shared-search-input (handleSearch)="getPermissions({description: $event, page: 1})" [placeholder]="'pages.modules-details.search-by-description' | translate" #code></erp-shared-search-input>
+        </div>
+        <div class="col">
+          <erp-shared-search-input (handleSearch)="getPermissions({code: $event, page: 1})" [placeholder]="'pages.modules-details.search-by-code' | translate" #description></erp-shared-search-input>
+        </div>
+        <div class="col">
+          <div class="w-100 text-right">
+            <app-button (handle)="clearFields()" [value]="'button.reset' | translate" class="mr-5"></app-button>
+            <app-confirm-button (handle)="list({page: 1})" [value]="'button.search' | translate"></app-confirm-button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="card-body">
       <div
@@ -35,8 +47,8 @@
         </table>
         <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage" *ngIf="result"
           [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
-          (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event })"
-          (pageChange)="list({ keyword: keyword, page: $event })">
+          (sizeChange)="list({ keyword: keyword, page: pagination.currentPage, itemsPerPage: $event })"
+          (pageChange)="list({ keyword: keyword, page: $event, itemsPerPage: pagination.pageSize })">
         </div>
       </div>
     </div>

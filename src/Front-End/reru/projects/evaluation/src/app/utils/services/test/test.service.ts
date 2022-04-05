@@ -32,6 +32,10 @@ export class TestService extends AbstractService {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}
 
+	getTestSettings(id: number): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/setting/${id}`);
+	}
+
 	getUserTests(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/mine`, { params });
 	}
@@ -117,5 +121,40 @@ export class TestService extends AbstractService {
 
 	getMyEvaluatedTestsByDate(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-tests-evaluated-by-date`, { params });
+	}
+
+	print(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-tests`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
+	printUserTests(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-user-tests`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
+	printUserPolls(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-user-polls`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
+	printUserTestsByEvent(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-user-tests-by-event`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
+	printUserEvaluatedTests(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-user-evaluated-tests`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
 	}
 }

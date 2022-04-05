@@ -165,7 +165,8 @@
     "bulk-beSureMsg": "Asigurați-vă că încărcați șablonul necesar",
     "status-msg": "Sigur doriți să atribuiți această stare testului dvs.",
     "edit-options": "Nu puteți edita opțiunile.",
-    "no-record": "Nu a fost găsită nicio înregistrare."
+    "no-record": "Nu a fost găsită nicio înregistrare.",
+    "negative-message": "Această întrebare nu poate avea punctaj negativ."
   },
   "categories": {
     "settings": "Setări",
@@ -218,7 +219,8 @@
     "options": "Opțiuni",
     "search-test": "Caută test",
     "search-status": "Caută după statutul testului",
-    "name": "Nume",
+    "name": "Nume test",
+    "template-name": "Nume șablon de test",
     "category-used-count": "Categorii",
     "questions-to-use-count": "Întrebări",
     "time-min": "Timp, min",
@@ -227,13 +229,13 @@
     "total-time": "Timpul Total",
     "total-questions": "Total Intrebari",
     "min-score": "Puncte",
-    "status": "Status",
+    "status": "Statut",
     "points-to-pass": "Puncte de trecut",
     "questions": "Întrebări",
     "test-start": "Testul începe în",
     "open-options": "Deschideți Opțiunile",
-    "change-status": "Schimba Stare",
-    "choose-status": "Alegeți Stare",
+    "change-status": "Schimbă Statutul",
+    "choose-status": "Alegeți Starea",
     "view": "Vizualizează",
     "confirmation": "Confirmare",
     "remove": "Ștergeți șablonul testului",
@@ -257,7 +259,7 @@
     "succes-delete-msg": "Testul a fost șters cu succes",
     "succes-add-msg": "Testul a fost adăugat cu succes",
     "succes-update-msg": "Șablon de test a fost actualizat cu succes",
-    "succes-update-status-msg": "Statutul șablonului de test a fost actualizat",
+    "succes-update-test-status-msg": "Statutul șablonului de test a fost actualizat",
     "succes-add-rules-msg": "Regurile au fost adăugate cu succes",
     "succes-order-update": "Ordinea a fost actualizată cu succes",
     "succes-update-settings-msg": "Setările au fost actualizate cu succes",
@@ -270,12 +272,12 @@
     "subtitle": "Gestionarea testelor",
     "search-test-name": "Căutare după numele testului",
     "search-test-type": "Căutare după șablonul testului",
-    "search-test-status": "Căutare după status",
+    "search-test-status": "Căutare după statut",
     "search-student": "Caută utilizator",
     "search-student-idnp": "Caută după idnp utilizatorului",
     "test-type-name": "Numele șablonului de test",
     "student": "Student",
-    "status": "Status",
+    "status": "Statut",
     "verified-progress": "Verificare",
     "min-points": "Min Puncte",
     "allow-start": "Permiteți să înceapă",
@@ -324,7 +326,9 @@
     "subtitle": "Pagina de start",
     "start-test": "Începe un test",
     "my-tests": "Testele mele",
-    "date-status": "Data & Status",
+    "date-status": "Data & Statut",
+    "date": "Data",
+    "status": "Statut",
     "test": "Testul",
     "score": "Puncte",
     "result": "Rezultat",
@@ -433,7 +437,15 @@
     "clone": "Clonați",
     "Select": "Selectați",
     "Random": "Aleatorie",
-    "Strict": "Strictă"
+    "Strict": "Strictă",
+    "ZeroPercent": "Răspuns greșit = 0%",
+    "OneDivideCountPercent": "Răspuns greșit = 1/n% (n-nr total de opțiuni)",
+    "MinusCorrectOption": "Răspuns greșit = (-1) * răspuns corect%",
+    "New": "Nou",
+    "Refused": "Refuzat",
+    "Approved": "Aprobat",
+    "approve": "Aprobă",
+    "refuse": "Refuză"
   },
   "options": {
     "start-without-confirmation": "Este posibil să porniți testul fără confirmare",
@@ -455,7 +467,10 @@
     "succes-add-msg": "Opțiunea a fost adăugată cu succes",
     "succes-update-msg": "Opțiunea a fost actualizată cu succes",
     "succes-update-options-msg": "Opțiunile au fost actualizate cu succes",
-    "bulk-import": "Bulk Import"
+    "bulk-import": "Bulk Import",
+    "formula-for-one-answer": "Formula de calcul pentru întrebări cu un răspuns",
+    "formula-for-multiple-answers": "Formula de calcul pentru intrebari cu răspunsuri multiple",
+    "negative-score": "Permite scor negativ"
   },
   "tooltips": {
     "option1": "Utilizatorul are posibilitatea de a începe testul fără confirmarea administratorului",
@@ -640,6 +655,9 @@
     "not-correct-percent": "Procentul incorect",
     "skipped-percent": "Procentul omis"
   },
+  "select-format":{
+    "please-select-format": "Selectati formatul necesar"
+  },
   "message-code": {
     "MAP0000001": "Cerere către aplicație neautentificată",
     "MAP0000002": "Cerere neautorizată. Nu sunt permisiuni.",
@@ -659,6 +677,7 @@
     "03000205": "Sunt permise doar sondaje sau teste",
     "03000206": "Tipul de test nu există în eveniment",
     "03000207": "Adăugați eveniment sau evaluator",
+    "03000208": "Data începutului evenimentului nu poate fi din trecut",
     "03000301": "Evaluatorul există deja în eveniment",
     "03000302": "Evaluatorul există deja în test",
     "03000303": "Evaluatorul și candidatul nu pot fi aceeași persoană",
@@ -730,7 +749,8 @@
     "03001721": "Numai tipul de test închis poate fi clonat",
     "03001722": "Ora nevalidă",
     "03001723": "Sondaj nevalid",
-    "03001724": "Doar testul in status maculator poate fi sters",
+    "03001724": "Doar testul in statut 'maculator' poate fi sters",
+    "03001725": "Formulă necompletată",
     "03001801": "Numărul de întrebări a atins limita",
     "03001802": "Secvență nevalidă",
     "03001803": "Tip de selecție nevalid",
@@ -749,7 +769,9 @@
     "03030203": "Ați fost invitat la eveniment ca candidat",
     "03030204": "Ați fost invitat la eveniment ca persoana responsabilă",
     "03030205": "Ați fost invitat la eveniment ca evaluator",
-    "03030206": "Ați fost invitat la test ca evaluator"
+    "03030206": "Ați fost invitat la test ca evaluator",
+    "03030207": "Toți candidații din eveniment au terminat testul",
+    "03030208": "Testul dvs. solicitat a fost refuzat"
   },
   "login": {
     "colaborator-id": "Colaborator ID",
@@ -769,5 +791,24 @@
     "sorted-by": "Sortat după",
     "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
     "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare."
+  },
+  "guide": {
+    "title": "Ghidul Utilizatorului"
+  },
+  "solicited-test": {
+    "solicited-tests": "Teste solicitate",
+    "my-solicited-tests": "Testele mele solicitate",
+    "solicited-time": "Timp solicitat",
+    "add-test": "Solicita un test",
+    "remove": "Ștergeți testul solicitat",
+    "remove-msg": "Sigur doriți să ștergeți acest test solicitat?",
+    "succes-remove-msg": "Testul solicitat a fost șters cu succes",
+    "subtitle": "Gestionarea testelor solicitate",
+    "test-data": "Introduceți detaliile testului solicitat și confirmați",
+    "test-details": "Detaliile testului solicitat",
+    "succes-add-msg": "Testul solicitat a fost adăugat cu succes",
+    "succes-edit-msg": "Testul solicitat a fost editat cu succes",
+    "change-status": "Schimba statutul",
+    "refuse-msg": "Sigur doriți să refuzați acest test solicitat?"
   }
 }

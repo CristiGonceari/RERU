@@ -13,6 +13,13 @@ namespace CODWER.RERU.Personal.Application.DocumentTemplates
                     opts => opts.Ignore());
           
             CreateMap<DocumentTemplate, AddEditDocumentTemplateDto>();
+
+            CreateMap<DocumentTemplateCategory, DocumentTemplateCategoryDto>()
+                .ForMember(x => x.DocumentTemplateKeys, opts => opts.MapFrom(x => x.DocumentKeys));
+
+            CreateMap<DocumentTemplateKey, DocumentTemplateKeyDto>();
+            CreateMap<DocumentTemplateKeyDto, DocumentTemplateKey>();
+
         }
     }
 }

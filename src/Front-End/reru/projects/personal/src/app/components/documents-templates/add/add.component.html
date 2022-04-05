@@ -60,10 +60,10 @@
               <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills mb-2" orientation="vertical" >
                
                 <li [ngbNavItem]="data.id" class="w-auto" *ngFor="let data of firebase_Data">
-                  <a ngbNavLink >{{ 'categoriesKeys.' + categoryKeyEnum[data.id]  | translate}}</a>
+                  <a ngbNavLink >{{ 'categoriesKeys.' + data.name  | translate}}</a>
                     <ng-template ngbNavContent >
                       <ul class="drop-area" >
-                        <div class="btn btn-light-success d-inline-flex align-items-center btn-sm  btn-block" *ngFor="let item of data.keys " style="justify-content: right;" (click)="addWordButtonToCkEditor(item.keyName)" >
+                        <div class="btn btn-light-success d-inline-flex align-items-center btn-sm  btn-block" *ngFor="let item of data.documentTemplateKeys " style="justify-content: right;" (click)="addWordButtonToCkEditor(item.keyName)" >
                           <div class="d-flex flex-column text-right pr-3">
                               <span class="text-dark-75 font-weight-bold font-size-sm">{{ 'documentKeys.' + keysEnum[item.id]  | translate}}</span>
                               <span class="font-weight-bolder font-size-sm">{{ item.keyName }}</span>

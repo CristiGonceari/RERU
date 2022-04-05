@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PaginationSummary } from 'projects/core/src/app/utils/models/pagination-summary.model';
 import { PermissionModel } from 'projects/core/src/app/utils/models/permission.model';
@@ -17,7 +17,12 @@ export class ModulePermissionsComponent implements OnInit {
 	pagination: PaginationSummary = new PaginationSummary();
 	pager: number[] = [];
 	result: boolean;
-	keyword: string;
+	code: string;
+	description: string;
+	filters: any = {}
+
+	@ViewChild('code') searchCode: any;
+	@ViewChild('description') searchDescription: any;
 
 	constructor(
 		private permissionServise: ModulePermissionsService,
@@ -38,16 +43,19 @@ export class ModulePermissionsComponent implements OnInit {
 	}
 	
 	getPermissions(data: any = {}): void {
-		this.keyword = data.keyword;
+		this.code = data.code;
+		this.description = data.description;
 		data = {
 			...data,
-			keyword: this.keyword,
+			code: this.code,
+			description: this.description,
 			page: data.page || this.pagination.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
 		};
 		this.list(data);
 	}
-	list(data){
+
+	list(data): void {
 		this.permissionServise.get(this.moduleId, ObjectUtil.preParseObject(data)).subscribe(res => {
 			if (res && res.data.items.length) {
 				this.result = true;
@@ -65,5 +73,8 @@ export class ModulePermissionsComponent implements OnInit {
 		this.isLoading = true;
 	}
 
-
+	clearFields() {
+		this.searchCode.clear();
+		this.searchDescription.clear();
+	}
 }

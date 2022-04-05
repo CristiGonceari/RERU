@@ -23,5 +23,7 @@
         public const string STATISTICS_GENERAL_ACCESS = "P03000901";
 
         public const string TEST_VERIFICATION_GENERAL_ACCESS = "P03001001";
+
+        public const string SOLICITED_TESTS_GENERAL_ACCESS = "P03001101";
     }
 }

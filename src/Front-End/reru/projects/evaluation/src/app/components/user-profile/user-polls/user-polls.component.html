@@ -5,10 +5,10 @@
 		</div>
 		<div class="card-body">
 			<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+            
             <div *ngIf="!isLoading">
-                <ngb-accordion  
-                    *ngFor="let event of events; let i = index">
-                    <ngb-panel [id]="i">
+                <ngb-accordion [activeIds]="activeIds">
+                    <ngb-panel *ngFor="let event of events; let i = index" [id]="'panel'+event.id" >
                         <ng-template ngbPanelTitle style="color: black; font-size: 14px; display: flex;">
                             <span class="svg-icon svg-icon-primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -26,10 +26,17 @@
                                     </g>
                                 </svg>
                             </span>
-                            <label>{{event.name}}</label>
+                           
+                            <label id="title">{{event.name}}</label>
                         </ng-template>
                         <ng-template ngbPanelContent>
-                            <app-polls-by-event [id]="event.id"></app-polls-by-event>
+                            <div class="card-toolbar" style="text-align: right;">
+                                <app-confirm-button class="btn mr-3" (click)="pollsTable.getHeaders(getTitle())">
+                                    <i class="far fa-file-pdf text-white"></i>
+                                    {{'button.print' | translate}}
+                                </app-confirm-button>
+                            </div>
+                            <app-polls-by-event [id]="event.id" #pollsTable></app-polls-by-event>
                         </ng-template>
                     </ngb-panel>
                 </ngb-accordion>

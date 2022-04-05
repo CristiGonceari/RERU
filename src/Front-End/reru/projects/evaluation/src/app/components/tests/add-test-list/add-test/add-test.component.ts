@@ -11,11 +11,12 @@ import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notific
 import { AddEditTest } from '../../../../utils/models/tests/add-edit-test.model';
 import { FormControl} from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { AssignedUsers } from '../../../../utils/models/tests/assigned-users';
 import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
 import { forkJoin } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { AttachUserModalComponent } from 'projects/evaluation/src/app/utils/components/attach-user-modal/attach-user-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-test',
@@ -26,37 +27,28 @@ export class AddTestComponent implements OnInit {
   @ViewChild('autoCompleteInput', { read: MatAutocompleteTrigger }) autoCompleteElement: MatAutocompleteTrigger;
   @Input() testEvent: boolean;
 
-  usersList: any;
   eventsList: any;
   selectActiveTests: any;
-  testTemplateEvaluator: any;
-  eventEvaluator: any;
+  evaluatorList = [];
+  userListToAdd: number[] = [];
 
   title: string;
 	description: string;
 
-  evaluatorList: [] = [];
-  userListToAdd:number[] = [];
-  displayUserNames: AssignedUsers[] = []; 
-
-  user = new SelectItem();
   event = new SelectItem();
   testTemplate = new SelectItem();
   evaluator = new SelectItem();
+  myControl = new FormControl();
   
   showName: boolean = false;
   isTestTemplateOneAnswer: boolean = false;
   printTest: boolean = true;
-  needEvaluator: boolean = false;
   hasEventEvaluator: boolean = false;
-  isListOrderedAsc: boolean = false;
 
   date: Date;
   search: string;
-  key: string = '';
-  messageText = "";
-  
-  myControl = new FormControl();
+  messageText = '';
+  exceptUserIds = [];
 
   constructor(
     private referenceService: ReferenceService,
@@ -65,24 +57,12 @@ export class AddTestComponent implements OnInit {
 	  public translate: I18nService,
     private location: Location,
     private notificationService: NotificationsService,
-    private printService: PrintTemplateService
+    private printService: PrintTemplateService,
+		private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
-    this.getUsers();
     this.getEvents();
-    this.getEvaluators();
-  }
-
-  getUsers() {
-    this.referenceService.getUsers({name: this.key, eventId: this.event.value }).subscribe(res => {
-      let initialArray = res.data.map(el => el.value);
-      this.usersList = res.data;
-      for( let i=0; i<initialArray.length; i++ ) {
-        if (this.displayUserNames.map(el => el.value).includes(initialArray[i]))
-          this.updateUserList(initialArray[i]);
-      }
-    });
   }
 
   getEvents() {
@@ -90,15 +70,6 @@ export class AddTestComponent implements OnInit {
       this.eventsList = res.data;
       this.getActiveTestTemplate();
     });
-  }
-
-  getEvaluators() {
-    if (this.needEvaluator === false && this.hasEventEvaluator === false) {
-      this.referenceService.getUsers({ eventId: this.event.value }).subscribe(res => { this.evaluatorList = res.data });
-    } else {
-      this.evaluatorList = [];
-      this.evaluator.value = null;
-    };
   }
 
   setTimeToSearch(): void {
@@ -117,7 +88,6 @@ export class AddTestComponent implements OnInit {
     this.testTemplateService.getTestTemplateByStatus(params).subscribe((res) => {
       this.selectActiveTests = res.data;
     })
-    this.getUsers();
   }
 
   checkIfIsOneAnswer(event) {
@@ -138,46 +108,13 @@ export class AddTestComponent implements OnInit {
     this.hasEventEvaluator = this.eventsList.find(x => x.eventId === event).isEventEvaluator;
   }
 
-  deleteFromList(user, index) {
-    let indexOfIdToDelete = this.userListToAdd.findIndex(x => x == this.displayUserNames[index].value);
-    this.displayUserNames.splice(index, 1);
-    this.userListToAdd.splice(indexOfIdToDelete, 1);
-    this.usersList.push( new AssignedUsers(user.value, user.label));
-  }
-
-  updateUserList(id?: number): void {
-    let indexToDelete = this.usersList.map(el => el.value).findIndex(x => x == id);
-    this.usersList.splice(indexToDelete, 1);
-    this.key = '';
-    this.autoCompleteElement.openPanel();
-  }
-
-  addUserToList(id: number, name: string) {
-    if(!this.userListToAdd.includes(+id))
-    this.displayUserNames.push(
-      new AssignedUsers(id, name)
-    );
-    this.userListToAdd.push(+id);
-    this.updateUserList(id);
-  }
-
-  sortByName() {
-    if(!this.isListOrderedAsc) {
-      this.displayUserNames.sort( (a,b)=> a.label > b.label ? 1:-1 );
-      this.isListOrderedAsc = true;
-    } else {
-      this.displayUserNames.sort( (a,b)=> a.label > b.label ? -1:1 );
-      this.isListOrderedAsc = false;
-    }
-  }
-
   parse() {
     this.setTimeToSearch();
     return  new AddEditTest({
       userProfileId: this.userListToAdd,
       programmedTime: this.search,
       eventId: +this.event.value || null,
-      evaluatorId: +this.evaluator.value || null,
+      evaluatorId: this.evaluatorList[0] || null,
       testStatus: TestStatusEnum.Programmed,
       testTemplateId: +this.testTemplate.value || 0,
       showUserName: this.showName
@@ -234,4 +171,26 @@ export class AddTestComponent implements OnInit {
       saveAs(file);
     });
   }
+
+  attachEvaluators(): void {
+    this.exceptUserIds = this.userListToAdd;
+    this.openUsersModal(this.evaluatorList, 'radio');
+  }
+
+  attachUsers(): void {
+    this.exceptUserIds = this.evaluatorList;
+    this.openUsersModal(this.userListToAdd, 'checkbox');
+  }
+
+  openUsersModal(attachedItems, inputType): void {
+    const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
+    modalRef.componentInstance.exceptUserIds = this.exceptUserIds;
+    modalRef.componentInstance.attachedItems = attachedItems;
+    modalRef.componentInstance.inputType = inputType;
+    modalRef.result.then(() => {
+      if (inputType == 'radio') this.evaluatorList = modalRef.result.__zone_symbol__value;
+      else if (inputType == 'checkbox') this.userListToAdd = modalRef.result.__zone_symbol__value;
+    }, () => { });
+  }
+
 }

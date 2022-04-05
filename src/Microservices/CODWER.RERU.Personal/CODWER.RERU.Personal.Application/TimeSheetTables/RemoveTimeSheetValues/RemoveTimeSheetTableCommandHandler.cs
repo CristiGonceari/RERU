@@ -1,5 +1,11 @@
-﻿using CODWER.RERU.Personal.Data.Persistence.Context;
+﻿using CODWER.RERU.Personal.Application.Services;
+using CODWER.RERU.Personal.Data.Entities.StaticExtensions;
+using CODWER.RERU.Personal.Data.Entities.TimeSheetTables;
+using CODWER.RERU.Personal.Data.Persistence.Context;
+using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
 using MediatR;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,10 +15,17 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.RemoveTimeSheetValues
     public class RemoveTimeSheetTableCommandHandler : IRequestHandler<RemoveTimeSheetTableCommand ,Unit>
     {
         private readonly AppDbContext _appDbContext;
+        private readonly ILoggerService<RemoveTimeSheetTableCommand> _loggerService;
+        private readonly IUserProfileService _userProfileService;
 
-        public RemoveTimeSheetTableCommandHandler(AppDbContext appDbContext)
+        public RemoveTimeSheetTableCommandHandler(
+            AppDbContext appDbContext,
+            ILoggerService<RemoveTimeSheetTableCommand> loggerService,
+            IUserProfileService userProfileService)
         {
             _appDbContext = appDbContext;
+            _loggerService = loggerService;
+            _userProfileService = userProfileService;
         }
 
         public async Task<Unit> Handle(RemoveTimeSheetTableCommand request, CancellationToken cancellationToken)
@@ -29,8 +42,14 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.RemoveTimeSheetValues
             }
             await _appDbContext.SaveChangesAsync();
 
+            await LogAction(delete);
+
             return Unit.Value;
         }
 
+        private async Task LogAction(IQueryable<TimeSheetTable> timeSheetTable)
+        {
+            await _loggerService.Log(LogData.AsPersonal($"TimeSheetTable values were removed", timeSheetTable));
+        }
     }
 }

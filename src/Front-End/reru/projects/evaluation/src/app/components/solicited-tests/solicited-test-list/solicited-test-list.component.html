@@ -1,0 +1,48 @@
+<app-page-title title="{{ 'solicited-test.solicited-tests' | translate }}" subTitle="{{ 'solicited-test.subtitle' | translate }}">
+</app-page-title>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+	<div class="d-flex flex-column-fluid">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="card card-custom gutter-b">
+						<div class="card-header flex-wrap border-0 py-5">
+							<div class="card-title">
+								<h3 class="card-label" id="title">{{ 'solicited-test.solicited-tests' | translate }}</h3>
+							</div>
+							<div class="card-toolbar">
+								<app-confirm-button class="btn mr-3" (click)="testsTable.getHeaders(getTitle())">
+									<i class="far fa-file-pdf text-white"></i>
+									{{'button.print' | translate}}
+								</app-confirm-button>
+							</div>
+						</div>
+						<div class="card-header border-0 mt-5 pr-5" style="min-height: 100%;">
+							<div class="row w-100">
+								<div class="col-4">
+									<erp-shared-search-input (handleSearch)="testsTable.setFilter('userName', $event)" [placeholder]="'verify-test.search-student' | translate" #user></erp-shared-search-input>
+							  </div>
+							  <div class="col-3">
+									<erp-shared-search-input (handleSearch)="testsTable.setFilter('testName', $event)" [placeholder]="'tests.search-test' | translate" #test></erp-shared-search-input>
+							  </div>
+								<div class="col-3">
+									<erp-shared-search-input (handleSearch)="testsTable.setFilter('eventName', $event)" [placeholder]="'events.search-event' | translate" #event></erp-shared-search-input>
+								</div>
+							  <div class="col-2">
+								<div class="w-100 text-right">
+									<app-button (handle)="clearFields(); testsTable.resetFilters()" [value]="'button.reset' | translate" class="mr-5"></app-button>
+									<app-confirm-button (handle)="testsTable.list({page: 1})" [value]="'button.search' | translate"></app-confirm-button>
+								</div>
+							</div>
+							</div>
+						</div>
+						<div class="card-body">
+							<app-solicited-tests-table #testsTable></app-solicited-tests-table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

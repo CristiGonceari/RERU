@@ -11,7 +11,7 @@ import { Response, AppSettingsService, AbstractService } from '@erp/shared';
 	providedIn: 'root',
 })
 export class UserService extends AbstractService {
-	private readonly routeUrl: string = 'user';
+	private readonly routeUrl: string = 'User';
 
 	constructor(protected configService: AppSettingsService, private http: HttpClient) {
 		super(configService);
@@ -21,8 +21,12 @@ export class UserService extends AbstractService {
 		return this.http.get<Response<UserForRemove>>(`${this.coreUrl}/${this.routeUrl}/${id}/for-remove`);
 	}
 
-	createUser(data: User): Observable<any> {
+	createUser(data): Observable<any> {
 		return this.http.post(`${this.coreUrl}/${this.routeUrl}`, data);
+	}
+
+	addUserAvatar(data): Observable<any> {
+		return this.http.post(`${this.coreUrl}/${this.routeUrl}/avatar`, data);
 	}
 
 	getUser(id: string): Observable<Response<User>> {
@@ -44,7 +48,8 @@ export class UserService extends AbstractService {
 	}
 
 	editUserPersonalDetails(data): Observable<any> {
-		return this.http.put(`${this.coreUrl}/${this.routeUrl}/personal-details`, data);
+		console.log("data:", data)
+		return this.http.patch(`${this.coreUrl}/${this.routeUrl}/personal-details`, data);
 	}
 
 	resetPassword(id: string): Observable<any> {

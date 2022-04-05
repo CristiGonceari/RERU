@@ -40,6 +40,8 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Context
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<QuestionUnitTag> QuestionUnitTags { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
+        public virtual DbSet<EmailTestNotification> EmailTestNotifications { get; set; }
+        public virtual DbSet<SolicitedTest> SolicitedTests { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

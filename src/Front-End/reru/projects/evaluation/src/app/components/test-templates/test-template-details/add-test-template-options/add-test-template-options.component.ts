@@ -9,14 +9,16 @@ import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notific
 import { TestTemplateSettings } from 'projects/evaluation/src/app/utils/models/test-templates/test-template-settings.model';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { forkJoin } from 'rxjs';
+import { ReferenceService } from 'projects/evaluation/src/app/utils/services/reference/reference.service';
+import { SelectItem } from 'projects/evaluation/src/app/utils/models/select-item.model';
 
 @Component({
-  selector: 'app-add-test-template-options',
-  templateUrl: './add-test-template-options.component.html',
-  styleUrls: ['./add-test-template-options.component.scss']
+	selector: 'app-add-test-template-options',
+	templateUrl: './add-test-template-options.component.html',
+	styleUrls: ['./add-test-template-options.component.scss']
 })
 export class AddTestTemplateOptionsComponent implements OnInit {
-  settingsForm: FormGroup;
+	settingsForm: FormGroup;
 	testId: number;
 	testName;
 	status;
@@ -29,18 +31,22 @@ export class AddTestTemplateOptionsComponent implements OnInit {
 	possibleChangeAnswer;
 	possibleGetToSkipped;
 	hidePagination;
-	setMaxErrors: boolean;
+	setMaxErrors: boolean = false;
 
 	title: string;
-  	description: string;
+	description: string;
+	scoreFormulas: SelectItem[] = [{ label: "", value: "" }];
+	showNegativeInputOneAnswer: boolean;
+	showNegativeInputMultipleAnswers: boolean;
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
-	  	public translate: I18nService,
-	  	private location: Location,
+		public translate: I18nService,
+		private location: Location,
 		private testTemplateService: TestTemplateService,
 		private notificationService: NotificationsService,
-		private formBuilder: FormBuilder
+		private formBuilder: FormBuilder,
+		private referenceService: ReferenceService
 	) { }
 
 	ngOnInit(): void {
@@ -56,10 +62,43 @@ export class AddTestTemplateOptionsComponent implements OnInit {
 			hidePagination: new FormControl(),
 			showManyQuestionPerPage: new FormControl(),
 			questionsCountPerPage: new FormControl(),
-			maxErrors: new FormControl()
+			maxErrors: new FormControl(),
+			formulaForOneAnswer: new FormControl(),
+			negativeScoreForOneAnswer: new FormControl(),
+			formulaForMultipleAnswers: new FormControl(),
+			negativeScoreForMultipleAnswers: new FormControl()
 		});
 
 		this.initData();
+		this.getScoreFormulas();
+	}
+
+	getScoreFormulas() {
+		this.referenceService.getScoreFormula().subscribe(res => this.scoreFormulas = res.data);
+	}
+
+	selectScoreFormulaOneAnswer(event) {
+		if (event == 1 || event == 2) {
+			this.showNegativeInputOneAnswer = true;
+			if (this.settingsForm.value.negativeScoreForOneAnswer == null) {
+				this.settingsForm.value.negativeScoreForOneAnswer = false;
+			}
+		} else {
+			this.showNegativeInputOneAnswer = false;
+			this.settingsForm.value.negativeScoreForOneAnswer = null;
+		}
+	}
+
+	selectScoreFormulaMultipleAnswers(event) {
+		if (event == 1 || event == 2) {
+			this.showNegativeInputMultipleAnswers = true;
+			if (this.settingsForm.value.negativeScoreForMultipleAnswers == null) {
+				this.settingsForm.value.negativeScoreForMultipleAnswers = false;
+			}
+		} else {
+			this.showNegativeInputMultipleAnswers = false;
+			this.settingsForm.value.negativeScoreForMultipleAnswers = null;
+		}
 	}
 
 	initData(): void {
@@ -68,21 +107,21 @@ export class AddTestTemplateOptionsComponent implements OnInit {
 				this.testId = response.id;
 				this.testTemplateService.getTestTemplateSettings({ testTemplateId: this.testId }).subscribe(res => {
 					this.get();
+					this.selectScoreFormulaOneAnswer(res.data.formulaForOneAnswer);
+					this.selectScoreFormulaMultipleAnswers(res.data.formulaForMultipleAnswers);
 					this.initForm(res.data);
 				})
 			}
-			else
-			this.initForm();
 		})
 	}
 
-	get(){
+	get() {
 		this.testTemplateService.getTestTemplate(this.testId).subscribe(res => {
-			if(res && res.data) {
+			if (res && res.data) {
 				this.isLoading = false;
 				this.status = res.data.status;
 				this.mode = res.data.mode;
-				if(this.status == TestTemplateStatusEnum.Active || this.status == TestTemplateStatusEnum.Canceled){
+				if (this.status == TestTemplateStatusEnum.Active || this.status == TestTemplateStatusEnum.Canceled) {
 					this.disable = true;
 				}
 			}
@@ -103,29 +142,18 @@ export class AddTestTemplateOptionsComponent implements OnInit {
 				hidePagination: this.formBuilder.control((test && test.hidePagination) || false),
 				showManyQuestionPerPage: this.formBuilder.control((test && test.showManyQuestionPerPage) || false),
 				questionsCountPerPage: this.formBuilder.control((test && test.questionsCountPerPage) || null),
-				maxErrors: this.formBuilder.control((test && test.maxErrors) || null)
+				maxErrors: this.formBuilder.control((test && test.maxErrors) || null),
+				formulaForOneAnswer: this.formBuilder.control(test && test.formulaForOneAnswer),
+				negativeScoreForOneAnswer: this.formBuilder.control((test && test.negativeScoreForOneAnswer) || null),
+				formulaForMultipleAnswers: this.formBuilder.control(test && test.formulaForMultipleAnswers),
+				negativeScoreForMultipleAnswers: this.formBuilder.control((test && test.negativeScoreForMultipleAnswers) || null)
 			});
+
 			this.possibleChangeAnswer = this.settingsForm.value.possibleChangeAnswer;
 			this.possibleGetToSkipped = this.settingsForm.value.possibleGetToSkipped;
 			this.hidePagination = this.settingsForm.value.hidePagination;
 			this.showManyQuestionPerPage = this.settingsForm.value.showManyQuestionPerPage;
-			if(this.settingsForm.value.maxErrors) this.setMaxErrors = true;
-		}
-		else {
-			this.settingsForm = this.formBuilder.group({
-				testTemplateId: this.testId,
-				startWithoutConfirmation: this.formBuilder.control(false),
-				startBeforeProgrammation: this.formBuilder.control(false),
-				startAfterProgrammation: this.formBuilder.control(false),
-				possibleGetToSkipped: this.formBuilder.control(false),
-				possibleChangeAnswer: this.formBuilder.control(false),
-				canViewResultWithoutVerification: this.formBuilder.control(false),
-				canViewPollProgress: this.formBuilder.control(false),
-				hidePagination: this.formBuilder.control(false),
-				showManyQuestionPerPage: this.formBuilder.control(false),
-				questionsCountPerPage: this.formBuilder.control(null),
-				maxErrors: this.formBuilder.control(null)
-			});
+			if (this.settingsForm.value.maxErrors) this.setMaxErrors = true;
 		}
 	}
 
@@ -133,15 +161,15 @@ export class AddTestTemplateOptionsComponent implements OnInit {
 		this.showManyQuestionPerPage = value;
 	}
 
-	possibleChangeAnswerChange(value){
+	possibleChangeAnswerChange(value) {
 		this.possibleChangeAnswer = value;
 	}
 
-	possibleGetToSkippedChange(value){
+	possibleGetToSkippedChange(value) {
 		this.possibleGetToSkipped = value;
 	}
 
-	hidePaginationChange(value){
+	hidePaginationChange(value) {
 		this.hidePagination = value;
 	}
 
@@ -162,6 +190,9 @@ export class AddTestTemplateOptionsComponent implements OnInit {
 	}
 
 	updateOptions() {
+		this.selectScoreFormulaOneAnswer(this.settingsForm.value.formulaForOneAnswer);
+		this.selectScoreFormulaMultipleAnswers(this.settingsForm.value.formulaForMultipleAnswers);
+
 		this.testTemplateService.addEditTestTemplateSettings({ data: this.settingsForm.value }).subscribe(() => {
 			forkJoin([
 				this.translate.get('modal.success'),
@@ -169,7 +200,7 @@ export class AddTestTemplateOptionsComponent implements OnInit {
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
-				});
+			});
 			this.getTestTemplateSettings();
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 		});

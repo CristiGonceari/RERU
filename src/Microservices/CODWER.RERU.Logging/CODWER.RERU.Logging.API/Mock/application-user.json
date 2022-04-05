@@ -1,0 +1,14 @@
+{
+  "id": "test-id-1",
+  "name": "RERU Client",
+  "email": "andrian.hubencu@codwer.com",
+  "modules": [
+    {
+      "module": { "name": "Logging" },
+      "role": "test role",
+      "permissions": [
+        "P04000002"
+      ]
+    }
+  ]
+}

@@ -33,14 +33,14 @@ namespace CODWER.RERU.Core.Application.ModulePermissions.GetModulePermissions
 
         private IQueryable<ModulePermission> Filter(IQueryable<ModulePermission> items, GetModulePermissionsQuery request)
         {
-            if (!string.IsNullOrEmpty(request.Keyword))
+            if (!string.IsNullOrEmpty(request.Code))
             {
-                var toSearch = request.Keyword.Split(' ').ToList();
+                items = items.Where(p => p.Code.ToLower().Contains(request.Code.ToLower()));
+            }
 
-                foreach(var s in toSearch)
-                {
-                    items = items.Where(p => p.Code.Contains(s) || p.Description.Contains(s));
-                }
+            if (!string.IsNullOrEmpty(request.Description))
+            {
+                items = items.Where(p => p.Description.ToLower().Contains(request.Description.ToLower()));
             }
 
             return items;

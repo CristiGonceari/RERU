@@ -1,22 +1,23 @@
-﻿using System.Linq;
-using CVU.ERP.Common.DataTransferObjects.Files;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Data.Entities;
+﻿using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
-using CVU.ERP.Module.Application.TablePrinterService;
+using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.Module.Application.TableExportServices;
+using CVU.ERP.Module.Application.TableExportServices.Interfaces;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.Events.PrintUserEvents
 {
     public class PrintUserEventsCommandHandler : IRequestHandler<PrintUserEventsCommand, FileDataDto>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ITablePrinter<Event, EventDto> _printer;
+        private readonly IExportData<Event, EventDto> _printer;
 
-        public PrintUserEventsCommandHandler(AppDbContext appDbContext, ITablePrinter<Event, EventDto> printer)
+        public PrintUserEventsCommandHandler(AppDbContext appDbContext, IExportData<Event, EventDto> printer)
         {
             _appDbContext = appDbContext;
             _printer = printer;
@@ -31,12 +32,13 @@ namespace CODWER.RERU.Evaluation.Application.Events.PrintUserEvents
                 .Where(x => x.EventUsers.Any(e => e.UserProfileId == request.UserId) && x.EventTestTemplates.Any(e => e.TestTemplate.Mode == request.TestTemplateMode))
                 .AsQueryable();
 
-            var result = _printer.PrintTable(new TableData<Event>
+            var result = _printer.ExportTableSpecificFormat(new TableData<Event>
             {
                 Name = request.TableName,
                 Items = userEvents,
                 Fields = request.Fields,
-                Orientation = request.Orientation
+                Orientation = request.Orientation,
+                ExportFormat = request.TableExportFormat
             });
 
             return result;

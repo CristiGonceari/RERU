@@ -1,9 +1,8 @@
 ﻿using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionUnits
 {
@@ -22,17 +21,17 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits
 
             if (!string.IsNullOrWhiteSpace(filterData.QuestionName))
             {
-                questions = questions.Where(x => x.Question.Contains(filterData.QuestionName) || x.QuestionUnitTags.Any(qu => qu.Tag.Name.Contains(filterData.QuestionName)));
+                questions = questions.Where(x => x.Question.ToLower().Contains(filterData.QuestionName.ToLower()) || x.QuestionUnitTags.Any(qu => qu.Tag.Name.ToLower().Contains(filterData.QuestionName.ToLower())));
             }
 
             if (!string.IsNullOrWhiteSpace(filterData.CategoryName))
             {
-                questions = questions.Where(x => x.QuestionCategory.Name.Contains(filterData.CategoryName));
+                questions = questions.Where(x => x.QuestionCategory.Name.ToLower().Contains(filterData.CategoryName.ToLower()));
             }
 
             if (!string.IsNullOrWhiteSpace(filterData.QuestionTags))
             {
-                questions = questions.Where(x => x.QuestionUnitTags.Any(qu => qu.Tag.Name.Contains(filterData.QuestionTags)));
+                questions = questions.Where(x => x.QuestionUnitTags.Any(qu => qu.Tag.Name.ToLower().Contains(filterData.QuestionTags.ToLower())));
             }
 
             if (filterData.Type != null)

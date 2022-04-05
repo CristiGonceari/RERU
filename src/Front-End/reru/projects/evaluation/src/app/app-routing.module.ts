@@ -85,6 +85,12 @@ const routes: Routes = [
 		loadChildren: () => import('./components/user-profile/user-profile.module').then(m => m.UserProfileModule),
 		canActivate: [AuthenticationGuard]
 	},
+	{
+		path: 'solicited-tests', 
+		loadChildren: () => import('./components/solicited-tests/solicited-tests.module').then(m => m.SolicitedTestsModule),
+		data: { permission: 'P03001101' },
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
+	},
 	{ path: '404', component: Exception404Component },
 	{ path: '**', redirectTo: '404' }
 ];

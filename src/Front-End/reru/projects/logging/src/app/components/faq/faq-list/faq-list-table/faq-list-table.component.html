@@ -1,0 +1,72 @@
+<app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'10vh'" [height]="'5rem'" [width]="'5rem'"
+    [colorClass]="'text-primary'">
+</app-loading-spinner>
+<h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
+
+<div *ngIf="!isLoading && !downloadFile"
+    class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+    id="kt_datatable">
+    <table class="datatable table font-size-lg" style="overflow: visible">
+        <thead class="text-uppercase text-muted">
+            <tr>
+                <th scope="col">{{'faq.name' | translate}}</th>
+                <th scope="col" class="d-none">{{'faq.content' | translate}}</th>
+                <th scope="col" style="width: 48px"></th>
+            </tr>
+        </thead>
+        <tbody class="datatable-body" *ngIf="articles">
+            <tr *ngFor="let item of articles" (dblclick)="navigate(item.id)">
+                <td style="cursor: pointer;" [routerLink]="['faq-details', item.id]">{{ item.name }}</td>
+                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
+                    <div style="overflow: visible; position: relative; width: 0px">
+                        <div ngbDropdown class="dropdown dropdown-inline">
+                            <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                                <span class="svg-icon svg-icon-md" ngbDropdownToggle>
+                                    <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                        viewBox="0 0 24 24" version="1.1">
+                                        <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
+                                            <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3"
+                                                fill="black">
+                                            </rect>
+                                            <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3"
+                                                fill="black" fill-opacity="0.7"></rect>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                                <div ngbDropdownMenu aria-labelledby="action1">
+                                    <button [routerLink]="['faq-details', item.id]"
+                                        class="navi-link align-items-center px-6" ngbDropdownItem>
+                                        {{'dashboard.view-details' | translate}}
+                                    </button>
+                                    <button [routerLink]="['edit-article', item.id]"
+                                        class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                                        {{ 'button.edit' | translate }}
+                                    </button>
+                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem
+                                        (click)="openConfirmationDeleteModal(item.id)">
+                                        {{'button.delete' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tbody class="datatable-body" *ngIf="!articles.length">
+            <tr>
+                <td colspan="2" class="text-center">
+                    {{ 'message.no-record' | translate }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage" *ngIf="articles.length"
+        [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
+        (sizeChange)="list({ page: pagedSummary.currentPage, itemsPerPage: $event })"
+        (pageChange)="list({ keyword: keyword, page: $event })">
+    </div>
+</div>

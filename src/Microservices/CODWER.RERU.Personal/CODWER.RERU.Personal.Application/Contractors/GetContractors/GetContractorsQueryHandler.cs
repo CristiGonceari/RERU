@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Personal.Application.Enums;
+using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Data.Entities;
 using CODWER.RERU.Personal.Data.Entities.StaticExtensions;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Contractors;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,15 +21,24 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
     {
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
+        private readonly ILoggerService<GetContractorsQuery> _loggerService;
+        private readonly IUserProfileService _userProfileService;
 
-        public GetContractorsQueryHandler(AppDbContext appDbContext, IPaginationService paginationService)
+        public GetContractorsQueryHandler(
+            AppDbContext appDbContext, 
+            IPaginationService paginationService,
+            ILoggerService<GetContractorsQuery> loggerService,
+            IUserProfileService userProfileService)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
+            _loggerService = loggerService;
+            _userProfileService = userProfileService;
         }
 
         public async Task<PaginatedModel<ContractorDto>> Handle(GetContractorsQuery request, CancellationToken cancellationToken)
         {
+
             var contractors = _appDbContext.Contractors
                 .Include(r => r.Positions)
                 .ThenInclude(p => p.Department)
@@ -38,7 +51,14 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Contractor, ContractorDto>(contractors, request);
             
+            await LogAction(paginatedModel.Items);
+
             return paginatedModel;
+        }
+
+        private async Task LogAction(IEnumerable<ContractorDto> contractors)
+        {
+            await _loggerService.Log(LogData.AsPersonal($"Contractors list was viewed", contractors));
         }
 
         private IQueryable<Contractor> Filter(IQueryable<Contractor> items, GetContractorsQuery request)

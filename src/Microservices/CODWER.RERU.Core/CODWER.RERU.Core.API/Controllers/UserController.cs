@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.UserProfiles.GetUserForRemove;
 using CODWER.RERU.Core.Application.Users.ActivateUser;
+using CODWER.RERU.Core.Application.Users.AddUserAvatar;
 using CODWER.RERU.Core.Application.Users.BlockUser;
 using CODWER.RERU.Core.Application.Users.ChangeMyPassword;
 using CODWER.RERU.Core.Application.Users.ChangePersonalData;
@@ -16,7 +17,6 @@ using CODWER.RERU.Core.Application.Users.ResetUserPassword;
 using CODWER.RERU.Core.Application.Users.SetPassword;
 using CODWER.RERU.Core.DataTransferObjects.Password;
 using CODWER.RERU.Core.DataTransferObjects.Users;
-using CVU.ERP.Common.DataTransferObjects.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,10 +49,10 @@ namespace CODWER.RERU.Core.API.Controllers
             return Mediator.Send (new GetEditUserPersonalDetailsQuery (id));
         }
 
-        [HttpPut ("personal-details")]
-        public Task UpdateUserPersonalDetails ([FromBody] EditUserPersonalDetailsDto dto) 
+        [HttpPatch ("personal-details")]
+        public Task<int> UpdateUserPersonalDetails ([FromBody] EditUserPersonalDetailsCommand command) 
         {
-            return Mediator.Send (new EditUserPersonalDetailsCommand (dto));
+            return Mediator.Send(command);
         }
 
         [HttpGet ("get-personal-data")]
@@ -62,9 +62,15 @@ namespace CODWER.RERU.Core.API.Controllers
         }
 
         [HttpPost]
-        public Task<int> CreateUser ([FromBody] CreateUserDto user) 
+        public Task<int> CreateUser ([FromBody] CreateUserCommand command) 
         {
-            return Mediator.Send (new CreateUserCommand (user));
+            return Mediator.Send(command);
+        }
+
+        [HttpPost("avatar")]
+        public Task<string> AddAvatar([FromForm] AddUserAvatarCommand command)
+        {
+            return Mediator.Send(command);
         }
 
         [HttpPut]

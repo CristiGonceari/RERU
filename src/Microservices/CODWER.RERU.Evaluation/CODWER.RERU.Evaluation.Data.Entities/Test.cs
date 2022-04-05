@@ -10,6 +10,7 @@ namespace CODWER.RERU.Evaluation.Data.Entities
         public Test()
         {
             TestQuestions = new HashSet<TestQuestion>();
+            EmailTestNotifications = new HashSet<EmailTestNotification>();
         }
 
         public int? AccumulatedPercentage { get; set; }
@@ -41,5 +42,7 @@ namespace CODWER.RERU.Evaluation.Data.Entities
       
 
         public virtual ICollection<TestQuestion> TestQuestions { get; set; }
+        public virtual ICollection<EmailTestNotification> EmailTestNotifications { get; set; }
+
     }
 }

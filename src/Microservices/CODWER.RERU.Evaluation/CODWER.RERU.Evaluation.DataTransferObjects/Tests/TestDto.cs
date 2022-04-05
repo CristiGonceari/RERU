@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
@@ -11,10 +12,10 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public int TestTemplateId { get; set; }
         public string EventName { get; set; }
         public int EventId { get; set; }
-        public string LocationName { get; set; }
+        public IEnumerable<string> LocationNames { get; set; }
         public TestPassStatusEnum? TestPassStatus { get; set; }
         public int? MaxErrors { get; set; }
-        public int Duration { get; set; }        
+        public int Duration { get; set; }
         public int MinPercent { get; set; }
         public int QuestionCount { get; set; }
         public int AccumulatedPercentage { get; set; }

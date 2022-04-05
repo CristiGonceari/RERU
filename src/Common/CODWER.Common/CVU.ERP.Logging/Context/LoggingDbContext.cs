@@ -14,7 +14,8 @@ namespace CVU.ERP.Logging.Context
         {
         }
 
-        public DbSet<Log> Logs { set; get; }
+        public virtual DbSet<Log> Logs { set; get; }
+        public virtual DbSet<Article> Articles { set; get; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

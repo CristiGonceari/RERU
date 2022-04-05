@@ -25,6 +25,7 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using System;
 using System.Text;
+using CODWER.RERU.Personal.Application.CronJobs;
 using Hangfire.PostgreSql;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
@@ -134,20 +135,21 @@ namespace CODWER.RERU.Personal.API
                 app.UseHsts();
             }
 
-            //app.UseHangfireDashboard();
-            //app.UseHangfireServer();
+            // if (env.IsDevelopment())
+            // {
+            DatabaseSeeder.SeedDb(appDbContext);
+            // }
 
-            //RecurringJob.AddOrUpdate<JobTimeSheetTable>(x => x.JobForNationalHolidays(), "00 20 * * *");
-            //RecurringJob.AddOrUpdate<JobTimeSheetTable>(x => x.JobForWorkedHours(), "0 4 * * *");
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
+
+            RecurringJob.AddOrUpdate<JobTimeSheetTable>(x => x.JobForNationalHolidays(), "00 20 * * *");
+            RecurringJob.AddOrUpdate<JobTimeSheetTable>(x => x.JobForWorkedHours(), "0 4 * * *");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
 
-            // if (env.IsDevelopment())
-            // {
-            DatabaseSeeder.SeedDb(appDbContext);
-            // }
 
             if (env.IsDevelopment())
             {

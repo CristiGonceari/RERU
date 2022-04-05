@@ -1,13 +1,17 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using CODWER.RERU.Evaluation.DataTransferObjects.Plans;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.AssignResponsiblePersonToPlan
 {
-    public class AssignResponsiblePersonToPlanCommandHandler : IRequestHandler<AssignResponsiblePersonToPlanCommand, Unit>
+    public class AssignResponsiblePersonToPlanCommandHandler : IRequestHandler<AssignResponsiblePersonToPlanCommand, List<int>>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
@@ -18,14 +22,51 @@ namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.AssignRespon
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(AssignResponsiblePersonToPlanCommand request, CancellationToken cancellationToken)
+        public async Task<List<int>> Handle(AssignResponsiblePersonToPlanCommand request, CancellationToken cancellationToken)
         {
-            var planResponsiblePerson = _mapper.Map<PlanResponsiblePerson>(request.Data);
 
-            await _appDbContext.PlanResponsiblePersons.AddAsync(planResponsiblePerson);
-            await _appDbContext.SaveChangesAsync();
+            var planUsersIds = new List<int>();
 
-            return Unit.Value;
+            var planValues = await _appDbContext.PlanResponsiblePersons.ToListAsync();
+
+
+            foreach (var userId in request.UserProfileId)
+            {
+                var planUser = planValues.FirstOrDefault(l => l.UserProfileId == userId);
+
+                if (planUser == null)
+                {
+
+                    var newPlanUser = new AddPlanPersonDto()
+                    {
+                        UserProfileId = userId,
+                        PlanId = request.PlanId,
+                    };
+
+                    var planResponsiblePerson = _mapper.Map<PlanResponsiblePerson>(newPlanUser);
+
+                    await _appDbContext.PlanResponsiblePersons.AddAsync(planResponsiblePerson);
+                    await _appDbContext.SaveChangesAsync();
+
+                    var planName = await _appDbContext.PlanResponsiblePersons.FirstAsync(x => x.UserProfileId == userId);
+
+                    planUsersIds.Add(planName.Id);
+                }
+                else
+                {
+                    planUsersIds.Add(planUser.Id);
+                }
+
+                planValues = planValues.Where(l => l.UserProfileId != userId).ToList();
+            }
+
+            if (planValues.Count() > 0)
+            {
+                _appDbContext.PlanResponsiblePersons.RemoveRange(planValues);
+                await _appDbContext.SaveChangesAsync();
+            }
+
+            return planUsersIds;
         }
     }
 

@@ -1,4 +1,4 @@
-<app-page-title title="{{ 'questions.settings' | translate }}" subTitle="{{ 'questions.subtitle' | translate }}">
+<app-page-title title="{{ 'questions.questions' | translate }}" subTitle="{{ 'questions.subtitle' | translate }}">
 </app-page-title>
 
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -12,7 +12,7 @@
 								<h3 class="card-label" id="title">{{ 'questions.title' | translate }}</h3>
 							</div>
 							<div class="card-toolbar">
-								<app-confirm-button class="btn mr-3" (click)="questionsTable.getHeaders(title)">
+								<app-confirm-button class="btn mr-3" (click)="questionsTable.getHeaders(getTitle())">
 									<i class="far fa-file-pdf text-white"></i>
 									{{'button.print' | translate}}
 								</app-confirm-button>
@@ -38,36 +38,31 @@
 						</div>
 						<div class="card-header border-0 mt-5 pr-5" style="min-height: 100%;">
 							<div class="row w-100">
-							  <div class="col">
-								<div class="input-group input-group-sm input-group-solid">
-								<app-search-question style="width: 100%;" (handleSearch)="questionsTable.list({keyword: $event, page: 1})"></app-search-question>
-								</div>
-							  </div>
-							  <div class="col">
-								<div class="input-group input-group-sm input-group-solid">
-								  <input type="text" class="form-control"  [placeholder]="'questions.search-category' | translate" name="categoryName" [(ngModel)]="questionsTable.categoryName">
-								</div>
-							  </div>
-							  <div class="col">
-								<div class="input-group input-group-sm input-group-solid">
-								  <input type="text" class="form-control"  [placeholder]="'questions.tags' | translate" name="questionTag" [(ngModel)]="questionsTable.questionTag">
-								</div>
-							  </div>
-							</div>
-							<div class="row w-100" style="margin-top: 1%;">
 								<div class="col">
-									<app-search-by-question-status (filter)="questionsTable.questionStatus = $event.target.value"></app-search-by-question-status>
-								  </div>
-								  <div class="col">
-									<app-search-by-question-type (filter)="questionsTable.questionType = $event.target.value"></app-search-by-question-type>
-								  </div>
-								  <div class="col pr-lg-0">
-									<div class="w-100">
-									  <app-confirm-button (handle)="questionsTable.list({page: 1})" [value]="'button.search' | translate" [width]="'100%'"></app-confirm-button>
-									</div>
-								  </div>
+									<erp-shared-search-input (handleSearch)="questionsTable.setFilter('questionName', $event)" [placeholder]="'questions.search-question' | translate" #question></erp-shared-search-input>
+								</div>
+							  <div class="col">
+									<erp-shared-search-input (handleSearch)="questionsTable.setFilter('categoryName', $event)" [placeholder]="'questions.search-category' | translate" #category></erp-shared-search-input>
+							  </div>
+							  <div class="col">
+									<erp-shared-search-input (handleSearch)="questionsTable.setFilter('questionTags', $event)" [placeholder]="'questions.tags' | translate" #tags></erp-shared-search-input>
+							  </div>
 							</div>
-						  </div>
+							<div class="row w-100 mt-4">
+								<div class="col">
+									<app-search-by-question-status (filter)="questionsTable.setFilter('questionStatus', $event)" #status></app-search-by-question-status>
+								</div>
+								<div class="col">
+									<app-search-by-question-type (filter)="questionsTable.setFilter('questionType', $event)" #type></app-search-by-question-type>
+								</div>
+								<div class="col">
+									<div class="w-100 text-right">
+										<app-button (handle)="clearFields(); questionsTable.resetFilters()" [value]="'button.reset' | translate" class="mr-5"></app-button>
+										<app-confirm-button (handle)="questionsTable.list({page: 1})" [value]="'button.search' | translate"></app-confirm-button>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div class="card-body">
 							<app-question-list-table #questionsTable></app-question-list-table>
 						</div>

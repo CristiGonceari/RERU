@@ -21,7 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.Plans.GetPlans
 
         public async Task<PaginatedModel<PlanDto>> Handle(GetPlansQuery request, CancellationToken cancellationToken)
         {
-            var plans = GetAndFilterPlans.Filter(_appDbContext, request.Name, request.TillDate, request.FromDate);
+            var plans = GetAndFilterPlans.Filter(_appDbContext, request.Name, request.FromDate, request.TillDate);
 
             return await _paginationService.MapAndPaginateModelAsync<Plan, PlanDto>(plans, request);
         }

@@ -1,0 +1,114 @@
+<app-page-title title="{{ 'solicited-test.subtitle' | translate }}"
+    subTitle="{{ 'solicited-test.test-data' | translate }}">
+</app-page-title>
+
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="card card-custom gutter-b">
+                <div class="card-body p-0">
+                    <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first"
+                        data-wizard-clickable="true">
+                        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+                            <div class="col-xl-12 col-xxl-7">
+                                <div class="form" id="kt_contact_add_form">
+                                    <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                                        <h3 class="mb-10 font-weight-bold text-dark">{{'solicited-test.test-details' |
+                                            translate}}</h3>
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="form-group row">
+                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                        {{'events.event' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-9">
+                                                        <p *ngIf="solicitedTest.eventName" class="pt-3 px-4"><b>{{solicitedTest.eventName}}</b></p>
+                                                        <p *ngIf="!solicitedTest.eventName" class="pt-3 px-4"><b>-</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                        {{'verify-test.select-user' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-9">
+                                                        <p class="pt-3 px-4"><b>{{solicitedTest.userProfileName}}</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'verify-test.select-test-type' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-9">
+                                                        <p class="pt-3 px-4"><b>{{solicitedTest.testTemplateName}}</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                        {{'events.evaluator' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-9">
+                                                        <select *ngIf="!(hasEventEvaluator || isTestTemplateOneAnswer)"
+                                                            class="form-control form-control-lg form-control-solid"
+                                                            [(ngModel)]="evaluator.value" name="searchEvaluator">
+                                                            <option [value]="null" [selected]="true">
+                                                                {{'questions.select' | translate}}</option>
+                                                            <option *ngFor="let item of evaluatorList"
+                                                                [ngValue]="item.value">
+                                                                {{ item.label }}
+                                                            </option>
+                                                        </select>
+                                                        <span *ngIf="isTestTemplateOneAnswer"
+                                                            class="label label-lg label-light label-inline h-45px px-5 w-100">
+                                                            {{'tests.test-type-autoverify' | translate}}
+                                                        </span>
+                                                        <span *ngIf="hasEventEvaluator && !isTestTemplateOneAnswer"
+                                                            class="label label-lg label-light label-inline h-45px px-5 w-100">
+                                                            {{'tests.event-has-evaluator' | translate}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row"
+                                                    *ngIf="!(hasEventEvaluator || isTestTemplateOneAnswer)">
+                                                    <label
+                                                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.show-candidate'
+                                                        | translate}}:</label>
+                                                    <div class="ml-5 w-auto my-auto">
+                                                        <label class="checkbox checkbox-lg checkbox-inline mr-5">
+                                                            <input type="checkbox" name="isSelected"
+                                                                (change)="onItemChange($event)" [value]="showName"
+                                                                [checked]="showName">
+                                                            <span></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-10">
+                                                    <label
+                                                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'solicited-test.solicited-time'
+                                                        | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-9">
+                                                        <input id="from" [owlDateTime]="dtFrom"
+                                                            [owlDateTimeTrigger]="dtFrom" placeholder="Date Time"
+                                                            class="form-control form-control-lg form-control-solid"
+                                                            name="date" [(ngModel)]="date" autocomplete="off" />
+                                                        <owl-date-time #dtFrom></owl-date-time>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-right border-top pt-10">
+                                            <app-button class="btn mr-2" [value]="'button.cancel' | translate"
+                                                (handle)="backClicked()">
+                                            </app-button>
+                                            <app-add-button class="btn mr-2" [value]="'button.confirm' | translate"
+                                                (handle)="createTest()">
+                                            </app-add-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

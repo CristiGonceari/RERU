@@ -2,7 +2,7 @@
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionCategory;
 using CVU.ERP.Common.DataTransferObjects.Files;
-using CVU.ERP.Module.Application.TablePrinterService;
+using CVU.ERP.Module.Application.TableExportServices;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,9 +12,9 @@ namespace CODWER.RERU.Evaluation.Application.QuestionCategories.PrintQuestionCat
     public class PrintQuestionCategoriesCommandHandler : IRequestHandler<PrintQuestionCategoriesCommand, FileDataDto>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ITablePrinter<QuestionCategory, QuestionCategoryDto> _printer;
+        private readonly IExportData<QuestionCategory, QuestionCategoryDto> _printer;
 
-        public PrintQuestionCategoriesCommandHandler(AppDbContext appDbContext, ITablePrinter<QuestionCategory, QuestionCategoryDto> printer)
+        public PrintQuestionCategoriesCommandHandler(AppDbContext appDbContext, IExportData<QuestionCategory, QuestionCategoryDto> printer)
         {
             _appDbContext = appDbContext;
             _printer = printer;
@@ -24,12 +24,13 @@ namespace CODWER.RERU.Evaluation.Application.QuestionCategories.PrintQuestionCat
         {
             var categories = GetAndFilterQuestionCategories.Filter(_appDbContext, request.Name);
 
-            var result = _printer.PrintTable(new TableData<QuestionCategory>
+            var result = _printer.ExportTableSpecificFormat(new TableData<QuestionCategory>
             { 
                 Name = request.TableName,
                 Items = categories,
                 Fields = request.Fields,
-                Orientation = request.Orientation
+                Orientation = request.Orientation,
+                ExportFormat = request.TableExportFormat
             });
 
             return result;

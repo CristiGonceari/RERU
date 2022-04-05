@@ -57,8 +57,6 @@ export class AddEditEventsComponent implements OnInit {
 				this.isLoading = false;
 			}
 		});
-		console.log("id", id);
-		
 	}
 
 	onSave(): void {
@@ -109,7 +107,7 @@ export class AddEditEventsComponent implements OnInit {
 		this.eventService.addEvent(this.parse()).subscribe(() => {
 			forkJoin([
 				this.translate.get('modal.success'),
-				this.translate.get('events.succes-add-event-msg"'),
+				this.translate.get('events.succes-add-event-msg'),
 			  ]).subscribe(([title, description1]) => {
 				this.title = title;
 				this.description1 = description1;

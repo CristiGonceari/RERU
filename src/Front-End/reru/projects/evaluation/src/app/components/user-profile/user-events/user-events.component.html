@@ -6,9 +6,9 @@
 		<div class="card-body pt-0">
 			<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 			<div *ngIf="!isLoading">
-				<ngb-accordion *ngFor="let event of events; let i = index">
-					<ngb-panel [id]="i">
-						<ng-template ngbPanelTitle style="color: black; font-size: 14px; display: flex;">
+				<ngb-accordion [activeIds]="activeIds">
+					<ngb-panel [id]="'panel'+event.id" *ngFor="let event of events; let i = index">
+						<ng-template ngbPanelTitle  class="w-100 text-left">
 							<span class="svg-icon svg-icon-primary">
 								<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 									width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -25,10 +25,16 @@
 									</g> 
 								</svg>
 							</span>
-							<label>{{event.name}}</label>
+							<label id="title">{{event.name}}</label>
 						</ng-template>
 						<ng-template ngbPanelContent>
-							<app-tests-by-event [id]="event.id"></app-tests-by-event>
+							<div class="card-toolbar" style="text-align: right;">
+                                <app-confirm-button class="btn mr-3" (click)="eventsTable.getHeaders(getTitle())">
+                                    <i class="far fa-file-pdf text-white"></i>
+                                    {{'button.print' | translate}}
+                                </app-confirm-button>
+                            </div>
+							<app-tests-by-event [id]="event.id" #eventsTable></app-tests-by-event>
 						</ng-template>
 					</ngb-panel>
 				</ngb-accordion>

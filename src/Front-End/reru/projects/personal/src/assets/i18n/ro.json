@@ -29,8 +29,9 @@
     "vacantions":"Concedii",
     "guide": "Ghid",
     "guide-description": "Ghidul Utilizatorului",
-    "documentsTemplates" : "Șabloane"
-
+    "documentsTemplates" : "Șabloane",
+    "help": "Ajutor",
+    "faq": "FAQ"
   },
   "my-profile":{
     "title":"Profilul meu",
@@ -207,7 +208,8 @@
     "quick-access": "Acces rapid",
     "department-component": "Componența departamentului",
     "dismissal-request": "Cereri de demisie",
-    "add-dismissal-request": "Adaugă cerere de concediere"
+    "add-dismissal-request": "Adaugă cerere de concediere",
+    "add-photo": "Adaugă poza de profil"
   },
   "nomenclature": {
     "title": "Nomenclatoare",
@@ -894,7 +896,10 @@
     "02008005": "Numărul diplomei lipsește",
     "02008006": "Data eliberării diplomei de studii lipsește",
     "02008007": "Frecventa studiilor este invalidă",
-    "02008008": "Studiile nu au fost găsite"
+    "02008008": "Studiile nu au fost găsite",
+    "02016001": "Conținut gol",
+    "02016002": "Nume gol",
+    "02016003": "Articolul nu a fost găsit"
   },
   "expired-token": {
     "title": "Sesiune expirată",
@@ -940,5 +945,28 @@
     "empty-name": "Camp este obligatorie, cel puțin 1 caracter",
     "wrong-name": "Camp trebue să incepe cu 1 caracter",
     "available-modules": "Module disponibile"
+  },
+  "faq": {
+    "help": "Ajutor",
+    "faq": "FAQ",
+    "subtitle": "Întrebări frecvente",
+    "manage-faq": "Gestionarea FAQ",
+    "new-article": "Adaugă Articol",
+    "delete-article": "Șterge Articol",
+    "article-title": "Titlul Articolului",
+    "name": "Nume",
+    "content": "Conţinut",
+    "remove": "Ștergeți articol",
+    "remove-msg": "Sigur doriți să ștergeți acest articol?",
+    "succes-remove-msg": "Articol a fost șters cu succes",
+    "succes-add-msg": "Articol a fost adăugat cu succes",
+    "succes-edit-msg": "Articol a fost editat cu succes",
+    "faq-details": "Detaliile articolului"
+  },
+  "print": {
+    "print-table": "Printare tabel",
+    "sorted-by": "Sortat după",
+    "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
+    "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare."
   }
 }

@@ -1,0 +1,85 @@
+<div class="modal-header px-7">
+	<h3 class="modal-title">{{'events.attach-user' | translate}}</h3>
+</div>
+<div class="modal-body px-7">
+	<div class="row mb-5">
+		<div class="col">
+			<erp-shared-search-input (handleSearch)="setFilter('firstName', $event)"
+				[placeholder]="'login.first-name' | translate" #firstName></erp-shared-search-input>
+		</div>
+		<div class="col">
+			<erp-shared-search-input (handleSearch)="setFilter('lastName', $event)"
+				[placeholder]="'login.last-name' | translate" #lastName></erp-shared-search-input>
+		</div>
+		<div class="col">
+			<erp-shared-search-input (handleSearch)="setFilter('patronymic', $event)"
+			[placeholder]="'login.father-name' | translate" #patronymic></erp-shared-search-input>
+		</div>
+	</div>
+	<div class="row mb-5">
+		<div class="col">
+			<erp-shared-search-input (handleSearch)="setFilter('idnp', $event)"
+				[placeholder]="'verify-test.search-student-idnp' | translate" #idnp></erp-shared-search-input>
+		</div>
+		<div class="col">
+			<erp-shared-search-input (handleSearch)="setFilter('email', $event)"
+				[placeholder]="'user-profile.user-email'  | translate" #email></erp-shared-search-input>
+		</div>
+		<div class="col text-right">
+			<app-button (click)="resetFilters()">{{'button.reset' | translate}}</app-button>
+		</div>
+	</div>
+
+	<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+		[colorClass]="'text-primary'">
+	</app-loading-spinner>
+
+	<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+  	id="kt_datatable" *ngIf="!isLoading">
+		<table class="datatable table font-size-lg" style="overflow: visible">
+			<thead class="text-uppercase text-muted">
+				<tr>
+					<th scope="col" style="width: 50px"></th>
+					<th scope="col"> {{ 'login.last-name' | translate }} </th>
+					<th scope="col"> {{ 'login.first-name' | translate }} </th>
+					<th scope="col"> {{ 'login.father-name' | translate }} </th>
+					<th scope="col"> {{ 'login.idnp' | translate }} </th>
+					<th scope="col"> {{ 'user-profile.user-email' | translate }} </th>
+				</tr>
+			</thead>
+			<tbody class="datatable-body">
+				<tr *ngFor="let user of users">
+					<td>
+						<label class="checkbox checkbox-lg checkbox-inline">
+							<input type="{{inputType}}" value="{{ user.id }}" name="option"
+								[checked]="attachedItems.includes(user.id)" (change)="checkInput($event)" />
+							<span></span>
+						</label>
+
+					</td>
+					<td> {{ user.firstName }} </td>
+					<td> {{ user.lastName }} </td>
+					<td> {{ user.patronymic }} </td>
+					<td> {{ user.idnp }} </td>
+					<td> {{ user.email }} </td>
+				</tr>
+			</tbody>
+			<tbody class="datatable-body">
+				<tr *ngIf="!users.length">
+					<td colspan="6" class="text-center">
+						{{ 'message.no-record' | translate }}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div pagination class="datatable-pager datatable-paging-loaded mb-5" [page]="pagination.currentPage" 
+			*ngIf="users" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
+			(sizeChange)="getUsers({ page: pagination.currentPage, itemsPerPage: $event})"
+			(pageChange)="getUsers({ page: $event})">
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+	<button type="button" class="btn btn-primary" (click)="confirm()">{{'button.confirm' | translate}}</button>
+</div>

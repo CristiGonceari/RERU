@@ -18,6 +18,10 @@ import { MainComponent } from './components/main/main.component';
 
 
 const routes: Routes = [
+	{
+		 path: 'registration-page',
+		 loadChildren: () => import('./components/registration-page/registration-page.module').then(m => m.RegistrationPageModule)
+	},
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent},
 	{
 		path: '',
@@ -53,6 +57,10 @@ const routes: Routes = [
 				path: 'my-profile', 
 				loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule)
 			},
+			{
+				path: 'faq',
+				loadChildren: () => import('./components/faq/faq.module').then(m => m.FAQModule)
+			}
 		],
 	},
 	{ path: '404', component: Exception404Component },

@@ -3,17 +3,22 @@ using System.Threading.Tasks;
 using CODWER.RERU.Personal.Data.Entities.OrganizationRoleRelations;
 using CODWER.RERU.Personal.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleRelations;
+using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.AddDepartmentRoleRelation
 {
     public class AddDepartmentRoleRelationCommandHandler : IRequestHandler<AddDepartmentRoleRelationCommand, int>
     {
         private readonly AppDbContext _appDbContext;
+        private readonly ILoggerService<AddDepartmentRoleRelationCommand> _loggerService;
 
-        public AddDepartmentRoleRelationCommandHandler(AppDbContext appDbContext)
+        public AddDepartmentRoleRelationCommandHandler(AppDbContext appDbContext, ILoggerService<AddDepartmentRoleRelationCommand> loggerService)
         {
             _appDbContext = appDbContext;
+            _loggerService = loggerService;
         }
 
         public async Task<int> Handle(AddDepartmentRoleRelationCommand request, CancellationToken cancellationToken)
@@ -39,7 +44,18 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.AddDepartment
             await _appDbContext.DepartmentRoleRelations.AddAsync(item);
             await _appDbContext.SaveChangesAsync();
 
+            await LogAction(item);
+
             return item.Id;
+        }
+
+        private async Task LogAction(DepartmentRoleRelation departmentRoleRelation)
+        {
+            var organigram = await _appDbContext.DepartmentRoleRelations
+                .Include(x => x.OrganizationalChart)
+                .FirstAsync(x => x.Id == departmentRoleRelation.Id);
+
+            await _loggerService.Log(LogData.AsPersonal($"New relation was added to organigram {organigram.OrganizationalChart.Name}", departmentRoleRelation));
         }
 
         private ParentDepartmentChildDepartment NewDepartmentToDepartmentRelation(AddDepartmentRoleRelationCommand request)

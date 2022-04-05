@@ -12,24 +12,16 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetUserProfile
 {
     public class GetUserProfileQueryHandler : BaseHandler, IRequestHandler<GetUserProfileQuery, UserProfileDto> 
     {
-        private readonly IDocumentStorageService _documentService;
 
-        public GetUserProfileQueryHandler (ICommonServiceProvider commonServiceProvider, IDocumentStorageService documentService) : base (commonServiceProvider)
-        {
-            _documentService = documentService;
-        }
+        public GetUserProfileQueryHandler (ICommonServiceProvider commonServiceProvider) : base (commonServiceProvider){}
 
         public async Task<UserProfileDto> Handle (GetUserProfileQuery request, CancellationToken cancellationToken) {
             var userProfile = await CoreDbContext.UserProfiles
-                .Include(up => up.Avatar)
                 .FirstOrDefaultAsync (u => u.Id == request.Id);
 
             var userProfDto = Mapper.Map<UserProfileDto>(userProfile);
             
-            if (userProfile.Avatar == null) return userProfDto;
-            
-            var str = Convert.ToBase64String(await _documentService.GetDocument(userProfile.Avatar.DocumentStorageId));
-            userProfDto.Avatar = str;
+            if (userProfile.MediaFileId == null) return userProfDto;
             
             return userProfDto;
         }

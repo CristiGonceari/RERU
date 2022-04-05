@@ -1,27 +1,20 @@
 ::ng-deep .accordion {
-    .card {
-        border-radius: 5px;
-        
-        .card-header {
-            padding: 5px;
-  
-        button {
-          width: 100%;
-          font-size: 14px;
-          text-align: left;
-          height: auto !important;
-          display: flex;
-          text-decoration: none;
-          padding: 3px;
-  
-          span {
-            font-size: 15px;
-          }
-  
-          label {
-            color: #3f4254;
-          }
+  .card {
+    border-radius: 5px;
+
+    .card-header {
+      background: white;
+      border-bottom: 1px solid #e2e2e2;
+
+      button {
+        height: auto !important;
+        text-decoration: none;
+        label {
+          cursor: pointer;
+          color: #3f4254;
+          margin-bottom: 0px;
         }
       }
     }
+  }
 }

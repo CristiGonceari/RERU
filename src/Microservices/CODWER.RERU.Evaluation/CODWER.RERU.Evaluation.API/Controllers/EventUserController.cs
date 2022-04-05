@@ -9,6 +9,7 @@ using CODWER.RERU.Evaluation.Application.EventUsers.UnassignUserFromEvent;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.Pagination;
 using MediatR;
+using CODWER.RERU.Evaluation.Application.EventUsers.GetEventAssignedUsers;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -23,13 +24,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("no-assigned")]
-        public async Task<List<UserProfileDto>> GetNoAssignedUsers([FromQuery] GetNoAssignedUsersQuery query)
+        public async Task<PaginatedModel<UserProfileDto>> GetNoAssignedUsers([FromQuery] GetNoAssignedUsersQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpPost]
-        public async Task<Unit> AssignUserToEvent([FromBody] AssignUserToEventCommand command)
+        public async Task<List<int>> AssignUserToEvent([FromBody] AssignUserToEventCommand command)
         {
             return await Mediator.Send(command);
         }
@@ -41,5 +42,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
             return await Mediator.Send(command);
         }
+
+        [HttpGet("assigned")]
+        public async Task<PaginatedModel<UserProfileDto>> GetNoAssignedUsers([FromQuery] GetEventAssignedUsersQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
     }
 }

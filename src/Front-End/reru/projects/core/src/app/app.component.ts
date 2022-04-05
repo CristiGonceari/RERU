@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavigationService } from '@erp/shared'
 
 @Component({
 	selector: 'app-root',
@@ -13,5 +14,6 @@ export class AppComponent {
 		lastOnBottom: true;
 		showProgressBar: true;
 	};
-	constructor() {}
+	
+	constructor(public navigation: NavigationService) { this.navigation.startSaveHistory()}
 }

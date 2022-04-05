@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationModel } from '../../../../utils/models/pagination.model';
@@ -11,6 +11,7 @@ import { TestStatusEnum } from '../../../../utils/enums/test-status.enum'
 import { TestResultStatusEnum } from '../../../../utils/enums/test-result-status.enum'
 import { saveAs } from 'file-saver';
 import { ConfirmModalComponent } from '@erp/shared';
+import { PrintModalComponent } from '@erp/shared';
 import { NotificationUtil } from '../../../../utils/util/notification.util';
 import { forkJoin } from 'rxjs';
 import { NotificationsService } from 'angular2-notifications';
@@ -51,6 +52,10 @@ export class TestListTableComponent implements OnInit {
   locationName;
   idnp: string;
   isLoading: boolean = true;
+	downloadFile: boolean = false;
+	headersToPrint = [];
+	printTranslates: any[];
+  filters: any = {};
 
   title: string;
 	description: string;
@@ -88,8 +93,7 @@ export class TestListTableComponent implements OnInit {
     if (this.dateTimeFrom) {
       const date = new Date(this.dateTimeFrom);
       this.searchFrom = new Date(date.getTime() - (new Date(this.dateTimeFrom).getTimezoneOffset() * 60000)).toISOString();
-    }
-    if (this.dateTimeTo) {
+    } else if (this.dateTimeTo) {
       const date = new Date(this.dateTimeTo);
       this.searchTo = new Date(date.getTime() - (new Date(this.dateTimeTo).getTimezoneOffset() * 60000)).toISOString();
     }
@@ -97,19 +101,20 @@ export class TestListTableComponent implements OnInit {
 
   getTests(data: any = {}) {
     this.setTimeToSearch();
-    this.isLoading = true;
-
+    this.isLoading = true; 
+    
     let params = {
-      testTemplateName: this.testToSearch || '',
-      locationKeyword: this.locationName || '',
-      idnp: this.idnp || '',
-      eventName: this.eventName || '',
-      userName: this.userName || '',
+      testTemplateName: this.filters.testName || this.testToSearch || '',
+      locationKeyword: this.filters.testLocation || this.locationName || '',
+      idnp: this.filters.idnp ||this.idnp || '',
+      eventName: this.filters.testEvent || this.eventName || '',
+      userName: this.filters.userName || this.userName || '',
       programmedTimeFrom: this.searchFrom,
       programmedTimeTo: this.searchTo,
-      testStatus: data.selectedStatus || this.selectedStatus,
+      testStatus: this.filters.selectedStatus || this.selectedStatus,
       page: data.page || this.pagination.currentPage,
-      itemsPerPage: data.itemsPerPage || this.pagination.pageSize
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+      ...this.filters
     }
 
     this.testService.getTests(params).subscribe(res => {
@@ -119,8 +124,6 @@ export class TestListTableComponent implements OnInit {
         this.testTemplateName = res.data.items.map(it => it.testTemplateName);
         this.score = res.data.items.map(s => s.score);
         this.pagination = res.data.pagedSummary;
-        this.searchFrom = '';
-        this.searchTo = '';
         this.isLoading = false;
 
         for (let i = 1; i <= this.pagination.totalCount; i++) {
@@ -270,4 +273,74 @@ export class TestListTableComponent implements OnInit {
       saveAs(file);
     });
   }
+
+  getHeaders(name: string): void {
+		this.translateData();
+		let headersHtml = document.getElementsByTagName('th');
+		let headersDto = ['testTemplateName', 'userName', 'eventName', 'locationNames', 'testStatus', 'verificationProgress', 'result', 'accumulatedPercentage', 'minPercent'];
+		for (let i = 0; i < headersHtml.length - 1; i++) {
+      if(i == 2){
+        this.headersToPrint.push({ value: "idnp", label: "Idnp"})
+      }
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+		}
+    
+		let printData = {
+			tableName: name,
+			fields: this.headersToPrint,
+			orientation: 2,
+      testStatus: this.filters.selectedStatus || this.selectedStatus,
+      testTemplateName: this.filters.testName || this.testToSearch || '',
+      locationKeyword: this.filters.testLocation || this.locationName || '',
+      idnp: this.filters.idnp ||this.idnp || '',
+      eventName: this.filters.testEvent || this.eventName || '',
+      userName: this.filters.userName || this.userName || '',
+      programmedTimeFrom: this.searchFrom || null,
+      programmedTimeTo: this.searchTo || null
+		};
+		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
+		modalRef.componentInstance.tableData = printData;
+		modalRef.componentInstance.translateData = this.printTranslates;
+		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
+		this.headersToPrint = [];
+	}
+
+	translateData(): void {
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
+		forkJoin([
+			this.translate.get('print.print-table'),
+			this.translate.get('print.print-msg'),
+			this.translate.get('print.sorted-by'),
+			this.translate.get('button.cancel')
+		]).subscribe(
+			(items) => {
+				for (let i = 0; i < this.printTranslates.length; i++) {
+					this.printTranslates[i] = items[i];
+				}
+			}
+		);
+	}
+
+	printTable(data): void {
+		this.downloadFile = true;
+		this.testService.print(data).subscribe(response => {
+			if (response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], fileName, { type: response.body.type });
+				saveAs(file);
+				this.downloadFile = false;
+			}
+		}, () => this.downloadFile = false);
+	}
+
+  setFilter(field: string, value): void {
+		this.filters[field] = value;
+		this.getTests();
+	}
+
+	resetFilters(): void {
+		this.filters = {};
+		this.getTests();
+	}
 }

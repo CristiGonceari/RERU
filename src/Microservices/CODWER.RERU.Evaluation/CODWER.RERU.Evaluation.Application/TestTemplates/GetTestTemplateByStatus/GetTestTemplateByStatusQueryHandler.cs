@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCategoryQuestions;
 using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Data.Persistence.Context;
@@ -11,6 +7,10 @@ using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates;
 using CVU.ERP.StorageService.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStatus
 {
@@ -65,10 +65,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
                     var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { TestTemplateQuestionCategoryId = testTemplateCategory.Id });
 
                     questionsList.AddRange(testCategoryQuestionData.Questions);
-                    x.IsOnlyOneAnswer = questionsList.All(x => x.QuestionType == QuestionTypeEnum.OneAnswer);
+                    x.IsOnlyOneAnswer = questionsList.All(x => x.QuestionType == QuestionTypeEnum.OneAnswer || x.QuestionType == QuestionTypeEnum.MultipleAnswers);
                 }
 
-                if (testTemplateCategories.All(tt => tt.QuestionType == QuestionTypeEnum.OneAnswer))
+                if (testTemplateCategories.All(tt => tt.QuestionType == QuestionTypeEnum.OneAnswer || tt.QuestionType == QuestionTypeEnum.MultipleAnswers))
                 {
                     x.IsOnlyOneAnswer = true;
                 }
@@ -81,8 +81,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
 
         private async Task<bool> CanPrintTest(List<QuestionUnitDto> questionsList)
         {
-            var mediaList = new List<string>() { "video", "audio" };
-            bool result;
+            var mediaList = new List<string>() { "video", "audio", "gif" };
             var filesIdsList = new List<string>();
 
             var mediaOptionsIds = await _appDbContext.Options
@@ -105,7 +104,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
                 .Where(f => filesIdsList.Contains(f.Id.ToString()))
                 .ToList();
 
-            result = !files.Any(x => mediaList.Any(m => x.Type.Contains(m)));
+            var result = !files.Any(x => mediaList.Any(m => x.Type.Contains(m)));
 
             return result;
         }

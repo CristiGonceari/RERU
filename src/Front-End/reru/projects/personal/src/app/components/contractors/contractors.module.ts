@@ -29,7 +29,6 @@ import { EmployeeFromDateComponent } from './list/employee-from-date/employee-fr
 import { EmployeeToDateComponent } from './list/employee-to-date/employee-to-date.component';
 import { EmployeePositionComponent } from './list/employee-position/employee-position.component';
 import { SearchByDepartmentComponent } from './list/search-by-department/search-by-department.component';
-import { PictureDataFormComponent } from './add/picture-data-form/picture-data-form.component';
 import { RequestToEmployDataFormComponent } from './add/request-to-employ-data-form/request-to-employ-data-form.component';
 import { ContractorsTableComponent } from './contractors-table/contractors-table.component';
 
@@ -54,7 +53,6 @@ import { ContractorsTableComponent } from './contractors-table/contractors-table
     EmployeeToDateComponent,
     EmployeePositionComponent,
     SearchByDepartmentComponent,
-    PictureDataFormComponent,
     RequestToEmployDataFormComponent,
     ContractorsTableComponent
   ],

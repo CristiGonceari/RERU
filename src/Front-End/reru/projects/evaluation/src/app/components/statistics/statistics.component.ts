@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SelectItem } from '../../utils/models/select-item.model';
 import { ReferenceService } from '../../utils/services/reference/reference.service';
 
@@ -7,14 +7,14 @@ import { ReferenceService } from '../../utils/services/reference/reference.servi
   templateUrl: './statistics.component.html',
   styleUrls: ['./statistics.component.scss']
 })
-export class StatisticsComponent implements OnInit, AfterViewInit {
+export class StatisticsComponent implements OnInit {
 
   statisticEnum: SelectItem[] = [{ label: "", value: "" }];
   testTemplates: SelectItem[] = [{ label: "", value: "" }];
   categories: SelectItem[] = [{ label: "", value: "" }];
   filterEnum = 3;
   testTemplateId;
-  itemsPerPage;
+  itemsPerPage = 10;
   categoryId;
   title: string;
   
@@ -28,9 +28,10 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
     this.getQuestionCategories();
   }
 
-  ngAfterViewInit(): void {
-    this.title = document.getElementById('title').innerHTML;
-  }
+  getTitle(): string {
+		this.title = document.getElementById('title').innerHTML;
+		return this.title
+	}
 
   getStatisticType() {
     this.referenceService.getStatisticEnum().subscribe((res) => this.statisticEnum = res.data);

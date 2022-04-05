@@ -8,7 +8,25 @@
     "header": "User profile",
     "my-profile": "My profile",
     "change-password": "Change password",
-    "logout": "Logout"
+    "logout": "Logout",
+    "registration": "Core Registration"
+  },
+  "registration-page":{
+    "about-us": "Good to know",
+    "registration": "Registration",
+    "success-message": "You have successfully registered, your password has been sent to your email !!",
+    "registration-datas": "Registration data",
+    "to-add-new-candidate": "To register as a candidate, you need to fill in the form below.",
+    "after-registration-recive-email": "After registration, you will be sent an email with your credentials.",
+    "step1": "You must be logged in with these credentials. After authentication go to the „Evaluation and Testing” module. (Step 1)",
+    "step2": "Request a test in the „My Activities” section (Step 2)",
+    "step3": "„Tests Required” option (Step 3)",
+    "step4-step5": "Click the „Request Test” button (Step 4) and fill out the form with the desired data (Step 5)",
+    "event": " - Event",
+    "test": " - Test",
+    "time": " - Convenient time",
+    "step6": "Click the „Confirm” button (Step 6) to complete the procedure.",
+    "registration-candidate-page": "Candidate Registration Page"
   },
   "login": {
     "admin-panel": "Administration Panel",
@@ -92,10 +110,13 @@
     "back": "Back",
     "navigate": "Navigate to",
     "update": "Update",
+    "reset": "Reset",
     "search":"Search",
     "filter": "Filter",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "attach": "Attach",
+    "print": "Print"
   },
   "pagination": {
     "displaing": "Displaying",
@@ -107,6 +128,7 @@
     "icon": "Icon",
     "module": "Module name",
     "name": "Name",
+    "full-name": "Full name",
     "email":"Email",
     "lastName": "Last name",
     "father-name": "Patronymic",
@@ -124,7 +146,9 @@
     "description": "Description",
     "permission": "Permission",
     "default": "Default",
-    "priority":"Priority"
+    "priority":"Priority",
+    "status": "Status",
+    "profile-photo": "Profile Photo"
   },
   "menu": {
     "menu-sections": {
@@ -140,8 +164,8 @@
     "change-personal-details": "Change personal profile details:",
     "logout": "Logout",
     "logout-msg": "Are you sure you want to logout from the system?",
-    "empty-name": "Insert at least one symbol",
-    "wrong-name": "Wrong name , should start with symbol",
+    "empty-name": "The field must contain only Latin letters",
+    "wrong-name": "The field must contain only Latin letters",
     "available-modules": "Available modules",
     "idnp-length": "IDNP should consist of 13 numbers!"
   },
@@ -150,12 +174,13 @@
     "delete-title": "Delete User",
     "block-title": "Block/Unblock",
     "remove-sure": "Are you sure you want to remove this user?",
-    "succes-remove": "User was successfully removed!",
-    "succes-edit": "User has been successfully updated!",
-    "succes-create": "User has been created successfully!"
+    "succes-remove": "User profile was successfully removed!",
+    "succes-edit": "User profile has been successfully updated!",
+    "succes-create": "User profile has been successfully created!"
   },
   "word": {
-    "search": "Search"
+    "search": "Search by full name or e-mail",
+    "search-idnp": "Search by IDNP"
   },
   "set-password": {
     "title": "Set Password",
@@ -194,13 +219,13 @@
     "title": "Deactivate user",
     "deactivate": "Are you sure you want to deactivate this user?",
     "deactivate-msg": "Are you sure you want to deactivate user",
-    "success-deactivate": "User was deactivated successfully!"
+    "success-deactivate": "User profile was deactivated successfully!"
   },
   "activate-user": {
     "title": "Activate user",
     "activate": "Are you sure you want to activate this user?",
-    "activate-msg": "Are you sure you want to activate user ",
-    "success-activate": "User was successfully activated!"
+    "activate-msg": "Are you sure you want to activate user",
+    "success-activate": "User profile was successfully activated!"
   },
   "module-access": {
     "title": "User's access to modules",
@@ -234,7 +259,10 @@
       "email": "E-mail",
       "give-module-access": "Give access",
       "update-module-access": "Update access",
-      "remove-module-access": "Remove access"
+      "remove-module-access": "Remove access",
+      "search-name": "Search by name",
+      "search-email": "Search by email",
+      "search-idnp": "Search by IDNP"
     },
     "modules": {
       "title": "Modules",
@@ -262,7 +290,9 @@
       "title": "Module details",
       "overview": "Module overview",
       "roles": "Module roles",
-      "permissions": "Module permissions"
+      "permissions": "Module permissions",
+      "search-by-code": "Search by permission code",
+      "search-by-description": "Search by permission name"
     },
     "roles": {
       "view-permissions": "View permissions",
@@ -323,6 +353,36 @@
     "01000002": "IDNP should consist only digits",
     "01000003": "IDNP shout not consist only zeroes",
     "01000004": "Invalid IDNP!",
-    "01000005": "Duplicate IDNP in the system!"
+    "01000005": "Duplicate IDNP in the system!",
+    "01000201": "Empty name!",
+    "01000202": "Empty content!",
+    "01000203": "Invalid input!",
+    "01000204": "Invalid id!"
+  },
+  "print": {
+    "print-table": "Print table",
+    "sorted-by": "Sorted by",
+    "error-msg": "Please select fields for print",
+    "print-msg": "Please specify the print orientation and necessary fields."
+  },
+  "guide": {
+    "title": "User Guide"
+  },
+  "faq": {
+    "overview": "Overview",
+    "help": "Help",
+    "faq": "FAQ",
+    "subtitle": "Frequently Asked Questions",
+    "manage-faq": "Manage FAQ",
+    "new-article": "Add Article",
+    "delete-article": "Delete Article",
+    "article-title": "Article Titile",
+    "name": "Name",
+    "content": "Content",
+    "remove": "Remove article",
+    "remove-msg": "Are you sure you want to remove this article?",
+    "succes-remove-msg": "Article was successfully deleted",
+    "succes-add-msg": "Article was successfully added",
+    "succes-edit-msg": "Article was successfully edited"
   }
 }

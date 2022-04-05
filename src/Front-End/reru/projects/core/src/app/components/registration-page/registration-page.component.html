@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <div _ngcontent-ffy-c90="">
+        <img _ngcontent-ffy-c90="" src="../../../assets/logo.png" alt="..." class="img-thumbnail"
+          style="max-height: 40px;">
+      </div>
+      <div class=" d-flex justify-content-center" id="navbarSupportedContent">
+        <h1 style="color: white; text-align: center; font-style: bold;" >{{ 'registration-page.registration-candidate-page' | translate }}</h1>
+      </div>
+      <div class=" d-flex justify-content-end" id="navbarSupportedContent">
+        <div class="topbar">
+          <div ngbDropdown #languageDropdown="ngbDropdown" class="dropdown">
+            <div class="topbar-item mr-4" data-toggle="dropdown" data-offset="10px,0px" aria-expanded="false">
+              <div ngbDropdownToggle id="languageDropdown" class="btn font-weight-bolder btn-sm btn-light-primary px-5">
+                {{ getLang() }}
+              </div>
+            </div>
+            <div ngbDropdownMenu aria-labelledby="languageDropdown"
+              class="dropdown-menu p-0 m-0 dropdown-menu-left dropdown-menu-anim-up">
+              <ul class="navi navi-hover py-5">
+                <li class="navi-item">
+                  <a href="javascript:;" (click)="useLanguage('ro'); languageDropdown.close()" class="navi-link">
+                    <span class="navi-text">Română</span>
+                  </a>
+                </li>
+                <li class="navi-item">
+                  <a href="javascript:;" (click)="useLanguage('en'); languageDropdown.close()" class="navi-link">
+                    <span class="navi-text">English</span>
+                  </a>
+                </li>
+                <li class="navi-item">
+                  <a href="javascript:;" (click)="useLanguage('ru'); languageDropdown.close()" class="navi-link">
+                    <span class="navi-text">Русский</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topbar-item" style="white-space: nowrap; font-size: 14px; font-weight: 500">
+            <button type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;"
+              [routerLink]="['../']">{{ 'login.login' | translate }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <img src="../../../assets/5.jpg" class="img-fluid w-100" style="background-size: cover;" />
+  <div class="container-fluid py-4" style="background-color: #eff1f3; color: #142b3e; font-family: Georgia, serif;">
+    <h1 class="text-center mb-10">{{ 'registration-page.about-us' | translate }}</h1>
+    <div class="row" >
+      <div class="col" style="padding: 0.25rem; background-color: #fff; border: 1px solid #dee2e6; border-radius: 0.25rem; max-width: 100%; height: auto; margin-left: 4%">
+        <div class="text-center">
+          <p class="text-justify text-center" style="font-size: 20px; margin-top: 15%;">{{ 'registration-page.to-add-new-candidate' | translate }}
+          </p>
+          <p class="text-justify text-center" style="font-size: 20px;">{{ 'registration-page.after-registration-recive-email' | translate }}
+          </p>
+          <div style="margin: 9%; ">
+            <p class="text-justify text-left" style="font-size: 18px;">{{ 'registration-page.step1' | translate }}
+            </p>
+            <p class="text-justify text-left" style="font-size: 18px;">{{ 'registration-page.step2' | translate }}
+            </p>
+            <p class="text-justify text-left" style="font-size: 18px;">{{ 'registration-page.step3' | translate }}
+            </p>
+            <p class="text-justify text-left" style="font-size: 18px;">{{ 'registration-page.step4-step5' | translate }} 
+            </p>
+              <ul class="text-justify text-left" style="font-size: 16px; list-style-type: none;">
+                <li>
+                  {{ 'registration-page.event' | translate }}
+                </li>
+                <li>
+                  {{ 'registration-page.test' | translate }}
+                </li>
+                <li>
+                  {{ 'registration-page.time' | translate }}
+                </li>
+              </ul>
+              <p class="text-justify text-left" style="font-size: 18px;">
+                {{ 'registration-page.step6' | translate }}
+              </p>
+          </div>
+        </div>
+        
+      </div>
+      <div class="col">
+        <div class="text-center">
+  <img src="../../../assets/step-by-step.PNG" class="img-fluid img-thumbnail" style="background-size: cover;" />
+        </div>
+      </div>
+    </div>
+    <!-- 
+    <p class="text-justify">Duis quis risus dictum metus gravida venenatis pretium et nisl. Aenean sit amet massa
+      lectus. In hac habitasse platea dictumst. Nam vitae turpis eu odio semper convallis vitae sed metus. Aliquam
+      tempus laoreet diam eu faucibus. Nulla ultrices pellentesque mattis. Nam rutrum tempor tortor, sed rhoncus
+      erat ultricies vel. Sed non porta elit. Nulla egestas feugiat ligula non tempus. Ut rutrum, ligula sit amet
+      auctor tincidunt, dui urna pulvinar metus, sed blandit lorem eros nec nulla. Maecenas eu nisi non lorem
+      congue pellentesque. Suspendisse lacinia lacus velit.</p>
+    <p class="text-justify">In aliquam ut justo id vehicula. Donec euismod lectus at risus tincidunt vulputate.
+      Phasellus tincidunt mollis dui a euismod. Morbi venenatis lobortis nulla a dictum. Vestibulum ante ipsum
+      primis in faucibus orci luctus et ultrices posuere cubilia curae; Morbi tempor porttitor justo varius
+      congue. Aliquam suscipit odio lorem, sed congue tortor mattis vitae. Pellentesque commodo, odio consectetur
+      blandit pellentesque, orci dolor tincidunt urna, sit amet consectetur quam lorem ut metus. Fusce a posuere
+      purus. Ut euismod dolor bibendum elementum faucibus. In vitae metus eget dui luctus mollis. Integer iaculis
+      tempor nisl, sit amet sodales augue. Pellentesque sodales ipsum at quam vestibulum commodo.</p> -->
+  </div>
+
+  <div class="container-fluid" style="background-color: #eff1f3;">
+    <div class="container py-4" style="font-family: Georgia, serif;">
+      <div class="row p-3">
+        <h1 class="text-center mb-4">{{ 'registration-page.registration' | translate }}</h1>
+        <div *ngIf="!success" class="col-xl-6 col-lg-6 col-md-12 col-xs-12"
+          style="border: 1px solid #212529; border-radius: 9px; padding: 11px; margin-bottom: 7px;">
+          <h4 class="text-center">{{ 'registration-page.registration-datas' | translate }}</h4>
+          <form [formGroup]="userForm">
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="inputEmail4">{{ 'table.name' | translate }}</label>
+                <input class="form-control form-control-lg form-control-solid" name="name" type="text"
+                  formControlName="name"
+                  [ngClass]="{'is-invalid': hasErrors('name'), 'is-valid': userForm.get('name').valid}" />
+                <div *ngIf="hasErrors('name')" class="fv-plugins-message-container">
+                  <div *ngIf="hasError('name', 'required')" data-field="name" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'user-profile.empty-name' | translate }}</div>
+                  <div *ngIf="hasError('name', 'pattern')" data-field="name" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'user-profile.wrong-name' | translate }}</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputPassword4">{{ 'table.lastName' | translate }}</label>
+                <input class="form-control form-control-lg form-control-solid" name="lastName" type="text"
+                  formControlName="lastName"
+                  [ngClass]="{'is-invalid': hasErrors('lastName'), 'is-valid': userForm.get('lastName').valid}" />
+                <div *ngIf="hasErrors('lastName')" class="fv-plugins-message-container">
+                  <div *ngIf="hasError('lastName', 'required')" data-field="lastName" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'user-profile.empty-name' | translate }}</div>
+                  <div *ngIf="hasError('lastName', 'pattern')" data-field="lastName" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'user-profile.wrong-name' | translate }}</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputPassword4">{{ 'table.father-name' | translate }}</label>
+                <input class="form-control form-control-lg form-control-solid" name="fatherName" type="text"
+                  formControlName="fatherName"
+                  [ngClass]="{'is-invalid': hasErrors('fatherName'), 'is-valid': userForm.get('fatherName').valid}" />
+                <div *ngIf="hasErrors('fatherName')" class="fv-plugins-message-container">
+                  <div *ngIf="hasError('fatherName', 'required')" data-field="fatherName" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'user-profile.empty-name' | translate }}</div>
+                  <div *ngIf="hasError('fatherName', 'pattern')" data-field="fatherName" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'user-profile.wrong-name' | translate }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputEmail4">{{ 'table.idnp' | translate }}</label>
+                <input class="form-control form-control-lg form-control-solid" name="idnp" maxlength="13" minlength="13"
+                  onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off" type="text"
+                  formControlName="idnp"
+                  [ngClass]="{'is-invalid': hasErrors('idnp'), 'is-valid': userForm.get('idnp').valid }" />
+                <div *ngIf="isIdnpLengthValidator('idnp')" class="invalid-feedback d-block">{{'user-profile.idnp-length'
+                  | translate}}</div>
+                <div *ngIf="hasErrors('idnp')" class="fv-plugins-message-container">
+                  <div *ngIf="hasError('idnp', 'required')" data-field="idnp" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'user-profile.idnp-length' | translate }}</div>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputPassword4">{{ 'table.email' | translate }}</label>
+                <input class="form-control form-control-lg form-control-solid" name="email" type="email"
+                  formControlName="email"
+                  [ngClass]="{'is-invalid': hasErrors('email'), 'is-valid': userForm.get('email').valid}" />
+                <div *ngIf="hasErrors('email')" class="fv-plugins-message-container">
+                  <div *ngIf="hasError('email', 'required')" data-field="email" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'login.email-is-required' | translate }}</div>
+                  <div *ngIf="hasError('email', 'email')" data-field="email" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'login.please-use-valid-email' | translate }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group photo-upload">
+              <label for="inputAddress">{{ 'table.profile-photo' | translate }}</label>
+              <div *ngIf="fileId">
+                <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
+                </app-add-edit-media-file>
+              </div>
+              <div *ngIf="!fileId">
+                <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
+                </app-add-edit-media-file>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary float-right" (click)="addUser()">{{ 'button.confirm' |
+              translate }}</button>
+          </form>
+        </div>
+        <div *ngIf="success" class="col-xl-6 col-lg-6 col-md-12 col-xs-12"
+          style="border: 1px solid #212529; border-radius: 9px; padding: 11px; margin-bottom: 7px;">
+          <div class="alert alert-dark" role="alert">
+            {{ 'registration-page.success-message' | translate }}
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-xs-12">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2720.028347693455!2d28.836176615791832!3d47.020048579150114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c97c307d536dd5%3A0x3aa9e3993d05a6c!2z0JzQuNC90LjRgdGC0LXRgNGB0YLQstC-INCy0L3Rg9GC0YDQtdC90L3QuNGFINC00LXQuw!5e0!3m2!1sru!2s!4v1647866771697!5m2!1sru!2s"
+            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid bg-dark navbar-dark sticky-bottom">
+    <footer class="py-3 my-4">
+      <p class="text-center text-muted">&copy; 2021 Company, Inc</p>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

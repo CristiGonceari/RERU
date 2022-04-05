@@ -7,6 +7,7 @@ namespace CODWER.RERU.Core.Application.ModulePermissions.GetModulePermissions
     public class GetModulePermissionsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<ModulePermissionRowDto>>
     {
         public int ModuleId { get; set; }
-        public string Keyword { get; set; }
+        public string Code { set; get; }
+        public string Description { set; get; }
     }
 }

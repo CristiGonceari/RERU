@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EPPlus" Version="5.8.7" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="9.4.0" />
@@ -20,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Microservices\CODWER.RERU.Core\CODWER.RERU.Core.Data.Entities\CODWER.RERU.Core.Data.Entities.csproj" />
     <ProjectReference Include="..\..\CVU.ERP.Infrastructure\CVU.ERP.Infrastructure.csproj" />
     <ProjectReference Include="..\..\CVU.ERP.Logging\CVU.ERP.Logging.csproj" />
     <ProjectReference Include="..\..\CVU.ERP.Module.Common\src\CVU.ERP.Module.Common.csproj" />

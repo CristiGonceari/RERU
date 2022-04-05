@@ -15,7 +15,6 @@ import { AddEditQuestionComponent } from './add-edit-question/add-edit-question.
 import { QuestionDetailsComponent } from './question-details/question-details.component';
 import { TagInputModule } from 'ngx-chips';
 import { QuestionOverviewComponent } from './question-details/question-overview/question-overview.component';
-import { SearchQuestionComponent } from './question-list/search-question/search-question.component'
 import { QuestionListTableComponent } from './question-list/question-list-table/question-list-table.component';
 import { SearchByQuestionStatusComponent } from './question-list/search-by-question-status/search-by-question-status.component';
 import { SearchByQuestionTypeComponent } from './question-list/search-by-question-type/search-by-question-type.component';
@@ -27,7 +26,6 @@ import { SearchByQuestionTypeComponent } from './question-list/search-by-questio
     AddEditQuestionComponent,
     QuestionDetailsComponent,
     QuestionOverviewComponent,
-    SearchQuestionComponent,
     QuestionListTableComponent,
     SearchByQuestionStatusComponent,
     SearchByQuestionTypeComponent,

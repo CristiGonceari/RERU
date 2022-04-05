@@ -46,6 +46,7 @@ export class TestTemplateListTableComponent implements OnInit {
 	downloadFile: boolean = false;
 	headersToPrint = [];
 	printTranslates: any[];
+	filters: any = {}
 
 	constructor(
 		public referenceService: ReferenceService,
@@ -74,9 +75,9 @@ export class TestTemplateListTableComponent implements OnInit {
 			tableName: name,
 			fields: this.headersToPrint,
 			orientation: 2,
-			name: this.testName || '',
-			eventName: this.eventName || '',
-			status: +this.status || ''
+			name: this.filters.name || this.testName || '',
+			eventName: this.filters.eventName || this.eventName || '',
+			status: +this.filters.status || ''
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.tableData = printData;
@@ -119,9 +120,10 @@ export class TestTemplateListTableComponent implements OnInit {
 		let params: any = {
 			name: this.testName || '',
 			eventName: this.eventName || '',
-			status: this.status,
+			status: this.status || '',
 			page: data.page || this.pagination.currentPage,
-			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+			...this.filters
 		}
 
 		this.testTemplateService.getTestTemplates(params).subscribe(res => {
@@ -133,6 +135,18 @@ export class TestTemplateListTableComponent implements OnInit {
 		});
 	}
 
+	resetFilters(): void {
+		this.filters = {};
+		this.status = '';
+		this.list();
+	}
+
+	setFilter(field: string, value): void {
+		this.filters[field] = value;
+		this.status = this.filters.status
+		this.list();
+	}
+
 	changeStatus(id, status) {
 		let params;
 
@@ -141,19 +155,18 @@ export class TestTemplateListTableComponent implements OnInit {
 		else if (status == TestTemplateStatusEnum.Active)
 			params = { testTemplateId: id, status: TestTemplateStatusEnum.Canceled }
 
-		this.testTemplateService.changeStatus({ data: params }).subscribe(() => 
-		{
+		this.testTemplateService.changeStatus({ data: params }).subscribe(() => {
+			this.list();
 			forkJoin([
 				this.translate.get('modal.success'),
-				this.translate.get('questions.succes-update-status-msg'),
+				this.translate.get('tests.succes-update-test-status-msg'),
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
 				});
-			this.list()
-			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-		});
-	}
+				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+			});
+	} 
 
 	validateTestTemplate(id, status) {
 		this.testTemplateService.validateTestTemplate({ testTemplateId: id }).subscribe(() => this.changeStatus(id, status));

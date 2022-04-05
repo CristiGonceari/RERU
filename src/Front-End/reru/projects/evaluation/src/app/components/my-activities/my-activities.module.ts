@@ -20,6 +20,10 @@ import { MaterialModule } from '../../material.module';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MyEvaluatedTestsComponent } from './my-evaluated-tests/my-evaluated-tests.component';
 import { EvaluatedTestsTableComponent } from './my-evaluated-tests/evaluated-tests-table/evaluated-tests-table.component';
+import { MySolicitedTestsComponent } from './my-solicited-tests/my-solicited-tests.component';
+import { SolicitedTestsTableComponent } from './my-solicited-tests/solicited-tests-table/solicited-tests-table.component';
+import { AddEditSolicitedTestComponent } from './my-solicited-tests/add-edit-solicited-test/add-edit-solicited-test.component';
+import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-datetime';
 
 @NgModule({
   declarations: [
@@ -32,6 +36,9 @@ import { EvaluatedTestsTableComponent } from './my-evaluated-tests/evaluated-tes
     TestsTableComponent,
     MyEvaluatedTestsComponent,
     EvaluatedTestsTableComponent,
+    MySolicitedTestsComponent,
+    SolicitedTestsTableComponent,
+    AddEditSolicitedTestComponent,
   ],
   imports: [
     CommonModule,
@@ -46,7 +53,9 @@ import { EvaluatedTestsTableComponent } from './my-evaluated-tests/evaluated-tes
     MyActivitiesRoutingModule,
     MatProgressBarModule,
     MaterialModule,
-    CKEditorModule
+    CKEditorModule,
+    OwlDateTimeModule,
+    OwlMomentDateTimeModule
   ],
   schemas: [ 
     CUSTOM_ELEMENTS_SCHEMA

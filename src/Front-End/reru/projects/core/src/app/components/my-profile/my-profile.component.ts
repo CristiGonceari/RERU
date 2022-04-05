@@ -19,7 +19,6 @@ export class MyProfileComponent implements OnInit {
 	acronym: string;
 	isLoading = false;
 	avatarString: string;
-	avatar: any;
 	deleteTitle: string;
 	deleteMsg: string;
 	logoutTitle: string;
@@ -28,6 +27,7 @@ export class MyProfileComponent implements OnInit {
     yes: string;
 	buttonNo: string;
     buttonYes: string;
+	fileId: string;
 
 	@Input() user: any;
 	@Input() isCustomHeader: boolean;
@@ -49,9 +49,9 @@ export class MyProfileComponent implements OnInit {
 		this.isLoading = true;
 		this.profileService.getUserProfile().subscribe(res => {
 			this.userProfile = res.data;
-			if (res.data.avatar !== null) {
-				this.avatarString = res.data.avatar;
-				this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/*;base64, ${this.avatarString}`);
+			if (res.data.mediaFileId !== null) {
+				this.avatarString = res.data.mediaFileId;
+				this.fileId = res.data.mediaFileId;
 			}
 			const matches = res && (res.data.name + ' ' + res.data.lastName).match(/\b(\w)/g);
 			this.acronym = matches ? matches.join('') : null;

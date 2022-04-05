@@ -47,7 +47,7 @@ namespace CODWER.RERU.Logging.Application.GetLoggingValuesQuery
 
             if (!string.IsNullOrEmpty(request.UserName))
             {
-                items = items.Where(x => x.UserName.Contains(request.UserName));
+                items = items.Where(x => x.UserName.ToLower().Contains(request.UserName.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(request.UserIdentifier))

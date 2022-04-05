@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ReferenceService } from 'projects/evaluation/src/app/utils/services/reference/reference.service';
 
 @Component({
@@ -10,6 +10,7 @@ export class SearchByQuestionTypeComponent {
 
   @Output() filter: EventEmitter<void> = new EventEmitter<void>();
   questionTypeList: any;
+
   constructor(private referenceService: ReferenceService) { this.getQuestionType(); }
 
   getQuestionType(){

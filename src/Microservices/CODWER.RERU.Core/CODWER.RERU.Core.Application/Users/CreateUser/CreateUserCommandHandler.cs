@@ -1,17 +1,19 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+using AutoMapper;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CODWER.RERU.Core.Data.Entities;
-using CVU.ERP.Logging.Models;
-using MediatR;
-using AutoMapper;
+using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
 using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.Models.Internal;
+using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.Application.Users.CreateUser
 {
@@ -24,7 +26,9 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
         public CreateUserCommandHandler(ICommonServiceProvider commonServiceProvider,
             IEnumerable<IIdentityService> identityServices, 
-            ILoggerService<CreateUserCommandHandler> loggerService, IEvaluationClient evaluationClient, IMapper mapper)
+            ILoggerService<CreateUserCommandHandler> loggerService, 
+            IEvaluationClient evaluationClient, 
+            IMapper mapper)
             : base(commonServiceProvider)
         {
             _identityServices = identityServices;
@@ -35,7 +39,17 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
         public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var userProfile = Mapper.Map<UserProfile>(request.User);
+            var newUser = new CreateUserDto()
+            {
+                Name = request.Name,
+                LastName = request.LastName,
+                FatherName = request.FatherName,
+                Idnp = request.Idnp,
+                Email = request.Email,
+                EmailNotification = request.EmailNotification,
+            };
+
+            var userProfile = Mapper.Map<UserProfile>(newUser);
             var defaultRoles = CoreDbContext.Modules
                 .SelectMany(m => m.Roles.Where(r => r.IsAssignByDefault).Take(1))
                 .ToList();
@@ -50,7 +64,7 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
             foreach (var identityService in _identityServices)
             {
-                var identifier = await identityService.Create(userProfile, request.User.EmailNotification);
+                var identifier = await identityService.Create(userProfile, request.EmailNotification);
 
                 if (!string.IsNullOrEmpty(identifier))
                 {
@@ -63,10 +77,10 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
             }
 
             CoreDbContext.UserProfiles.Add(userProfile);
-
             await CoreDbContext.SaveChangesAsync();
 
             await LogAction(userProfile);
+
             await SyncUserProfile(userProfile);
 
             return userProfile.Id;

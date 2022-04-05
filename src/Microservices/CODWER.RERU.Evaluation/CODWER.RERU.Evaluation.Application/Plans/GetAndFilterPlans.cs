@@ -13,14 +13,17 @@ namespace CODWER.RERU.Evaluation.Application.Plans
 
             if (!string.IsNullOrEmpty(name))
             {
-                plans = plans.Where(x => x.Name.Contains(name));
+                plans = plans.Where(x => x.Name.ToLower().Contains(name.ToLower()));
             }
 
-            if (fromDate != null && tillDate != null)
+            if (fromDate != null)
             {
-                plans = plans.Where(p => p.FromDate.Date >= fromDate && p.TillDate.Date <= tillDate ||
-                                         (fromDate <= p.FromDate.Date && p.FromDate.Date <= tillDate) && (fromDate <= p.TillDate.Date && p.TillDate.Date >= tillDate) ||
-                                         (fromDate >= p.FromDate.Date && p.FromDate.Date <= tillDate) && (fromDate <= p.TillDate.Date && p.TillDate.Date <= tillDate));
+                plans = plans.Where(x => x.FromDate >= fromDate);
+            }
+
+            if (tillDate != null)
+            {
+                plans = plans.Where(x => x.TillDate <= tillDate);
             }
 
             return plans;
