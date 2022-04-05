@@ -81,7 +81,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
 
         private async Task<bool> CanPrintTest(List<QuestionUnitDto> questionsList)
         {
-            var mediaList = new List<string>() { "video", "audio" };
+            var mediaList = new List<string>() { "video", "audio", "gif" };
             var filesIdsList = new List<string>();
 
             var mediaOptionsIds = await _appDbContext.Options
