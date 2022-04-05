@@ -341,6 +341,13 @@ export class TestListTableComponent implements OnInit {
 
 	resetFilters(): void {
 		this.filters = {};
+    
+    this.dateTimeFrom = '';
+    this.dateTimeTo = '';
+    
+    this.searchFrom = '';
+    this.searchTo = '';
+
 		this.getTests();
 	}
 }
