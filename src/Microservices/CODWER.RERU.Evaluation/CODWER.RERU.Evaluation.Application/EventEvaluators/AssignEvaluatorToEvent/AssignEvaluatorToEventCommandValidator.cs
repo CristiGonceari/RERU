@@ -34,10 +34,6 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
                     .WithMessage(ValidationMessages.InvalidReference);
 
                 RuleFor(r => r)
-                    .Must(r => !ExistentAssignedEvaluator(r))
-                    .WithErrorCode(ValidationCodes.USER_ALREADY_ASSIGNED);
-
-                RuleFor(r => r)
                     .Must(r => !ExistentEvaluatorSameWithCandidate(r))
                     .WithErrorCode(ValidationCodes.EVALUATOR_AND_CANDIDATE_CANT_BE_THE_SAME);
 
@@ -64,26 +60,6 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
             }
 
             return true;
-        }
-
-        private bool ExistentAssignedEvaluator(AssignEvaluatorToEventCommand data)
-        {
-            var listOfResults = new List<bool>();
-
-
-            foreach (var userId in data.EvaluatorId)
-            {
-                var result = _appDbContext.EventEvaluators.Any(ev => ev.EvaluatorId == userId && ev.EventId == data.EventId);
-
-                listOfResults.Add(result);
-            }
-
-            if (listOfResults.Contains(true))
-            {
-                return true;
-            }
-
-            return false;
         }
 
         private bool ExistentEvaluatorSameWithCandidate(AssignEvaluatorToEventCommand data)
