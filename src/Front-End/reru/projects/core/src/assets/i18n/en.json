@@ -116,7 +116,8 @@
     "yes": "Yes",
     "no": "No",
     "attach": "Attach",
-    "print": "Print"
+    "print": "Print",
+    "watch": "Watch video"
   },
   "pagination": {
     "displaing": "Displaying",
