@@ -10,6 +10,8 @@ import { UserService } from '../../utils/services/user.service';
 import { InregistrationUserService } from '../../utils/services/inregistration-user.service';
 import { NotificationUtil } from '../../utils/util/notification.util';
 import { ValidatorUtil } from '../../utils/util/validator.util';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { WatchInfoVideoModalComponent } from '../../utils/modals/watch-info-video-modal/watch-info-video-modal.component'
 
 
 @Component({
@@ -44,11 +46,17 @@ export class RegistrationPageComponent implements OnInit {
     private inregistrationService: InregistrationUserService,
     private notificationService: NotificationsService,
     public translate: I18nService,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
     this.initForm();
     this.currentLanguage = this.translate.currentLanguage;
+  }
+
+ 
+  openModal(){
+    const modalRef = this.modalService.open( WatchInfoVideoModalComponent, { centered: true, size: 'lg', windowClass: 'my-class' });
   }
 
   getLang(): string {
