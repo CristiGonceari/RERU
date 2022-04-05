@@ -118,6 +118,10 @@ services:
       - IDENTITY_DISCOVERY_ENDPOINT_URI=http://localhost:10000
     volumes:
       - ./docker-settings/Identity/IdentityWeb/appsettings.json:/app/appsettings.json
+    depends_on:
+      - db
+      - reru-identity-migrator
+      - reru-storage-migrator
 
   reru-saml2:
     hostname: reru-saml2
@@ -182,6 +186,8 @@ services:
       - ./docker-settings/Logging/appsettings.json:/app/appsettings.json
     depends_on:
       - db
+      - reru-identity-migrator
+      - reru-storage-migrator
 
   reru-logging-fe:
     hostname: localhost
@@ -211,11 +217,13 @@ services:
       # - ConnectionStrings__Default=server=db;database=RERU-Core;User=sa;Password=Your_password123;
       # - ConnectionStrings__Identity=server=db;database=RERU-Identity;User=sa;Password=Your_password123;
       # - ConnectionStrings__Log=server=db;database=RERU-Logging;User=sa;Password=Your_password123;
+
+    volumes:
+      - ./docker-settings/Core/appsettings.json:/app/appsettings.json
     depends_on:
       - db
       - reru-identity-migrator
-    volumes:
-      - ./docker-settings/Core/appsettings.json:/app/appsettings.json
+      - reru-storage-migrator
 
   reru-core-fe:
     hostname: localhost
@@ -246,6 +254,10 @@ services:
       # - ConnectionStrings__Log=server=db;database=RERU-Logging;User=sa;Password=Your_password123;
     volumes:
       - ./docker-settings/Personal/appsettings.json:/app/appsettings.json
+    depends_on:
+      - db
+      - reru-identity-migrator
+      - reru-storage-migrator
 
   reru-personal-fe:
     hostname: localhost
@@ -280,6 +292,8 @@ services:
       - ./docker-settings/Evaluation/appsettings.json:/app/appsettings.json
     depends_on:
       - db
+      - reru-identity-migrator
+      - reru-storage-migrator
 
   reru-evaluation-fe:
     hostname: localhost
