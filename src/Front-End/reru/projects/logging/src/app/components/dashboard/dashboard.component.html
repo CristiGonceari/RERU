@@ -77,6 +77,8 @@
                 </div>
               </div>
             </div>
+            <app-loading-spinner *ngIf="!isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+                                  [colorClass]="'text-primary'"></app-loading-spinner>
             <div class="card-body">
               <div
                 class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"

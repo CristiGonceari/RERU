@@ -13,6 +13,7 @@ import { DeleteLogsModalComponent } from '../../utils/modals/delete-logs-modal/d
 })
 export class DashboardComponent implements OnInit {
   pagination: PaginationModel = new PaginationModel();
+  isLoading: boolean = false;
 
   dateTimeFrom: string;
   dateTimeTo: string;
@@ -94,6 +95,7 @@ export class DashboardComponent implements OnInit {
     this.loggingService.getLoggingValues(params).subscribe((res) => {
       (this.loggingValues = res.data.items),
         (this.pagination = res.data.pagedSummary);
+        this.isLoading = true; 
     });
   }
 
