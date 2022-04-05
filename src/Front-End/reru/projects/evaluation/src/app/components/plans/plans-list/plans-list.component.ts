@@ -126,6 +126,16 @@ export class PlansListComponent implements OnInit {
     });
   }
 
+  clearFields(){
+		  
+		this.dateTimeFrom = '';
+		this.dateTimeTo = '';
+		this.searchFrom = '';
+		this.searchTo = '';
+		
+		this.getListByDate();
+	}
+
   list(data: any = {}): void {
     this.selectedDay = null;
     this.isLoading = true;
