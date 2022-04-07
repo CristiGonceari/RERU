@@ -130,6 +130,8 @@
     "vote": "Vote",
     "refresh": "Refresh",
     "reset": "Reset",
+    "reset-filters": "Reset filters",
+    "uncheck-all": "Uncheck all",
     "back": "Back",
     "ok": "Ok",
     "random": "Random",

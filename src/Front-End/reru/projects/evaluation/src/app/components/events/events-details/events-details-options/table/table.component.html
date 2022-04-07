@@ -5,33 +5,33 @@
   id="kt_datatable">
   <table class="datatable table font-size-lg" style="overflow: visible">
     <thead class="text-uppercase text-muted">
-      <tr *ngIf="!user">
+      <tr *ngIf="users.length">
         <th scope="col">{{'events.name' | translate}}</th>
-        <th scope="col" style="width: 48px"></th>
+        <th scope="col">{{'login.idnp' | translate}}</th>
       </tr>
-      <tr *ngIf="!testTemplates">
+      <tr *ngIf="testTemplates">
         <th scope="col">{{'events.test-type-name' | translate}}</th>
         <th scope="col" style="width: 120px;" class="text-left">{{'tests.questions-to-use-count' | translate}}</th>
         <th scope="col" style="width: 100px;" class="text-left">{{'tests.time' | translate}}</th>
         <th scope="col" style="width: 48px"></th>
       </tr>
-      <tr *ngIf="!locations">
+      <tr *ngIf="locations">
         <th scope="col">{{'locations.name' | translate}}</th>
         <th scope="col" style="width: 300px;" class="text-left">{{'locations.address' | translate}}</th>
         <th scope="col" style="width: 200px;" class="text-left">{{'questions.type' | translate}}</th>
         <th scope="col" style="width: 100px;" class="text-left">{{'locations.places' | translate}}</th>
         <th scope="col" style="width: 48px"></th>
       </tr>
-      <tr *ngIf="!evaluators">
+      <tr *ngIf="evaluators">
         <th scope="col">{{'events.evaluator' | translate}}</th>
-        <th scope="col" style="width: 48px"></th>
+        <th scope="col"> {{'login.idnp' | translate}}</th>
       </tr>
-      <tr *ngIf="!person">
+      <tr *ngIf="persons">
         <th scope="col">{{'locations.person' | translate}}</th>
-        <th scope="col" style="width: 48px"></th>
+        <th scope="col">{{'login.idnp' | translate}}</th>
       </tr>
     </thead>
-    <tbody class="datatable-body" *ngIf="fields.length && !locations">
+    <tbody class="datatable-body" *ngIf="fields.length && locations">
       <tr *ngFor="let item of fields">
         <td>{{item.name}}</td>
         <td>{{item.address}}</td>
@@ -75,7 +75,7 @@
         </td>
       </tr>
     </tbody>
-    <tbody class="datatable-body" *ngIf="fields.length && !testTemplates">
+    <tbody class="datatable-body" *ngIf="fields.length && testTemplates">
       <tr *ngFor="let item of fields">
         <td>{{item.name}}</td>
         <td>{{item.questionCount}}</td>
@@ -110,112 +110,28 @@
         </td>
       </tr>
     </tbody>
-    <tbody class="datatable-body" *ngIf="fields.length && !user">
+    <tbody class="datatable-body" *ngIf="fields.length && users">
       <tr *ngFor="let item of fields">
         <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../user-profile', item.id]">
           {{item.firstName}} {{item.lastName}} {{item.patronymic}}
-          <span class="text-dark-50 font-size-lg font-weight-light">(idnp: {{item.idnp}})</span>
         </td>
-        <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-          <div style="overflow: visible; position: relative; width: 0px">
-            <div ngbDropdown class="dropdown dropdown-inline">
-              <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
-                <span class="svg-icon svg-icon-md" ngbDropdownToggle>
-                  <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
-                    version="1.1">
-                    <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
-                      <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3" fill="black">
-                      </rect>
-                      <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3" fill="black"
-                        fill-opacity="0.7"></rect>
-                    </g>
-                  </svg>
-                </span>
-              </div>
-              <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
-                <div ngbDropdownMenu aria-labelledby="action1">
-                  <button (click)="openConfirmationDeleteModal(importedId, item.id)"
-                    class="navi-link align-items-baseline px-6" ngbDropdownItem>
-                    {{ 'button.delete' | translate }}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </td>
+        <td>{{ item.idnp }}</td>
       </tr>
     </tbody>
-    <tbody class="datatable-body" *ngIf="fields.length && !evaluators">
+    <tbody class="datatable-body" *ngIf="fields.length && evaluators">
       <tr *ngFor="let item of fields">
         <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../user-profile', item.id]">
           {{item.firstName}} {{item.lastName}} {{item.patronymic}}
-          <span class="text-dark-50 font-size-lg font-weight-light">(idnp: {{item.idnp}})</span>
         </td>
-        <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-          <div style="overflow: visible; position: relative; width: 0px">
-            <div ngbDropdown class="dropdown dropdown-inline">
-              <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
-                <span class="svg-icon svg-icon-md" ngbDropdownToggle>
-                  <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
-                    version="1.1">
-                    <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
-                      <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3" fill="black">
-                      </rect>
-                      <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3" fill="black"
-                        fill-opacity="0.7"></rect>
-                    </g>
-                  </svg>
-                </span>
-              </div>
-              <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
-                <div ngbDropdownMenu aria-labelledby="action1">
-                  <button (click)="openConfirmationDeleteModal(importedId, item.id)"
-                    class="navi-link align-items-baseline px-6" ngbDropdownItem>
-                    {{ 'button.delete' | translate }}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </td>
+        <td>{{ item.idnp }}</td>
       </tr>
     </tbody>
-    <tbody class="datatable-body" *ngIf="fields.length && !person">
+    <tbody class="datatable-body" *ngIf="fields.length && persons">
       <tr *ngFor="let item of fields">
         <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../user-profile', item.id]">
           {{item.firstName}} {{item.lastName}} {{item.patronymic}}
-          <span class="text-dark-50 font-size-lg font-weight-light">(idnp: {{item.idnp}})</span>
         </td>
-        <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-          <div style="overflow: visible; position: relative; width: 0px">
-            <div ngbDropdown class="dropdown dropdown-inline">
-              <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
-                <span class="svg-icon svg-icon-md" ngbDropdownToggle>
-                  <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
-                    version="1.1">
-                    <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
-                      <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3" fill="black">
-                      </rect>
-                      <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3" fill="black"
-                        fill-opacity="0.7"></rect>
-                    </g>
-                  </svg>
-                </span>
-              </div>
-              <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
-                <div ngbDropdownMenu aria-labelledby="action1">
-                  <button (click)="openConfirmationDeleteModal(importedId, item.id)"
-                    class="navi-link align-items-baseline px-6" ngbDropdownItem>
-                    {{ 'button.delete' | translate }}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </td>
+        <td>{{ item.idnp }}</td>
       </tr>
     </tbody>
     <tr *ngIf="!fields.length">

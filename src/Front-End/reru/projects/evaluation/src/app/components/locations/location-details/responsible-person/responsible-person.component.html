@@ -4,11 +4,11 @@
         <div class="card-title"><b>{{'locations.persons' | translate}}</b></div>
         <div class="card-toolbar m-0">
           <app-add-button class="btn" [value]="'locations.attach-res' | translate"
-            [routerLink]="['../../../attach-person', locationId]"></app-add-button>
+            (click)="table.openUsersModal()"></app-add-button>
         </div>
       </div>
       <div class="card-body">
-        <app-person-table-list></app-person-table-list>
+        <app-person-table-list #table></app-person-table-list>
       </div>
     </div>
   </div>

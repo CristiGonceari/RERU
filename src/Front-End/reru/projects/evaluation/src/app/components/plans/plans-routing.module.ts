@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AttachComponent } from './plan-details/events/attach/attach.component';
 import { PlanDetailsComponent } from './plan-details/plan-details.component';
 import { PlanOverviewComponent } from './plan-details/plan-overview/plan-overview.component';
-import { AttachPersonsComponent } from './plan-details/responsable-persons/attach-persons/attach-persons.component';
 import { ResponsablePersonsComponent } from './plan-details/responsable-persons/responsable-persons.component';
 import { EventsComponent } from './plan-details/events/events.component';
 import { PlansComponent } from './plans.component';
@@ -24,7 +23,6 @@ const routes: Routes = [
     ]
   },
   { path: 'attach-event/:id', component: AttachComponent },
-  { path: 'attach-person/:id', component: AttachPersonsComponent },
 ]
 
 @NgModule({

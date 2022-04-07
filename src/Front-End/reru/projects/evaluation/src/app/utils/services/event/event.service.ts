@@ -72,6 +72,10 @@ export class EventService extends AbstractService {
     return this.http.post(`${this.baseUrl}/EventResponsiblePerson`, data);
   }
 
+  getNotAssignedPersons(params): Observable<any>{
+    return this.http.get(`${this.baseUrl}/EventResponsiblePerson/no-assigned`, {params});
+  }
+
   detachPerson(eventId, userProfileId){
     return this.http.delete(`${this.baseUrl}/EventResponsiblePerson/Event=${eventId}&&UserProfile=${userProfileId}`);
   }
@@ -85,12 +89,19 @@ export class EventService extends AbstractService {
   }
 
   detachLocation(eventId , locationId): Observable<any>{
-    // console.log("data", data);
     return this.http.delete(`${this.baseUrl}/EventLocation/Event=${eventId}&&Location=${locationId}`);
   }
 
   getUsers(params): Observable<any>{
     return this.http.get(`${this.baseUrl}/EventUser`, {params});
+  }
+
+  getAssignedUsers(params): Observable<any>{
+    return this.http.get(`${this.baseUrl}/EventUser/assigned`, {params});
+  }
+
+  getNotAssignedUsers(params): Observable<any>{
+    return this.http.get(`${this.baseUrl}/EventUser/no-assigned`, {params});
   }
 
   attachUser(data){
@@ -127,8 +138,8 @@ export class EventService extends AbstractService {
     return this.http.get(`${this.baseUrl}EventEvaluator/no-assigned`, {params});
   }
 
-  attachEvaluator(data) {
-    return this.http.post(`${this.baseUrl}/EventEvaluator`, data);
+  attachEvaluator(params) {
+    return this.http.post(`${this.baseUrl}/EventEvaluator`, params);
   }
 
   detachEvaluator(eventId, evaluatorId) {

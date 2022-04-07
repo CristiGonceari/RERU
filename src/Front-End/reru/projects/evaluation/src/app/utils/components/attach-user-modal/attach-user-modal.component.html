@@ -26,7 +26,7 @@
 				[placeholder]="'user-profile.user-email'  | translate" #email></erp-shared-search-input>
 		</div>
 		<div class="col text-right">
-			<app-button (click)="resetFilters()">{{'button.reset' | translate}}</app-button>
+			<app-button (click)="resetFilters()">{{'button.reset-filters' | translate}}</app-button>
 		</div>
 	</div>
 
@@ -36,10 +36,29 @@
 
 	<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
   	id="kt_datatable" *ngIf="!isLoading">
+		<div *ngIf="page == 'evaluators'">
+			<span class="h3">Show User Name</span>
+			<span class="switch switch-sm mx-3">
+				<label>
+					<input type="checkbox" [checked]="sequence" name="select" (change)="checkEvent($event)">
+					<span></span>
+				</label>
+			</span>
+		</div>
+
 		<table class="datatable table font-size-lg" style="overflow: visible">
 			<thead class="text-uppercase text-muted">
 				<tr>
-					<th scope="col" style="width: 50px"></th>
+					<th scope="col" style="width: 50px">
+						<span *ngIf="attachedItems.length">
+							<label class="checkbox checkbox-lg checkbox-inline" [ngbTooltip]="tooltip">
+								<input type="checkbox" value="" name="option"
+									[checked]="attachedItems.length"
+									(change)="uncheckAll($event)" />
+								<span></span>
+							</label>
+						</span>
+					</th>
 					<th scope="col"> {{ 'login.last-name' | translate }} </th>
 					<th scope="col"> {{ 'login.first-name' | translate }} </th>
 					<th scope="col"> {{ 'login.father-name' | translate }} </th>
@@ -55,7 +74,6 @@
 								[checked]="attachedItems.includes(user.id)" (change)="checkInput($event)" />
 							<span></span>
 						</label>
-
 					</td>
 					<td> {{ user.firstName }} </td>
 					<td> {{ user.lastName }} </td>
@@ -83,3 +101,4 @@
 	<button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
 	<button type="button" class="btn btn-primary" (click)="confirm()">{{'button.confirm' | translate}}</button>
 </div>
+<ng-template #tooltip><p class="mb-0 font-size-sm">{{'button.uncheck-all' | translate}}</p></ng-template>

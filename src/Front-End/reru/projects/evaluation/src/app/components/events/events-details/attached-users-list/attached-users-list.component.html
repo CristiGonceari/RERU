@@ -3,23 +3,12 @@
     <div class="card-header flex-wrap border-0 py-5">
       <div class="card-title"><b>{{'events.attached-users' | translate}}</b></div>
       <div class="card-toolbar m-0">
-        <div class="dropdown dropdown-inline my-auto" ngbDropdown>
-          <app-add-button class="btn my-auto" id="action1" ngbDropdownToggle [value]="'events.attach-user' | translate">
-          </app-add-button>
-          <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-            <div ngbDropdownMenu aria-labelledby="action1">
-              <button class="navi-link align-items-center px-6" ngbDropdownItem
-                [routerLink]="['../../../attach-user', id]">
-                <i class="la la-plus mr-2"></i>
-                {{'events.attach-user' | translate}}
-              </button>
-            </div>
-          </div>
-        </div>
+        <app-add-button class="btn my-auto" [value]="'events.attach-user' | translate" (click)="table.openUsersModal()">
+        </app-add-button>
       </div>
     </div>
     <div class="card-body">
-      <app-table [category]="url" [importedId]="id"></app-table>
+      <app-table [category]="url" [importedId]="id" #table></app-table>
     </div>
   </div>
 </div>

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-responsable-persons',
@@ -7,18 +6,10 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./responsable-persons.component.scss']
 })
 export class ResponsablePersonsComponent implements OnInit {
-  id: number;
 
-	constructor(private route: ActivatedRoute) { }
+	constructor() { }
 
-	ngOnInit(): void {
-		this.subsribeForParams();
-	}
+	ngOnInit(): void { }
 
-  subsribeForParams(): void {
-    this.route.parent.params.subscribe(params => {
-      this.id = params.id;
-    });
-	}
 }
 

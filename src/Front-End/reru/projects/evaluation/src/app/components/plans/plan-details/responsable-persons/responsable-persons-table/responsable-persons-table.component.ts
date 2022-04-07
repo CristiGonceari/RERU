@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
-import { ConfirmModalComponent } from 'projects/erp-shared/src/lib/modals/confirm-modal/confirm-modal.component';
+import { AttachUserModalComponent } from 'projects/evaluation/src/app/utils/components/attach-user-modal/attach-user-modal.component';
 import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { PlanService } from 'projects/evaluation/src/app/utils/services/plan/plan.service';
@@ -15,11 +15,11 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./responsable-persons-table.component.scss']
 })
 export class ResponsablePersonsTableComponent implements OnInit {
-    persons;
 	keyword: string;
 	pagination: PaginationModel = new PaginationModel();
 	id: number;
 	isLoading: boolean = true;
+	attachedPersons = [];
 
 	title: string;
 	description: string;
@@ -28,7 +28,6 @@ export class ResponsablePersonsTableComponent implements OnInit {
 
 	constructor(
 		private planService: PlanService, 
-		private router: Router, 
 		public translate: I18nService,
 		private route: ActivatedRoute,
 		private modalService: NgbModal,
@@ -56,50 +55,40 @@ export class ResponsablePersonsTableComponent implements OnInit {
 
 		this.planService.persons(params).subscribe( res => {
 			if (res && res.data) {
-				this.persons = res.data.items;
+				this.attachedPersons = res.data.items;
 				this.pagination = res.data.pagedSummary;
 				this.isLoading = false;
 			}
-				
 		});
 	}
 
-	openConfirmationDeleteModal(id: number, itemId): void {
-		const params = {
-		   planId: +id,
-		   personId: itemId
-		}
-		forkJoin([
-			this.translate.get('plans.delete'),
-			this.translate.get('plans.remove-person-msg'),
-			this.translate.get('button.no'),
-			this.translate.get('button.yes'),
-		]).subscribe(([title, description, no, yes]) => {
-			this.title = title;
-			this.description = description;
-			this.no = no;
-			this.yes = yes;
+	openUsersModal(): void {
+		const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
+		modalRef.componentInstance.exceptUserIds = [];
+		modalRef.componentInstance.attachedItems = this.attachedPersons.map(el => el.id);
+		modalRef.componentInstance.inputType = 'checkbox';
+		modalRef.result.then(() => {
+			this.attachPersons(modalRef.result.__zone_symbol__value);
+		}, () => { });
+	}
+
+	parse(users) {
+		return {
+			planId: +this.id,
+			userProfileId: users || this.attachedPersons
+		};
+	}
+
+	attachPersons(users) {
+		this.planService.attachPerson(this.parse(users)).subscribe(() => {
+		  forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('locations.succes-add-person-msg'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
 			});
-		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
-		modalRef.componentInstance.title = this.title;
-		modalRef.componentInstance.description = this.description;
-		modalRef.componentInstance.buttonNo = this.no;
-		modalRef.componentInstance.buttonYes = this.yes;
-		modalRef.result.then(() => this.detachPerson(id, itemId), () => { });
-	
-	  }
-	
-	  detachPerson(id, itemId) {
-		forkJoin([
-			this.translate.get('modal.success'),
-			this.translate.get('plans.succes-remove-person-msg'),
-		  ]).subscribe(([title, description]) => {
-			this.title = title;
-			this.description = description;
-			});
-		this.planService.detachPerson(id, itemId).subscribe(() => {
-		  this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-		  this.list();
-		});
-	  }
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+		}, () => {}, () => this.list());
+	}
 }
