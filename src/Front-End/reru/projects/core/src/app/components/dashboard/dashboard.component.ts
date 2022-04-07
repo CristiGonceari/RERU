@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { SidebarView } from '../../utils/models/sidebar.model';
 import {
   ApplicationUserService,
@@ -10,7 +10,7 @@ import { InternalService } from '../../utils/services/internal.service';
 import { NotificationsService } from 'angular2-notifications';
 import { I18nService } from '../../utils/services/i18n.service';
 import { forkJoin } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -31,7 +31,9 @@ export class DashboardComponent implements OnInit {
     private internalService: InternalService,
     public notificationService: NotificationsService,
     public translate: I18nService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +46,6 @@ export class DashboardComponent implements OnInit {
     this.userSubject.userChange.subscribe(
       () => (this.modules = this.moduleService.get())
     );
-    console.log(this.modules);
   }
 
   list(): void {
@@ -68,16 +69,16 @@ export class DashboardComponent implements OnInit {
         ]).subscribe(([type, message]) => {
           this.type = type;
           this.messageText = message;
-          this.notificationService
-            .info(this.type, this.messageText, {
-              timeOut: 29000,
-              showProgressBar: true,
-            })
-            .click.subscribe(() =>
-              this.router.navigate(['../reru-evaluation/#/my-activities/start-test/', this.testId])
-            );
-          // .click.subscribe(() => this.router.navigate(['reru-evaluation/#/my-activities/start-test/', this.testId]));
-          // .click.subscribe(() => this.router.navigateByUrl(`http://reru.codwer.com/reru-evaluation/#/my-activities/start-test/${this.testId}`));
+          this.notificationService.info(this.type, this.messageText, {
+            timeOut: 29000,
+            showProgressBar: true,
+          })
+          .click.subscribe(() => {
+            console.warn(this.router);
+            this.ngZone.run(() => this.router.navigate(['../reru-evaluation/#/my-activities/start-test/', this.testId], { relativeTo: this.route }))
+            console.warn(this.router);
+          }
+          );
         });
       }
     });
