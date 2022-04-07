@@ -15,14 +15,9 @@ import { LocationListTableComponent } from './location-list/location-list-table/
 import { SearchLocationComponent } from './location-list/search-location/search-location.component';
 import { LocationDetailsComponent } from './location-details/location-details.component';
 import { LocationOverviewComponent } from './location-details/location-overview/location-overview.component';
-import { RegisteredComputersComponent } from './location-details/registered-computers/registered-computers.component';
 import { ResponsiblePersonComponent } from './location-details/responsible-person/responsible-person.component';
-import { ComputersTableComponent } from './location-details/registered-computers/computers-table/computers-table.component';
 import { PersonTableListComponent } from './location-details/responsible-person/person-table-list/person-table-list.component';
-import { AttachPersonComponent } from './location-details/responsible-person/attach-person/attach-person.component';
-import { SearchPersonComponent } from './location-details/responsible-person/attach-person/search-person/search-person.component';
 import { MaterialModule } from './../../material.module';
-
 
 @NgModule({
   declarations: [
@@ -32,12 +27,8 @@ import { MaterialModule } from './../../material.module';
     SearchLocationComponent,
     LocationDetailsComponent,
     LocationOverviewComponent,
-    RegisteredComputersComponent,
     ResponsiblePersonComponent,
-    ComputersTableComponent,
     PersonTableListComponent,
-    AttachPersonComponent,
-    SearchPersonComponent, 
     ],
 
   imports: [
@@ -51,7 +42,6 @@ import { MaterialModule } from './../../material.module';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    CommonModule,
     MaterialModule
   ]
 })

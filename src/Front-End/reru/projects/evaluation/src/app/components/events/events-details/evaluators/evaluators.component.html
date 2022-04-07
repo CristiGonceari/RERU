@@ -4,11 +4,11 @@
             <div class="card-title"><b>{{'events.evaluators' | translate}}</b></div>
             <div class="card-toolbar m-0">
                 <app-add-button class="btn" [value]="'events.attach-evaluator' | translate"
-                    [routerLink]="['../../../attach-evaluator', id]"></app-add-button>
+                    (click)="table.openUsersModal()"></app-add-button>
             </div>
         </div>
         <div class="card-body">
-            <app-table [category]="url" [importedId]="id"></app-table>
+            <app-table [category]="url" [importedId]="id" #table></app-table>
         </div>
     </div>
 </div>

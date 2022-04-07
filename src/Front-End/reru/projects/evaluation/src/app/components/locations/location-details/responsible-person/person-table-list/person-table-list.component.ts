@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
-import { ConfirmModalComponent } from 'projects/erp-shared/src/lib/modals/confirm-modal/confirm-modal.component';
+import { AttachUserModalComponent } from 'projects/evaluation/src/app/utils/components/attach-user-modal/attach-user-modal.component';
 import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
 import { AttachToLocationService } from 'projects/evaluation/src/app/utils/services/attach-to-location/attach-to-location.service';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
@@ -16,7 +16,7 @@ import { forkJoin } from 'rxjs';
 	styleUrls: ['./person-table-list.component.scss']
 })
 export class PersonTableListComponent implements OnInit {
-	persons;
+	attachedPersons = [];
 	pagination: PaginationModel = new PaginationModel();
 	locationId: number;
 	isLoading: boolean = true;
@@ -48,7 +48,7 @@ export class PersonTableListComponent implements OnInit {
 		this.attachToLocationService.getPersons(params).subscribe(
 			res => {
 				if (res && res.data) {
-					this.persons = res.data.items;
+					this.attachedPersons = res.data.items;
 					this.pagination = res.data.pagedSummary;
 					this.isLoading = false;
 				}
@@ -65,37 +65,33 @@ export class PersonTableListComponent implements OnInit {
 		});
 	}
 
-	openConfirmationDeleteModal(locationId: number, personId): void {
-		forkJoin([
-			this.translate.get('locations.remove'),
-			this.translate.get('locations.remove-person-msg'),
-			this.translate.get('button.no'),
-			this.translate.get('button.yes'),
-		]).subscribe(([title, description, no, yes]) => {
-			this.title = title;
-			this.description = description;
-			this.no = no;
-			this.yes = yes;
-			});
-		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
-		modalRef.componentInstance.title = this.title;
-		modalRef.componentInstance.description = this.description;
-		modalRef.componentInstance.buttonNo = this.no;
-		modalRef.componentInstance.buttonYes = this.yes;
-		modalRef.result.then(() => this.detachPerson(locationId, personId), () => { });
+	openUsersModal(): void {
+		const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
+		modalRef.componentInstance.exceptUserIds = [];
+		modalRef.componentInstance.attachedItems = this.attachedPersons.map(el => el.id);
+		modalRef.componentInstance.inputType = 'checkbox';
+		modalRef.result.then(() => {
+			this.attachPersons(modalRef.result.__zone_symbol__value);
+		}, () => { });
 	}
 
-	detachPerson(locationId, personId) {
-		this.locationService.detachPerson(locationId, personId).subscribe(() => {
-			forkJoin([
+	parse(users) {
+		return {
+			locationId: +this.locationId,
+			userProfileId: users || this.attachedPersons
+		};
+	}
+
+	attachPersons(users) {
+		this.locationService.assignPerson(this.parse(users)).subscribe(() => {
+		  forkJoin([
 				this.translate.get('modal.success'),
-				this.translate.get('locations.succes-remove-person-msg'),
-			  ]).subscribe(([title, description]) => {
+				this.translate.get('locations.succes-add-person-msg'),
+			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
-				});
+			});
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-			this.list();
-		});
+		}, () => {}, () => this.list());
 	}
 }
