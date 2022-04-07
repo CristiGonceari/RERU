@@ -62,11 +62,11 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
 
                     var eventName = await _appDbContext.EventEvaluators
                         .Include(x => x.Event)
-                        .FirstAsync(x => x.EventId == eventEvaluator.EventId && x.EvaluatorId == eventEvaluator.EvaluatorId);
+                        .FirstAsync(x => x.EventId == request.EventId && x.EvaluatorId == evaluatorId);
 
                     eventEvaluatorIds.Add(eventName.Id);
 
-                    await _internalNotificationService.AddNotification(eventEvaluator.EvaluatorId, NotificationMessages.YouWereInvitedToEventAsEvaluator);
+                    await _internalNotificationService.AddNotification(newEventEvaluator.EvaluatorId, NotificationMessages.YouWereInvitedToEventAsEvaluator);
 
                     await SendEmailNotification(result);
                 }

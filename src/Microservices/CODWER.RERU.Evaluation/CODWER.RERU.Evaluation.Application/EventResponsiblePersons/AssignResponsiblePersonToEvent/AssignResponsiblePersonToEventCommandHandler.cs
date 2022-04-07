@@ -60,11 +60,11 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
 
                     var eventName = await _appDbContext.EventResponsiblePersons
                         .Include(x => x.Event)
-                        .FirstAsync(x => x.EventId == eventResponsiblePerson.EventId && x.UserProfileId == eventResponsiblePerson.UserProfileId);
+                        .FirstAsync(x => x.EventId == request.EventId && x.UserProfileId == userId);
 
                     eventUsersIds.Add(eventName.Id);
 
-                    await _internalNotificationService.AddNotification(eventResponsiblePerson.UserProfileId, NotificationMessages.YouWereInvitedToEventAsResponsiblePerson);
+                    await _internalNotificationService.AddNotification(newEventResponsiblePerson.UserProfileId, NotificationMessages.YouWereInvitedToEventAsResponsiblePerson);
                     await SendEmailNotification(result);
                 }
                 else

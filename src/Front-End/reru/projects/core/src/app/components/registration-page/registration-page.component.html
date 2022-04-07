@@ -16,7 +16,8 @@
           style="max-height: 40px;">
       </div>
       <div class=" d-flex justify-content-center" id="navbarSupportedContent">
-        <h1 style="color: white; text-align: center; font-style: bold;" >{{ 'registration-page.registration-candidate-page' | translate }}</h1>
+        <h1 style="color: white; text-align: center; font-style: bold;">{{
+          'registration-page.registration-candidate-page' | translate }}</h1>
       </div>
       <div class=" d-flex justify-content-end" id="navbarSupportedContent">
         <div class="topbar">
@@ -58,12 +59,15 @@
   <img src="../../../assets/5.jpg" class="img-fluid w-100" style="background-size: cover;" />
   <div class="container-fluid py-4" style="background-color: #eff1f3; color: #142b3e; font-family: Georgia, serif;">
     <h1 class="text-center mb-10">{{ 'registration-page.about-us' | translate }}</h1>
-    <div class="row" >
-      <div class="col" style="padding: 0.25rem; background-color: #fff; border: 1px solid #dee2e6; border-radius: 0.25rem; max-width: 100%; height: auto; margin-left: 4%">
+    <div class="row">
+      <div class="col"
+        style="padding: 0.25rem; background-color: #fff; border: 1px solid #dee2e6; border-radius: 0.25rem; max-width: 100%; height: auto; margin-left: 4%">
         <div class="text-center">
-          <p class="text-justify text-center" style="font-size: 20px; margin-top: 15%;">{{ 'registration-page.to-add-new-candidate' | translate }}
+          <p class="text-justify text-center" style="font-size: 20px; margin-top: 15%;">{{
+            'registration-page.to-add-new-candidate' | translate }}
           </p>
-          <p class="text-justify text-center" style="font-size: 20px;">{{ 'registration-page.after-registration-recive-email' | translate }}
+          <p class="text-justify text-center" style="font-size: 20px;">{{
+            'registration-page.after-registration-recive-email' | translate }}
           </p>
           <div style="margin: 9%; ">
             <p class="text-justify text-left" style="font-size: 18px;">{{ 'registration-page.step1' | translate }}
@@ -72,46 +76,36 @@
             </p>
             <p class="text-justify text-left" style="font-size: 18px;">{{ 'registration-page.step3' | translate }}
             </p>
-            <p class="text-justify text-left" style="font-size: 18px;">{{ 'registration-page.step4-step5' | translate }} 
+            <p class="text-justify text-left" style="font-size: 18px;">{{ 'registration-page.step4-step5' | translate }}
             </p>
-              <ul class="text-justify text-left" style="font-size: 16px; list-style-type: none;">
-                <li>
-                  {{ 'registration-page.event' | translate }}
-                </li>
-                <li>
-                  {{ 'registration-page.test' | translate }}
-                </li>
-                <li>
-                  {{ 'registration-page.time' | translate }}
-                </li>
-              </ul>
-              <p class="text-justify text-left" style="font-size: 18px;">
-                {{ 'registration-page.step6' | translate }}
-              </p>
+            <ul class="text-justify text-left" style="font-size: 16px; list-style-type: none;">
+              <li>
+                {{ 'registration-page.event' | translate }}
+              </li>
+              <li>
+                {{ 'registration-page.test' | translate }}
+              </li>
+              <li>
+                {{ 'registration-page.time' | translate }}
+              </li>
+            </ul>
+            <p class="text-justify text-left" style="font-size: 18px;">
+              {{ 'registration-page.step6' | translate }}
+            </p>
+          </div>
+          <div class="row">
+          <div class="col">
+            <button type="button" class="btn btn-primary" (click)="openModal()">{{'button.watch' | translate}}</button>
+          </div>
           </div>
         </div>
-        
       </div>
       <div class="col">
         <div class="text-center">
-  <img src="../../../assets/step-by-step.PNG" class="img-fluid img-thumbnail" style="background-size: cover;" />
+          <img src="../../../assets/step-by-step.PNG" class="img-fluid img-thumbnail" style="background-size: cover;" />
         </div>
       </div>
     </div>
-    <!-- 
-    <p class="text-justify">Duis quis risus dictum metus gravida venenatis pretium et nisl. Aenean sit amet massa
-      lectus. In hac habitasse platea dictumst. Nam vitae turpis eu odio semper convallis vitae sed metus. Aliquam
-      tempus laoreet diam eu faucibus. Nulla ultrices pellentesque mattis. Nam rutrum tempor tortor, sed rhoncus
-      erat ultricies vel. Sed non porta elit. Nulla egestas feugiat ligula non tempus. Ut rutrum, ligula sit amet
-      auctor tincidunt, dui urna pulvinar metus, sed blandit lorem eros nec nulla. Maecenas eu nisi non lorem
-      congue pellentesque. Suspendisse lacinia lacus velit.</p>
-    <p class="text-justify">In aliquam ut justo id vehicula. Donec euismod lectus at risus tincidunt vulputate.
-      Phasellus tincidunt mollis dui a euismod. Morbi venenatis lobortis nulla a dictum. Vestibulum ante ipsum
-      primis in faucibus orci luctus et ultrices posuere cubilia curae; Morbi tempor porttitor justo varius
-      congue. Aliquam suscipit odio lorem, sed congue tortor mattis vitae. Pellentesque commodo, odio consectetur
-      blandit pellentesque, orci dolor tincidunt urna, sit amet consectetur quam lorem ut metus. Fusce a posuere
-      purus. Ut euismod dolor bibendum elementum faucibus. In vitae metus eget dui luctus mollis. Integer iaculis
-      tempor nisl, sit amet sodales augue. Pellentesque sodales ipsum at quam vestibulum commodo.</p> -->
   </div>
 
   <div class="container-fluid" style="background-color: #eff1f3;">

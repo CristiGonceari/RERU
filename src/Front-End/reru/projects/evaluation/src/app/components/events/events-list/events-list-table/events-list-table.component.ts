@@ -88,7 +88,17 @@ export class EventsListTableComponent implements OnInit {
 			})
 		}
 	  }
-     
+
+	  clearFields(){
+
+		this.dateTimeFrom = '';
+		this.dateTimeTo = '';
+		this.searchFrom = '';
+		this.searchTo = '';
+		
+		this.getListByDate();
+	  }
+
 	list(data: any = {}) {
 	this.selectedDay = null;
     this.isLoading = true;

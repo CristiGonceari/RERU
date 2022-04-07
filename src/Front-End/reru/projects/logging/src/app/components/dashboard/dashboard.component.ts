@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PaginationModel } from '../../utils/models/pagination.model';
 import { LoggingService } from '../../utils/services/logging-service/logging.service';
 import { FormGroup } from '@angular/forms';
@@ -13,6 +13,7 @@ import { DeleteLogsModalComponent } from '../../utils/modals/delete-logs-modal/d
 })
 export class DashboardComponent implements OnInit {
   pagination: PaginationModel = new PaginationModel();
+  isLoading: boolean = false;
 
   dateTimeFrom: string;
   dateTimeTo: string;
@@ -34,7 +35,7 @@ export class DashboardComponent implements OnInit {
 		public modalService: NgbModal) {}
 
   ngOnInit(): void {
-    this.retriveDeopdowns();
+    this.retriveDropdowns();
     this.getLoggingValues();
   }
 
@@ -51,9 +52,13 @@ export class DashboardComponent implements OnInit {
     this.userIdentifier = '';
 
     this.getLoggingValues();
+    this.retriveDropdowns();
   }
 
-  retriveDeopdowns() {
+  retriveDropdowns() {
+    this.events = [];
+    this.projects = [];
+
     this.loggingService
       .getProjectSelectItem()
       .subscribe((res) => (this.projects = res.data));
@@ -92,8 +97,11 @@ export class DashboardComponent implements OnInit {
     };
 
     this.loggingService.getLoggingValues(params).subscribe((res) => {
-      (this.loggingValues = res.data.items),
-        (this.pagination = res.data.pagedSummary);
+      if(res && res.data){
+        this.loggingValues = res.data.items;
+        this.pagination = res.data.pagedSummary;
+        this.isLoading = true; 
+      }
     });
   }
 
