@@ -1,0 +1,12 @@
+﻿using CVU.ERP.Common.Data.Entities;
+using System.Collections.Generic;
+
+namespace CODWER.RERU.Core.Data.Entities
+{
+    public class CandidatePosition : SoftDeleteBaseEntity
+    {
+        public string Name { get; set; }
+        public bool IsActive { get; set; }
+        public virtual ICollection<UserProfile> UserProfiles { get; set; }
+    }
+}
