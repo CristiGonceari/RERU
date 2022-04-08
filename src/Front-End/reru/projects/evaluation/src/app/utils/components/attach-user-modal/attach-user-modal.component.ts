@@ -34,7 +34,7 @@ export class AttachUserModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.page == 'add-test') this.getAssignedUsers();
+    if (this.eventId && this.page == 'add-test') this.getAssignedUsers();
     else this.getUsers();
   }
 

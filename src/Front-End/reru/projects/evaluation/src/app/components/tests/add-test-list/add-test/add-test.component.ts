@@ -188,8 +188,8 @@ export class AddTestComponent implements OnInit {
     modalRef.componentInstance.page = 'add-test';
     modalRef.componentInstance.eventId = +this.event.value;
     modalRef.result.then(() => {
-      if (inputType == 'radio') this.evaluatorList = modalRef.result.__zone_symbol__value;
-      else if (inputType == 'checkbox') this.userListToAdd = modalRef.result.__zone_symbol__value;
+      if (inputType == 'radio') this.evaluatorList = modalRef.result.__zone_symbol__value.attachedItems;
+      else if (inputType == 'checkbox') this.userListToAdd = modalRef.result.__zone_symbol__value.attachedItems;
     }, () => { });
   }
 
