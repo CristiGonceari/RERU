@@ -21,5 +21,10 @@ namespace CODWER.RERU.Core.Application.Validation
         public static string EMPTY_CONTENT = "01000202";
         public static string INVALID_INPUT = "01000203";
         public static string INVALID_ID = "01000204";
+
+        //CANDIDATE_POSITION
+        public static string INVALID_POSITION = "01000301";
+        public static string EMPTY_POSITION_NAME = "01000302";
+
     }
 }

@@ -21,6 +21,9 @@ namespace CODWER.RERU.Core.Data.Entities
         public string Idnp { set; get; }
         public string? MediaFileId { get; set; }
 
+        public int? CandidatePositionId { set; get; }
+        public CandidatePosition CandidatePosition { set; get; }
+
         public string Token { set; get; }
         public bool IsActive { set; get; }
         public DateTime? TokenLifetime { get; set; }
