@@ -26,7 +26,9 @@
     "test": " - Test",
     "time": " - Convenient time",
     "step6": "Click the „Confirm” button (Step 6) to complete the procedure.",
-    "registration-candidate-page": "Candidate Registration Page"
+    "registration-candidate-page": "Candidate Registration Page",
+    "select-candidate-position": "Select Position",
+    "position-to-candidate": "Position to Candidate"
   },
   "login": {
     "admin-panel": "Administration Panel",

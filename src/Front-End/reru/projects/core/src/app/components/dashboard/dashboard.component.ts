@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
           })
           .click.subscribe(() => {
             console.warn(this.router);
-            this.ngZone.run(() => this.router.navigate(['../reru-evaluation/#/my-activities/start-test/', this.testId], { relativeTo: this.route }))
+            this.ngZone.run(() => this.router.navigate(['reru-evaluation/#/my-activities/start-test/', this.testId], { relativeTo: this.route }))
             console.warn(this.router);
           }
           );

@@ -9,6 +9,7 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
         public string FatherName { get; set; }
         public string Email { get; set; }
         public string Idnp { get; set; }
+        public int? CandidatePositionId { set; get; }
         public bool EmailNotification { get; set; }
     }
 }

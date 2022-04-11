@@ -3,10 +3,13 @@ using CODWER.RERU.Core.Application.CandidatePositions.DeleteCandidatePosition;
 using CODWER.RERU.Core.Application.CandidatePositions.EditCandidatePosition;
 using CODWER.RERU.Core.Application.CandidatePositions.GetCandidatePosition;
 using CODWER.RERU.Core.Application.CandidatePositions.GetCandidatePositions;
+using CODWER.RERU.Core.Application.CandidatePositions.GetPositionsSelectValues;
 using CODWER.RERU.Core.DataTransferObjects.CandidatePositions;
+using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.API.Controllers
@@ -26,6 +29,15 @@ namespace CODWER.RERU.Core.API.Controllers
         [HttpGet]
         public async Task<PaginatedModel<CandidatePositionDto>> GetCandidatePositions([FromQuery] GetCandidatePositionsQuery query)
         {
+            return await Mediator.Send(query);
+        }
+
+
+        [HttpGet("select-values")]
+        public async Task<List<SelectItem>> GetCandidatePositionValue()
+        {
+            var query = new GetPositionsSelectValuesQuery();
+
             return await Mediator.Send(query);
         }
 
