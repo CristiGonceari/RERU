@@ -30,9 +30,9 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
                 .Any(x => x.FileType == fileType); 
         }
 
-        public async Task<IQueryable<File>> GetContractorFiles(List<string> idList)
+        public async Task<IQueryable<File>> GetContractorFiles(List<string> fileIdList)
         {
-            return _storageDbContext.Files.Where(file => idList.Contains(file.Id.ToString()));
+            return _storageDbContext.Files.Where(file => fileIdList.Contains(file.Id.ToString()));
         }
 
         public async Task<int> AddFileToContractor(int contractorId, string fileId)

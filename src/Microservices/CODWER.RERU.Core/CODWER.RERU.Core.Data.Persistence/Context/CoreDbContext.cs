@@ -20,6 +20,7 @@ namespace CODWER.RERU.Core.Data.Persistence.Context
         public DbSet<UserProfile> UserProfiles { set; get; }
         public DbSet<Article> Articles { set; get; }
         public DbSet<CandidatePosition> CandidatePositions { set; get; }
+        public DbSet<UserFile> UserFiles { set; get; }
 
 
         protected override void OnConfiguring (

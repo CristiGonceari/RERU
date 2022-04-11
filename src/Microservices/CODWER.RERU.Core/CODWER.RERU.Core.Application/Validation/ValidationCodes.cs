@@ -15,6 +15,7 @@ namespace CODWER.RERU.Core.Application.Validation
         public static string EMPTY_USER_LAST_NAME = "01000102";
         public static string EMPTY_USER_FATHER_NAME = "01000103";
         public static string EMPTY_USER_EMAIL = "01000104";
+        public static string EMPTY_USER_ID = "01000105";
 
         //ARTICLES
         public static string EMPTY_NAME = "01000201";
@@ -26,5 +27,7 @@ namespace CODWER.RERU.Core.Application.Validation
         public static string INVALID_POSITION = "01000301";
         public static string EMPTY_POSITION_NAME = "01000302";
 
+        //FILES
+        public static string INVALID_FILE_ID = "01000401";
     }
 }

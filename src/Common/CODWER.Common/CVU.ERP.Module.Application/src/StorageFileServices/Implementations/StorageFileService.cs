@@ -170,6 +170,11 @@ namespace CVU.ERP.Module.Application.StorageFileServices.Implementations
             return name;
         }
 
+        public async Task<IQueryable<File>> GetUserFiles(List<string> fileIdList)
+        {
+            return _appDbContext.Files.Where(file => fileIdList.Contains(file.Id.ToString()));
+        }
+
         private async Task FileUpload(string bucketName, string objectName, byte[] ms)
         {
             try
