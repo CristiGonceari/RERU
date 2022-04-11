@@ -12,7 +12,9 @@ import { NotificationUtil } from '../../utils/util/notification.util';
 import { ValidatorUtil } from '../../utils/util/validator.util';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WatchInfoVideoModalComponent } from '../../utils/modals/watch-info-video-modal/watch-info-video-modal.component'
-
+import { CandidatePositionService } from '../../utils/services/candidate-position.service';
+import { CandidatePositionModel } from '../../utils/models/candidate-position.model';
+import { SelectItem } from '../../utils/models/select-item.model';
 
 @Component({
   selector: 'app-registration-page',
@@ -30,6 +32,8 @@ export class RegistrationPageComponent implements OnInit {
   fileId: string;
   fileType: FileTypeEnum = FileTypeEnum.Photos;
   attachedFile: File;
+  candidatePositions: SelectItem[] = [{ label: '', value: '' }];
+  selectedProject: number;
 
   languageList = [
     { code: 'en', label: 'English' },
@@ -45,16 +49,27 @@ export class RegistrationPageComponent implements OnInit {
     private userService: UserService,
     private inregistrationService: InregistrationUserService,
     private notificationService: NotificationsService,
+    private candidatePosition: CandidatePositionService,
     public translate: I18nService,
     private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
     this.initForm();
+    this.retrievePositions();
     this.currentLanguage = this.translate.currentLanguage;
   }
 
- 
+  retrievePositions(){
+    this.candidatePosition.getPositionValues().subscribe((res) => (
+        this.candidatePositions = res.data
+      ));
+  }
+
+  atachProject(item: any) {
+    this.selectedProject = item.target.value;
+  }
+
   openModal(){
     const modalRef = this.modalService.open( WatchInfoVideoModalComponent, { centered: true, size: 'lg', windowClass: 'my-class' });
   }
@@ -92,7 +107,8 @@ export class RegistrationPageComponent implements OnInit {
       fatherName: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'),]),
       idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
       email: this.fb.control(null, [Validators.required, Validators.email]),
-      emailNotification: this.fb.control(false, [Validators.required])
+      emailNotification: this.fb.control(false, [Validators.required]),
+      candidatePositionId: this.fb.control((this.selectedProject), [Validators.required]),
     });
   }
 
@@ -105,7 +121,8 @@ export class RegistrationPageComponent implements OnInit {
       fatherName: this.userForm.value.fatherName,
       email: this.userForm.value.email,
       idnp: this.userForm.value.idnp,
-      emailNotification: this.userForm.value.emailNotification = true
+      emailNotification: this.userForm.value.emailNotification = true,
+      candidatePositionId: +this.selectedProject
     }
 
     this.inregistrationService.inregistrateUser(data).subscribe(res => {

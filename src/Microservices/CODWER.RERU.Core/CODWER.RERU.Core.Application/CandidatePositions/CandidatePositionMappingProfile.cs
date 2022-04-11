@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Core.Data.Entities;
 using CODWER.RERU.Core.DataTransferObjects.CandidatePositions;
+using CVU.ERP.Common.DataTransferObjects.SelectValues;
 
 namespace CODWER.RERU.Core.Application.CandidatePositions
 {
@@ -14,6 +15,10 @@ namespace CODWER.RERU.Core.Application.CandidatePositions
             CreateMap<CandidatePosition, AddEditCandidatePositionDto>();
 
             CreateMap<CandidatePosition, CandidatePositionDto>();
+
+            CreateMap<CandidatePosition, SelectItem>()
+              .ForMember(x => x.Value, opts => opts.MapFrom(tt => tt.Id))
+              .ForMember(x => x.Label, opts => opts.MapFrom(tt => tt.Name));
         }
     }
 }

@@ -5,6 +5,7 @@ export class User {
   fatherName: string;
   idnp: string;
   mediaFileId: string;
+  candidatePositionId?: number;
   email: string;
   isActive: boolean;
 }

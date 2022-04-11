@@ -190,7 +190,8 @@
                 </div>
               </div>
             </div>
-            <div class="form-group photo-upload">
+            <div class="form-row">
+            <div class="form-group photo-upload col-md-6">
               <label for="inputAddress">{{ 'table.profile-photo' | translate }}</label>
               <div *ngIf="fileId">
                 <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
@@ -200,6 +201,20 @@
                 <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
                 </app-add-edit-media-file>
               </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputPassword4">{{ 'registration-page.position-to-candidate' | translate }}</label>
+              <div class="input-group input-group-lg input-group-solid">
+                <select class="form-control h-35px" name="selectedStatus" id="selectedStatus"
+                  (change)="atachProject($event)">
+                  <option class="default-option text-muted" selected value="">{{ 'registration-page.select-candidate-position' | translate }}
+                  </option>
+                  <option *ngFor="let item of candidatePositions" [value]="item.value">
+                    {{ item.label }}
+                  </option>
+                </select>
+              </div>
+            </div>
             </div>
             <button type="submit" class="btn btn-primary float-right" (click)="addUser()">{{ 'button.confirm' |
               translate }}</button>
