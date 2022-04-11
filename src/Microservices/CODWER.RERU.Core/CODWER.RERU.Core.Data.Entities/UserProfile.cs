@@ -32,5 +32,7 @@ namespace CODWER.RERU.Core.Data.Entities
         [JsonIgnore]
         public List<UserProfileIdentity> Identities { set; get; }
         public bool RequiresDataEntry { get; set; }
+
+        public virtual ICollection<UserFile> UserFiles { get; set; }
     }
 }
