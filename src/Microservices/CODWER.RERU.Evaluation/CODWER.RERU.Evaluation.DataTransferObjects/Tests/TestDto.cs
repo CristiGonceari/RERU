@@ -12,7 +12,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public int TestTemplateId { get; set; }
         public string EventName { get; set; }
         public int EventId { get; set; }
-        public IEnumerable<string> LocationNames { get; set; }
+        public List<string> LocationNames { get; set; }
         public TestPassStatusEnum? TestPassStatus { get; set; }
         public int? MaxErrors { get; set; }
         public int Duration { get; set; }

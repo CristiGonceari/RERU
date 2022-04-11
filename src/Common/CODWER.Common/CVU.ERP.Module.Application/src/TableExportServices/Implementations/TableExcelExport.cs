@@ -80,7 +80,6 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                     SetBordersStyleOnCells(workSheet, i + 2, j + 1 );
                 }
             }
-
         }
 
         private static PropertyInfo GetPropertyInfo(Type type, string propertyName)
@@ -94,6 +93,15 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             if (propInfo.PropertyType == typeof(DateTime))
             {
                 result = Convert.ToDateTime(result).ToString("dd/MM/yyyy, HH:mm");
+            }
+            else if (propInfo.PropertyType == typeof(List<string>))
+            {
+                result = string.Join(", ", (List<string>)result);
+
+                if (result == "")
+                {
+                    result = "-";
+                }
             }
             else if (propInfo.PropertyType == typeof(bool))
             {
