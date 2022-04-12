@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   messageText: string;
   modules: ApplicationUserModuleModel[];
 
-  testId: number;
+  testId: string;
   showMultipleQuestionsPerPega: boolean;
 
   constructor(
@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
   getTestId() {
     this.internalService.getTestIdForFastStart().subscribe((res) => {
       if (res && +res.data.testId != 0) {
-        this.testId = +res.data.testId;
+        this.testId = res.data.testId;
         this.showMultipleQuestionsPerPega = res.data.showManyQuestionPerPage;
         this.type = res.type;
         this.messageText = res.message;
@@ -74,11 +74,8 @@ export class DashboardComponent implements OnInit {
             showProgressBar: true,
           })
           .click.subscribe(() => {
-            console.warn(this.router);
-            this.ngZone.run(() => this.router.navigate(['reru-evaluation/#/my-activities/start-test/', this.testId], { relativeTo: this.route }))
-            console.warn(this.router);
-          }
-          );
+            this.ngZone.run(() => this.router.createUrlTree([`../reru-evaluation/#/my-activities/start-test/${this.testId}`], { relativeTo: this.route }))
+          });
         });
       }
     });

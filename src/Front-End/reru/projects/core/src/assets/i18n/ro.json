@@ -64,7 +64,7 @@
   "modules": {
     "dashboard": "Dashboard",
     "personal": "Management Personal",
-    "crm": "Management Clienti",
+    "crm": "Management Clienți",
     "documents": "Management Documente",
     "inventory": "Inventar",
     "tasks": "Misiuni",
@@ -76,7 +76,8 @@
     "profile": "Profilul meu",
     "administration": "Administrare",
     "modules": "Module",
-    "users": "Utilizatori"
+    "users": "Utilizatori",
+    "positions": "Posiții"
   },
   "modal":{
     "delete": "Șterge",
@@ -309,6 +310,21 @@
       "error-create": "Rolul nu a fost creat!",
       "error-edit": "Rolul nu a fost editat!",
       "success-upd-permissions": "Permisiunile pentru rolul modulului au fost actualizate cu succes!"
+    },
+    "positions": {
+      "management": "Managementul postului candidat",
+      "add": "Adaugă post",
+      "edit": "Editează post",
+      "remove": "Elimină post",
+      "details": "Detalii privind postul candidatului",
+      "subtitle": "Gestionați posturile candidaților",
+      "list": "Lista de posturi",
+      "success-create": "Postul creat cu succes",
+      "success-update": "Postul actualizat cu succes",
+      "success-delete": "Postul eliminat cu succes",
+      "delete-msg": "Sunteți sigur că doriți să ștergeți postul",
+      "name": "Titlul postului",
+      "is-active": "Activ"
     }
   },
   "upload-avatar": {

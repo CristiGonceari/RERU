@@ -19,8 +19,8 @@ import { MainComponent } from './components/main/main.component';
 
 const routes: Routes = [
 	{
-		 path: 'registration-page',
-		 loadChildren: () => import('./components/registration-page/registration-page.module').then(m => m.RegistrationPageModule)
+		path: 'registration-page',
+		loadChildren: () => import('./components/registration-page/registration-page.module').then(m => m.RegistrationPageModule)
 	},
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent},
 	{
@@ -48,6 +48,10 @@ const routes: Routes = [
 			{ 
 				path: 'users', 
 				loadChildren: () => import('./components/users/users.module').then(m => m.UsersModule)
+			},
+			{
+				path: 'positions', 
+				loadChildren: () => import('./components/positions/positions.module').then(m => m.PositionsModule)
 			},
 			{ 
 				path: 'roles', 
