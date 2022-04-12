@@ -18,6 +18,7 @@ import { environment } from '../environments/environment';
 import { ModulesComponent } from './components/modules/modules.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { MainComponent } from './components/main/main.component';
+import { PositionsComponent } from './components/positions/positions.component';
 
 @NgModule({
 	declarations: [
@@ -28,6 +29,7 @@ import { MainComponent } from './components/main/main.component';
 			ModulesComponent,
 			RolesComponent,
 			MainComponent,
+			PositionsComponent,
 	],
 	imports: [
 		BrowserModule,

@@ -19,8 +19,8 @@ export class CandidatePositionService extends AbstractService{
 		return this.client.get<any>(`${this.coreUrl}/${this.urlRoute}/${id}`);
 	}
 
-	getList(): Observable<any> {
-		return this.client.get(`${this.coreUrl}/${this.urlRoute}`);
+	getList(params): Observable<any> {
+		return this.client.get(`${this.coreUrl}/${this.urlRoute}`, {params});
 	}
 
   	getPositionValues(): Observable<any> {
@@ -32,10 +32,10 @@ export class CandidatePositionService extends AbstractService{
 	}
 
 	create(data: CandidatePositionModel): Observable<CandidatePositionModel> {
-		return this.client.post<CandidatePositionModel>(`${this.coreUrl}/${this.urlRoute}`, data);
+		return this.client.post<CandidatePositionModel>(`${this.coreUrl}/${this.urlRoute}`, {data});
 	}
 
-  editPosition(data: CandidatePositionModel): Observable<CandidatePositionModel> {
-		return this.client.patch<CandidatePositionModel>(`${this.coreUrl}/${this.urlRoute}`, data);
+  	editPosition(data: CandidatePositionModel): Observable<CandidatePositionModel> {
+		return this.client.patch<CandidatePositionModel>(`${this.coreUrl}/${this.urlRoute}`, {data});
 	}
 }

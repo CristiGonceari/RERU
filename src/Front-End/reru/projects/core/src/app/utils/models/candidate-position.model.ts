@@ -1,5 +1,5 @@
 export interface CandidatePositionModel {
-    id: number;
+    id?: number;
     name: string;
     isActive: boolean;
 }
