@@ -68,7 +68,7 @@ export class ResponsablePersonsTableComponent implements OnInit {
 		modalRef.componentInstance.attachedItems = this.attachedPersons.map(el => el.id);
 		modalRef.componentInstance.inputType = 'checkbox';
 		modalRef.result.then(() => {
-			this.attachPersons(modalRef.result.__zone_symbol__value);
+			this.attachPersons(modalRef.result.__zone_symbol__value.attachedItems);
 		}, () => { });
 	}
 

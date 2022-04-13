@@ -209,7 +209,7 @@ export class TableComponent implements OnInit {
     this.eventService.attachUser(this.parse(data)).subscribe(() => {
 		  forkJoin([
 				this.translate.get('modal.success'),
-				this.translate.get('locations.succes-add-person-msg'),
+				this.translate.get('events.succes-add-user-msg'),
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
@@ -227,7 +227,7 @@ export class TableComponent implements OnInit {
     this.eventService.attachEvaluator(params).subscribe(() => {
 		  forkJoin([
 				this.translate.get('modal.success'),
-				this.translate.get('locations.succes-add-person-msg'),
+				this.translate.get('events.succes-attach-evaluator-msg'),
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
