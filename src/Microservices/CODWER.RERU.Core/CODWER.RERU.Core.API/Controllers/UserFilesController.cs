@@ -46,10 +46,14 @@ namespace CODWER.RERU.Core.API.Controllers
             return await Mediator.Send(command);
         }
 
-        [HttpDelete]
-        public async Task<Unit> DeleteUserFile([FromForm] RemoveUserFileCommand command)
+        [HttpDelete("{fileId}")]
+        public async Task<Unit> DeleteFile([FromRoute] string fileId)
         {
-            return await Mediator.Send(command);
+            var command = new RemoveUserFileCommand { FileId = fileId };
+
+            var result = await Mediator.Send(command);
+
+            return result;
         }
     }
 }

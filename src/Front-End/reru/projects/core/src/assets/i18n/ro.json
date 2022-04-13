@@ -30,6 +30,13 @@
     "select-candidate-position": "Selectați poziția",
     "position-to-candidate": "Poziția pentru care candidați"
   },
+  "files":{
+    "title": "Documente",
+    "files-list": "Lista de documente",
+    "file-name": "Denumirea documentului",
+    "download": "Descarcă",
+    "delete": "Șterge"
+  },
   "login": {
     "admin-panel": "Panou de Administrare",
     "signin": "Conectare",
