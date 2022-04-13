@@ -26,7 +26,9 @@
     "test": " - Test",
     "time": " - Convenient time",
     "step6": "Click the „Confirm” button (Step 6) to complete the procedure.",
-    "registration-candidate-page": "Candidate Registration Page"
+    "registration-candidate-page": "Candidate Registration Page",
+    "select-candidate-position": "Select Position",
+    "position-to-candidate": "Position to Candidate"
   },
   "login": {
     "admin-panel": "Administration Panel",
@@ -76,7 +78,8 @@
     "administration": "Administration",
     "modules": "Modules",
     "users": "Users",
-    "access-roles": "Roles access"
+    "access-roles": "Roles access",
+    "positions": "Positions"
   },
   "modal":{
     "delete": "Delete",
@@ -116,7 +119,8 @@
     "yes": "Yes",
     "no": "No",
     "attach": "Attach",
-    "print": "Print"
+    "print": "Print",
+    "watch": "Watch video"
   },
   "pagination": {
     "displaing": "Displaying",
@@ -309,6 +313,21 @@
       "error-create": "Role has not been created!",
       "error-edit": "Role has not been edited!",
       "success-upd-permissions": "Permissions for Module Role has been successfully updated!"
+    },
+    "positions": {
+      "management": "Candidate position management",
+      "add": "Add position",
+      "edit": "Edit position",
+      "remove": "Remove position",
+      "details": "Candidate position details",
+      "subtitle": "Manage candidate positions",
+      "list": "Candidate position list",
+      "success-create": "Position successfully created",
+      "success-update": "Position successfully updated",
+      "success-delete": "Position successfully deleted",
+      "delete-msg": "Are you sure you want to delete position",
+      "name": "Position name",
+      "is-active": "Is active"
     }
   },
   "upload-avatar": {

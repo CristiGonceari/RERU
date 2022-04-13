@@ -1,4 +1,5 @@
 ﻿using CODWER.RERU.Evaluation.Data.Entities;
+using CODWER.RERU.Evaluation.Data.Entities.Documents;
 using CVU.ERP.Common.Data.Persistence.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,6 +43,8 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Context
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<EmailTestNotification> EmailTestNotifications { get; set; }
         public virtual DbSet<SolicitedTest> SolicitedTests { get; set; }
+        public virtual DbSet<DocumentTemplate> DocumentTemplates { get; set; }
+        public virtual DbSet<DocumentTemplateKey> DocumentTemplateKeys { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

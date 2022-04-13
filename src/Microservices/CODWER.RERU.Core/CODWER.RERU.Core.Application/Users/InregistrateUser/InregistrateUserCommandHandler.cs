@@ -45,6 +45,7 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
                 FatherName = request.FatherName,
                 Idnp = request.Idnp,
                 Email = request.Email,
+                CandidatePositionId = request.CandidatePositionId,
                 EmailNotification = request.EmailNotification,
             };
 

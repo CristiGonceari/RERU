@@ -1,8 +1,3 @@
-// export class LocationResponsiblePerson {
-//     locationId: number;
-//     userProfileId: number;
-// }
-
 export class LocationResponsiblePerson {
     locationId: number;
     userProfileId: number;

@@ -3,6 +3,7 @@ import { UserProfileService } from '../../services/user-profile/user-profile.ser
 import { UserProfile } from '../../models/user-profiles/user-profile.model';
 import { PaginationModel } from '../../models/pagination.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { EventService } from '../../services/event/event.service';
 
 @Component({
   selector: 'app-attach-user-modal',
@@ -14,6 +15,7 @@ export class AttachUserModalComponent implements OnInit {
   pagination: PaginationModel = new PaginationModel();
   isLoading = true;
   filters = {};
+  showUserName: boolean = false;
   @ViewChild('firstName') firstName: any;
   @ViewChild('lastName') lastName: any;
   @ViewChild('patronymic') patronymic: any;
@@ -22,11 +24,18 @@ export class AttachUserModalComponent implements OnInit {
   @Input() exceptUserIds: any;
   @Input() attachedItems: number[];
   @Input() inputType: string;
+  @Input() eventId: number;
+  @Input() page: string;
 
-  constructor(private userService: UserProfileService, private activeModal: NgbActiveModal) { }
+  constructor(
+    private userService: UserProfileService,
+    private activeModal: NgbActiveModal,
+    private eventUserService: EventService
+  ) { }
 
   ngOnInit(): void {
-    this.getUsers();
+    if (this.eventId && this.page == 'add-test') this.getAssignedUsers();
+    else this.getUsers();
   }
 
   getUsers(data: any = {}): void {
@@ -46,19 +55,41 @@ export class AttachUserModalComponent implements OnInit {
     })
   }
 
+  getAssignedUsers(data: any = {}): void {
+    let params = {
+      page: data.page || this.pagination.currentPage,
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+      eventId: this.eventId,
+      ...this.filters
+    }
+    this.eventUserService.getAssignedUsers(params).subscribe(res => {
+      if (res && res.data) {
+        this.users = res.data.items;
+        this.pagination = res.data.pagedSummary;
+        this.isLoading = false;
+      }
+    })
+  }
+
   dismiss(): void {
     this.activeModal.dismiss();
   }
 
   confirm(): void {
-    this.activeModal.close(this.attachedItems);
+    let data = {
+      attachedItems: this.attachedItems,
+      showUserName: this.showUserName
+    }
+    this.activeModal.close(data);
+  }
+
+  uncheckAll(event): void {
+    if (event.target.checked == false) this.attachedItems = [];
   }
 
   checkInput(event): void {
     if (this.inputType == 'checkbox') this.onItemChange(event);
-    else {
-      this.attachedItems[0] = +event.target.value;
-    }
+    else this.attachedItems[0] = +event.target.value;
   }
 
   onItemChange(event): void {
@@ -84,5 +115,9 @@ export class AttachUserModalComponent implements OnInit {
     this.filters = {};
     this.getUsers();
 	}
+  
+  checkEvent(event): void {
+    this.showUserName = event.target.checked;
+  }
 
 }

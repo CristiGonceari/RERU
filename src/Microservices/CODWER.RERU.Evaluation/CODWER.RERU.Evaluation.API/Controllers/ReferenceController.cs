@@ -118,5 +118,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
             return items;
         }
+
+        [HttpGet("document-template-type/select-values")]
+        public async Task<List<SelectItem>> GetDocumentTemplateType()
+        {
+            var items = EnumConverter<FileTypeEnum>.SelectValues;
+
+            return items;
+        }
     }
 }

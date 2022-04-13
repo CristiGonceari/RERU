@@ -55,6 +55,42 @@ namespace CODWER.RERU.Core.Data.Persistence.Migrations
                     b.ToTable("Articles");
                 });
 
+            modelBuilder.Entity("CODWER.RERU.Core.Data.Entities.CandidatePosition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CandidatePositions");
+                });
+
             modelBuilder.Entity("CODWER.RERU.Core.Data.Entities.Module", b =>
                 {
                     b.Property<int>("Id")
@@ -234,12 +270,53 @@ namespace CODWER.RERU.Core.Data.Persistence.Migrations
                     b.ToTable("ModuleRolePermissions");
                 });
 
+            modelBuilder.Entity("CODWER.RERU.Core.Data.Entities.UserFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("UserFiles");
+                });
+
             modelBuilder.Entity("CODWER.RERU.Core.Data.Entities.UserProfile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
+
+                    b.Property<int?>("CandidatePositionId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("CreateById")
                         .HasColumnType("text");
@@ -290,6 +367,8 @@ namespace CODWER.RERU.Core.Data.Persistence.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CandidatePositionId");
 
                     b.ToTable("UserProfiles");
                 });
@@ -507,6 +586,26 @@ namespace CODWER.RERU.Core.Data.Persistence.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("CODWER.RERU.Core.Data.Entities.UserFile", b =>
+                {
+                    b.HasOne("CODWER.RERU.Core.Data.Entities.UserProfile", "UserProfile")
+                        .WithMany("UserFiles")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("CODWER.RERU.Core.Data.Entities.UserProfile", b =>
+                {
+                    b.HasOne("CODWER.RERU.Core.Data.Entities.CandidatePosition", "CandidatePosition")
+                        .WithMany("UserProfiles")
+                        .HasForeignKey("CandidatePositionId");
+
+                    b.Navigation("CandidatePosition");
+                });
+
             modelBuilder.Entity("CODWER.RERU.Core.Data.Entities.UserProfileIdentity", b =>
                 {
                     b.HasOne("CODWER.RERU.Core.Data.Entities.UserProfile", null)
@@ -562,6 +661,11 @@ namespace CODWER.RERU.Core.Data.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("CODWER.RERU.Core.Data.Entities.CandidatePosition", b =>
+                {
+                    b.Navigation("UserProfiles");
+                });
+
             modelBuilder.Entity("CODWER.RERU.Core.Data.Entities.Module", b =>
                 {
                     b.Navigation("Permissions");
@@ -579,6 +683,8 @@ namespace CODWER.RERU.Core.Data.Persistence.Migrations
                     b.Navigation("Identities");
 
                     b.Navigation("ModuleRoles");
+
+                    b.Navigation("UserFiles");
                 });
 #pragma warning restore 612, 618
         }

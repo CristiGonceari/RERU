@@ -26,7 +26,9 @@
     "test": " - Test",
     "time": " - Timpul comod",
     "step6": "Apasăti butonul „Confirmă” (Pasul 6) pentru a finaliza procedura. ",
-    "registration-candidate-page": "Pagină de înregistrare a candidaților"
+    "registration-candidate-page": "Pagină de înregistrare a candidaților",
+    "select-candidate-position": "Selectați poziția",
+    "position-to-candidate": "Poziția pentru care candidați"
   },
   "login": {
     "admin-panel": "Panou de Administrare",
@@ -62,7 +64,7 @@
   "modules": {
     "dashboard": "Dashboard",
     "personal": "Management Personal",
-    "crm": "Management Clienti",
+    "crm": "Management Clienți",
     "documents": "Management Documente",
     "inventory": "Inventar",
     "tasks": "Misiuni",
@@ -74,7 +76,8 @@
     "profile": "Profilul meu",
     "administration": "Administrare",
     "modules": "Module",
-    "users": "Utilizatori"
+    "users": "Utilizatori",
+    "positions": "Posiții"
   },
   "modal":{
     "delete": "Șterge",
@@ -114,7 +117,8 @@
     "yes": "Da",
     "no": "Nu",
     "attach": "Atașează",
-    "print": "Imprimă"
+    "print": "Imprimă",
+    "watch": "Priveste video"
   },
   "pagination": {
     "displaing": "Se afișează",
@@ -306,6 +310,21 @@
       "error-create": "Rolul nu a fost creat!",
       "error-edit": "Rolul nu a fost editat!",
       "success-upd-permissions": "Permisiunile pentru rolul modulului au fost actualizate cu succes!"
+    },
+    "positions": {
+      "management": "Managementul postului candidat",
+      "add": "Adaugă post",
+      "edit": "Editează post",
+      "remove": "Elimină post",
+      "details": "Detalii privind postul candidatului",
+      "subtitle": "Gestionați posturile candidaților",
+      "list": "Lista de posturi",
+      "success-create": "Postul creat cu succes",
+      "success-update": "Postul actualizat cu succes",
+      "success-delete": "Postul eliminat cu succes",
+      "delete-msg": "Sunteți sigur că doriți să ștergeți postul",
+      "name": "Titlul postului",
+      "is-active": "Activ"
     }
   },
   "upload-avatar": {

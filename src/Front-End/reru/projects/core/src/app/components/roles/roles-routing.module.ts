@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-//import { AuthGuard } from '../../utils/guards/auth.guard';
 import { PermissionRouteGuard, AuthenticationGuard } from '@erp/shared';
 import { RoleDetailsRoutingModule } from './role-details/role-details-routing.module';
 import { RolesComponent } from './roles.component';

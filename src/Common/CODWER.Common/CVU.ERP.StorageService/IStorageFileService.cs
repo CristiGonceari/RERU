@@ -2,6 +2,7 @@
 using CVU.ERP.StorageService.Models;
 using MediatR;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CVU.ERP.Common.DataTransferObjects.Files;
 
@@ -15,5 +16,6 @@ namespace CVU.ERP.StorageService
         public Task<FileDataDto> GetFile(string fileId);
         public Task<List<File>> GetDemoList();
         public Task<string> GetFileName(string fileId);
+        public Task<IQueryable<File>> GetUserFiles(List<string> fileIdList);
     }
 }

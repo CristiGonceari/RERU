@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 import { Location } from '@angular/common';
 import { SelectItem } from 'projects/evaluation/src/app/utils/models/select-item.model';
@@ -10,7 +10,6 @@ import { TestStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-sta
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { AddEditTest } from '../../../../utils/models/tests/add-edit-test.model';
 import { FormControl} from '@angular/forms';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
 import { forkJoin } from 'rxjs';
 import { saveAs } from 'file-saver';
@@ -24,7 +23,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./add-test.component.scss'],
 })
 export class AddTestComponent implements OnInit {
-  @ViewChild('autoCompleteInput', { read: MatAutocompleteTrigger }) autoCompleteElement: MatAutocompleteTrigger;
   @Input() testEvent: boolean;
 
   eventsList: any;
@@ -96,8 +94,7 @@ export class AddTestComponent implements OnInit {
       this.printTest = this.selectActiveTests.find(x => x.testTemplateId === event).printTest;
     } else this.isTestTemplateOneAnswer = false;
     
-    if (!this.printTest) 
-      this.messageText = "Acest test poate conține video sau audio!"
+    if (!this.printTest) this.messageText = "Acest test poate conține video sau audio!"
 
     if (this.isTestTemplateOneAnswer) {
       this.evaluator.value = null;
@@ -105,12 +102,13 @@ export class AddTestComponent implements OnInit {
   }
 
   checkIfEventHasEvaluator(event) {
+    if (event)
     this.hasEventEvaluator = this.eventsList.find(x => x.eventId === event).isEventEvaluator;
   }
 
   parse() {
     this.setTimeToSearch();
-    return  new AddEditTest({
+    return new AddEditTest({
       userProfileId: this.userListToAdd,
       programmedTime: this.search,
       eventId: +this.event.value || null,
@@ -187,9 +185,11 @@ export class AddTestComponent implements OnInit {
     modalRef.componentInstance.exceptUserIds = this.exceptUserIds;
     modalRef.componentInstance.attachedItems = attachedItems;
     modalRef.componentInstance.inputType = inputType;
+    modalRef.componentInstance.page = 'add-test';
+    modalRef.componentInstance.eventId = +this.event.value;
     modalRef.result.then(() => {
-      if (inputType == 'radio') this.evaluatorList = modalRef.result.__zone_symbol__value;
-      else if (inputType == 'checkbox') this.userListToAdd = modalRef.result.__zone_symbol__value;
+      if (inputType == 'radio') this.evaluatorList = modalRef.result.__zone_symbol__value.attachedItems;
+      else if (inputType == 'checkbox') this.userListToAdd = modalRef.result.__zone_symbol__value.attachedItems;
     }, () => { });
   }
 

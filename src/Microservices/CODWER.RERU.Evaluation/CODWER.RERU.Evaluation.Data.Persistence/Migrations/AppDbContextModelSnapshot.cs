@@ -55,6 +55,88 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                     b.ToTable("Articles");
                 });
 
+            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Documents.DocumentTemplate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("FileType")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FileType");
+
+                    b.ToTable("DocumentTemplates");
+                });
+
+            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Documents.DocumentTemplateKey", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<int>("FileType")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("KeyName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FileType");
+
+                    b.ToTable("DocumentTemplateKeys");
+                });
+
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.EmailTestNotification", b =>
                 {
                     b.Property<int>("Id")
@@ -1405,6 +1487,34 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.FileTypeEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("FileTypeEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "TestTemplate"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Test"
+                        });
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.QuestionTypeEnum>", b =>
                 {
                     b.Property<int>("Id")
@@ -1827,6 +1937,24 @@ namespace CODWER.RERU.Evaluation.Data.Persistence.Migrations
                             Id = 2,
                             Name = "NotVerified"
                         });
+                });
+
+            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Documents.DocumentTemplate", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.FileTypeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("FileType")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.Documents.DocumentTemplateKey", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CODWER.RERU.Evaluation.Data.Entities.Enums.FileTypeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("FileType")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CODWER.RERU.Evaluation.Data.Entities.EmailTestNotification", b =>
