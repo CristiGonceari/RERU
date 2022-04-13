@@ -111,13 +111,16 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             services.AddTransient(typeof(IStorageFileService), typeof(StorageFileService));
             services.Configure<MinioSettings>(configuration.GetSection("Minio"));
 
-
             services.AddDbContext<LoggingDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("Log"),
                     b => b.MigrationsAssembly(typeof(LoggingDbContext).GetTypeInfo().Assembly.GetName().Name)));
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient(typeof(ILoggerService<>), typeof(LoggerService<>));
+
+            services.AddExportTableServices();
+            services.AddExportCurrentUserService();
+
 
             return services;
         }
@@ -157,6 +160,14 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             services.AddTransient(typeof(ITablePrinter<,>), typeof(TablePrinter<,>));
             services.AddTransient(typeof(ITableExcelExport<,>), typeof(TableExcelExport<,>));
             services.AddTransient(typeof(ITableXmlExport<,>), typeof(TableXmlExport<,>));
+
+            return services;
+        }
+
+        private static IServiceCollection AddExportCurrentUserService(this IServiceCollection services)
+        {
+            
+            services.AddTransient(typeof(ICurrentApplicationUserProvider), typeof(MockCurrentApplicationUserProvider));
 
             return services;
         }
