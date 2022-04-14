@@ -53,6 +53,7 @@ import { SearchInputComponent } from './components/search-input/search-input.com
 import { GetMediaFileComponent } from './components/get-media-file/get-media-file.component';
 import { ShowImageModalComponent } from './modals/show-image-modal/show-image-modal.component';
 import { AddEditMediaFileComponent } from '../public-api';
+import { UploadFileModalComponent } from './modals/upload-file-modal/upload-file-modal.component';
 
 export const translateModule = TranslateModule.forChild();
 
@@ -81,7 +82,7 @@ const commonExports = [
 	ShowImageModalComponent
 ];
 @NgModule({
-	declarations: [...commonExports, ViewIconComponent, ContentComponent],
+	declarations: [...commonExports, ViewIconComponent, ContentComponent, UploadFileModalComponent],
 	imports: [
 		CommonModule,
 		RouterModule,
