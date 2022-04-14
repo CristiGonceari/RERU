@@ -1,0 +1,32 @@
+<app-page-title [title]="'documents-templates.title' | translate "></app-page-title>
+
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+        <div class="d-flex flex-column-fluid">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="card card-custom gutter-b">
+                            <div class="card-header flex-wrap border-0 py-5">
+                                <div class="card-title">
+                                    <h3 class="card-label font-weight-bolder">
+                                        {{'documents-templates.title-description-list' | translate}}
+                                    </h3>
+                                </div>
+                                <div class="card-toolbar">
+                                    <div class="mr-2">
+                                         <a [routerLink]="['../new']" class="btn btn-success font-weight-bolder">{{ 'button.add' | translate}}</a>
+                                    </div>
+                                    <div>
+                                        <button type="button" (click)="openConvertPdfModal()" class="btn btn-success font-weight-bolder">Test Modal</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <app-document-templates-table></app-document-templates-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

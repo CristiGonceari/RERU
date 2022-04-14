@@ -228,6 +228,25 @@ export class AppComponent {
 			name: '',
 		},
 		{
+			type: SidebarItemType.ITEM,
+			url: '/documents-templates',
+			name: '',
+			// permission: 'P03002801',
+			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+			<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+				<polygon points="0 0 24 0 24 24 0 24"/>
+				<path d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+				<rect fill="#000000" x="6" y="11" width="9" height="2" rx="1"/>
+				<rect fill="#000000" x="6" y="15" width="5" height="2" rx="1"/>
+			</g>
+		</svg>`,
+		},
+		{
+			type: SidebarItemType.SECTION,
+			url: '',
+			name: '',
+		},
+		{
 			permission: 'P03000001',
 			type: SidebarItemType.ITEM,
 			url: '/faq',
@@ -288,9 +307,11 @@ export class AppComponent {
 			this.translate.get('locations.locations'),
 			this.translate.get('events.events'),
 			this.translate.get('plans.plans'),
+			this.translate.get('sidebar.documents-management'),
+			this.translate.get('sidebar.documents-template'),
 			this.translate.get('faq.help'),
 			this.translate.get('faq.faq'),
-		]).subscribe(([home, activities, settings, categories, questions, tests, test, solicitedTest, verifyTest, statistic, event, location, events, plan, help, faq]) => {
+		]).subscribe(([home, activities, settings, categories, questions, tests, test, solicitedTest, verifyTest, statistic, event, location, events, plan, documentsManagement, documentsTemplate, help, faq]) => {
 			this.sidebarItems[0].name = home;
 			this.sidebarItems[1].name = activities;
 			this.sidebarItems[2].name = settings;
@@ -305,8 +326,10 @@ export class AppComponent {
 			this.sidebarItems[11].name = location;
 			this.sidebarItems[12].name = events;
 			this.sidebarItems[13].name = plan;
-			this.sidebarItems[14].name = help;
-			this.sidebarItems[15].name = faq;
+			this.sidebarItems[14].name = documentsManagement;
+			this.sidebarItems[15].name = documentsTemplate;
+			this.sidebarItems[16].name = help;
+			this.sidebarItems[17].name = faq;
 		});
 	}
 

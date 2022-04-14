@@ -5,6 +5,7 @@ using CODWER.RERU.Evaluation.Application.DocumentsTemplates.GetDocumentTemplate;
 using CODWER.RERU.Evaluation.Application.DocumentsTemplates.GetDocumentTemplates;
 using CODWER.RERU.Evaluation.Application.DocumentsTemplates.RemoveDocumentTemplate;
 using CODWER.RERU.Evaluation.Application.DocumentsTemplates.UpdateDocumentTemplate;
+using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.Documents;
 using CVU.ERP.Common.Pagination;
 using MediatR;
@@ -28,9 +29,9 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
 
         [HttpGet("keys")]
-        public async Task<List<DocumentTemplateKeyDto>> GetKeys()
+        public async Task<List<DocumentTemplateKeyDto>> GetKeys([FromQuery] FileTypeEnum fileType)
         {
-            var query = new GetDocumentKeysQuery();
+            var query = new GetDocumentKeysQuery { fileType = fileType };
 
             return await Mediator.Send(query);
         }
