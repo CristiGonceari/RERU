@@ -94,7 +94,7 @@ export class StatiscticsTableComponent implements OnInit {
     if(this.data.categoryId) {
       this.statisticService.printByCategory(data).subscribe(response => {
         if (response) {
-          const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
+          const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(1).slice(0, -1);
           const blob = new Blob([response.body], { type: response.body.type });
           const file = new File([blob], fileName, { type: response.body.type });
           saveAs(file);
@@ -104,7 +104,7 @@ export class StatiscticsTableComponent implements OnInit {
     } else if (this.data.testTemplateId) {
       this.statisticService.printByTestTemplate(data).subscribe(response => {
         if (response) {
-          const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
+          const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(1).slice(0, -1);
           const blob = new Blob([response.body], { type: response.body.type });
           const file = new File([blob], fileName, { type: response.body.type });
           saveAs(file);
