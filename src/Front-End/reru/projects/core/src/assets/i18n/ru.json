@@ -30,6 +30,13 @@
     "select-candidate-position": "Выберите должность",
     "position-to-candidate": "Кандидируемая позиция"
   },
+  "files":{
+    "title": "Документы",
+    "files-list": "Список документов",
+    "file-name": "Название документа",
+    "download": "Скачать",
+    "delete": "Удалить"
+  },
   "login": {
     "admin-panel": "Панель управления",
     "signin": "Войти",

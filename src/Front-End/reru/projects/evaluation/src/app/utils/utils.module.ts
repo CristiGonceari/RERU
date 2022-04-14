@@ -15,6 +15,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SharedModule } from '@erp/shared';
 import { AttachUserModalComponent } from './components/attach-user-modal/attach-user-modal.component';
 import { DateFilterPipe } from './pipes/date-filter.pipe';
+import { ConvertPdfDocumentModalComponent } from './modals/convert-pdf-document-modal/convert-pdf-document-modal.component';
+import { CKEditorModule } from 'ngx-ckeditor';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { DateFilterPipe } from './pipes/date-filter.pipe';
     CalendarChunkPipe,
     AttachUserModalComponent,
     DateFilterPipe,
+    ConvertPdfDocumentModalComponent
   ],
   imports: [
     HttpClientModule,
@@ -35,7 +38,8 @@ import { DateFilterPipe } from './pipes/date-filter.pipe';
     FormsModule, 
     ReactiveFormsModule,
     NgxDropzoneModule,
-    SharedModule
+    SharedModule,
+    CKEditorModule
   ],
   providers: [
     { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter },

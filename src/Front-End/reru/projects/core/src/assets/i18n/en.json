@@ -30,6 +30,13 @@
     "select-candidate-position": "Select Position",
     "position-to-candidate": "Position to Candidate"
   },
+  "files":{
+    "title": "Documets",
+    "files-list": "Documents list",
+    "file-name": "Document name",
+    "download": "Download",
+    "delete": "Delete"
+  },
   "login": {
     "admin-panel": "Administration Panel",
     "signin": "Sign In",
