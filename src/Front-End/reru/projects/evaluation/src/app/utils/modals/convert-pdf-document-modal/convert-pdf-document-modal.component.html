@@ -1,0 +1,66 @@
+<div class="card card-custom card-stretch modal-body px-7">
+    <div class="card-title">
+        <h3 class="card-label font-weight-bolder">
+            {{'documents-templates.title-description-list' | translate}}
+        </h3>
+    </div>
+    <div class="row">
+        <div class="col-lg col-12">
+            <select class="form-control" [(ngModel)]="selectedType" required (ngModelChange)="retrieveDocuments()">
+                <option value="0">{{'document-test-modal.all' | translate}}</option>
+                <option *ngFor="let item of fileType" [ngValue]="item.value" [selected]="item.value === selectedType">
+                    {{ 'document-test-modal.' + item.value | translate}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <app-loading-spinner *ngIf="isLoading" [contentHeight]="'20rem'" [height]="'5rem'" [width]="'5rem'"
+        [colorClass]="'text-primary'">
+    </app-loading-spinner>
+    <div *ngIf="!isLoading" class="table-responsive datatable datatable-default">
+        <table class="table erp-table">
+            <thead>
+                <tr>
+                    <th>{{'document-test-modal.reports.name' | translate}}</th>
+                    <th class="text-center">{{'document-test-modal.reports.fileType' | translate}}</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of documents;">
+                    <td class="pointer">{{item.name}}</td>
+                    <td class="text-center">{{'document-test-modal.'+item.fileType | translate}}</td>
+                </tr>
+                <tr *ngIf="!documents || !documents.length">
+                    <td colspan="10" class="text-center">
+                        {{'document-test-modal.there-are-no-records-at-the-moment' | translate}}
+                        <div class="text-center">
+                            <span class="svg-icon svg-icon-primary svg-icon-10x">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24" />
+                                        <path
+                                            d="M11.1669899,4.49941818 L2.82535718,19.5143571 C2.557144,19.9971408 2.7310878,20.6059441 3.21387153,20.8741573 C3.36242953,20.9566895 3.52957021,21 3.69951446,21 L21.2169432,21 C21.7692279,21 22.2169432,20.5522847 22.2169432,20 C22.2169432,19.8159952 22.1661743,19.6355579 22.070225,19.47855 L12.894429,4.4636111 C12.6064401,3.99235656 11.9909517,3.84379039 11.5196972,4.13177928 C11.3723594,4.22181902 11.2508468,4.34847583 11.1669899,4.49941818 Z"
+                                            fill="#000000" opacity="0.3" />
+                                        <rect fill="#000000" x="11" y="9" width="2" height="7" rx="1" />
+                                        <rect fill="#000000" x="11" y="17" width="2" height="2" rx="1" />
+                                    </g>
+                                </svg>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="modal-footer pt-0 border-0">
+            <button type="button" class="btn btn-secondary float-right" (click)="dismiss()">{{'button.close' |
+                translate}}</button>
+        </div>
+        <div pagination [page]="pagedSummary.currentPage" [total]="pagedSummary.totalPages"
+            [size]="pagedSummary.pageSize"
+            (sizeChange)="getList({ page: pagedSummary.currentPage, itemsPerPage: $event })"
+            (pageChange)="getList({ page: $event })" class="datatable-pager datatable-paging-loaded">
+        </div>
+    </div>
+</div>

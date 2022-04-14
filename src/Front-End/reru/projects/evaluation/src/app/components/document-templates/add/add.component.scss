@@ -1,0 +1,27 @@
+.card-body{
+    display: flex;
+    justify-content: center
+}
+.pointer {
+    cursor: pointer;
+  }
+  .haha{
+      background-color: #f8f8f8;
+  }
+
+.drop-area{
+    border: #ccc dashed 2px;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    margin-top: 50px;
+    height: 1260px;
+    overflow: auto;
+}
+.box-size{
+    min-height: 1260px;
+}
+
+.key-map{
+    min-width: 350px;
+    max-height: 1337px;
+}
