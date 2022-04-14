@@ -33,7 +33,7 @@ namespace CODWER.RERU.Core.API.Controllers
         }
 
         [HttpGet("files")]
-        public async Task<PaginatedModel<GetFilesDto>> GetContractor([FromQuery] GetUserFilesQuery query)
+        public async Task<PaginatedModel<GetFilesDto>> GetUserFiles([FromQuery] GetUserFilesQuery query)
         {
             var result = await Mediator.Send(query);
 
