@@ -33,7 +33,7 @@ namespace CODWER.RERU.Core.API.Controllers
         }
 
         [HttpGet("files")]
-        public async Task<PaginatedModel<GetFilesDto>> GetContractor([FromQuery] GetUserFilesQuery query)
+        public async Task<PaginatedModel<GetFilesDto>> GetUserFiles([FromQuery] GetUserFilesQuery query)
         {
             var result = await Mediator.Send(query);
 
@@ -46,10 +46,14 @@ namespace CODWER.RERU.Core.API.Controllers
             return await Mediator.Send(command);
         }
 
-        [HttpDelete]
-        public async Task<Unit> DeleteUserFile([FromForm] RemoveUserFileCommand command)
+        [HttpDelete("{fileId}")]
+        public async Task<Unit> DeleteFile([FromRoute] string fileId)
         {
-            return await Mediator.Send(command);
+            var command = new RemoveUserFileCommand { FileId = fileId };
+
+            var result = await Mediator.Send(command);
+
+            return result;
         }
     }
 }

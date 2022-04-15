@@ -1,7 +1,7 @@
 <div class="modal-header">
   <h3 class="modal-title">{{translateData[0]}}: <b> {{tableData.tableName}} </b> </h3>
   <select class="form-control h-35px max-with" name="selectedFormat" id="selectedFormat" (change)="selectedFormat = $event.target.value">
-    <option class="default-option text-muted" selected value="0">{{ 'select-format.please-select-format' | translate }}</option>
+    <!-- <option class="default-option text-muted" selected value="0">{{ 'select-format.please-select-format' | translate }}</option> -->
     <option *ngFor="let item of exportTableFormat" [value]="item.value">
         {{ item.label }}
     </option>

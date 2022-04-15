@@ -9,7 +9,8 @@ import { UtilsModule } from '../../../utils/utils.module';
 import { UserProfileComponent } from './user-profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserOverviewComponent } from './user-overview/user-overview.component';
-import { ModuleAccessModule } from './module-access/module-access.module'
+import { ModuleAccessModule } from './module-access/module-access.module';
+import { UserFilesComponent } from './user-files/user-files.component'
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { ModuleAccessModule } from './module-access/module-access.module'
   declarations: [
     UserProfileComponent,
     UserOverviewComponent,
+    UserFilesComponent,
   ],
   providers: [
     TranslatePipe,

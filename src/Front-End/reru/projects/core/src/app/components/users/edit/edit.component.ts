@@ -93,12 +93,10 @@ export class EditComponent implements OnInit {
 	editUser(): void {
 		this.isLoading = true;
 		let data = {
-			data: {
-				id: this.userForm.value.id,
-				name: this.userForm.value.name,
-				lastName: this.userForm.value.lastName,
-				fatherName: this.userForm.value.fatherName
-			}
+			id: this.userForm.value.id,
+			name: this.userForm.value.name,
+			lastName: this.userForm.value.lastName,
+			fatherName: this.userForm.value.fatherName
 		}
 
 		this.userService.editUserPersonalDetails(data).subscribe(

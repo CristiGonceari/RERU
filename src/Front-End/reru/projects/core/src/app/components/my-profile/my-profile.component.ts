@@ -118,7 +118,4 @@ export class MyProfileComponent implements OnInit {
 		this.authService.signout();
 	}
 
-	openUploadAvatarModal(): void {
-		const modalRef: any = this.modalService.open(UploadAvatarComponent, { centered: true });
-	}
 }

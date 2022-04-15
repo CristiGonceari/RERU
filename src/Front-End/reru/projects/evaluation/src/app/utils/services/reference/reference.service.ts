@@ -72,4 +72,8 @@ export class ReferenceService extends AbstractService {
   getSolicitedTestStatus(): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/solicited-test-status/select-values`);
   }
+
+  getDocumentTemplateType(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/document-template-type/select-values`);
+  }
 }

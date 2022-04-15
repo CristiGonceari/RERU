@@ -9,6 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientModule } from '@angular/common/http';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { WatchInfoVideoModalComponent } from './modals/watch-info-video-modal/watch-info-video-modal.component';
+import { ImportUsersModalComponent } from './modals/import-users-modal/import-users-modal.component';
 
 const commonComponents = [
   Exception404Component,
@@ -16,7 +17,8 @@ const commonComponents = [
   DateComponent,
   SearchPipe,
   SafeHtmlPipe,
-  WatchInfoVideoModalComponent
+  WatchInfoVideoModalComponent,
+  ImportUsersModalComponent
 ];
 
 @NgModule({

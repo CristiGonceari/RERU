@@ -5,6 +5,6 @@ namespace CODWER.RERU.Core.Application.UserFiles.AddUserFile
 {
     public class AddUserFileCommand : IRequest<string>
     {
-        public AddEditUserFileDto Data { get; set; }
+        public AddUserFileDto Data { get; set; }
     }
 }

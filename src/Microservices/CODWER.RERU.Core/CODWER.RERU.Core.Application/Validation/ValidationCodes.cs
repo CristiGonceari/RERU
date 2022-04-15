@@ -29,5 +29,6 @@ namespace CODWER.RERU.Core.Application.Validation
 
         //FILES
         public static string INVALID_FILE_ID = "01000401";
+        public static string FILE_IS_CORRUPTED = "01000402";
     }
 }
