@@ -24,7 +24,7 @@ export class CandidatePositionService extends AbstractService{
 	}
 
   	getPositionValues(): Observable<any> {
-    	return this.client.get(`${this.baseUrl}/${this.urlRoute}/select-values`);
+    	return this.client.get(`${this.coreUrl}/${this.urlRoute}/select-values`);
   	}
 
 	delete(id: number): Observable<CandidatePositionModel> {
