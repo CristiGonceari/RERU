@@ -35,7 +35,8 @@
     "files-list": "Documents list",
     "file-name": "Document name",
     "download": "Download",
-    "delete": "Delete"
+    "delete": "Delete",
+    "import-users": "Import Users"
   },
   "login": {
     "admin-panel": "Administration Panel",
@@ -127,7 +128,8 @@
     "no": "No",
     "attach": "Attach",
     "print": "Print",
-    "watch": "Watch video"
+    "watch": "Watch video",
+    "import": "Import"
   },
   "pagination": {
     "displaing": "Displaying",

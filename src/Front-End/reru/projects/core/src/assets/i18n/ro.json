@@ -35,7 +35,8 @@
     "files-list": "Lista de documente",
     "file-name": "Denumirea documentului",
     "download": "Descarcă",
-    "delete": "Șterge"
+    "delete": "Șterge",
+    "import-users": "Import utilizatori"
   },
   "login": {
     "admin-panel": "Panou de Administrare",
@@ -125,7 +126,8 @@
     "no": "Nu",
     "attach": "Atașează",
     "print": "Imprimă",
-    "watch": "Priveste video"
+    "watch": "Priveste video",
+    "import": "Importa"
   },
   "pagination": {
     "displaing": "Se afișează",

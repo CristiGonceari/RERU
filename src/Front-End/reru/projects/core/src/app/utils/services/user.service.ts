@@ -43,6 +43,10 @@ export class UserService extends AbstractService {
 		return this.http.get<Response<PersonalData>>(`${this.coreUrl}/${this.routeUrl}/get-personal-data`);
 	}
 
+	bulkAddUsers(data): Observable<any> {
+		return this.http.put(`${this.coreUrl}/${this.routeUrl}/excel-import`, data);
+	}
+
 	editUser(data): Observable<any> {
 		return this.http.put(`${this.coreUrl}/${this.routeUrl}`, data);
 	}

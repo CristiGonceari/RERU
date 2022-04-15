@@ -45,7 +45,8 @@ namespace CVU.ERP.Module.Application.Clients
             var json = JsonSerializer.Serialize<BaseUserProfile>(userProfile);
             request.AddParameter("application/json; charset=utf-8", json, ParameterType.RequestBody);
 
-             var response = await _restClient.PostAsync<Response<Unit>>(request, new CancellationToken());
+            //var response = await _restClient.PostAsync<Response<Unit>>(request, new CancellationToken());
+            var response = await _restClient.PutAsync<Response<Unit>>(request, new CancellationToken());
 
             if (!response.Success)
             {

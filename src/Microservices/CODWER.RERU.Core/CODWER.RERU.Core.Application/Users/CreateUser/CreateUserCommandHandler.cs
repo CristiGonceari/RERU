@@ -81,7 +81,7 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
             await LogAction(userProfile);
 
-            await SyncUserProfile(userProfile);
+            //await SyncUserProfile(userProfile);
 
             return userProfile.Id;
         }
@@ -91,9 +91,9 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
             await _loggerService.Log(LogData.AsCore($"User {userProfile.Name} {userProfile.LastName} was added to system", userProfile));
         }
 
-        private async Task SyncUserProfile(UserProfile userProfile)
-        {
-            await _evaluationClient.SyncUserProfile(_mapper.Map<BaseUserProfile>(userProfile));
-        }
+        //private async Task SyncUserProfile(UserProfile userProfile)
+        //{
+        //    await _evaluationClient.SyncUserProfile(_mapper.Map<BaseUserProfile>(userProfile));
+        //}
     }
 }
