@@ -15,6 +15,8 @@ import { WatchInfoVideoModalComponent } from '../../utils/modals/watch-info-vide
 import { CandidatePositionService } from '../../utils/services/candidate-position.service';
 import { CandidatePositionModel } from '../../utils/models/candidate-position.model';
 import { SelectItem } from '../../utils/models/select-item.model';
+import { UserFilesService } from '../../utils/services/user-files.service';
+import { UploadFileModalComponent } from '@erp/shared';
 
 @Component({
   selector: 'app-registration-page',
@@ -27,10 +29,12 @@ export class RegistrationPageComponent implements OnInit {
   title: string;
   description: string;
   success: boolean = false;
+  files: File[] = [];
 
   userId: any;
   fileId: string;
   fileType: FileTypeEnum = FileTypeEnum.Photos;
+  userFileType: FileTypeEnum = FileTypeEnum.Documents;
   attachedFile: File;
   candidatePositions: SelectItem[] = [{ label: '', value: '' }];
   selectedProject: number;
@@ -48,6 +52,7 @@ export class RegistrationPageComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private inregistrationService: InregistrationUserService,
+    private userFilesService: UserFilesService,
     private notificationService: NotificationsService,
     private candidatePosition: CandidatePositionService,
     public translate: I18nService,
@@ -108,8 +113,17 @@ export class RegistrationPageComponent implements OnInit {
       idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
       email: this.fb.control(null, [Validators.required, Validators.email]),
       emailNotification: this.fb.control(false, [Validators.required]),
-      candidatePositionId: this.fb.control((this.selectedProject), [Validators.required]),
+      candidatePositionId: this.fb.control((this.selectedProject), [Validators.required])
     });
+  }
+
+  onSelect(event) {
+    this.files.push(...event.addedFiles);
+  }
+
+  onRemove(event) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
   }
 
   addUser(): void {
@@ -139,11 +153,19 @@ export class RegistrationPageComponent implements OnInit {
         request.append('Data.File.File', this.attachedFile);
         request.append('Data.File.Type', this.fileType.toString());
       }
-      request.append('Data.UserId', res.data);
+        request.append('Data.UserId', res.data);
 
       this.userService.addUserAvatar(request).subscribe(() => {
         this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       })
+
+      for(let userFile of this.files){
+        let formData = new FormData();
+        formData.append('Data.UserId', res.data);
+        formData.append('Data.File.File', userFile);
+        formData.append('Data.File.Type', this.userFileType.toString());
+        this.userFilesService.create(formData).subscribe(res => {})
+      }
 
     }, () => {
       forkJoin([
@@ -156,4 +178,9 @@ export class RegistrationPageComponent implements OnInit {
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
+
+  checkFile(event) {
+		if (event != null) this.attachedFile = event;
+		else this.fileId = null;
+	}
 }

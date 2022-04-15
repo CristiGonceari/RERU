@@ -21,6 +21,7 @@ export class UserFilesComponent implements OnInit {
 	userId: string;
 	fileId: string;
   userFiles: UserFilesModel[] = [];
+  files: any;
 	pagination: PaginationSummary = new PaginationSummary();
 
   constructor(
@@ -93,12 +94,15 @@ export class UserFilesComponent implements OnInit {
   }
 
   uploadDocument(file): void {
-    let formData = new FormData();
-    formData.append('Data.UserId', this.userId);
-    formData.append('Data.File.File', file);
-    formData.append('Data.File.Type', '5');
-    this.userFilesService.create(formData).subscribe(res => {
-      if (res) this.getUserFiles();
-    })
+    this.files = file;
+    for(let userFile of this.files){
+      let formData = new FormData();
+      formData.append('Data.UserId', this.userId);
+      formData.append('Data.File.File', userFile);
+      formData.append('Data.File.Type', '5');
+      this.userFilesService.create(formData).subscribe(res => {
+        if (res) this.getUserFiles();
+      })
+    }
   }
 }

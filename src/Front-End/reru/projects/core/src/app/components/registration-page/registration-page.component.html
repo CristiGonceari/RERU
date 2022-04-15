@@ -216,6 +216,20 @@
               </div>
             </div>
             </div>
+            <div class="form-row py-8">
+              <div class="col-md-12">
+                  <ngx-dropzone (change)="onSelect($event)" class="font-weight-light justify-content-center" 
+                          [expandable]="true" [multiple]="true">
+                    <ngx-dropzone-label>
+                      <h4>Drop file here or click to upload</h4>
+                    </ngx-dropzone-label>
+                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" 
+                        [removable]="true" (removed)="onRemove(f)" [file]="f">
+                      <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                    </ngx-dropzone-image-preview>
+                  </ngx-dropzone>
+              </div>
+            </div>
             <button type="submit" class="btn btn-primary float-right" (click)="addUser()">{{ 'button.confirm' |
               translate }}</button>
           </form>
