@@ -3,6 +3,7 @@ using CODWER.RERU.Core.Application.UserProfiles.GetUserForRemove;
 using CODWER.RERU.Core.Application.Users.ActivateUser;
 using CODWER.RERU.Core.Application.Users.AddUserAvatar;
 using CODWER.RERU.Core.Application.Users.BlockUser;
+using CODWER.RERU.Core.Application.Users.BulkImportUsers;
 using CODWER.RERU.Core.Application.Users.ChangeMyPassword;
 using CODWER.RERU.Core.Application.Users.ChangePersonalData;
 using CODWER.RERU.Core.Application.Users.CreateUser;
@@ -15,9 +16,11 @@ using CODWER.RERU.Core.Application.Users.GetUserDetails;
 using CODWER.RERU.Core.Application.Users.RemoveUser;
 using CODWER.RERU.Core.Application.Users.ResetUserPassword;
 using CODWER.RERU.Core.Application.Users.SetPassword;
+using CODWER.RERU.Core.DataTransferObjects.Files;
 using CODWER.RERU.Core.DataTransferObjects.Password;
 using CODWER.RERU.Core.DataTransferObjects.Users;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CODWER.RERU.Core.API.Controllers
@@ -71,6 +74,14 @@ namespace CODWER.RERU.Core.API.Controllers
         public Task<string> AddAvatar([FromForm] AddUserAvatarCommand command)
         {
             return Mediator.Send(command);
+        }
+
+        [HttpPut("excel-import")]
+        public async Task ImportFromExcelFile([FromForm] BulkExcelImport dto)
+        {
+            var command = new BulkImportUsersCommand { Data = dto };
+
+            await Mediator.Send(command);
         }
 
         [HttpPut]
