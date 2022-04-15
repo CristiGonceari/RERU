@@ -284,7 +284,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       # - ConnectionStrings__Default=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Evaluation;
       - ConnectionStrings__RERU=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Common;
-      - ConnectionStrings__HangfireConnection=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Evaluation;
+      - ConnectionStrings__HangfireConnection=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Common;
       - ConnectionStrings__Log=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Logging;
 
       # - ConnectionStrings__Default=server=db;database=RERU-Evaluation;User=sa;Password=Your_password123;
