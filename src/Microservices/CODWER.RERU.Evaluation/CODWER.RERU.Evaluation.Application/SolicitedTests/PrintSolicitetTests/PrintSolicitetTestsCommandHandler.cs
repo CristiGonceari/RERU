@@ -1,10 +1,11 @@
-﻿using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests;
+﻿using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.TableExportServices;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedTests.PrintSolicitetTests
@@ -12,9 +13,9 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.PrintSolicitetTests
     public class PrintSolicitetTestsCommandHandler : IRequestHandler<PrintSolicitedTestsCommand, FileDataDto>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly IExportData<Data.Entities.SolicitedTest, SolicitedTestDto> _printer;
+        private readonly IExportData<SolicitedTest, SolicitedTestDto> _printer;
 
-        public PrintSolicitetTestsCommandHandler(AppDbContext appDbContext, IExportData<Data.Entities.SolicitedTest, SolicitedTestDto> printer)
+        public PrintSolicitetTestsCommandHandler(AppDbContext appDbContext, IExportData<SolicitedTest, SolicitedTestDto> printer)
         {
             _appDbContext = appDbContext;
             _printer = printer;
@@ -24,7 +25,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.PrintSolicitetTests
         {
             var solicitedTests = GetAndFilterSolicitedTests.Filter(_appDbContext, request.EventName, request.UserName, request.TestName);
 
-            var result = _printer.ExportTableSpecificFormat(new TableData<Data.Entities.SolicitedTest>
+            var result = _printer.ExportTableSpecificFormat(new TableData<SolicitedTest>
             {
                 Name = request.TableName,
                 Items = solicitedTests,

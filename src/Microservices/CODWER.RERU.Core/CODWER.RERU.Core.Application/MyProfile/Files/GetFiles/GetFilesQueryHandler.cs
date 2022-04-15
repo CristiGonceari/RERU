@@ -32,7 +32,7 @@ namespace CODWER.RERU.Core.Application.MyProfile.Files.GetFiles
         {
             var currentUser = await _currentApplication.Get();
 
-            var fileIdList = CoreDbContext.UserFiles
+            var fileIdList = AppDbContext.UserFiles
                 .Where(x => x.UserProfileId == int.Parse(currentUser.Id))
                 .Select(x => x.FileId).ToList();
 

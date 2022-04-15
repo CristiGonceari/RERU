@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Users.ChangePersonalData
 {
@@ -25,20 +26,20 @@ namespace CODWER.RERU.Core.Application.Users.ChangePersonalData
         {
             var currentUser = await _userProvider.Get();
 
-            var userProfile = await CoreDbContext
+            var userProfile = await AppDbContext
                 .UserProfiles
                 .FirstOrDefaultAsync(up => up.Id == int.Parse(currentUser.Id));
 
             if (userProfile == null)
             {
-                userProfile = new Data.Entities.UserProfile();
-                CoreDbContext.UserProfiles.Add(userProfile);
-                await CoreDbContext.SaveChangesAsync();
+                userProfile = new UserProfile();
+                AppDbContext.UserProfiles.Add(userProfile);
+                await AppDbContext.SaveChangesAsync();
             }
 
-            userProfile.Name = request.User.Name;
+            userProfile.FirstName = request.User.FirstName;
             userProfile.LastName = request.User.LastName;
-            await CoreDbContext.SaveChangesAsync();
+            await AppDbContext.SaveChangesAsync();
 
             return Unit.Value;
         }

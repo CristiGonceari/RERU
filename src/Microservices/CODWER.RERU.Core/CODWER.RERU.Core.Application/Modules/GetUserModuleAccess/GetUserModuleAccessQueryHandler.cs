@@ -16,12 +16,12 @@ namespace CODWER.RERU.Core.Application.Modules.GetUserModuleAccess
 
         public async Task<List<UserModuleAccessDto>> Handle (GetUserModuleAccessQuery request, CancellationToken cancellationToken) 
         {
-            var user = await CoreDbContext.UserProfiles
+            var user = await AppDbContext.UserProfiles
                 .Include (up => up.ModuleRoles)
                 .ThenInclude (upmr => upmr.ModuleRole)
                 .FirstOrDefaultAsync (mr => mr.Id == request.Id);
 
-            var modules = await CoreDbContext.Modules.ToListAsync ();
+            var modules = await AppDbContext.Modules.ToListAsync ();
 
             List<UserModuleAccessDto> allModules = new List<UserModuleAccessDto> ();
 

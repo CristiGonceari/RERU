@@ -27,7 +27,7 @@ namespace CODWER.RERU.Core.Application.Users.EditUser {
             //     await CoreDbContext.SaveChangesAsync();
             // }
             // userProfile.UserId = user.Id;
-            // userProfile.Name = user.Name;
+            // userProfile.FirstName = user.FirstName;
             // userProfile.LastName = user.LastName;
             // userProfile.Email = user.Email;
             // await CoreDbContext.SaveChangesAsync();

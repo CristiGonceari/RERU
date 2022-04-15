@@ -26,7 +26,7 @@ namespace CODWER.RERU.Core.Application.UserFiles.GetUserFiles
 
         public async Task<PaginatedModel<GetFilesDto>> Handle(GetUserFilesQuery request, CancellationToken cancellationToken)
         {
-            var fileIdList = CoreDbContext.UserFiles
+            var fileIdList = AppDbContext.UserFiles
                                     .Where(x => x.UserProfileId == request.UserId)
                                     .Select(x => x.FileId).ToList();
 

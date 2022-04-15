@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.EditTestTemplateStatus
 {
@@ -13,7 +14,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.EditTestTemplateStatu
         public EditTestTemplateStatusCommandValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.Data.TestTemplateId)
-                .SetValidator(x => new ItemMustExistValidator<Data.Entities.TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
+                .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
 
             When(x => appDbContext.TestTemplates.First(t => t.Id == x.Data.TestTemplateId).Status == TestTemplateStatusEnum.Active, () =>

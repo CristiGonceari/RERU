@@ -20,12 +20,12 @@ namespace CODWER.RERU.Core.Application.UserFiles.RemoveUserFiles
 
         public async Task<Unit> Handle(RemoveUserFileCommand request, CancellationToken cancellationToken)
         {
-            var userFile = CoreDbContext.UserFiles.FirstOrDefault(x => x.FileId == request.FileId);
+            var userFile = AppDbContext.UserFiles.FirstOrDefault(x => x.FileId == request.FileId);
 
             await _storageFileService.RemoveFile(request.FileId);
 
-            CoreDbContext.UserFiles.Remove(userFile);
-            await CoreDbContext.SaveChangesAsync();
+            AppDbContext.UserFiles.Remove(userFile);
+            await AppDbContext.SaveChangesAsync();
 
             return Unit.Value;
         }

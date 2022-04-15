@@ -2,6 +2,7 @@
 using CODWER.RERU.Core.Application.Common.Providers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.Enums;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,14 +15,14 @@ namespace CODWER.RERU.Core.Application.ModuleRoles.DeleteModuleRole
 
         public async Task<Unit> Handle(DeleteModuleRoleCommand request, CancellationToken cancellationToken)
         {
-            var moduleRole = await CoreDbContext.ModuleRoles
+            var moduleRole = await AppDbContext.ModuleRoles
                 .FirstOrDefaultAsync(u => u.Id == request.Id);
 
-            if (moduleRole.Type == Data.Entities.Enums.RoleTypeEnum.Dynamic)
+            if (moduleRole.Type == RoleTypeEnum.Dynamic)
             {
-                CoreDbContext.ModuleRoles.Remove(moduleRole);
+                AppDbContext.ModuleRoles.Remove(moduleRole);
 
-                await CoreDbContext.SaveChangesAsync();
+                await AppDbContext.SaveChangesAsync();
             }
             else
             {

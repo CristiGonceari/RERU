@@ -12,7 +12,7 @@ namespace CVU.ERP.Module.Application.Models {
         }
         public string Id { set; get; }
         public bool IsAnonymous => string.IsNullOrEmpty(Id);
-        //public string Name { set; get; }
+        //public string FirstName { set; get; }
         
         public string FirstName { set; get; }
         public string LastName { get; set; }

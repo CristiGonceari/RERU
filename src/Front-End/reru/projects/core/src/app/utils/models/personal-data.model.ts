@@ -1,6 +1,6 @@
 export class PersonalData {
     avatar: string;
-    name: string;
+    firstName: string;
     lastName: string;
     fatherName: string;
     email: string;

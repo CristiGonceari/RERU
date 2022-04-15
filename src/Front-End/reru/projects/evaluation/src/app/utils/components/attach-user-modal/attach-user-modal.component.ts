@@ -18,7 +18,7 @@ export class AttachUserModalComponent implements OnInit {
   showUserName: boolean = false;
   @ViewChild('firstName') firstName: any;
   @ViewChild('lastName') lastName: any;
-  @ViewChild('patronymic') patronymic: any;
+  @ViewChild('fatherName') fatherName: any;
   @ViewChild('idnp') idnp: any;
   @ViewChild('email') email: any;
   @Input() exceptUserIds: any;
@@ -109,7 +109,7 @@ export class AttachUserModalComponent implements OnInit {
 	resetFilters(): void {
     this.firstName.key = '';
     this.lastName.key = '';
-    this.patronymic.key = '';
+    this.fatherName.key = '';
     this.idnp.key = '';
     this.email.key = '';
     this.filters = {};

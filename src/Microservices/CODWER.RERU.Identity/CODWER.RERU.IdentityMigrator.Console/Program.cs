@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CVU.ERP.Identity.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.IdentityMigrator.Console
 {
@@ -28,15 +29,22 @@ namespace CODWER.RERU.IdentityMigrator.Console
             })
             .ConfigureServices((hostingContext, services) => services.AddDbContext<IdentityDbContext>(options =>
                 options.UseNpgsql(hostingContext.Configuration.GetConnectionString("Default"),
-                        b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName))));
+                        b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName))))
+            .ConfigureServices((hostingContext, services) => services.AddDbContext<AppDbContext>(options =>
+                options.UseNpgsql(hostingContext.Configuration.GetConnectionString("RERU"),
+                    b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName))));
+
 
         static void Migrate(IServiceProvider services)
         {
             using var serviceScope = services.CreateScope();
             var provider = serviceScope.ServiceProvider;
 
-            var dbContext = provider.GetService<IdentityDbContext>();
-            dbContext.Database.Migrate();
+            var identityDbContext = provider.GetService<IdentityDbContext>();
+            identityDbContext.Database.Migrate();
+
+            var reruCommonContext = provider.GetService<AppDbContext>();
+            reruCommonContext.Database.Migrate();
 
             System.Console.WriteLine("Latest migrations applied");
         }

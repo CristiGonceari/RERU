@@ -1,21 +1,21 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Core.Data.Entities;
-using CODWER.RERU.Core.Data.Persistence.Context;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.CandidatePositions.AddCandidatePosition
 {
     public class AddCandidatePositionCommandHandler : IRequestHandler<AddCandidatePositionCommand, int>
     {
-        private readonly CoreDbContext _coreDbContext;
+        private readonly AppDbContext _coreDbContext;
         private readonly IMapper _mapper;
         private readonly ILoggerService<AddCandidatePositionCommand> _loggerService;
 
-        public AddCandidatePositionCommandHandler(CoreDbContext coreDbContext, IMapper mapper, ILoggerService<AddCandidatePositionCommand> loggerService)
+        public AddCandidatePositionCommandHandler(AppDbContext coreDbContext, IMapper mapper, ILoggerService<AddCandidatePositionCommand> loggerService)
         {
             _coreDbContext = coreDbContext;
             _mapper = mapper;

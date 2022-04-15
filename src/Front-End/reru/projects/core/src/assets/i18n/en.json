@@ -144,7 +144,7 @@
     "full-name": "Full name",
     "email":"Email",
     "lastName": "Last name",
-    "father-name": "Patronymic",
+    "father-name": "Father name",
     "idnp": "IDNP",
     "role": "Role",
     "actions": "Actions",

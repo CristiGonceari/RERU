@@ -68,7 +68,7 @@ export class EditComponent implements OnInit {
 	initForm(user?: any): void {
 		this.userForm = this.fb.group({
 			id: this.fb.control(user.id, [Validators.required]),
-			name: this.fb.control((user && user.name) || null, [
+			firstName: this.fb.control((user && user.firstName) || null, [
 				Validators.required,
 				Validators.pattern(
 					'^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'
@@ -94,7 +94,7 @@ export class EditComponent implements OnInit {
 		this.isLoading = true;
 		let data = {
 			id: this.userForm.value.id,
-			name: this.userForm.value.name,
+			firstName: this.userForm.value.firstName,
 			lastName: this.userForm.value.lastName,
 			fatherName: this.userForm.value.fatherName
 		}

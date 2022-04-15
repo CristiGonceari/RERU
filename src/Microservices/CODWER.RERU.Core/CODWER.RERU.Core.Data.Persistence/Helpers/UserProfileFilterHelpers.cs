@@ -1,5 +1,5 @@
 using System.Linq;
-using CODWER.RERU.Core.Data.Entities;
+using RERU.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Core.Data.Persistence.Helpers

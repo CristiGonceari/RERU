@@ -2,24 +2,24 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using CODWER.RERU.Core.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Articles.DeleteArticle
 {
     public class DeleteArticleCommandHandler : IRequestHandler<DeleteArticleCommand, Unit>
     {
-        private readonly CoreDbContext _appDbContext;
+        private readonly AppDbContext _appDbContext;
 
-        public DeleteArticleCommandHandler(CoreDbContext appDbContext)
+        public DeleteArticleCommandHandler(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
 
         public async Task<Unit> Handle(DeleteArticleCommand request, CancellationToken cancellationToken)
         {
-            var articleToDelete = await _appDbContext.Articles.FirstAsync(x => x.Id == request.Id);
+            var articleToDelete = await _appDbContext.CoreArticles.FirstAsync(x => x.Id == request.Id);
 
-            _appDbContext.Articles.Remove(articleToDelete);
+            _appDbContext.CoreArticles.Remove(articleToDelete);
 
             await _appDbContext.SaveChangesAsync();
 

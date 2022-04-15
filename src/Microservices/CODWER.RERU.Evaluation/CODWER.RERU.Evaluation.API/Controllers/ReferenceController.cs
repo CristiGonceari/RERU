@@ -3,13 +3,13 @@ using CODWER.RERU.Evaluation.Application.References.GetEventsValues;
 using CODWER.RERU.Evaluation.Application.References.GetQuestionCategoryValue;
 using CODWER.RERU.Evaluation.Application.References.GetTestTemplatesValue;
 using CODWER.RERU.Evaluation.Application.References.GetUsersValue;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CVU.ERP.Common.EnumConverters;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {

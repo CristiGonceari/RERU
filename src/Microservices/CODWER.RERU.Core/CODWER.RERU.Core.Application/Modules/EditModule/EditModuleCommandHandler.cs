@@ -16,12 +16,12 @@ namespace CODWER.RERU.Core.Application.Modules.EditModule
 
         public async Task<Unit> Handle(EditModuleCommand request, CancellationToken cancellationToken)
         {
-            var module = await CoreDbContext.Modules
+            var module = await AppDbContext.Modules
                 .Include(m => m.Permissions)
                 .FirstOrDefaultAsync(m => m.Id == request.Module.Id);
 
             Mapper.Map(request.Module, module);
-            await CoreDbContext.SaveChangesAsync();
+            await AppDbContext.SaveChangesAsync();
 
             await Mediator.Send(new UpdateModulePermissionsCommand(module));
             return Unit.Value;

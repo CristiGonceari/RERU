@@ -11,7 +11,7 @@ namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.GetNoAssigne
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Patronymic { get; set; }
+        public string FatherName { get; set; }
         public string Email { get; set; }
         public string Idnp { get; set; }
         public int PlanId { get; set; }

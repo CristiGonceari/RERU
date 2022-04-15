@@ -8,8 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Core.Data.Entities;
 using CVU.ERP.Logging;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Users.ResetUserPassword
 {
@@ -30,7 +30,7 @@ namespace CODWER.RERU.Core.Application.Users.ResetUserPassword
 
         public async Task<Unit> Handle(ResetUserPasswordCommand request, CancellationToken cancellationToken)
         {
-            var userProfile = await CoreDbContext
+            var userProfile = await AppDbContext
               .UserProfiles
                   .Include(up => up.Identities)
                   .FirstOrDefaultAsync(up => up.Id == request.Id);
@@ -55,7 +55,7 @@ namespace CODWER.RERU.Core.Application.Users.ResetUserPassword
 
         private async Task LogAction(UserProfile userProfile)
         {
-            await _loggerService.Log(LogData.AsCore($" User {userProfile.Name} {userProfile.LastName}, password was reset", userProfile));
+            await _loggerService.Log(LogData.AsCore($" User {userProfile.FirstName} {userProfile.LastName}, password was reset", userProfile));
         }
     }
 }

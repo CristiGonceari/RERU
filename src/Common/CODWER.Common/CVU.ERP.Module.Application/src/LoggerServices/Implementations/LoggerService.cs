@@ -10,8 +10,7 @@ using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CVU.ERP.Logging;
-using CVU.ERP.Module.Application.Models;
-using CODWER.RERU.Core.Data.Entities;
+using RERU.Data.Entities;
 
 namespace CVU.ERP.Module.Application.LoggerServices.Implementations
 {
@@ -37,7 +36,7 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
             {
                 Id = Guid.NewGuid().ToString(),
                 Project = data.Project,
-                UserName = $"{user.LastName} {user.Name} {user.FatherName}",
+                UserName = $"{user.LastName} {user.FirstName} {user.FatherName}",
                 UserIdentifier = "",
                 Event = !string.IsNullOrWhiteSpace(data.Event) ? data.Event : ParseName(),
                 EventMessage = data.EventMessage,

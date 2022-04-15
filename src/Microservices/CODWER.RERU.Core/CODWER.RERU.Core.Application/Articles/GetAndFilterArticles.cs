@@ -1,14 +1,14 @@
 ﻿using System.Linq;
-using CODWER.RERU.Core.Data.Entities;
-using CODWER.RERU.Core.Data.Persistence.Context;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Articles
 {
     public static class GetAndFilterArticles
     {
-        public static IQueryable<Article> Filter(CoreDbContext appDbContext, string name)
+        public static IQueryable<ArticleCore> Filter(AppDbContext appDbContext, string name)
         {
-            var articles = appDbContext.Articles.AsQueryable();
+            var articles = appDbContext.CoreArticles.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(name))
             {

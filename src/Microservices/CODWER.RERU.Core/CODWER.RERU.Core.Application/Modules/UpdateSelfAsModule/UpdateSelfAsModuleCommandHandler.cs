@@ -4,10 +4,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
-using CODWER.RERU.Core.Data.Entities;
 using CVU.ERP.Module.Common.Providers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule 
 {
@@ -26,20 +27,20 @@ namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule
         {
             var moduleCode = "00";
             var superAdministratorCode = "R00000001";
-            var selfModule = await CoreDbContext.Modules
+            var selfModule = await AppDbContext.Modules
                 .Include (m => m.Permissions)
                 .Include (m => m.Roles)
                 .ThenInclude (mr => mr.Permissions)
                 .FirstOrDefaultAsync (m => m.Code == moduleCode);
 
             if (selfModule == null) {
-                selfModule = new Data.Entities.Module ();
+                selfModule = new global::RERU.Data.Entities.Module ();
                 selfModule.Code = moduleCode;
                 selfModule.Name = "Core/Dashboard";
                 selfModule.Permissions = new List<ModulePermission> ();
                 selfModule.Roles = new List<ModuleRole> ();
-                selfModule.Type = Data.Entities.Enums.ModuleTypeEnum.Default;
-                CoreDbContext.Modules.Add (selfModule);
+                selfModule.Type = ModuleTypeEnum.Default;
+                AppDbContext.Modules.Add (selfModule);
             }
 
             var allModulePermissions = new List<CVU.ERP.Module.Common.Models.ModulePermission> ();
@@ -56,14 +57,14 @@ namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule
             if (superAdministratorRole == null) {
                 superAdministratorRole = new ModuleRole ();
                 superAdministratorRole.Code = superAdministratorCode;
-                superAdministratorRole.Type = Data.Entities.Enums.RoleTypeEnum.Default;
+                superAdministratorRole.Type = RoleTypeEnum.Default;
                 superAdministratorRole.Name = "Super administrator";
                 superAdministratorRole.Permissions = new List<ModuleRolePermission> ();
                 selfModule.Roles.Add (superAdministratorRole);
             }
 
             superAdministratorRole.Permissions.AddRange (selfModule.Permissions.Where (mp => superAdministratorRole.Permissions.All (mrp => mrp.Permission.Code != mp.Code)).Select (mp => new ModuleRolePermission { Permission = mp }));
-            await CoreDbContext.SaveChangesAsync ();
+            await AppDbContext.SaveChangesAsync ();
 
             await AddAdministratorUserProfile();
 
@@ -72,7 +73,7 @@ namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule
 
         private async Task AddAdministratorUserProfile()
         {
-            if (!CoreDbContext.UserProfileModuleRoles.Any())
+            if (!AppDbContext.UserProfileModuleRoles.Any())
             {
                 var userProfileModuleRoles = new UserProfileModuleRole
                 {
@@ -81,14 +82,22 @@ namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule
                 };
 
 
-                userProfileModuleRoles.UserProfile.Name = "Administrator";
+                userProfileModuleRoles.UserProfile.FirstName = "Administrator";
                 userProfileModuleRoles.UserProfile.LastName = "Platforma";
                 userProfileModuleRoles.UserProfile.IsActive = true;
                 userProfileModuleRoles.UserProfile.RequiresDataEntry = true;
-                userProfileModuleRoles.UserProfile.Identities.Add(new UserProfileIdentity { Identificator = UserManagementDbContext.Users.First().Id, Type = "local" });
 
-                CoreDbContext.UserProfileModuleRoles.Add(userProfileModuleRoles);
-                await CoreDbContext.SaveChangesAsync();
+                var ident = new UserProfileIdentity
+                {
+                    Identificator = UserManagementDbContext.Users.First().Id, 
+                    Type = "local"
+
+                };
+
+                userProfileModuleRoles.UserProfile.Identities.Add(ident);
+
+                AppDbContext.UserProfileModuleRoles.Add(userProfileModuleRoles);
+                await AppDbContext.SaveChangesAsync();
             }
         }
     }

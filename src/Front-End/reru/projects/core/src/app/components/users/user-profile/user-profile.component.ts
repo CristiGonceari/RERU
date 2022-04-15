@@ -87,7 +87,7 @@ export class UserProfileComponent implements OnInit {
 				this.avatarString = user.data.avatar;
 				this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/*;base64, ${this.avatarString}`);
 			}
-			const matches = user && (user.data.name + ' ' + user.data.lastName).match(/\b(\w)/g);
+			const matches = user && (user.data.firstName + ' ' + user.data.lastName).match(/\b(\w)/g);
 			this.acronym = matches ? matches.join('') : null;
 		}
 	}

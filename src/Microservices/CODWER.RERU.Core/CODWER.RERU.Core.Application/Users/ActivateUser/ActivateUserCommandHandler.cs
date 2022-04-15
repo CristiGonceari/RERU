@@ -28,13 +28,13 @@ namespace CODWER.RERU.Core.Application.Users.ActivateUser {
 
         public async Task<Unit> Handle(ActivateUserCommand request, CancellationToken cancellationToken)
         {
-            var userProfile = await CoreDbContext.UserProfiles
+            var userProfile = await AppDbContext.UserProfiles
                 .FirstOrDefaultAsync(up => up.Id == request.Id);
 
             if (userProfile != null)
             {
                 userProfile.IsActive = true;
-                await CoreDbContext.SaveChangesAsync();
+                await AppDbContext.SaveChangesAsync();
 
                 try
                 {
@@ -43,7 +43,7 @@ namespace CODWER.RERU.Core.Application.Users.ActivateUser {
                     var template = await File.ReadAllTextAsync(assemblyPath + "/ActivateUser.html", cancellationToken);
 
                     template = template
-                        .Replace("{FirstName}", userProfile.Name + ' ' + userProfile.LastName);
+                        .Replace("{FirstName}", userProfile.FirstName + ' ' + userProfile.LastName);
 
                     var emailData = new EmailData()
                     {

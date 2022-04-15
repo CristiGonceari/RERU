@@ -1,9 +1,9 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
+﻿using CODWER.RERU.Evaluation.Application.Validation;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Articles.DeleteArticle
 {
@@ -12,7 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.Articles.DeleteArticle
         public DeleteArticleCommandValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.Id)
-               .SetValidator(x => new ItemMustExistValidator<Article>(appDbContext, ValidationCodes.INVALID_ID,
+               .SetValidator(x => new ItemMustExistValidator<ArticleCore>(appDbContext, ValidationCodes.INVALID_ID,
                    ValidationMessages.InvalidReference));
         }
     }

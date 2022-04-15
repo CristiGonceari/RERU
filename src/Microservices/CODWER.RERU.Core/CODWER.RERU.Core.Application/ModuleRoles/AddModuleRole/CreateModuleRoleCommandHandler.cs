@@ -1,8 +1,9 @@
-﻿
-using CODWER.RERU.Core.Application.Common.Handlers;
+﻿using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using System;
 using System.Linq;
 using System.Threading;
@@ -19,21 +20,21 @@ namespace CODWER.RERU.Core.Application.ModuleRoles.AddModuleRole
         {
             if(request.ModuleRole.ModuleId != null)
             {
-                var moduleRole = Mapper.Map<Data.Entities.ModuleRole>(request.ModuleRole);
+                var moduleRole = Mapper.Map<ModuleRole>(request.ModuleRole);
                 
                 if (request.ModuleRole.IsAssignByDefault)
                 {
-                    await CoreDbContext.ModuleRoles
+                    await AppDbContext.ModuleRoles
                         .Where(mr => mr.ModuleId == request.ModuleRole.ModuleId)
                         .Where(mr => mr.IsAssignByDefault == true)
                         .ForEachAsync(x => x.IsAssignByDefault = false);
 
-                    await CoreDbContext.SaveChangesAsync();
+                    await AppDbContext.SaveChangesAsync();
                 }
 
-                moduleRole.Type = Data.Entities.Enums.RoleTypeEnum.Dynamic;
-                CoreDbContext.ModuleRoles.Add(moduleRole);
-                await CoreDbContext.SaveChangesAsync();
+                moduleRole.Type = RoleTypeEnum.Dynamic;
+                AppDbContext.ModuleRoles.Add(moduleRole);
+                await AppDbContext.SaveChangesAsync();
             } 
             else
             {

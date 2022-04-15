@@ -1,20 +1,20 @@
-﻿using CODWER.RERU.Core.Data.Entities;
-using CODWER.RERU.Core.Data.Persistence.Context;
-using CVU.ERP.Logging;
+﻿using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.CandidatePositions.DeleteCandidatePosition
 {
     internal class DeleteCandidatePositionCommandHandler : IRequestHandler<DeleteCandidatePositionCommand, Unit>
     {
-        private readonly CoreDbContext _coreDbContext;
+        private readonly AppDbContext _coreDbContext;
         private readonly ILoggerService<DeleteCandidatePositionCommand> _loggerService;
 
-        public DeleteCandidatePositionCommandHandler(CoreDbContext coreDbContext, ILoggerService<DeleteCandidatePositionCommand> loggerService)
+        public DeleteCandidatePositionCommandHandler(AppDbContext coreDbContext, ILoggerService<DeleteCandidatePositionCommand> loggerService)
         {
             _coreDbContext = coreDbContext;
             _loggerService = loggerService;

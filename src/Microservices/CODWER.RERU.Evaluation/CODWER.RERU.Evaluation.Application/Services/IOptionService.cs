@@ -1,7 +1,6 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.Services
 {

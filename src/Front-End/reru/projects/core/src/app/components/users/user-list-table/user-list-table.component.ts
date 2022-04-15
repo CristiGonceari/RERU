@@ -11,7 +11,6 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { UserService } from '../../../utils/services/user.service';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
-import { ImportUsersModalComponent } from '../../../utils/modals/import-users-modal/import-users-modal.component';
 
 @Component({
 	selector: 'app-user-list-table',
@@ -59,8 +58,8 @@ export class UserListTableComponent implements OnInit {
 		public permissionService: PermissionCheckerService,
 		private modalService: NgbModal,
 		private notificationService: NotificationsService,
-		private userService: UserService,
-	) { }
+    	private userService: UserService,
+	) {}
 
 	ngOnInit(): void {
 		this.list();
@@ -138,15 +137,15 @@ export class UserListTableComponent implements OnInit {
 	}
 
 	renderText(user): string {
-		if (!user || !user.name || !user.lastName) {
+		if (!user || !user.firstName || !user.lastName) {
 			return '';
 		}
 
-		return `${user.lastName[0].toUpperCase()}${user.name[0].toUpperCase()}`;
+		return `${user.lastName[0].toUpperCase()}${user.firstName[0].toUpperCase()}`;
 	}
 
 	navigateToDetails(id): void {
-		this.router.navigate(['../../user-profile', id, 'overview'], { relativeTo: this.route });
+		this.router.navigate(['../../user-profile', id, 'overview'], {relativeTo: this.route});
 	}
 
 	checkPermission(): void {
@@ -155,25 +154,7 @@ export class UserListTableComponent implements OnInit {
 		}
 	}
 
-	openImportModal(): void {
-		const modalRef: any = this.modalService.open(ImportUsersModalComponent, { centered: true, backdrop: 'static', size: 'lg' });
-		modalRef.result.then((data) => this.importRoles(data), () => { });
-	}
-
-	importRoles(data): void {
-		this.isLoading = true;
-		const form = new FormData();
-		form.append('file', data.file);
-		this.userService.bulkAddUsers(form).subscribe(() => {
-			this.notificationService.success('Success', 'Roles imported!', NotificationUtil.getDefaultMidConfig());
-			this.list();
-		}, () => { }, () => {
-			this.isLoading = false;
-		})
-	}
-
-
-	openConfirmModal(id: number, name, lastName, type): void {
+	openConfirmModal(id: number, firstName, lastName, type): void {
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
 		if (type == 'reset-password') {
 			forkJoin([
@@ -186,14 +167,14 @@ export class UserListTableComponent implements OnInit {
 				this.description = description;
 				this.no = no;
 				this.yes = yes;
-			});
+				});
 			modalRef.componentInstance.title = this.title;
-			modalRef.componentInstance.description = `${this.description} ${name} ${lastName}?`;
+			modalRef.componentInstance.description = `${this.description} ${firstName} ${lastName}?`;
 			modalRef.componentInstance.buttonNo = this.no;
 			modalRef.componentInstance.buttonYes = this.yes;
-			modalRef.result.then(() => this.resetPassword(id, name, lastName), () => { });
+			modalRef.result.then(() => this.resetPassword(id, firstName, lastName), () => {});
 		}
-		if (type == 'deactivate-user') {
+		if(type == 'deactivate-user'){
 			forkJoin([
 				this.translate.get('deactivate-user.title'),
 				this.translate.get('deactivate-user.deactivate-msg'),
@@ -204,14 +185,14 @@ export class UserListTableComponent implements OnInit {
 				this.description = description;
 				this.no = no;
 				this.yes = yes;
-			});
+				});
 			modalRef.componentInstance.title = this.title;
-			modalRef.componentInstance.description = `${this.description} ${name} ${lastName}?`;
+			modalRef.componentInstance.description = `${this.description} ${firstName} ${lastName}?`;
 			modalRef.componentInstance.buttonNo = this.no;
 			modalRef.componentInstance.buttonYes = this.yes;
-			modalRef.result.then(() => this.deactivateUser(id, name, lastName), () => { });
+			modalRef.result.then(() => this.deactivateUser(id, firstName, lastName), () => {});
 		}
-		if (type == 'activate-user') {
+		if(type == 'activate-user'){
 			forkJoin([
 				this.translate.get('activate-user.title'),
 				this.translate.get('activate-user.activate-msg'),
@@ -222,42 +203,42 @@ export class UserListTableComponent implements OnInit {
 				this.description = description;
 				this.no = no;
 				this.yes = yes;
-			});
+				});
 			modalRef.componentInstance.title = this.title;
-			modalRef.componentInstance.description = `${this.description} ${name} ${lastName}?`;
+			modalRef.componentInstance.description = `${this.description} ${firstName} ${lastName}?`;
 			modalRef.componentInstance.buttonNo = this.no;
 			modalRef.componentInstance.buttonYes = this.yes;
-			modalRef.result.then(() => this.activateUser(id, name, lastName), () => { });
+			modalRef.result.then(() => this.activateUser(id, firstName, lastName), () => {});
 		}
 	}
-
-	resetPassword(id, name, lastName): void {
+	
+	resetPassword(id, firstName, lastName): void {
 		this.userService.resetPassword(id).subscribe(
-			(res) => {
-				forkJoin([
-					this.translate.get('modal.success'),
-					this.translate.get('reset-password.success-reset'),
-				]).subscribe(([title, description]) => {
-					this.title = title;
-					this.description = description;
+		  (res) => {
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('reset-password.success-reset'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
 				});
-				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-				if (res) { this.list(); }
-			},
-			(err) => {
-				forkJoin([
-					this.translate.get('notification.title.error'),
-					this.translate.get('notification.body.error'),
-				]).subscribe(([title, description]) => {
-					this.title = title;
-					this.description = description;
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+			if(res){ this.list(); }
+		  },
+		  (err) => {
+			forkJoin([
+				this.translate.get('notification.title.error'),
+				this.translate.get('notification.body.error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
 				});
-				this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-			},
+			this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+		  },
 		);
 	}
 
-	deactivateUser(id, name, lastName): void {
+	deactivateUser(id, firstName, lastName): void {
 		this.userService.deactivateUser(id).subscribe((res) => {
 			forkJoin([
 				this.translate.get('modal.success'),
@@ -265,36 +246,36 @@ export class UserListTableComponent implements OnInit {
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
-			});
+				});
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-			if (res) { this.list(); }
-		}
+				if(res){ this.list(); }
+			}
 		);
 	}
 
-	activateUser(id, name, lastName): void {
-		this.userService.activateUser(id).subscribe((res) => {
+	activateUser(id, firstName, lastName): void {
+    	this.userService.activateUser(id).subscribe((res) => {
 			forkJoin([
 				this.translate.get('modal.success'),
 				this.translate.get('activate-user.success-activate'),
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
-			});
-			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-			if (res) { this.list(); }
-		},
-			(err) => {
-				forkJoin([
-					this.translate.get('notification.title.error'),
-					this.translate.get('notification.body.error'),
-				]).subscribe(([title, description]) => {
-					this.title = title;
-					this.description = description;
 				});
-				this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-			}
-		);
-	}
+        	this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+				if(res){ this.list(); }
+      		},
+      (err) => {
+		forkJoin([
+			this.translate.get('notification.title.error'),
+			this.translate.get('notification.body.error'),
+		]).subscribe(([title, description]) => {
+			this.title = title;
+			this.description = description;
+			});
+        this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      }
+    );
+  }
 
 }

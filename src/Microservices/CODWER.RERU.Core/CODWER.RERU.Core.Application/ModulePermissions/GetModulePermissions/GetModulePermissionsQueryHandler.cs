@@ -1,12 +1,12 @@
 ﻿using CVU.ERP.Common.Pagination;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
-using CODWER.RERU.Core.Data.Entities;
 using CODWER.RERU.Core.DataTransferObjects.ModulePermissions;
 using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.ModulePermissions.GetModulePermissions
 {
@@ -22,7 +22,7 @@ namespace CODWER.RERU.Core.Application.ModulePermissions.GetModulePermissions
 
         public async Task<PaginatedModel<ModulePermissionRowDto>> Handle(GetModulePermissionsQuery request, CancellationToken cancellationToken)
         {
-            var moduleRoles = CoreDbContext.ModulePermissions.Where(m => m.ModuleId == request.ModuleId);
+            var moduleRoles = AppDbContext.ModulePermissions.Where(m => m.ModuleId == request.ModuleId);
 
             moduleRoles = Filter(moduleRoles, request);
 

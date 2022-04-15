@@ -19,7 +19,7 @@ namespace CODWER.RERU.Core.Application.Modules.GetInternalModules
 
         public async Task<List<ModuleRolesDto>> Handle(GetInternalModulesQuery request, CancellationToken cancellationToken)
         {
-            var items = await CoreDbContext.Modules
+            var items = await AppDbContext.Modules
                 .Include(x => x.Roles)
                 .ToListAsync();
 

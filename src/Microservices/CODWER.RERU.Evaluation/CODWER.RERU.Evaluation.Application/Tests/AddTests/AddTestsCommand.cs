@@ -1,7 +1,7 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using MediatR;
+﻿using MediatR;
 using System;
 using System.Collections.Generic;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 {

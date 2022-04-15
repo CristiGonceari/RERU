@@ -8,19 +8,20 @@ using CODWER.RERU.Core.Data.Persistence.Helpers;
 using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Providers;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Module.Providers
 {
     public class CoreApplicationUserProvider : IApplicationUserProvider
     {
-        private readonly CoreDbContext _coreDbContext;
+        private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
 
         private const string DEFAULT_IDENTITY_SERVICE = "local";
 
         public CoreApplicationUserProvider(ICommonServiceProvider commonServiceProvider)
         {
-            _coreDbContext = commonServiceProvider.CoreDbContext;
+            _appDbContext = commonServiceProvider.AppDbContext;
             _mapper = commonServiceProvider.Mapper;
         }
 
@@ -28,7 +29,7 @@ namespace CODWER.RERU.Core.Application.Module.Providers
         {
             identityProvider = identityProvider ?? DEFAULT_IDENTITY_SERVICE;
 
-            var userProfile = await _coreDbContext.UserProfiles
+            var userProfile = await _appDbContext.UserProfiles
                                          .IncludeBasic()
                                          .FirstOrDefaultAsync(up => up.Identities.Any(upi => upi.Identificator == id && upi.Type == identityProvider));
             //if (userProfile == null)
@@ -45,7 +46,7 @@ namespace CODWER.RERU.Core.Application.Module.Providers
 
             if (userProfile.IsActive == false)
             {
-                throw new Exception(userProfile.Name + ' ' + userProfile.LastName + " was deactivated");
+                throw new Exception(userProfile.FirstName + ' ' + userProfile.LastName + " was deactivated");
             }
 
             return _mapper.Map<ApplicationUser>(userProfile);

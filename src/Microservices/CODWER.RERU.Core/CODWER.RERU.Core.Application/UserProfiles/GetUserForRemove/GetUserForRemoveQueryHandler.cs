@@ -1,10 +1,10 @@
 ﻿using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
-using CODWER.RERU.Core.Data.Entities;
 using CODWER.RERU.Core.DataTransferObjects.Modules;
 using CODWER.RERU.Core.DataTransferObjects.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -18,12 +18,12 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetUserForRemove
 
         public async Task<UserForRemoveDto> Handle(GetUserForRemoveQuery request, CancellationToken cancellationToken)
         {
-            var userProfile = await CoreDbContext.UserProfiles
+            var userProfile = await AppDbContext.UserProfiles
                 .Include(up => up.ModuleRoles)
                 .ThenInclude(upmr => upmr.ModuleRole)
                 .FirstOrDefaultAsync(mr => mr.Id == request.Id);
 
-            var modules = await CoreDbContext.Modules.ToListAsync();
+            var modules = await AppDbContext.Modules.ToListAsync();
 
             List<UserModuleAccessDto> allModules = new List<UserModuleAccessDto>();
 

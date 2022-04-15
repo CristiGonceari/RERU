@@ -8,6 +8,6 @@ namespace CODWER.RERU.Evaluation.Application.Articles.AddEditArticle
     [ModuleOperation(permission: PermissionCodes.ARTICLES_GENERAL_ACCESS)]
     public class AddEditArticleCommand : IRequest<int>
     {
-        public ArticleDto Data { get; set; }
+        public ArticleEvaluationDto Data { get; set; }
     }
 }

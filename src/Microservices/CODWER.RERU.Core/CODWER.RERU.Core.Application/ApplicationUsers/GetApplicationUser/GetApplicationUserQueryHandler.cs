@@ -26,7 +26,7 @@ namespace CODWER.RERU.Core.Application.ApplicationUsers.GetApplicationUser
                 return await _applicationUserProvider.Get(request.Id);
             }
 
-            var userProfile = await CoreDbContext.UserProfiles
+            var userProfile = await AppDbContext.UserProfiles
                 .IncludeBasic()
                 .FirstOrDefaultAsync(up => up.Id == request.UserProfileId);
 

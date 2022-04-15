@@ -44,7 +44,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
                     var command = new CreateUserCommand
                     {
-                        Name = name,
+                        FirstName = name,
                         LastName = lastName,
                         FatherName = patronymic,
                         Email = email,

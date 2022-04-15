@@ -1,7 +1,4 @@
 ﻿using CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCategoryQuestions;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestCategoryQuestions;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.StorageService;
@@ -15,6 +12,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
+using RERU.Data.Persistence.Context;
 using Wkhtmltopdf.NetCore;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations

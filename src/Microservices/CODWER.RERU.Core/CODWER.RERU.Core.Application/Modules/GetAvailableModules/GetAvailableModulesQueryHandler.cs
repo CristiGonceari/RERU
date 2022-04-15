@@ -14,7 +14,7 @@ namespace CODWER.RERU.Core.Application.Modules.GetAvailableModules
 
         public async Task<IEnumerable<ModuleDto>> Handle (GetAvailableModulesQuery request, CancellationToken cancellationToken) 
         {
-            var availableModules = await CoreDbContext.Modules.ToListAsync();
+            var availableModules = await AppDbContext.Modules.ToListAsync();
 
             return Mapper.Map<IEnumerable<ModuleDto>> (availableModules);
         }
