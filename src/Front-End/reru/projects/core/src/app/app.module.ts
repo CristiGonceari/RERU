@@ -19,6 +19,7 @@ import { ModulesComponent } from './components/modules/modules.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { MainComponent } from './components/main/main.component';
 import { PositionsComponent } from './components/positions/positions.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
 	declarations: [
@@ -49,6 +50,7 @@ import { PositionsComponent } from './components/positions/positions.component';
 		UtilsModule,
 		CommonModule,
 		SvgModule,
+		NgxDropzoneModule,
 		NgxDnDModule.forRoot(),
 	],
 	schemas: [

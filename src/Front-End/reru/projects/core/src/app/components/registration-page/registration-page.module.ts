@@ -8,6 +8,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RegistrationPageRoutingModule } from './registration-page-routing.module';
 import { RouterModule } from '@angular/router';
 import { RegistrationPageComponent } from './registration-page.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+
 
 @NgModule({
   imports: [
@@ -20,7 +22,7 @@ import { RegistrationPageComponent } from './registration-page.component';
     TranslateModule,
     NgbModule,
     RegistrationPageRoutingModule,
-    
+    NgxDropzoneModule
   ],
   providers: [
     TranslatePipe,

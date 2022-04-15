@@ -20,8 +20,12 @@ export class UploadFileModalComponent implements OnInit {
     this.files.push(...event.addedFiles);
   }
 
+  onRemove(event) {
+    this.files.splice(this.files.indexOf(event), 1);
+  }
+
   uploadFile(): void {
-    this.activeModal.close(this.files[0]);
+    this.activeModal.close(this.files);
   };
 
 }
