@@ -319,18 +319,18 @@
       "success-upd-permissions": "Permisiunile pentru rolul modulului au fost actualizate cu succes!"
     },
     "positions": {
-      "management": "Managementul postului candidat",
-      "add": "Adaugă post",
-      "edit": "Editează post",
-      "remove": "Elimină post",
-      "details": "Detalii privind postul candidatului",
-      "subtitle": "Gestionați posturile candidaților",
-      "list": "Lista de posturi",
-      "success-create": "Postul creat cu succes",
-      "success-update": "Postul actualizat cu succes",
-      "success-delete": "Postul eliminat cu succes",
-      "delete-msg": "Sunteți sigur că doriți să ștergeți postul",
-      "name": "Titlul postului",
+      "management": "Gestionarea pozițiilor vacante",
+      "add": "Adaugă poziție",
+      "edit": "Editează poziție",
+      "remove": "Elimină poziție",
+      "details": "Detaliile poziției",
+      "subtitle": "Gestionați pozițiile vacante",
+      "list": "Lista de poziții vacante",
+      "success-create": "Poziția a fost adăugată cu succes",
+      "success-update": "Poziția a fost actualizată cu succes",
+      "success-delete": "Poziția a fost eliminată cu succes",
+      "delete-msg": "Sunteți sigur(-ă) că doriți să eliminați poziția",
+      "name": "Denumirea poziției",
       "is-active": "Activ"
     }
   },
@@ -380,7 +380,9 @@
     "01000201": "Nume necompletat!",
     "01000202": "Conținut necompletat!",
     "01000203": "Date nevalide!",
-    "01000204": "Id nevalid!"
+    "01000204": "Id nevalid!",
+    "01000301": "Postul nevalid",
+    "01000302": "Introduceti denumirea pozitiei"
   },
   "print": {
     "print-table": "Printare tabel",

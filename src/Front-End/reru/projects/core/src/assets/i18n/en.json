@@ -383,7 +383,9 @@
     "01000201": "Empty name!",
     "01000202": "Empty content!",
     "01000203": "Invalid input!",
-    "01000204": "Invalid id!"
+    "01000204": "Invalid id!",
+    "01000301": "Invalid position",
+    "01000302": "Invalid position name"
   },
   "print": {
     "print-table": "Print table",

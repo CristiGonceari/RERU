@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
-import { ConfirmModalComponent } from '@erp/shared';
+import { ConfirmModalComponent, UploadFileModalComponent } from '@erp/shared';
 import { PaginationSummary } from 'projects/core/src/app/utils/models/pagination-summary.model';
 import { UserFilesModel } from 'projects/core/src/app/utils/models/user-files.model';
 import { NotificationUtil } from 'projects/core/src/app/utils/util/notification.util';
@@ -18,16 +18,10 @@ import { saveAs } from 'file-saver';
 export class UserFilesComponent implements OnInit {
 
   isLoading = false;
-	userId: number;
+	userId: string;
 	fileId: string;
   userFiles: UserFilesModel[] = [];
 	pagination: PaginationSummary = new PaginationSummary();
-	pagedSummary = {
-		totalCount: 0,
-		pageSize: 0,
-		currentPage: 1,
-		totalPages: 1,
-	};
 
   constructor(
     private userFilesService: UserFilesService,
@@ -53,12 +47,13 @@ export class UserFilesComponent implements OnInit {
   getUserFiles(data: any = {}): void {
     const request = ObjectUtil.preParseObject({
       userId: +this.userId,
-      page: data.page || this.pagedSummary.currentPage,
-      itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize,
+      page: data.page || this.pagination.currentPage,
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
     });
 
     this.userFilesService.getList(request).subscribe(response => {
-      if(response){
+      if(response) {
+        this.pagination = response.data.pagedSummary;
         this.userFiles = response.data.items;
         this.isLoading = false;
       }
@@ -90,5 +85,20 @@ export class UserFilesComponent implements OnInit {
       this.getUserFiles();
       this.isLoading = false;
     });
+  }
+
+  openUploadDocumentModal(): void {
+  	const modalRef: any = this.modalService.open(UploadFileModalComponent, { centered: true });
+    modalRef.result.then(() => this.uploadDocument(modalRef.result.__zone_symbol__value), () => {});
+  }
+
+  uploadDocument(file): void {
+    let formData = new FormData();
+    formData.append('Data.UserId', this.userId);
+    formData.append('Data.File.File', file);
+    formData.append('Data.File.Type', '5');
+    this.userFilesService.create(formData).subscribe(res => {
+      if (res) this.getUserFiles();
+    })
   }
 }
