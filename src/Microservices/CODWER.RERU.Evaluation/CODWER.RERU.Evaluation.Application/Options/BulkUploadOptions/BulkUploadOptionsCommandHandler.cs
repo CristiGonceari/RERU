@@ -1,6 +1,5 @@
 ﻿using CODWER.RERU.Evaluation.Application.Services;
 using MediatR;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -1,10 +1,10 @@
-﻿namespace CODWER.RERU.Evaluation.Data.Entities.Enums
-{
-    public enum QuestionTypeEnum
-    {
-        FreeText = 1,
-        MultipleAnswers = 2,
-        OneAnswer = 3,
-        HashedAnswer = 4
-    }
-}
+﻿//namespace CODWER.RERU.Evaluation.Data.Entities.Enums
+//{
+//    public enum QuestionTypeEnum
+//    {
+//        FreeText = 1,
+//        MultipleAnswers = 2,
+//        OneAnswer = 3,
+//        HashedAnswer = 4
+//    }
+//}

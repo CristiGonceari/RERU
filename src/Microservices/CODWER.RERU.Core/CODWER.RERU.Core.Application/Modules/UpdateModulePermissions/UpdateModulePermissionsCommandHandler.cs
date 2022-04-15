@@ -1,15 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
-using CODWER.RERU.Core.Data.Entities;
-using CODWER.RERU.Core.Data.Entities.Enums;
 using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.Models;
 using MediatR;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Core.Application.Modules.UpdateModulePermissions 
 {
@@ -52,7 +51,7 @@ namespace CODWER.RERU.Core.Application.Modules.UpdateModulePermissions
                     request.Module.Status = ModuleStatus.Offline;
                 }
 
-                await CoreDbContext.SaveChangesAsync();
+                await AppDbContext.SaveChangesAsync();
             }
             catch
             {

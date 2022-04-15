@@ -1,8 +1,9 @@
 ﻿using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplate
 {
@@ -11,7 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplate
         public GetTestTemplateQueryValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.Id)
-                .SetValidator(x => new ItemMustExistValidator<Data.Entities.TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
+                .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
         }
     }

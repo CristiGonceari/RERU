@@ -1,7 +1,4 @@
-﻿using CODWER.RERU.Evaluation.Application.TestCategoryQuestions;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.TestCategoryQuestions;
+﻿using CODWER.RERU.Evaluation.DataTransferObjects.TestCategoryQuestions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCategoryQuestions;
 using CVU.ERP.Common.DataTransferObjects.Files;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 using Wkhtmltopdf.NetCore;
 
 namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementations

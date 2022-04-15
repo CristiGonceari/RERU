@@ -15,7 +15,7 @@ namespace CODWER.RERU.Core.Application.ModuleRoles.GetModuleRoleDetails
         public GetModuleRoleDetailsQueryHandler(ICommonServiceProvider commonServiceProvider) : base(commonServiceProvider) { }
         public async Task<ModuleRoleDto> Handle(GetModuleRoleDetailsQuery request, CancellationToken cancellationToken)
         {
-            var module = await CoreDbContext.ModuleRoles
+            var module = await AppDbContext.ModuleRoles
                 .FirstOrDefaultAsync(m => m.Id == request.Id);
 
             return Mapper.Map<ModuleRoleDto>(module);

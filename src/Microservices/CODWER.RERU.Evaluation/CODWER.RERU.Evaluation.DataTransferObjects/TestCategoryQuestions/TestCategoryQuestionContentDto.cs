@@ -1,11 +1,6 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
-using System;
+﻿using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.TestCategoryQuestions
 {

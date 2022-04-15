@@ -16,7 +16,7 @@ namespace CODWER.RERU.Core.Application.ModuleRoles.GetModuleRolesForSelect
         public GetModuleRoleSelectItemsQueryHandler(ICommonServiceProvider commonServiceProvider) : base(commonServiceProvider) { }
         public async Task<IEnumerable<SelectItem>> Handle(GetModuleRoleSelectItemsQuery request, CancellationToken cancellationToken)
         {
-            var moduleRoles = await CoreDbContext.ModuleRoles
+            var moduleRoles = await AppDbContext.ModuleRoles
                 .Where(m => m.ModuleId == request.ModuleId).ToListAsync();
 
             return Mapper.Map<IEnumerable<SelectItem>>(moduleRoles);

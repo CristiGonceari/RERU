@@ -4,6 +4,6 @@ export class UserProfile {
     firstName: string;
     email: string;
     lastName: string;
-    patronymic: string;
+    fatherName: string;
     permissions: string[];
 }

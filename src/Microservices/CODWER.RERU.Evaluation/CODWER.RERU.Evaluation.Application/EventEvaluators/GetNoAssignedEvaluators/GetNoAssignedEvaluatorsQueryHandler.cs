@@ -1,12 +1,12 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
+﻿using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetNoAssignedEvaluators
 {
@@ -47,9 +47,9 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetNoAssignedEvalua
                 userProfiles = userProfiles.Where(x => x.LastName.Contains(request.LastName));
             }
 
-            if (!string.IsNullOrEmpty(request.Patronymic))
+            if (!string.IsNullOrEmpty(request.FatherName))
             {
-                userProfiles = userProfiles.Where(x => x.Patronymic.Contains(request.Patronymic));
+                userProfiles = userProfiles.Where(x => x.FatherName.Contains(request.FatherName));
             }
 
             if (!string.IsNullOrEmpty(request.Email))

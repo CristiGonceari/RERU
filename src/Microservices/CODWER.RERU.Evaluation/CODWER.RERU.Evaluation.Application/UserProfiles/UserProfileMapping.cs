@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Models.Internal;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Evaluation.Application.UserProfiles
 {
@@ -31,7 +31,7 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles
 
             CreateMap<UserProfile, SelectItem>()
                 .ForMember(x => x.Value, opts => opts.MapFrom(u => u.Id))
-                .ForMember(x => x.Label, opts => opts.MapFrom(u => u.FirstName + " " + u.LastName + " " + u.Patronymic + " " + $"({u.Idnp})"));
+                .ForMember(x => x.Label, opts => opts.MapFrom(u => u.FirstName + " " + u.LastName + " " + u.FatherName + " " + $"({u.Idnp})"));
 
 
             CreateMap<BaseUserProfile, UserProfile>()
@@ -39,7 +39,7 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles
                 .ForMember(x => x.CoreUserId, opts => opts.MapFrom(u => u.CoreUserId))
                 .ForMember(x => x.FirstName, opts => opts.MapFrom(u => u.FirstName))
                 .ForMember(x => x.LastName, opts => opts.MapFrom(u => u.LastName))
-                .ForMember(x => x.Patronymic, opts => opts.MapFrom(u => u.FatherName))
+                .ForMember(x => x.FatherName, opts => opts.MapFrom(u => u.FatherName))
                 .ForMember(x => x.Idnp, opts => opts.MapFrom(u => u.Idnp))
                 .ForMember(x => x.Email, opts => opts.MapFrom(u => u.Email));
         }

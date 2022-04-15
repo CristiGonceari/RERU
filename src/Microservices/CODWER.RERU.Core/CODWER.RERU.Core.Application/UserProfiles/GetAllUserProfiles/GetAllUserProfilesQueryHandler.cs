@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using CVU.ERP.Common.Pagination;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
-using CODWER.RERU.Core.Data.Entities;
 using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
 using MediatR;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles 
 {
@@ -20,7 +20,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
 
         public async Task<PaginatedModel<UserProfileDto>> Handle (GetAllUserProfilesQuery request, CancellationToken cancellationToken) 
         {
-            var userProfiles = CoreDbContext.UserProfiles.AsQueryable();
+            var userProfiles = AppDbContext.UserProfiles.AsQueryable();
 
             userProfiles = Filter(userProfiles, request);
             userProfiles = Sort(userProfiles, request);
@@ -39,7 +39,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
                 foreach (var s in toSearch)
                 {
                     items = items.Where(p =>
-                        p.Name.ToLower().Contains(s.ToLower())
+                        p.FirstName.ToLower().Contains(s.ToLower())
                         || p.LastName.ToLower().Contains(s.ToLower())
                         || p.FatherName.ToLower().Contains(s.ToLower()));
                 }
@@ -74,7 +74,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
 
             if(request.Sort.Equals("name"))
             {
-                items = request.Order.Equals("asc")? items.OrderBy(up => up.LastName).ThenBy(up => up.Name): items.OrderByDescending(up => up.LastName).ThenByDescending(up => up.Name);
+                items = request.Order.Equals("asc")? items.OrderBy(up => up.LastName).ThenBy(up => up.FirstName): items.OrderByDescending(up => up.LastName).ThenByDescending(up => up.FirstName);
             }
             else if (request.Sort.Equals("username"))
             {

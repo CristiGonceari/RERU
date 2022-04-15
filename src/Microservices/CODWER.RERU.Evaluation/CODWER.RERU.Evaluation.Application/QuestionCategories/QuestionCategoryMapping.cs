@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionCategory;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionCategories
 {

@@ -53,7 +53,7 @@ export class MyProfileComponent implements OnInit {
 				this.avatarString = res.data.mediaFileId;
 				this.fileId = res.data.mediaFileId;
 			}
-			const matches = res && (res.data.name + ' ' + res.data.lastName).match(/\b(\w)/g);
+			const matches = res && (res.data.firstName + ' ' + res.data.lastName).match(/\b(\w)/g);
 			this.acronym = matches ? matches.join('') : null;
 			this.isLoading = false;
 		});

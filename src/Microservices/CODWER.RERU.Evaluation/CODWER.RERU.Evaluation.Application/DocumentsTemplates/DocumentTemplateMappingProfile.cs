@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Evaluation.Data.Entities.Documents;
 using CODWER.RERU.Evaluation.DataTransferObjects.Documents;
+using RERU.Data.Entities.Documents;
 
 namespace CODWER.RERU.Evaluation.Application.DocumentsTemplates
 {

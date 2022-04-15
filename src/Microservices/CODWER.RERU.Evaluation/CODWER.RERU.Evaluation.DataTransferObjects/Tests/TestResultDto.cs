@@ -1,4 +1,4 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
+﻿using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
 {

@@ -1,8 +1,8 @@
 using AutoMapper;
 using CVU.ERP.Common.DataTransferObjects.Users;
-using CODWER.RERU.Core.Data.Entities;
 using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Identity.Models;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Users
 {

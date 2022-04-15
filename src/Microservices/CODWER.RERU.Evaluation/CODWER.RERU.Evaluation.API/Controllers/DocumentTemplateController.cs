@@ -1,17 +1,17 @@
 ﻿using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.DocumentsTemplates.AddDocumentTemplate;
-using CODWER.RERU.Evaluation.Application.DocumentsTemplates.GetDocumentCategoryKeys;
 using CODWER.RERU.Evaluation.Application.DocumentsTemplates.GetDocumentTemplate;
 using CODWER.RERU.Evaluation.Application.DocumentsTemplates.GetDocumentTemplates;
 using CODWER.RERU.Evaluation.Application.DocumentsTemplates.RemoveDocumentTemplate;
 using CODWER.RERU.Evaluation.Application.DocumentsTemplates.UpdateDocumentTemplate;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.Documents;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.DocumentsTemplates.GetDocumentKeys;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {

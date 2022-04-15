@@ -7,7 +7,7 @@ namespace CODWER.RERU.Core.Application.Validators.DTO.Users
     {
         public EditUserPersonalDetailsValidator()
         {
-            RuleFor(x => x.Name).NameRule();
+            RuleFor(x => x.FirstName).NameRule();
             RuleFor(x => x.LastName).NameRule();
         }
     }

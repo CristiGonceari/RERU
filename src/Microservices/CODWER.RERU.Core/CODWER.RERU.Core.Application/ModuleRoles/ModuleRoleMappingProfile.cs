@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Core.Data.Entities;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CODWER.RERU.Core.DataTransferObjects.ModuleRoles;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.ModuleRoles
 {

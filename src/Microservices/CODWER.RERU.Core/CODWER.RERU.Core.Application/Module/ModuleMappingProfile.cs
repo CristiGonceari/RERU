@@ -9,7 +9,7 @@ namespace CODWER.RERU.Core.Application.Module {
         public ModuleMappingProfile ()
         {
             CreateMap<ApplicationUser, ApplicationUserDto>()
-                .ForMember(x => x.Name, opts => opts.MapFrom(op => $"{op.FirstName} {op.LastName}"));
+                .ForMember(x => x.FirstName, opts => opts.MapFrom(op => $"{op.FirstName} {op.LastName}"));
 
             CreateMap<ApplicationUserModule, ApplicationUserModuleDto> ();
             CreateMap<ApplicationModule, ApplicationModuleDto> ();

@@ -1,15 +1,15 @@
 ﻿using CODWER.RERU.Core.Application.Validation;
-using CODWER.RERU.Core.Data.Entities;
-using CODWER.RERU.Core.Data.Persistence.Context;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.CandidatePositions.EditCandidatePosition
 {
     public class EditCandidatePositionCommandValidator : AbstractValidator<EditCandidatePositionCommand>
     {
-        public EditCandidatePositionCommandValidator(CoreDbContext coreDbContext)
+        public EditCandidatePositionCommandValidator(AppDbContext coreDbContext)
         {
             RuleFor(r => r.Data.Name)
                 .NotEmpty()

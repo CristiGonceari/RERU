@@ -1,23 +1,19 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Core.Data.Persistence.Context;
 using CODWER.RERU.Core.DataTransferObjects.CandidatePositions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.CandidatePositions.GetCandidatePosition
 {
     internal class GetCandidatePositionQueryHandler : IRequestHandler<GetCandidatePositionQuery, CandidatePositionDto>
     {
-        private readonly CoreDbContext _coreDbContext;
+        private readonly AppDbContext _coreDbContext;
         private readonly IMapper _mapper;
 
-        public GetCandidatePositionQueryHandler(CoreDbContext coreDbContext, IMapper mapper)
+        public GetCandidatePositionQueryHandler(AppDbContext coreDbContext, IMapper mapper)
         {
             _coreDbContext = coreDbContext;
             _mapper = mapper;

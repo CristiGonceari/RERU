@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using AutoMapper;
-using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates
 {

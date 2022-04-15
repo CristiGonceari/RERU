@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Application.TestCategoryQuestions;
 using CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCategoryQuestions;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 using Wkhtmltopdf.NetCore;
 
 namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementations
@@ -104,12 +103,12 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
                 source = source.Replace(key, value);
             }
 
-            //source = source.Replace("{test_name}", item.TestTemplate.Name);
+            //source = source.Replace("{test_name}", item.TestTemplate.FirstName);
             //source = source.Replace("{nr_test_question}", item.TestTemplate.QuestionCount.ToString());
             //source = source.Replace("{test_time}", item.ProgrammedTime.ToString("dd/MM/yyyy, HH:mm"));
             //source = source.Replace("{min_percentage}", item.TestTemplate.MinPercent.ToString());
-            //source = source.Replace("{event_name}", item.EventId != null ? item.Event.Name : "-");
-            //source = source.Replace("{location_name}", item.LocationId != null ? item.Location.Name : "-");
+            //source = source.Replace("{event_name}", item.EventId != null ? item.Event.FirstName : "-");
+            //source = source.Replace("{location_name}", item.LocationId != null ? item.Location.FirstName : "-");
             //source = source.Replace("{evaluat_name}", item.UserProfile.FirstName + " " + item.UserProfile.LastName);
             //source = source.Replace("{evaluator_name}", getEvaluatorName(item));
             //source = source.Replace("{tr_area_replace}", await GetTableContentAsync(item));

@@ -5,12 +5,12 @@ using System.Reflection;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Services.Identity.Exceptions;
 using CODWER.RERU.Core.Application.Common.Services.PasswordGenerator;
-using CODWER.RERU.Core.Data.Entities;
 using CVU.ERP.Identity.Models;
 using CVU.ERP.Notifications.Email;
 using Microsoft.AspNetCore.Identity;
 using CVU.ERP.Notifications.Services;
 using CVU.ERP.Notifications.Enums;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 {
@@ -50,7 +50,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                         var template = await File.ReadAllTextAsync(assemblyPath + "/UserRegister.html");
 
                         template = template
-                            .Replace("{FirstName}", $"{userProfile.Name} {userProfile.LastName}")
+                            .Replace("{FirstName}", $"{userProfile.FirstName} {userProfile.LastName}")
                             .Replace("{Password}", password);
 
                         var emailData = new EmailData()

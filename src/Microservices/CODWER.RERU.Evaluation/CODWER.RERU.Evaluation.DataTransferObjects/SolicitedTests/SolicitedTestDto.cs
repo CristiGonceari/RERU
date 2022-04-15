@@ -1,5 +1,5 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using System;
+﻿using System;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests
 {

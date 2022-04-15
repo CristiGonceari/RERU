@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionCategories.AddQuestionCategory
 {
@@ -19,7 +20,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionCategories.AddQuestionCateg
 
         public async Task<int> Handle(AddQuestionCategoryCommand request, CancellationToken cancellationToken)
         {
-            var questionCategoryToCreate = _mapper.Map<Evaluation.Data.Entities.QuestionCategory>(request.Data);
+            var questionCategoryToCreate = _mapper.Map<QuestionCategory>(request.Data);
 
             await _appDbContext.QuestionCategories.AddAsync(questionCategoryToCreate);
             await _appDbContext.SaveChangesAsync();

@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
-using CODWER.RERU.Core.Data.Entities;
 using CODWER.RERU.Core.Data.Persistence.Helpers;
 using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Models.Internal;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.UserProfiles.Internal.CreateInternalUserProfile
 {
@@ -31,7 +31,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.Internal.CreateInternalUserP
 
         public async Task<ApplicationUser> Handle(CreateInternalUserProfileCommand request, CancellationToken cancellationToken)
         {
-            var existUserProfileByIdnp = await CoreDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Idnp == request.Data.Idnp);
+            var existUserProfileByIdnp = await AppDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Idnp == request.Data.Idnp);
 
             if (existUserProfileByIdnp == null)
             {
@@ -50,7 +50,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.Internal.CreateInternalUserP
                 }
                 else
                 {
-                    var defaultRoles = CoreDbContext.Modules
+                    var defaultRoles = AppDbContext.Modules
                         .SelectMany(m => m.Roles.Where(r => r.IsAssignByDefault).Take(1))
                         .ToList();
 
@@ -77,8 +77,8 @@ namespace CODWER.RERU.Core.Application.UserProfiles.Internal.CreateInternalUserP
                     }
                 }
 
-                CoreDbContext.UserProfiles.Add(userProfile);
-                await CoreDbContext.SaveChangesAsync();
+                AppDbContext.UserProfiles.Add(userProfile);
+                await AppDbContext.SaveChangesAsync();
 
                 return await GetApplicationUserAndSync(userProfile.Id);
             }
@@ -90,7 +90,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.Internal.CreateInternalUserP
 
         private async Task<ApplicationUser> GetApplicationUserAndSync(int userProfileId)
         {
-            var userProfile = await CoreDbContext.UserProfiles
+            var userProfile = await AppDbContext.UserProfiles
                 .IncludeBasic()
                 .FirstOrDefaultAsync(up => up.Id == userProfileId);
 

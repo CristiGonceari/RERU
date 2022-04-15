@@ -7,18 +7,19 @@ using CVU.ERP.Common.Validation;
 using FluentValidation;
 using FluentValidation.Validators;
 using System.Linq;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Users.InregistrateUser
 {
     public class InregistrateUserCommandValidator : AbstractValidator<InregistrateUserCommand>
     {
-        private readonly CoreDbContext _coreDbContext;
+        private readonly AppDbContext _appDbContext;
 
-        public InregistrateUserCommandValidator(IValidator<CreateUserDto> createUserDto, CoreDbContext coreDbContext)
+        public InregistrateUserCommandValidator(IValidator<CreateUserDto> createUserDto, AppDbContext appDbContext)
         {
-            _coreDbContext = coreDbContext;
+            _appDbContext = appDbContext;
 
-            RuleFor(x => x.Name).NotEmpty()
+            RuleFor(x => x.FirstName).NotEmpty()
                 .WithMessage(ValidationMessages.InvalidInput)
                 .WithErrorCode(ValidationCodes.EMPTY_USER_NAME);
 
@@ -43,7 +44,7 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
         }
         private void CheckIfUniqueIdnpOnCreate(string idnp, CustomContext context)
         {
-            var exist = _coreDbContext.UserProfiles.Any(x => x.Idnp == idnp);
+            var exist = _appDbContext.UserProfiles.Any(x => x.Idnp == idnp);
 
             if (exist)
             {

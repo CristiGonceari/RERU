@@ -1,9 +1,9 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CODWER.RERU.Evaluation.DataTransferObjects.Documents;
+﻿using CODWER.RERU.Evaluation.DataTransferObjects.Documents;
 using MediatR;
+using RERU.Data.Entities.Enums;
 using System.Collections.Generic;
 
-namespace CODWER.RERU.Evaluation.Application.DocumentsTemplates.GetDocumentCategoryKeys
+namespace CODWER.RERU.Evaluation.Application.DocumentsTemplates.GetDocumentKeys
 {
     public class GetDocumentKeysQuery : IRequest<List<DocumentTemplateKeyDto>>
     {

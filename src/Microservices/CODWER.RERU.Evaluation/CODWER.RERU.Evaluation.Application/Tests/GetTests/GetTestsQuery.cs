@@ -1,10 +1,10 @@
 ﻿using CODWER.RERU.Evaluation.Application.Permissions;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 using System;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 {

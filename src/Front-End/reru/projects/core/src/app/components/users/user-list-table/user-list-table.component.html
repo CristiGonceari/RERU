@@ -34,7 +34,7 @@
         </td>
         <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
           <a [routerLink]="['../../user-profile', user.id, 'overview']" class="font-size-lg text-dark-50 text-hover-dark-75" >
-            {{ user.lastName }} {{ user.name }} {{user.fatherName}}
+            {{ user.lastName }} {{ user.firstName }} {{user.fatherName}}
         </a>
         </td>
         <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
@@ -105,18 +105,18 @@
                     ngbDropdownItem *permission="'P00000015'">
                     {{ 'change-password-comp.title' | translate }}
                   </button>
-                  <button (click)="openConfirmModal(user.id, user.name, user.lastName, 'reset-password')" class="navi-link align-items-baseline py-2 px-6 my-2"
+                  <button (click)="openConfirmModal(user.id, user.firstName, user.lastName, 'reset-password')" class="navi-link align-items-baseline py-2 px-6 my-2"
                     ngbDropdownItem *permission="'P00000016'">
                     {{ 'reset-password.title' | translate }}
                   </button>
                   <span *permission="'P00000017'">
-                    <button *ngIf="user.isActive === false" (click)="openConfirmModal(user.id, user.name, user.lastName, 'activate-user')"
+                    <button *ngIf="user.isActive === false" (click)="openConfirmModal(user.id, user.firstName, user.lastName, 'activate-user')"
                       class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem>
                       {{ 'button.activate-user' | translate }}
                     </button>
                   </span>
                   <span *permission="'P00000018'">
-                    <button *ngIf="user.isActive === true" (click)="openConfirmModal(user.id, user.name, user.lastName, 'deactivate-user')"
+                    <button *ngIf="user.isActive === true" (click)="openConfirmModal(user.id, user.firstName, user.lastName, 'deactivate-user')"
                       class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem>
                       {{ 'button.deactivate-user' | translate }}
                     </button>

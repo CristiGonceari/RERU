@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.DataTransferObjects.Articles;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Evaluation.Application.Articles
 {
@@ -8,9 +8,9 @@ namespace CODWER.RERU.Evaluation.Application.Articles
     {
         public ArticleMappings()
         {
-            CreateMap<Article, ArticleDto>();
+            CreateMap<ArticleEvaluation, ArticleEvaluationDto>();
 
-            CreateMap<ArticleDto, Article>()
+            CreateMap<ArticleEvaluationDto, ArticleEvaluation>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
         }
     }

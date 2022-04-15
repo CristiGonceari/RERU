@@ -1,9 +1,9 @@
 ﻿using CODWER.RERU.Evaluation.Application.Permissions;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CVU.ERP.Module.Application.Attributes;
 using CVU.ERP.StorageService.Models;
 using MediatR;
 using System.Collections.Generic;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit
 {

@@ -1,6 +1,6 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Evaluation.Application.Services
 {

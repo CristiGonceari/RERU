@@ -18,19 +18,19 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     public class ArticleController : BaseController
     {
         [HttpGet("{id}")]
-        public async Task<ArticleDto> GetArticle([FromRoute] int id)
+        public async Task<ArticleEvaluationDto> GetArticle([FromRoute] int id)
         {
             return await Mediator.Send(new GetArticleQuery { Id = id });
         }
 
         [HttpGet]
-        public async Task<PaginatedModel<ArticleDto>> GetArticles([FromQuery] GetArticlesQuery query)
+        public async Task<PaginatedModel<ArticleEvaluationDto>> GetArticles([FromQuery] GetArticlesQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpPost]
-        public async Task<int> AddEditArticle([FromBody] ArticleDto request)
+        public async Task<int> AddEditArticle([FromBody] ArticleEvaluationDto request)
         {
             return await Mediator.Send(new AddEditArticleCommand { Data = request });
         }

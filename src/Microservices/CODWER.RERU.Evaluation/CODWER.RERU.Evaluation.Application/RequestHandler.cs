@@ -3,12 +3,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CVU.ERP.Common.Data.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using RERU.Data.Entities.Enums;
 using ISession = CODWER.RERU.Evaluation.Application.Interfaces.ISession;
 
 namespace CODWER.RERU.Evaluation.Application

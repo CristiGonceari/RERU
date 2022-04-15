@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests
 {
@@ -44,7 +44,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
 
             if (!string.IsNullOrWhiteSpace(request.UserName))
             {
-                tests = tests.Where(x => x.UserProfile.FirstName.ToLower().Contains(request.UserName.ToLower()) || x.UserProfile.LastName.ToLower().Contains(request.UserName.ToLower()) || x.UserProfile.Patronymic.ToLower().Contains(request.UserName.ToLower()));
+                tests = tests.Where(x => x.UserProfile.FirstName.ToLower().Contains(request.UserName.ToLower()) || x.UserProfile.LastName.ToLower().Contains(request.UserName.ToLower()) || x.UserProfile.FatherName.ToLower().Contains(request.UserName.ToLower()));
             }
 
             if (!string.IsNullOrWhiteSpace(request.Idnp))

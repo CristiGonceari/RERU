@@ -1,6 +1,4 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using MediatR;
+﻿using MediatR;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +6,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.Common.DataTransferObjects.Files;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 using Wkhtmltopdf.NetCore;
 
 namespace CODWER.RERU.Evaluation.Application.PrintTestReportList

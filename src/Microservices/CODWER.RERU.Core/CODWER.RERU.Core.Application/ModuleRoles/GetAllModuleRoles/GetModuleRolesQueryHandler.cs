@@ -6,6 +6,7 @@ using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.ModuleRoles.GetAllModuleRoles
 {
@@ -21,10 +22,10 @@ namespace CODWER.RERU.Core.Application.ModuleRoles.GetAllModuleRoles
 
         public async Task<PaginatedModel<ModuleRoleRowDto>> Handle(GetModuleRolesQuery request, CancellationToken cancellationToken)
         {
-            var moduleRoles = CoreDbContext.ModuleRoles
+            var moduleRoles = AppDbContext.ModuleRoles
                 .Where(m=>m.ModuleId == request.ModuleId);
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Data.Entities.ModuleRole, ModuleRoleRowDto>(moduleRoles, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<ModuleRole, ModuleRoleRowDto>(moduleRoles, request);
 
             return paginatedModel;
         }

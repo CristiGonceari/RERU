@@ -1,7 +1,8 @@
 using AutoMapper;
-using CODWER.RERU.Core.Data.Entities.Enums;
 using CODWER.RERU.Core.DataTransferObjects.Modules;
 using CVU.ERP.Module.Application.Models;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Core.Application.Modules
 {
@@ -9,20 +10,20 @@ namespace CODWER.RERU.Core.Application.Modules
     {
         public ModuleMappingProfile() 
         {
-            CreateMap<Data.Entities.Module, ModuleDto> ()
-                .ForMember (destination => destination.Status, options => options.MapFrom (m => m.Status == Data.Entities.Enums.ModuleStatus.Online));
+            CreateMap<global::RERU.Data.Entities.Module, ModuleDto> ()
+                .ForMember (destination => destination.Status, options => options.MapFrom (m => m.Status == ModuleStatus.Online));
 
-            CreateMap<ModuleDto, Data.Entities.Module> ()
+            CreateMap<ModuleDto,global::RERU.Data.Entities.Module> ()
                 .ForMember (destination => destination.Id, options => options.Ignore ());
 
-            CreateMap<Data.Entities.Module, UserModuleAccessDto> ();
+            CreateMap<global::RERU.Data.Entities.Module, UserModuleAccessDto> ();
 
-            CreateMap<UserModuleAccessDto, Data.Entities.Module> ()
+            CreateMap<UserModuleAccessDto, global::RERU.Data.Entities.Module> ()
                 .ForMember (destination => destination.Id, options => options.Ignore ());
 
-            CreateMap<Data.Entities.Module, AddEditModuleDto> ();
+            CreateMap<global::RERU.Data.Entities.Module, AddEditModuleDto> ();
 
-            CreateMap<AddEditModuleDto, Data.Entities.Module> ()
+            CreateMap<AddEditModuleDto, global::RERU.Data.Entities.Module> ()
                 .ForMember (destination => destination.Id, options => options.Ignore ())
                 .ForMember (destination => destination.Type, options => options.Ignore ())
                 .ForMember(destination => destination.Code, options =>
@@ -31,9 +32,9 @@ namespace CODWER.RERU.Core.Application.Modules
                     options.MapFrom(src => src.Code);
                 });
 
-            CreateMap<CVU.ERP.Module.Common.Models.ModulePermission, Data.Entities.ModulePermission> ();
+            CreateMap<CVU.ERP.Module.Common.Models.ModulePermission, ModulePermission> ();
 
-            CreateMap<Data.Entities.Module, ModuleRolesDto>();
+            CreateMap<global::RERU.Data.Entities.Module, ModuleRolesDto>();
 
         }
     }

@@ -2,7 +2,6 @@
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
-using CODWER.RERU.Core.Data.Entities;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
@@ -13,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Users.InregistrateUser
 {
@@ -40,7 +40,7 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
         {
             var newUser = new CreateUserDto()
             {
-                Name = request.Name,
+                FirstName = request.FirstName,
                 LastName = request.LastName,
                 FatherName = request.FatherName,
                 Idnp = request.Idnp,
@@ -50,7 +50,7 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
             };
 
             var userProfile = Mapper.Map<UserProfile>(newUser);
-            var defaultRoles = CoreDbContext.Modules
+            var defaultRoles = AppDbContext.Modules
                 .SelectMany(m => m.Roles.Where(r => r.IsAssignByDefault).Take(1))
                 .ToList();
 
@@ -76,19 +76,19 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
                 }
             }
 
-            CoreDbContext.UserProfiles.Add(userProfile);
-            await CoreDbContext.SaveChangesAsync();
+            AppDbContext.UserProfiles.Add(userProfile);
+            await AppDbContext.SaveChangesAsync();
 
             await LogAction(userProfile);
 
-            await SyncUserProfile(userProfile);
+            //await SyncUserProfile(userProfile);
 
             return userProfile.Id;
         }
 
         private async Task LogAction(UserProfile userProfile)
         {
-            await _loggerService.LogWithoutUser(LogData.AsCore($"User {userProfile.Name} {userProfile.LastName} was inregistrated to system", userProfile));
+            await _loggerService.LogWithoutUser(LogData.AsCore($"User {userProfile.FirstName} {userProfile.LastName} was inregistrated to system", userProfile));
         }
 
         private async Task SyncUserProfile(UserProfile userProfile)

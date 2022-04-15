@@ -1,7 +1,7 @@
 ﻿using CODWER.RERU.Evaluation.Application.Permissions;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionBulkTemplate
 {

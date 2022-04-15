@@ -1,12 +1,12 @@
 ﻿using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using CVU.ERP.Module.Application.TableExportServices.Validators;
 using FluentValidation;
 using System.Linq;
+using RERU.Data.Persistence.Context;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Evaluation.Application.Events.PrintUserEvents
 {

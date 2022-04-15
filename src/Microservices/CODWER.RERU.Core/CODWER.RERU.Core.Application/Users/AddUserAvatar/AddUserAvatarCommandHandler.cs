@@ -20,7 +20,7 @@ namespace CODWER.RERU.Core.Application.Users.AddUserAvatar
 
         public async Task<string> Handle(AddUserAvatarCommand request, CancellationToken cancellationToken)
         {
-            var user = CoreDbContext.UserProfiles.FirstOrDefault(x => x.Id == request.Data.UserId);
+            var user = AppDbContext.UserProfiles.FirstOrDefault(x => x.Id == request.Data.UserId);
 
             if (request.Data.File == null && user != null)
             {
@@ -31,7 +31,7 @@ namespace CODWER.RERU.Core.Application.Users.AddUserAvatar
                 user.MediaFileId = await _storageFileService.AddFile(request.Data.File);
             }
 
-            await CoreDbContext.SaveChangesAsync();
+            await AppDbContext.SaveChangesAsync();
 
             return user?.MediaFileId;
         }

@@ -28,11 +28,11 @@ namespace CODWER.RERU.Core.Application.Users.DeactivateUser {
 
         public async Task<Unit> Handle (DeactivateUserCommand request, CancellationToken cancellationToken) 
         {
-            var userProfile = await CoreDbContext.UserProfiles.FirstOrDefaultAsync(up => up.Id == request.Id);
+            var userProfile = await AppDbContext.UserProfiles.FirstOrDefaultAsync(up => up.Id == request.Id);
             if (userProfile != null)
             {
                 userProfile.IsActive = false;
-                await CoreDbContext.SaveChangesAsync();
+                await AppDbContext.SaveChangesAsync();
 
                 try
                 {
@@ -42,7 +42,7 @@ namespace CODWER.RERU.Core.Application.Users.DeactivateUser {
                         await File.ReadAllTextAsync(assemblyPath + "/DeactivateUser.html", cancellationToken);
 
                     template = template
-                        .Replace("{FirstName}", userProfile.Name + ' ' + userProfile.LastName);
+                        .Replace("{FirstName}", userProfile.FirstName + ' ' + userProfile.LastName);
                     
                     var emailData = new EmailData()
                     {

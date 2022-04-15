@@ -1,16 +1,16 @@
-using CODWER.RERU.Core.Data.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Data.Persistence.Initializer
 {
     public class DatabaseSeeder
     {
-        public static void Migrate(CoreDbContext coreDbContext)
+        public static void Migrate(AppDbContext appDbContext)
         {
-            coreDbContext.Database.Migrate();
+            appDbContext.Database.Migrate();
         }
 
-        public static void SeedDb(CoreDbContext appDbContext)
+        public static void SeedDb(AppDbContext appDbContext)
         {
         }
     }

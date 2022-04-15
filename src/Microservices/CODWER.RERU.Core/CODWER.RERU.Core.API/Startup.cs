@@ -26,6 +26,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using NSwag;
 using NSwag.Generation.Processors.Security;
+using RERU.Data.Persistence.Context;
 using Wkhtmltopdf.NetCore;
 
 namespace CODWER.RERU.Core.API
@@ -119,14 +120,14 @@ namespace CODWER.RERU.Core.API
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, CoreDbContext coreDbContext, IMediator mediator)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext appDbContext, IMediator mediator)
         {
 
             //app.UseApiResponseAndExceptionWrapper ()
 
             app.UseAuthentication();
 
-            DatabaseSeeder.Migrate(coreDbContext);
+            DatabaseSeeder.Migrate(appDbContext);
 
             app.UseSwaggerUi3(settings =>
             {
