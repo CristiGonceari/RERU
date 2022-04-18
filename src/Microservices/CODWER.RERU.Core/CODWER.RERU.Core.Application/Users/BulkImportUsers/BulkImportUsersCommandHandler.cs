@@ -32,6 +32,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
             int totalRows = workSheet.Dimension.Rows;
 
+
             try
             {
                 for (int i = 1; i <= totalRows; i++)
@@ -54,12 +55,12 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
                     await Mediator.Send(command);
                 }
-        }
+            }
             catch (Exception e)
             {
                 throw new Exception($"Excel error, please try with new created excel document {e.Message}");
-    }
-}
+            }
+        }
 
     }
 }

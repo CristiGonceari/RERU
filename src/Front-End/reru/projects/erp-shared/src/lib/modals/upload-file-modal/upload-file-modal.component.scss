@@ -1,3 +1,9 @@
 ngx-dropzone-label {
     outline: 0 !important;
 }
+
+ngx-dropzone {
+    min-height: 180px;
+    flex-wrap: wrap;
+    height: auto !important;
+}

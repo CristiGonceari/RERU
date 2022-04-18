@@ -11,6 +11,7 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { UserService } from '../../../utils/services/user.service';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
+import { ImportUsersModalComponent } from '../../../utils/modals/import-users-modal/import-users-modal.component';
 
 @Component({
 	selector: 'app-user-list-table',
@@ -153,6 +154,24 @@ export class UserListTableComponent implements OnInit {
 			this.viewDetails = true;
 		}
 	}
+
+	openImportModal(): void {
+		const modalRef: any = this.modalService.open(ImportUsersModalComponent, { centered: true, backdrop: 'static', size: 'lg' });
+		modalRef.result.then((data) => this.importRoles(data), () => { });
+	}
+
+	importRoles(data): void {
+		this.isLoading = true;
+		const form = new FormData();
+		form.append('file', data.file);
+		this.userService.bulkAddUsers(form).subscribe(() => {
+			this.notificationService.success('Success', 'Users Imported!', NotificationUtil.getDefaultMidConfig());
+			this.list();
+		}, () => { }, () => {
+			this.isLoading = false;
+		})
+	}
+	
 
 	openConfirmModal(id: number, firstName, lastName, type): void {
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
