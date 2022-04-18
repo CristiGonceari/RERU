@@ -24,7 +24,7 @@ spec:
         imagePullPolicy: Always
         env:
         - name: ConnectionStrings__RERU
-          value: {{ .Values.reru_core.database.connection_string_common }}   
+          value: {{ .Values.reru_core.database.reru_connection_string }}   
         - name: ConnectionStrings__Identity
           value: {{ .Values.reru_core.database.identity_connection_string }}   
         - name: ConnectionStrings__Log

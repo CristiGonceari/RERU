@@ -66,7 +66,7 @@ reru_core:
     repository: cvuintell/reru-core
   database:
     # connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Core-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
-    connection_string_common: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
     identity_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
     log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
     storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
@@ -79,7 +79,7 @@ reru_identity_migrator:
     repository: cvuintell/reru-identity-migrator
   database:
     connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
-    connection_string_common: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
 
 reru_storage_migrator:
   enabled: true
@@ -125,7 +125,7 @@ reru_evaluation:
     repository: cvuintell/reru-evaluation
   database:
     # connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Evaluation-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
-    connection_string_common: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
     log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
     storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
 
