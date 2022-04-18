@@ -2,7 +2,6 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileService } from '../../utils/services/profile.service';
 import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
-import { DomSanitizer } from '@angular/platform-browser';
 import { MyProfile } from '../../utils/models/user-profile.model';
 import { I18nService } from '../../utils/services/i18n.service';
 import { forkJoin } from 'rxjs';
@@ -37,7 +36,6 @@ export class MyProfileComponent implements OnInit {
 		private modalService: NgbModal,
 		private authService: AuthenticationService,
 		private profileService: ProfileService,
-		private sanitizer: DomSanitizer,
 		public translate: I18nService
 	) {}
 

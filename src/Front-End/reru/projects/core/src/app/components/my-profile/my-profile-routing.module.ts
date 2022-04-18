@@ -5,6 +5,7 @@ import { ChangePersonalDataComponent } from './change-personal-data/change-perso
 import { AuthenticationGuard } from '@erp/shared';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { OverviewProfileComponent } from './overview-profile/overview-profile.component';
+import { UserFilesComponent } from '../users/user-profile/user-files/user-files.component';
 
 const routes: Routes = [
     {
@@ -14,7 +15,8 @@ const routes: Routes = [
         children: [
             { path: 'overview', component: OverviewProfileComponent },
             { path: 'change-password', component: ChangePasswordComponent },
-            { path: 'change-my-data', component: ChangePersonalDataComponent }
+            { path: 'change-my-data', component: ChangePersonalDataComponent },
+            { path: 'my-documents', component: UserFilesComponent },
         ]
     }
 ];

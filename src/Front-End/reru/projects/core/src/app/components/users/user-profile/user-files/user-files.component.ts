@@ -141,8 +141,8 @@ export class UserFilesComponent implements OnInit {
   uploadMyDocs(files): void {
     for(let myFile of files) {
       let formData = new FormData();
-      formData.append('Data.File.File', myFile);
-      formData.append('Data.File.Type', '5');
+      formData.append('File.File', myFile);
+      formData.append('File.Type', '5');
       this.myFiles.addFile(formData).subscribe(res => {
         if (res) this.subsribeForParams();
       })
