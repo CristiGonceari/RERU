@@ -36,7 +36,10 @@
     "file-name": "Denumirea documentului",
     "download": "Descarcă",
     "delete": "Șterge",
-    "import-users": "Import utilizatori"
+    "upload-doc": "Încărcă document",
+    "import-users": "Import utilizatori",
+    "modal-title": "Încărcarea documentelor",
+    "modal-description": "Încărcă document sau apasa aici pentru incarcare"
   },
   "login": {
     "admin-panel": "Panou de Administrare",

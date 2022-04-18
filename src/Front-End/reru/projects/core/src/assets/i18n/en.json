@@ -31,12 +31,15 @@
     "position-to-candidate": "Position to Candidate"
   },
   "files":{
-    "title": "Documets",
+    "title": "Documents",
     "files-list": "Documents list",
     "file-name": "Document name",
     "download": "Download",
     "delete": "Delete",
-    "import-users": "Import Users"
+    "upload-doc": "Upload document",
+    "import-users": "Import Users",
+    "modal-title": "Upload file modal",
+    "modal-description": "Drop file hereor click to upload"
   },
   "login": {
     "admin-panel": "Administration Panel",
