@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { ConfirmModalComponent, UploadFileModalComponent } from '@erp/shared';
@@ -9,6 +9,9 @@ import { NotificationUtil } from 'projects/core/src/app/utils/util/notification.
 import { ObjectUtil } from 'projects/core/src/app/utils/util/object.util';
 import { UserFilesService } from '../../../../utils/services/user-files.service';
 import { saveAs } from 'file-saver';
+import { forkJoin } from 'rxjs';
+import { I18nService } from 'projects/core/src/app/utils/services/i18n.service';
+import { MyProfileService } from 'projects/core/src/app/utils/services/my-profile.service';
 
 @Component({
   selector: 'app-user-files',
@@ -22,30 +25,54 @@ export class UserFilesComponent implements OnInit {
 	fileId: string;
   userFiles: UserFilesModel[] = [];
   files: any;
+  docTitle: string;
+  docDescription: string;
 	pagination: PaginationSummary = new PaginationSummary();
 
   constructor(
     private userFilesService: UserFilesService,
+    private myFiles: MyProfileService, 
 		private activatedRoute: ActivatedRoute,
+		private router: Router,
     private notificationService: NotificationsService,
     private modalService: NgbModal,
+		public translate: I18nService,
   ) { }
 
   ngOnInit(): void {
-		this.subsribeForParams();
-  }
-
-  subsribeForParams() {
 		this.isLoading = true;
-		this.activatedRoute.parent.params.subscribe(params => {
-			if (params.id) {
-				this.userId = params.id;
-				this.getUserFiles();
-			}
-		});
+    this.subsribeForParams();
+  }
+  
+  subsribeForParams(data: any = {}) {
+    if (this.router.url.includes('/my-documents')) {
+      this.getMyFiles(data);
+    } else {
+      this.activatedRoute.parent.params.subscribe(params => {
+        if (params.id) {
+          this.userId = params.id;
+          this.getUserFiles(data);
+        }
+      });
+    }
 	}
 
-  getUserFiles(data: any = {}): void {
+  getMyFiles(data): void {
+    const request = ObjectUtil.preParseObject({
+      page: data.page || this.pagination.currentPage,
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+    });
+
+    this.myFiles.getFiles(request).subscribe(response => {
+      if(response) {
+        this.pagination = response.data.pagedSummary;
+        this.userFiles = response.data.items;
+        this.isLoading = false;
+      }
+    })
+  }
+
+  getUserFiles(data): void {
     const request = ObjectUtil.preParseObject({
       userId: +this.userId,
       page: data.page || this.pagination.currentPage,
@@ -62,7 +89,7 @@ export class UserFilesComponent implements OnInit {
   }
 
   downloadFile(item): void {
-    this.userFilesService.get(item).subscribe(response => {
+    this.userFilesService.get(item.fileId).subscribe(response => {
       const fileName = item.name;
       const blob = new Blob([response.body], { type: response.body.type });
 			const file = new File([blob], fileName, { type: response.body.type });
@@ -83,25 +110,53 @@ export class UserFilesComponent implements OnInit {
     this.isLoading = true;
     this.userFilesService.delete(id).subscribe(() => {
       this.notificationService.success('Success', 'Fișier șters!', NotificationUtil.getDefaultConfig());
-      this.getUserFiles();
+      this.subsribeForParams();
       this.isLoading = false;
     });
   }
 
   openUploadDocumentModal(): void {
-  	const modalRef: any = this.modalService.open(UploadFileModalComponent, { centered: true });
-    modalRef.result.then(() => this.uploadDocument(modalRef.result.__zone_symbol__value), () => {});
+    forkJoin([
+      this.translate.get('files.modal-title'),
+			this.translate.get('files.modal-description')
+    ]).subscribe(([title, description]) => {
+			this.docTitle = title as string;
+			this.docDescription = description as string;
+    });
+
+  	const modalRef: any = this.modalService.open(UploadFileModalComponent, { centered: true, size: 'lg' });
+		modalRef.componentInstance.title = this.docTitle;
+		modalRef.componentInstance.description = this.docDescription;
+    modalRef.result.then(() => this.checkUser(modalRef.result.__zone_symbol__value), () => {});
   }
 
-  uploadDocument(file): void {
-    this.files = file;
-    for(let userFile of this.files){
+  checkUser(files): void {
+    if (this.router.url.includes('/my-documents')) {
+      this.uploadMyDocs(files);
+    } else {
+      this.uploadDocuments(files);
+    }
+  }
+
+  uploadMyDocs(files): void {
+    for(let myFile of files) {
+      let formData = new FormData();
+      formData.append('Data.File.File', myFile);
+      formData.append('Data.File.Type', '5');
+      this.myFiles.addFile(formData).subscribe(res => {
+        if (res) this.subsribeForParams();
+      })
+    }
+  }
+
+  uploadDocuments(files): void {
+    for(let userFile of files) {
       let formData = new FormData();
       formData.append('Data.UserId', this.userId);
       formData.append('Data.File.File', userFile);
       formData.append('Data.File.Type', '5');
       this.userFilesService.create(formData).subscribe(res => {
-        if (res) this.getUserFiles();
+        if (res) this.subsribeForParams();
       })
     }
   }

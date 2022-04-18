@@ -1,14 +1,14 @@
 <div class="modal-header px-5">
-  <h3 class="modal-title mb-0">Upload File Modal</h3>
+  <h3 class="modal-title mb-0">{{title}}</h3>
 </div>
 <div class="modal-body px-5">
-  <ngx-dropzone (change)="onSelect($event)" class="font-weight-light justify-content-center" [multiple]="true" [disabled]="files.length > 0">
+  <ngx-dropzone (change)="onSelect($event)" class="font-weight-light justify-content-center" [multiple]="true">
     <ngx-dropzone-label>
-      <h4>Drop file here or click to upload</h4>
+      <h4>{{description}}</h4>
     </ngx-dropzone-label>
-    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
-      <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-    </ngx-dropzone-image-preview>
+    <ngx-dropzone-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+      <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+    </ngx-dropzone-preview>
   </ngx-dropzone>
 </div>
 <div class="modal-footer">
