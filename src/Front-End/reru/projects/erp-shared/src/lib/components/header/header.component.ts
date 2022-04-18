@@ -52,11 +52,11 @@ export class HeaderComponent implements OnInit {
 					this.avatarString = response.user.avatar;
 					this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/*;base64, ${this.avatarString}`);
 				}
-				let matches = this.authUserModel && this.authUserModel.user && this.authUserModel.user.name.match(/\b(\w)/g);
+				let matches = this.authUserModel && this.authUserModel.user && this.authUserModel.user.firstName.match(/\b(\w)/g);
 				this.acronym = matches ? matches.join('') : null;
 			});
 		} else {
-			this.acronym = this.user && `${this.user.name[0]} ${this.user.lastName[0]}`;
+			this.acronym = this.user && `${this.user.firstName[0]} ${this.user.lastName[0]}`;
 		}
 	}
 
