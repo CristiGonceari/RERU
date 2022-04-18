@@ -1,12 +1,10 @@
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
-using CODWER.RERU.Core.Application.Common.Services;
 using CODWER.RERU.Core.Data.Persistence.Helpers;
 using CODWER.RERU.Core.DataTransferObjects.Profile;
 using CVU.ERP.Module.Application.Providers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,7 +24,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetMyUserProfileOverview
         public async Task<UserProfileOverviewDto> Handle(GetMyUserProfileOverviewQuery request, CancellationToken cancellationToken)
         {
             var currentApplicationUser = await _currentUserProvider.Get();
-            var userProfile = await CoreDbContext
+            var userProfile = await AppDbContext
                 .UserProfiles.IncludeBasic()
                 .FirstOrDefaultAsync(up => up.Id == int.Parse(currentApplicationUser.Id));
 

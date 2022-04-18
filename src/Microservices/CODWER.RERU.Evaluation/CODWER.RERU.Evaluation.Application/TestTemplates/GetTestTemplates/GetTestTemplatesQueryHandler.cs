@@ -1,9 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates;
 using CVU.ERP.Common.Pagination;
 using MediatR;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplates
 {
@@ -22,7 +23,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplates
         {
             var testTemplates = GetAndFilterTestTemplates.Filter(_appDbContext, request.Name, request.EventName, request.Status);
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Data.Entities.TestTemplate, TestTemplateDto>(testTemplates, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<TestTemplate, TestTemplateDto>(testTemplates, request);
 
             return paginatedModel;
         }

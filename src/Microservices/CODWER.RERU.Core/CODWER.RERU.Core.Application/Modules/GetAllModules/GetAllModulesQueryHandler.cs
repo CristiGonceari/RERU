@@ -7,6 +7,7 @@ using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.DataTransferObjects.Modules;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Modules.GetAllModules {
     public class GetAllModulesQueryHandler : BaseHandler, IRequestHandler<GetAllModulesQuery, PaginatedModel<ModuleDto>> 
@@ -19,13 +20,13 @@ namespace CODWER.RERU.Core.Application.Modules.GetAllModules {
         }
 
         public async Task<PaginatedModel<ModuleDto>> Handle (GetAllModulesQuery request, CancellationToken cancellationToken) {
-            var modules = CoreDbContext.Modules.AsQueryable ();
+            var modules = AppDbContext.Modules.AsQueryable ();
 
             if (request != null && !string.IsNullOrEmpty (request.Keyword)) {
                 modules = modules.Where (x => EF.Functions.Like (x.Name, $"%{request.Keyword}%"));
             }
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Data.Entities.Module, ModuleDto> (modules.OrderByDescending(m=>m.Priority), request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<global::RERU.Data.Entities.Module, ModuleDto> (modules.OrderByDescending(m=>m.Priority), request);
 
             return paginatedModel;
         }

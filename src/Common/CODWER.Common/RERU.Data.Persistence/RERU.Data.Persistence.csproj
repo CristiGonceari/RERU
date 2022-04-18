@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CVU.ERP.Common.Data.Persistence.EntityFramework\CVU.ERP.Common.Data.Persistence.EntityFramework.csproj" />
+    <ProjectReference Include="..\RERU.Data.Entities\RERU.Data.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

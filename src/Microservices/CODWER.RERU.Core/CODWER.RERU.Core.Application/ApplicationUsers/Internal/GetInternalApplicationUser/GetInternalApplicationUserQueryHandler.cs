@@ -17,7 +17,7 @@ namespace CODWER.RERU.Core.Application.ApplicationUsers.Internal.GetInternalAppl
 
         public async Task<ApplicationUser> Handle(GetInternalApplicationUserQuery request, CancellationToken cancellationToken)
         {
-            var userProfile = await CoreDbContext.UserProfiles
+            var userProfile = await AppDbContext.UserProfiles
              .IncludeBasic()
              .FirstOrDefaultAsync(up => up.Id == request.Id);
 

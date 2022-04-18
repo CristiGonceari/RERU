@@ -3,5 +3,5 @@ export class AddEditUserProfile {
     userId: string;
     firstName: string;
     lastName: string;
-    patronymic: string;
+    fatherName: string;
 }

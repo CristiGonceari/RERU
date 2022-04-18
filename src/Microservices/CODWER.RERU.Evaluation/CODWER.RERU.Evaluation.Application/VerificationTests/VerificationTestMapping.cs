@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.VerificationTests;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.VerificationTests
 {

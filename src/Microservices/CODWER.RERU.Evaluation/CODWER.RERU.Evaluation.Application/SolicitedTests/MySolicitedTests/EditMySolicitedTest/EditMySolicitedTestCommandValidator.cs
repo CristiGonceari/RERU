@@ -1,11 +1,11 @@
 ﻿using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 using System;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.EditMySolicitedTest
 {

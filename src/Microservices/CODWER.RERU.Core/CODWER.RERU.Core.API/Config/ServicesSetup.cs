@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.API.Config {
     public static class ServicesSetup {
@@ -16,10 +17,14 @@ namespace CODWER.RERU.Core.API.Config {
             IConfiguration configuration
         ) {
             //Add framework services.
-            services
-                .AddDbContext<CoreDbContext> (options =>
-                    options.UseNpgsql(configuration.GetConnectionString ("Default"),
-                        b => b.MigrationsAssembly (typeof (CoreDbContext).GetTypeInfo ().Assembly.GetName ().Name)));
+            //services
+            //    .AddDbContext<AppDbContext> (options =>
+            //        options.UseNpgsql(configuration.GetConnectionString ("Default"),
+            //            b => b.MigrationsAssembly (typeof (AppDbContext).GetTypeInfo ().Assembly.GetName ().FirstName)));
+
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString("RERU"),
+                    b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name)));
 
             services
                 .AddDbContext<UserManagementDbContext> (options =>

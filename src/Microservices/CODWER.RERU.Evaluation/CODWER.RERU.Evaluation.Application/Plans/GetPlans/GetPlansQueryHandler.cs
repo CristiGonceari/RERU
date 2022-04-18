@@ -1,10 +1,10 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.Plans;
+﻿using CODWER.RERU.Evaluation.DataTransferObjects.Plans;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Plans.GetPlans
 {

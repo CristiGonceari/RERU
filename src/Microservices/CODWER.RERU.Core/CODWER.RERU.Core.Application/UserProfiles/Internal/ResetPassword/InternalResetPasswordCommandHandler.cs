@@ -23,7 +23,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.Internal.ResetPassword
 
         public async Task<Unit> Handle(InternalResetPasswordCommand request, CancellationToken cancellationToken)
         {
-            var userProfile = await CoreDbContext.UserProfiles
+            var userProfile = await AppDbContext.UserProfiles
                     .Include(up => up.Identities)
                     .FirstOrDefaultAsync(up => up.Id == request.UserProfileId);
 

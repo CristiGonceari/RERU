@@ -211,7 +211,8 @@ services:
     environment:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Core;
+      # - ConnectionStrings__Default=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Core;
+      - ConnectionStrings__RERU=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Common;
       - ConnectionStrings__Identity=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Identity;
       - ConnectionStrings__Log=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Logging;
       # - ConnectionStrings__Default=server=db;database=RERU-Core;User=sa;Password=Your_password123;
@@ -281,8 +282,9 @@ services:
     environment:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Evaluation;
-      - ConnectionStrings__HangfireConnection=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Evaluation;
+      # - ConnectionStrings__Default=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Evaluation;
+      - ConnectionStrings__RERU=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Common;
+      - ConnectionStrings__HangfireConnection=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Common;
       - ConnectionStrings__Log=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Logging;
 
       # - ConnectionStrings__Default=server=db;database=RERU-Evaluation;User=sa;Password=Your_password123;

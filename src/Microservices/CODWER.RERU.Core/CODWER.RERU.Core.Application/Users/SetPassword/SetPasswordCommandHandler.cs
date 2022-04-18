@@ -29,7 +29,7 @@ namespace CODWER.RERU.Core.Application.Users.SetPassword {
         }
 
         public async Task<Unit> Handle (SetPasswordCommand request, CancellationToken cancellationToken) {
-            var userProfile = await CoreDbContext.UserProfiles
+            var userProfile = await AppDbContext.UserProfiles
                 .Include(x => x.Identities)
                 .FirstOrDefaultAsync (up => up.Id == request.Data.Id);
 

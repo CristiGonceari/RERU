@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Evaluation.Application.Services;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.AddMySolicitedTest
 {

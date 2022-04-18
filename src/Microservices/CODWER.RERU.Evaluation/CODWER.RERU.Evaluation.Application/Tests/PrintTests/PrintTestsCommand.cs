@@ -1,10 +1,10 @@
 ﻿using CODWER.RERU.Evaluation.Application.Permissions;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.Attributes;
 using CVU.ERP.Module.Application.TableExportServices;
 using MediatR;
 using System;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
 {

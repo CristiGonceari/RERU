@@ -1,12 +1,10 @@
 ﻿using FluentValidation;
-using System.Linq;
-using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.SetConfirmationToStartTest
 {
@@ -21,8 +19,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.SetConfirmationToStartTest
             RuleFor(x => x.TestId)
                 .SetValidator(x => new ItemMustExistValidator<Test>(appDbContext, ValidationCodes.INVALID_TEST,
                     ValidationMessages.InvalidReference));
-
-
         }
        
     }

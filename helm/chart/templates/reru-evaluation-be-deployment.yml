@@ -23,14 +23,14 @@ spec:
         image: {{ .Values.reru_evaluation.image.repository }}:{{ .Values.tag }}
         imagePullPolicy: Always
         env:
-        - name: ConnectionStrings__Default
-          value: {{ .Values.reru_evaluation.database.connection_string }}   
+        - name: ConnectionStrings__RERU
+          value: {{ .Values.reru_evaluation.database.connection_string_common }}   
         - name: ConnectionStrings__Log
           value: {{ .Values.reru_evaluation.database.log_connection_string }}   
         - name: ConnectionStrings__Storage
           value: {{ .Values.reru_evaluation.database.storage_connection_string }}   
         - name: ConnectionStrings__HangfireConnection
-          value: {{ .Values.reru_evaluation.database.connection_string }}   
+          value: {{ .Values.reru_evaluation.database.connection_string_common }}   
         - name: TZ
           value: {{ .Values.timeZone }}
         {{- if .Values.dotnet_microservice.deployment.env }}

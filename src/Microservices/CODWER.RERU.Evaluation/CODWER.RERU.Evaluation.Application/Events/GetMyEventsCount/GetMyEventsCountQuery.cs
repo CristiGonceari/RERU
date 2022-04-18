@@ -1,8 +1,8 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CODWER.RERU.Evaluation.DataTransferObjects.Events;
+﻿using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.Events.GetMyEventsCount
 {

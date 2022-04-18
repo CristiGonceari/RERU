@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddEditTestTemplateSettings
 {

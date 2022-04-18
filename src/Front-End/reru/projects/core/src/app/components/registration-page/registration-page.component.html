@@ -119,14 +119,14 @@
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label for="inputEmail4">{{ 'table.name' | translate }}</label>
-                <input class="form-control form-control-lg form-control-solid" name="name" type="text"
-                  formControlName="name"
-                  [ngClass]="{'is-invalid': hasErrors('name'), 'is-valid': userForm.get('name').valid}" />
-                <div *ngIf="hasErrors('name')" class="fv-plugins-message-container">
-                  <div *ngIf="hasError('name', 'required')" data-field="name" data-validator="notEmpty"
+                <input class="form-control form-control-lg form-control-solid" name="firstName" type="text"
+                  formControlName="firstName"
+                  [ngClass]="{'is-invalid': hasErrors('firstName'), 'is-valid': userForm.get('firstName').valid}" />
+                <div *ngIf="hasErrors('firstName')" class="fv-plugins-message-container">
+                  <div *ngIf="hasError('firstName', 'required')" data-field="firstName" data-validator="notEmpty"
                     class="fv-help-block">
                     {{ 'user-profile.empty-name' | translate }}</div>
-                  <div *ngIf="hasError('name', 'pattern')" data-field="name" data-validator="notEmpty"
+                  <div *ngIf="hasError('firstName', 'pattern')" data-field="firstName" data-validator="notEmpty"
                     class="fv-help-block">
                     {{ 'user-profile.wrong-name' | translate }}</div>
                 </div>

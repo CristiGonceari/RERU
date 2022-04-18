@@ -54,7 +54,7 @@ export class ChangePersonalDataComponent implements OnInit {
 
 	initForm(oldPersonalData: PersonalData): void {
 		this.personalDataForm = this.fb.group({
-			name: this.fb.control(oldPersonalData.name, [
+			firstName: this.fb.control(oldPersonalData.firstName, [
 				Validators.required,
 				Validators.pattern(
 					'^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'

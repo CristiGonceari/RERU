@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedTests
 {
@@ -30,7 +30,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests
             {
                 solicitedTests = solicitedTests.Where(x => x.UserProfile.FirstName.ToLower().Contains(userName.ToLower()) ||
                                                            x.UserProfile.LastName.ToLower().Contains(userName.ToLower()) ||
-                                                           x.UserProfile.Patronymic.ToLower().Contains(userName.ToLower()) ||
+                                                           x.UserProfile.FatherName.ToLower().Contains(userName.ToLower()) ||
                                                            x.UserProfile.Idnp.Contains(userName));
             }
 

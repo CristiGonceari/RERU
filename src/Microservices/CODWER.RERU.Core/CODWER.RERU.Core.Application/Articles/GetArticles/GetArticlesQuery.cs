@@ -7,7 +7,7 @@ using MediatR;
 namespace CODWER.RERU.Core.Application.Articles.GetArticles
 {
     [ModuleOperation(permission: PermissionCodes.ARTICLES_GENERAL_ACCESS)]
-    public class GetArticlesQuery : PaginatedQueryParameter, IRequest<PaginatedModel<ArticleDto>>
+    public class GetArticlesQuery : PaginatedQueryParameter, IRequest<PaginatedModel<ArticleCoreDto>>
     {
         public string Name { get; set; }
     }

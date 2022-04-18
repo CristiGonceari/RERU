@@ -3,7 +3,7 @@ namespace CODWER.RERU.Core.DataTransferObjects.Users {
         public string Id { get; set; }
         public string? MediaFileId { get; set; }
         public int? CandidatePositionId { set; get; }
-        public string Name { set; get; }
+        public string FirstName { set; get; }
         public string LastName { set; get; }
         public string Email { get; set; }
         public string Username { get; set; }

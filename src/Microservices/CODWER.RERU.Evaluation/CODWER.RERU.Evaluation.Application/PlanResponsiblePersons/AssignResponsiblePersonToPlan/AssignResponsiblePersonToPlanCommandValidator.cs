@@ -1,12 +1,12 @@
 ﻿using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using FluentValidation;
 using System.Linq;
-using CODWER.RERU.Evaluation.Data.Entities;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.AssignResponsiblePersonToPlan
 {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Evaluation.Data.Entities;
 using CODWER.RERU.Evaluation.DataTransferObjects.Plans;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Evaluation.Application.Plans
 {

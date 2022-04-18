@@ -12,8 +12,8 @@
 				[placeholder]="'login.last-name' | translate" #lastName></erp-shared-search-input>
 		</div>
 		<div class="col">
-			<erp-shared-search-input (handleSearch)="setFilter('patronymic', $event)"
-			[placeholder]="'login.father-name' | translate" #patronymic></erp-shared-search-input>
+			<erp-shared-search-input (handleSearch)="setFilter('fatherName', $event)"
+			[placeholder]="'login.father-name' | translate" #fatherName></erp-shared-search-input>
 		</div>
 	</div>
 	<div class="row mb-5">
@@ -77,7 +77,7 @@
 					</td>
 					<td> {{ user.firstName }} </td>
 					<td> {{ user.lastName }} </td>
-					<td> {{ user.patronymic }} </td>
+					<td> {{ user.fatherName }} </td>
 					<td> {{ user.idnp }} </td>
 					<td> {{ user.email }} </td>
 				</tr>

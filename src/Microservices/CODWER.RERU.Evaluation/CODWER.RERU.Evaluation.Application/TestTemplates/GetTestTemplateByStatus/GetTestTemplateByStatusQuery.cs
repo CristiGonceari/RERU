@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates;
 using MediatR;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStatus
 {

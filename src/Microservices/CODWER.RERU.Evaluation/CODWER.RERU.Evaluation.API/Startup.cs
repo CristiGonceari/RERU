@@ -1,8 +1,6 @@
 using AutoMapper.EquivalencyExpression;
 using CODWER.RERU.Evaluation.Application.CronJobs;
 using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.Data.Persistence.Initializer;
 using CVU.ERP.Infrastructure.Email;
 using CVU.ERP.Logging.DependencyInjection;
 using CVU.ERP.MessageQueue;
@@ -24,6 +22,8 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using System;
 using System.Text;
+using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.Initializer;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
@@ -106,7 +106,7 @@ namespace CODWER.RERU.Evaluation.API
             services.AddCommonLoggingContext(Configuration);
 
             services.AddHangfire(config =>
-                config.UsePostgreSqlStorage(Configuration.GetConnectionString("Default")));
+                config.UsePostgreSqlStorage(Configuration.GetConnectionString("RERU")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

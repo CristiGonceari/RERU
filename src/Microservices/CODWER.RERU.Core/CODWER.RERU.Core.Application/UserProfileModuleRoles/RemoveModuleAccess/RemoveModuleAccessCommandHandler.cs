@@ -12,13 +12,13 @@ namespace CODWER.RERU.Core.Application.UserProfileModuleRoles.RemoveModuleAccess
 
         public async Task<Unit> Handle (RemoveModuleAccessCommand request, CancellationToken cancellationToken) 
         {
-            var upmrToBeRemoved = await CoreDbContext.UserProfileModuleRoles
+            var upmrToBeRemoved = await AppDbContext.UserProfileModuleRoles
                 .FirstOrDefaultAsync (upmr => upmr.UserProfileId == request.UserId 
                                               && upmr.ModuleRole.ModuleId == request.ModuleId);
 
             if (upmrToBeRemoved != null) {
-                CoreDbContext.UserProfileModuleRoles.Remove (upmrToBeRemoved);
-                await CoreDbContext.SaveChangesAsync ();
+                AppDbContext.UserProfileModuleRoles.Remove (upmrToBeRemoved);
+                await AppDbContext.SaveChangesAsync ();
             }
 
             return Unit.Value;

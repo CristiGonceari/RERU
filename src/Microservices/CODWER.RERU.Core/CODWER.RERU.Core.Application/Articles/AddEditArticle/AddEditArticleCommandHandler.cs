@@ -4,17 +4,17 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using CODWER.RERU.Core.Data.Persistence.Context;
-using CODWER.RERU.Core.Data.Entities;
+using RERU.Data.Persistence.Context;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Articles.AddEditArticle
 {
     public class AddEditArticleCommandHandler : IRequestHandler<AddEditArticleCommand, int>
     {
-        private readonly CoreDbContext _appDbContext;
+        private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
 
-        public AddEditArticleCommandHandler(CoreDbContext appDbContext, IMapper mapper)
+        public AddEditArticleCommandHandler(AppDbContext appDbContext, IMapper mapper)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
@@ -22,18 +22,18 @@ namespace CODWER.RERU.Core.Application.Articles.AddEditArticle
 
         public async Task<int> Handle(AddEditArticleCommand request, CancellationToken cancellationToken)
         {
-            var articleToCreate = _mapper.Map<Article>(request.Data);
+            var articleToCreate = _mapper.Map<ArticleCore>(request.Data);
 
-            if (request.Data.Id.HasValue && _appDbContext.Articles.Any(x => x.Id == request.Data.Id))
+            if (request.Data.Id.HasValue && _appDbContext.CoreArticles.Any(x => x.Id == request.Data.Id))
             {
-                var existingArticle = await _appDbContext.Articles.FirstAsync(x => x.Id == request.Data.Id);
+                var existingArticle = await _appDbContext.CoreArticles.FirstAsync(x => x.Id == request.Data.Id);
                 existingArticle.Name = articleToCreate.Name;
                 existingArticle.Content = articleToCreate.Content;
                 articleToCreate.Id = existingArticle.Id;
             }
             else
             {
-                await _appDbContext.Articles.AddAsync(articleToCreate);
+                await _appDbContext.CoreArticles.AddAsync(articleToCreate);
             }
 
             await _appDbContext.SaveChangesAsync();

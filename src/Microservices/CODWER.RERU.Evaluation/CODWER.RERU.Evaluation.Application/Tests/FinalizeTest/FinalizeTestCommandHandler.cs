@@ -2,9 +2,6 @@
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Application.VerificationTests.AutoCheckTestScore;
 using CODWER.RERU.Evaluation.Application.VerificationTests.AutoVerificationTestQuestions;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
@@ -14,6 +11,9 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 {

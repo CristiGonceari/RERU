@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Core.Data.Entities;
 using CODWER.RERU.Core.DataTransferObjects.CandidatePositions;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.CandidatePositions
 {

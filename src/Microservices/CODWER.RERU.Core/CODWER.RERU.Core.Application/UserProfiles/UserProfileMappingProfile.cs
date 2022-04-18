@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using AutoMapper;
-using CODWER.RERU.Core.Data.Entities;
 using CODWER.RERU.Core.DataTransferObjects.Profile;
 using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
 using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Models.Internal;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.UserProfiles
 {
@@ -24,7 +24,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles
 
             CreateMap<UserProfile, ApplicationUser>()
                 .ForMember(destinationMember => destinationMember.Id, opts => opts.MapFrom(sourceMember => sourceMember.Id.ToString()))
-                .ForMember(destinationMember => destinationMember.FirstName, opts => opts.MapFrom(sourceMember => sourceMember.Name))
+                .ForMember(destinationMember => destinationMember.FirstName, opts => opts.MapFrom(sourceMember => sourceMember.FirstName))
                 .ForMember(destinationMember => destinationMember.LastName, opts => opts.MapFrom(sourceMember => sourceMember.LastName))
                 .ForMember(destinationMember => destinationMember.FatherName, opts => opts.MapFrom(sourceMember => sourceMember.FatherName))
                 .ForMember(destinationMember => destinationMember.Idnp, opts => opts.MapFrom(sourceMember => sourceMember.Idnp))
@@ -37,7 +37,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles
                 .ForMember(destinationMember => destinationMember.Module, opts => opts.MapFrom(sourceMember => sourceMember.ModuleRole.Module))
                 .ForMember(destinationMember => destinationMember.Permissions, opts => opts.MapFrom(sourceMember => sourceMember.ModuleRole.Permissions.Select(p => p.Permission.Code)));
 
-            CreateMap<Data.Entities.Module, ApplicationModule>();
+            CreateMap<global::RERU.Data.Entities.Module, ApplicationModule>();
 
             CreateMap<UserProfile, UserProfileOverviewDto>()
                 .ForMember(destinationMember => destinationMember.Modules, opts => opts.MapFrom(sourceMember => sourceMember.ModuleRoles));
@@ -56,7 +56,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles
 
             CreateMap<UserProfile, BaseUserProfile>()
                 .ForMember(destinationMember => destinationMember.CoreUserId, opts => opts.MapFrom(sourceMember => sourceMember.Id.ToString()))
-                .ForMember(destinationMember => destinationMember.FirstName, opts => opts.MapFrom(sourceMember => sourceMember.Name))
+                .ForMember(destinationMember => destinationMember.FirstName, opts => opts.MapFrom(sourceMember => sourceMember.FirstName))
                 .ForMember(destinationMember => destinationMember.LastName, opts => opts.MapFrom(sourceMember => sourceMember.LastName))
                 .ForMember(destinationMember => destinationMember.FatherName, opts => opts.MapFrom(sourceMember => sourceMember.FatherName))
                 .ForMember(destinationMember => destinationMember.Email, opts => opts.MapFrom(sourceMember => sourceMember.Email))

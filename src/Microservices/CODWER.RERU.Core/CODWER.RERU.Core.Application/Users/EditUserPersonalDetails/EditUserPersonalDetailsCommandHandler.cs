@@ -2,7 +2,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
-using CODWER.RERU.Core.Data.Entities;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using CVU.ERP.Module.Application.Clients;
@@ -10,6 +9,7 @@ using CVU.ERP.Module.Application.Models.Internal;
 using CVU.ERP.StorageService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails 
 {
@@ -31,7 +31,7 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
 
         public async Task<int> Handle (EditUserPersonalDetailsCommand request, CancellationToken cancellationToken) 
         {
-            var userProfile = await CoreDbContext.UserProfiles
+            var userProfile = await AppDbContext.UserProfiles
                 .FirstOrDefaultAsync (up => up.Id == request.Data.Id);
 
             //if (request.Data.FileDto != null)
@@ -46,21 +46,21 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
             //}
 
             userProfile.Id = request.Data.Id;
-            userProfile.Name = request.Data.Name;
+            userProfile.FirstName = request.Data.FirstName;
             userProfile.LastName = request.Data.LastName;
             userProfile.FatherName = request.Data.FatherName;
 
-            await CoreDbContext.SaveChangesAsync();
+            await AppDbContext.SaveChangesAsync();
              
             await LogAction(userProfile);
-            await SyncUserProfile(userProfile);
+            //await SyncUserProfile(userProfile);
 
             return userProfile.Id;
         }
 
         private async Task LogAction(UserProfile userProfile)
         {
-            await _loggerService.Log(LogData.AsCore($"User {userProfile.Name} {userProfile.LastName} was edited", userProfile));
+            await _loggerService.Log(LogData.AsCore($"User {userProfile.FirstName} {userProfile.LastName} was edited", userProfile));
         }
 
         private async Task SyncUserProfile(UserProfile userProfile)

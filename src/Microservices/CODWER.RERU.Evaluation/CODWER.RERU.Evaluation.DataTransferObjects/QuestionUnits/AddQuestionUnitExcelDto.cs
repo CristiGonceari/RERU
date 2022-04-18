@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.Options;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits
 {

@@ -1,9 +1,9 @@
 ﻿using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using FluentValidation;
 using System.Linq;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.Enums;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionCategories.DeleteQuestionCategory
 {

@@ -3,8 +3,8 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetTestResult
 {

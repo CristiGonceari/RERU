@@ -1,5 +1,5 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using MediatR;
+﻿using MediatR;
+using RERU.Data.Entities.Enums;
 
 
 namespace CODWER.RERU.Evaluation.Application.Options.GetOptionBulkTemplate

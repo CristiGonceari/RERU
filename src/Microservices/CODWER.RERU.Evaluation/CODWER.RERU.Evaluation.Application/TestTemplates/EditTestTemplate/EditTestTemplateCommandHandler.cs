@@ -1,11 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.EditTestTemplate
 {
@@ -34,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.EditTestTemplate
             return updatetestTemplate.Id;
         }
 
-        private async Task LogAction(Data.Entities.TestTemplate testTemplate)
+        private async Task LogAction(TestTemplate testTemplate)
         {
             await _loggerService.Log(LogData.AsEvaluation($"Test template was edited", testTemplate));
         }

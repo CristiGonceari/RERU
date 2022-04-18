@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using CODWER.RERU.Evaluation.Application;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +12,7 @@ using CVU.ERP.Common.Pagination;
 using CVU.ERP.Infrastructure;
 using CVU.ERP.Infrastructure.Email;
 using Microsoft.AspNetCore.Http;
+using RERU.Data.Persistence.Context;
 using ISession = CODWER.RERU.Evaluation.Application.Interfaces.ISession;
 
 namespace CODWER.RERU.Evaluation.API.Config
@@ -24,9 +24,13 @@ namespace CODWER.RERU.Evaluation.API.Config
         public static void ConfigureEntity(IServiceCollection services, IConfiguration configuration)
         {
             // Add framework services.
+            //services.AddDbContext<AppDbContext>(options =>
+            //   options.UseNpgsql(configuration.GetConnectionString("Default"),
+            //   b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().FirstName)));
+
             services.AddDbContext<AppDbContext>(options =>
-               options.UseNpgsql(configuration.GetConnectionString("Default"),
-               b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name)));
+                options.UseNpgsql(configuration.GetConnectionString("RERU"),
+                    b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name)));
         }
         #endregion
 

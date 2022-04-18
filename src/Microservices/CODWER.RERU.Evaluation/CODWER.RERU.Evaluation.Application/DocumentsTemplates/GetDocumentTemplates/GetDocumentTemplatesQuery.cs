@@ -1,7 +1,7 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CODWER.RERU.Evaluation.DataTransferObjects.Documents;
+﻿using CODWER.RERU.Evaluation.DataTransferObjects.Documents;
 using CVU.ERP.Common.Pagination;
 using MediatR;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.DocumentsTemplates.GetDocumentTemplates
 {

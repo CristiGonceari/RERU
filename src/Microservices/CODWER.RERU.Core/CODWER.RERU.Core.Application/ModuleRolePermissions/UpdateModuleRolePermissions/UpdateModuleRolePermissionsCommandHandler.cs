@@ -2,6 +2,7 @@
 using CODWER.RERU.Core.Application.Common.Providers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace CODWER.RERU.Core.Application.ModuleRolePermissions.UpdateModuleRolePer
 
         public async Task<Unit> Handle(UpdateModuleRolePermissionsCommand request, CancellationToken cancellationToken)
         {
-            var moduleRolePermissions = await CoreDbContext.ModuleRolePermissions
+            var moduleRolePermissions = await AppDbContext.ModuleRolePermissions
                 .Where(mrp => mrp.ModuleRoleId == request.ModuleRolePermissions.ModuleRoleId)
                 .ToListAsync();
 
@@ -25,7 +26,7 @@ namespace CODWER.RERU.Core.Application.ModuleRolePermissions.UpdateModuleRolePer
                 { 
                     if(!moduleRolePermissions.Any(x=>x.ModulePermissionId == permission.PermissionId))
                     {
-                        CoreDbContext.ModuleRolePermissions.Add(new Data.Entities.ModuleRolePermission 
+                        AppDbContext.ModuleRolePermissions.Add(new ModuleRolePermission 
                         {
                             ModuleRoleId = request.ModuleRolePermissions.ModuleRoleId,
                             ModulePermissionId = permission.PermissionId
@@ -37,11 +38,11 @@ namespace CODWER.RERU.Core.Application.ModuleRolePermissions.UpdateModuleRolePer
                     if(moduleRolePermissions.Any(x => x.ModulePermissionId == permission.PermissionId))
                     {
                         var permissionToDelete = moduleRolePermissions.First(x => x.ModulePermissionId == permission.PermissionId);
-                        CoreDbContext.ModuleRolePermissions.Remove(permissionToDelete);
+                        AppDbContext.ModuleRolePermissions.Remove(permissionToDelete);
                     }
                 }
 
-                await CoreDbContext.SaveChangesAsync();
+                await AppDbContext.SaveChangesAsync();
             }
 
             return Unit.Value;

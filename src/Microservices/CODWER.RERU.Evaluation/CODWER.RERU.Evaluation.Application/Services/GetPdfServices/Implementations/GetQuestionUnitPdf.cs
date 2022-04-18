@@ -1,13 +1,13 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CVU.ERP.Common.DataTransferObjects.Files;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
+using RERU.Data.Persistence.Context;
 using Wkhtmltopdf.NetCore;
 
 namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementations
@@ -79,7 +79,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
                 source = source.Replace(key, value);
             }
             //source = source.Replace("{question_name}", await GetQuestionName(items.Id))
-            //               .Replace("{category_name}", items.QuestionCategory.Name)
+            //               .Replace("{category_name}", items.QuestionCategory.FirstName)
             //               .Replace("{question_type}", EnumMessages.EnumMessages.GetQuestionType(items.QuestionType))
             //               .Replace("{question_points}", items.QuestionPoints.ToString())
             //               .Replace("{question_status}", EnumMessages.EnumMessages.GetQuestionStatus(items.Status))

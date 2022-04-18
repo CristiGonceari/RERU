@@ -1,7 +1,7 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CVU.ERP.Common.DataTransferObjects.Files;
+﻿using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.TableExportServices;
 using MediatR;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.Events.PrintUserEvents
 {

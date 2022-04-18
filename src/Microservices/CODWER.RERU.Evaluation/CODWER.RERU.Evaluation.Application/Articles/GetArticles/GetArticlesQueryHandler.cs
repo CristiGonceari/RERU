@@ -1,14 +1,14 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
-using CODWER.RERU.Evaluation.DataTransferObjects.Articles;
+﻿using CODWER.RERU.Evaluation.DataTransferObjects.Articles;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Articles.GetArticles
 {
-    public class GetArticlesQueryHandler : IRequestHandler<GetArticlesQuery, PaginatedModel<ArticleDto>>
+    public class GetArticlesQueryHandler : IRequestHandler<GetArticlesQuery, PaginatedModel<ArticleEvaluationDto>>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
@@ -19,11 +19,11 @@ namespace CODWER.RERU.Evaluation.Application.Articles.GetArticles
             _paginationService = paginationService;
         }
 
-        public async Task<PaginatedModel<ArticleDto>> Handle(GetArticlesQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedModel<ArticleEvaluationDto>> Handle(GetArticlesQuery request, CancellationToken cancellationToken)
         {
             var articles = GetAndFilterArticles.Filter(_appDbContext, request.Name);
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Article, ArticleDto>(articles, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<ArticleEvaluation, ArticleEvaluationDto>(articles, request);
 
             return paginatedModel;
         }

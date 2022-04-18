@@ -2,9 +2,6 @@ using CODWER.RERU.Evaluation.Application.Options.AddOption;
 using CODWER.RERU.Evaluation.Application.Options.DeleteOption;
 using CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit;
 using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.Options;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using MediatR;
@@ -17,6 +14,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 {
@@ -206,7 +206,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             {
                 var ws = p.Workbook.Worksheets.Add(workSheetName);
                 ws.Cells["A1"].Value = $"QuestionType={(int)QuestionTypeEnum.HashedAnswer}";
-                ws.Cells["B1"].Value = "Category Name";
+                ws.Cells["B1"].Value = "Category FirstName";
                 ws.Cells["C1"].Value = "Question with answer";
                 ws.Cells["D1"].Value = "Points (greater than 0)";
                 ws.Cells["E1"].Value = "Tags (comma separated)";
@@ -233,7 +233,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             {
                 var ws = p.Workbook.Worksheets.Add(workSheetName);
                 ws.Cells["A1"].Value = $"QuestionType={(int)QuestionTypeEnum.FreeText}";
-                ws.Cells["B1"].Value = "Category Name";
+                ws.Cells["B1"].Value = "Category FirstName";
                 ws.Cells["C1"].Value = "Question";
                 ws.Cells["D1"].Value = "Points (greater than 0)";
                 ws.Cells["E1"].Value = "Tags (comma separated)";
@@ -255,7 +255,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             {
                 var ws = p.Workbook.Worksheets.Add($"{questionType.ToString()}Template");
                 ws.Cells["A1"].Value = $"QuestionType={(int)questionType}";
-                ws.Cells["B1"].Value = "Category Name";
+                ws.Cells["B1"].Value = "Category FirstName";
                 ws.Cells["C1"].Value = "Question";
                 ws.Cells["D1"].Value = "Answer";
                 ws.Cells["E1"].Value = "Is Right? (Yes-1, No-0)";

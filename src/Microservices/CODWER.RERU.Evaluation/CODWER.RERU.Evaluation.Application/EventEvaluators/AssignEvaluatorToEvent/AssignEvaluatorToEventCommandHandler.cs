@@ -3,8 +3,6 @@ using AutoMapper;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Data.Entities;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
@@ -14,6 +12,8 @@ using CODWER.RERU.Evaluation.Application.Validation;
 using System.Collections.Generic;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using System.Linq;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEvent
 {

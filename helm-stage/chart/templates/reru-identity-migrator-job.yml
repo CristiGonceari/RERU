@@ -23,4 +23,6 @@ spec:
           value: {{ .Values.timeZone }} 
         - name: ConnectionStrings__Default
           value: {{ .Values.reru_identity_migrator.database.connection_string }}   
+        - name: ConnectionStrings__RERU
+          value: {{ .Values.reru_identity_migrator.database.connection_string_common }}   
 {{- end }}

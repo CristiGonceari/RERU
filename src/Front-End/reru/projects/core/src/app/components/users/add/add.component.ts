@@ -64,7 +64,7 @@ export class AddComponent implements OnInit {
 
   initForm(): void {
     this.userForm = this.fb.group({
-      name: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'),]),
+      firstName: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'),]),
       lastName: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'),]),
       fatherName: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'),]),
       idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
@@ -80,7 +80,7 @@ export class AddComponent implements OnInit {
   addUser(): void {
     this.isLoading = true;
     let data = {
-      name: this.userForm.value.name,
+      firstName: this.userForm.value.firstName,
       lastName: this.userForm.value.lastName,
       fatherName: this.userForm.value.fatherName,
       email: this.userForm.value.email,

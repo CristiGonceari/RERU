@@ -15,11 +15,11 @@ namespace CODWER.RERU.Core.Application.UserProfiles.Internal.DeactivateUserProfi
 
         public async Task<Unit> Handle(InternalDeactivateUserProfileCommand request, CancellationToken cancellationToken)
         {
-            var userProfile = await CoreDbContext.UserProfiles.FirstOrDefaultAsync(up => up.Id == request.UserProfileId);
+            var userProfile = await AppDbContext.UserProfiles.FirstOrDefaultAsync(up => up.Id == request.UserProfileId);
             if (userProfile != null)
             {
                 userProfile.IsActive = false;
-                await CoreDbContext.SaveChangesAsync();
+                await AppDbContext.SaveChangesAsync();
             }
 
             return Unit.Value;

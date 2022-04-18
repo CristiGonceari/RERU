@@ -16,14 +16,14 @@ namespace CODWER.RERU.Core.Application.ModuleRolePermissions.GetModuleRolePermis
 
         public async Task<List<ModuleRolePermissionGrantedRowDto>> Handle(GetModuleRolePermissionsForUpdateQuery request, CancellationToken cancellationToken)
         {
-            var moduleRolePermissions = await CoreDbContext.ModuleRolePermissions
+            var moduleRolePermissions = await AppDbContext.ModuleRolePermissions
                 .Where(mrp => mrp.ModuleRoleId == request.RoleId)
                 .ToListAsync();
 
-            var module = CoreDbContext.ModuleRoles
+            var module = AppDbContext.ModuleRoles
                 .FirstOrDefault(mrp => mrp.Id == request.RoleId);
 
-            var modulePermissions = await CoreDbContext.ModulePermissions
+            var modulePermissions = await AppDbContext.ModulePermissions
                 .Where(m => m.ModuleId == module.ModuleId)
                 .ToListAsync();
 

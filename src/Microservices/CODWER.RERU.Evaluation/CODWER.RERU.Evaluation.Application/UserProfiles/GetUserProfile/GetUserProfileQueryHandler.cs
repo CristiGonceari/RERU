@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfile 
 {

@@ -13,7 +13,7 @@ namespace CODWER.RERU.Core.Application.ModuleRoles.GetModuleRoleForEdit
         public GetModuleRoleForEditQueryHandler(ICommonServiceProvider commonServiceProvider) : base(commonServiceProvider) { }
         public async Task<AddEditModuleRoleDto> Handle(GetModuleRoleForEditQuery request, CancellationToken cancellationToken)
         {
-            var module = await CoreDbContext.ModuleRoles
+            var module = await AppDbContext.ModuleRoles
                 .FirstOrDefaultAsync(m => m.Id == request.Id);
 
             return Mapper.Map<AddEditModuleRoleDto>(module);

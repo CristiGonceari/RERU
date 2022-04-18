@@ -4,7 +4,7 @@ export class MyProfile {
     mediaFileId?: string;
     candidatePositionName?: string;
     email: string;
-    name: string;
+    firstName: string;
     lastName: string;
     fatherName: string;
     idnp: string;

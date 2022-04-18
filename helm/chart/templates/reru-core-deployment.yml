@@ -23,8 +23,8 @@ spec:
         image: {{ .Values.reru_core.image.repository }}:{{ .Values.tag }}
         imagePullPolicy: Always
         env:
-        - name: ConnectionStrings__Default
-          value: {{ .Values.reru_core.database.connection_string }}   
+        - name: ConnectionStrings__RERU
+          value: {{ .Values.reru_core.database.connection_string_common }}   
         - name: ConnectionStrings__Identity
           value: {{ .Values.reru_core.database.identity_connection_string }}   
         - name: ConnectionStrings__Log

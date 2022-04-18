@@ -12,7 +12,7 @@ namespace CODWER.RERU.Core.Application.Modules.GetEditModule {
 
         public async Task<ModuleDto> Handle (GetEditModuleQuery request, CancellationToken cancellationToken) 
         {
-            var module = await CoreDbContext.Modules.FirstOrDefaultAsync (m => m.Id == request.Id);
+            var module = await AppDbContext.Modules.FirstOrDefaultAsync (m => m.Id == request.Id);
 
             return Mapper.Map<ModuleDto> (module);
         }

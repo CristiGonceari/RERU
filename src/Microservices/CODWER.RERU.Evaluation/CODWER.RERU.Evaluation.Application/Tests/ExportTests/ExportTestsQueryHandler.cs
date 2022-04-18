@@ -4,8 +4,8 @@ using OfficeOpenXml;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CODWER.RERU.Evaluation.Data.Persistence.Context;
+using RERU.Data.Entities.Enums;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.ExportTests
 {
@@ -60,7 +60,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.ExportTests
                     ws.Cells[i, 1].Value = test.UserProfile.Idnp;
                     ws.Cells[i, 2].Value = test.UserProfile.LastName;
                     ws.Cells[i, 3].Value = test.UserProfile.FirstName;
-                    ws.Cells[i, 4].Value = test.UserProfile.Patronymic;
+                    ws.Cells[i, 4].Value = test.UserProfile.FatherName;
                     ws.Cells[i, 5].Value = test.TestTemplate.Name;
                     ws.Cells[i, 6].Value = $"{test.ProgrammedTime.Hour}:{test.ProgrammedTime.Minute} {test.ProgrammedTime.Day.ToString("00")}.{test.ProgrammedTime.Month.ToString("00")}.{test.ProgrammedTime.Year}";
                     ws.Cells[i, 7].Value = rezultStatus;

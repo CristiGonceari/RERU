@@ -1,6 +1,6 @@
 ﻿using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using FluentValidation;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddTestTemplate
 {

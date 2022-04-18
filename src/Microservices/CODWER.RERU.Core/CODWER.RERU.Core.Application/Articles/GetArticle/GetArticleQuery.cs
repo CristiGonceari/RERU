@@ -6,7 +6,7 @@ using MediatR;
 namespace CODWER.RERU.Core.Application.Articles.GetArticle
 {
     [ModuleOperation(permission: PermissionCodes.ARTICLES_GENERAL_ACCESS)]
-    public class GetArticleQuery : IRequest<ArticleDto>
+    public class GetArticleQuery : IRequest<ArticleCoreDto>
     {
         public int Id { get; set; }
     }

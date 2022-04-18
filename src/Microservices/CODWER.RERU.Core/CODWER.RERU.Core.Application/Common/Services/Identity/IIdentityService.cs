@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using CODWER.RERU.Core.Data.Entities;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Common.Services.Identity
 {

@@ -7,7 +7,6 @@ using CODWER.RERU.Evaluation.Application.Options.EditOption;
 using CODWER.RERU.Evaluation.Application.Options.GetOption;
 using CODWER.RERU.Evaluation.Application.Options.GetOptionBulkTemplate;
 using CODWER.RERU.Evaluation.Application.Options.GetOptions;
-using CODWER.RERU.Evaluation.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.DataTransferObjects.Options;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
@@ -15,6 +14,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {

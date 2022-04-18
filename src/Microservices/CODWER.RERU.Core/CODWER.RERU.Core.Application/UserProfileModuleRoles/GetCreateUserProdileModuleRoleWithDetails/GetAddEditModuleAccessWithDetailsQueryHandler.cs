@@ -15,12 +15,12 @@ namespace CODWER.RERU.Core.Application.UserProfileModuleRoles.GetCreateUserProdi
 
         public async Task<AddEditModuleAccessWithDetailsDto> Handle (GetAddEditModuleAccessWithDetailsQuery request, CancellationToken cancellationToken) 
         {
-            var userProfile = await CoreDbContext.UserProfiles
+            var userProfile = await AppDbContext.UserProfiles
                 .Include (up => up.ModuleRoles)
                 .ThenInclude (upmr => upmr.ModuleRole)
                 .FirstOrDefaultAsync (up => up.Id == request.UserId);
 
-            var module = await CoreDbContext.Modules
+            var module = await AppDbContext.Modules
                 .FirstOrDefaultAsync (m => m.Id == request.ModuleId);
 
             var dto = new AddEditModuleAccessWithDetailsDto ();
@@ -37,7 +37,7 @@ namespace CODWER.RERU.Core.Application.UserProfileModuleRoles.GetCreateUserProdi
             dto.ModuleId = module.Id;
             dto.UserEmail = userProfile.Email;
             dto.UserLastName = userProfile.LastName;
-            dto.UserName = userProfile.Name;
+            dto.UserName = userProfile.FirstName;
             dto.UserId = userProfile.Id;
 
             return dto;

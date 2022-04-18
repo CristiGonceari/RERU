@@ -1,7 +1,7 @@
-﻿using CODWER.RERU.Evaluation.Data.Entities.Enums;
-using CODWER.RERU.Evaluation.DataTransferObjects.Events;
+﻿using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Common.Pagination;
 using MediatR;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.Events.GetUserEvents
 {
