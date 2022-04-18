@@ -6,7 +6,7 @@ export interface ApplicationUserModel {
 	user: {
 		avatar: string;
 		lastname: string;
-		name: string;
+		firstName: string;
 		email: string;
 		permissions: string[];
 		modules: ApplicationUserModuleModel[];
