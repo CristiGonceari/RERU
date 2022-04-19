@@ -127,8 +127,6 @@ namespace CODWER.RERU.Core.API
 
             app.UseAuthentication();
 
-            DatabaseSeeder.Migrate(appDbContext);
-
             app.UseSwaggerUi3(settings =>
             {
                 settings.Path = "/api";

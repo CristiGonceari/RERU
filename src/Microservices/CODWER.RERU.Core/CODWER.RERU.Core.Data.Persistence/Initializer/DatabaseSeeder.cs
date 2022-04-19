@@ -5,13 +5,13 @@ namespace CODWER.RERU.Core.Data.Persistence.Initializer
 {
     public class DatabaseSeeder
     {
-        public static void Migrate(AppDbContext appDbContext)
-        {
-            appDbContext.Database.Migrate();
-        }
+        //public static void Migrate(AppDbContext appDbContext)
+        //{
+        //    appDbContext.Database.Migrate();
+        //}
 
-        public static void SeedDb(AppDbContext appDbContext)
-        {
-        }
+        //public static void SeedDb(AppDbContext appDbContext)
+        //{
+        //}
     }
 }

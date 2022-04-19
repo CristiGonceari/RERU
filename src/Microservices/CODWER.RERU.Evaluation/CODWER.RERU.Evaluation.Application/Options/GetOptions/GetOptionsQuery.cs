@@ -6,7 +6,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.Options;
 
 namespace CODWER.RERU.Evaluation.Application.Options.GetOptions
 {
-    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ÎNTREBĂRI)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_INTREBARI)]
     public class GetOptionsQuery : IRequest<List<OptionDto>>
     {
         public int? QuestionUnitId { get; set; }
