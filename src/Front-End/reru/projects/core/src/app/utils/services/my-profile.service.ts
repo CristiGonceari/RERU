@@ -15,7 +15,7 @@ export class MyProfileService extends AbstractService {
 	}
 
 	getFiles(params): Observable<any> {
-		return this.http.get(`${this.coreUrl}/${this.routeUrl}`, { params });
+		return this.http.get(`${this.coreUrl}/${this.routeUrl}/files`, { params });
 	}
 
 	addFile(params: any): Observable<any> {
