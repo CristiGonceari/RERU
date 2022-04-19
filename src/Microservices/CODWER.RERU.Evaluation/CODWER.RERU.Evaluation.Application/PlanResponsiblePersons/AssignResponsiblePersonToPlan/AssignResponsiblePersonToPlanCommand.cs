@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.AssignResponsiblePersonToPlan
 {
-    [ModuleOperation(permission: PermissionCodes.PLANS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_PLANURI)]
 
     public class AssignResponsiblePersonToPlanCommand : IRequest<List<int>>
     {

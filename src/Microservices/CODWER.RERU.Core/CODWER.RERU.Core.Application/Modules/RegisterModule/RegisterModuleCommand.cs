@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.Modules.RegisterModule 
 {
-    [ModuleOperation(permission: PermissionCodes.REGISTER_MODULE)]
+    [ModuleOperation(permission: PermissionCodes.ÎNREGISTRAREA_MODULULUI)]
     public class RegisterModuleCommand : IRequest<bool> 
     {
         public AddEditModuleDto Module { set; get; }

@@ -7,7 +7,7 @@ using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.Statistics.GetTestQuestionsStatistic
 {
-    [ModuleOperation(permission: PermissionCodes.STATISTICS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_STATISTICI)]
     public class GetTestQuestionsStatisticQuery : IRequest<List<TestQuestionStatisticDto>>
     {
         public int TestTemplateId { get; set; }

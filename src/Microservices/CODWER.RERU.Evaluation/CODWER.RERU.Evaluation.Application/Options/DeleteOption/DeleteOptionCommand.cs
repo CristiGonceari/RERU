@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.Options.DeleteOption
 {
-    [ModuleOperation(permission: PermissionCodes.QUESTION_UNITS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ÎNTREBĂRI)]
     public class DeleteOptionCommand : IRequest<Unit>
     {
         public int Id { get; set; }

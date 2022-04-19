@@ -7,7 +7,7 @@ using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.Statistics.PrintCategoryQuestionsStatistic
 {
-    [ModuleOperation(permission: PermissionCodes.STATISTICS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_STATISTICI)]
     public class PrintCategoryQuestionsStatisticCommand : TableParameter, IRequest<FileDataDto>
     {
         public int CategoryId { get; set; }

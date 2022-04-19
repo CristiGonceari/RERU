@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.EditTestTemplate
 {
-    [ModuleOperation(permission: PermissionCodes.TEST_TEMPLATES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ȘABLOANELE_DE_TESTE)]
 
     public class EditTestTemplateCommand : IRequest<int>
     {

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.Plans.GetPlan
 {
-    [ModuleOperation(permission: PermissionCodes.PLANS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_PLANURI)]
 
     public class GetPlanQuery : IRequest<PlanDto>
     {

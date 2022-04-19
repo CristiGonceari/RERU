@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.UserProfiles.GetUserProfile
 {
-    [ModuleOperation(permission: PermissionCodes.VIEW_USER_DETAILS)]
+    [ModuleOperation(permission: PermissionCodes.VIZUALIZAREA_DETALIILOR_UTILIZATORULUI)]
     public class GetUserProfileQuery : IRequest<UserProfileDto>
     {
         public GetUserProfileQuery(int id)

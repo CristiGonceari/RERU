@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.Modules.EditModule 
 {
-    [ModuleOperation(permission: PermissionCodes.EDIT_MODULE)]
+    [ModuleOperation(permission: PermissionCodes.ACTUALIZAREA_MODULULUI)]
     public class EditModuleCommand: IRequest {
         public EditModuleCommand(AddEditModuleDto module)
         {

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.Modules.GetModuleDetails 
 {
-    [ModuleOperation(permission: PermissionCodes.VIEW_MODULE_DETAILS)]
+    [ModuleOperation(permission: PermissionCodes.VIZUALIZAREA_DETALIILOR_MODULULUI)]
 
     public class GetModuleDetailsQuery : IRequest<ModuleDto> 
     {

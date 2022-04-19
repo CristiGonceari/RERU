@@ -7,7 +7,7 @@ using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AddQuestionUnit
 {
-    [ModuleOperation(permission: PermissionCodes.QUESTION_UNITS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ÎNTREBĂRI)]
 
     public class AddQuestionUnitCommand : IRequest<int>
     {

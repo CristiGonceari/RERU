@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.Users.ResetUserPassword 
 {
-    [ModuleOperation(permission: PermissionCodes.RESET_USER_PASSWORD)]
+    [ModuleOperation(permission: PermissionCodes.RESETAREA_PAROLEI_UTILIZATORULUI)]
 
     public class ResetUserPasswordCommand : IRequest<Unit>
     {

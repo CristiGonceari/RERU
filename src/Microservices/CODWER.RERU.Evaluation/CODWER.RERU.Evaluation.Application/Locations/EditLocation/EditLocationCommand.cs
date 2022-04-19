@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.Locations.EditLocation
 {
-    [ModuleOperation(permission: Permissions.PermissionCodes.LOCATIONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: Permissions.PermissionCodes.ACCES_GENERAL_LA_LOCAȚII)]
     public class EditLocationCommand : IRequest<int>
     {
         public AddEditLocationDto Data { get; set; }

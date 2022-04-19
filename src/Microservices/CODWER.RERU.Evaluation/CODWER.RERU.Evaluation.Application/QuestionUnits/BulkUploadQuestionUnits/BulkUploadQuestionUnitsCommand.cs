@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionUnits.BulkUploadQuestionUnits
 {
-    [ModuleOperation(permission: PermissionCodes.QUESTION_UNITS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ÎNTREBĂRI)]
     public class BulkUploadQuestionUnitsCommand : IRequest<byte[]>
     {
         public IFormFile Input { get; set; }

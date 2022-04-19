@@ -8,7 +8,7 @@ using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
 {
-    [ModuleOperation(permission: PermissionCodes.TESTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_TESTE)]
     public class PrintTestsCommand : TableParameter, IRequest<FileDataDto>
     {
         public string TestTemplateName { get; set; }

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.Modules.GetAllModules 
 {
-    [ModuleOperation (permission: PermissionCodes.VIEW_ALL_MODULES)]
+    [ModuleOperation (permission: PermissionCodes.VIZUALIZAREA_MODULELOR)]
     public class GetAllModulesQuery : PaginatedQueryParameter, IRequest<PaginatedModel<ModuleDto>> {
         public string Keyword { get; set; }
     }

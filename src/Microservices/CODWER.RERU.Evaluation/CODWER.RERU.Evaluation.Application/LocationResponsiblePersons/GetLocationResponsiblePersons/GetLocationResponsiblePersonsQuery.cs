@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.GetLocationResponsiblePersons
 {
-    [ModuleOperation(permission: Permissions.PermissionCodes.LOCATIONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: Permissions.PermissionCodes.ACCES_GENERAL_LA_LOCAȚII)]
     public class GetLocationResponsiblePersonsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<UserProfileDto>>
     {
         public int LocationId { get; set; }

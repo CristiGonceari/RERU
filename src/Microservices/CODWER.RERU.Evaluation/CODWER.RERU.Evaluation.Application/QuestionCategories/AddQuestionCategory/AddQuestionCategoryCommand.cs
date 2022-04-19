@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionCategories.AddQuestionCategory
 {
-    [ModuleOperation(permission: Permissions.PermissionCodes.QUESTION_CATEGORIES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: Permissions.PermissionCodes.ACCES_GENERAL_LA_CATEGORII)]
     public class AddQuestionCategoryCommand : IRequest<int>
     {
         public AddEditQuestionCategoryDto Data { get; set; }

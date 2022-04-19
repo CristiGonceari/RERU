@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.Users.ActivateUser
 {
-    [ModuleOperation(permission: PermissionCodes.ACTIVATE_USER)]
+    [ModuleOperation(permission: PermissionCodes.ACTIVAREA_UTILIZATORULUI)]
     public class ActivateUserCommand : IRequest<Unit>
     {
         public ActivateUserCommand(int id)

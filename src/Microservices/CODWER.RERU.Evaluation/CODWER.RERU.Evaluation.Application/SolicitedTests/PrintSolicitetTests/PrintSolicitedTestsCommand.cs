@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedTests.PrintSolicitetTests
 {
-    [ModuleOperation(permission: PermissionCodes.SOLICITED_TESTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_TESTE_SOLICITATE)]
     public class PrintSolicitedTestsCommand : TableParameter, IRequest<FileDataDto>
     {
         public string EventName { get; set; }

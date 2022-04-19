@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
 {
-    [ModuleOperation(permission: PermissionCodes.TEST_QUESTIONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ÎNTREBĂRILE_TESTULUI)]
     public class GenerateTestQuestionsCommand : IRequest<Unit>
     {
         public int TestId { get; set; }

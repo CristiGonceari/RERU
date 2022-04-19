@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.ModuleRoles.GetModuleRoleDetails
 {
-    [ModuleOperation(permission: PermissionCodes.VIEW_ROLE_PERMISSIONS)]
+    [ModuleOperation(permission: PermissionCodes.VIZUALIZAREA_PERMISIUNILOR_ROLULUI)]
 
     public class GetModuleRoleDetailsQuery : IRequest<ModuleRoleDto>
     {

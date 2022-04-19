@@ -6,7 +6,7 @@ using CVU.ERP.Common.Pagination;
 
 namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetNoAssignedEvaluators
 {
-    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_EVENIMENTE)]
     public class GetNoAssignedEvaluatorsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<UserProfileDto>>
     {
         public string FirstName { get; set; }

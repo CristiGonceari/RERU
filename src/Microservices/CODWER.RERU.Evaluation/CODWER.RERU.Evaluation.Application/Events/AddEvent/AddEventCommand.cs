@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.Events.AddEvent
 {
-    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_EVENIMENTE)]
     public class AddEventCommand : IRequest<int>
     {
         public AddEditEventDto Data { get; set; }

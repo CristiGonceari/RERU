@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.TestQuestions.SaveTestQuestion
 {
-    [ModuleOperation(permission: PermissionCodes.TEST_QUESTIONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ÎNTREBĂRILE_TESTULUI)]
     public class SaveTestQuestionCommand : IRequest<Unit>
     {
         public AddTestQuestionDto Data { get; set; }

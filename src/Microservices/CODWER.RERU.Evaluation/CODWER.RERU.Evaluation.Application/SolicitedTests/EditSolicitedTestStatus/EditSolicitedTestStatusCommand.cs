@@ -5,7 +5,7 @@ using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedTests.EditSolicitedTestStatus
 {
-    [ModuleOperation(permission: PermissionCodes.SOLICITED_TESTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_TESTE_SOLICITATE)]
     public class EditSolicitedTestStatusCommand : IRequest<Unit>
     {
         public int Id { get; set; }
