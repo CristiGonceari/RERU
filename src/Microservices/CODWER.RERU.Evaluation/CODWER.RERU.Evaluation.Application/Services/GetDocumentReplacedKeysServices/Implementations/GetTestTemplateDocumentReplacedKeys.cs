@@ -66,7 +66,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
         public async Task<Dictionary<string, string>> GetDictionay(TestTemplate testTemplate)
         {
-            var keys = _appDbContext.DocumentTemplateKeys.Where(dtk => dtk.FileType == FileTypeEnum.TestTemplate).Select(dtk => dtk.KeyName).ToList();
+            var keys = _appDbContext.DocumentTemplateKeys
+                                        .Where(dtk => dtk.FileType == FileTypeEnum.TestTemplate)
+                                        .Select(dtk => dtk.KeyName)
+                                        .ToList();
 
             var myDictionary = new Dictionary<string, string>();
 

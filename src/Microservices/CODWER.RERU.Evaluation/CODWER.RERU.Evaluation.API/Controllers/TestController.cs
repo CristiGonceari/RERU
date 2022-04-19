@@ -35,6 +35,8 @@ using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.CountMyEvaluatedTests;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.GetMyEvaluatedTestsByDate;
 using CODWER.RERU.Evaluation.Application.Tests.GetTestSettings;
+using CODWER.RERU.Evaluation.Application.Tests.GetTestDocumentReplacedKeys;
+using CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -42,6 +44,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     [ApiController]
     public class TestController : BaseController
     {
+        private readonly IGetTestDocumentReplacedKeys _getTestDocumentReplacedKeys;
+
+        public TestController(IGetTestDocumentReplacedKeys getTestDocumentReplacedKeys)
+        {
+            _getTestDocumentReplacedKeys = getTestDocumentReplacedKeys;
+        }
+
         [HttpGet("{id}")]
         public async Task<TestDto> GetTest([FromRoute] int id)
         {
@@ -238,6 +247,22 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         {
             var result = await Mediator.Send(command);
 
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpGet("getTestRelacedKeys")]
+        public async Task<string> GetTestDocumentReplacedKeys([FromQuery] GetTestDocumentReplacedKeysQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("getPDF")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> GetPDF([FromQuery] string source, string testName)
+        {
+            var result = await _getTestDocumentReplacedKeys.GetPdf(source, testName);
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);
