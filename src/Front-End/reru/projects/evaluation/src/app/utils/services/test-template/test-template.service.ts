@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AbstractService, AppSettingsService } from '@erp/shared';
+import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
@@ -76,4 +77,16 @@ export class TestTemplateService extends AbstractService {
 			observe: 'response',
 		});
 	}
+
+  getTestTemplateDocumentReplacedKeys(params): Observable<any>{
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/getTestTemplateRelacedKeys`, {params});
+  }
+
+  printDocument(data): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/getPDF?source=${encodeURIComponent(data.source)}&testTemplateName=${data.testTemplateName}`, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
 }

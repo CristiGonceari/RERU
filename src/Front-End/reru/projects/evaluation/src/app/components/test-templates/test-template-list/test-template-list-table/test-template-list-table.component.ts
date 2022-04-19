@@ -16,7 +16,8 @@ import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services
 import { saveAs } from 'file-saver';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { forkJoin } from 'rxjs';
-
+import { GenerateDocumentModalComponent } from 'projects/evaluation/src/app/utils/modals/generate-document-modal/generate-document-modal.component';
+import { FileTypeEnum } from '../../../../utils/enums/file-type.enum';
 @Component({
 	selector: 'app-test-template-list-table',
 	templateUrl: './test-template-list-table.component.html',
@@ -27,7 +28,7 @@ export class TestTemplateListTableComponent implements OnInit {
 	testTemplateStatusEnumList: SelectItem[] = [];
 	pagination: PaginationModel = new PaginationModel();
 	eventName: string;
-	testName: StringConstructor;
+	testName: string;
 	modeEnum = TestTemplateModeEnum;
 
 	keyword: string;
@@ -35,6 +36,7 @@ export class TestTemplateListTableComponent implements OnInit {
 	public id: number;
 
 	statusEnum = TestTemplateStatusEnum;
+	fileTypeEnum = FileTypeEnum;
 	isActive: boolean = false;
 	isLoading: boolean = false;
 
@@ -220,6 +222,14 @@ export class TestTemplateListTableComponent implements OnInit {
 		modalRef.result.then(() => this.deleteTestTemplate(id), () => { });
 	}
 
+	openGenerateDocumentModal(id, testName){
+		const modalRef: any = this.modalService.open(GenerateDocumentModalComponent, { centered: true, size:'xl', windowClass: 'my-class', scrollable: true });
+		modalRef.componentInstance.id = id;
+		modalRef.componentInstance.testName = testName;
+		modalRef.componentInstance.fileType = 1;
+		modalRef.result.then((response) => (response), () => {});
+	}
+
 	printTestTemplate(id){
 		this.printTemplateService.getTestTemplatePdf(id).subscribe((response : any) => {
 			let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
@@ -231,6 +241,6 @@ export class TestTemplateListTableComponent implements OnInit {
 			const blob = new Blob([response.body], { type: response.body.type });
 			const file = new File([blob], fileName, { type: response.body.type });
 			saveAs(file);
-			  });
+		});
 	}
 }

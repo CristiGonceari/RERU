@@ -106,7 +106,9 @@
     "are-you-sure-you-want-to-delete-documents": "Вы действительно хотите удалить документ <b>{{name}}</b>?",
     "test-convert": "Tест Конвертер",
     "configure-document": "Настроить документ",
-    "key-list": "Ключевая карта"
+    "key-list": "Карта ключей",
+    "generate-document": "Сгенерировать документ",
+    "select-document": "Выберите документ"
   },
   "document-test-modal":{
     "all": "Все",
