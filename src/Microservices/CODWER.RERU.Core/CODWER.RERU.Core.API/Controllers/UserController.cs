@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.UserProfiles.GetUserForRemove;
 using CODWER.RERU.Core.Application.Users.ActivateUser;
@@ -19,19 +20,21 @@ using CODWER.RERU.Core.Application.Users.SetPassword;
 using CODWER.RERU.Core.DataTransferObjects.Files;
 using CODWER.RERU.Core.DataTransferObjects.Password;
 using CODWER.RERU.Core.DataTransferObjects.Users;
+using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.API.Controllers
 {
     [ApiController]
     [Route ("api/[controller]")]
-    public class UserController : BaseController 
+    public class UserController : BaseController
     {
         public UserController(IMediator mediator) : base(mediator)
         {
-
         }
 
         [HttpGet ("{id:int}")]
@@ -77,11 +80,15 @@ namespace CODWER.RERU.Core.API.Controllers
         }
 
         [HttpPut("excel-import")]
-        public async Task ImportFromExcelFile([FromForm] BulkExcelImport dto)
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> ImportFromExcelFile([FromForm] BulkExcelImport dto)
         {
             var command = new BulkImportUsersCommand { Data = dto };
 
-            await Mediator.Send(command);
+            var result = await Mediator.Send(command);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
 
         [HttpPut]

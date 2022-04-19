@@ -12,6 +12,7 @@ import { UserService } from '../../../utils/services/user.service';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
 import { ImportUsersModalComponent } from '../../../utils/modals/import-users-modal/import-users-modal.component';
+import { saveAs } from 'file-saver';
 
 @Component({
 	selector: 'app-user-list-table',
@@ -59,8 +60,8 @@ export class UserListTableComponent implements OnInit {
 		public permissionService: PermissionCheckerService,
 		private modalService: NgbModal,
 		private notificationService: NotificationsService,
-    	private userService: UserService,
-	) {}
+		private userService: UserService,
+	) { }
 
 	ngOnInit(): void {
 		this.list();
@@ -146,7 +147,7 @@ export class UserListTableComponent implements OnInit {
 	}
 
 	navigateToDetails(id): void {
-		this.router.navigate(['../../user-profile', id, 'overview'], {relativeTo: this.route});
+		this.router.navigate(['../../user-profile', id, 'overview'], { relativeTo: this.route });
 	}
 
 	checkPermission(): void {
@@ -157,21 +158,27 @@ export class UserListTableComponent implements OnInit {
 
 	openImportModal(): void {
 		const modalRef: any = this.modalService.open(ImportUsersModalComponent, { centered: true, backdrop: 'static', size: 'lg' });
-		modalRef.result.then((data) => this.importRoles(data), () => { });
+		modalRef.result.then((data) => this.importUsers(data), () => { });
 	}
 
-	importRoles(data): void {
+	importUsers(data): void {
 		this.isLoading = true;
 		const form = new FormData();
-		form.append('file', data.file);
-		this.userService.bulkAddUsers(form).subscribe(() => {
+		form.append('File', data.file);
+		this.userService.bulkAddUsers(form).subscribe(response => {
+			if(response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], fileName, { type: response.body.type });
+				saveAs(file);
+			}
 			this.notificationService.success('Success', 'Users Imported!', NotificationUtil.getDefaultMidConfig());
 			this.list();
 		}, () => { }, () => {
 			this.isLoading = false;
 		})
 	}
-	
+
 
 	openConfirmModal(id: number, firstName, lastName, type): void {
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
@@ -186,14 +193,14 @@ export class UserListTableComponent implements OnInit {
 				this.description = description;
 				this.no = no;
 				this.yes = yes;
-				});
+			});
 			modalRef.componentInstance.title = this.title;
 			modalRef.componentInstance.description = `${this.description} ${firstName} ${lastName}?`;
 			modalRef.componentInstance.buttonNo = this.no;
 			modalRef.componentInstance.buttonYes = this.yes;
-			modalRef.result.then(() => this.resetPassword(id, firstName, lastName), () => {});
+			modalRef.result.then(() => this.resetPassword(id, firstName, lastName), () => { });
 		}
-		if(type == 'deactivate-user'){
+		if (type == 'deactivate-user') {
 			forkJoin([
 				this.translate.get('deactivate-user.title'),
 				this.translate.get('deactivate-user.deactivate-msg'),
@@ -204,14 +211,14 @@ export class UserListTableComponent implements OnInit {
 				this.description = description;
 				this.no = no;
 				this.yes = yes;
-				});
+			});
 			modalRef.componentInstance.title = this.title;
 			modalRef.componentInstance.description = `${this.description} ${firstName} ${lastName}?`;
 			modalRef.componentInstance.buttonNo = this.no;
 			modalRef.componentInstance.buttonYes = this.yes;
-			modalRef.result.then(() => this.deactivateUser(id, firstName, lastName), () => {});
+			modalRef.result.then(() => this.deactivateUser(id, firstName, lastName), () => { });
 		}
-		if(type == 'activate-user'){
+		if (type == 'activate-user') {
 			forkJoin([
 				this.translate.get('activate-user.title'),
 				this.translate.get('activate-user.activate-msg'),
@@ -222,38 +229,38 @@ export class UserListTableComponent implements OnInit {
 				this.description = description;
 				this.no = no;
 				this.yes = yes;
-				});
+			});
 			modalRef.componentInstance.title = this.title;
 			modalRef.componentInstance.description = `${this.description} ${firstName} ${lastName}?`;
 			modalRef.componentInstance.buttonNo = this.no;
 			modalRef.componentInstance.buttonYes = this.yes;
-			modalRef.result.then(() => this.activateUser(id, firstName, lastName), () => {});
+			modalRef.result.then(() => this.activateUser(id, firstName, lastName), () => { });
 		}
 	}
-	
+
 	resetPassword(id, firstName, lastName): void {
 		this.userService.resetPassword(id).subscribe(
-		  (res) => {
-			forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('reset-password.success-reset'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
+			(res) => {
+				forkJoin([
+					this.translate.get('modal.success'),
+					this.translate.get('reset-password.success-reset'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
 				});
-			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-			if(res){ this.list(); }
-		  },
-		  (err) => {
-			forkJoin([
-				this.translate.get('notification.title.error'),
-				this.translate.get('notification.body.error'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
+				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+				if (res) { this.list(); }
+			},
+			(err) => {
+				forkJoin([
+					this.translate.get('notification.title.error'),
+					this.translate.get('notification.body.error'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
 				});
-			this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-		  },
+				this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+			},
 		);
 	}
 
@@ -265,36 +272,36 @@ export class UserListTableComponent implements OnInit {
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
-				});
+			});
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-				if(res){ this.list(); }
-			}
+			if (res) { this.list(); }
+		}
 		);
 	}
 
 	activateUser(id, firstName, lastName): void {
-    	this.userService.activateUser(id).subscribe((res) => {
+		this.userService.activateUser(id).subscribe((res) => {
 			forkJoin([
 				this.translate.get('modal.success'),
 				this.translate.get('activate-user.success-activate'),
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
-				});
-        	this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-				if(res){ this.list(); }
-      		},
-      (err) => {
-		forkJoin([
-			this.translate.get('notification.title.error'),
-			this.translate.get('notification.body.error'),
-		]).subscribe(([title, description]) => {
-			this.title = title;
-			this.description = description;
 			});
-        this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-      }
-    );
-  }
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+			if (res) { this.list(); }
+		},
+			(err) => {
+				forkJoin([
+					this.translate.get('notification.title.error'),
+					this.translate.get('notification.body.error'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
+				});
+				this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+			}
+		);
+	}
 
 }

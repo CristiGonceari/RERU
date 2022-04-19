@@ -44,7 +44,10 @@ export class UserService extends AbstractService {
 	}
 
 	bulkAddUsers(data): Observable<any> {
-		return this.http.put(`${this.coreUrl}/${this.routeUrl}/excel-import`, data);
+		return this.http.put(`${this.coreUrl}/${this.routeUrl}/excel-import`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
 	}
 
 	editUser(data): Observable<any> {
