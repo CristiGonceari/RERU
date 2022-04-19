@@ -27,6 +27,9 @@ namespace CODWER.RERU.Core.Application.Users
             CreateMap<CreateUserDto, UserProfile>()
                 .ForMember(x => x.IsActive, opts => opts.MapFrom(x => true));
 
+            CreateMap<AddUserDto, UserProfile>()
+                .ForMember(x => x.IsActive, opts => opts.MapFrom(x => true));
+
             CreateMap<UserPersonalDataDto, ERPIdentityUser>()
                 .ForMember(destinationMember => destinationMember.Id, options => options.Ignore());
 
