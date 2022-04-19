@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 {
-    [ModuleOperation(permission: PermissionCodes.TESTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_TESTE)]
     public class AddTestCommand : IRequest<int>
     {
         public AddEditTestDto Data { get; set; }

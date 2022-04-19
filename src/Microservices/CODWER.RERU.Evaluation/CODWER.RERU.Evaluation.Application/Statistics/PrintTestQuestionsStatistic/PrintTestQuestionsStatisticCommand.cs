@@ -9,7 +9,7 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.PrintTestQuestionsStatis
 {
     public class PrintTestQuestionsStatisticCommand : TableParameter, IRequest<FileDataDto>
     {
-        [ModuleOperation(permission: PermissionCodes.STATISTICS_GENERAL_ACCESS)]
+        [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_STATISTICI)]
 
         public int TestTemplateId { get; set; }
         public int ItemsPerPage { get; set; }

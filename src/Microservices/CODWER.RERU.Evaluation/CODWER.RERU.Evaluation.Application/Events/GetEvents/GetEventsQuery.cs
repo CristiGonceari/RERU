@@ -7,7 +7,7 @@ using System;
 
 namespace CODWER.RERU.Evaluation.Application.Events.GetEvents
 {
-    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_EVENIMENTE)]
     public class GetEventsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<EventDto>>
     {
         public string Name { get; set; }

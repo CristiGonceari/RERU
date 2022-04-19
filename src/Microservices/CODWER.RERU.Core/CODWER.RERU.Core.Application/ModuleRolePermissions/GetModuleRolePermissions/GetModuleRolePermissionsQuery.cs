@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.ModuleRolePermissions.GetModuleRolePermissions
 {
-    [ModuleOperation(permission: PermissionCodes.VIEW_ROLE_PERMISSIONS)]
+    [ModuleOperation(permission: PermissionCodes.VIZUALIZAREA_PERMISIUNILOR_ROLULUI)]
 
     public class GetModuleRolePermissionsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<ModulePermissionRowDto>>
     {

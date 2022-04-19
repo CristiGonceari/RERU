@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.Users.SetPassword 
 {
-    [ModuleOperation(permission: PermissionCodes.SET_USER_PASSWORD)]
+    [ModuleOperation(permission: PermissionCodes.SETAREA_PAROLEI_UTILIZATORULUI)]
 
     public class SetPasswordCommand : IRequest<Unit> 
     {

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTestQuestion
 {
-    [ModuleOperation(permission: PermissionCodes.TEST_VERIFICATION_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_VERIFICAREA_TESTELOR)]
     public class GetTestQuestionForVerifyQuery : IRequest<VerificationTestQuestionUnitDto>
     {
         public VerificationTestQuestionDto Data { get; set; }

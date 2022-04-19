@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Logging.Application.Articles.AddEditArticle
 {
-    [ModuleOperation(permission: PermissionCodes.ARTICLES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ARTICOLE)]
     public class AddEditArticleCommand : IRequest<int>
     {
         public ArticleDto Data { get; set; }

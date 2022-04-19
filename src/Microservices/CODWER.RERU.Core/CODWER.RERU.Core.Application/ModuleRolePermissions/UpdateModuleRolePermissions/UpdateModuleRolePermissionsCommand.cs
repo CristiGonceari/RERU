@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.ModuleRolePermissions.UpdateModuleRolePermissions
 {
-    [ModuleOperation(permission: PermissionCodes.UPDATE_MODULE_ROLE_PERMISSIONS)]
+    [ModuleOperation(permission: PermissionCodes.ACTUALIZAREA_PERMISIUNILOR_ROLULUI_LA_MODUL)]
 
     public class UpdateModuleRolePermissionsCommand : IRequest<Unit>
     {

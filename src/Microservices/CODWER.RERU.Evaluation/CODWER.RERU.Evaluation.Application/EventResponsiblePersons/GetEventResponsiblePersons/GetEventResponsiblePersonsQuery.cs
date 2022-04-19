@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.GetEventResponsiblePersons
 {
-    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_EVENIMENTE)]
     public class GetEventResponsiblePersonsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<UserProfileDto>>
     {
         public int EventId { get; set; }

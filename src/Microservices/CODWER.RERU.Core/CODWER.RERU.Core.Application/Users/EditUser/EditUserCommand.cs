@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.Users.EditUser 
 {
-    [ModuleOperation(permission: PermissionCodes.EDIT_USER_DETAILS)]
+    [ModuleOperation(permission: PermissionCodes.EDITAREA_DETALIILOR_UTILIZATORULUI)]
 
     public class EditUserCommand : IRequest<Unit> 
     {

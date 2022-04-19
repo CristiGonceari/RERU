@@ -2,28 +2,28 @@
 {
     public static class PermissionCodes
     {
-        public const string ARTICLES_GENERAL_ACCESS = "P03000001";
+        public const string ACCES_GENERAL_LA_ARTICOLE = "P03000001";
 
-        public const string EVENTS_GENERAL_ACCESS = "P03000101";
+        public const string ACCES_GENERAL_LA_EVENIMENTE = "P03000101";
 
-        public const string LOCATIONS_GENERAL_ACCESS = "P03000201";
+        public const string ACCES_GENERAL_LA_LOCAȚII = "P03000201";
 
-        public const string PLANS_GENERAL_ACCESS = "P03000301";
+        public const string ACCES_GENERAL_LA_PLANURI = "P03000301";
 
-        public const string QUESTION_CATEGORIES_GENERAL_ACCESS = "P03000401";
+        public const string ACCES_GENERAL_LA_CATEGORII = "P03000401";
 
-        public const string QUESTION_UNITS_GENERAL_ACCESS = "P03000501";
+        public const string ACCES_GENERAL_LA_ÎNTREBĂRI = "P03000501";
 
-        public const string TESTS_GENERAL_ACCESS = "P03000601";
+        public const string ACCES_GENERAL_LA_TESTE = "P03000601";
 
-        public const string TEST_QUESTIONS_GENERAL_ACCESS = "P03000701";
+        public const string ACCES_GENERAL_LA_ÎNTREBĂRILE_TESTULUI = "P03000701";
 
-        public const string TEST_TEMPLATES_GENERAL_ACCESS = "P03000801";
+        public const string ACCES_GENERAL_LA_ȘABLOANELE_DE_TESTE = "P03000801";
 
-        public const string STATISTICS_GENERAL_ACCESS = "P03000901";
+        public const string ACCES_GENERAL_LA_STATISTICI = "P03000901";
 
-        public const string TEST_VERIFICATION_GENERAL_ACCESS = "P03001001";
+        public const string ACCES_GENERAL_LA_VERIFICAREA_TESTELOR = "P03001001";
 
-        public const string SOLICITED_TESTS_GENERAL_ACCESS = "P03001101";
+        public const string ACCES_GENERAL_LA_TESTE_SOLICITATE = "P03001101";
     }
 }

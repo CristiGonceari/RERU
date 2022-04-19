@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
 {
-    [ModuleOperation(permission: PermissionCodes.VIEW_ALL_USERS)]
+    [ModuleOperation(permission: PermissionCodes.VIZUALIZAREA_UTILIZATORILOR)]
     public class GetAllUserProfilesQuery : PaginatedQueryParameter, IRequest<PaginatedModel<UserProfileDto>>
     {
         public string Keyword { get; set; }

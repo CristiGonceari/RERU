@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.EventLocations.GetEventLocations
 {
-    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_EVENIMENTE)]
     public class GetEventLocationsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<LocationDto>>
     {
         public int EventId { get; set; }

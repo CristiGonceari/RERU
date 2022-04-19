@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.EventLocations.AssignLocationToEvent
 {
-    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_EVENIMENTE)]
     public class AssignLocationToEventCommand : IRequest<Unit>
     {
         public AddEventLocationDto Data { get; set; }

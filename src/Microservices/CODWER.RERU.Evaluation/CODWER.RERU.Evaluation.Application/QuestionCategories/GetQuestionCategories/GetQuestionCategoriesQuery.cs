@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionCategories.GetQuestionCategories
 {
-    [ModuleOperation(permission: Permissions.PermissionCodes.QUESTION_CATEGORIES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: Permissions.PermissionCodes.ACCES_GENERAL_LA_CATEGORII)]
     public class GetQuestionCategoriesQuery: PaginatedQueryParameter, IRequest<PaginatedModel<QuestionCategoryDto>>
     {
         public string Name { get; set; }

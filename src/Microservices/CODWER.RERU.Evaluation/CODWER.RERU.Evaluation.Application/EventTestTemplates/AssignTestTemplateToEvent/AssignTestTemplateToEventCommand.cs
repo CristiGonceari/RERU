@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTemplateToEvent
 {
-    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_EVENIMENTE)]
     public class AssignTestTemplateToEventCommand : IRequest<Unit>
     {
         public AddEventTestTemplateDto Data { get; set; }
