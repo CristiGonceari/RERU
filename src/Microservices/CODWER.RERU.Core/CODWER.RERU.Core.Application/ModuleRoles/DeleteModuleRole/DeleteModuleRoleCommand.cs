@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.ModuleRoles.DeleteModuleRole
 {
-    [ModuleOperation(permission: PermissionCodes.ȘTERGEREA_ROLULUI_LA_MODUL)]
+    [ModuleOperation(permission: PermissionCodes.STERGEREA_ROLULUI_LA_MODUL)]
 
     public class DeleteModuleRoleCommand : IRequest<Unit>
     {

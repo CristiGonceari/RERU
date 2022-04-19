@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.ModuleRoles.AddModuleRole
 {
-    [ModuleOperation(permission: PermissionCodes.ADĂUGAREA_ROLULUI_LA_MODUL)]
+    [ModuleOperation(permission: PermissionCodes.ADAUGAREA_ROLULUI_LA_MODUL)]
 
     public class CreateModuleRoleCommand : IRequest<Unit>
     {

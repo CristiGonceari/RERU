@@ -93,11 +93,19 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
                     case "{rules_key}":
 
-                        var base64EncodedBytes = Convert.FromBase64String(testTemplate.Rules);
-                        var rules = Encoding.UTF8.GetString(base64EncodedBytes);
+                        if(testTemplate.Rules != null)
+                        {
 
-                        myDictionary.Add(item, rules);
+                            var base64EncodedBytes = Convert.FromBase64String(testTemplate.Rules);
+                            var rules = Encoding.UTF8.GetString(base64EncodedBytes);
 
+                            myDictionary.Add(item, rules);
+
+                        }
+                        else
+                        {
+                            myDictionary.Add(item, "-");
+                        }
                         break;
 
                     case "{question_count_key}":

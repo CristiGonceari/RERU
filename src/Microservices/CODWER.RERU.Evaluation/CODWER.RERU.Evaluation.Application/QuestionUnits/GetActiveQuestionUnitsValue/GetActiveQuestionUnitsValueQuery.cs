@@ -7,7 +7,7 @@ using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetActiveQuestionUnitsValue
 {
-    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ȘABLOANELE_DE_TESTE)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_SABLOANELE_DE_TESTE)]
     public class GetActiveQuestionUnitsValueQuery : PaginatedQueryParameter, IRequest<PaginatedModel<ActiveQuestionUnitValueDto>>
     {
         public QuestionTypeEnum? Type { get; set; }

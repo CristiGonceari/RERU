@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.Options.DeleteAllOptionsByQuestion
 {
-    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ÎNTREBĂRI)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_INTREBARI)]
     public class DeleteAllOptionsByQuestionCommand : IRequest<Unit>
     {
         public int QuestionUnitId { get; set; }

@@ -106,7 +106,9 @@
     "are-you-sure-you-want-to-delete-documents": "Sunteți sigur/ă că doriți să ștergeți documentul <b>{{name}}</b>?",
     "test-convert": "Testeaza Comversia",
     "configure-document": "Configurează Documentul",
-    "key-list": "Harta de chei"
+    "key-list": "Harta de chei",
+    "generate-document": "Generează document",
+    "select-document": "Selectează document"
   },
   "document-test-modal":{
     "all": "Toate",

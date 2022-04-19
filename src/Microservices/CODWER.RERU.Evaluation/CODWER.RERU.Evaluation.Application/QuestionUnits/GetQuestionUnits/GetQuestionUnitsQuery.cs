@@ -7,7 +7,7 @@ using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
 {
-    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ÎNTREBĂRI)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_INTREBARI)]
 
     public class GetQuestionUnitsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<QuestionUnitDto>>
     {

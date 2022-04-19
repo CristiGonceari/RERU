@@ -11,8 +11,6 @@ namespace RERU.Data.Persistence.Initializer
     {
         public static void SeedDb(AppDbContext appDbContext)
         {
-            appDbContext.Database.Migrate();
-
             AddBaseDocumentTemplateKeys(appDbContext);
         }
 
@@ -83,10 +81,9 @@ namespace RERU.Data.Persistence.Initializer
                 {
                     keys.Remove(existentKey);
                 }
-
             }
 
-            if (keys.Count() >= 1)
+            if (keys.Any())
             {
                 appDbContext.DocumentTemplateKeys.RemoveRange(keys);
             }

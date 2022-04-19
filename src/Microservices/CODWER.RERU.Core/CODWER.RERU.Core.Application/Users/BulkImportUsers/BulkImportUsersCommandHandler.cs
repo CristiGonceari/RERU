@@ -41,25 +41,19 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         {
             var fileStream = new MemoryStream();
             await data.CopyToAsync(fileStream);
-            using ExcelPackage package = new ExcelPackage(fileStream);
-            ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
-            int totalRows = workSheet.Dimension.Rows;
+            using var package = new ExcelPackage(fileStream);
+            var workSheet = package.Workbook.Worksheets[0];
+            var totalRows = workSheet.Dimension.Rows;
 
-            for (int i = 1; i <= totalRows; i++)
+            for (var i = 1; i <= totalRows; i++)
             {
-                string name = workSheet?.Cells[i, 1]?.Value?.ToString();
-                string lastName = workSheet?.Cells[i, 2]?.Value?.ToString();
-                string patronymic = workSheet?.Cells[i, 3]?.Value?.ToString();
-                string idnp = workSheet?.Cells[i, 4]?.Value?.ToString();
-                string email = workSheet?.Cells[i, 5]?.Value?.ToString();
-
                 var command = new CreateUserCommand
                 {
-                    FirstName = name,
-                    LastName = lastName,
-                    FatherName = patronymic,
-                    Email = email,
-                    Idnp = idnp,
+                    FirstName = workSheet?.Cells[i, 1]?.Value?.ToString(),
+                    LastName = workSheet?.Cells[i, 2]?.Value?.ToString(),
+                    FatherName = workSheet?.Cells[i, 3]?.Value?.ToString(),
+                    Idnp = workSheet?.Cells[i, 4]?.Value?.ToString(),
+                    Email = workSheet?.Cells[i, 5]?.Value?.ToString(),
                     EmailNotification = true
                 };
 
