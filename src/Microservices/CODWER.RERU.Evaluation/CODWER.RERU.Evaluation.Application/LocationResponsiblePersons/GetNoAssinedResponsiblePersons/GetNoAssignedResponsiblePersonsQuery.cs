@@ -6,7 +6,7 @@ using CVU.ERP.Common.Pagination;
 
 namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.GetNoAssinedResponsiblePersons
 {
-    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_LOCAȚII)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_LOCATII)]
     public class GetNoAssignedResponsiblePersonsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<UserProfileDto>>
     {
         public string FirstName { get; set; }

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetTags
 {
-    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ÎNTREBĂRI)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_INTREBARI)]
     public class GetTagsQuery : IRequest<List<TagDto>>
     {
         public string Name { get; set; }

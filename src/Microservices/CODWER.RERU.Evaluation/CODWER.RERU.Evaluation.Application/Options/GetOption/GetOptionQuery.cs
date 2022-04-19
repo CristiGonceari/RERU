@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.Options.GetOption
 {
-    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ÎNTREBĂRI)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_INTREBARI)]
     public class GetOptionQuery : IRequest<OptionDto>
     {
         public int Id { get; set; }

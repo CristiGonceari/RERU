@@ -7,7 +7,7 @@ using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
 {
-    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ÎNTREBĂRILE_TESTULUI)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_INTREBARILE_TESTULUI)]
     public class GetTestQuestionQuery : IRequest<TestQuestionDto>
     {
         public int TestId { get; set; }

@@ -6,7 +6,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.TestQuestions;
 
 namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestionsSummary
 {
-    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ÎNTREBĂRILE_TESTULUI)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_INTREBARILE_TESTULUI)]
     public class GetTestQuestionsSummaryQuery : IRequest<List<TestQuestionSummaryDto>>
     {
         public int TestId { get; set; }

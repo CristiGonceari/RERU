@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetQuestionsPreview
 {
-    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ȘABLOANELE_DE_TESTE)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_SABLOANELE_DE_TESTE)]
 
     public class GetQuestionsPreviewQuery : IRequest<List<QuestionUnitPreviewDto>>
     {

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionStatus
 {
-    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ÎNTREBĂRI)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_INTREBARI)]
     public class EditQuestionStatusCommand : IRequest<Unit>
     {
         public EditQuestionStatusDto Data { get; set; }
