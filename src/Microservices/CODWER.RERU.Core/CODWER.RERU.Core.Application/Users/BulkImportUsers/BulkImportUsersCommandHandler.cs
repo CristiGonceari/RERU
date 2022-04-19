@@ -60,7 +60,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                     FatherName = patronymic,
                     Email = email,
                     Idnp = idnp,
-                    EmailNotification = false
+                    EmailNotification = true
                 };
 
                 try
