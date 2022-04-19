@@ -17,6 +17,8 @@ import { AttachUserModalComponent } from './components/attach-user-modal/attach-
 import { DateFilterPipe } from './pipes/date-filter.pipe';
 import { ConvertPdfDocumentModalComponent } from './modals/convert-pdf-document-modal/convert-pdf-document-modal.component';
 import { CKEditorModule } from 'ngx-ckeditor';
+import { GenerateDocumentModalComponent } from './modals/generate-document-modal/generate-document-modal.component';
+import { CkEditorConfigComponent } from './components/ck-editor-config/ck-editor-config.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { CKEditorModule } from 'ngx-ckeditor';
     CalendarChunkPipe,
     AttachUserModalComponent,
     DateFilterPipe,
-    ConvertPdfDocumentModalComponent
+    ConvertPdfDocumentModalComponent,
+    GenerateDocumentModalComponent
   ],
   imports: [
     HttpClientModule,

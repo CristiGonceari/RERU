@@ -157,4 +157,15 @@ export class TestService extends AbstractService {
 			observe: 'response',
 		});
 	}
+
+	getTestDocumentReplacedKeys(params): Observable<any>{
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/getTestRelacedKeys`, {params});
+	}
+	
+	printDocument(data): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/getPDF?source=${encodeURIComponent(data.source)}&testName=${data.testName}`, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }
