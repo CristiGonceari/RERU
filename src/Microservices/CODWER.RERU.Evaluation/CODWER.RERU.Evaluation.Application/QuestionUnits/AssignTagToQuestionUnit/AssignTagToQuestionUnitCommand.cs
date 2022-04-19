@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionUnits.AssignTagToQuestionUnit
 {
-    [ModuleOperation(permission: PermissionCodes.QUESTION_UNITS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_INTREBARI)]
     public class AssignTagToQuestionUnitCommand : IRequest<Unit>
     {
         public int QuestionUnitId { get; set; }

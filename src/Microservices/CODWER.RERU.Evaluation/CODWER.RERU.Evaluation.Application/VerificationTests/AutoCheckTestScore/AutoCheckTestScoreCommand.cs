@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.VerificationTests.AutoCheckTestScore
 {
-    [ModuleOperation(permission: PermissionCodes.TEST_VERIFICATION_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_VERIFICAREA_TESTELOR)]
     public class AutoCheckTestScoreCommand : IRequest<Response>
     {
         public int TestId { get; set; }

@@ -7,7 +7,7 @@ using System;
 
 namespace CODWER.RERU.Evaluation.Application.Events.PrintEvents
 {
-    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_EVENIMENTE)]
     public class PrintEventsCommand : TableParameter, IRequest<FileDataDto>
     {
         public string Name { get; set; }

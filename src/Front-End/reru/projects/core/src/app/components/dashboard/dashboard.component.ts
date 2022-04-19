@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SidebarView } from '../../utils/models/sidebar.model';
 import {
   ApplicationUserService,
@@ -9,8 +9,6 @@ import {
 import { InternalService } from '../../utils/services/internal.service';
 import { NotificationsService } from 'angular2-notifications';
 import { I18nService } from '../../utils/services/i18n.service';
-import { forkJoin } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -31,9 +29,6 @@ export class DashboardComponent implements OnInit {
     private internalService: InternalService,
     public notificationService: NotificationsService,
     public translate: I18nService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
@@ -57,27 +52,6 @@ export class DashboardComponent implements OnInit {
   }
 
   getTestId() {
-    this.internalService.getTestIdForFastStart().subscribe((res) => {
-      if (res && +res.data.testId != 0) {
-        this.testId = res.data.testId;
-        this.showMultipleQuestionsPerPega = res.data.showManyQuestionPerPage;
-        this.type = res.type;
-        this.messageText = res.message;
-        forkJoin([
-          this.translate.get('Go to Test'),
-          this.translate.get('Testul e pe cale de a incepe'),
-        ]).subscribe(([type, message]) => {
-          this.type = type;
-          this.messageText = message;
-          this.notificationService.info(this.type, this.messageText, {
-            timeOut: 29000,
-            showProgressBar: true,
-          })
-          .click.subscribe(() => {
-            this.ngZone.run(() => this.router.createUrlTree([`../reru-evaluation/#/my-activities/start-test/${this.testId}`], { relativeTo: this.route }))
-          });
-        });
-      }
-    });
+    this.internalService.getTestIdForFastStart().subscribe(() => {});
   }
 }

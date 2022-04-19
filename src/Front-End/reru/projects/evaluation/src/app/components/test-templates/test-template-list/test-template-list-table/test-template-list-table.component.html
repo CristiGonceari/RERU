@@ -49,6 +49,7 @@
                                         </svg>
                                     </span>
                                 </div>
+                                
                                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                                     <div ngbDropdownMenu aria-labelledby="action1">
                                         <button [routerLink]="['type-details', testTemplate.id]"
@@ -85,8 +86,12 @@
                                             <button (click)="printTestTemplate(testTemplate.id)" class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                             {{ 'button.print' | translate }}
                                         </button>
+                                        <button (click)="openGenerateDocumentModal(testTemplate.id, testTemplate.name)" class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                                            {{'documents-templates.generate-document'| translate}}
+                                        </button>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </td>

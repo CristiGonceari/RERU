@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.Users.RemoveUser
 {
-    [ModuleOperation(permission: PermissionCodes.DELETE_USER)]
+    [ModuleOperation(permission: PermissionCodes.STERGEREA_UTILIZATORULUI)]
     public class RemoveUserCommand : IRequest<Unit>
     {
         public RemoveUserCommand(int id)

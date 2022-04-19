@@ -98,6 +98,9 @@
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem (click)="printTest(item.id)">
                                         {{ 'button.print' | translate }}
                                     </button>
+                                    <button (click)="openGenerateDocumentModal(item.id, item.testTemplateName)" class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                                        {{'documents-templates.generate-document'| translate}}
+                                    </button>
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem
                                         (click)="removeTest(item.id)">
                                         {{ 'button.delete' | translate }}

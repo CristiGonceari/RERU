@@ -10,8 +10,6 @@ export class DateFilterPipe implements PipeTransform {
   }
 
   transform(value: any, format?: string): any {
-    console.warn('value', value);
-    
     if (!value) {
       return '';
     }

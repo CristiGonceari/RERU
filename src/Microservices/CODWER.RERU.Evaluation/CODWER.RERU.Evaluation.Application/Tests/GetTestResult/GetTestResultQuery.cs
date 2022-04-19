@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetTestResult
 {
-    [ModuleOperation(permission: PermissionCodes.TESTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_TESTE)]
     public class GetTestResultQuery : IRequest<TestResultDto>
     {
         public int TestId { get; set; }

@@ -107,7 +107,9 @@
     "test-convert": "Test Convertor",
     "configure-document": "Configure Document",
     "key-list": "Key map",
-    "Contractor Name": "Numele persoanei"
+    "Contractor Name": "Numele persoanei",
+    "generate-document": "Generate document",
+    "select-document": "Select document"
   },
   "document-test-modal":{
     "all": "All",

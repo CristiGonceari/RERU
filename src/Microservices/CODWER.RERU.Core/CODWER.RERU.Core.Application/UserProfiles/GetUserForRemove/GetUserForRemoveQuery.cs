@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.UserProfiles.GetUserForRemove
 {
-    [ModuleOperation(permission: PermissionCodes.DELETE_USER)]
+    [ModuleOperation(permission: PermissionCodes.STERGEREA_UTILIZATORULUI)]
     public class GetUserForRemoveQuery : IRequest<UserForRemoveDto>
     {
         public GetUserForRemoveQuery(int id)

@@ -2,8 +2,8 @@
 {
     public static class PermissionCodes
     {
-        public const string LOGGING_GENERAL_ACCESS = "P04000001";
+        public const string ACCES_GENERAL_LA_DATE_JURNALIZATE = "P04000001";
 
-        public const string ARTICLES_GENERAL_ACCESS = "P04000002";
+        public const string ACCES_GENERAL_LA_ARTICOLE = "P04000002";
     }
 }

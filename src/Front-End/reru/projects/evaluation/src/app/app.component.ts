@@ -334,38 +334,14 @@ export class AppComponent {
 	}
 
 	setIntrvl() {
-		setInterval(() => this.getTestId(), 300000);
+		setInterval(() => this.getTestId(), 100000);
 	}
 
 	getTestId() {
-		this.internalGetTest.getTestIdForFastStart("").subscribe((res) => {
-			if (res && +res.data.testId != 0) {
-				this.testId = +res.data.testId;
-				this.showMultipleQuestionsPerPega = res.data.showManyQuestionPerPage;
-				this.type = res.type;
-				this.messageText = res.message;
-				forkJoin([
-					this.translate.get('Go to Test'),
-					this.translate.get('Testul e pe cale de a incepe'),
-				]).subscribe(([type, message]) => {
-					this.type = type;
-					this.messageText = message;
-					this.notificationService
-						.info(this.type, this.messageText, {
-							timeOut: 29000,
-							showProgressBar: true,
-						})
-						.click.subscribe(() =>
-							this.router.navigate(['my-activities/start-test/', this.testId])
-						);
-				});
-			}
-		});
+		this.internalGetTest.getTestIdForFastStart("").subscribe(() => {});
 	}
 
 	logout() {
 		this.authenticationService.signout();
-		// localStorage.clear();
-		// window.location.assign('/');
 	}
 }

@@ -7,7 +7,7 @@ using CODWER.RERU.Core.Application.Permissions;
 
 namespace CODWER.RERU.Core.Application.Modules.GetUserModuleAccess 
 {
-    [ModuleOperation(permission: PermissionCodes.VIEW_USER_MODULES)]
+    [ModuleOperation(permission: PermissionCodes.VIZUALIZAREA_MODULELOR_UTILIZATORULUI)]
     public class GetUserModuleAccessQuery : IRequest<List<UserModuleAccessDto>> 
     {
         public GetUserModuleAccessQuery (int id) 

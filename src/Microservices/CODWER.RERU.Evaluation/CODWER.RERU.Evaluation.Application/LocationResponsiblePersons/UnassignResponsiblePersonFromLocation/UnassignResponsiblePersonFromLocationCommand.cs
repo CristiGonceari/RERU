@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.UnassignResponsiblePersonFromLocation
 {
-    [ModuleOperation(permission: Permissions.PermissionCodes.LOCATIONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: Permissions.PermissionCodes.ACCES_GENERAL_LA_LOCATII)]
     public class UnassignResponsiblePersonFromLocationCommand : IRequest<Unit>
     {
         public int LocationId { get; set; }

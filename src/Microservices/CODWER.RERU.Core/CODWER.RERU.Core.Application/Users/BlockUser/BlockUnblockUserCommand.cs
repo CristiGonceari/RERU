@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.Users.BlockUser
 {
-    [ModuleOperation(permission: PermissionCodes.DEACTIVATE_USER)]
+    [ModuleOperation(permission: PermissionCodes.DEZACTIVAREA_UTILIZATORULUI)]
     public class BlockUnblockUserCommand : IRequest<Unit>
     {
         public BlockUnblockUserCommand(int id)

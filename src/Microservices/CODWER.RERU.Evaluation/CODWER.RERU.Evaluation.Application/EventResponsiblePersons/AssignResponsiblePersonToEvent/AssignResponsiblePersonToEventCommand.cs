@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignResponsiblePersonToEvent
 {
-    [ModuleOperation(permission: PermissionCodes.EVENTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_EVENIMENTE)]
     public class AssignResponsiblePersonToEventCommand : IRequest<List<int>>
     {
         public int EventId { get; set; }

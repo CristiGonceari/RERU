@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.ModuleRoles.GetModuleRoleForEdit
 {
-    [ModuleOperation(permission: PermissionCodes.UPDATE_MODULE_ROLE)]
+    [ModuleOperation(permission: PermissionCodes.ACTUALIZAREA_ROLULUI_LA_MODUL)]
 
     public class GetModuleRoleForEditQuery : IRequest<AddEditModuleRoleDto>
     {

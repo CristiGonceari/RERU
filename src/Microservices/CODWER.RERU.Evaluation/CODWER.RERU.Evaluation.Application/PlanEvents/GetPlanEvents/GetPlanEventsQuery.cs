@@ -6,8 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.PlanEvents.GetPlanEvents
 {
-    [ModuleOperation(permission: PermissionCodes.PLANS_GENERAL_ACCESS)]
-
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_PLANURI)]
     public class GetPlanEventsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<EventDto>>
     {
         public int PlanId { get; set; }
