@@ -1,10 +1,10 @@
 ﻿using CODWER.RERU.Core.DataTransferObjects.Files;
+using CVU.ERP.Common.DataTransferObjects.Files;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 
 namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 {
-    public class BulkImportUsersCommand : IRequest<Unit>
+    public class BulkImportUsersCommand : IRequest<FileDataDto>
     {
         public BulkExcelImport Data { get; set; }
     }
