@@ -46,7 +46,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                 {
                     try
                     {
-                        string assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
+                        var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
                         var template = await File.ReadAllTextAsync(assemblyPath + "/UserRegister.html");
 
                         template = template
