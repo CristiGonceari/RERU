@@ -1,5 +1,7 @@
 ﻿using CODWER.RERU.Evaluation.Application.Permissions;
 using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices;
+using CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices.Implementations;
 using CODWER.RERU.Evaluation.Application.Services.GetPdfServices;
 using CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementations;
 using CODWER.RERU.Evaluation.Application.Services.Implementations;
@@ -29,6 +31,7 @@ namespace CODWER.RERU.Evaluation.Application.DependencyInjection
                 .AddScoped(typeof(IGetTestTemplatePdf), typeof(GetTestTemplatePdf))
                 .AddScoped(typeof(IPdfService), typeof(PdfService))
                 .AddScoped(typeof(IOptionService), typeof(OptionService))
+                .AddScoped(typeof(IGetTestTemplateDocumentReplacedKeys), typeof(GetTestTemplateDocumentReplacedKeys))
                 .AddScoped(typeof(IInternalNotificationService), typeof(InternalNotificationService));
         }
     }

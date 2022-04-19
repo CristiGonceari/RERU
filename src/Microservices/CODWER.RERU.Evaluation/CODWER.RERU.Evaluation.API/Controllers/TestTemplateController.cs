@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.API.Config;
+using CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices;
 using CODWER.RERU.Evaluation.Application.TestTemplates.AddEditTestTemplateSettings;
 using CODWER.RERU.Evaluation.Application.TestTemplates.AddTestTemplate;
 using CODWER.RERU.Evaluation.Application.TestTemplates.AddTestTemplateRules;
@@ -11,6 +12,7 @@ using CODWER.RERU.Evaluation.Application.TestTemplates.EditTestTemplateStatus;
 using CODWER.RERU.Evaluation.Application.TestTemplates.GetQuestionsPreview;
 using CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplate;
 using CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStatus;
+using CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateDocumentReplacedKeys;
 using CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateRules;
 using CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplates;
 using CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateSettings;
@@ -29,6 +31,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     [ApiController]
     public class TestTemplateController : BaseController
     {
+        private readonly IGetTestTemplateDocumentReplacedKeys _getTestTemplateDocumentReplacedKeys;
+        public TestTemplateController(IGetTestTemplateDocumentReplacedKeys getTestTemplateDocumentReplacedKeys)
+        {
+
+            _getTestTemplateDocumentReplacedKeys = getTestTemplateDocumentReplacedKeys;
+        }
+
         [HttpGet("{id}")]
         public async Task<TestTemplateDto> GetTestTemplate([FromRoute] int id)
         {
@@ -121,6 +130,22 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         {
             var result = await Mediator.Send(command);
 
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpGet("getTestTemplateRelacedKeys")]
+        public async Task<string> GetTestTemplateDocumentReplacedKeys([FromQuery] GetTestTemplateDocumentReplacedKeysQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("getPDF")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> GetPDF([FromQuery] string source, string testTemplateName)
+        {
+            var result = await _getTestTemplateDocumentReplacedKeys.GetPdf(source, testTemplateName);
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);
