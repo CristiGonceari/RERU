@@ -154,6 +154,7 @@
 
         //document templates
         public static string DOCUMENTS_NOT_FOUND = "03002104";
+        public static string INVALID_DOCUMENT_TEMPLATE = "03002105";
 
 
     }
