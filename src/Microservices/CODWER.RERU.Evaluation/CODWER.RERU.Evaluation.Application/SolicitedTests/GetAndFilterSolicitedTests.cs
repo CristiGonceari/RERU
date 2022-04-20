@@ -12,6 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests
             var solicitedTests = appDbContext.SolicitedTests
                 .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
+                .Include(t => t.CandidatePosition)
                 .Include(t => t.Event)
                 .OrderByDescending(x => x.Id)
                 .AsQueryable();

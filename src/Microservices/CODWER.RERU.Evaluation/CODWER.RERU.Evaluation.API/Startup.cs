@@ -128,7 +128,7 @@ namespace CODWER.RERU.Evaluation.API
             app.UseHangfireDashboard();
             app.UseHangfireServer();
 
-            RecurringJob.AddOrUpdate<SendEmailNotificationBeforeTest>(x => x.SendNotificationBeforeTest(), "*/5 * * * *");
+            //RecurringJob.AddOrUpdate<SendEmailNotificationBeforeTest>(x => x.SendNotificationBeforeTest(), "*/5 * * * *");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

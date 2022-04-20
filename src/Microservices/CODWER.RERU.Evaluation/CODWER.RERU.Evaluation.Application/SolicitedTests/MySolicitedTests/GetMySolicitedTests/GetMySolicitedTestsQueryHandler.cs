@@ -31,6 +31,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Get
             var mySolicitedTests = _appDbContext.SolicitedTests
                 .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
+                .Include(t => t.CandidatePosition)
                 .Include(t => t.Event)
                 .Where(t => t.UserProfileId == myUserProfile.Id)
                 .OrderByDescending(x => x.Id)

@@ -14,10 +14,11 @@ import { SharedModule, SvgModule, MOCK_AUTHENTICATION } from '@erp/shared';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { environment } from '../environments/environment';
 import { NOTIFICATION_INTERCEPTOR_PROVIDER } from './utils/interceptors/notification.interceptor'
+import { PositionsComponent } from './components/positions/positions.component';
 
 
 @NgModule({
-  declarations: [ AppComponent, DashboardComponent ],
+  declarations: [ AppComponent, DashboardComponent, PositionsComponent ],
   imports: [
     BrowserModule,
 		BrowserAnimationsModule,
@@ -35,7 +36,7 @@ import { NOTIFICATION_INTERCEPTOR_PROVIDER } from './utils/interceptors/notifica
 		NgbModule,
 		UtilsModule,
 		CommonModule,
-		SvgModule
+		SvgModule,
   ],
   providers: [
     TranslatePipe, 

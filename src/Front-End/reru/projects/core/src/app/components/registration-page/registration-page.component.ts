@@ -32,6 +32,7 @@ export class RegistrationPageComponent implements OnInit {
   fileType: FileTypeEnum = FileTypeEnum.Photos;
   userFileType: FileTypeEnum = FileTypeEnum.Documents;
   attachedFile: File;
+  selectedProject: number;
 
   languageList = [
     { code: 'en', label: 'English' },

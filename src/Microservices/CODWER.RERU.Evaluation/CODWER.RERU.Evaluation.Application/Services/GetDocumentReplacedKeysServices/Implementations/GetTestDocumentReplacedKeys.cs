@@ -78,7 +78,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
             {
                 switch (item)
                 {
-                    case "{today_date_key}":
+                    case "{cheie_pentru_data_de_azi}":
 
                         var date = DateTime.Now;
 
@@ -86,37 +86,37 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
                         break;
 
-                    case "{accumulated_percentage_key}":
+                    case "{cheie_cu_punctaj_acumulat}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.AccumulatedPercentage.ToString()));
 
                         break;
 
-                    case "{max_errors_key}":
+                    case "{cheie_cu_maxim_posibile_erori}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.MaxErrors.ToString()));
 
                         break;
 
-                    case "{test_pass_status_key}":
+                    case "{cheie_cu_statutul_testului}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.TestPassStatus.ToString()));
 
                         break;
 
-                    case "{result_status_key}":
+                    case "{cheie_cu_rezultatul_testului}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.ResultStatus.ToString()));
 
                         break;
 
-                    case "{programmed_time_key}":
+                    case "{cheie_cu_data_programata_a_testului}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.ProgrammedTime.ToString("dd/MM/yyyy").Replace("-", "/")));
 
                         break;
 
-                    case "{start_time_key}":
+                    case "{cheie_cu_data_de_început_a_testului}":
 
                         var startTime = test.StartTime;
 
@@ -124,7 +124,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
                         break;
 
-                    case "{end_time_key}":
+                    case "{cheie_cu_data_de_încheiere_a_testului}":
 
                         var endTime = test.EndTime;
                         
@@ -132,115 +132,115 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
                         break;
 
-                    case "{event_name_key}":
+                    case "{cheie_cu_numele_evenimentului}":
 
                          myDictionary.Add(item, ValidateItemsForDictionary(item, test.Event?.Name));
 
                         break;
 
-                    case "{event_description_key}":
+                    case "{cheie_cu_descrierea_evenimentului}":
                         
                          myDictionary.Add(item, ValidateItemsForDictionary(item, test.Event?.Description));
                        
                         break;
 
-                    case "{event_from_date_key}":
+                    case "{cheie_cu_data_de_început_a_evenimentului}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.Event?.FromDate.ToString("dd/MM/yyyy").Replace("-", "/")));
 
                         break;
 
-                    case "{event_till_date_key}":
+                    case "{cheie_cu_data_de_încheiere_a_evenimentului}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.Event?.TillDate.ToString("dd/MM/yyyy").Replace("-", "/")));
 
                         break;
 
-                    case "{location_name_key}":
+                    case "{cheie_cu_numele_locatiei}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.Location?.Name));
 
                         break;
 
-                    case "{location_description_key}":
+                    case "{cheie_cu_descrierea_locatiei}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.Location?.Description));
 
                         break;
 
-                    case "{location_address_key}":
+                    case "{cheie_cu_adresa_locatiei}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.Location?.Address));
 
                         break;
 
-                    case "{location_type_key}":
+                    case "{cheie_cu_tipul_locatiei}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.Location?.Type.ToString()));
 
                         break;
 
-                    case "{location_places_key}":
+                    case "{cheie_cu_numarul_de_locuri_ale_locatiei}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.Location?.Places.ToString()));
 
                         break;
 
-                    case "{appraiser_name_key}":
+                    case "{cheie_cu_numele_evaluatului}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.UserProfile?.FirstName));
 
                         break;
 
-                    case "{appraiser_last_name_key}":
+                    case "{cheie_cu_prenumele_evaluatului}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.UserProfile?.LastName));
 
                         break;
 
-                    case "{appraiser_father_name_key}":
+                    case "{cheie_cu_patronimicul_evaluatului}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.UserProfile?.FatherName));
 
                         break;
 
-                    case "{appraiser_idnp_key}":
+                    case "{cheie_cu_IDNP_evaluatului}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.UserProfile?.Idnp));
 
                         break;
 
-                    case "{appraiser_email_key}":
+                    case "{cheie_cu_email_evaluatului}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.UserProfile?.Email));
 
                         break;
 
-                    case "{evaluator_name_key}":
+                    case "{cheie_cu_numele_evaluatorului}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.Evaluator?.FirstName));
 
                         break;
 
-                    case "{evaluator_last_name_key}":
+                    case "{cheie_cu_prenumele_evaluatorului}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.Evaluator?.LastName));
 
                         break;
 
-                    case "{evaluator_father_name_key}":
+                    case "{cheie_cu_patronimicul_evaluatorului}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.Evaluator?.FirstName));
 
                         break;
 
-                    case "{evaluator_idnp_key}":
+                    case "{cheie_cu_IDNP_evaluatorului}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.Evaluator?.Idnp));
 
                         break;
 
-                    case "{evaluator_email_key}":
+                    case "{cheie_cu_email_evaluatorului}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.Evaluator?.Email));
 
