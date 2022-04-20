@@ -34,7 +34,7 @@ export class InternalNotifyInterceptor extends AbstractService implements HttpIn
     return next.handle(req).pipe(
       tap(evt => {
         if (evt instanceof HttpResponse && evt.url.includes('internal')) {
-          if (evt.body && evt.body) {
+          if (evt && evt.body) {
             console.log('url', `${this.baseUrl}/reru-evaluation/#/my-activities/start-test`);
             this.notificationService.info('Go to Test', 'Testul e pe cale de a incepe', {
               timeOut: 29000,
