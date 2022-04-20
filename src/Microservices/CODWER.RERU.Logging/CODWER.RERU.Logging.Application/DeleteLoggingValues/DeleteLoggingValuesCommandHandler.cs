@@ -11,8 +11,8 @@ namespace CODWER.RERU.Logging.Application.DeleteLoggingValues
     {
         private readonly LoggingDbContext _appDbContext;
 
-        public DeleteLoggingValuesCommandHandler(LoggingDbContext appDbContext) {
-
+        public DeleteLoggingValuesCommandHandler(LoggingDbContext appDbContext) 
+        {
             _appDbContext = appDbContext;
         }
 
@@ -27,6 +27,5 @@ namespace CODWER.RERU.Logging.Application.DeleteLoggingValues
 
             return Unit.Value;
         }
-       
     }
 }
