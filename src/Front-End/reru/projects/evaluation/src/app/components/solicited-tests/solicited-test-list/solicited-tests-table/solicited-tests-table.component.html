@@ -11,6 +11,7 @@
                 <tr>
                     <th scope="col">{{'verify-test.student' | translate}}</th>
                     <th scope="col" class="text-left">{{'tests.name' | translate}}</th>
+                    <th scope="col" class="text-left">{{'position.apply-for-position' | translate}}</th>
                     <th scope="col" class="text-left">{{'events.event' | translate}}</th>
                     <th scope="col" class="text-left">{{'tests.status' | translate}}</th>
                     <th scope="col" style="width: 48px"></th>
@@ -28,6 +29,7 @@
                         </p>
                     </td>
                     <td>{{ item.testTemplateName }}</td>
+                    <td>{{ item.candidatePositionName }}</td>
                     <td>
                         <span *ngIf="item.eventName">{{ item.eventName }}</span>
                         <span *ngIf="!item.eventName">-</span>

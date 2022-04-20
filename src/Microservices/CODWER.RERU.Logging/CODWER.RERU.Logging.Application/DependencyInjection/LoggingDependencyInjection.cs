@@ -8,8 +8,7 @@ namespace CODWER.RERU.Logging.Application.DependencyInjection
     {
         public static IServiceCollection AddLoggingApplication(this IServiceCollection services)
         {
-            services.AddScoped(typeof(IModulePermissionProvider), typeof(ModulePermissionProvider))
-                ;
+            services.AddScoped(typeof(IModulePermissionProvider), typeof(ModulePermissionProvider));
 
             return services;
         }

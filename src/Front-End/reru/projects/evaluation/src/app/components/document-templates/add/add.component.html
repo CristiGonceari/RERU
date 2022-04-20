@@ -61,7 +61,7 @@
               *ngFor="let item of firebase_Data " style="justify-content: right;"
               (click)="addWordButtonToCkEditor(item.keyName)">
               <div class="d-flex flex-column text-right pr-3">
-                <span class="text-dark-75 font-weight-bold font-size-sm">{{ 'documentKeys.' + keysEnum[item.id] | translate}}</span>
+                <span class="text-dark-75 font-weight-bold font-size-sm">{{ 'documentKeys.' + keysEnum[item.translateId] | translate}}</span>
                 <span class="font-weight-bolder font-size-sm">{{ item.keyName }}</span>
               </div>
               <span class="svg-icon svg-icon-primary svg-icon-2x">

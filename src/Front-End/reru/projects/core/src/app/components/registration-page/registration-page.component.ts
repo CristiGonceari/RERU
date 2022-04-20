@@ -12,11 +12,7 @@ import { NotificationUtil } from '../../utils/util/notification.util';
 import { ValidatorUtil } from '../../utils/util/validator.util';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WatchInfoVideoModalComponent } from '../../utils/modals/watch-info-video-modal/watch-info-video-modal.component'
-import { CandidatePositionService } from '../../utils/services/candidate-position.service';
-import { CandidatePositionModel } from '../../utils/models/candidate-position.model';
-import { SelectItem } from '../../utils/models/select-item.model';
 import { UserFilesService } from '../../utils/services/user-files.service';
-import { UploadFileModalComponent } from '@erp/shared';
 
 @Component({
   selector: 'app-registration-page',
@@ -36,7 +32,6 @@ export class RegistrationPageComponent implements OnInit {
   fileType: FileTypeEnum = FileTypeEnum.Photos;
   userFileType: FileTypeEnum = FileTypeEnum.Documents;
   attachedFile: File;
-  candidatePositions: SelectItem[] = [{ label: '', value: '' }];
   selectedProject: number;
 
   languageList = [
@@ -54,25 +49,13 @@ export class RegistrationPageComponent implements OnInit {
     private inregistrationService: InregistrationUserService,
     private userFilesService: UserFilesService,
     private notificationService: NotificationsService,
-    private candidatePosition: CandidatePositionService,
     public translate: I18nService,
     private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
     this.initForm();
-    this.retrievePositions();
     this.currentLanguage = this.translate.currentLanguage;
-  }
-
-  retrievePositions(){
-    this.candidatePosition.getPositionValues().subscribe((res) => (
-        this.candidatePositions = res.data
-      ));
-  }
-
-  atachProject(item: any) {
-    this.selectedProject = item.target.value;
   }
 
   openModal(){
@@ -113,7 +96,6 @@ export class RegistrationPageComponent implements OnInit {
       idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
       email: this.fb.control(null, [Validators.required, Validators.email]),
       emailNotification: this.fb.control(false, [Validators.required]),
-      candidatePositionId: this.fb.control((this.selectedProject), [Validators.required])
     });
   }
 
@@ -136,7 +118,6 @@ export class RegistrationPageComponent implements OnInit {
       email: this.userForm.value.email,
       idnp: this.userForm.value.idnp,
       emailNotification: this.userForm.value.emailNotification = true,
-      candidatePositionId: +this.selectedProject
     }
 
     this.inregistrationService.inregistrateUser(data).subscribe(res => {

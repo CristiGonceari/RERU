@@ -13,6 +13,5 @@ namespace CODWER.RERU.Logging.Application.GetLoggingValuesQuery
         public string UserIdentifier { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
-
     }
 }
