@@ -77,7 +77,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
             {
                 switch (item)
                 {
-                    case "{today_date_key_key}":
+                    case "{cheie_cu_data_de_azi}":
 
                         var date = DateTime.Now;
 
@@ -85,13 +85,13 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
                         break;
 
-                    case "{test_template_name_key}":
+                    case "{cheia_numelui_șablonului_de_testare}":
 
                         myDictionary.Add(item, testTemplate.Name);
 
                         break;
 
-                    case "{rules_key}":
+                    case "{cheia_regulilor}":
 
                         if(testTemplate.Rules != null)
                         {
@@ -108,25 +108,25 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
                         }
                         break;
 
-                    case "{question_count_key}":
+                    case "{cheie_cu_numarul_total_de_întrebări}":
 
                         myDictionary.Add(item, testTemplate.QuestionCount.ToString());
 
                         break;
 
-                    case "{min_percent_key}":
+                    case "{cheie_minim_punctaj}":
 
                         myDictionary.Add(item, testTemplate.MinPercent.ToString() + " %");
 
                         break;
 
-                    case "{duration_key}":
+                    case "{cheie_de_durată}":
 
                         myDictionary.Add(item, testTemplate.Duration.ToString() + " min");
 
                         break;
 
-                    case "{settings_max_errors_key}":
+                    case "{cheie_cu_numarul_de_maxim_posibile_erori}":
 
                         if (testTemplate.Settings.MaxErrors != null)
                         {
@@ -139,7 +139,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
                         break;
 
-                    case "{settings_formula_for_one_answer_key}":
+                    case "{cheie_cu_formula_pentru_un_singur_raspuns}":
 
                         if (testTemplate.Settings.FormulaForOneAnswer != null)
                         {
@@ -152,7 +152,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
                         break;
 
-                    case "{settings_formula_for_multiple_answer_key}":
+                    case "{cheie_cu_formula_pentru_răspunsuri_multiple}":
 
                         if (testTemplate.Settings.FormulaForMultipleAnswers != null)
                         {
@@ -165,19 +165,19 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
                         break;
 
-                    case "{status_key}":
+                    case "{cheie_cu_statutul_șablonului}":
 
                         myDictionary.Add(item, testTemplate.Status.ToString());
 
                         break;
 
-                    case "{mode_key}":
+                    case "{cheie_modul_șablonului}":
 
                         myDictionary.Add(item, testTemplate.Mode.ToString());
 
                         break;
 
-                    case "{categories_sequence_key}":
+                    case "{cheie_cu_ordinea_întrebărilor_in_test}":
 
                         myDictionary.Add(item, testTemplate.CategoriesSequence.ToString());
 

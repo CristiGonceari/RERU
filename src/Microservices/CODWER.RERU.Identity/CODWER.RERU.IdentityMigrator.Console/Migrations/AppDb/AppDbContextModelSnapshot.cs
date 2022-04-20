@@ -196,6 +196,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<string>("KeyName")
                         .HasColumnType("text");
 
+                    b.Property<int?>("TranslateId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("UpdateById")
                         .HasColumnType("text");
 
@@ -1122,6 +1125,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
+                    b.Property<int?>("CandidatePositionId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("CreateById")
                         .HasColumnType("text");
 
@@ -1156,6 +1162,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CandidatePositionId");
 
                     b.HasIndex("EventId");
 
@@ -2721,6 +2729,10 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
             modelBuilder.Entity("RERU.Data.Entities.SolicitedTest", b =>
                 {
+                    b.HasOne("RERU.Data.Entities.CandidatePosition", "CandidatePosition")
+                        .WithMany()
+                        .HasForeignKey("CandidatePositionId");
+
                     b.HasOne("RERU.Data.Entities.Event", "Event")
                         .WithMany()
                         .HasForeignKey("EventId");
@@ -2742,6 +2754,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("CandidatePosition");
 
                     b.Navigation("Event");
 

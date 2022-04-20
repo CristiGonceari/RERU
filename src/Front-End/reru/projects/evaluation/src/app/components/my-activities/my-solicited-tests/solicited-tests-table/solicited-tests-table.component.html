@@ -8,6 +8,7 @@
         <thead class="text-uppercase text-muted">
             <tr>
                 <th scope="col">{{'dashboard.test' | translate}}</th>
+                <th scope="col">{{'position.apply-for-position' | translate}}</th>
                 <th scope="col">{{'events.event' | translate}}</th>
                 <th scope="col">{{'solicited-test.solicited-time' | translate}}</th>
                 <th scope="col">{{'verify-test.status' | translate}}</th>
@@ -17,6 +18,7 @@
         <tbody class="datatable-body" *ngIf="solicitedTests.length">
             <tr *ngFor="let item of solicitedTests">
                 <td>{{ item.testTemplateName }}</td>
+                <td>{{ item.candidatePositionName }}</td>
                 <td>
                     <span *ngIf="item.eventName">{{ item.eventName }}</span>
                     <span *ngIf="!item.eventName">-</span>

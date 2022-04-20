@@ -96,7 +96,26 @@
     "events": "Events",
     "faq": "FAQ",
     "documents-template": "Document Templates",
-    "documents-management": "Document Management"
+    "documents-management": "Document Management",
+    "administration": "Administration",
+    "positions": "Positions"
+  },
+  "position": {
+    "administration": "Administration",
+    "management": "Candidate position management",
+    "add": "Add position",
+    "edit": "Edit position",
+    "remove": "Remove position",
+    "details": "Candidate position details",
+    "subtitle": "Manage candidate positions",
+    "list": "Candidate position list",
+    "success-create": "Position successfully created",
+    "success-update": "Position successfully updated",
+    "success-delete": "Position successfully deleted",
+    "delete-msg": "Are you sure you want to delete position",
+    "name": "Position name",
+    "is-active": "Is active",
+    "apply-for-position": "Candided position"
   },
   "documents-templates":{
     "title": "Document Templates",
@@ -877,6 +896,8 @@
     "succes-add-msg": "Solicited test was successfully added",
     "succes-edit-msg": "Solicited test was successfully edited",
     "change-status": "Change status",
-    "refuse-msg": "Are you sure you want to refuse this solicited test?"
+    "refuse-msg": "Are you sure you want to refuse this solicited test?",
+    "select-candidate-position": "Select Position",
+    "position-to-candidate": "Position to Candidate"
   }
 }
