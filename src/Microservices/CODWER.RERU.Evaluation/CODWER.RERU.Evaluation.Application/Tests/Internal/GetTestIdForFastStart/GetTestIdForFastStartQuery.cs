@@ -5,6 +5,5 @@ namespace CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStar
 {
     public class GetTestIdForFastStartQuery : IRequest<TestDataDto>
     {
-        public string CoreUserProfileId { get; set; }
     }
 }
