@@ -29,7 +29,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             if (coreUser != null)
             {
                 currentUserProfile = _appDbContext.UserProfiles
-                    .FirstOrDefault(x => x.CoreUserId == coreUser.Id);
+                    .FirstOrDefault(x => x.Id == int.Parse(coreUser.Id));
 
 
                 if (currentUserProfile == null)
