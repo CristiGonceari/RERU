@@ -9,6 +9,8 @@ using CODWER.RERU.Core.Application.Modules.RegisterModule;
 using CODWER.RERU.Core.DataTransferObjects.Modules;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
+using CODWER.RERU.Core.Application.Modules.PrintModules;
 
 namespace CODWER.RERU.Core.API.Controllers.Admin 
 {
@@ -58,6 +60,17 @@ namespace CODWER.RERU.Core.API.Controllers.Admin
         {
             var deleteCommand = new DeleteModuleCommand (id);
             return Mediator.Send (deleteCommand);
+        }
+
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintModules([FromBody] PrintModulesCommand command)
+        {
+            var result = await Mediator.Send(command);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }

@@ -12,6 +12,8 @@ using CODWER.RERU.Core.DataTransferObjects.UserProfileModuleRoles;
 using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using CODWER.RERU.Core.Application.UserProfiles.PrintUserProfiles;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 
 namespace CODWER.RERU.Core.API.Controllers {
     [ApiController]
@@ -56,6 +58,16 @@ namespace CODWER.RERU.Core.API.Controllers {
         {
             var getModuleDetails = new GetUserModuleAccessQuery(id);
             return Mediator.Send(getModuleDetails);
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintUserProfiles([FromBody] PrintUserProfilesCommand command)
+        {
+            var result = await Mediator.Send(command);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }

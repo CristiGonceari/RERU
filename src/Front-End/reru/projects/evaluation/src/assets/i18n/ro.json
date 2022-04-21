@@ -114,6 +114,7 @@
       "success-delete": "Poziția a fost eliminată cu succes",
       "delete-msg": "Sunteți sigur(-ă) că doriți să eliminați poziția",
       "name": "Denumirea poziției",
+      "status": "Statut",
       "is-active": "Activ",
       "apply-for-position": "Poziție candidată"
   },

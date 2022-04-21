@@ -114,6 +114,7 @@
     "success-delete": "Position successfully deleted",
     "delete-msg": "Are you sure you want to delete position",
     "name": "Position name",
+    "status": "Status",
     "is-active": "Is active",
     "apply-for-position": "Candided position"
   },

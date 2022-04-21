@@ -5,9 +5,11 @@ using CODWER.RERU.Evaluation.Application.CandidatePositions.EditCandidatePositio
 using CODWER.RERU.Evaluation.Application.CandidatePositions.GetCandidatePosition;
 using CODWER.RERU.Evaluation.Application.CandidatePositions.GetCandidatePositions;
 using CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionsSelectValues;
+using CODWER.RERU.Evaluation.Application.CandidatePositions.PrintCandidatePosition;
 using CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -58,6 +60,17 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<Unit> DeleteCandidatePosition([FromRoute] int id)
         {
             return await Mediator.Send(new DeleteCandidatePositionCommand { Id = id });
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintCandidatePosition([FromBody] PrintCandidatePositionCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }

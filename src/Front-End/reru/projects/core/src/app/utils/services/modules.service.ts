@@ -41,4 +41,11 @@ export class ModulesService extends AbstractService {
 	list(): Observable<any> {
 		return this.http.get(`${this.coreUrl}`);
 	}
+
+	print(data): Observable<any> {
+		return this.http.put(`${this.coreUrl}/admin/module/print`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }

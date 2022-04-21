@@ -14,11 +14,15 @@
           <div class="card card-custom gutter-b">
             <div class="card-header flex-wrap border-0 py-0">
               <div class="card-title">
-                <h3 class="card-label">
+                <h3 class="card-label" id="documentTitle">
                   {{ 'position.list' | translate }}
                 </h3>
               </div>
               <div class="card-toolbar">
+                <app-confirm-button class="btn mr-3" (click)="getHeaders(getTitle())">
+									<i class="far fa-file-pdf text-white"></i>
+									{{'button.print' | translate}}
+								</app-confirm-button>
                 <app-add-button class="btn" routerLink="../add-position" [value]="'position.add' | translate">
                 </app-add-button>
               </div>
@@ -35,13 +39,19 @@
                 <table class="datatable table font-size-lg">
                   <thead class="text-uppercase text-muted">
                     <tr>
-                      <th scope="col" style="width: 50px"></th>
                       <th scope="col">{{'position.name' | translate}}</th>
+                      <th scope="col"  style="width: 75px; text-align: center; vertical-align: middle">{{'position.status' | translate}}</th>
                       <th scope="col" style="width: 50px"></th>
                     </tr>
                   </thead>
                   <tbody class="text-dark-75">
                     <tr *ngFor="let position of positions">
+                      <td>
+                        <a [routerLink]="['../edit-position', position.id]"
+                          class="font-size-lg text-dark-50 text-hover-dark-75">
+                          {{ position.name }}
+                        </a>
+                      </td>
                       <td>
                         <svg-icon *ngIf="position.isActive === false" key="error" [width]="24" [height]="24"
                           data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Inactive">
@@ -49,12 +59,6 @@
                         <svg-icon *ngIf="position.isActive === true" key="success" [width]="24" [height]="24"
                           data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Active">
                         </svg-icon>
-                      </td>
-                      <td>
-                        <a [routerLink]="['../edit-position', position.id]"
-                          class="font-size-lg text-dark-50 text-hover-dark-75">
-                          {{ position.name }}
-                        </a>
                       </td>
                       <td data-field="Actions" data-autohide-disabled="false"
                         class="datatable-cell datatable-cell-sort p-3">
