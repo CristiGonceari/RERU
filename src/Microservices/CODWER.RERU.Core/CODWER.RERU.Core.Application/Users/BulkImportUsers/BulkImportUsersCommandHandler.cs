@@ -54,7 +54,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                     FatherName = workSheet?.Cells[i, 3]?.Value?.ToString(),
                     Idnp = workSheet?.Cells[i, 4]?.Value?.ToString(),
                     Email = workSheet?.Cells[i, 5]?.Value?.ToString(),
-                    EmailNotification = true
+                    EmailNotification = bool.Parse(workSheet?.Cells[i, 6]?.Value?.ToString())
                 };
 
                 try
@@ -63,7 +63,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 }
                 catch (Exception e)
                 {
-                    workSheet.Cells[i, 6].Value = e.Message;
+                    workSheet.Cells[i, 7].Value = e.Message;
                     Console.WriteLine(e);
                 }
             }

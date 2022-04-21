@@ -8,6 +8,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests
         public int? Id { get; set; }
         public int? EventId { get; set; }
         public int? UserProfileId { get; set; }
+        public int CandidatePositionId { get; set; }
         public int TestTemplateId { get; set; }
         public DateTime SolicitedTime { get; set; }
         public SolicitedTestStatusEnum? SolicitedTestStatus { get; set; }

@@ -48,6 +48,19 @@
                                                         </select>
                                                     </div>
                                                 </div>
+                                                <div class="form-group row">
+                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{ 'solicited-test.position-to-candidate' | translate }}</label>
+                                                    <div class="col-lg-9 col-xl-9">
+                                                        <select class="form-control form-control-lg form-control-solid"
+                                                            name="selectedStatus" id="selectedStatus" [(ngModel)]="candidatePositions.value">
+                                                            <option class="default-option text-muted" selected value="">{{ 'solicited-test.select-candidate-position' | translate }}
+                                                            </option>
+                                                            <option *ngFor="let item of candidatePositions" [value]="item.value">
+                                                                {{ item.label }}
+                                                              </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                                 <div class="form-group row mb-10">
                                                     <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'solicited-test.solicited-time' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">

@@ -15,7 +15,6 @@ namespace CODWER.RERU.Core.Application.Users.GetUserDetails {
         public async Task<UserDetailsOverviewDto> Handle (GetUserDetailsQuery request, CancellationToken cancellationToken)
         {
             var user = await AppDbContext.UserProfiles
-                .Include(x=> x.CandidatePosition)
                 .FirstOrDefaultAsync(d => d.Id == request.Id);
 
             return Mapper.Map<UserDetailsOverviewDto> (user);

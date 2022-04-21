@@ -35,22 +35,27 @@ namespace RERU.Data.Entities
         public bool IsActive { set; get; }
         public DateTime? TokenLifetime { get; set; }
 
-        public int? CandidatePositionId { set; get; }
-        public CandidatePosition CandidatePosition { set; get; }
-
         [JsonIgnore]
         public List<UserProfileModuleRole> ModuleRoles { set; get; }
         [JsonIgnore]
         public List<UserProfileIdentity> Identities { set; get; }
-
+        [JsonIgnore]
         public virtual ICollection<UserFile> UserFiles { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Test> Tests { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Test> TestsWithEvaluator { get; set; }
+        [JsonIgnore]
         public virtual ICollection<LocationResponsiblePerson> LocationResponsiblePersons { get; set; }
+        [JsonIgnore]
         public virtual ICollection<EventResponsiblePerson> EventResponsiblePersons { get; set; }
+        [JsonIgnore]
         public virtual ICollection<PlanResponsiblePerson> PlanResponsiblePersons { get; set; }
+        [JsonIgnore]
         public virtual ICollection<EventUser> EventUsers { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Notification> Notifications { get; set; }
+        [JsonIgnore]
         public virtual ICollection<EmailTestNotification> EmailTestNotifications { get; set; }
     }
 }

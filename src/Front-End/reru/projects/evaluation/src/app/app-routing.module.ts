@@ -96,6 +96,10 @@ const routes: Routes = [
 		loadChildren: () => import('./components/document-templates/document-templates.module').then(m => m.DocumentTemplatesModule),
 		canActivate: [AuthenticationGuard],
 	},
+	{
+		path: 'positions', 
+		loadChildren: () => import('./components/positions/positions.module').then(m => m.PositionsModule)
+	},
 	{ path: '404', component: Exception404Component },
 	{ path: '**', redirectTo: '404' }
 ];

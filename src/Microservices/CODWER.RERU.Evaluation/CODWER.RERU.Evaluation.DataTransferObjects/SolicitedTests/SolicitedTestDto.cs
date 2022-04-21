@@ -13,6 +13,8 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests
         public string UserProfileIdnp { get; set; }
         public int TestTemplateId { get; set; }
         public string TestTemplateName { get; set; }
+        public int CandidatePositionId { get; set; }
+        public string CandidatePositionName { get; set; }
         public DateTime SolicitedTime { get; set; }
         public SolicitedTestStatusEnum? SolicitedTestStatus { get; set; }
     }

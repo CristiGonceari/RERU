@@ -96,7 +96,26 @@
     "events": "Evenimente",
     "faq": "FAQ",
     "documents-template": "Șabloane",
-    "documents-management": "Management de Șabloane"
+    "documents-management": "Management de Șabloane",
+    "administration": "Administrare",
+    "positions": "Poziții"
+  },
+  "position": {
+    "administration": "Administrare",
+    "management": "Gestionarea pozițiilor vacante",
+      "add": "Adaugă poziție",
+      "edit": "Editează poziție",
+      "remove": "Elimină poziție",
+      "details": "Detaliile poziției",
+      "subtitle": "Gestionați pozițiile vacante",
+      "list": "Lista de poziții vacante",
+      "success-create": "Poziția a fost adăugată cu succes",
+      "success-update": "Poziția a fost actualizată cu succes",
+      "success-delete": "Poziția a fost eliminată cu succes",
+      "delete-msg": "Sunteți sigur(-ă) că doriți să eliminați poziția",
+      "name": "Denumirea poziției",
+      "is-active": "Activ",
+      "apply-for-position": "Poziție candidată"
   },
   "documents-templates":{
     "title": "Șabloane",
@@ -881,6 +900,8 @@
     "succes-add-msg": "Testul solicitat a fost adăugat cu succes",
     "succes-edit-msg": "Testul solicitat a fost editat cu succes",
     "change-status": "Schimba statutul",
-    "refuse-msg": "Sigur doriți să refuzați acest test solicitat?"
+    "refuse-msg": "Sigur doriți să refuzați acest test solicitat?",
+    "select-candidate-position": "Selectați poziția",
+    "position-to-candidate": "Poziția pentru care candidați"
   }
 }

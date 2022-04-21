@@ -7,6 +7,7 @@ namespace RERU.Data.Entities.Documents
     {
         public string KeyName { get; set; }
         public string Description { get; set; }
+        public int? TranslateId { get; set; }
 
         public FileTypeEnum FileType { get; set; }
     }

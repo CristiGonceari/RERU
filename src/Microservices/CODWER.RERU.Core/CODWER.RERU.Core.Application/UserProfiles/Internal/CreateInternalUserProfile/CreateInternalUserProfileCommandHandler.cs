@@ -94,8 +94,6 @@ namespace CODWER.RERU.Core.Application.UserProfiles.Internal.CreateInternalUserP
                 .IncludeBasic()
                 .FirstOrDefaultAsync(up => up.Id == userProfileId);
 
-            await _evaluationClient.SyncUserProfile(Mapper.Map<BaseUserProfile>(userProfile));
-
             return Mapper.Map<ApplicationUser>(userProfile);
         }
     }

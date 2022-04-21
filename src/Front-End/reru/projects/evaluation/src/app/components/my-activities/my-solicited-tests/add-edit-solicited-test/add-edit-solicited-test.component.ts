@@ -10,6 +10,7 @@ import { forkJoin } from 'rxjs';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { Location } from '@angular/common';
 import { SolicitedTestService } from 'projects/evaluation/src/app/utils/services/solicited-test/solicited-test.service';
+import { CandidatePositionService } from 'projects/evaluation/src/app/utils/services/candidate-position/candidate-position.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -30,6 +31,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
   isLoading: boolean = true;
   solicitedTestId;
   solicitedTest: AddEditSolicitedTest;
+  candidatePositions = new SelectItem();
 
   constructor(
     private referenceService: ReferenceService,
@@ -38,12 +40,14 @@ export class AddEditSolicitedTestComponent implements OnInit {
     public translate: I18nService,
     private location: Location,
     private notificationService: NotificationsService,
-    public activatedRoute: ActivatedRoute
+    public activatedRoute: ActivatedRoute,
+    private candidatePosition: CandidatePositionService,
   ) { }
 
   ngOnInit(): void {
     this.initData();
     this.getEvents();
+    this.retrievePositions();
   }
 
   initData(): void {
@@ -59,10 +63,17 @@ export class AddEditSolicitedTestComponent implements OnInit {
         this.event.value = res.data.eventId;
         this.testTemplate.value = res.data.testTemplateId;
         this.date = res.data.solicitedTime;
+        this.candidatePositions.value = res.data.candidatePositionId;
         this.isLoading = false;
         console.log(this.solicitedTest)
       }
     });
+  }
+
+  retrievePositions(){
+    this.candidatePosition.getPositionValues().subscribe((res) => (
+        this.candidatePositions = res.data
+      ));
   }
 
   getEvents() {
@@ -107,7 +118,8 @@ export class AddEditSolicitedTestComponent implements OnInit {
           solicitedTime: this.search,
           eventId: +this.event.value || null,
           testTemplateId: +this.testTemplate.value || 0,
-          solicitedTestStatus: this.solicitedTest.solicitedTestStatus
+          solicitedTestStatus: this.solicitedTest.solicitedTestStatus,
+          candidatePositionId : this.candidatePositions.value || 0
         }
       };
     } else {
@@ -115,7 +127,8 @@ export class AddEditSolicitedTestComponent implements OnInit {
         data: {
           solicitedTime: this.search,
           eventId: +this.event.value || null,
-          testTemplateId: +this.testTemplate.value || 0
+          testTemplateId: +this.testTemplate.value || 0,
+          candidatePositionId : this.candidatePositions.value || 0
         }
       };
     }
