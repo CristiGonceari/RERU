@@ -22,7 +22,6 @@ namespace RERU.Data.Entities
             Identities = new List<UserProfileIdentity>();
         }
 
-        public string CoreUserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FatherName { get; set; }

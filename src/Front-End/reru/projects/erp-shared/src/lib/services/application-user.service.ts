@@ -80,7 +80,6 @@ export class ApplicationUserService extends AbstractService {
 	}
 
 	logoutCurrentUser(): void {
-		//localStorage.removeItem(this.tokenKey);
 		localStorage.removeItem(this.userProfileKey);
 	}
 

@@ -41,7 +41,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStar
                 .Where(test => test.ProgrammedTime <= _timeRangeBeforeStart &&
                                test.ProgrammedTime >= _timeRangeAfterStart &&
                                test.TestStatus == TestStatusEnum.Programmed || test.TestStatus == TestStatusEnum.AlowedToStart)
-                .FirstOrDefault(x => x.UserProfile.CoreUserId == user.Id);
+                .FirstOrDefault(x => x.UserProfile.Id == int.Parse(user.Id));
 
             return test == null ? new TestDataDto() : _mapper.Map<TestDataDto>(test);
         }
