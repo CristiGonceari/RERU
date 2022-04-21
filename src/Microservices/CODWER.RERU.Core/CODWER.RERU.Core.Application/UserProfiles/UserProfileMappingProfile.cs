@@ -55,7 +55,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles
             .ForMember(x => x.ModuleRoles, opts => opts.Ignore());
 
             CreateMap<UserProfile, BaseUserProfile>()
-                .ForMember(destinationMember => destinationMember.CoreUserId, opts => opts.MapFrom(sourceMember => sourceMember.Id.ToString()))
+                .ForMember(destinationMember => destinationMember.Id, opts => opts.MapFrom(sourceMember => sourceMember.Id.ToString()))
                 .ForMember(destinationMember => destinationMember.FirstName, opts => opts.MapFrom(sourceMember => sourceMember.FirstName))
                 .ForMember(destinationMember => destinationMember.LastName, opts => opts.MapFrom(sourceMember => sourceMember.LastName))
                 .ForMember(destinationMember => destinationMember.FatherName, opts => opts.MapFrom(sourceMember => sourceMember.FatherName))
