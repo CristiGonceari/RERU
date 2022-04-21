@@ -15,6 +15,8 @@ namespace CODWER.RERU.Core.Application.Users
                 .ForMember(destinationMember => destinationMember.EmailNotification, options => options.Ignore());
             CreateMap<ERPIdentityUser, UserPersonalDataDto>();
 
+            CreateMap<UserProfile, UserPersonalDataDto>();
+
             CreateMap<UserDto, ERPIdentityUser>()
                 .ForMember(destinationMember => destinationMember.LockoutEnabled, options => options.Ignore())
                 .ForMember(destinationMember => destinationMember.Id, options => options.Ignore());

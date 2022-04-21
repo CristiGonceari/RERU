@@ -15,6 +15,7 @@ import { ModulesRoutingModule } from './components/modules/modules-routing.modul
 import { MyProfileRoutingModule } from './components/my-profile/my-profile-routing.module';
 import { Exception404Component } from './utils/exceptions/404/404.component';
 import { MainComponent } from './components/main/main.component';
+import { PermissionRouteGuard } from '@erp/shared';
 
 
 const routes: Routes = [
@@ -43,11 +44,15 @@ const routes: Routes = [
 			},
 			{ 
 				path: 'modules', 
-				loadChildren: () => import('./components/modules/modules.module').then(m => m.ModulesModule)
+				loadChildren: () => import('./components/modules/modules.module').then(m => m.ModulesModule),
+				data: { permission: 'P00000001' },
+				canActivate: [PermissionRouteGuard]
 			},
 			{ 
 				path: 'users', 
-				loadChildren: () => import('./components/users/users.module').then(m => m.UsersModule)
+				loadChildren: () => import('./components/users/users.module').then(m => m.UsersModule),
+				data: { permission: 'P00000012' },
+				canActivate: [PermissionRouteGuard]
 			},
 			{ 
 				path: 'roles', 
@@ -59,7 +64,9 @@ const routes: Routes = [
 			},
 			{
 				path: 'faq',
-				loadChildren: () => import('./components/faq/faq.module').then(m => m.FAQModule)
+				loadChildren: () => import('./components/faq/faq.module').then(m => m.FAQModule),
+				data: { permission: 'P00000025' },
+				canActivate: [PermissionRouteGuard]
 			}
 		],
 	},
