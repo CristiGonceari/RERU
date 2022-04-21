@@ -16,6 +16,6 @@ export class InternalGetTestIdService extends AbstractService {
   getTestIdForFastStart(coreId): Observable<any> {
     let internalBaseUrl = this.baseUrl.replace("/api", "/internal/api");
 
-    return this.http.get<any>(`${internalBaseUrl}/${this.routeUrl}/%20${coreId}`);
+    return this.http.get<any>(`${internalBaseUrl}/${this.routeUrl}/${coreId}`);
   }
 }
