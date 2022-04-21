@@ -63,9 +63,9 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
             await _loggerService.Log(LogData.AsCore($"User {userProfile.FirstName} {userProfile.LastName} was edited", userProfile));
         }
 
-        private async Task SyncUserProfile(UserProfile userProfile)
-        {
-            await _evaluationClient.SyncUserProfile(Mapper.Map<BaseUserProfile>(userProfile));
-        }
+        //private async Task SyncUserProfile(UserProfile userProfile)
+        //{
+        //    await _evaluationClient.SyncUserProfile(Mapper.Map<BaseUserProfile>(userProfile));
+        //}
     }
 }
