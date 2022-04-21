@@ -5,7 +5,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles
     public class UserProfileDto
     {
         public int Id { get; set; }
-        public string CoreUserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FatherName { get; set; }
