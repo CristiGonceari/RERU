@@ -39,20 +39,20 @@ namespace CVU.ERP.Module.Application.Clients
             _currentApplicationUserProvider = currentApplicationUserProvider;
         }
 
-        public async Task SyncUserProfile(BaseUserProfile userProfile)
-        {
-            var request = NewJsonRequest(UserProfileBasePath);
-            var json = JsonSerializer.Serialize<BaseUserProfile>(userProfile);
-            request.AddParameter("application/json; charset=utf-8", json, ParameterType.RequestBody);
+        //public async Task SyncUserProfile(BaseUserProfile userProfile)
+        //{
+        //    var request = NewJsonRequest(UserProfileBasePath);
+        //    var json = JsonSerializer.Serialize<BaseUserProfile>(userProfile);
+        //    request.AddParameter("application/json; charset=utf-8", json, ParameterType.RequestBody);
 
-            //var response = await _restClient.PostAsync<Response<Unit>>(request, new CancellationToken());
-            var response = await _restClient.PutAsync<Response<Unit>>(request, new CancellationToken());
+        //    //var response = await _restClient.PostAsync<Response<Unit>>(request, new CancellationToken());
+        //    var response = await _restClient.PutAsync<Response<Unit>>(request, new CancellationToken());
 
-            if (!response.Success)
-            {
-                throw new EvaluationClientResponseNotSuccessfulException(response.Messages);
-            }
-        }
+        //    if (!response.Success)
+        //    {
+        //        throw new EvaluationClientResponseNotSuccessfulException(response.Messages);
+        //    }
+        //}
 
         public async Task SyncUserProfileByAnonymous(BaseUserProfile userProfile)
         {
