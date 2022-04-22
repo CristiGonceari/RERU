@@ -1,11 +1,11 @@
 
 import {
-  HttpInterceptor,
-  HttpHandler,
-  HttpRequest,
-  HttpEvent,
-  HttpResponse,
-  HTTP_INTERCEPTORS,
+	HttpInterceptor,
+	HttpHandler,
+	HttpRequest,
+	HttpEvent,
+	HttpResponse,
+	HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import { ClassProvider, Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
@@ -18,8 +18,8 @@ import { AppSettingsService } from '../services/app-settings.service';
 
 @Injectable()
 export class InternalNotifyInterceptor extends AbstractService implements HttpInterceptor {
-  type: string;
-  messageText: string;
+	type: string;
+	messageText: string;
 
 	constructor(
 		public notificationService: NotificationsService,
@@ -44,14 +44,13 @@ export class InternalNotifyInterceptor extends AbstractService implements HttpIn
 						);
 					}
 				}
-			}
-		})
-	);
-}
+			})
+		);
+	}
 }
 
 export const INTERNAL_NOTIFY_INTERCEPTOR: ClassProvider = {
-  provide: HTTP_INTERCEPTORS,
-  useClass: InternalNotifyInterceptor,
-  multi: true,
+	provide: HTTP_INTERCEPTORS,
+	useClass: InternalNotifyInterceptor,
+	multi: true,
 };
