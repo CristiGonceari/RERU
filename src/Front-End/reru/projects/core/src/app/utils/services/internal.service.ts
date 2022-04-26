@@ -17,7 +17,7 @@ export class InternalService extends AbstractService {
   }
 
   getTestIdForFastStart(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/${this.routeUrl}/internal`);
+    return this.http.get<any>(`${this.coreUrl}/${this.routeUrl}/internal`);
   }
-  
+
 }

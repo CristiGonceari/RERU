@@ -26,22 +26,22 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
 
             if (!string.IsNullOrEmpty(request.FirstName))
             {
-                items = items.Where(x => x.FirstName.Contains(request.FirstName));
+                items = items.Where(x => x.FirstName.ToLower().Contains(request.FirstName.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(request.LastName))
             {
-                items = items.Where(x => x.LastName.Contains(request.LastName));
+                items = items.Where(x => x.LastName.ToLower().Contains(request.LastName.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(request.FatherName))
             {
-                items = items.Where(x => x.FatherName.Contains(request.FatherName));
+                items = items.Where(x => x.FatherName.ToLower().Contains(request.FatherName.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(request.Email))
             {
-                items = items.Where(x => x.Email.Contains(request.Email));
+                items = items.Where(x => x.Email.ToLower().Contains(request.Email.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(request.Idnp))
