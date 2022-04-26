@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using RERU.Data.Persistence.Context;
+using System;
+using System.Text;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetTest
 {
@@ -43,6 +45,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTest
             else
             {
                 testDto.ShowUserName = true;
+            }
+
+            if (!string.IsNullOrEmpty(testDto.Rules))
+            {
+                var base64EncodedBytes = Convert.FromBase64String(testDto.Rules);
+                testDto.Rules = Encoding.UTF8.GetString(base64EncodedBytes);
             }
 
             return testDto;
