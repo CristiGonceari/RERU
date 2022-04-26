@@ -40,4 +40,11 @@ export class UserProfileService extends AbstractService {
 	removeModuleAccessRole(data: any): Observable<any> {
 		return this.http.delete(`${this.coreUrl}/${this.routeUrl}/${data.userId}/module-access/${data.moduleId}`);
 	}
+
+	print(data): Observable<any> {
+		return this.http.put(`${this.coreUrl}/${this.routeUrl}/print`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }

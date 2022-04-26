@@ -14,11 +14,15 @@
           <div class="card card-custom gutter-b">
             <div class="card-header flex-wrap border-0 py-0">
               <div class="card-title">
-                <h3 class="card-label">
+                <h3 class="card-label" id="documentTitle">
                   {{ 'pages.modules.list-module' | translate }}
                 </h3>
               </div>
               <div class="card-toolbar" *permission="'P00000002'">
+                <app-confirm-button class="btn mr-3" (click)="getHeaders(getTitle())">
+									<i class="far fa-file-pdf text-white"></i>
+									{{'button.print' | translate}}
+								</app-confirm-button>
                 <app-add-button class="btn" routerLink="../new" [value]="'button.add-module' | translate">
                 </app-add-button>
               </div>
@@ -31,25 +35,18 @@
                   <thead class="text-uppercase text-muted">
                     <tr>
                       <th scope="col" style="width: 48px"></th>
-                      <th scope="col" style="width: 48px"></th>
                       <th scope="col">{{ 'table.module' | translate }}</th>
                       <th scope="col" style="width: 100px">{{ 'table.code' | translate }}</th>
                       <th scope="col" style="width: 120px">{{ 'table.type' | translate }}</th>
                       <th scope="col" style="width: 120px">{{ 'table.priority' | translate }}</th>
-                      <th scope="col" style="width: 100px">{{ 'table.color' | translate }}</th>
+                      <th scope="col" style="width: 48px" style="width: 75px; text-align: center; vertical-align: middle">
+                        {{ 'table.status' | translate }}</th>
+                      <!-- <th scope="col" style="width: 100px">{{ 'table.color' | translate }}</th> -->
                       <th scope="col" style="width: 50px"></th>
                     </tr>
                   </thead>
                   <tbody class="text-dark-75">
                     <tr *ngFor="let module of modules">
-                      <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
-                        <svg-icon *ngIf="module.status === false" key="error" [width]="24" [height]="24"
-                          data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Offline">
-                        </svg-icon>
-                        <svg-icon *ngIf="module.status === true" key="success" [width]="24" [height]="24"
-                          data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Online">
-                        </svg-icon>
-                      </td>
                       <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
                         <svg-icon [key]="module.icon" [width]="32" [height]="32"></svg-icon>
                       </td>
@@ -68,8 +65,16 @@
                       <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
                         {{ module.priority }}</td>
                       <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
-                        <div class="module-color" [ngStyle]="{ 'background-color': module.color }"></div>
+                        <svg-icon *ngIf="module.status === false" key="error" [width]="24" [height]="24"
+                          data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Offline">
+                        </svg-icon>
+                        <svg-icon *ngIf="module.status === true" key="success" [width]="24" [height]="24"
+                          data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Online">
+                        </svg-icon>
                       </td>
+                      <!-- <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
+                        <div class="module-color" [ngStyle]="{ 'background-color': module.color }"></div>
+                      </td> -->
                       <td data-field="Actions" data-autohide-disabled="false"
                         class="datatable-cell datatable-cell-sort p-3">
                         <div style="overflow: visible; position: relative; width: 0px">
