@@ -91,11 +91,6 @@ export class StartTestPageComponent implements OnInit {
     this.testService.getTestSettings(id).subscribe(
       res => {
         this.testDto = res.data;
-        if (this.testDto.rules == null) {
-          this.testDto.rules == '';
-        } else {
-          this.testDto.rules = this.b64DecodeUnicode(res.data.rules);
-        }
       }
     )
   }
