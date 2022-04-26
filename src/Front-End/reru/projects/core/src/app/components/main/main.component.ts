@@ -50,6 +50,7 @@ export class MainComponent implements OnInit {
 			name: '',
 		},
 		{
+			permission: 'P00000001',
 			type: SidebarItemType.ITEM,
 			url: '/modules/list',
 			name: '',
@@ -65,6 +66,7 @@ export class MainComponent implements OnInit {
 						</svg>`,
 		},
 		{
+			permission: 'P00000012',
 			type: SidebarItemType.ITEM,
 			url: '/users',
 			name: '',
@@ -88,6 +90,7 @@ export class MainComponent implements OnInit {
 			name: '',
 		},
 		{
+			permission: 'P00000025',
 			type: SidebarItemType.ITEM,
 			url: '/faq',
 			name: '',

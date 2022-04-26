@@ -5,12 +5,13 @@ import { AdminModuleModel } from '../../../utils/models/admin-module.model';
 import { ModulesService } from '../../../utils/services/modules.service';
 import { PaginationSummary } from 'projects/core/src/app/utils/models/pagination-summary.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ConfirmModalComponent, PermissionCheckerService } from '@erp/shared';
+import { ConfirmModalComponent, PermissionCheckerService, PrintModalComponent } from '@erp/shared';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { NotificationsService } from 'angular2-notifications';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
+import { saveAs } from 'file-saver';
 
 @Component({
 	selector: 'app-list-module',
@@ -28,7 +29,10 @@ export class ListModuleComponent implements OnInit {
 	description: string;
 	no: string;
 	yes: string;
-
+	documentTitle: string;
+	downloadFile: boolean = false;
+	headersToPrint = [];
+	printTranslates: any[];
 	constructor(
 		private moduleService: ModulesService,
 		public translate: I18nService,
@@ -42,6 +46,11 @@ export class ListModuleComponent implements OnInit {
 	ngOnInit(): void {
 		this.getModules();
 		this.checkPermission();
+	}
+
+	getTitle(): string {
+		this.documentTitle = document.getElementById('documentTitle').innerHTML;
+		return this.documentTitle
 	}
 
 	getModules(data: any = {}): void {
@@ -60,6 +69,54 @@ export class ListModuleComponent implements OnInit {
 				this.isLoading = false;
 			}
 		});
+	}
+
+	getHeaders(name: string): void {
+		this.translateData();
+		let headersHtml = document.getElementsByTagName('th');
+		let headersDto = ['icon', 'name', 'code', 'type', 'priority', 'status'];
+		for (let i=1; i<headersHtml.length-1; i++) {
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+		}
+		let printData = {
+			tableName: name,
+			fields: this.headersToPrint,
+			orientation: 2,
+		};
+		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'lg' });
+		modalRef.componentInstance.tableData = printData;
+		modalRef.componentInstance.translateData = this.printTranslates;
+		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
+		this.headersToPrint = [];
+	}
+
+	translateData(): void {
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
+		forkJoin([
+			this.translate.get('print.print-table'),
+			this.translate.get('print.print-msg'),
+			this.translate.get('print.sorted-by'),
+			this.translate.get('button.cancel')
+		]).subscribe(
+			(items) => {
+				for (let i=0; i<this.printTranslates.length; i++) {
+					this.printTranslates[i] = items[i];
+				}
+			}
+		);
+	}
+
+	printTable(data): void {
+		this.downloadFile = true;
+		this.moduleService.print(data).subscribe(response => {
+			if (response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(1).slice(0, -1);
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], fileName, { type: response.body.type });
+				saveAs(file);
+				this.downloadFile = false;
+			}
+		}, () => this.downloadFile = false);
 	}
 
 	navigateToDetails(id): void {

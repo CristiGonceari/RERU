@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
-import { ConfirmModalComponent } from '@erp/shared';
+import { ConfirmModalComponent, PrintModalComponent } from '@erp/shared';
 import { forkJoin } from 'rxjs';
 import { CandidatePositionModel } from '../../utils/models/candidate-position.model';
 import { CandidatePositionService } from '../../utils/services/candidate-position/candidate-position.service';
 import { NotificationUtil } from '../../utils/util/notification.util';
 import { I18nService } from '../../utils/services/i18n/i18n.service';
 import { PaginationModel } from '../../utils/models/pagination.model';
+import { saveAs } from 'file-saver';
 
 @Component({
 	selector: 'app-positions',
@@ -19,10 +20,16 @@ export class PositionsComponent implements OnInit {
 	positions: CandidatePositionModel[];
 	pagination: PaginationModel = new PaginationModel();
 	title: string;
+	documentTitle: string;
 	description: string;
 	no: string;
 	yes: string;
+	keyword: string;
 
+	downloadFile: boolean = false;
+	headersToPrint = [];
+	printTranslates: any[];
+	
 	constructor(
 		private positionService: CandidatePositionService,
 		public translate: I18nService,
@@ -33,10 +40,15 @@ export class PositionsComponent implements OnInit {
 	ngOnInit(): void {
 		this.getPositions();
 	}
+	
+	getTitle(): string {
+		this.documentTitle = document.getElementById('documentTitle').innerHTML;
+		return this.documentTitle
+	}
 
 	getPositions(data: any = {}): void {
 		let params: any = {
-			name: data.keyword || '',
+			name: this.keyword || '',
 			page: data.page || this.pagination.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
 		};
@@ -51,6 +63,55 @@ export class PositionsComponent implements OnInit {
 				this.isLoading = false;
 			}
 		});
+	}
+
+	getHeaders(name: string): void {
+		this.translateData();
+		let headersHtml = document.getElementsByTagName('th');
+		let headersDto = ['name', 'isActive'];
+		for (let i=0; i<headersHtml.length-1; i++) {
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+		}
+		let printData = {
+			tableName: name,
+			fields: this.headersToPrint,
+			orientation: 2,
+			name: this.keyword || ''
+		};
+		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'lg' });
+		modalRef.componentInstance.tableData = printData;
+		modalRef.componentInstance.translateData = this.printTranslates;
+		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
+		this.headersToPrint = [];
+	}
+
+	translateData(): void {
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
+		forkJoin([
+			this.translate.get('print.print-table'),
+			this.translate.get('print.print-msg'),
+			this.translate.get('print.sorted-by'),
+			this.translate.get('button.cancel')
+		]).subscribe(
+			(items) => {
+				for (let i=0; i<this.printTranslates.length; i++) {
+					this.printTranslates[i] = items[i];
+				}
+			}
+		);
+	}
+
+	printTable(data): void {
+		this.downloadFile = true;
+		this.positionService.print(data).subscribe(response => {
+			if (response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(1).slice(0, -1);
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], fileName, { type: response.body.type });
+				saveAs(file);
+				this.downloadFile = false;
+			}
+		}, () => this.downloadFile = false);
 	}
 
 	openRemoveModal(id: number, name: string): void {

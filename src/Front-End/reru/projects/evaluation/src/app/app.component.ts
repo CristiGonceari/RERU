@@ -359,7 +359,7 @@ export class AppComponent {
 	}
 
 	getTestId() {
-		this.internalGetTest.getTestIdForFastStart("").subscribe(() => {});
+		this.internalGetTest.getTestIdForFastStart().subscribe(() => {});
 	}
 
 	logout() {

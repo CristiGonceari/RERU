@@ -38,4 +38,11 @@ export class CandidatePositionService extends AbstractService{
   	editPosition(data: CandidatePositionModel): Observable<CandidatePositionModel> {
 		return this.client.patch<CandidatePositionModel>(`${this.baseUrl}/${this.urlRoute}`, {data});
 	}
+
+	print(data): Observable<any> {
+		return this.client.put(`${this.baseUrl}/${this.urlRoute}/print`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }

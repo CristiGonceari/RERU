@@ -10,10 +10,10 @@ namespace CODWER.RERU.Evaluation.API.Controllers.Internal
     [ApiController]
     public class InternalGetTestIdController : BaseController
     {
-        [HttpGet("{coreUserProfileId}")]
-        public async Task<TestDataDto> GetUserTestId([FromRoute] string coreUserProfileId)
+        [HttpGet()]
+        public async Task<TestDataDto> GetUserTestId()
         {
-            return await Mediator.Send(new GetTestIdForFastStartQuery { CoreUserProfileId = coreUserProfileId });
+            return await Mediator.Send(new GetTestIdForFastStartQuery());
         }
     }
 }

@@ -13,6 +13,7 @@ export class UserListComponent {
  @ViewChild('idnp') searchIdnp: any;
  @ViewChild(FilterUserStateComponent) userState: FilterUserStateComponent;
 
+ title: string;
   constructor() { }
 
   resetFilters(): void {
@@ -21,4 +22,10 @@ export class UserListComponent {
 		this.searchIdnp.clear();
     this.userState.userState = '0';
   }
+  
+  getTitle(): string {
+		this.title = document.getElementById('title').innerHTML;
+		return this.title
+	}
+
 }
