@@ -111,6 +111,14 @@
                                             <span class="navi-text font-size-lg">{{ 'verify-test.evaluated-tests' | translate }}</span>
                                         </a>
                                     </div>
+                                    <div class="navi-item mb-2">
+										<a [routerLink]="['solicited-tests']" routerLinkActive="active" class="navi-link py-4">
+											<i class="fas fa-poll-h icon-md mr-3"></i>
+											<span class="navi-text font-size-lg">
+												{{ 'solicited-test.solicited-tests' | translate }}
+											</span>
+										</a>
+									</div>
                                 </div>
                             </div>
                         </div>

@@ -42,12 +42,6 @@ export class UserListTableComponent implements OnInit {
 
 	isLoading = true;
 	module: any;
-	pagedSummary = {
-		totalCount: 0,
-		pageSize: 0,
-		currentPage: 1,
-		totalPages: 1,
-	};
 	userState: number = 0;
 	searchValue: string;
 	title: string;
@@ -81,6 +75,7 @@ export class UserListTableComponent implements OnInit {
 			keyword: this.keyword,
 			email: this.email,
 			idnp: this.idnp,
+			page: data.page || this.pagination.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
 			status: data.userState
 		};
@@ -101,6 +96,7 @@ export class UserListTableComponent implements OnInit {
 			}
 		});
 	}
+
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
@@ -171,7 +167,7 @@ export class UserListTableComponent implements OnInit {
 			idnp: this.idnp || this.searchValue,
 			order: this.filter.order ? 'desc' : 'asc',
 			sort: this.filter.sort,
-			page: data.page || this.pagedSummary.currentPage,
+			page: data.page || this.pagination.currentPage,
 			status: data.userState || this.userState
 		};
 		this.isLoading = true;

@@ -1,9 +1,5 @@
-using CVU.ERP.Module.Application.Clients;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using CODWER.RERU.Core.Application.Internal.GetTestIdFastStart;
-using CVU.ERP.Common.DataTransferObjects.TestDatas;
 
 namespace CODWER.RERU.Core.API.Controllers.Internal
 {
@@ -11,17 +7,15 @@ namespace CODWER.RERU.Core.API.Controllers.Internal
     [Route ("/api/[controller]/internal")]
     public class ApplicationController : BaseController
     {
-        private readonly IEvaluationClient _evaluationClient;
-        public ApplicationController (IMediator mediator, IEvaluationClient evaluationClient) : base (mediator)
+        public ApplicationController (IMediator mediator) : base (mediator)
         {
-            _evaluationClient = evaluationClient;
         }
 
-        [HttpGet]
-        public async Task<TestDataDto> GetTestId()
-        {
-            return await Mediator.Send(new GetTestIdFastStartQuery());
-        }
+        //[HttpGet]
+        //public async Task<TestDataDto> GetTestId()
+        //{
+        //    return await Mediator.Send(new GetTestIdFastStartQuery());
+        //}
 
         // [HttpPost ("user")]
         // public async Task<ApplicationUser> CreateUser ([FromBody] CreateUserDto userDto) 

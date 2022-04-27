@@ -1,0 +1,42 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+<div *ngIf="!isLoading"
+    class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+    id="kt_datatable">
+    <table for="kt_datatable" class="datatable table" style="overflow: visible" id="testsTable">
+        <thead class="text-uppercase text-muted">
+            <tr>
+                <th scope="col">{{'dashboard.test' | translate}}</th>
+                <th scope="col">{{'position.apply-for-position' | translate}}</th>
+                <th scope="col">{{'events.event' | translate}}</th>
+                <th scope="col">{{'solicited-test.solicited-time' | translate}}</th>
+                <th scope="col">{{'verify-test.status' | translate}}</th>
+            </tr>
+        </thead>
+        <tbody class="datatable-body" *ngIf="solicitedTests.length">
+            <tr *ngFor="let item of solicitedTests">
+                <td>{{ item.testTemplateName }}</td>
+                <td>{{ item.candidatePositionName }}</td>
+                <td>
+                    <span *ngIf="item.eventName">{{ item.eventName }}</span>
+                    <span *ngIf="!item.eventName">-</span>
+                </td>
+                <td>{{ item.solicitedTime | date: 'dd/MM/yyyy, HH:mm'}}</td>
+                <td>{{'statuses.' + enum[item.solicitedTestStatus] | translate }}</td>
+            </tr>
+        </tbody>
+        <tbody class="datatable-body" *ngIf="!solicitedTests.length">
+            <tr>
+                <td colspan="6" class="text-center">
+                    {{ 'message.no-record' | translate }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
+        *ngIf="solicitedTests.length > 5" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
+        [size]="pagedSummary.pageSize"
+        (sizeChange)="getMySolicitedTests({ page: pagedSummary.currentPage, itemsPerPage: $event })"
+        (pageChange)="getMySolicitedTests({ page: $event })">
+    </div>
+</div>

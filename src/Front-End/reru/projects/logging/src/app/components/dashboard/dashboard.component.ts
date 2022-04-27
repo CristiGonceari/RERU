@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
 
   projects: any;
   events: any;
-
+  event: string = '';
   form: FormGroup;
 
   constructor(private loggingService: LoggingService,
@@ -59,12 +59,8 @@ export class DashboardComponent implements OnInit {
     this.events = [];
     this.projects = [];
 
-    this.loggingService
-      .getProjectSelectItem()
-      .subscribe((res) => (this.projects = res.data));
-    this.loggingService
-      .getEventSelectItem()
-      .subscribe((res) => (this.events = res.data));
+    this.loggingService.getProjectSelectItem().subscribe((res) => (this.projects = res.data));
+    this.loggingService.getEventSelectItem().subscribe((res) => (this.events = res.data));
   }
 
   setTimeToSearch(): void {

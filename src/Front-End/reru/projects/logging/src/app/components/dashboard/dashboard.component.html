@@ -11,7 +11,7 @@
                 <div class="col">
                   <div class="input-group input-group-sm input-group-solid">
                     <select class="form-control h-35px" name="selectedStatus" id="selectedStatus"
-                      (change)="atachProject($event)">
+                      (change)="atachProject($event)" (change)="getLoggingValues($event.target.value)">
                       <option class="default-option text-muted" selected value="">{{ 'dashboard.project' | translate }}
                       </option>
                       <option *ngFor="let item of projects" [value]="item">
@@ -23,7 +23,7 @@
                 <div class="col">
                   <div class="input-group input-group-sm input-group-solid">
                     <select class="form-control h-35px" name="selectedStatus" id="selectedStatus"
-                      (change)="atachEvent($event)">
+                      (change)="atachEvent($event)" (change)="getLoggingValues($event.target.value)">
                       <option class="default-option text-muted" selected value="">{{ 'dashboard.event' | translate }}
                       </option>
                       <option *ngFor="let item of events" [value]="item">
@@ -36,7 +36,7 @@
 
                   <div class="input-group input-group-sm input-group-solid">
                     <input type="text" class="form-control" [placeholder]="'dashboard.user-name' | translate"
-                      name="user-name" [(ngModel)]="userName">
+                      name="user-name" [(ngModel)]="userName" (ngModelChange)="getLoggingValues({userName: $event})">
                   </div>
                 </div>
                 <div class="col">
@@ -63,8 +63,8 @@
                 <div class="col-lg-3 col-12 mt-lg-0 mt-3">
                   <div class="input-group input-group-sm input-group-solid">
                     <input type="text" class="form-control" [placeholder]="'dashboard.user-identifier' | translate"
-                      name="user-identifier" [(ngModel)]="userIdentifier">
-                  </div>
+                      name="user-identifier" [(ngModel)]="userIdentifier" (ngModelChange)="getLoggingValues({userIdentifier: $event})"> 
+                  </div> 
                 </div>
                 <div class="col-lg-1 col-12 mt-lg-0 mt-3">
                   <button class="btn btn-secondary reset" (click)="initFilters()">

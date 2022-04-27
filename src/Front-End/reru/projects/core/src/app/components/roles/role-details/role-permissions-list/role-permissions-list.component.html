@@ -36,9 +36,9 @@
           </tbody>
         </table>
         <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage" *ngIf="permissions"
-           [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize" 
-          (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event })"
-          (pageChange)="list({ page: $event })">
+          [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize" 
+          (sizeChange)="getPermissions({ page: 1, itemsPerPage: $event })"
+          (pageChange)="getPermissions({ page: $event, itemsPerPage: pagination.pageSize })">
         </div>
       </div>
     </div>

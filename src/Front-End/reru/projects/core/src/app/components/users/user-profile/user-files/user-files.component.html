@@ -78,8 +78,8 @@
 
         <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
           [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
-          (sizeChange)="subsribeForParams({ page: pagination.currentPage, itemsPerPage: $event })"
-          (pageChange)="subsribeForParams({ page: $event })" *ngIf="userFiles.length">
+          (sizeChange)="subsribeForParams({ page: 1, itemsPerPage: $event })"
+          (pageChange)="subsribeForParams({ page: $event, itemsPerPage: pagination.pageSize })" *ngIf="userFiles.length">
         </div>
       </div>
     </div>

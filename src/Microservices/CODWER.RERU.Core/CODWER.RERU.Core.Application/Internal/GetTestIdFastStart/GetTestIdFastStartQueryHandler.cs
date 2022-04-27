@@ -29,7 +29,6 @@ namespace CODWER.RERU.Core.Application.Internal.GetTestIdFastStart
             _currentApplicationUserProvider = currentApplicationUserProvider;
             _timeRangeBeforeStart = DateTime.Now.AddMinutes(15);
             _timeRangeAfterStart = DateTime.Now.AddMinutes(-1);
-    
         }
 
         public async Task<TestDataDto> Handle(GetTestIdFastStartQuery request, CancellationToken cancellationToken)
@@ -37,12 +36,12 @@ namespace CODWER.RERU.Core.Application.Internal.GetTestIdFastStart
             var user = await _currentApplicationUserProvider.Get();
 
             var test = _appDbContext.Tests
-                .Include(x => x.UserProfile)
                 .Include(x => x.TestTemplate.Settings)
                 .Where(test => test.ProgrammedTime <= _timeRangeBeforeStart &&
                     test.ProgrammedTime >= _timeRangeAfterStart &&
-                    test.TestStatus == TestStatusEnum.Programmed || test.TestStatus == TestStatusEnum.AlowedToStart)
-                .FirstOrDefault(x => x.UserProfile.Id == int.Parse(user.Id));
+                    (test.TestStatus == TestStatusEnum.Programmed ||
+                     test.TestStatus == TestStatusEnum.AlowedToStart))
+                .FirstOrDefault(x => x.UserProfileId == int.Parse(user.Id));
 
             return test == null ? new TestDataDto() : _mapper.Map<TestDataDto>(test);
         }

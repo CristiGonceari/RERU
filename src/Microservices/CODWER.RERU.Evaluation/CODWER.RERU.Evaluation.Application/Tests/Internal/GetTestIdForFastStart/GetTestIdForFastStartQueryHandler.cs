@@ -34,14 +34,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStar
         public async Task<TestDataDto> Handle(GetTestIdForFastStartQuery request, CancellationToken cancellationToken)
         {
             var user = await _currentApplicationUserProvider.Get();
-             
+
             var test = _appDbContext.Tests
-                .Include(x => x.UserProfile)
                 .Include(x => x.TestTemplate.Settings)
                 .Where(test => test.ProgrammedTime <= _timeRangeBeforeStart &&
                                test.ProgrammedTime >= _timeRangeAfterStart &&
-                               test.TestStatus == TestStatusEnum.Programmed || test.TestStatus == TestStatusEnum.AlowedToStart)
-                .FirstOrDefault(x => x.UserProfile.Id == int.Parse(user.Id));
+                               (test.TestStatus == TestStatusEnum.Programmed || test.TestStatus == TestStatusEnum.AlowedToStart))
+                .FirstOrDefault(x => x.UserProfileId == int.Parse(user.Id));
 
             return test == null ? new TestDataDto() : _mapper.Map<TestDataDto>(test);
         }

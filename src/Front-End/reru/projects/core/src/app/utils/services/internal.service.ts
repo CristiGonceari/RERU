@@ -7,7 +7,7 @@ import { AppSettingsService, AbstractService } from '@erp/shared';
   providedIn: 'root',
 })
 export class InternalService extends AbstractService {
-  private readonly routeUrl: string = 'Application';
+  private readonly routeUrl: string = 'TestNotification';
 
   constructor(
     protected configService: AppSettingsService,
@@ -17,7 +17,7 @@ export class InternalService extends AbstractService {
   }
 
   getTestIdForFastStart(): Observable<any> {
-    return this.http.get<any>(`${this.coreUrl}/${this.routeUrl}/internal`);
+    return this.http.get<any>(`${this.coreUrl}/${this.routeUrl}/test-notification`);
   }
 
 }

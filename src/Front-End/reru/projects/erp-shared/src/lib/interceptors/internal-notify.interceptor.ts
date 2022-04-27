@@ -33,10 +33,10 @@ export class InternalNotifyInterceptor extends AbstractService implements HttpIn
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		return next.handle(req).pipe(
 			tap(evt => {
-				if (evt instanceof HttpResponse && (evt.url.includes('Application/internal') || evt.url.includes('InternalGetTestId'))) {
-					if (evt && evt.body) {
-						console.log('url', `${this.baseUrl}/reru-evaluation/#/my-activities/start-test/${evt.body.data.testId}`)
-						this.notificationService.info('Go to Test', 'Testul e pe cale de a incepe', {
+				if (evt instanceof HttpResponse && evt.url.includes('test-notification')) {
+					if (evt && evt.body && evt.body.data.testId) {
+						console.warn('url', `${this.baseUrl}/reru-evaluation/#/my-activities/start-test/${evt.body.data.testId}`)
+						this.notificationService.info('Start Test', 'Testul e pe cale de a incepe', {
 							timeOut: 29000,
 							showProgressBar: true,
 						}).click.subscribe(() =>
