@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class InternalGetTestIdService extends AbstractService {
-  private readonly routeUrl: string = 'InternalGetTestId';
+  private readonly urlRoute: string = 'InternalNotifications';
 
   constructor(
     protected appConfigService: AppSettingsService,
@@ -17,8 +17,6 @@ export class InternalGetTestIdService extends AbstractService {
 
 
   getTestIdForFastStart(): Observable<any> {
-    let internalBaseUrl = this.baseUrl.replace("/api", "/internal/api");
-
-    return this.http.get<any>(`${internalBaseUrl}/${this.routeUrl}`);
+    return this.http.get<any>(`${this.baseUrl}/${this.urlRoute}/test-notification`);
   }
 }
