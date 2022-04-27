@@ -10,6 +10,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using CODWER.RERU.Evaluation.Application.EventUsers.GetEventAssignedUsers;
+using CODWER.RERU.Evaluation.Application.EventUsers.GetListOfEventUsers;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -19,6 +20,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     {
         [HttpGet]
         public async Task<PaginatedModel<UserProfileDto>> GetEventUsers([FromQuery] GetEventUsersQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("list-of-event-user")]
+        public async Task<List<int>> GetListOfEventUsers([FromQuery] GetListOfEventUsersQuery query)
         {
             return await Mediator.Send(query);
         }
