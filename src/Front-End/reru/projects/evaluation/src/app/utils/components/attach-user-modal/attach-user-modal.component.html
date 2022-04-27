@@ -4,12 +4,12 @@
 <div class="modal-body px-7">
 	<div class="row mb-5">
 		<div class="col">
-			<erp-shared-search-input (handleSearch)="setFilter('firstName', $event)"
-				[placeholder]="'login.first-name' | translate" #firstName></erp-shared-search-input>
-		</div>
-		<div class="col">
 			<erp-shared-search-input (handleSearch)="setFilter('lastName', $event)"
 				[placeholder]="'login.last-name' | translate" #lastName></erp-shared-search-input>
+		</div>
+		<div class="col">
+			<erp-shared-search-input (handleSearch)="setFilter('firstName', $event)"
+				[placeholder]="'login.first-name' | translate" #firstName></erp-shared-search-input>
 		</div>
 		<div class="col">
 			<erp-shared-search-input (handleSearch)="setFilter('fatherName', $event)"
@@ -75,8 +75,8 @@
 							<span></span>
 						</label>
 					</td>
-					<td> {{ user.firstName }} </td>
 					<td> {{ user.lastName }} </td>
+					<td> {{ user.firstName }} </td>
 					<td> {{ user.fatherName }} </td>
 					<td> {{ user.idnp }} </td>
 					<td> {{ user.email }} </td>
