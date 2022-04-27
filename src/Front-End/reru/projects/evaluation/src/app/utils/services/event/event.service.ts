@@ -150,6 +150,10 @@ export class EventService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-events`, { params });
   }
 
+  getListOfEventUsers(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}/EventUser/list-of-event-user`, { params });
+  }
+
   print(data): Observable<any> {
 		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-events`, data, {
 			responseType: 'blob',

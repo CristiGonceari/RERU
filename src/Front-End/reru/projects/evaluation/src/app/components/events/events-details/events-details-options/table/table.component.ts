@@ -32,6 +32,7 @@ export class TableComponent implements OnInit {
   currentUrl;
   enum = TestingLocationTypeEnum;
   fields = [];
+  attachedUsers = [];
 
   title: string;
 	description: string;
@@ -69,6 +70,11 @@ export class TableComponent implements OnInit {
           this.users = true;
         }
       });
+      this.eventService.getListOfEventUsers({eventId: this.importedId}).subscribe(res => {
+        if(res && res.data) {
+          this.attachedUsers = res.data;
+        }
+      })
     }
 
     if (this.category == "test-types") {
@@ -176,7 +182,7 @@ export class TableComponent implements OnInit {
 		modalRef.componentInstance.exceptUserIds = [];
 		modalRef.componentInstance.page = this.category;
 		modalRef.componentInstance.eventId = this.importedId;
-		modalRef.componentInstance.attachedItems = this.fields.map(el => el.id);
+		modalRef.componentInstance.attachedItems = this.attachedUsers;
 		modalRef.componentInstance.inputType = 'checkbox';
 		modalRef.result.then(() => {
       if (this.persons) this.attachPersons(modalRef.result.__zone_symbol__value);
@@ -188,7 +194,7 @@ export class TableComponent implements OnInit {
 	parse(data) {
 		return {
 			eventId: +this.importedId,
-			userProfileId: data.attachedItems || this.fields
+			userProfileId: data.attachedItems || this.attachedUsers
 		};
 	}
 
