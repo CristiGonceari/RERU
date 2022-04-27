@@ -33,10 +33,10 @@ export class RolePermissionsListComponent implements OnInit {
 		});
 	}
 
-	getPermissions(): void {
+	getPermissions(data: any = {}): void {
 		let params: any = {
-			page: this.pagination.currentPage,
-			itemsPerPage: this.pagination.pageSize || 10
+			page: data.page || this.pagination.currentPage,
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
 		};
 		this.list(params);
 	}
