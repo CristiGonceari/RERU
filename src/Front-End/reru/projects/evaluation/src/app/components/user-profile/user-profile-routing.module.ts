@@ -5,6 +5,7 @@ import { UserEvaluatedTestsComponent } from './user-evaluated-tests/user-evaluat
 import { UserEventsComponent } from './user-events/user-events.component';
 import { UserPollsComponent } from './user-polls/user-polls.component';
 import { UserProfileComponent } from './user-profile.component';
+import { UserSolicitedTestsComponent } from './user-solicited-tests/user-solicited-tests.component';
 import { UserTestsComponent } from './user-tests/user-tests.component';
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
       { path: 'user-events', component: UserEventsComponent },
       { path: 'user-polls', component: UserPollsComponent },
       { path: 'evaluated-tests', component: UserEvaluatedTestsComponent },
+      { path: 'solicited-tests', component: UserSolicitedTestsComponent },
     ]
   }
 ];
