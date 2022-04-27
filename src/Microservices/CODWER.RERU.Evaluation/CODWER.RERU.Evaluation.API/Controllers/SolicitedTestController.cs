@@ -2,6 +2,7 @@
 using CODWER.RERU.Evaluation.Application.SolicitedTests.EditSolicitedTestStatus;
 using CODWER.RERU.Evaluation.Application.SolicitedTests.GetSolicitedTest;
 using CODWER.RERU.Evaluation.Application.SolicitedTests.GetSolicitedTests;
+using CODWER.RERU.Evaluation.Application.SolicitedTests.GetUserSolicitedTests;
 using CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.AddMySolicitedTest;
 using CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.DeleteMySolicitedTest;
 using CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.EditMySolicitedTest;
@@ -23,6 +24,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     {
         [HttpGet]
         public async Task<PaginatedModel<SolicitedTestDto>> GetSolicitedTests([FromQuery] GetSolicitedTestsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("user-solicited-test")]
+        public async Task<PaginatedModel<SolicitedTestDto>> GetUserSolicitedTests([FromQuery] GetUserSolicitedTestsQuery query)
         {
             return await Mediator.Send(query);
         }
