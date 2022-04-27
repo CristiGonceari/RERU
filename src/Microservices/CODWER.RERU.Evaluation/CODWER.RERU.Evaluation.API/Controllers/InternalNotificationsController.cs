@@ -6,6 +6,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStart;
+using CVU.ERP.Common.DataTransferObjects.TestDatas;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -23,6 +25,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<Unit> MarkNotificationAsSeen([FromRoute] int id)
         {
             return await Mediator.Send(new MarkNotificationAsSeenCommand { NotificationId = id });
+        }
+
+        [HttpGet("test-notification")]
+        public async Task<TestDataDto> GetUserTestId()
+        {
+            return await Mediator.Send(new GetTestIdForFastStartQuery());
         }
     }
 }
