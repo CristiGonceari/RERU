@@ -50,11 +50,11 @@
 			<thead class="text-uppercase text-muted">
 				<tr>
 					<th scope="col" style="width: 50px">
-						<span *ngIf="attachedItems.length">
+						<span>
 							<label class="checkbox checkbox-lg checkbox-inline" [ngbTooltip]="tooltip">
 								<input type="checkbox" value="" name="option"
 									[checked]="attachedItems.length"
-									(change)="uncheckAll($event)" />
+									(change)="checkAll($event)" />
 								<span></span>
 							</label>
 						</span>
@@ -101,4 +101,7 @@
 	<button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
 	<button type="button" class="btn btn-primary" (click)="confirm()">{{'button.confirm' | translate}}</button>
 </div>
-<ng-template #tooltip><p class="mb-0 font-size-sm">{{'button.uncheck-all' | translate}}</p></ng-template>
+<ng-template #tooltip>
+	<p class="mb-0 font-size-sm" *ngIf="attachedItems.length">{{'button.uncheck-all' | translate}}</p>
+	<p class="mb-0 font-size-sm" *ngIf="!attachedItems.length">{{'button.check-all' | translate}}</p>
+</ng-template>

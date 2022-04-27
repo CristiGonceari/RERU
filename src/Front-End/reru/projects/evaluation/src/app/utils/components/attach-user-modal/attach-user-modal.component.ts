@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { UserProfileService } from '../../services/user-profile/user-profile.service';
-import { UserProfile } from '../../models/user-profiles/user-profile.model';
 import { PaginationModel } from '../../models/pagination.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventService } from '../../services/event/event.service';
@@ -11,7 +10,7 @@ import { EventService } from '../../services/event/event.service';
   styleUrls: ['./attach-user-modal.component.scss']
 })
 export class AttachUserModalComponent implements OnInit {
-  users: UserProfile;
+  users = []
   pagination: PaginationModel = new PaginationModel();
   isLoading = true;
   filters = {};
@@ -83,8 +82,9 @@ export class AttachUserModalComponent implements OnInit {
     this.activeModal.close(data);
   }
 
-  uncheckAll(event): void {
+  checkAll(event): void {
     if (event.target.checked == false) this.attachedItems = [];
+    if (event.target.checked == true) this.attachedItems = this.users.map(el => el.id);
   }
 
   checkInput(event): void {
