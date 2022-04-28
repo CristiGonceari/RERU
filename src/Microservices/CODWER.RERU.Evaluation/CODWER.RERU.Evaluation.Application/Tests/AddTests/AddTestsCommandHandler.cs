@@ -58,10 +58,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
                 await _mediator.Send(generateCommand);
 
-                await SendEmailNotification(testCommand, null, testId);
+                //await SendEmailNotification(testCommand, null, testId);
             }
 
-            await SendEmailNotification(null, request, testId);
+            //await SendEmailNotification(null, request, testId);
 
             return testsIds;
         }
