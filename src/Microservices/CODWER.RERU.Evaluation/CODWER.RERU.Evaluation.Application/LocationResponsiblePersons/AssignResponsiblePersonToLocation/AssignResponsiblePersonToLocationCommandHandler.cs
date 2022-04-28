@@ -2,7 +2,6 @@
 using CODWER.RERU.Evaluation.DataTransferObjects.Locations;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -27,7 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.AssignRe
         {
             var locationUsersIds = new List<int>();
 
-            var locationValues = await _appDbContext.LocationResponsiblePersons.ToListAsync();
+            var locationValues = await _appDbContext.LocationResponsiblePersons.Where(lrp => lrp.LocationId == request.LocationId).ToListAsync();
 
             foreach (var userId in request.UserProfileId)
             {
@@ -45,15 +44,12 @@ namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.AssignRe
                     var locationResponsiblePerson = _mapper.Map<LocationResponsiblePerson>(newLocationUser);
 
                     await _appDbContext.LocationResponsiblePersons.AddAsync(locationResponsiblePerson);
-                    await _appDbContext.SaveChangesAsync();
 
-                    var addedLocationUserId = _appDbContext.LocationResponsiblePersons.FirstOrDefault(lrp => lrp.UserProfileId == userId);
-
-                    locationUsersIds.Add(addedLocationUserId.Id);
+                    locationUsersIds.Add(userId);
                 }
                 else 
                 { 
-                    locationUsersIds.Add(locationUser.Id);
+                    locationUsersIds.Add(locationUser.UserProfileId);
                 }
 
                 locationValues = locationValues.Where(l => l.UserProfileId != userId).ToList();
@@ -64,8 +60,9 @@ namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.AssignRe
             {
 
                 _appDbContext.LocationResponsiblePersons.RemoveRange(locationValues);
-                await _appDbContext.SaveChangesAsync();
             }
+
+            await _appDbContext.SaveChangesAsync();
 
             return locationUsersIds;
          }

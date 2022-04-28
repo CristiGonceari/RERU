@@ -9,6 +9,8 @@ using CODWER.RERU.Evaluation.Application.EventResponsiblePersons.UnassignRespons
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.Pagination;
 using MediatR;
+using CODWER.RERU.Evaluation.Application.EventResponsiblePersons.SendToAssignedResponsiblePersonNotifications;
+using CODWER.RERU.Evaluation.Application.EventResponsiblePersons.GetListOfEventResponsiblePerson;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -40,6 +42,18 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             var command = new UnassignResponsiblePersonFromEventCommand { EventId = eventId, UserProfileId = userProfileId };
 
             return await Mediator.Send(command);
+        }
+
+        [HttpPut]
+        public async Task<Unit> SendToAssignedResponsiblePersonNotifications([FromBody] SendToAssignedResponsiblePersonNotificationsCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
+        [HttpGet("list-of-event-responsible-person")]
+        public async Task<List<int>> GetListOfEventResponsiblePerson([FromQuery] GetListOfEventResponsiblePersonQuery query)
+        {
+            return await Mediator.Send(query);
         }
     }
 }

@@ -3,6 +3,8 @@
         <div class="card-header flex-wrap border-0 py-5">
             <div class="card-title"><b>{{'locations.persons' | translate}}</b></div>
             <div class="card-toolbar m-0">
+                <app-confirm-button class="btn mr-5" [value]="'button.send-email' | translate"
+                    (click)="table.sendEmail()" *ngIf="table.attachedUsers.length"></app-confirm-button>
                 <app-add-button class="btn" [value]="'locations.attach-res' | translate"
                     (click)="table.openUsersModal()">
                 </app-add-button>

@@ -232,7 +232,8 @@
     "print": "Print",
     "performing-test": "Print performing test",
     "attach": "Attach file",
-    "confirm-print": "Confirm and Print"
+    "confirm-print": "Confirm and Print",
+    "send-email": "Email notification"
   },
   "modal":{
     "delete": "Delete",

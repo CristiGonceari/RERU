@@ -53,7 +53,7 @@
 						<span>
 							<label class="checkbox checkbox-lg checkbox-inline" [ngbTooltip]="tooltip">
 								<input type="checkbox" value="" name="option"
-									[checked]="attachedItems.length"
+									[checked]="paginatedAttachedIds"
 									(change)="checkAll($event)" />
 								<span></span>
 							</label>
@@ -92,8 +92,8 @@
 		</table>
 		<div pagination class="datatable-pager datatable-paging-loaded mb-5" [page]="pagination.currentPage" 
 			*ngIf="users" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
-			(sizeChange)="getUsers({ page: pagination.currentPage, itemsPerPage: $event})"
-			(pageChange)="getUsers({ page: $event})">
+			(sizeChange)="getUsers({ page: 1, itemsPerPage: $event})"
+			(pageChange)="getUsers({ page: $event, itemsPerPage: pagination.pageSize})">
 		</div>
 	</div>
 </div>

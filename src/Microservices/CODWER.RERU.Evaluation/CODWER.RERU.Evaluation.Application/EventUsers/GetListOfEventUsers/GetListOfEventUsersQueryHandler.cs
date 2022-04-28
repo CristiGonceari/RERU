@@ -18,7 +18,10 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.GetListOfEventUsers
 
         public async Task<List<int>> Handle(GetListOfEventUsersQuery request, CancellationToken cancellationToken)
         {
-            var eventUserIds =  _appDbContext.EventUsers.Where(eu => eu.EventId == request.EventId).Select(eu => eu.UserProfileId).ToList();
+            var eventUserIds =  _appDbContext.EventUsers
+                                                .Where(eu => eu.EventId == request.EventId)
+                                                .Select(eu => eu.UserProfileId)
+                                                .ToList();
 
             return eventUserIds;
         }

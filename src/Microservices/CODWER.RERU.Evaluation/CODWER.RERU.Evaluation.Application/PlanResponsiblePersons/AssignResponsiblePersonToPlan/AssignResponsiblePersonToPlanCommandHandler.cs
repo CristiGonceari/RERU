@@ -27,7 +27,7 @@ namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.AssignRespon
 
             var planUsersIds = new List<int>();
 
-            var planValues = await _appDbContext.PlanResponsiblePersons.ToListAsync();
+            var planValues = await _appDbContext.PlanResponsiblePersons.Where(prp => prp.PlanId == request.PlanId).ToListAsync();
 
 
             foreach (var userId in request.UserProfileId)
@@ -46,15 +46,12 @@ namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.AssignRespon
                     var planResponsiblePerson = _mapper.Map<PlanResponsiblePerson>(newPlanUser);
 
                     await _appDbContext.PlanResponsiblePersons.AddAsync(planResponsiblePerson);
-                    await _appDbContext.SaveChangesAsync();
 
-                    var planName = await _appDbContext.PlanResponsiblePersons.FirstAsync(x => x.UserProfileId == userId);
-
-                    planUsersIds.Add(planName.Id);
+                    planUsersIds.Add(userId);
                 }
                 else
                 {
-                    planUsersIds.Add(planUser.Id);
+                    planUsersIds.Add(planUser.UserProfileId);
                 }
 
                 planValues = planValues.Where(l => l.UserProfileId != userId).ToList();
@@ -63,8 +60,9 @@ namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.AssignRespon
             if (planValues.Count() > 0)
             {
                 _appDbContext.PlanResponsiblePersons.RemoveRange(planValues);
-                await _appDbContext.SaveChangesAsync();
             }
+
+            await _appDbContext.SaveChangesAsync();
 
             return planUsersIds;
         }

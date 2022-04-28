@@ -40,7 +40,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
 
             var eventEvaluatorIds = new List<int>();
 
-            var eventValues = await _appDbContext.EventEvaluators.ToListAsync();
+            var eventValues = await _appDbContext.EventEvaluators.Where(ee => ee.EventId == request.EventId).ToListAsync();
 
             foreach (var evaluatorId in request.EvaluatorId)
             {
@@ -58,21 +58,12 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
                     var result = _mapper.Map<EventEvaluator>(newEventEvaluator);
 
                     await _appDbContext.EventEvaluators.AddAsync(result);
-                    await _appDbContext.SaveChangesAsync();
 
-                    var eventName = await _appDbContext.EventEvaluators
-                        .Include(x => x.Event)
-                        .FirstAsync(x => x.EventId == request.EventId && x.EvaluatorId == evaluatorId);
-
-                    eventEvaluatorIds.Add(eventName.Id);
-
-                    await _internalNotificationService.AddNotification(newEventEvaluator.EvaluatorId, NotificationMessages.YouWereInvitedToEventAsEvaluator);
-
-                    await SendEmailNotification(result);
+                    eventEvaluatorIds.Add(evaluatorId);
                 }
                 else
                 {
-                    eventEvaluatorIds.Add(eventEvaluator.Id);
+                    eventEvaluatorIds.Add(eventEvaluator.EvaluatorId);
                 }
 
                 eventValues = eventValues.Where(l => l.EvaluatorId != evaluatorId).ToList();
@@ -83,44 +74,11 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
             {
 
                 _appDbContext.EventEvaluators.RemoveRange(eventValues);
-                await _appDbContext.SaveChangesAsync();
             }
 
+            await _appDbContext.SaveChangesAsync();
+
             return eventEvaluatorIds;
-        }
-
-        private async Task<Unit> SendEmailNotification(EventEvaluator eventEvaluator)
-        {
-            var user = await _appDbContext.EventEvaluators
-                .Include(eu => eu.Evaluator)
-                .Include(eu => eu.Event)
-                .FirstOrDefaultAsync(x => x.Id == eventEvaluator.Id);
-
-            var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            var template = await File.ReadAllTextAsync(path);
-
-            template = template
-                .Replace("{user_name}", user.Evaluator.FirstName + " " + user.Evaluator.LastName)
-                .Replace("{email_message}", await GetTableContent(eventEvaluator.Event.Name));
-
-            var emailData = new EmailData
-            {
-                subject = "Invitație la eveniment",
-                body = template,
-                from = "Do Not Reply",
-                to = user.Evaluator.Email
-            };
-
-            await _notificationService.Notify(emailData, NotificationType.Both);
-
-            return Unit.Value;
-        }
-
-        private async Task<string> GetTableContent(string eventName)
-        {
-            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la evenimentul ""{eventName}"" în rol de evaluator.</p>";
-
-            return content;
         }
     }
 }

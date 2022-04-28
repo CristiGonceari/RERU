@@ -3,6 +3,7 @@ import { UserProfileService } from '../../services/user-profile/user-profile.ser
 import { PaginationModel } from '../../models/pagination.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventService } from '../../services/event/event.service';
+import { Test } from '../../models/tests/test.model';
 
 @Component({
   selector: 'app-attach-user-modal',
@@ -10,7 +11,8 @@ import { EventService } from '../../services/event/event.service';
   styleUrls: ['./attach-user-modal.component.scss']
 })
 export class AttachUserModalComponent implements OnInit {
-  users = []
+  users = [];
+  paginatedAttachedIds: boolean = false;
   pagination: PaginationModel = new PaginationModel();
   isLoading = true;
   filters = {};
@@ -33,25 +35,29 @@ export class AttachUserModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.eventId && this.page == 'add-test') this.getAssignedUsers();
-    else this.getUsers();
+    this.getUsers();
   }
 
   getUsers(data: any = {}): void {
-    let exceptIds = this.exceptUserIds.length ? this.exceptUserIds : 0;
-    let params = {
-      page: data.page || this.pagination.currentPage,
-      itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
-      exceptUserIds: exceptIds,
-      ...this.filters
-    }
-    this.userService.get(params).subscribe(res => {
-      if (res && res.data) {
-        this.users = res.data.items;
-        this.pagination = res.data.pagedSummary;
-        this.isLoading = false;
+    if (this.inputType == 'checkbox' && this.page == 'add-test') this.getAssignedUsers(data);
+    else {
+      let exceptIds = this.exceptUserIds.length ? this.exceptUserIds : 0;
+      this.paginatedAttachedIds = false;
+      let params = {
+        page: data.page || this.pagination.currentPage,
+        itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+        exceptUserIds: exceptIds,
+        ...this.filters
       }
-    })
+      this.userService.get(params).subscribe(res => {
+        if (res && res.data) {
+          this.paginatedAttachedIds = res.data.items.map(el => el.id).some(r=> this.attachedItems.includes(r))
+          this.users = res.data.items;
+          this.pagination = res.data.pagedSummary;
+          this.isLoading = false;
+        }
+      })
+    }
   }
 
   getAssignedUsers(data: any = {}): void {
@@ -84,7 +90,12 @@ export class AttachUserModalComponent implements OnInit {
 
   checkAll(event): void {
     if (event.target.checked == false) this.attachedItems = [];
-    if (event.target.checked == true) this.attachedItems = this.users.map(el => el.id);
+    if (event.target.checked == true) {
+      let itemsToAdd = this.users.map(el => +el.id)
+      for (let i=0; i<itemsToAdd.length; i++) {
+        this.attachedItems.push(itemsToAdd[i]);
+      }
+    }
   }
 
   checkInput(event): void {
