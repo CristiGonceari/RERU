@@ -2,7 +2,6 @@
 using CODWER.RERU.Evaluation.DataTransferObjects.Locations;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -27,7 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.AssignRe
         {
             var locationUsersIds = new List<int>();
 
-            var locationValues = await _appDbContext.LocationResponsiblePersons.ToListAsync();
+            var locationValues = await _appDbContext.LocationResponsiblePersons.Where(lrp => lrp.LocationId == request.LocationId).ToListAsync();
 
             foreach (var userId in request.UserProfileId)
             {

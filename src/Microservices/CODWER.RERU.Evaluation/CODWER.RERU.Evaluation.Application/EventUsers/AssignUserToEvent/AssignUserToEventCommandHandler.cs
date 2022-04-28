@@ -39,7 +39,7 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
         {
             var eventUsersIds = new List<int>();
 
-            var eventValues = await _appDbContext.EventUsers.ToListAsync();
+            var eventValues = await _appDbContext.EventUsers.Where(eu => eu.EventId == request.EventId).ToListAsync();
 
             foreach (var userId in request.UserProfileId)
             {

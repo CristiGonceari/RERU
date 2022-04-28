@@ -27,7 +27,7 @@ namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.AssignRespon
 
             var planUsersIds = new List<int>();
 
-            var planValues = await _appDbContext.PlanResponsiblePersons.ToListAsync();
+            var planValues = await _appDbContext.PlanResponsiblePersons.Where(prp => prp.PlanId == request.PlanId).ToListAsync();
 
 
             foreach (var userId in request.UserProfileId)

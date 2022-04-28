@@ -39,7 +39,7 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
         {
             var eventUsersIds = new List<int>();
 
-            var eventValues = await _appDbContext.EventResponsiblePersons.ToListAsync();
+            var eventValues = await _appDbContext.EventResponsiblePersons.Where(erp => erp.EventId == request.EventId).ToListAsync();
 
             foreach (var userId in request.UserProfileId)
             {

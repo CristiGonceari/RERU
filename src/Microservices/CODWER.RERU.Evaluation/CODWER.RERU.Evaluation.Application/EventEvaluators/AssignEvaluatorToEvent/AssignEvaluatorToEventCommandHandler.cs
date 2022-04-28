@@ -40,7 +40,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
 
             var eventEvaluatorIds = new List<int>();
 
-            var eventValues = await _appDbContext.EventEvaluators.ToListAsync();
+            var eventValues = await _appDbContext.EventEvaluators.Where(ee => ee.EventId == request.EventId).ToListAsync();
 
             foreach (var evaluatorId in request.EvaluatorId)
             {
