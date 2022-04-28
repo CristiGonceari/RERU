@@ -6,6 +6,7 @@ using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 using FluentValidation.Validators;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
@@ -51,25 +52,36 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
             var now = DateTime.Now;
             var programmedTime = test.ProgrammedTime;
 
+            var startBefore = test.TestTemplate.Settings.StartBeforeProgrammation;
+            var startAfter = test.TestTemplate.Settings.StartAfterProgrammation;
 
-            var castNow = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
-            var castProgrammedTime = new DateTime(programmedTime.Year, programmedTime.Month, programmedTime.Day, programmedTime.Hour, programmedTime.Minute, 0);
-
-            if (!test.TestTemplate.Settings.StartBeforeProgrammation && !test.TestTemplate.Settings.StartAfterProgrammation && castNow == castProgrammedTime)
+            if (IntervalMaxOneMinute(now, programmedTime))
             {
                 return;
             }
 
-            if (!test.TestTemplate.Settings.StartBeforeProgrammation && castProgrammedTime > castNow)
+            if (!startBefore && now < programmedTime && !IntervalMaxOneMinute(now, programmedTime))
             {
                 context.AddFail(ValidationCodes.INVALID_TEST_START_TIME, ValidationMessages.InvalidInput);
 
                 return;
             }
-            if (!test.TestTemplate.Settings.StartAfterProgrammation && castProgrammedTime <= castNow)
+            if (!startAfter && programmedTime < now && !IntervalMaxOneMinute(now, programmedTime))
             {
                 context.AddFail(ValidationCodes.INVALID_TEST_START_TIME, ValidationMessages.InvalidInput);
             }
+        }
+
+        private bool IntervalMaxOneMinute(DateTime now, DateTime programmed)
+        {
+            var interval = now - programmed;
+
+            if (Math.Abs(interval.TotalSeconds) <= 90)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
