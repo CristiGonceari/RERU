@@ -34,27 +34,16 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTestSettings
                              .WithErrorCode(ValidationCodes.NEED_ADMIN_CONFIRMATION);
                          });
 
-                    When(x => !appDbContext.Tests
-                        .Include(x => x.TestTemplate)
-                            .ThenInclude(x => x.Settings)
-                        .First(t => t.Id == x.Id)
-                        .TestTemplate.Settings.StartBeforeProgrammation, () =>
-                        {
-                            RuleFor(x => x.Id)
-                            .Must(x => appDbContext.Tests.First(t => t.Id == x).ProgrammedTime <= DateTime.Now)
-                            .WithErrorCode(ValidationCodes.WAIT_THE_START_TIME);
-                        });
-
-                    When(x => !appDbContext.Tests
-                        .Include(x => x.TestTemplate)
-                            .ThenInclude(x => x.Settings)
-                        .First(t => t.Id == x.Id)
-                        .TestTemplate.Settings.StartBeforeProgrammation, () =>
-                        {
-                            RuleFor(x => x.Id)
-                            .Must(x => appDbContext.Tests.First(t => t.Id == x).ProgrammedTime <= DateTime.Now)
-                            .WithErrorCode(ValidationCodes.WAIT_THE_START_TIME);
-                        });
+                    //When(x => !appDbContext.Tests
+                    //    .Include(x => x.TestTemplate)
+                    //        .ThenInclude(x => x.Settings)
+                    //    .First(t => t.Id == x.Id)
+                    //    .TestTemplate.Settings.StartBeforeProgrammation, () =>
+                    //    {
+                    //        RuleFor(x => x.Id)
+                    //        .Must(x => appDbContext.Tests.First(t => t.Id == x).ProgrammedTime <= DateTime.Now)
+                    //        .WithErrorCode(ValidationCodes.WAIT_THE_START_TIME);
+                    //    });
 
                     When(x => appDbContext.Tests.First(t => t.Id == x.Id).TestPassStatus.HasValue, () =>
                     {
