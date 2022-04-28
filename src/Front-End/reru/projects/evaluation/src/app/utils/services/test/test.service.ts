@@ -80,6 +80,10 @@ export class TestService extends AbstractService {
 		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/edit-status`, data);
 	}
 
+	startTest(data): Observable<any> {
+		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/start-test`, data);
+	}
+
 	deleteTest(params): Observable<any> {
 		return this.http.delete(`${this.baseUrl}/${this.urlRoute}`,  { params } );
 	}

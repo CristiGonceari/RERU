@@ -810,6 +810,7 @@
     "03001501": "Test nevalid",
     "03001502": "Numai testele în progres pot fi încheiate",
     "03001503": "Limita de eroare a fost atinsă",
+    "03001504": "Setările timpului nu permit începerea testului",
     "03001601": "Întrebare de test nevalidă",
     "03001602": "Testul s-a încheiat",
     "03001603": "Răspunsul nu poate fi schimbat",

@@ -89,16 +89,16 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                 remainsCategoriesCount--;
             }
 
-            if (test.TestTemplate.Settings.StartAfterProgrammation)
-            {
-                test.StartTime = DateTime.Now;
-                test.EndTime = DateTime.Now.AddMinutes(test.TestTemplate.Duration);
-            }
-            else
-            {
-                test.StartTime = test.ProgrammedTime;
-                test.EndTime = test.ProgrammedTime.AddMinutes(test.TestTemplate.Duration);
-            }
+            //if (test.TestTemplate.Settings.StartAfterProgrammation)
+            //{
+            //    test.StartTime = DateTime.Now;
+            //    test.EndTime = DateTime.Now.AddMinutes(test.TestTemplate.Duration);
+            //}
+            //else
+            //{
+            //    test.StartTime = test.ProgrammedTime;
+            //    test.EndTime = test.ProgrammedTime.AddMinutes(test.TestTemplate.Duration);
+            //}
 
             test.MaxErrors = test.TestTemplate.Settings.MaxErrors;
 

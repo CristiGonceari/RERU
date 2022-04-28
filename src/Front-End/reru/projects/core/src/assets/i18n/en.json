@@ -417,5 +417,35 @@
     "succes-remove-msg": "Article was successfully deleted",
     "succes-add-msg": "Article was successfully added",
     "succes-edit-msg": "Article was successfully edited"
+  },
+  "departments": {
+    "overview": "Overview",
+    "help": "Help",
+    "departments": "Departments",
+    "department": "Department",
+    "subtitle": "Manage departments",
+    "new-department": "Add department",
+    "delete-department": "Delete department",
+    "name": "Name",
+    "remove": "Remove department",
+    "remove-msg": "Are you sure you want to remove this department?",
+    "succes-remove-msg": "Department was successfully deleted",
+    "succes-add-msg": "Department was successfully added",
+    "succes-edit-msg": "Department was successfully edited"
+  },
+  "user-roles": {
+    "overview": "Overview",
+    "help": "Help",
+    "roles": "Roles",
+    "role": "Role",
+    "subtitle": "Manage roles",
+    "new-role": "Add role",
+    "delete-role": "Delete role",
+    "name": "Name",
+    "remove": "Remove role",
+    "remove-msg": "Are you sure you want to remove this role?",
+    "succes-remove-msg": "Role was successfully deleted",
+    "succes-add-msg": "Role was successfully added",
+    "succes-edit-msg": "Role was successfully edited"
   }
 }

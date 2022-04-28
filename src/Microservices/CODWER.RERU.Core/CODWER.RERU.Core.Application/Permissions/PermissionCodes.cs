@@ -26,5 +26,7 @@
         public const string ELIMINATI_ACCESUL_UTILIZATORULUI_LA_MODUL = "P00000023";
         public const string ACTUALIZATI_ACCESUL_UTILIZATORULUI_LA_MODUL = "P00000024";
         public const string ACCES_GENERAL_LA_ARTICOLE = "P00000025";
+        public const string ACCES_GENERAL_LA_DEPARTAMENTE = "P00000026";
+        public const string ACCES_GENERAL_LA_ROLURI = "P00000027";
     }
 }
