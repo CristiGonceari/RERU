@@ -8,6 +8,7 @@ using FluentValidation;
 using FluentValidation.Validators;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
@@ -26,6 +27,18 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
 
             RuleFor(x => x.TestId)
                 .Custom((id, c) => CheckStartTest(id, c));
+
+            When(x => appDbContext.Tests.Include(x => x.TestTemplate)
+                .First(t => t.Id == x.TestId)
+                .TestTemplate.Mode == TestTemplateModeEnum.Test, () =>
+                {
+                    When(x => appDbContext.Tests.First(t => t.Id == x.TestId).TestPassStatus.HasValue, () =>
+                    {
+                        RuleFor(x => x.TestId)
+                        .Must(x => appDbContext.Tests.First(t => t.Id == x).TestPassStatus.Value == TestPassStatusEnum.Allowed)
+                        .WithErrorCode(ValidationCodes.NEED_ADMIN_CONFIRMATION);
+                    });
+                });
         }
 
         private void CheckStartTest(int testId, CustomContext context)
@@ -41,7 +54,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
 
                 return;
             }
-            if (!test.TestTemplate.Settings.StartAfterProgrammation && test.ProgrammedTime < DateTime.Now)
+            if (!test.TestTemplate.Settings.StartAfterProgrammation && test.ProgrammedTime.AddMinutes(2) < DateTime.Now)
             {
                 context.AddFail(ValidationCodes.INVALID_TEST_START_TIME, ValidationMessages.InvalidInput);
             }
