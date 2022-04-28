@@ -1,5 +1,5 @@
 {
-  "id": "test-id-1",
+  "id": "99",
   "name": "RERU Client",
   "email": "andrian.hubencu@codwer.com",
   "modules": [
@@ -71,7 +71,9 @@
         "P00000022",
         "P00000023",
         "P00000024",
-        "P00000025"
+        "P00000025",
+        "P00000026",
+        "P00000027"
       ]
     },
     {

@@ -809,6 +809,7 @@
     "03001501": "Invalid test",
     "03001502": "Only tests in progress may be terminated",
     "03001503": "Error limit is reached",
+    "03001504": "Invalid test start time",
     "03001601": "Invalid test question",
     "03001602": "Test is finished",
     "03001603": "Answer can not be changed",
