@@ -48,13 +48,25 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
                     .ThenInclude(x => x.Settings)
                 .FirstOrDefault(x => x.Id == testId);
 
-            if (!test.TestTemplate.Settings.StartBeforeProgrammation && test.ProgrammedTime > DateTime.Now)
+            var now = DateTime.Now;
+            var programmedTime = test.ProgrammedTime;
+
+
+            var castNow = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
+            var castProgrammedTime = new DateTime(programmedTime.Year, programmedTime.Month, programmedTime.Day, programmedTime.Hour, programmedTime.Minute, 0);
+
+            if (!test.TestTemplate.Settings.StartBeforeProgrammation && !test.TestTemplate.Settings.StartAfterProgrammation && castNow == castProgrammedTime)
+            {
+                return;
+            }
+
+            if (!test.TestTemplate.Settings.StartBeforeProgrammation && castProgrammedTime > castNow)
             {
                 context.AddFail(ValidationCodes.INVALID_TEST_START_TIME, ValidationMessages.InvalidInput);
 
                 return;
             }
-            if (!test.TestTemplate.Settings.StartAfterProgrammation && test.ProgrammedTime.AddMinutes(2) < DateTime.Now)
+            if (!test.TestTemplate.Settings.StartAfterProgrammation && castProgrammedTime <= castNow)
             {
                 context.AddFail(ValidationCodes.INVALID_TEST_START_TIME, ValidationMessages.InvalidInput);
             }
