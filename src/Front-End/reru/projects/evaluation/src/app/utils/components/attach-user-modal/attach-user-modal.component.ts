@@ -12,7 +12,7 @@ import { Test } from '../../models/tests/test.model';
 })
 export class AttachUserModalComponent implements OnInit {
   users = [];
-  paginatedAttachedIds: boolean;
+  paginatedAttachedIds: boolean = false;
   pagination: PaginationModel = new PaginationModel();
   isLoading = true;
   filters = {};
@@ -42,6 +42,7 @@ export class AttachUserModalComponent implements OnInit {
     if (this.inputType == 'checkbox' && this.page == 'add-test') this.getAssignedUsers(data);
     else {
       let exceptIds = this.exceptUserIds.length ? this.exceptUserIds : 0;
+      this.paginatedAttachedIds = false;
       let params = {
         page: data.page || this.pagination.currentPage,
         itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
