@@ -37,6 +37,7 @@ using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.GetMyEvaluate
 using CODWER.RERU.Evaluation.Application.Tests.GetTestSettings;
 using CODWER.RERU.Evaluation.Application.Tests.GetTestDocumentReplacedKeys;
 using CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices;
+using CODWER.RERU.Evaluation.Application.Tests.StartTest;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -152,6 +153,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpPatch("edit-status")]
         public async Task<Unit> EditTestStatus([FromBody] EditTestStatusCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
+        [HttpPatch("start-test")]
+        public async Task<Unit> StartTest([FromBody] StartTestCommand command)
         {
             return await Mediator.Send(command);
         }

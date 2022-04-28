@@ -54,6 +54,8 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<SolicitedTest> SolicitedTests { get; set; }
         public virtual DbSet<DocumentTemplate> DocumentTemplates { get; set; }
         public virtual DbSet<DocumentTemplateKey> DocumentTemplateKeys { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

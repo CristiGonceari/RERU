@@ -28,7 +28,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 			DashboardComponent,
 			ModulesComponent,
 			RolesComponent,
-			MainComponent,
+			MainComponent
 	],
 	imports: [
 		BrowserModule,
