@@ -96,6 +96,10 @@ export class EventService extends AbstractService {
     return this.http.get(`${this.baseUrl}/EventUser`, {params});
   }
 
+  sendEmail(url, userProfileId): Observable<any>{
+    return this.http.put(`${this.baseUrl}/${url}`, {userProfileId});
+  }
+
   getAssignedUsers(params): Observable<any>{
     return this.http.get(`${this.baseUrl}/EventUser/assigned`, {params});
   }
@@ -154,6 +158,14 @@ export class EventService extends AbstractService {
     return this.http.get(`${this.baseUrl}/EventUser/list-of-event-user`, { params });
   }
 
+  getListOfEventEvaluators(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}/EventEvaluator/list-of-event-evaluators`, { params });
+  }
+
+  getListOfEventPersons(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}/EventResponsiblePerson/list-of-event-responsible-person`, { params });
+  }
+  
   print(data): Observable<any> {
 		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-events`, data, {
 			responseType: 'blob',

@@ -30,6 +30,7 @@ export class TableComponent implements OnInit {
   users: boolean = false;
 
   currentUrl;
+  urlApi: string;
   enum = TestingLocationTypeEnum;
   fields = [];
   attachedUsers = [];
@@ -62,6 +63,7 @@ export class TableComponent implements OnInit {
     }
 
     if (this.category == "users") {
+      this.urlApi = 'EventUser';
       this.eventService.getUsers(params).subscribe(res => {
         if (res && res.data) {
           this.fields = res.data.items;
@@ -100,6 +102,7 @@ export class TableComponent implements OnInit {
     }
 
     if (this.category == "evaluators") {
+      this.urlApi = 'EventEvaluator';
       this.eventService.getEvaluators(params).subscribe(res => {
         if (res && res.data) {
           this.fields = res.data.items;
@@ -108,9 +111,15 @@ export class TableComponent implements OnInit {
           this.evaluators = true;
         }
       });
+      this.eventService.getListOfEventEvaluators({eventId: this.importedId}).subscribe(res => {
+        if(res && res.data) {
+          this.attachedUsers = res.data;
+        }
+      })
     }
 
     if (this.category == "persons") {
+      this.urlApi = 'EventResponsiblePerson';
       this.eventService.getResponsiblePersons(params).subscribe(res => {
         if (res && res.data) {
           this.fields = res.data.items;
@@ -119,6 +128,11 @@ export class TableComponent implements OnInit {
           this.persons = true;
         }
       });
+      this.eventService.getListOfEventPersons({eventId: this.importedId}).subscribe(res => {
+        if(res && res.data) {
+          this.attachedUsers = res.data;
+        }
+      })
     }
   }
 
@@ -185,9 +199,13 @@ export class TableComponent implements OnInit {
 		modalRef.componentInstance.attachedItems = this.attachedUsers;
 		modalRef.componentInstance.inputType = 'checkbox';
 		modalRef.result.then(() => {
-      if (this.persons) this.attachPersons(modalRef.result.__zone_symbol__value);
-      if (this.users) this.attachUser(modalRef.result.__zone_symbol__value);
-      if (this.evaluators) this.attachEvaluators(modalRef.result.__zone_symbol__value);
+      if (this.persons) {
+        this.attachPersons(modalRef.result.__zone_symbol__value);
+      } else if (this.users) {
+        this.attachUser(modalRef.result.__zone_symbol__value);
+      } else if (this.evaluators) {
+        this.attachEvaluators(modalRef.result.__zone_symbol__value);
+      }
 		}, () => { });
 	}
 
@@ -222,6 +240,12 @@ export class TableComponent implements OnInit {
 			});
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 		}, () => {}, () => this.list());
+  }
+
+  sendEmail(): void {
+    for (let i = 0; i < this.attachedUsers.length; i++) {
+      this.eventService.sendEmail(this.urlApi, this.attachedUsers[i]).subscribe();
+    }
   }
 
   attachEvaluators(data): void {
