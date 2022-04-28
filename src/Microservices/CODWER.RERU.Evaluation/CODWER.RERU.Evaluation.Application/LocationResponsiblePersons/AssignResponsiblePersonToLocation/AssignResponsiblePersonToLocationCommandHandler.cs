@@ -45,15 +45,12 @@ namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.AssignRe
                     var locationResponsiblePerson = _mapper.Map<LocationResponsiblePerson>(newLocationUser);
 
                     await _appDbContext.LocationResponsiblePersons.AddAsync(locationResponsiblePerson);
-                    await _appDbContext.SaveChangesAsync();
 
-                    var addedLocationUserId = _appDbContext.LocationResponsiblePersons.FirstOrDefault(lrp => lrp.UserProfileId == userId);
-
-                    locationUsersIds.Add(addedLocationUserId.Id);
+                    locationUsersIds.Add(userId);
                 }
                 else 
                 { 
-                    locationUsersIds.Add(locationUser.Id);
+                    locationUsersIds.Add(locationUser.UserProfileId);
                 }
 
                 locationValues = locationValues.Where(l => l.UserProfileId != userId).ToList();
@@ -64,8 +61,9 @@ namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.AssignRe
             {
 
                 _appDbContext.LocationResponsiblePersons.RemoveRange(locationValues);
-                await _appDbContext.SaveChangesAsync();
             }
+
+            await _appDbContext.SaveChangesAsync();
 
             return locationUsersIds;
          }

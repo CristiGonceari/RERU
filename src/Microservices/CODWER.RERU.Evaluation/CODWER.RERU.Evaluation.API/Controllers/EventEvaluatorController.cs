@@ -10,6 +10,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using CODWER.RERU.Evaluation.Application.EventEvaluators.GetAssignedEvaluators;
+using CODWER.RERU.Evaluation.Application.EventEvaluators.SendToAssignedEvaluatorNotifications;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -47,6 +48,11 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<PaginatedModel<UserProfileDto>> GetAssignedUsers([FromQuery] GetAssignedEvaluatorsQuery query)
         {
             return await Mediator.Send(query);
+        }
+        [HttpPut]
+        public async Task<Unit> SendToAssignedEvaluatorNotification([FromBody] SendToAssignedEvaluatorNotificationCommand command)
+        {
+            return await Mediator.Send(command);
         }
     }
 }

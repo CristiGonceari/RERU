@@ -56,21 +56,12 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
                     var result = _mapper.Map<EventUser>(newEventUser);
 
                     await _appDbContext.EventUsers.AddAsync(result);
-                    await _appDbContext.SaveChangesAsync();
 
-                    var eventName = await _appDbContext.EventUsers
-                       .Include(x => x.Event)
-                       .FirstAsync(x => x.EventId == request.EventId && x.UserProfileId == userId);
-
-                    eventUsersIds.Add(eventName.Id);
-
-                    await _internalNotificationService.AddNotification(newEventUser.UserProfileId, NotificationMessages.YouWereInvitedToEventAsCandidate);
-
-                    await SendEmailNotification(result);
+                    eventUsersIds.Add(userId);
                 }
                 else
                 {
-                    eventUsersIds.Add(eventUser.Id);
+                    eventUsersIds.Add(eventUser.UserProfileId);
                 }
 
                 eventValues = eventValues.Where(l => l.UserProfileId != userId).ToList();
@@ -81,44 +72,12 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
             {
 
                 _appDbContext.EventUsers.RemoveRange(eventValues);
-                await _appDbContext.SaveChangesAsync();
+               
             }
 
+            await _appDbContext.SaveChangesAsync();
+
             return eventUsersIds;
-        }
-
-        private async Task<Unit> SendEmailNotification(EventUser eventUser)
-        {
-            var user = await _appDbContext.EventUsers
-                .Include(eu => eu.UserProfile)
-                .Include(eu => eu.Event)
-                .FirstOrDefaultAsync(x => x.Id == eventUser.Id);
-
-            var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            var template = await File.ReadAllTextAsync(path);
-
-            template = template
-                .Replace("{user_name}", user.UserProfile.FirstName + " " + user.UserProfile.LastName)
-                .Replace("{email_message}", await GetTableContent(eventUser.Event.Name));
-
-            var emailData = new EmailData()
-            {
-                subject = "Invitație la eveniment",
-                body = template,
-                from = "Do Not Reply",
-                to = user.UserProfile.Email
-            };
-
-            await _notificationService.Notify(emailData, NotificationType.Both);
-
-            return Unit.Value;
-        }
-
-        private async Task<string> GetTableContent(string eventName)
-        {
-            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la evenimentul ""{eventName}"" în rol de candidat.</p>";
-
-            return content;
         }
     }
 }
