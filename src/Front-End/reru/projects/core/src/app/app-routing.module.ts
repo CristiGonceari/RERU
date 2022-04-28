@@ -67,6 +67,18 @@ const routes: Routes = [
 				loadChildren: () => import('./components/faq/faq.module').then(m => m.FAQModule),
 				data: { permission: 'P00000025' },
 				canActivate: [PermissionRouteGuard]
+			},
+			{
+				path: 'departments',
+				loadChildren: () => import('./components/departments/departments.module').then(m => m.DepartmentsModule),
+				data: { permission: 'P00000026' },
+				canActivate: [PermissionRouteGuard]
+			},
+			{
+				path: 'user-roles',
+				loadChildren: () => import('./components/user-roles/user-roles.module').then(m => m.UserRolesModule),
+				data: { permission: 'P00000027' },
+				canActivate: [PermissionRouteGuard]
 			}
 		],
 	},

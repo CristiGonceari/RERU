@@ -11,6 +11,7 @@ using CVU.ERP.Common.Pagination;
 using MediatR;
 using CODWER.RERU.Evaluation.Application.EventUsers.GetEventAssignedUsers;
 using CODWER.RERU.Evaluation.Application.EventUsers.GetListOfEventUsers;
+using CODWER.RERU.Evaluation.Application.EventUsers.SendToAssignedUserNotifications;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -38,6 +39,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpPost]
         public async Task<List<int>> AssignUserToEvent([FromBody] AssignUserToEventCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
+        [HttpPut]
+        public async Task<Unit> SendToAssignedUserNotification([FromBody] SendToAssignedUserNotificationsCommand command)
         {
             return await Mediator.Send(command);
         }
