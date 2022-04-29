@@ -311,7 +311,7 @@ data:
       },
       "SecurityKey": "TESTSECURITYKEY2018",
       "Smtp": {
-        "FromName" : "CODWER RERU",
+        "FromName" : "Evaluare MAI",
         "From": "donotreply-dev@codwer.com",
         "EnableSsl": false,
         "Host": "smtp.office365.com",
@@ -354,7 +354,7 @@ data:
 
         "CoreSettings": {
           "Tenant": {
-            "Name": "CODWER RERU [Mediul de testare și dezvoltare]"
+            "Name": "Evaluare MAI [Mediul de testare și dezvoltare]"
           },
           "ActiveTime": {
             "TokenLifetime": "0.00:05:00"
@@ -379,7 +379,7 @@ data:
         },
         "SecurityKey": "TESTSECURITYKEY2018",
         "Smtp": {
-          "FromName" : "CODWER RERU",
+          "FromName" : "Evaluare MAI",
           "From": "donotreply-dev@codwer.com",
           "EnableSsl": false,
           "Host": "smtp.office365.com",
@@ -477,7 +477,7 @@ data:
       },
        "SecurityKey":"TESTSECURITYKEY2018",
         "Smtp": {
-          "FromName" : "CODWER RERU",
+          "FromName" : "Evaluare MAI",
           "From": "donotreply-dev@codwer.com",
           "EnableSsl": false,
           "Host": "smtp.office365.com",
