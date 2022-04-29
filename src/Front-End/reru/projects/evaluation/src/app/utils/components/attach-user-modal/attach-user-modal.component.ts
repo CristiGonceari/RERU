@@ -39,7 +39,7 @@ export class AttachUserModalComponent implements OnInit {
   }
 
   getUsers(data: any = {}): void {
-    if (this.inputType == 'checkbox' && this.page == 'add-test') this.getAssignedUsers(data);
+    if (this.eventId && this.inputType == 'checkbox' && this.page == 'add-test') this.getAssignedUsers(data);
     else {
       let exceptIds = this.exceptUserIds.length ? this.exceptUserIds : 0;
       this.paginatedAttachedIds = false;
