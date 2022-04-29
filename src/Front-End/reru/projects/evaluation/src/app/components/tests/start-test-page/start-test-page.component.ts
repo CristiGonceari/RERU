@@ -68,12 +68,12 @@ export class StartTestPageComponent implements OnInit {
     return ` ${h < 10 ? '0' + h : h} : ${m < 10 ? '0' + m : m} : ${s < 10 ? '0' + s : s}`;
   }
 
-  startTestStatus(){
-    this.testService.startTest({testId: this.testId}).subscribe(() => {
+  startTestStatus() {
+    this.testService.startTest({ testId: this.testId }).subscribe(() => {
       if (!this.settings.showManyQuestionPerPage)
         this.router.navigate(['my-activities/one-test-per-page', this.testId]);
       else
-       this.router.navigate(['my-activities/multiple-per-page', this.testId]);
+        this.router.navigate(['my-activities/multiple-per-page', this.testId]);
     });
   }
 
