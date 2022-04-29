@@ -14,7 +14,9 @@
                             <div class="card-title m-10">
                                 <h3 class="card-label text-muted">{{'verify-test.student' | translate}}:</h3>
                                 <h3 class="card-label">{{ testDto.userName }} <br>
-                                <span class="text-dark-50 font-size-lg font-weight-light">(idnp: {{testDto.idnp}})</span></h3>
+                                    <span class="text-dark-50 font-size-lg font-weight-light">(idnp:
+                                        {{testDto.idnp}})</span>
+                                </h3>
                             </div>
                             <div class="card-title m-10">
                                 <h3 class="card-label text-muted">{{'tests.time' | translate}}:</h3>
@@ -43,8 +45,8 @@
                                 <div class="col-xl-12">
                                     <h1 class="text-center">{{'tests.rules' | translate}}:</h1>
                                     <div class="text mt-10"></div>
-                                    <ckeditor *ngIf="testDto.rules" [(ngModel)]="testDto.rules" [editor]="Editor" readOnly="true"
-                                        class="disabled-area"></ckeditor>
+                                    <ckeditor *ngIf="testDto.rules" [(ngModel)]="testDto.rules" [editor]="Editor"
+                                        readOnly="true" class="disabled-area"></ckeditor>
                                 </div>
                             </div>
                             <div class="row">
