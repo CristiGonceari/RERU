@@ -55,6 +55,7 @@ export class AppComponent {
 </svg>`,
 		},
 		{
+			permissions: ['P03000401', 'P03000501', 'P03000801'],
 			type: SidebarItemType.SECTION,
 			url: '',
 			name: '',
@@ -123,6 +124,7 @@ export class AppComponent {
       </svg>`,
 		},
 		{
+			permissions: ['P03001101', 'P03000601', 'P03000901'],
 			type: SidebarItemType.SECTION,
 			url: '',
 			name: '',
@@ -174,6 +176,7 @@ export class AppComponent {
 		</svg>`,
 		},
 		{
+			permissions: ['P03000201', 'P03000101', 'P03000301'],
 			type: SidebarItemType.SECTION,
 			url: '',
 			name: '',
@@ -259,6 +262,7 @@ export class AppComponent {
 			</svg>`,
 		},
 		{
+			permissions: ['P03000001'],
 			type: SidebarItemType.SECTION,
 			url: '',
 			name: '',
