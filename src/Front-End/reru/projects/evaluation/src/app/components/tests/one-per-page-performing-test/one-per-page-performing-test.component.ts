@@ -66,6 +66,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   disableNext = false;
   isLoading = true;
   testTemplateId;
+  disableBtn: boolean = false;
 
   isLoadingMedia: boolean;
   imageUrl: any;
@@ -101,7 +102,6 @@ export class OnePerPagePerformingTestComponent implements OnInit {
 
   subscribeForHashedAnswers() {
     this.testQuestionService.answerSubject.subscribe(res => {
-      console.log(res);
       if (res && res != undefined) {
         const index = this.hashedOptions.findIndex(x => x.id == res.optionId);
         this.hashedOptions[index].answer = res.answer;
@@ -233,6 +233,8 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   }
 
    saveAnswers() {
+    this.disableBtn = true;
+    this.isLoading = true;
     this.testAnswersInput = [];
 
     if (this.questionUnit.questionType == this.questionTypeEnum.FreeText)
@@ -289,6 +291,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
                 isNotClosedAnswers.filter(x => x.index < this.questionIndex)[0].index;
               this.getTestQuestions(this.questionIndex);
             } else {
+              this.disableBtn = false;
               if (this.questionIndex < this.count)
                 this.getTestQuestions(this.questionIndex + 1);
               else {
@@ -301,10 +304,12 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   }
 
   skipQuestion() {
+    this.isLoading = true;
     this.postAnswer(+this.answerStatusEnum.Skipped);
   }
 
   getTestQuestions(questionIndex?: number) {
+    this.isLoading = true;
     this.questionIndex = questionIndex == null ? this.questionIndex : questionIndex;
 
     if (this.questionUnit.timeLimit)
@@ -322,6 +327,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
           this.hashedOptions = res.data.hashedOptions;
           this.fileId = res.data.mediaFileId;
           this.isLoadingMedia = false;
+          this.isLoading = false;
           if (this.questionUnit.timeLimit)
             this.startQuestionTimer();
           if (this.questionUnit.answerStatus == AnswerStatusEnum.None)
