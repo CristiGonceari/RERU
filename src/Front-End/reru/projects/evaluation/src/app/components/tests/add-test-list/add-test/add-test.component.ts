@@ -42,6 +42,7 @@ export class AddTestComponent implements OnInit {
   isTestTemplateOneAnswer: boolean = false;
   printTest: boolean = true;
   hasEventEvaluator: boolean = false;
+  disableBtn: boolean = false;
 
   date: Date;
   search: string;
@@ -120,6 +121,7 @@ export class AddTestComponent implements OnInit {
   }
 
   createTest() {
+    this.disableBtn = true;
     this.testService.createTest(this.parse()).subscribe(() => {
       forkJoin([
 				this.translate.get('modal.success'),
@@ -129,11 +131,13 @@ export class AddTestComponent implements OnInit {
 				this.description = description;
 				});
       this.backClicked();
+      this.disableBtn = false;
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
   createTestAndPrint() {
+    this.disableBtn = true;
     this.testService.createTest(this.parse()).subscribe((res) => {
       forkJoin([
 				this.translate.get('modal.success'),
@@ -144,6 +148,7 @@ export class AddTestComponent implements OnInit {
 				});
       this.performingTestPdf(res.data);
       this.backClicked();
+      this.disableBtn = false;
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }

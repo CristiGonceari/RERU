@@ -47,11 +47,15 @@
                         <mat-progress-bar mode="determinate" [value]="percent"></mat-progress-bar>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <span class="completed_progress_bar">{{timeQuestionLeft}} {{'tests.seconds-to-complete' |
-                            translate}}</span>
+                        <span class="completed_progress_bar"> {{timeQuestionLeft}}
+                            {{'tests.seconds-to-complete' | translate}}
+                        </span>
                     </div>
                 </div>
-                <div class="text-container mt-5 mx-auto w-80">
+                <app-loading-spinner *ngIf="isLoading" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
+                    [colorClass]="'text-primary'">
+                </app-loading-spinner>
+                <div class="text-container mt-5 mx-auto w-80" *ngIf="!isLoading">
                     <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
                         [colorClass]="'text-primary'">
                     </app-loading-spinner>
@@ -98,17 +102,17 @@
                                 (click)="getTestQuestions(questionIndex - 1)"
                                 [disabled]="questionIndex==1">{{'button.back' | translate}}</button>
                             <button *ngIf="testTemplateSettings.possibleGetToSkipped" type="button"
-                                class="btn btn-secondary h6 mr-10 py-auto pb-9" (click)="skipQuestion()">{{'button.skip'
-                                | translate}}</button>
+                                class="btn btn-secondary h6 mr-10 py-auto pb-9" (click)="skipQuestion()">
+                                {{'button.skip' | translate}}
+                            </button>
                         </div>
                         <div class="d-flex flex-row-reverse">
-                            <button type="button" (click)="saveAnswers()"
+                            <button type="button" (click)="saveAnswers()" [disabled]="disableBtn"
                                 class="btn btn-success h6 py-auto pb-9">{{'button.save-and-next' | translate}}
                             </button>
                         </div>
                     </div>
-                    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-                    <div *ngIf="!isLoading">
+                    <div>
                         <div class="card-body d-flex justify-content-between p-0"
                             *ngIf="!testTemplateSettings.hidePagination">
                             <div class="mx-auto">
