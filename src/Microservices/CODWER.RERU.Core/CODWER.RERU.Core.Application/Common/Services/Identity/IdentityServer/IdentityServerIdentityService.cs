@@ -51,6 +51,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 
                         template = template
                             .Replace("{FirstName}", $"{userProfile.FirstName} {userProfile.LastName}")
+                            .Replace("{Login}", userProfile.Email)
                             .Replace("{Password}", password);
 
                         var emailData = new EmailData()
@@ -112,6 +113,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 
                 template = template
                     .Replace("{FirstName}", user.UserName)
+                    .Replace("{Login}", user.Email)
                     .Replace("{Password}", password);
 
                 var emailData = new EmailData()
