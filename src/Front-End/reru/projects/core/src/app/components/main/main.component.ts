@@ -46,6 +46,7 @@ export class MainComponent implements OnInit {
 					</svg>`,
 		},
 		{
+			permissions: ['P00000001', 'P00000012'],
 			type: SidebarItemType.SECTION,
 			url: '',
 			name: '',
@@ -118,6 +119,7 @@ export class MainComponent implements OnInit {
 			// </svg>`,
 			// },
 		{
+			permissions: ['P00000025'],
 			type: SidebarItemType.SECTION,
 			url: '',
 			name: '',
@@ -177,23 +179,21 @@ export class MainComponent implements OnInit {
 			this.translate.get('sidebar.administration'),
 			this.translate.get('sidebar.modules'),
 			this.translate.get('sidebar.users'),
-			//  this.translate.get('sidebar.departments'),
-			//  this.translate.get('sidebar.user-roles'),
+			this.translate.get('sidebar.departments'),
+			this.translate.get('sidebar.user-roles'),
 			this.translate.get('faq.help'),
 			this.translate.get('faq.faq')
 		]).subscribe(
 			([
-				home, profile, administration, modules, users, 
-				// departemnts, userRoles,
-				help, faq
+				home, profile, administration, modules, users, departemnts, userRoles, help, faq
 			]) => {
 				this.sidebarItems[0].name = home;
 				this.sidebarItems[1].name = profile;
 				this.sidebarItems[2].name = administration;
 				this.sidebarItems[3].name = modules;
 				this.sidebarItems[4].name = users;
-				//  this.sidebarItems[5].name = departemnts;
-				//  this.sidebarItems[6].name = userRoles;
+				this.sidebarItems[5].name = departemnts;
+				this.sidebarItems[6].name = userRoles;
 				this.sidebarItems[5].name = help;
 				this.sidebarItems[6].name = faq;
 			}

@@ -56,4 +56,11 @@ export class SidebarComponent implements OnInit {
 		}
 		return this.permissionCheckerService.isGranted(menuItem.permission);
 	}
+
+	hasPermissions(permissions: any): boolean {
+		if (!permissions) {
+			return true;
+		}
+		return this.permissionCheckerService.areGranted(permissions);
+	}
 }
