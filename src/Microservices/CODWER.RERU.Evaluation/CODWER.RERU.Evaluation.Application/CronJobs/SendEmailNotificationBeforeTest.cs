@@ -96,7 +96,7 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
             var content = string.Empty;
 
             content += $@"<p style=""font-size: 22px; font-weight: 300;"">Iti reamintim ca in decurs de 15 minute se va incepe testul la care ai fost asignat, poti accesa linkul: </p>
-                            <p style=""font-size: 22px;font-weight: 300;"">http://reru.codwer.com</p>";
+                            <p style=""font-size: 22px;font-weight: 300;"">http://reru-stage.codwer.com</p>";
 
             return content;
         }
