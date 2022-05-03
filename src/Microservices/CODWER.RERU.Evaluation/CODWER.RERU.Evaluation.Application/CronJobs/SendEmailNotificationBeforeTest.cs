@@ -78,7 +78,7 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
 
             template = template
                 .Replace("{user_name}", test.UserProfile.FirstName + " " + test.UserProfile.LastName)
-                .Replace("{email_message}", GetTableContent());
+                .Replace("{email_message}", GetEmailContent());
 
             var emailData = new EmailData()
             {
@@ -91,7 +91,7 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
             await _notificationService.Notify(emailData, NotificationType.Both);
         }
 
-        private string GetTableContent()
+        private string GetEmailContent()
         {
             var content = string.Empty;
 
