@@ -226,15 +226,16 @@ export class AppComponent {
 		</svg>`,
 		},
 		{
+			permission: ['P03001301'],
 			type: SidebarItemType.SECTION,
 			url: '',
 			name: '',
 		},
 		{
+			permission: 'P03001301',
 			type: SidebarItemType.ITEM,
 			url: '/documents-templates',
 			name: '',
-			// permission: 'P03002801',
 			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
 			<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 				<polygon points="0 0 24 0 24 24 0 24"/>
@@ -245,11 +246,13 @@ export class AppComponent {
 		</svg>`,
 		},
 		{
+			permission: ['P03001201'],
 			type: SidebarItemType.SECTION,
 			url: '',
 			name: '',
 		},
 		{
+			permission: 'P03001201',
 			type: SidebarItemType.ITEM,
 			url: '/positions',
 			name: '',

@@ -14,6 +14,7 @@ export class TestListComponent {
   @ViewChild('userName') userName: any;
   @ViewChild('idnp') idnp: any;
   @ViewChild('selectedStatus') selectedStatus: any;
+  @ViewChild('selectedResult') selectedResult: any;
 
   constructor() { }
 
@@ -29,5 +30,6 @@ export class TestListComponent {
     this.userName.key = '';
     this.idnp.key = '';
     this.selectedStatus.getTestStatuses();
+    this.selectedResult.getTestResults();
   }
 }

@@ -41,6 +41,10 @@ export class ReferenceService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-statuses/select-values`);
   }
 
+  getTestResults(): Observable<any>{
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-results/select-values`);
+  }
+
   getLocationType(): Observable<any>{
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/locations/select-values`);
   }

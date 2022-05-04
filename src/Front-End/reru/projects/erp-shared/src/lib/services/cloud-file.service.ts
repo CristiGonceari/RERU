@@ -14,12 +14,25 @@ export class CloudFileService extends AbstractService {
 	constructor(protected appConfigService: AppSettingsService, public http: HttpClient) {
 		super(appConfigService);
 	}
+
   get(id): Observable<HttpEvent<Blob>> {
-		return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`, { 
+	  if(this.baseUrl.includes("reru-evaluation"))
+	  {
+			console.warn('evaluation url', this.baseUrl)
+		  return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`, { 
+			  reportProgress: true,
+			  observe: 'events',
+			  responseType: 'blob'
+		  });
+	  } 
+	  else {
+		  console.warn('core url', this.coreUrl)
+		return this.http.get(`${this.coreUrl}/${this.urlRoute}/${id}`, { 
 			reportProgress: true,
 			observe: 'events',
 			responseType: 'blob'
 		});
+	  }
 	}
 
   download(id: string): void {
