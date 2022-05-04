@@ -43,11 +43,14 @@
                 </div>
               </div>
               <div class="row w-100 mt-3">
-                <div class="col-lg-3 col-12">
+                <div class="col-lg-2 col-12">
                   <app-search-status (filter)="testsTable.setFilter('selectedStatus', $event)" #selectedStatus>
                   </app-search-status>
                 </div>
-                <div class="col">
+                <div class="col-lg-2 col-12">
+                  <app-search-result (filter)="testsTable.setFilter('selectedResult', $event)" #selectedResult></app-search-result>
+                </div>
+                <div class="col-lg-2 col-12">
                   <erp-shared-search-input (handleSearch)="testsTable.setFilter('idnp', $event)" [placeholder]="
                       'verify-test.search-student-idnp' | translate
                     " #idnp></erp-shared-search-input>

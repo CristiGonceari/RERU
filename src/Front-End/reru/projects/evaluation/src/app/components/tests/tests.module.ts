@@ -24,6 +24,7 @@ import { ViewTestResultComponent } from './view-test-result/view-test-result.com
 import { TestVerificationProcessComponent } from './test-verification-process/test-verification-process.component';
 import { AddTestListComponent } from './add-test-list/add-test-list.component';
 import { TestListTableComponent } from './test-list/test-list-table/test-list-table.component';
+import { SearchResultComponent } from './test-list/search-result/search-result.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { TestListTableComponent } from './test-list/test-list-table/test-list-ta
     ViewTestResultComponent,
     TestVerificationProcessComponent,
     AddTestListComponent,
-    TestListTableComponent
+    TestListTableComponent,
+    SearchResultComponent
   ],
   imports: [
     CommonModule,

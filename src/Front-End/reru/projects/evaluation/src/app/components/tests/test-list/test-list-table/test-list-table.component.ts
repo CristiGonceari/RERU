@@ -41,12 +41,14 @@ export class TestListTableComponent implements OnInit {
   result = TestResultStatusEnum;
   fileTypeEnum = FileTypeEnum;
   selectedStatus: number;
+  selectedResult: number;
   verificationProgress = [];
   dateTimeFrom: string;
   searchFrom: string;
   dateTimeTo: string;
   searchTo: string;
   testStatusesList;
+  testResultsList;
   selectedSortOrder = "Date range";
   dateData = ["None", "Today", "This week", "This month"];
   testPassStatus;
@@ -115,6 +117,7 @@ export class TestListTableComponent implements OnInit {
       programmedTimeFrom: this.searchFrom,
       programmedTimeTo: this.searchTo,
       testStatus: this.filters.selectedStatus || this.selectedStatus,
+      resultStatus: this.filters.selectedResult || this.selectedResult,
       page: data.page || this.pagination.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
       ...this.filters
@@ -176,6 +179,10 @@ export class TestListTableComponent implements OnInit {
 
   getTestStatuses() {
     this.referenceService.getTestStatuses().subscribe((res) => this.testStatusesList = res.data);
+  }
+
+  getTestResults() {
+    this.referenceService.getTestResults().subscribe((res) => this.testResultsList = res.data);
   }
 
   stopTest(id): void {
@@ -293,6 +300,7 @@ export class TestListTableComponent implements OnInit {
 			fields: this.headersToPrint,
 			orientation: 2,
       testStatus: this.filters.selectedStatus || this.selectedStatus,
+      resultStatus: this.filters.selectedResult || this.selectedResult,
       testTemplateName: this.filters.testName || this.testToSearch || '',
       locationKeyword: this.filters.testLocation || this.locationName || '',
       idnp: this.filters.idnp ||this.idnp || '',

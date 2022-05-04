@@ -313,6 +313,7 @@
     "options": "Параметры",
     "search-test": "Поиск по названию теста",
     "search-status": "Поиск по статусу теста",
+    "search-result": "Поиск по результату теста",
     "name": "Название теста",
     "template-name": "Название шаблона теста",
     "category-used-count": "Категории",
@@ -539,7 +540,10 @@
     "Refused": "Отказаный",
     "Approved": "Одобренный",
     "approve": "Одобрить",
-    "refuse": "Отказать"
+    "refuse": "Отказать",
+    "NoResult": "Без Результата",
+    "Passed": "Пройден",
+    "NotPassed": "Не пройден"
   },
   "options": {
     "start-without-confirmation": "Возможен запуск теста без подтверждения",

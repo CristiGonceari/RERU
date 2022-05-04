@@ -313,6 +313,7 @@
     "options": "Opțiuni",
     "search-test": "Caută test",
     "search-status": "Caută după statutul testului",
+    "search-result": "Caută după rezultatul testului",
     "name": "Nume test",
     "template-name": "Nume șablon de test",
     "category-used-count": "Categorii",
@@ -539,7 +540,10 @@
     "Refused": "Refuzat",
     "Approved": "Aprobat",
     "approve": "Aprobă",
-    "refuse": "Refuză"
+    "refuse": "Refuză",
+    "NoResult": "Fără rezultat",
+    "Passed": "Susținut",
+    "NotPassed": "Nesusținut"
   },
   "options": {
     "start-without-confirmation": "Este posibil să porniți testul fără confirmare",

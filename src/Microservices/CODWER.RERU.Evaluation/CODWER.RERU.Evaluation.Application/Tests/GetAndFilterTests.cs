@@ -57,6 +57,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 tests = tests.Where(x => x.TestStatus == request.TestStatus);
             }
 
+            if (request.ResultStatus.HasValue)
+            {
+                tests = tests.Where(x => x.ResultStatus == request.ResultStatus);
+            }
+
             if (!string.IsNullOrWhiteSpace(request.LocationKeyword))
             {
                 tests = tests.Where(x => x.Location.Name.ToLower().Contains(request.LocationKeyword.ToLower()) || x.Location.Address.ToLower().Contains(request.LocationKeyword.ToLower()));
