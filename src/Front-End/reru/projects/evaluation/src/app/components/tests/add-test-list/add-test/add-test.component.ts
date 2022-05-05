@@ -9,7 +9,7 @@ import { TestTemplateStatusEnum } from 'projects/evaluation/src/app/utils/enums/
 import { TestStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-status.enum';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { AddEditTest } from '../../../../utils/models/tests/add-edit-test.model';
-import { FormControl} from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
 import { forkJoin } from 'rxjs';
 import { saveAs } from 'file-saver';
@@ -31,18 +31,21 @@ export class AddTestComponent implements OnInit {
   userListToAdd: number[] = [];
 
   title: string;
-	description: string;
+  description: string;
 
   event = new SelectItem();
   testTemplate = new SelectItem();
   evaluator = new SelectItem();
   myControl = new FormControl();
-  
+
   showName: boolean = false;
   isTestTemplateOneAnswer: boolean = false;
   printTest: boolean = true;
   hasEventEvaluator: boolean = false;
   disableBtn: boolean = false;
+  isStartAddingTests: boolean = false;
+  toolBarValue: number = 0;
+  toolBarProcents: number = 0;
 
   date: Date;
   search: string;
@@ -53,11 +56,11 @@ export class AddTestComponent implements OnInit {
     private referenceService: ReferenceService,
     private testTemplateService: TestTemplateService,
     private testService: TestService,
-	  public translate: I18nService,
+    public translate: I18nService,
     private location: Location,
     private notificationService: NotificationsService,
     private printService: PrintTemplateService,
-		private modalService: NgbModal,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
@@ -94,7 +97,7 @@ export class AddTestComponent implements OnInit {
       this.isTestTemplateOneAnswer = this.selectActiveTests.find(x => x.testTemplateId === event).isOnlyOneAnswer;
       this.printTest = this.selectActiveTests.find(x => x.testTemplateId === event).printTest;
     } else this.isTestTemplateOneAnswer = false;
-    
+
     if (!this.printTest) this.messageText = "Acest test poate conține video sau audio!"
 
     if (this.isTestTemplateOneAnswer) {
@@ -104,7 +107,7 @@ export class AddTestComponent implements OnInit {
 
   checkIfEventHasEvaluator(event) {
     if (event)
-    this.hasEventEvaluator = this.eventsList.find(x => x.eventId === event).isEventEvaluator;
+      this.hasEventEvaluator = this.eventsList.find(x => x.eventId === event).isEventEvaluator;
   }
 
   parse() {
@@ -120,38 +123,203 @@ export class AddTestComponent implements OnInit {
     })
   }
 
-  createTest() {
-    this.disableBtn = true;
-    this.testService.createTest(this.parse()).subscribe(() => {
-      forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('tests.tests-were-programmed'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-				});
-      this.backClicked();
-      this.disableBtn = false;
-      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-    });
+  parseForBulkAdd() {
+    this.setTimeToSearch();
+    return new AddEditTest({
+      userProfileId: this.getSubArray(0, 5, this.userListToAdd),
+      programmedTime: this.search,
+      eventId: +this.event.value || null,
+      evaluatorId: this.evaluatorList[0] || null,
+      testStatus: TestStatusEnum.Programmed,
+      testTemplateId: +this.testTemplate.value || 0,
+      showUserName: this.showName
+    })
   }
 
-  createTestAndPrint() {
-    this.disableBtn = true;
-    this.testService.createTest(this.parse()).subscribe((res) => {
+  parseTestToEmailNotification(){
+
+  }
+
+  roundUpNearest10(num) {
+    return Math.ceil(num / 10) * 10;
+  }
+
+  getSubArray(idx, _length, _array) {
+    return _array.slice(idx, idx + _length);
+  }
+  //Create test Recursion 
+  addTests() {
+    this.isStartAddingTests = true;
+    let requests = Math.ceil((this.userListToAdd.length / 5));
+    this.createTest(requests);
+  }
+
+  createTest(requests: number) {
+    if (this.userListToAdd.length > 0) {
+      this.testService.createTest(this.parseForBulkAdd()).subscribe((res) => {
+        this.userListToAdd.splice(0, 5);
+        this.toolBarProcents++;
+        this.toolBarValue = Math.round(this.toolBarProcents / requests * 100);
+
+        this.testService.sendEmailNotification({testIds: res.data}).subscribe();
+
+        this.createTest(requests);
+      });
+    } else {
+
+      this.isStartAddingTests = false;
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('tests.tests-were-programmed'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-				});
-      this.performingTestPdf(res.data);
+        this.translate.get('modal.success'),
+        this.translate.get('tests.tests-were-programmed'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.backClicked();
       this.disableBtn = false;
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-    });
+
+    }
   }
+
+  //Create For Every 10 users
+  // createTest() {
+  //   this.disableBtn = true;
+  //   let users = this.parse();
+
+  //   for (let i = 0; i <= 10; i++) {
+
+  //     if (i % 10 == 0 && i != 0 && users.userProfileId.length >= 10) {
+
+  //       var tests = new AddEditTest({
+  //         userProfileId: this.getSubArray(i - 10, 10, users.userProfileId),
+  //         programmedTime: this.search,
+  //         eventId: +this.event.value || null,
+  //         evaluatorId: this.evaluatorList[0] || null,
+  //         testStatus: TestStatusEnum.Programmed,
+  //         testTemplateId: +this.testTemplate.value || 0,
+  //         showUserName: this.showName
+  //       })
+
+  //       this.testService.createTest(tests).subscribe(() => {
+  //         if (users.userProfileId.length == 0) {
+  //           forkJoin([
+  //             this.translate.get('modal.success'),
+  //             this.translate.get('tests.tests-were-programmed'),
+  //           ]).subscribe(([title, description]) => {
+  //             this.title = title;
+  //             this.description = description;
+  //           });
+  //           this.backClicked();
+  //           this.disableBtn = false;
+
+
+  //           this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+  //         }
+
+  //       });
+
+  //       users.userProfileId.splice(0, 10);
+
+  //       i = 0;
+  //     }
+  //   }
+
+  //   if (users.userProfileId.length < 10 && users.userProfileId.length > 0) {
+
+  //     var tests = new AddEditTest({
+  //       userProfileId: users.userProfileId,
+  //       programmedTime: this.search,
+  //       eventId: +this.event.value || null,
+  //       evaluatorId: this.evaluatorList[0] || null,
+  //       testStatus: TestStatusEnum.Programmed,
+  //       testTemplateId: +this.testTemplate.value || 0,
+  //       showUserName: this.showName
+  //     })
+
+  //     this.testService.createTest(tests).subscribe(() => {
+  //       forkJoin([
+  //         this.translate.get('modal.success'),
+  //         this.translate.get('tests.tests-were-programmed'),
+  //       ]).subscribe(([title, description]) => {
+  //         this.title = title;
+  //         this.description = description;
+  //       });
+  //       this.backClicked();
+  //       this.disableBtn = false;
+
+  //       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+  //     });
+
+  //   }
+  // }
+
+  //Create Test For All bulk
+  // createTest() {
+  //   this.disableBtn = true
+
+  //   this.testService.createTest(this.parse()).subscribe(() => {
+  //     forkJoin([
+  //       this.translate.get('modal.success'),
+  //       this.translate.get('tests.tests-were-programmed'),
+  //     ]).subscribe(([title, description]) => {
+  //       this.title = title;
+  //       this.description = description;
+  //     });
+  //     this.backClicked();
+  //     this.disableBtn = false;
+  //     this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+  //   });
+  // }
+
+  addTestAndPrint(){
+    this.isStartAddingTests = true;
+    let requests = Math.ceil((this.userListToAdd.length / 5));
+    this.createTestAndPrint(requests);
+  }
+
+  createTestAndPrint(requests) {
+    this.disableBtn = true;
+    if (this.userListToAdd.length > 0) {
+      this.testService.createTest(this.parseForBulkAdd()).subscribe((res) => {
+        this.userListToAdd.splice(0, 5);
+        this.toolBarProcents++;
+        this.toolBarValue = Math.round(this.toolBarProcents / requests * 100);
+        this.performingTestPdf(res.data);
+        this.createTestAndPrint(requests);
+      });
+    } else {
+      this.isStartAddingTests = false;
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('tests.tests-were-programmed'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.backClicked();
+      this.disableBtn = false;
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+    }
+   
+  }
+
+  // createTestAndPrint() {
+  //   this.disableBtn = true;
+  //   this.testService.createTest(this.parse()).subscribe((res) => {
+  //     forkJoin([
+  //       this.translate.get('modal.success'),
+  //       this.translate.get('tests.tests-were-programmed'),
+  //     ]).subscribe(([title, description]) => {
+  //       this.title = title;
+  //       this.description = description;
+  //     });
+  //     this.performingTestPdf(res.data);
+  //     this.backClicked();
+  //     this.disableBtn = false;
+  //     this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+  //   });
+  // }
 
   backClicked() {
     this.location.back();
@@ -162,7 +330,7 @@ export class AddTestComponent implements OnInit {
   }
 
   performingTestPdf(testIds) {
-    this.printService.getPerformingTestPdf({testsIds: testIds}).subscribe((response: any) => {
+    this.printService.getPerformingTestPdf({ testsIds: testIds }).subscribe((response: any) => {
       let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
 
       if (response.body.type === 'application/pdf') {

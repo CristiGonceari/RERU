@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CODWER.RERU.Evaluation.Application.Tests.AddTest;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using MediatR;
@@ -6,11 +7,13 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper.Internal;
 using CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using Microsoft.EntityFrameworkCore;
+using Minio;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
@@ -58,10 +61,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
                 await _mediator.Send(generateCommand);
 
-                await SendEmailNotification(testCommand, null, testId);
+                //await SendEmailNotification(testCommand, null, testId);
             }
 
-            await SendEmailNotification(null, request, testId);
+            //await SendEmailNotification(null, request, testId);
 
             return testsIds;
         }
@@ -133,5 +136,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
             return content;
         }
+
+
     }
 }

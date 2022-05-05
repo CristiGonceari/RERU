@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using RERU.Data.Entities;
 using RERU.Data.Entities.Documents;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
@@ -88,7 +89,41 @@ namespace RERU.Data.Persistence.Initializer
                 appDbContext.DocumentTemplateKeys.RemoveRange(keys);
             }
 
+            AddRegistrationPageMessage(appDbContext);
+
             appDbContext.SaveChanges();
+        }
+
+        private static void AddRegistrationPageMessage(AppDbContext appDbContext)
+        {
+            var existMessage = appDbContext.RegistrationPageMessages.Any();
+
+            if (!existMessage)
+            {
+                const string message = "<p style=\"text-align:center;\">&nbsp;</p>" +
+                                       "<p style=\"text-align:center;\">&nbsp;</p>" +
+                                       "<p style=\"text-align:center;\">" +
+                                       "<span class=\"text-huge\">Pentru a vă înregistra în calitate de candidat, este necesar să completați formularul de mai jos.</span></p>" +
+                                       "<p style=\"text-align:center;\"><span class=\"text-huge\">După înregistrare, vi se va expedia un email cu credențialele dvs.</span></p><p>&nbsp;</p>" +
+                                       "<p><span class=\"text-big\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Cu ajutorul acestor credențiale trebuie să vă autentificați. După autentificare mergeți la modulul „Evaluare și Testare”. (Pasul 1)</span></p>" +
+                                       "<p>&nbsp;</p><p><span class=\"text-big\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Solicitați un test din secțiunea „Activitățile mele”.(Pasul 2)</span></p>" +
+                                       "<p>&nbsp;</p><p><span class=\"text-big\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Opțiunea „Teste solicitate” (Pasul 3)</span></p><p>&nbsp;</p>" +
+                                       "<p><span class=\"text-big\">&nbsp; &nbsp; &nbsp; Apăsați butonul „Solicită test” (Pasul 4) si completați formularul cu datele dorite (Pasul 5)</span></p>" +
+                                       "<ul>" +
+                                       "<li><span class=\"text-big\">&nbsp;- Eveniment</span></li>" +
+                                       "<li><span class=\"text-big\">- Test</span></li>" +
+                                       "<li><span class=\"text-big\">- Timpul comod</span></li>" +
+                                       "</ul>" +
+                                       "<p><span class=\"text-big\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Apasăti butonul „Confirmă” (Pasul 6) pentru a finaliza procedura.</span></p><p>&nbsp;" +
+                                       "</p>";
+
+                var record = new RegistrationPageMessage
+                {
+                    Message = message
+                };
+
+                appDbContext.RegistrationPageMessages.Add(record);
+            }
         }
     }
 }

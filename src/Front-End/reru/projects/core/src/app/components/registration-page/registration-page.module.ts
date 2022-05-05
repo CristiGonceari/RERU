@@ -9,6 +9,7 @@ import { RegistrationPageRoutingModule } from './registration-page-routing.modul
 import { RouterModule } from '@angular/router';
 import { RegistrationPageComponent } from './registration-page.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     TranslateModule,
     NgbModule,
     RegistrationPageRoutingModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    CKEditorModule
   ],
   providers: [
     TranslatePipe,

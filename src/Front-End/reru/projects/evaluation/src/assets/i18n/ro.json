@@ -360,7 +360,8 @@
     "succes-update-settings-msg": "Setările au fost actualizate cu succes",
     "tests-were-programmed": "Test a fost programat cu succes",
     "finish-test-msg": "Doriți sa terminați testul?",
-    "stop-test-msg": "Sigur doriți să opriți acest test?"
+    "stop-test-msg": "Sigur doriți să opriți acest test?",
+    "please-wait": "Vă rugăm să așteptați până sistemul adaugă teste pentru utilizatori ..."
   },
   "verify-test": {
     "title": "Teste",
