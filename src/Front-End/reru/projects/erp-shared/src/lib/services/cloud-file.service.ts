@@ -16,22 +16,18 @@ export class CloudFileService extends AbstractService {
 	}
 
   get(id): Observable<HttpEvent<Blob>> {
-	  if(this.baseUrl.includes("reru-evaluation"))
-	  {
-			console.warn('evaluation url', this.baseUrl)
-		  return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`, { 
-			  reportProgress: true,
-			  observe: 'events',
-			  responseType: 'blob'
-		  });
-	  } 
-	  else {
-		  console.warn('core url', this.coreUrl)
-		return this.http.get(`${this.coreUrl}/${this.urlRoute}/${id}`, { 
-			reportProgress: true,
-			observe: 'events',
-			responseType: 'blob'
-		});
+	  if(this.baseUrl.includes('reru-evaluation')) {
+			return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`, { 
+				reportProgress: true,
+				observe: 'events',
+				responseType: 'blob'
+			});
+	  } else {
+			return this.http.get(`${this.coreUrl}/${this.urlRoute}/${id}`, { 
+				reportProgress: true,
+				observe: 'events',
+				responseType: 'blob'
+			});
 	  }
 	}
 

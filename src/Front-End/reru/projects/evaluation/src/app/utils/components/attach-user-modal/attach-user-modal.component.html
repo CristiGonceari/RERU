@@ -36,15 +36,17 @@
 
 	<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
   	id="kt_datatable" *ngIf="!isLoading">
-		<div *ngIf="page == 'evaluators'">
-			<span class="h3">Show User Name</span>
-			<span class="switch switch-sm mx-3">
+		<div *ngIf="page == 'evaluators'" class="d-flex align-items-center mb-5">
+			<span class="h3 mb-0">Show User Name</span>
+			<span class="switch switch-primary switch-sm mx-3">
 				<label>
-					<input type="checkbox" [checked]="sequence" name="select" (change)="checkEvent($event)">
+					<input type="checkbox" name="select" (change)="checkEvent($event)">
 					<span></span>
 				</label>
 			</span>
 		</div>
+
+		<p *ngIf="inputType == 'checkbox'">{{ 'events.attached-users' | translate }}: {{attachedItems.length}}</p>
 
 		<table class="datatable table font-size-lg" style="overflow: visible">
 			<thead class="text-uppercase text-muted">
@@ -103,5 +105,5 @@
 </div>
 <ng-template #tooltip>
 	<p class="mb-0 font-size-sm" *ngIf="attachedItems.length">{{'button.uncheck-all' | translate}}</p>
-	<p class="mb-0 font-size-sm" *ngIf="!attachedItems.length">{{'button.check-all' | translate}}</p>
+	<p class="mb-0 font-size-sm" *ngIf="!attachedItems.length && !paginatedAttachedIds">{{'button.check-all' | translate}}</p>
 </ng-template>
