@@ -96,6 +96,7 @@ export class AttachUserModalComponent implements OnInit {
         this.attachedItems.push(itemsToAdd[i]);
       }
     }
+    this.getUsers();
   }
 
   checkInput(event): void {
