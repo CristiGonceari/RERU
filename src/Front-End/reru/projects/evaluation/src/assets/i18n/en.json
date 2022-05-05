@@ -361,7 +361,8 @@
     "succes-update-settings-msg": "Settings were successfully updated",
     "tests-were-programmed":"Tests were successfully programmed",
     "finish-test-msg": "Do you want to finish test?",
-    "stop-test-msg": "Are you sure you want to stop this test?"
+    "stop-test-msg": "Are you sure you want to stop this test?",
+    "please-wait": "Please wait while system add tests for users ..."
   },
   "verify-test": {
     "title": "Tests",

@@ -1,17 +1,13 @@
-using System.Text;
 using CODWER.RERU.Core.API.Config;
-using CODWER.RERU.Core.Application.Common.Services;
 using CODWER.RERU.Core.Application.DependencyInjection;
 using CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule;
 using CODWER.RERU.Core.Data.Persistence.Context;
-using CODWER.RERU.Core.Data.Persistence.Initializer;
 using CODWER.RERU.Core.DataTransferObjects.Me;
 using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
 using CVU.ERP.Identity.Models;
 using CVU.ERP.Infrastructure.Email;
 using CVU.ERP.Logging.DependencyInjection;
 using CVU.ERP.Module;
-using CVU.ERP.Module.Common.Models;
 using MediatR;
 //using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -21,13 +17,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using RERU.Data.Persistence.Context;
+using System.Text;
+using RERU.Data.Persistence.Initializer;
 using Wkhtmltopdf.NetCore;
+
 
 namespace CODWER.RERU.Core.API
 {
@@ -147,6 +145,9 @@ namespace CODWER.RERU.Core.API
                     options => options.SetIsOriginAllowed(x => _ = true).AllowAnyMethod().AllowAnyHeader().AllowCredentials()
                 );
             }
+
+            DatabaseSeeder.SeedDb(appDbContext);
+
             app.UseERPMiddlewares();
             app.UseAuthorization();
 

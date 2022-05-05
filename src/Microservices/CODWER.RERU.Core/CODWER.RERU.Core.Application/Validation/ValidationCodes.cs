@@ -16,6 +16,7 @@ namespace CODWER.RERU.Core.Application.Validation
         public static string EMPTY_USER_FATHER_NAME = "01000103";
         public static string EMPTY_USER_EMAIL = "01000104";
         public static string EMPTY_USER_ID = "01000105";
+        public static string INVALID_EMAIL_FORMAT = "01000105";
 
         //ARTICLES
         public static string EMPTY_NAME = "01000201";

@@ -68,6 +68,10 @@ export class TestService extends AbstractService {
 		return this.http.post(`${this.baseUrl}/${this.urlRoute}/create-my-poll`, data);
 	}
 
+	sendEmailNotification(data): Observable<any> {
+		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/send-notification`, data);
+	}
+
 	finalizeTest(testId): Observable<any> {
 		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/finalize`, { testId: testId });
 	}

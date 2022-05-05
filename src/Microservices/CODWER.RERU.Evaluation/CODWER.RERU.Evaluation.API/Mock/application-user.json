@@ -1,6 +1,9 @@
 ﻿{
-  "id": "99",
-  "name": "RERU Client",
+
+  "id": "9999",
+  "firstName": "RERU Client",
+  "lastName": "Evaluation",
+  "fatherName":  "Mock User",
   "email": "andrian.hubencu@codwer.com",
   "avatar": null,
   "modules": [

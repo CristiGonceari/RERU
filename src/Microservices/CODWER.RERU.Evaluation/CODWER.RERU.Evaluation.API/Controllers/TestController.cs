@@ -37,6 +37,7 @@ using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.GetMyEvaluate
 using CODWER.RERU.Evaluation.Application.Tests.GetTestSettings;
 using CODWER.RERU.Evaluation.Application.Tests.GetTestDocumentReplacedKeys;
 using CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices;
+using CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotification;
 using CODWER.RERU.Evaluation.Application.Tests.StartTest;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
@@ -141,6 +142,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpPost("allow")]
         public async Task<Unit> SetConfirmationToStartTest([FromBody] SetConfirmationToStartTestCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
+        [HttpPatch("send-notification")]
+        public async Task<Unit> SendEmailNotification([FromBody] SendEmailNotificationCommand command)
         {
             return await Mediator.Send(command);
         }

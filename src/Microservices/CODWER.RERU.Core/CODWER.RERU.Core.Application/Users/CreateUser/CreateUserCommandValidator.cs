@@ -32,7 +32,11 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
             RuleFor(x => x.Email).NotEmpty()
                 .WithMessage(ValidationMessages.InvalidInput)
-                .WithErrorCode(ValidationCodes.EMPTY_USER_EMAIL);
+                .WithErrorCode(ValidationCodes.EMPTY_USER_EMAIL)
+                .EmailAddress()
+                .WithMessage(ValidationMessages.InvalidInput)
+                .WithErrorCode(ValidationCodes.INVALID_EMAIL_FORMAT);
+
 
             //RuleFor(x => x.Idnp)
             //    .SetValidator(new IdnpValidator());
