@@ -15,7 +15,7 @@ export class TryLongRequestService extends AbstractService {
   }
 
   getLongRequest(): Observable<string> {
-    return this.client.get<string>(`${this.coreUrl}/${this.routeUrl}`, { headers: new HttpHeaders({ timeout: `${10000}` }) });
+    return this.client.get<string>(`${this.coreUrl}/${this.routeUrl}`, { headers: new HttpHeaders({ timeout: `${120000}` }) });
   }
   
 }
