@@ -33,8 +33,24 @@ namespace CODWER.RERU.Core.API.Controllers
     [Route ("api/[controller]")]
     public class UserController : BaseController
     {
-        public UserController(IMediator mediator) : base(mediator)
+        private readonly AppDbContext _appDbContext;
+        public UserController(IMediator mediator, AppDbContext appDbContext) : base(mediator)
         {
+            _appDbContext = appDbContext;
+        }
+
+        [HttpDelete("users")]
+        public async Task RemovePassword()
+        {
+            var users = _appDbContext.UserProfiles.ToList();
+
+            foreach (var user in users)
+            {
+                if (user.Email != "andrian.hubencu@codwer.com" && user.LastName != "Platforma")
+                {
+                    await Mediator.Send(new RemoveUserCommand(user.Id));
+                }
+            }
         }
 
         [HttpGet ("{id:int}")]
