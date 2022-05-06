@@ -17,13 +17,15 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotificatio
     {
         private readonly AppDbContext _appDbContext;
         private readonly INotificationService _notificationService;
-        private readonly IOptions<EvaluationConfig> _options;
-
-        public SendEmailNotificationCommandHandler(AppDbContext appDbContext, INotificationService notificationService, IOptions<EvaluationConfig> options)
+        private readonly IOptions<PlatformConfig> _options;
+        private readonly PlatformConfig _platformConfig;
+        public SendEmailNotificationCommandHandler(AppDbContext appDbContext, INotificationService notificationService, IOptions<PlatformConfig> options, PlatformConfig platformConfig)
         {
             _appDbContext = appDbContext;
             _notificationService = notificationService;
+            _platformConfig = options.Value;
             _options = options;
+          
         }
 
         public async Task<Unit> Handle(SendEmailNotificationCommand request, CancellationToken cancellationToken)
@@ -83,14 +85,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotificatio
         private async Task<string> GetTableContent(Test item, bool evaluat)
         {
             var content = string.Empty;
-            var baseUrl = _options.Value.BaseUrl;
 
             if (evaluat)
             {
                 content += $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la testul ""{item.TestTemplate.Name}"" în rol de candidat.</p>
                           <p style=""font-size: 22px; font-weight: 300;""> Testul va avea loc pe data: {item.ProgrammedTime.ToString("dd/MM/yyyy")}.</p> 
                           <p>Pentru a accesa testul programat pe Dvs, urmati pasii:</p>
-                          <p>1. Logati- va pe pagina {baseUrl} </p>
+                          <p>1. Logati- va pe pagina {_platformConfig.BaseUrl} </p>
                           <p>2.Click pe butonul ""Evaluare"" </p>
                           <p> 3.Click pe butonul ""Activitatile mele"" </p>
                           <p> 4.Din meniul din stanga alegeti optiunea ""Eveniment"", daca testul a fost programat cu eveniment </p>

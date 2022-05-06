@@ -1,4 +1,5 @@
-﻿using CODWER.RERU.Evaluation.Application.Permissions;
+﻿using CODWER.RERU.Evaluation.Application.Models;
+using CODWER.RERU.Evaluation.Application.Permissions;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices;
 using CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices.Implementations;
@@ -33,7 +34,9 @@ namespace CODWER.RERU.Evaluation.Application.DependencyInjection
                 .AddScoped(typeof(IOptionService), typeof(OptionService))
                 .AddScoped(typeof(IGetTestTemplateDocumentReplacedKeys), typeof(GetTestTemplateDocumentReplacedKeys))
                 .AddScoped(typeof(IGetTestDocumentReplacedKeys), typeof(GetTestDocumentReplacedKeys))
-                .AddScoped(typeof(IInternalNotificationService), typeof(InternalNotificationService));
+                .AddScoped(typeof(IInternalNotificationService), typeof(InternalNotificationService))
+                .AddScoped(typeof(PlatformConfig));
+
         }
     }
 }

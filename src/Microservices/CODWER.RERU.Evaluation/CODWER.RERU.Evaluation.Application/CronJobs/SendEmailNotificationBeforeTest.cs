@@ -20,13 +20,15 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
         private readonly INotificationService _notificationService;
         private readonly DateTime _timeRangeBeforeStart;
         private readonly DateTime _timeRangeAfterStart;
-        private readonly IOptions<EvaluationConfig> _options;
+        private readonly IOptions<PlatformConfig> _options;
+        private readonly PlatformConfig _platformConfig;
 
-        public SendEmailNotificationBeforeTest(AppDbContext appDbContext, INotificationService notificationService, IOptions<EvaluationConfig> options)
+        public SendEmailNotificationBeforeTest(AppDbContext appDbContext, INotificationService notificationService, IOptions<PlatformConfig> options, PlatformConfig platformConfig)
         {
             _appDbContext = appDbContext;
             _notificationService = notificationService;
             _options = options;
+            _platformConfig = options.Value;
             _timeRangeBeforeStart = DateTime.Now.AddMinutes(15);
             _timeRangeAfterStart = DateTime.Now.AddMinutes(-1);
         }
@@ -98,10 +100,9 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
         private string GetEmailContent()
         {
             var content = string.Empty;
-            var baseUrl = _options.Value.BaseUrl;
 
             content += $@"<p style=""font-size: 22px; font-weight: 300;"">Iti reamintim ca in decurs de 15 minute se va incepe testul la care ai fost asignat, poti accesa linkul: </p>
-                            <p style=""font-size: 22px;font-weight: 300;"">{baseUrl}</p>";
+                            <p style=""font-size: 22px;font-weight: 300;"">{_platformConfig.BaseUrl}</p>";
 
             return content;
         }
