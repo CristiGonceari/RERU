@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractService, AppSettingsService } from '@erp/shared';
 import { Observable } from 'rxjs';
@@ -15,7 +15,7 @@ export class TryLongRequestService extends AbstractService {
   }
 
   getLongRequest(): Observable<string> {
-    return this.client.get<string>(`${this.coreUrl}/${this.routeUrl}`);
+    return this.client.get<string>(`${this.coreUrl}/${this.routeUrl}`, { headers: new HttpHeaders({ timeout: `${10000}` }) });
   }
   
 }

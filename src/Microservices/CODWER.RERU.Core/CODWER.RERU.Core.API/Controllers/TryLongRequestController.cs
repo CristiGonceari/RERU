@@ -34,7 +34,7 @@ namespace CODWER.RERU.Core.API.Controllers
             }
 
 
-            Thread.Sleep(120000);
+            Thread.Sleep(60000);
             return "Job Done";
         }
     }

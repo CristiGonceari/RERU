@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +19,7 @@ import { ModulesComponent } from './components/modules/modules.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { MainComponent } from './components/main/main.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { DEFAULT_TIMEOUT, TimeoutInterceptor } from '../app/utils/specific-interceptor/timeout-intercepter';
 
 @NgModule({
 	declarations: [
@@ -50,15 +51,21 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 		SvgModule,
 		NgxDropzoneModule,
 		NgxDnDModule.forRoot(),
+		HttpClientModule
+
 	],
 	schemas: [
 		CUSTOM_ELEMENTS_SCHEMA
  	],
-	providers: [TranslatePipe, Location,
-    {
-      provide: MOCK_AUTHENTICATION,
-      useValue: !environment.PRODUCTION
-    }],
+	// providers: [[TranslatePipe, Location,{ provide: MOCK_AUTHENTICATION, useValue: !environment.PRODUCTION }]
+	// 		[{ provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }],
+	// 		[{ provide: DEFAULT_TIMEOUT, useValue: 30000 }]
+    // ],
+	providers: [
+		[{ provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }],
+		[{ provide: DEFAULT_TIMEOUT, useValue: 30000  }],
+		[TranslatePipe, Location,{ provide: MOCK_AUTHENTICATION, useValue: !environment.PRODUCTION }]
+	  ],
   	bootstrap: [AppComponent]
 })
 export class AppModule { }
