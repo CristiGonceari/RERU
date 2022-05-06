@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using Microsoft.Extensions.Options;
+using CODWER.RERU.Evaluation.Application.Models;
 
 namespace CODWER.RERU.Evaluation.Application.CronJobs
 {
@@ -18,11 +20,15 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
         private readonly INotificationService _notificationService;
         private readonly DateTime _timeRangeBeforeStart;
         private readonly DateTime _timeRangeAfterStart;
+        private readonly IOptions<PlatformConfig> _options;
+        private readonly PlatformConfig _platformConfig;
 
-        public SendEmailNotificationBeforeTest(AppDbContext appDbContext, INotificationService notificationService)
+        public SendEmailNotificationBeforeTest(AppDbContext appDbContext, INotificationService notificationService, IOptions<PlatformConfig> options, PlatformConfig platformConfig)
         {
             _appDbContext = appDbContext;
             _notificationService = notificationService;
+            _options = options;
+            _platformConfig = options.Value;
             _timeRangeBeforeStart = DateTime.Now.AddMinutes(15);
             _timeRangeAfterStart = DateTime.Now.AddMinutes(-1);
         }
@@ -96,7 +102,7 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
             var content = string.Empty;
 
             content += $@"<p style=""font-size: 22px; font-weight: 300;"">Iti reamintim ca in decurs de 15 minute se va incepe testul la care ai fost asignat, poti accesa linkul: </p>
-                            <p style=""font-size: 22px;font-weight: 300;"">http://reru-stage.codwer.com</p>";
+                            <p style=""font-size: 22px;font-weight: 300;"">{_platformConfig.BaseUrl}</p>";
 
             return content;
         }

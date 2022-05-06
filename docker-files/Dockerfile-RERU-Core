@@ -1,4 +1,5 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+RUN apt-get update && apt-get install -y libgdiplus
 RUN apt-get update && apt-get install -y --no-install-recommends tzdata && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 
