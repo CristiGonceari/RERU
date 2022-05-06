@@ -51,7 +51,7 @@ namespace CODWER.RERU.Evaluation.API
         {
             services.Configure<SmtpOptions>(this.Configuration.GetSection("Smtp"));
             services.Configure<RabbitMq>(Configuration.GetSection("MessageQueue"));
-            services.Configure<PlatformConfig>(Configuration.GetSection("ModuleConfig"));
+            services.Configure<PlatformConfig>(Configuration.GetSection("PlatformConfig"));
 
 
             ServicesSetup.ConfigureEntity(services, Configuration);
