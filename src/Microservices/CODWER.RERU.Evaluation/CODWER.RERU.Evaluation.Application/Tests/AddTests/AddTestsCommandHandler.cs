@@ -16,6 +16,8 @@ using Microsoft.EntityFrameworkCore;
 using Minio;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using Microsoft.Extensions.Options;
+using CODWER.RERU.Evaluation.Application.Models;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 {
@@ -24,12 +26,17 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
         private readonly IMediator _mediator;
         private readonly AppDbContext _appDbContext;
         private readonly INotificationService _notificationService;
-
-        public AddTestsCommandHandler(IMediator mediator, AppDbContext appDbContext, INotificationService notificationService)
+        private readonly IOptions<EvaluationConfig> _options;
+        public AddTestsCommandHandler(
+            IMediator mediator, 
+            AppDbContext appDbContext, 
+            INotificationService notificationService, 
+            IOptions<EvaluationConfig> options)
         {
             _mediator = mediator;
             _appDbContext = appDbContext;
             _notificationService = notificationService;
+            _options = options;
         }
 
         public async Task<List<int>> Handle(AddTestsCommand request, CancellationToken cancellationToken)
@@ -114,14 +121,16 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
         private async Task<string> GetTableContent(Test item, bool evaluat)
         {
-            var content = string.Empty;
+             var content = string.Empty;
+            
+            var baseUrl = _options.Value.BaseUrl;
 
             if (evaluat)
             {
                 content += $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la testul ""{item.TestTemplate.Name}"" în rol de candidat.</p>
                           <p style=""font-size: 22px; font-weight: 300;""> Testul va avea loc pe data: {item.ProgrammedTime.ToString("dd/MM/yyyy")}.</p> 
                           <p>Pentru a accesa testul programat pe Dvs, urmati pasii:</p>
-                          <p>1. Logati- va pe pagina <a href=""http://reru-stage.codwer.com/"" target=""_blank"">http://reru-stage.codwer.com/</a></p>
+                          <p>1. Logati- va pe pagina {baseUrl}</p>
                           <p>2.Click pe butonul ""Evaluare"" </p>
                           <p> 3.Click pe butonul ""Activitatile mele"" </p>
                           <p> 4.Din meniul din stanga alegeti optiunea ""Eveniment"", daca testul a fost programat cu eveniment </p>
