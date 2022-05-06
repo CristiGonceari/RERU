@@ -26,6 +26,7 @@
 									<span class="text-white mr-2 font-weight-normal" *ngIf="isLoadingButton">{{'button.loading' | translate}}</span>
 									<div *ngIf="isLoadingButton" class="spinner-border spinner-border-sm text-white" role="status"></div>
 								</button>
+								
 								<app-add-button class="btn" [routerLink]="['add-article']"
 									[value]="'faq.new-article' | translate"></app-add-button>
 							</div>
