@@ -22,7 +22,9 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
 
         public async Task<PaginatedModel<UserProfileDto>> Handle(GetUserProfilesQuery request, CancellationToken cancellationToken)
         {
-            var items = _appDbContext.UserProfiles.AsQueryable();
+            var items = _appDbContext.UserProfiles
+                .Where(x => x.IsActive)
+                .AsQueryable();
 
             if (!string.IsNullOrEmpty(request.FirstName))
             {
