@@ -118,12 +118,12 @@ export class AddTestTemplateOptionsComponent implements OnInit {
 	get() {
 		this.testTemplateService.getTestTemplate(this.testId).subscribe(res => {
 			if (res && res.data) {
-				this.isLoading = false;
 				this.status = res.data.status;
 				this.mode = res.data.mode;
 				if (this.status == TestTemplateStatusEnum.Active || this.status == TestTemplateStatusEnum.Canceled) {
 					this.disable = true;
 				}
+				this.isLoading = false;
 			}
 		})
 	}

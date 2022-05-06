@@ -1,14 +1,14 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!isActive">
     <div class="card card-custom mb-7" style="margin-left: 16px;">
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title"><b>{{'categories.categories' | translate}}</b></div>
-            <div class="card-toolbar">
-                <app-add-button class="btn" [value]="'categories.new-category' | translate"
+            <div class="card-toolbar" >
+                <app-add-button *ngIf="!disable && !isLoading" class="btn" [value]="'categories.new-category' | translate"
                     [routerLink]="['../../../category', testTemplateId, 'add']"></app-add-button>
             </div>
         </div>
         <div class="card-body">
-            <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
             <div *ngIf="!isLoading"
                 class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
                 id="kt_datatable">
@@ -79,8 +79,8 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="text-right border-top pt-7">
-                    <app-add-button class="btn" [value]="'button.update' | translate" (handle)="confirm(categories)">
+                <div *ngIf="!isLoading" class="text-right border-top pt-7">
+                    <app-add-button *ngIf="!disable" class="btn" [value]="'button.update' | translate" (handle)="confirm(categories)">
                     </app-add-button>
                 </div>
             </div>

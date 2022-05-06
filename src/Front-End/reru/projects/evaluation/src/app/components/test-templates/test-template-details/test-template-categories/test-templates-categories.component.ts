@@ -11,6 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { forkJoin } from 'rxjs';
 import { ConfirmModalComponent } from '@erp/shared';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { TestTemplateStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-template-status.enum';
 
 @Component({
   selector: 'app-test-template-categories',
@@ -29,7 +30,8 @@ export class TestTemplatesCategoriesComponent implements OnInit {
   description: string;
   no: string;
   yes: string;
-  @Input() isActive: boolean ;
+  @Input() isActive: boolean;
+	disable: boolean = false;
 
   constructor(private service: TestTemplateQuestionCategoryService,
     private route: ActivatedRoute,
@@ -50,7 +52,6 @@ export class TestTemplatesCategoriesComponent implements OnInit {
     this.route.parent.params.subscribe(params => {
       this.testTemplateId = params.id;
       if (this.testTemplateId) {
-        this.getList();
         this.get();
       }
     });
@@ -60,6 +61,10 @@ export class TestTemplatesCategoriesComponent implements OnInit {
     this.testTemplateService.getTestTemplate(this.testTemplateId).subscribe(res => {
       this.sequence = res.data.categoriesSequence;
       this.status = res.data.status;
+      this.getList();
+      if (this.status == TestTemplateStatusEnum.Active || this.status == TestTemplateStatusEnum.Canceled) {
+        this.disable = true;
+      }
     })
   }
 
