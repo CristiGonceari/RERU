@@ -428,7 +428,9 @@
     "remove-msg": "Sigur doriți să ștergeți acest departament?",
     "succes-remove-msg": "Departamentul a fost șters cu succes",
     "succes-add-msg": "Departamentul a fost adăugat cu succes",
-    "succes-edit-msg": "Departamentul a fost editat cu succes"
+    "succes-edit-msg": "Departamentul a fost editat cu succes",
+    "department-data": "Introduceți detaliile departamentului și confirmați",
+    "department-details": "Detaliile departamentului"
   },
   "user-roles": {
     "overview": "Prezentare generală",
@@ -443,6 +445,8 @@
     "remove-msg": "Sigur doriți să ștergeți acest rol?",
     "succes-remove-msg": "Rolul a fost șters cu succes",
     "succes-add-msg": "Rolul a fost adăugat cu succes",
-    "succes-edit-msg": "Rolul a fost editat cu succes"
+    "succes-edit-msg": "Rolul a fost editat cu succes",
+    "user-role-data": "Introduceți detaliile rolului și confirmați",
+    "user-role-details": "Detaliile rolului"
   }
 }
