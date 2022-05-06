@@ -431,7 +431,9 @@
     "remove-msg": "Are you sure you want to remove this department?",
     "succes-remove-msg": "Department was successfully deleted",
     "succes-add-msg": "Department was successfully added",
-    "succes-edit-msg": "Department was successfully edited"
+    "succes-edit-msg": "Department was successfully edited",
+    "department-data": "Enter the department details and confirm",
+    "department-details": "Department details"
   },
   "user-roles": {
     "overview": "Overview",
@@ -446,6 +448,8 @@
     "remove-msg": "Are you sure you want to remove this role?",
     "succes-remove-msg": "Role was successfully deleted",
     "succes-add-msg": "Role was successfully added",
-    "succes-edit-msg": "Role was successfully edited"
+    "succes-edit-msg": "Role was successfully edited",
+    "user-role-data": "Enter the role details and confirm",
+    "user-role-details": "Role details"
   }
 }
