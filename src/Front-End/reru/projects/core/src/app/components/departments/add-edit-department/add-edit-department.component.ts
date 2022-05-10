@@ -31,7 +31,7 @@ export class AddEditDepartmentComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-		this.departmentForm = new FormGroup({ name: new FormControl() });
+		this.departmentForm = new FormGroup({ name: new FormControl(), colaboratorId: new FormControl() });
 		this.initData();
 	}
 
@@ -52,13 +52,15 @@ export class AddEditDepartmentComponent implements OnInit {
 		if (department) {
 			this.departmentForm = this.formBuilder.group({
 				id: this.formBuilder.control(department.id, [Validators.required]),
-				name: this.formBuilder.control((department && department.name) || null, Validators.required)
+				name: this.formBuilder.control((department && department.name) || null, Validators.required),
+				colaboratorId: this.formBuilder.control((department && department.colaboratorId), Validators.required)
 			});
 			this.isLoading = false;
 		}
 		else {
 			this.departmentForm = this.formBuilder.group({
 				name: this.formBuilder.control(null, [Validators.required]),
+				colaboratorId: this.formBuilder.control(0, [Validators.required])
 			});
 			this.isLoading = false;
 		}
@@ -79,6 +81,7 @@ export class AddEditDepartmentComponent implements OnInit {
 	add(): void {
 		const data = {
 			name: this.departmentForm.value.name,
+			colaboratorId: this.departmentForm.value.colaboratorId
 		} as DepartmentModel;
 
 		this.departmentService.create(data).subscribe(() => {
@@ -98,6 +101,7 @@ export class AddEditDepartmentComponent implements OnInit {
 		const data = {
 			id: this.departmentId,
 			name: this.departmentForm.value.name,
+			colaboratorId: this.departmentForm.value.colaboratorId
 		} as DepartmentModel;
 
 		this.departmentService.edit(data).subscribe(() => {

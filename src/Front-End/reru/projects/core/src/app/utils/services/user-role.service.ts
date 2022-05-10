@@ -40,4 +40,11 @@ export class UserRoleService extends AbstractService {
       observe: 'response',
     });
   }
+
+  bulkImport(data): Observable<any> {
+		return this.client.put(`${this.coreUrl}/${this.urlRoute}/excel-import`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }

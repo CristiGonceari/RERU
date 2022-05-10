@@ -37,7 +37,9 @@
     "download": "Descarcă",
     "delete": "Șterge",
     "upload-doc": "Încărcă document",
-    "import-users": "Import utilizatori",
+    "import-users": "Importă utilizatori",
+    "import-departments": "Importă departamente",
+    "import-roles": "Importă roluri",
     "modal-title": "Încărcarea documentelor",
     "modal-description": "Încărcă document sau apasa aici pentru incarcare"
   },

@@ -11,7 +11,7 @@ namespace CODWER.RERU.Core.Application.Roles.UpdateRole
     {
         public UpdateRoleCommandValidator(AppDbContext appDbContext)
         {
-            RuleFor(x => x.Data.Id)
+            RuleFor(x => x.Id)
                 .SetValidator(x => new ItemMustExistValidator<Role>(appDbContext, ValidationCodes.INVALID_ID,
                     ValidationMessages.InvalidReference));
         }
