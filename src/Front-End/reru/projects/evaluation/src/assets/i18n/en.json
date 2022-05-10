@@ -33,7 +33,9 @@
     "available-modules": "Available modules",
     "user-profile": "User's profile",
     "user-details": "User profile overview",
-    "user-email": "E-mail"
+    "user-email": "E-mail",
+    "general-overview": "General user profile overview",
+    "navigate-core-msg": "Are you sure you want to navigate to general user profile overview?"
   },
   "notification": {
     "title": {

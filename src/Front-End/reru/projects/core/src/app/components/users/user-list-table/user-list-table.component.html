@@ -109,6 +109,10 @@
               </div>
               <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                 <div ngbDropdownMenu aria-labelledby="action1" class="p-0">
+                  <button (click)="navigateToEvaluation(user.id)"
+                    class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem *permission="'P00000020'">
+                    {{ 'button.view-user' | translate }} (Evaluation)
+                  </button>
                   <button [routerLink]="['../../user-profile', user.id, 'overview']"
                     class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem *permission="'P00000020'">
                     {{ 'button.view-user' | translate }}
@@ -125,13 +129,13 @@
                     ngbDropdownItem *permission="'P00000016'">
                     {{ 'reset-password.title' | translate }}
                   </button>
-                  <span *permission="'P00000017'">
+                  <span *permission="'P00000017'" class="font-size-lg">
                     <button *ngIf="user.isActive === false" (click)="openConfirmModal(user.id, user.firstName, user.lastName, 'activate-user')"
                       class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem>
                       {{ 'button.activate-user' | translate }}
                     </button>
                   </span>
-                  <span *permission="'P00000018'">
+                  <span *permission="'P00000018'" class="font-size-lg">
                     <button *ngIf="user.isActive === true" (click)="openConfirmModal(user.id, user.firstName, user.lastName, 'deactivate-user')"
                       class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem>
                       {{ 'button.deactivate-user' | translate }}

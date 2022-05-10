@@ -40,8 +40,8 @@ export class InternalNotifyInterceptor extends AbstractService implements HttpIn
 							showProgressBar: true,
 						}).click.subscribe(() => {
 							let host = window.location.host;
-							console.warn('rrrr', `http://${host}/#/my-activities/start-test/${evt.body.data.testId}`);
-							this.router.navigateByUrl(`http://${host}/#/my-activities/start-test/${evt.body.data.testId}`)
+							console.warn('url for run test', `http://${host}/reru-evaluation/#/my-activities/start-test/${evt.body.data.testId}`);
+							this.router.navigateByUrl(`http://${host}/reru-evaluation/#/my-activities/start-test/${evt.body.data.testId}`)
 						});
 					}
 				}

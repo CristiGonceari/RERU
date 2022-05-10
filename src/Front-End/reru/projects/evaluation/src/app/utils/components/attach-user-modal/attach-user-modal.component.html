@@ -104,6 +104,6 @@
 	<button type="button" class="btn btn-primary" (click)="confirm()">{{'button.confirm' | translate}}</button>
 </div>
 <ng-template #tooltip>
-	<p class="mb-0 font-size-sm" *ngIf="attachedItems.length">{{'button.uncheck-all' | translate}}</p>
-	<p class="mb-0 font-size-sm" *ngIf="!attachedItems.length && !paginatedAttachedIds">{{'button.check-all' | translate}}</p>
+	<p class="mb-0 font-size-sm" *ngIf="paginatedAttachedIds">{{'button.uncheck-all' | translate}}</p>
+	<p class="mb-0 font-size-sm" *ngIf="!paginatedAttachedIds">{{'button.check-all' | translate}}</p>
 </ng-template>

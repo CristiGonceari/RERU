@@ -209,4 +209,9 @@ export class UserProfileComponent implements OnInit {
 			window.location.reload();
 		});
 	}
+	
+	navigateToEvaluation(id): void {
+		let host = window.location.host;
+		window.open(`http://${host}/reru-evaluation/#/user-profile/${id}/overview`, '_self')
+	}
 }
