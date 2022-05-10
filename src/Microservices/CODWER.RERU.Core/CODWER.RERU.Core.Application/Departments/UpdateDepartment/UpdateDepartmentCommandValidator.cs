@@ -11,7 +11,7 @@ namespace CODWER.RERU.Core.Application.Departments.UpdateDepartment
     {
         public UpdateDepartmentCommandValidator(AppDbContext appDbContext)
         {
-            RuleFor(x => x.Data.Id)
+            RuleFor(x => x.Id)
                 .SetValidator(x => new ItemMustExistValidator<Department>(appDbContext, ValidationCodes.INVALID_ID,
                     ValidationMessages.InvalidReference));
         }

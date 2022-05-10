@@ -8,6 +8,8 @@ namespace CODWER.RERU.Core.Application.Departments.UpdateDepartment
     [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_DEPARTAMENTE)]
     public class UpdateDepartmentCommand : IRequest<int>
     {
-        public DepartmentDto Data { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int ColaboratorId { get; set; }
     }
 }

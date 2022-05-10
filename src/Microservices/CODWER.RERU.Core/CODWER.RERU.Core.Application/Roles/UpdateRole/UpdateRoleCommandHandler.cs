@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using CODWER.RERU.Core.DataTransferObjects.Roles;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Persistence.Context;
@@ -20,9 +21,16 @@ namespace CODWER.RERU.Core.Application.Roles.UpdateRole
 
         public async Task<int> Handle(UpdateRoleCommand request, CancellationToken cancellationToken)
         {
-            var role = await _appDbContext.Roles.FirstAsync(x => x.Id == request.Data.Id);
+            var newRole = new RoleDto()
+            {
+                Id = request.Id,
+                Name = request.Name,
+                ColaboratorId = request.ColaboratorId
+            };
 
-            _mapper.Map(request.Data, role);
+            var role = await _appDbContext.Roles.FirstAsync(x => x.Id == newRole.Id);
+
+            _mapper.Map(newRole, role);
             await _appDbContext.SaveChangesAsync();
 
             return role.Id;

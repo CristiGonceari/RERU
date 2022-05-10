@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { WatchInfoVideoModalComponent } from './modals/watch-info-video-modal/watch-info-video-modal.component';
 import { ImportUsersModalComponent } from './modals/import-users-modal/import-users-modal.component';
+import { ImportDepartmentModalComponent } from './modals/import-department-modal/import-department-modal.component';
+import { ImportRoleModalComponent } from './modals/import-role-modal/import-role-modal.component';
 
 const commonComponents = [
   Exception404Component,
@@ -18,7 +20,9 @@ const commonComponents = [
   SearchPipe,
   SafeHtmlPipe,
   WatchInfoVideoModalComponent,
-  ImportUsersModalComponent
+  ImportUsersModalComponent,
+  ImportDepartmentModalComponent,
+  ImportRoleModalComponent
 ];
 
 @NgModule({

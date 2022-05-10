@@ -11,6 +11,7 @@ import { PrintModalComponent } from '@erp/shared';
 import { forkJoin } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { I18nService } from 'projects/core/src/app/utils/services/i18n.service';
+import { ImportDepartmentModalComponent } from '../../../utils/modals/import-department-modal/import-department-modal.component';
 
 @Component({
 	selector: 'app-departments-table',
@@ -143,5 +144,28 @@ export class DepartmentsTableComponent implements OnInit {
 		modalRef.componentInstance.buttonNo = this.no;
 		modalRef.componentInstance.buttonYes = this.yes;
 		modalRef.result.then(() => this.delete(id), () => { });
+	}
+
+	openImportModal(): void {
+		const modalRef: any = this.modalService.open(ImportDepartmentModalComponent, { centered: true, backdrop: 'static', size: 'lg' });
+		modalRef.result.then((data) => this.import(data), () => { });
+	}
+
+	import(data): void {
+		this.isLoading = true;
+		const form = new FormData();
+		form.append('File', data.file);
+		this.departmentService.bulkImport(form).subscribe(response => {
+			if(response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], fileName, { type: response.body.type });
+				saveAs(file);
+			}
+			this.notificationService.success('Success', 'Users Imported!', NotificationUtil.getDefaultMidConfig());
+			this.list();
+		}, () => { }, () => {
+			this.isLoading = false;
+		})
 	}
 }

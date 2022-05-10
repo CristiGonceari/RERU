@@ -31,7 +31,7 @@ export class AddEditUserRoleComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-		this.roleForm = new FormGroup({ name: new FormControl() });
+		this.roleForm = new FormGroup({ name: new FormControl(), colaboratorId: new FormControl() });
 		this.initData();
 	}
 
@@ -41,6 +41,7 @@ export class AddEditUserRoleComponent implements OnInit {
 				this.roleId = response.id;
 				this.roleService.get(this.roleId).subscribe(res => {
 					this.initForm(res.data);
+					console.log("role", res.data)
 				})
 			}
 			else
@@ -52,13 +53,15 @@ export class AddEditUserRoleComponent implements OnInit {
 		if (role) {
 			this.roleForm = this.formBuilder.group({
 				id: this.formBuilder.control(role.id, [Validators.required]),
-				name: this.formBuilder.control((role && role.name) || null, Validators.required)
+				name: this.formBuilder.control((role && role.name) || null, Validators.required),
+				colaboratorId: this.formBuilder.control((role && role.colaboratorId), Validators.required)
 			});
 			this.isLoading = false;
 		}
 		else {
 			this.roleForm = this.formBuilder.group({
 				name: this.formBuilder.control(null, [Validators.required]),
+				colaboratorId: this.formBuilder.control(0, [Validators.required])
 			});
 			this.isLoading = false;
 		}
@@ -79,6 +82,7 @@ export class AddEditUserRoleComponent implements OnInit {
 	add(): void {
 		const data = {
 			name: this.roleForm.value.name,
+			colaboratorId: this.roleForm.value.colaboratorId
 		} as UserRoleModel;
 
 		this.roleService.create(data).subscribe(() => {
@@ -98,6 +102,7 @@ export class AddEditUserRoleComponent implements OnInit {
 		const data = {
 			id: this.roleId,
 			name: this.roleForm.value.name,
+			colaboratorId: this.roleForm.value.colaboratorId
 		} as UserRoleModel;
 
 		this.roleService.edit(data).subscribe(() => {

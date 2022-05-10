@@ -37,7 +37,9 @@
     "download": "Download",
     "delete": "Delete",
     "upload-doc": "Upload document",
-    "import-users": "Import Users",
+    "import-users": "Import users",
+    "import-departments": "Import departments",
+    "import-roles": "Import roles",
     "modal-title": "Upload file modal",
     "modal-description": "Drop file hereor click to upload"
   },

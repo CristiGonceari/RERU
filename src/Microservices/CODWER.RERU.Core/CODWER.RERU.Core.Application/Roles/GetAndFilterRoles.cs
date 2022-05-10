@@ -8,7 +8,9 @@ namespace CODWER.RERU.Core.Application.Roles
     {
         public static IQueryable<Role> Filter(AppDbContext appDbContext, string name)
         {
-            var roles = appDbContext.Roles.AsQueryable();
+            var roles = appDbContext.Roles
+                .OrderByDescending(x => x.Id)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(name))
             {

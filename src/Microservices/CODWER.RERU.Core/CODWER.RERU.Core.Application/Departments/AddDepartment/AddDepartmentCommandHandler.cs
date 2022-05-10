@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using CODWER.RERU.Core.DataTransferObjects.Departemnts;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
@@ -20,7 +21,13 @@ namespace CODWER.RERU.Core.Application.Departments.AddDepartment
 
         public async Task<int> Handle(AddDepartmentCommand request, CancellationToken cancellationToken)
         {
-            var department = _mapper.Map<Department>(request.Data);
+            var newDepart = new DepartmentDto()
+            {
+                Name = request.Name,
+                ColaboratorId = request.ColaboratorId
+            };
+
+            var department = _mapper.Map<Department>(newDepart);
             
             await _appDbContext.Departments.AddAsync(department);
 
