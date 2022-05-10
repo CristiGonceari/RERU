@@ -36,6 +36,15 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
         {
             var newTest = _mapper.Map<Test>(request.Data);
 
+            var eventDatas = _appDbContext.Events.FirstOrDefault(e => e.Id == newTest.EventId);
+
+            if (eventDatas != null)
+            {
+                newTest.StartTime = eventDatas.FromDate;
+                newTest.EndTime = eventDatas.TillDate;
+                newTest.ProgrammedTime = eventDatas.FromDate;
+            }
+
             newTest.TestStatus = TestStatusEnum.Programmed;
 
             if (request.Data.EventId.HasValue)

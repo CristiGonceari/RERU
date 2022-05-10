@@ -13,6 +13,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public int? EventId { get; set; }
         public int? LocationId { get; set; }
         public TestStatusEnum TestStatus { get; set; }
-        public DateTime ProgrammedTime { get; set; }
+        public DateTime? ProgrammedTime { get; set; }
     }
 }

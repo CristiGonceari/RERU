@@ -13,6 +13,9 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
         public string Email { get; set; }
         public string Idnp { get; set; }
 
+        public bool EventUsers { get; set; }
+        public bool EventResponsiblePerson { get; set; }
+
         public List<int> ExceptUserIds { get; set; }
     }
 }
