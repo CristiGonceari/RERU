@@ -16,7 +16,7 @@ namespace CODWER.RERU.Core.API.Controllers
         {
         }
 
-        [HttpGet]
+        [HttpPost]
         public string GetUserDetails()
         {
            int sqh;
