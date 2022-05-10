@@ -16,6 +16,7 @@ import { saveAs } from 'file-saver';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { AttachUserModalComponent } from 'projects/evaluation/src/app/utils/components/attach-user-modal/attach-user-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EventService } from 'projects/evaluation/src/app/utils/services/event/event.service';
 
 @Component({
   selector: 'app-add-test',
@@ -27,6 +28,7 @@ export class AddTestComponent implements OnInit {
 
   eventsList: any;
   selectActiveTests: any;
+  eventDatas: any;
   evaluatorList = [];
   userListToAdd: number[] = [];
 
@@ -38,6 +40,7 @@ export class AddTestComponent implements OnInit {
   evaluator = new SelectItem();
   myControl = new FormControl();
 
+  showEventCard: boolean = false;
   showName: boolean = false;
   isTestTemplateOneAnswer: boolean = false;
   printTest: boolean = true;
@@ -61,6 +64,7 @@ export class AddTestComponent implements OnInit {
     private notificationService: NotificationsService,
     private printService: PrintTemplateService,
     private modalService: NgbModal,
+    private eventService: EventService
   ) { }
 
   ngOnInit(): void {
@@ -84,11 +88,26 @@ export class AddTestComponent implements OnInit {
   getActiveTestTemplate() {
     let params = {
       testTemplateStatus: TestTemplateStatusEnum.Active,
-      eventId: this.event.value
+      eventId: this.event.value || null
     }
 
     this.testTemplateService.getTestTemplateByStatus(params).subscribe((res) => {
       this.selectActiveTests = res.data;
+    })
+
+    if(params.eventId != null){
+      this.getEvent(params.eventId);
+    }
+    else{
+      this.showEventCard = false;
+    }
+
+  }
+
+  getEvent(eventId: any){
+    this.eventService.getEvent(eventId).subscribe((res) => {
+      this.eventDatas = res.data;
+      this.showEventCard = true;
     })
   }
 
@@ -114,7 +133,7 @@ export class AddTestComponent implements OnInit {
     this.setTimeToSearch();
     return new AddEditTest({
       userProfileId: this.userListToAdd,
-      programmedTime: this.search,
+      programmedTime: this.search || null,
       eventId: +this.event.value || null,
       evaluatorId: this.evaluatorList[0] || null,
       testStatus: TestStatusEnum.Programmed,
@@ -127,7 +146,7 @@ export class AddTestComponent implements OnInit {
     this.setTimeToSearch();
     return new AddEditTest({
       userProfileId: this.getSubArray(0, 5, this.userListToAdd),
-      programmedTime: this.search,
+      programmedTime: this.search || null,
       eventId: +this.event.value || null,
       evaluatorId: this.evaluatorList[0] || null,
       testStatus: TestStatusEnum.Programmed,

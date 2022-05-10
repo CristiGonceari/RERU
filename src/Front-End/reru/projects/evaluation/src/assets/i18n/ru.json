@@ -653,6 +653,7 @@
   "events": {
     "events": "События",
     "event": "Событие",
+    "event-overview": "Обзор событий",
     "manage-events": "Управлять cобытиями",
     "attach-to-event": "Прикрепить ответственное лицо к событию",
     "attach-location-to-event": "Прикрепить место к событию",

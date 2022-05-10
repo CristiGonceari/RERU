@@ -43,6 +43,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                                     .GreaterThan(new DateTime(2000, 1, 1))
                                     .WithErrorCode(ValidationCodes.INVALID_TIME);
                 });
+
                 When(r => r.Data.EventId.HasValue, () =>
                 {
                     RuleFor(x => x.Data.EventId.Value)
