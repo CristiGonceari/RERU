@@ -656,6 +656,7 @@
   "events": {
     "events": "Events",
     "event": "Event",
+    "event-overview": "Event Overview",
     "manage-events": "Manage Events",
     "attach-to-event": "Attach responsible person to event",
     "attach-location-to-event": "Attach location to event",

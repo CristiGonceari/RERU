@@ -40,8 +40,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 
             if (eventDatas != null)
             {
-                newTest.StartTime = eventDatas.FromDate;
-                newTest.EndTime = eventDatas.TillDate;
                 newTest.ProgrammedTime = eventDatas.FromDate;
             }
 

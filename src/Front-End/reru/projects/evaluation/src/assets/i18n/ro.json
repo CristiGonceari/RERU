@@ -655,6 +655,7 @@
   "events": {
     "events": "Evenimente",
     "event": "Eveniment",
+    "event-overview": "Vizualizarea generală a evenimentului",
     "manage-events": "Gestionarea evenimentului",
     "attach-to-event": "Atașați persoana responsabilă la eveniment",
     "attach-location-to-event": "Atașați locația la eveniment",
