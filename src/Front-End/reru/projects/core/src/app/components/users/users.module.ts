@@ -18,6 +18,7 @@ import { SetPasswordUserComponent } from '././user-profile/set-password-user/set
 import { SortButtonComponent } from '././user-list-table/sort-button/sort-button.component';
 import { FilterUserStateComponent } from '././user-list/filter-user-state/filter-user-state.component';
 import { RemoveComponent } from './remove/remove.component';
+import { SearchStatusComponent } from './user-list/search-status/search-status.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { RemoveComponent } from './remove/remove.component';
     SetPasswordUserComponent,
     SortButtonComponent,
     FilterUserStateComponent,
-    RemoveComponent
+    RemoveComponent,
+    SearchStatusComponent
   ],
   providers: [
     TranslatePipe,

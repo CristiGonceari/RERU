@@ -546,7 +546,9 @@
     "refuse": "Refuză",
     "NoResult": "Fără rezultat",
     "Passed": "Susținut",
-    "NotPassed": "Nesusținut"
+    "NotPassed": "Nesusținut",
+    "employee": "Angajat",
+    "candidate": "Candidat"
   },
   "options": {
     "start-without-confirmation": "Este posibil să porniți testul fără confirmare",

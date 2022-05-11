@@ -5,12 +5,14 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Core.Application.Departments.AddDepartment;
-using CODWER.RERU.Core.Application.Departments.UpdateDepartment;
+using AutoMapper;
+using CODWER.RERU.Core.DataTransferObjects.Departemnts;
+using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Departments.BulkImportDepartments
@@ -18,10 +20,15 @@ namespace CODWER.RERU.Core.Application.Departments.BulkImportDepartments
     public class BulkImportDepartmentsCommandHandler : BaseHandler, IRequestHandler<BulkImportDepartmentsCommand, FileDataDto>
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IMapper _mapper;
 
-        public BulkImportDepartmentsCommandHandler(ICommonServiceProvider commonServiceProvider, AppDbContext appDbContext) : base(commonServiceProvider)
+        private List<Department> departments;
+
+        public BulkImportDepartmentsCommandHandler(ICommonServiceProvider commonServiceProvider, AppDbContext appDbContext, IMapper mapper) : base(commonServiceProvider)
         {
             _appDbContext = appDbContext;
+            _mapper = mapper;
+
         }
 
         public async Task<FileDataDto> Handle(BulkImportDepartmentsCommand request, CancellationToken cancellationToken)
@@ -37,34 +44,37 @@ namespace CODWER.RERU.Core.Application.Departments.BulkImportDepartments
             var workSheet = package.Workbook.Worksheets[0];
             var totalRows = workSheet.Dimension.Rows;
 
-            var departments = _appDbContext.Departments.AsQueryable();
+            departments = _appDbContext.Departments.ToList();
 
             for (var i = 1; i <= totalRows; i++)
             {
-                var addCommand = new AddDepartmentCommand()
+                var newDepartment = new DepartmentDto()
                 {
-                    ColaboratorId = int.Parse(workSheet.Cells[i, 1]?.Value?.ToString() ?? string.Empty),
-                    Name = workSheet.Cells[i, 2]?.Value?.ToString()
+                    Name = workSheet.Cells[i, 2]?.Value?.ToString(),
+                    ColaboratorId = int.Parse(workSheet.Cells[i, 1]?.Value?.ToString() ?? string.Empty)
                 };
 
-                if (departments.Any(x => x.ColaboratorId == addCommand.ColaboratorId))
+                var department = _appDbContext.Departments.FirstOrDefault(x => x.ColaboratorId == newDepartment.ColaboratorId);
+
+                if (department != null)
                 {
                     try
                     {
-                        var departmentByColaborator = departments.FirstOrDefault(x => x.ColaboratorId == addCommand.ColaboratorId);
-
-                        var editCommand = new UpdateDepartmentCommand()
+                        if (CheckUpdateDepartment(newDepartment))
                         {
-                            Id = departmentByColaborator.Id,
-                            Name = workSheet.Cells[i, 2]?.Value?.ToString(),
-                            ColaboratorId = departmentByColaborator.ColaboratorId
-                        };
+                            workSheet.Cells[i, 3].Value = "Error: Nume dublicat";
+                        }
+                        else
+                        {
+                            _mapper.Map(newDepartment, department);
+                            await _appDbContext.SaveChangesAsync();
 
-                        await Mediator.Send(editCommand);
+                            workSheet.Cells[i, 3].Value = "Editat";
+                        }
                     }
                     catch (Exception e)
                     {
-                        workSheet.Cells[i, 3].Value = e.Message;
+                        workSheet.Cells[i, 3].Value = $"Error: {e.Message}";
                         Console.WriteLine(e);
                     }
                 }
@@ -72,11 +82,21 @@ namespace CODWER.RERU.Core.Application.Departments.BulkImportDepartments
                 {
                     try
                     {
-                        await Mediator.Send(addCommand);
+                        if (CheckCreateDepartment(newDepartment.Name))
+                        {
+                            workSheet.Cells[i, 3].Value = "Error: Nume dublicat";
+                        }
+                        else
+                        {
+                            await _appDbContext.Departments.AddAsync(_mapper.Map<Department>(newDepartment));
+                            await _appDbContext.SaveChangesAsync();
+
+                            workSheet.Cells[i, 3].Value = "Adăugat";
+                        }
                     }
                     catch (Exception e)
                     {
-                        workSheet.Cells[i, 3].Value = e.Message;
+                        workSheet.Cells[i, 3].Value = $"Error: {e.Message}";
                         Console.WriteLine(e);
                     }
                 }
@@ -90,6 +110,20 @@ namespace CODWER.RERU.Core.Application.Departments.BulkImportDepartments
                 Name = "Department-Import-Result",
                 ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             };
+        }
+
+        private bool CheckCreateDepartment(string name)
+        {
+            var result = departments.Any(x => x.Name.ToLower().Contains(name.ToLower()) || name.ToLower().Contains(x.Name.ToLower()));
+
+            return result;
+        }
+
+        private bool CheckUpdateDepartment(DepartmentDto command)
+        {
+            var result = departments.Any(x => x.Id != command.Id && (x.Name.ToLower().Contains(command.Name.ToLower()) || command.Name.ToLower().Contains(x.Name.ToLower())));
+
+            return result;
         }
     }
 }

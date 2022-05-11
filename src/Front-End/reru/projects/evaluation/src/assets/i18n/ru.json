@@ -546,7 +546,9 @@
     "refuse": "Отказать",
     "NoResult": "Без Результата",
     "Passed": "Пройден",
-    "NotPassed": "Не пройден"
+    "NotPassed": "Не пройден",
+    "employee": "Сотрудник",
+    "candidate": "Кандидат"
   },
   "options": {
     "start-without-confirmation": "Возможен запуск теста без подтверждения",

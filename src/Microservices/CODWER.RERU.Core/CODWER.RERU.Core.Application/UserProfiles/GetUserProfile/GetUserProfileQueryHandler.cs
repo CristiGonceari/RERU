@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
@@ -19,7 +18,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetUserProfile
                 .FirstOrDefaultAsync (u => u.Id == request.Id);
 
             var userProfDto = Mapper.Map<UserProfileDto>(userProfile);
-            
+
             if (userProfile.MediaFileId == null) return userProfDto;
             
             return userProfDto;

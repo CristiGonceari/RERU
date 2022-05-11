@@ -171,6 +171,15 @@
       "administration": "Administrare"
     }
   },
+  "statuses": {
+    "all": "Toți",
+    "active": "Activi",
+    "inactive": "Inactivi",
+    "Candidate": "Candidați",
+    "Employee": "Angajați",
+    "employee": "Angajat",
+    "candidate": "Candidat"
+  },
   "user-profile": {
     "overview": "Vizualizarea profilului personal",
     "edit-title": "Editarea profilului personal",
@@ -183,7 +192,8 @@
     "empty-name": "Câmpul trebuie sa conțină doar litere latine",
     "wrong-name": "Câmpul trebuie sa conțină doar litere latine",
     "available-modules": "Module disponibile",
-    "idnp-length": "IDNP trebuie să conține 13 cifre!"
+    "idnp-length": "IDNP trebuie să conține 13 cifre!",
+    "search-by-user-state": "Căutați după statutul utilizatorului"
   },
   "user": {
     "edit-title": "Editarea utilizatorului",

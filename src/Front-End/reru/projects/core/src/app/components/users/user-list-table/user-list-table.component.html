@@ -25,6 +25,14 @@
           {{ 'table.email' | translate }}
           <!-- <app-sort-button *ngIf="filter.sort === 'username'" [desc]="filter.order"></app-sort-button> -->
         </th>
+        <th scope="col">
+          {{ 'departments.department' | translate }}
+          <!-- <app-sort-button *ngIf="filter.sort === 'username'" [desc]="filter.order"></app-sort-button> -->
+        </th>
+        <th scope="col">
+          {{ 'user-roles.role' | translate }}
+          <!-- <app-sort-button *ngIf="filter.sort === 'username'" [desc]="filter.order"></app-sort-button> -->
+        </th>
         <th scope="col" style="width: 75px; text-align: center; vertical-align: middle">
           {{ 'table.status' | translate }}
         </th>
@@ -32,35 +40,43 @@
       </tr>
     </thead>
     <tbody class="datatable-body" *ngIf="result">
-      <tr *ngFor="let user of users">
-        <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+      <tr *ngFor="let user of users" (dblclick)="navigateToDetails(user.id)">
+        <td [class.no-actions]="!viewDetails">
           <div class="symbol symbol-35 symbol-sm-s symbol-light-success">
             <span class="font-size-h4 symbol-label font-weight-boldest">{{ renderText(user) }}</span>
           </div>
         </td>
-        <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+        <td [class.no-actions]="!viewDetails">
           <a [routerLink]="['../../user-profile', user.id, 'overview']" class="font-size-lg text-dark-50 text-hover-dark-75" >
             {{ user.lastName }}
           </a>
         </td>
-        <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+        <td [class.no-actions]="!viewDetails">
           <a [routerLink]="['../../user-profile', user.id, 'overview']" class="font-size-lg text-dark-50 text-hover-dark-75" >
             {{ user.firstName }}
           </a>
         </td>
-        <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+        <td [class.no-actions]="!viewDetails">
           <a [routerLink]="['../../user-profile', user.id, 'overview']" class="font-size-lg text-dark-50 text-hover-dark-75" >
             {{user.fatherName}}
           </a>
         </td>
-        <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+        <td [class.no-actions]="!viewDetails">
           {{ user.idnp }}
         </td>
-        <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+        <td [class.no-actions]="!viewDetails">
           {{ user.email }}
         </td>
+        <td [class.no-actions]="!viewDetails">
+          <span class="font-size-lg" *ngIf="user.departmentName">{{ user.departmentName }}</span>
+          <span class="font-size-lg" *ngIf="!user.departmentName">-</span>
+        </td>
+        <td [class.no-actions]="!viewDetails">
+          <span class="font-size-lg" *ngIf="user.roleName">{{ user.roleName }}</span>
+          <span class="font-size-lg" *ngIf="!user.roleName">-</span>
+        </td>
         <td style="text-align: center">
-          <div [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+          <div [class.no-actions]="!viewDetails">
             <div *ngIf="user.isActive === false" style="width: 25px; display: inline-block">
               <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"

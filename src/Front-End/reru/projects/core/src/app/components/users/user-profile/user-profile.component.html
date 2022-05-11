@@ -76,17 +76,29 @@
                 <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
                   {{ user?.data.firstName + ' ' + user?.data.lastName }}
                 </a>
-                <p class="text-muted mt-3" *ngIf="user?.data.isActive === true">
+                <p class="text-muted mt-2" *ngIf="user?.data.isActive === true">
                   <span class="mr-2">
                     <svg-icon key="success" [width]="16" [height]="16"></svg-icon>
                   </span>
-                  Active
+                  Activ
                 </p>
-                <p class="text-muted mt-3" *ngIf="user?.data.isActive === false">
+                <p class="text-muted mt-2" *ngIf="user?.data.isActive === false">
                   <span class="mr-2">
                     <svg-icon key="error" [width]="16" [height]="16"></svg-icon>
                   </span>
-                  Inactive
+                  Inactiv
+                </p>
+                <p class="text-muted" *ngIf="user?.data.userStatusEnum === 1">
+                  <span class="mr-2">
+                    <svg-icon key="user" [width]="16" [height]="16"></svg-icon>
+                  </span>
+                  {{'statuses.employee' | translate}}
+                </p>
+                <p class="text-muted" *ngIf="user?.data.userStatusEnum === 0">
+                  <span class="mr-2">
+                    <svg-icon key="user" [width]="16" [height]="16"></svg-icon>
+                  </span>
+                  {{'statuses.candidate' | translate}}
                 </p>
                 </div>
               </div>
