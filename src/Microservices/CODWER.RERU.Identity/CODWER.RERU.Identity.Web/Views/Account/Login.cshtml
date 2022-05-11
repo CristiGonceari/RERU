@@ -93,7 +93,7 @@
 
 
 
-    <div class="row">
+    <div class="row rowConfig">
         <div class="col-sm-6">
             <img src="~/logo.png" class="imageConfig" />
         </div>
@@ -151,9 +151,9 @@
                             </div>
                             @if (Model.VisibleExternalProviders.Any())
                             {
-                                <div class="text-center" style="padding-top: 70px!important;">
+                                <div class="text-center signUpConfig">
                                     <p>Not a member? <a routerLink="/#/registration-page">Register</a></p>
-                                    <p>or sign up with:</p>
+                                    <button>or sign up with:</button>
                                     <ul class="list-inline">
 
                                         @foreach (var provider in Model.VisibleExternalProviders)
