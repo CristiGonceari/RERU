@@ -22,7 +22,18 @@
       height: 100px; }
   .grants-page .card label {
     font-weight: bold; }
-    
+
     .imageConfig{
       max-width: 500px;
+  }
+
+  .rowConfig{
+    height: 1140px;
+    align-items: center;
+  }
+  .signUpConfig{
+    padding-top: 70px;
+  }
+  body{
+    background-image: url("../bg-image.jpg");
   }
