@@ -56,8 +56,11 @@
                 [placeholder]="'pages.user-details.search-idnp' | translate" #idnp></erp-shared-search-input>
             </div>
             <div class="col">
-              <app-filter-user-state (filter)="userTable.getFilteredUsers({userState: $event})"
+              <app-filter-user-state (filter)="userTable.getFilteredUsers({status: $event})"
                 (handleSearch)="userTable.searchValue = $event.target.value"></app-filter-user-state>
+            </div>
+            <div class="col">
+              <app-search-status (filter)="userTable.getFilteredUsers({userStatusEnum: $event})" #userStatusEnum></app-search-status>
             </div>
             <div class="col">
               <div class="w-100 text-right">

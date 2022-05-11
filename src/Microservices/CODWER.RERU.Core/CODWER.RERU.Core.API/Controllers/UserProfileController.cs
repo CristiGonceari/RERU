@@ -13,6 +13,9 @@ using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using CODWER.RERU.Core.Application.UserProfiles.PrintUserProfiles;
+using CVU.ERP.Common.DataTransferObjects.SelectValues;
+using CVU.ERP.Common.DataTransferObjects.Users;
+using CVU.ERP.Common.EnumConverters;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 
 namespace CODWER.RERU.Core.API.Controllers {
@@ -51,6 +54,14 @@ namespace CODWER.RERU.Core.API.Controllers {
         public Task RemoveModuleAccess([FromRoute] int userId, [FromRoute] int moduleId)
         {
             return Mediator.Send(new RemoveModuleAccessCommand(userId, moduleId));
+        }
+
+        [HttpGet("user-status/select-values")]
+        public async Task<List<SelectItem>> GetUserEnum()
+        {
+            var items = EnumConverter<UserStatusEnum>.SelectValues;
+
+            return items;
         }
 
         [HttpGet("access/{id}")]

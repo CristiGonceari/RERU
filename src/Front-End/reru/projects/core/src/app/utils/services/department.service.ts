@@ -34,6 +34,10 @@ export class DepartmentService extends AbstractService {
 		return this.client.patch<DepartmentModel>(`${this.coreUrl}/${this.urlRoute}`, data);
 	}
 
+	getValues(): Observable<any> {
+		return this.client.get(`${this.coreUrl}/${this.urlRoute}/select-values`);
+	}
+
 	print(data): Observable<any> {
 		return this.client.put(`${this.coreUrl}/${this.urlRoute}/print`, data, {
 			responseType: 'blob',

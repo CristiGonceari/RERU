@@ -9,6 +9,8 @@ namespace CVU.ERP.Common.DataTransferObjects.Users
         public string Idnp{get;set; }
         public string MediaFileId { get; set; }
         public int? CandidatePositionId { set; get; }
+        public int? DepartmentColaboratorId { get; set; }
+        public int? RoleColaboratorId { get; set; }
         public bool EmailNotification { get; set; }
     }
 }

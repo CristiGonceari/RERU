@@ -546,7 +546,9 @@
     "refuse": "Refuse",
     "NoResult": "No result",
     "Passed": "Passed",
-    "NotPassed":"Not Passed"
+    "NotPassed":"Not Passed",
+    "employee": "Employee",
+    "candidate": "Candidate"
   },
   "options": {
     "start-without-confirmation": "Possible to start test without confirmation",

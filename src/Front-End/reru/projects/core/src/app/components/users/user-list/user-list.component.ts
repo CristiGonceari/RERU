@@ -12,6 +12,7 @@ export class UserListComponent {
  @ViewChild('email') searchEmail: any;
  @ViewChild('idnp') searchIdnp: any;
  @ViewChild(FilterUserStateComponent) userState: FilterUserStateComponent;
+ @ViewChild('userStatusEnum') userStatusEnum: any;
 
  title: string;
   constructor() { }
@@ -20,7 +21,8 @@ export class UserListComponent {
     this.searchKeyword.clear();
 		this.searchEmail.clear();
 		this.searchIdnp.clear();
-    this.userState.userState = '0';
+    this.userState.status = '0';
+    this.userStatusEnum = '';
   }
   
   getTitle(): string {

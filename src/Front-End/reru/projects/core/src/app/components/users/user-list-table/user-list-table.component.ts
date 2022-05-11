@@ -29,6 +29,7 @@ export class UserListTableComponent implements OnInit {
 	keyword: string;
 	email: string;
 	idnp: string;
+	userStatusEnum: string;
 	viewDetails: boolean = false;
 	filter = {
 		sort: 'name',
@@ -70,6 +71,7 @@ export class UserListTableComponent implements OnInit {
 		this.keyword = data.keyword;
 		this.email = data.email;
 		this.idnp = data.idnp;
+		this.userStatusEnum = data.userStatusEnum;
 		data = {
 			...data,
 			keyword: this.keyword,
@@ -77,7 +79,8 @@ export class UserListTableComponent implements OnInit {
 			idnp: this.idnp,
 			page: data.page || this.pagination.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
-			status: data.userState
+			status: data.status,
+			userStatusEnum: data.userStatusEnum
 		};
 		this.list(data);
 	}
