@@ -92,12 +92,17 @@
 </div> *@
 
 
-
-    <div class="row">
-        <div class="col-sm-6">
-            <img src="~/logo.png"  alt="" style="max-width: 500px!important;" />
+<div class="d-flex flex-column flex-root h-100" id="kt_login_wrapper">
+    <div class="login login-1 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white" id="kt_login">
+        <div class="login-aside d-flex flex-column flex-row-auto" style="background-color: #F2C98A;">
+            <div class="d-flex flex-column-auto flex-column pt-lg-40 pt-15">
+                <a class="text-center mb-10">
+                    <img src="~/logo.png"  alt="" style="max-width: 500px;" />
+                </a>
+            </div>
         </div>
-        <div class="col-sm-6">
+        <div
+            class="login-content flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto">
             <div class="d-flex flex-column-fluid flex-center">
                 <div class="login-form login-signin">
 
@@ -150,7 +155,7 @@
                             </div>
                             @if (Model.VisibleExternalProviders.Any())
                             {
-                                <div class="text-center" style="padding-top: 70px!important;">
+                                <div class="text-center" style="padding-top: 70px;">
                                     <p>Not a member? <a routerLink="/#/registration-page">Register</a></p>
                                     <p>or sign up with:</p>
                                     <ul class="list-inline">
@@ -184,6 +189,7 @@
             </div>
         </div>
     </div>
+</div>
 
 
 
