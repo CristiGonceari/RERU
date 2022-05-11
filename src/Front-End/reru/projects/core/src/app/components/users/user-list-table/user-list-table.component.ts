@@ -355,7 +355,6 @@ export class UserListTableComponent implements OnInit {
 
 	navigateToEvaluation(id): void {
 		let host = window.location.host;
-		console.warn('url for user overview evaluation', `http://${host}/reru-evaluation/#/user-profile/${id}/overview`);
 		window.open(`http://${host}/reru-evaluation/#/user-profile/${id}/overview`, '_self')
 	}
 
