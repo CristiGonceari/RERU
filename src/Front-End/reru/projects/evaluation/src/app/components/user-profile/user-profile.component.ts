@@ -71,7 +71,6 @@ export class UserProfileComponent implements OnInit {
 
   navigateToCore(id): void {
     let host = window.location.host;
-    console.warn('url for user overview', `http://${host}/#/user-profile/${id}/overview`);
-    this.router.navigateByUrl(`http://${host}/#/user-profile/${id}/overview`)
+		window.open(`http://${host}/#/user-profile/${id}/overview`, '_self')
   }
 }
