@@ -22,3 +22,7 @@
       height: 100px; }
   .grants-page .card label {
     font-weight: bold; }
+    
+    .imageConfig{
+      max-width: 500px;
+  }
