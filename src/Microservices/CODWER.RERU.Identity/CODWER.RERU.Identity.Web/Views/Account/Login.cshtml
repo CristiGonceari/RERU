@@ -152,8 +152,8 @@
                             @if (Model.VisibleExternalProviders.Any())
                             {
                                 <div class="text-center signUpConfig">
-                                    <p>Not a member? <a routerLink="/#/registration-page">Register</a></p>
-                                    <button>or sign up with:</button>
+                                    <p>Not a member? <button routerLink="/#/registration-page">Register</button></p>
+                                    <p>or sign up with:</p>
                                     <ul class="list-inline">
 
                                         @foreach (var provider in Model.VisibleExternalProviders)
