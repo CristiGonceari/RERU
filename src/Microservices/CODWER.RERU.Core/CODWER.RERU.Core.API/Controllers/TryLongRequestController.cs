@@ -17,22 +17,22 @@ namespace CODWER.RERU.Core.API.Controllers
         [HttpGet]
         public string GetUserDetails()
         {
-           int sqh;
+           //int sqh;
 
-            for (int i = 0; i < 1000000000; i++)
-            {
-                var h = i;
-                var p = i + 1;
-                var b = i + 2;
-
-
-                sqh = p * p + b * b;
-
-                h = (int) Math.Sqrt(sqh);
-            }
+           // for (int i = 0; i < 1000000000; i++)
+           // {
+           //     var h = i;
+           //     var p = i + 1;
+           //     var b = i + 2;
 
 
-            Thread.Sleep(300000);
+           //     sqh = p * p + b * b;
+
+           //     h = (int) Math.Sqrt(sqh);
+           // }
+
+
+            Thread.Sleep(18_000_000); //5hours
             return "Job Done";
         }
     }
