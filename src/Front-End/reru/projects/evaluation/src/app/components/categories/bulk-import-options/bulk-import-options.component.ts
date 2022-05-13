@@ -13,7 +13,6 @@ import { OptionsService } from '../../../utils/services/options/options.service'
 export class BulkImportOptionsComponent implements OnInit {
   selectedTypeName: string = QuestionUnitTypeEnum[3];
 	selectedTypeId = 3;
-	qType: string[];
 	hasTemplate: boolean;
 	files: File[] = [];
   questionId;
@@ -21,14 +20,11 @@ export class BulkImportOptionsComponent implements OnInit {
 	constructor(
 		public activeModal: NgbActiveModal,
 		private questionService: QuestionService,
-    private optionService: OptionsService
+    	private optionService: OptionsService
 	) { }
 
 	ngOnInit(): void {
-		this.hasTemplate = false;
-		this.qType = Object.keys(QuestionUnitTypeEnum)
-			.map(key => QuestionUnitTypeEnum[key])
-			.filter(value => typeof value === 'string') as string[];
+		this.hasTemplate = true;
 	}
 
 	selectType(val) {
