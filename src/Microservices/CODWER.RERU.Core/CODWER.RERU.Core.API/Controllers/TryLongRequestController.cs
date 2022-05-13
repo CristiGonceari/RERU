@@ -1,9 +1,7 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using CODWER.RERU.Core.Application.Users.GetUserDetails;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading;
 
 namespace CODWER.RERU.Core.API.Controllers
 {
@@ -34,7 +32,7 @@ namespace CODWER.RERU.Core.API.Controllers
             }
 
 
-            Thread.Sleep(120000);
+            Thread.Sleep(300000);
             return "Job Done";
         }
     }
