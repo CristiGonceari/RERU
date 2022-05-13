@@ -45,7 +45,9 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
                 FatherName = request.FatherName,
                 Idnp = request.Idnp,
                 Email = request.Email,
-                EmailNotification = request.EmailNotification,
+                DepartmentColaboratorId = request.DepartmentColaboratorId,
+                RoleColaboratorId = request.RoleColaboratorId,
+                EmailNotification = request.EmailNotification
             };
 
             var userProfile = Mapper.Map<UserProfile>(newUser);

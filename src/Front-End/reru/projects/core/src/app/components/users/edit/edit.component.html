@@ -63,6 +63,30 @@
                     </div>
                   </div>
                 </div>
+                <div class="form-group row align-items-center mb-9">
+                  <label class="col-xl-3 col-lg-3 col-form-label">
+                    {{'departments.department' | translate}}
+                  </label>
+                  <div class="col-lg-9 col-xl-9">
+                    <select class="form-control form-control-lg form-control-solid" name="departmentColaboratorId"
+                      id="role" type="number" formControlName="departmentColaboratorId">
+                      <option value="null">{{'module-access.select' | translate}}</option>
+                      <option *ngFor="let item of departments" [value]="item.value">{{ item.label }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row align-items-center mb-9">
+                  <label class="col-xl-3 col-lg-3 col-form-label">
+                    {{ 'user-roles.role' | translate }}
+                  </label>
+                  <div class="col-lg-9 col-xl-9">
+                    <select class="form-control form-control-lg form-control-solid" name="roleColaboratorId"
+                      id="role" type="number" formControlName="roleColaboratorId">
+                      <option value="null">{{'module-access.select' | translate}}</option>
+                      <option *ngFor="let item of roles" [value]="item.value">{{ item.label }}</option>
+                    </select>
+                  </div>
+                </div>
                 <div class="form-group row mb-10">
                   <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.profile-photo' | translate }}</label>
                   <div class="col-lg-9 col-xl-9">

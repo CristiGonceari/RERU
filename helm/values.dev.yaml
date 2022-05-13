@@ -7,12 +7,12 @@ ingress:
     ingress.kubernetes.io/proxy-body-size: "250m"
     nginx.org/client-body-timeout: "3600"
     nginx.org/client-max-body-size: 250m
-    nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600s"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600s"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600s"
-    # nginx.org/proxy-connect-timeout: "3600s"
-    # nginx.org/proxy-read-timeout: "3600s"
-    # nginx.org/proxy-send-timeout: "3600s"
+    # nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
+    # nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    # nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.org/proxy-connect-timeout: "3600"
+    nginx.org/proxy-read-timeout: "3600"
+    nginx.org/proxy-send-timeout: "3600"
 #     nginx.ingress.kubernetes.io/configuration-snippet: |
 #       add_header Content-Security-Policy "frame-ancestors mpass.staging.egov.md;";
 
@@ -23,12 +23,12 @@ ingress_back:
     ingress.kubernetes.io/proxy-body-size: "250m"
     nginx.org/client-body-timeout: "3600"
     nginx.org/client-max-body-size: 250m
-    nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600s"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600s"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600s"
-    # nginx.org/proxy-connect-timeout: "3600s"
-    # nginx.org/proxy-read-timeout: "3600s"
-    # nginx.org/proxy-send-timeout: "3600s"
+    # nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
+    # nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    # nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.org/proxy-connect-timeout: "3600"
+    nginx.org/proxy-read-timeout: "3600"
+    nginx.org/proxy-send-timeout: "3600"
     # nginx.ingress.kubernetes.io/configuration-snippet: |
     #   add_header Content-Security-Policy "frame-ancestors mpass.staging.egov.md;";
 

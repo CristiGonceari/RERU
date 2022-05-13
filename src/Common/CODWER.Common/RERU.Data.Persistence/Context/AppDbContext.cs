@@ -74,6 +74,18 @@ namespace RERU.Data.Persistence.Context
             modelBuilder.Entity<Module>().HasKey(c => c.Id);
             modelBuilder.Entity<UserProfile>().HasKey(c => c.Id);
 
+            modelBuilder.Entity<UserProfile>()
+                .HasOne(up => up.Department)
+                .WithMany()
+                .HasForeignKey(up => up.DepartmentColaboratorId)
+                .HasPrincipalKey(d => d.ColaboratorId);
+
+            modelBuilder.Entity<UserProfile>()
+                .HasOne(up => up.Role)
+                .WithMany()
+                .HasForeignKey(up => up.RoleColaboratorId)
+                .HasPrincipalKey(r => r.ColaboratorId);
+
             modelBuilder
                 .ApplyConfigurationsFromAssembly(typeof(AppDbContext)
                     .Assembly);

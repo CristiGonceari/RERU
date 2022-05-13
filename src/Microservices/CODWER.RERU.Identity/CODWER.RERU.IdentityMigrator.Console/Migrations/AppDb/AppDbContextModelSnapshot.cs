@@ -1819,6 +1819,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<int?>("DepartmentColaboratorId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
@@ -1846,6 +1849,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<bool>("RequiresDataEntry")
                         .HasColumnType("boolean");
 
+                    b.Property<int?>("RoleColaboratorId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Token")
                         .HasColumnType("text");
 
@@ -1859,6 +1865,10 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentColaboratorId");
+
+                    b.HasIndex("RoleColaboratorId");
 
                     b.ToTable("UserProfiles");
                 });
@@ -3073,6 +3083,23 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .IsRequired();
 
                     b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.UserProfile", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentColaboratorId")
+                        .HasPrincipalKey("ColaboratorId");
+
+                    b.HasOne("RERU.Data.Entities.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleColaboratorId")
+                        .HasPrincipalKey("ColaboratorId");
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.UserProfileIdentity", b =>

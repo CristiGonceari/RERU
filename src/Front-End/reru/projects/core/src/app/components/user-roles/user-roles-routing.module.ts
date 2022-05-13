@@ -14,9 +14,9 @@ const routes: Routes = [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: 'overview', component: UserRoleOverviewComponent }
     ]
-  },
-  { path: 'add-user-role', component: AddEditUserRoleComponent },
-  { path: 'edit-user-role/:id', component: AddEditUserRoleComponent }
+  }
+  // { path: 'add-user-role', component: AddEditUserRoleComponent },
+  // { path: 'edit-user-role/:id', component: AddEditUserRoleComponent }
 ]
 
 @NgModule({

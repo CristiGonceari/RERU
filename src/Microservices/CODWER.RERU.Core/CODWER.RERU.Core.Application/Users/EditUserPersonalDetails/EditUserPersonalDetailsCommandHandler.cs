@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CVU.ERP.Logging;
@@ -18,14 +19,16 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
         private readonly IEvaluationClient _evaluationClient;
         private readonly ILoggerService<EditUserPersonalDetailsCommandHandler> _loggerService;
         private readonly IStorageFileService _storageFileService;
+        private readonly IMapper _mapper;
 
         public EditUserPersonalDetailsCommandHandler(ICommonServiceProvider commonServiceProvider,
             IEvaluationClient evaluationClient,
             ILoggerService<EditUserPersonalDetailsCommandHandler> loggerService,
-            IStorageFileService storageFileService) : base(commonServiceProvider)
+            IStorageFileService storageFileService, IMapper mapper) : base(commonServiceProvider)
         {
             _evaluationClient = evaluationClient;
             _storageFileService = storageFileService;
+            _mapper = mapper;
             _loggerService = loggerService;
         }
 
@@ -45,11 +48,7 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
             //    userProfile.MediaFileId = request.Data.MediaFileId;
             //}
 
-            userProfile.Id = request.Data.Id;
-            userProfile.FirstName = request.Data.FirstName;
-            userProfile.LastName = request.Data.LastName;
-            userProfile.FatherName = request.Data.FatherName;
-
+            _mapper.Map(request.Data, userProfile);
             await AppDbContext.SaveChangesAsync();
              
             await LogAction(userProfile);

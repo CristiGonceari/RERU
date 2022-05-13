@@ -41,6 +41,10 @@ export class UserProfileService extends AbstractService {
 		return this.http.delete(`${this.coreUrl}/${this.routeUrl}/${data.userId}/module-access/${data.moduleId}`);
 	}
 
+	getUserStatus(): Observable<any> {
+		return this.http.get(`${this.coreUrl}/${this.routeUrl}/user-status/select-values`);
+	}
+
 	print(data): Observable<any> {
 		return this.http.put(`${this.coreUrl}/${this.routeUrl}/print`, data, {
 			responseType: 'blob',

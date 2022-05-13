@@ -9,6 +9,8 @@ import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
 import { ValidatorUtil } from '../../../utils/util/validator.util';
 import { FileTypeEnum } from '../../../../../../erp-shared/src/lib/models/FileTypeEnum';
+import { DepartmentService } from '../../../utils/services/department.service';
+import { UserRoleService } from '../../../utils/services/user-role.service';
 
 @Component({
   selector: 'app-add',
@@ -25,6 +27,8 @@ export class AddComponent implements OnInit {
   fileId: string;
   fileType: FileTypeEnum = FileTypeEnum.Photos
   attachedFile: File;
+  departments;
+  roles;
 
   constructor(
     private fb: FormBuilder,
@@ -34,14 +38,25 @@ export class AddComponent implements OnInit {
     public translate: I18nService,
     private ngZone: NgZone,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private departmentService: DepartmentService,
+    private roleService: UserRoleService
   ) { }
 
   ngOnInit(): void {
+    this.getDepartments();
+    this.getRoles();
     this.initForm();
     if (this.userId) this.get();
   }
 
+  getDepartments(){
+    this.departmentService.getValues().subscribe(res => this.departments = res.data);
+  }
+
+  getRoles(){
+    this.roleService.getValues().subscribe(res => this.roles = res.data);
+  }
 
   hasErrors(field): boolean {
     return this.userForm.touched && this.userForm.get(field).invalid;
@@ -69,6 +84,8 @@ export class AddComponent implements OnInit {
       fatherName: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'),]),
       idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
       email: this.fb.control(null, [Validators.required, Validators.email]),
+      departmentColaboratorId: this.fb.control(null, [Validators.required]),
+      roleColaboratorId: this.fb.control(null, [Validators.required]),
       emailNotification: this.fb.control(false, [Validators.required])
     });
   }
@@ -79,12 +96,15 @@ export class AddComponent implements OnInit {
 
   addUser(): void {
     this.isLoading = true;
+
     let data = {
       firstName: this.userForm.value.firstName,
       lastName: this.userForm.value.lastName,
       fatherName: this.userForm.value.fatherName,
       email: this.userForm.value.email,
       idnp: this.userForm.value.idnp,
+      departmentColaboratorId: this.userForm.value.departmentColaboratorId,
+      roleColaboratorId: this.userForm.value.roleColaboratorId,
       emailNotification: this.userForm.value.emailNotification
     }
 
@@ -109,9 +129,6 @@ export class AddComponent implements OnInit {
         this.ngZone.run(() => this.router.navigate(['../'], { relativeTo: this.route }));
         this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       })
-
-
-
     }, () => {
       forkJoin([
         this.translate.get('notification.title.error'),

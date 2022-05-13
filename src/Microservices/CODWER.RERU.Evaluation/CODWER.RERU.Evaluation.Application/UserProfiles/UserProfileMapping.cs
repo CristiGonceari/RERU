@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
+using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Models.Internal;
 using RERU.Data.Entities;
@@ -14,7 +15,8 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles
             CreateMap<AddEditUserProfileDto, UserProfile>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
 
-            CreateMap<UserProfile, UserProfileDto>();
+            CreateMap<UserProfile, UserProfileDto>()
+                .ForMember(x => x.UserStatusEnum, opts => opts.MapFrom(src => src.DepartmentColaboratorId == null && src.RoleColaboratorId == null ? UserStatusEnum.Candidate : UserStatusEnum.Employee));
 
             CreateMap<UserProfileDto, InternalUserProfileCreate>()
                 .ForMember(x => x.Name, opts => opts.MapFrom(src => src.FirstName))
