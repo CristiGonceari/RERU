@@ -483,7 +483,8 @@
     "succes-update-msg": "Întrebarea a fost actualizată cu succes",
     "succes-update-status-msg": "Statutul intrebării a fost actualizat",
     "search-by-status": "Selecteaza statutul intrebării",
-    "add-tags": "Insereaza taguri"
+    "add-tags": "Insereaza taguri",
+    "bulk-import-options-msg": "Vă rugăm să descărcați și să utilizați formularul nostru special pentru a importa opțiunile"
   },
   "answers": {
     "option-settings": "Setări Opțiuni",

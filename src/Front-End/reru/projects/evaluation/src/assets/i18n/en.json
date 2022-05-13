@@ -483,7 +483,8 @@
     "succes-update-msg": "Question was successfully updated",
     "succes-update-status-msg": "Question status was updated",
     "search-by-status": "Select question status",
-    "add-tags": "Add tags"
+    "add-tags": "Add tags",
+    "bulk-import-options-msg": "Please, download and use our special form for import options"
   },
   "answers": {
     "option-settings": "Option Settions",
