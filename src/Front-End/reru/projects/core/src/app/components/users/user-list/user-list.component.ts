@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { FilterUserStateComponent } from './filter-user-state/filter-user-state.component';
+import { SearchStatusComponent } from './search-status/search-status.component';
 
 @Component({
   selector: 'app-user-list',
@@ -12,7 +13,7 @@ export class UserListComponent {
  @ViewChild('email') searchEmail: any;
  @ViewChild('idnp') searchIdnp: any;
  @ViewChild(FilterUserStateComponent) userState: FilterUserStateComponent;
- @ViewChild('userStatusEnum') userStatusEnum: any;
+ @ViewChild(SearchStatusComponent) userStatusEnum: SearchStatusComponent;
 
  title: string;
   constructor() { }
@@ -22,7 +23,7 @@ export class UserListComponent {
 		this.searchEmail.clear();
 		this.searchIdnp.clear();
     this.userState.status = '0';
-    this.userStatusEnum = '';
+    this.userStatusEnum.userStatus = '';
   }
   
   getTitle(): string {

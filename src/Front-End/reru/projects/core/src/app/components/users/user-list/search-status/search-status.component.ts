@@ -7,9 +7,9 @@ import { UserProfileService } from 'projects/core/src/app/utils/services/user-pr
   styleUrls: ['./search-status.component.scss']
 })
 export class SearchStatusComponent {
-
   @Output() filter: EventEmitter<void> = new EventEmitter<void>();
   statusesList;
+  userStatus: string = '';
   constructor(private userService: UserProfileService) { this.getTestStatuses(); }
 
   getTestStatuses() {
