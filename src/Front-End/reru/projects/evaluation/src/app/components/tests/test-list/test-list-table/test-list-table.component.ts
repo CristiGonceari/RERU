@@ -30,6 +30,7 @@ export class TestListTableComponent implements OnInit {
   testTemplateName = [];
   testToSearch;
   userName;
+  userEmail;
   testTemplateId: number;
   testTemplate = [];
   pager: number[] = [];
@@ -114,6 +115,7 @@ export class TestListTableComponent implements OnInit {
       idnp: this.filters.idnp ||this.idnp || '',
       eventName: this.filters.testEvent || this.eventName || '',
       userName: this.filters.userName || this.userName || '',
+      email: this.filters.userEmail || this.userEmail || '',
       programmedTimeFrom: this.searchFrom,
       programmedTimeTo: this.searchTo,
       testStatus: this.filters.selectedStatus || this.selectedStatus,
@@ -306,6 +308,7 @@ export class TestListTableComponent implements OnInit {
       idnp: this.filters.idnp ||this.idnp || '',
       eventName: this.filters.testEvent || this.eventName || '',
       userName: this.filters.userName || this.userName || '',
+      email: this.filters.userEmail || this.userEmail || '',
       programmedTimeFrom: this.searchFrom || null,
       programmedTimeTo: this.searchTo || null
 		};

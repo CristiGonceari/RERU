@@ -47,6 +47,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 tests = tests.Where(x => x.UserProfile.FirstName.ToLower().Contains(request.UserName.ToLower()) || x.UserProfile.LastName.ToLower().Contains(request.UserName.ToLower()) || x.UserProfile.FatherName.ToLower().Contains(request.UserName.ToLower()));
             }
 
+            if (!string.IsNullOrWhiteSpace(request.Email))
+            {
+                tests = tests.Where(x => x.UserProfile.Email.Contains(request.Email));
+            }
+
             if (!string.IsNullOrWhiteSpace(request.Idnp))
             {
                 tests = tests.Where(x => x.UserProfile.Idnp.Contains(request.Idnp));

@@ -12,6 +12,7 @@ export class TestListComponent {
   @ViewChild('testEvent') testEvent: any;
   @ViewChild('testLocation') testLocation: any;
   @ViewChild('userName') userName: any;
+  @ViewChild('userEmail') userEmail: any;
   @ViewChild('idnp') idnp: any;
   @ViewChild('selectedStatus') selectedStatus: any;
   @ViewChild('selectedResult') selectedResult: any;
@@ -28,6 +29,7 @@ export class TestListComponent {
 		this.testEvent.key = '';
 		this.testLocation.key = '';
     this.userName.key = '';
+    this.userEmail.key = '';
     this.idnp.key = '';
     this.selectedStatus.getTestStatuses();
     this.selectedResult.getTestResults();

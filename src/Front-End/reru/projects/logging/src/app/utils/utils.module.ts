@@ -7,11 +7,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DetailsModalComponent } from './modals/details-modal/details-modal.component';
 import { DeleteLogsModalComponent } from './modals/delete-logs-modal/delete-logs-modal.component';
+import { DateFilterPipe } from './pipes/date-filter.pipe';
 
 
 
 @NgModule({
-  declarations: [DetailsModalComponent, DeleteLogsModalComponent],
+  declarations: [DetailsModalComponent, DeleteLogsModalComponent, DateFilterPipe],
   imports: [
     HttpClientModule,
     CommonModule,
@@ -22,7 +23,8 @@ import { DeleteLogsModalComponent } from './modals/delete-logs-modal/delete-logs
     ReactiveFormsModule,
   ],
   exports: [
-    TranslateModule
+    TranslateModule,
+    DateFilterPipe
   ]
 })
 export class UtilsModule { }
