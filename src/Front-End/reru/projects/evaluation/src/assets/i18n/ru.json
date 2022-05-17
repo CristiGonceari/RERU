@@ -136,7 +136,7 @@
     "all": "Все",
     "there-are-no-records-at-the-moment": "В настоящее время нет записей",
     "1": "Шаблон теста",
-    "2": "Контрольная работа",
+    "2": "Тест",
     "reports":{
       "name": "Название",
       "personFullName": "Полное имя",
@@ -372,6 +372,7 @@
     "search-test-type": "Поиск по шаблону теста",
     "search-test-status": "Поиск по статусу",
     "search-student": "Поиск по имени пользователя",
+    "search-email": "Поиск по электронной почте",
     "search-student-idnp": "Поиск по idnp пользователя",
     "test-type-name": "Имя шаблона теста",
     "student": "Студент",

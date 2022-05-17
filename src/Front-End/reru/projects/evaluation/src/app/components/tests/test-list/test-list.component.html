@@ -41,6 +41,10 @@
                   <erp-shared-search-input (handleSearch)="testsTable.setFilter('userName', $event)"
                     [placeholder]="'verify-test.search-student' | translate" #userName></erp-shared-search-input>
                 </div>
+                <div class="col">
+                  <erp-shared-search-input (handleSearch)="testsTable.setFilter('userEmail', $event)"
+                    [placeholder]="'verify-test.search-email' | translate" #userEmail></erp-shared-search-input>
+                </div>
               </div>
               <div class="row w-100 mt-3">
                 <div class="col-lg-2 col-12">
