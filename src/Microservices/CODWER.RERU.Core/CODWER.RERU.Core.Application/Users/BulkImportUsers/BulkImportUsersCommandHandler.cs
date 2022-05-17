@@ -7,15 +7,26 @@ using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
+using CVU.ERP.Common.DataTransferObjects.Users;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 {
     public class BulkImportUsersCommandHandler : BaseHandler, IRequestHandler<BulkImportUsersCommand, FileDataDto>
     {
-        public BulkImportUsersCommandHandler(ICommonServiceProvider commonServiceProvider) : base(commonServiceProvider)
+        private readonly AppDbContext _appDbContext;
+        private readonly IMapper _mapper;
+
+        public BulkImportUsersCommandHandler(ICommonServiceProvider commonServiceProvider, AppDbContext appDbContext, IMapper mapper) : base(commonServiceProvider)
         {
+            _appDbContext = appDbContext;
+            _mapper = mapper;
         }
 
         public async Task<FileDataDto> Handle(BulkImportUsersCommand request, CancellationToken cancellationToken)
@@ -33,7 +44,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
             for (var i = 1; i <= totalRows; i++)
             {
-                var command = new CreateUserCommand
+                var newUser = new CreateUserDto()
                 {
                     LastName = workSheet.Cells[i, 1]?.Value?.ToString(),
                     FirstName = workSheet.Cells[i, 2]?.Value?.ToString(),
@@ -45,14 +56,37 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                     EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "True")
                 };
 
-                try
+                var user = _appDbContext.UserProfiles.FirstOrDefault(x => x.Idnp == newUser.Idnp);
+
+                if (user != null)
                 {
-                    await Mediator.Send(command);
+                    try
+                    {
+                        _mapper.Map(newUser, user);
+                        await _appDbContext.SaveChangesAsync();
+
+                        workSheet.Cells[i, 9].Value = "Editat";
+                    }
+                    catch (Exception e)
+                    {
+                        workSheet.Cells[i, 9].Value = $"Error: {e.Message}";
+                        Console.WriteLine(e);
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    workSheet.Cells[i, 7].Value = e.Message;
-                    Console.WriteLine(e);
+                    try
+                    {
+                        await _appDbContext.UserProfiles.AddAsync(_mapper.Map<UserProfile>(newUser));
+                        await _appDbContext.SaveChangesAsync();
+
+                        workSheet.Cells[i, 9].Value = "Adăugat";
+                    }
+                    catch (Exception e)
+                    {
+                        workSheet.Cells[i, 9].Value = $"Error: {e.Message}";
+                        Console.WriteLine(e);
+                    }
                 }
             }
 
