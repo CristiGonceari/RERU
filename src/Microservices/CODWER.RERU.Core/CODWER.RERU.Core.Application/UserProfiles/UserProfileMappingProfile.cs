@@ -44,6 +44,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles
             CreateMap<global::RERU.Data.Entities.Module, ApplicationModule>();
 
             CreateMap<UserProfile, UserProfileOverviewDto>()
+                .ForMember(x => x.UserStatusEnum, opts => opts.MapFrom(src => src.DepartmentColaboratorId == null && src.RoleColaboratorId == null ? UserStatusEnum.Candidate : UserStatusEnum.Employee))
                 .ForMember(destinationMember => destinationMember.Modules, opts => opts.MapFrom(sourceMember => sourceMember.ModuleRoles));
 
             CreateMap<UserProfileModuleRole, UserProfileModuleRowDto>()
