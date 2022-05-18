@@ -134,7 +134,8 @@
     "attach": "Attach",
     "print": "Print",
     "watch": "Watch video",
-    "import": "Import"
+    "import": "Import",
+    "loading": "Loading"
   },
   "pagination": {
     "displaing": "Displaying",

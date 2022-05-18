@@ -132,7 +132,8 @@
     "attach": "Atașează",
     "print": "Imprimă",
     "watch": "Priveste video",
-    "import": "Importa"
+    "import": "Importa",
+    "loading": "Se încarcă"
   },
   "pagination": {
     "displaing": "Se afișează",
