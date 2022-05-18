@@ -50,15 +50,14 @@
 							</div>
 							<div class="row w-100 mt-4">
 								<div class="col">
-									<app-search-by-question-status (filter)="questionsTable.setFilter('questionStatus', $event)" #status></app-search-by-question-status>
+									<app-search-by-question-status (filter)="questionsTable.setFilter('status', $event)" #status></app-search-by-question-status>
 								</div>
 								<div class="col">
-									<app-search-by-question-type (filter)="questionsTable.setFilter('questionType', $event)" #type></app-search-by-question-type>
+									<app-search-by-question-type (filter)="questionsTable.setFilter('type', $event)" #type></app-search-by-question-type>
 								</div>
 								<div class="col">
 									<div class="w-100 text-right">
-										<app-button (handle)="clearFields(); questionsTable.resetFilters()" [value]="'button.reset' | translate" class="mr-5"></app-button>
-										<app-confirm-button (handle)="questionsTable.list({page: 1})" [value]="'button.search' | translate"></app-confirm-button>
+										<app-button (handle)="clearFields(); questionsTable.resetFilters()" [value]="'button.reset' | translate"></app-button>
 									</div>
 								</div>
 							</div>

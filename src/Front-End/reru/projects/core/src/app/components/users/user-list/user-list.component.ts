@@ -8,7 +8,6 @@ import { SearchStatusComponent } from './search-status/search-status.component';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent {
- // @ViewChild(UserSearchComponent) userSearch: UserSearchComponent;
  @ViewChild('keyword') searchKeyword: any;
  @ViewChild('email') searchEmail: any;
  @ViewChild('idnp') searchIdnp: any;
@@ -18,12 +17,13 @@ export class UserListComponent {
  title: string;
   constructor() { }
 
-  resetFilters(): void {
-    this.searchKeyword.clear();
-		this.searchEmail.clear();
-		this.searchIdnp.clear();
+  clearFilters(): void {
+    this.searchKeyword.key = '';
+		this.searchEmail.key = '';
+		this.searchIdnp.key = '';
     this.userState.status = '0';
     this.userStatusEnum.userStatus = '';
+    // this.userStatusEnum.getTestStatuses();
   }
   
   getTitle(): string {

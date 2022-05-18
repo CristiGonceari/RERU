@@ -140,13 +140,15 @@ export class QuestionListTableComponent implements OnInit {
 
 	setFilter(field: string, value): void {
 		this.filters[field] = value;
+		this.pagedSummary.currentPage = 1;
 		this.list();
 	}
 
 	resetFilters(): void {
 		this.filters = {};
-		this.questionStatus = '';
 		this.questionType = '';
+		this.questionStatus = '';
+		this.pagedSummary.currentPage = 1;
 		this.list();
 	}
 

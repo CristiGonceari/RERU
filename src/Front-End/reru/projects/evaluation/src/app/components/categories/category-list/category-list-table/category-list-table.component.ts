@@ -24,7 +24,6 @@ export class CategoryListTableComponent implements OnInit {
   	questionCategories: QuestionCategory[] = [];
   	pagedSummary: PaginationModel = new PaginationModel();
 	name = '';
-	pager: number[] = [];
 	keyword: string;
 	isLoading: boolean = true;
 	title: string;

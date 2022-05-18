@@ -15,7 +15,6 @@ import { UserListTableComponent } from '././user-list-table/user-list-table.comp
 import { UsersComponent } from './users.component';
 import { EditUserComponent } from '././user-profile/edit-user/edit-user.component';
 import { SetPasswordUserComponent } from '././user-profile/set-password-user/set-password-user.component';
-import { SortButtonComponent } from '././user-list-table/sort-button/sort-button.component';
 import { FilterUserStateComponent } from '././user-list/filter-user-state/filter-user-state.component';
 import { RemoveComponent } from './remove/remove.component';
 import { SearchStatusComponent } from './user-list/search-status/search-status.component';
@@ -41,7 +40,6 @@ import { SearchStatusComponent } from './user-list/search-status/search-status.c
     SetPasswordComponent,
     EditUserComponent,
     SetPasswordUserComponent,
-    SortButtonComponent,
     FilterUserStateComponent,
     RemoveComponent,
     SearchStatusComponent

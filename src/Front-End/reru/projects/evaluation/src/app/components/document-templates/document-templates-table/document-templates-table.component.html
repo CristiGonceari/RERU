@@ -74,8 +74,8 @@
         </tbody>
     </table>
     <div pagination [page]="pagedSummary.currentPage" [total]="pagedSummary.totalPages" [size]="pagedSummary.pageSize"
-        *ngIf="documents.length" [totalRecords]="pagedSummary.totalCount"
-        (sizeChange)="getList({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-        (pageChange)="getList({ page: $event })" class="datatable-pager datatable-paging-loaded">
+        *ngIf="documents.length" [totalRecords]="pagedSummary.totalCount" class="datatable-pager datatable-paging-loaded"
+        (sizeChange)="getList({ page: 1, itemsPerPage: $event })"
+        (pageChange)="getList({ page: $event, itemsPerPage: pagedSummary.pageSize })">
     </div>
 </div>

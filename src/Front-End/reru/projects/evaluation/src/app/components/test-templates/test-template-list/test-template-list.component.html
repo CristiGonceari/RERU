@@ -27,13 +27,12 @@
                 <div class="col">
 									<erp-shared-search-input (handleSearch)="testTable.setFilter('eventName', $event)" [placeholder]="'events.search-event' | translate" #eventName></erp-shared-search-input>
 							  </div>
-                <div class="col-lg-3 col-12">
+                <div class="col">
                   <app-test-template-search (filter)="testTable.setFilter('status', $event)" #status></app-test-template-search>
                 </div>
                 <div class="col-lg-3 col-12">
                   <div class="w-100 text-right">
-										<app-button (handle)="clearFields(); testTable.resetFilters()" [value]="'button.reset' | translate" class="mr-5"></app-button>
-                    <app-confirm-button (handle)="testTable.list({page: 1})" [value]="'button.search' | translate"></app-confirm-button>
+										<app-button (handle)="clearFields(); testTable.resetFilters()" [value]="'button.reset' | translate"></app-button>
                   </div>
                 </div>
               </div>
