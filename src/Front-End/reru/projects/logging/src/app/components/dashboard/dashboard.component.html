@@ -122,8 +122,8 @@
                 </table>
                 <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
                   [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
-                  (sizeChange)="getLoggingValues({ page: pagination.currentPage, itemsPerPage: $event})"
-                  (pageChange)="getLoggingValues({ page: $event})">
+                  (sizeChange)="getLoggingValues({ page: 1, itemsPerPage: $event })"
+                  (pageChange)="getLoggingValues({ page: $event, itemsPerPage: pagination.pageSize })">
                 </div>
               </div>
             </div>
