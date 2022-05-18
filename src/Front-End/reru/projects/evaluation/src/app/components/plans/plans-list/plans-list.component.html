@@ -6,18 +6,20 @@
 <div class="row w-100 my-4">
   <div class="col">
     <div class="input-group input-group-sm input-group-solid">
-      <input class="form-control" [owlDateTime]="dtFrom" [owlDateTimeTrigger]="dtFrom"
-        [placeholder]="'events.search-from' | translate"
-        [(ngModel)]="dateTimeFrom" autocomplete="off">
-      <owl-date-time #dtFrom></owl-date-time>
+      <input id="from" [owlDateTime]="dtFrom" [placeholder]="'events.search-from' | translate"
+      class="shadow-input" name="date" [(ngModel)]="dateTimeFrom" (ngModelChange)="getFilteredEvents({dtFrom: $event})" autocomplete="off" />
+    <input id="from" [owlDateTimeTrigger]="dtFrom" [placeholder]="'events.search-from' | translate" autocomplete="off"
+      class="form-control form-control-lg form-control-solid" [value]="dateTimeFrom | dateFilter:'dd/MM/yy HH:mm'"/>
+    <owl-date-time #dtFrom></owl-date-time>
     </div>
   </div>
   <div class="col">
     <div class="input-group input-group-sm input-group-solid">
-      <input class="form-control" [owlDateTime]="toDate"
-        [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate"
-        [(ngModel)]="dateTimeTo" autocomplete="off">
-      <owl-date-time #toDate></owl-date-time>
+      <input id="from" [owlDateTime]="toDate" [placeholder]="'events.search-to' | translate"
+      class="shadow-input" name="date" [(ngModel)]="dateTimeTo" (ngModelChange)="getFilteredEvents({toDate: $event})" autocomplete="off" />
+    <input id="from" [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate" autocomplete="off"
+      class="form-control form-control-lg form-control-solid" [value]="dateTimeTo | dateFilter:'dd/MM/yy HH:mm'"/>
+    <owl-date-time #toDate></owl-date-time>
     </div>
   </div>
   <div class="col">
