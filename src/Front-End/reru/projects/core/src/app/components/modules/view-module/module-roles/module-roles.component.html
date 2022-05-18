@@ -1,6 +1,4 @@
-<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-
-<div *ngIf="!isLoading" id="kt_content" class="content d-flex flex-column flex-column-fluid">
+<div id="kt_content" class="content d-flex flex-column flex-column-fluid">
   <div class="card card-custom gutter-b">
     <div class="card-header flex-wrap border-0 py-5">
       <div class="w-100 d-flex justify-content-between align-items-center">
@@ -10,89 +8,91 @@
       </div>
     </div>
     <div class="card-body">
+      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+      
       <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
       id="kt_datatable">
-      <table class="datatable table font-size-lg">
-        <thead class="text-uppercase text-muted">
-          <tr>
-            <th scope="col">{{ 'table.title' | translate }}</th>
-            <th scope="col" style="width: 80px">{{ 'table.default' | translate }}</th>
-            <th scope="col" style="width: 100px">{{ 'table.type' | translate }}</th>
-            <th scope="col" style="width: 50px"></th>
-          </tr>
-        </thead>
-        <tbody class="text-dark-75" *ngIf="roles">
-          <tr *ngFor="let role of roles">
-            <td [class.no-actions]="!viewPermissions" (dblclick)="navigateToPermissions(role.id)">
-              <a [routerLink]="['../../../roles', role.id, 'permissions']" class="font-size-lg text-dark-50 text-hover-dark-75" >
-                {{ role.name }}
-              </a>
-            </td>
-            <td [class.no-actions]="!viewPermissions" (dblclick)="navigateToPermissions(role.id)"
-              style="text-align: center">
-              <svg-icon *ngIf="role.isAssignByDefault === true" key="success" [width]="24" [height]="24"></svg-icon>
-            </td>
-            <td [class.no-actions]="!viewPermissions" (dblclick)="navigateToPermissions(role.id)">
-              <span *ngIf="role.type === 1" class="font-size-lg text-dark-75">Default</span>
-              <span *ngIf="role.type === 2" class="font-size-lg text-dark-75">Dynamic</span>
-            </td>
-            <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-              <div style="overflow: visible; position: relative; width: 0px">
-                <div ngbDropdown class="dropdown dropdown-inline">
-                  <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
-                    <span class="svg-icon svg-icon-md" [id]="'action' + i" ngbDropdownToggle>
-                      <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
-                        version="1.1">
-                        <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
-                          <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3" fill="black"></rect>
-                          <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3" fill="black"
-                            fill-opacity="0.7"></rect>
-                        </g>
-                      </svg>
-                    </span>
-                  </div>
-                  <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
-                    <div ngbDropdownMenu [aria-labelledby]="'action' + i" class="p-0">
-                      <span *permission="'P00000010'">
-                        <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
-                          [routerLink]="['../../../roles', role.id, 'permissions']">
-                          {{ 'pages.roles.view-permissions' | translate }}
-                        </button>
+        <table class="datatable table font-size-lg" *ngIf="!isLoading" >
+          <thead class="text-uppercase text-muted">
+            <tr>
+              <th scope="col">{{ 'table.title' | translate }}</th>
+              <th scope="col" style="width: 80px">{{ 'table.default' | translate }}</th>
+              <th scope="col" style="width: 100px">{{ 'table.type' | translate }}</th>
+              <th scope="col" style="width: 50px"></th>
+            </tr>
+          </thead>
+          <tbody class="text-dark-75" *ngIf="roles">
+            <tr *ngFor="let role of roles">
+              <td [class.no-actions]="!viewPermissions" (dblclick)="navigateToPermissions(role.id)">
+                <a [routerLink]="['../../../roles', role.id, 'permissions']" class="font-size-lg text-dark-50 text-hover-dark-75" >
+                  {{ role.name }}
+                </a>
+              </td>
+              <td [class.no-actions]="!viewPermissions" (dblclick)="navigateToPermissions(role.id)"
+                style="text-align: center">
+                <svg-icon *ngIf="role.isAssignByDefault === true" key="success" [width]="24" [height]="24"></svg-icon>
+              </td>
+              <td [class.no-actions]="!viewPermissions" (dblclick)="navigateToPermissions(role.id)">
+                <span *ngIf="role.type === 1" class="font-size-lg text-dark-75">Default</span>
+                <span *ngIf="role.type === 2" class="font-size-lg text-dark-75">Dynamic</span>
+              </td>
+              <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
+                <div style="overflow: visible; position: relative; width: 0px">
+                  <div ngbDropdown class="dropdown dropdown-inline">
+                    <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                      <span class="svg-icon svg-icon-md" [id]="'action' + i" ngbDropdownToggle>
+                        <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
+                          version="1.1">
+                          <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
+                            <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3" fill="black"></rect>
+                            <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3" fill="black"
+                              fill-opacity="0.7"></rect>
+                          </g>
+                        </svg>
                       </span>
-                      <span *permission="'P00000007'">
-                        <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
-                          (click)="navigateToUpdatePermissions(role.id)" [class.mb-2]="role.type == '1'">
-                          {{ 'pages.roles.update-permissions' | translate }}
-                        </button>
-                      </span>
-                      <span *permission="'P00000011'">
-                        <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
-                          *ngIf="role.type == '2'" [routerLink]="['../../../roles/edit', role.id]">
-                          {{ 'button.edit-role' | translate }}
-                        </button>
-                      </span>
-                      <span *permission="'P00000009'">
-                        <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
-                          *ngIf="role.type == '2'" (click)="openRemoveRoleModal(role.id, role.name)">
-                          {{ 'button.delete' | translate }}
-                        </button>
-                      </span>
+                    </div>
+                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                      <div ngbDropdownMenu [aria-labelledby]="'action' + i" class="p-0">
+                        <span *permission="'P00000010'">
+                          <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
+                            [routerLink]="['../../../roles', role.id, 'permissions']">
+                            {{ 'pages.roles.view-permissions' | translate }}
+                          </button>
+                        </span>
+                        <span *permission="'P00000007'">
+                          <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
+                            (click)="navigateToUpdatePermissions(role.id)" [class.mb-2]="role.type == '1'">
+                            {{ 'pages.roles.update-permissions' | translate }}
+                          </button>
+                        </span>
+                        <span *permission="'P00000011'">
+                          <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
+                            *ngIf="role.type == '2'" [routerLink]="['../../../roles/edit', role.id]">
+                            {{ 'button.edit-role' | translate }}
+                          </button>
+                        </span>
+                        <span *permission="'P00000009'">
+                          <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
+                            *ngIf="role.type == '2'" (click)="openRemoveRoleModal(role.id, role.name)">
+                            {{ 'button.delete' | translate }}
+                          </button>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-        <tbody class="datatable-body text-dark-75" *ngIf="!roles">
-          <tr *ngIf="!roles">
-            <td colspan="4" class="text-center">
-              {{'messages.no-records' | translate}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+            </tr>
+          </tbody>
+          <tbody class="datatable-body text-dark-75" *ngIf="!roles">
+            <tr *ngIf="!roles">
+              <td colspan="4" class="text-center">
+                {{'messages.no-records' | translate}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage" *ngIf="roles"
             [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
             (sizeChange)="list({ page: 1, itemsPerPage: $event })"

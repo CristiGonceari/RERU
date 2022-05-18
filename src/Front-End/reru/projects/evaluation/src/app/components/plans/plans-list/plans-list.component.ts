@@ -65,8 +65,7 @@ export class PlansListComponent implements OnInit {
 		          public translate: I18nService,
               private modalService: NgbModal,
 		          private notificationService: NotificationsService,
-              public dialog: MatDialog,
-              private modal: NgbModal) { }
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -84,32 +83,31 @@ export class PlansListComponent implements OnInit {
 	  getFilteredEvents(data: any = {}) :void {
 		this.setTimeToSearch();
 
-		let params = {
-			fromDate: this.searchFrom,
-			tillDate: this.searchTo,
-			page: data.page || this.pagination.currentPage,
-			itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10
-		}
-		if(this.searchFrom != null || this.searchTo != null){
-			this.planService.list(params).subscribe(res =>{
-				if(res && res.data){
-					this.fromDate = res.data.fromDate;
-					this.tillDate = res.data.tillDate;
-					this.plans = res.data.items || [];
-					this.pagination = res.data.pagedSummary;
-				}
-			})
-		}
+      let params = {
+        fromDate: this.searchFrom,
+        tillDate: this.searchTo,
+        page: data.page || this.pagination.currentPage,
+        itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10
+      }
+      if(this.searchFrom != null || this.searchTo != null) {
+        this.planService.list(params).subscribe(res => {
+          if(res && res.data) {
+            this.fromDate = res.data.fromDate;
+            this.tillDate = res.data.tillDate;
+            this.plans = res.data.items || [];
+            this.pagination = res.data.pagedSummary;
+          }
+        })
+      }
 	  }
 
   getListByDate(data: any = {}): void {
+    this.isLoading = true;
 
     if (data.date != null) {
       this.selectedDay = this.parseDates(data.date);
       this.displayDate = this.parseDatesForTable(data.date)
     }
-
-    this.isLoading = true;
 
     const request = {
       date:  this.selectedDay,
@@ -137,12 +135,12 @@ export class PlansListComponent implements OnInit {
 	}
 
   list(data: any = {}): void {
-    this.selectedDay = null;
     this.isLoading = true;
-    
+    this.selectedDay = null;
+
     if (data.fromDate != null && data.tillDate != null) {
       this.tillDate = data.tillDate,
-        this.fromDate = data.fromDate
+      this.fromDate = data.fromDate
     }
     if (data.displayMonth != null && data.displayYear != null) {
       this.displayMonth = data.displayMonth;
@@ -158,10 +156,8 @@ export class PlansListComponent implements OnInit {
 
     this.planService.list(request).subscribe(response => {
       if (response.success) {
-
         this.plans = response.data.items || [];
         this.pagination = response.data.pagedSummary;
-
         this.isLoading = false;
         this.selectedDay = null;
       }

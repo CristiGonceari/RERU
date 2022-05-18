@@ -49,6 +49,8 @@ export class CategoryListTableComponent implements OnInit {
  	}
 
   	list(data: any = {}) {
+		console.warn('pagination', data.itemsPerPage, this.pagedSummary.pageSize);
+		
 		this.isLoading = true;
 		this.keyword = data.keyword;
 		let params = {
