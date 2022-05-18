@@ -106,12 +106,12 @@
   </div>
   <div pagination class="datatable-pager datatable-paging-loaded" *ngIf="plans.length && selectedDay != null"
     [page]="pagination.currentPage" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount"
-    [size]="pagination.pageSize" (sizeChange)="getListByDate({ page: pagination.currentPage, itemsPerPage: $event})"
-    (pageChange)="getListByDate({ page: $event})">
+    [size]="pagination.pageSize" (sizeChange)="getListByDate({page: 1, itemsPerPage: $event})"
+    (pageChange)="getListByDate({page: $event, itemsPerPage: pagination.pageSize})">
   </div>
   <div pagination class="datatable-pager datatable-paging-loaded" *ngIf="plans.length && selectedDay == null"
     [page]="pagination.currentPage" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount"
-    [size]="pagination.pageSize" (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event})"
-    (pageChange)="list({ page: $event})">
+    [size]="pagination.pageSize" (sizeChange)="list({page: 1, itemsPerPage: $event})"
+    (pageChange)="list({page: $event, itemsPerPage: pagination.pageSize})">
   </div>
 </div>

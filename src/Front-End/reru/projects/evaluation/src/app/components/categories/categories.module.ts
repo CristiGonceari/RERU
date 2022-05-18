@@ -45,7 +45,6 @@ import { BulkImportOptionsComponent } from './bulk-import-options/bulk-import-op
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    CommonModule,
     NgxDropzoneModule
   ]
 })

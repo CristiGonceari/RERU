@@ -86,6 +86,6 @@
         [totalRecords]="pagedSummary.totalCount"
         [size]="pagedSummary.pageSize"
         (sizeChange)="list({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-        (pageChange)="list({ keyword: keyword, page: $event })">
+        (pageChange)="list({ itemsPerPage: pagedSummary.pageSize, page: $event })">
     </div>
 </div>

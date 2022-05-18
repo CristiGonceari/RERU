@@ -358,18 +358,17 @@ export class TestListTableComponent implements OnInit {
   
   setFilter(field: string, value): void {
 		this.filters[field] = value;
+		this.pagination.currentPage = 1;
 		this.getTests();
 	}
 
 	resetFilters(): void {
 		this.filters = {};
-    
+		this.pagination.currentPage = 1;
     this.dateTimeFrom = '';
     this.dateTimeTo = '';
-    
     this.searchFrom = '';
     this.searchTo = '';
-
 		this.getTests();
 	}
 }

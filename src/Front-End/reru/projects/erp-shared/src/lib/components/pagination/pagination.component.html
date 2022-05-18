@@ -14,23 +14,23 @@
         (click)="changePage(p)" [disabled]="page === total && total === 1">{{p}}
       </a>
     </li>
-    <li><a (click)="changePage(page + 1)" title="Next" class="datatable-pager-link datatable-pager-link-next"
-        [ngClass]="{'datatable-pager-link-disabled': page === total}" data-page="2" [disabled]="page === total"><i
-          class="flaticon2-next"></i></a></li>
-    <li><a title="Last" class="datatable-pager-link datatable-pager-link-last"
-        [ngClass]="{'datatable-pager-link-disabled': page === total}" (click)="changePage(total)"><i
-          class="flaticon2-fast-next" [disabled]="page === total"></i></a></li>
+    <li>
+      <a (click)="changePage(page + 1)" title="Next" class="datatable-pager-link datatable-pager-link-next"
+        [ngClass]="{'datatable-pager-link-disabled': page === total}" data-page="2" [disabled]="page === total">
+        <i class="flaticon2-next"></i>
+      </a>
+    </li>
+    <li>
+      <a title="Last" class="datatable-pager-link datatable-pager-link-last"
+        [ngClass]="{'datatable-pager-link-disabled': page === total}" (click)="changePage(total)">
+        <i class="flaticon2-fast-next" [disabled]="page === total"></i>
+      </a>
+    </li>
   </ul>
   <div class="datatable-pager-info my-2 mb-sm-0">
     <select (change)="changeSize($event)" [(ngModel)]="size" [title]="size"
       class="btn text-dark-50 font-weight-bold mr-4 border-0 bg-light w-75px">
-      <option class="d-none" value=""></option>
-			<option value="5">5</option>
-      <option value="10" selected>10</option>
-      <option value="20">20</option>
-      <option value="30">30</option>
-      <option value="50">50</option>
-      <option value="100">100</option>
+      <option [value]="i" *ngFor="let i of pageNumbers" [selected]="i === 10">{{i}}</option>
     </select>
     <span class="datatable-pager-detail font-size-sm"> {{size}} - <b>{{totalRecords}}</b> </span>
   </div>

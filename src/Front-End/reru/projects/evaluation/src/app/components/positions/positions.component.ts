@@ -47,6 +47,7 @@ export class PositionsComponent implements OnInit {
 	}
 
 	getPositions(data: any = {}): void {
+		this.keyword = data.name;
 		let params: any = {
 			name: this.keyword || '',
 			page: data.page || this.pagination.currentPage,
@@ -56,6 +57,8 @@ export class PositionsComponent implements OnInit {
 	}
 
 	list(params): void {
+		console.warn('params', params);
+		
 		this.positionService.getList(params).subscribe(res => {
 			if (res && res.data) {
 				this.positions = res.data.items;

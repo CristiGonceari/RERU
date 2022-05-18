@@ -41,33 +41,33 @@
             </button>
           </div>
         </div>
-        <div class="card-header border-0 py-0 pr-5" style="min-height: 100%;">
+        <div class="card-header border-0 py-0 pr-4" style="min-height: 100%;">
           <div class="row w-100">
             <div class="col">
-              <erp-shared-search-input (handleSearch)="userTable.getFilteredUsers({keyword: $event, page: 1})"
-                [placeholder]="'pages.user-details.search-name' | translate" #keyword></erp-shared-search-input>
+              <erp-shared-search-input [placeholder]="'pages.user-details.search-name' | translate" #keyword
+                (handleSearch)="userTable.setFilter('keyword', $event)">
+              </erp-shared-search-input>
             </div>
             <div class="col">
-              <erp-shared-search-input (handleSearch)="userTable.getFilteredUsers({email: $event, page: 1})"
-                [placeholder]="'pages.user-details.search-email' | translate" #email></erp-shared-search-input>
+              <erp-shared-search-input [placeholder]="'pages.user-details.search-email' | translate" #email
+                (handleSearch)="userTable.setFilter('email', $event)">
+              </erp-shared-search-input>
             </div>
             <div class="col">
-              <erp-shared-search-input (handleSearch)="userTable.getFilteredUsers({idnp: $event, page: 1})"
-                [placeholder]="'pages.user-details.search-idnp' | translate" #idnp></erp-shared-search-input>
+              <erp-shared-search-input [placeholder]="'pages.user-details.search-idnp' | translate" #idnp
+                (handleSearch)="userTable.setFilter('idnp', $event)">
+              </erp-shared-search-input>
             </div>
             <div class="col">
-              <app-filter-user-state (filter)="userTable.getFilteredUsers({status: $event})"
+              <app-filter-user-state (filter)="userTable.setFilter('status', $event)" #userState
                 (handleSearch)="userTable.searchValue = $event.target.value"></app-filter-user-state>
             </div>
             <div class="col">
-              <app-search-status (filter)="userTable.getFilteredUsers({userStatusEnum: $event})" #userStatusEnum></app-search-status>
+              <app-search-status (filter)="userTable.setFilter('userStatusEnum',  $event)" #userStatusEnum></app-search-status>
             </div>
             <div class="col">
               <div class="w-100 text-right">
-                <app-button (click)="resetFilters(); userTable.list()" [value]="'button.reset' | translate"
-                  class="mr-5"></app-button>
-                <app-confirm-button (handle)="userTable.list({page: 1})" [value]="'button.search' | translate">
-                </app-confirm-button>
+                <app-button (click)="clearFilters(); userTable.resetFilter()" [value]="'button.reset' | translate"></app-button>
               </div>
             </div>
           </div>

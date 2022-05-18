@@ -100,7 +100,7 @@ export class LocationListTableComponent implements OnInit {
 		let params = {
 			name: this.keyword || '',
 			page: data.page || this.pagination.currentPage,
-			itemsPerPage: Number(this.pagination?.pageSize || 10)
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
 		}
 		this.locationService.getLocations(params).subscribe( res => {
 			if(res && res.data) {

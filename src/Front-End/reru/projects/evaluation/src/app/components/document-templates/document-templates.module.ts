@@ -23,7 +23,6 @@ import { DocumentTemplatesTableComponent } from './document-templates-table/docu
   imports: [
     CommonModule,
     DocumentTemplatesRoutingModule,
-    CommonModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
