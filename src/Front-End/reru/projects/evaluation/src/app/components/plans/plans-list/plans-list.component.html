@@ -3,117 +3,114 @@
 </app-loading-spinner>
 <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
-<div *ngIf="!isLoading && !downloadFile">
-  <div class="row w-100 my-4">
-    <div class="col">
-      <div class="input-group input-group-sm input-group-solid">
-        <input id="from" [owlDateTime]="dtFrom" [placeholder]="'events.search-from' | translate" class="shadow-input"
-          name="date" [(ngModel)]="dateTimeFrom" (ngModelChange)="getFilteredEvents({dtFrom: $event})"
-          autocomplete="off" />
-        <input id="from" [owlDateTimeTrigger]="dtFrom" [placeholder]="'events.search-from' | translate"
-          autocomplete="off" class="form-control form-control-lg form-control-solid"
-          [value]="dateTimeFrom | dateFilter:'dd/MM/yy HH:mm'" />
-        <owl-date-time #dtFrom></owl-date-time>
-      </div>
-    </div>
-    <div class="col">
-      <div class="input-group input-group-sm input-group-solid">
-        <input id="from" [owlDateTime]="toDate" [placeholder]="'events.search-to' | translate" class="shadow-input"
-          name="date" [(ngModel)]="dateTimeTo" (ngModelChange)="getFilteredEvents({toDate: $event})"
-          autocomplete="off" />
-        <input id="from" [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate" autocomplete="off"
-          class="form-control form-control-lg form-control-solid" [value]="dateTimeTo | dateFilter:'dd/MM/yy HH:mm'" />
-        <owl-date-time #toDate></owl-date-time>
-      </div>
-    </div>
-    <div class="col">
-      <div class="w-100 text-right">
-        <app-button (handle)="clearFields()" [value]="'button.reset' | translate" class="mr-5"></app-button>
-        <app-confirm-button (handle)="getFilteredEvents({page: 1})" [value]="'button.search' | translate">
-        </app-confirm-button>
-      </div>
+<div class="row w-100 my-4">
+  <div class="col">
+    <div class="input-group input-group-sm input-group-solid">
+      <input id="from" [owlDateTime]="dtFrom" [placeholder]="'events.search-from' | translate" class="shadow-input"
+        name="date" [(ngModel)]="dateTimeFrom" (ngModelChange)="getFilteredEvents({dtFrom: $event})"
+        autocomplete="off" />
+      <input id="from" [owlDateTimeTrigger]="dtFrom" [placeholder]="'events.search-from' | translate"
+        autocomplete="off" class="form-control form-control-lg form-control-solid"
+        [value]="dateTimeFrom | dateFilter:'dd/MM/yy HH:mm'" />
+      <owl-date-time #dtFrom></owl-date-time>
     </div>
   </div>
-
-  <div
-    class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded mt-13"
-    id="kt_datatable">
-    <div class="card-header text-center" *ngIf="selectedDay != null">
-      {{ 'calendar.selected-date' | translate }}: {{displayDate}}
+  <div class="col">
+    <div class="input-group input-group-sm input-group-solid">
+      <input id="from" [owlDateTime]="toDate" [placeholder]="'events.search-to' | translate" class="shadow-input"
+        name="date" [(ngModel)]="dateTimeTo" (ngModelChange)="getFilteredEvents({toDate: $event})"
+        autocomplete="off" />
+      <input id="from" [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate" autocomplete="off"
+        class="form-control form-control-lg form-control-solid" [value]="dateTimeTo | dateFilter:'dd/MM/yy HH:mm'" />
+      <owl-date-time #toDate></owl-date-time>
     </div>
-    <table class="datatable table font-size-lg" style="overflow: visible" id="plans-table"
-      *ngIf="!isLoading && !downloadFile">
-      <thead class="text-uppercase text-muted">
-        <tr>
-          <th scope="col" style="width: 400px;">{{'events.name' | translate}}</th>
-          <th scope="col">{{'locations.description' | translate}}</th>
-          <th scope="col" style="width: 200px;">{{'events.start-date' | translate}}</th>
-          <th scope="col" style="width: 200px;">{{'events.end-date' | translate}}</th>
-          <th scope="col" style="width: 48px"></th>
-        </tr>
-      </thead>
-      <tbody class="datatable-body" *ngIf="plans.length">
-        <tr *ngFor="let item of plans" (dblclick)="navigate(item.id)">
-          <td style="cursor: pointer;" [routerLink]="['plan', item.id]">{{ item.name }}</td>
-          <td style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-            {{item.description}}
-          </td>
-          <td>{{item.fromDate | date: 'dd/MM/yyyy'}}</td>
-          <td>{{item.tillDate | date: 'dd/MM/yyyy'}}</td>
-          <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-            <div style="overflow: visible; position: relative; width: 0px">
-              <div ngbDropdown class="dropdown dropdown-inline">
-                <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
-                  <span class="svg-icon svg-icon-md" ngbDropdownToggle>
-                    <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
-                      version="1.1">
-                      <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
-                        <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3" fill="black">
-                        </rect>
-                        <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3" fill="black"
-                          fill-opacity="0.7"></rect>
-                      </g>
-                    </svg>
-                  </span>
-                </div>
-                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                  <div ngbDropdownMenu aria-labelledby="action1">
-                    <button [routerLink]="['plan', item.id]" class="navi-link align-items-center px-6" ngbDropdownItem>
-                      {{'categories.view-details' | translate}}
-                    </button>
-                    <button [routerLink]="['edit', item.id]" class="navi-link align-items-baseline px-6"
-                      ngbDropdownItem>
-                      {{ 'button.edit' | translate }}
-                    </button>
-                    <button (click)="openDeleteModal(item.id)" class="navi-link align-items-baseline px-6"
-                      ngbDropdownItem>
-                      {{ 'button.delete' | translate }}
-                    </button>
-                  </div>
+  </div>
+  <div class="col">
+    <div class="w-100 text-right">
+      <app-button (handle)="clearFields()" [value]="'button.reset' | translate" class="mr-5"></app-button>
+      <app-confirm-button (handle)="getFilteredEvents({page: 1})" [value]="'button.search' | translate">
+      </app-confirm-button>
+    </div>
+  </div>
+</div>
+
+<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded mt-13"
+  id="kt_datatable">
+  <div class="card-header text-center" *ngIf="selectedDay != null">
+    {{ 'calendar.selected-date' | translate }}: {{displayDate}}
+  </div>
+  <table class="datatable table font-size-lg" style="overflow: visible" id="plans-table"
+    *ngIf="!isLoading && !downloadFile">
+    <thead class="text-uppercase text-muted">
+      <tr>
+        <th scope="col" style="width: 400px;">{{'events.name' | translate}}</th>
+        <th scope="col">{{'locations.description' | translate}}</th>
+        <th scope="col" style="width: 200px;">{{'events.start-date' | translate}}</th>
+        <th scope="col" style="width: 200px;">{{'events.end-date' | translate}}</th>
+        <th scope="col" style="width: 48px"></th>
+      </tr>
+    </thead>
+    <tbody class="datatable-body" *ngIf="plans.length">
+      <tr *ngFor="let item of plans" (dblclick)="navigate(item.id)">
+        <td style="cursor: pointer;" [routerLink]="['plan', item.id]">{{ item.name }}</td>
+        <td style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+          {{item.description}}
+        </td>
+        <td>{{item.fromDate | date: 'dd/MM/yyyy'}}</td>
+        <td>{{item.tillDate | date: 'dd/MM/yyyy'}}</td>
+        <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
+          <div style="overflow: visible; position: relative; width: 0px">
+            <div ngbDropdown class="dropdown dropdown-inline">
+              <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                <span class="svg-icon svg-icon-md" ngbDropdownToggle>
+                  <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
+                    version="1.1">
+                    <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
+                      <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3" fill="black">
+                      </rect>
+                      <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3" fill="black"
+                        fill-opacity="0.7"></rect>
+                    </g>
+                  </svg>
+                </span>
+              </div>
+              <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                <div ngbDropdownMenu aria-labelledby="action1">
+                  <button [routerLink]="['plan', item.id]" class="navi-link align-items-center px-6" ngbDropdownItem>
+                    {{'categories.view-details' | translate}}
+                  </button>
+                  <button [routerLink]="['edit', item.id]" class="navi-link align-items-baseline px-6"
+                    ngbDropdownItem>
+                    {{ 'button.edit' | translate }}
+                  </button>
+                  <button (click)="openDeleteModal(item.id)" class="navi-link align-items-baseline px-6"
+                    ngbDropdownItem>
+                    {{ 'button.delete' | translate }}
+                  </button>
                 </div>
               </div>
             </div>
-          </td>
-        </tr>
-      </tbody>
-      <tbody class="datatable-body" *ngIf="!plans.length">
-        <tr>
-          <td colspan="5" class="text-center">
-            {{ 'message.no-record' | translate }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div pagination class="datatable-pager datatable-paging-loaded" *ngIf="plans.length && selectedDay != null"
-      [page]="pagination.currentPage" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount"
-      [size]="pagination.pageSize" (sizeChange)="getListByDate({page: 1, itemsPerPage: $event})"
-      (pageChange)="getListByDate({page: $event, itemsPerPage: pagination.pageSize})">
-    </div>
-    <div pagination class="datatable-pager datatable-paging-loaded" *ngIf="plans.length && selectedDay == null"
-      [page]="pagination.currentPage" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount"
-      [size]="pagination.pageSize" (sizeChange)="list({page: 1, itemsPerPage: $event})"
-      (pageChange)="list({page: $event, itemsPerPage: pagination.pageSize})">
-    </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <tbody class="datatable-body" *ngIf="!plans.length">
+      <tr>
+        <td colspan="5" class="text-center">
+          {{ 'message.no-record' | translate }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div pagination class="datatable-pager datatable-paging-loaded" *ngIf="plans.length && selectedDay != null"
+    [page]="pagination.currentPage" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount"
+    [size]="pagination.pageSize" (sizeChange)="getListByDate({page: 1, itemsPerPage: $event})"
+    (pageChange)="getListByDate({page: $event, itemsPerPage: pagination.pageSize})">
+  </div>
+  <div pagination class="datatable-pager datatable-paging-loaded" *ngIf="plans.length && selectedDay == null"
+    [page]="pagination.currentPage" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount"
+    [size]="pagination.pageSize" (sizeChange)="list({page: 1, itemsPerPage: $event})"
+    (pageChange)="list({page: $event, itemsPerPage: pagination.pageSize})">
   </div>
 </div>

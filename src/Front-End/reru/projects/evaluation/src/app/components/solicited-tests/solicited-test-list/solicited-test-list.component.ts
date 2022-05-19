@@ -19,8 +19,8 @@ export class SolicitedTestListComponent {
 	}
 
 	clearFields() {
-		this.searchEvent.clear();
-		this.searchUser.clear();
-		this.searchTest.clear();
+		this.searchEvent.key = '';
+		this.searchUser.key = '';
+		this.searchTest.key = '';
 	}
 }
