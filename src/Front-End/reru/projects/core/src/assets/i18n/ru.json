@@ -28,7 +28,9 @@
     "step6": "Нажмите кнопку «Подтвердить» (шаг 6), чтобы завершить процедуру.",
     "registration-candidate-page": "Страница регистрации кандидата",
     "select-candidate-position": "Выберите должность",
-    "position-to-candidate": "Кандидируемая позиция"
+    "position-to-candidate": "Кандидируемая позиция",
+    "accept-condition": "Я соглашаюсь и принимаю",
+    "registration-conditions": "условия регистрации"
   },
   "files":{
     "title": "Документы",

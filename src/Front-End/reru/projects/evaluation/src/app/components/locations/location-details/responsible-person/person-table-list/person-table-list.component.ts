@@ -39,10 +39,11 @@ export class PersonTableListComponent implements OnInit {
 	}
 
 	list(data: any = {}) {
+		this.isLoading = true;
 		let params = {
 			locationId: this.locationId,
 			page: data.page || this.pagination.currentPage,
-			itemsPerPage: Number(this.pagination?.pageSize || 10)
+			itemsPerPage: data.itemsPerPage || 10
 		}
 
 		this.attachToLocationService.getPersons(params).subscribe(

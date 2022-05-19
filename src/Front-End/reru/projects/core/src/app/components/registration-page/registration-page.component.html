@@ -195,7 +195,15 @@
                 </ngx-dropzone>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary float-right" (click)="addUser()">{{ 'button.confirm' |
+            <div class="form-row py-8">
+              <div class="col-md-12">
+                <p>
+                <input type="checkbox" id="checkbox" (change)="accept = !accept">
+                {{ 'registration-page.accept-condition' | translate }} <button type="button" class="btn btn-link" (click)="openAcceptConditionsModal()">{{ 'registration-page.registration-conditions' | translate }}</button>
+                </p>
+              </div>
+            </div>
+            <button type="submit" [disabled]="!accept" class="btn btn-primary float-right" (click)="addUser()">{{ 'button.confirm' |
               translate }}</button>
           </form>
         </div>

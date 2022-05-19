@@ -1,4 +1,5 @@
-<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'40vh'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'"></app-loading-spinner>
 
 <div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
 	<div class="card card-custom mb-7 ml-5">
@@ -7,29 +8,29 @@
 		</div>
 		<div class="card-body">
 			<div class="form-group row align-items-center">
-                <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
-                  {{'categories.category-name' | translate}}:
-                </label>
-                <div class="col-lg-9 col-xl-6">
-                  <p class="font-size-lg m-0">{{user.firstName}} {{user.lastName}} {{user.fatherName}}</p>
-                </div>
-              </div>
-              <div class="form-group row align-items-center">
-                <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
-                  {{'login.idnp' | translate}}:
-                </label>
-                <div class="col-lg-9 col-xl-6">
-                  <p class="font-size-lg m-0">{{user.idnp}}</p>
-                </div>
-              </div>
-              <div class="form-group row align-items-center">
-                <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
-                  {{'user-profile.user-email' | translate}}:
-                </label>
-                <div class="col-lg-9 col-xl-6">
-                  <p class="font-size-lg m-0">{{user.email}}</p>
-                </div>
-              </div>
+        <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+          {{'categories.category-name' | translate}}:
+        </label>
+        <div class="col-lg-9 col-xl-6">
+          <p class="font-size-lg m-0">{{user.firstName}} {{user.lastName}} {{user.fatherName}}</p>
+        </div>
+      </div>
+      <div class="form-group row align-items-center">
+        <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+          {{'login.idnp' | translate}}:
+        </label>
+        <div class="col-lg-9 col-xl-6">
+          <p class="font-size-lg m-0">{{user.idnp}}</p>
+        </div>
+      </div>
+      <div class="form-group row align-items-center">
+        <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+          {{'user-profile.user-email' | translate}}:
+        </label>
+        <div class="col-lg-9 col-xl-6">
+          <p class="font-size-lg m-0">{{user.email}}</p>
+        </div>
+      </div>
 		</div>
 	</div>
 </div>

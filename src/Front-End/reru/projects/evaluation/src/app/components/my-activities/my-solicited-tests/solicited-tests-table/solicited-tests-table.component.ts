@@ -47,6 +47,7 @@ export class SolicitedTestsTableComponent implements OnInit {
 	}
 
 	getMySolicitedTests(data: any = {}) {
+		this.isLoading = true;
 		const params: any = {
 			page: data.page || this.pagedSummary.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize

@@ -196,11 +196,14 @@ namespace IdentityServerHost.Quickstart.UI
                 string url = Url.Action("Logout", new { logoutId = vm.LogoutId });
 
                 // this triggers a redirect to the external provider for sign-out
-                return SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme);
+                return SignOut(new AuthenticationProperties { RedirectUri = "/Account/Login" }, vm.ExternalAuthenticationScheme);
             }
 
             //return View("LoggedOut", vm);
-            return Redirect(vm.PostLogoutRedirectUri);
+            //return Redirect(vm.PostLogoutRedirectUri);
+            //vm = await BuildLoginViewModelAsync(model);
+            //return await Login("Login");
+            return View("Login");
         }
 
         [HttpGet]

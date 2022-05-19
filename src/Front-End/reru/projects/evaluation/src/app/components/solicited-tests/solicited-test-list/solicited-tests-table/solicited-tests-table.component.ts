@@ -138,11 +138,13 @@ export class SolicitedTestsTableComponent implements OnInit {
 	}
 
 	setFilter(field: string, value): void {
+		this.pagination.currentPage = 1;
 		this.filters[field] = value;
 		this.list();
 	}
 
 	resetFilters(): void {
+		this.pagination.currentPage = 1;
 		this.filters = {};
 		this.list();
 	}

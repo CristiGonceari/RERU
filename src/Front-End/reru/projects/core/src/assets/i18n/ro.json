@@ -28,7 +28,9 @@
     "step6": "Apasăti butonul „Confirmă” (Pasul 6) pentru a finaliza procedura. ",
     "registration-candidate-page": "Pagină de înregistrare a candidaților",
     "select-candidate-position": "Selectați poziția",
-    "position-to-candidate": "Poziția pentru care candidați"
+    "position-to-candidate": "Poziția pentru care candidați",
+    "accept-condition": "Înregistrându-mă în sistem accept",
+    "registration-conditions":"condiții de înregistrare"
   },
   "files":{
     "title": "Documente",

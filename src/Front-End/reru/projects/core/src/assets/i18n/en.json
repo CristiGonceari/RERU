@@ -28,7 +28,10 @@
     "step6": "Click the „Confirm” button (Step 6) to complete the procedure.",
     "registration-candidate-page": "Candidate Registration Page",
     "select-candidate-position": "Select Position",
-    "position-to-candidate": "Position to Candidate"
+    "position-to-candidate": "Position to Candidate",
+    "accept-condition": "I agree and accept with",
+    "registration-conditions":"registration conditions"
+
   },
   "files":{
     "title": "Documents",
