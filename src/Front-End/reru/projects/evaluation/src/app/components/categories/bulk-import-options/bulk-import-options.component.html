@@ -23,15 +23,21 @@
               </span>
             </div>
             <p class="text-danger text-center w-50">{{'questions.bulk-import-options-msg' | translate}}</p>
+            <select name="type" class="form-control w-50 mx-7" [(ngModel)]="selectedTypeName"
+                (ngModelChange)="selectType($event)">
+                <option value="{{ questionTypes[1] }}">{{'statuses.' + questionTypes[1] | translate}}</option>
+                <option value="{{ questionTypes[2] }}">{{'statuses.' + questionTypes[2] | translate}}</option>
+                <!-- <option value="{{ item }}" *ngFor="let item of questionTypes">{{'statuses.' + item | translate}}</option> -->
+              </select>
+            <app-confirm-button class="btn" (handle)="downloadTemplate(selectedTypeId)"
+                [value]="'button.download' | translate"></app-confirm-button>
           </div>
-          <app-confirm-button class="btn" (handle)="downloadTemplate(selectedTypeId)"
-              [value]="'button.download' | translate"></app-confirm-button>
           <div class="fv-plugins-message-container"></div>
         </div>
       </div>
     </div>
   
-    <div class="form-group row mt-10">
+    <div class="form-group row mt-10" *ngIf="hasTemplate">
       <label class="col-form-label col-3 text-right">{{'message.bulk-uploadMsg' | translate}}:</label>
       <div class="col-9">
         <ngx-dropzone (change)="onSelect($event)" class="font-weight-light justify-content-center" [multiple]="false" accept=".xlsx" [disabled]="files.length > 0">
@@ -48,6 +54,6 @@
   </div>
   <div class="modal-footer">
       <app-button class="btn mr-2" (handle)="dismiss()" [value]="'button.cancel' | translate"></app-button>
-    <app-add-button class="btn" (handle)="onConfirm()" [value]="'button.confirm' | translate"></app-add-button>
+  <app-add-button class="btn" (handle)="onConfirm()" [value]="'button.confirm' | translate"></app-add-button>
   </div>
   
