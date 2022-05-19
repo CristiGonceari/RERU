@@ -187,7 +187,8 @@
     "TestPassStatusKey": "Test status",
     "ResultStatusKey": "The test result",
     "EvaluatorIdnpKey": "IDNP from the evaluator's bulletin",
-    "EvaluatorEmailKey": "Evaluator's email"
+    "EvaluatorEmailKey": "Evaluator's email",
+    "TestNameKey":"Test Name"
   },
   "button": {
     "add": "Add",

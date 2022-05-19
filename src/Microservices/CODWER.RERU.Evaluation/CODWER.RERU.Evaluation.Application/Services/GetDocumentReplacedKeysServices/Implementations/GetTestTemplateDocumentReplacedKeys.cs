@@ -178,7 +178,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
             {
                 var finalKeyName = keyName.Substring(1, keyName.Length - 2);
 
-                return finalKeyName + " has not been set";
+                return finalKeyName + " nu a fost setata";
             }
         }
     }

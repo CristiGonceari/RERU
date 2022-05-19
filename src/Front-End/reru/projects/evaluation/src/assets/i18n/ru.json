@@ -186,7 +186,8 @@
     "TestPassStatusKey": "Статус теста",
     "ResultStatusKey": "Результат теста",
     "EvaluatorIdnpKey": "IDNP из бюллетеня оценщика",
-    "EvaluatorEmailKey": "Электронная почта оценщика"
+    "EvaluatorEmailKey": "Электронная почта оценщика",
+    "TestNameKey":"Название теста"
   },
   "button": {
     "add": "Добавить",
