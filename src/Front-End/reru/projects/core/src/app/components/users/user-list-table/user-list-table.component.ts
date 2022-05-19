@@ -84,7 +84,7 @@ export class UserListTableComponent implements OnInit {
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['-', 'lastName', 'firstName', 'fatherName', 'idnp', 'email', 'isActive'];
+		let headersDto = ['-', 'lastName', 'firstName', 'fatherName', 'idnp', 'email', 'departmentName', 'roleName', 'isActive'];
 		for (let i=1; i<headersHtml.length-1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
 		}
