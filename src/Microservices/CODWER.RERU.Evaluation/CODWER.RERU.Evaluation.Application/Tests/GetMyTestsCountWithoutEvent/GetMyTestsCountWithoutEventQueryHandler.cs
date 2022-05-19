@@ -32,12 +32,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
                 .Include(t => t.Event)
-                .Where(t => t.UserProfileId == myUserProfile.Id && 
-                        t.Event == null &&
-                        (t.StartTime >= request.StartTime.Date && t.EndTime <= request.EndTime ||
-                         t.StartTime <= request.StartTime.Date && request.StartTime.Date <= t.EndTime && t.EndTime <= request.EndTime.Date ||
-                         t.StartTime >= request.StartTime.Date && t.StartTime <= request.EndTime.Date && t.EndTime >= request.EndTime.Date))
-                .AsQueryable();
+                .Where(p => (request.StartTime.Date <= p.ProgrammedTime && request.EndTime.Date <= p.EndProgrammedTime) ||
+                                                    (request.StartTime.Date <= p.ProgrammedTime && p.ProgrammedTime <= request.EndTime.Date && p.EndProgrammedTime >= request.EndTime.Date) ||
+                                                    (p.ProgrammedTime <= request.StartTime.Date && request.StartTime.Date <= p.EndProgrammedTime && p.EndProgrammedTime <= request.EndTime.Date) ||
+                                                    (request.StartTime.Date >= p.ProgrammedTime && p.EndProgrammedTime >= request.EndTime.Date))
+                                        .AsQueryable();
 
             var dates = new List<TestCount>();
 
