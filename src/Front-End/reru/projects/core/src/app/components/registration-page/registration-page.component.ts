@@ -16,7 +16,7 @@ import { UserFilesService } from '../../utils/services/user-files.service';
 import { RegistrationPageService } from '../../utils/services/registration-page.service'
 import { ApplicationUserService} from '@erp/shared';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
-
+import { AcceptConditionsModalComponent } from '../../utils/modals/accept-conditions-modal/accept-conditions-modal.component';
 
 @Component({
   selector: 'app-registration-page',
@@ -32,6 +32,7 @@ export class RegistrationPageComponent implements OnInit {
   files: File[] = [];
   textValue: string = "";
   canEdit: boolean = false;
+  accept: boolean = false; 
   year = new Date().getFullYear();
   public Editor = DecoupledEditor;
   public onReady(editor) {
@@ -78,6 +79,10 @@ export class RegistrationPageComponent implements OnInit {
 
   openModal() {
     const modalRef = this.modalService.open(WatchInfoVideoModalComponent, { centered: true, size: 'lg', windowClass: 'my-class' });
+  }
+
+  openAcceptConditionsModal() {
+    const modalRef = this.modalService.open(AcceptConditionsModalComponent, { centered: true, size: 'lg'});
   }
 
   getLang(): string {

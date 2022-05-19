@@ -11,7 +11,6 @@ import { RegistrationPageComponent } from './registration-page.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
-
 @NgModule({
   imports: [
     CommonModule,
