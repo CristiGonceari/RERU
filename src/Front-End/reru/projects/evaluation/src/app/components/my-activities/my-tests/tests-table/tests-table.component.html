@@ -117,34 +117,13 @@
     <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
         *ngIf="selectedDay == null" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
         [size]="pagedSummary.pageSize"
-        (sizeChange)="getUserTests({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-        (pageChange)="getUserTests({ page: $event })">
+        (sizeChange)="getUserTests({ page: 1, itemsPerPage: $event })"
+        (pageChange)="getUserTests({ page: $event, itemsPerPage: pagedSummary.pageSize} )">
     </div>
     <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
         *ngIf="selectedDay != null" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
         [size]="pagedSummary.pageSize"
-        (sizeChange)="getListByDate({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-        (pageChange)="getListByDate({ page: $event })">
+        (sizeChange)="getListByDate({ page: 1, itemsPerPage: $event })"
+        (pageChange)="getListByDate({ page: $event, itemsPerPage: pagedSummary.pageSize })">
     </div>
-    <!-- <div class="d-flex justify-content-between align-items-baseline" *ngIf="testRowList.length">
-        <ngb-pagination [collectionSize]="count" [(page)]="pageNumber" [pageSize]="pageSize" [maxSize]="5"
-            [rotate]="true" [boundaryLinks]="true" (pageChange)="getUserTests($event)">
-        </ngb-pagination>
-        <div class="d-flex align-items-center py-3">
-            <select class="btn text-primary font-weight-bold mr-4 border-0 bg-light w-75px" [(ngModel)]="pageSize"
-                (ngModelChange)="getUserTests()">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
-
-            <span class="text-muted">
-                {{'pagination.displaing' | translate}} {{ pageSize }} {{'pagination.of' | translate}}
-                <b>{{ count }}</b>
-                {{'pagination.records' | translate}}
-            </span>
-        </div>
-    </div> -->
 </div>

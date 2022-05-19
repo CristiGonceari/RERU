@@ -117,13 +117,13 @@
     <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
         *ngIf="selectedDay == null" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
         [size]="pagedSummary.pageSize"
-        (sizeChange)="getUserTests({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-        (pageChange)="getUserTests({ page: $event })">
+        (sizeChange)="getUserTests({ page: 1, itemsPerPage: $event })"
+        (pageChange)="getUserTests({ page: $event, itemsPerPage: pagedSummary })">
     </div>
     <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
         *ngIf="selectedDay != null" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
         [size]="pagedSummary.pageSize"
-        (sizeChange)="getListByDate({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-        (pageChange)="getListByDate({ page: $event })">
+        (sizeChange)="getListByDate({ page: 1, itemsPerPage: $event })"
+        (pageChange)="getListByDate({ page: $event, itemsPerPage: pagedSummary })">
     </div>
 </div>

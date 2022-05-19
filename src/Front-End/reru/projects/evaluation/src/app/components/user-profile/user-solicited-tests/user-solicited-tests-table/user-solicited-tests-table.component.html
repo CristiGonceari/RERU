@@ -1,9 +1,11 @@
-<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'20vh'"
+    [height]="'5rem'" [width]="'5rem'"
+    [colorClass]="'text-primary'">
+</app-loading-spinner>
 
-<div *ngIf="!isLoading"
-    class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
-    <table for="kt_datatable" class="datatable table" style="overflow: visible" id="testsTable">
+    <table for="kt_datatable" class="datatable table" style="overflow: visible" id="testsTable" *ngIf="!isLoading">
         <thead class="text-uppercase text-muted">
             <tr>
                 <th scope="col">{{'dashboard.test' | translate}}</th>
@@ -34,9 +36,9 @@
         </tbody>
     </table>
     <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
-        *ngIf="solicitedTests.length > 5" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
+        *ngIf="solicitedTests.length" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
         [size]="pagedSummary.pageSize"
-        (sizeChange)="getMySolicitedTests({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-        (pageChange)="getMySolicitedTests({ page: $event })">
+        (sizeChange)="getUserSolicitedTests({ page: 1, itemsPerPage: $event })"
+        (pageChange)="getUserSolicitedTests({ page: $event, itemsPerPage: pagedSummary.pageSize })">
     </div>
 </div>

@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TestResultStatusEnum } from '../../../../utils/enums/test-result-status.enum';
 import { TestStatusEnum } from '../../../../utils/enums/test-status.enum';
 import { Test } from '../../../../utils/models/tests/test.model';
@@ -7,9 +7,6 @@ import { TestTemplateService } from 'projects/evaluation/src/app/utils/services/
 import { TestService } from 'projects/evaluation/src/app/utils/services/test/test.service';
 import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
 import { Events } from 'projects/evaluation/src/app/utils/models/calendar/events';
-import { EventCalendarComponent } from 'projects/evaluation/src/app/utils/components/event-calendar/event-calendar.component';
-import { renderFlagCheckIfStmt } from '@angular/compiler/src/render3/view/template';
-
 
 @Component({
   selector: 'app-tests-table',

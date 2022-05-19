@@ -5,36 +5,37 @@ import { SolicitedTestService } from 'projects/evaluation/src/app/utils/services
 import { SolicitedTestStatusEnum } from 'projects/evaluation/src/app/utils/enums/solicited-test-status.model';
 
 @Component({
-  selector: 'app-user-solicited-tests-table',
-  templateUrl: './user-solicited-tests-table.component.html',
-  styleUrls: ['./user-solicited-tests-table.component.scss']
+	selector: 'app-user-solicited-tests-table',
+	templateUrl: './user-solicited-tests-table.component.html',
+	styleUrls: ['./user-solicited-tests-table.component.scss']
 })
 export class UserSolicitedTestsTableComponent implements OnInit {
-  
-  solicitedTests: [] = [];
+	userId: number;
+	solicitedTests: [] = [];
 	pagedSummary: PaginationModel = new PaginationModel();
 	isLoading: boolean = true;
 	enum = SolicitedTestStatusEnum;
-  
-  constructor(private solicitedTestService: SolicitedTestService,
+
+	constructor(private solicitedTestService: SolicitedTestService,
 		private activatedRoute: ActivatedRoute,
 	) { }
 
-  ngOnInit() {
-    this.subsribeForParams();
-  }
-   
-  subsribeForParams(): void {
+	ngOnInit() {
+		this.subsribeForParams();
+	}
+
+	subsribeForParams(): void {
 		this.activatedRoute.parent.params.subscribe(params => {
 			if (params.id) {
-        this.getUserSolicitedTests(params.id);
+				this.userId = params.id
+				this.getUserSolicitedTests(this.userId);
 			}
 		});
 	}
 
-  getUserSolicitedTests(data: any = {}) {
+	getUserSolicitedTests(data: any = {}) {
 		const params: any = {
-      userId: data || 0,
+			userId: this.userId,
 			page: data.page || this.pagedSummary.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
 		}
