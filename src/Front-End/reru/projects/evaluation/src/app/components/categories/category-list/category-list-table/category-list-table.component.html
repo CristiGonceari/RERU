@@ -3,10 +3,10 @@
 </app-loading-spinner>
 <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
-<div *ngIf="!isLoading && !downloadFile"
+<div
   class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
   id="kt_datatable">
-  <table class="datatable table font-size-lg" style="overflow: visible">
+  <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading && !downloadFile">
     <thead class="text-uppercase text-muted">
       <tr>
         <th scope="col">{{'categories.category-name' | translate}}</th>
@@ -66,12 +66,12 @@
       </tr>
     </tbody>
   </table>
-  <div pagination class="datatable-pager datatable-paging-loaded"
+  <div pagination class="datatable-pager datatable-paging-loaded" *ngIf="questionCategories.length"
     [page]="pagedSummary.currentPage"
     [total]="pagedSummary.totalPages"
     [totalRecords]="pagedSummary.totalCount"
     [size]="pagedSummary.pageSize"
-    (sizeChange)="list({ keyword: keyword, page: pagedSummary.currentPage, itemsPerPage: $event })"
+    (sizeChange)="list({ keyword: keyword, page: 1, itemsPerPage: $event })"
     (pageChange)="list({ keyword: keyword, itemsPerPage: pagedSummary.pageSize, page: $event })">
   </div>
 </div>

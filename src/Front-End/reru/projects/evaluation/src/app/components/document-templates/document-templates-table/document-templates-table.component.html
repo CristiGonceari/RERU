@@ -2,10 +2,9 @@
     [colorClass]="'text-primary'">
 </app-loading-spinner>
 
-<div *ngIf="!isLoading"
-    class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
-    <table class="datatable table font-size-lg" style="overflow: visible">
+    <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading">
         <thead class="text-uppercase text-muted">
             <tr>
                 <th scope="col">{{'document-test-modal.reports.name' | translate}}</th>

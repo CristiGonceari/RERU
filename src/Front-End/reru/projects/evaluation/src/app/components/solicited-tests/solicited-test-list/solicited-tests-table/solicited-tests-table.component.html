@@ -81,8 +81,8 @@
         </table>
         <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
             [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
-            (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event })"
-            (pageChange)="list({ keyword: keyword, page: $event })">
+            (sizeChange)="list({ keyword: keyword, page: 1, itemsPerPage: $event })"
+            (pageChange)="list({ keyword: keyword, page: $event, itemsPerPage: pagination.pageSize })">
         </div>
     </div>
 </div>
