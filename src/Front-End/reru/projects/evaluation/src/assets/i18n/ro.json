@@ -186,7 +186,8 @@
     "TestPassStatusKey": "Statutul testului",
     "ResultStatusKey": "Rezultatul testului",
     "EvaluatorIdnpKey": "IDNP din buletinul evaluatorului",
-    "EvaluatorEmailKey": "E-mailul evaluatorului"
+    "EvaluatorEmailKey": "E-mailul evaluatorului",
+    "TestNameKey":"Numele testului"
   },
   "button": {
     "add": "Adaugă",

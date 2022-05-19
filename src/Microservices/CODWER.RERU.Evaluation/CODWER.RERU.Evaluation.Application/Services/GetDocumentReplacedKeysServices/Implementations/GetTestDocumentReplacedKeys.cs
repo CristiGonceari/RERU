@@ -92,9 +92,9 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
                         break;
 
-                    case "{cheie_cu_maxim_posibile_erori}":
+                    case "{cheie_cu_numele_testului}":
 
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.MaxErrors.ToString()));
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.TestTemplate?.Name));
 
                         break;
 
@@ -116,43 +116,39 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
                         break;
 
-                    case "{cheie_cu_data_de_început_a_testului}":
+                    case "{cheie_cu_data_de_inceput_a_testului}":
 
                         var startTime = test.StartTime;
 
-                         myDictionary.Add(item, ValidateItemsForDictionary(item, startTime?.ToString("dd/MM/yyyy").Replace("-", "/")) ); 
-
-                        break;
-
-                    case "{cheie_cu_data_de_încheiere_a_testului}":
-
-                        var endTime = test.EndTime;
-                        
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, endTime?.ToString("dd/MM/yyyy").Replace("-", "/")));
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, startTime?.ToString("dd/MM/yyyy").Replace("-", "/")));
 
                         break;
 
                     case "{cheie_cu_numele_evenimentului}":
 
-                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.Event?.Name));
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.Event?.Name));
 
                         break;
 
                     case "{cheie_cu_descrierea_evenimentului}":
-                        
-                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.Event?.Description));
-                       
-                        break;
 
-                    case "{cheie_cu_data_de_început_a_evenimentului}":
-
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.Event?.FromDate.ToString("dd/MM/yyyy").Replace("-", "/")));
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.Event?.Description));
 
                         break;
 
-                    case "{cheie_cu_data_de_încheiere_a_evenimentului}":
+                    case "{cheie_cu_data_de_inceput_a_evenimentului}":
 
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.Event?.TillDate.ToString("dd/MM/yyyy").Replace("-", "/")));
+                        var eventStartTime = test.Event?.FromDate;
+
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, eventStartTime?.ToString("dd/MM/yyyy").Replace("-", "/")));
+
+                        break;
+
+                    case "{cheie_cu_data_de_incheiere_a_evenimentului}":
+
+                        var eventEndTime = test.Event?.TillDate;
+
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, eventEndTime?.ToString("dd/MM/yyyy").Replace("-", "/")));
 
                         break;
 
@@ -171,12 +167,6 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
                     case "{cheie_cu_adresa_locatiei}":
 
                         myDictionary.Add(item, ValidateItemsForDictionary(item, test.Location?.Address));
-
-                        break;
-
-                    case "{cheie_cu_tipul_locatiei}":
-
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.Location?.Type.ToString()));
 
                         break;
 
@@ -262,7 +252,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
             {
                 var finalKeyName = keyName.Substring(1, keyName.Length - 2);
 
-                return finalKeyName + " has not been set";
+                return finalKeyName + " nu este setata";
             }
         }
     }
