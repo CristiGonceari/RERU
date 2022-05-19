@@ -31,6 +31,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.CountMyEv
                 .Include(t => t.Event)
                 .Where(t => t.EvaluatorId == myUserProfile.Id ||
                             _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == myUserProfile.Id))
+                .Where(p => (request.StartTime.Date <= p.ProgrammedTime && request.EndTime.Date <= p.EndProgrammedTime) ||
+                            (request.StartTime.Date <= p.ProgrammedTime && p.ProgrammedTime <= request.EndTime.Date && p.EndProgrammedTime >= request.EndTime.Date) ||
+                            (p.ProgrammedTime <= request.StartTime.Date && request.StartTime.Date <= p.EndProgrammedTime && p.EndProgrammedTime <= request.EndTime.Date) ||
+                            (request.StartTime.Date >= p.ProgrammedTime && p.EndProgrammedTime >= request.EndTime.Date))
                 .AsQueryable();
 
             var dates = new List<TestCount>();

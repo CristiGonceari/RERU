@@ -21,9 +21,12 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetEventCount
         public async Task<List<EventCount>> Handle(GetEventCountQuery request, CancellationToken cancellationToken)
         {
 
-            var events = _appDbContext.Events.Where(p => p.FromDate.Date >= request.FromDate.Date && p.TillDate.Date <= request.TillDate ||
-                                                   (request.FromDate.Date <= p.FromDate.Date && p.FromDate.Date <= request.TillDate.Date) && (request.FromDate.Date <= p.TillDate.Date && p.TillDate.Date >= request.TillDate.Date) ||
-                                                   (request.FromDate.Date >= p.FromDate.Date && p.FromDate.Date <= request.TillDate.Date) && (request.FromDate.Date <= p.TillDate.Date && p.TillDate.Date <= request.TillDate.Date)).AsQueryable();
+            var events = _appDbContext.Events
+                                        .Where(p => (request.FromDate.Date <= p.FromDate.Date && request.TillDate.Date >= p.TillDate.Date) ||
+                                                    (request.FromDate.Date <= p.FromDate.Date && p.FromDate.Date <= request.TillDate.Date && p.TillDate.Date >= request.TillDate.Date) ||
+                                                    (p.FromDate.Date <= request.FromDate.Date && request.FromDate.Date <= p.TillDate.Date && p.TillDate.Date <= request.TillDate.Date) ||
+                                                    (request.FromDate.Date >= p.FromDate.Date && p.TillDate.Date >= request.TillDate.Date))
+                                        .AsQueryable();
 
             var dates = new List<EventCount>();
 
