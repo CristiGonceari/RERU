@@ -93,6 +93,7 @@ export class AttachUserModalComponent implements OnInit {
       this.attachedItems = this.attachedItems.filter( x => !itemsToRemove.includes(x) );
     }
     if (event.target.checked == true) {
+      this.attachedItems = this.attachedItems.filter( x => !this.users.map(el => +el.id).includes(x) );
       let itemsToAdd = this.users.map(el => +el.id)
       for (let i=0; i<itemsToAdd.length; i++) {
         this.attachedItems.push(itemsToAdd[i]);
