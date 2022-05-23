@@ -720,7 +720,8 @@
     "succes-add-user-msg": "Utilizator a fost adăugat cu succes",
     "succes-add-test-type-msg": "Șablon de test a fost adăugat cu succes",
     "succes-attach-evaluator-msg": "Evaluator a fost atașat cu succes",
-    "succes-detach-evaluator-msg": "Evaluator a fost eliminat cu succes"
+    "succes-detach-evaluator-msg": "Evaluator a fost eliminat cu succes",
+    "show-user-name": "Afișează numele utilizatorului"
   },
   "test-template":{
     "number-of-questions": "Numărul de întrebări",

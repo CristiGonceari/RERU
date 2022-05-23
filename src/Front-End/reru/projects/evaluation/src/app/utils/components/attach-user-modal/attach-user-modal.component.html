@@ -37,15 +37,15 @@
 	<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
   	id="kt_datatable">
 		<div *ngIf="page == 'evaluators'" class="d-flex align-items-center mb-5">
-			<span class="h3 mb-0">Show User Name</span>
-			<span> True </span>
+			<span class="h3 mb-0 pr-2">{{ 'events.show-user-name' | translate }}: </span>
+			<span>{{ 'button.yes' | translate }}</span>
 			<span class="switch switch-primary switch-sm mx-3">
 				<label>
 					<input type="checkbox" name="select" (change)="checkEvent($event)">
 					<span></span>
 				</label>
 			</span>
-			<span> False </span>
+			<span>{{ 'button.no' | translate }}</span>
 		</div>
 
 		<p *ngIf="inputType == 'checkbox'">{{ 'events.attached-users' | translate }}: {{attachedItems.length}}</p>

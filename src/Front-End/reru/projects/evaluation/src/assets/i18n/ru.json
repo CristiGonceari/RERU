@@ -721,9 +721,8 @@
     "succes-add-user-msg": "Пользователь был успешно добавлен",
     "succes-add-test-type-msg": "Шаблон теста был успешно добавлен",
     "succes-attach-evaluator-msg": "Проверяющий был успешно прикреплён",
-    "succes-detach-evaluator-msg": "Проверяющий был успешно удален"
-
-
+    "succes-detach-evaluator-msg": "Проверяющий был успешно удален",
+    "show-user-name": "Отображать имя пользователя"
   },
   "test-template":{
     "number-of-questions":"Количество вопросов",
