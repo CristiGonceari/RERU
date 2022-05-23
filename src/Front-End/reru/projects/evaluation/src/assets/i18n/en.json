@@ -722,7 +722,8 @@
     "succes-add-user-msg": "User was successfully attached",
     "succes-add-test-type-msg": "Test Template was successfully attached",
     "succes-attach-evaluator-msg": "Evaluator was successfully attached",
-    "succes-detach-evaluator-msg": "Evaluator was successfully detached"
+    "succes-detach-evaluator-msg": "Evaluator was successfully detached",
+    "show-user-name": "Show user name"
   },
   "test-template": {
     "number-of-questions":"Number of questions",
