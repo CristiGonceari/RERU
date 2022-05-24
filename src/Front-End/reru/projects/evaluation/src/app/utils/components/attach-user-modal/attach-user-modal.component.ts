@@ -15,7 +15,7 @@ export class AttachUserModalComponent implements OnInit {
   pagination: PaginationModel = new PaginationModel();
   isLoading = true;
   filters = {};
-  showUserName: boolean = false;
+  showUserName: boolean = true;
   @ViewChild('firstName') firstName: any;
   @ViewChild('lastName') lastName: any;
   @ViewChild('fatherName') fatherName: any;
@@ -134,7 +134,7 @@ export class AttachUserModalComponent implements OnInit {
 	}
   
   checkEvent(event): void {
-    this.showUserName = event.target.checked;
+    this.showUserName = event.target.uchecked;
   }
 
 }
