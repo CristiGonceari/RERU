@@ -43,8 +43,6 @@ export class AddEditEventsComponent implements OnInit {
 		this.eventId = this.activatedRoute.snapshot.paramMap.get('id');
 		if (this.eventId != null) this.getEvent(this.eventId)
 		else this.isLoading = false;
-		console.log(" this.eventID", this.eventId);
-		
 	}
 
 	getEvent(id: number): void {
@@ -121,7 +119,7 @@ export class AddEditEventsComponent implements OnInit {
 		this.eventService.editEvent(this.parse()).subscribe(() => {
 			forkJoin([
 				this.translate.get('modal.success'),
-				this.translate.get('events.succes-edit-event-msg"'),
+				this.translate.get('events.succes-edit-event-msg'),
 			  ]).subscribe(([title, description1]) => {
 				this.title = title;
 				this.description1 = description1;
