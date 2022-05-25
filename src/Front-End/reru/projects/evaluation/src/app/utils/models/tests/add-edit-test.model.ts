@@ -10,6 +10,7 @@ export class AddEditTest {
     locationId?: number;
     testStatus: TestStatusEnum;
     programmedTime: string;
+    processId?: number;
 
     constructor(testModel?: AddEditTest) {
         if (testModel) {
@@ -21,6 +22,7 @@ export class AddEditTest {
             this.testTemplateId = testModel.testTemplateId;
             this.evaluatorId = testModel.evaluatorId;
             this.showUserName = testModel.showUserName;
+            this.processId = testModel.processId;
         } else {
             this.id = null;
             this.userProfileId = null;

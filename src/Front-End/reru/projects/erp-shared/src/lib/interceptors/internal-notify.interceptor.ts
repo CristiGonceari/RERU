@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { AbstractService } from '../services/abstract.service';
 import { AppSettingsService } from '../services/app-settings.service';
 
+
 @Injectable()
 export class InternalNotifyInterceptor extends AbstractService implements HttpInterceptor {
 	type: string;

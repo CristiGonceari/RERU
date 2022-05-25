@@ -24,6 +24,21 @@ export class TestService extends AbstractService {
 		return this.http.post(`${this.baseUrl}/${this.urlRoute}/tests`, data);
 	}
 
+	startBulkAddProcess(data): Observable<any> {
+		return this.http.post(`${this.baseUrl}/${this.urlRoute}/process`, data);
+	}
+
+	getBulkImportProcess(id: number): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/process/${id}`);
+	}
+
+	getBulkImportResult(fileId: number): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/process-result/${fileId}`, {
+			responseType: 'blob' as 'json' ,
+			observe: 'response',
+		});
+	}
+
 	editTest(data): Observable<any> {
 		return this.http.patch(`${this.baseUrl}/${this.urlRoute}`, data);
 	}

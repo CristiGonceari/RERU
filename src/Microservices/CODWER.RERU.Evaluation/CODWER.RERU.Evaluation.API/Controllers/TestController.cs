@@ -37,8 +37,12 @@ using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.GetMyEvaluate
 using CODWER.RERU.Evaluation.Application.Tests.GetTestSettings;
 using CODWER.RERU.Evaluation.Application.Tests.GetTestDocumentReplacedKeys;
 using CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices;
+using CODWER.RERU.Evaluation.Application.Tests.AddTests.GetBulkImportProcess;
+using CODWER.RERU.Evaluation.Application.Tests.AddTests.GetBulkImportResult;
 using CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotification;
+using CODWER.RERU.Evaluation.Application.Tests.AddTests.StartBulkImportProcess;
 using CODWER.RERU.Evaluation.Application.Tests.StartTest;
+using CODWER.RERU.Evaluation.DataTransferObjects.BulkProcesses;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -126,6 +130,31 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<List<int>> AddTests([FromBody] AddTestsCommand command)
         {
             return await Mediator.Send(command);
+        }
+
+        [HttpPost("process")]
+        public async Task<int> StartBulkAddProcess([FromBody] StartBulkImportProcessCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
+        [HttpGet("process/{id}")]
+        public async Task<ProcessDataDto> GetBuklImportProcess([FromRoute] int id)
+        {
+            var query = new GetBulkImportProcessQuery { ProcessId = id };
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("process-result/{fileId}")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> GetFile([FromRoute] string fileId)
+        {
+            var query = new GetBulkImportResultQuery {FileId = fileId};
+
+            var result = await Mediator.Send(query);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
 
         [HttpPost("create-my-poll")]

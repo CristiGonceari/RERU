@@ -11,6 +11,7 @@
         photos = 7,
         request = 8,
         order = 9,
-        cim = 10
+        cim = 10,
+        procesfile = 11
     }
 }

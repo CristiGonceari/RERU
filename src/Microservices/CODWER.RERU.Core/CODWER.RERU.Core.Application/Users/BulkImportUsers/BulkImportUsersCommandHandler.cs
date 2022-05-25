@@ -51,8 +51,8 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                     FatherName = workSheet.Cells[i, 3]?.Value?.ToString(),
                     Idnp = workSheet.Cells[i, 4]?.Value?.ToString(),
                     Email = workSheet.Cells[i, 5]?.Value?.ToString(),
-                    DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? string.Empty),
-                    RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? string.Empty),
+                    DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0"),
+                    RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
                     EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "True")
                 };
 
