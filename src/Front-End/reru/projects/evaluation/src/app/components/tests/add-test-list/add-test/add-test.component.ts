@@ -17,6 +17,10 @@ import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18
 import { AttachUserModalComponent } from 'projects/evaluation/src/app/utils/components/attach-user-modal/attach-user-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventService } from 'projects/evaluation/src/app/utils/services/event/event.service';
+import { NgtscCompilerHost } from '@angular/compiler-cli/src/ngtsc/file_system';
+import { Subscription, timer } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-add-test',
@@ -26,11 +30,15 @@ import { EventService } from 'projects/evaluation/src/app/utils/services/event/e
 export class AddTestComponent implements OnInit {
   @Input() testEvent: boolean;
 
+  processProgress: any;
+
+
   eventsList: any;
   selectActiveTests: any;
   eventDatas: any;
   evaluatorList = [];
   userListToAdd: number[] = [];
+  processId: number;
 
   title: string;
   description: string;
@@ -47,6 +55,7 @@ export class AddTestComponent implements OnInit {
   hasEventEvaluator: boolean = false;
   disableBtn: boolean = false;
   isStartAddingTests: boolean = false;
+
   toolBarValue: number = 0;
   toolBarProcents: number = 0;
 
@@ -95,16 +104,16 @@ export class AddTestComponent implements OnInit {
       this.selectActiveTests = res.data;
     })
 
-    if(params.eventId != null){
+    if (params.eventId != null) {
       this.getEvent(params.eventId);
     }
-    else{
+    else {
       this.showEventCard = false;
     }
 
   }
 
-  getEvent(eventId: any){
+  getEvent(eventId: any) {
     this.eventService.getEvent(eventId).subscribe((res) => {
       this.eventDatas = res.data;
       this.showEventCard = true;
@@ -137,27 +146,25 @@ export class AddTestComponent implements OnInit {
       eventId: +this.event.value || null,
       evaluatorId: this.evaluatorList[0] || null,
       testStatus: TestStatusEnum.Programmed,
+      processId: this.processId || null,
       testTemplateId: +this.testTemplate.value || 0,
       showUserName: this.showName
     })
   }
 
-  parseForBulkAdd() {
-    this.setTimeToSearch();
-    return new AddEditTest({
-      userProfileId: this.getSubArray(0, 5, this.userListToAdd),
-      programmedTime: this.search || null,
-      eventId: +this.event.value || null,
-      evaluatorId: this.evaluatorList[0] || null,
-      testStatus: TestStatusEnum.Programmed,
-      testTemplateId: +this.testTemplate.value || 0,
-      showUserName: this.showName
-    })
-  }
+  // parseForBulkAdd() {
+  //   this.setTimeToSearch();
+  //   return new AddEditTest({
+  //     userProfileId: this.getSubArray(0, 5, this.userListToAdd),
+  //     programmedTime: this.search || null,
+  //     eventId: +this.event.value || null,
+  //     evaluatorId: this.evaluatorList[0] || null,
+  //     testStatus: TestStatusEnum.Programmed,
+  //     testTemplateId: +this.testTemplate.value || 0,
+  //     showUserName: this.showName
+  //   })
+  // }
 
-  parseTestToEmailNotification(){
-
-  }
 
   roundUpNearest10(num) {
     return Math.ceil(num / 10) * 10;
@@ -167,39 +174,39 @@ export class AddTestComponent implements OnInit {
     return _array.slice(idx, idx + _length);
   }
   //Create test Recursion 
-  addTests() {
-    this.isStartAddingTests = true;
-    let requests = Math.ceil((this.userListToAdd.length / 5));
-    this.createTest(requests);
-  }
+  // addTests() {
+  //   this.isStartAddingTests = true;
+  //   let requests = Math.ceil((this.userListToAdd.length / 5));
+  //   this.createTest(requests);
+  // }
 
-  createTest(requests: number) {
-    if (this.userListToAdd.length > 0) {
-      this.testService.createTest(this.parseForBulkAdd()).subscribe((res) => {
-        this.userListToAdd.splice(0, 5);
-        this.toolBarProcents++;
-        this.toolBarValue = Math.round(this.toolBarProcents / requests * 100);
+  // createTest(requests: number) {
+  //   if (this.userListToAdd.length > 0) {
+  //     this.testService.createTest(this.parseForBulkAdd()).subscribe((res) => {
+  //       this.userListToAdd.splice(0, 5);
+  //       this.toolBarProcents++;
+  //       this.toolBarValue = Math.round(this.toolBarProcents / requests * 100);
 
-        this.testService.sendEmailNotification({testIds: res.data}).subscribe();
+  // this.testService.sendEmailNotification({testIds: res.data}).subscribe();
 
-        this.createTest(requests);
-      });
-    } else {
+  //       this.createTest(requests);
+  //     });
+  //   } else {
 
-      this.isStartAddingTests = false;
-      forkJoin([
-        this.translate.get('modal.success'),
-        this.translate.get('tests.tests-were-programmed'),
-      ]).subscribe(([title, description]) => {
-        this.title = title;
-        this.description = description;
-      });
-      this.backClicked();
-      this.disableBtn = false;
-      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+  //     this.isStartAddingTests = false;
+  //     forkJoin([
+  //       this.translate.get('modal.success'),
+  //       this.translate.get('tests.tests-were-programmed'),
+  //     ]).subscribe(([title, description]) => {
+  //       this.title = title;
+  //       this.description = description;
+  //     });
+  //     this.backClicked();
+  //     this.disableBtn = false;
+  //     this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 
-    }
-  }
+  //   }
+  // }
 
   //Create For Every 10 users
   // createTest() {
@@ -274,10 +281,79 @@ export class AddTestComponent implements OnInit {
   // }
 
   //Create Test For All bulk
-  // createTest() {
-  //   this.disableBtn = true
+  createTest() {
+    this.disableBtn = true
+    this.isStartAddingTests = true;
 
-  //   this.testService.createTest(this.parse()).subscribe(() => {
+    this.testService.startBulkAddProcess({ totalProcesses: this.parse().userProfileId.length }).subscribe(res => {
+      this.processId = res.data;
+
+
+      const interval = setInterval(() => {
+        this.testService.getBulkImportProcess(this.processId).subscribe(res => {
+          this.processProgress = res.data;
+          this.toolBarValue = Math.round(this.processProgress.doneProcesses * 100 / this.processProgress.totalProcesses);
+        })
+      }, 10 * 300);
+
+
+      this.testService.createTest(this.parse()).subscribe(() => {
+
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('tests.tests-were-programmed'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+
+        
+
+        if (this.toolBarValue == 100) {
+          this.testService.getBulkImportProcess(this.processId).subscribe(res => {
+            this.processProgress = res.data;
+            this.toolBarValue = this.processProgress.doneProcesses * 100 / this.processProgress.totalProcesses;
+            console.log("this.toolbarValue:", this.toolBarValue)
+            this.testService.getBulkImportResult(this.processProgress.fileId).subscribe(response => {
+              if (response) {
+                const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
+                const blob = new Blob([response.body], { type: response.body.type });
+                const file = new File([blob], fileName, { type: response.body.type });
+                saveAs(file);
+              }
+            }
+            )
+          })
+        }
+
+        clearInterval(interval);
+        this.isStartAddingTests = true;
+        this.backClicked();
+        this.disableBtn = false;
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      });
+    })
+  }
+
+
+  // addTestAndPrint(){
+  //   this.isStartAddingTests = true;
+  //   let requests = Math.ceil((this.userListToAdd.length / 5));
+  //   this.createTestAndPrint(requests);
+  // }
+
+  // createTestAndPrint(requests) {
+  //   this.disableBtn = true;
+  //   if (this.userListToAdd.length > 0) {
+  //     this.testService.createTest(this.parseForBulkAdd()).subscribe((res) => {
+  //       this.userListToAdd.splice(0, 5);
+  //       this.toolBarProcents++;
+  //       this.toolBarValue = Math.round(this.toolBarProcents / requests * 100);
+  //       this.performingTestPdf(res.data);
+  //       this.createTestAndPrint(requests);
+  //     });
+  //   } else {
+  //     this.isStartAddingTests = false;
   //     forkJoin([
   //       this.translate.get('modal.success'),
   //       this.translate.get('tests.tests-were-programmed'),
@@ -288,27 +364,13 @@ export class AddTestComponent implements OnInit {
   //     this.backClicked();
   //     this.disableBtn = false;
   //     this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-  //   });
+  //   }
+
   // }
 
-  addTestAndPrint(){
-    this.isStartAddingTests = true;
-    let requests = Math.ceil((this.userListToAdd.length / 5));
-    this.createTestAndPrint(requests);
-  }
-
-  createTestAndPrint(requests) {
+  createTestAndPrint() {
     this.disableBtn = true;
-    if (this.userListToAdd.length > 0) {
-      this.testService.createTest(this.parseForBulkAdd()).subscribe((res) => {
-        this.userListToAdd.splice(0, 5);
-        this.toolBarProcents++;
-        this.toolBarValue = Math.round(this.toolBarProcents / requests * 100);
-        this.performingTestPdf(res.data);
-        this.createTestAndPrint(requests);
-      });
-    } else {
-      this.isStartAddingTests = false;
+    this.testService.createTest(this.parse()).subscribe((res) => {
       forkJoin([
         this.translate.get('modal.success'),
         this.translate.get('tests.tests-were-programmed'),
@@ -316,29 +378,12 @@ export class AddTestComponent implements OnInit {
         this.title = title;
         this.description = description;
       });
+      this.performingTestPdf(res.data);
       this.backClicked();
       this.disableBtn = false;
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-    }
-   
+    });
   }
-
-  // createTestAndPrint() {
-  //   this.disableBtn = true;
-  //   this.testService.createTest(this.parse()).subscribe((res) => {
-  //     forkJoin([
-  //       this.translate.get('modal.success'),
-  //       this.translate.get('tests.tests-were-programmed'),
-  //     ]).subscribe(([title, description]) => {
-  //       this.title = title;
-  //       this.description = description;
-  //     });
-  //     this.performingTestPdf(res.data);
-  //     this.backClicked();
-  //     this.disableBtn = false;
-  //     this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-  //   });
-  // }
 
   backClicked() {
     this.location.back();

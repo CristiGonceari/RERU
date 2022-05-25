@@ -1,23 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CODWER.RERU.Evaluation.Application.Models;
+using CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions;
 using CODWER.RERU.Evaluation.Application.Tests.AddTest;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
+using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.Notifications.Email;
+using CVU.ERP.Notifications.Enums;
+using CVU.ERP.Notifications.Services;
+using CVU.ERP.StorageService;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using OfficeOpenXml;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
+using RERU.Data.Entities.StaticExtensions;
+using RERU.Data.Persistence.Context;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper.Internal;
-using CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions;
-using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
-using CVU.ERP.Notifications.Services;
-using Microsoft.EntityFrameworkCore;
-using Minio;
-using RERU.Data.Entities;
-using RERU.Data.Persistence.Context;
-using Microsoft.Extensions.Options;
-using CODWER.RERU.Evaluation.Application.Models;
+using FileTypeEnum = CVU.ERP.StorageService.Entities.FileTypeEnum;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 {
@@ -28,57 +32,85 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
         private readonly INotificationService _notificationService;
         private readonly IOptions<PlatformConfig> _options;
         private readonly PlatformConfig _platformConfig;
+        private readonly IStorageFileService _storageFileService;
 
         public AddTestsCommandHandler(
-            IMediator mediator, 
-            AppDbContext appDbContext, 
-            INotificationService notificationService, 
+            IMediator mediator,
+            AppDbContext appDbContext,
+            INotificationService notificationService,
             IOptions<PlatformConfig> options,
-            PlatformConfig platformConfig)
+            PlatformConfig platformConfig,
+            IStorageFileService storageFileService)
         {
             _mediator = mediator;
             _appDbContext = appDbContext;
             _notificationService = notificationService;
             _options = options;
+            _storageFileService = storageFileService;
             _platformConfig = options.Value;
         }
 
         public async Task<List<int>> Handle(AddTestsCommand request, CancellationToken cancellationToken)
         {
-            var testId = 0;
+            using var package = new ExcelPackage();
+            var workSheet = package.Workbook.Worksheets.Add("Sheet1");
+
+            int testId = 0;
             var testsIds = new List<int>();
 
-            foreach (var testCommand in request.UserProfileId.Select(id => new AddTestCommand
-            {
-                Data = new AddEditTestDto
-                {
-                    UserProfileId = id,
-                    EvaluatorId = request.EvaluatorId,
-                    ShowUserName = request.ShowUserName,
-                    TestTemplateId = request.TestTemplateId,
-                    EventId = request.EventId,
-                    TestStatus = request.TestStatus,
-                    ProgrammedTime = request.ProgrammedTime
-                }
-            }))
-            {
-                testId = await _mediator.Send(testCommand);
-                testsIds.Add(testId);
+            var processId = request.ProcessId;
 
-                var generateCommand = new GenerateTestQuestionsCommand
+            for (int i = 0; i < request.UserProfileId.Count; i++)
+            {
+                var addCommand = new AddTestCommand
                 {
-                    TestId = testId
+                    Data = new AddEditTestDto
+                    {
+                        UserProfileId = request.UserProfileId[i],
+                        EvaluatorId = request.EvaluatorId,
+                        ShowUserName = request.ShowUserName,
+                        TestTemplateId = request.TestTemplateId,
+                        EventId = request.EventId,
+                        TestStatus = request.TestStatus,
+                        ProgrammedTime = request.ProgrammedTime
+                    }
                 };
 
-                await _mediator.Send(generateCommand);
+                try
+                {
+                    testId = await _mediator.Send(addCommand);
 
-                //await SendEmailNotification(testCommand, null, testId);
+                    testsIds.Add(testId);
+
+                    var generateCommand = new GenerateTestQuestionsCommand
+                    {
+                        TestId = testId
+                    };
+
+                    await _mediator.Send(generateCommand);
+
+                    await UpdateProcesses(processId);
+
+                    await GenerateExcelResult(i, addCommand.Data.UserProfileId, true, string.Empty, workSheet);
+
+                    await SendEmailNotification(addCommand, null, testId);
+
+                }
+                catch (Exception e)
+                {
+                    await GenerateExcelResult(i, addCommand.Data.UserProfileId, false, e.ToString(), workSheet);
+
+                    Console.WriteLine(e);
+                }
             }
 
-            //await SendEmailNotification(null, request, testId);
+            await SaveExcelFile(processId, package);
+
+            await SendEmailNotification(null, request, testId);
 
             return testsIds;
         }
+
 
         private async Task<Unit> SendEmailNotification(AddTestCommand testCommand, AddTestsCommand request, int testId)
         {
@@ -119,14 +151,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             };
 
             await _notificationService.Notify(emailData, NotificationType.Both);
-                
+
             return Unit.Value;
         }
 
         private async Task<string> GetTableContent(Test item, bool evaluat)
         {
-             var content = string.Empty;
-            
+            var content = string.Empty;
+
             if (evaluat)
             {
                 content += $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la testul ""{item.TestTemplate.Name}"" în rol de candidat.</p>
@@ -148,6 +180,64 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             return content;
         }
 
+        private async Task UpdateProcesses(int processId)
+        {
+            var process = _appDbContext.BulkProcesses.FirstOrDefault(x => x.Id == processId);
+            process.DoneProcesses++;
 
+            await _appDbContext.SaveChangesAsync();
+        }
+        private async Task GenerateExcelResult(int i, int userProfileId, bool result, string error, ExcelWorksheet workSheet)
+        {
+            var userProfile = _appDbContext.UserProfiles.FirstOrDefault(x => x.Id == userProfileId);
+
+            workSheet.Cells[1, 1].Value = "Name";
+            workSheet.Cells[1, 2].Value = "Idnp";
+            workSheet.Cells[1, 3].Value = "Email";
+            workSheet.Cells[1, 4].Value = "Result";
+            workSheet.Cells[1, 5].Value = "Error";
+
+
+            workSheet.Cells[i + 2, 1].Value = userProfile.GetFullName();
+            workSheet.Column(1).Width = 25;
+
+            workSheet.Cells[i + 2, 2].Value = userProfile?.Idnp;
+            workSheet.Column(1).Width = 25;
+
+            workSheet.Cells[i + 2, 3].Value = userProfile?.Email;
+            workSheet.Column(1).Width = 45;
+
+            workSheet.Cells[i + 2, 4].Value = result ? "Adaugat" : "Nereusit";
+            workSheet.Column(2).Width = 25;
+
+            workSheet.Cells[i + 2, 5].Value = error;
+            workSheet.Column(2).Width = 25;
+
+        }
+        private async Task<FileDataDto> ReturnExcelFile(ExcelPackage package)
+        {
+            var excelName = "AddTestResult.xlsx";
+            var streamBytesArray = package.GetAsByteArray();
+
+            return new FileDataDto
+            {
+                Content = streamBytesArray,
+                Name = excelName,
+                ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            };
+        }
+        private async Task SaveExcelFile(int processId, ExcelPackage package)
+        {
+            var excelFile = await ReturnExcelFile(package);
+
+            var fileId = await _storageFileService.AddFile(excelFile.Name, FileTypeEnum.procesfile, excelFile.ContentType, excelFile.Content);
+
+            var process = _appDbContext.BulkProcesses.First(x => x.Id == processId);
+
+            process.FileId = fileId;
+            process.IsDone = true;
+
+            await _appDbContext.SaveChangesAsync();
+        }
     }
 }

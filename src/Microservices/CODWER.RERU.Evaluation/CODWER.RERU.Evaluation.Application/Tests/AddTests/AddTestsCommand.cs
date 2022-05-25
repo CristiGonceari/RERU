@@ -16,5 +16,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
         public int? LocationId { get; set; }
         public TestStatusEnum TestStatus { get; set; }
         public DateTime? ProgrammedTime { get; set; }
+        public int ProcessId { get; set; }
     }
 }

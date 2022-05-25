@@ -89,7 +89,7 @@ namespace CVU.ERP.Module.Application.StorageFileServices.Implementations
                     BucketName = fileType.ToString()
                 };
 
-                await _appDbContext.Files.AddAsync(fileToAdd);
+                _appDbContext.Files.Add(fileToAdd);
                 await _appDbContext.SaveChangesAsync();
 
                 return fileToAdd.Id.ToString();

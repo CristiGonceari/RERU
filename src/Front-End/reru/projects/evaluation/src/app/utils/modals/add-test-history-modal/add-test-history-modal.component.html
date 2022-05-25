@@ -1,0 +1,47 @@
+<div class="modal-header border-0 pb-0">
+    <h3 class="modal-title">{{'documents-templates.generate-document'| translate}}</h3>
+</div>
+<div class="modal-body px-7">
+    <!-- <div class="separator separator-dashed my-5"></div> -->
+    <div class="row ">
+        <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+            id="kt_datatable">
+            <table class="datatable table font-size-lg" style="overflow: visible">
+                <thead class="text-uppercase text-muted">
+                    <tr>
+                        <th scope="col" class="text-center" style="width: 150px">Processe Totale</th>
+                        <th scope="col" class="text-center" style="width: 150px">Processe Efectuate</th>
+                        <th scope="col" class="text-center" style="width: 150px">Start Time</th>
+                        <th scope="col" class="text-center" style="width: 150px">End Time</th>
+                        <th scope="col" class="text-center" style="width: 150px">File</th>
+
+                        <th scope="col" style="width: 48px"></th>
+                    </tr>
+                </thead>
+                <tbody class="datatable-body">
+                    <tr *ngFor="let item of processesData">
+                        <td class="text-center" style="width: 150px">{{item.doneProcesses}}</td>
+                        <td class="text-center" style="width: 150px">{{item.totalProcesses}}</td>
+                        <td class="text-center" style="width: 150px">{{item.startTime | date: 'M/d/yy, h:mm a'}}</td>
+                        <td class="text-center" style="width: 150px">{{item.endTime | date: 'M/d/yy, h:mm a' }}</td>
+                        <td class="text-center" style="width: 150px" >
+                            <button (click)="getResultFile(item.fileId)" [disabled]="item.fileId == null" class="btn btn-light-success font-weight-bold mr-3">
+                                <i class="far fa-file-excel"></i>
+                                .xsls
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody class="datatable-body" *ngIf="!recivedData">
+                    <tr>
+                        <td colspan="10" class="text-center">
+                            {{ 'message.no-record' | translate }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer border-0 pt-0">
+        <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+    </div>
