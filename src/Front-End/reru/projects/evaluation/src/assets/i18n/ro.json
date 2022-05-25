@@ -536,7 +536,7 @@
     "NotCorrect": "Incorecte",
     "Skipped": "Omise",
     "clone": "Clonați",
-    "Select": "Selectați",
+    "Select": "Utilizate în teste",
     "Random": "Aleatorie",
     "Strict": "Strictă",
     "ZeroPercent": "Răspuns greșit = 0%",
@@ -761,7 +761,8 @@
     "total-used": "Total utilizat",
     "correct-percent": "Procentul corect",
     "not-correct-percent": "Procentul incorect",
-    "skipped-percent": "Procentul omis"
+    "skipped-percent": "Procentul omis",
+    "filter-criteria": "Criterii de filtrare"
   },
   "select-format":{
     "please-select-format": "Selectati formatul necesar"

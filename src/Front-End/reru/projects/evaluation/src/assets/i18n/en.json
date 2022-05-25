@@ -536,7 +536,7 @@
     "NotCorrect": "Inorrect",
     "Skipped": "Skipped",
     "clone": "Clone",
-    "Select": "Select",
+    "Select": "Used in tests",
     "Random": "Random",
     "Strict": "Strict",
     "ZeroPercent": "Wrong answer = 0%",
@@ -762,7 +762,8 @@
     "total-used": "Total used",
     "correct-percent": "Correct percent",
     "not-correct-percent": "Incorrect percent",
-    "skipped-percent": "Skipped percent"
+    "skipped-percent": "Skipped percent",
+    "filter-criteria": "Filter criteria"
   },
   "select-format":{
     "please-select-format": "Please select format"

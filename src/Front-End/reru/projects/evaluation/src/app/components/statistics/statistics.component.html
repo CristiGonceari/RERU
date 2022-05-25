@@ -42,9 +42,10 @@
                                 <div class="row col-12 w-100">
                                     <div class="col-lg-6 col-6">
                                         <div class="d-flex flex-column">
-                                            <label class="col-form-label pb-0 text-dark-50">{{'questions.type' | translate}}</label>
+                                            <label class="col-form-label pb-0 text-dark-50">{{'statistics.filter-criteria' | translate}}</label>
                                             <select class="form-control h-35px" name="filterEnum"
                                                 [(ngModel)]="filterEnum" (ngModelChange)="table.getQuestions(send())">
+                                                <option class="default-option" selected [ngValue]="null">{{'questions.select' | translate }}</option>
                                                 <option *ngFor="let item of statisticEnum" [value]="item.value">
                                                     {{'statuses.' + item.label | translate}}
                                                 </option>
