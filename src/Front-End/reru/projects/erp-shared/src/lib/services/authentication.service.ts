@@ -78,7 +78,7 @@ export class AuthenticationService extends BaseService {
 			authority: settings.IDENTITY_AUTHORITY,
 			client_id: settings.CLIENT_ID,
 			redirect_uri: settings.IDENTITY_AUTHORITY_REDIRECT_URI,
-			post_logout_redirect_uri: settings.APP_BASE_URL,
+			// post_logout_redirect_uri: settings.APP_BASE_URL,
 			response_type: 'id_token token',
 			scope: 'openid ' + settings.MODULE_SCOPE,
 			filterProtocolClaims: true,
