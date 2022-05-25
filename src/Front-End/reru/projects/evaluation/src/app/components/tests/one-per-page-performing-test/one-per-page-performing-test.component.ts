@@ -43,6 +43,8 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   timerInterval;
   percent;
 
+  disableBtn: boolean = false;
+
   title: string;
 	description: string;
 	no: string;
@@ -232,6 +234,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   }
 
    saveAnswers() {
+    this.disableBtn = true;
     this.isLoading = true;
     this.testAnswersInput = [];
 
@@ -282,6 +285,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
             if (this.testQuestionSummary.every(x => x.isClosed === true))
               this.submitTest();
             else if (!this.testTemplateSettings.possibleChangeAnswer || !this.testTemplateSettings.possibleGetToSkipped) {
+              this.disableBtn = false;
               var isNotClosedAnswers = this.testQuestionSummary.filter(x => x.isClosed === false);
 
               this.questionIndex = isNotClosedAnswers.some(x => x.index > this.questionIndex) ?
@@ -289,11 +293,12 @@ export class OnePerPagePerformingTestComponent implements OnInit {
                 isNotClosedAnswers.filter(x => x.index < this.questionIndex)[0].index;
               this.getTestQuestions(this.questionIndex);
             } else {
-              if (this.questionIndex < this.count)
-                this.getTestQuestions(this.questionIndex + 1);
-              else {
+                this.disableBtn = false;
+                if (this.questionIndex < this.count)
+                  this.getTestQuestions(this.questionIndex + 1);
+                else {
                 this.getTestQuestions(1);
-              }
+                }
             }
           });
       }
