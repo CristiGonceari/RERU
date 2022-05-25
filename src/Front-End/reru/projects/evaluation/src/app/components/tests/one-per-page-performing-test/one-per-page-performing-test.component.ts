@@ -66,7 +66,6 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   disableNext = false;
   isLoading = true;
   testTemplateId;
-  disableBtn: boolean = false;
 
   isLoadingMedia: boolean;
   imageUrl: any;
@@ -233,7 +232,6 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   }
 
    saveAnswers() {
-    this.disableBtn = true;
     this.isLoading = true;
     this.testAnswersInput = [];
 
@@ -291,7 +289,6 @@ export class OnePerPagePerformingTestComponent implements OnInit {
                 isNotClosedAnswers.filter(x => x.index < this.questionIndex)[0].index;
               this.getTestQuestions(this.questionIndex);
             } else {
-              this.disableBtn = false;
               if (this.questionIndex < this.count)
                 this.getTestQuestions(this.questionIndex + 1);
               else {
