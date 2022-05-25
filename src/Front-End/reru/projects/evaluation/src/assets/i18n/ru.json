@@ -535,7 +535,7 @@
     "NotCorrect": "Неправильныe",
     "Skipped": "Пропущенные",
     "clone": "Клонировать",
-    "Select": "Выбрать",
+    "Select": "Использованные в тестах",
     "Random": "Cлучайный",
     "Strict": "Cтрогий",
     "ZeroPercent": "Неправильный ответ = 0%",
@@ -762,7 +762,8 @@
     "total-used": "Всего использовано",
     "correct-percent": "Правильный процент",
     "not-correct-percent": "Не правильный процент",
-    "skipped-percent": "Пропущенный процент"
+    "skipped-percent": "Пропущенный процент",
+    "filter-criteria": "Критерии фильтрации"
   },
   "select-format":{
     "please-select-format": "Пожалуйста выберите формат файла"
