@@ -181,12 +181,25 @@
                 </div>
               </div>
             </div>
+
+            <div class="form-row">
+              <div class="col-md-12">
+                <label for="inputAddress">{{ 'registration-page.personal-file-msg' | translate }}</label>
+                <button [disabled]="isLoadingButton" type="button" (click)="downloadFile()"
+                  class="btn btn-success mb-5">
+                <i class="far fa-file-excel" *ngIf="!isLoadingButton"></i>
+                <span class="text-white ml-2 font-weight-bold font-size-lg" *ngIf="!isLoadingButton">{{'registration-page.personal-file' | translate}}</span>
+                <span class="text-white mr-2 font-weight-bold font-size-lg" *ngIf="isLoadingButton">{{'button.loading' | translate}}</span>
+                <div *ngIf="isLoadingButton" class="spinner-border spinner-border-sm text-white" role="status"></div>
+              </button>
+              </div>
+            </div>
             <div class="form-row py-8">
               <div class="col-md-12">
                 <ngx-dropzone (change)="onSelect($event)" class="font-weight-light justify-content-center"
                   [expandable]="true" [multiple]="true">
                   <ngx-dropzone-label>
-                    <h4>Drop file here or click to upload</h4>
+                    <h4>{{ 'registration-page.upload-files' | translate }}</h4>
                   </ngx-dropzone-label>
                   <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
                     [removable]="true" (removed)="onRemove(f)" [file]="f">

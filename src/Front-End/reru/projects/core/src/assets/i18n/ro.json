@@ -30,7 +30,11 @@
     "select-candidate-position": "Selectați poziția",
     "position-to-candidate": "Poziția pentru care candidați",
     "accept-condition": "Înregistrându-mă în sistem accept",
-    "registration-conditions":"condiții de înregistrare"
+    "registration-conditions":"condiții de înregistrare",
+    "personal-file": "Fișa Personala",
+    "personal-form-file": "Formular pentru completarea datelor personale",
+    "upload-files": "Plasați fișiere aici sau faceți clic pentru a încărca",
+    "personal-file-msg": "Pentru a completa fișa personala vă rugăm să o descărcati, accesând butonul de mai jos. După ce completați fișa personala, o încărcați in zona de mai jos împreună cu celelalte documente necesare. Completarea fișei este obligatorie"
   },
   "files":{
     "title": "Documente",
