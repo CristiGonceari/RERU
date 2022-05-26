@@ -1,20 +1,17 @@
-﻿using CODWER.RERU.Core.Application.Validation;
-using CODWER.RERU.Core.Application.Validators.IDNP;
-using CVU.ERP.Common.DataTransferObjects.Users;
+﻿using System.Linq;
+using CODWER.RERU.Core.Application.Validation;
 using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 using FluentValidation.Validators;
-using System.Linq;
 using RERU.Data.Persistence.Context;
 
-namespace CODWER.RERU.Core.Application.Users.CreateUser
+namespace CODWER.RERU.Core.Application.Users.EditUserFromColaborator
 {
-    public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
+    public class EditUserFromColaboratorCommandValidator : AbstractValidator<EditUserFromColaboratorCommand>
     {
         private readonly AppDbContext _appDbContext;
-
-        public CreateUserCommandValidator(IValidator<CreateUserDto> createUserDto, AppDbContext appDbContext)
+        public EditUserFromColaboratorCommandValidator(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
 
@@ -37,16 +34,13 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
                 .WithMessage(ValidationMessages.InvalidInput)
                 .WithErrorCode(ValidationCodes.INVALID_EMAIL_FORMAT);
 
-            //RuleFor(x => x.Idnp)
-            //    .SetValidator(new IdnpValidator());
-
-            RuleFor(x => x.Idnp)
+            RuleFor(x => x)
               .Custom(CheckIfUniqueIdnpOnCreate);
-
         }
-        private void CheckIfUniqueIdnpOnCreate(string idnp, CustomContext context)
+
+        private void CheckIfUniqueIdnpOnCreate(EditUserFromColaboratorCommand data, CustomContext context)
         {
-            var exist = _appDbContext.UserProfiles.Any(x => x.Idnp == idnp);
+            var exist = _appDbContext.UserProfiles.Any(x =>x.Id != data.Id && x.Idnp == data.Idnp);
 
             if (exist)
             {
