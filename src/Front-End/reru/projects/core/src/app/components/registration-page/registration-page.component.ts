@@ -17,6 +17,7 @@ import { RegistrationPageService } from '../../utils/services/registration-page.
 import { ApplicationUserService} from '@erp/shared';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { AcceptConditionsModalComponent } from '../../utils/modals/accept-conditions-modal/accept-conditions-modal.component';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-registration-page',
@@ -42,7 +43,7 @@ export class RegistrationPageComponent implements OnInit {
     );
   }
 
-
+  isLoadingButton: boolean = false;
   userId: any;
   fileId: string;
   fileType: FileTypeEnum = FileTypeEnum.Photos;
@@ -196,6 +197,22 @@ export class RegistrationPageComponent implements OnInit {
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
+
+  downloadFile(): void {
+    this.isLoadingButton = true;
+		this.inregistrationService.getPersonalFile().subscribe((response : any) => {
+      let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+      
+      if (response.body.type === 'application/xlsx') {
+        fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
+      }
+
+      const blob = new Blob([response.body], { type: response.body.type });
+      const file = new File([blob], fileName, { type: response.body.type });
+      saveAs(file);
+      this.isLoadingButton = false;
+		});
+	}
 
   checkFile(event) {
     if (event != null) this.attachedFile = event;

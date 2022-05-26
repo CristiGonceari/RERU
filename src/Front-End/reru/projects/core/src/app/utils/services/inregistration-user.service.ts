@@ -13,7 +13,11 @@ export class InregistrationUserService  extends AbstractService {
 		super(appSettingsService);
 	}
 
-  inregistrateUser(data): Observable<any> {
+  	inregistrateUser(data): Observable<any> {
 		return this.http.post(`${this.coreUrl}/${this.routeUrl}`, data);
+	}
+
+	getPersonalFile(): Observable<any> {
+		return this.http.get(`${this.coreUrl}/${this.routeUrl}/personal-file`, { responseType: 'blob', observe: 'response' });
 	}
 }

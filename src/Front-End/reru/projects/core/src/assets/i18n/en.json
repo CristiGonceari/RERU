@@ -30,8 +30,11 @@
     "select-candidate-position": "Select Position",
     "position-to-candidate": "Position to Candidate",
     "accept-condition": "I agree and accept with",
-    "registration-conditions":"registration conditions"
-
+    "registration-conditions":"registration conditions",
+    "personal-file": "Personal File",
+    "personal-form-file": "Form for filling in personal data",
+    "upload-files": "Drop file here or click to upload",
+    "personal-file-msg": "To complete the personal file, please download it by accessing the button below. After filling in the personal file, upload it in the area below together with the other necessary documents. Filling the form is mandatory"
   },
   "files":{
     "title": "Documents",
