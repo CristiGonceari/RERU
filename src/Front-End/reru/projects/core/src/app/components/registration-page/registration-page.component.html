@@ -189,7 +189,7 @@
                   class="btn btn-success mb-5">
                 <i class="far fa-file-excel" *ngIf="!isLoadingButton"></i>
                 <span class="text-white ml-2 font-weight-bold font-size-lg" *ngIf="!isLoadingButton">{{'registration-page.personal-file' | translate}}</span>
-                <span class="text-white mr-2 font-weight-bold font-size-lg" *ngIf="isLoadingButton">{{'button.loading' | translate}}</span>
+                <span class="text-white mr-2 font-weight-bold font-size-lg" *ngIf="isLoadingButton">{{'registration-page.is-downloading' | translate}}</span>
                 <div *ngIf="isLoadingButton" class="spinner-border spinner-border-sm text-white" role="status"></div>
               </button>
               </div>
