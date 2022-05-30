@@ -124,6 +124,17 @@ stages:
                       echo "##vso[task.setvariable variable=BuildPublicGateway]True"
                       echo "##vso[task.setvariable variable=BuildInternalGateway]True"
                     }
+
+                      echo "##vso[task.setvariable variable=BuildCore]True"
+                      echo "##vso[task.setvariable variable=BuildEvaluation]True"
+                      echo "##vso[task.setvariable variable=BuildPersonal]True"
+                      echo "##vso[task.setvariable variable=BuildLogging]True"
+
+                      echo "##vso[task.setvariable variable=BuildIdentityMigrator]True"
+                      echo "##vso[task.setvariable variable=BuildStorageMigrator]True"
+                      echo "##vso[task.setvariable variable=BuildIdentityNew]True"
+                      echo "##vso[task.setvariable variable=BuildPublicGateway]True"
+                      echo "##vso[task.setvariable variable=BuildInternalGateway]True"
                 }
 
           - task: CmdLine@2
