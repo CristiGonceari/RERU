@@ -24,7 +24,6 @@ export class CategoryListTableComponent implements OnInit {
   	questionCategories: QuestionCategory[] = [];
   	pagedSummary: PaginationModel = new PaginationModel();
 	name = '';
-	pager: number[] = [];
 	keyword: string;
 	isLoading: boolean = true;
 	title: string;
@@ -50,6 +49,8 @@ export class CategoryListTableComponent implements OnInit {
  	}
 
   	list(data: any = {}) {
+		console.warn('pagination', data.itemsPerPage, this.pagedSummary.pageSize);
+		
 		this.isLoading = true;
 		this.keyword = data.keyword;
 		let params = {

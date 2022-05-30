@@ -136,7 +136,7 @@
     "all": "Все",
     "there-are-no-records-at-the-moment": "В настоящее время нет записей",
     "1": "Шаблон теста",
-    "2": "Контрольная работа",
+    "2": "Тест",
     "reports":{
       "name": "Название",
       "personFullName": "Полное имя",
@@ -186,7 +186,8 @@
     "TestPassStatusKey": "Статус теста",
     "ResultStatusKey": "Результат теста",
     "EvaluatorIdnpKey": "IDNP из бюллетеня оценщика",
-    "EvaluatorEmailKey": "Электронная почта оценщика"
+    "EvaluatorEmailKey": "Электронная почта оценщика",
+    "TestNameKey":"Название теста"
   },
   "button": {
     "add": "Добавить",
@@ -372,6 +373,7 @@
     "search-test-type": "Поиск по шаблону теста",
     "search-test-status": "Поиск по статусу",
     "search-student": "Поиск по имени пользователя",
+    "search-email": "Поиск по электронной почте",
     "search-student-idnp": "Поиск по idnp пользователя",
     "test-type-name": "Имя шаблона теста",
     "student": "Студент",
@@ -482,8 +484,8 @@
     "succes-update-msg": "Вопрос был успешно обновлён",
     "succes-update-status-msg": "Статус вопроса был успешно обновлён",
     "search-by-status": "Выберите статус вопроса",
-    "add-tags": "Добавить тэги"
-
+    "add-tags": "Добавить тэги",
+    "bulk-import-options-msg":"Скачайте и воспользуйтесь, пожалуйста, нашей специальной формой для загрузки вопроса" 
   },
   "answers": {
     "option-settings": "Настройка Опции",
@@ -546,7 +548,9 @@
     "refuse": "Отказать",
     "NoResult": "Без Результата",
     "Passed": "Пройден",
-    "NotPassed": "Не пройден"
+    "NotPassed": "Не пройден",
+    "employee": "Сотрудник",
+    "candidate": "Кандидат"
   },
   "options": {
     "start-without-confirmation": "Возможен запуск теста без подтверждения",

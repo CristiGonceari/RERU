@@ -25,18 +25,22 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
 
         public async Task<PaginatedModel<UserProfileDto>> Handle (GetAllUserProfilesQuery request, CancellationToken cancellationToken) 
         {
-
             var filterData = new FilterUserProfilesDto
             {
                 Keyword = request.Keyword,
                 Email = request.Email,
-                Idnp = request.Idnp
+                Idnp = request.Idnp,
+                Status = request.Status
             };
-           
 
             var userProfiles = GetAndFilterUserProfiles.Filter(_appDbContext, filterData);
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto> (userProfiles, request);
+
+            if (request.UserStatusEnum.HasValue)
+            {
+                paginatedModel.Items = paginatedModel.Items.Where(p => p.UserStatusEnum == request.UserStatusEnum);
+            }
 
             return paginatedModel;
         }

@@ -22,28 +22,15 @@ import { saveAs } from 'file-saver';
 export class UserListTableComponent implements OnInit {
 	users: User[];
 	pagination: PaginationSummary = new PaginationSummary();
-	pager: number[] = [];
 	result: boolean;
-	asc: boolean;
-	order: string;
-	keyword: string;
-	email: string;
-	idnp: string;
 	viewDetails: boolean = false;
-	filter = {
-		sort: 'name',
-		order: true
-	}
 
 	downloadFile: boolean = false;
 	headersToPrint = [];
 	printTranslates: any[];
-	filters: any = {}
+	filters: any = {};
 
 	isLoading = true;
-	module: any;
-	userState: number = 0;
-	searchValue: string;
 	title: string;
 	description: string;
 	no: string;
@@ -62,37 +49,34 @@ export class UserListTableComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.list();
-		this.prepareFilter('name', 'asc');
 		this.checkPermission();
 	}
 
-	getFilteredUsers(data: any = {}): void {
-		this.keyword = data.keyword;
-		this.email = data.email;
-		this.idnp = data.idnp;
-		data = {
-			...data,
-			keyword: this.keyword,
-			email: this.email,
-			idnp: this.idnp,
-			page: data.page || this.pagination.currentPage,
-			itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
-			status: data.userState
-		};
-		this.list(data);
+	setFilter(field: string, value): void {
+		this.filters[field] = value;
+		this.pagination.currentPage = 1;
+		this.list();
+	}
+
+	resetFilter(): void {
+		this.filters = {};
+		this.list();
 	}
 
 	list(data: any = {}): void {
+		data = {
+			page: data.page || this.pagination.currentPage,
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+			...this.filters,
+		};
 		this.isLoading = true;
 		this.userProfileService.getUserProfiles(ObjectUtil.preParseObject(data)).subscribe(response => {
-			if (response && response.data.items.length) {
-				this.result = true;
+			if (response && response.data.items) {
 				this.users = response.data.items;
 				this.pagination = response.data.pagedSummary;
 				this.isLoading = false;
 			} else {
 				this.isLoading = false;
-				this.result = false;
 			}
 		});
 	}
@@ -100,7 +84,7 @@ export class UserListTableComponent implements OnInit {
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['-', 'lastName', 'firstName', 'fatherName', 'idnp', 'email', 'isActive'];
+		let headersDto = ['-', 'lastName', 'firstName', 'fatherName', 'idnp', 'email', 'departmentName', 'roleName', 'isActive'];
 		for (let i=1; i<headersHtml.length-1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
 		}
@@ -108,9 +92,9 @@ export class UserListTableComponent implements OnInit {
 			tableName: name,
 			fields: this.headersToPrint,
 			orientation: 2,
-			keyword: this.keyword || '',
-			email: this.email || '',
-			idnp: this.idnp || ''
+			keyword: this.filters.keyword || '',
+			email: this.filters.email || '',
+			idnp: this.filters.idnp || ''
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'lg' });
 		modalRef.componentInstance.tableData = printData;
@@ -146,45 +130,6 @@ export class UserListTableComponent implements OnInit {
 				this.downloadFile = false;
 			}
 		}, () => this.downloadFile = false);
-	}
-
-	prepareFilter(sort, order): void {
-		if (sort === this.filter.sort) {
-			this.filter.order = !this.filter.order;
-			return
-		} else if (sort !== this.filter.sort) {
-			this.filter.sort = sort;
-			this.filter.order = false;
-		}
-	}
-
-	sortedList(data: any = {}): void {
-		this.prepareFilter(data.sort, data.order);
-		data = {
-			...data,
-			keyword: this.keyword || this.searchValue,
-			email: this.email || this.searchValue,
-			idnp: this.idnp || this.searchValue,
-			order: this.filter.order ? 'desc' : 'asc',
-			sort: this.filter.sort,
-			page: data.page || this.pagination.currentPage,
-			status: data.userState || this.userState
-		};
-		this.isLoading = true;
-		this.userProfileService.getUserProfiles(ObjectUtil.preParseObject(data)).subscribe(response => {
-			if (response && response.data.items.length) {
-				this.result = true;
-				this.users = response.data.items;
-				this.pagination = response.data.pagedSummary;
-				for (let i = 1; i <= this.pagination.totalCount; i++) {
-					this.pager.push(i);
-					this.isLoading = false;
-				}
-			} else {
-				this.isLoading = false;
-				this.result = false;
-			}
-		});
 	}
 
 	renderText(user): string {
@@ -228,7 +173,6 @@ export class UserListTableComponent implements OnInit {
 		})
 	}
 
-
 	openConfirmModal(id: number, firstName, lastName, type): void {
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
 		if (type == 'reset-password') {
@@ -247,7 +191,7 @@ export class UserListTableComponent implements OnInit {
 			modalRef.componentInstance.description = `${this.description} ${firstName} ${lastName}?`;
 			modalRef.componentInstance.buttonNo = this.no;
 			modalRef.componentInstance.buttonYes = this.yes;
-			modalRef.result.then(() => this.resetPassword(id, firstName, lastName), () => { });
+			modalRef.result.then(() => this.resetPassword(id), () => { });
 		}
 		if (type == 'deactivate-user') {
 			forkJoin([
@@ -265,7 +209,7 @@ export class UserListTableComponent implements OnInit {
 			modalRef.componentInstance.description = `${this.description} ${firstName} ${lastName}?`;
 			modalRef.componentInstance.buttonNo = this.no;
 			modalRef.componentInstance.buttonYes = this.yes;
-			modalRef.result.then(() => this.deactivateUser(id, firstName, lastName), () => { });
+			modalRef.result.then(() => this.deactivateUser(id), () => { });
 		}
 		if (type == 'activate-user') {
 			forkJoin([
@@ -283,24 +227,21 @@ export class UserListTableComponent implements OnInit {
 			modalRef.componentInstance.description = `${this.description} ${firstName} ${lastName}?`;
 			modalRef.componentInstance.buttonNo = this.no;
 			modalRef.componentInstance.buttonYes = this.yes;
-			modalRef.result.then(() => this.activateUser(id, firstName, lastName), () => { });
+			modalRef.result.then(() => this.activateUser(id), () => { });
 		}
 	}
 
-	resetPassword(id, firstName, lastName): void {
-		this.userService.resetPassword(id).subscribe(
-			(res) => {
-				forkJoin([
-					this.translate.get('modal.success'),
-					this.translate.get('reset-password.success-reset'),
-				]).subscribe(([title, description]) => {
-					this.title = title;
-					this.description = description;
-				});
-				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-				if (res) { this.list(); }
-			},
-			(err) => {
+	resetPassword(id): void {
+		this.userService.resetPassword(id).subscribe(() => {
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('reset-password.success-reset'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+		}, (err) => {
 				forkJoin([
 					this.translate.get('notification.title.error'),
 					this.translate.get('notification.body.error'),
@@ -313,7 +254,7 @@ export class UserListTableComponent implements OnInit {
 		);
 	}
 
-	deactivateUser(id, firstName, lastName): void {
+	deactivateUser(id): void {
 		this.userService.deactivateUser(id).subscribe((res) => {
 			forkJoin([
 				this.translate.get('modal.success'),
@@ -328,7 +269,7 @@ export class UserListTableComponent implements OnInit {
 		);
 	}
 
-	activateUser(id, firstName, lastName): void {
+	activateUser(id): void {
 		this.userService.activateUser(id).subscribe((res) => {
 			forkJoin([
 				this.translate.get('modal.success'),

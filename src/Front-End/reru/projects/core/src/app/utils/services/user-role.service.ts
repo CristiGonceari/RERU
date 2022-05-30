@@ -34,6 +34,10 @@ export class UserRoleService extends AbstractService {
     return this.client.patch<UserRoleModel>(`${this.coreUrl}/${this.urlRoute}`, data);
   }
 
+  getValues(): Observable<any> {
+		return this.client.get(`${this.coreUrl}/${this.urlRoute}/select-values`);
+	}
+
   print(data): Observable<any> {
     return this.client.put(`${this.coreUrl}/${this.urlRoute}/print`, data, {
       responseType: 'blob',

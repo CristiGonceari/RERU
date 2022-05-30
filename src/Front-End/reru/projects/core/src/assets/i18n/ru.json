@@ -28,7 +28,9 @@
     "step6": "Нажмите кнопку «Подтвердить» (шаг 6), чтобы завершить процедуру.",
     "registration-candidate-page": "Страница регистрации кандидата",
     "select-candidate-position": "Выберите должность",
-    "position-to-candidate": "Кандидируемая позиция"
+    "position-to-candidate": "Кандидируемая позиция",
+    "accept-condition": "Я соглашаюсь и принимаю",
+    "registration-conditions": "условия регистрации"
   },
   "files":{
     "title": "Документы",
@@ -139,7 +141,8 @@
     "attach": "Прикрепить",
     "print": "Распечатать",
     "watch": "Смотреть видео",
-    "import": "Импортировать"
+    "import": "Импортировать",
+    "loading": "Скачивание"
   },
   "pagination": {
     "displaing": "Показано",
@@ -182,6 +185,15 @@
       "administration": "Администрирование"
     }
   },
+  "statuses": {
+    "all": "Все",
+    "active": "Активныe",
+    "inactive": "Неактивныe",
+    "Candidate": "Кандидаты",
+    "Employee": "Сотрудники",
+    "employee": "Сотрудник",
+    "candidate": "Кандидат"
+  },
   "user-profile": {
     "overview": "Обзор профиля",
     "edit-title": "Обновить свой профиль",
@@ -194,7 +206,8 @@
     "empty-name": "Поле должно содержать только латинские буквы",
     "wrong-name": "Поле должно содержать только латинские буквы",
     "available-modules": "Доступные модули",
-    "idnp-length": "IDNP должно состоять из 13 цифр!"
+    "idnp-length": "IDNP должно состоять из 13 цифр!",
+    "search-by-user-state": "Поиск по статусу пользователя"
   },
   "user": {
     "edit-title": "Обновить Пользователя",

@@ -218,6 +218,11 @@ namespace CVU.ERP.Module.API.Middlewares.ResponseWrapper
                 var errorMessage = new ErrorMessage(exception.Message);
                 //TODO: De adaugat un if si configuratie, daca de adaugat stack trace sau nu.
                 errorMessage.Data.Add(new KeyValuePair<string, object>("StackTrace", exception.StackTrace));
+                if (exception.InnerException != null)
+                {
+                    errorMessage.Data.Add(new KeyValuePair<string, object>("InnerExceptionStackTrace", exception.InnerException.StackTrace));
+                    errorMessage.Data.Add(new KeyValuePair<string, object>("InnerExceptionMessage", exception.InnerException.Message));
+                }
 
                 response.AddErrorMessage(errorMessage);
             }

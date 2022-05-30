@@ -34,7 +34,7 @@
     "user-profile": "Profilul utilizatorului",
     "user-details": "Vizualizarea profilului utilizatorului",
     "user-email": "E-mail",
-    "general-overview": "Общий обзор профиля",
+    "general-overview": "Prezentarea generală a profilului utilizatorului",
     "navigate-core-msg": "Sunteți sigur(-ă) că doriți să navigați la vizualizarea generală a profilului utilizatorului?"
   },
   "notification": {
@@ -186,7 +186,8 @@
     "TestPassStatusKey": "Statutul testului",
     "ResultStatusKey": "Rezultatul testului",
     "EvaluatorIdnpKey": "IDNP din buletinul evaluatorului",
-    "EvaluatorEmailKey": "E-mailul evaluatorului"
+    "EvaluatorEmailKey": "E-mailul evaluatorului",
+    "TestNameKey":"Numele testului"
   },
   "button": {
     "add": "Adaugă",
@@ -357,7 +358,7 @@
     "succes-add-msg": "Testul a fost adăugat cu succes",
     "succes-update-msg": "Șablon de test a fost actualizat cu succes",
     "succes-update-test-status-msg": "Statutul șablonului de test a fost actualizat",
-    "succes-add-rules-msg": "Regurile au fost adăugate cu succes",
+    "succes-add-rules-msg": "Regulile au fost adăugate cu succes",
     "succes-order-update": "Ordinea a fost actualizată cu succes",
     "succes-update-settings-msg": "Setările au fost actualizate cu succes",
     "tests-were-programmed": "Test a fost programat cu succes",
@@ -372,6 +373,7 @@
     "search-test-type": "Căutare după șablonul testului",
     "search-test-status": "Căutare după statut",
     "search-student": "Caută utilizator",
+    "search-email": "Căutare după email",
     "search-student-idnp": "Caută după idnp utilizatorului",
     "test-type-name": "Numele șablonului de test",
     "student": "Student",
@@ -483,7 +485,8 @@
     "succes-update-msg": "Întrebarea a fost actualizată cu succes",
     "succes-update-status-msg": "Statutul intrebării a fost actualizat",
     "search-by-status": "Selecteaza statutul intrebării",
-    "add-tags": "Insereaza taguri"
+    "add-tags": "Insereaza taguri",
+    "bulk-import-options-msg": "Vă rugăm să descărcați și să utilizați formularul nostru special pentru a importa opțiunile"
   },
   "answers": {
     "option-settings": "Setări Opțiuni",
@@ -546,7 +549,9 @@
     "refuse": "Refuză",
     "NoResult": "Fără rezultat",
     "Passed": "Susținut",
-    "NotPassed": "Nesusținut"
+    "NotPassed": "Nesusținut",
+    "employee": "Angajat",
+    "candidate": "Candidat"
   },
   "options": {
     "start-without-confirmation": "Este posibil să porniți testul fără confirmare",

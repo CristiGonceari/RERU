@@ -33,7 +33,6 @@
                   </div>
                 </div>
                 <div class="col">
-
                   <div class="input-group input-group-sm input-group-solid">
                     <input type="text" class="form-control" [placeholder]="'dashboard.user-name' | translate"
                       name="user-name" [(ngModel)]="userName" (ngModelChange)="getLoggingValues({userName: $event})">
@@ -46,18 +45,20 @@
               <div class="row w-100" style="margin-top: 1%;">
                 <div class="col-lg-3 col-12 mt-lg-0 mt-3">
                   <div class="input-group input-group-sm input-group-solid">
-                    <input id="from" [owlDateTime]="fromDate" [owlDateTimeTrigger]="fromDate"
-                      [placeholder]="'dashboard.from' | translate"
-                      class="form-control form-control-lg form-control-solid" name="date" [(ngModel)]="dateTimeFrom"
-                      autocomplete="off" />
-                    <owl-date-time #fromDate></owl-date-time>
+                    <input id="from" [owlDateTime]="fromDate" [placeholder]="'dashboard.from' | translate"
+                        class="shadow-input" name="date" [(ngModel)]="dateTimeFrom" (ngModelChange)="getLoggingValues({fromDate: $event})" autocomplete="off" />
+                      <input id="from" [owlDateTimeTrigger]="fromDate" [placeholder]="'dashboard.from' | translate" autocomplete="off"
+                        class="form-control form-control-lg form-control-solid" [value]="dateTimeFrom | dateFilter:'dd/MM/yy HH:mm'"/>
+                      <owl-date-time #fromDate></owl-date-time>
                   </div>
                 </div>
                 <div class="col-lg-3 col-12">
                   <div class="input-group input-group-sm input-group-solid">
-                    <input class="form-control" [owlDateTime]="toDate" [owlDateTimeTrigger]="toDate"
-                      [placeholder]="'dashboard.to' | translate" [(ngModel)]="dateTimeTo" autocomplete="off" />
-                    <owl-date-time #toDate></owl-date-time>
+                    <input id="from" [owlDateTime]="toDate" [placeholder]="'dashboard.to' | translate"
+                        class="shadow-input" name="date" [(ngModel)]="dateTimeTo" (ngModelChange)="getLoggingValues({toDate: $event})" autocomplete="off" />
+                      <input id="from" [owlDateTimeTrigger]="toDate" [placeholder]="'dashboard.to' | translate" autocomplete="off"
+                        class="form-control form-control-lg form-control-solid" [value]="dateTimeTo | dateFilter:'dd/MM/yy HH:mm'"/>
+                      <owl-date-time #toDate></owl-date-time>
                   </div>
                 </div>
                 <div class="col-lg-3 col-12 mt-lg-0 mt-3">
@@ -121,8 +122,8 @@
                 </table>
                 <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
                   [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
-                  (sizeChange)="getLoggingValues({ page: pagination.currentPage, itemsPerPage: $event})"
-                  (pageChange)="getLoggingValues({ page: $event})">
+                  (sizeChange)="getLoggingValues({ page: 1, itemsPerPage: $event })"
+                  (pageChange)="getLoggingValues({ page: $event, itemsPerPage: pagination.pageSize })">
                 </div>
               </div>
             </div>

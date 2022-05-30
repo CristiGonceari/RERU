@@ -140,12 +140,14 @@ export class TestTemplateListTableComponent implements OnInit {
 	resetFilters(): void {
 		this.filters = {};
 		this.status = '';
+		this.pagination.currentPage = 1;
 		this.list();
 	}
 
 	setFilter(field: string, value): void {
 		this.filters[field] = value;
-		this.status = this.filters.status
+		this.status = this.filters.status;
+		this.pagination.currentPage = 1;
 		this.list();
 	}
 

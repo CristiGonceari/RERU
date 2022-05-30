@@ -33,9 +33,11 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetMyEventsCount
                                x.EventTestTemplates.Any(e => e.TestTemplate.Mode == request.TestTemplateMode))
                    .AsQueryable();
 
-                myEvents.Where(x => x.FromDate.Date >= request.FromDate.Date && x.TillDate.Date <= request.TillDate ||
-                          (request.FromDate.Date <= x.FromDate.Date && x.FromDate.Date <= request.TillDate.Date) && (request.FromDate.Date <= x.TillDate.Date && x.TillDate.Date >= request.TillDate.Date) ||
-                          (request.FromDate.Date >= x.FromDate.Date && x.FromDate.Date <= request.TillDate.Date) && (request.FromDate.Date <= x.TillDate.Date && x.TillDate.Date <= request.TillDate.Date));
+            myEvents.Where(p => (request.FromDate.Date <= p.FromDate.Date && p.TillDate.Date <= p.TillDate.Date) ||
+                                                (request.FromDate.Date <= p.FromDate.Date && p.FromDate.Date <= request.TillDate.Date && p.TillDate.Date >= request.TillDate.Date) ||
+                                                (p.FromDate.Date <= request.FromDate.Date && request.FromDate.Date <= p.TillDate.Date && p.TillDate.Date <= request.TillDate.Date) ||
+                                                (request.FromDate.Date >= p.FromDate.Date && p.TillDate.Date >= request.TillDate.Date));
+                                       
 
             var dates = new List<EventCount>();
 

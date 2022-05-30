@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment.prod';
 import { HttpLoaderFactory, MOCK_AUTHENTICATION, SharedModule } from '@erp/shared'
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule, DatePipe, Location } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-datetime';
 
@@ -47,7 +47,7 @@ import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-dat
 		CUSTOM_ELEMENTS_SCHEMA
  	],
   providers: [
-    TranslatePipe, Location,
+    TranslatePipe, Location, DatePipe,
     //CONFIG_INITIALIZER,
     // NOTIFICATION_INTERCEPTOR_PROVIDER,
     // IDNP_INTERCEPTOR_PROVIDER,

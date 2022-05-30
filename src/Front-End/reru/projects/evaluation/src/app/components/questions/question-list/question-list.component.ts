@@ -43,9 +43,9 @@ export class QuestionListComponent implements OnInit {
 	}
 
 	clearFields() {
-		this.searchQuestion.clear();
-		this.searchCategory.clear();
-		this.searchTags.clear();
+		this.searchQuestion.key='';
+		this.searchCategory.key='';
+		this.searchTags.key='';
 		this.searchStatus.getQuestionStatus();
 		this.searchType.getQuestionType();
 	}

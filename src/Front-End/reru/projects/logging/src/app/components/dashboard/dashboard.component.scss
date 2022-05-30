@@ -124,3 +124,10 @@ tbody {
     max-width: 1500px;
     min-width: 1200px;
   }
+
+.shadow-input {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border: none;
+}

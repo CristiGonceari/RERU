@@ -14,9 +14,9 @@ const routes: Routes = [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: 'overview', component: DepartmentOverviewComponent }
     ]
-  },
-  { path: 'add-department', component: AddEditDepartmentComponent },
-  { path: 'edit-department/:id', component: AddEditDepartmentComponent }
+  }
+  // { path: 'add-department', component: AddEditDepartmentComponent },
+  // { path: 'edit-department/:id', component: AddEditDepartmentComponent }
 ]
 
 @NgModule({

@@ -187,7 +187,8 @@
     "TestPassStatusKey": "Test status",
     "ResultStatusKey": "The test result",
     "EvaluatorIdnpKey": "IDNP from the evaluator's bulletin",
-    "EvaluatorEmailKey": "Evaluator's email"
+    "EvaluatorEmailKey": "Evaluator's email",
+    "TestNameKey":"Test Name"
   },
   "button": {
     "add": "Add",
@@ -372,7 +373,8 @@
     "search-test-name": "Search by test name",
     "search-test-type": "Search by test template",
     "search-test-status": "Search by status",
-    "search-student": "Search user",
+    "search-student": "Search user", 
+    "search-email": "Search by email",
     "search-student-idnp": "Search by user idnp",
     "test-type-name": "Test template name",
     "student": "Student",
@@ -483,7 +485,8 @@
     "succes-update-msg": "Question was successfully updated",
     "succes-update-status-msg": "Question status was updated",
     "search-by-status": "Select question status",
-    "add-tags": "Add tags"
+    "add-tags": "Add tags",
+    "bulk-import-options-msg": "Please, download and use our special form for import options"
   },
   "answers": {
     "option-settings": "Option Settions",
@@ -546,7 +549,9 @@
     "refuse": "Refuse",
     "NoResult": "No result",
     "Passed": "Passed",
-    "NotPassed":"Not Passed"
+    "NotPassed":"Not Passed",
+    "employee": "Employee",
+    "candidate": "Candidate"
   },
   "options": {
     "start-without-confirmation": "Possible to start test without confirmation",

@@ -31,6 +31,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
             {
                 TestTemplateName = request.TestTemplateName,
                 UserName = request.UserName,
+                Email= request.Email,
                 TestStatus = request.TestStatus,
                 ResultStatus = request.ResultStatus,
                 LocationKeyword = request.LocationKeyword,

@@ -6,10 +6,10 @@
     <div class="card-header border-0 pt-0 pb-0" style="min-height: 100%;">
       <div class="row w-100"> 
         <div class="col">
-          <erp-shared-search-input (handleSearch)="getPermissions({description: $event, page: 1})" [placeholder]="'pages.modules-details.search-by-description' | translate" #code></erp-shared-search-input>
+          <erp-shared-search-input (handleSearch)="getPermissions({description: $event, page: 1})" [placeholder]="'pages.modules-details.search-by-description' | translate" #description></erp-shared-search-input>
         </div>
         <div class="col">
-          <erp-shared-search-input (handleSearch)="getPermissions({code: $event, page: 1})" [placeholder]="'pages.modules-details.search-by-code' | translate" #description></erp-shared-search-input>
+          <erp-shared-search-input (handleSearch)="getPermissions({code: $event, page: 1})" [placeholder]="'pages.modules-details.search-by-code' | translate" #code></erp-shared-search-input>
         </div>
         <div class="col">
           <div class="w-100 text-right">
@@ -31,24 +31,24 @@
               <th scope="col">{{'table.permission' | translate}}</th>
             </tr>
           </thead>
-          <tbody class="text-dark-75" *ngIf="result">
+          <tbody class="text-dark-75" *ngIf="permissions">
             <tr *ngFor="let item of permissions">
               <td>{{item.code}}</td>
               <td>{{item.description}}</td>
             </tr>
           </tbody>
-          <tbody class="datatable-body text-dark-75" *ngIf="!result">
-            <tr *ngIf="!result">
+          <tbody class="datatable-body text-dark-75" *ngIf="!permissions">
+            <tr *ngIf="!permissions">
               <td colspan="4" class="text-center">
                 {{'messages.no-records' | translate}}
               </td>
             </tr>
           </tbody>
         </table>
-        <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage" *ngIf="result"
+        <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage" *ngIf="permissions"
           [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
-          (sizeChange)="list({ keyword: keyword, page: 1, itemsPerPage: $event })"
-          (pageChange)="list({ keyword: keyword, page: $event, itemsPerPage: pagination.pageSize })">
+          (sizeChange)="getPermissions({ page: 1, itemsPerPage: $event })"
+          (pageChange)="getPermissions({ page: $event, itemsPerPage: pagination.pageSize })">
         </div>
       </div>
     </div>

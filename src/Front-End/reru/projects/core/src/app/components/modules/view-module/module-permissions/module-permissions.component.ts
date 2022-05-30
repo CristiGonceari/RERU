@@ -15,11 +15,8 @@ export class ModulePermissionsComponent implements OnInit {
 	moduleId: number;
 	permissions: PermissionModel[];
 	pagination: PaginationSummary = new PaginationSummary();
-	pager: number[] = [];
-	result: boolean;
 	code: string;
 	description: string;
-	filters: any = {}
 
 	@ViewChild('code') searchCode: any;
 	@ViewChild('description') searchDescription: any;
@@ -43,8 +40,9 @@ export class ModulePermissionsComponent implements OnInit {
 	}
 	
 	getPermissions(data: any = {}): void {
-		this.code = data.code;
-		this.description = data.description;
+		this.code = this.searchCode?.key;
+		this.description = this.searchDescription?.key;
+		
 		data = {
 			...data,
 			code: this.code,
@@ -58,16 +56,11 @@ export class ModulePermissionsComponent implements OnInit {
 	list(data): void {
 		this.permissionServise.get(this.moduleId, ObjectUtil.preParseObject(data)).subscribe(res => {
 			if (res && res.data.items.length) {
-				this.result = true;
 				this.isLoading = false;
 				this.permissions = res.data.items;
 				this.pagination = res.data.pagedSummary;
-				for (let i = 1; i <= this.pagination.totalCount; i++) {
-					this.pager.push(i);
-				}
 			} else {
 				this.isLoading = false;
-				this.result = false;
 			}
 		});
 		this.isLoading = true;

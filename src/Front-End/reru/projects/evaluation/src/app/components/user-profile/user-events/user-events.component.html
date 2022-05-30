@@ -4,9 +4,11 @@
 			<div class="card-title font-weight-bolder">{{'events.events' | translate}}</div>
 		</div>
 		<div class="card-body pt-0">
-			<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-			<div *ngIf="!isLoading">
-				<ngb-accordion [activeIds]="activeIds">
+			<app-loading-spinner *ngIf="isLoading" [contentHeight]="'40vh'" [height]="'5rem'" [width]="'5rem'"
+				[colorClass]="'text-primary'"></app-loading-spinner>
+			<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+				id="kt_datatable">
+				<ngb-accordion [activeIds]="activeIds" *ngIf="!isLoading">
 					<ngb-panel [id]="'panel'+event.id" *ngFor="let event of events; let i = index">
 						<ng-template ngbPanelTitle  class="w-100 text-left">
 							<span class="svg-icon svg-icon-primary">
@@ -39,10 +41,10 @@
 					</ngb-panel>
 				</ngb-accordion>
 				<div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
-					*ngIf="events.length > 5" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
+					*ngIf="events.length" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
 					[size]="pagedSummary.pageSize"
-					(sizeChange)="getEvents({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-					(pageChange)="getEvents({ page: $event })">
+					(sizeChange)="getEvents({ page: 1, itemsPerPage: $event })"
+					(pageChange)="getEvents({ page: $event, itemsPerPage: pagedSummary.pageSize})">
 				</div>
 				<div>
 					<p *ngIf="!events.length" style="text-align: center;">{{ 'message.no-record' | translate }}</p>

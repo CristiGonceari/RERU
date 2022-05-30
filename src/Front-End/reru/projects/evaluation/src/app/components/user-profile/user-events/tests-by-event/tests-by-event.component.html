@@ -1,9 +1,11 @@
-<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'40vh'" [height]="'5rem'" [width]="'5rem'"
+    [colorClass]="'text-primary'">
+</app-loading-spinner>
+<h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
-<div *ngIf="!isLoading"
-    class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
-    <table class="datatable table" style="overflow: visible" id="eventsTable">
+    <table class="datatable table" style="overflow: visible" id="eventsTable" *ngIf="!isLoading && !downloadFile">
         <thead class="text-uppercase text-muted">
             <tr>
                 <th scope="col" class="colored">{{'dashboard.date' | translate}}</th>
@@ -84,9 +86,9 @@
         </tbody>
     </table>
     <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
-        *ngIf="tests.length > 5" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
+        *ngIf="tests.length" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
         [size]="pagedSummary.pageSize"
-        (sizeChange)="getTests({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-        (pageChange)="getTests({ page: $event })">
+        (sizeChange)="getTests({ page: 1, itemsPerPage: $event })"
+        (pageChange)="getTests({ page: $event, itemsPerPage: pagedSummary.pageSize })">
     </div>
 </div>

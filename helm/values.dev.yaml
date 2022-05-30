@@ -7,12 +7,12 @@ ingress:
     ingress.kubernetes.io/proxy-body-size: "250m"
     nginx.org/client-body-timeout: "3600"
     nginx.org/client-max-body-size: 250m
-    nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600s"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600s"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600s"
-    # nginx.org/proxy-connect-timeout: "3600s"
-    # nginx.org/proxy-read-timeout: "3600s"
-    # nginx.org/proxy-send-timeout: "3600s"
+    # nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
+    # nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    # nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.org/proxy-connect-timeout: "3600"
+    nginx.org/proxy-read-timeout: "3600"
+    nginx.org/proxy-send-timeout: "3600"
 #     nginx.ingress.kubernetes.io/configuration-snippet: |
 #       add_header Content-Security-Policy "frame-ancestors mpass.staging.egov.md;";
 
@@ -23,12 +23,12 @@ ingress_back:
     ingress.kubernetes.io/proxy-body-size: "250m"
     nginx.org/client-body-timeout: "3600"
     nginx.org/client-max-body-size: 250m
-    nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600s"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600s"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600s"
-    # nginx.org/proxy-connect-timeout: "3600s"
-    # nginx.org/proxy-read-timeout: "3600s"
-    # nginx.org/proxy-send-timeout: "3600s"
+    # nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
+    # nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    # nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.org/proxy-connect-timeout: "3600"
+    nginx.org/proxy-read-timeout: "3600"
+    nginx.org/proxy-send-timeout: "3600"
     # nginx.ingress.kubernetes.io/configuration-snippet: |
     #   add_header Content-Security-Policy "frame-ancestors mpass.staging.egov.md;";
 
@@ -72,10 +72,10 @@ reru_core:
     repository: cvuintell/reru-core
   database:
     # connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Core-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
-    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Connection Idle Lifetime=10;Connection Pruning Interval=10;
-    identity_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Connection Idle Lifetime=10;Connection Pruning Interval=10;
-    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Connection Idle Lifetime=10;Connection Pruning Interval=10;
-    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Connection Idle Lifetime=10;Connection Pruning Interval=10;
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Maximum Pool Size=300;Connection Idle Lifetime=3;Connection Pruning Interval=3;
+    identity_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Maximum Pool Size=300;Connection Idle Lifetime=3;Connection Pruning Interval=3;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Maximum Pool Size=300;Connection Idle Lifetime=3;Connection Pruning Interval=3;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Maximum Pool Size=300;Connection Idle Lifetime=3;Connection Pruning Interval=3;
 
 reru_identity_migrator:
   enabled: true
@@ -84,8 +84,8 @@ reru_identity_migrator:
   image:
     repository: cvuintell/reru-identity-migrator
   database:
-    connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Connection Idle Lifetime=10;Connection Pruning Interval=10;
-    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Connection Idle Lifetime=10;Connection Pruning Interval=10;
+    connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Maximum Pool Size=300;Connection Idle Lifetime=3;Connection Pruning Interval=3;
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Maximum Pool Size=300;Connection Idle Lifetime=3;Connection Pruning Interval=3;
 
 reru_storage_migrator:
   enabled: true
@@ -94,7 +94,7 @@ reru_storage_migrator:
   image:
     repository: cvuintell/reru-storage-migrator
   database:
-    connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Connection Idle Lifetime=10;Connection Pruning Interval=10;
+    connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Maximum Pool Size=300;Connection Idle Lifetime=3;Connection Pruning Interval=3;
 
 reru_core_fe:
   name: "reru-core-fe"
@@ -114,9 +114,9 @@ reru_personal:
   image:
     repository: cvuintell/reru-personal
   database:
-    connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Personal-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Connection Idle Lifetime=10;Connection Pruning Interval=10;
-    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Connection Idle Lifetime=10;Connection Pruning Interval=10;
-    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Connection Idle Lifetime=10;Connection Pruning Interval=10;
+    connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Personal-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Maximum Pool Size=300;Connection Idle Lifetime=3;Connection Pruning Interval=3;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Maximum Pool Size=300;Connection Idle Lifetime=3;Connection Pruning Interval=3;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Maximum Pool Size=300;Connection Idle Lifetime=3;Connection Pruning Interval=3;
 
 reru_evaluation_fe:
   name: "reru-evaluation-fe"
@@ -131,9 +131,9 @@ reru_evaluation:
     repository: cvuintell/reru-evaluation
   database:
     # connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Evaluation-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
-    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Connection Idle Lifetime=10;Connection Pruning Interval=10;
-    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Connection Idle Lifetime=10;Connection Pruning Interval=10;
-    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Connection Idle Lifetime=10;Connection Pruning Interval=10;
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Maximum Pool Size=300;Connection Idle Lifetime=3;Connection Pruning Interval=3;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Maximum Pool Size=300;Connection Idle Lifetime=3;Connection Pruning Interval=3;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Maximum Pool Size=300;Connection Idle Lifetime=3;Connection Pruning Interval=3;
 
 reru_logging_fe:
   name: "reru-logging-fe"
@@ -147,7 +147,7 @@ reru_logging:
   image:
     repository: cvuintell/reru-logging
   database:
-    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Connection Idle Lifetime=10;Connection Pruning Interval=10;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Maximum Pool Size=300;Connection Idle Lifetime=3;Connection Pruning Interval=3;
 
 microservices:
   - test_saml:
@@ -204,7 +204,7 @@ microservices:
         - name: SAML_ENDPOINT
           value: "http://reru.codwer.com"
         - name: ConnectionStrings__Default
-          value: "server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Connection Idle Lifetime=10;Connection Pruning Interval=10;"
+          value: "server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=true;Maximum Pool Size=300;Connection Idle Lifetime=3;Connection Pruning Interval=3;"
         - name: IDENTITY_ISSUER_URI
           value: "http://reru.codwer.com/ms/reru-identity-new"
         - name: IDENTITY_DISCOVERY_ENDPOINT_URI

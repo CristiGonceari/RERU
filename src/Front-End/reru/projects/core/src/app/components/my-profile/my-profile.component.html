@@ -25,6 +25,18 @@
                 </div>
                 <div>
                   <p class="font-weight-bolder font-size-h5 text-dark-75">{{userProfile?.firstName}} {{userProfile?.lastName}}</p>
+                  <p class="text-muted" *ngIf="userProfile?.userStatusEnum === 1">
+                    <span class="mr-2">
+                      <svg-icon key="user" [width]="16" [height]="16"></svg-icon>
+                    </span>
+                    {{'statuses.employee' | translate}}
+                  </p>
+                  <p class="text-muted" *ngIf="userProfile?.userStatusEnum === 0">
+                    <span class="mr-2">
+                      <svg-icon key="user" [width]="16" [height]="16"></svg-icon>
+                    </span>
+                    {{'statuses.candidate' | translate}}
+                  </p>
                 </div>
               </div>
               <div class="py-9">

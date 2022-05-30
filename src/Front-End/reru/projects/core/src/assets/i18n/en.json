@@ -28,7 +28,10 @@
     "step6": "Click the „Confirm” button (Step 6) to complete the procedure.",
     "registration-candidate-page": "Candidate Registration Page",
     "select-candidate-position": "Select Position",
-    "position-to-candidate": "Position to Candidate"
+    "position-to-candidate": "Position to Candidate",
+    "accept-condition": "I agree and accept with",
+    "registration-conditions":"registration conditions"
+
   },
   "files":{
     "title": "Documents",
@@ -134,7 +137,8 @@
     "attach": "Attach",
     "print": "Print",
     "watch": "Watch video",
-    "import": "Import"
+    "import": "Import",
+    "loading": "Loading"
   },
   "pagination": {
     "displaing": "Displaying",
@@ -173,6 +177,15 @@
       "administration": "Administration"
     }
   },
+  "statuses": {
+    "all": "All",
+    "active": "Active",
+    "inactive": "Inactive",
+    "Candidate": "Candidates",
+    "Employee": "Employees",
+    "employee": "Employee",
+    "candidate": "Candidate"
+  },
   "user-profile": {
     "overview": "Overview profile",
     "edit-title": "Edit my profile",
@@ -185,7 +198,8 @@
     "empty-name": "The field must contain only Latin letters",
     "wrong-name": "The field must contain only Latin letters",
     "available-modules": "Available modules",
-    "idnp-length": "IDNP should consist of 13 numbers!"
+    "idnp-length": "IDNP should consist of 13 numbers!",
+    "search-by-user-state": "Search by user state"
   },
   "user": {
     "edit-title": "Edit User",

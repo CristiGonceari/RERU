@@ -21,9 +21,14 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfile
 
         public async Task<UserProfileDto> Handle (GetUserProfileQuery request, CancellationToken cancellationToken) 
         {
-            var userProfile = await _appDbContext.UserProfiles.FirstOrDefaultAsync(u => u.Id == request.Id);
+            var userProfile = await _appDbContext.UserProfiles
+                .Include(x => x.Department)
+                .Include(x => x.Role)
+                .FirstOrDefaultAsync(u => u.Id == request.Id);
 
-            return _mapper.Map<UserProfileDto>(userProfile);
+            var userProfDto = _mapper.Map<UserProfileDto>(userProfile);
+
+            return userProfDto;
         }
     }
 }

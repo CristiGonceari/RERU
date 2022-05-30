@@ -22,6 +22,7 @@ namespace RERU.Data.Entities
         public TestResultStatusEnum ResultStatus { get; set; }
 
         public DateTime ProgrammedTime { get; set; }
+        public DateTime? EndProgrammedTime { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
 

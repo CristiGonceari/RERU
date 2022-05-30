@@ -1,66 +1,59 @@
 <app-loading-spinner *ngIf="isLoading" [contentHeight]="'20rem'" [height]="'5rem'" [width]="'5rem'"
   [colorClass]="'text-primary'">
 </app-loading-spinner>
-<div *ngIf="!isLoading"
-  class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
   id="kt_datatable">
-  <table class="datatable table font-size-lg" style="overflow: visible">
+  <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading">
     <thead class="text-uppercase text-muted">
       <tr>
         <th scope="col" style="width: 50px"></th>
-        <th scope="col" class="cursor-pointer" (click)="sortedList({ sort: 'name' })">
-          {{ 'table.lastName' | translate }}
-          <!-- <app-sort-button *ngIf="filter.sort === 'name'" [desc]="filter.order"></app-sort-button> -->
-        </th>
-        <th scope="col">
-          {{ 'table.name' | translate }}
-        </th>
-        <th scope="col">
-          {{ 'table.father-name' | translate }}
-        </th>
-        <th scope="col">
-          {{ 'table.idnp' | translate }}
-        </th>
-        <th scope="col" class="cursor-pointer" (click)="sortedList({ sort: 'username' })">
-          {{ 'table.email' | translate }}
-          <!-- <app-sort-button *ngIf="filter.sort === 'username'" [desc]="filter.order"></app-sort-button> -->
-        </th>
+        <th scope="col"> {{ 'table.lastName' | translate }} </th>
+        <th scope="col"> {{ 'table.name' | translate }} </th>
+        <th scope="col"> {{ 'table.father-name' | translate }} </th>
+        <th scope="col"> {{ 'table.idnp' | translate }} </th>
+        <th scope="col"> {{ 'table.email' | translate }} </th>
+        <th scope="col"> {{ 'departments.department' | translate }} </th>
+        <th scope="col"> {{ 'user-roles.role' | translate }} </th>
         <th scope="col" style="width: 75px; text-align: center; vertical-align: middle">
           {{ 'table.status' | translate }}
         </th>
         <th scope="col w-50px"></th>
       </tr>
     </thead>
-    <tbody class="datatable-body" *ngIf="result">
-      <tr *ngFor="let user of users">
-        <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+    <tbody class="datatable-body" *ngIf="users">
+      <tr *ngFor="let user of users" (dblclick)="navigateToDetails(user.id)">
+        <td [class.no-actions]="!viewDetails">
           <div class="symbol symbol-35 symbol-sm-s symbol-light-success">
             <span class="font-size-h4 symbol-label font-weight-boldest">{{ renderText(user) }}</span>
           </div>
         </td>
-        <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+        <td [class.no-actions]="!viewDetails">
           <a [routerLink]="['../../user-profile', user.id, 'overview']" class="font-size-lg text-dark-50 text-hover-dark-75" >
             {{ user.lastName }}
           </a>
         </td>
-        <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+        <td [class.no-actions]="!viewDetails">
           <a [routerLink]="['../../user-profile', user.id, 'overview']" class="font-size-lg text-dark-50 text-hover-dark-75" >
             {{ user.firstName }}
           </a>
         </td>
-        <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+        <td [class.no-actions]="!viewDetails">
           <a [routerLink]="['../../user-profile', user.id, 'overview']" class="font-size-lg text-dark-50 text-hover-dark-75" >
             {{user.fatherName}}
           </a>
         </td>
-        <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
-          {{ user.idnp }}
+        <td [class.no-actions]="!viewDetails"> {{ user.idnp }} </td>
+        <td [class.no-actions]="!viewDetails"> {{ user.email }} </td>
+        <td [class.no-actions]="!viewDetails">
+          <span class="font-size-lg" *ngIf="user.departmentName">{{ user.departmentName }}</span>
+          <span class="font-size-lg" *ngIf="!user.departmentName">-</span>
         </td>
-        <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
-          {{ user.email }}
+        <td [class.no-actions]="!viewDetails">
+          <span class="font-size-lg" *ngIf="user.roleName">{{ user.roleName }}</span>
+          <span class="font-size-lg" *ngIf="!user.roleName">-</span>
         </td>
         <td style="text-align: center">
-          <div [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(user.id)">
+          <div [class.no-actions]="!viewDetails">
             <div *ngIf="user.isActive === false" style="width: 25px; display: inline-block">
               <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
@@ -156,17 +149,17 @@
         </td>
       </tr>
     </tbody>
-    <tbody class="datatable-body" *ngIf="!result">
-      <tr *ngIf="!result">
-        <td colspan="4" class="text-center">
+    <tbody class="datatable-body" *ngIf="!users.length">
+      <tr *ngIf="!users.length">
+        <td colspan="10" class="text-center">
           {{ 'messages.no-records' | translate }}
         </td>
       </tr>
     </tbody>
   </table>
-  <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage" *ngIf="result"
+  <div pagination class="datatable-pager datatable-paging-loaded" *ngIf="users.length" [page]="pagination.currentPage"
     [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
-    (sizeChange)="list({ keyword: keyword, email: email, idnp: idnp, page: 1, itemsPerPage: $event })"
-    (pageChange)="list({ keyword: keyword, email: email, idnp: idnp, page: $event, itemsPerPage: pagination.pageSize })">
+    (sizeChange)="list({ page: 1, itemsPerPage: $event })"
+    (pageChange)="list({ page: $event, itemsPerPage: pagination.pageSize })">
   </div>
 </div>

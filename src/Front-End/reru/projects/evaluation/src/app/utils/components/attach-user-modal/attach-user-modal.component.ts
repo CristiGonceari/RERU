@@ -3,7 +3,6 @@ import { UserProfileService } from '../../services/user-profile/user-profile.ser
 import { PaginationModel } from '../../models/pagination.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventService } from '../../services/event/event.service';
-import { Test } from '../../models/tests/test.model';
 
 @Component({
   selector: 'app-attach-user-modal',
@@ -94,6 +93,7 @@ export class AttachUserModalComponent implements OnInit {
       this.attachedItems = this.attachedItems.filter( x => !itemsToRemove.includes(x) );
     }
     if (event.target.checked == true) {
+      this.attachedItems = this.attachedItems.filter( x => !this.users.map(el => +el.id).includes(x) );
       let itemsToAdd = this.users.map(el => +el.id)
       for (let i=0; i<itemsToAdd.length; i++) {
         this.attachedItems.push(itemsToAdd[i]);
@@ -117,11 +117,13 @@ export class AttachUserModalComponent implements OnInit {
   }
 
   setFilter(field: string, value): void {
+    this.pagination.currentPage = 1;
     this.filters[field] = value;
     this.getUsers();
 	}
 
 	resetFilters(): void {
+    this.pagination.currentPage = 1;
     this.firstName.key = '';
     this.lastName.key = '';
     this.fatherName.key = '';

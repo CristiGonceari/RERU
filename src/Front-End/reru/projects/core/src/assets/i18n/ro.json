@@ -28,7 +28,9 @@
     "step6": "Apasăti butonul „Confirmă” (Pasul 6) pentru a finaliza procedura. ",
     "registration-candidate-page": "Pagină de înregistrare a candidaților",
     "select-candidate-position": "Selectați poziția",
-    "position-to-candidate": "Poziția pentru care candidați"
+    "position-to-candidate": "Poziția pentru care candidați",
+    "accept-condition": "Înregistrându-mă în sistem accept",
+    "registration-conditions":"condiții de înregistrare"
   },
   "files":{
     "title": "Documente",
@@ -132,7 +134,8 @@
     "attach": "Atașează",
     "print": "Imprimă",
     "watch": "Priveste video",
-    "import": "Importa"
+    "import": "Importa",
+    "loading": "Se încarcă"
   },
   "pagination": {
     "displaing": "Se afișează",
@@ -171,6 +174,15 @@
       "administration": "Administrare"
     }
   },
+  "statuses": {
+    "all": "Toți",
+    "active": "Activi",
+    "inactive": "Inactivi",
+    "Candidate": "Candidați",
+    "Employee": "Angajați",
+    "employee": "Angajat",
+    "candidate": "Candidat"
+  },
   "user-profile": {
     "overview": "Vizualizarea profilului personal",
     "edit-title": "Editarea profilului personal",
@@ -183,7 +195,8 @@
     "empty-name": "Câmpul trebuie sa conțină doar litere latine",
     "wrong-name": "Câmpul trebuie sa conțină doar litere latine",
     "available-modules": "Module disponibile",
-    "idnp-length": "IDNP trebuie să conține 13 cifre!"
+    "idnp-length": "IDNP trebuie să conține 13 cifre!",
+    "search-by-user-state": "Căutați după statutul utilizatorului"
   },
   "user": {
     "edit-title": "Editarea utilizatorului",

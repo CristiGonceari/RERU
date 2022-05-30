@@ -41,6 +41,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
             if (eventDatas != null)
             {
                 newTest.ProgrammedTime = eventDatas.FromDate;
+                newTest.EndProgrammedTime = eventDatas.TillDate;
             }
 
             newTest.TestStatus = TestStatusEnum.Programmed;

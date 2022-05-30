@@ -48,6 +48,7 @@ export class TestsTableComponent implements OnInit {
   }
 
   getUserTests(data: any = {}) {
+	this.isLoading = true;
     const params: any = {
       userId: this.userId,
       page: data.page || this.pagedSummary.currentPage,

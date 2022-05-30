@@ -41,6 +41,10 @@
                   <erp-shared-search-input (handleSearch)="testsTable.setFilter('userName', $event)"
                     [placeholder]="'verify-test.search-student' | translate" #userName></erp-shared-search-input>
                 </div>
+                <div class="col">
+                  <erp-shared-search-input (handleSearch)="testsTable.setFilter('userEmail', $event)"
+                    [placeholder]="'verify-test.search-email' | translate" #userEmail></erp-shared-search-input>
+                </div>
               </div>
               <div class="row w-100 mt-3">
                 <div class="col-lg-2 col-12">
@@ -51,24 +55,26 @@
                   <app-search-result (filter)="testsTable.setFilter('selectedResult', $event)" #selectedResult></app-search-result>
                 </div>
                 <div class="col-lg-2 col-12">
-                  <erp-shared-search-input (handleSearch)="testsTable.setFilter('idnp', $event)" [placeholder]="
-                      'verify-test.search-student-idnp' | translate
-                    " #idnp></erp-shared-search-input>
+                  <erp-shared-search-input (handleSearch)="testsTable.setFilter('idnp', $event)" 
+                  [placeholder]="'verify-test.search-student-idnp' | translate" #idnp></erp-shared-search-input>
                 </div>
                 <div class="col-lg-2 col-12">
                   <div class="input-group input-group-sm input-group-solid">
-                    <input class="form-control" [owlDateTime]="dtFrom" [owlDateTimeTrigger]="dtFrom"
-                      [placeholder]="'events.search-from' | translate" (ngModelChange)="testsTable.getTests()"
-                      [(ngModel)]="testsTable.dateTimeFrom" autocomplete="off" />
-                    <owl-date-time #dtFrom></owl-date-time>
+                    <input id="from" [owlDateTime]="dtFrom" [placeholder]="'events.search-from' | translate"
+                    class="shadow-input" name="date" [(ngModel)]="testsTable.dateTimeFrom" (ngModelChange)="testsTable.getTests({dtFrom: $event})" autocomplete="off" />
+                  <input id="from" [owlDateTimeTrigger]="dtFrom" [placeholder]="'events.search-from' | translate" autocomplete="off"
+                    class="form-control form-control-lg form-control-solid" [value]="testsTable.dateTimeFrom | dateFilter:'dd/MM/yy HH:mm'"/>
+                  <owl-date-time #dtFrom></owl-date-time>
                   </div>
                 </div>
                 <div class="col-lg-2 col-12">
                   <div class="input-group input-group-sm input-group-solid">
-                    <input class="form-control" [owlDateTime]="toDate" (ngModelChange)="testsTable.getTests()"
-                      [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate"
-                      [(ngModel)]="testsTable.dateTimeTo" autocomplete="off" />
-                    <owl-date-time #toDate></owl-date-time>
+
+                    <input id="from" [owlDateTime]="toDate" [placeholder]="'events.search-to' | translate"
+                        class="shadow-input" name="date" [(ngModel)]="testsTable.dateTimeTo" (ngModelChange)="testsTable.getTests({toDate: $event})" autocomplete="off" />
+                      <input id="from" [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate" autocomplete="off"
+                        class="form-control form-control-lg form-control-solid" [value]="testsTable.dateTimeTo | dateFilter:'dd/MM/yy HH:mm'"/>
+                      <owl-date-time #toDate></owl-date-time>
                   </div>
                 </div>
                 <div class="col-lg-2 col-12 pr-4">

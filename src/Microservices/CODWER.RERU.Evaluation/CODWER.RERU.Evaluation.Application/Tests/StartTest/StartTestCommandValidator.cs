@@ -69,6 +69,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
 
             var now = DateTime.Now;
             var programmedTime = test.ProgrammedTime;
+            var endProgramedTime = test.EndProgrammedTime.Value;
 
             var startBefore = test.TestTemplate.Settings.StartBeforeProgrammation;
             var startAfter = test.TestTemplate.Settings.StartAfterProgrammation;
@@ -84,7 +85,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
 
                 return;
             }
-            if (!startAfter && programmedTime < now && !IntervalMaxOneMinute(now, programmedTime))
+            if (!startAfter && endProgramedTime < now && !IntervalMaxOneMinute(now, endProgramedTime))
             {
                 context.AddFail(ValidationCodes.INVALID_TEST_START_TIME, ValidationMessages.InvalidInput);
             }
