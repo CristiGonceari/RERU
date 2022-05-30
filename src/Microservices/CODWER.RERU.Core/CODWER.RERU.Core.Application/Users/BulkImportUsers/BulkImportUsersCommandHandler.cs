@@ -1,35 +1,27 @@
 ﻿using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Users.CreateUser;
+using CVU.ERP.Common.DataTransferObjects.Files;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Core.Application.Common.Services.Identity;
-using CODWER.RERU.Core.DataTransferObjects.Users;
-using CVU.ERP.Common.DataTransferObjects.Files;
-using CVU.ERP.Infrastructure.Extensions;
-using CVU.ERP.Logging;
-using CVU.ERP.StorageService.Models;
-using RERU.Data.Entities;
+using CODWER.RERU.Core.Application.Users.EditUserFromColaborator;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 {
     public class BulkImportUsersCommandHandler : BaseHandler, IRequestHandler<BulkImportUsersCommand, FileDataDto>
     {
-        private readonly IEnumerable<IIdentityService> _identityServices;
-        private readonly ILoggerService<CreateUserCommandHandler> _loggerService;
-        public BulkImportUsersCommandHandler(ICommonServiceProvider commonServiceProvider, 
-            ILoggerService<CreateUserCommandHandler> loggerService, 
-            IEnumerable<IIdentityService> identityServices) : base(commonServiceProvider)
+        private readonly AppDbContext _appDbContext;
+
+        public BulkImportUsersCommandHandler(ICommonServiceProvider commonServiceProvider, AppDbContext appDbContext) : base(commonServiceProvider)
         {
-            _loggerService = loggerService;
-            _identityServices = identityServices;
+            _appDbContext = appDbContext;
         }
 
         public async Task<FileDataDto> Handle(BulkImportUsersCommand request, CancellationToken cancellationToken)
@@ -49,22 +41,58 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             {
                 var command = new CreateUserCommand
                 {
-                    FirstName = workSheet?.Cells[i, 1]?.Value?.ToString(),
-                    LastName = workSheet?.Cells[i, 2]?.Value?.ToString(),
-                    FatherName = workSheet?.Cells[i, 3]?.Value?.ToString(),
-                    Idnp = workSheet?.Cells[i, 4]?.Value?.ToString(),
-                    Email = workSheet?.Cells[i, 5]?.Value?.ToString(),
-                    EmailNotification = bool.Parse(workSheet?.Cells[i, 6]?.Value?.ToString())
+                    LastName = workSheet.Cells[i, 1]?.Value?.ToString(),
+                    FirstName = workSheet.Cells[i, 2]?.Value?.ToString(),
+                    FatherName = workSheet.Cells[i, 3]?.Value?.ToString(),
+                    Idnp = workSheet.Cells[i, 4]?.Value?.ToString(),
+                    Email = workSheet.Cells[i, 5]?.Value?.ToString(),
+                    DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0"),
+                    RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
+                    EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "True")
                 };
 
-                try
+                var user = _appDbContext.UserProfiles.FirstOrDefault(x => x.Idnp == command.Idnp);
+
+                if (user != null)
                 {
-                    await Mediator.Send(command);
+                    try
+                    {
+                        var editcommand = new EditUserFromColaboratorCommand()
+                        {
+                            Id = user.Id,
+                            LastName = workSheet.Cells[i, 1]?.Value?.ToString(),
+                            FirstName = workSheet.Cells[i, 2]?.Value?.ToString(),
+                            FatherName = workSheet.Cells[i, 3]?.Value?.ToString(),
+                            Idnp = workSheet.Cells[i, 4]?.Value?.ToString(),
+                            Email = workSheet.Cells[i, 5]?.Value?.ToString(),
+                            DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0"),
+                            RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
+                            EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "True")
+                        };
+
+                        await Mediator.Send(editcommand);
+
+                        workSheet.Cells[i, 9].Value = "Editat";
+                    }
+                    catch (Exception e)
+                    {
+                        workSheet.Cells[i, 9].Value = $"Error: {e.Message}";
+                        Console.WriteLine(e);
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    workSheet.Cells[i, 7].Value = e.Message;
-                    Console.WriteLine(e);
+                    try
+                    {
+                        await Mediator.Send(command);
+
+                        workSheet.Cells[i, 9].Value = "Adăugat";
+                    }
+                    catch (Exception e)
+                    {
+                        workSheet.Cells[i, 9].Value = $"Error: {e.Message}";
+                        Console.WriteLine(e);
+                    }
                 }
             }
 

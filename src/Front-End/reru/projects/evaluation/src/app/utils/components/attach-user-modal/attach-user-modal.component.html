@@ -30,23 +30,26 @@
 		</div>
 	</div>
 
-	<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+	<app-loading-spinner *ngIf="isLoading" [contentHeight]="'40vh'" [height]="'5rem'" [width]="'5rem'"
 		[colorClass]="'text-primary'">
 	</app-loading-spinner>
 
 	<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
-  	id="kt_datatable" *ngIf="!isLoading">
-		<div *ngIf="page == 'evaluators'">
-			<span class="h3">Show User Name</span>
-			<span class="switch switch-sm mx-3">
+  	id="kt_datatable">
+		<div *ngIf="page == 'evaluators'" class="d-flex align-items-center mb-5">
+			<span class="h3 mb-0 pr-2">{{ 'events.show-user-name' | translate }}: </span>
+			<span>{{ 'button.no' | translate }}</span>
+			<span class="switch switch-primary switch-sm mx-3">
 				<label>
-					<input type="checkbox" [checked]="sequence" name="select" (change)="checkEvent($event)">
+					<input type="checkbox" checked="checked" name="select" (change)="checkEvent($event)">
 					<span></span>
 				</label>
 			</span>
+			<span>{{ 'button.yes' | translate }}</span>
 		</div>
-
-		<table class="datatable table font-size-lg" style="overflow: visible">
+		
+		<p *ngIf="inputType == 'checkbox'">{{ 'events.attached-users' | translate }}: {{attachedItems.length}}</p>
+		<table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading">
 			<thead class="text-uppercase text-muted">
 				<tr>
 					<th scope="col" style="width: 50px">
@@ -102,6 +105,6 @@
 	<button type="button" class="btn btn-primary" (click)="confirm()">{{'button.confirm' | translate}}</button>
 </div>
 <ng-template #tooltip>
-	<p class="mb-0 font-size-sm" *ngIf="attachedItems.length">{{'button.uncheck-all' | translate}}</p>
-	<p class="mb-0 font-size-sm" *ngIf="!attachedItems.length">{{'button.check-all' | translate}}</p>
+	<p class="mb-0 font-size-sm" *ngIf="paginatedAttachedIds">{{'button.uncheck-all' | translate}}</p>
+	<p class="mb-0 font-size-sm" *ngIf="!paginatedAttachedIds">{{'button.check-all' | translate}}</p>
 </ng-template>

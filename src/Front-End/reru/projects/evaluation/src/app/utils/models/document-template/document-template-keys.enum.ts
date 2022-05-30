@@ -39,4 +39,5 @@ export enum DocumentKeyEnum {
     ResultStatusKey = 38,
     EvaluatorIdnpKey = 39,
     EvaluatorEmailKey = 40,
+    TestNameKey = 41,
 }

@@ -8,7 +8,9 @@ namespace CODWER.RERU.Core.Application.Departments
     {
         public static IQueryable<Department> Filter(AppDbContext appDbContext, string name)
         {
-            var deparments = appDbContext.Departments.AsQueryable();
+            var deparments = appDbContext.Departments
+                .OrderByDescending(x => x.Id)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(name))
             {

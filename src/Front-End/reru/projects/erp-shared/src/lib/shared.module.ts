@@ -54,7 +54,7 @@ import { GetMediaFileComponent } from './components/get-media-file/get-media-fil
 import { ShowImageModalComponent } from './modals/show-image-modal/show-image-modal.component';
 import { AddEditMediaFileComponent } from '../public-api';
 import { UploadFileModalComponent } from './modals/upload-file-modal/upload-file-modal.component';
-// import { INTERNAL_NOTIFY_INTERCEPTOR } from './interceptors/internal-notify.interceptor';
+import { INTERNAL_NOTIFY_INTERCEPTOR } from './interceptors/internal-notify.interceptor';
 
 export const translateModule = TranslateModule.forChild();
 
@@ -114,7 +114,7 @@ const commonExports = [
 		HTTP_ERROR_INTERCEPTOR_PROVIDER,
 		DEACTIVATED_INTERCEPTOR_PROVIDER,
 		HTTP_RESPONSE_INTERCEPTOR_PROVIDER,
-		// INTERNAL_NOTIFY_INTERCEPTOR
+		INTERNAL_NOTIFY_INTERCEPTOR
 	],
 })
 export class SharedModule {

@@ -47,12 +47,12 @@
                             </ng-template>
                         </ngb-panel>
                     </ngb-accordion>
-                    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
-                        *ngIf="events.length > 5" [total]="pagedSummary.totalPages"
-                        [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
-                        (sizeChange)="getEvents({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-                        (pageChange)="getEvents({ page: $event })">
-                    </div>
+                </div>
+                <div pagination class="datatable-pager datatable-paging-loaded"  [page]="pagedSummary.currentPage"
+                    *ngIf="events.length" [total]="pagedSummary.totalPages"
+                    [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
+                    (sizeChange)="getEvents({ page: 1, itemsPerPage: $event })"
+                    (pageChange)="getEvents({ page: $event, itemsPerPage: pagedSummary.pageSize })">
                 </div>
             </div>
         </div>

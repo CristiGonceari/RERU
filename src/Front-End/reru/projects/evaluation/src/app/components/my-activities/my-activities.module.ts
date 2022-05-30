@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedModule } from '@erp/shared';
+import { SharedModule, SvgModule } from '@erp/shared';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { UtilsModule } from '../../utils/utils.module';
@@ -55,7 +55,8 @@ import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-dat
     MaterialModule,
     CKEditorModule,
     OwlDateTimeModule,
-    OwlMomentDateTimeModule
+    OwlMomentDateTimeModule,
+    SvgModule
   ],
   schemas: [ 
     CUSTOM_ELEMENTS_SCHEMA

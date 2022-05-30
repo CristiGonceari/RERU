@@ -18,6 +18,7 @@ import { DateFilterPipe } from './pipes/date-filter.pipe';
 import { ConvertPdfDocumentModalComponent } from './modals/convert-pdf-document-modal/convert-pdf-document-modal.component';
 import { CKEditorModule } from 'ngx-ckeditor';
 import { GenerateDocumentModalComponent } from './modals/generate-document-modal/generate-document-modal.component';
+import { AddTestHistoryModalComponent } from './modals/add-test-history-modal/add-test-history-modal.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { GenerateDocumentModalComponent } from './modals/generate-document-modal
     AttachUserModalComponent,
     DateFilterPipe,
     ConvertPdfDocumentModalComponent,
-    GenerateDocumentModalComponent
+    GenerateDocumentModalComponent,
+    AddTestHistoryModalComponent
   ],
   imports: [
     HttpClientModule,

@@ -2,7 +2,6 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.Users.CreateUser
 {
-
     public class CreateUserCommand : IRequest<int> 
     {
         public string FirstName { get; set; }
@@ -10,6 +9,8 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
         public string FatherName { get; set; }
         public string Email { get; set; }
         public string Idnp { get; set; }
+        public int? DepartmentColaboratorId { get; set; }
+        public int? RoleColaboratorId { get; set; }
         public bool EmailNotification { get; set; }
     }
 }

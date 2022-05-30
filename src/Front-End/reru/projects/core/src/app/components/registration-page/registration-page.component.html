@@ -50,50 +50,27 @@
           </div>
           <div class="topbar-item" style="white-space: nowrap; font-size: 14px; font-weight: 500">
             <button type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;"
-              [routerLink]="['../']">{{ 'login.login' | translate }}</button>
+               [routerLink]="['../']">{{ 'login.login' | translate }}</button>
           </div>
         </div>
       </div>
     </div>
   </nav>
-  <img src="../../../assets/5.jpg" class="img-fluid w-100" style="background-size: cover;" />
   <div class="container-fluid py-4" style="background-color: #eff1f3; color: #142b3e; font-family: Georgia, serif;">
     <h1 class="text-center mb-10">{{ 'registration-page.about-us' | translate }}</h1>
     <div class="row">
       <div class="col"
         style="padding: 0.25rem; background-color: #fff; border: 1px solid #dee2e6; border-radius: 0.25rem; max-width: 100%; height: auto; margin-left: 4%">
         <div class="text-center">
-          <p class="text-justify text-center" style="font-size: 20px; margin-top: 15%;">{{
-            'registration-page.to-add-new-candidate' | translate }}
-          </p>
-          <p class="text-justify text-center" style="font-size: 20px;">{{
-            'registration-page.after-registration-recive-email' | translate }}
-          </p>
-          <div style="margin: 9%; ">
-            <p class="text-justify text-left" style="font-size: 18px;">{{ 'registration-page.step1' | translate }}
-            </p>
-            <p class="text-justify text-left" style="font-size: 18px;">{{ 'registration-page.step2' | translate }}
-            </p>
-            <p class="text-justify text-left" style="font-size: 18px;">{{ 'registration-page.step3' | translate }}
-            </p>
-            <p class="text-justify text-left" style="font-size: 18px;">{{ 'registration-page.step4-step5' | translate }}
-            </p>
-            <ul class="text-justify text-left" style="font-size: 16px; list-style-type: none;">
-              <li>
-                {{ 'registration-page.event' | translate }}
-              </li>
-              <li>
-                {{ 'registration-page.test' | translate }}
-              </li>
-              <li>
-                {{ 'registration-page.time' | translate }}
-              </li>
-            </ul>
-            <p class="text-justify text-left" style="font-size: 18px;">
-              {{ 'registration-page.step6' | translate }}
-            </p>
+          <ckeditor *ngIf="canEdit" [editor]="Editor" [(ngModel)]="textValue" (ready)="onReady($event)"></ckeditor>
+          <ckeditor *ngIf="!canEdit" [editor]="Editor" [(ngModel)]="textValue" class="disabled-area"></ckeditor>
+          <div class="row" style="margin-top: 2%;">
+            <div *ngIf="canEdit" class="col">
+              <button type="button" class="btn btn-success" (click)="editMessage()">{{'button.edit' |
+                translate}}</button>
+            </div>
           </div>
-          <div class="row">
+          <div class="row" style="margin-top: 2%;">
             <div class="col">
               <button type="button" class="btn btn-primary" (click)="openModal()">{{'button.watch' |
                 translate}}</button>
@@ -103,7 +80,7 @@
       </div>
       <div class="col">
         <div class="text-center">
-          <img src="../../../assets/step-by-step.PNG" class="img-fluid img-thumbnail" style="background-size: cover;" />
+          <img src="../../../assets/Step-By-Step-photo.png" class="img-fluid img-thumbnail" style="background-size: cover;" />
         </div>
       </div>
     </div>
@@ -204,12 +181,25 @@
                 </div>
               </div>
             </div>
+
+            <div class="form-row">
+              <div class="col-md-12">
+                <label for="inputAddress">{{ 'registration-page.personal-file-msg' | translate }}</label>
+                <button [disabled]="isLoadingButton" type="button" (click)="downloadFile()"
+                  class="btn btn-success mb-5">
+                <i class="far fa-file-excel" *ngIf="!isLoadingButton"></i>
+                <span class="text-white ml-2 font-weight-bold font-size-lg" *ngIf="!isLoadingButton">{{'registration-page.personal-file' | translate}}</span>
+                <span class="text-white mr-2 font-weight-bold font-size-lg" *ngIf="isLoadingButton">{{'registration-page.is-downloading' | translate}}</span>
+                <div *ngIf="isLoadingButton" class="spinner-border spinner-border-sm text-white" role="status"></div>
+              </button>
+              </div>
+            </div>
             <div class="form-row py-8">
               <div class="col-md-12">
                 <ngx-dropzone (change)="onSelect($event)" class="font-weight-light justify-content-center"
                   [expandable]="true" [multiple]="true">
                   <ngx-dropzone-label>
-                    <h4>Drop file here or click to upload</h4>
+                    <h4>{{ 'registration-page.upload-files' | translate }}</h4>
                   </ngx-dropzone-label>
                   <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
                     [removable]="true" (removed)="onRemove(f)" [file]="f">
@@ -218,7 +208,15 @@
                 </ngx-dropzone>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary float-right" (click)="addUser()">{{ 'button.confirm' |
+            <div class="form-row py-8">
+              <div class="col-md-12">
+                <p>
+                <input type="checkbox" id="checkbox" (change)="accept = !accept">
+                {{ 'registration-page.accept-condition' | translate }} <button type="button" class="btn btn-link" (click)="openAcceptConditionsModal()">{{ 'registration-page.registration-conditions' | translate }}</button>
+                </p>
+              </div>
+            </div>
+            <button type="submit" [disabled]="!accept" class="btn btn-primary float-right" (click)="addUser()">{{ 'button.confirm' |
               translate }}</button>
           </form>
         </div>
@@ -239,7 +237,7 @@
 
   <div class="container-fluid bg-dark navbar-dark sticky-bottom">
     <footer class="py-3 my-4">
-      <p class="text-center text-muted">&copy; 2021 Company, Inc</p>
+      <p class="text-center text-muted">&copy; {{ year }} Company, Inc</p>
     </footer>
   </div>
 

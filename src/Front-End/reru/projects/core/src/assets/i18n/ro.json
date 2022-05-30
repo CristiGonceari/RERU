@@ -28,7 +28,14 @@
     "step6": "Apasăti butonul „Confirmă” (Pasul 6) pentru a finaliza procedura. ",
     "registration-candidate-page": "Pagină de înregistrare a candidaților",
     "select-candidate-position": "Selectați poziția",
-    "position-to-candidate": "Poziția pentru care candidați"
+    "position-to-candidate": "Poziția pentru care candidați",
+    "accept-condition": "Înregistrându-mă în sistem accept",
+    "registration-conditions":"condiții de înregistrare",
+    "is-downloading": "Se descarсă",
+    "personal-file": "Fișa Personala",
+    "personal-form-file": "Formular pentru completarea datelor personale",
+    "upload-files": "Plasați fișiere aici sau faceți clic pentru a încărca",
+    "personal-file-msg": "Pentru a completa fișa personala vă rugăm să o descărcati, accesând butonul de mai jos. După ce completați fișa personala, o încărcați in zona de mai jos împreună cu celelalte documente necesare. Completarea fișei este obligatorie"
   },
   "files":{
     "title": "Documente",
@@ -37,7 +44,9 @@
     "download": "Descarcă",
     "delete": "Șterge",
     "upload-doc": "Încărcă document",
-    "import-users": "Import utilizatori",
+    "import-users": "Importă utilizatori",
+    "import-departments": "Importă departamente",
+    "import-roles": "Importă roluri",
     "modal-title": "Încărcarea documentelor",
     "modal-description": "Încărcă document sau apasa aici pentru incarcare"
   },
@@ -130,7 +139,8 @@
     "attach": "Atașează",
     "print": "Imprimă",
     "watch": "Priveste video",
-    "import": "Importa"
+    "import": "Importa",
+    "loading": "Se încarcă"
   },
   "pagination": {
     "displaing": "Se afișează",
@@ -169,6 +179,15 @@
       "administration": "Administrare"
     }
   },
+  "statuses": {
+    "all": "Toți",
+    "active": "Activi",
+    "inactive": "Inactivi",
+    "Candidate": "Candidați",
+    "Employee": "Angajați",
+    "employee": "Angajat",
+    "candidate": "Candidat"
+  },
   "user-profile": {
     "overview": "Vizualizarea profilului personal",
     "edit-title": "Editarea profilului personal",
@@ -181,7 +200,8 @@
     "empty-name": "Câmpul trebuie sa conțină doar litere latine",
     "wrong-name": "Câmpul trebuie sa conțină doar litere latine",
     "available-modules": "Module disponibile",
-    "idnp-length": "IDNP trebuie să conține 13 cifre!"
+    "idnp-length": "IDNP trebuie să conține 13 cifre!",
+    "search-by-user-state": "Căutați după statutul utilizatorului"
   },
   "user": {
     "edit-title": "Editarea utilizatorului",
@@ -428,7 +448,9 @@
     "remove-msg": "Sigur doriți să ștergeți acest departament?",
     "succes-remove-msg": "Departamentul a fost șters cu succes",
     "succes-add-msg": "Departamentul a fost adăugat cu succes",
-    "succes-edit-msg": "Departamentul a fost editat cu succes"
+    "succes-edit-msg": "Departamentul a fost editat cu succes",
+    "department-data": "Introduceți detaliile departamentului și confirmați",
+    "department-details": "Detaliile departamentului"
   },
   "user-roles": {
     "overview": "Prezentare generală",
@@ -443,6 +465,8 @@
     "remove-msg": "Sigur doriți să ștergeți acest rol?",
     "succes-remove-msg": "Rolul a fost șters cu succes",
     "succes-add-msg": "Rolul a fost adăugat cu succes",
-    "succes-edit-msg": "Rolul a fost editat cu succes"
+    "succes-edit-msg": "Rolul a fost editat cu succes",
+    "user-role-data": "Introduceți detaliile rolului și confirmați",
+    "user-role-details": "Detaliile rolului"
   }
 }

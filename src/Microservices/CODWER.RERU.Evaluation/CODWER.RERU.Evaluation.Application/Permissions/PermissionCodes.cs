@@ -25,5 +25,9 @@
         public const string ACCES_GENERAL_LA_VERIFICAREA_TESTELOR = "P03001001";
 
         public const string ACCES_GENERAL_LA_TESTE_SOLICITATE = "P03001101";
+
+        public const string ACCES_GENERAL_LA_POZITII_CANDIDATULUI = "P03001201";
+
+        public const string ACCES_GENERAL_LA_SABLOANELE_DE_DOCUMENTE = "P03001301";
     }
 }

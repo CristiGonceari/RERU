@@ -9,6 +9,8 @@ using CVU.ERP.Common.EnumConverters;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.References.GetAddTestProcesses;
+using CODWER.RERU.Evaluation.DataTransferObjects.BulkProcesses;
 using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
@@ -73,9 +75,25 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return items;
         }
 
+        [HttpGet("test-results/select-values")]
+        public async Task<List<SelectItem>> GetTestResults()
+        {
+            var items = EnumConverter<TestResultStatusEnum>.SelectValues;
+
+            return items;
+        }
+
         [HttpGet("users-value/select-values")]
         public async Task<List<SelectItem>> GetUsers([FromQuery] GetUsersValueQuery query)
         {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("processes-value/select-values")]
+        public async Task<List<ProcessDataDto>> GetProcesses()
+        {
+            var query = new GetAddTestProcessesQuery();
+
             return await Mediator.Send(query);
         }
 

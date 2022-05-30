@@ -34,6 +34,12 @@ namespace RERU.Data.Entities
         public bool IsActive { set; get; }
         public DateTime? TokenLifetime { get; set; }
 
+        public int? DepartmentColaboratorId { get; set; }
+        public Department Department { get; set; }
+
+        public int? RoleColaboratorId { get; set; }
+        public Role Role { get; set; }
+
         [JsonIgnore]
         public List<UserProfileModuleRole> ModuleRoles { set; get; }
         [JsonIgnore]

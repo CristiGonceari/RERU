@@ -34,7 +34,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
             {
                 TestTemplateName = request.TestTemplateName,
                 UserName = request.UserName,
+                Email = request.Email,
                 TestStatus = request.TestStatus,
+                ResultStatus = request.ResultStatus,
                 LocationKeyword = request.LocationKeyword,
                 EventName = request.EventName,
                 Idnp = request.Idnp,

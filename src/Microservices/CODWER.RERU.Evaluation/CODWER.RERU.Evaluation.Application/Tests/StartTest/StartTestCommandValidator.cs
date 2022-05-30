@@ -84,9 +84,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
 
                 return;
             }
-            if (!startAfter && programmedTime < now && !IntervalMaxOneMinute(now, programmedTime))
+
+            if (test.EventId == null)
             {
-                context.AddFail(ValidationCodes.INVALID_TEST_START_TIME, ValidationMessages.InvalidInput);
+                if (!startAfter && programmedTime < now && !IntervalMaxOneMinute(now, programmedTime))
+                {
+                    context.AddFail(ValidationCodes.INVALID_TEST_START_TIME, ValidationMessages.InvalidInput);
+                }
             }
         }
 

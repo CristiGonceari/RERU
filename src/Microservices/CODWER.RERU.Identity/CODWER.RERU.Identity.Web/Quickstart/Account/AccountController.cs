@@ -199,7 +199,14 @@ namespace IdentityServerHost.Quickstart.UI
                 return SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme);
             }
 
+            if (!string.IsNullOrWhiteSpace(vm.PostLogoutRedirectUri))
+                return Redirect(vm.PostLogoutRedirectUri);
+
             return View("LoggedOut", vm);
+            //return Redirect(vm.PostLogoutRedirectUri);
+            //vm = await BuildLoginViewModelAsync(model);
+            //return await Login("Login");
+            //return View("Login");
         }
 
         [HttpGet]

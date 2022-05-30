@@ -30,7 +30,7 @@
         [total]="pagination.totalPages"
         [totalRecords]="pagination.totalCount"
         [size]="pagination.pageSize"
-        (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event})"
-        (pageChange)="list({ page: $event})">
+        (sizeChange)="list({ page: 1, itemsPerPage: $event})"
+        (pageChange)="list({ page: $event, itemsPerPage: pagination.pageSize})">
     </div>
 </div>

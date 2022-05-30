@@ -19,8 +19,8 @@ export class TestTemplateListComponent {
 	}
 
   clearFields() {
-    this.templateName.clear();
-    this.eventName.clear();
+    this.templateName.key='';
+    this.eventName.key='';
 		this.searchStatus.getTestStatuses();
 	}
 

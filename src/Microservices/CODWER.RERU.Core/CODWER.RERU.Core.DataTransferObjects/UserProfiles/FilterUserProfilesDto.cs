@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CVU.ERP.Common.DataTransferObjects.Users;
 
 namespace CODWER.RERU.Core.DataTransferObjects.UserProfiles
 {
@@ -14,5 +15,6 @@ namespace CODWER.RERU.Core.DataTransferObjects.UserProfiles
         public string Order { get; set; }
         public string Sort { get; set; }
         public bool? Status { get; set; }
+        public UserStatusEnum? UserStatusEnum { get; set; }
     }
 }

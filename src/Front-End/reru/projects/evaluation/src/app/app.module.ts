@@ -16,7 +16,6 @@ import { environment } from '../environments/environment';
 import { NOTIFICATION_INTERCEPTOR_PROVIDER } from './utils/interceptors/notification.interceptor'
 import { PositionsComponent } from './components/positions/positions.component';
 
-
 @NgModule({
   declarations: [ AppComponent, DashboardComponent, PositionsComponent ],
   imports: [

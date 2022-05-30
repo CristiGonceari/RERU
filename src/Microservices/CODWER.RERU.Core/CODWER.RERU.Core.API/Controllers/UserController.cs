@@ -10,6 +10,7 @@ using CODWER.RERU.Core.Application.Users.ChangePersonalData;
 using CODWER.RERU.Core.Application.Users.CreateUser;
 using CODWER.RERU.Core.Application.Users.DeactivateUser;
 using CODWER.RERU.Core.Application.Users.EditUser;
+using CODWER.RERU.Core.Application.Users.EditUserFromColaborator;
 using CODWER.RERU.Core.Application.Users.EditUserPersonalDetails;
 using CODWER.RERU.Core.Application.Users.GetEditUserPersonalDetails;
 using CODWER.RERU.Core.Application.Users.GetPersonalData;
@@ -33,8 +34,10 @@ namespace CODWER.RERU.Core.API.Controllers
     [Route ("api/[controller]")]
     public class UserController : BaseController
     {
-        public UserController(IMediator mediator) : base(mediator)
+        private readonly AppDbContext _appDbContext;
+        public UserController(IMediator mediator, AppDbContext appDbContext) : base(mediator)
         {
+            _appDbContext = appDbContext;
         }
 
         [HttpGet ("{id:int}")]
@@ -69,6 +72,12 @@ namespace CODWER.RERU.Core.API.Controllers
 
         [HttpPost]
         public Task<int> CreateUser ([FromBody] CreateUserCommand command) 
+        {
+            return Mediator.Send(command);
+        }
+
+        [HttpPatch("from-colaborator")]
+        public Task<int> UpdateUserFromColaborator([FromBody] EditUserFromColaboratorCommand command)
         {
             return Mediator.Send(command);
         }

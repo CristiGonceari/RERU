@@ -8,6 +8,8 @@ import { Location } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
 import { FileTypeEnum } from 'projects/erp-shared/src/lib/models/FileTypeEnum';
+import { DepartmentService } from '../../../utils/services/department.service';
+import { UserRoleService } from '../../../utils/services/user-role.service';
 
 @Component({
 	selector: 'app-edit',
@@ -24,6 +26,8 @@ export class EditComponent implements OnInit {
 	fileId: string;
 	fileType: FileTypeEnum = FileTypeEnum.Photos;
 	attachedFile: File;
+	departments;
+  	roles;
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -32,11 +36,23 @@ export class EditComponent implements OnInit {
 		private userService: UserService,
 		private notificationService: NotificationsService,
 		private router: Router,
-		private location: Location
+		private location: Location,
+		private departmentService: DepartmentService,
+    	private roleService: UserRoleService
 	) { }
 
 	ngOnInit(): void {
 		this.initData();
+		this.getDepartments();
+    	this.getRoles();
+	}
+
+	getDepartments(){
+		this.departmentService.getValues().subscribe(res => this.departments = res.data);
+	}
+	
+	getRoles(){
+		this.roleService.getValues().subscribe(res => this.roles = res.data);
 	}
 
 	initData(): void {
@@ -86,6 +102,8 @@ export class EditComponent implements OnInit {
 					'^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'
 				),
 			]),
+			departmentColaboratorId: this.fb.control((user && user.departmentColaboratorId) || null, Validators.required),
+      		roleColaboratorId: this.fb.control((user && user.roleColaboratorId) || null, [Validators.required]),
 		});
 		this.isLoading = false;
 	}
@@ -96,7 +114,9 @@ export class EditComponent implements OnInit {
 			id: this.userForm.value.id,
 			firstName: this.userForm.value.firstName,
 			lastName: this.userForm.value.lastName,
-			fatherName: this.userForm.value.fatherName
+			fatherName: this.userForm.value.fatherName,
+			departmentColaboratorId: +this.userForm.value.departmentColaboratorId,
+      		roleColaboratorId: +this.userForm.value.roleColaboratorId
 		}
 
 		this.userService.editUserPersonalDetails(data).subscribe(

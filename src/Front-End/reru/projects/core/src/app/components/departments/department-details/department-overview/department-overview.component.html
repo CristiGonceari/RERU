@@ -1,0 +1,18 @@
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="card card-custom mb-7 ml-5">
+      <div class="card-header flex-wrap border-0 py-5">
+        <div class="card-title font-weight-bolder">{{'departments.overview' | translate}}</div>
+      </div>
+      <div class="card-body">
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+        <div *ngIf="!isLoading" class="form-group row align-items-center">
+          <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+            {{'departments.name' | translate}}:
+          </label>
+          <div class="col-lg-9 col-xl-6">
+            <p class="font-size-lg m-0">{{departmentName}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -27,9 +27,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
 
-            RuleFor(x => x.ProgrammedTime)
-                .GreaterThan(new DateTime(2000, 1, 1))
-                .WithErrorCode(ValidationCodes.INVALID_TIME);
+            When(x => x.EventId == null, () =>
+            {
+                RuleFor(x => x.ProgrammedTime)
+                                .GreaterThan(new DateTime(2000, 1, 1))
+                                .WithErrorCode(ValidationCodes.INVALID_TIME);
+            });
 
             When(r => r.EventId.HasValue, () =>
             {

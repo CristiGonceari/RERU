@@ -30,6 +30,7 @@ export class TestListTableComponent implements OnInit {
   testTemplateName = [];
   testToSearch;
   userName;
+  userEmail;
   testTemplateId: number;
   testTemplate = [];
   pager: number[] = [];
@@ -41,12 +42,14 @@ export class TestListTableComponent implements OnInit {
   result = TestResultStatusEnum;
   fileTypeEnum = FileTypeEnum;
   selectedStatus: number;
+  selectedResult: number;
   verificationProgress = [];
   dateTimeFrom: string;
   searchFrom: string;
   dateTimeTo: string;
   searchTo: string;
   testStatusesList;
+  testResultsList;
   selectedSortOrder = "Date range";
   dateData = ["None", "Today", "This week", "This month"];
   testPassStatus;
@@ -112,9 +115,11 @@ export class TestListTableComponent implements OnInit {
       idnp: this.filters.idnp ||this.idnp || '',
       eventName: this.filters.testEvent || this.eventName || '',
       userName: this.filters.userName || this.userName || '',
+      email: this.filters.userEmail || this.userEmail || '',
       programmedTimeFrom: this.searchFrom,
       programmedTimeTo: this.searchTo,
       testStatus: this.filters.selectedStatus || this.selectedStatus,
+      resultStatus: this.filters.selectedResult || this.selectedResult,
       page: data.page || this.pagination.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
       ...this.filters
@@ -176,6 +181,10 @@ export class TestListTableComponent implements OnInit {
 
   getTestStatuses() {
     this.referenceService.getTestStatuses().subscribe((res) => this.testStatusesList = res.data);
+  }
+
+  getTestResults() {
+    this.referenceService.getTestResults().subscribe((res) => this.testResultsList = res.data);
   }
 
   stopTest(id): void {
@@ -293,11 +302,13 @@ export class TestListTableComponent implements OnInit {
 			fields: this.headersToPrint,
 			orientation: 2,
       testStatus: this.filters.selectedStatus || this.selectedStatus,
+      resultStatus: this.filters.selectedResult || this.selectedResult,
       testTemplateName: this.filters.testName || this.testToSearch || '',
       locationKeyword: this.filters.testLocation || this.locationName || '',
       idnp: this.filters.idnp ||this.idnp || '',
       eventName: this.filters.testEvent || this.eventName || '',
       userName: this.filters.userName || this.userName || '',
+      email: this.filters.userEmail || this.userEmail || '',
       programmedTimeFrom: this.searchFrom || null,
       programmedTimeTo: this.searchTo || null
 		};
@@ -347,18 +358,17 @@ export class TestListTableComponent implements OnInit {
   
   setFilter(field: string, value): void {
 		this.filters[field] = value;
+		this.pagination.currentPage = 1;
 		this.getTests();
 	}
 
 	resetFilters(): void {
 		this.filters = {};
-    
+		this.pagination.currentPage = 1;
     this.dateTimeFrom = '';
     this.dateTimeTo = '';
-    
     this.searchFrom = '';
     this.searchTo = '';
-
 		this.getTests();
 	}
 }

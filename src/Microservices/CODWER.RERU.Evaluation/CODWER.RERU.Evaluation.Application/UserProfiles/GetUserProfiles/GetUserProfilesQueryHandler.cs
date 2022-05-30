@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.Pagination;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
@@ -22,7 +24,13 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
 
         public async Task<PaginatedModel<UserProfileDto>> Handle(GetUserProfilesQuery request, CancellationToken cancellationToken)
         {
-            var items = _appDbContext.UserProfiles.AsQueryable();
+
+            var items = _appDbContext.UserProfiles
+                .Where(x => x.IsActive)
+                .Include(up => up.EventResponsiblePersons)
+                .Include(up => up.EventUsers)
+                .AsQueryable();
+
 
             if (!string.IsNullOrEmpty(request.FirstName))
             {
@@ -52,6 +60,26 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
             if (request.ExceptUserIds.Count>0)
             {
                 items = items.Where(x => !request.ExceptUserIds.Contains(x.Id));
+            }
+
+            if (request.EventUsers)
+            {
+                var list = _appDbContext.EventResponsiblePersons.Select(erp => erp.UserProfileId).ToList();
+
+                foreach (var id in list)
+                {
+                    items = items.Where(x => x.Id != id);
+                }
+            }
+
+            if (request.EventResponsiblePerson)
+            {
+                var list = _appDbContext.EventUsers.Select(erp => erp.UserProfileId).ToList();
+
+                foreach (var id in list)
+                {
+                    items = items.Where(x => x.Id != id);
+                }
             }
 
             return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(items, request);

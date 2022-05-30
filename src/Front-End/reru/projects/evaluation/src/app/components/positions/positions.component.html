@@ -30,7 +30,7 @@
             <div class="card-body">
 							<div class="row mb-5">
 								<div class="col">
-									<erp-shared-search-input (handleSearch)="list({name: $event, page: 1})" [placeholder]="'button.search' | translate" #search></erp-shared-search-input>
+									<erp-shared-search-input (handleSearch)="getPositions({name: $event, page: 1, itemsPerPage: pagination.pageSize})" [placeholder]="'button.search' | translate" #search></erp-shared-search-input>
 								</div>
 								<app-button (click)="search.clear()" [value]="'button.reset' | translate" class="mr-5"></app-button>
 							</div>
@@ -98,8 +98,8 @@
                 </table>
                 <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
                   [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
-                  (sizeChange)="list({ page: 1, itemsPerPage: $event })"
-                  (pageChange)="list({ page: $event })" *ngIf="positions">
+                  (sizeChange)="getPositions({ name: keyword, page: 1, itemsPerPage: $event })"
+                  (pageChange)="getPositions({ name: keyword, page: $event, itemsPerPage: pagination.pageSize})" *ngIf="positions">
                 </div>
               </div>
             </div>

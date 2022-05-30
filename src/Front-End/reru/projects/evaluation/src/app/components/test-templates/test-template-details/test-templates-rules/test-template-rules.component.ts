@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TestTemplateService } from 'projects/evaluation/src/app/utils/services/test-template/test-template.service';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import { TestTemplateStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-template-status.enum';
 
 @Component({
   selector: 'app-test-template-rules',
@@ -11,10 +12,11 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 export class TestTemplatesRulesComponent implements OnInit{
   testTemplateId
   editorData: string = '';
-  status: string;
+  status;
   add = false;
   public Editor = DecoupledEditor;
   isLoading: boolean = false;
+	disable: boolean = false;
 
   constructor(private route: ActivatedRoute, private service: TestTemplateService) { }
 
@@ -27,7 +29,6 @@ export class TestTemplatesRulesComponent implements OnInit{
     this.route.parent.params.subscribe(params => {this.testTemplateId = params.id;
       if (this.testTemplateId) {
         this.get();
-        this.getTest();
       }
     });
   }
@@ -36,7 +37,7 @@ export class TestTemplatesRulesComponent implements OnInit{
     this.service.getRules(this.testTemplateId).subscribe(res => {
       if(res && res.data) {
         this.editorData = res.data.rules;
-        this.isLoading = false;
+        this.getTest();
       }
       if(res.data.rules == null) this.add = true;
       }
@@ -44,6 +45,12 @@ export class TestTemplatesRulesComponent implements OnInit{
   }
 
   getTest(){
-    this.service.getTestTemplate(this.testTemplateId).subscribe(res => this.status = res.data.status);
+    this.service.getTestTemplate(this.testTemplateId).subscribe(res => {
+      this.status = res.data.status;
+      if (this.status == TestTemplateStatusEnum.Active || this.status == TestTemplateStatusEnum.Canceled) {
+        this.disable = true;
+      }
+      this.isLoading = false;
+    });
   }
 }

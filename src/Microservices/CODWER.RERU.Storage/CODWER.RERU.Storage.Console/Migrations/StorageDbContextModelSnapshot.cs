@@ -130,6 +130,11 @@ namespace CODWER.RERU.Storage.Console.Migrations
                         {
                             Id = 10,
                             Name = "cim"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "procesfile"
                         });
                 });
 

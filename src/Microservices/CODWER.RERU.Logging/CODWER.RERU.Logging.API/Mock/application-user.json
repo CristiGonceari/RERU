@@ -1,6 +1,8 @@
 {
-  "id": "test-id-1",
-  "name": "RERU Client",
+  "id": "9999",
+  "firstName": "RERU Client",
+  "lastName": "Logging",
+  "fatherName": "Mock User",
   "email": "andrian.hubencu@codwer.com",
   "modules": [
     {

@@ -4,9 +4,9 @@
       <div class="card-title"><b>{{'questions.settings' | translate}}</b></div>
     </div>
     <div class="card-body">
-      <div class="container">
+      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 
-        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+      <div class="container">
         <div *ngIf="!isLoading" class="row justify-content-center">
           <div class="form" id="kt_contact_add_form" [formGroup]="settingsForm">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0">
@@ -198,8 +198,8 @@
           </div>
         </div>
       </div>
-      <div class="mt-5 text-right">
-        <app-add-button class="btn" [value]="'button.save' | translate" (handle)="updateOptions()"></app-add-button>
+      <div *ngIf="!isLoading" class="mt-5 text-right">
+        <app-add-button *ngIf="!disable" class="btn" [value]="'button.save' | translate" (handle)="updateOptions()"></app-add-button>
       </div>
     </div>
   </div>

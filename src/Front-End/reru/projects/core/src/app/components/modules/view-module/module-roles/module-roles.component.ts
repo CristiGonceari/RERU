@@ -59,18 +59,15 @@ export class ModuleRolesComponent implements OnInit {
 		this.list(params);
 	}
 
-	list(params){
+	list(params) {
+		this.isLoading = true;
 		this.roleService.get(this.moduleId, params).subscribe(res => {
-			this.isLoading = false;
 			if (res && res.data.items.length) {
 				this.roles = res.data.items;
 				this.pagination = res.data.pagedSummary;
-				for (let i = 1; i <= this.pagination.totalCount; i++) {
-					this.pager.push(i);
-				}
+				this.isLoading = false;
 			}
 		});
-		this.isLoading = true;
 	}
 
 	openRemoveRoleModal(id: string, name): void {

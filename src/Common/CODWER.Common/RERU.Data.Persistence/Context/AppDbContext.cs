@@ -56,6 +56,8 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<DocumentTemplateKey> DocumentTemplateKeys { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<RegistrationPageMessage> RegistrationPageMessages { get; set; }
+        public virtual DbSet<BulkProcess> BulkProcesses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -72,6 +74,18 @@ namespace RERU.Data.Persistence.Context
 
             modelBuilder.Entity<Module>().HasKey(c => c.Id);
             modelBuilder.Entity<UserProfile>().HasKey(c => c.Id);
+
+            modelBuilder.Entity<UserProfile>()
+                .HasOne(up => up.Department)
+                .WithMany()
+                .HasForeignKey(up => up.DepartmentColaboratorId)
+                .HasPrincipalKey(d => d.ColaboratorId);
+
+            modelBuilder.Entity<UserProfile>()
+                .HasOne(up => up.Role)
+                .WithMany()
+                .HasForeignKey(up => up.RoleColaboratorId)
+                .HasPrincipalKey(r => r.ColaboratorId);
 
             modelBuilder
                 .ApplyConfigurationsFromAssembly(typeof(AppDbContext)

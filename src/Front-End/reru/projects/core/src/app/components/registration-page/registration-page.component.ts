@@ -13,6 +13,11 @@ import { ValidatorUtil } from '../../utils/util/validator.util';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WatchInfoVideoModalComponent } from '../../utils/modals/watch-info-video-modal/watch-info-video-modal.component'
 import { UserFilesService } from '../../utils/services/user-files.service';
+import { RegistrationPageService } from '../../utils/services/registration-page.service'
+import { ApplicationUserService} from '@erp/shared';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import { AcceptConditionsModalComponent } from '../../utils/modals/accept-conditions-modal/accept-conditions-modal.component';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-registration-page',
@@ -26,7 +31,19 @@ export class RegistrationPageComponent implements OnInit {
   description: string;
   success: boolean = false;
   files: File[] = [];
+  textValue: string = "";
+  canEdit: boolean = false;
+  accept: boolean = false; 
+  year = new Date().getFullYear();
+  public Editor = DecoupledEditor;
+  public onReady(editor) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+      editor.ui.view.toolbar.element,
+      editor.ui.getEditableElement()
+    );
+  }
 
+  isLoadingButton: boolean = false;
   userId: any;
   fileId: string;
   fileType: FileTypeEnum = FileTypeEnum.Photos;
@@ -51,15 +68,22 @@ export class RegistrationPageComponent implements OnInit {
     private notificationService: NotificationsService,
     public translate: I18nService,
     private modalService: NgbModal,
+    private registrationPageService: RegistrationPageService,
+    private applicationUserService: ApplicationUserService,
   ) { }
 
   ngOnInit(): void {
     this.initForm();
     this.currentLanguage = this.translate.currentLanguage;
+    this.getMessage();
   }
 
-  openModal(){
-    const modalRef = this.modalService.open( WatchInfoVideoModalComponent, { centered: true, size: 'lg', windowClass: 'my-class' });
+  openModal() {
+    const modalRef = this.modalService.open(WatchInfoVideoModalComponent, { centered: true, size: 'lg', windowClass: 'my-class' });
+  }
+
+  openAcceptConditionsModal() {
+    const modalRef = this.modalService.open(AcceptConditionsModalComponent, { centered: true, size: 'lg'});
   }
 
   getLang(): string {
@@ -82,6 +106,20 @@ export class RegistrationPageComponent implements OnInit {
       this.userForm.get(field).touched &&
       this.userForm.get(field).hasError(error)
     );
+  }
+
+  getMessage() {
+    this.registrationPageService.getMessage().subscribe(res => {
+      this.textValue = res.data
+      var user = this.applicationUserService.getCurrentUser();
+      if (user.isAuthenticated && user.user.permissions.includes('P00000028')) {
+        this.canEdit = true;
+      }
+    })
+  }
+
+  editMessage() {
+    this.registrationPageService.editMessage({message: this.textValue}).subscribe();
   }
 
   isIdnpLengthValidator(field: string): boolean {
@@ -134,18 +172,18 @@ export class RegistrationPageComponent implements OnInit {
         request.append('Data.File.File', this.attachedFile);
         request.append('Data.File.Type', this.fileType.toString());
       }
-        request.append('Data.UserId', res.data);
+      request.append('Data.UserId', res.data);
 
       this.userService.addUserAvatar(request).subscribe(() => {
         this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       })
 
-      for(let userFile of this.files){
+      for (let userFile of this.files) {
         let formData = new FormData();
         formData.append('Data.UserId', res.data);
         formData.append('Data.File.File', userFile);
         formData.append('Data.File.Type', this.userFileType.toString());
-        this.userFilesService.create(formData).subscribe(res => {})
+        this.userFilesService.create(formData).subscribe(res => { })
       }
 
     }, () => {
@@ -160,8 +198,24 @@ export class RegistrationPageComponent implements OnInit {
     });
   }
 
-  checkFile(event) {
-		if (event != null) this.attachedFile = event;
-		else this.fileId = null;
+  downloadFile(): void {
+    this.isLoadingButton = true;
+		this.inregistrationService.getPersonalFile().subscribe((response : any) => {
+      let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+      
+      if (response.body.type === 'application/xlsx') {
+        fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
+      }
+
+      const blob = new Blob([response.body], { type: response.body.type });
+      const file = new File([blob], fileName, { type: response.body.type });
+      saveAs(file);
+      this.isLoadingButton = false;
+		});
 	}
+
+  checkFile(event) {
+    if (event != null) this.attachedFile = event;
+    else this.fileId = null;
+  }
 }

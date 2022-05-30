@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Provider.Kubernetes;
+using Ocelot.Provider.Polly;
 
 namespace CODWER.RERU.Gateway.Public
 {
@@ -62,7 +63,9 @@ namespace CODWER.RERU.Gateway.Public
 
             services.AddControllers().AddCommonModuleControllers();
 
-            services.AddOcelot(Configuration).AddKubernetes();
+            services.AddOcelot(Configuration)
+                .AddPolly()
+                .AddKubernetes();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

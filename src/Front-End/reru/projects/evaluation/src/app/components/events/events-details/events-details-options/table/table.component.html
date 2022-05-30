@@ -1,9 +1,8 @@
 <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 
-<div *ngIf="!isLoading"
-  class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
   id="kt_datatable">
-  <table class="datatable table font-size-lg" style="overflow: visible">
+  <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading">
     <thead class="text-uppercase text-muted">
       <tr *ngIf="users.length">
         <th scope="col">{{'events.name' | translate}}</th>
@@ -140,6 +139,7 @@
   </table>
   <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
     [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
-    (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event })" (pageChange)="list({ page: $event })">
+    (sizeChange)="list({ page: 1, itemsPerPage: $event })"
+    (pageChange)="list({ page: $event, itemsPerPage: pagination.pageSize})">
   </div>
 </div>

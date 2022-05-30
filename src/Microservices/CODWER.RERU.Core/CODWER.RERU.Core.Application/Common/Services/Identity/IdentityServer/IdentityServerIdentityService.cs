@@ -82,6 +82,66 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
             throw new CreateIdentityFailedException("User was not created for unknown reason");
         }
 
+        public async Task<string> Update(string userName, string newEmail, string lastEmail, bool notify)
+        {
+            var identityUser = await _userManager.FindByEmailAsync(lastEmail);
+
+            var usernameResult = await _userManager.SetUserNameAsync(identityUser, newEmail);
+
+            var emailResult = await _userManager.SetEmailAsync(identityUser, newEmail);
+
+            var password = _passwordGenerator.Generate(); 
+            await _userManager.UpdateNormalizedEmailAsync(identityUser);
+
+            if (usernameResult.Succeeded && emailResult.Succeeded)
+            {
+                // TODO: asta trebuie de mutat in notification service
+                if (notify)
+                {
+                    try
+                    {
+                        var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
+                        var template = await File.ReadAllTextAsync(assemblyPath + "/UserRegister.html");
+
+                        template = template
+                            .Replace("{FirstName}", $"{userName}")
+                            .Replace("{Login}", newEmail)
+                            .Replace("{Password}", password);
+
+                        var emailData = new EmailData()
+                        {
+                            subject = "Update account",
+                            body = template,
+                            from = "Do Not Reply",
+                            to = identityUser.Email
+                        };
+
+                        await _notificationService.Notify(emailData, NotificationType.Both);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"ERROR {e.Message}");
+                    }
+                }
+                // end
+
+                return identityUser.Id;
+            }
+
+            if (usernameResult.Errors.Any())
+            {
+                throw new CreateIdentityFailedException(usernameResult.Errors.Select(re => $"{re.Code}: {re.Description}").ToArray());
+            }
+
+            if (emailResult.Errors.Any())
+            {
+                throw new CreateIdentityFailedException(emailResult.Errors.Select(re => $"{re.Code}: {re.Description}").ToArray());
+            }
+
+            throw new CreateIdentityFailedException("User was not updated for unknown reason");
+        }
+
+
         public async Task Remove(string id)
         {
             var user = await _userManager.FindByIdAsync(id);

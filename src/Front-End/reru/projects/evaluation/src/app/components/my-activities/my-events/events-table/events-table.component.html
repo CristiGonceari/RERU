@@ -1,9 +1,9 @@
 
 <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 
-<div *ngIf="!isLoading" id="kt_datatable"
+<div id="kt_datatable"
     class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded">
-    <table class="datatable table" style="overflow: visible">
+    <table class="datatable table" style="overflow: visible" *ngIf="!isLoading">
         <thead class="text-uppercase text-muted">
             <tr>
                 <th scope="col" class="colored">
@@ -94,8 +94,8 @@
         </tbody>
     </table>
     <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage" 
-        *ngIf="tests.length > 5" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
-        (sizeChange)="getTests({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-        (pageChange)="getTests({ page: $event })">
+        *ngIf="tests.length" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
+        (sizeChange)="getTests({ page: 1, itemsPerPage: $event })"
+        (pageChange)="getTests({ page: $event, itemsPerPage: pagedSummary.pageSize })">
     </div>
 </div>

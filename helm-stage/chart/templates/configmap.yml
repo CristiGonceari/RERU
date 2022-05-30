@@ -425,6 +425,9 @@ data:
           "LoggingClient": {
             "BaseUrl": "http://reru-internal-gateway-service:8080/reru-logging/api"
           }
+        },
+      "PlatformConfig": {
+          "BaseUrl": "http://reru-stage.codwer.com"  
         }
     }
 

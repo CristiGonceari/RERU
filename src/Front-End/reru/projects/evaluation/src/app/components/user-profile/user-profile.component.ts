@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmModalComponent } from '@erp/shared';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../utils/services/i18n/i18n.service';
 import { UserProfileService } from '../../utils/services/user-profile/user-profile.service';
 
 @Component({
@@ -12,7 +16,13 @@ export class UserProfileComponent implements OnInit {
   isLoading = false;
   user;
 
-  constructor(private activatedRoute: ActivatedRoute, private userService: UserProfileService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+		private modalService: NgbModal,
+		public translate: I18nService,
+    private userService: UserProfileService,
+		public router: Router
+  ) { }
 
   ngOnInit(): void {
     this.subsribeForParams();
@@ -42,4 +52,25 @@ export class UserProfileComponent implements OnInit {
     }
     this.acronym = matches ? matches.join('') : null;
 	}
+
+  openConfirmationModal(id): void {
+		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
+
+    forkJoin([
+			this.translate.get('user-profile.navigate-core-msg'),
+			this.translate.get('button.no'),
+			this.translate.get('button.yes'),
+		]).subscribe(([description, no, yes]) => {
+      modalRef.componentInstance.description = description;
+      modalRef.componentInstance.buttonNo = no;
+      modalRef.componentInstance.buttonYes = yes;
+			});
+
+		modalRef.result.then(() => this.navigateToCore(id), () => { });
+	}
+
+  navigateToCore(id): void {
+    let host = window.location.host;
+		window.open(`http://${host}/#/user-profile/${id}/overview`, '_self')
+  }
 }

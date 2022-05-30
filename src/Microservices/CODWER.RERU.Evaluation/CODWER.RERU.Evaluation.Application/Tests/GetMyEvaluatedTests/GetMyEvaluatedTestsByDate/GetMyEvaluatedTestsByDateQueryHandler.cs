@@ -34,6 +34,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.GetMyEval
                 .Include(t => t.Event)
                 .Where(t => t.EvaluatorId == currentUser.Id ||
                             _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == currentUser.Id))
+                .Where(t => t.ProgrammedTime.Date == request.Date.Date)
                 .AsQueryable();
 
 

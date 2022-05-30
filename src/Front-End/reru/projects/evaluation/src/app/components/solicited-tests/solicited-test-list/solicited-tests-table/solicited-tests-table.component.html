@@ -1,88 +1,86 @@
-<app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'10vh'" [height]="'5rem'" [width]="'5rem'"
+<app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'20vh'" [height]="'5rem'" [width]="'5rem'"
     [colorClass]="'text-primary'">
 </app-loading-spinner>
 <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
-<div *ngIf="!isLoading && !downloadFile">
-    <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
-        id="kt_datatable">
-        <table class="datatable table font-size-lg" style="overflow: visible">
-            <thead class="text-uppercase text-muted">
-                <tr>
-                    <th scope="col">{{'verify-test.student' | translate}}</th>
-                    <th scope="col" class="text-left">{{'tests.name' | translate}}</th>
-                    <th scope="col" class="text-left">{{'position.apply-for-position' | translate}}</th>
-                    <th scope="col" class="text-left">{{'events.event' | translate}}</th>
-                    <th scope="col" class="text-left">{{'tests.status' | translate}}</th>
-                    <th scope="col" style="width: 48px"></th>
-                </tr>
-            </thead>
-            <tbody class="datatable-body" *ngIf="solicitedTests.length">
-                <tr *ngFor="let item of solicitedTests">
-                    <td>
-                        <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
-                            [routerLink]="['../user-profile', item.userProfileId]"
-                            style="white-space: nowrap;">
-                                {{ item.userProfileName }}
-                            <br>
-                            <span class="text-dark-50 font-size-lg font-weight-light">{{ item.userProfileIdnp }}</span>
-                        </p>
-                    </td>
-                    <td>{{ item.testTemplateName }}</td>
-                    <td>{{ item.candidatePositionName }}</td>
-                    <td>
-                        <span *ngIf="item.eventName">{{ item.eventName }}</span>
-                        <span *ngIf="!item.eventName">-</span>
-                    </td>
-                    <td>{{'statuses.' + enum[item.solicitedTestStatus] | translate}}</td>
-                    <td data-field="Actions" data-autohide-disabled="false"
-                        class="datatable-cell datatable-cell-sort p-3">
-                        <div style="overflow: visible; position: relative; width: 0px">
-                            <div ngbDropdown class="dropdown dropdown-inline">
-                                <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
-                                    <span class="svg-icon svg-icon-md" ngbDropdownToggle>
-                                        <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                            viewBox="0 0 24 24" version="1.1">
-                                            <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
-                                                <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3"
-                                                    fill="black">
-                                                </rect>
-                                                <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3"
-                                                    fill="black" fill-opacity="0.7"></rect>
-                                            </g>
-                                        </svg>
-                                    </span>
-                                </div>
-                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left" *ngIf="item.solicitedTestStatus == enum.New">
-                                    <div ngbDropdownMenu aria-labelledby="action1">
-                                        <button class="navi-link align-items-baseline px-6" ngbDropdownItem 
-                                            (click)="openConfirmationChangeModal(item.id)">
-                                            {{'statuses.refuse' | translate}}
-                                        </button>
-                                        <button class="navi-link align-items-baseline px-6" ngbDropdownItem
-                                            [routerLink]="['approve', item.id]">
-                                            {{'statuses.approve' | translate}}
-                                        </button>
-                                    </div>
+<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+    id="kt_datatable">
+    <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading && !downloadFile">
+        <thead class="text-uppercase text-muted">
+            <tr>
+                <th scope="col">{{'verify-test.student' | translate}}</th>
+                <th scope="col" class="text-left">{{'tests.name' | translate}}</th>
+                <th scope="col" class="text-left">{{'position.apply-for-position' | translate}}</th>
+                <th scope="col" class="text-left">{{'events.event' | translate}}</th>
+                <th scope="col" class="text-left">{{'tests.status' | translate}}</th>
+                <th scope="col" style="width: 48px"></th>
+            </tr>
+        </thead>
+        <tbody class="datatable-body" *ngIf="solicitedTests.length">
+            <tr *ngFor="let item of solicitedTests">
+                <td>
+                    <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
+                        [routerLink]="['../user-profile', item.userProfileId]"
+                        style="white-space: nowrap;">
+                            {{ item.userProfileName }}
+                        <br>
+                        <span class="text-dark-50 font-size-lg font-weight-light">{{ item.userProfileIdnp }}</span>
+                    </p>
+                </td>
+                <td>{{ item.testTemplateName }}</td>
+                <td>{{ item.candidatePositionName }}</td>
+                <td>
+                    <span *ngIf="item.eventName">{{ item.eventName }}</span>
+                    <span *ngIf="!item.eventName">-</span>
+                </td>
+                <td>{{'statuses.' + enum[item.solicitedTestStatus] | translate}}</td>
+                <td data-field="Actions" data-autohide-disabled="false"
+                    class="datatable-cell datatable-cell-sort p-3">
+                    <div style="overflow: visible; position: relative; width: 0px">
+                        <div ngbDropdown class="dropdown dropdown-inline">
+                            <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                                <span class="svg-icon svg-icon-md" ngbDropdownToggle>
+                                    <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                        viewBox="0 0 24 24" version="1.1">
+                                        <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
+                                            <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3"
+                                                fill="black">
+                                            </rect>
+                                            <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3"
+                                                fill="black" fill-opacity="0.7"></rect>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left" *ngIf="item.solicitedTestStatus == enum.New">
+                                <div ngbDropdownMenu aria-labelledby="action1">
+                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem 
+                                        (click)="openConfirmationChangeModal(item.id)">
+                                        {{'statuses.refuse' | translate}}
+                                    </button>
+                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem
+                                        [routerLink]="['approve', item.id]">
+                                        {{'statuses.approve' | translate}}
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody class="datatable-body" *ngIf="!solicitedTests.length">
-                <tr>
-                    <td colspan="7" class="text-center">
-                        {{ 'message.no-record' | translate }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
-            [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
-            (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event })"
-            (pageChange)="list({ keyword: keyword, page: $event })">
-        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tbody class="datatable-body" *ngIf="!solicitedTests.length">
+            <tr>
+                <td colspan="7" class="text-center">
+                    {{ 'message.no-record' | translate }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
+        [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
+        (sizeChange)="list({ page: 1, itemsPerPage: $event })"
+        (pageChange)="list({ page: $event, itemsPerPage: pagination.pageSize })">
     </div>
 </div>

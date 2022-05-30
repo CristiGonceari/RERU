@@ -2,6 +2,7 @@
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Core.Application.UserProfiles
 {
@@ -9,7 +10,10 @@ namespace CODWER.RERU.Core.Application.UserProfiles
     {
         public static IQueryable<UserProfile> Filter(AppDbContext appDbContext, FilterUserProfilesDto request)
         {
-            var userProfiles = appDbContext.UserProfiles.AsQueryable();
+            var userProfiles = appDbContext.UserProfiles
+                .Include(x => x.Department)
+                .Include(x => x.Role)
+                .AsQueryable();
 
 
             if (!string.IsNullOrEmpty(request.Keyword))

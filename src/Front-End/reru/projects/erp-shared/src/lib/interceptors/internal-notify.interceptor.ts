@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { AbstractService } from '../services/abstract.service';
 import { AppSettingsService } from '../services/app-settings.service';
 
+
 @Injectable()
 export class InternalNotifyInterceptor extends AbstractService implements HttpInterceptor {
 	type: string;
@@ -30,23 +31,23 @@ export class InternalNotifyInterceptor extends AbstractService implements HttpIn
 		super(configService);
 	}
 
-	// intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-	// 	return next.handle(req).pipe(
-	// 		tap(evt => {
-	// 			if (evt instanceof HttpResponse && evt.url.includes('test-notification')) {
-	// 				if (evt && evt.body && evt.body.data.testId) {
-	// 					console.warn('url', `${this.baseUrl}/reru-evaluation/#/my-activities/start-test/${evt.body.data.testId}`)
-	// 					this.notificationService.info('Start Test', 'Testul e pe cale de a incepe', {
-	// 						timeOut: 29000,
-	// 						showProgressBar: true,
-	// 					}).click.subscribe(() =>
-	// 						this.router.navigate([`${this.baseUrl}/reru-evaluation/#/my-activities/start-test/${evt.body.data.testId}`])
-	// 					);
-	// 				}
-	// 			}
-	// 		})
-	// 	);
-	// }
+	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+		return next.handle(req).pipe(
+			tap(evt => {
+				if (evt instanceof HttpResponse && evt.url.includes('test-notification')) {
+					if (evt && evt.body && evt.body.data.testId) {
+						this.notificationService.info('Start Test', 'Testul e pe cale de a incepe', {
+							timeOut: 29000,
+							showProgressBar: true,
+						}).click.subscribe(() => {
+							let host = window.location.host;
+							window.open(`http://${host}/reru-evaluation/#/my-activities/start-test/${evt.body.data.testId}`, '_self');
+						});
+					}
+				}
+			})
+		);
+	}
 }
 
 export const INTERNAL_NOTIFY_INTERCEPTOR: ClassProvider = {

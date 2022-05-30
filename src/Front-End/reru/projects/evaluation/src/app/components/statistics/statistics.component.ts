@@ -12,7 +12,7 @@ export class StatisticsComponent implements OnInit {
   statisticEnum: SelectItem[] = [{ label: "", value: "" }];
   testTemplates: SelectItem[] = [{ label: "", value: "" }];
   categories: SelectItem[] = [{ label: "", value: "" }];
-  filterEnum = 3;
+  filterEnum;
   testTemplateId;
   itemsPerPage = 10;
   categoryId;

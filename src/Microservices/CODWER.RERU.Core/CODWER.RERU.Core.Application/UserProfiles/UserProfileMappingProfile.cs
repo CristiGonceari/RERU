@@ -3,6 +3,7 @@ using AutoMapper;
 using CODWER.RERU.Core.DataTransferObjects.Profile;
 using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
 using CODWER.RERU.Core.DataTransferObjects.Users;
+using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Models.Internal;
 using RERU.Data.Entities;
@@ -13,7 +14,10 @@ namespace CODWER.RERU.Core.Application.UserProfiles
     {
         public UserProfileMappingProfile()
         {
-            CreateMap<UserProfile, UserProfileDto>();
+            CreateMap<UserProfile, UserProfileDto>()
+                .ForMember(x => x.DepartmentName, opts => opts.MapFrom(src => src.Department.Name))
+                .ForMember(x => x.RoleName, opts => opts.MapFrom(src => src.Role.Name))
+                .ForMember(x => x.UserStatusEnum, opts => opts.MapFrom(src => src.DepartmentColaboratorId == null && src.RoleColaboratorId == null ? UserStatusEnum.Candidate : UserStatusEnum.Employee));
 
             CreateMap<UserProfileDto, UserProfile>()
                 .ForMember(x => x.Id, options => options.Ignore());
@@ -40,6 +44,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles
             CreateMap<global::RERU.Data.Entities.Module, ApplicationModule>();
 
             CreateMap<UserProfile, UserProfileOverviewDto>()
+                .ForMember(x => x.UserStatusEnum, opts => opts.MapFrom(src => src.DepartmentColaboratorId == null && src.RoleColaboratorId == null ? UserStatusEnum.Candidate : UserStatusEnum.Employee))
                 .ForMember(destinationMember => destinationMember.Modules, opts => opts.MapFrom(sourceMember => sourceMember.ModuleRoles));
 
             CreateMap<UserProfileModuleRole, UserProfileModuleRowDto>()

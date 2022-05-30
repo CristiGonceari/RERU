@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { GuideService } from '../../../utils/services/guide.service';
+import { TryLongRequestService } from '../../../utils/services/try-long-request.service';
 import { saveAs } from 'file-saver';
 
 @Component({
@@ -9,17 +10,24 @@ import { saveAs } from 'file-saver';
 })
 export class FaqListComponent {
   title: string;
-  isLoadingButton: boolean;
+  isLoadingButton: boolean = false;
   isLoading: boolean = true;
 
-  constructor(private guideService: GuideService) { }
+  constructor(private guideService: GuideService,
+              private tryLongRequestService: TryLongRequestService
+    ) { }
 
   getTitle(): string {
 		this.title = document.getElementById('title').innerHTML;
 		return this.title
 	}
 
+  tryLongRequest(){
+    this.tryLongRequestService.getLongRequest().subscribe(res => console.log("res", res))
+  }
+
   downloadFile(): void {
+    this.isLoadingButton = true;
 		this.guideService.get().subscribe((response : any) => {
       let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
       
@@ -30,6 +38,7 @@ export class FaqListComponent {
       const blob = new Blob([response.body], { type: response.body.type });
       const file = new File([blob], fileName, { type: response.body.type });
       saveAs(file);
+      this.isLoadingButton = false;
 		});
 	}
 }

@@ -29,6 +29,10 @@ export class ReferenceService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/question-categories-value/select-values`);
   }
 
+  getProcesses(): Observable<any>{
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/processes-value/select-values`);
+  }
+
   getUsers(params): Observable<any>{
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/users-value/select-values`, { params });
   }
@@ -39,6 +43,10 @@ export class ReferenceService extends AbstractService {
 
   getTestStatuses(): Observable<any>{
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-statuses/select-values`);
+  }
+
+  getTestResults(): Observable<any>{
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-results/select-values`);
   }
 
   getLocationType(): Observable<any>{

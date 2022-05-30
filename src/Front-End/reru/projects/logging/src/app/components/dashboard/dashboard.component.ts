@@ -39,7 +39,9 @@ export class DashboardComponent implements OnInit {
     this.getLoggingValues();
   }
 
-  initFilters(){
+  initFilters() {
+    this.pagination.currentPage = 1;
+
     this.dateTimeFrom = '';
     this.dateTimeTo = '';
     
@@ -88,7 +90,7 @@ export class DashboardComponent implements OnInit {
       event: this.selectedEvent || '',
       userName:  this.userName || '',
       userIdentifier: this.userIdentifier || '',
-      page: data.page || this.pagination.currentPage,
+      page: data.page || 1,
       itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
     };
 

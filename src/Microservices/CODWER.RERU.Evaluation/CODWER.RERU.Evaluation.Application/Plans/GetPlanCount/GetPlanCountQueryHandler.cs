@@ -21,13 +21,12 @@ namespace CODWER.RERU.Evaluation.Application.Plans.GetPlanCount
         public async Task<List<PlanCount>> Handle(GetPlanCountQuery request, CancellationToken cancellationToken)
         {
 
-            var plans =  _appDbContext.Plans
-                .Where(p => p.FromDate.Date >= request.FromDate.Date && p.TillDate.Date <= request.TillDate || 
-                            (request.FromDate.Date <= p.FromDate.Date && p.FromDate.Date <= request.TillDate.Date) && 
-                            (request.FromDate.Date <= p.TillDate.Date && p.TillDate.Date >= request.TillDate.Date) ||
-                            (request.FromDate.Date >= p.FromDate.Date && p.FromDate.Date <= request.TillDate.Date) && 
-                            ( request.FromDate.Date <= p.TillDate.Date && p.TillDate.Date <= request.TillDate.Date))
-                .AsQueryable();
+            var plans = _appDbContext.Plans
+                                        .Where(p => (request.FromDate.Date <= p.FromDate.Date && request.TillDate.Date >= p.TillDate.Date) ||
+                                                    (request.FromDate.Date <= p.FromDate.Date && p.FromDate.Date <= request.TillDate.Date && p.TillDate.Date >= request.TillDate.Date) ||
+                                                    (p.FromDate.Date <= request.FromDate.Date && request.FromDate.Date <= p.TillDate.Date && p.TillDate.Date <= request.TillDate.Date) ||
+                                                    (request.FromDate.Date >= p.FromDate.Date && p.TillDate.Date >= request.TillDate.Date))
+                                        .AsQueryable();
 
             var dates = new List<PlanCount>();
             

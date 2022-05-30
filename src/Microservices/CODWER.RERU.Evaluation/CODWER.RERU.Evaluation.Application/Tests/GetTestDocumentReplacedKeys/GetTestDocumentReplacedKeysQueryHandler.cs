@@ -26,6 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTestDocumentReplacedKeys
                                         .Include(t => t.TestTemplate)
                                         .Include(t => t.Location)
                                         .Include(t => t.Event)
+                                        .Include(t => t.Evaluator)
                                         .FirstOrDefault(t => t.Id == request.TestId);
 
             var replacedKeys = await _getTestDocumentReplacedKeys.GetTestDocumentReplacedKey(testValues, request.DocumentTemplateId);

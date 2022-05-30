@@ -1,6 +1,7 @@
 ﻿using CODWER.RERU.Core.Application.Permissions;
 using CVU.ERP.Common.Pagination;
 using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
+using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 
@@ -15,6 +16,6 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
         public string Order { get; set; }
         public string Sort { get; set; }
         public bool? Status { get; set; }
-
+        public UserStatusEnum? UserStatusEnum { get; set; }
     }
 }

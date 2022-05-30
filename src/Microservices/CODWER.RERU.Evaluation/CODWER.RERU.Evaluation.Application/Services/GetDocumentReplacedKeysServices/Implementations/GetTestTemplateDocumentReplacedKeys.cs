@@ -127,41 +127,20 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
                         break;
 
                     case "{cheie_cu_numarul_de_maxim_posibile_erori}":
-
-                        if (testTemplate.Settings.MaxErrors != null)
-                        {
-                            myDictionary.Add(item, testTemplate.Settings.MaxErrors.ToString());
-                        }
-                        else 
-                        {
-                            myDictionary.Add(item, "max_errors_key has not been set");
-                        }
+                       
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, testTemplate.Settings?.MaxErrors.ToString()));
 
                         break;
 
                     case "{cheie_cu_formula_pentru_un_singur_raspuns}":
 
-                        if (testTemplate.Settings.FormulaForOneAnswer != null)
-                        {
-                           myDictionary.Add(item, testTemplate.Settings.FormulaForOneAnswer.ToString()); 
-                        }
-                        else
-                        {
-                            myDictionary.Add(item, "formula_for_one_answer_key has not been set");
-                        }
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, testTemplate.Settings?.FormulaForOneAnswer.ToString()));
 
                         break;
 
                     case "{cheie_cu_formula_pentru_răspunsuri_multiple}":
 
-                        if (testTemplate.Settings.FormulaForMultipleAnswers != null)
-                        {
-                           myDictionary.Add(item, testTemplate.Settings.FormulaForMultipleAnswers.ToString()); 
-                        }
-                        else
-                        {
-                            myDictionary.Add(item, "formula_for_multiple_answer_key has not been set");
-                        }
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, testTemplate.Settings?.FormulaForMultipleAnswers.ToString()));
 
                         break;
 
@@ -186,6 +165,21 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
             }
 
             return myDictionary;
+        }
+
+        private string ValidateItemsForDictionary(string keyName, string testTemplateValue)
+        {
+
+            if (testTemplateValue != null)
+            {
+                return testTemplateValue;
+            }
+            else
+            {
+                var finalKeyName = keyName.Substring(1, keyName.Length - 2);
+
+                return finalKeyName + " nu a fost setata";
+            }
         }
     }
 }

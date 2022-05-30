@@ -113,8 +113,8 @@
         </table>
         <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
           [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
-          (sizeChange)="getAll({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-          (pageChange)="getAll({ page: $event })">
+          (sizeChange)="getAll({ page: 1, itemsPerPage: $event })"
+          (pageChange)="getAll({ page: $event, itemsPerPage: pagedSummary.pageSize })">
         </div>
       </div>
     </div>

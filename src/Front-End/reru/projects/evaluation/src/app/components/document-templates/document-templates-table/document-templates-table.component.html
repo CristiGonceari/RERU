@@ -2,10 +2,9 @@
     [colorClass]="'text-primary'">
 </app-loading-spinner>
 
-<div *ngIf="!isLoading"
-    class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
-    <table class="datatable table font-size-lg" style="overflow: visible">
+    <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading">
         <thead class="text-uppercase text-muted">
             <tr>
                 <th scope="col">{{'document-test-modal.reports.name' | translate}}</th>
@@ -74,8 +73,8 @@
         </tbody>
     </table>
     <div pagination [page]="pagedSummary.currentPage" [total]="pagedSummary.totalPages" [size]="pagedSummary.pageSize"
-        *ngIf="documents.length" [totalRecords]="pagedSummary.totalCount"
-        (sizeChange)="getList({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-        (pageChange)="getList({ page: $event })" class="datatable-pager datatable-paging-loaded">
+        *ngIf="documents.length" [totalRecords]="pagedSummary.totalCount" class="datatable-pager datatable-paging-loaded"
+        (sizeChange)="getList({ page: 1, itemsPerPage: $event })"
+        (pageChange)="getList({ page: $event, itemsPerPage: pagedSummary.pageSize })">
     </div>
 </div>

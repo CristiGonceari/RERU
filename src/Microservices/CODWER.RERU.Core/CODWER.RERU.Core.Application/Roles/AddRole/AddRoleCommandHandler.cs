@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using CODWER.RERU.Core.DataTransferObjects.Roles;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
@@ -20,7 +21,13 @@ namespace CODWER.RERU.Core.Application.Roles.AddRole
 
         public async Task<int> Handle(AddRoleCommand request, CancellationToken cancellationToken)
         {
-            var role = _mapper.Map<Role>(request.Data);
+            var newRole = new RoleDto()
+            {
+                Name = request.Name,
+                ColaboratorId = request.ColaboratorId
+            };
+
+            var role = _mapper.Map<Role>(newRole);
 
             await _appDbContext.Roles.AddAsync(role);
 

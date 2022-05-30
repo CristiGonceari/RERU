@@ -41,6 +41,9 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 case QuestionTypeEnum.OneAnswer:
                     return await GenerateTemplateForOneAnswerOption(questionType);
 
+                case QuestionTypeEnum.MultipleAnswers:
+                    return await GenerateTemplateForOneAnswerOption(questionType);
+
                 default:
                     return null;
             }
@@ -88,6 +91,12 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                     {
                         await UploadOneAnswer(ws, questionUnitId);
                     }
+
+                    if (QuestionTypeEnum.MultipleAnswers.ToString() == optionType)
+                    {
+                        await UploadOneAnswer(ws, questionUnitId);
+                    }
+
 
                     if (_errors.Count > 0)
                     {
@@ -137,7 +146,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
                 var correctOption = list.Where(x => x.IsCorrect == true).Count();
 
-                if (correctOption == 1)
+                if (correctOption >= 1)
                 {
                     SaveOptions(list);
                 }

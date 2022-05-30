@@ -73,12 +73,14 @@ export class AuthenticationService extends BaseService {
 
 	getClientSettings(): UserManagerSettings {
 		var settings = this.appSettingsService.settings;
+		console.log("Settings", settings);
+		console.log("Settings post_logout_redirect_uri", settings.APP_BASE_URL);
 
 		return {
 			authority: settings.IDENTITY_AUTHORITY,
 			client_id: settings.CLIENT_ID,
 			redirect_uri: settings.IDENTITY_AUTHORITY_REDIRECT_URI,
-			post_logout_redirect_uri: settings.APP_BASE_URL,
+			// post_logout_redirect_uri: settings.APP_BASE_URL,
 			response_type: 'id_token token',
 			scope: 'openid ' + settings.MODULE_SCOPE,
 			filterProtocolClaims: true,

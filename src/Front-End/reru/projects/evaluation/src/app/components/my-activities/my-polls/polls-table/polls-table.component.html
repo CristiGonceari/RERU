@@ -1,9 +1,8 @@
 <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 
-<div *ngIf="!isLoading"
-    class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
-    <table class="datatable table" style="overflow: visible">
+    <table class="datatable table" style="overflow: visible" *ngIf="!isLoading">
         <thead class="text-uppercase text-muted">
             <tr>
                 <th scope="col" class="colored">{{'tests.name' | translate}}</th>
@@ -47,8 +46,8 @@
         </tbody>
     </table>
     <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage" 
-        *ngIf="polls.length > 5" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
-        (sizeChange)="getPolls({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-        (pageChange)="getPolls({ page: $event })">
+        *ngIf="polls.length" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
+        (sizeChange)="getPolls({ page: 1, itemsPerPage: $event })"
+        (pageChange)="getPolls({ page: $event, itemsPerPage: pagedSummary.pageSize })">
     </div>
 </div>

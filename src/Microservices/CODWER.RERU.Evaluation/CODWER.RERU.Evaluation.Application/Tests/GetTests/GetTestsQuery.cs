@@ -13,7 +13,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
     {
         public string TestTemplateName { get; set; }
         public string UserName { get; set; }
+        public string Email { get; set; }
         public TestStatusEnum? TestStatus { get; set; }
+        public TestResultStatusEnum? ResultStatus { get; set; }
         public string LocationKeyword { get; set; }
         public string EventName { get; set; }
         public string Idnp { get; set; }

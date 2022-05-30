@@ -28,7 +28,14 @@
     "step6": "Click the „Confirm” button (Step 6) to complete the procedure.",
     "registration-candidate-page": "Candidate Registration Page",
     "select-candidate-position": "Select Position",
-    "position-to-candidate": "Position to Candidate"
+    "position-to-candidate": "Position to Candidate",
+    "accept-condition": "I agree and accept with",
+    "registration-conditions":"registration conditions",
+    "is-downloading": "Downloading",
+    "personal-file": "Personal File",
+    "personal-form-file": "Form for filling in personal data",
+    "upload-files": "Drop file here or click to upload",
+    "personal-file-msg": "To complete the personal file, please download it by accessing the button below. After filling in the personal file, upload it in the area below together with the other necessary documents. Filling the form is mandatory"
   },
   "files":{
     "title": "Documents",
@@ -37,7 +44,9 @@
     "download": "Download",
     "delete": "Delete",
     "upload-doc": "Upload document",
-    "import-users": "Import Users",
+    "import-users": "Import users",
+    "import-departments": "Import departments",
+    "import-roles": "Import roles",
     "modal-title": "Upload file modal",
     "modal-description": "Drop file hereor click to upload"
   },
@@ -132,7 +141,8 @@
     "attach": "Attach",
     "print": "Print",
     "watch": "Watch video",
-    "import": "Import"
+    "import": "Import",
+    "loading": "Loading"
   },
   "pagination": {
     "displaing": "Displaying",
@@ -171,6 +181,15 @@
       "administration": "Administration"
     }
   },
+  "statuses": {
+    "all": "All",
+    "active": "Active",
+    "inactive": "Inactive",
+    "Candidate": "Candidates",
+    "Employee": "Employees",
+    "employee": "Employee",
+    "candidate": "Candidate"
+  },
   "user-profile": {
     "overview": "Overview profile",
     "edit-title": "Edit my profile",
@@ -183,7 +202,8 @@
     "empty-name": "The field must contain only Latin letters",
     "wrong-name": "The field must contain only Latin letters",
     "available-modules": "Available modules",
-    "idnp-length": "IDNP should consist of 13 numbers!"
+    "idnp-length": "IDNP should consist of 13 numbers!",
+    "search-by-user-state": "Search by user state"
   },
   "user": {
     "edit-title": "Edit User",
@@ -431,7 +451,9 @@
     "remove-msg": "Are you sure you want to remove this department?",
     "succes-remove-msg": "Department was successfully deleted",
     "succes-add-msg": "Department was successfully added",
-    "succes-edit-msg": "Department was successfully edited"
+    "succes-edit-msg": "Department was successfully edited",
+    "department-data": "Enter the department details and confirm",
+    "department-details": "Department details"
   },
   "user-roles": {
     "overview": "Overview",
@@ -446,6 +468,8 @@
     "remove-msg": "Are you sure you want to remove this role?",
     "succes-remove-msg": "Role was successfully deleted",
     "succes-add-msg": "Role was successfully added",
-    "succes-edit-msg": "Role was successfully edited"
+    "succes-edit-msg": "Role was successfully edited",
+    "user-role-data": "Enter the role details and confirm",
+    "user-role-details": "Role details"
   }
 }

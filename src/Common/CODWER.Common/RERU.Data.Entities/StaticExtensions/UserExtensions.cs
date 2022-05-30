@@ -4,7 +4,7 @@ namespace RERU.Data.Entities.StaticExtensions
 {
     public static class UserExtensions
     {
-        public static string GetFullName(this UserProfile user) => $"{user.FirstName} {user.LastName}";
+        public static string GetFullName(this UserProfile user) => $"{user.FirstName} {user.LastName} {user.FatherName}";
 
         ///<summary>
         ///common search by firstName and/or lastName and/or patronymic and/or idnp

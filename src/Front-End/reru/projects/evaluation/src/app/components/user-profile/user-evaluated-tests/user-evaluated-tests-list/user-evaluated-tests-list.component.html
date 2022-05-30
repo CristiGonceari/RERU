@@ -1,95 +1,96 @@
-<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-            <div *ngIf="!isLoading"
-                class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
-                id="kt_datatable">
-                <table for="kt_datatable" class="datatable table" style="overflow: visible" id="evaluatedTestTable">
-                    <thead class="text-uppercase text-muted">
-                        <tr>
-                            <th scope="col">
-                                {{'dashboard.date' | translate}}
-                            </th>
-                            <th scope="col">{{'dashboard.status' | translate}}</th>
-                            <th scope="col">{{'dashboard.test' | translate}}</th>
-                            <th scope="col" style="width: 170px;">
-                                {{'dashboard.score' | translate}} / {{'dashboard.min-score' | translate}}
-                            </th>
-                            <th scope="col" style="width: 100px;">{{'dashboard.result' | translate}}</th>
-                        </tr>
-                    </thead>
-                    <tbody class="datatable-body" *ngIf="testRowList.length">
-                        <tr *ngFor="let test of testRowList">
-                            <td>
-                                <span class="colored d-block mb-0">
-                                    <b>{{ test.programmedTime | date: 'dd/MM/yyyy, HH:mm'}}</b>
-                                </span>
-                            </td>
-                            <td>
-                                <div class="font-size-sm">
-                                    <span class="text-dark-50" *ngIf="test.testStatus == enum.AlowedToStart">
-                                        {{'statuses.AlowedToStart' | translate}}
-                                    </span>
-                                    <span class="text-dark-50" *ngIf="test.testStatus == enum.InProgress">
-                                        {{'statuses.started' | translate}}
-                                    </span>
-                                    <span class="text-dark-50" *ngIf="test.testStatus == enum.Terminated">
-                                        {{'statuses.Terminated' | translate}}
-                                    </span>
-                                    <span class="text-dark-50" *ngIf="test.testStatus == enum.Verified">
-                                        {{'statuses.Verified' | translate}}
-                                    </span>
-                                    <span class="text-dark-50" *ngIf="test.testStatus == enum.Closed">
-                                        {{'statuses.Closed' | translate}}
-                                    </span>
-                                    <span class="text-dark-50" *ngIf="test.testStatus == enum.Programmed">
-                                        {{'verify-test.status-0' | translate}}
-                                    </span>
-                                </div>
-                            </td>
-                            <td><b>{{ test.testTemplateName }}</b></td>
-                            <td>
-                                <b *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</b>
-                                <b *ngIf="test.result != resultEnum.NoResult">{{ test.accumulatedPercentage }}% /
-                                    {{test.minPercent}}%</b>
-                            </td>
-                            <td>
-                                <span *ngIf="test.testStatus == enum.AlowedToStart" class="font-size-lg">
-                                    {{'statuses.AlowedToStart' | translate}}
-                                </span>
-                                <span *ngIf="test.testStatus == enum.InProgress" class="font-size-lg">
-                                    {{'statuses.InProgress' | translate}}
-                                </span>
-                                <span class="font-size-lg" *ngIf="test.testStatus == enum.Terminated">
-                                    {{'statuses.verify' | translate}}
-                                </span>
-                                <span class="font-size-lg" *ngIf="test.testStatus == enum.Programmed">
-                                    {{'verify-test.status-0' | translate}}
-                                </span>
-                                <span class="font-size-lg" *ngIf="test.testStatus == enum.Closed">
-                                    {{'statuses.Closed' | translate}}
-                                </span>
-                                <span *ngIf="test.testStatus != enum.Closed">
-                                    <span class="font-size-lg"
-                                        *ngIf="test.result == resultEnum.Passed">{{'statuses.passed' |
+<app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'40vh'" [height]="'5rem'" [width]="'5rem'"
+    [colorClass]="'text-primary'">
+</app-loading-spinner>
+<h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
+
+<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+  id="kt_datatable">
+  <table for="kt_datatable" class="datatable table" style="overflow: visible" id="evaluatedTestTable" *ngIf="!isLoading && !downloadFile">
+    <thead class="text-uppercase text-muted">
+      <tr>
+        <th scope="col">
+          {{'dashboard.date' | translate}}
+        </th>
+        <th scope="col">{{'dashboard.status' | translate}}</th>
+        <th scope="col">{{'dashboard.test' | translate}}</th>
+        <th scope="col" style="width: 170px;">
+          {{'dashboard.score' | translate}} / {{'dashboard.min-score' | translate}}
+        </th>
+        <th scope="col" style="width: 100px;">{{'dashboard.result' | translate}}</th>
+      </tr>
+    </thead>
+    <tbody class="datatable-body" *ngIf="testRowList.length">
+      <tr *ngFor="let test of testRowList">
+        <td>
+          <span class="colored d-block mb-0">
+            <b>{{ test.programmedTime | date: 'dd/MM/yyyy, HH:mm'}}</b>
+          </span>
+        </td>
+        <td>
+          <div class="font-size-sm">
+            <span class="text-dark-50" *ngIf="test.testStatus == enum.AlowedToStart">
+              {{'statuses.AlowedToStart' | translate}}
+            </span>
+            <span class="text-dark-50" *ngIf="test.testStatus == enum.InProgress">
+              {{'statuses.started' | translate}}
+            </span>
+            <span class="text-dark-50" *ngIf="test.testStatus == enum.Terminated">
+              {{'statuses.Terminated' | translate}}
+            </span>
+            <span class="text-dark-50" *ngIf="test.testStatus == enum.Verified">
+              {{'statuses.Verified' | translate}}
+            </span>
+            <span class="text-dark-50" *ngIf="test.testStatus == enum.Closed">
+              {{'statuses.Closed' | translate}}
+            </span>
+            <span class="text-dark-50" *ngIf="test.testStatus == enum.Programmed">
+              {{'verify-test.status-0' | translate}}
+            </span>
+          </div>
+        </td>
+        <td><b>{{ test.testTemplateName }}</b></td>
+        <td>
+          <b *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</b>
+          <b *ngIf="test.result != resultEnum.NoResult">{{ test.accumulatedPercentage }}% /
+            {{test.minPercent}}%</b>
+        </td>
+        <td>
+          <span *ngIf="test.testStatus == enum.AlowedToStart" class="font-size-lg">
+            {{'statuses.AlowedToStart' | translate}}
+          </span>
+          <span *ngIf="test.testStatus == enum.InProgress" class="font-size-lg">
+            {{'statuses.InProgress' | translate}}
+          </span>
+          <span class="font-size-lg" *ngIf="test.testStatus == enum.Terminated">
+            {{'statuses.verify' | translate}}
+          </span>
+          <span class="font-size-lg" *ngIf="test.testStatus == enum.Programmed">
+            {{'verify-test.status-0' | translate}}
+          </span>
+          <span class="font-size-lg" *ngIf="test.testStatus == enum.Closed">
+            {{'statuses.Closed' | translate}}
+          </span>
+          <span *ngIf="test.testStatus != enum.Closed">
+            <span class="font-size-lg" *ngIf="test.result == resultEnum.Passed">{{'statuses.passed' |
                                         translate}}</span>
-                                    <span class="font-size-lg"
-                                        *ngIf="test.result == resultEnum.NotPassed">{{'statuses.not-passed' |
+            <span class="font-size-lg" *ngIf="test.result == resultEnum.NotPassed">{{'statuses.not-passed' |
                                         translate}}</span>
-                                </span>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tbody class="datatable-body" *ngIf="!testRowList.length">
-                        <tr>
-                            <td colspan="6" class="text-center">
-                                {{ 'message.no-record' | translate }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
-                    *ngIf="testRowList.length > 5" [total]="pagedSummary.totalPages"
-                    [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
-                    (sizeChange)="getUserTests({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-                    (pageChange)="getUserTests({ page: $event })">
-                </div>
-            </div>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+    <tbody class="datatable-body" *ngIf="!testRowList.length">
+      <tr>
+        <td colspan="6" class="text-center">
+          {{ 'message.no-record' | translate }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
+    *ngIf="testRowList.length" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
+    [size]="pagedSummary.pageSize"
+    (sizeChange)="getUserTests({ page: 1, itemsPerPage: $event })"
+    (pageChange)="getUserTests({ page: $event, itemsPerPage: pagedSummary.pageSize })">
+  </div>
+</div>

@@ -24,8 +24,10 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetMyUserProfileOverview
         public async Task<UserProfileOverviewDto> Handle(GetMyUserProfileOverviewQuery request, CancellationToken cancellationToken)
         {
             var currentApplicationUser = await _currentUserProvider.Get();
-            var userProfile = await AppDbContext
-                .UserProfiles.IncludeBasic()
+            var userProfile = await AppDbContext.UserProfiles
+                .IncludeBasic()
+                .Include(x => x.Department)
+                .Include(x => x.Role)
                 .FirstOrDefaultAsync(up => up.Id == int.Parse(currentApplicationUser.Id));
 
             var userProfDto = Mapper.Map<UserProfileOverviewDto>(userProfile);

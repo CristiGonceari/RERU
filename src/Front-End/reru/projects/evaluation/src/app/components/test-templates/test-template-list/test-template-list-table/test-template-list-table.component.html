@@ -3,10 +3,10 @@
 </app-loading-spinner>
 <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
-<div *ngIf="!isLoading && !downloadFile">
+<div>
     <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
         id="kt_datatable">
-        <table class="datatable table font-size-lg" style="overflow: visible">
+        <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading && !downloadFile">
             <thead class="text-uppercase text-muted">
                 <tr>
                     <th scope="col">{{'tests.template-name' | translate}}</th>
@@ -83,7 +83,7 @@
                                                 <span style="font-size: 13px;">{{'statuses.clone' | translate}}</span>
                                             </button>
                                         </span>
-                                            <button (click)="printTestTemplate(testTemplate.id)" class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                                            <button (click)="printTestTemplate(testTemplate.id)" *ngIf="testTemplate.status !== statusEnum.Draft" class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                             {{ 'button.print' | translate }}
                                         </button>
                                         <button (click)="openGenerateDocumentModal(testTemplate.id, testTemplate.name)" class="navi-link align-items-baseline px-6" ngbDropdownItem>
@@ -107,8 +107,8 @@
         </table>
         <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
             [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
-            (sizeChange)="list({ page: pagination.currentPage, itemsPerPage: $event })"
-            (pageChange)="list({ keyword: keyword, page: $event })">
+            (sizeChange)="list({ keyword: keyword, page: 1, itemsPerPage: $event })"
+            (pageChange)="list({ keyword: keyword, page: $event, itemsPerPage: pagination.pageSize })">
         </div>
     </div>
 </div>

@@ -33,7 +33,9 @@
     "available-modules": "Доступные модули",
     "user-profile": "Профиль пользователя",
     "user-details": "Обзор профиля пользователя",
-    "user-email": "Электронная почта"
+    "user-email": "Электронная почта",
+    "general-overview": "Общий обзор профиля",
+    "navigate-core-msg": "Вы уверенны, что хотите перейти в раздел общей информации о пользователе?"
   },
   "notification": {
     "title": {
@@ -134,7 +136,7 @@
     "all": "Все",
     "there-are-no-records-at-the-moment": "В настоящее время нет записей",
     "1": "Шаблон теста",
-    "2": "Контрольная работа",
+    "2": "Тест",
     "reports":{
       "name": "Название",
       "personFullName": "Полное имя",
@@ -184,7 +186,8 @@
     "TestPassStatusKey": "Статус теста",
     "ResultStatusKey": "Результат теста",
     "EvaluatorIdnpKey": "IDNP из бюллетеня оценщика",
-    "EvaluatorEmailKey": "Электронная почта оценщика"
+    "EvaluatorEmailKey": "Электронная почта оценщика",
+    "TestNameKey":"Название теста"
   },
   "button": {
     "add": "Добавить",
@@ -313,6 +316,7 @@
     "options": "Параметры",
     "search-test": "Поиск по названию теста",
     "search-status": "Поиск по статусу теста",
+    "search-result": "Поиск по результату теста",
     "name": "Название теста",
     "template-name": "Название шаблона теста",
     "category-used-count": "Категории",
@@ -359,7 +363,8 @@
     "succes-update-settings-msg": "Настройки были успешно обновлены",
     "tests-were-programmed": "Тест был успешно запрограммирован",
     "finish-test-msg": "Вы уверенны, что хотите завершить тест?",
-    "stop-test-msg": "Вы уверенны, что хотите остановить этот тест,"
+    "stop-test-msg": "Вы уеренны, что хотите остановить этот тест,",
+    "please-wait": "Просим вас подождать, пока система добавляет тесты для пользователей ..."
   },
   "verify-test": {
     "title": "Тесты",
@@ -368,6 +373,7 @@
     "search-test-type": "Поиск по шаблону теста",
     "search-test-status": "Поиск по статусу",
     "search-student": "Поиск по имени пользователя",
+    "search-email": "Поиск по электронной почте",
     "search-student-idnp": "Поиск по idnp пользователя",
     "test-type-name": "Имя шаблона теста",
     "student": "Студент",
@@ -478,8 +484,8 @@
     "succes-update-msg": "Вопрос был успешно обновлён",
     "succes-update-status-msg": "Статус вопроса был успешно обновлён",
     "search-by-status": "Выберите статус вопроса",
-    "add-tags": "Добавить тэги"
-
+    "add-tags": "Добавить тэги",
+    "bulk-import-options-msg":"Скачайте и воспользуйтесь, пожалуйста, нашей специальной формой для загрузки вопроса" 
   },
   "answers": {
     "option-settings": "Настройка Опции",
@@ -529,7 +535,7 @@
     "NotCorrect": "Неправильныe",
     "Skipped": "Пропущенные",
     "clone": "Клонировать",
-    "Select": "Выбрать",
+    "Select": "Использованные в тестах",
     "Random": "Cлучайный",
     "Strict": "Cтрогий",
     "ZeroPercent": "Неправильный ответ = 0%",
@@ -539,7 +545,12 @@
     "Refused": "Отказаный",
     "Approved": "Одобренный",
     "approve": "Одобрить",
-    "refuse": "Отказать"
+    "refuse": "Отказать",
+    "NoResult": "Без Результата",
+    "Passed": "Пройден",
+    "NotPassed": "Не пройден",
+    "employee": "Сотрудник",
+    "candidate": "Кандидат"
   },
   "options": {
     "start-without-confirmation": "Возможен запуск теста без подтверждения",
@@ -648,6 +659,7 @@
   "events": {
     "events": "События",
     "event": "Событие",
+    "event-overview": "Обзор событий",
     "manage-events": "Управлять cобытиями",
     "attach-to-event": "Прикрепить ответственное лицо к событию",
     "attach-location-to-event": "Прикрепить место к событию",
@@ -709,9 +721,8 @@
     "succes-add-user-msg": "Пользователь был успешно добавлен",
     "succes-add-test-type-msg": "Шаблон теста был успешно добавлен",
     "succes-attach-evaluator-msg": "Проверяющий был успешно прикреплён",
-    "succes-detach-evaluator-msg": "Проверяющий был успешно удален"
-
-
+    "succes-detach-evaluator-msg": "Проверяющий был успешно удален",
+    "show-user-name": "Отображать имя пользователя"
   },
   "test-template":{
     "number-of-questions":"Количество вопросов",
@@ -751,7 +762,8 @@
     "total-used": "Всего использовано",
     "correct-percent": "Правильный процент",
     "not-correct-percent": "Не правильный процент",
-    "skipped-percent": "Пропущенный процент"
+    "skipped-percent": "Пропущенный процент",
+    "filter-criteria": "Критерии фильтрации"
   },
   "select-format":{
     "please-select-format": "Пожалуйста выберите формат файла"
