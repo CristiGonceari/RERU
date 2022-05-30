@@ -152,6 +152,12 @@ stages:
               addPipelineData: false
             condition: and(succeeded(), eq(variables['BuildPublicGateway'], 'True'))
 
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildPublicGateway'], 'True'))
+
           - task: Docker@2
             displayName: Build Internal Gateway image
             inputs:
@@ -172,6 +178,12 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
+            condition: and(succeeded(), eq(variables['BuildInternalGateway'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
             condition: and(succeeded(), eq(variables['BuildInternalGateway'], 'True'))
 
           - task: Docker@2
@@ -196,6 +208,12 @@ stages:
               addPipelineData: false
             condition: and(succeeded(), eq(variables['BuildIdentityNew'], 'True'))
 
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildIdentityNew'], 'True'))
+
           - task: Docker@2
             displayName: Build Identity Migrator back end image
             inputs:
@@ -216,6 +234,12 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
+            condition: and(succeeded(), eq(variables['BuildIdentityMigrator'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
             condition: and(succeeded(), eq(variables['BuildIdentityMigrator'], 'True'))
 
           - task: Docker@2
@@ -240,6 +264,12 @@ stages:
               addPipelineData: false
             condition: and(succeeded(), eq(variables['BuildStorageMigrator'], 'True'))
 
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildStorageMigrator'], 'True'))
+
           - task: Docker@2
             displayName: Build Core front end image
             inputs:
@@ -260,6 +290,12 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
+            condition: and(succeeded(), eq(variables['BuildCoreFE'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
             condition: and(succeeded(), eq(variables['BuildCoreFE'], 'True'))
 
           - task: Docker@2
@@ -284,6 +320,12 @@ stages:
               addPipelineData: false
             condition: and(succeeded(), eq(variables['BuildCore'], 'True'))
 
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildCore'], 'True'))
+
           - task: Docker@2
             displayName: Build Logging front end image
             inputs:
@@ -304,6 +346,12 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
+            condition: and(succeeded(), eq(variables['BuildLoggingFE'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
             condition: and(succeeded(), eq(variables['BuildLoggingFE'], 'True'))
 
           - task: Docker@2
@@ -328,6 +376,12 @@ stages:
               addPipelineData: false
             condition: and(succeeded(), eq(variables['BuildLogging'], 'True'))
 
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildLogging'], 'True'))
+
           - task: Docker@2
             displayName: Build Personal front end  image
             inputs:
@@ -348,6 +402,12 @@ stages:
               command: "push"
               tags: $(tag)
               addPipelineData: false
+            condition: and(succeeded(), eq(variables['BuildPersonalFE'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
             condition: and(succeeded(), eq(variables['BuildPersonalFE'], 'True'))
 
           - task: Docker@2
@@ -372,6 +432,12 @@ stages:
               addPipelineData: false
             condition: and(succeeded(), eq(variables['BuildPersonal'], 'True'))
 
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildPersonal'], 'True'))
+
           - task: Docker@2
             displayName: Build Evaluation front end  image
             inputs:
@@ -394,6 +460,12 @@ stages:
               addPipelineData: false
             condition: and(succeeded(), eq(variables['BuildEvaluationFE'], 'True'))
 
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildEvaluationFE'], 'True'))
+              
           - task: Docker@2
             displayName: Build Evaluation back end image
             inputs:
@@ -420,6 +492,7 @@ stages:
             displayName: Clean all docker resources
             inputs:
               script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildEvaluation'], 'True'))
 
   - stage: DeployDev
     displayName: Deploy to DEV
