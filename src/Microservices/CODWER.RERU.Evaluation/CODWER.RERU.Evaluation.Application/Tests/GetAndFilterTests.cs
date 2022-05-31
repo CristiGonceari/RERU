@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
+using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
@@ -8,7 +9,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
 {
     public static class GetAndFilterTests
     {
-        public static IQueryable<Test> Filter(AppDbContext appDbContext, TestFiltersDto request)
+        public static IQueryable<Test> Filter(AppDbContext appDbContext, TestFiltersDto request, UserProfileDto currentUser)
         {
             var tests = appDbContext.Tests
                 .Include(t => t.TestTemplate)
@@ -16,6 +17,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
                 .Include(t => t.Event).ThenInclude(l => l.EventLocations).ThenInclude(l => l.Location)
+                .Where(x => x.UserProfile.DepartmentColaboratorId == currentUser.DepartmentColaboratorId || x.UserProfile.DepartmentColaboratorId == null)
                 .OrderByDescending(x => x.CreateDate)
                 .Select(t => new Test
                 {

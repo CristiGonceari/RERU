@@ -44,7 +44,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
                 ProgrammedTimeTo = request.ProgrammedTimeTo
             };
 
-            var tests = GetAndFilterTests.Filter(_appDbContext, filterData);
+            var tests = GetAndFilterTests.Filter(_appDbContext, filterData, curUser);
 
             foreach (var testDto in tests.ToList())
             {

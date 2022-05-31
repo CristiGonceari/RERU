@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.Pagination;
 using MediatR;
@@ -15,18 +16,22 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
     {
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
+        private readonly IUserProfileService _userProfileService;
 
-        public GetUserProfilesQueryHandler(AppDbContext appDbContext, IPaginationService paginationService)
+        public GetUserProfilesQueryHandler(AppDbContext appDbContext, IPaginationService paginationService, IUserProfileService userProfileService)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
+            _userProfileService = userProfileService;
         }
 
         public async Task<PaginatedModel<UserProfileDto>> Handle(GetUserProfilesQuery request, CancellationToken cancellationToken)
         {
+            var currentUser = await _userProfileService.GetCurrentUser();
 
             var items = _appDbContext.UserProfiles
                 .Where(x => x.IsActive)
+                .Where(x => x.DepartmentColaboratorId == currentUser.DepartmentColaboratorId || x.DepartmentColaboratorId == null)
                 .Include(up => up.EventResponsiblePersons)
                 .Include(up => up.EventUsers)
                 .AsQueryable();
