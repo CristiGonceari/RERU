@@ -23,13 +23,17 @@
     }
     </style>
 </head>
-<body class="header-mobile-fixed subheader-enabled aside-enabled aside-fixed aside-secondary-enabled page-loading" >
+<body class="header-mobile-fixed subheader-enabled aside-enabled aside-fixed aside-secondary-enabled page-loading">
     <partial name="_Nav" />
-   
-        @RenderBody()
+
+    @RenderBody()
 
     <script src="~/lib/jquery/dist/jquery.slim.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="~/assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+    <script src="~/assets/js/scripts.bundle.js"></script>
+    <script src="~/assets/js/pages/custom/login/login-general.js"></script>
 
     @RenderSection("scripts", required: false)
 </body>
