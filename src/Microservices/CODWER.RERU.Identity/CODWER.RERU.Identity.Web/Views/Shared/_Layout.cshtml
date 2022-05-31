@@ -8,6 +8,7 @@
 
     <link rel="canonical" href="https://keenthemes.com/metronic" />
     <link href="~/assets/css/pages/login/classic/login-2.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/site.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="~/assets//media//bg/bg-4.jpg" />
 
     <link href="~/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
@@ -15,25 +16,15 @@
     <link href="~/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 
     <link rel="shortcut icon" href="~/assets/media/logos/favicon.ico" />
-    <style nonce='ab49Fdd'>
-            .back-image {
-        background-repeat: no-repeat;
-        background-size: cover;
-        background: url("../../../media//bg//bg-4.jpg");
-    }
-    </style>
 </head>
-<body class="header-mobile-fixed subheader-enabled aside-enabled aside-fixed aside-secondary-enabled page-loading">
+<body class="header-mobile-fixed subheader-enabled aside-enabled aside-fixed aside-secondary-enabled page-loading" >
     <partial name="_Nav" />
-
-    @RenderBody()
+   
+        @RenderBody()
 
     <script src="~/lib/jquery/dist/jquery.slim.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/assets/plugins/global/plugins.bundle.js"></script>
-    <script src="~/assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
-    <script src="~/assets/js/scripts.bundle.js"></script>
-    <script src="~/assets/js/pages/custom/login/login-general.js"></script>
+
 
     @RenderSection("scripts", required: false)
 </body>
