@@ -149,12 +149,8 @@
 
                                 @if (Model.VisibleExternalProviders.Any())
                                 {
-                                    <div class="col-sm-6">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h2>External Account</h2>
-                                            </div>
-                                            <div class="card-body">
+                                    <div class="class="text-center"">
+                                        <p>or sign up with:</p>
                                                 <ul class="list-inline">
                                                     @foreach (var provider in Model.VisibleExternalProviders)
                                                     {
@@ -169,9 +165,7 @@
                                                         </li>
                                                     }
                                                 </ul>
-                                            </div>
                                         </div>
-                                    </div>
                                 }
                             </form>
                             <!--end::Form-->
