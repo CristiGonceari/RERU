@@ -65,7 +65,7 @@
     max-width: 100%; } }
 
 .back-image {
-    background-image: url(../../../media//bg//bg-4.jpg) ;
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     background-size: cover;
+    background: url(../../../media//bg//bg-4.jpg);
 }
