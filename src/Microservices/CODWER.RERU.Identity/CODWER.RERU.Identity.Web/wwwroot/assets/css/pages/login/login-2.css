@@ -65,5 +65,5 @@
     max-width: 100%; } }
 
 .back-image {
-    background-image: src(../../../media/bg/bg-4.jpg)
+    background-image: src(~/assets//media//bg//bg-4.jpg)
 }
