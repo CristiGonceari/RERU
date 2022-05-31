@@ -63,3 +63,7 @@
   .login.login-2 .login-form {
     width: 100%;
     max-width: 100%; } }
+
+.back-image {
+    background-image: src(../../../media/bg/bg-4.jpg)
+}
