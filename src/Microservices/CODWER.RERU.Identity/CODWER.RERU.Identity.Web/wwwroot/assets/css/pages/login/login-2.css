@@ -67,5 +67,5 @@
 .back-image {
     background-repeat: no-repeat;
     background-size: cover;
-    background: url(../../../media//bg//bg-4.jpg);
+    background: url("../../../media//bg//bg-4.jpg");
 }
