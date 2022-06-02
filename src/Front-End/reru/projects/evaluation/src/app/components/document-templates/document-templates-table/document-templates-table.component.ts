@@ -7,8 +7,8 @@ import { DocumentTemplateService } from '../../../utils/services/document-templa
 import { PaginationModel } from '../../../utils/models/pagination.model';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { forkJoin } from 'rxjs';
-import { ConfirmModalComponent } from '@erp/shared';
-
+import { ConfirmModalComponent, PrintModalComponent } from '@erp/shared';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-document-templates-table',
@@ -20,11 +20,18 @@ export class DocumentTemplatesTableComponent implements OnInit {
   documents: any[] = [];
   editDocument: string[];
 
+  documentName: string;
+	fileType: string = '';
+	filters: any = {}
+	pagination: PaginationModel = new PaginationModel();
+
   title: string;
 	description: string;
   no: string;
 	yes: string;
-
+	downloadFile: boolean = false;
+	headersToPrint = [];
+	printTranslates: any[];
   pagedSummary: PaginationModel = new PaginationModel();
   
   constructor(private documentService: DocumentTemplateService,
@@ -35,14 +42,69 @@ export class DocumentTemplatesTableComponent implements OnInit {
   ngOnInit(): void {
     this.getList()
   }
-  
+  getHeaders(name: string, documentType: string): void {
+		this.translateData();
+		let headersHtml = document.getElementsByTagName('th');
+		let headersDto = ['name', 'fileType'];
+		for (let i=0; i<headersHtml.length-1; i++) {
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+		}
+		let printData = {
+			tableName: name,
+      documentType: documentType,
+			fields: this.headersToPrint,
+			orientation: 2,
+			name: this.filters.name || this.documentName || '',
+			fileType: this.filters.fileType || 0
+		};
+		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'lg' });
+		modalRef.componentInstance.tableData = printData;
+		modalRef.componentInstance.translateData = this.printTranslates;
+		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
+		this.headersToPrint = [];
+	}
+
+	translateData(): void {
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
+		forkJoin([
+			this.translate.get('print.print-table'),
+			this.translate.get('print.print-msg'),
+			this.translate.get('print.sorted-by'),
+			this.translate.get('button.cancel')
+		]).subscribe(
+			(items) => {
+				for (let i=0; i<this.printTranslates.length; i++) {
+					this.printTranslates[i] = items[i];
+				}
+			}
+		);
+	}
+
+	printTable(data): void {
+		this.downloadFile = true;
+		this.documentService.print(data).subscribe(response => {
+			if (response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(1).slice(0, -1);
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], fileName, { type: response.body.type });
+				saveAs(file);
+				this.downloadFile = false;
+			}
+		}, () => this.downloadFile = false);
+	}
+
   getList(data :any = {}): void {
     this.isLoading = true;
-    const request= ObjectUtil.preParseObject({
-      page: data.page || this.pagedSummary.currentPage,
-      itemsPerPage:data.itemsPerPage || this.pagedSummary.pageSize
-    })
-    this.documentService.list(request).subscribe(response => {
+
+		let params = {
+			name: this.documentName || '',
+			fileType: this.fileType || '',
+			page: data.page || this.pagedSummary.currentPage,
+			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize,
+			...this.filters
+		}
+
+    this.documentService.list(params).subscribe(response => {
       if (response.success) {
         this.documents = response.data.items || [];
         this.pagedSummary = response.data.pagedSummary;
@@ -50,6 +112,20 @@ export class DocumentTemplatesTableComponent implements OnInit {
       }
     });
   }
+
+  resetFilters(): void {
+		this.filters = {};
+		this.fileType = '';
+		this.pagination.currentPage = 1;
+		this.getList();
+	}
+
+  setFilter(field: string, value): void {
+		this.filters[field] = value;
+		this.fileType = this.filters.fileType;
+		this.pagination.currentPage = 1;
+		this.getList();
+	}
 
   deleteDocument(id: number): void {
     this.documentService.delete(id).subscribe(() => {

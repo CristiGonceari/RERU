@@ -130,7 +130,8 @@
     "configure-document": "Configurează Documentul",
     "key-list": "Harta de chei",
     "generate-document": "Generează document",
-    "select-document": "Selectează document"
+    "select-document": "Selectează document",
+    "search-by-type": "Caută după tipul șablonului"
   },
   "document-test-modal":{
     "all": "Toate",
@@ -538,6 +539,7 @@
     "hashed-answer": "Completează textul",
     "Poll": "Sondaj",
     "Test": "Test",
+    "TestTemplate": "Șablon de test",
     "Voted": "Votat",
     "NotVoted": "Fără vot",
     "Correct": "Corecte",

@@ -36,4 +36,10 @@ export class DocumentTemplateService extends AbstractService {
   delete(id: number) {
     return this.http.delete(`${this.baseUrl}/${this.urlRoute}/${id}`);
   }
+  print(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }
