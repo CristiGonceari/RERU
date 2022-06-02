@@ -188,6 +188,14 @@
     "employee": "Angajat",
     "candidate": "Candidat"
   },
+  "processes":{
+    "totalProcesses": "Procese Totale",
+    "doneProcesses": "Procese Efectuate",
+    "startTime": "Inceput",
+    "endTime": "Sfarsit",
+    "file": "Fisier",
+    "history": "Istoria"
+  },
   "user-profile": {
     "overview": "Vizualizarea profilului personal",
     "edit-title": "Editarea profilului personal",
@@ -210,7 +218,8 @@
     "remove-sure": "Sunteți sigur(-ă) că doriți să stergeți acest utilizator?",
     "succes-remove": "Utilizatorul a fost șters cu succes!",
     "succes-edit": "Utilizatorul a fost editat cu success!",
-    "succes-create": "Utilizatorul a fost creat cu succes!"
+    "succes-create": "Utilizatorul a fost creat cu succes!",
+    "please-wait": "Vă rugăm să așteptați până sistemul adaugă utilizatori ..."
   },
   "word": {
     "search": "Căutarea după N.P.P. sau e-mail",

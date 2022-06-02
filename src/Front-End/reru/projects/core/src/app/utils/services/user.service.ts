@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
@@ -43,10 +43,26 @@ export class UserService extends AbstractService {
 		return this.http.get<Response<PersonalData>>(`${this.coreUrl}/${this.routeUrl}/get-personal-data`);
 	}
 
+	startAddProcess(data): Observable<any> {
+		return this.http.post(`${this.baseUrl}/${this.routeUrl}/process`, data);
+	}
+
+	getImportProcess(id: number): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.routeUrl}/process/${id}`);
+	}
+
+	getImportResult(fileId: number): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.routeUrl}/process-result/${fileId}`, {
+			responseType: 'blob' as 'json' ,
+			observe: 'response',
+		});
+	}
+
 	bulkAddUsers(data): Observable<any> {
 		return this.http.put(`${this.coreUrl}/${this.routeUrl}/excel-import`, data, {
 			responseType: 'blob',
 			observe: 'response',
+			headers: new HttpHeaders({timeout: `${3500000}`})
 		});
 	}
 

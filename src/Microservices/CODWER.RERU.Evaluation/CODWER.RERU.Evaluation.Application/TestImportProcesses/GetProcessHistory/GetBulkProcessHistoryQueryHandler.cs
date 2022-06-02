@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CODWER.RERU.Evaluation.Application.TestBulkProcesses
+namespace CODWER.RERU.Evaluation.Application.TestImportProcesses.GetProcessHistory
 {
     public class GetBulkProcessHistoryQueryHandler : IRequestHandler<GetBulkProcessHistoryQuery, List<HistoryProcessDto>>
     {
@@ -24,8 +24,8 @@ namespace CODWER.RERU.Evaluation.Application.TestBulkProcesses
 
         public async Task<List<HistoryProcessDto>> Handle(GetBulkProcessHistoryQuery request, CancellationToken cancellationToken)
         {
-            var processes = await _appDbContext.BulkProcesses
-                .Where(x => x.ProcessType == Processes.BulkAddTests)
+            var processes = await _appDbContext.Processes
+                .Where(x => x.ProcessesEnumType == ProcessesEnum.BulkAddTests)
                 .AsQueryable()
                 .OrderByDescending(x => x.CreateDate)
                 .Take(10)

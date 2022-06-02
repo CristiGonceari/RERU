@@ -5,7 +5,7 @@ using MediatR;
 using System.Collections.Generic;
 
 
-namespace CODWER.RERU.Evaluation.Application.TestBulkProcesses
+namespace CODWER.RERU.Evaluation.Application.TestImportProcesses.GetProcessHistory
 {
     [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_TESTE)]
 

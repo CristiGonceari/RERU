@@ -12,6 +12,7 @@ import { WatchInfoVideoModalComponent } from './modals/watch-info-video-modal/wa
 import { ImportUsersModalComponent } from './modals/import-users-modal/import-users-modal.component';
 import { ImportDepartmentModalComponent } from './modals/import-department-modal/import-department-modal.component';
 import { ImportRoleModalComponent } from './modals/import-role-modal/import-role-modal.component';
+import { AddUserProcessHistoryModalComponent } from './modals/add-user-process-history-modal/add-user-process-history-modal.component';
 
 const commonComponents = [
   Exception404Component,
@@ -22,7 +23,8 @@ const commonComponents = [
   WatchInfoVideoModalComponent,
   ImportUsersModalComponent,
   ImportDepartmentModalComponent,
-  ImportRoleModalComponent
+  ImportRoleModalComponent,
+  AddUserProcessHistoryModalComponent
 ];
 
 @NgModule({

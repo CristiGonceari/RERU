@@ -31,19 +31,18 @@ export class TestListComponent implements OnInit {
   ngOnInit(): void {
     this.referenceService.getProcesses().subscribe(res => {
       this.processesData = res.data;
+
       if (this.processesData && !this.processesData.isDone) {
         this.interval = setInterval(() => {
           this.referenceService.getProcesses().subscribe(res => {
             this.processesData = res.data;
 
-            if(this.processesData.length <= 0){
+            if (this.processesData.length <= 0) {
               clearInterval(this.interval);
             }
-
           })
         }, 10 * 300);
-
-      } 
+      }
     })
   }
 
@@ -64,14 +63,13 @@ export class TestListComponent implements OnInit {
   }
 
   getPercents(item) {
-    // console.log(`${ item.doneProcesses * 100 / item.totalProcesses} %`)
-    return `${item.doneProcesses * 100 / item.totalProcesses} %`;
+    var percents =  Math.round(item.done * 100 / item.total)
+    return `${percents} %`;
   }
 
-  openHistoryModal(){
-    const modalRef: any = this.modalService.open(AddTestHistoryModalComponent, { centered: true, size:'lg', windowClass: 'my-class', scrollable: true });
-		// modalRef.componentInstance.fileType = 1;
-		modalRef.result.then((response) => (response), () => {});
+  openHistoryModal() {
+    const modalRef: any = this.modalService.open(AddTestHistoryModalComponent, { centered: true, size: 'lg', windowClass: 'my-class', scrollable: true });
+    modalRef.result.then((response) => (response), () => { });
   }
 
 }

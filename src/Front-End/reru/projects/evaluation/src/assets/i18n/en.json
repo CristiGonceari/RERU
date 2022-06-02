@@ -488,6 +488,16 @@
     "add-tags": "Add tags",
     "bulk-import-options-msg": "Please, download and use our special form for import options"
   },
+
+  "processes":{
+    "totalProcesses": "Total Processes",
+    "doneProcesses": "Done Processes",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "file": "File",
+    "history": "History"
+  },
+
   "answers": {
     "option-settings": "Option Settions",
     "delete-option": "Delete option",
