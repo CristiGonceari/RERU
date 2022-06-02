@@ -23,6 +23,10 @@ using CODWER.RERU.Core.DataTransferObjects.Password;
 using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
+using CVU.ERP.Module.Application.ImportProcesses;
+using CVU.ERP.Module.Application.ImportProcesses.GetImportProcess;
+using CVU.ERP.Module.Application.ImportProcesses.GetImportResult;
+using CVU.ERP.Module.Application.ImportProcesses.StartImportProcess;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -90,11 +94,35 @@ namespace CODWER.RERU.Core.API.Controllers
 
         [HttpPut("excel-import")]
         [IgnoreResponseWrap]
-        public async Task<IActionResult> ImportFromExcelFile([FromForm] BulkExcelImport dto)
+        public async Task<IActionResult> ImportFromExcelFile([FromForm] BulkImportUsersCommand command)
         {
-            var command = new BulkImportUsersCommand { Data = dto };
-
             var result = await Mediator.Send(command);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPost("process")]
+        public async Task<int> StartAddProcess([FromBody] StartImportProcessCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
+        [HttpGet("process/{id}")]
+        public async Task<ProcessDataDto> GetImportProcess([FromRoute] int id)
+        {
+            var query = new GetImportProcessQuery() { ProcessId = id };
+
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("process-result/{fileId}")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> GetFile([FromRoute] string fileId)
+        {
+            var query = new GetImportResultQuery { FileId = fileId };
+
+            var result = await Mediator.Send(query);
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);

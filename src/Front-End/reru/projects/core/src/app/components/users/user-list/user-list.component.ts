@@ -1,6 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { FilterUserStateComponent } from './filter-user-state/filter-user-state.component';
 import { SearchStatusComponent } from './search-status/search-status.component';
+import { ReferenceService } from '../../../utils/services/reference.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddUserProcessHistoryModalComponent } from '../../../utils/modals/add-user-process-history-modal/add-user-process-history-modal.component'
 
 @Component({
   selector: 'app-user-list',
@@ -8,27 +11,59 @@ import { SearchStatusComponent } from './search-status/search-status.component';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent {
- @ViewChild('keyword') searchKeyword: any;
- @ViewChild('email') searchEmail: any;
- @ViewChild('idnp') searchIdnp: any;
- @ViewChild(FilterUserStateComponent) userState: FilterUserStateComponent;
- @ViewChild(SearchStatusComponent) userStatusEnum: SearchStatusComponent;
+  @ViewChild('keyword') searchKeyword: any;
+  @ViewChild('email') searchEmail: any;
+  @ViewChild('idnp') searchIdnp: any;
+  @ViewChild(FilterUserStateComponent) userState: FilterUserStateComponent;
+  @ViewChild(SearchStatusComponent) userStatusEnum: SearchStatusComponent;
 
- title: string;
-  constructor() { }
+  title: string;
+  constructor(private referenceService: ReferenceService,
+    private modalService: NgbModal) { }
+
+  interval: any;
+  processesData: any;
+
+  ngOnInit(): void {
+    this.referenceService.getProcesses().subscribe(res => {
+      this.processesData = res.data;
+
+      if (this.processesData && !this.processesData.isDone) {
+        this.interval = setInterval(() => {
+          this.referenceService.getProcesses().subscribe(res => {
+            this.processesData = res.data;
+
+            if (this.processesData.length <= 0) {
+              clearInterval(this.interval);
+            }
+          })
+        }, 10 * 300);
+      }
+    })
+  }
+
+  getPercents(item) {
+    var percents = Math.round(item.done * 100 / item.total)
+    return `${percents} %`;
+  }
 
   clearFilters(): void {
     this.searchKeyword.key = '';
-		this.searchEmail.key = '';
-		this.searchIdnp.key = '';
+    this.searchEmail.key = '';
+    this.searchIdnp.key = '';
     this.userState.status = '0';
     this.userStatusEnum.userStatus = '';
     // this.userStatusEnum.getTestStatuses();
   }
-  
+
   getTitle(): string {
-		this.title = document.getElementById('title').innerHTML;
-		return this.title
-	}
+    this.title = document.getElementById('title').innerHTML;
+    return this.title
+  }
+
+  openHistoryModal() {
+    const modalRef: any = this.modalService.open(AddUserProcessHistoryModalComponent, { centered: true, size: 'lg', windowClass: 'my-class', scrollable: true });
+    modalRef.result.then((response) => (response), () => { });
+  }
 
 }

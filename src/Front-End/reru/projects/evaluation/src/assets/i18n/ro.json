@@ -488,6 +488,14 @@
     "add-tags": "Insereaza taguri",
     "bulk-import-options-msg": "Vă rugăm să descărcați și să utilizați formularul nostru special pentru a importa opțiunile"
   },
+  "processes":{
+    "totalProcesses": "Procese Totale",
+    "doneProcesses": "Procese Efectuate",
+    "startTime": "Inceput",
+    "endTime": "Sfarsit",
+    "file": "Fisier",
+    "history": "Istoria"
+  },
   "answers": {
     "option-settings": "Setări Opțiuni",
     "delete-option": "Șterge opțiunea",

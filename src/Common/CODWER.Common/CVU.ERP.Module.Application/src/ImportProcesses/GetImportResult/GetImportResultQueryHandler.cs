@@ -4,18 +4,18 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.AddTests.GetBulkImportResult
+namespace CVU.ERP.Module.Application.ImportProcesses.GetImportResult
 {
-    public class GetBulkImportResultQueryHandler : IRequestHandler<GetBulkImportResultQuery, FileDataDto>
+    public class GetImportResultQueryHandler : IRequestHandler<GetImportResultQuery, FileDataDto>
     {
         private readonly IStorageFileService _storageFileService;
 
-        public GetBulkImportResultQueryHandler(IStorageFileService storageFileService)
+        public GetImportResultQueryHandler(IStorageFileService storageFileService)
         {
             _storageFileService = storageFileService;
         }
 
-        public async Task<FileDataDto> Handle(GetBulkImportResultQuery request, CancellationToken cancellationToken)
+        public async Task<FileDataDto> Handle(GetImportResultQuery request, CancellationToken cancellationToken)
         {
             return await _storageFileService.GetFile(request.FileId);
         }

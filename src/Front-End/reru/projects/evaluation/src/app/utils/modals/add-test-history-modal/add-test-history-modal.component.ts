@@ -22,7 +22,7 @@ export class AddTestHistoryModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getBulkProgressHistoryService.getBulkProgressHistory().subscribe(res => {
+    this.getBulkProgressHistoryService.getProgressHistory().subscribe(res => {
       this.processesData = res.data,
       this.recivedData = true;
     })
@@ -37,7 +37,7 @@ export class AddTestHistoryModalComponent implements OnInit {
   }
 
   getResultFile(fileId){
-    this.testService.getBulkImportResult(fileId).subscribe(response => {
+    this.testService.getImportResult(fileId).subscribe(response => {
       if (response) {
         const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
         const blob = new Blob([response.body], { type: response.body.type });

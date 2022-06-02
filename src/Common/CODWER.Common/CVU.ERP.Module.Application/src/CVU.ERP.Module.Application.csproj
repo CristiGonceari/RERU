@@ -28,6 +28,7 @@
     <ProjectReference Include="..\..\CVU.ERP.Notifications\CVU.ERP.Notifications.csproj" />
     <ProjectReference Include="..\..\CVU.ERP.StorageService\CVU.ERP.StorageService.csproj" />
     <ProjectReference Include="..\..\RERU.Data.Entities\RERU.Data.Entities.csproj" />
+    <ProjectReference Include="..\..\RERU.Data.Persistence\RERU.Data.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

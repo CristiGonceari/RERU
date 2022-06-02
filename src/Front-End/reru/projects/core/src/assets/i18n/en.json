@@ -190,6 +190,14 @@
     "employee": "Employee",
     "candidate": "Candidate"
   },
+  "processes":{
+    "totalProcesses": "Total Processes",
+    "doneProcesses": "Done Processes",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "file": "File",
+    "history": "History"
+  },
   "user-profile": {
     "overview": "Overview profile",
     "edit-title": "Edit my profile",
@@ -212,7 +220,8 @@
     "remove-sure": "Are you sure you want to remove this user?",
     "succes-remove": "User profile was successfully removed!",
     "succes-edit": "User profile has been successfully updated!",
-    "succes-create": "User profile has been successfully created!"
+    "succes-create": "User profile has been successfully created!",
+    "please-wait": "Please wait while system add users ..."
   },
   "word": {
     "search": "Search by full name or e-mail",

@@ -1,41 +1,47 @@
 ﻿using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Users.CreateUser;
+using CODWER.RERU.Core.Application.Users.EditUserFromColaborator;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
+using RERU.Data.Persistence.Context;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Core.Application.Users.EditUserFromColaborator;
-using RERU.Data.Persistence.Context;
+using CVU.ERP.StorageService;
+using CVU.ERP.StorageService.Entities;
 
 namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 {
     public class BulkImportUsersCommandHandler : BaseHandler, IRequestHandler<BulkImportUsersCommand, FileDataDto>
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IStorageFileService _storageFileService;
 
-        public BulkImportUsersCommandHandler(ICommonServiceProvider commonServiceProvider, AppDbContext appDbContext) : base(commonServiceProvider)
+        public BulkImportUsersCommandHandler(ICommonServiceProvider commonServiceProvider,
+            AppDbContext appDbContext, IStorageFileService storageFileService) : base(commonServiceProvider)
         {
             _appDbContext = appDbContext;
+            _storageFileService = storageFileService;
         }
 
         public async Task<FileDataDto> Handle(BulkImportUsersCommand request, CancellationToken cancellationToken)
         {
-            return await Import(request.Data.File); 
+            return await Import(request); 
         }
 
-        public async Task<FileDataDto> Import(IFormFile data)
+        public async Task<FileDataDto> Import(BulkImportUsersCommand request)
         {
             var fileStream = new MemoryStream();
-            await data.CopyToAsync(fileStream);
+            await request.Data.File.CopyToAsync(fileStream);
             using var package = new ExcelPackage(fileStream);
             var workSheet = package.Workbook.Worksheets[0];
             var totalRows = workSheet.Dimension.Rows;
+
+            await SetTotalNumberOfProcesses(request.ProcessId, totalRows);
 
             for (var i = 1; i <= totalRows; i++)
             {
@@ -57,7 +63,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 {
                     try
                     {
-                        var editcommand = new EditUserFromColaboratorCommand()
+                        var editCommand = new EditUserFromColaboratorCommand()
                         {
                             Id = user.Id,
                             LastName = workSheet.Cells[i, 1]?.Value?.ToString(),
@@ -70,7 +76,9 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                             EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "True")
                         };
 
-                        await Mediator.Send(editcommand);
+                        await Mediator.Send(editCommand);
+
+                        await UpdateProcesses(request.ProcessId);
 
                         workSheet.Cells[i, 9].Value = "Editat";
                     }
@@ -86,6 +94,8 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                     {
                         await Mediator.Send(command);
 
+                        await UpdateProcesses(request.ProcessId);
+
                         workSheet.Cells[i, 9].Value = "Adăugat";
                     }
                     catch (Exception e)
@@ -98,12 +108,44 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
             var streamBytesArray = package.GetAsByteArray();
 
-            return new FileDataDto
+            var excelFile = new FileDataDto
             {
                 Content = streamBytesArray,
                 Name = "User-Import-Result",
                 ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             };
+
+            await SaveExcelFile(request.ProcessId, excelFile);
+
+            return excelFile;
+        }
+
+        private async Task SetTotalNumberOfProcesses(int processId, int totalUsers)
+        {
+            var process = _appDbContext.Processes.First(x => x.Id == processId);
+            process.Total = totalUsers;
+
+            await _appDbContext.SaveChangesAsync();
+        }
+
+        private async Task UpdateProcesses(int processId)
+        {
+            var process = _appDbContext.Processes.First(x => x.Id == processId);
+            process.Done++;
+
+            await _appDbContext.SaveChangesAsync();
+        }
+
+        private async Task SaveExcelFile(int processId, FileDataDto excelFile)
+        {
+            var fileId = await _storageFileService.AddFile(excelFile.Name, FileTypeEnum.procesfile, excelFile.ContentType, excelFile.Content);
+
+            var process = _appDbContext.Processes.First(x => x.Id == processId);
+
+            process.FileId = fileId;
+            process.IsDone = true;
+
+            await _appDbContext.SaveChangesAsync();
         }
     }
 }

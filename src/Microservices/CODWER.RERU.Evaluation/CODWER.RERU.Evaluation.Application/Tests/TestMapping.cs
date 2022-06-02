@@ -41,13 +41,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             CreateMap<Test, TestDataDto>()
                 .ForMember(x => x.TestId, opts => opts.MapFrom(src => src.Id));
 
-            CreateMap<BulkProcess, ProcessDataDto>();
-
-            CreateMap<BulkProcess, HistoryProcessDto>()
-                .ForMember(x => x.StartTime, opts => opts.MapFrom(src => src.CreateDate))
-                .ForMember(x => x.EndTime, opts => opts.MapFrom(src => src.UpdateDate))
-                ;
-
             CreateMap<Test, TestResultDto>()
                 .ForMember(x => x.MinPercent, opts => opts.MapFrom(src => src.TestTemplate.MinPercent))
                 .ForMember(x => x.AccumulatedPercentage, opts => opts.MapFrom(src => src.AccumulatedPercentage))

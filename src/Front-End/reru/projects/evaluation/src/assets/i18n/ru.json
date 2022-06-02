@@ -487,6 +487,14 @@
     "add-tags": "Добавить тэги",
     "bulk-import-options-msg":"Скачайте и воспользуйтесь, пожалуйста, нашей специальной формой для загрузки вопроса" 
   },
+  "processes":{
+    "totalProcesses": "Все процессы",
+    "doneProcesses": "Выполненные процессы",
+    "startTime": "Время начала",
+    "endTime": "Время окончания",
+    "file": "Файл",
+    "history": "История"
+  },
   "answers": {
     "option-settings": "Настройка Опции",
     "delete-option": "Удалить oпцию",

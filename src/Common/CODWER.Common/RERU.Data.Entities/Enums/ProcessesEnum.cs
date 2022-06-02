@@ -1,6 +1,6 @@
 ﻿namespace RERU.Data.Entities.Enums
 {
-    public enum Processes
+    public enum ProcessesEnum
     {
         BulkAddUsers = 1,
         BulkAddTests = 2

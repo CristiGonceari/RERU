@@ -158,9 +158,10 @@
         public static string INVALID_DOCUMENT_TEMPLATE = "03002105";
 
         //CANDIDATE_POSITION
-        public static string INVALID_POSITION = "03002105";
-        public static string EMPTY_POSITION_NAME = "03002106";
+        public static string INVALID_POSITION = "03002106";
+        public static string EMPTY_POSITION_NAME = "03002107";
 
-
+        //progress
+        public static string INVALID_PROGRESS = "03002108";
     }
 }

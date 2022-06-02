@@ -13,6 +13,24 @@
             </h3>
           </div>
           <div class="card-toolbar">
+            <button class="btn btn-light-primary font-weight-bold mr-3" [disabled]
+              ngbTooltip="{{item.done}} \ {{item.total}}" *ngFor="let item of processesData; let i = index"
+              style="width: 125px;">
+              <div class="container">
+                <div class="row">
+                  <div class="col" style="padding: 0;">
+                    <app-loading-spinner [contentHeight]="'2vh'" [height]="'1rem'" [width]="'1rem'"
+                      [colorClass]="'text-primary'">
+                    </app-loading-spinner>
+                  </div>
+                  <div class="col" style="font-size: 10px; padding: 0;"> {{ getPercents(item) }}</div>
+                </div>
+              </div>
+            </button>
+            <button class="btn btn-light-warning font-weight-bold mr-3" (click)="openHistoryModal()">
+              <i class="far fa-file-excel"></i>
+              {{ 'processes.history' | translate }}
+            </button>
             <app-confirm-button class="btn mr-3" (click)="userTable.getHeaders(getTitle())">
               <i class="far fa-file-pdf text-white"></i>
               {{'button.print' | translate}}
@@ -63,11 +81,13 @@
                 (handleSearch)="userTable.searchValue = $event.target.value"></app-filter-user-state>
             </div>
             <div class="col">
-              <app-search-status (filter)="userTable.setFilter('userStatusEnum',  $event)" #userStatusEnum></app-search-status>
+              <app-search-status (filter)="userTable.setFilter('userStatusEnum',  $event)" #userStatusEnum>
+              </app-search-status>
             </div>
             <div class="col">
               <div class="w-100 text-right">
-                <app-button (click)="clearFilters(); userTable.resetFilter()" [value]="'button.reset' | translate"></app-button>
+                <app-button (click)="clearFilters(); userTable.resetFilter()" [value]="'button.reset' | translate">
+                </app-button>
               </div>
             </div>
           </div>
