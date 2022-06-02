@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.DocumentsTemplates.GetDocumentKeys;
 using RERU.Data.Entities.Enums;
+using CODWER.RERU.Evaluation.Application.DocumentsTemplates.PrintDocumentTemplates;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -68,6 +70,17 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             var result = await Mediator.Send(command);
 
             return result;
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintDocumentTemplatesPdf([FromBody] PrintDocumentTemplatesCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }

@@ -130,7 +130,8 @@
     "configure-document": "Настроить документ",
     "key-list": "Карта ключей",
     "generate-document": "Сгенерировать документ",
-    "select-document": "Выберите документ"
+    "select-document": "Выберите документ",
+    "search-by-type": "Поиск по типу шаблона"
   },
   "document-test-modal":{
     "all": "Все",
@@ -537,6 +538,7 @@
     "hashed-answer": "Дополняемый текст",
     "Poll": "Голосование",
     "Test": "Tест",
+    "TestTemplate": "Шаблон теста",
     "Voted": "Проголосовал",
     "NotVoted": "Не проголосовал",
     "Correct": "Верные",

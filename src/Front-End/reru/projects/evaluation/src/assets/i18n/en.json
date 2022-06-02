@@ -131,7 +131,8 @@
     "key-list": "Key map",
     "Contractor Name": "Numele persoanei",
     "generate-document": "Generate document",
-    "select-document": "Select document"
+    "select-document": "Select document",
+    "search-by-type": "Search by document template type"
   },
   "document-test-modal":{
     "all": "All",
@@ -540,6 +541,7 @@
     "hashed-answer": "Hashed Answer",
     "Poll": "Poll",
     "Test": "Test",
+    "TestTemplate": "Test Template",
     "Voted": "Voted",
     "NotVoted": "Not voted",
     "Correct": "Correct",
