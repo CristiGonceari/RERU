@@ -17,6 +17,7 @@ using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Common.EnumConverters;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Core.API.Controllers {
     [ApiController]
@@ -60,6 +61,14 @@ namespace CODWER.RERU.Core.API.Controllers {
         public async Task<List<SelectItem>> GetUserEnum()
         {
             var items = EnumConverter<UserStatusEnum>.SelectValues;
+
+            return items;
+        }
+
+        [HttpGet("access-mode/select-values")]
+        public async Task<List<SelectItem>> GetAccessModeEnum()
+        {
+            var items = EnumConverter<AccessModeEnum>.SelectValues;
 
             return items;
         }

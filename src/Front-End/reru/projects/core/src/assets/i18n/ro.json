@@ -186,7 +186,11 @@
     "Candidate": "Candidați",
     "Employee": "Angajați",
     "employee": "Angajat",
-    "candidate": "Candidat"
+    "candidate": "Candidat",
+    "All": "Toți",
+    "AllDepartments": "Toate departamentele",
+    "CurrentDepartment": "Departamentul curent",
+    "OnlyCandidates": "Doar candidați"
   },
   "processes":{
     "totalProcesses": "Procese Totale",
@@ -209,7 +213,8 @@
     "wrong-name": "Câmpul trebuie sa conțină doar litere latine",
     "available-modules": "Module disponibile",
     "idnp-length": "IDNP trebuie să conține 13 cifre!",
-    "search-by-user-state": "Căutați după statutul utilizatorului"
+    "search-by-user-state": "Căutați după statutul utilizatorului",
+    "access-mode": "Modul de acces"
   },
   "user": {
     "edit-title": "Editarea utilizatorului",
@@ -416,7 +421,8 @@
     "01000203": "Date nevalide!",
     "01000204": "Id nevalid!",
     "01000301": "Postul nevalid",
-    "01000302": "Introduceti denumirea pozitiei"
+    "01000302": "Introduceti denumirea pozitiei",
+    "01000106": "Modul de acces necompletat"
   },
   "print": {
     "print-table": "Printare tabel",

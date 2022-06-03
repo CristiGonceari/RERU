@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CVU.ERP.Common.DataTransferObjects.Users;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles
 {
@@ -16,6 +17,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles
         public int? RoleColaboratorId { get; set; }
         public string RoleName { get; set; }
         public UserStatusEnum? UserStatusEnum { get; set; }
+        public AccessModeEnum? AccessModeEnum { get; set; }
         public IEnumerable<string> Permissions { get; set; }
     }
 }

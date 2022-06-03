@@ -32,17 +32,18 @@
     <thead class="text-uppercase text-muted">
       <tr>
         <th scope="col" style="width: 50px"></th>
-        <th scope="col"> {{ 'table.lastName' | translate }} </th>
-        <th scope="col"> {{ 'table.name' | translate }} </th>
-        <th scope="col"> {{ 'table.father-name' | translate }} </th>
+        <th scope="col"> {{ 'table.username' | translate }}</th>
+        <!-- <th scope="col"> {{ 'table.name' | translate }} </th>
+        <th scope="col"> {{ 'table.father-name' | translate }} </th> -->
         <th scope="col"> {{ 'table.idnp' | translate }} </th>
         <th scope="col"> {{ 'table.email' | translate }} </th>
         <th scope="col"> {{ 'departments.department' | translate }} </th>
         <th scope="col"> {{ 'user-roles.role' | translate }} </th>
+        <th scope="col"> {{ 'user-profile.access-mode' | translate }} </th>
         <th scope="col" style="width: 75px; text-align: center; vertical-align: middle">
           {{ 'table.status' | translate }}
         </th>
-        <th scope="col w-50px"></th>
+        <th scope="col" style="width: 48px;"></th>
       </tr>
     </thead>
     <tbody class="datatable-body" *ngIf="users">
@@ -54,10 +55,10 @@
         </td>
         <td [class.no-actions]="!viewDetails">
           <a [routerLink]="['../../user-profile', user.id, 'overview']" class="font-size-lg text-dark-50 text-hover-dark-75" >
-            {{ user.lastName }}
+            {{ user.userName }}
           </a>
         </td>
-        <td [class.no-actions]="!viewDetails">
+        <!-- <td [class.no-actions]="!viewDetails">
           <a [routerLink]="['../../user-profile', user.id, 'overview']" class="font-size-lg text-dark-50 text-hover-dark-75" >
             {{ user.firstName }}
           </a>
@@ -66,7 +67,7 @@
           <a [routerLink]="['../../user-profile', user.id, 'overview']" class="font-size-lg text-dark-50 text-hover-dark-75" >
             {{user.fatherName}}
           </a>
-        </td>
+        </td> -->
         <td [class.no-actions]="!viewDetails"> {{ user.idnp }} </td>
         <td [class.no-actions]="!viewDetails"> {{ user.email }} </td>
         <td [class.no-actions]="!viewDetails">
@@ -77,6 +78,8 @@
           <span class="font-size-lg" *ngIf="user.roleName">{{ user.roleName }}</span>
           <span class="font-size-lg" *ngIf="!user.roleName">-</span>
         </td>
+        <td [class.no-actions]="!viewDetails">{{'statuses.' + accessMode[user.accessModeEnum] | translate}}</td>
+
         <td style="text-align: center">
           <div [class.no-actions]="!viewDetails">
             <div *ngIf="user.isActive === false" style="width: 25px; display: inline-block">

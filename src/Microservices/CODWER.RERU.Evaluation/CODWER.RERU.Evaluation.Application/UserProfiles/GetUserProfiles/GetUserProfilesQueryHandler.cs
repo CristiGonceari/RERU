@@ -8,6 +8,7 @@ using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
@@ -31,11 +32,22 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
 
             var items = _appDbContext.UserProfiles
                 .Where(x => x.IsActive)
-                .Where(x => x.DepartmentColaboratorId == currentUser.DepartmentColaboratorId || x.DepartmentColaboratorId == null)
                 .Include(up => up.EventResponsiblePersons)
                 .Include(up => up.EventUsers)
                 .AsQueryable();
 
+            if (currentUser.AccessModeEnum == AccessModeEnum.CurrentDepartment || currentUser.AccessModeEnum == null)
+            {
+                items = items.Where(x => x.DepartmentColaboratorId == currentUser.DepartmentColaboratorId);
+            }
+            else if (currentUser.AccessModeEnum == AccessModeEnum.OnlyCandidates)
+            {
+                items = items.Where(x => x.DepartmentColaboratorId == null && x.RoleColaboratorId == null);
+            }
+            else if (currentUser.AccessModeEnum == AccessModeEnum.AllDepartments)
+            {
+                items = items.Where(x => x.DepartmentColaboratorId != null);
+            }
 
             if (!string.IsNullOrEmpty(request.FirstName))
             {

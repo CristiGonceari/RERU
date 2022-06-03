@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Entities;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 {
@@ -54,7 +55,8 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                     Email = workSheet.Cells[i, 5]?.Value?.ToString(),
                     DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0"),
                     RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
-                    EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "True")
+                    EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "True"),
+                    AccessModeEnum = AccessModeEnum.CurrentDepartment
                 };
 
                 var user = _appDbContext.UserProfiles.FirstOrDefault(x => x.Idnp == command.Idnp);
@@ -73,7 +75,8 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                             Email = workSheet.Cells[i, 5]?.Value?.ToString(),
                             DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0"),
                             RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
-                            EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "True")
+                            EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "True"),
+                            AccessModeEnum = AccessModeEnum.CurrentDepartment
                         };
 
                         await Mediator.Send(editCommand);
@@ -138,7 +141,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
         private async Task SaveExcelFile(int processId, FileDataDto excelFile)
         {
-            var fileId = await _storageFileService.AddFile(excelFile.Name, FileTypeEnum.procesfile, excelFile.ContentType, excelFile.Content);
+            var fileId = await _storageFileService.AddFile(excelFile.Name, CVU.ERP.StorageService.Entities.FileTypeEnum.procesfile, excelFile.ContentType, excelFile.Content);
 
             var process = _appDbContext.Processes.First(x => x.Id == processId);
 
