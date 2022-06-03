@@ -5,6 +5,7 @@ using CVU.ERP.Common.Pagination;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
+using CVU.ERP.Module.Application.Providers;
 using MediatR;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
@@ -15,12 +16,14 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
     {
         private readonly IPaginationService _paginationService;
         private readonly AppDbContext _appDbContext;
+        private readonly ICurrentApplicationUserProvider _currentUserProvider;
 
         public GetAllUserProfilesQueryHandler(ICommonServiceProvider commonServiceProvider, IPaginationService paginationService, 
-            AppDbContext appDbContext) : base(commonServiceProvider)
+            AppDbContext appDbContext, ICurrentApplicationUserProvider currentUserProvider) : base(commonServiceProvider)
         {
             _paginationService = paginationService;
             _appDbContext = appDbContext;
+            _currentUserProvider = currentUserProvider;
         }
 
         public async Task<PaginatedModel<UserProfileDto>> Handle (GetAllUserProfilesQuery request, CancellationToken cancellationToken) 
@@ -33,7 +36,11 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
                 Status = request.Status
             };
 
-            var userProfiles = GetAndFilterUserProfiles.Filter(_appDbContext, filterData);
+            var currentUser = await _currentUserProvider.Get();
+            var userProfile = _appDbContext.UserProfiles.FirstOrDefault(x => x.Id.ToString() == currentUser.Id);
+            var userProfileDto = Mapper.Map<UserProfileDto>(userProfile);
+
+            var userProfiles = GetAndFilterUserProfiles.Filter(_appDbContext, filterData, userProfileDto);
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto> (userProfiles, request);
 

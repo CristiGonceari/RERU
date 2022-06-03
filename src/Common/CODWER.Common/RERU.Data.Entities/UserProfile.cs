@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using CVU.ERP.Common.Data.Entities;
+using RERU.Data.Entities.Enums;
 
 namespace RERU.Data.Entities
 {
@@ -33,6 +34,7 @@ namespace RERU.Data.Entities
         public string Token { set; get; }
         public bool IsActive { set; get; }
         public DateTime? TokenLifetime { get; set; }
+        public AccessModeEnum? AccessModeEnum { get; set; }
 
         public int? DepartmentColaboratorId { get; set; }
         public Department Department { get; set; }

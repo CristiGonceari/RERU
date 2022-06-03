@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Core.Application.Users.EditUserFromColaborator
 {
@@ -13,5 +14,6 @@ namespace CODWER.RERU.Core.Application.Users.EditUserFromColaborator
         public int? DepartmentColaboratorId { get; set; }
         public int? RoleColaboratorId { get; set; }
         public bool EmailNotification { get; set; }
+        public AccessModeEnum AccessModeEnum { get; set; }
     }
 }

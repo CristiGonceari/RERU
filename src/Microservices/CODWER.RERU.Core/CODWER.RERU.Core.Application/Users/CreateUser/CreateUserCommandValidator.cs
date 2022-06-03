@@ -37,6 +37,11 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
                 .WithMessage(ValidationMessages.InvalidInput)
                 .WithErrorCode(ValidationCodes.INVALID_EMAIL_FORMAT);
 
+            RuleFor(x => x.AccessModeEnum)
+                .NotNull()
+                .WithMessage(ValidationMessages.InvalidInput)
+                .WithErrorCode(ValidationCodes.EMPTY_ACCESS_MODE);
+
             //RuleFor(x => x.Idnp)
             //    .SetValidator(new IdnpValidator());
 

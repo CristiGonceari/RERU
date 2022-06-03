@@ -10,6 +10,8 @@ import { I18nService } from '../../../utils/services/i18n.service';
 import { FileTypeEnum } from 'projects/erp-shared/src/lib/models/FileTypeEnum';
 import { DepartmentService } from '../../../utils/services/department.service';
 import { UserRoleService } from '../../../utils/services/user-role.service';
+import { UserProfileService } from '../../../utils/services/user-profile.service';
+import { SelectItem } from '../../../utils/models/select-item.model';
 
 @Component({
 	selector: 'app-edit',
@@ -26,8 +28,9 @@ export class EditComponent implements OnInit {
 	fileId: string;
 	fileType: FileTypeEnum = FileTypeEnum.Photos;
 	attachedFile: File;
-	departments;
-  	roles;
+	departments: SelectItem[] = [{ label: '', value: '' }];
+	roles: SelectItem[] = [{ label: '', value: '' }];
+	accessModes: SelectItem[] = [{ label: '', value: '' }];
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -35,25 +38,31 @@ export class EditComponent implements OnInit {
 		public translate: I18nService,
 		private userService: UserService,
 		private notificationService: NotificationsService,
+		private userProfileService: UserProfileService,
 		private router: Router,
 		private location: Location,
 		private departmentService: DepartmentService,
-    	private roleService: UserRoleService
+		private roleService: UserRoleService
 	) { }
 
 	ngOnInit(): void {
 		this.initData();
+		this.getAccessMode();
 		this.getDepartments();
-    	this.getRoles();
+		this.getRoles();
 	}
 
-	getDepartments(){
+	getDepartments() {
 		this.departmentService.getValues().subscribe(res => this.departments = res.data);
 	}
-	
-	getRoles(){
+
+	getRoles() {
 		this.roleService.getValues().subscribe(res => this.roles = res.data);
 	}
+
+	getAccessMode(){
+		this.userProfileService.getAccessMode().subscribe(res => this.accessModes = res.data);
+	  }
 
 	initData(): void {
 		this.activatedRoute.params.subscribe(response => {
@@ -103,7 +112,8 @@ export class EditComponent implements OnInit {
 				),
 			]),
 			departmentColaboratorId: this.fb.control((user && user.departmentColaboratorId) || null, Validators.required),
-      		roleColaboratorId: this.fb.control((user && user.roleColaboratorId) || null, [Validators.required]),
+			roleColaboratorId: this.fb.control((user && user.roleColaboratorId) || null, [Validators.required]),
+			accessModeEnum: this.fb.control((user && user.accessModeEnum) || null, [Validators.required]),
 		});
 		this.isLoading = false;
 	}
@@ -116,7 +126,8 @@ export class EditComponent implements OnInit {
 			lastName: this.userForm.value.lastName,
 			fatherName: this.userForm.value.fatherName,
 			departmentColaboratorId: +this.userForm.value.departmentColaboratorId,
-      		roleColaboratorId: +this.userForm.value.roleColaboratorId
+			roleColaboratorId: +this.userForm.value.roleColaboratorId,
+			accessModeEnum: this.userForm.value.accessModeEnum
 		}
 
 		this.userService.editUserPersonalDetails(data).subscribe(

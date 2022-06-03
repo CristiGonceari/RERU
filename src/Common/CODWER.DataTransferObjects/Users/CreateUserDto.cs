@@ -12,5 +12,6 @@ namespace CVU.ERP.Common.DataTransferObjects.Users
         public int? DepartmentColaboratorId { get; set; }
         public int? RoleColaboratorId { get; set; }
         public bool EmailNotification { get; set; }
+        public int AccessModeEnum { get; set; }
     }
 }

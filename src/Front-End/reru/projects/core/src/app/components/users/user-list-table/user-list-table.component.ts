@@ -14,6 +14,7 @@ import { I18nService } from '../../../utils/services/i18n.service';
 import { ImportUsersModalComponent } from '../../../utils/modals/import-users-modal/import-users-modal.component';
 import { ReferenceService } from '../../../utils/services/reference.service';
 import { saveAs } from 'file-saver';
+import { AccessModeEnum } from '../../../utils/models/access-mode.enum';
 
 @Component({
 	selector: 'app-user-list-table',
@@ -43,6 +44,7 @@ export class UserListTableComponent implements OnInit {
 	description: string;
 	no: string;
 	yes: string;
+	accessMode = AccessModeEnum;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -93,7 +95,7 @@ export class UserListTableComponent implements OnInit {
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['-', 'lastName', 'firstName', 'fatherName', 'idnp', 'email', 'departmentName', 'roleName', 'isActive'];
+		let headersDto = ['-', 'userName', 'idnp', 'email', 'departmentName', 'roleName', 'accessModeEnum', 'isActive'];
 		for (let i = 1; i < headersHtml.length - 1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
 		}
