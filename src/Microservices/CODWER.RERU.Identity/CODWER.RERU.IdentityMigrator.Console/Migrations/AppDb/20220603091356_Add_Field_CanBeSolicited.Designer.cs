@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RERU.Data.Persistence.Context;
@@ -9,9 +10,10 @@ using RERU.Data.Persistence.Context;
 namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220603091356_Add_Field_CanBeSolicited")]
+    partial class Add_Field_CanBeSolicited
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1863,9 +1865,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<int?>("AccessModeEnum")
-                        .HasColumnType("integer");
-
                     b.Property<string>("CreateById")
                         .HasColumnType("text");
 
@@ -1921,8 +1920,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AccessModeEnum");
 
                     b.HasIndex("DepartmentColaboratorId");
 
@@ -1998,44 +1995,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasIndex("UserProfileId");
 
                     b.ToTable("UserProfileModuleRoles");
-                });
-
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.AccessModeEnum>", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("AccessModeEnum");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 0,
-                            Name = "OnlyCandidates"
-                        },
-                        new
-                        {
-                            Id = 1,
-                            Name = "CurrentDepartment"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "AllDepartments"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "All"
-                        });
                 });
 
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.AnswerStatusEnum>", b =>
@@ -3220,11 +3179,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
             modelBuilder.Entity("RERU.Data.Entities.UserProfile", b =>
                 {
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.AccessModeEnum>", null)
-                        .WithMany()
-                        .HasForeignKey("AccessModeEnum")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("RERU.Data.Entities.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentColaboratorId")
@@ -3266,15 +3220,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("ModuleRole");
 
                     b.Navigation("UserProfile");
-                });
-
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.AccessModeEnum>", b =>
-                {
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.AccessModeEnum>", null)
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.AnswerStatusEnum>", b =>

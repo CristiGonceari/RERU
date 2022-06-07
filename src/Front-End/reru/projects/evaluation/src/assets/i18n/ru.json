@@ -739,7 +739,10 @@
     "succes-delete-msg": "Шаблон теста был успешно удалён",
     "succes-add-msg": "Шаблон теста был успешно добавлен",
     "delete-msg": "Вы уверенны, что хотите удалить этот шаблон теста?",
-    "order-of-questions":"Порядок вопросов"
+    "order-of-questions":"Порядок вопросов",
+    "set-can-be-solicited": "Добавьте в необходимые тесты",
+    "unset-from-can-be-solicited": "Удалить из обязательных тестов",
+    "can-be-solicited": "Его можно запросить"
 },
   "plans": {
     "plans": "Планы",

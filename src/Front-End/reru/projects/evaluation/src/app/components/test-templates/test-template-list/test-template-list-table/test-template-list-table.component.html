@@ -18,11 +18,12 @@
                     <th scope="col" class="text-left" style="width: 75px">{{'verify-test.min-points' | translate}}</th>
                     <th scope="col" class="text-left" style="width: 75px">{{'tests.mode' | translate}}</th>
                     <th scope="col" class="text-left" style="width: 100px">{{'tests.status' | translate}}</th>
+                    <th scope="col" class="text-left" style="width: 100px"> {{'test-template.can-be-solicited' | translate}}</th>
                     <th scope="col" style="width: 48px"></th> 
                 </tr>
             </thead>
             <tbody class="datatable-body" *ngIf="testTemplateList.length">
-                <tr *ngFor="let testTemplate of testTemplateList" (dblclick)="navigate(testTemplate.id)">
+                <tr *ngFor="let testTemplate of testTemplateList" (dblclick)="navigate(testTemplate.id)" [ngSwitch]="testTemplate.canBeSolicited">
                     <td style="cursor: pointer;" [routerLink]="['type-details', testTemplate.id]">{{testTemplate.name}}</td>
                     <td>{{ testTemplate.categoriesCount }}</td>
                     <td>{{ testTemplate.questionCount }}</td>
@@ -30,6 +31,9 @@
                     <td>{{ testTemplate.minPercent }} %</td>
                     <td>{{'statuses.' + modeEnum[testTemplate.mode] | translate}}</td>
                     <td>{{'statuses.' + statusEnum[testTemplate.status] | translate}}</td>
+                    <td *ngSwitchCase="null" class="text-center"><i class="ki ki-plus icon-md"></i></td>
+                    <td *ngSwitchCase="true" class="text-center"><i class="ki ki-check icon-md"></i></td>
+                    <td *ngSwitchCase="false" class="text-center"><i class="ki ki-plus icon-md"></i></td>
                     <td data-field="Actions" data-autohide-disabled="false"
                         class="datatable-cell datatable-cell-sort p-3">
                         <div style="overflow: visible; position: relative; width: 0px">
@@ -89,9 +93,18 @@
                                         <button (click)="openGenerateDocumentModal(testTemplate.id, testTemplate.name)" class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                             {{'documents-templates.generate-document'| translate}}
                                         </button>
+                                        <button *ngIf="testTemplate.canBeSolicited"
+                                            class="navi-link align-items-baseline px-6" ngbDropdownItem
+                                            (click)="editCanBeSolicitedTestTemplate(testTemplate.id)">
+                                            {{'test-template.unset-from-can-be-solicited' | translate}}
+                                        </button>
+                                        <button *ngIf="!testTemplate.canBeSolicited"
+                                            class="navi-link align-items-baseline px-6" ngbDropdownItem
+                                            (click)="editCanBeSolicitedTestTemplate(testTemplate.id)">
+                                            {{'test-template.set-can-be-solicited' | translate}}
+                                        </button>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </td>

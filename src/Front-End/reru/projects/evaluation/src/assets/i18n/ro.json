@@ -738,7 +738,10 @@
     "succes-delete-msg": "Șablon de test a fost șters cu succes",
     "succes-add-msg": "Șablon de test a fost adăugat cu succes",
     "delete-msg": "Sigur doriți să ștergeți acest șablon de test?",
-    "order-of-questions": "Ordinea întrebărilor"
+    "order-of-questions": "Ordinea întrebărilor",
+    "set-can-be-solicited": "Adaugati in teste solicitate",
+    "unset-from-can-be-solicited": "Scoateti din teste solicitate",
+    "can-be-solicited": "Poate fi solicitat"
 },
   "plans": {
     "plans": "Planuri",
