@@ -47,6 +47,11 @@
                             </ng-template>
                         </ngb-panel>
                     </ngb-accordion>
+                    <div class="datatable-body" *ngIf="!events.length">
+                          <p class="text-center">
+                            {{ 'message.no-record' | translate }}
+                          </p>
+                    </div>
                 </div>
                 <div pagination class="datatable-pager datatable-paging-loaded"  [page]="pagedSummary.currentPage"
                     *ngIf="events.length" [total]="pagedSummary.totalPages"
