@@ -10,30 +10,30 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddEditTestTemplateSe
 {
     public class AddEditTestTemplateSettingsCommandHandler : IRequestHandler<AddEditTestTemplateSettingsCommand, Unit>
     {
-        private readonly AppDbContext _appDbContex;
+        private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
 
-        public AddEditTestTemplateSettingsCommandHandler(AppDbContext appDbContex, IMapper mapper)
+        public AddEditTestTemplateSettingsCommandHandler(AppDbContext appDbContext, IMapper mapper)
         {
-            _appDbContex = appDbContex;
+            _appDbContext = appDbContext;
             _mapper = mapper;
         }
 
         public async Task<Unit> Handle(AddEditTestTemplateSettingsCommand request, CancellationToken cancellationToken)
         {
-            var existingSettings = await _appDbContex.TestTemplateSettings.FirstOrDefaultAsync(x => x.TestTemplateId == request.Data.TestTemplateId);
+            var existingSettings = await _appDbContext.TestTemplateSettings.FirstOrDefaultAsync(x => x.TestTemplateId == request.Data.TestTemplateId);
 
             if (existingSettings == null)
             {
                 var settingsToAdd = _mapper.Map<TestTemplateSettings>(request.Data);
-                _appDbContex.TestTemplateSettings.Add(settingsToAdd);
+                _appDbContext.TestTemplateSettings.Add(settingsToAdd);
             }
             else
             {
                 _mapper.Map(request.Data, existingSettings);
             }
 
-            await _appDbContex.SaveChangesAsync();
+            await _appDbContext.SaveChangesAsync();
 
             return Unit.Value;
         }

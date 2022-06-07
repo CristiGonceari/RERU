@@ -741,7 +741,10 @@
     "number-of-questions":"Number of questions",
     "succes-delete-msg": "Test template  was successfully deleted",
     "succes-add-msg": "Test template was successfully added",
-    "order-of-questions":"The order of the questions"
+    "order-of-questions":"The order of the questions",
+    "set-can-be-solicited": "Add to can be solicited",
+    "unset-from-can-be-solicited": "Unset from solicited tests",
+    "can-be-solicited": "Can be solicited"
   },
   "plans": {
     "plans": "Plans",

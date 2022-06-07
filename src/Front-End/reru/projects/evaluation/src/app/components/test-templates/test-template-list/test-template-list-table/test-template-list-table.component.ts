@@ -70,7 +70,7 @@ export class TestTemplateListTableComponent implements OnInit {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
 		let headersDto = ['name', 'categoriesCount', 'questionCount', 'duration', 'minPercent', 'mode', 'status'];
-		for (let i=0; i<headersHtml.length-1; i++) {
+		for (let i = 0; i < headersHtml.length - 1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
 		}
 		let printData = {
@@ -97,7 +97,7 @@ export class TestTemplateListTableComponent implements OnInit {
 			this.translate.get('button.cancel')
 		]).subscribe(
 			(items) => {
-				for (let i=0; i<this.printTranslates.length; i++) {
+				for (let i = 0; i < this.printTranslates.length; i++) {
 					this.printTranslates[i] = items[i];
 				}
 			}
@@ -115,6 +115,12 @@ export class TestTemplateListTableComponent implements OnInit {
 				this.downloadFile = false;
 			}
 		}, () => this.downloadFile = false);
+	}
+
+	editCanBeSolicitedTestTemplate(testTemplateId: number) {
+		this.testTemplateService.changeTestTesmplateCanBeSolicited({testTemplateId: testTemplateId}).subscribe(res => {
+			this.list();
+		})
 	}
 
 	list(data: any = {}) {
@@ -167,10 +173,10 @@ export class TestTemplateListTableComponent implements OnInit {
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
-				});
-				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			});
-	} 
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+		});
+	}
 
 	validateTestTemplate(id, status) {
 		this.testTemplateService.validateTestTemplate({ testTemplateId: id }).subscribe(() => this.changeStatus(id, status));
@@ -198,7 +204,7 @@ export class TestTemplateListTableComponent implements OnInit {
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
-				});
+			});
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			this.list();
 		});
@@ -215,7 +221,7 @@ export class TestTemplateListTableComponent implements OnInit {
 			this.description = description;
 			this.no = no;
 			this.yes = yes;
-			});
+		});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
 		modalRef.componentInstance.title = this.title;
 		modalRef.componentInstance.description = this.description;
@@ -224,22 +230,22 @@ export class TestTemplateListTableComponent implements OnInit {
 		modalRef.result.then(() => this.deleteTestTemplate(id), () => { });
 	}
 
-	openGenerateDocumentModal(id, testName){
-		const modalRef: any = this.modalService.open(GenerateDocumentModalComponent, { centered: true, size:'xl', windowClass: 'my-class', scrollable: true });
+	openGenerateDocumentModal(id, testName) {
+		const modalRef: any = this.modalService.open(GenerateDocumentModalComponent, { centered: true, size: 'xl', windowClass: 'my-class', scrollable: true });
 		modalRef.componentInstance.id = id;
 		modalRef.componentInstance.testName = testName;
 		modalRef.componentInstance.fileType = 1;
-		modalRef.result.then((response) => (response), () => {});
+		modalRef.result.then((response) => (response), () => { });
 	}
 
-	printTestTemplate(id){
-		this.printTemplateService.getTestTemplatePdf(id).subscribe((response : any) => {
+	printTestTemplate(id) {
+		this.printTemplateService.getTestTemplatePdf(id).subscribe((response: any) => {
 			let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
-			
+
 			if (response.body.type === 'application/pdf') {
-			  fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
+				fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
 			}
-	  
+
 			const blob = new Blob([response.body], { type: response.body.type });
 			const file = new File([blob], fileName, { type: response.body.type });
 			saveAs(file);
