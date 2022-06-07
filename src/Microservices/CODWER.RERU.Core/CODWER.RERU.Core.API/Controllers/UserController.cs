@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.UserProfiles.GetUserForRemove;
 using CODWER.RERU.Core.Application.Users.ActivateUser;
@@ -12,23 +11,21 @@ using CODWER.RERU.Core.Application.Users.DeactivateUser;
 using CODWER.RERU.Core.Application.Users.EditUser;
 using CODWER.RERU.Core.Application.Users.EditUserFromColaborator;
 using CODWER.RERU.Core.Application.Users.EditUserPersonalDetails;
+using CODWER.RERU.Core.Application.Users.ExportUserTestsList;
 using CODWER.RERU.Core.Application.Users.GetEditUserPersonalDetails;
 using CODWER.RERU.Core.Application.Users.GetPersonalData;
 using CODWER.RERU.Core.Application.Users.GetUserDetails;
 using CODWER.RERU.Core.Application.Users.RemoveUser;
 using CODWER.RERU.Core.Application.Users.ResetUserPassword;
 using CODWER.RERU.Core.Application.Users.SetPassword;
-using CODWER.RERU.Core.DataTransferObjects.Files;
 using CODWER.RERU.Core.DataTransferObjects.Password;
 using CODWER.RERU.Core.DataTransferObjects.Users;
-using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using CVU.ERP.Module.Application.ImportProcesses;
 using CVU.ERP.Module.Application.ImportProcesses.GetImportProcess;
 using CVU.ERP.Module.Application.ImportProcesses.GetImportResult;
 using CVU.ERP.Module.Application.ImportProcesses.StartImportProcess;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RERU.Data.Persistence.Context;
 
@@ -180,6 +177,16 @@ namespace CODWER.RERU.Core.API.Controllers
         public Task DeactivateUser ([FromRoute] int id) 
         {
             return Mediator.Send (new DeactivateUserCommand (id));
+        }
+
+        [HttpGet("{id}/export-excel")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> GetAllTImeSheetTableForExport([FromRoute] int id)
+        {
+            var result = await Mediator.Send(new ExportUserTestsListCommand(id));
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }

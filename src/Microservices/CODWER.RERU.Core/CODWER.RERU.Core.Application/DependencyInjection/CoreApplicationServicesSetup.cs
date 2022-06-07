@@ -1,7 +1,9 @@
 using CODWER.RERU.Core.Application.Common.ExceptionHandlers.Response;
 using CODWER.RERU.Core.Application.Common.Providers;
+using CODWER.RERU.Core.Application.Common.Services;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer;
+using CODWER.RERU.Core.Application.Common.Services.Implementation;
 using CODWER.RERU.Core.Application.Common.Services.PasswordGenerator;
 using CODWER.RERU.Core.Application.Module.Providers;
 using CODWER.RERU.Core.Application.Permissions;
@@ -38,6 +40,8 @@ namespace CODWER.RERU.Core.Application.DependencyInjection
             //end exception handlers
 
             services.AddTransient<IEvaluationClient, EvaluationClient>();
+
+            services.AddTransient<IExportUserTestsService, ExportUserTestsService>();
 
             return services;
         }

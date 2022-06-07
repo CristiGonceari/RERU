@@ -3,6 +3,8 @@ using CVU.ERP.Common.DataTransferObjects.Users;
 using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Identity.Models;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
+using System.Linq;
 
 namespace CODWER.RERU.Core.Application.Users
 {
@@ -46,6 +48,32 @@ namespace CODWER.RERU.Core.Application.Users
 
             CreateMap<EditUserPersonalDetailsDto, UserProfile>()
                 .ForMember(destinationMember => destinationMember.Id, options => options.Ignore());
+
+            CreateMap<Test, UserTestDto>()
+               .ForMember(x => x.Id, opts => opts.MapFrom(src => src.Id))
+               .ForMember(x => x.UserId, opts => opts.MapFrom(src => src.UserProfile.Id))
+               .ForMember(x => x.MinPercent, opts => opts.MapFrom(src => src.TestTemplate.MinPercent))
+               .ForMember(x => x.QuestionCount, opts => opts.MapFrom(src => src.TestTemplate.QuestionCount))
+               .ForMember(x => x.AccumulatedPercentage, opts => opts.MapFrom(src => src.AccumulatedPercentage))
+               .ForMember(x => x.TestTemplateName, opts => opts.MapFrom(src => src.TestTemplate.Name))
+               .ForMember(x => x.EventName, opts => opts.MapFrom(src => src.Event.Name))
+               .ForMember(x => x.EventId, opts => opts.MapFrom(src => src.EventId))
+               .ForMember(x => x.UserName, opts => opts.MapFrom(src => src.UserProfile.FirstName + " " + src.UserProfile.LastName + " " + src.UserProfile.FatherName))
+               .ForMember(x => x.Result, opts => opts.MapFrom(src => src.ResultStatus))
+               .ForMember(x => x.VerificationProgress, opts => opts.MapFrom(src => GetVerifiationStatus(src)));
+        }
+
+        private string GetVerifiationStatus(Test inputTest)
+        {
+            if (inputTest.TestStatus == (int)TestStatusEnum.Programmed || inputTest.TestStatus == TestStatusEnum.AlowedToStart || inputTest.TestStatus == TestStatusEnum.InProgress || inputTest.TestQuestions == null)
+            {
+                return "-";
+            }
+
+            var verified = inputTest.TestQuestions.Where(x => x.Verified == VerificationStatusEnum.Verified || x.Verified == VerificationStatusEnum.VerifiedBySystem).Count();
+            var all = inputTest.TestQuestions.Count;
+
+            return $"{verified}/{all}";
         }
     }
 }

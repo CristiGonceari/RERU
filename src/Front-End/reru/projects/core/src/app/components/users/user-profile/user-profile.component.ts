@@ -11,6 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ConfirmModalComponent } from '@erp/shared';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
+import { saveAs } from 'file-saver';
 
 @Component({
 	selector: 'app-user-profile',
@@ -101,6 +102,17 @@ export class UserProfileComponent implements OnInit {
 			this.isLoading = false;
 		});
 	}
+
+	exportUserTestExcel(id): void {
+		this.isLoading = true;
+		this.userService.exportTestExcel(id).subscribe(response => {
+		  let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0].substring(1).slice(0, -1);
+		  const blob = new Blob([response.body], { type: response.body.type });
+		  const file = new File([blob], fileName, { type: response.body.type });
+		  saveAs(file);
+		  this.isLoading = false;
+		});
+	  }
 
 	openResetPasswordModal(id: string): void {
 		forkJoin([
