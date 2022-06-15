@@ -289,12 +289,23 @@ export class TestListTableComponent implements OnInit {
   getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['testTemplateName', 'userName', 'eventName', 'locationNames', 'testStatus', 'verificationProgress', 'result', 'accumulatedPercentage', 'minPercent'];
+		let headersDto = [
+      'testTemplateName', 
+      'userName', 
+      'eventName', 
+      'locationNames', 
+      'testStatus', 
+      'verificationProgress', 
+      'result', 
+      'accumulatedPercentage', 
+      'minPercent'
+    ];
+    
 		for (let i = 0; i < headersHtml.length - 1; i++) {
       if(i == 2){
-        this.headersToPrint.push({ value: "idnp", label: "Idnp"})
+        this.headersToPrint.push({ value: "idnp", label: "Idnp",isChecked: true})
       }
-			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
     
 		let printData = {
@@ -312,6 +323,7 @@ export class TestListTableComponent implements OnInit {
       programmedTimeFrom: this.searchFrom || null,
       programmedTimeTo: this.searchTo || null
 		};
+    
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.tableData = printData;
 		modalRef.componentInstance.translateData = this.printTranslates;
@@ -337,6 +349,7 @@ export class TestListTableComponent implements OnInit {
 
 	printTable(data): void {
 		this.downloadFile = true;
+    
 		this.testService.print(data).subscribe(response => {
 			if (response) {
 				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(2).slice(0, -2);
