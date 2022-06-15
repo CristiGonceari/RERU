@@ -49,15 +49,15 @@ export class PrintModalComponent implements OnInit {
   }
 
   onItemChange(event, item): void {
-    if (event.target.checked === true) {
-      this.selectedFields.push(item);
-    } else if (event.target.checked === false) {
-      this.selectedFields.splice(this.selectedFields.indexOf(item), 1);
-    }
+
+    item.isChecked = event.target.checked;
   }
 
   print(): void {
-    this.tableData.fields = this.selectedFields;
+
+    var fields = this.tableData.fields.filter((el) => el.isChecked == true);
+    
+    this.tableData.fields = fields;
     this.tableData.tableExportFormat = this.selectedFormat;
     this.activeModal.close(this.tableData);
   }
