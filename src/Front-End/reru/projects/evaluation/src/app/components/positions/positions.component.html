@@ -82,11 +82,11 @@
                               <div ngbDropdownMenu [aria-labelledby]="'action' + i" class="p-0">
                                 <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
                                   [routerLink]="['../edit-position', position.id]">
-                                  {{ 'position.edit' | translate }}
+                                  {{ 'button.edit' | translate }}
                                 </button>
                                 <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
                                   (click)="openRemoveModal(position.id, position.name)">
-                                  {{ 'position.remove' | translate }}
+                                  {{'button.delete' | translate}}
                                 </button>
                               </div>
                             </div>

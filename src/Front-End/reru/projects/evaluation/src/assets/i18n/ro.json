@@ -100,7 +100,7 @@
     "documents-template": "Șabloane",
     "documents-management": "Management de Șabloane",
     "administration": "Administrare",
-    "positions": "Poziții"
+    "positions": "Poziții vacante"
   },
   "position": {
     "administration": "Administrare",
@@ -108,7 +108,7 @@
       "add": "Adaugă poziție",
       "edit": "Editează poziție",
       "remove": "Elimină poziție",
-      "details": "Detaliile poziției",
+      "details": "Detaliile poziției vacante",
       "subtitle": "Gestionați pozițiile vacante",
       "list": "Lista de poziții vacante",
       "success-create": "Poziția a fost adăugată cu succes",

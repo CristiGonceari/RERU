@@ -100,15 +100,15 @@
     "documents-template": "Document Templates",
     "documents-management": "Document Management",
     "administration": "Administration",
-    "positions": "Positions"
+    "positions": "Vacant positions"
   },
   "position": {
     "administration": "Administration",
-    "management": "Candidate position management",
+    "management": "Vacant position management",
     "add": "Add position",
     "edit": "Edit position",
     "remove": "Remove position",
-    "details": "Candidate position details",
+    "details": "Vacant position details",
     "subtitle": "Manage candidate positions",
     "list": "Candidate position list",
     "success-create": "Position successfully created",
