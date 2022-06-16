@@ -69,9 +69,9 @@ export class TestTemplateListTableComponent implements OnInit {
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['name', 'categoriesCount', 'questionCount', 'duration', 'minPercent', 'mode', 'status'];
+		let headersDto = ['name', 'categoriesCount', 'questionCount', 'duration', 'minPercent', 'mode', 'status', "canBeSolicited"];
 		for (let i = 0; i < headersHtml.length - 1; i++) {
-			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
 		let printData = {
 			tableName: name,

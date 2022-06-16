@@ -192,7 +192,7 @@ export class PlansListComponent implements OnInit {
 		let headersHtml = table.getElementsByTagName('th');
 		let headersDto = ['name', 'description', 'fromDate', 'tillDate'];
 		for (let i=0; i<headersHtml.length-1; i++) {
-			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
 		let printData = {
 			tableName: name,
