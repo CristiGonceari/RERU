@@ -165,7 +165,7 @@ namespace IdentityServerHost.Quickstart.UI
                 return await Logout(vm);
             }
 
-            return Redirect("~/");
+            return View(vm);
         }
 
         /// <summary>
@@ -202,8 +202,8 @@ namespace IdentityServerHost.Quickstart.UI
             if (!string.IsNullOrWhiteSpace(vm.PostLogoutRedirectUri))
                 return Redirect(vm.PostLogoutRedirectUri);
 
-            return View("LoggedOut", vm);
-            //return Redirect(vm.PostLogoutRedirectUri);
+            //return View("LoggedOut", vm);
+            return Redirect(vm.PostLogoutRedirectUri);
             //vm = await BuildLoginViewModelAsync(model);
             //return await Login("Login");
             //return View("Login");
