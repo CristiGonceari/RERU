@@ -12,7 +12,7 @@ export class StatisticsComponent implements OnInit {
   statisticEnum: SelectItem[] = [{ label: "", value: "" }];
   testTemplates: SelectItem[] = [{ label: "", value: "" }];
   categories: SelectItem[] = [{ label: "", value: "" }];
-  filterEnum;
+  filterEnum: number;
   testTemplateId;
   itemsPerPage = 10;
   categoryId;
@@ -53,5 +53,4 @@ export class StatisticsComponent implements OnInit {
       filterEnum: this.filterEnum
     }
   }
-
 }

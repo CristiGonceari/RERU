@@ -45,7 +45,7 @@
                                             <label class="col-form-label pb-0 text-dark-50">{{'statistics.filter-criteria' | translate}}</label>
                                             <select class="form-control h-35px" name="filterEnum"
                                                 [(ngModel)]="filterEnum" (ngModelChange)="table.getQuestions(send())">
-                                                <option class="default-option" selected [ngValue]="null">{{'questions.select' | translate }}</option>
+                                                <option class="default-option" selected [value]="null">{{'questions.select' | translate }}</option>
                                                 <option *ngFor="let item of statisticEnum" [value]="item.value">
                                                     {{'statuses.' + item.label | translate}}
                                                 </option>
@@ -65,7 +65,7 @@
                                 <div class="w-100 mt-8">
                                     <app-confirm-button class="btn d-block"
                                         (click)="table.getHeaders(getTitle())" [width]="'100%'"
-                                        [disabled]="!(itemsPerPage && filterEnum && (testTemplateId || categoryId)) && send()">
+                                        [disabled]="!(filterEnum && (testTemplateId || categoryId))">
                                         <i class="far fa-file-pdf text-white"></i>
                                         {{'button.print' | translate}}
                                     </app-confirm-button>
