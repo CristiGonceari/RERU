@@ -66,7 +66,7 @@ export class AddEditPositionComponent implements OnInit {
 			() => {
 				forkJoin([
 					this.translate.get('modal.success'),
-					this.translate.get('pages.positions.success-create'),
+					this.translate.get('position.success-create'),
 				]).subscribe(([title, description]) => {
 					this.title = title;
 					this.description = description;
@@ -87,7 +87,7 @@ export class AddEditPositionComponent implements OnInit {
 			() => {
 				forkJoin([
 					this.translate.get('modal.success'),
-					this.translate.get('pages.positions.success-update'),
+					this.translate.get('position.success-update'),
 				]).subscribe(([title, description]) => {
 					this.title = title;
 					this.description = description;
