@@ -203,9 +203,9 @@ namespace IdentityServerHost.Quickstart.UI
                 return Redirect(vm.PostLogoutRedirectUri);
 
             //return View("LoggedOut", vm);
-            return Redirect(vm.PostLogoutRedirectUri);
+            //return Redirect(vm.PostLogoutRedirectUri);
             //vm = await BuildLoginViewModelAsync(model);
-            //return await Login("Login");
+            return await Login("Login");
             //return View("Login");
         }
 
