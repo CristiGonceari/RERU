@@ -10,25 +10,23 @@
             <thead class="text-uppercase text-muted">
                 <tr>
                     <th scope="col">{{'tests.template-name' | translate}}</th>
-                    <th scope="col" class="text-left" style="width: 100px">{{'tests.category-used-count' | translate}}</th>
-                    <th scope="col" class="text-left" style="width: 100px">
-                        {{'tests.questions-to-use-count' | translate}}
-                    </th>
-                    <th scope="col" class="text-left" style="width: 75px">{{'tests.time' | translate}}</th>
-                    <th scope="col" class="text-left" style="width: 75px">{{'verify-test.min-points' | translate}}</th>
+                    <th scope="col" class="text-left" style="width: 120px">{{'tests.category-used-count' | translate}}</th>
+                    <th scope="col" class="text-left" style="width: 120px">{{'tests.questions-to-use-count' | translate}}</th>
+                    <th scope="col" class="text-left" style="width: 100px">{{'tests.time-min' | translate}}</th>
+                    <th scope="col" class="text-left" style="width: 130px">{{'verify-test.min-points' | translate}}</th>
                     <th scope="col" class="text-left" style="width: 75px">{{'tests.mode' | translate}}</th>
-                    <th scope="col" class="text-left" style="width: 100px">{{'tests.status' | translate}}</th>
-                    <th scope="col" class="text-left" style="width: 100px"> {{'test-template.can-be-solicited' | translate}}</th>
+                    <th scope="col" class="text-left" style="width: 75px">{{'tests.status' | translate}}</th>
+                    <th scope="col" class="text-left" style="width: 75px"> {{'test-template.can-be-solicited' | translate}}</th>
                     <th scope="col" style="width: 48px"></th> 
                 </tr>
             </thead>
             <tbody class="datatable-body" *ngIf="testTemplateList.length">
                 <tr *ngFor="let testTemplate of testTemplateList" (dblclick)="navigate(testTemplate.id)" [ngSwitch]="testTemplate.canBeSolicited">
                     <td style="cursor: pointer;" [routerLink]="['type-details', testTemplate.id]">{{testTemplate.name}}</td>
-                    <td>{{ testTemplate.categoriesCount }}</td>
-                    <td>{{ testTemplate.questionCount }}</td>
-                    <td>{{ testTemplate.duration }}</td>
-                    <td>{{ testTemplate.minPercent }} %</td>
+                    <td style="text-align: center;">{{ testTemplate.categoriesCount }}</td>
+                    <td style="text-align: center;">{{ testTemplate.questionCount }}</td>
+                    <td style="text-align: center;">{{ testTemplate.duration }}</td>
+                    <td style="text-align: center;">{{ testTemplate.minPercent }}</td>
                     <td>{{'statuses.' + modeEnum[testTemplate.mode] | translate}}</td>
                     <td>{{'statuses.' + statusEnum[testTemplate.status] | translate}}</td>
                     <td *ngSwitchCase="null" class="text-center"><i class="ki ki-plus icon-md"></i></td>
