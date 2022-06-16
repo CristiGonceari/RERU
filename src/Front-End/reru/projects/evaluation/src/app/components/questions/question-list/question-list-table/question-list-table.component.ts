@@ -66,7 +66,7 @@ export class QuestionListTableComponent implements OnInit {
 		let headersHtml = document.getElementsByTagName('th');
 		let headersDto = ['question', 'categoryName', 'questionType', 'status'];
 		for (let i=0; i<headersHtml.length-1; i++) {
-			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
 		let printData = {
 			tableName: name,
