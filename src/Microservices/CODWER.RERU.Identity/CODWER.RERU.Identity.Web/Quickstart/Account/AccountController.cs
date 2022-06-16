@@ -165,7 +165,7 @@ namespace IdentityServerHost.Quickstart.UI
                 return await Logout(vm);
             }
 
-            return View(vm);
+            return Redirect("~/");
         }
 
         /// <summary>
