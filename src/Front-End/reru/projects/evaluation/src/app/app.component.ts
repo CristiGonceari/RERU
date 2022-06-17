@@ -362,7 +362,7 @@ export class AppComponent {
 	}
 
 	setIntrvl() {
-		setInterval(() => this.getTestId(), 100000);
+		setInterval(() => this.getTestId(), 360_000);
 	}
 
 	getTestId() {
