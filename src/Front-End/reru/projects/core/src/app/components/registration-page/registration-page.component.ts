@@ -74,7 +74,6 @@ export class RegistrationPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    this.currentLanguage = this.translate.currentLanguage;
     this.getMessage();
   }
 
@@ -87,6 +86,8 @@ export class RegistrationPageComponent implements OnInit {
   }
 
   getLang(): string {
+    this.currentLanguage = this.translate.currentLanguage;
+
     const value = this.languageList.find(l => l.code == this.currentLanguage);
 
     return (value.label) || "Language";
