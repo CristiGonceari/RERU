@@ -9,6 +9,7 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetCurrentUserProfile
     public class GetCurrentUserProfileQueryHandler : IRequestHandler<GetCurrentUserProfileQuery, UserProfileDto>
     {
         private readonly IUserProfileService _userProfileService;
+
         public GetCurrentUserProfileQueryHandler(IUserProfileService userProfileService)
         {
             _userProfileService = userProfileService;

@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
   }
 
   setIntrvl() {
-    setInterval(() => this.getTestId(), 300000);
+    setInterval(() => this.getTestId(), 360_000);
   }
 
   getTestId() {

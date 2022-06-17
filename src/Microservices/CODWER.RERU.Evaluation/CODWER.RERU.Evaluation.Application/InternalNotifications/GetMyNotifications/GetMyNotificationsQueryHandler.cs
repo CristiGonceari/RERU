@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Evaluation.Application.Services;
-using CODWER.RERU.Evaluation.Application.UserProfiles.GetCurrentUserProfile;
 using CODWER.RERU.Evaluation.DataTransferObjects.Notifications;
 using MediatR;
 using System.Collections.Generic;
@@ -12,18 +11,19 @@ namespace CODWER.RERU.Evaluation.Application.InternalNotifications.GetMyNotifica
     public class GetMyNotificationsQueryHandler : IRequestHandler<GetMyNotificationsQuery, List<NotificationDto>>
     {
         private readonly IInternalNotificationService _internalNotificationService;
-        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        public GetMyNotificationsQueryHandler(IInternalNotificationService internalMotificationService, IMediator mediator, IMapper mapper)
+        private readonly IUserProfileService _userProfileService;
+
+        public GetMyNotificationsQueryHandler(IInternalNotificationService internalNotificationService, IMediator mediator, IMapper mapper, IUserProfileService userProfileService)
         {
-            _internalNotificationService = internalMotificationService;
-            _mediator = mediator;
+            _internalNotificationService = internalNotificationService;
             _mapper = mapper;
+            _userProfileService = userProfileService;
         }
 
         public async Task<List<NotificationDto>> Handle(GetMyNotificationsQuery request, CancellationToken cancellationToken)
         {
-            var myUserProfile = await _mediator.Send(new GetCurrentUserProfileQuery());
+            var myUserProfile = await _userProfileService.GetCurrentUser();
             var myNotifications = await _internalNotificationService.GetMyNotifications(myUserProfile.Id);
 
             return _mapper.Map<List<NotificationDto>>(myNotifications);

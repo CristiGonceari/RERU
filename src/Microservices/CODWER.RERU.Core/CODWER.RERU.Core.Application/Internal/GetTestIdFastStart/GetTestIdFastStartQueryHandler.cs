@@ -33,15 +33,23 @@ namespace CODWER.RERU.Core.Application.Internal.GetTestIdFastStart
 
         public async Task<TestDataDto> Handle(GetTestIdFastStartQuery request, CancellationToken cancellationToken)
         {
-            var user = await _currentApplicationUserProvider.Get();
+            var currentUser = await _currentApplicationUserProvider.Get();
+
+            //var test = _appDbContext.Tests
+            //    .Include(x => x.TestTemplate.Settings)
+            //    .Where(test => test.ProgrammedTime <= _timeRangeBeforeStart &&
+            //        test.ProgrammedTime >= _timeRangeAfterStart &&
+            //        (test.TestStatus == TestStatusEnum.Programmed ||
+            //         test.TestStatus == TestStatusEnum.AlowedToStart))
+            //    .FirstOrDefault(x => x.UserProfileId == int.Parse(currentUser.Id));
 
             var test = _appDbContext.Tests
                 .Include(x => x.TestTemplate.Settings)
-                .Where(test => test.ProgrammedTime <= _timeRangeBeforeStart &&
-                    test.ProgrammedTime >= _timeRangeAfterStart &&
-                    (test.TestStatus == TestStatusEnum.Programmed ||
-                     test.TestStatus == TestStatusEnum.AlowedToStart))
-                .FirstOrDefault(x => x.UserProfileId == int.Parse(user.Id));
+                .Where(test => test.UserProfileId == int.Parse(currentUser.Id) &&
+                 (test.TestStatus == TestStatusEnum.Programmed || test.TestStatus == TestStatusEnum.AlowedToStart))
+                .FirstOrDefault(test => test.Event == null
+                    ? test.ProgrammedTime <= _timeRangeBeforeStart && test.ProgrammedTime >= _timeRangeAfterStart
+                    : test.Event.FromDate <= DateTime.Now && test.Event.TillDate >= DateTime.Now);
 
             return test == null ? new TestDataDto() : _mapper.Map<TestDataDto>(test);
         }

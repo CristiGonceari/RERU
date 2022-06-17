@@ -15,6 +15,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             _appDbContext = appDbContext;
         }
+
         public async Task AddNotification(int userProfileId, string notificationCode)
         {
             var notificationToAdd = new Notification()
@@ -27,6 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             await _appDbContext.Notifications.AddAsync(notificationToAdd);
             await _appDbContext.SaveChangesAsync();
         }
+
         public async Task<List<Notification>> GetMyNotifications(int myUserProfileId)
         {
             return await _appDbContext.Notifications
