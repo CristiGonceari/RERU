@@ -1,0 +1,20 @@
+.btn-confirm{
+        color: #FFF;
+        background: #6993FF;
+        width: 100%;
+    
+        &:disabled {
+          color: #FFF;
+          background: #E5EAEE;
+        }
+    
+        &:hover:not(:disabled) {
+          color: #FFF;
+          background: #4A7DFF;
+        }
+    
+        &:focus {
+          color: #FFF;
+          background: #6993FF;
+        }
+}
