@@ -162,7 +162,7 @@ export class UserListTableComponent implements OnInit {
 	}
 
 	openImportModal(): void {
-		const modalRef: any = this.modalService.open(ImportUsersModalComponent, { centered: true, backdrop: 'static', size: 'lg' });
+		const modalRef: any = this.modalService.open(ImportUsersModalComponent, { centered: true, size: 'xl' });
 		modalRef.result.then((data) => this.importUsers(data), () => { });
 	}
 

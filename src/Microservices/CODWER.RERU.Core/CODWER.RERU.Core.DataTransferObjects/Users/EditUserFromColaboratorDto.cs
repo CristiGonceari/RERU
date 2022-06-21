@@ -1,4 +1,5 @@
-﻿using RERU.Data.Entities.Enums;
+﻿using System;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Core.DataTransferObjects.Users
 {
@@ -10,6 +11,8 @@ namespace CODWER.RERU.Core.DataTransferObjects.Users
         public string FatherName { get; set; }
         public string Email { get; set; }
         public string Idnp { get; set; }
+        public string PhoneNumber { get; set; }
+        public DateTime? Birthday { get; set; }
         public string MediaFileId { get; set; }
         public int? CandidatePositionId { set; get; }
         public int? DepartmentColaboratorId { get; set; }

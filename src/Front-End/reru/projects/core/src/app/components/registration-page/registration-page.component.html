@@ -12,16 +12,16 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
       <div class="d-flex">
-        <img src="../../../assets/logo_2.png" alt="..." class="img-thumbnail"
-          style="max-height: 40px;">
-          <h2 style="color: white;" class="ml-3 mt-1">
-            {{'registration-page.registration-candidate-page' | translate }}</h2>
+        <img src="../../../assets/logo_2.png" alt="..." class="img-thumbnail" style="max-height: 40px;">
+        <h2 style="color: white;" class="ml-3 mt-1">
+          {{'registration-page.registration-candidate-page' | translate }}</h2>
       </div>
       <div class=" d-flex justify-content-end" id="navbarSupportedContent">
         <div class="topbar">
           <div ngbDropdown #languageDropdown="ngbDropdown" class="dropdown">
             <div class="topbar-item mr-4" data-toggle="dropdown" data-offset="10px,0px" aria-expanded="false">
-              <div ngbDropdownToggle id="languageDropdown" class="btn btn-light-primary px-3" style="border-radius:10px; font-weight: bold;">
+              <div ngbDropdownToggle id="languageDropdown" class="btn btn-light-primary px-3"
+                style="border-radius:10px; font-weight: bold;">
                 {{ getLang() }}
               </div>
             </div>
@@ -29,17 +29,20 @@
               class="dropdown-menu p-0 m-0 dropdown-menu-left dropdown-menu-anim-up">
               <ul class="navi navi-hover py-3">
                 <li class="navi-item">
-                  <a href="javascript:;" (click)="useLanguage('ro'); languageDropdown.close()" class="navi-link text-decoration-none">
+                  <a href="javascript:;" (click)="useLanguage('ro'); languageDropdown.close()"
+                    class="navi-link text-decoration-none">
                     <span class="navi-text">Română</span>
                   </a>
                 </li>
                 <li class="navi-item">
-                  <a href="javascript:;" (click)="useLanguage('en'); languageDropdown.close()" class="navi-link text-decoration-none">
+                  <a href="javascript:;" (click)="useLanguage('en'); languageDropdown.close()"
+                    class="navi-link text-decoration-none">
                     <span class="navi-text">English</span>
                   </a>
                 </li>
                 <li class="navi-item">
-                  <a href="javascript:;" (click)="useLanguage('ru'); languageDropdown.close()" class="navi-link text-decoration-none">
+                  <a href="javascript:;" (click)="useLanguage('ru'); languageDropdown.close()"
+                    class="navi-link text-decoration-none">
                     <span class="navi-text">Русский</span>
                   </a>
                 </li>
@@ -48,15 +51,15 @@
           </div>
           <div class="topbar-item" style="white-space: nowrap; font-size: 14px; font-weight: 500">
             <button type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;"
-               [routerLink]="['../']">{{ 'login.login' | translate }}</button>
+              [routerLink]="['../']">{{ 'login.login' | translate }}</button>
           </div>
         </div>
       </div>
     </div>
   </nav>
   <div class="container-fluid py-4" style="background-color: #eff1f3; color: #142b3e; font-family: Georgia, serif;">
-    <h1 class="text-center mb-10">{{ 'registration-page.about-us' | translate }}</h1>
-    <div class="row">
+    <!-- <h1 class="text-center mb-10">{{ 'registration-page.about-us' | translate }}</h1> -->
+    <!-- <div class="row">
       <div class="col"
         style="padding: 0.25rem; background-color: #fff; border: 1px solid #dee2e6; border-radius: 0.25rem; max-width: 100%; height: auto; margin-left: 4%">
         <div class="text-center">
@@ -81,16 +84,17 @@
           <img src="../../../assets/Step-By-Step-photo.png" class="img-fluid img-thumbnail" style="background-size: cover;" />
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 
-  <div class="container-fluid" style="background-color: #eff1f3;">
-    <div class="container py-4" style="font-family: Georgia, serif;">
-      <div class="row p-3">
-        <h1 class="text-center mb-4">{{ 'registration-page.registration' | translate }}</h1>
-        <div *ngIf="!success" class="col-xl-6 col-lg-6 col-md-12 col-xs-12"
-          style="border: 1px solid #212529; border-radius: 9px; padding: 11px; margin-bottom: 7px;">
-          <h4 class="text-center">{{ 'registration-page.registration-datas' | translate }}</h4>
+  <div class="container-fluid" style="background-color: #eff1f3; height: 100%;">
+    <div class="container" style="font-family: Georgia, serif;">
+      <div class="row p-3 mt-4">
+        <!-- <h1 class="text-center mb-4">{{ 'registration-page.registration' | translate }}</h1> -->
+        <div *ngIf="!success" class="col-xl-12 col-lg-12 col-md-12 col-xs-12"
+          style="padding: 2.25rem; background-color: #fff; border: 1px solid #dee2e6; border-radius: 0.25rem; max-width: 100%; height: auto; margin-left: 4%">
+          <h4 class="text-center" style="margin-bottom: 3.0rem;">{{ 'registration-page.registration-datas' | translate
+            }}</h4>
           <form [formGroup]="userForm">
             <div class="form-row">
               <div class="form-group col-md-4">
@@ -152,6 +156,36 @@
                 </div>
               </div>
               <div class="form-group col-md-6">
+                <label for="inputPassword4">{{ 'user.birthday' | translate }}</label>
+                <input class="form-control form-control-lg form-control-solid" placeholder="dd-mm-yyyy" name="birthday"
+                  type="date" formControlName="birthday"
+                  [ngClass]="{'is-invalid': hasErrors('birthday'), 'is-valid': userForm.get('birthday').valid}" />
+                <div *ngIf="hasErrors('birthday')" class="fv-plugins-message-container">
+                  <div *ngIf="hasError('birthday', 'required')" data-field="birthday" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'login.birthday-is-required' | translate }}</div>
+                  <div *ngIf="hasError('birthday', 'birthday')" data-field="birthday" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'login.birthday-is-required' | translate }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputPassword4">{{ 'user.phone' | translate }}</label>
+                <input class="form-control form-control-lg form-control-solid" name="phoneNumber" type="tel"
+                  formControlName="phoneNumber"
+                  [ngClass]="{'is-invalid': hasErrors('phoneNumber'), 'is-valid': userForm.get('phoneNumber').valid}" />
+                <div *ngIf="hasErrors('phoneNumber')" class="fv-plugins-message-container">
+                  <div *ngIf="hasError('phoneNumber', 'required')" data-field="phoneNumber" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'login.phone-is-required' | translate }}</div>
+                  <div *ngIf="hasError('phoneNumber', 'phoneNumber')" data-field="phoneNumber" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'login.phone-is-required' | translate }}</div>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
                 <label for="inputPassword4">{{ 'table.email' | translate }}</label>
                 <input class="form-control form-control-lg form-control-solid" name="email" type="email"
                   formControlName="email"
@@ -180,19 +214,21 @@
               </div>
             </div>
 
-            <div class="form-row">
+            <!-- <div class="form-row">
               <div class="col-md-12">
                 <label for="inputAddress">{{ 'registration-page.personal-file-msg' | translate }}</label>
                 <button [disabled]="isLoadingButton" type="button" (click)="downloadFile()"
                   class="btn btn-success mb-5">
-                <i class="far fa-file-excel" *ngIf="!isLoadingButton"></i>
-                <span class="text-white ml-2 font-weight-bold font-size-lg" *ngIf="!isLoadingButton">{{'registration-page.personal-file' | translate}}</span>
-                <span class="text-white mr-2 font-weight-bold font-size-lg" *ngIf="isLoadingButton">{{'registration-page.is-downloading' | translate}}</span>
-                <div *ngIf="isLoadingButton" class="spinner-border spinner-border-sm text-white" role="status"></div>
-              </button>
+                  <i class="far fa-file-excel" *ngIf="!isLoadingButton"></i>
+                  <span class="text-white ml-2 font-weight-bold font-size-lg"
+                    *ngIf="!isLoadingButton">{{'registration-page.personal-file' | translate}}</span>
+                  <span class="text-white mr-2 font-weight-bold font-size-lg"
+                    *ngIf="isLoadingButton">{{'registration-page.is-downloading' | translate}}</span>
+                  <div *ngIf="isLoadingButton" class="spinner-border spinner-border-sm text-white" role="status"></div>
+                </button>
               </div>
-            </div>
-            <div class="form-row py-8">
+            </div> -->
+            <!-- <div class="form-row py-8">
               <div class="col-md-12">
                 <ngx-dropzone (change)="onSelect($event)" class="font-weight-light justify-content-center"
                   [expandable]="true" [multiple]="true">
@@ -205,38 +241,40 @@
                   </ngx-dropzone-image-preview>
                 </ngx-dropzone>
               </div>
-            </div>
-            <div class="form-row py-8">
+            </div> -->
+            <div class="form-row">
               <div class="col-md-12">
                 <p>
-                <input type="checkbox" id="checkbox" (change)="accept = !accept">
-                {{ 'registration-page.accept-condition' | translate }} <button type="button" class="btn btn-link" (click)="openAcceptConditionsModal()">{{ 'registration-page.registration-conditions' | translate }}</button>
+                  <input type="checkbox" id="checkbox" (change)="accept = !accept">
+                  {{ 'registration-page.accept-condition' | translate }} <button type="button" class="btn btn-link"
+                    (click)="openAcceptConditionsModal()">{{ 'registration-page.registration-conditions' | translate
+                    }}</button>
                 </p>
               </div>
             </div>
-            <button type="submit" [disabled]="!accept" class="btn btn-primary float-right" (click)="addUser()">{{ 'button.confirm' |
+            <button type="submit" [disabled]="!accept" class="btn btn-primary float-right"
+              (click)="verifyEmailCode()">{{
+              'button.confirm' |
               translate }}</button>
           </form>
         </div>
-        <div *ngIf="success" class="col-xl-6 col-lg-6 col-md-12 col-xs-12"
+        <div *ngIf="success" class="col-xl-12 col-lg-12 col-md-12 col-xs-12"
           style="border: 1px solid #212529; border-radius: 9px; padding: 11px; margin-bottom: 7px;">
           <div class="alert alert-dark" role="alert">
             {{ 'registration-page.success-message' | translate }}
           </div>
         </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-xs-12">
+        <!-- <div class="col-xl-6 col-lg-6 col-md-12 col-xs-12">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2720.028347693455!2d28.836176615791832!3d47.020048579150114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c97c307d536dd5%3A0x3aa9e3993d05a6c!2z0JzQuNC90LjRgdGC0LXRgNGB0YLQstC-INCy0L3Rg9GC0YDQtdC90L3QuNGFINC00LXQuw!5e0!3m2!1sru!2s!4v1647866771697!5m2!1sru!2s"
             width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
 
-  <div class="container-fluid bg-dark navbar-dark sticky-bottom">
-    <footer class="py-3 my-4">
-      <p class="text-center text-muted">&copy; {{ year }} Company, Inc</p>
-    </footer>
+  <div class="footer fixed-bottom container-fluid bg-dark navbar-dark py-2">
+    <p class="text-center text-muted mt-1">&copy; {{ year }} Company, Inc</p>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
