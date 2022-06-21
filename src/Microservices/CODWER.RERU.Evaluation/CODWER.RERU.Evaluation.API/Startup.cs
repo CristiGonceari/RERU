@@ -107,8 +107,8 @@ namespace CODWER.RERU.Evaluation.API
 
             services.AddCommonLoggingContext(Configuration);
 
-            services.AddHangfire(config =>
-                config.UsePostgreSqlStorage(Configuration.GetConnectionString("RERU")));
+            //services.AddHangfire(config =>
+            //    config.UsePostgreSqlStorage(Configuration.GetConnectionString("RERU")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -127,8 +127,8 @@ namespace CODWER.RERU.Evaluation.API
 
             DatabaseSeeder.SeedDb(appDbContext);
 
-            app.UseHangfireDashboard();
-            app.UseHangfireServer();
+            //app.UseHangfireDashboard();
+            //app.UseHangfireServer();
 
             //RecurringJob.AddOrUpdate<SendEmailNotificationBeforeTest>(x => x.SendNotificationBeforeTest(), "*/5 * * * *");
 
