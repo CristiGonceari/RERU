@@ -47,19 +47,22 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             await SetTotalNumberOfProcesses(request.ProcessId, totalRows);
 
 
+
+
             for (var i = 1; i <= totalRows; i++)
             {
                 var idnp = workSheet.Cells[i, 4]?.Value?.ToString();
+                var dateArray = workSheet.Cells[i, 9]?.Value?.ToString()?.Split("/");
 
                 var user = _appDbContext.UserProfiles.FirstOrDefault(x => x.Idnp == idnp);
 
                 if (user != null)
                 {
-                    await EditUser(workSheet, user, request, i);
+                    await EditUser(workSheet, user, request, i, dateArray);
                 }
                 else
                 {
-                    await CreateUser(workSheet, request ,i);
+                    await CreateUser(workSheet, request ,i, dateArray);
                 }
             }
 
@@ -78,40 +81,40 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             await _appDbContext.SaveChangesAsync();
         }
 
-        private async Task EditUser(ExcelWorksheet workSheet, UserProfile user, BulkImportUsersCommand request, int i)
+        private async Task EditUser(ExcelWorksheet workSheet, UserProfile user, BulkImportUsersCommand request, int i, string[] dateStrings)
         {
             try
             {
-                var editCommand = GetEditUserCommand(workSheet, user, i);
+                var editCommand = GetEditUserCommand(workSheet, user, i, dateStrings);
 
                 await Mediator.Send(editCommand);
 
                 await UpdateProcesses(request.ProcessId);
 
-                workSheet.Cells[i, 9].Value = "Editat";
+                workSheet.Cells[i, 11].Value = "Editat";
             }
             catch (Exception e)
             {
-                workSheet.Cells[i, 9].Value = $"Error: {e.Message}";
+                workSheet.Cells[i, 11].Value = $"Error: {e.Message}";
                 Console.WriteLine(e);
             }
         }
 
-        private async Task CreateUser(ExcelWorksheet workSheet, BulkImportUsersCommand request, int i)
+        private async Task CreateUser(ExcelWorksheet workSheet, BulkImportUsersCommand request, int i, string[] dateStrings)
         {
             try
             {
-                var command = GetCreateUserCommand(workSheet, i);
+                var command = GetCreateUserCommand(workSheet, i, dateStrings);
 
                 await Mediator.Send(command);
 
                 await UpdateProcesses(request.ProcessId);
 
-                workSheet.Cells[i, 9].Value = "Adăugat";
+                workSheet.Cells[i, 11].Value = "Adăugat";
             }
             catch (Exception e)
             {
-                workSheet.Cells[i, 9].Value = $"Error: {e.Message}";
+                workSheet.Cells[i, 11].Value = $"Error: {e.Message}";
                 Console.WriteLine(e);
             }
         }
@@ -136,7 +139,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             await _appDbContext.SaveChangesAsync();
         }
 
-        private CreateUserCommand GetCreateUserCommand(ExcelWorksheet workSheet, int i)
+        private CreateUserCommand GetCreateUserCommand(ExcelWorksheet workSheet, int i, string[] dateStrings)
         {
             return new CreateUserCommand
             {
@@ -148,11 +151,13 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0"),
                 RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
                 EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "False"),
+                Birthday = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[1]), int.Parse(dateStrings[0])),
+                PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString(),
                 AccessModeEnum = AccessModeEnum.CurrentDepartment
             };
         }
 
-        private EditUserFromColaboratorCommand GetEditUserCommand(ExcelWorksheet workSheet, UserProfile user, int i)
+        private EditUserFromColaboratorCommand GetEditUserCommand(ExcelWorksheet workSheet, UserProfile user, int i, string[] dateStrings)
         {
             return new EditUserFromColaboratorCommand()
             {
@@ -165,6 +170,8 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0"),
                 RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
                 EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "True"),
+                Birthday = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[1]), int.Parse(dateStrings[0])),
+                PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString(),
                 AccessModeEnum = AccessModeEnum.CurrentDepartment
             };
         }

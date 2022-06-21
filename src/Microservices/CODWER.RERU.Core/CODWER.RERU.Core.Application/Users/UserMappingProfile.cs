@@ -61,6 +61,9 @@ namespace CODWER.RERU.Core.Application.Users
                .ForMember(x => x.UserName, opts => opts.MapFrom(src => src.UserProfile.FirstName + " " + src.UserProfile.LastName + " " + src.UserProfile.FatherName))
                .ForMember(x => x.Result, opts => opts.MapFrom(src => src.ResultStatus))
                .ForMember(x => x.VerificationProgress, opts => opts.MapFrom(src => GetVerifiationStatus(src)));
+
+            CreateMap<EmailVerificationCodeDto, EmailVerification>()
+                .ForMember(x => x.Id, opts => opts.Ignore());
         }
 
         private string GetVerifiationStatus(Test inputTest)

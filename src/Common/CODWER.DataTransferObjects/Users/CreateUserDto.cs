@@ -1,3 +1,5 @@
+using System;
+
 namespace CVU.ERP.Common.DataTransferObjects.Users
 {
     public class CreateUserDto
@@ -13,5 +15,7 @@ namespace CVU.ERP.Common.DataTransferObjects.Users
         public int? RoleColaboratorId { get; set; }
         public bool EmailNotification { get; set; }
         public int AccessModeEnum { get; set; }
+        public string PhoneNumber { get; set; }
+        public DateTime? Birthday { get; set; }
     }
 }

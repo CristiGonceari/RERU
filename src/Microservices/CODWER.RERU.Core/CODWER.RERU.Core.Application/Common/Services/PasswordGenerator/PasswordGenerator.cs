@@ -139,6 +139,12 @@ namespace CODWER.RERU.Core.Application.Common.Services.PasswordGenerator
             }
             return result;
         }
+
+        public string RandomEmailCode()
+        {
+            const string chars = "0123456789";
+            return new string(Enumerable.Repeat(chars, 4).Select(s => s[_randomSecure.Next(s.Length)]).ToArray());
+        }
     }
 
     internal static class Extensions

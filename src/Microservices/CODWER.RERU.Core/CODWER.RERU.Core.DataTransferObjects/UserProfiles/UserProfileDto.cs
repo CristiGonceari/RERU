@@ -1,4 +1,5 @@
-﻿using CVU.ERP.Common.DataTransferObjects.Users;
+﻿using System;
+using CVU.ERP.Common.DataTransferObjects.Users;
 using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Core.DataTransferObjects.UserProfiles
@@ -12,6 +13,8 @@ namespace CODWER.RERU.Core.DataTransferObjects.UserProfiles
         public string UserName { set; get; }
         public string Email { get; set; }
         public string Idnp { get; set; }
+        public string PhoneNumber { get; set; }
+        public DateTime? Birthday { get; set; }
         public string? MediaFileId { get; set; }
         public int? CandidatePositionId { set; get; }
         public int? DepartmentColaboratorId { get; set; }

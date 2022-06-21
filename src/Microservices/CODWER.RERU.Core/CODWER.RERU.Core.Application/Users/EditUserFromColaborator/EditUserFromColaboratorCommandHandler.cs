@@ -47,6 +47,8 @@ namespace CODWER.RERU.Core.Application.Users.EditUserFromColaborator
                 LastName = request.LastName,
                 FatherName = request.FatherName,
                 Idnp = request.Idnp,
+                Birthday = request.Birthday,
+                PhoneNumber = request.PhoneNumber,
                 Email = request.Email,
                 DepartmentColaboratorId = request.DepartmentColaboratorId == 0 ? null : request.DepartmentColaboratorId,
                 RoleColaboratorId = request.RoleColaboratorId == 0 ? null : request.RoleColaboratorId,

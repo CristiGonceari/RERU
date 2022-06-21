@@ -8,7 +8,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./import-users-modal.component.scss']
 })
 export class ImportUsersModalComponent implements OnInit {
-
   uploadForm: FormGroup;
   isLoading: boolean = true;
   

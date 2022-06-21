@@ -14,10 +14,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WatchInfoVideoModalComponent } from '../../utils/modals/watch-info-video-modal/watch-info-video-modal.component'
 import { UserFilesService } from '../../utils/services/user-files.service';
 import { RegistrationPageService } from '../../utils/services/registration-page.service'
-import { ApplicationUserService} from '@erp/shared';
+import { ApplicationUserService } from '@erp/shared';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { AcceptConditionsModalComponent } from '../../utils/modals/accept-conditions-modal/accept-conditions-modal.component';
+import { VerifyEmailCodeModalComponent } from '../../utils/modals/verify-email-code-modal/verify-email-code-modal.component';
 import { saveAs } from 'file-saver';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration-page',
@@ -25,7 +27,6 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./registration-page.component.scss']
 })
 export class RegistrationPageComponent implements OnInit {
-
   userForm: FormGroup;
   title: string;
   description: string;
@@ -33,7 +34,7 @@ export class RegistrationPageComponent implements OnInit {
   files: File[] = [];
   textValue: string = "";
   canEdit: boolean = false;
-  accept: boolean = false; 
+  accept: boolean = false;
   year = new Date().getFullYear();
   public Editor = DecoupledEditor;
   public onReady(editor) {
@@ -42,6 +43,7 @@ export class RegistrationPageComponent implements OnInit {
       editor.ui.getEditableElement()
     );
   }
+  modalRef;
 
   isLoadingButton: boolean = false;
   userId: any;
@@ -50,6 +52,7 @@ export class RegistrationPageComponent implements OnInit {
   userFileType: FileTypeEnum = FileTypeEnum.Documents;
   attachedFile: File;
   selectedProject: number;
+  code: string;
 
   languageList = [
     { code: 'en', label: 'English' },
@@ -70,11 +73,19 @@ export class RegistrationPageComponent implements OnInit {
     private modalService: NgbModal,
     private registrationPageService: RegistrationPageService,
     private applicationUserService: ApplicationUserService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.initForm();
     this.getMessage();
+    this.inregistrationService.code.subscribe((val: any) => {
+      if (val) {
+        this.code = val;
+        this.addUser();
+      }
+    })
   }
 
   openModal() {
@@ -82,7 +93,7 @@ export class RegistrationPageComponent implements OnInit {
   }
 
   openAcceptConditionsModal() {
-    const modalRef = this.modalService.open(AcceptConditionsModalComponent, { centered: true, size: 'lg'});
+    const modalRef = this.modalService.open(AcceptConditionsModalComponent, { centered: true, size: 'lg' });
   }
 
   getLang(): string {
@@ -120,7 +131,7 @@ export class RegistrationPageComponent implements OnInit {
   }
 
   editMessage() {
-    this.registrationPageService.editMessage({message: this.textValue}).subscribe();
+    this.registrationPageService.editMessage({ message: this.textValue }).subscribe();
   }
 
   isIdnpLengthValidator(field: string): boolean {
@@ -135,6 +146,8 @@ export class RegistrationPageComponent implements OnInit {
       idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
       email: this.fb.control(null, [Validators.required, Validators.email]),
       emailNotification: this.fb.control(false, [Validators.required]),
+      birthday: this.fb.control(null, [Validators.required]),
+      phoneNumber: this.fb.control(null, [Validators.required])
     });
   }
 
@@ -147,6 +160,12 @@ export class RegistrationPageComponent implements OnInit {
     this.files.splice(this.files.indexOf(event), 1);
   }
 
+  verifyEmailCode() {
+    this.inregistrationService.verifyEmail({ email: this.userForm.value.email }).subscribe(res => {
+      this.modalRef = this.modalService.open(VerifyEmailCodeModalComponent, { centered: true, size: 'md' });
+    });
+  }
+
   addUser(): void {
     const request = new FormData();
 
@@ -157,9 +176,14 @@ export class RegistrationPageComponent implements OnInit {
       email: this.userForm.value.email,
       idnp: this.userForm.value.idnp,
       emailNotification: this.userForm.value.emailNotification = true,
+      birthday: this.userForm.value.birthday,
+      phoneNumber: this.userForm.value.phoneNumber,
+      code: this.code
     }
 
     this.inregistrationService.inregistrateUser(data).subscribe(res => {
+      this.modalRef.close();
+
       forkJoin([
         this.translate.get('modal.success'),
         this.translate.get('user.succes-create'),
@@ -187,6 +211,10 @@ export class RegistrationPageComponent implements OnInit {
         this.userFilesService.create(formData).subscribe(res => { })
       }
 
+      setTimeout(() => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      }, 5000);
+
     }, () => {
       forkJoin([
         this.translate.get('notification.title.error'),
@@ -201,9 +229,9 @@ export class RegistrationPageComponent implements OnInit {
 
   downloadFile(): void {
     this.isLoadingButton = true;
-		this.inregistrationService.getPersonalFile().subscribe((response : any) => {
+    this.inregistrationService.getPersonalFile().subscribe((response: any) => {
       let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
-      
+
       if (response.body.type === 'application/xlsx') {
         fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
       }
@@ -212,8 +240,8 @@ export class RegistrationPageComponent implements OnInit {
       const file = new File([blob], fileName, { type: response.body.type });
       saveAs(file);
       this.isLoadingButton = false;
-		});
-	}
+    });
+  }
 
   checkFile(event) {
     if (event != null) this.attachedFile = event;
