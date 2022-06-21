@@ -1,12 +1,14 @@
 ﻿using CODWER.RERU.Core.Application.Validation;
-using CODWER.RERU.Core.Application.Validators.IDNP;
+using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 using FluentValidation.Validators;
-using System.Linq;
+using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Linq;
+using CODWER.RERU.Core.Application.Validators.IDNP;
 
 namespace CODWER.RERU.Core.Application.Users.CreateUser
 {
@@ -36,6 +38,20 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
                 .EmailAddress()
                 .WithMessage(ValidationMessages.InvalidInput)
                 .WithErrorCode(ValidationCodes.INVALID_EMAIL_FORMAT);
+
+            When(r => r.DepartmentColaboratorId != null, () =>
+            {
+                RuleFor(x => x.DepartmentColaboratorId.Value)
+                    .SetValidator(x => new ItemMustExistValidator<Department>(appDbContext, ValidationCodes.INVALID_DEPARTMENT_ID,
+                        ValidationMessages.InvalidReference));
+            });
+
+            When(r => r.RoleColaboratorId != null, () =>
+            {
+                RuleFor(x => x.RoleColaboratorId.Value)
+                    .SetValidator(x => new ItemMustExistValidator<Role>(appDbContext, ValidationCodes.INVALID_ROLE_ID,
+                        ValidationMessages.InvalidReference));
+            });
 
             RuleFor(x => x.AccessModeEnum)
                 .NotNull()
