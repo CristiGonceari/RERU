@@ -15,6 +15,9 @@ export class AddTestHistoryModalComponent implements OnInit {
   processesData: any;
   recivedData: boolean = false;
 
+  isRunningProcess: boolean = false;
+  cancelRequest: boolean = false;
+
   constructor(
     private activeModal: NgbActiveModal,
     private getBulkProgressHistoryService: GetBulkProgressHistoryService,
@@ -25,15 +28,32 @@ export class AddTestHistoryModalComponent implements OnInit {
     this.getBulkProgressHistoryService.getProgressHistory().subscribe(res => {
       this.processesData = res.data,
       this.recivedData = true;
+      this.checkIfAreAnyNotDone(this.processesData);
     })
+
   }
 
   close(): void {
-    this.activeModal.close();
+    this.activeModal.close(this.cancelRequest);
   }
 
   dismiss(): void {
     this.activeModal.dismiss();
+  }
+
+  closeAllProcesses(){
+    this.getBulkProgressHistoryService.closeAllProcesses().subscribe();
+    this.getBulkProgressHistoryService.cancelRequest(this.cancelRequest);
+    this.isRunningProcess = false;
+  }
+
+  checkIfAreAnyNotDone(items: any){
+    items.forEach(element => {
+      if(element.isDone == false){
+       this.isRunningProcess = true
+       this.cancelRequest = true
+      }
+    });
   }
 
   getResultFile(fileId){

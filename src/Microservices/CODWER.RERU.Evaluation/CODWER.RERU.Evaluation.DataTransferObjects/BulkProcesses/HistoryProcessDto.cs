@@ -9,5 +9,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.BulkProcesses
         public string FileId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        public bool isDone { get; set; }
     }
 }
