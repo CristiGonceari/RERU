@@ -204,7 +204,7 @@ namespace IdentityServerHost.Quickstart.UI
 
             //return View("LoggedOut", vm);
 
-            return Redirect("/ms/reru-identity-new/Account/Login");
+            return Redirect("/");
 
             //return Redirect(vm.PostLogoutRedirectUri);
             //vm = await BuildLoginViewModelAsync(model);
