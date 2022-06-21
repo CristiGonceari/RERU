@@ -21,7 +21,7 @@ namespace CVU.ERP.Module.Application.ImportProcesses.GetImportProcess
 
         public async Task<ProcessDataDto> Handle(GetImportProcessQuery request, CancellationToken cancellationToken)
         {
-            var process = _appDbContext.Processes.FirstOrDefault(x => x.Id == request.ProcessId && x.ProcessesEnumType == ProcessesEnum.BulkAddUsers);
+            var process = _appDbContext.Processes.FirstOrDefault(x => x.Id == request.ProcessId);
 
             return _mapper.Map<ProcessDataDto>(process);
         }

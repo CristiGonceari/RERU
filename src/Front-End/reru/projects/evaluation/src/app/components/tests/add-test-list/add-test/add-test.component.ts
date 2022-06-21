@@ -11,7 +11,7 @@ import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notific
 import { AddEditTest } from '../../../../utils/models/tests/add-edit-test.model';
 import { FormControl } from '@angular/forms';
 import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
-import { forkJoin } from 'rxjs';
+import { BehaviorSubject, forkJoin, interval, Subscribable, Subscriber } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { AttachUserModalComponent } from 'projects/evaluation/src/app/utils/components/attach-user-modal/attach-user-modal.component';
@@ -20,6 +20,8 @@ import { EventService } from 'projects/evaluation/src/app/utils/services/event/e
 import { NgtscCompilerHost } from '@angular/compiler-cli/src/ngtsc/file_system';
 import { Subscription, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { GetBulkProgressHistoryService } from 'projects/evaluation/src/app/utils/services/bulk-progress/get-bulk-progress-history.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -55,8 +57,13 @@ export class AddTestComponent implements OnInit {
   disableBtn: boolean = false;
   isStartAddingTests: boolean = false;
 
+  cancelRequest: any;
+  request;
+
   toolBarValue: number = 0;
   toolBarProcents: number = 0;
+
+  addTestRequest: any = 0;
 
   date: Date;
   search: string;
@@ -72,11 +79,13 @@ export class AddTestComponent implements OnInit {
     private notificationService: NotificationsService,
     private printService: PrintTemplateService,
     private modalService: NgbModal,
-    private eventService: EventService
+    private eventService: EventService,
+    private getProcessService: GetBulkProgressHistoryService
   ) { }
 
   ngOnInit(): void {
     this.getEvents();
+    this.getProcessService.currentSendToCancelRequest.subscribe(msg => { this.cancelRequest = msg });
   }
 
   getEvents() {
@@ -163,12 +172,12 @@ export class AddTestComponent implements OnInit {
     this.disableBtn = true
     this.isStartAddingTests = true;
 
-    this.testService.startAddProcess({ totalProcesses: this.parse().userProfileId.length , processType: 2}).subscribe(res => {
+    this.testService.startAddProcess({ totalProcesses: this.parse().userProfileId.length, processType: 2 }).subscribe(res => {
       this.processId = res.data;
 
       const interval = this.setIntervalGetProcess();
 
-      this.testService.createTest(this.parse()).subscribe(() => {
+      this.request = this.testService.createTest(this.parse()).subscribe(() => {
         forkJoin([
           this.translate.get('modal.success'),
           this.translate.get('tests.tests-were-programmed'),
@@ -185,11 +194,12 @@ export class AddTestComponent implements OnInit {
         this.disableBtn = false;
         this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       });
+
     })
   }
 
-  setIntervalGetProcess(){
-   return setInterval(() => {
+  setIntervalGetProcess() {
+    return setInterval(() => {
       this.testService.getImportProcess(this.processId).subscribe(res => {
         this.processProgress = res.data;
         this.toolBarValue = Math.round(this.processProgress.done * 100 / this.processProgress.total);
@@ -197,7 +207,7 @@ export class AddTestComponent implements OnInit {
     }, 10 * 300);
   }
 
-  downloadProcessResult(){
+  downloadProcessResult() {
     if (this.toolBarValue == 100) {
       this.testService.getImportProcess(this.processId).subscribe(res => {
         this.processProgress = res.data;
