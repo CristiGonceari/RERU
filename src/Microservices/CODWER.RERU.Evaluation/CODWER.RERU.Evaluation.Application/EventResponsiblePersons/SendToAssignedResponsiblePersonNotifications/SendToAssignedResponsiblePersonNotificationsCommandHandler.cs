@@ -32,7 +32,9 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.SendToAssig
         public async Task<Unit> Handle(SendToAssignedResponsiblePersonNotificationsCommand request, CancellationToken cancellationToken)
         {
 
-            var eventResponsiblePerson = _appDbContext.EventResponsiblePersons.FirstOrDefault(erp => erp.UserProfileId == request.UserProfileId);
+            var eventResponsiblePerson = _appDbContext.EventResponsiblePersons
+                .Include(x => x.Event)
+                .FirstOrDefault(erp => erp.UserProfileId == request.UserProfileId);
 
             await _internalNotificationService.AddNotification(eventResponsiblePerson.UserProfileId, NotificationMessages.YouWereInvitedToEventAsCandidate);
 
