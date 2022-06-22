@@ -35,6 +35,11 @@ export class AddComponent implements OnInit {
   accessModes: SelectItem[] = [{ label: '', value: '' }];
   accesModeEnum = AccessModeEnum;
 
+  birthday;
+  fromData = '';
+  fromDate;
+  startDate;
+
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
@@ -95,6 +100,8 @@ export class AddComponent implements OnInit {
       fatherName: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'),]),
       idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
       email: this.fb.control(null, [Validators.required, Validators.email]),
+      birthday: this.fb.control(null, [Validators.required]),
+      phoneNumber: this.fb.control(null, [Validators.required]),
       departmentColaboratorId: this.fb.control(null, [Validators.required]),
       roleColaboratorId: this.fb.control(null, [Validators.required]),
       emailNotification: this.fb.control(false, [Validators.required]),
@@ -118,6 +125,8 @@ export class AddComponent implements OnInit {
       departmentColaboratorId: this.userForm.value.departmentColaboratorId,
       roleColaboratorId: this.userForm.value.roleColaboratorId,
       emailNotification: this.userForm.value.emailNotification,
+      birthday: this.userForm.value.birthday,
+      phoneNumber: this.userForm.value.phoneNumber,
       accessModeEnum: this.userForm.value.accessModeEnum
     }
 

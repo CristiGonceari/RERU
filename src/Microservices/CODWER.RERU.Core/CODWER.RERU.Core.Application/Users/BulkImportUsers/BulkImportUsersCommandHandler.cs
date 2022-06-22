@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Entities;
+using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
@@ -21,6 +22,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
     {
         private readonly AppDbContext _appDbContext;
         private readonly IStorageFileService _storageFileService;
+        
 
         public BulkImportUsersCommandHandler(ICommonServiceProvider commonServiceProvider,
             AppDbContext appDbContext, IStorageFileService storageFileService) : base(commonServiceProvider)
@@ -34,7 +36,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             return await Import(request); 
         }
 
-        public async Task<FileDataDto> Import(BulkImportUsersCommand request)
+        private async Task<FileDataDto> Import(BulkImportUsersCommand request)
         {
             var fileStream = new MemoryStream();
             await request.Data.File.CopyToAsync(fileStream);
@@ -44,79 +46,27 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
             await SetTotalNumberOfProcesses(request.ProcessId, totalRows);
 
+
+
+
             for (var i = 1; i <= totalRows; i++)
             {
-                var command = new CreateUserCommand
-                {
-                    LastName = workSheet.Cells[i, 1]?.Value?.ToString(),
-                    FirstName = workSheet.Cells[i, 2]?.Value?.ToString(),
-                    FatherName = workSheet.Cells[i, 3]?.Value?.ToString(),
-                    Idnp = workSheet.Cells[i, 4]?.Value?.ToString(),
-                    Email = workSheet.Cells[i, 5]?.Value?.ToString(),
-                    DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0"),
-                    RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
-                    EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "True"),
-                    AccessModeEnum = AccessModeEnum.CurrentDepartment
-                };
+                var idnp = workSheet.Cells[i, 4]?.Value?.ToString();
+                var dateArray = workSheet.Cells[i, 9]?.Value?.ToString()?.Split("/");
 
-                var user = _appDbContext.UserProfiles.FirstOrDefault(x => x.Idnp == command.Idnp);
+                var user = _appDbContext.UserProfiles.FirstOrDefault(x => x.Idnp == idnp);
 
                 if (user != null)
                 {
-                    try
-                    {
-                        var editCommand = new EditUserFromColaboratorCommand()
-                        {
-                            Id = user.Id,
-                            LastName = workSheet.Cells[i, 1]?.Value?.ToString(),
-                            FirstName = workSheet.Cells[i, 2]?.Value?.ToString(),
-                            FatherName = workSheet.Cells[i, 3]?.Value?.ToString(),
-                            Idnp = workSheet.Cells[i, 4]?.Value?.ToString(),
-                            Email = workSheet.Cells[i, 5]?.Value?.ToString(),
-                            DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0"),
-                            RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
-                            EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "True"),
-                            AccessModeEnum = AccessModeEnum.CurrentDepartment
-                        };
-
-                        await Mediator.Send(editCommand);
-
-                        await UpdateProcesses(request.ProcessId);
-
-                        workSheet.Cells[i, 9].Value = "Editat";
-                    }
-                    catch (Exception e)
-                    {
-                        workSheet.Cells[i, 9].Value = $"Error: {e.Message}";
-                        Console.WriteLine(e);
-                    }
+                    await EditUser(workSheet, user, request, i, dateArray);
                 }
                 else
                 {
-                    try
-                    {
-                        await Mediator.Send(command);
-
-                        await UpdateProcesses(request.ProcessId);
-
-                        workSheet.Cells[i, 9].Value = "Adăugat";
-                    }
-                    catch (Exception e)
-                    {
-                        workSheet.Cells[i, 9].Value = $"Error: {e.Message}";
-                        Console.WriteLine(e);
-                    }
+                    await CreateUser(workSheet, request ,i, dateArray);
                 }
             }
 
-            var streamBytesArray = package.GetAsByteArray();
-
-            var excelFile = new FileDataDto
-            {
-                Content = streamBytesArray,
-                Name = "User-Import-Result",
-                ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            };
+            var excelFile = GetExcelFile(package);
 
             await SaveExcelFile(request.ProcessId, excelFile);
 
@@ -129,6 +79,44 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             process.Total = totalUsers;
 
             await _appDbContext.SaveChangesAsync();
+        }
+
+        private async Task EditUser(ExcelWorksheet workSheet, UserProfile user, BulkImportUsersCommand request, int i, string[] dateStrings)
+        {
+            try
+            {
+                var editCommand = GetEditUserCommand(workSheet, user, i, dateStrings);
+
+                await Mediator.Send(editCommand);
+
+                await UpdateProcesses(request.ProcessId);
+
+                workSheet.Cells[i, 11].Value = "Editat";
+            }
+            catch (Exception e)
+            {
+                workSheet.Cells[i, 11].Value = $"Error: {e.Message}";
+                Console.WriteLine(e);
+            }
+        }
+
+        private async Task CreateUser(ExcelWorksheet workSheet, BulkImportUsersCommand request, int i, string[] dateStrings)
+        {
+            try
+            {
+                var command = GetCreateUserCommand(workSheet, i, dateStrings);
+
+                await Mediator.Send(command);
+
+                await UpdateProcesses(request.ProcessId);
+
+                workSheet.Cells[i, 11].Value = "Adăugat";
+            }
+            catch (Exception e)
+            {
+                workSheet.Cells[i, 11].Value = $"Error: {e.Message}";
+                Console.WriteLine(e);
+            }
         }
 
         private async Task UpdateProcesses(int processId)
@@ -149,6 +137,55 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             process.IsDone = true;
 
             await _appDbContext.SaveChangesAsync();
+        }
+
+        private CreateUserCommand GetCreateUserCommand(ExcelWorksheet workSheet, int i, string[] dateStrings)
+        {
+            return new CreateUserCommand
+            {
+                LastName = workSheet.Cells[i, 1]?.Value?.ToString(),
+                FirstName = workSheet.Cells[i, 2]?.Value?.ToString(),
+                FatherName = workSheet.Cells[i, 3]?.Value?.ToString(),
+                Idnp = workSheet.Cells[i, 4]?.Value?.ToString(),
+                Email = workSheet.Cells[i, 5]?.Value?.ToString(),
+                DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0"),
+                RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
+                EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "False"),
+                Birthday = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[1]), int.Parse(dateStrings[0])),
+                PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString(),
+                AccessModeEnum = AccessModeEnum.CurrentDepartment
+            };
+        }
+
+        private EditUserFromColaboratorCommand GetEditUserCommand(ExcelWorksheet workSheet, UserProfile user, int i, string[] dateStrings)
+        {
+            return new EditUserFromColaboratorCommand()
+            {
+                Id = user.Id,
+                LastName = workSheet.Cells[i, 1]?.Value?.ToString(),
+                FirstName = workSheet.Cells[i, 2]?.Value?.ToString(),
+                FatherName = workSheet.Cells[i, 3]?.Value?.ToString(),
+                Idnp = workSheet.Cells[i, 4]?.Value?.ToString(),
+                Email = workSheet.Cells[i, 5]?.Value?.ToString(),
+                DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0"),
+                RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
+                EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "True"),
+                Birthday = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[1]), int.Parse(dateStrings[0])),
+                PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString(),
+                AccessModeEnum = AccessModeEnum.CurrentDepartment
+            };
+        }
+
+        private FileDataDto GetExcelFile(ExcelPackage package)
+        {
+            var streamBytesArray = package.GetAsByteArray();
+
+            return new FileDataDto
+            {
+                Content = streamBytesArray,
+                Name = "User-Import-Result",
+                ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            };
         }
     }
 }

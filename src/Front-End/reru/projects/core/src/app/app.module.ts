@@ -20,16 +20,17 @@ import { RolesComponent } from './components/roles/roles.component';
 import { MainComponent } from './components/main/main.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { DEFAULT_TIMEOUT, TimeoutInterceptor } from '../app/utils/specific-interceptor/timeout-intercepter';
+import { OwlDateTimeModule, OwlMomentDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';
 
 @NgModule({
 	declarations: [
-			//AuthenticationCallbackComponent,
-			AppComponent,
-			//    LoginComponent,
-			DashboardComponent,
-			ModulesComponent,
-			RolesComponent,
-			MainComponent
+		//AuthenticationCallbackComponent,
+		AppComponent,
+		//    LoginComponent,
+		DashboardComponent,
+		ModulesComponent,
+		RolesComponent,
+		MainComponent
 	],
 	imports: [
 		BrowserModule,
@@ -51,21 +52,24 @@ import { DEFAULT_TIMEOUT, TimeoutInterceptor } from '../app/utils/specific-inter
 		SvgModule,
 		NgxDropzoneModule,
 		NgxDnDModule.forRoot(),
-		HttpClientModule
+		HttpClientModule,
+		OwlDateTimeModule,
+		OwlMomentDateTimeModule,
+		OwlNativeDateTimeModule,
 
 	],
 	schemas: [
 		CUSTOM_ELEMENTS_SCHEMA
- 	],
+	],
 	// providers: [[TranslatePipe, Location,{ provide: MOCK_AUTHENTICATION, useValue: !environment.PRODUCTION }]
 	// 		[{ provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }],
 	// 		[{ provide: DEFAULT_TIMEOUT, useValue: 30000 }]
-    // ],
+	// ],
 	providers: [
 		[{ provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }],
-		[{ provide: DEFAULT_TIMEOUT, useValue: 30000  }],
-		[TranslatePipe, Location,{ provide: MOCK_AUTHENTICATION, useValue: !environment.PRODUCTION }]
-	  ],
-  	bootstrap: [AppComponent]
+		[{ provide: DEFAULT_TIMEOUT, useValue: 30000 }],
+		[TranslatePipe, Location, { provide: MOCK_AUTHENTICATION, useValue: !environment.PRODUCTION }]
+	],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }

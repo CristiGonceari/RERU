@@ -30,7 +30,7 @@
     "select-candidate-position": "Selectați poziția",
     "position-to-candidate": "Poziția pentru care candidați",
     "accept-condition": "Înregistrându-mă în sistem accept",
-    "registration-conditions":"condiții de înregistrare",
+    "registration-conditions":"termenii și condițiile de înregistrare",
     "is-downloading": "Se descarсă",
     "personal-file": "Fișa Personala",
     "personal-form-file": "Formular pentru completarea datelor personale",
@@ -63,7 +63,10 @@
     "password-is-required": "Parola este obligatorie",
     "forgot-password": "Ai uitat parola?",
     "recover-email-sent": "Mesajul de recuperare a fost trimis pe email!",
-    "idnp-is-required": "IDNP este obligatoriu" },
+    "idnp-is-required": "IDNP este obligatoriu",
+    "birthday-is-required": "Data nașterii este obligatorie",
+    "phone-is-required": "Numărul de contact este obligatoriu"
+  },
   "notification": {
     "title": {
       "success": "Succes",
@@ -214,7 +217,10 @@
     "available-modules": "Module disponibile",
     "idnp-length": "IDNP trebuie să conține 13 cifre!",
     "search-by-user-state": "Căutați după statutul utilizatorului",
-    "access-mode": "Modul de acces"
+    "access-mode": "Modul de acces",
+    "code-length": "Codul trebuie să conțină 4 cifre!",
+    "enter-code": "Introduceți codul",
+    "verify-process": "Procesul de verificare email"
   },
   "user": {
     "edit-title": "Editarea utilizatorului",
@@ -224,7 +230,10 @@
     "succes-remove": "Utilizatorul a fost șters cu succes!",
     "succes-edit": "Utilizatorul a fost editat cu success!",
     "succes-create": "Utilizatorul a fost creat cu succes!",
-    "please-wait": "Vă rugăm să așteptați până sistemul adaugă utilizatori ..."
+    "please-wait": "Vă rugăm să așteptați până sistemul adaugă utilizatori ...",
+    "birthday": "Data nașterii",
+    "phone": "Telefon de contact",
+    "date-format": "Vă rugăm să furnizați un format valid ZZ.LL.AAAA"
   },
   "word": {
     "search": "Căutarea după N.P.P. sau e-mail",
@@ -422,7 +431,8 @@
     "01000204": "Id nevalid!",
     "01000301": "Postul nevalid",
     "01000302": "Introduceti denumirea pozitiei",
-    "01000106": "Modul de acces necompletat"
+    "01000106": "Modul de acces necompletat",
+    "01000108": "Cod incorect"
   },
   "print": {
     "print-table": "Printare tabel",

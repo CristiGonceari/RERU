@@ -9,7 +9,7 @@ namespace CODWER.RERU.Core.Application.Validation
         public static string VALIDATION_IDNP_SHOULD_NOT_BE_ZEROES = "01000003";
         public static string VALIDATION_IDNP_INVALID_CONTROL_DIGIT = "01000004";
         public static string DUPLICATE_IDNP_IN_SYSTEM = "01000005";
-         
+
         //USER
         public static string EMPTY_USER_NAME = "01000101";
         public static string EMPTY_USER_LAST_NAME = "01000102";
@@ -18,6 +18,8 @@ namespace CODWER.RERU.Core.Application.Validation
         public static string EMPTY_USER_ID = "01000105";
         public static string INVALID_EMAIL_FORMAT = "01000105";
         public static string EMPTY_ACCESS_MODE = "01000106";
+        public static string DUPLICATE_EMAIL_IN_SYSTEM = "01000107";
+        public static string INVALID_CODE = "01000108";
 
         //ARTICLES
         public static string EMPTY_NAME = "01000201";
@@ -32,5 +34,11 @@ namespace CODWER.RERU.Core.Application.Validation
         //FILES
         public static string INVALID_FILE_ID = "01000401";
         public static string FILE_IS_CORRUPTED = "01000402";
+
+        //ROLES
+        public static string INVALID_ROLE_ID = "01000501";
+
+        //DEPARTMENT
+        public static string INVALID_DEPARTMENT_ID = "01000602";
     }
 }

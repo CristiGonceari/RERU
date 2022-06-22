@@ -19,6 +19,10 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
         {
             _appDbContext = appDbContext;
 
+            RuleFor(x => x).NotEmpty()
+                .Must(x=> CheckCode(x.Code, x.Email))
+                .WithErrorCode(ValidationCodes.INVALID_CODE);
+
             RuleFor(x => x.FirstName).NotEmpty()
                 .WithMessage(ValidationMessages.InvalidInput)
                 .WithErrorCode(ValidationCodes.EMPTY_USER_NAME);
@@ -42,6 +46,22 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
               .Custom(CheckIfUniqueIdnpOnCreate);
 
         }
+
+        private bool CheckCode(string code, string email)
+        {
+            var emailVerification = _appDbContext.EmailVerifications.FirstOrDefault(x => x.Email == email);
+
+            if (emailVerification != null)
+            {
+                if (emailVerification.Code == code)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private void CheckIfUniqueIdnpOnCreate(string idnp, CustomContext context)
         {
             var exist = _appDbContext.UserProfiles.Any(x => x.Idnp == idnp);

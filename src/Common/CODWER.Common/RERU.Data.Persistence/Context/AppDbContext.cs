@@ -58,6 +58,7 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RegistrationPageMessage> RegistrationPageMessages { get; set; }
         public virtual DbSet<Process> Processes { get; set; }
+        public virtual DbSet<EmailVerification> EmailVerifications { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

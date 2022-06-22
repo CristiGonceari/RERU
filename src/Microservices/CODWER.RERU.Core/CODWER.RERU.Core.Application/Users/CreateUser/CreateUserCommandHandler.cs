@@ -46,6 +46,8 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
                 FatherName = request.FatherName,
                 Idnp = request.Idnp,
                 Email = request.Email,
+                Birthday = request.Birthday,
+                PhoneNumber = request.PhoneNumber,
                 DepartmentColaboratorId = request.DepartmentColaboratorId == 0 ? null : request.DepartmentColaboratorId,
                 RoleColaboratorId = request.RoleColaboratorId == 0 ? null : request.RoleColaboratorId,
                 EmailNotification = request.EmailNotification,

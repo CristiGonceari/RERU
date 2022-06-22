@@ -5,7 +5,6 @@ import { AddComponent } from './add/add.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { SharedModule } from '@erp/shared';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { UtilsModule } from '../../utils/utils.module';
@@ -18,6 +17,9 @@ import { SetPasswordUserComponent } from '././user-profile/set-password-user/set
 import { FilterUserStateComponent } from '././user-list/filter-user-state/filter-user-state.component';
 import { RemoveComponent } from './remove/remove.component';
 import { SearchStatusComponent } from './user-list/search-status/search-status.component';
+import { OwlDateTimeModule, OwlMomentDateTimeModule, OwlNativeDateTimeModule  } from '@busacca/ng-pick-datetime';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @NgModule({
   imports: [
@@ -29,7 +31,11 @@ import { SearchStatusComponent } from './user-list/search-status/search-status.c
     ReactiveFormsModule,
     TranslateModule,
     UsersRoutingModule,
-    NgbModule
+    NgbModule,
+    OwlDateTimeModule,
+    OwlMomentDateTimeModule,
+    OwlNativeDateTimeModule,
+    HttpClientModule
   ],
   declarations: [
     UserListComponent,
@@ -46,7 +52,8 @@ import { SearchStatusComponent } from './user-list/search-status/search-status.c
   ],
   providers: [
     TranslatePipe,
-    Location
+    Location,
+    DatePipe
   ]
 })
 export class UsersModule { }
