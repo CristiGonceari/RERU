@@ -11,6 +11,6 @@ namespace CODWER.RERU.Evaluation.Application.DocumentsTemplates.GetDocumentTempl
     public class GetDocumentTemplatesQuery : PaginatedQueryParameter, IRequest<PaginatedModel<AddEditDocumentTemplateDto>>
     {
         public string Name { get; set; }
-        public FileTypeEnum fileType { get; set; }
+        public FileTypeEnum FileType { get; set; }
     }
 }

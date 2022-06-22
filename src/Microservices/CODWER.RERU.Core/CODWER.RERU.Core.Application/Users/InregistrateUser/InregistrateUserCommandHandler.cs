@@ -47,6 +47,8 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
                 Email = request.Email,
                 CandidatePositionId = request.CandidatePositionId,
                 EmailNotification = request.EmailNotification,
+                Birthday = request.Birthday,
+                PhoneNumber = request.PhoneNumber
             };
 
             var userProfile = Mapper.Map<UserProfile>(newUser);

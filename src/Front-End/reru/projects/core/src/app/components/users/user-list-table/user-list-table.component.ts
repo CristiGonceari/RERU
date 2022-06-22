@@ -12,7 +12,9 @@ import { UserService } from '../../../utils/services/user.service';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
 import { ImportUsersModalComponent } from '../../../utils/modals/import-users-modal/import-users-modal.component';
+import { ReferenceService } from '../../../utils/services/reference.service';
 import { saveAs } from 'file-saver';
+import { AccessModeEnum } from '../../../utils/models/access-mode.enum';
 
 @Component({
 	selector: 'app-user-list-table',
@@ -25,6 +27,13 @@ export class UserListTableComponent implements OnInit {
 	result: boolean;
 	viewDetails: boolean = false;
 
+	interval: any;
+	processesData: any;
+	processProgress: any;
+	processId: any;
+	toolBarValue: number = 0;
+	isStartAddingUsers: boolean = false;
+
 	downloadFile: boolean = false;
 	headersToPrint = [];
 	printTranslates: any[];
@@ -35,6 +44,7 @@ export class UserListTableComponent implements OnInit {
 	description: string;
 	no: string;
 	yes: string;
+	accessMode = AccessModeEnum;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -45,6 +55,7 @@ export class UserListTableComponent implements OnInit {
 		private modalService: NgbModal,
 		private notificationService: NotificationsService,
 		private userService: UserService,
+		private referenceService: ReferenceService,
 	) { }
 
 	ngOnInit(): void {
@@ -84,8 +95,8 @@ export class UserListTableComponent implements OnInit {
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['-', 'lastName', 'firstName', 'fatherName', 'idnp', 'email', 'departmentName', 'roleName', 'isActive'];
-		for (let i=1; i<headersHtml.length-1; i++) {
+		let headersDto = ['-', 'userName', 'idnp', 'email', 'departmentName', 'roleName', 'accessModeEnum', 'isActive'];
+		for (let i = 1; i < headersHtml.length - 1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
 		}
 		let printData = {
@@ -112,7 +123,7 @@ export class UserListTableComponent implements OnInit {
 			this.translate.get('button.cancel')
 		]).subscribe(
 			(items) => {
-				for (let i=0; i<this.printTranslates.length; i++) {
+				for (let i = 0; i < this.printTranslates.length; i++) {
 					this.printTranslates[i] = items[i];
 				}
 			}
@@ -151,27 +162,48 @@ export class UserListTableComponent implements OnInit {
 	}
 
 	openImportModal(): void {
-		const modalRef: any = this.modalService.open(ImportUsersModalComponent, { centered: true, backdrop: 'static', size: 'lg' });
+		const modalRef: any = this.modalService.open(ImportUsersModalComponent, { centered: true, size: 'xl' });
 		modalRef.result.then((data) => this.importUsers(data), () => { });
 	}
 
 	importUsers(data): void {
 		this.isLoading = true;
-		const form = new FormData();
-		form.append('File', data.file);
-		this.userService.bulkAddUsers(form).subscribe(response => {
-			if(response) {
-				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
-				const blob = new Blob([response.body], { type: response.body.type });
-				const file = new File([blob], fileName, { type: response.body.type });
-				saveAs(file);
-			}
-			this.notificationService.success('Success', 'Users Imported!', NotificationUtil.getDefaultMidConfig());
-			this.list();
-		}, () => { }, () => {
-			this.isLoading = false;
+		this.isStartAddingUsers = true;
+
+		this.userService.startAddProcess({ totalProcesses: null, processType: 1 }).subscribe(res => {
+			this.processId = res.data
+
+			const interval = this.setIntervalGetProcess();
+
+			const form = new FormData();
+			form.append('Data.File', data.file);
+			form.append('ProcessId', this.processId);
+			this.userService.bulkAddUsers(form).subscribe(response => {
+				if (response) {
+					const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
+					const blob = new Blob([response.body], { type: response.body.type });
+					const file = new File([blob], fileName, { type: response.body.type });
+					saveAs(file);
+				}
+				this.notificationService.success('Success', 'Users Imported!', NotificationUtil.getDefaultMidConfig());
+				this.isStartAddingUsers = false;
+				clearInterval(interval);
+				this.list();
+			}, () => { }, () => {
+				this.isLoading = false;
+			})
 		})
 	}
+
+	setIntervalGetProcess() {
+		return setInterval(() => {
+			this.userService.getImportProcess(this.processId).subscribe(res => {
+				this.processProgress = res.data;
+				this.toolBarValue = Math.round(this.processProgress.done * 100 / this.processProgress.total);
+			})
+		}, 10 * 300);
+	}
+
 
 	openConfirmModal(id: number, firstName, lastName, type): void {
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
@@ -242,15 +274,15 @@ export class UserListTableComponent implements OnInit {
 			});
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 		}, (err) => {
-				forkJoin([
-					this.translate.get('notification.title.error'),
-					this.translate.get('notification.body.error'),
-				]).subscribe(([title, description]) => {
-					this.title = title;
-					this.description = description;
-				});
-				this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-			},
+			forkJoin([
+				this.translate.get('notification.title.error'),
+				this.translate.get('notification.body.error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+			this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+		},
 		);
 	}
 

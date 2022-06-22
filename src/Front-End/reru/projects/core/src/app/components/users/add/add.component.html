@@ -7,137 +7,189 @@
 
 <div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
   <div class="d-flex flex-column-fluid">
-    <div class="container">
+    <div class="container-fluid">
       <div class="card card-custom gutter-b">
-        <div class="card-body p-0">
-          <div class="row justify-content-center my-7 px-8 my-lg-10 px-lg-10">
-            <div class="col-xl-12 col-xxl-7">
+        <div class="card-body p-0 justify-content-center">
+          <div class="row justify-content-center my-7 px-8 my-lg-10">
+            <div class="col-xl-12">
               <form class="form" id="kt_contact_add_form" [formGroup]="userForm">
                 <h3 class="mb-10 font-weight-bold text-dark">{{ 'pages.users.details' | translate }}:</h3>
-                <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.name' | translate }}</label>
-                  <div class="col-lg-9 col-xl-9">
-                    <input class="form-control form-control-lg form-control-solid" name="firstName" type="text"
-                      formControlName="firstName"
-                      [ngClass]="{'is-invalid': hasErrors('firstName'), 'is-valid': userForm.get('firstName').valid}" />
-                    <div *ngIf="hasErrors('firstName')" class="fv-plugins-message-container">
-                      <div *ngIf="hasError('firstName', 'required')" data-field="firstName" data-validator="notEmpty"
-                        class="fv-help-block">
-                        {{ 'user-profile.empty-name' | translate }}</div>
-                      <div *ngIf="hasError('firstName', 'pattern')" data-field="firstName" data-validator="notEmpty"
-                        class="fv-help-block">
-                        {{ 'user-profile.wrong-name' | translate }}</div>
+
+                <div class="row">
+                  <diV class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group row">
+                      <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.name' | translate }}</label>
+                      <div class="col-lg-9 col-xl-9">
+                        <input class="form-control form-control-lg form-control-solid" name="firstName" type="text"
+                          formControlName="firstName"
+                          [ngClass]="{'is-invalid': hasErrors('firstName'), 'is-valid': userForm.get('firstName').valid}" />
+                        <div *ngIf="hasErrors('firstName')" class="fv-plugins-message-container">
+                          <div *ngIf="hasError('firstName', 'required')" data-field="firstName"
+                            data-validator="notEmpty" class="fv-help-block">
+                            {{ 'user-profile.empty-name' | translate }}</div>
+                          <div *ngIf="hasError('firstName', 'pattern')" data-field="firstName" data-validator="notEmpty"
+                            class="fv-help-block">
+                            {{ 'user-profile.wrong-name' | translate }}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.lastName' | translate }}</label>
+                      <div class="col-lg-9 col-xl-9">
+                        <input class="form-control form-control-lg form-control-solid" name="lastName" type="text"
+                          formControlName="lastName"
+                          [ngClass]="{'is-invalid': hasErrors('lastName'), 'is-valid': userForm.get('lastName').valid}" />
+                        <div *ngIf="hasErrors('lastName')" class="fv-plugins-message-container">
+                          <div *ngIf="hasError('lastName', 'required')" data-field="lastName" data-validator="notEmpty"
+                            class="fv-help-block">
+                            {{ 'user-profile.empty-name' | translate }}</div>
+                          <div *ngIf="hasError('lastName', 'pattern')" data-field="lastName" data-validator="notEmpty"
+                            class="fv-help-block">
+                            {{ 'user-profile.wrong-name' | translate }}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.father-name' | translate }}</label>
+                      <div class="col-lg-9 col-xl-9">
+                        <input class="form-control form-control-lg form-control-solid" name="fatherName" type="text"
+                          formControlName="fatherName"
+                          [ngClass]="{'is-invalid': hasErrors('fatherName'), 'is-valid': userForm.get('fatherName').valid}" />
+                        <div *ngIf="hasErrors('fatherName')" class="fv-plugins-message-container">
+                          <div *ngIf="hasError('fatherName', 'required')" data-field="fatherName"
+                            data-validator="notEmpty" class="fv-help-block">
+                            {{ 'user-profile.empty-name' | translate }}</div>
+                          <div *ngIf="hasError('fatherName', 'pattern')" data-field="fatherName"
+                            data-validator="notEmpty" class="fv-help-block">
+                            {{ 'user-profile.wrong-name' | translate }}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.idnp' | translate }}</label>
+                      <div class="col-lg-9 col-xl-9">
+                        <input class="form-control form-control-lg form-control-solid" name="idnp" maxlength="13"
+                          minlength="13" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                          autocomplete="off" type="text" formControlName="idnp"
+                          [ngClass]="{'is-invalid': hasErrors('idnp'), 'is-valid': userForm.get('idnp').valid }" />
+                        <div *ngIf="isIdnpLengthValidator('idnp')" class="invalid-feedback d-block">
+                          {{'user-profile.idnp-length' | translate}}</div>
+                        <div *ngIf="hasErrors('idnp')" class="fv-plugins-message-container">
+                          <div *ngIf="hasError('idnp', 'required')" data-field="idnp" data-validator="notEmpty"
+                            class="fv-help-block">
+                            {{ 'user-profile.idnp-length' | translate }}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-3 col-lg-3 col-form-label">{{'user.birthday' |
+                        translate}}</label>
+                      <div class="col-lg-9 col-xl-9" style="height: 44px;">
+                        <app-date style="height: 44px;" [isDisabled]="false" [isReverse]="false" [parent]="userForm" [date]="'birthday'"
+                          [placeholder]="dd-mm-yyyy"></app-date>
+
+                        <!-- <input id="from" [owlDateTime]="birthday" [owlDateTimeTrigger]="birthday"
+                          placeholder="Date Time" class="form-control form-control-lg form-control-solid"
+                          autocomplete="off" [readonly]="true" formControlName="birthday"
+                          name="birthday" [value]="birthday | dateFilter:'dd/MM/yy'" />
+                        <owl-date-time #birthday></owl-date-time> -->
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-3 col-lg-3 col-form-label mt-1">{{ 'table.profile-photo' | translate }}</label>
+                      <div class="col-lg-9 col-xl-9 mt-1">
+                        <div *ngIf="fileId">
+                          <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)"
+                            (disableBtn)="disableBtn"></app-add-edit-media-file>
+                        </div>
+                        <div *ngIf="!fileId">
+                          <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
+                          </app-add-edit-media-file>
+                        </div>
+                      </div>
+                    </div>
+                  </diV>
+
+                  <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group row">
+                      <label class="col-xl-3 col-lg-3 col-form-label">{{ 'user.phone' | translate }}</label>
+                      <div class="col-lg-9 col-xl-9">
+                        <input class="form-control form-control-lg form-control-solid" name="phoneNumber" type="tel"
+                          formControlName="phoneNumber"
+                          [ngClass]="{'is-invalid': hasErrors('phoneNumber'), 'is-valid': userForm.get('phoneNumber').valid}" />
+                        <div *ngIf="hasErrors('phoneNumber')" class="fv-plugins-message-container">
+                          <div *ngIf="hasError('phoneNumber', 'required')" data-field="phoneNumber"
+                            data-validator="notEmpty" class="fv-help-block">
+                            {{ 'login.phone-is-required' | translate }}</div>
+                          <div *ngIf="hasError('phoneNumber', 'phoneNumber')" data-field="phoneNumber"
+                            data-validator="notEmpty" class="fv-help-block">
+                            {{ 'login.phone-is-required' | translate }}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.email' | translate }}</label>
+                      <div class="col-lg-9 col-xl-9">
+                        <input class="form-control form-control-lg form-control-solid" name="email" type="email"
+                          formControlName="email"
+                          [ngClass]="{'is-invalid': hasErrors('email'), 'is-valid': userForm.get('email').valid}" />
+                        <div *ngIf="hasErrors('email')" class="fv-plugins-message-container">
+                          <div *ngIf="hasError('email', 'required')" data-field="email" data-validator="notEmpty"
+                            class="fv-help-block">
+                            {{ 'login.email-is-required' | translate }}</div>
+                          <div *ngIf="hasError('email', 'email')" data-field="email" data-validator="notEmpty"
+                            class="fv-help-block">
+                            {{ 'login.please-use-valid-email' | translate }}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-3 col-lg-3 col-form-label">
+                        {{'departments.department' | translate}}
+                      </label>
+                      <div class="col-lg-9 col-xl-9">
+                        <select class="form-control form-control-lg form-control-solid" name="departmentColaboratorId"
+                          id="role" type="number" formControlName="departmentColaboratorId">
+                          <option value="null">{{'module-access.select' | translate}}</option>
+                          <option *ngFor="let item of departments" [value]="item.value">{{ item.label }}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-3 col-lg-3 col-form-label">
+                        {{ 'user-roles.role' | translate }}
+                      </label>
+                      <div class="col-lg-9 col-xl-9">
+                        <select class="form-control form-control-lg form-control-solid" name="roleColaboratorId"
+                          id="role" type="number" formControlName="roleColaboratorId">
+                          <option value="null">{{'module-access.select' | translate}}</option>
+                          <option *ngFor="let item of roles" [value]="item.value">{{ item.label }}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-3 col-lg-3 col-form-label">
+                        {{ 'user-profile.access-mode' | translate }}
+                      </label>
+                      <div class="col-lg-9 col-xl-9">
+                        <select class="form-control form-control-lg form-control-solid" name="accessModeEnum" id="role"
+                          type="number" formControlName="accessModeEnum">
+                          <option value="null">{{'module-access.select' | translate}}</option>
+                          <option *ngFor="let item of accessModes" [value]="item.value">{{'statuses.' + item.label |
+                            translate}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-3 col-lg-3 col-form-label">{{ 'pages.users.send-email' | translate }}</label>
+                      <div class="col-lg-9 col-xl-9">
+                        <input class="form-control form-control-lg form-control-solid" style="width: 25px;"
+                          name="emailNotification" type="checkbox" formControlName="emailNotification" />
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.lastName' | translate }}</label>
-                  <div class="col-lg-9 col-xl-9">
-                    <input class="form-control form-control-lg form-control-solid" name="lastName" type="text"
-                      formControlName="lastName"
-                      [ngClass]="{'is-invalid': hasErrors('lastName'), 'is-valid': userForm.get('lastName').valid}" />
-                    <div *ngIf="hasErrors('lastName')" class="fv-plugins-message-container">
-                      <div *ngIf="hasError('lastName', 'required')" data-field="lastName" data-validator="notEmpty"
-                        class="fv-help-block">
-                        {{ 'user-profile.empty-name' | translate }}</div>
-                      <div *ngIf="hasError('lastName', 'pattern')" data-field="lastName" data-validator="notEmpty"
-                        class="fv-help-block">
-                        {{ 'user-profile.wrong-name' | translate }}</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.father-name' | translate }}</label>
-                  <div class="col-lg-9 col-xl-9">
-                    <input class="form-control form-control-lg form-control-solid" name="fatherName" type="text"
-                      formControlName="fatherName"
-                      [ngClass]="{'is-invalid': hasErrors('fatherName'), 'is-valid': userForm.get('fatherName').valid}" />
-                    <div *ngIf="hasErrors('fatherName')" class="fv-plugins-message-container">
-                      <div *ngIf="hasError('fatherName', 'required')" data-field="fatherName" data-validator="notEmpty"
-                        class="fv-help-block">
-                        {{ 'user-profile.empty-name' | translate }}</div>
-                      <div *ngIf="hasError('fatherName', 'pattern')" data-field="fatherName" data-validator="notEmpty"
-                        class="fv-help-block">
-                        {{ 'user-profile.wrong-name' | translate }}</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.idnp' | translate }}</label>
-                  <div class="col-lg-9 col-xl-9">
-                    <input class="form-control form-control-lg form-control-solid" name="idnp" maxlength="13"
-                      minlength="13" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off"
-                      type="text" formControlName="idnp"
-                      [ngClass]="{'is-invalid': hasErrors('idnp'), 'is-valid': userForm.get('idnp').valid }" />
-                    <div *ngIf="isIdnpLengthValidator('idnp')" class="invalid-feedback d-block">
-                      {{'user-profile.idnp-length' | translate}}</div>
-                    <div *ngIf="hasErrors('idnp')" class="fv-plugins-message-container">
-                      <div *ngIf="hasError('idnp', 'required')" data-field="idnp" data-validator="notEmpty"
-                        class="fv-help-block">
-                        {{ 'user-profile.idnp-length' | translate }}</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.email' | translate }}</label>
-                  <div class="col-lg-9 col-xl-9">
-                    <input class="form-control form-control-lg form-control-solid" name="email" type="email"
-                      formControlName="email"
-                      [ngClass]="{'is-invalid': hasErrors('email'), 'is-valid': userForm.get('email').valid}" />
-                    <div *ngIf="hasErrors('email')" class="fv-plugins-message-container">
-                      <div *ngIf="hasError('email', 'required')" data-field="email" data-validator="notEmpty"
-                        class="fv-help-block">
-                        {{ 'login.email-is-required' | translate }}</div>
-                      <div *ngIf="hasError('email', 'email')" data-field="email" data-validator="notEmpty"
-                        class="fv-help-block">
-                        {{ 'login.please-use-valid-email' | translate }}</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row align-items-center mb-9">
-                  <label class="col-xl-3 col-lg-3 col-form-label">
-                    {{'departments.department' | translate}}
-                  </label>
-                  <div class="col-lg-9 col-xl-9">
-                    <select class="form-control form-control-lg form-control-solid" name="departmentColaboratorId"
-                      id="role" type="number" formControlName="departmentColaboratorId">
-                      <option value="null">{{'module-access.select' | translate}}</option>
-                      <option *ngFor="let item of departments" [value]="item.value">{{ item.label }}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row align-items-center mb-9">
-                  <label class="col-xl-3 col-lg-3 col-form-label">
-                    {{ 'user-roles.role' | translate }}
-                  </label>
-                  <div class="col-lg-9 col-xl-9">
-                    <select class="form-control form-control-lg form-control-solid" name="roleColaboratorId"
-                      id="role" type="number" formControlName="roleColaboratorId">
-                      <option value="null">{{'module-access.select' | translate}}</option>
-                      <option *ngFor="let item of roles" [value]="item.value">{{ item.label }}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row mb-10">
-                  <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.profile-photo' | translate }}</label>
-                  <div class="col-lg-9 col-xl-9">
-                    <div *ngIf="fileId">
-                      <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)"
-                        (disableBtn)="disableBtn"></app-add-edit-media-file>
-                    </div>
-                    <div *ngIf="!fileId">
-                      <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
-                      </app-add-edit-media-file>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label">{{ 'pages.users.send-email' | translate }}</label>
-                  <div class="col-lg-9 col-xl-9">
-                    <input class="form-control form-control-lg form-control-solid" style="width: 25px;"
-                      name="emailNotification" type="checkbox" formControlName="emailNotification" />
-                  </div>
-                </div>
+
                 <div class="text-right border-top pt-10">
                   <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="back()"></app-button>
                   <app-add-button class="btn" [value]="'button.add' | translate" (handle)="addUser()">

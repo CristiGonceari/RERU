@@ -1,14 +1,16 @@
 ﻿using System.Linq;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
+using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests
 {
     public static class GetAndFilterTests
     {
-        public static IQueryable<Test> Filter(AppDbContext appDbContext, TestFiltersDto request)
+        public static IQueryable<Test> Filter(AppDbContext appDbContext, TestFiltersDto request, UserProfileDto currentUser)
         {
             var tests = appDbContext.Tests
                 .Include(t => t.TestTemplate)
@@ -36,6 +38,19 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                     TestPassStatus = t.TestPassStatus
                 })
                 .AsQueryable();
+
+            if (currentUser.AccessModeEnum == AccessModeEnum.CurrentDepartment || currentUser.AccessModeEnum == null)
+            {
+                tests = tests.Where(x => x.UserProfile.DepartmentColaboratorId == currentUser.DepartmentColaboratorId);
+            }
+            else if (currentUser.AccessModeEnum == AccessModeEnum.OnlyCandidates)
+            {
+                tests = tests.Where(x => x.UserProfile.DepartmentColaboratorId == null && x.UserProfile.RoleColaboratorId == null);
+            }
+            else if (currentUser.AccessModeEnum == AccessModeEnum.AllDepartments)
+            {
+                tests = tests.Where(x => x.UserProfile.DepartmentColaboratorId != null);
+            }
 
             if (!string.IsNullOrWhiteSpace(request.TestTemplateName))
             {

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Module.Application.ImportProcesses;
 
 namespace CODWER.RERU.Evaluation.Application.References.GetAddTestProcesses
 {
@@ -24,8 +25,8 @@ namespace CODWER.RERU.Evaluation.Application.References.GetAddTestProcesses
 
         public async Task<List<ProcessDataDto>> Handle(GetAddTestProcessesQuery request, CancellationToken cancellationToken)
         {
-            var processes = await _appDbContext.BulkProcesses
-                .Where(x => x.IsDone == false && x.ProcessType == Processes.BulkAddTests)
+            var processes = await _appDbContext.Processes
+                .Where(x => x.IsDone == false && x.ProcessesEnumType == ProcessesEnum.BulkAddTests)
                 .AsQueryable()
                 .Select(p => _mapper.Map<ProcessDataDto>(p))
                 .ToListAsync();

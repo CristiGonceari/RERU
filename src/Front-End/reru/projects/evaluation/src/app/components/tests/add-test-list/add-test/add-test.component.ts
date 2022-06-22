@@ -11,7 +11,7 @@ import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notific
 import { AddEditTest } from '../../../../utils/models/tests/add-edit-test.model';
 import { FormControl } from '@angular/forms';
 import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
-import { forkJoin } from 'rxjs';
+import { BehaviorSubject, forkJoin, interval, Subscribable, Subscriber } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { AttachUserModalComponent } from 'projects/evaluation/src/app/utils/components/attach-user-modal/attach-user-modal.component';
@@ -20,6 +20,8 @@ import { EventService } from 'projects/evaluation/src/app/utils/services/event/e
 import { NgtscCompilerHost } from '@angular/compiler-cli/src/ngtsc/file_system';
 import { Subscription, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { GetBulkProgressHistoryService } from 'projects/evaluation/src/app/utils/services/bulk-progress/get-bulk-progress-history.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -31,7 +33,6 @@ export class AddTestComponent implements OnInit {
   @Input() testEvent: boolean;
 
   processProgress: any;
-
 
   eventsList: any;
   selectActiveTests: any;
@@ -56,8 +57,13 @@ export class AddTestComponent implements OnInit {
   disableBtn: boolean = false;
   isStartAddingTests: boolean = false;
 
+  cancelRequest: any;
+  request;
+
   toolBarValue: number = 0;
   toolBarProcents: number = 0;
+
+  addTestRequest: any = 0;
 
   date: Date;
   search: string;
@@ -73,11 +79,13 @@ export class AddTestComponent implements OnInit {
     private notificationService: NotificationsService,
     private printService: PrintTemplateService,
     private modalService: NgbModal,
-    private eventService: EventService
+    private eventService: EventService,
+    private getProcessService: GetBulkProgressHistoryService
   ) { }
 
   ngOnInit(): void {
     this.getEvents();
+    this.getProcessService.currentSendToCancelRequest.subscribe(msg => { this.cancelRequest = msg });
   }
 
   getEvents() {
@@ -152,20 +160,6 @@ export class AddTestComponent implements OnInit {
     })
   }
 
-  // parseForBulkAdd() {
-  //   this.setTimeToSearch();
-  //   return new AddEditTest({
-  //     userProfileId: this.getSubArray(0, 5, this.userListToAdd),
-  //     programmedTime: this.search || null,
-  //     eventId: +this.event.value || null,
-  //     evaluatorId: this.evaluatorList[0] || null,
-  //     testStatus: TestStatusEnum.Programmed,
-  //     testTemplateId: +this.testTemplate.value || 0,
-  //     showUserName: this.showName
-  //   })
-  // }
-
-
   roundUpNearest10(num) {
     return Math.ceil(num / 10) * 10;
   }
@@ -173,132 +167,17 @@ export class AddTestComponent implements OnInit {
   getSubArray(idx, _length, _array) {
     return _array.slice(idx, idx + _length);
   }
-  //Create test Recursion 
-  // addTests() {
-  //   this.isStartAddingTests = true;
-  //   let requests = Math.ceil((this.userListToAdd.length / 5));
-  //   this.createTest(requests);
-  // }
 
-  // createTest(requests: number) {
-  //   if (this.userListToAdd.length > 0) {
-  //     this.testService.createTest(this.parseForBulkAdd()).subscribe((res) => {
-  //       this.userListToAdd.splice(0, 5);
-  //       this.toolBarProcents++;
-  //       this.toolBarValue = Math.round(this.toolBarProcents / requests * 100);
-
-  // this.testService.sendEmailNotification({testIds: res.data}).subscribe();
-
-  //       this.createTest(requests);
-  //     });
-  //   } else {
-
-  //     this.isStartAddingTests = false;
-  //     forkJoin([
-  //       this.translate.get('modal.success'),
-  //       this.translate.get('tests.tests-were-programmed'),
-  //     ]).subscribe(([title, description]) => {
-  //       this.title = title;
-  //       this.description = description;
-  //     });
-  //     this.backClicked();
-  //     this.disableBtn = false;
-  //     this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-
-  //   }
-  // }
-
-  //Create For Every 10 users
-  // createTest() {
-  //   this.disableBtn = true;
-  //   let users = this.parse();
-
-  //   for (let i = 0; i <= 10; i++) {
-
-  //     if (i % 10 == 0 && i != 0 && users.userProfileId.length >= 10) {
-
-  //       var tests = new AddEditTest({
-  //         userProfileId: this.getSubArray(i - 10, 10, users.userProfileId),
-  //         programmedTime: this.search,
-  //         eventId: +this.event.value || null,
-  //         evaluatorId: this.evaluatorList[0] || null,
-  //         testStatus: TestStatusEnum.Programmed,
-  //         testTemplateId: +this.testTemplate.value || 0,
-  //         showUserName: this.showName
-  //       })
-
-  //       this.testService.createTest(tests).subscribe(() => {
-  //         if (users.userProfileId.length == 0) {
-  //           forkJoin([
-  //             this.translate.get('modal.success'),
-  //             this.translate.get('tests.tests-were-programmed'),
-  //           ]).subscribe(([title, description]) => {
-  //             this.title = title;
-  //             this.description = description;
-  //           });
-  //           this.backClicked();
-  //           this.disableBtn = false;
-
-
-  //           this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-  //         }
-
-  //       });
-
-  //       users.userProfileId.splice(0, 10);
-
-  //       i = 0;
-  //     }
-  //   }
-
-  //   if (users.userProfileId.length < 10 && users.userProfileId.length > 0) {
-
-  //     var tests = new AddEditTest({
-  //       userProfileId: users.userProfileId,
-  //       programmedTime: this.search,
-  //       eventId: +this.event.value || null,
-  //       evaluatorId: this.evaluatorList[0] || null,
-  //       testStatus: TestStatusEnum.Programmed,
-  //       testTemplateId: +this.testTemplate.value || 0,
-  //       showUserName: this.showName
-  //     })
-
-  //     this.testService.createTest(tests).subscribe(() => {
-  //       forkJoin([
-  //         this.translate.get('modal.success'),
-  //         this.translate.get('tests.tests-were-programmed'),
-  //       ]).subscribe(([title, description]) => {
-  //         this.title = title;
-  //         this.description = description;
-  //       });
-  //       this.backClicked();
-  //       this.disableBtn = false;
-
-  //       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-  //     });
-
-  //   }
-  // }
-
-  //Create Test For All bulk
   createTest() {
     this.disableBtn = true
     this.isStartAddingTests = true;
 
-    this.testService.startBulkAddProcess({ totalProcesses: this.parse().userProfileId.length }).subscribe(res => {
+    this.testService.startAddProcess({ totalProcesses: this.parse().userProfileId.length, processType: 2 }).subscribe(res => {
       this.processId = res.data;
 
+      const interval = this.setIntervalGetProcess();
 
-      const interval = setInterval(() => {
-        this.testService.getBulkImportProcess(this.processId).subscribe(res => {
-          this.processProgress = res.data;
-          this.toolBarValue = Math.round(this.processProgress.doneProcesses * 100 / this.processProgress.totalProcesses);
-        })
-      }, 10 * 300);
-
-
-      this.testService.createTest(this.parse()).subscribe(() => {
-
+      this.request = this.testService.createTest(this.parse()).subscribe(() => {
         forkJoin([
           this.translate.get('modal.success'),
           this.translate.get('tests.tests-were-programmed'),
@@ -307,66 +186,44 @@ export class AddTestComponent implements OnInit {
           this.description = description;
         });
 
-        
-
-        if (this.toolBarValue == 100) {
-          this.testService.getBulkImportProcess(this.processId).subscribe(res => {
-            this.processProgress = res.data;
-            this.toolBarValue = this.processProgress.doneProcesses * 100 / this.processProgress.totalProcesses;
-            console.log("this.toolbarValue:", this.toolBarValue)
-            this.testService.getBulkImportResult(this.processProgress.fileId).subscribe(response => {
-              if (response) {
-                const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
-                const blob = new Blob([response.body], { type: response.body.type });
-                const file = new File([blob], fileName, { type: response.body.type });
-                saveAs(file);
-              }
-            }
-            )
-          })
-        }
+        this.downloadProcessResult();
 
         clearInterval(interval);
-        this.isStartAddingTests = true;
+        this.isStartAddingTests = false;
         this.backClicked();
         this.disableBtn = false;
         this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       });
+
     })
   }
 
+  setIntervalGetProcess() {
+    return setInterval(() => {
+      this.testService.getImportProcess(this.processId).subscribe(res => {
+        this.processProgress = res.data;
+        this.toolBarValue = Math.round(this.processProgress.done * 100 / this.processProgress.total);
+      })
+    }, 10 * 300);
+  }
 
-  // addTestAndPrint(){
-  //   this.isStartAddingTests = true;
-  //   let requests = Math.ceil((this.userListToAdd.length / 5));
-  //   this.createTestAndPrint(requests);
-  // }
-
-  // createTestAndPrint(requests) {
-  //   this.disableBtn = true;
-  //   if (this.userListToAdd.length > 0) {
-  //     this.testService.createTest(this.parseForBulkAdd()).subscribe((res) => {
-  //       this.userListToAdd.splice(0, 5);
-  //       this.toolBarProcents++;
-  //       this.toolBarValue = Math.round(this.toolBarProcents / requests * 100);
-  //       this.performingTestPdf(res.data);
-  //       this.createTestAndPrint(requests);
-  //     });
-  //   } else {
-  //     this.isStartAddingTests = false;
-  //     forkJoin([
-  //       this.translate.get('modal.success'),
-  //       this.translate.get('tests.tests-were-programmed'),
-  //     ]).subscribe(([title, description]) => {
-  //       this.title = title;
-  //       this.description = description;
-  //     });
-  //     this.backClicked();
-  //     this.disableBtn = false;
-  //     this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-  //   }
-
-  // }
+  downloadProcessResult() {
+    if (this.toolBarValue == 100) {
+      this.testService.getImportProcess(this.processId).subscribe(res => {
+        this.processProgress = res.data;
+        this.toolBarValue = this.processProgress.doneProcesses * 100 / this.processProgress.totalProcesses;
+        this.testService.getImportResult(this.processProgress.fileId).subscribe(response => {
+          if (response) {
+            const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
+            const blob = new Blob([response.body], { type: response.body.type });
+            const file = new File([blob], fileName, { type: response.body.type });
+            saveAs(file);
+          }
+        }
+        )
+      })
+    }
+  }
 
   createTestAndPrint() {
     this.disableBtn = true;

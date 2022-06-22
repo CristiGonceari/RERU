@@ -7,6 +7,7 @@ using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Models.Internal;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Core.Application.UserProfiles
 {
@@ -17,7 +18,9 @@ namespace CODWER.RERU.Core.Application.UserProfiles
             CreateMap<UserProfile, UserProfileDto>()
                 .ForMember(x => x.DepartmentName, opts => opts.MapFrom(src => src.Department.Name))
                 .ForMember(x => x.RoleName, opts => opts.MapFrom(src => src.Role.Name))
-                .ForMember(x => x.UserStatusEnum, opts => opts.MapFrom(src => src.DepartmentColaboratorId == null && src.RoleColaboratorId == null ? UserStatusEnum.Candidate : UserStatusEnum.Employee));
+                .ForMember(x => x.UserStatusEnum, opts => opts.MapFrom(src => src.DepartmentColaboratorId == null && src.RoleColaboratorId == null ? UserStatusEnum.Candidate : UserStatusEnum.Employee))
+                .ForMember(x => x.AccessModeEnum, opts => opts.MapFrom(src => src.AccessModeEnum != null ? src.AccessModeEnum : AccessModeEnum.CurrentDepartment))
+                .ForMember(x => x.UserName, opts => opts.MapFrom(src => src.LastName + " " + src.FirstName + " " + src.FatherName)); 
 
             CreateMap<UserProfileDto, UserProfile>()
                 .ForMember(x => x.Id, options => options.Ignore());

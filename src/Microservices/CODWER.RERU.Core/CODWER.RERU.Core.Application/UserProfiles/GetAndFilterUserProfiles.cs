@@ -3,18 +3,32 @@ using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Core.Application.UserProfiles
 {
     public static class GetAndFilterUserProfiles
     {
-        public static IQueryable<UserProfile> Filter(AppDbContext appDbContext, FilterUserProfilesDto request)
+        public static IQueryable<UserProfile> Filter(AppDbContext appDbContext, FilterUserProfilesDto request, UserProfileDto currentUser)
         {
             var userProfiles = appDbContext.UserProfiles
                 .Include(x => x.Department)
                 .Include(x => x.Role)
+                .OrderByDescending(x => x.Id)
                 .AsQueryable();
 
+            if (currentUser.AccessModeEnum == AccessModeEnum.CurrentDepartment || currentUser.AccessModeEnum == null)
+            {
+                userProfiles = userProfiles.Where(x => x.DepartmentColaboratorId == currentUser.DepartmentColaboratorId);
+            }
+            else if (currentUser.AccessModeEnum == AccessModeEnum.OnlyCandidates)
+            {
+                userProfiles = userProfiles.Where(x => x.DepartmentColaboratorId == null && x.RoleColaboratorId == null);
+            }
+            else if (currentUser.AccessModeEnum == AccessModeEnum.AllDepartments)
+            {
+                userProfiles = userProfiles.Where(x => x.DepartmentColaboratorId != null);
+            }
 
             if (!string.IsNullOrEmpty(request.Keyword))
             {

@@ -12,6 +12,7 @@ import { DocumentTemplatesComponent } from './document-templates.component';
 import { AddComponent } from './add/add.component';
 import { ListComponent } from './list/list.component';
 import { DocumentTemplatesTableComponent } from './document-templates-table/document-templates-table.component';
+import { SearchByTypeComponent } from './search-by-type/search-by-type.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { DocumentTemplatesTableComponent } from './document-templates-table/docu
     AddComponent,
     ListComponent,
     DocumentTemplatesTableComponent,
+    SearchByTypeComponent,
   ],
   imports: [
     CommonModule,

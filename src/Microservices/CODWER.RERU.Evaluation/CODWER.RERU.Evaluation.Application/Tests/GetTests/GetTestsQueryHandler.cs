@@ -25,7 +25,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
         public async Task<PaginatedModel<TestDto>> Handle(GetTestsQuery request, CancellationToken cancellationToken)
         {
-            var curUser = await _userProfileService.GetCurrentUser();
+            var currentUser = await _userProfileService.GetCurrentUser();
 
             var filterData = new TestFiltersDto
             {
@@ -41,14 +41,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 ProgrammedTimeTo = request.ProgrammedTimeTo
             };
 
-            var tests = GetAndFilterTests.Filter(_appDbContext, filterData);
+            var tests = GetAndFilterTests.Filter(_appDbContext, filterData, currentUser);
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(tests, request);
 
             foreach (var testDto in paginatedModel.Items)
             {
-                var eventEvaluator = _appDbContext.EventEvaluators.FirstOrDefault(x => x.EvaluatorId == curUser.Id && x.EventId == testDto.EventId);
-                var testEvaluator = _appDbContext.Tests.FirstOrDefault(x => x.EvaluatorId == curUser.Id && x.Id == testDto.Id);
+                var eventEvaluator = _appDbContext.EventEvaluators.FirstOrDefault(x => x.EvaluatorId == currentUser.Id && x.EventId == testDto.EventId);
+                var testEvaluator = _appDbContext.Tests.FirstOrDefault(x => x.EvaluatorId == currentUser.Id && x.Id == testDto.Id);
 
                 if (eventEvaluator != null)
                 {

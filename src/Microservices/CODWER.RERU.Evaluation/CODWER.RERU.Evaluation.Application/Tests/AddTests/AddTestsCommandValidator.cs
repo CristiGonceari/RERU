@@ -23,6 +23,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             _appDbContext = appDbContext;
             _mediator = mediator;
 
+            RuleFor(x => x.ProcessId)
+                .SetValidator(x => new ItemMustExistValidator<Process>(appDbContext, ValidationCodes.INVALID_PROGRESS,
+                    ValidationMessages.InvalidReference));
+
             RuleFor(x => x.TestTemplateId)
                 .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));

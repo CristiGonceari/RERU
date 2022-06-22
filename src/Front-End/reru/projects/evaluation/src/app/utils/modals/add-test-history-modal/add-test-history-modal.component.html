@@ -1,5 +1,5 @@
 <div class="modal-header border-0 pb-0">
-    <h3 class="modal-title">{{'documents-templates.generate-document'| translate}}</h3>
+    <h3 class="modal-title">{{ 'processes.history' | translate }}</h3>
 </div>
 <div class="modal-body px-7">
     <!-- <div class="separator separator-dashed my-5"></div> -->
@@ -9,19 +9,19 @@
             <table class="datatable table font-size-lg" style="overflow: visible">
                 <thead class="text-uppercase text-muted">
                     <tr>
-                        <th scope="col" class="text-center" style="width: 150px">Processe Totale</th>
-                        <th scope="col" class="text-center" style="width: 150px">Processe Efectuate</th>
-                        <th scope="col" class="text-center" style="width: 150px">Start Time</th>
-                        <th scope="col" class="text-center" style="width: 150px">End Time</th>
-                        <th scope="col" class="text-center" style="width: 150px">File</th>
+                        <th scope="col" class="text-center" style="width: 150px">{{ 'processes.totalProcesses' | translate }}</th>
+                        <th scope="col" class="text-center" style="width: 150px">{{ 'processes.doneProcesses' | translate }}</th>
+                        <th scope="col" class="text-center" style="width: 150px">{{ 'processes.startTime' | translate }}</th>
+                        <th scope="col" class="text-center" style="width: 150px">{{ 'processes.endTime' | translate }}</th>
+                        <th scope="col" class="text-center" style="width: 150px">{{ 'processes.file' | translate }}</th>
 
                         <th scope="col" style="width: 48px"></th>
                     </tr>
                 </thead>
                 <tbody class="datatable-body">
                     <tr *ngFor="let item of processesData">
-                        <td class="text-center" style="width: 150px">{{item.doneProcesses}}</td>
-                        <td class="text-center" style="width: 150px">{{item.totalProcesses}}</td>
+                        <td class="text-center" style="width: 150px">{{item.done}}</td>
+                        <td class="text-center" style="width: 150px">{{item.total}}</td>
                         <td class="text-center" style="width: 150px">{{item.startTime | date: 'M/d/yy, h:mm a'}}</td>
                         <td class="text-center" style="width: 150px">{{item.endTime | date: 'M/d/yy, h:mm a' }}</td>
                         <td class="text-center" style="width: 150px" >
@@ -43,5 +43,6 @@
         </div>
     </div>
     <div class="modal-footer border-0 pt-0">
-        <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+        <button type="button" class="btn btn-danger" (click)="closeAllProcesses()" *ngIf="isRunningProcess">{{'button.close' | translate}}</button>
+        <button type="button" class="btn btn-secondary" (click)="close()" (click)="dismiss()">{{'button.cancel' | translate}}</button>
     </div>

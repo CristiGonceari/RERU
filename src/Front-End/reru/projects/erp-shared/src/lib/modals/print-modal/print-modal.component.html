@@ -13,7 +13,7 @@
 
   <div class="d-flex justify-content-center flex-wrap">
     <div *ngFor="let item of tableData.fields" class="d-flex h-30px label label-light-secondary label-inline m-1">
-      <input type="checkbox" id="{{ item.value }}" class="hidden" [checked]="true"
+      <input type="checkbox" id="{{ item.value }}" class="hidden" [checked]="item.isChecked"
         value="{{ item.value }}" (change)="onItemChange($event, item)" />
       <label class="mb-0 d-flex cursor-pointer font-size-lg" for="{{ item.value }}">
         {{ item.label }}

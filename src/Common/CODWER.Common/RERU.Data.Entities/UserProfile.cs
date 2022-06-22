@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using CVU.ERP.Common.Data.Entities;
+using RERU.Data.Entities.Enums;
 
 namespace RERU.Data.Entities
 {
@@ -27,12 +28,15 @@ namespace RERU.Data.Entities
         public string FatherName { get; set; }
         public string Idnp { get; set; }
         public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public DateTime? Birthday { get; set; }
         public string MediaFileId { get; set; }
         public bool RequiresDataEntry { get; set; }
         
         public string Token { set; get; }
         public bool IsActive { set; get; }
         public DateTime? TokenLifetime { get; set; }
+        public AccessModeEnum? AccessModeEnum { get; set; }
 
         public int? DepartmentColaboratorId { get; set; }
         public Department Department { get; set; }

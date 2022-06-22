@@ -45,6 +45,10 @@ export class UserProfileService extends AbstractService {
 		return this.http.get(`${this.coreUrl}/${this.routeUrl}/user-status/select-values`);
 	}
 
+	getAccessMode(): Observable<any> {
+		return this.http.get(`${this.coreUrl}/${this.routeUrl}/access-mode/select-values`);
+	}
+
 	print(data): Observable<any> {
 		return this.http.put(`${this.coreUrl}/${this.routeUrl}/print`, data, {
 			responseType: 'blob',

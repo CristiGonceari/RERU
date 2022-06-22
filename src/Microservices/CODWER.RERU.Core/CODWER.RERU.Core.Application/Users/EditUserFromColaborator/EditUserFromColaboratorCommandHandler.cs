@@ -11,6 +11,7 @@ using CVU.ERP.Logging;
 using CVU.ERP.Module.Application.Clients;
 using MediatR;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Users.EditUserFromColaborator
@@ -46,10 +47,13 @@ namespace CODWER.RERU.Core.Application.Users.EditUserFromColaborator
                 LastName = request.LastName,
                 FatherName = request.FatherName,
                 Idnp = request.Idnp,
+                Birthday = request.Birthday,
+                PhoneNumber = request.PhoneNumber,
                 Email = request.Email,
                 DepartmentColaboratorId = request.DepartmentColaboratorId == 0 ? null : request.DepartmentColaboratorId,
                 RoleColaboratorId = request.RoleColaboratorId == 0 ? null : request.RoleColaboratorId,
-                EmailNotification = request.EmailNotification
+                EmailNotification = request.EmailNotification,
+                AccessModeEnum = request.AccessModeEnum
             };
 
             var user = _appDbContext.UserProfiles.FirstOrDefault(x => x.Idnp == editUser.Idnp);

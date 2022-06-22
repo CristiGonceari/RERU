@@ -4,6 +4,7 @@ using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using CODWER.RERU.Core.Application.Users.SendEmailVerificationCode;
 
 namespace CODWER.RERU.Core.API.Controllers
 {
@@ -15,6 +16,12 @@ namespace CODWER.RERU.Core.API.Controllers
 
         [HttpPost]
         public Task<int> InregistrateUser([FromBody] InregistrateUserCommand command)
+        {
+            return Mediator.Send(command);
+        }
+
+        [HttpPost("verify-code")]
+        public Task<int> VerifyEmail([FromBody] SendEmailVerificationCodeCommand command)
         {
             return Mediator.Send(command);
         }

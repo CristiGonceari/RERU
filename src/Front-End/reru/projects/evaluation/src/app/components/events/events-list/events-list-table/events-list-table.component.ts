@@ -243,7 +243,7 @@ export class EventsListTableComponent implements OnInit {
 		let headersHtml = eventsTable.getElementsByTagName('th');
 		let headersDto = ['name', 'description', 'fromDate', 'tillDate'];
 		for (let i = 0; i < headersHtml.length - 1; i++) {
-			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
 		let printData = {
 			tableName: name,

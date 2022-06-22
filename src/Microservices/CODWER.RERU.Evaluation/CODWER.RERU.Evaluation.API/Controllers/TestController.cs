@@ -1,21 +1,28 @@
 ﻿using CODWER.RERU.Evaluation.API.Config;
+using CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices;
 using CODWER.RERU.Evaluation.Application.Tests.AddMyPoll;
 using CODWER.RERU.Evaluation.Application.Tests.AddTests;
+using CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotification;
 using CODWER.RERU.Evaluation.Application.Tests.DeleteTest;
 using CODWER.RERU.Evaluation.Application.Tests.EditTestStatus;
 using CODWER.RERU.Evaluation.Application.Tests.ExportTests;
 using CODWER.RERU.Evaluation.Application.Tests.FinalizeTest;
+using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests;
+using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.CountMyEvaluatedTests;
+using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.GetMyEvaluatedTestsByDate;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyPollsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent;
-using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEventByDate;
 using CODWER.RERU.Evaluation.Application.Tests.GetPollResult;
 using CODWER.RERU.Evaluation.Application.Tests.GetTest;
+using CODWER.RERU.Evaluation.Application.Tests.GetTestDocumentReplacedKeys;
 using CODWER.RERU.Evaluation.Application.Tests.GetTests;
+using CODWER.RERU.Evaluation.Application.Tests.GetTestSettings;
 using CODWER.RERU.Evaluation.Application.Tests.PrintTests;
 using CODWER.RERU.Evaluation.Application.Tests.SetConfirmationToStartTest;
+using CODWER.RERU.Evaluation.Application.Tests.StartTest;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluatedTests;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPollsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTests;
@@ -32,17 +39,10 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.CountMyEvaluatedTests;
-using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.GetMyEvaluatedTestsByDate;
-using CODWER.RERU.Evaluation.Application.Tests.GetTestSettings;
-using CODWER.RERU.Evaluation.Application.Tests.GetTestDocumentReplacedKeys;
-using CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices;
-using CODWER.RERU.Evaluation.Application.Tests.AddTests.GetBulkImportProcess;
-using CODWER.RERU.Evaluation.Application.Tests.AddTests.GetBulkImportResult;
-using CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotification;
-using CODWER.RERU.Evaluation.Application.Tests.AddTests.StartBulkImportProcess;
-using CODWER.RERU.Evaluation.Application.Tests.StartTest;
-using CODWER.RERU.Evaluation.DataTransferObjects.BulkProcesses;
+using CVU.ERP.Module.Application.ImportProcesses;
+using CVU.ERP.Module.Application.ImportProcesses.GetImportProcess;
+using CVU.ERP.Module.Application.ImportProcesses.GetImportResult;
+using CVU.ERP.Module.Application.ImportProcesses.StartImportProcess;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -133,15 +133,16 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpPost("process")]
-        public async Task<int> StartBulkAddProcess([FromBody] StartBulkImportProcessCommand command)
+        public async Task<int> StartAddProcess([FromBody] StartImportProcessCommand command)
         {
             return await Mediator.Send(command);
         }
 
         [HttpGet("process/{id}")]
-        public async Task<ProcessDataDto> GetBuklImportProcess([FromRoute] int id)
+        public async Task<ProcessDataDto> GetImportProcess([FromRoute] int id)
         {
-            var query = new GetBulkImportProcessQuery { ProcessId = id };
+            var query = new GetImportProcessQuery() { ProcessId = id };
+
             return await Mediator.Send(query);
         }
 
@@ -149,7 +150,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         [IgnoreResponseWrap]
         public async Task<IActionResult> GetFile([FromRoute] string fileId)
         {
-            var query = new GetBulkImportResultQuery {FileId = fileId};
+            var query = new GetImportResultQuery {FileId = fileId};
 
             var result = await Mediator.Send(query);
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");

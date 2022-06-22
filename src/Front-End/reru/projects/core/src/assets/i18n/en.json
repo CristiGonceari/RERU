@@ -30,7 +30,7 @@
     "select-candidate-position": "Select Position",
     "position-to-candidate": "Position to Candidate",
     "accept-condition": "I agree and accept with",
-    "registration-conditions":"registration conditions",
+    "registration-conditions":"terms and conditions of registration",
     "is-downloading": "Downloading",
     "personal-file": "Personal File",
     "personal-form-file": "Form for filling in personal data",
@@ -63,7 +63,9 @@
     "password-is-required": "Password is required",
     "forgot-password": "Forgot Password?",
     "recover-email-sent": "The recover email has been sent!",
-    "idnp-is-required": "IDNP is required"
+    "idnp-is-required": "IDNP is required",
+    "birthday-is-required": "Birthday is required",
+    "phone-is-required": "Contact number is required"
   },
   "notification": {
     "title": {
@@ -188,7 +190,19 @@
     "Candidate": "Candidates",
     "Employee": "Employees",
     "employee": "Employee",
-    "candidate": "Candidate"
+    "candidate": "Candidate",
+    "All": "All",
+    "AllDepartments": "All departments",
+    "CurrentDepartment": "Current department",
+    "OnlyCandidates": "Only candidates"
+  },
+  "processes":{
+    "totalProcesses": "Total Processes",
+    "doneProcesses": "Done Processes",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "file": "File",
+    "history": "History"
   },
   "user-profile": {
     "overview": "Overview profile",
@@ -203,7 +217,11 @@
     "wrong-name": "The field must contain only Latin letters",
     "available-modules": "Available modules",
     "idnp-length": "IDNP should consist of 13 numbers!",
-    "search-by-user-state": "Search by user state"
+    "search-by-user-state": "Search by user state",
+    "access-mode": "Access mode",
+    "code-length": "Code should consist of 4 numbers!",
+    "enter-code": "Enter the code",
+    "verify-process": "Email verification process"
   },
   "user": {
     "edit-title": "Edit User",
@@ -212,7 +230,11 @@
     "remove-sure": "Are you sure you want to remove this user?",
     "succes-remove": "User profile was successfully removed!",
     "succes-edit": "User profile has been successfully updated!",
-    "succes-create": "User profile has been successfully created!"
+    "succes-create": "User profile has been successfully created!",
+    "please-wait": "Please wait while system add users ...",
+    "birthday": "Birthday",
+    "phone": "Contact phone",
+    "date-format": "Please provide a valid format ZZ.LL.AAAA"
   },
   "word": {
     "search": "Search by full name or e-mail",
@@ -410,7 +432,9 @@
     "01000203": "Invalid input!",
     "01000204": "Invalid id!",
     "01000301": "Invalid position",
-    "01000302": "Invalid position name"
+    "01000302": "Invalid position name",
+    "01000106": "Empty access mode",
+    "01000108": "Invalid code"
   },
   "print": {
     "print-table": "Print table",

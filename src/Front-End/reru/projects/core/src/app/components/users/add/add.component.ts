@@ -11,6 +11,9 @@ import { ValidatorUtil } from '../../../utils/util/validator.util';
 import { FileTypeEnum } from '../../../../../../erp-shared/src/lib/models/FileTypeEnum';
 import { DepartmentService } from '../../../utils/services/department.service';
 import { UserRoleService } from '../../../utils/services/user-role.service';
+import { UserProfileService } from '../../../utils/services/user-profile.service';
+import { SelectItem } from '../../../utils/models/select-item.model';
+import { AccessModeEnum } from '../../../utils/models/access-mode.enum';
 
 @Component({
   selector: 'app-add',
@@ -27,12 +30,20 @@ export class AddComponent implements OnInit {
   fileId: string;
   fileType: FileTypeEnum = FileTypeEnum.Photos
   attachedFile: File;
-  departments;
-  roles;
+  departments: SelectItem[] = [{ label: '', value: '' }];
+  roles: SelectItem[] = [{ label: '', value: '' }];
+  accessModes: SelectItem[] = [{ label: '', value: '' }];
+  accesModeEnum = AccessModeEnum;
+
+  birthday;
+  fromData = '';
+  fromDate;
+  startDate;
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
+    private userProfileService: UserProfileService,
     private notificationService: NotificationsService,
     private router: Router,
     public translate: I18nService,
@@ -44,6 +55,7 @@ export class AddComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getAccessMode();
     this.getDepartments();
     this.getRoles();
     this.initForm();
@@ -56,6 +68,10 @@ export class AddComponent implements OnInit {
 
   getRoles(){
     this.roleService.getValues().subscribe(res => this.roles = res.data);
+  }
+
+  getAccessMode(){
+    this.userProfileService.getAccessMode().subscribe(res => this.accessModes = res.data);
   }
 
   hasErrors(field): boolean {
@@ -84,9 +100,12 @@ export class AddComponent implements OnInit {
       fatherName: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'),]),
       idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
       email: this.fb.control(null, [Validators.required, Validators.email]),
+      birthday: this.fb.control(null, [Validators.required]),
+      phoneNumber: this.fb.control(null, [Validators.required]),
       departmentColaboratorId: this.fb.control(null, [Validators.required]),
       roleColaboratorId: this.fb.control(null, [Validators.required]),
-      emailNotification: this.fb.control(false, [Validators.required])
+      emailNotification: this.fb.control(false, [Validators.required]),
+      accessModeEnum: this.fb.control(null, [Validators.required])
     });
   }
 
@@ -105,7 +124,10 @@ export class AddComponent implements OnInit {
       idnp: this.userForm.value.idnp,
       departmentColaboratorId: this.userForm.value.departmentColaboratorId,
       roleColaboratorId: this.userForm.value.roleColaboratorId,
-      emailNotification: this.userForm.value.emailNotification
+      emailNotification: this.userForm.value.emailNotification,
+      birthday: this.userForm.value.birthday,
+      phoneNumber: this.userForm.value.phoneNumber,
+      accessModeEnum: this.userForm.value.accessModeEnum
     }
 
     this.userService.createUser(data).subscribe(res => {

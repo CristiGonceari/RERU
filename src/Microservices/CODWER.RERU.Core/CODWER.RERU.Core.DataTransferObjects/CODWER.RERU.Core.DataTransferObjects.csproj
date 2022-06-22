@@ -4,6 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.StorageService\CVU.ERP.StorageService.csproj" />
+    <ProjectReference Include="..\..\..\Common\CODWER.Common\RERU.Data.Entities\RERU.Data.Entities.csproj" />
   </ItemGroup>
 </Project>
  

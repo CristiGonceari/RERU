@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Core.Application.Users.CreateUser
 {
@@ -45,9 +46,12 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
                 FatherName = request.FatherName,
                 Idnp = request.Idnp,
                 Email = request.Email,
+                Birthday = request.Birthday,
+                PhoneNumber = request.PhoneNumber,
                 DepartmentColaboratorId = request.DepartmentColaboratorId == 0 ? null : request.DepartmentColaboratorId,
                 RoleColaboratorId = request.RoleColaboratorId == 0 ? null : request.RoleColaboratorId,
-                EmailNotification = request.EmailNotification
+                EmailNotification = request.EmailNotification,
+                AccessModeEnum = (int)request.AccessModeEnum
             };
 
             var userProfile = Mapper.Map<UserProfile>(newUser);

@@ -100,15 +100,15 @@
     "documents-template": "Document Templates",
     "documents-management": "Document Management",
     "administration": "Administration",
-    "positions": "Positions"
+    "positions": "Vacant positions"
   },
   "position": {
     "administration": "Administration",
-    "management": "Candidate position management",
+    "management": "Vacant position management",
     "add": "Add position",
     "edit": "Edit position",
     "remove": "Remove position",
-    "details": "Candidate position details",
+    "details": "Vacant position details",
     "subtitle": "Manage candidate positions",
     "list": "Candidate position list",
     "success-create": "Position successfully created",
@@ -131,12 +131,13 @@
     "key-list": "Key map",
     "Contractor Name": "Numele persoanei",
     "generate-document": "Generate document",
-    "select-document": "Select document"
+    "select-document": "Select document",
+    "search-by-type": "Search by document template type"
   },
   "document-test-modal":{
     "all": "All",
     "there-are-no-records-at-the-moment": "There are no records at the moment",
-    "1": "TestTemplate",
+    "1": "Test Template",
     "2": "Test",
     "reports":{
       "name": "Name",
@@ -320,9 +321,9 @@
     "search-result": "Search by test result",
     "name": "Test name",
     "template-name": "Test template name",
-    "category-used-count": "Categories",
-    "questions-to-use-count": "Questions",
-    "time-min": "Time, min",
+    "category-used-count": "No. categories",
+    "questions-to-use-count": "No. questions",
+    "time-min": "Time (min)",
     "minutes": "minutes",
     "time": "Time",
     "total-time": "Total Time",
@@ -342,7 +343,7 @@
     "remove-test-category-msg": "Are you sure you want to remove this category from this test template?",
     "test-type-data": "Enter test template details and confirm",
     "test-type-details": "Test template details",
-    "mode": "Mode",
+    "mode": "Type",
     "finalize-test": "Finalize test",
     "finalize-poll": "Finalize poll",
     "seconds-to-complete": "seconds to complete",
@@ -377,17 +378,17 @@
     "search-email": "Search by email",
     "search-student-idnp": "Search by user idnp",
     "test-type-name": "Test template name",
-    "student": "Student",
+    "student": "Evaluated",
     "status": "Status",
     "verified-progress": "Verified",
-    "min-points": "Min. Points",
+    "min-points": "Min. Points (%)",
     "allow-start": "Allow to Start",
     "verify": "Verify",
     "finalize-verification": "Finalize Verification",
     "confirm-verification": "All questions are verified!",
     "next-question": "Next Question",
     "result": "Result",
-    "score": "Score",
+    "score": "Score (%)",
     "NoResult": "No result",
     "Passed": "Passed",
     "NotPassed": "Not Passed",
@@ -488,6 +489,16 @@
     "add-tags": "Add tags",
     "bulk-import-options-msg": "Please, download and use our special form for import options"
   },
+
+  "processes":{
+    "totalProcesses": "Total Processes",
+    "doneProcesses": "Done Processes",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "file": "File",
+    "history": "History"
+  },
+
   "answers": {
     "option-settings": "Option Settions",
     "delete-option": "Delete option",
@@ -530,6 +541,7 @@
     "hashed-answer": "Hashed Answer",
     "Poll": "Poll",
     "Test": "Test",
+    "TestTemplate": "Test Template",
     "Voted": "Voted",
     "NotVoted": "Not voted",
     "Correct": "Correct",
@@ -614,7 +626,7 @@
     "location-name": "Testing location name",
     "address": "Address",
     "location-address": "Testing location address",
-    "places": "Places",
+    "places": "No. places",
     "person-name": "Responsible person name",
     "person": "Responsible person",
     "persons": "Responsible persons",
@@ -692,6 +704,7 @@
     "test-types": "Test templates",
     "attached-users": "Attached Users",
     "attach-user": "Attach user",
+    "attach-evaluated": "Attach evaluated",
     "user-name": "User",
     "attach-test-type": "Attach test template",
     "attach-test-type-to-event": "Attach test template to event",
@@ -729,7 +742,10 @@
     "number-of-questions":"Number of questions",
     "succes-delete-msg": "Test template  was successfully deleted",
     "succes-add-msg": "Test template was successfully added",
-    "order-of-questions":"The order of the questions"
+    "order-of-questions":"The order of the questions",
+    "set-can-be-solicited": "Add to can be solicited",
+    "unset-from-can-be-solicited": "Unset from solicited tests",
+    "can-be-solicited": "Can be solicited"
   },
   "plans": {
     "plans": "Plans",
