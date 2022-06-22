@@ -17,7 +17,7 @@ import { SetPasswordUserComponent } from '././user-profile/set-password-user/set
 import { FilterUserStateComponent } from '././user-list/filter-user-state/filter-user-state.component';
 import { RemoveComponent } from './remove/remove.component';
 import { SearchStatusComponent } from './user-list/search-status/search-status.component';
-import { OwlDateTimeModule, OwlMomentDateTimeModule, OwlNativeDateTimeModule  } from '@busacca/ng-pick-datetime';
+import { OwlDateTimeModule, OwlMomentDateTimeModule  } from '@busacca/ng-pick-datetime';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 
@@ -34,7 +34,6 @@ import { CommonModule, DatePipe } from '@angular/common';
     NgbModule,
     OwlDateTimeModule,
     OwlMomentDateTimeModule,
-    OwlNativeDateTimeModule,
     HttpClientModule
   ],
   declarations: [

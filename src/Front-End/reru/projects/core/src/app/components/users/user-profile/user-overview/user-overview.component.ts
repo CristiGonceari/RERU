@@ -16,6 +16,8 @@ export class UserOverviewComponent implements OnInit {
   fatherName: string;
   idnp: string;
   candidatePositionName: string;
+  birthday;
+  phoneNumber;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -43,6 +45,8 @@ export class UserOverviewComponent implements OnInit {
       this.idnp = res.data.idnp;
       this.email = res.data.email;
       this.candidatePositionName = res.data.candidatePositionName;
+      this.birthday = res.data.birthday;
+      this.phoneNumber = res.data.phoneNumber;
       this.isLoading = false;
     });
   }

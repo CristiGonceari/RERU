@@ -23,11 +23,11 @@
                               formControlName="firstName"
                               [ngClass]="{'is-invalid': hasErrors('firstName'), 'is-valid': personalDataForm.get('firstName').valid}" />
                             <div *ngIf="hasErrors('firstName')" class="fv-plugins-message-container">
-                              <div *ngIf="hasError('firstName', 'required')" data-field="firstName" data-validator="notEmpty"
-                                class="fv-help-block">
+                              <div *ngIf="hasError('firstName', 'required')" data-field="firstName"
+                                data-validator="notEmpty" class="fv-help-block">
                                 {{ 'user-profile.empty-name' | translate }}</div>
-                              <div *ngIf="hasError('firstName', 'pattern')" data-field="firstName" data-validator="notEmpty"
-                                class="fv-help-block">
+                              <div *ngIf="hasError('firstName', 'pattern')" data-field="firstName"
+                                data-validator="notEmpty" class="fv-help-block">
                                 {{ 'user-profile.wrong-name' | translate }}</div>
                             </div>
                           </div>
@@ -63,6 +63,41 @@
                                 data-validator="notEmpty" class="fv-help-block">
                                 {{ 'user-profile.empty-name' | translate }}</div>
                               <div *ngIf="hasError('fatherName', 'pattern')" data-field="fatherName"
+                                data-validator="notEmpty" class="fv-help-block">
+                                {{ 'user-profile.wrong-name' | translate }}</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-xl-3 col-lg-3 col-form-label">
+                            {{'user.birthday' | translate}}
+                          </label>
+                          <div class="col-lg-9 col-xl-9">
+                            <app-date [isDisabled]="false" [isReverse]="false" [parent]="personalDataForm"
+                              [date]="'birthday'" [placeholder]="dd-mm-yyyy"></app-date>
+                            <div *ngIf="hasErrors('fatherName')" class="fv-plugins-message-container">
+                              <div *ngIf="hasError('fatherName', 'required')" data-field="fatherName"
+                                data-validator="notEmpty" class="fv-help-block">
+                                {{ 'user-profile.empty-name' | translate }}</div>
+                              <div *ngIf="hasError('fatherName', 'pattern')" data-field="fatherName"
+                                data-validator="notEmpty" class="fv-help-block">
+                                {{ 'user-profile.wrong-name' | translate }}</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-xl-3 col-lg-3 col-form-label">
+                            {{'user.phone' | translate}}
+                          </label>
+                          <div class="col-lg-9 col-xl-9">
+                            <input class="form-control form-control-lg form-control-solid" name="phoneNumber"
+                              type="text" formControlName="phoneNumber"
+                              [ngClass]="{'is-invalid': hasErrors('phoneNumber'), 'is-valid': personalDataForm.get('phoneNumber').valid}" />
+                            <div *ngIf="hasErrors('phoneNumber')" class="fv-plugins-message-container">
+                              <div *ngIf="hasError('phoneNumber', 'required')" data-field="phoneNumber"
+                                data-validator="notEmpty" class="fv-help-block">
+                                {{ 'user-profile.empty-name' | translate }}</div>
+                              <div *ngIf="hasError('phoneNumber', 'pattern')" data-field="phoneNumber"
                                 data-validator="notEmpty" class="fv-help-block">
                                 {{ 'user-profile.wrong-name' | translate }}</div>
                             </div>

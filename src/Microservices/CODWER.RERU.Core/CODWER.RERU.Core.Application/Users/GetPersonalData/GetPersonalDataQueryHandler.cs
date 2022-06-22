@@ -23,13 +23,14 @@ namespace CODWER.RERU.Core.Application.Users.GetPersonalData {
             _userManager = userManager;
             _userProvider = userProvider;
         }
-        public async Task<UserPersonalDataDto> Handle (GetPersonalDataQuery request, CancellationToken cancellationToken) {
+        public async Task<UserPersonalDataDto> Handle (GetPersonalDataQuery request, CancellationToken cancellationToken) 
+        {
             var currentUser = await _userProvider.Get ();
 
             var user = await AppDbContext.UserProfiles
                 .FirstOrDefaultAsync (u => u.Id == int.Parse(currentUser.Id));
 
-            await UserManagementDbContext.SaveChangesAsync ();
+            await AppDbContext.SaveChangesAsync ();
 
             return Mapper.Map<UserPersonalDataDto> (user);
         }

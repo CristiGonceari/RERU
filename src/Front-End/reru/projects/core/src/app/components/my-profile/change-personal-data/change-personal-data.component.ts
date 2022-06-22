@@ -72,6 +72,12 @@ export class ChangePersonalDataComponent implements OnInit {
 					'^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'
 				),
 			]),
+			birthday: this.fb.control(oldPersonalData.birthday, [
+				Validators.required,
+			]),
+			phoneNumber: this.fb.control(oldPersonalData.phoneNumber, [
+				Validators.required,
+			]),
 		});
 		this.isLoading = false;
 	}

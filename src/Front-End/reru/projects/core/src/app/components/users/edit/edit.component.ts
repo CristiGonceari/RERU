@@ -111,6 +111,8 @@ export class EditComponent implements OnInit {
 					'^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'
 				),
 			]),
+			birthday: this.fb.control(user && user.birthday, [Validators.required]),
+			phoneNumber: this.fb.control(user && user.phoneNumber, [Validators.required]),
 			departmentColaboratorId: this.fb.control((user && user.departmentColaboratorId) || null, Validators.required),
 			roleColaboratorId: this.fb.control((user && user.roleColaboratorId) || null, [Validators.required]),
 			accessModeEnum: this.fb.control((user && user.accessModeEnum) || null, [Validators.required]),
@@ -125,6 +127,8 @@ export class EditComponent implements OnInit {
 			firstName: this.userForm.value.firstName,
 			lastName: this.userForm.value.lastName,
 			fatherName: this.userForm.value.fatherName,
+			birthday: this.userForm.value.birthday,
+			phoneNumber: this.userForm.value.phoneNumber,
 			departmentColaboratorId: +this.userForm.value.departmentColaboratorId,
 			roleColaboratorId: +this.userForm.value.roleColaboratorId,
 			accessModeEnum: this.userForm.value.accessModeEnum
