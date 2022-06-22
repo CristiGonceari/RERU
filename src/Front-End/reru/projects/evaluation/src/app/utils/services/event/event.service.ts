@@ -96,8 +96,8 @@ export class EventService extends AbstractService {
     return this.http.get(`${this.baseUrl}/EventUser`, {params});
   }
 
-  sendEmail(url, userProfileId): Observable<any>{
-    return this.http.put(`${this.baseUrl}/${url}`, {userProfileId});
+  sendEmail(url, userProfileId, eventId): Observable<any>{
+    return this.http.put(`${this.baseUrl}/${url}`, {userProfileId, eventId});
   }
 
   getAssignedUsers(params): Observable<any>{

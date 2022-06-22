@@ -5,5 +5,6 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.SendToAssig
     public class SendToAssignedResponsiblePersonNotificationsCommand : IRequest<Unit>
     {
         public int UserProfileId { get; set; }
+        public int EventId { get; set; }
     }
 }
