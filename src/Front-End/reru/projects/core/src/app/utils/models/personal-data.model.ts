@@ -4,5 +4,7 @@ export class PersonalData {
     lastName: string;
     fatherName: string;
     email: string;
+    birthday: string;
+    phoneNumber: string;
     username: string;
   }
