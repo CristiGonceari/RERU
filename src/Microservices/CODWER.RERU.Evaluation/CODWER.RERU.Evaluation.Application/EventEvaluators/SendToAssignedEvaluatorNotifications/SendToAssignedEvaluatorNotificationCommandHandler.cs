@@ -37,7 +37,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.SendToAssignedEvalu
 
             var eventEvaluator = _appDbContext.EventEvaluators
                 .Include(x => x.Event)
-                .FirstOrDefault(ee => ee.EvaluatorId == request.UserProfileId);
+                .FirstOrDefault(ee => ee.EvaluatorId == request.UserProfileId && ee.EventId == request.EventId);
 
             await _internalNotificationService.AddNotification(eventEvaluator.EvaluatorId, NotificationMessages.YouWereInvitedToEventAsCandidate);
 
