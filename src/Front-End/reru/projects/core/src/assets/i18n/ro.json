@@ -232,7 +232,8 @@
     "succes-create": "Utilizatorul a fost creat cu succes!",
     "please-wait": "Vă rugăm să așteptați până sistemul adaugă utilizatori ...",
     "birthday": "Data nașterii",
-    "phone": "Telefon de contact"
+    "phone": "Telefon de contact",
+    "date-format": "Vă rugăm să furnizați un format valid ZZ.LL.AAAA"
   },
   "word": {
     "search": "Căutarea după N.P.P. sau e-mail",
