@@ -82,14 +82,30 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="birthday" class="col-xl-3 col-lg-3 col-form-label">{{'user.birthday' |
+                      <label class="col-xl-3 col-lg-3 col-form-label">{{'user.birthday' |
                         translate}}</label>
-                      <div class="col-lg-9 col-xl-9">
-                        <input id="from" [owlDateTime]="birthday" [owlDateTimeTrigger]="birthday"
+                      <div class="col-lg-9 col-xl-9" style="height: 44px;">
+                        <app-date style="height: 44px;" [isDisabled]="false" [isReverse]="false" [parent]="userForm" [date]="'birthday'"
+                          [placeholder]="dd-mm-yyyy"></app-date>
+
+                        <!-- <input id="from" [owlDateTime]="birthday" [owlDateTimeTrigger]="birthday"
                           placeholder="Date Time" class="form-control form-control-lg form-control-solid"
                           autocomplete="off" [readonly]="true" formControlName="birthday"
                           name="birthday" [value]="birthday | dateFilter:'dd/MM/yy'" />
-                        <owl-date-time #birthday></owl-date-time>
+                        <owl-date-time #birthday></owl-date-time> -->
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-3 col-lg-3 col-form-label mt-1">{{ 'table.profile-photo' | translate }}</label>
+                      <div class="col-lg-9 col-xl-9 mt-1">
+                        <div *ngIf="fileId">
+                          <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)"
+                            (disableBtn)="disableBtn"></app-add-edit-media-file>
+                        </div>
+                        <div *ngIf="!fileId">
+                          <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
+                          </app-add-edit-media-file>
+                        </div>
                       </div>
                     </div>
                   </diV>
@@ -127,7 +143,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="form-group row align-items-center mb-9">
+                    <div class="form-group row">
                       <label class="col-xl-3 col-lg-3 col-form-label">
                         {{'departments.department' | translate}}
                       </label>
@@ -139,7 +155,7 @@
                         </select>
                       </div>
                     </div>
-                    <div class="form-group row align-items-center mb-9">
+                    <div class="form-group row">
                       <label class="col-xl-3 col-lg-3 col-form-label">
                         {{ 'user-roles.role' | translate }}
                       </label>
@@ -151,7 +167,7 @@
                         </select>
                       </div>
                     </div>
-                    <div class="form-group row align-items-center mb-9">
+                    <div class="form-group row">
                       <label class="col-xl-3 col-lg-3 col-form-label">
                         {{ 'user-profile.access-mode' | translate }}
                       </label>
@@ -164,26 +180,6 @@
                         </select>
                       </div>
                     </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-group row mb-10">
-                      <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.profile-photo' | translate }}</label>
-                      <div class="col-lg-9 col-xl-9">
-                        <div *ngIf="fileId">
-                          <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)"
-                            (disableBtn)="disableBtn"></app-add-edit-media-file>
-                        </div>
-                        <div *ngIf="!fileId">
-                          <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
-                          </app-add-edit-media-file>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12">
                     <div class="form-group row">
                       <label class="col-xl-3 col-lg-3 col-form-label">{{ 'pages.users.send-email' | translate }}</label>
                       <div class="col-lg-9 col-xl-9">
@@ -192,9 +188,7 @@
                       </div>
                     </div>
                   </div>
-
                 </div>
-
 
                 <div class="text-right border-top pt-10">
                   <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="back()"></app-button>

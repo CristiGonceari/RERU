@@ -9,11 +9,11 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0">
     <div class="container-fluid">
-      <div class="d-flex">
+      <div class="d-flex pt-2">
         <img src="../../../assets/logo_2.png" alt="..." class="img-thumbnail" style="max-height: 40px;">
-        <h2 style="color: white;" class="ml-3 mt-1">
+        <h2 style="color: white; font-family: Georgia, serif;" class="ml-3 pt-1 mb-3">
           {{'registration-page.registration-candidate-page' | translate }}</h2>
       </div>
       <div class=" d-flex justify-content-end" id="navbarSupportedContent">
@@ -57,7 +57,7 @@
       </div>
     </div>
   </nav>
-  <div class="container-fluid py-4" style="background-color: #eff1f3; color: #142b3e; font-family: Georgia, serif;">
+  <!-- <div class="container-fluid py-4" style="background-color: #eff1f3; color: #142b3e; font-family: Georgia, serif;"> -->
     <!-- <h1 class="text-center mb-10">{{ 'registration-page.about-us' | translate }}</h1> -->
     <!-- <div class="row">
       <div class="col"
@@ -85,7 +85,7 @@
         </div>
       </div>
     </div> -->
-  </div>
+  <!-- </div> -->
 
   <div class="container-fluid" style="background-color: #eff1f3; height: 100%;">
     <div class="container" style="font-family: Georgia, serif;">
@@ -93,8 +93,8 @@
         <!-- <h1 class="text-center mb-4">{{ 'registration-page.registration' | translate }}</h1> -->
         <div *ngIf="!success" class="col-xl-12 col-lg-12 col-md-12 col-xs-12"
           style="padding: 2.25rem; background-color: #fff; border: 1px solid #dee2e6; border-radius: 0.25rem; max-width: 100%; height: auto; margin-left: 4%">
-          <h4 class="text-center" style="margin-bottom: 3.0rem;">{{ 'registration-page.registration-datas' | translate
-            }}</h4>
+          <h2 class="text-center" style="margin-bottom: 2.25rem; font-family: Georgia, serif;">{{ 'registration-page.registration-datas' | translate
+            }}</h2>
           <form [formGroup]="userForm">
             <div class="form-row">
               <div class="form-group col-md-4">
@@ -157,7 +157,16 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="inputPassword4">{{ 'user.birthday' | translate }}</label>
-                <input class="form-control form-control-lg form-control-solid" placeholder="dd-mm-yyyy" name="birthday"
+                <app-date [isDisabled]="false" [isReverse]="false" [parent]="userForm" [date]="'birthday'" [placeholder]="dd-mm-yyyy"></app-date>
+                <div *ngIf="hasErrors('birthday')" class="fv-plugins-message-container">
+                  <div *ngIf="hasError('birthday', 'required')" data-field="birthday" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'login.birthday-is-required' | translate }}</div>
+                  <div *ngIf="hasError('birthday', 'birthday')" data-field="birthday" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'login.birthday-is-required' | translate }}</div>
+                </div>
+                <!-- <input class="form-control form-control-lg form-control-solid" placeholder="dd-mm-yyyy" name="birthday"
                   type="date" formControlName="birthday"
                   [ngClass]="{'is-invalid': hasErrors('birthday'), 'is-valid': userForm.get('birthday').valid}" />
                 <div *ngIf="hasErrors('birthday')" class="fv-plugins-message-container">
@@ -167,7 +176,7 @@
                   <div *ngIf="hasError('birthday', 'birthday')" data-field="birthday" data-validator="notEmpty"
                     class="fv-help-block">
                     {{ 'login.birthday-is-required' | translate }}</div>
-                </div>
+                </div> -->
               </div>
             </div>
             <div class="form-row">
