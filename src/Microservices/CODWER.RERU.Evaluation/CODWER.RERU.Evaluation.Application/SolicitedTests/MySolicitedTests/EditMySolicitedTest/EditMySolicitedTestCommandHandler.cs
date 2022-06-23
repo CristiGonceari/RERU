@@ -25,7 +25,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Edi
         {
             var myUserProfile = await _userProfileService.GetCurrentUser();
 
-            var solicitedTest = await _appDbContext.SolicitedTests.FirstOrDefaultAsync(x => x.Id == request.Data.Id);
+            var solicitedTest = await _appDbContext.SolicitedVacantPositions.FirstOrDefaultAsync(x => x.Id == request.Data.Id);
 
             _mapper.Map(request.Data, solicitedTest);
 

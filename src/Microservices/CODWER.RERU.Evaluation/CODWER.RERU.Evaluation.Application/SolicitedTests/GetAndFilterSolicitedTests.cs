@@ -7,9 +7,9 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests
 {
     public static class GetAndFilterSolicitedTests
     {
-        public static IQueryable<SolicitedTest> Filter(AppDbContext appDbContext, string eventName, string userName, string testName)
+        public static IQueryable<SolicitedVacantPosition> Filter(AppDbContext appDbContext, string eventName, string userName, string testName)
         {
-            var solicitedTests = appDbContext.SolicitedTests
+            var solicitedTests = appDbContext.SolicitedVacantPositions
                 .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
                 .Include(t => t.CandidatePosition)

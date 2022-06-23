@@ -51,7 +51,10 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<QuestionUnitTag> QuestionUnitTags { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<EmailTestNotification> EmailTestNotifications { get; set; }
-        public virtual DbSet<SolicitedTest> SolicitedTests { get; set; }
+        public virtual DbSet<SolicitedVacantPosition> SolicitedVacantPositions { get; set; }
+        public virtual DbSet<RequiredDocument> RequiredDocuments { get; set; }
+        public virtual DbSet<RequiredDocumentPosition> RequiredDocumentPositions { get; set; }
+        public virtual DbSet<EventVacantPosition> EventVacantPositions { get; set; }
         public virtual DbSet<DocumentTemplate> DocumentTemplates { get; set; }
         public virtual DbSet<DocumentTemplateKey> DocumentTemplateKeys { get; set; }
         public virtual DbSet<Department> Departments { get; set; }

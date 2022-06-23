@@ -14,5 +14,8 @@ namespace RERU.Data.Entities
         public UserProfile UserProfile { get; set; }
 
         public string FileId { get; set; }
+
+        public int? RequiredDocumentId { get; set; }
+        public RequiredDocument RequiredDocument { get; set; }
     }
 }
