@@ -4,7 +4,7 @@ using RERU.Data.Entities.Enums;
 
 namespace RERU.Data.Entities
 {
-    public class SolicitedTest : SoftDeleteBaseEntity
+    public class SolicitedVacantPosition : SoftDeleteBaseEntity
     {
         public int? EventId { get; set; }
         public Event Event { get; set; }

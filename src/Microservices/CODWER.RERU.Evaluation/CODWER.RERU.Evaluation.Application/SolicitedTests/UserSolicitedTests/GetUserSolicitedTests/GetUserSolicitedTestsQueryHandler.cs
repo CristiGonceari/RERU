@@ -24,14 +24,14 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.GetUserSolicitedTest
 
         public async Task<PaginatedModel<SolicitedTestDto>> Handle(GetUserSolicitedTestsQuery request, CancellationToken cancellationToken)
         {
-            var solicitedUserTests =  _appDbContext.SolicitedTests
+            var solicitedUserTests =  _appDbContext.SolicitedVacantPositions
                 .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Event)
                 .Include(t => t.CandidatePosition)
                 .Where(x => x.UserProfileId == request.UserId).AsQueryable();
 
-            return await _paginationService.MapAndPaginateModelAsync<SolicitedTest, SolicitedTestDto>(solicitedUserTests, request);
+            return await _paginationService.MapAndPaginateModelAsync<SolicitedVacantPosition, SolicitedTestDto>(solicitedUserTests, request);
         }
     }
 }

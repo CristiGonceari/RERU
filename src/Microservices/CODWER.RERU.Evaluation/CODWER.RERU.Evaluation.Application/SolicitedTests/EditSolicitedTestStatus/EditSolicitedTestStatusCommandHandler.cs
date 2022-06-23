@@ -36,7 +36,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.EditSolicitedTestSta
 
         public async Task<Unit> Handle(EditSolicitedTestStatusCommand request, CancellationToken cancellationToken)
         {
-            var solicitedTest = await _appDbContext.SolicitedTests
+            var solicitedTest = await _appDbContext.SolicitedVacantPositions
                 .Include(s => s.UserProfile)
                 .Include(s => s.TestTemplate)
                 .FirstAsync(x => x.Id == request.Id);
@@ -56,19 +56,19 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.EditSolicitedTestSta
             return Unit.Value;
         }
 
-        private async Task<Unit> SendEmailNotification(SolicitedTest solicitedTest)
+        private async Task<Unit> SendEmailNotification(SolicitedVacantPosition solicitedVacantPosition)
         {
-            var user = await _appDbContext.SolicitedTests
+            var user = await _appDbContext.SolicitedVacantPositions
                 .Include(s => s.UserProfile)
                 .Include(s => s.TestTemplate)
-                .FirstOrDefaultAsync(x => x.UserProfileId == solicitedTest.UserProfileId);
+                .FirstOrDefaultAsync(x => x.UserProfileId == solicitedVacantPosition.UserProfileId);
 
             var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
             var template = await File.ReadAllTextAsync(path);
 
             template = template
                 .Replace("{user_name}", user.UserProfile.FirstName + " " + user.UserProfile.LastName)
-                .Replace("{email_message}", await GetTableContent(solicitedTest.TestTemplate.Name));
+                .Replace("{email_message}", await GetTableContent(solicitedVacantPosition.TestTemplate.Name));
 
             var emailData = new EmailData
             {
@@ -90,7 +90,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.EditSolicitedTestSta
             return content;
         }
 
-        private async Task LogAction(SolicitedTest item)
+        private async Task LogAction(SolicitedVacantPosition item)
         {
             if(item.SolicitedTestStatus == SolicitedTestStatusEnum.Refused)
             {

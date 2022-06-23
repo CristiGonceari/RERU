@@ -24,7 +24,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.GetSolicitedTests
         {
             var solicitedTests = GetAndFilterSolicitedTests.Filter(_appDbContext, request.EventName, request.UserName, request.TestName);
 
-            return await _paginationService.MapAndPaginateModelAsync<SolicitedTest, SolicitedTestDto>(solicitedTests, request);
+            return await _paginationService.MapAndPaginateModelAsync<SolicitedVacantPosition, SolicitedTestDto>(solicitedTests, request);
         }
     }
 }

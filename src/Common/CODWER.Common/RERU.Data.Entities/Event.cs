@@ -31,5 +31,6 @@ namespace RERU.Data.Entities
         public virtual ICollection<EventUser> EventUsers { get; set; }
         public virtual ICollection<EventLocation> EventLocations { get; set; }
         public virtual ICollection<EventEvaluator> EventEvaluators { get; set; }
+        public virtual ICollection<EventVacantPosition> EventVacantPositions { get; set; }
     }
 }

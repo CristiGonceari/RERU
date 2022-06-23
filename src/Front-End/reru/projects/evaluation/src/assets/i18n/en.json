@@ -100,7 +100,8 @@
     "documents-template": "Document Templates",
     "documents-management": "Document Management",
     "administration": "Administration",
-    "positions": "Vacant positions"
+    "positions": "Vacant positions",
+    "required-documents": "Required Documents"
   },
   "position": {
     "administration": "Administration",
@@ -489,7 +490,19 @@
     "add-tags": "Add tags",
     "bulk-import-options-msg": "Please, download and use our special form for import options"
   },
-
+  "require-documents":{
+    "document-details": "Document details",
+    "name": "Name",
+    "must-be-on-candidate": "Mandatory for applications",
+    "document-added-msg": "Document added successfuly",
+    "document-edited-msg": "Document edited successfuly",
+    "required-documents": "Required documents",
+    "add-document": "Add document",
+    "mandatory": "Mandatory",
+    "success-delete-mgs": "Document was successfuly deleted",
+    "want-to-del-msg": "Do you want to delete document",
+    "document-application": "Manage documents"
+  },
   "processes":{
     "totalProcesses": "Total Processes",
     "doneProcesses": "Done Processes",

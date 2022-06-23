@@ -265,6 +265,13 @@ export class AppComponent {
 			</svg>`,
 		},
 		{
+			// permission: 'P03001201',
+			type: SidebarItemType.ITEM,
+			url: '/required-documents',
+			name: '',
+			icon: `<i class="fa far fa-file-alt icon-lg"></i>`,
+		},
+		{
 			permissions: ['P03000001'],
 			type: SidebarItemType.SECTION,
 			url: '',
@@ -335,9 +342,10 @@ export class AppComponent {
 			this.translate.get('sidebar.documents-template'),
 			this.translate.get('sidebar.administration'),
 			this.translate.get('sidebar.positions'),
+			this.translate.get('sidebar.required-documents'),
 			this.translate.get('faq.help'),
 			this.translate.get('faq.faq'),
-		]).subscribe(([home, activities, settings, categories, questions, tests, test, solicitedTest, verifyTest, statistic, event, location, events, plan, documentsManagement, documentsTemplate, administration, position, help, faq]) => {
+		]).subscribe(([home, activities, settings, categories, questions, tests, test, solicitedTest, verifyTest, statistic, event, location, events, plan, documentsManagement, documentsTemplate, administration, position, requiredDocuments, help, faq]) => {
 			this.sidebarItems[0].name = home;
 			this.sidebarItems[1].name = activities;
 			this.sidebarItems[2].name = settings;
@@ -356,8 +364,9 @@ export class AppComponent {
 			this.sidebarItems[15].name = documentsTemplate;
 			this.sidebarItems[16].name = administration;
 			this.sidebarItems[17].name = position;
-			this.sidebarItems[18].name = help;
-			this.sidebarItems[19].name = faq;
+			this.sidebarItems[18].name = requiredDocuments;
+			this.sidebarItems[19].name = help;
+			this.sidebarItems[20].name = faq;
 		});
 	}
 
