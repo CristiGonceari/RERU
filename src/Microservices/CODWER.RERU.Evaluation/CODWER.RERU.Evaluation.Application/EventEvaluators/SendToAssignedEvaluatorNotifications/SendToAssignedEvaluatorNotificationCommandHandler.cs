@@ -35,7 +35,9 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.SendToAssignedEvalu
         public async Task<Unit> Handle(SendToAssignedEvaluatorNotificationCommand request, CancellationToken cancellationToken)
         {
 
-            var eventEvaluator = _appDbContext.EventEvaluators.FirstOrDefault(ee => ee.EvaluatorId == request.UserProfileId);
+            var eventEvaluator = _appDbContext.EventEvaluators
+                .Include(x => x.Event)
+                .FirstOrDefault(ee => ee.EvaluatorId == request.UserProfileId && ee.EventId == request.EventId);
 
             await _internalNotificationService.AddNotification(eventEvaluator.EvaluatorId, NotificationMessages.YouWereInvitedToEventAsCandidate);
 

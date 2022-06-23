@@ -233,7 +233,8 @@
     "succes-create": "User profile has been successfully created!",
     "please-wait": "Please wait while system add users ...",
     "birthday": "Birthday",
-    "phone": "Contact phone"
+    "phone": "Contact phone",
+    "date-format": "Please provide a valid format ZZ.LL.AAAA"
   },
   "word": {
     "search": "Search by full name or e-mail",

@@ -1,1 +1,25 @@
-<p>date works!</p>
+<div class="input-group">
+    <div *ngIf="!isDisabled && isReverse" class="input-group-prepend">
+      <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+        <i class="flaticon-calendar-1"></i>
+      </button>
+    </div>
+    <input class="form-control form-control-solid" 
+          [placeholder]="placeholder" 
+          container="body" 
+          ngbDatepicker
+          [minDate]="{year: 1920, month: 1, day: 1}"
+          [disabled]="isDisabled"
+          #d="ngbDatepicker"
+          [ngModel]="dateModel"
+          [ngClass]="{'is-invalid': isPatternError}"
+          (ngModelChange)="handleChange($event)">
+    <div *ngIf="!isDisabled && !isReverse" class="input-group-append">
+      <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+        <i class="flaticon-calendar-1"></i>
+      </button>
+    </div>
+    <div *ngIf="isPatternError" class="invalid-feedback">
+      {{ 'user.date-format' | translate}}
+    </div>
+  </div>

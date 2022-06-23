@@ -32,6 +32,9 @@ export class EditComponent implements OnInit {
 	roles: SelectItem[] = [{ label: '', value: '' }];
 	accessModes: SelectItem[] = [{ label: '', value: '' }];
 
+	birthday;
+	startDate;
+
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private fb: FormBuilder,
@@ -111,10 +114,13 @@ export class EditComponent implements OnInit {
 					'^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'
 				),
 			]),
+			phoneNumber: this.fb.control(user && user.phoneNumber, [Validators.required]),
 			departmentColaboratorId: this.fb.control((user && user.departmentColaboratorId) || null, Validators.required),
 			roleColaboratorId: this.fb.control((user && user.roleColaboratorId) || null, [Validators.required]),
 			accessModeEnum: this.fb.control((user && user.accessModeEnum) || null, [Validators.required]),
 		});
+
+		this.birthday = user.birthday
 		this.isLoading = false;
 	}
 
@@ -125,6 +131,8 @@ export class EditComponent implements OnInit {
 			firstName: this.userForm.value.firstName,
 			lastName: this.userForm.value.lastName,
 			fatherName: this.userForm.value.fatherName,
+			birthday: this.birthday != null ? new Date(`${this.birthday} EDT`).toISOString() : null,
+			phoneNumber: this.userForm.value.phoneNumber,
 			departmentColaboratorId: +this.userForm.value.departmentColaboratorId,
 			roleColaboratorId: +this.userForm.value.roleColaboratorId,
 			accessModeEnum: this.userForm.value.accessModeEnum
