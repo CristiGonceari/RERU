@@ -65,16 +65,17 @@
                 <div class="form-group row mb-10">
                   <label class="col-xl-3 col-lg-3 col-form-label">{{ 'user.birthday' | translate }}</label>
                   <div class="col-lg-9 col-xl-9">
-                    <app-date [isDisabled]="false" [isReverse]="false" [parent]="userForm"
-                    [date]="'birthday'" [placeholder]="dd-mm-yyyy"></app-date>
-                    <div *ngIf="hasErrors('birthday')" class="fv-plugins-message-container">
-                      <div *ngIf="hasError('birthday', 'required')" data-field="birthday" data-validator="notEmpty"
-                        class="fv-help-block">
-                        {{ 'user-profile.empty-name' | translate }}</div>
-                      <div *ngIf="hasError('birthday', 'pattern')" data-field="birthday" data-validator="notEmpty"
-                        class="fv-help-block">
-                        {{ 'user-profile.wrong-name' | translate }}</div>
-                    </div>
+                    <!-- <app-date [isDisabled]="false" [isReverse]="false" [parent]="userForm"
+                    [date]="'birthday'" [placeholder]="dd-mm-yyyy"></app-date> -->
+                    <input type="text" [owlDateTimeTrigger]="startDate"
+                          class="form-control form-control-lg form-control-solid"
+                          [value]="birthday | dateFilter:'dd/MM/yyyy'" [ngModelOptions]="{standalone: true}"
+                          [readonly]="true" (ngModelChange)="modelChanged(birthday)">
+                        <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
+                          name="date_time" [(ngModel)]="birthday" [owlDateTime]="startDate"
+                          (ngModelChange)="modelChanged(birthday)" [ngModelOptions]="{standalone: true}"
+                          [readonly]="true">
+                        <owl-date-time #startDate pickerType="calendar"></owl-date-time>
                   </div>
                 </div>
                 <div class="form-group row mb-10">

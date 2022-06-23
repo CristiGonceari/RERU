@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CVU.ERP.Common.DataTransferObjects.Users;
 
@@ -10,6 +11,8 @@ namespace CODWER.RERU.Core.DataTransferObjects.Profile
         public string LastName { set; get; }
         public string FatherName { set; get; }
         public string Idnp { set; get; }
+        public string PhoneNumber { get; set; }
+        public DateTime? Birthday { get; set; }
         public string? MediaFileId { set; get; }
         public int? DepartmentColaboratorId { get; set; }
         public int? RoleColaboratorId { get; set; }

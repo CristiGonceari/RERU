@@ -2,7 +2,7 @@ import { MyProfileRoutingModule } from './my-profile-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { SharedModule, SvgModule } from '@erp/shared';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { UtilsModule } from '../../utils/utils.module';
@@ -13,7 +13,7 @@ import { ChangePersonalDataComponent } from './change-personal-data/change-perso
 import { OverviewProfileComponent } from './overview-profile/overview-profile.component';
 import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';
 
 @NgModule({
   imports: [
@@ -24,6 +24,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     MyProfileRoutingModule,
     NgxDropzoneModule,
     SvgModule,
@@ -34,11 +36,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       ChangePasswordComponent,
       ChangePersonalDataComponent,
       OverviewProfileComponent,
-      UploadAvatarComponent
+      UploadAvatarComponent,
   ],
   providers: [
     TranslatePipe,
-    Location
+    Location,
+    DatePipe
   ]
 })
 export class MyProfileModule { }

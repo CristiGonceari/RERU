@@ -53,6 +53,8 @@ export class RegistrationPageComponent implements OnInit {
   attachedFile: File;
   selectedProject: number;
   code: string;
+  birthday;
+  startDate;
 
   languageList = [
     { code: 'en', label: 'English' },
@@ -176,7 +178,7 @@ export class RegistrationPageComponent implements OnInit {
       email: this.userForm.value.email,
       idnp: this.userForm.value.idnp,
       emailNotification: this.userForm.value.emailNotification = true,
-      birthday: this.userForm.value.birthday,
+      birthday: this.birthday != null ? new Date(`${this.birthday} EDT`).toISOString() : null,
       phoneNumber: this.userForm.value.phoneNumber,
       code: this.code
     }
