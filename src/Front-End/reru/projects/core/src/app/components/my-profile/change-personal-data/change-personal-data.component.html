@@ -73,16 +73,15 @@
                             {{'user.birthday' | translate}}
                           </label>
                           <div class="col-lg-9 col-xl-9">
-                            <app-date [isDisabled]="false" [isReverse]="false" [parent]="personalDataForm"
-                              [date]="'birthday'" [placeholder]="dd-mm-yyyy"></app-date>
-                            <div *ngIf="hasErrors('fatherName')" class="fv-plugins-message-container">
-                              <div *ngIf="hasError('fatherName', 'required')" data-field="fatherName"
-                                data-validator="notEmpty" class="fv-help-block">
-                                {{ 'user-profile.empty-name' | translate }}</div>
-                              <div *ngIf="hasError('fatherName', 'pattern')" data-field="fatherName"
-                                data-validator="notEmpty" class="fv-help-block">
-                                {{ 'user-profile.wrong-name' | translate }}</div>
-                            </div>
+                            <!-- <app-date [isDisabled]="false" [isReverse]="false" [parent]="personalDataForm"
+                              [date]="'birthday'" [placeholder]="dd-mm-yyyy"></app-date> -->
+                            <input type="text" [owlDateTimeTrigger]="startDate"
+                              class="form-control form-control-lg form-control-solid"
+                              [value]="birthday | dateFilter:'dd/MM/yyyy'">
+                            <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
+                              name="date_time" [(ngModel)]="birthday" [owlDateTime]="startDate"
+                              [ngModelOptions]="{standalone: true}" [readonly]="true">
+                            <owl-date-time #startDate pickerType="calendar"></owl-date-time>
                           </div>
                         </div>
                         <div class="form-group row">
