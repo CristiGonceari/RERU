@@ -98,7 +98,7 @@ export class AttachComponent implements OnInit {
         data: new AttachTestTemplateToEventModel({
           eventId: +this.eventId,
           testTemplateId: +this.id,
-          maxAttempts: this.attempts
+          maxAttempts: this.attempts != null ? this.attempts : 1 
         })
       };
     }
