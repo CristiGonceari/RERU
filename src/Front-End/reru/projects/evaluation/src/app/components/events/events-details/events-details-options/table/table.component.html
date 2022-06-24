@@ -32,7 +32,7 @@
     </thead>
     <tbody class="datatable-body" *ngIf="fields.length && locations">
       <tr *ngFor="let item of fields">
-        <td>{{item.name}}</td>
+        <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../locations/location', item.id]">{{item.name}}</td>
         <td>{{item.address}}</td>
         <td>
           <span class="font-size-lg" *ngIf="item.type == enum.Class">{{'locations.Class' | translate}}</span>
@@ -75,10 +75,13 @@
       </tr>
     </tbody>
     <tbody class="datatable-body" *ngIf="fields.length && testTemplates">
-      <tr *ngFor="let item of fields">
-        <td>{{item.name}}</td>
+      <tr *ngFor="let item of fields" >
+        <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../test-type/type-details', item.id]">{{item.name}}</td>
         <td>{{item.questionCount}}</td>
-        <td>{{item.duration}}</td>
+        <td>
+          <span *ngIf="item.duration == 0">-</span>
+          <span *ngIf="item.duration > 0">{{item.duration}}</span>
+        </td>
         <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
           <div style="overflow: visible; position: relative; width: 0px">
             <div ngbDropdown class="dropdown dropdown-inline">
