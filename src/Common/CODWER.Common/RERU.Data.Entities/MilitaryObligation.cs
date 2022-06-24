@@ -13,7 +13,10 @@ namespace RERU.Data.Entities
         public string MilitarySpecialty { get; set; }
         public string Degree { get; set; }
 
-        public MilitaryBooklet MilitaryBooklet { get; set; }
+        public string MilitaryBookletSeries { get; set; }
+        public int MilitaryBookletNumber { get; set; }
+        public DateTime MilitaryBookletReleaseDay { get; set; }
+        public string MilitaryBookletEminentAuthority { get; set; }
 
         public int UserProfileId { get; set; }
         public UserProfile UserProfile { get; set; }

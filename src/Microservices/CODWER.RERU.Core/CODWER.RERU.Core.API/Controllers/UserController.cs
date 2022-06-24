@@ -8,6 +8,7 @@ using CODWER.RERU.Core.Application.Users.ChangeMyPassword;
 using CODWER.RERU.Core.Application.Users.ChangePersonalData;
 using CODWER.RERU.Core.Application.Users.CreateUser;
 using CODWER.RERU.Core.Application.Users.DeactivateUser;
+using CODWER.RERU.Core.Application.Users.EditCandidate;
 using CODWER.RERU.Core.Application.Users.EditUser;
 using CODWER.RERU.Core.Application.Users.EditUserFromColaborator;
 using CODWER.RERU.Core.Application.Users.EditUserPersonalDetails;
@@ -61,6 +62,12 @@ namespace CODWER.RERU.Core.API.Controllers
 
         [HttpPatch ("personal-details")]
         public Task<int> UpdateUserPersonalDetails ([FromBody] EditUserPersonalDetailsCommand command) 
+        {
+            return Mediator.Send(command);
+        }
+
+        [HttpPatch("edit-candidate-details")]
+        public Task<int> UpdateCandidateDetails([FromBody] EditCandidateCommand command)
         {
             return Mediator.Send(command);
         }

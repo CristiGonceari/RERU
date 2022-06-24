@@ -32,7 +32,21 @@ namespace RERU.Data.Entities
         public DateTime? Birthday { get; set; }
         public string MediaFileId { get; set; }
         public bool RequiresDataEntry { get; set; }
-        
+
+        public int? WorkPhone { get; set; }
+        public int? HomePhone { get; set; }
+        public int? MobilePhone { get; set; }
+        public DateTime? BirthDate { get; set; }
+
+        public SexTypeEnum? Sex { get; set; }
+        public StateLanguageLevel? StateLanguageLevel { get; set; }
+
+        public int? CandidateNationalityId { get; set; }
+        public CandidateNationality CandidateNationality { get; set; }
+
+        public int? CandidateCitizenshipId { get; set; }
+        public CandidateCitizenship CandidateCitizenship { get; set; }
+
         public string Token { set; get; }
         public bool IsActive { set; get; }
         public DateTime? TokenLifetime { get; set; }
@@ -43,6 +57,11 @@ namespace RERU.Data.Entities
 
         public int? RoleColaboratorId { get; set; }
         public Role Role { get; set; }
+
+        public Bulletin Bulletin { get; set; }
+        public MaterialStatus MaterialStatus { get; set; }
+        public KinshipRelationCriminalData KinshipRelationCriminalData { get; set; }
+        public Autobiography Autobiography { get; set; }
 
         [JsonIgnore]
         public List<UserProfileModuleRole> ModuleRoles { set; get; }
@@ -66,5 +85,17 @@ namespace RERU.Data.Entities
         public virtual ICollection<Notification> Notifications { get; set; }
         [JsonIgnore]
         public virtual ICollection<EmailTestNotification> EmailTestNotifications { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Study> Studies { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<ModernLanguageLevel> ModernLanguageLevels { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<RecommendationForStudy> RecommendationForStudies { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<KinshipRelationWithUserProfile> KinshipRelationWithUserProfiles { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<KinshipRelation> KinshipRelations { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<MilitaryObligation> MilitaryObligations { get; set; }
     }
 }
