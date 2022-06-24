@@ -63,6 +63,26 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<Process> Processes { get; set; }
         public virtual DbSet<EmailVerification> EmailVerifications { get; set; }
 
+        #region FisaPersonala
+        public virtual DbSet<CandidateNationality> CandidateNationalities { get; set; }
+        public virtual DbSet<CandidateCitizenship> CandidateCitizens { get; set; }
+        public virtual DbSet<Bulletin> Bulletins { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<Study> Studies { get; set; }
+        public virtual DbSet<StudyType> StudyTypes { get; set; }
+        public virtual DbSet<ModernLanguageLevel> ModernLanguageLevels { get; set; }
+        public virtual DbSet<ModernLanguage> ModernLanguages { get; set; }
+        public virtual DbSet<RecommendationForStudy> RecommendationForStudies { get; set; }
+        public virtual DbSet<MaterialStatus> MaterialStatuses { get; set; }
+        public virtual DbSet<MaterialStatusType> MaterialStatusTypes { get; set; }
+        public virtual DbSet<KinshipRelationWithUserProfile> KinshipRelationWithUserProfiles { get; set; }
+        public virtual DbSet<KinshipRelation> KinshipRelations { get; set; }
+        public virtual DbSet<KinshipRelationCriminalData> KinshipRelationCriminalDatas { get; set; }
+        public virtual DbSet<MilitaryObligation> MilitaryObligations { get; set; }
+        public virtual DbSet<Autobiography> Autobiographies { get; set; }
+        #endregion
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }
