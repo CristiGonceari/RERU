@@ -45,6 +45,23 @@
                               name="isActive" type="checkbox" formControlName="isActive" />
                           </div>
                         </div>
+                        <div class="form-group row"> 
+                            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                              {{'questions.tags' | translate}}
+                            </label>
+                            <div class="col-lg-9 col-xl-9">
+                              <tag-input class="py-0 form-control form-control-lg form-control-solid h-100"
+                                [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="tags" 
+                                >
+                                  <tag-input-dropdown 
+                                  [autocompleteItems]="items" 
+                                  [showDropdownIfEmpty]="true"
+                                  [dynamicUpdate]="true">
+                                  </tag-input-dropdown>
+                              </tag-input>
+                            </div>
+                        </div>
                       </div>
                     </div>
                   </div>

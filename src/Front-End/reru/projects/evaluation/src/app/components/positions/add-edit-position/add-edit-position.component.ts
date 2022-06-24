@@ -8,6 +8,7 @@ import { Location } from '@angular/common';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { CandidatePositionModel } from '../../../utils/models/candidate-position.model';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
+import { ReferenceService } from '../../../utils/services/reference/reference.service';
 
 @Component({
 	selector: 'app-add-edit-position',
@@ -20,7 +21,12 @@ export class AddEditPositionComponent implements OnInit {
 	positionForm: FormGroup;
 	positionName: string;
 	title: string;
+	placeHolderString = '+ Tag'
+	items = [{ display: 'Item1', value: 0 }];
 	description: string;
+	tags: any[] = [];
+
+
 
 	constructor(
 		private fb: FormBuilder,
@@ -28,7 +34,8 @@ export class AddEditPositionComponent implements OnInit {
 		public translate: I18nService,
 		private route: ActivatedRoute,
 		private positionService: CandidatePositionService,
-		private location: Location
+		private location: Location,
+		private referenceService: ReferenceService
 	) { }
 
 	ngOnInit(): void {
@@ -36,11 +43,17 @@ export class AddEditPositionComponent implements OnInit {
 			name: new FormControl(),
 			isActive: new FormControl()
 		});
+
+		this.onTextChange("");
+
 		this.route.params.subscribe(params => {
 			if (params.id) {
 				this.positionId = params.id;
 				this.positionService.get(this.positionId).subscribe(res => {
 					this.initForm(res.data);
+					res.data.requiredDocuments.forEach(element => {
+						this.tags.push({ display: element.label, value: +element.value })
+					});
 				})
 				this.isLoading = false;
 			} else {
@@ -50,6 +63,8 @@ export class AddEditPositionComponent implements OnInit {
 		});
 	}
 
+
+
 	initForm(data?): void {
 		this.positionForm = this.fb.group({
 			name: this.fb.control(data?.name || null, [Validators.required]),
@@ -58,9 +73,14 @@ export class AddEditPositionComponent implements OnInit {
 	}
 
 	addRole(): void {
+		this.isLoading = true;
+
+		const tagsArr = this.tags.map(obj => typeof obj.value !== 'number' ? { ...obj, value: 0 } : obj);
+
 		let addPositionModel = {
 			name: this.positionForm.value.name,
 			isActive: this.positionForm.value.isActive,
+			requiredDocuments: tagsArr
 		} as CandidatePositionModel;
 		this.positionService.create(addPositionModel).subscribe(
 			() => {
@@ -73,15 +93,21 @@ export class AddEditPositionComponent implements OnInit {
 				});
 				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 				this.back();
+				this.isLoading = false;
 			}
 		);
 	}
 
 	editRole(): void {
+		this.isLoading = true;
+
+		const tagsArr = this.tags.map(obj => typeof obj.value !== 'number' ? { ...obj, value: 0 } : obj);
+
 		let editPositionModel = {
 			id: +this.positionId,
 			name: this.positionForm.value.name,
-			isActive: this.positionForm.value.isActive
+			isActive: this.positionForm.value.isActive,
+			requiredDocuments: tagsArr
 		} as CandidatePositionModel;
 		this.positionService.editPosition(editPositionModel).subscribe(
 			() => {
@@ -94,6 +120,8 @@ export class AddEditPositionComponent implements OnInit {
 				});
 				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 				this.back();
+				this.isLoading = false;
+
 			}
 		);
 	}
@@ -109,4 +137,12 @@ export class AddEditPositionComponent implements OnInit {
 	back(): void {
 		this.location.back();
 	}
+
+	onTextChange(text: string) {
+		this.referenceService.getRequiredDocumentSelectValues({ name: text }).subscribe(res => {
+			res.data.forEach(element => {
+				this.items.push({ display: element.label, value: +element.value })
+			});
+		})
+	};
 }
