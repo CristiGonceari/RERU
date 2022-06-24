@@ -30,7 +30,7 @@ export class AddEditQuestionComponent implements OnInit {
   category: number;
   value = false;
   isLoading: boolean = true;
-  items = [];
+  items = ['vasile', 'dime', 'vinDisel'];
   placeHolderString = '+ Tag'
   tags: any;
   fileId: string;

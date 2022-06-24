@@ -108,10 +108,8 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("required-document/select-values")]
-        public async Task<List<SelectItem>> GetRequiredDocument()
+        public async Task<List<SelectItem>> GetRequiredDocument([FromQuery] GetRequiredDocumentsValueQuery query)
         {
-            var query = new GetRequiredDocumentsValueQuery();
-
             return await Mediator.Send(query);
         }
 
