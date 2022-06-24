@@ -69,6 +69,16 @@ export class AddEditTestTemplateComponent implements OnInit {
 		})
 	}
 
+	getTestTemplate(){
+		this.testTemplateService.getTestTemplate( this.testId ).subscribe(res => {
+			if (res && res.data) {
+				if(res.data.mode == 1) {
+					this.addSetting(this.testId)
+				};
+			}
+		})
+	}
+
 	getMode() {
 		this.referenceService.getMode().subscribe((res) => this.modes = res.data);
 	}
@@ -151,6 +161,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 				this.description = description;
 				});
 			this.testId = res.data; 
+			this.getTestTemplate();
 			this.backClicked()
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 		});
@@ -158,5 +169,30 @@ export class AddEditTestTemplateComponent implements OnInit {
 
 	backClicked() {
 		this.location.back();
+	}
+
+	addSetting(testTemplateId){
+		let data = {
+			testTemplateId: testTemplateId,
+			startWithoutConfirmation: true,
+			startBeforeProgrammation: true,
+			startAfterProgrammation: true,
+			possibleGetToSkipped: false,
+			possibleChangeAnswer: false,
+			canViewResultWithoutVerification: false,
+			canViewPollProgress: false,
+			hidePagination: false,
+			showManyQuestionPerPage: false,
+			questionsCountPerPage: null,
+			maxErrors: null,
+			formulaForOneAnswer: null,
+			negativeScoreForOneAnswer: null,
+			formulaForMultipleAnswers: null,
+			negativeScoreForMultipleAnswers: null
+		}
+
+		this.testTemplateService.addEditTestTemplateSettings({data: data}).subscribe(res => 
+			console.log(res)
+		);
 	}
 }

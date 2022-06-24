@@ -23,12 +23,12 @@ namespace CODWER.RERU.Evaluation.Application.PlanEvents.GetPlanEvents
 
         public async Task<PaginatedModel<EventDto>> Handle(GetPlanEventsQuery request, CancellationToken cancellationToken)
         {
-            var planEvents =  _appDbContext.Plans
-                .Include(x => x.Events)
-                .FirstOrDefault(x => x.Id == request.PlanId)?.Events
+            var events = _appDbContext.Events
+                .Include(x => x.Plan)
+                .Where(x => x.PlanId == request.PlanId)
                 .AsQueryable();
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Event, EventDto>(planEvents, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Event, EventDto>(events, request);
 
             return paginatedModel;
         }

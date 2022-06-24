@@ -43,14 +43,17 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions
 
             var testSettings = testQuestion.Test.TestTemplate.Settings;
 
-            if (!testSettings.PossibleChangeAnswer && testQuestion.AnswerStatus == AnswerStatusEnum.Answered)
+            if (testSettings != null)
             {
-                answer = true;
-            }
+                if (!testSettings.PossibleChangeAnswer && testQuestion.AnswerStatus == AnswerStatusEnum.Answered)
+                {
+                    answer = true;
+                }
 
-            if (!testSettings.PossibleGetToSkipped && testQuestion.AnswerStatus == AnswerStatusEnum.Skipped)
-            {
-                answer = true;
+                if (!testSettings.PossibleGetToSkipped && testQuestion.AnswerStatus == AnswerStatusEnum.Skipped)
+                {
+                    answer = true;
+                }
             }
 
             return answer;
