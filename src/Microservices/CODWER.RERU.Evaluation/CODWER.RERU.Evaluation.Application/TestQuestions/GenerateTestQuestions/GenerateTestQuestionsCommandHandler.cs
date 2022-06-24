@@ -100,7 +100,14 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
             //    test.EndTime = test.ProgrammedTime.AddMinutes(test.TestTemplate.Duration);
             //}
 
-            test.MaxErrors = test.TestTemplate.Settings?.MaxErrors != null ? test.TestTemplate.Settings.MaxErrors : 1;
+            if (test.TestTemplate.Settings != null && test.TestTemplate.Settings.MaxErrors != null)
+            {
+                test.MaxErrors = test.TestTemplate.Settings.MaxErrors;
+            }
+            else
+            {
+                test.MaxErrors = 1;
+            }
 
             await _appDbContext.SaveChangesAsync();
 

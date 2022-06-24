@@ -191,8 +191,6 @@ export class AddEditTestTemplateComponent implements OnInit {
 			negativeScoreForMultipleAnswers: null
 		}
 
-		this.testTemplateService.addEditTestTemplateSettings({data: data}).subscribe(res => 
-			console.log(res)
-		);
+		this.testTemplateService.addEditTestTemplateSettings({data: data}).subscribe();
 	}
 }
