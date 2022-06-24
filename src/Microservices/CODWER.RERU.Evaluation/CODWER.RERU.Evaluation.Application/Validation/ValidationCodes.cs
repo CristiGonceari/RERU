@@ -159,11 +159,15 @@
         public static string DOCUMENTS_NOT_FOUND = "03002104";
         public static string INVALID_DOCUMENT_TEMPLATE = "03002105";
 
-        //CANDIDATE_POSITION
+        //candidate position
         public static string INVALID_POSITION = "03002106";
         public static string EMPTY_POSITION_NAME = "03002107";
 
         //progress
         public static string INVALID_PROGRESS = "03002108";
+
+        //required documents
+        public static string MANDATORY_EMPTY = "03002109";
+        public static string INVALID_REQUIRED_DOCUMENT = "03002110";
     }
 }

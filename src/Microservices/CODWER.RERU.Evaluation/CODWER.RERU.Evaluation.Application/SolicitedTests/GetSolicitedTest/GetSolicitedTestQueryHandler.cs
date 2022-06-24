@@ -21,7 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.GetSolicitedTest
 
         public async Task<SolicitedTestDto> Handle(GetSolicitedTestQuery request, CancellationToken cancellationToken)
         {
-            var solicitedTest = await _appDbContext.SolicitedTests
+            var solicitedTest = await _appDbContext.SolicitedVacantPositions
                 .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Event)

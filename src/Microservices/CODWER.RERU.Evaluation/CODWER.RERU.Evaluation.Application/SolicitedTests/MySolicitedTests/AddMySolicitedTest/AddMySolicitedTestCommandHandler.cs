@@ -30,18 +30,18 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Add
         {
             var myUserProfile = await _userProfileService.GetCurrentUser();
 
-            var solicitedTest = _mapper.Map<SolicitedTest>(request.Data);
+            var solicitedTest = _mapper.Map<SolicitedVacantPosition>(request.Data);
             solicitedTest.UserProfileId = myUserProfile.Id;
             solicitedTest.SolicitedTestStatus = SolicitedTestStatusEnum.New;
 
-            await _appDbContext.SolicitedTests.AddAsync(solicitedTest);
+            await _appDbContext.SolicitedVacantPositions.AddAsync(solicitedTest);
             await _appDbContext.SaveChangesAsync();
             await LogAction(solicitedTest);
 
             return solicitedTest.Id;
         }
 
-        private async Task LogAction(SolicitedTest item)
+        private async Task LogAction(SolicitedVacantPosition item)
         {
             await _loggerService.Log(LogData.AsEvaluation($"Solicited test was created", item));
         }

@@ -100,7 +100,8 @@
     "documents-template": "Шаблоны документов",
     "documents-management": "Управление шаблонами",
     "administration": "Администрирование",
-    "positions": "Вакансии"
+    "positions": "Вакансии",
+    "required-documents": "Необходимые документы"
   },
   "position": {
     "administration": "Администрирование",
@@ -487,6 +488,19 @@
     "search-by-status": "Выберите статус вопроса",
     "add-tags": "Добавить тэги",
     "bulk-import-options-msg":"Скачайте и воспользуйтесь, пожалуйста, нашей специальной формой для загрузки вопроса" 
+  },
+  "require-documents":{
+    "document-details": "Детали документа",
+    "name": "Имя",
+    "must-be-on-candidate": "Обязательна к применению",
+    "document-added-msg": "Документ успешно добавлен",
+    "document-edited-msg": "Документ успешно отредактирован",
+    "required-documents": "Необходимые документы",
+    "add-document": "Добавить документ",
+    "mandatory": "Принудительный",
+    "success-delete-mgs": "Документ успешно удален",
+    "want-to-del-msg": "Вы хотите удалить этот документ",
+    "document-application": "Управление документами"
   },
   "processes":{
     "totalProcesses": "Все процессы",

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.References.GetAddTestProcesses;
+using CODWER.RERU.Evaluation.Application.References.GetRequiredDocumentsValue;
 using CODWER.RERU.Evaluation.DataTransferObjects.BulkProcesses;
 using CVU.ERP.Module.Application.ImportProcesses;
 using RERU.Data.Entities.Enums;
@@ -102,6 +103,14 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<List<SelectEventValueDto>> GetEvents()
         {
             var query = new GetEventsValueQuery();
+
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("required-document/select-values")]
+        public async Task<List<SelectItem>> GetRequiredDocument()
+        {
+            var query = new GetRequiredDocumentsValueQuery();
 
             return await Mediator.Send(query);
         }

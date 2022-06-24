@@ -50,10 +50,17 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
                 testToFinalize.TestStatus = TestStatusEnum.Verified;
                 await _appDbContext.SaveChangesAsync();
 
-                await SendEmailNotification(testToFinalize, true);
+
+                if (testToFinalize.TestTemplate.Mode == TestTemplateModeEnum.Test)
+                {
+                    await SendEmailNotification(testToFinalize, true);
+                }
             }
 
-            await SendEmailNotification(testToFinalize, false);
+            if (testToFinalize.TestTemplate.Mode == TestTemplateModeEnum.Test)
+            {
+                await SendEmailNotification(testToFinalize, false);
+            }
 
             return Unit.Value;
         }

@@ -1,0 +1,37 @@
+﻿using CODWER.RERU.Core.Application.Validation;
+using CVU.ERP.Common.Extensions;
+using CVU.ERP.Common.Validation;
+using FluentValidation;
+using FluentValidation.Validators;
+using RERU.Data.Persistence.Context;
+using System.Linq;
+
+namespace CODWER.RERU.Core.Application.KinshipRelationCriminalDatas.AddKinshipRelationCriminalData
+{
+    public class AddKinshipRelationCriminalDataCommandValidator : AbstractValidator<AddKinshipRelationCriminalDataCommand>
+    {
+        private readonly AppDbContext _appDbContext;
+        public AddKinshipRelationCriminalDataCommandValidator(AppDbContext appDbContext)
+        {
+
+            _appDbContext = appDbContext;
+
+            RuleFor(x => x.Data)
+                .SetValidator(new KinshipRelationCriminalDataValidator(appDbContext));
+
+            RuleFor(x => x.Data.UserProfileId)
+                .Custom(CheckIfUserProfileExistentKinshipRelationDate);
+        }
+
+        private void CheckIfUserProfileExistentKinshipRelationDate(int userProfileId, CustomContext context)
+        {
+            var exist = _appDbContext.KinshipRelationCriminalDatas.FirstOrDefault(x => x.UserProfileId == userProfileId);
+
+            if (exist != null)
+            {
+                context.AddFail(ValidationCodes.EXISTENT_KINSHIP_RELATION_IN_SISTEM, ValidationMessages.InvalidReference);
+            }
+        }
+       
+    }
+}
