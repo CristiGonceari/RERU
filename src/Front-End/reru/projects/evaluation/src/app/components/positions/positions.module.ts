@@ -8,7 +8,8 @@ import { UtilsModule } from '../../utils/utils.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PositionsRoutingModule } from './positions-routing.module';
 import { AddEditPositionComponent } from './add-edit-position/add-edit-position.component';
-
+import { TagInputModule } from 'ngx-chips';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
   declarations: [AddEditPositionComponent],
@@ -18,10 +19,12 @@ import { AddEditPositionComponent } from './add-edit-position/add-edit-position.
     SharedModule,
     UtilsModule,
     FormsModule,
+    NgxDropzoneModule,
     ReactiveFormsModule,
     TranslateModule,
     PositionsRoutingModule,
-    NgbModule
+    NgbModule,
+    TagInputModule,
   ],
   providers: [
     TranslatePipe,

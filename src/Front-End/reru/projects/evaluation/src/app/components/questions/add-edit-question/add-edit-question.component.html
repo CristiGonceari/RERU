@@ -89,8 +89,8 @@
                           [ngModelOptions]="{standalone: true}" [(ngModel)]="tags" (onTextChange)="onTextChange($event)"
                           [modelAsStrings]="true" [placeholder]="placeHolderString"
                           [secondaryPlaceholder]="placeHolderString">
-                          <tag-input-dropdown [autocompleteItems]="items" [showDropdownIfEmpty]="false"
-                            [dynamicUpdate]="false">
+                          <tag-input-dropdown [autocompleteItems]="items" [showDropdownIfEmpty]="true"
+                            [dynamicUpdate]="true">
                           </tag-input-dropdown>
                         </tag-input>
                       </div>
