@@ -5,7 +5,6 @@ using CVU.ERP.Logging.Context;
 using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.ExceptionHandlers;
 using CVU.ERP.Module.Application.Infrastructure;
-using CVU.ERP.Module.Application.LoggerServices.Implementations;
 using CVU.ERP.Module.Application.Providers;
 using CVU.ERP.Module.Application.StorageFileServices.Implementations;
 using CVU.ERP.Module.Application.TableExportServices;
@@ -34,6 +33,7 @@ using RestSharp;
 using src.ExceptionHandlers;
 using System;
 using System.Reflection;
+using CVU.ERP.Module.Application.LoggerService.Implementations;
 
 namespace CVU.ERP.Module.Application.DependencyInjection
 {

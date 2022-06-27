@@ -1,8 +1,4 @@
-﻿using CVU.ERP.Logging.Context;
-using CVU.ERP.Logging.Entities;
-using CVU.ERP.Logging.Models;
-using CVU.ERP.Module.Application.Providers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -10,19 +6,32 @@ using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CVU.ERP.Logging;
+using CVU.ERP.Logging.Context;
+using CVU.ERP.Logging.Entities;
+using CVU.ERP.Logging.Models;
+using CVU.ERP.Module.Application.Providers;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
-namespace CVU.ERP.Module.Application.LoggerServices.Implementations
+namespace CVU.ERP.Module.Application.LoggerService.Implementations
 {
     public class LoggerService<T> : ILoggerService<T>
     {
         private readonly LoggingDbContext _localLoggingDbContext;
         private readonly IEnumerable<ICurrentApplicationUserProvider> _userProvider;
-        public LoggerService(LoggingDbContext localLoggingDbContext, IEnumerable<ICurrentApplicationUserProvider> userProvider)
+        private readonly IConfiguration _configuration;
+        public LoggerService(IServiceProvider serviceProvider, IEnumerable<ICurrentApplicationUserProvider> userProvider, IConfiguration configuration)
         {
-            _localLoggingDbContext = localLoggingDbContext;
+            _configuration = configuration;
+            _localLoggingDbContext = NewInstance();
             _userProvider = userProvider;
         }
+        private LoggingDbContext NewInstance() => new (new DbContextOptionsBuilder<LoggingDbContext>()
+            .UseNpgsql(_configuration.GetConnectionString("Log"))
+            .Options);
 
         public virtual async Task Log(LogData data)
         {
@@ -103,7 +112,5 @@ namespace CVU.ERP.Module.Application.LoggerServices.Implementations
 
             Console.WriteLine($"Logged message :\n {consoleMessage}\n JSON Entity :\n {log.JsonMessage}\n");
         }
-
-        
     }
 }

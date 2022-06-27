@@ -7,33 +7,55 @@ using MediatR;
 using OfficeOpenXml;
 using RERU.Data.Persistence.Context;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 {
-    public class BulkImportUsersCommandHandler : BaseHandler, IRequestHandler<BulkImportUsersCommand, FileDataDto>
+    public class BulkImportUsersCommandHandler : IRequestHandler<BulkImportUsersCommand, FileDataDto>
     {
-        private readonly AppDbContext _appDbContext;
         private readonly IStorageFileService _storageFileService;
-        
+        private readonly IMediator Mediator;
+        private readonly IServiceProvider _serviceProvider;
+        private readonly IConfiguration _configuration;
 
         public BulkImportUsersCommandHandler(ICommonServiceProvider commonServiceProvider,
-            AppDbContext appDbContext, IStorageFileService storageFileService) : base(commonServiceProvider)
+            IStorageFileService storageFileService,
+             IServiceProvider serviceProvider, IConfiguration configuration)
         {
-            _appDbContext = appDbContext;
+            //_appDbContext = appDbContext;
             _storageFileService = storageFileService;
+            _serviceProvider = serviceProvider;
+            _configuration = configuration;
+
+            Mediator = commonServiceProvider.Mediator;
+
+
+
+            //_appDbContextFactory = appDbContextFactory;
+
+            //_database = _appDbContextFactory.CreateDbContext();
+
+            //var x = _database.Processes.Count();
         }
+
+        private AppDbContext NewInstance() => new (new DbContextOptionsBuilder<AppDbContext>()
+            .UseNpgsql(_configuration.GetConnectionString("RERU"))
+            .Options);
 
         public async Task<FileDataDto> Handle(BulkImportUsersCommand request, CancellationToken cancellationToken)
         {
-            return await Import(request); 
+            return await Import(request);
         }
 
         private async Task<FileDataDto> Import(BulkImportUsersCommand request)
@@ -46,25 +68,32 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
             await SetTotalNumberOfProcesses(request.ProcessId, totalRows);
 
+            var tasks = new List<Task>();
 
+            int i = 1;
 
-
-            for (var i = 1; i <= totalRows; i++)
+            while (ExistentRecord(workSheet, i))
             {
                 var idnp = workSheet.Cells[i, 4]?.Value?.ToString();
-                var dateArray = workSheet.Cells[i, 9]?.Value?.ToString()?.Split("/");
 
-                var user = _appDbContext.UserProfiles.FirstOrDefault(x => x.Idnp == idnp);
+                UserProfile user;
 
-                if (user != null)
+                using (var db = NewInstance())
                 {
-                    await EditUser(workSheet, user, request, i, dateArray);
+                    user = db.UserProfiles.FirstOrDefault(x => x.Idnp == idnp);
                 }
-                else
-                {
-                    await CreateUser(workSheet, request ,i, dateArray);
-                }
+
+                tasks.Add(AddEditUser(workSheet, request, i, user));
+
+                i++;
+
+                if (tasks.Count() <= 2) continue;
+                Task.WhenAll(tasks);
+                tasks.Clear();
             }
+
+            Task.WhenAll(tasks);
+            tasks.Clear();
 
             var excelFile = GetExcelFile(package);
 
@@ -73,19 +102,39 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             return excelFile;
         }
 
-        private async Task SetTotalNumberOfProcesses(int processId, int totalUsers)
+        private bool ExistentRecord(ExcelWorksheet workSheet, int i)
         {
-            var process = _appDbContext.Processes.First(x => x.Id == processId);
-            process.Total = totalUsers;
-
-            await _appDbContext.SaveChangesAsync();
+            return workSheet.Cells[i, 1]?.Value != null && workSheet.Cells[i, 2]?.Value != null;
         }
 
-        private async Task EditUser(ExcelWorksheet workSheet, UserProfile user, BulkImportUsersCommand request, int i, string[] dateStrings)
+        private async Task AddEditUser(ExcelWorksheet workSheet, BulkImportUsersCommand request, int i, UserProfile user)
+        {
+            if (user != null)
+            {
+                await EditUser(workSheet, user, request, i);
+            }
+            else
+            {
+                await CreateUser(workSheet, request, i);
+            }
+        }
+
+        private async Task SetTotalNumberOfProcesses(int processId, int totalUsers)
+        {
+            using (var db = NewInstance())
+            {
+                var process = db.Processes.First(x => x.Id == processId);
+                process.Total = totalUsers;
+
+                await db.SaveChangesAsync();
+            }
+        }
+
+        private async Task EditUser(ExcelWorksheet workSheet, UserProfile user, BulkImportUsersCommand request, int i)
         {
             try
             {
-                var editCommand = GetEditUserCommand(workSheet, user, i, dateStrings);
+                var editCommand = GetEditUserCommand(workSheet, user, i);
 
                 await Mediator.Send(editCommand);
 
@@ -100,11 +149,11 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             }
         }
 
-        private async Task CreateUser(ExcelWorksheet workSheet, BulkImportUsersCommand request, int i, string[] dateStrings)
+        private async Task CreateUser(ExcelWorksheet workSheet, BulkImportUsersCommand request, int i)
         {
             try
             {
-                var command = GetCreateUserCommand(workSheet, i, dateStrings);
+                var command = GetCreateUserCommand(workSheet, i);
 
                 await Mediator.Send(command);
 
@@ -121,26 +170,34 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
         private async Task UpdateProcesses(int processId)
         {
-            var process = _appDbContext.Processes.First(x => x.Id == processId);
-            process.Done++;
+            using (var db = NewInstance())
+            {
+                var process = db.Processes.First(x => x.Id == processId);
+                process.Done++;
 
-            await _appDbContext.SaveChangesAsync();
+                await db.SaveChangesAsync();
+            }
         }
 
         private async Task SaveExcelFile(int processId, FileDataDto excelFile)
         {
             var fileId = await _storageFileService.AddFile(excelFile.Name, CVU.ERP.StorageService.Entities.FileTypeEnum.procesfile, excelFile.ContentType, excelFile.Content);
 
-            var process = _appDbContext.Processes.First(x => x.Id == processId);
+            using (var db = NewInstance())
+            {
+                var process = db.Processes.First(x => x.Id == processId);
 
-            process.FileId = fileId;
-            process.IsDone = true;
+                process.FileId = fileId;
+                process.IsDone = true;
 
-            await _appDbContext.SaveChangesAsync();
+                await db.SaveChangesAsync();
+            }
         }
 
-        private CreateUserCommand GetCreateUserCommand(ExcelWorksheet workSheet, int i, string[] dateStrings)
+        private CreateUserCommand GetCreateUserCommand(ExcelWorksheet workSheet, int i)
         {
+            var dateStrings = DateTime.Parse(workSheet.Cells[i, 9]?.Value?.ToString()).ToString("MM.dd.yyyy")?.Split(".");
+
             return new CreateUserCommand
             {
                 LastName = workSheet.Cells[i, 1]?.Value?.ToString(),
@@ -151,14 +208,16 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0"),
                 RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
                 EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "False"),
-                Birthday = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[1]), int.Parse(dateStrings[0])),
+                Birthday = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[0]), int.Parse(dateStrings[1])),
                 PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString(),
                 AccessModeEnum = AccessModeEnum.CurrentDepartment
             };
         }
 
-        private EditUserFromColaboratorCommand GetEditUserCommand(ExcelWorksheet workSheet, UserProfile user, int i, string[] dateStrings)
+        private EditUserFromColaboratorCommand GetEditUserCommand(ExcelWorksheet workSheet, UserProfile user, int i)
         {
+            var dateStrings = DateTime.Parse(workSheet.Cells[i, 9]?.Value?.ToString()).ToString("MM.dd.yyyy")?.Split(".");
+
             return new EditUserFromColaboratorCommand()
             {
                 Id = user.Id,

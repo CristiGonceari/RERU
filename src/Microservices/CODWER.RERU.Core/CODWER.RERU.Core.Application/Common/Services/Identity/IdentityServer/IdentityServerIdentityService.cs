@@ -10,6 +10,7 @@ using CVU.ERP.Notifications.Email;
 using Microsoft.AspNetCore.Identity;
 using CVU.ERP.Notifications.Services;
 using CVU.ERP.Notifications.Enums;
+using Microsoft.Extensions.DependencyInjection;
 using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
@@ -21,15 +22,17 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
         private readonly IPasswordGenerator _passwordGenerator;
         public string Type => "local";
 
-        public IdentityServerIdentityService(UserManager<ERPIdentityUser> userManager, INotificationService notificationService, IPasswordGenerator passwordGenerator)
+        public IdentityServerIdentityService(IServiceProvider serviceProvider, INotificationService notificationService, IPasswordGenerator passwordGenerator)
         {
-            _userManager = userManager;
+            _userManager = serviceProvider.GetRequiredService<UserManager<ERPIdentityUser>>();
             _notificationService = notificationService;
             _passwordGenerator = passwordGenerator;
         }
 
         public async Task<string> Create(UserProfile userProfile, bool notify)
         {
+           // var um = new UserManager<ERPIdentityUser>()
+
             var identityUser = new ERPIdentityUser()
             {
                 Email = userProfile.Email,

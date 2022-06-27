@@ -1,4 +1,5 @@
-﻿using CODWER.RERU.Core.Application.Validation;
+﻿using System;
+using CODWER.RERU.Core.Application.Validation;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Common.Extensions;
@@ -9,6 +10,7 @@ using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 using System.Linq;
 using CODWER.RERU.Core.Application.Validators.IDNP;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CODWER.RERU.Core.Application.Users.CreateUser
 {
@@ -16,9 +18,9 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
     {
         private readonly AppDbContext _appDbContext;
 
-        public CreateUserCommandValidator(IValidator<CreateUserDto> createUserDto, AppDbContext appDbContext)
+        public CreateUserCommandValidator(IValidator<CreateUserDto> createUserDto,  IServiceProvider serviceProvider)
         {
-            _appDbContext = appDbContext;
+            _appDbContext = serviceProvider.GetRequiredService<AppDbContext>();
 
             RuleFor(x => x.FirstName).NotEmpty()
                 .WithMessage(ValidationMessages.InvalidInput)
@@ -41,16 +43,12 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
             When(r => r.DepartmentColaboratorId != null, () =>
             {
-                RuleFor(x => x.DepartmentColaboratorId.Value)
-                    .SetValidator(x => new ItemMustExistValidator<Department>(appDbContext, ValidationCodes.INVALID_DEPARTMENT_ID,
-                        ValidationMessages.InvalidReference));
+                RuleFor(x => x.DepartmentColaboratorId.Value).Custom(CheckExistentDepartment);
             });
 
             When(r => r.RoleColaboratorId != null, () =>
             {
-                RuleFor(x => x.RoleColaboratorId.Value)
-                    .SetValidator(x => new ItemMustExistValidator<Role>(appDbContext, ValidationCodes.INVALID_ROLE_ID,
-                        ValidationMessages.InvalidReference));
+                RuleFor(x => x.RoleColaboratorId.Value).Custom(CheckExistentRole);
             });
 
             RuleFor(x => x.AccessModeEnum)
@@ -65,6 +63,30 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
               .Custom(CheckIfUniqueIdnpOnCreate);
 
         }
+
+        private void CheckExistentDepartment(int colId, CustomContext context)
+        {
+
+            var exist = _appDbContext.Departments.Any(x => x.ColaboratorId == colId);
+
+            if (!exist)
+            {
+                context.AddFail(ValidationCodes.INVALID_DEPARTMENT_ID, ValidationMessages.InvalidReference);
+            }
+        }
+
+
+        private void CheckExistentRole(int roleId, CustomContext context)
+        {
+
+            var exist = _appDbContext.Roles.Any(x => x.ColaboratorId == roleId);
+
+            if (!exist)
+            {
+                context.AddFail(ValidationCodes.INVALID_ROLE_ID, ValidationMessages.InvalidReference);
+            }
+        }
+
         private void CheckIfUniqueIdnpOnCreate(string idnp, CustomContext context)
         {
             var exist = _appDbContext.UserProfiles.Any(x => x.Idnp == idnp);

@@ -2,12 +2,11 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Core.Application.Common.Providers;
-using CODWER.RERU.Core.Data.Persistence.Context;
 using CODWER.RERU.Core.Data.Persistence.Helpers;
 using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Providers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Module.Providers
@@ -16,14 +15,20 @@ namespace CODWER.RERU.Core.Application.Module.Providers
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
         private const string DEFAULT_IDENTITY_SERVICE = "local";
 
-        public CoreApplicationUserProvider(ICommonServiceProvider commonServiceProvider)
+        public CoreApplicationUserProvider(IMapper mapper, IServiceProvider serviceProvider, IConfiguration configuration)
         {
-            _appDbContext = commonServiceProvider.AppDbContext;
-            _mapper = commonServiceProvider.Mapper;
+            _configuration = configuration;
+            _appDbContext = NewInstance();
+            _mapper = mapper;
         }
+
+        private AppDbContext NewInstance() => new(new DbContextOptionsBuilder<AppDbContext>()
+            .UseNpgsql(_configuration.GetConnectionString("Storage"))
+            .Options);
 
         public async Task<ApplicationUser> Get(string id, string identityProvider = null)
         {
