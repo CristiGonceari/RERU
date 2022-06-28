@@ -1,5 +1,4 @@
-﻿using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Providers;
+﻿using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Users.CreateUser;
 using CODWER.RERU.Core.Application.Users.EditUserFromColaborator;
 using CVU.ERP.Common.DataTransferObjects.Files;
@@ -9,14 +8,11 @@ using RERU.Data.Persistence.Context;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.StorageService;
-using CVU.ERP.StorageService.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 
@@ -25,28 +21,14 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
     public class BulkImportUsersCommandHandler : IRequestHandler<BulkImportUsersCommand, FileDataDto>
     {
         private readonly IStorageFileService _storageFileService;
-        private readonly IMediator Mediator;
-        private readonly IServiceProvider _serviceProvider;
+        private readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
 
-        public BulkImportUsersCommandHandler(ICommonServiceProvider commonServiceProvider,
-            IStorageFileService storageFileService,
-             IServiceProvider serviceProvider, IConfiguration configuration)
+        public BulkImportUsersCommandHandler(IStorageFileService storageFileService, IConfiguration configuration, IMediator mediator)
         {
-            //_appDbContext = appDbContext;
             _storageFileService = storageFileService;
-            _serviceProvider = serviceProvider;
             _configuration = configuration;
-
-            Mediator = commonServiceProvider.Mediator;
-
-
-
-            //_appDbContextFactory = appDbContextFactory;
-
-            //_database = _appDbContextFactory.CreateDbContext();
-
-            //var x = _database.Processes.Count();
+            _mediator = mediator;
         }
 
         public async Task<FileDataDto> Handle(BulkImportUsersCommand request, CancellationToken cancellationToken)
@@ -74,21 +56,22 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
                 UserProfile user;
 
-                using (var db = AppDbContext.NewInstance(_configuration))
+                await using (var db = AppDbContext.NewInstance(_configuration))
                 {
-                    user = db.UserProfiles.FirstOrDefault(x => x.Idnp == idnp);
+                    user = await db.UserProfiles.FirstOrDefaultAsync(x => x.Idnp == idnp);
                 }
 
                 tasks.Add(AddEditUser(workSheet, request, i, user));
 
                 i++;
 
-                if (tasks.Count() <= 2) continue;
-                Task.WhenAll(tasks);
+                if (tasks.Count <= 10) continue;
+                WaitTasks(Task.WhenAll(tasks));
+
                 tasks.Clear();
             }
 
-            Task.WhenAll(tasks);
+            WaitTasks(Task.WhenAll(tasks));
             tasks.Clear();
 
             var excelFile = GetExcelFile(package);
@@ -96,6 +79,19 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             await SaveExcelFile(request.ProcessId, excelFile);
 
             return excelFile;
+        }
+
+        private async Task WaitTasks(Task t)
+        {
+            try
+            {
+                t.Wait();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw new Exception(e.Message);
+            }
         }
 
         private bool ExistentRecord(ExcelWorksheet workSheet, int i)
@@ -117,9 +113,9 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
         private async Task SetTotalNumberOfProcesses(int processId, int totalUsers)
         {
-            using (var db = AppDbContext.NewInstance(_configuration))
+            await using (var db = AppDbContext.NewInstance(_configuration))
             {
-                var process = db.Processes.First(x => x.Id == processId);
+                var process = await db.Processes.FirstAsync(x => x.Id == processId);
                 process.Total = totalUsers;
 
                 await db.SaveChangesAsync();
@@ -132,7 +128,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             {
                 var editCommand = GetEditUserCommand(workSheet, user, i);
 
-                await Mediator.Send(editCommand);
+                await _mediator.Send(editCommand);
 
                 await UpdateProcesses(request.ProcessId);
 
@@ -151,7 +147,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             {
                 var command = GetCreateUserCommand(workSheet, i);
 
-                await Mediator.Send(command);
+                await _mediator.Send(command);
 
                 await UpdateProcesses(request.ProcessId);
 
@@ -166,9 +162,9 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
         private async Task UpdateProcesses(int processId)
         {
-            using (var db = AppDbContext.NewInstance(_configuration))
+            await using (var db = AppDbContext.NewInstance(_configuration))
             {
-                var process = db.Processes.First(x => x.Id == processId);
+                var process = await db.Processes.FirstAsync(x => x.Id == processId);
                 process.Done++;
 
                 await db.SaveChangesAsync();
@@ -179,9 +175,9 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         {
             var fileId = await _storageFileService.AddFile(excelFile.Name, CVU.ERP.StorageService.Entities.FileTypeEnum.procesfile, excelFile.ContentType, excelFile.Content);
 
-            using (var db = AppDbContext.NewInstance(_configuration))
+            await using (var db = AppDbContext.NewInstance(_configuration))
             {
-                var process = db.Processes.First(x => x.Id == processId);
+                var process =await db.Processes.FirstAsync(x => x.Id == processId);
 
                 process.FileId = fileId;
                 process.IsDone = true;

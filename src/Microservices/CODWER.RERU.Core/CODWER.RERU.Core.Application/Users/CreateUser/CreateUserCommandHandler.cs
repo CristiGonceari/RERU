@@ -1,6 +1,5 @@
 using System;
 using AutoMapper;
-using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Logging;
@@ -10,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
@@ -23,17 +21,16 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
         private readonly ILoggerService<CreateUserCommandHandler> _loggerService;
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
-        private readonly IServiceProvider _serviceProvider;
 
         public CreateUserCommandHandler(
             IEnumerable<IIdentityService> identityServices, 
             ILoggerService<CreateUserCommandHandler> loggerService, 
-            IServiceProvider serviceProvider, IMapper mapper, IConfiguration configuration)
+            IMapper mapper,
+            IConfiguration configuration)
         {
             _identityServices = identityServices;
             _loggerService = loggerService;
             _mapper = mapper;
-            _serviceProvider = serviceProvider;
             _appDbContext = AppDbContext.NewInstance(configuration);
         }
 
@@ -55,7 +52,6 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
             };
 
             var userProfile = _mapper.Map<UserProfile>(newUser);
-
             
             var defaultRoles = _appDbContext.Modules
                 .SelectMany(m => m.Roles.Where(r => r.IsAssignByDefault).Take(1))
@@ -85,8 +81,6 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
             _appDbContext.UserProfiles.Add(userProfile);
             await _appDbContext.SaveChangesAsync();
-            
-
 
             await LogAction(userProfile);
 

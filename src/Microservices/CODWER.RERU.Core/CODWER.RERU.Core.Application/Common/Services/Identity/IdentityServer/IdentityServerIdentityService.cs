@@ -1,17 +1,24 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Services.Identity.Exceptions;
 using CODWER.RERU.Core.Application.Common.Services.PasswordGenerator;
+using CODWER.RERU.Core.Data.Persistence.Context;
 using CVU.ERP.Identity.Models;
 using CVU.ERP.Notifications.Email;
 using Microsoft.AspNetCore.Identity;
 using CVU.ERP.Notifications.Services;
 using CVU.ERP.Notifications.Enums;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using RERU.Data.Entities;
+using IdentityDbContext = CVU.ERP.Identity.Context.IdentityDbContext;
 
 namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 {
@@ -20,14 +27,49 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
         private readonly UserManager<ERPIdentityUser> _userManager;
         private readonly INotificationService _notificationService;
         private readonly IPasswordGenerator _passwordGenerator;
+        private readonly IConfiguration _configuration;
+
+
+        private readonly IOptions<IdentityOptions> _optionsAccessor;
+        private readonly IPasswordHasher<ERPIdentityUser> _passwordHasher;
+        private readonly IEnumerable<IUserValidator<ERPIdentityUser>> _userValidators;
+        private readonly IEnumerable<IPasswordValidator<ERPIdentityUser>> _passwordValidators;
+        private readonly ILookupNormalizer _keyNormalizer;
+        private readonly IdentityErrorDescriber _errors;
+        private readonly IServiceProvider _services;
+        private readonly ILogger<UserManager<ERPIdentityUser>> _logger;
+
+
         public string Type => "local";
 
-        public IdentityServerIdentityService(IServiceProvider serviceProvider, INotificationService notificationService, IPasswordGenerator passwordGenerator)
+        public IdentityServerIdentityService(IServiceProvider serviceProvider, INotificationService notificationService, IPasswordGenerator passwordGenerator, IConfiguration configuration, IOptions<IdentityOptions> optionsAccessor, IPasswordHasher<ERPIdentityUser> passwordHasher, IEnumerable<IUserValidator<ERPIdentityUser>> userValidators, IEnumerable<IPasswordValidator<ERPIdentityUser>> passwordValidators, ILookupNormalizer keyNormalizer, IdentityErrorDescriber errors, IServiceProvider services, ILogger<UserManager<ERPIdentityUser>> logger)
         {
-            _userManager = serviceProvider.GetRequiredService<UserManager<ERPIdentityUser>>();
             _notificationService = notificationService;
             _passwordGenerator = passwordGenerator;
+            _configuration = configuration;
+            
+            _optionsAccessor = optionsAccessor;
+            _passwordHasher = passwordHasher;
+            _userValidators = userValidators;
+            _passwordValidators = passwordValidators;
+            _keyNormalizer = keyNormalizer;
+            _errors = errors;
+            _services = services;
+            _logger = logger;
+
+            _userManager = UserManagerInstance;
         }
+
+        private UserManager<ERPIdentityUser> UserManagerInstance => new UserManager<ERPIdentityUser>(
+            new UserStore<ERPIdentityUser>(UserManagementDbContext.NewInstance(_configuration)),
+            _optionsAccessor,
+            _passwordHasher,
+            _userValidators,
+            _passwordValidators,
+            _keyNormalizer,
+            _errors,
+            _services,
+            _logger);
 
         public async Task<string> Create(UserProfile userProfile, bool notify)
         {

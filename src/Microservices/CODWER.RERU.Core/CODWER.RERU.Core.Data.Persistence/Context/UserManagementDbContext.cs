@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Identity.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace CODWER.RERU.Core.Data.Persistence.Context
 {
@@ -30,5 +29,9 @@ namespace CODWER.RERU.Core.Data.Persistence.Context
 
             base.OnModelCreating(modelBuilder);
         }
+
+        public static UserManagementDbContext NewInstance(IConfiguration configuration) => new(new DbContextOptionsBuilder<UserManagementDbContext>()
+            .UseNpgsql(configuration.GetConnectionString(ConnectionString.Identity))
+            .Options);
     }
 }
