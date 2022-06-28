@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Logging.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +13,7 @@ namespace CVU.ERP.Logging.DependencyInjection
         {
 
             services.AddDbContext<LoggingDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("Log"),
+                options.UseNpgsql(configuration.GetConnectionString(ConnectionString.Logging),
                     b => b.MigrationsAssembly(typeof(LoggingDbContext).GetTypeInfo().Assembly.GetName().Name)));
 
             return services;

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 
 namespace CODWER.RERU.Storage.Console
 {
@@ -27,7 +28,7 @@ namespace CODWER.RERU.Storage.Console
                 config.AddEnvironmentVariables();
             })
             .ConfigureServices((hostingContext, services) => services.AddDbContext<StorageDbContext>(options =>
-                options.UseNpgsql(hostingContext.Configuration.GetConnectionString("Default"),
+                options.UseNpgsql(hostingContext.Configuration.GetConnectionString(ConnectionString.Storage),
                     b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName))));
 
         static void Migrate(IServiceProvider services)

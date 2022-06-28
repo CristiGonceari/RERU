@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using CODWER.RERU.Core.Application.Validation;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 using FluentValidation.Validators;
+using Microsoft.Extensions.DependencyInjection;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
@@ -13,9 +15,9 @@ namespace CODWER.RERU.Core.Application.Users.EditUserFromColaborator
     public class EditUserFromColaboratorCommandValidator : AbstractValidator<EditUserFromColaboratorCommand>
     {
         private readonly AppDbContext _appDbContext;
-        public EditUserFromColaboratorCommandValidator(AppDbContext appDbContext)
+        public EditUserFromColaboratorCommandValidator(IServiceProvider serviceProvider)
         {
-            _appDbContext = appDbContext;
+            _appDbContext = serviceProvider.GetRequiredService<AppDbContext>();
 
             RuleFor(x => x.FirstName).NotEmpty()
                 .WithMessage(ValidationMessages.InvalidInput)
@@ -43,20 +45,39 @@ namespace CODWER.RERU.Core.Application.Users.EditUserFromColaborator
 
             When(r => r.DepartmentColaboratorId != null, () =>
             {
-                RuleFor(x => x.DepartmentColaboratorId.Value)
-                    .SetValidator(x => new ItemMustExistValidator<Department>(appDbContext, ValidationCodes.INVALID_DEPARTMENT_ID,
-                        ValidationMessages.InvalidReference));
+                RuleFor(x => x.DepartmentColaboratorId.Value).Custom(CheckExistentDepartment);
             });
 
             When(r => r.RoleColaboratorId != null, () =>
             {
-                RuleFor(x => x.RoleColaboratorId.Value)
-                    .SetValidator(x => new ItemMustExistValidator<Role>(appDbContext, ValidationCodes.INVALID_ROLE_ID,
-                        ValidationMessages.InvalidReference));
+                RuleFor(x => x.RoleColaboratorId.Value).Custom(CheckExistentRole);
             });
 
             RuleFor(x => x)
               .Custom(CheckIfUniqueIdnpOnCreate);
+        }
+
+        private void CheckExistentDepartment(int colId, CustomContext context)
+        {
+
+            var exist = _appDbContext.Departments.Any(x => x.ColaboratorId == colId);
+
+            if (!exist)
+            {
+                context.AddFail(ValidationCodes.INVALID_DEPARTMENT_ID, ValidationMessages.InvalidReference);
+            }
+        }
+
+
+        private void CheckExistentRole(int roleId, CustomContext context)
+        {
+
+            var exist = _appDbContext.Roles.Any(x => x.ColaboratorId == roleId);
+
+            if (!exist)
+            {
+                context.AddFail(ValidationCodes.INVALID_ROLE_ID, ValidationMessages.InvalidReference);
+            }
         }
 
         private void CheckIfUniqueIdnpOnCreate(EditUserFromColaboratorCommand data, CustomContext context)

@@ -5,8 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CODWER.DataTransferObjects\CVU.ERP.Common.DataTransferObjects.csproj" />
     <ProjectReference Include="..\CVU.ERP.Common.Data.Persistence.EntityFramework\CVU.ERP.Common.Data.Persistence.EntityFramework.csproj" />
     <ProjectReference Include="..\RERU.Data.Entities\RERU.Data.Entities.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
+	</ItemGroup>
 
 </Project>

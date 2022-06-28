@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 
 namespace CVU.ERP.StorageService.DependencyInjection
 {
@@ -11,7 +12,7 @@ namespace CVU.ERP.StorageService.DependencyInjection
         public static IServiceCollection AddCommonStorageContext(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<StorageDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("Storage"),
+                options.UseNpgsql(configuration.GetConnectionString(ConnectionString.Storage),
                     b => b.MigrationsAssembly(typeof(StorageDbContext).GetTypeInfo().Assembly.GetName().Name)));
 
             return services;

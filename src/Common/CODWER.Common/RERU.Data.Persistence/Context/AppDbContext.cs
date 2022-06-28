@@ -1,5 +1,8 @@
 ﻿using CVU.ERP.Common.Data.Persistence.EntityFramework;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Documents;
 using SpatialFocus.EntityFrameworkCore.Extensions;
@@ -122,5 +125,9 @@ namespace RERU.Data.Persistence.Context
                     .UseNumberAsIdentifier()
                     .SetDeleteBehavior(DeleteBehavior.Restrict));
         }
+
+        public static AppDbContext NewInstance(IConfiguration configuration) => new(new DbContextOptionsBuilder<AppDbContext>()
+            .UseNpgsql(configuration.GetConnectionString(ConnectionString.Common))
+            .Options);
     }
 }

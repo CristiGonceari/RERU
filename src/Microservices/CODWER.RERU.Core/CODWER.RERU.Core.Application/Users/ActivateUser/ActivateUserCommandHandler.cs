@@ -16,13 +16,11 @@ using Microsoft.EntityFrameworkCore;
 namespace CODWER.RERU.Core.Application.Users.ActivateUser {
     class ActivateUserCommandHandler : BaseHandler, IRequestHandler<ActivateUserCommand, Unit> 
     {
-        private readonly UserManager<ERPIdentityUser> _userManager;
         private readonly INotificationService _notificationService;
 
-        public ActivateUserCommandHandler (ICommonServiceProvider commonServicepProvider, UserManager<ERPIdentityUser> userManager, INotificationService notificationService) 
-            : base (commonServicepProvider) 
+        public ActivateUserCommandHandler (ICommonServiceProvider commonServiceProvider, INotificationService notificationService) 
+            : base (commonServiceProvider) 
         {
-            _userManager = userManager;
             _notificationService = notificationService;
         }
 

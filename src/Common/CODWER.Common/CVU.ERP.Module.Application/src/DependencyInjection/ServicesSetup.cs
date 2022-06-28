@@ -5,7 +5,6 @@ using CVU.ERP.Logging.Context;
 using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.ExceptionHandlers;
 using CVU.ERP.Module.Application.Infrastructure;
-using CVU.ERP.Module.Application.LoggerServices.Implementations;
 using CVU.ERP.Module.Application.Providers;
 using CVU.ERP.Module.Application.StorageFileServices.Implementations;
 using CVU.ERP.Module.Application.TableExportServices;
@@ -34,6 +33,8 @@ using RestSharp;
 using src.ExceptionHandlers;
 using System;
 using System.Reflection;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
+using CVU.ERP.Module.Application.LoggerService.Implementations;
 
 namespace CVU.ERP.Module.Application.DependencyInjection
 {
@@ -105,14 +106,14 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             services.AddTransient<IStorageFileService, StorageFileService>();
 
             services.AddDbContext<StorageDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("Storage"),
+                options.UseNpgsql(configuration.GetConnectionString(ConnectionString.Storage),
                     b => b.MigrationsAssembly(typeof(StorageDbContext).GetTypeInfo().Assembly.GetName().Name)));
 
             services.AddTransient(typeof(IStorageFileService), typeof(StorageFileService));
             services.Configure<MinioSettings>(configuration.GetSection("Minio"));
 
             services.AddDbContext<LoggingDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("Log"),
+                options.UseNpgsql(configuration.GetConnectionString(ConnectionString.Logging),
                     b => b.MigrationsAssembly(typeof(LoggingDbContext).GetTypeInfo().Assembly.GetName().Name)));
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<INotificationService, NotificationService>();

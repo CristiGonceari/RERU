@@ -13,12 +13,10 @@ namespace CODWER.RERU.Core.Application.Users.ChangePersonalData
 {
     public class ChangePersonalDataCommandHandler : BaseHandler, IRequestHandler<ChangePersonalDataCommand, Unit>
     {
-        private readonly UserManager<ERPIdentityUser> _userManager;
         private readonly ICurrentApplicationUserProvider _userProvider;
 
-        public ChangePersonalDataCommandHandler(ICommonServiceProvider commonServiceProvider, ICurrentApplicationUserProvider userProvider, UserManager<ERPIdentityUser> userManager) : base(commonServiceProvider)
+        public ChangePersonalDataCommandHandler(ICommonServiceProvider commonServiceProvider, ICurrentApplicationUserProvider userProvider) : base(commonServiceProvider)
         {
-            _userManager = userManager;
             _userProvider = userProvider;
         }
 

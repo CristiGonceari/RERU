@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Identity.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,10 +29,10 @@ namespace CODWER.RERU.IdentityMigrator.Console
                 config.AddEnvironmentVariables();
             })
             .ConfigureServices((hostingContext, services) => services.AddDbContext<IdentityDbContext>(options =>
-                options.UseNpgsql(hostingContext.Configuration.GetConnectionString("Default"),
+                options.UseNpgsql(hostingContext.Configuration.GetConnectionString(ConnectionString.Identity),
                         b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName))))
             .ConfigureServices((hostingContext, services) => services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(hostingContext.Configuration.GetConnectionString("RERU"),
+                options.UseNpgsql(hostingContext.Configuration.GetConnectionString(ConnectionString.Common),
                     b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName))));
 
 
