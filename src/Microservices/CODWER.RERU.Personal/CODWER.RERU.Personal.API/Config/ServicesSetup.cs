@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using ISession = CODWER.RERU.Personal.Application.Interfaces.ISession;
 
 namespace CODWER.RERU.Personal.API.Config
@@ -27,7 +28,7 @@ namespace CODWER.RERU.Personal.API.Config
         {
             // Add framework services.
             services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("Default"),
+                options.UseNpgsql(configuration.GetConnectionString(ConnectionString.Personal),
                     b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name)));
         }
         #endregion

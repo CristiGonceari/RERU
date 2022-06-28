@@ -49,10 +49,6 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             //var x = _database.Processes.Count();
         }
 
-        private AppDbContext NewInstance() => new (new DbContextOptionsBuilder<AppDbContext>()
-            .UseNpgsql(_configuration.GetConnectionString("RERU"))
-            .Options);
-
         public async Task<FileDataDto> Handle(BulkImportUsersCommand request, CancellationToken cancellationToken)
         {
             return await Import(request);
@@ -78,7 +74,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
                 UserProfile user;
 
-                using (var db = NewInstance())
+                using (var db = AppDbContext.NewInstance(_configuration))
                 {
                     user = db.UserProfiles.FirstOrDefault(x => x.Idnp == idnp);
                 }
@@ -121,7 +117,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
         private async Task SetTotalNumberOfProcesses(int processId, int totalUsers)
         {
-            using (var db = NewInstance())
+            using (var db = AppDbContext.NewInstance(_configuration))
             {
                 var process = db.Processes.First(x => x.Id == processId);
                 process.Total = totalUsers;
@@ -170,7 +166,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
         private async Task UpdateProcesses(int processId)
         {
-            using (var db = NewInstance())
+            using (var db = AppDbContext.NewInstance(_configuration))
             {
                 var process = db.Processes.First(x => x.Id == processId);
                 process.Done++;
@@ -183,7 +179,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         {
             var fileId = await _storageFileService.AddFile(excelFile.Name, CVU.ERP.StorageService.Entities.FileTypeEnum.procesfile, excelFile.ContentType, excelFile.Content);
 
-            using (var db = NewInstance())
+            using (var db = AppDbContext.NewInstance(_configuration))
             {
                 var process = db.Processes.First(x => x.Id == processId);
 

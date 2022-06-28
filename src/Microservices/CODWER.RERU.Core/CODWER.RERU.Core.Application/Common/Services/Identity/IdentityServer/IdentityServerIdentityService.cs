@@ -31,8 +31,6 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 
         public async Task<string> Create(UserProfile userProfile, bool notify)
         {
-           // var um = new UserManager<ERPIdentityUser>()
-
             var identityUser = new ERPIdentityUser()
             {
                 Email = userProfile.Email,

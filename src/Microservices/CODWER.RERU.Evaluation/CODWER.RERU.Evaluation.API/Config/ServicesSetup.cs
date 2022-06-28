@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using CODWER.RERU.Evaluation.Application.DependencyInjection;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CVU.ERP.Common;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Common.Interfaces;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Infrastructure;
@@ -29,7 +30,7 @@ namespace CODWER.RERU.Evaluation.API.Config
             //   b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().FirstName)));
 
             services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("RERU"),
+                options.UseNpgsql(configuration.GetConnectionString(ConnectionString.Common),
                     b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name)));
         }
         #endregion

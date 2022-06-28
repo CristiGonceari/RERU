@@ -24,9 +24,8 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly IServiceProvider _serviceProvider;
-        private readonly IConfiguration _configuration;
 
-        public CreateUserCommandHandler(ICommonServiceProvider commonServiceProvider,
+        public CreateUserCommandHandler(
             IEnumerable<IIdentityService> identityServices, 
             ILoggerService<CreateUserCommandHandler> loggerService, 
             IServiceProvider serviceProvider, IMapper mapper, IConfiguration configuration)
@@ -34,9 +33,8 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
             _identityServices = identityServices;
             _loggerService = loggerService;
             _mapper = mapper;
-            _configuration = configuration;
             _serviceProvider = serviceProvider;
-            _appDbContext = NewInstance();
+            _appDbContext = AppDbContext.NewInstance(configuration);
         }
 
         public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -101,10 +99,6 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
         {
             await _loggerService.Log(LogData.AsCore($"User {userProfile.FirstName} {userProfile.LastName} was added to system", userProfile));
         }
-
-        private AppDbContext NewInstance() => new (new DbContextOptionsBuilder<AppDbContext>()
-            .UseNpgsql(_configuration.GetConnectionString("RERU"))
-            .Options);
 
         //private async Task SyncUserProfile(UserProfile userProfile)
         //{

@@ -78,7 +78,7 @@ reru_identity_migrator:
   image:
     repository: cvuintell/reru-identity-migrator
   database:
-    connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    identity_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
 
 reru_storage_migrator:
@@ -88,7 +88,7 @@ reru_storage_migrator:
   image:
     repository: cvuintell/reru-storage-migrator
   database:
-    connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
 
 reru_core_fe:
   name: "reru-core-fe"
@@ -108,7 +108,7 @@ reru_personal:
   image:
     repository: cvuintell/reru-personal
   database:
-    connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Personal-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    personal_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Personal-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
 
@@ -197,7 +197,7 @@ microservices:
           value: "/Saml2/Acs"
         - name: SAML_ENDPOINT
           value: "http://reru-stage.codwer.com"
-        - name: ConnectionStrings__Default
+        - name: ConnectionStrings__Identity
           value: "server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;"
         - name: IDENTITY_ISSUER_URI
           value: "http://reru-stage.codwer.com/ms/reru-identity-new"

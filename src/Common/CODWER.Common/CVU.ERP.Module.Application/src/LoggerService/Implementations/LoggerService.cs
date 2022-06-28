@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Context;
 using CVU.ERP.Logging.Entities;
@@ -22,16 +23,11 @@ namespace CVU.ERP.Module.Application.LoggerService.Implementations
     {
         private readonly LoggingDbContext _localLoggingDbContext;
         private readonly IEnumerable<ICurrentApplicationUserProvider> _userProvider;
-        private readonly IConfiguration _configuration;
-        public LoggerService(IServiceProvider serviceProvider, IEnumerable<ICurrentApplicationUserProvider> userProvider, IConfiguration configuration)
+        public LoggerService(IEnumerable<ICurrentApplicationUserProvider> userProvider, IConfiguration configuration)
         {
-            _configuration = configuration;
-            _localLoggingDbContext = NewInstance();
+            _localLoggingDbContext = LoggingDbContext.NewInstance(configuration);
             _userProvider = userProvider;
         }
-        private LoggingDbContext NewInstance() => new (new DbContextOptionsBuilder<LoggingDbContext>()
-            .UseNpgsql(_configuration.GetConnectionString("Log"))
-            .Options);
 
         public virtual async Task Log(LogData data)
         {

@@ -17,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Reflection;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using Wkhtmltopdf.NetCore;
 
 namespace CODWER.RERU.Logging.API
@@ -34,7 +35,7 @@ namespace CODWER.RERU.Logging.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<LoggingDbContext>(options =>
-                    options.UseNpgsql(Configuration.GetConnectionString("Log"),
+                    options.UseNpgsql(Configuration.GetConnectionString(ConnectionString.Logging),
                             b => b.MigrationsAssembly(typeof(DatabaseSeeder).GetTypeInfo().Assembly.GetName().Name)));
 
             services.AddTransient<IPaginationService, PaginationService>();
