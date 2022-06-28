@@ -39,6 +39,11 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.Tests.AddEvaluations;
+using CODWER.RERU.Evaluation.Application.Tests.FinalizeEvaluation;
+using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluations;
+using CODWER.RERU.Evaluation.Application.Tests.SetTestResult;
+using CODWER.RERU.Evaluation.Application.Tests.StartEvaluation;
 using CVU.ERP.Module.Application.ImportProcesses;
 using CVU.ERP.Module.Application.ImportProcesses.GetImportProcess;
 using CVU.ERP.Module.Application.ImportProcesses.GetImportResult;
@@ -126,8 +131,20 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
+        [HttpGet("my-evaluations")]
+        public async Task<PaginatedModel<TestDto>> GetMyEvaluations([FromQuery] GetMyEvaluationsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
         [HttpPost("tests")]
         public async Task<List<int>> AddTests([FromBody] AddTestsCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
+        [HttpPost("evaluations")]
+        public async Task<List<int>> AddEvaluations([FromBody] AddEvaluationsCommand command)
         {
             return await Mediator.Send(command);
         }
@@ -188,14 +205,32 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(command);
         }
 
+        [HttpPatch("finalize-evaluation")]
+        public async Task<Unit> FinalizeEvaluation([FromBody] FinalizeEvaluationCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
         [HttpPatch("edit-status")]
         public async Task<Unit> EditTestStatus([FromBody] EditTestStatusCommand command)
         {
             return await Mediator.Send(command);
         }
 
+        [HttpPatch("edit-result")]
+        public async Task<Unit> SetTestResult([FromBody] SetTestResultCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
         [HttpPatch("start-test")]
         public async Task<Unit> StartTest([FromBody] StartTestCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
+        [HttpPatch("start-evaluation")]
+        public async Task<Unit> StartEvaluation([FromBody] StartEvaluationCommand command)
         {
             return await Mediator.Send(command);
         }

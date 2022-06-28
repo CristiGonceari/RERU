@@ -24,6 +24,8 @@
         public static string INEXISTENT_TEST_TEMPLATE_IN_EVENT = "03000206";
         public static string MUST_ADD_EVENT_OR_EVALUATOR = "03000207";
         public static string START_DAY_CANT_BE_FROM_PAST = "03000208";
+        public static string ONLY_ACTIVE_EVENT_CAN_BE_INACTIVE = "03000209";
+        public static string INACTIVE_EVENT_CANT_BE_CHANGED = "03000210";
 
         //event evaluator
         public static string EXISTENT_EVALUATOR_IN_EVENT = "03000301";

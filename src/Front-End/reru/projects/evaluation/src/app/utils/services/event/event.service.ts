@@ -138,6 +138,10 @@ export class EventService extends AbstractService {
     return this.http.get(`${this.baseUrl}/EventEvaluator`, {params});
   }
 
+  getAssignedEvaluators(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}/EventEvaluator/assigned`, {params});
+  }
+
   getNoAssignedEvaluators(params): Observable<any> {
     return this.http.get(`${this.baseUrl}EventEvaluator/no-assigned`, {params});
   }

@@ -110,6 +110,7 @@ export class TestListTableComponent implements OnInit {
     this.isLoading = true; 
     
     let params = {
+      mode: null,
       testTemplateName: this.filters.testName || this.testToSearch || '',
       locationKeyword: this.filters.testLocation || this.locationName || '',
       idnp: this.filters.idnp ||this.idnp || '',

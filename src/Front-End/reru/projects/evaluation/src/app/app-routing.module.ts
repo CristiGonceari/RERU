@@ -59,6 +59,12 @@ const routes: Routes = [
 		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
 	{
+		path: 'evaluations',
+		loadChildren: () => import('./components/evaluations/evaluations.module').then(m => m.EvaluationsModule),
+		data: { permission: 'P03000601' },
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
+	},
+	{
 		path: 'polls',
 		loadChildren: () => import('./components/polls/polls.module').then(m => m.PollsModule),
 		canActivate: [AuthenticationGuard]

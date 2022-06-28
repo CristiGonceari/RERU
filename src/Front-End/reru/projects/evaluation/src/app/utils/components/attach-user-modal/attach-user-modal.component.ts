@@ -26,6 +26,7 @@ export class AttachUserModalComponent implements OnInit {
   @Input() inputType: string;
   @Input() eventId: number;
   @Input() page: string;
+  @Input() whichUser: boolean;
 
   constructor(
     private userService: UserProfileService,
@@ -39,6 +40,8 @@ export class AttachUserModalComponent implements OnInit {
 
   getUsers(data: any = {}): void {
     if (this.eventId && this.inputType == 'checkbox' && this.page == 'add-test') this.getAssignedUsers(data);
+    else if (this.eventId && this.inputType == 'checkbox' && this.page == 'add-evaluation' && !this.whichUser) this.getAssignedUsers(data);
+    else if (this.eventId && this.inputType == 'checkbox' && this.page == 'add-evaluation' && this.whichUser) this.getAssignedEvaluators(data);
     else {
       let exceptIds = this.exceptUserIds.length ? this.exceptUserIds : 0;
       this.paginatedAttachedIds = false;
@@ -67,6 +70,22 @@ export class AttachUserModalComponent implements OnInit {
       ...this.filters
     }
     this.eventUserService.getAssignedUsers(params).subscribe(res => {
+      if (res && res.data) {
+        this.users = res.data.items;
+        this.pagination = res.data.pagedSummary;
+        this.isLoading = false;
+      }
+    })
+  }
+
+  getAssignedEvaluators(data: any = {}): void {
+    let params = {
+      page: data.page || this.pagination.currentPage,
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+      eventId: this.eventId,
+      ...this.filters
+    }
+    this.eventUserService.getAssignedEvaluators(params).subscribe(res => {
       if (res && res.data) {
         this.users = res.data.items;
         this.pagination = res.data.pagedSummary;
@@ -136,5 +155,4 @@ export class AttachUserModalComponent implements OnInit {
   checkEvent(event): void {
     this.showUserName = event.target.uchecked;
   }
-
 }

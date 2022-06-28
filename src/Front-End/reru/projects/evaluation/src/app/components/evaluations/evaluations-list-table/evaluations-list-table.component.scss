@@ -1,0 +1,17 @@
+:host {
+    .search-btn {
+        ::ng-deep {
+            app-confirm-button,
+            app-confirm-button button {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.shadow-input {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border: none;
+  }

@@ -5,7 +5,7 @@ export class AddEditTest {
     userProfileId: number[];
     evaluatorId?: any;
     showUserName?: boolean;
-    testTemplateId: number;
+    testTemplateId: any;
     eventId?: number;
     locationId?: number;
     testStatus: TestStatusEnum;

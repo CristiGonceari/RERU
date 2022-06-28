@@ -1,0 +1,35 @@
+<app-page-title title="{{ 'evaluations.manage-evaluations' | translate }}" subTitle="{{ 'evaluations.evaluation-data' | translate }}">
+</app-page-title>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid mb-5">
+        <div class="container">
+            <mat-accordion *ngIf="event == false">
+                <mat-expansion-panel (opened)="testEvent = true" (closed)="testEvent = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{'evaluations.add-evaluation-event-description' | translate}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{'evaluations.add-evaluation-event-description' | translate}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <app-add-evaluation [testEvent]="testEvent"></app-add-evaluation>
+                </mat-expansion-panel>
+            </mat-accordion>
+            <mat-accordion *ngIf="testEvent == false">
+                <mat-expansion-panel (opened)="event = true" (closed)="event = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{'evaluations.add-evaluation-description' | translate}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{'evaluations.add-evaluation-description' | translate}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <app-add-evaluation></app-add-evaluation>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>
