@@ -1,0 +1,113 @@
+<app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'">
+</app-loading-spinner>
+<h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
+
+<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable">
+    <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading && !downloadFile">
+        <thead class="text-uppercase text-muted">
+            <tr>
+                <th scope="col">{{ 'tests.name' | translate }}</th>
+                <th scope="col" class="text-left" style="width: 200px">{{ 'verify-test.student' | translate }}</th>
+                <th scope="col" class="text-left" style="width: 200px">{{ 'events.evaluator' | translate }}</th>
+                <th scope="col" class="text-left" style="width: 150px">{{ 'events.event' | translate }}</th>
+                <th scope="col" class="text-left" style="width: 150px">{{ 'events.location' | translate }}</th>
+                <th scope="col" class="text-left" style="width: 150px">{{ 'verify-test.status' | translate }}</th>
+                <th scope="col" class="text-left" style="width: 100px">{{ 'verify-test.result' | translate }}</th>
+                <th scope="col" style="width: 48px"></th>
+            </tr>
+        </thead>
+        <tbody class="datatable-body" *ngIf="testTemplate.length">
+            <tr *ngFor="let item of testTemplate">
+                <td><span class="font-size-lg">{{ item.testTemplateName }}</span></td>
+                <td>
+                    <p *ngIf="item.showUserName"
+                        class="font-size-lg cursor-pointer text-hover-primary mb-0"
+                        [routerLink]="['../user-profile', item.userId]"
+                        style="white-space: nowrap;">
+                            {{ item.userName }}
+                        <br>
+                        <span class="text-dark-50 font-size-lg font-weight-light">{{ item.idnp }}</span>
+                    </p>
+                    <span *ngIf="!item.showUserName" class="font-size-lg">-</span>
+                </td>
+                <td>
+                    <p *ngIf="item.showUserName"
+                        class="font-size-lg cursor-pointer text-hover-primary mb-0"
+                        [routerLink]="['../user-profile', item.evaluatorId]"
+                        style="white-space: nowrap;">
+                            {{ item.evaluatorName }}
+                        <br>
+                        <span class="text-dark-50 font-size-lg font-weight-light">{{ item.evaluatorIdnp }}</span>
+                    </p>
+                    <span *ngIf="!item.showUserName" class="font-size-lg">-</span>
+                </td>
+                <td>
+                    <span class="font-size-lg" *ngIf="item.eventName">{{ item.eventName }}</span>
+                    <span class="font-size-lg" *ngIf="!item.eventName">-</span>
+                </td>
+                <td>
+                    <span class="font-size-lg" *ngIf="item.locationNames">{{ item.locationNames }}</span>
+                    <span class="font-size-lg" *ngIf="!item.locationNames.length">-</span>
+                </td>
+                <td>{{'statuses.' + status[item.testStatus] | translate}}</td>
+                <td>{{'verify-test.' + result[item.result] | translate}}</td>
+                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
+                    <div style="overflow: visible; position: relative; width: 0px">
+                        <div ngbDropdown class="dropdown dropdown-inline">
+                            <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                                <span class="svg-icon svg-icon-md" ngbDropdownToggle>
+                                    <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                        viewBox="0 0 24 24" version="1.1">
+                                        <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
+                                            <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3"
+                                                fill="black">
+                                            </rect>
+                                            <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3"
+                                                fill="black" fill-opacity="0.7"></rect>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                                <div ngbDropdownMenu aria-labelledby="action1">
+                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem
+                                        (click)="closeTest(item.id)" *ngIf="item.testStatus === status.Verified">
+                                        {{ 'button.close' | translate }}
+                                    </button>
+                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem
+                                        [routerLink]="['../my-activities/evaluation-result', item.id]" *ngIf="item.testStatus === status.Verified">
+                                        {{ 'button.view' | translate }}
+                                    </button>
+                                    <!-- <button class="navi-link align-items-baseline px-6" ngbDropdownItem (click)="printTest(item.id)">
+                                        {{ 'button.print' | translate }}
+                                    </button> -->
+                                    <!-- <button (click)="openGenerateDocumentModal(item.id, item.testTemplateName)" class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                                        {{'documents-templates.generate-document'| translate}}
+                                    </button> -->
+                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem
+                                        (click)="removeTest(item.id)">
+                                        {{ 'button.delete' | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tbody class="datatable-body" *ngIf="!testTemplate.length">
+            <tr>
+                <td colspan="10" class="text-center">
+                    {{ 'message.no-record' | translate }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage" 
+    *ngIf="testTemplate.length" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
+    (sizeChange)="getTests({ page: 1, itemsPerPage: $event })"
+    (pageChange)="getTests({ page: $event, itemsPerPage: pagination.pageSize })">
+  </div>
+</div>

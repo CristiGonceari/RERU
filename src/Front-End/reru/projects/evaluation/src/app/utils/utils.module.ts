@@ -19,6 +19,9 @@ import { ConvertPdfDocumentModalComponent } from './modals/convert-pdf-document-
 import { CKEditorModule } from 'ngx-ckeditor';
 import { GenerateDocumentModalComponent } from './modals/generate-document-modal/generate-document-modal.component';
 import { AddTestHistoryModalComponent } from './modals/add-test-history-modal/add-test-history-modal.component';
+import { ViewUsersModalComponent } from './modals/view-users-modal/view-users-modal.component';
+import { ViewTemplatesModalComponent } from './modals/view-templates-modal/view-templates-modal.component';
+import { EvaluationResultModalComponent } from './modals/evaluation-result-modal/evaluation-result-modal.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { AddTestHistoryModalComponent } from './modals/add-test-history-modal/ad
     DateFilterPipe,
     ConvertPdfDocumentModalComponent,
     GenerateDocumentModalComponent,
-    AddTestHistoryModalComponent
+    AddTestHistoryModalComponent,
+    ViewUsersModalComponent,
+    ViewTemplatesModalComponent,
+    EvaluationResultModalComponent
   ],
   imports: [
     HttpClientModule,

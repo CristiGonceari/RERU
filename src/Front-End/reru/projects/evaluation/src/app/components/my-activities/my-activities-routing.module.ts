@@ -11,8 +11,12 @@ import { MyEvaluatedTestsComponent } from './my-evaluated-tests/my-evaluated-tes
 import { MyEventsComponent } from './my-events/my-events.component';
 import { MyPollsComponent } from './my-polls/my-polls.component';
 import { MySolicitedTestsComponent } from './my-solicited-tests/my-solicited-tests.component';
+import { MyEvaluationsComponent } from './my-evaluations/my-evaluations.component';
 import { AddEditSolicitedTestComponent } from './my-solicited-tests/add-edit-solicited-test/add-edit-solicited-test.component';
 import { MyTestsComponent } from './my-tests/my-tests.component';
+import { StartEvaluationPageComponent } from '../evaluations/start-evaluation-page/start-evaluation-page.component';
+import { PerformingEvaluationComponent } from '../evaluations/performing-evaluation/performing-evaluation.component';
+import { ViewEvaluationResultComponent } from '../evaluations/view-evaluation-result/view-evaluation-result.component';
 
 const routes: Routes = [
   {path: '', component: MyActivitiesComponent,
@@ -23,12 +27,16 @@ const routes: Routes = [
     { path: 'my-polls', component: MyPollsComponent },
     { path: 'my-evaluated-tests', component: MyEvaluatedTestsComponent },
     { path: 'my-solicited-tests', component: MySolicitedTestsComponent },
+    { path: 'my-evaluations', component: MyEvaluationsComponent },
   ]},
   { path: 'start-test/:id', component: StartTestPageComponent },
+  { path: 'start-evaluation/:id', component: StartEvaluationPageComponent },
   { path: 'one-test-per-page/:id', component: OnePerPagePerformingTestComponent},
   { path: 'multiple-per-page/:id', component: MultiplePerPagePerformingTestComponent},
+  { path: 'performing-evaluation/:id', component: PerformingEvaluationComponent},
   { path: 'poll-progress/:id', component: ViewPollProgressComponent },
   { path: 'test-result/:id', component: ViewTestResultComponent },
+  { path: 'evaluation-result/:id', component: ViewEvaluationResultComponent },
   { path: 'finish-page/:id', component: FinishPageComponent },
   { path: 'add-solicited-test', component: AddEditSolicitedTestComponent },
   { path: 'edit-solicited-test/:id', component: AddEditSolicitedTestComponent }

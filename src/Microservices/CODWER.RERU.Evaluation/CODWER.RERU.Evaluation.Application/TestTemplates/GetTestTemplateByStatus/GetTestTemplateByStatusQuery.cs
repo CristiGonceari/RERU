@@ -9,5 +9,6 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
     {
         public TestTemplateStatusEnum TestTemplateStatus { get; set; }
         public int? EventId { get; set; }
+        public TestTemplateModeEnum Mode { get; set; }
     }
 }

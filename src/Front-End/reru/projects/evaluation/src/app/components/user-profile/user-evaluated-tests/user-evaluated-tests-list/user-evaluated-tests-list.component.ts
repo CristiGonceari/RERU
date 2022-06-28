@@ -16,7 +16,6 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./user-evaluated-tests-list.component.scss']
 })
 export class UserEvaluatedTestsListComponent implements OnInit {
-
   testRowList: [] = [];
   pagedSummary: PaginationModel = new PaginationModel();
   userId: number;

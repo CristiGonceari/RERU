@@ -25,8 +25,14 @@
                     <td style="cursor: pointer;" [routerLink]="['type-details', testTemplate.id]">{{testTemplate.name}}</td>
                     <td style="text-align: center;">{{ testTemplate.categoriesCount }}</td>
                     <td style="text-align: center;">{{ testTemplate.questionCount }}</td>
-                    <td style="text-align: center;">{{ testTemplate.duration }}</td>
-                    <td style="text-align: center;">{{ testTemplate.minPercent }}</td>
+                    <td style="text-align: center;">
+                        <span *ngIf="testTemplate.duration > 0">{{ testTemplate.duration }}</span>
+                        <span *ngIf="testTemplate.duration == 0">-</span>
+                    </td>
+                    <td style="text-align: center;">
+                        <span *ngIf="testTemplate.minPercent > 0">{{ testTemplate.minPercent }}</span>
+                        <span *ngIf="testTemplate.minPercent == 0">-</span>
+                    </td>
                     <td>{{'statuses.' + modeEnum[testTemplate.mode] | translate}}</td>
                     <td>{{'statuses.' + statusEnum[testTemplate.status] | translate}}</td>
                     <td *ngSwitchCase="null" class="text-center"><i class="ki ki-plus icon-md"></i></td>

@@ -24,6 +24,10 @@ export class TestService extends AbstractService {
 		return this.http.post(`${this.baseUrl}/${this.urlRoute}/tests`, data);
 	}
 
+	createEvaluations(data): Observable<any> {
+		return this.http.post(`${this.baseUrl}/${this.urlRoute}/evaluations`, data);
+	}
+
 	startAddProcess(data): Observable<any> {
 		return this.http.post(`${this.baseUrl}/${this.urlRoute}/process`, data);
 	}
@@ -91,6 +95,10 @@ export class TestService extends AbstractService {
 		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/finalize`, { testId: testId });
 	}
 
+	finalizeEvaluation(testId): Observable<any> {
+		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/finalize-evaluation`, { testId: testId });
+	}
+
 	getTests(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
 	}
@@ -99,8 +107,16 @@ export class TestService extends AbstractService {
 		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/edit-status`, data);
 	}
 
+	setResult(data): Observable<any> {
+		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/edit-result`, data);
+	}
+
 	startTest(data): Observable<any> {
 		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/start-test`, data);
+	}
+
+	startEvaluation(data): Observable<any> {
+		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/start-evaluation`, data);
 	}
 
 	deleteTest(params): Observable<any> {
@@ -136,6 +152,10 @@ export class TestService extends AbstractService {
 
 	getMyEvaluatedTests(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-tests-evaluated`, { params });
+	}
+
+	getMyEvaluations(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-evaluations`, { params });
 	}
 
 	getMyEvaluatedTestsCount(params): Observable<any> {

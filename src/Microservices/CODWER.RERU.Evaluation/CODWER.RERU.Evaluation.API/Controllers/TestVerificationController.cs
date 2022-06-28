@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.VerificationTests.FinalizeTestVerification;
+using CODWER.RERU.Evaluation.Application.VerificationTests.GetEvaluationQuestion;
 using CODWER.RERU.Evaluation.Application.VerificationTests.GetTestVerificationSummary;
 using CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTestQuestion;
 using CODWER.RERU.Evaluation.Application.VerificationTests.SetTestQuestionAsVerified;
@@ -18,6 +19,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<VerificationTestQuestionUnitDto> GetTestQuestion([FromQuery] VerificationTestQuestionDto data)
         {
             return await Mediator.Send(new GetTestQuestionForVerifyQuery { Data = data }); 
+        }
+
+        [HttpGet("evaluation")]
+        public async Task<VerificationTestQuestionUnitDto> GetEvaluationQuestion([FromQuery] GetEvaluationQuestionQuery query)
+        {
+            return await Mediator.Send(query);
         }
 
         [HttpGet("summary/{testId}")]
