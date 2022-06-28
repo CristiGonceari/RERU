@@ -31,7 +31,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.VerificationProgress, opts => opts.MapFrom(src => GetVerifiationStatus(src)))
                 .ForMember(x => x.Result, opts => opts.MapFrom(src => src.ResultStatus))
                 .ForMember(x => x.ViewTestResult, opts => opts.MapFrom(src => src.TestTemplate.Settings.CanViewResultWithoutVerification))
-                .ForMember(x => x.ModeStatus, opts => opts.MapFrom(src => src.TestTemplate.Mode));
+                .ForMember(x => x.ModeStatus, opts => opts.MapFrom(src => src.TestTemplate.Mode))
+                .ForMember(x => x.EvaluatorName, opts => opts.MapFrom(src => src.Evaluator.FirstName + " " + src.Evaluator.LastName + " " + src.Evaluator.FatherName))
+                .ForMember(x => x.EvaluatorIdnp, opts => opts.MapFrom(src => src.Evaluator.Idnp));
 
             CreateMap<AddEditTestDto, Test>()
                 .ForMember(x => x.Id, opts => opts.Ignore());

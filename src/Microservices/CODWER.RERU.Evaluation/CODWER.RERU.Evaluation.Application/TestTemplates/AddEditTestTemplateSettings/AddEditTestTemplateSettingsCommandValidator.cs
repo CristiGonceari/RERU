@@ -69,7 +69,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddEditTestTemplateSe
                     return true;
                 }
             } 
-            else if (testTemplate.Mode == TestTemplateModeEnum.Poll)
+            else if (testTemplate.Mode == TestTemplateModeEnum.Poll || testTemplate.Mode == TestTemplateModeEnum.Evaluation)
             {
                 return true;
             }

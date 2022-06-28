@@ -25,6 +25,10 @@ export class TestVerificationProcessService extends AbstractService {
 		);
 	}
 
+	getEvaluationQuestion(params): Observable<any> {
+		return this.client.get<Test>(`${this.baseUrl}/${this.urlRoute}/evaluation`, {params});
+	}
+
 	verify(data): Observable<any> {
 		return this.client.post<any>(`${this.baseUrl}/${this.urlRoute}`, {data});
 	}

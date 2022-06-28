@@ -75,9 +75,8 @@
 											</span>
 										</a>
 									</div>
-									<div class="navi-item mb-2">
-										<a [routerLink]="['options']" routerLinkActive="active" class="navi-link py-4"
-											>
+									<div class="navi-item mb-2" *ngIf="mode != 2">
+										<a [routerLink]="['options']" routerLinkActive="active" class="navi-link py-4">
 											<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
 											<span class="navi-text font-size-lg">
 												{{ 'questions.settings' | translate }}

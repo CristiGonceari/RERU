@@ -66,12 +66,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                         .WithErrorCode(ValidationCodes.MUST_ADD_EVENT_OR_EVALUATOR);
                 });
 
-                When(r => r.Data.EventId.HasValue && r.Data.EvaluatorId.HasValue, () =>
-                {
-                    RuleFor(x => x.Data)
-                        .Must(x => !appDbContext.EventEvaluators.Any(e => e.EventId == x.EventId))
-                        .WithErrorCode(ValidationCodes.EXISTENT_EVALUATOR_IN_EVENT);
-                });
+                //When(r => r.Data.EventId.HasValue && r.Data.EvaluatorId.HasValue, () =>
+                //{
+                //    RuleFor(x => x.Data)
+                //        .Must(x => !appDbContext.EventEvaluators.Any(e => e.EventId == x.EventId))
+                //        .WithErrorCode(ValidationCodes.EXISTENT_EVALUATOR_IN_EVENT);
+                //});
 
                 When(r => r.Data.LocationId.HasValue, () =>
                 {

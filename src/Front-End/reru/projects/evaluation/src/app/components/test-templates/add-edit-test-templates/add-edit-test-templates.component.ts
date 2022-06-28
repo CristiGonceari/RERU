@@ -72,9 +72,10 @@ export class AddEditTestTemplateComponent implements OnInit {
 	getTestTemplate(){
 		this.testTemplateService.getTestTemplate( this.testId ).subscribe(res => {
 			if (res && res.data) {
-				if(res.data.mode == 1) {
-					this.addSetting(this.testId)
-				};
+				if(res.data.mode == 1) 
+					this.addPollSetting(this.testId);
+				else if(res.data.mode == 2)
+					this.addEvaluationSetting(this.testId);
 			}
 		})
 	}
@@ -171,7 +172,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 		this.location.back();
 	}
 
-	addSetting(testTemplateId){
+	addPollSetting(testTemplateId){
 		let data = {
 			testTemplateId: testTemplateId,
 			startWithoutConfirmation: true,
@@ -180,6 +181,29 @@ export class AddEditTestTemplateComponent implements OnInit {
 			possibleGetToSkipped: false,
 			possibleChangeAnswer: false,
 			canViewResultWithoutVerification: false,
+			canViewPollProgress: false,
+			hidePagination: false,
+			showManyQuestionPerPage: false,
+			questionsCountPerPage: null,
+			maxErrors: null,
+			formulaForOneAnswer: null,
+			negativeScoreForOneAnswer: null,
+			formulaForMultipleAnswers: null,
+			negativeScoreForMultipleAnswers: null
+		}
+
+		this.testTemplateService.addEditTestTemplateSettings({data: data}).subscribe();
+	}
+
+	addEvaluationSetting(testTemplateId){
+		let data = {
+			testTemplateId: testTemplateId,
+			startWithoutConfirmation: true,
+			startBeforeProgrammation: true,
+			startAfterProgrammation: true,
+			possibleGetToSkipped: true,
+			possibleChangeAnswer: true,
+			canViewResultWithoutVerification: true,
 			canViewPollProgress: false,
 			hidePagination: false,
 			showManyQuestionPerPage: false,

@@ -3726,6 +3726,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 1,
                             Name = "Poll"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Evaluation"
                         });
                 });
 
