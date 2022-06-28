@@ -16,13 +16,11 @@ using Microsoft.EntityFrameworkCore;
 namespace CODWER.RERU.Core.Application.Users.DeactivateUser {
     class DeactivateUserCommandHandler : BaseHandler, IRequestHandler<DeactivateUserCommand, Unit> 
     {
-        private readonly UserManager<ERPIdentityUser> _userManager;
         private readonly INotificationService _notificationService;
 
-        public DeactivateUserCommandHandler (ICommonServiceProvider commonServicepProvider, UserManager<ERPIdentityUser> userManager, INotificationService notificationService) 
-            : base (commonServicepProvider)
+        public DeactivateUserCommandHandler (ICommonServiceProvider commonServiceProvider, INotificationService notificationService) 
+            : base (commonServiceProvider)
         {
-            _userManager = userManager;
             _notificationService = notificationService;
         }
 

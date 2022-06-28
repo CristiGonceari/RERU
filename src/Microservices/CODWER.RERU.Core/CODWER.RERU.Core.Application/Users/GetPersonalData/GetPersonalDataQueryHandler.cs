@@ -13,16 +13,13 @@ using Microsoft.EntityFrameworkCore;
 namespace CODWER.RERU.Core.Application.Users.GetPersonalData {
     public class GetPersonalDataQueryHandler : BaseHandler, IRequestHandler<GetPersonalDataQuery, UserPersonalDataDto> 
     {
-        private readonly UserManager<ERPIdentityUser> _userManager;
         private readonly ICurrentApplicationUserProvider _userProvider;
 
-        public GetPersonalDataQueryHandler (ICommonServiceProvider commonServiceProvider,
-            ICurrentApplicationUserProvider userProvider,
-            UserManager<ERPIdentityUser> userManager) : base (commonServiceProvider) 
+        public GetPersonalDataQueryHandler (ICommonServiceProvider commonServiceProvider, ICurrentApplicationUserProvider userProvider) : base (commonServiceProvider) 
         {
-            _userManager = userManager;
             _userProvider = userProvider;
         }
+
         public async Task<UserPersonalDataDto> Handle (GetPersonalDataQuery request, CancellationToken cancellationToken) 
         {
             var currentUser = await _userProvider.Get ();

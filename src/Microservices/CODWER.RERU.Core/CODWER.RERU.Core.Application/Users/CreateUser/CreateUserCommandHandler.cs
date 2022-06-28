@@ -1,13 +1,10 @@
 using System;
 using AutoMapper;
-using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
-using CVU.ERP.Module.Application.Clients;
-using CVU.ERP.Module.Application.Models.Internal;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using RERU.Data.Entities;
-using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Users.CreateUser
