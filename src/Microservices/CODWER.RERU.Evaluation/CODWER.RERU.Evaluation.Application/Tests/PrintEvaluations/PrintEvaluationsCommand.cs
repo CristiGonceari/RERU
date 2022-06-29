@@ -1,15 +1,12 @@
-﻿using CODWER.RERU.Evaluation.Application.Permissions;
+﻿using System;
 using CVU.ERP.Common.DataTransferObjects.Files;
-using CVU.ERP.Module.Application.Attributes;
 using CVU.ERP.Module.Application.TableExportServices;
 using MediatR;
-using System;
 using RERU.Data.Entities.Enums;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
+namespace CODWER.RERU.Evaluation.Application.Tests.PrintEvaluations
 {
-    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_TESTE)]
-    public class PrintTestsCommand : TableParameter, IRequest<FileDataDto>
+    public class PrintEvaluationsCommand : TableParameter, IRequest<FileDataDto>
     {
         public string TestTemplateName { get; set; }
         public string UserName { get; set; }
@@ -20,6 +17,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
         public string LocationKeyword { get; set; }
         public string EventName { get; set; }
         public string Idnp { get; set; }
+        public string EvaluatorIdnp { get; set; }
         public DateTime? ProgrammedTimeFrom { get; set; }
         public DateTime? ProgrammedTimeTo { get; set; }
     }

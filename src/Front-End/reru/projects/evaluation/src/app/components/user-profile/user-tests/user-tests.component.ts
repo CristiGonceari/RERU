@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-tests.component.scss']
 })
 export class UserTestsComponent{
-
   title: string;
 
   constructor() { }

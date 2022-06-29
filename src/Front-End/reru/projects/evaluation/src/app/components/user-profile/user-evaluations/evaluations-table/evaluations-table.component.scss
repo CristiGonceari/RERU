@@ -1,0 +1,15 @@
+.dropdown-toggle::after {
+    display:none;
+}
+
+tbody {
+	tr {
+		td {
+			vertical-align: middle !important;
+		}
+
+		button {
+			height: auto;
+		}
+	}
+}

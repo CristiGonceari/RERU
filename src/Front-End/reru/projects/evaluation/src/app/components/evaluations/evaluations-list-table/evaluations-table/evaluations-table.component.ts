@@ -254,20 +254,15 @@ export class EvaluationsTableComponent implements OnInit {
 		let headersHtml = document.getElementsByTagName('th');
 		let headersDto = [
       'testTemplateName', 
-      'userName', 
+      'userName',
+      'evaluatorName', 
       'eventName', 
       'locationNames', 
       'testStatus', 
-      'verificationProgress', 
-      'result', 
-      'accumulatedPercentage', 
-      'minPercent'
+      'result'
     ];
     
 		for (let i = 0; i < headersHtml.length - 1; i++) {
-      if(i == 2){
-        this.headersToPrint.push({ value: "idnp", label: "Idnp",isChecked: true})
-      }
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
     
@@ -279,10 +274,9 @@ export class EvaluationsTableComponent implements OnInit {
       resultStatus: this.filters.selectedResult || this.selectedResult,
       testTemplateName: this.filters.testName || this.testToSearch || '',
       locationKeyword: this.filters.testLocation || this.locationName || '',
-      idnp: this.filters.idnp ||this.idnp || '',
       eventName: this.filters.testEvent || this.eventName || '',
       userName: this.filters.userName || this.userName || '',
-      email: this.filters.userEmail || this.userEmail || '',
+      evaluatorName: this.filters.evaluatorName || '',
       programmedTimeFrom: this.searchFrom || null,
       programmedTimeTo: this.searchTo || null
 		};
@@ -313,7 +307,7 @@ export class EvaluationsTableComponent implements OnInit {
 	printTable(data): void {
 		this.downloadFile = true;
     
-		this.testService.print(data).subscribe(response => {
+		this.testService.printEvaluations(data).subscribe(response => {
 			if (response) {
 				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(2).slice(0, -2);
 				const blob = new Blob([response.body], { type: response.body.type });

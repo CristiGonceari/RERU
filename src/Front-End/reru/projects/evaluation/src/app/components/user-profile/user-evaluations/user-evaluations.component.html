@@ -1,0 +1,16 @@
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+	<div class="card card-custom mb-7 ml-5">
+		<div class="card-header flex-wrap border-0 py-5">
+			<div class="card-title font-weight-bolder" id="title">{{'evaluations.evaluations' | translate}}</div>
+			<div class="card-toolbar">
+				<app-confirm-button class="btn mr-3" (click)="evaluationsTable.getHeaders(getTitle())">
+					<i class="far fa-file-pdf text-white"></i>
+					{{'button.print' | translate}}
+				</app-confirm-button>
+			</div>
+		</div>
+		<div class="card-body">
+			<app-evaluations-table #evaluationsTable></app-evaluations-table>
+		</div>
+	</div>
+</div>

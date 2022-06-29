@@ -20,6 +20,10 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Application.Validation;
+using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
 using FileTypeEnum = CVU.ERP.StorageService.Entities.FileTypeEnum;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
@@ -33,18 +37,22 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
         private readonly IStorageFileService _storageFileService;
         private readonly ExcelPackage _excelPackage = new();
         private readonly ExcelWorksheet _excelWorksheet;
+        private readonly IInternalNotificationService _internalNotificationService;
+        private readonly ILoggerService<AddTestsCommandHandler> _loggerService;
 
         public AddTestsCommandHandler(
             IMediator mediator,
             AppDbContext appDbContext,
             INotificationService notificationService,
             IOptions<PlatformConfig> options,
-            IStorageFileService storageFileService)
+            IStorageFileService storageFileService, IInternalNotificationService internalNotificationService, ILoggerService<AddTestsCommandHandler> loggerService)
         {
             _mediator = mediator;
             _appDbContext = appDbContext;
             _notificationService = notificationService;
             _storageFileService = storageFileService;
+            _internalNotificationService = internalNotificationService;
+            _loggerService = loggerService;
             _platformConfig = options.Value;
             _excelWorksheet = _excelPackage.Workbook.Worksheets.Add("Sheet1");
 
@@ -97,6 +105,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
                     await SendEmailNotification(addCommand, null, testId);
 
+                    await LogAction(testId);
                 }
                 catch (Exception e)
                 {
@@ -113,6 +122,34 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             return testsIds;
         }
 
+        private async Task UpdateProcesses(int processId)
+        {
+            var process = _appDbContext.Processes.First(x => x.Id == processId);
+            process.Done++;
+
+            await _appDbContext.SaveChangesAsync();
+        }
+
+        private async Task GenerateExcelResult(int i, int userProfileId, bool result, string error, ExcelWorksheet workSheet)
+        {
+            var userProfile = _appDbContext.UserProfiles.FirstOrDefault(x => x.Id == userProfileId);
+
+            workSheet.Cells[i + 2, 1].Value = userProfile.GetFullName();
+            workSheet.Column(1).Width = 25;
+
+            workSheet.Cells[i + 2, 2].Value = userProfile?.Idnp;
+            workSheet.Column(2).Width = 25;
+
+            workSheet.Cells[i + 2, 3].Value = userProfile?.Email;
+            workSheet.Column(3).Width = 45;
+
+            workSheet.Cells[i + 2, 4].Value = result ? "Adaugat" : "Nereusit";
+            workSheet.Column(4).Width = 25;
+
+            workSheet.Cells[i + 2, 5].Value = error;
+            workSheet.Column(5).Width = 25;
+        }
+
         private async Task<Unit> SendEmailNotification(AddTestCommand testCommand, AddTestsCommand request, int testId)
         {
             var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
@@ -127,6 +164,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             {
                 user = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == testCommand.Data.UserProfileId);
                 template = template.Replace("{email_message}", await GetTableContent(test, true));
+
+                await _internalNotificationService.AddNotification(test.UserProfileId, NotificationMessages.YouHaveNewProgrammedTest);
             }
             else
             {
@@ -134,6 +173,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 {
                     user = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == request.EvaluatorId);
                     template = template.Replace("{email_message}", await GetTableContent(test, false));
+
+                    await _internalNotificationService.AddNotification((int)test.EvaluatorId, NotificationMessages.YouWereInvitedToTestAsEvaluator);
                 }
                 else
                 {
@@ -181,45 +222,15 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             return content;
         }
 
-        private async Task UpdateProcesses(int processId)
+        private async Task LogAction(int testId)
         {
-            var process = _appDbContext.Processes.First(x => x.Id == processId);
-            process.Done++;
+            var test = await _appDbContext.Tests
+                .Include(x => x.UserProfile)
+                .Include(x => x.Evaluator)
+                .Include(x => x.TestTemplate)
+                .FirstOrDefaultAsync(x => x.Id == testId);
 
-            await _appDbContext.SaveChangesAsync();
-        }
-
-        private async Task GenerateExcelResult(int i, int userProfileId, bool result, string error, ExcelWorksheet workSheet)
-        {
-            var userProfile = _appDbContext.UserProfiles.FirstOrDefault(x => x.Id == userProfileId);
-
-            workSheet.Cells[i + 2, 1].Value = userProfile.GetFullName();
-            workSheet.Column(1).Width = 25;
-
-            workSheet.Cells[i + 2, 2].Value = userProfile?.Idnp;
-            workSheet.Column(2).Width = 25;
-
-            workSheet.Cells[i + 2, 3].Value = userProfile?.Email;
-            workSheet.Column(3).Width = 45;
-
-            workSheet.Cells[i + 2, 4].Value = result ? "Adaugat" : "Nereusit";
-            workSheet.Column(4).Width = 25;
-
-            workSheet.Cells[i + 2, 5].Value = error;
-            workSheet.Column(5).Width = 25;
-        }
-
-        private async Task<FileDataDto> GetExcelFile(ExcelPackage package)
-        {
-            const string fileName = "AddTestResult.xlsx";
-            var streamBytesArray = package.GetAsByteArray();
-
-            return new FileDataDto
-            {
-                Content = streamBytesArray,
-                Name = fileName,
-                ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            };
+            await _loggerService.Log(LogData.AsEvaluation($"User {test.UserProfile.FirstName} {test.UserProfile.LastName} was assigned to test with {test.TestTemplate.Name} test template at {test.ProgrammedTime:dd/MM/yyyy HH:mm}"));
         }
 
         private async Task SaveExcelFile(int processId, ExcelPackage package)
@@ -234,6 +245,19 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             process.IsDone = true;
 
             await _appDbContext.SaveChangesAsync();
+        }
+
+        private async Task<FileDataDto> GetExcelFile(ExcelPackage package)
+        {
+            const string fileName = "AddTestResult.xlsx";
+            var streamBytesArray = package.GetAsByteArray();
+
+            return new FileDataDto
+            {
+                Content = streamBytesArray,
+                Name = fileName,
+                ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            };
         }
     }
 }

@@ -21,6 +21,8 @@ import { UserEvaluatedTestsComponent } from './user-evaluated-tests/user-evaluat
 import { UserEvaluatedTestsListComponent } from './user-evaluated-tests/user-evaluated-tests-list/user-evaluated-tests-list.component';
 import { UserSolicitedTestsComponent } from './user-solicited-tests/user-solicited-tests.component';
 import { UserSolicitedTestsTableComponent } from './user-solicited-tests/user-solicited-tests-table/user-solicited-tests-table.component';
+import { UserEvaluationsComponent } from './user-evaluations/user-evaluations.component';
+import { EvaluationsTableComponent } from './user-evaluations/evaluations-table/evaluations-table.component';
 
 
 @NgModule({
@@ -37,6 +39,8 @@ import { UserSolicitedTestsTableComponent } from './user-solicited-tests/user-so
     UserEvaluatedTestsListComponent,
     UserSolicitedTestsComponent,
     UserSolicitedTestsTableComponent,
+    UserEvaluationsComponent,
+    EvaluationsTableComponent,
   ],
   imports: [
     CommonModule,

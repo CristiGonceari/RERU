@@ -73,7 +73,7 @@ export class PollsByEventComponent implements OnInit {
 		let headersHtml = pollsTable.getElementsByTagName('th');
 		let headersDto = ['testTemplateName', 'testStatus', 'votedTime','startTime', 'endTime'];
 		for (let i=0; i<headersHtml.length; i++) {
-			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
 		let printData = {
 			tableName: name,

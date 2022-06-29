@@ -9,32 +9,32 @@ using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTests
+namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluations
 {
-    public class GetUserTestsQueryHandler : IRequestHandler<GetUserTestsQuery, PaginatedModel<TestDto>>
+    public class GetUserEvaluationsQueryHandler : IRequestHandler<GetUserEvaluationsQuery, PaginatedModel<TestDto>>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
 
-        public GetUserTestsQueryHandler(AppDbContext appDbContext, IPaginationService paginationService)
+        public GetUserEvaluationsQueryHandler(AppDbContext appDbContext, IPaginationService paginationService)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
         }
 
-        public async Task<PaginatedModel<TestDto>> Handle(GetUserTestsQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedModel<TestDto>> Handle(GetUserEvaluationsQuery request, CancellationToken cancellationToken)
         {
-            var userTests = _appDbContext.Tests
+            var evaluations = _appDbContext.Tests
                 .Include(t => t.TestTemplate)
                 .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
                 .Include(t => t.Event)
-                .Where(t => t.UserProfileId == request.UserId && t.Event == null && t.TestTemplate.Mode == TestTemplateModeEnum.Test)
+                .Where(t => t.EvaluatorId == request.UserId && t.TestTemplate.Mode == TestTemplateModeEnum.Evaluation)
                 .OrderByDescending(x => x.ProgrammedTime)
                 .AsQueryable();
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(userTests, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(evaluations, request);
 
             return paginatedModel;
         }

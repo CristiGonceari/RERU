@@ -72,7 +72,7 @@ export class TestsTableComponent implements OnInit {
 		let headersHtml = testTable.getElementsByTagName('th');
 		let headersDto = ['programmedTime', 'testStatus', 'testTemplateName', 'accumulatedPercentage', 'result'];
 		for (let i=0; i<headersHtml.length; i++) {
-			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
 		let printData = {
 			tableName: name,
