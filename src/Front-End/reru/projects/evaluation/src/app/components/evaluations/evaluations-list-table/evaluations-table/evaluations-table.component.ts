@@ -113,7 +113,6 @@ export class EvaluationsTableComponent implements OnInit {
       mode: TestTemplateModeEnum.Evaluation,
       testTemplateName: this.filters.testName || this.testToSearch || '',
       locationKeyword: this.filters.testLocation || this.locationName || '',
-      idnp: this.filters.idnp ||this.idnp || '',
       eventName: this.filters.testEvent || this.eventName || '',
       userName: this.filters.userName || this.userName || '',
       evaluatorName: this.filters.evaluatorName || '',
@@ -127,7 +126,7 @@ export class EvaluationsTableComponent implements OnInit {
       ...this.filters
     }
 
-    this.testService.getTests(params).subscribe(res => {
+    this.testService.getEvaluations(params).subscribe(res => {
       if (res && res.data) {
         this.testTemplate = res.data.items;
         this.verificationProgress = res.data.items.map(el => el.verificationProgress);
@@ -141,44 +140,6 @@ export class EvaluationsTableComponent implements OnInit {
         }
       }
     });
-  }
-
-  ChangeSortOrder(newSortOrder) {
-    this.selectedSortOrder = newSortOrder;
-    this.setTimeToSearch();
-
-    if (newSortOrder === "None") {
-      this.searchFrom = ""; this.searchTo = "";
-      this.dateTimeFrom = ""; this.dateTimeTo = "";
-    } else if (newSortOrder === "Today")
-      this.today();
-    else if (newSortOrder === "This week")
-      this.thisWeek();
-    else if (newSortOrder === "This month")
-      this.thisMonth();
-    this.getTests();
-  }
-
-  today() {
-    this.setTimeToSearch();
-
-    this.dateTimeFrom = this.datePipe.transform(new Date(new Date().setHours(0, 0)), "MM/dd/yyyy,  hh:mm a");
-    this.dateTimeTo = this.datePipe.transform(new Date(new Date().setHours(23, 59)), "MM/dd/yyyy,  hh:mm a");
-  }
-
-  thisWeek() {
-    this.setTimeToSearch();
-    let first = new Date().getDate() - new Date().getDay() + 1;
-
-    this.dateTimeFrom = this.datePipe.transform(new Date(new Date().setDate(first)).toUTCString(), "MM/dd/yyyy");
-    this.dateTimeTo = this.datePipe.transform(new Date(new Date().setDate(first + 6)).toUTCString(), "MM/dd/yyyy");
-  }
-
-  thisMonth() {
-    this.setTimeToSearch();
-
-    this.dateTimeFrom = this.datePipe.transform(new Date(new Date().getFullYear(), new Date().getMonth(), 1), "MM/dd/yyyy");
-    this.dateTimeTo = this.datePipe.transform(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0), "MM/dd/yyyy");
   }
 
   getTestStatuses() {

@@ -45,16 +45,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
             var tests = GetAndFilterTests.Filter(_appDbContext, filterData, currentUser);
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(tests, request);
+            tests = tests.Where(x => x.TestTemplate.Mode == TestTemplateModeEnum.Poll || x.TestTemplate.Mode == TestTemplateModeEnum.Test);
 
-            if (request.Mode == TestTemplateModeEnum.Evaluation)
-            {
-                paginatedModel.Items = paginatedModel.Items.Where(x => x.ModeStatus == request.Mode);
-            }
-            else
-            {
-                paginatedModel.Items = paginatedModel.Items.Where(x => x.ModeStatus != TestTemplateModeEnum.Evaluation);
-            }
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(tests, request);
 
             foreach (var testDto in paginatedModel.Items)
             {

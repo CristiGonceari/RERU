@@ -1,15 +1,12 @@
-﻿using CODWER.RERU.Evaluation.Application.Permissions;
+﻿using System;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Common.Pagination;
-using CVU.ERP.Module.Application.Attributes;
 using MediatR;
-using System;
 using RERU.Data.Entities.Enums;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
+namespace CODWER.RERU.Evaluation.Application.Tests.GetEvaluations
 {
-    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_TESTE)]
-    public class GetTestsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<TestDto>>
+    public class GetEvaluationsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<TestDto>>
     {
         public string TestTemplateName { get; set; }
         public string UserName { get; set; }
@@ -19,7 +16,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
         public TestResultStatusEnum? ResultStatus { get; set; }
         public string LocationKeyword { get; set; }
         public string EventName { get; set; }
-        public string Idnp { get; set; }
         public DateTime? ProgrammedTimeFrom { get; set; }
         public DateTime? ProgrammedTimeTo { get; set; }
     }

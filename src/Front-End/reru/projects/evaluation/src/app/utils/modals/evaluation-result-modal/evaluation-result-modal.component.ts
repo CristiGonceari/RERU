@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TestResultStatusEnum } from '../../enums/test-result-status.enum';
 import { TestService } from '../../services/test/test.service';
@@ -11,7 +12,7 @@ import { TestService } from '../../services/test/test.service';
 export class EvaluationResultModalComponent implements OnInit {
   testId;
   enum = TestResultStatusEnum;
-  constructor(private activeModal: NgbActiveModal, private testService: TestService) { }
+  constructor(private activeModal: NgbActiveModal, private testService: TestService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -25,6 +26,10 @@ export class EvaluationResultModalComponent implements OnInit {
       testId: this.testId,
       resultStatus: status
     }
-    this.testService.setResult(data).subscribe(() => this.close());
+    this.testService.setResult(data).subscribe(() => {this.close(); this.finalizeTest()});
+  }
+
+  finalizeTest() {
+    this.testService.finalizeEvaluation(this.testId).subscribe(() => this.router.navigate(['my-activities/my-evaluations']));
   }
 }

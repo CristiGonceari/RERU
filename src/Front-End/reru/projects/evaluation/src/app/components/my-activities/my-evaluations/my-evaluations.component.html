@@ -16,6 +16,7 @@
                         <tr>
                             <th scope="col">{{'dashboard.test' | translate}}</th>
                             <th scope="col">{{'verify-test.student' | translate}}</th>
+                            <th scope="col">{{'events.event' | translate}}</th>
                             <th scope="col">{{'dashboard.status' | translate}}</th>
                             <th scope="col">{{'dashboard.result' | translate}}</th>
                             <th scope="col" style="width: 150px"></th>
@@ -31,6 +32,10 @@
                                     <br>
                                     <span class="text-dark-50 font-size-lg font-weight-light">{{ test.idnp }}</span>
                                 </p>
+                            </td>
+                            <td>
+                                <span class="font-size-lg" *ngIf="test.eventName">{{ test.eventName }}</span>
+                                <span class="font-size-lg" *ngIf="!test.eventName">-</span>
                             </td>
                             <td>
                                 <div class="font-size-sm">

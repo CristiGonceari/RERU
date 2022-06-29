@@ -29,9 +29,7 @@
                 </div>
                 <div class="card-body">
                     <div class="data-container">
-                        <span *ngIf="questionType == enum.HashedAnswer" class="font-size-lg">{{'verify-test.your-answer'
-                            |
-                            translate}}:</span>
+                        <span *ngIf="questionType == enum.HashedAnswer" class="font-size-lg">{{'verify-test.your-answer' | translate}}:</span>
                         <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'"
                             [width]="'3rem'" [colorClass]="'text-primary'">
                         </app-loading-spinner>
@@ -55,7 +53,7 @@
                                 <label class="px-4 checkbox checkbox-lg checkbox-inline" style="pointer-events: none;">
                                     <input type="checkbox" value="{{ item.id }}" name="option"
                                         [checked]="item.isSelected" />
-                                    <span [class.bg-success]="item.isSelected && item.isCorrect"></span>
+                                    <span [class.bg-success]="item.isSelected"></span>
                                 </label>
                                 {{ item.answer }}
                                 <div class="form-group row align-items-center">
