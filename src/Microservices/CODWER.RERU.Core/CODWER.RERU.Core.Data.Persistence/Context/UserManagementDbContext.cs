@@ -30,6 +30,9 @@ namespace CODWER.RERU.Core.Data.Persistence.Context
             base.OnModelCreating(modelBuilder);
         }
 
+        ///<summary>
+        ///Get new instance of UserManagementDbContext for thread safe using
+        ///</summary>
         public static UserManagementDbContext NewInstance(IConfiguration configuration) => new(new DbContextOptionsBuilder<UserManagementDbContext>()
             .UseNpgsql(configuration.GetConnectionString(ConnectionString.Identity))
             .Options);

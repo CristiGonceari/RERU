@@ -28,6 +28,9 @@ namespace CVU.ERP.Logging.Context
             base.OnModelCreating(modelBuilder);
         }
 
+        ///<summary>
+        ///Get new instance of LoggingDbContext for thread safe using
+        ///</summary>
         public static LoggingDbContext NewInstance(IConfiguration configuration) => new(new DbContextOptionsBuilder<LoggingDbContext>()
             .UseNpgsql(configuration.GetConnectionString(ConnectionString.Logging))
             .Options);

@@ -29,6 +29,9 @@ namespace CVU.ERP.StorageService.Context
             base.OnModelCreating(modelBuilder);
         }
 
+        ///<summary>
+        ///Get new instance of StorageDbContext for thread safe using
+        ///</summary>
         public static StorageDbContext NewInstance(IConfiguration configuration) => new(new DbContextOptionsBuilder<StorageDbContext>()
             .UseNpgsql(configuration.GetConnectionString(ConnectionString.Storage))
             .Options);
