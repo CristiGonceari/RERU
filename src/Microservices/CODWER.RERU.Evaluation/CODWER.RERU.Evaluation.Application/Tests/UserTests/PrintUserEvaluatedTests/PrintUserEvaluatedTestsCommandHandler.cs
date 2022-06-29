@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserEvaluatedTests
@@ -28,8 +29,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserEvaluatedT
                 .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Event)
-                .Where(t => t.EvaluatorId == request.UserId ||
-                            _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == request.UserId))
+                .Where(t => (t.EvaluatorId == request.UserId ||
+                             _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == request.UserId)) && 
+                            t.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .AsQueryable();
 
             var result = _printer.ExportTableSpecificFormat(new TableData<Test>

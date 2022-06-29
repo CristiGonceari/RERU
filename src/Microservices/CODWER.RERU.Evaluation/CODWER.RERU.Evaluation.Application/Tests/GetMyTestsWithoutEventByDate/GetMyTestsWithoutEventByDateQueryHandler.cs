@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEventByDate
@@ -35,7 +36,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEventByDate
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
                 .Include(t => t.Event)
-                .Where(t => t.UserProfileId == myUserProfile.Id && t.Event == null && t.ProgrammedTime.Date == request.Date.Date )
+                .Where(t => t.UserProfileId == myUserProfile.Id && t.Event == null && t.ProgrammedTime.Date == request.Date.Date && t.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .OrderByDescending(x => x.ProgrammedTime)
                 .AsQueryable();
 

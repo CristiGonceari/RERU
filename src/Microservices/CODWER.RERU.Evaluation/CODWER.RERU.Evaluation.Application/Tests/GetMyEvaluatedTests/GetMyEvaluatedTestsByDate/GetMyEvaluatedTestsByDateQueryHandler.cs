@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.GetMyEvaluatedTestsByDate
@@ -32,8 +33,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.GetMyEval
                 .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Event)
-                .Where(t => t.EvaluatorId == currentUser.Id ||
-                            _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == currentUser.Id))
+                .Where(t => (t.EvaluatorId == currentUser.Id ||
+                                    _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == currentUser.Id)) && 
+                                  t.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .Where(t => t.ProgrammedTime.Date == request.Date.Date)
                 .AsQueryable();
 

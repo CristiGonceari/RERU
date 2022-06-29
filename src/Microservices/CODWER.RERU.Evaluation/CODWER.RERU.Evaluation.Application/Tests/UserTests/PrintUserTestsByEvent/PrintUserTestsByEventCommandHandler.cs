@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTestsByEvent
@@ -30,7 +31,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTestsByEve
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
                 .Include(t => t.Event)
-                .Where(t => t.UserProfileId == request.UserId && t.Event.Id == request.EventId)
+                .Where(t => t.UserProfileId == request.UserId && t.Event.Id == request.EventId && t.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .OrderByDescending(x => x.ProgrammedTime)
                 .AsQueryable();
 

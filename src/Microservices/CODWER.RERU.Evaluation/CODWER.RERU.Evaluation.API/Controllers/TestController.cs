@@ -43,8 +43,11 @@ using CODWER.RERU.Evaluation.Application.Tests.AddEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.FinalizeEvaluation;
 using CODWER.RERU.Evaluation.Application.Tests.GetEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluations;
+using CODWER.RERU.Evaluation.Application.Tests.PrintEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.SetTestResult;
 using CODWER.RERU.Evaluation.Application.Tests.StartEvaluation;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluations;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserEvaluations;
 using CVU.ERP.Module.Application.ImportProcesses;
 using CVU.ERP.Module.Application.ImportProcesses.GetImportProcess;
 using CVU.ERP.Module.Application.ImportProcesses.GetImportResult;
@@ -254,6 +257,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
+        [HttpGet("user-evaluations")]
+        public async Task<PaginatedModel<TestDto>> GetUserEvaluations([FromQuery] GetUserEvaluationsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
         [HttpGet("user-tests-by-event")]
         public async Task<PaginatedModel<TestDto>> GetUserTestsByEvent([FromQuery] GetUserTestsByEventQuery query)
         {
@@ -294,9 +303,31 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return File(result.Content, result.ContentType, result.Name);
         }
 
+        [HttpPut("print-evaluations")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintEvaluationsPdf([FromBody] PrintEvaluationsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
         [HttpPut("print-user-tests")]
         [IgnoreResponseWrap]
         public async Task<IActionResult> PrintUserTestsPdf([FromBody] PrintUserTestsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-user-evaluations")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintUserEvaluationsPdf([FromBody] PrintUserEvaluationsCommand command)
         {
             var result = await Mediator.Send(command);
 

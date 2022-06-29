@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.CountMyEvaluatedTests
@@ -29,8 +30,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.CountMyEv
                 .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Event)
-                .Where(t => t.EvaluatorId == myUserProfile.Id ||
-                            _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == myUserProfile.Id))
+                .Where(t => (t.EvaluatorId == myUserProfile.Id || 
+                             _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == myUserProfile.Id)) && 
+                            t.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .AsQueryable();
 
             var dates = new List<TestCount>();
