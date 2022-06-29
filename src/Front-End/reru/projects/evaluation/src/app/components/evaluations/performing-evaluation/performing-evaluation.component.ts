@@ -264,12 +264,6 @@ export class PerformingEvaluationComponent implements OnInit {
                   });
               });
           this.ngDoBoostrap();
-        },
-        (error) => {
-          error.error.messages.some(x => {
-            if (x.code === '03020604')
-              this.finalizeTest();
-          })
         }
       )
   }
@@ -277,14 +271,5 @@ export class PerformingEvaluationComponent implements OnInit {
   submitTest() {
     const modalRef = this.modalService.open(EvaluationResultModalComponent, { centered: true, size: 'lg' });
     modalRef.componentInstance.testId = this.testId;
-    modalRef.result.then(
-      () => {
-        this.finalizeTest();
-      }
-    );
-  }
-
-  finalizeTest() {
-    this.testService.finalizeEvaluation(this.testId).subscribe(() => this.router.navigate(['my-activities/my-evaluations']));
   }
 }

@@ -41,6 +41,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Tests.AddEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.FinalizeEvaluation;
+using CODWER.RERU.Evaluation.Application.Tests.GetEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.SetTestResult;
 using CODWER.RERU.Evaluation.Application.Tests.StartEvaluation;
@@ -78,6 +79,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpGet]
         public async Task<PaginatedModel<TestDto>> GetTests([FromQuery] GetTestsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("get-evaluations")]
+        public async Task<PaginatedModel<TestDto>> GetEvaluations([FromQuery] GetEvaluationsQuery query)
         {
             return await Mediator.Send(query);
         }

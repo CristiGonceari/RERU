@@ -103,6 +103,10 @@ export class TestService extends AbstractService {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
 	}
 
+	getEvaluations(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/get-evaluations`, { params });
+	}
+
 	changeStatus(data): Observable<any> {
 		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/edit-status`, data);
 	}
