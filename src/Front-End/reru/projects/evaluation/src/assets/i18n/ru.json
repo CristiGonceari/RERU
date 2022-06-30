@@ -969,6 +969,9 @@
     "run-evaluation": "Запустить оценку",
     "start-evaluation": "Начать оценку",
     "view-evaluation": "Посмотреть оценку",
-    "evaluation-data": "Введите детали оценки и подтвердите"
+    "evaluation-data": "Введите детали оценки и подтвердите",
+    "received-evaluations": "Полученные оценки",
+    "granted-evaluations": "Выставленные оценки",
+    "performed-tests": "Проведенные тесты"
   }
 }

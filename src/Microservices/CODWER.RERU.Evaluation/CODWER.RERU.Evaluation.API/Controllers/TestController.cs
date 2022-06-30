@@ -47,7 +47,9 @@ using CODWER.RERU.Evaluation.Application.Tests.PrintEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.SetTestResult;
 using CODWER.RERU.Evaluation.Application.Tests.StartEvaluation;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluations;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserReceivedEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserEvaluations;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserReceivedEvaluations;
 using CVU.ERP.Module.Application.ImportProcesses;
 using CVU.ERP.Module.Application.ImportProcesses.GetImportProcess;
 using CVU.ERP.Module.Application.ImportProcesses.GetImportResult;
@@ -263,6 +265,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
+        [HttpGet("user-received-evaluations")]
+        public async Task<PaginatedModel<TestDto>> GetUserPersonalEvaluations([FromQuery] GetUserReceivedEvaluationsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
         [HttpGet("user-tests-by-event")]
         public async Task<PaginatedModel<TestDto>> GetUserTestsByEvent([FromQuery] GetUserTestsByEventQuery query)
         {
@@ -328,6 +336,17 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         [HttpPut("print-user-evaluations")]
         [IgnoreResponseWrap]
         public async Task<IActionResult> PrintUserEvaluationsPdf([FromBody] PrintUserEvaluationsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-user-received-evaluations")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintUserPersonalEvaluationsPdf([FromBody] PrintUserReceivedEvaluationsCommand command)
         {
             var result = await Mediator.Send(command);
 

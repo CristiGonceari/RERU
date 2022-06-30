@@ -11,11 +11,11 @@ import { forkJoin } from 'rxjs';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 
 @Component({
-  selector: 'app-evaluations-table',
-  templateUrl: './evaluations-table.component.html',
-  styleUrls: ['./evaluations-table.component.scss']
+  selector: 'app-received-table',
+  templateUrl: './received-table.component.html',
+  styleUrls: ['./received-table.component.scss']
 })
-export class EvaluationsTableComponent implements OnInit {
+export class ReceivedTableComponent implements OnInit {
   testRowList: [] = [];
   pagedSummary: PaginationModel = new PaginationModel();
   userId: number;
@@ -55,7 +55,7 @@ export class EvaluationsTableComponent implements OnInit {
       itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
     }
 
-    this.testService.getUsersEvaluations(params).subscribe(
+    this.testService.getUsersEvaluatedEvaluations(params).subscribe(
       res => {
         if (res && res.data) {
           this.testRowList = res.data.items;
@@ -71,7 +71,7 @@ export class EvaluationsTableComponent implements OnInit {
 		let headersHtml = document.getElementsByTagName('th');
 		let headersDto = [
       'testTemplateName', 
-      'userName',
+      'evaluatorName',
       'eventName', 
       'testStatus', 
       'result'
@@ -79,17 +79,17 @@ export class EvaluationsTableComponent implements OnInit {
     
 		for (let i = 0; i < headersHtml.length; i++) {
       if(i == 2){
-        this.headersToPrint.push({ value: "idnp", label: "Idnp",isChecked: true})
+        this.headersToPrint.push({ value: "evaluatorIdnp", label: "Idnp",isChecked: true})
       }
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
 
     console.log(this.headersToPrint)
 		let printData = {
+      userId: this.userId,
 			tableName: name,
 			fields: this.headersToPrint,
 			orientation: 2,
-			userId: this.userId
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.tableData = printData;
@@ -118,7 +118,7 @@ export class EvaluationsTableComponent implements OnInit {
   printTable(data): void {
     this.downloadFile = true;
 
-    this.testService.printUserEvaluations(data).subscribe(response => {
+    this.testService.printUserEvaluatedEvaluations(data).subscribe(response => {
       if (response) {
         const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(2).slice(0, -2);
         const blob = new Blob([response.body], { type: response.body.type });

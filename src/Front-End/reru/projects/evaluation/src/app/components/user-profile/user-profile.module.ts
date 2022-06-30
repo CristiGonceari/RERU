@@ -7,7 +7,6 @@ import { SharedModule, SvgModule } from '@erp/shared';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { UtilsModule } from '../../utils/utils.module';
-
 import { UserProfileRoutingModule } from './user-profile-routing.module';
 import { UserProfileComponent } from './user-profile.component';
 import { UserTestsComponent } from './user-tests/user-tests.component';
@@ -23,6 +22,8 @@ import { UserSolicitedTestsComponent } from './user-solicited-tests/user-solicit
 import { UserSolicitedTestsTableComponent } from './user-solicited-tests/user-solicited-tests-table/user-solicited-tests-table.component';
 import { UserEvaluationsComponent } from './user-evaluations/user-evaluations.component';
 import { EvaluationsTableComponent } from './user-evaluations/evaluations-table/evaluations-table.component';
+import { UserReceivedEvaluationsComponent } from './user-received-evaluations/user-received-evaluations.component';
+import { ReceivedTableComponent } from './user-received-evaluations/received-table/received-table.component';
 
 
 @NgModule({
@@ -41,6 +42,8 @@ import { EvaluationsTableComponent } from './user-evaluations/evaluations-table/
     UserSolicitedTestsTableComponent,
     UserEvaluationsComponent,
     EvaluationsTableComponent,
+    UserReceivedEvaluationsComponent,
+    ReceivedTableComponent,
   ],
   imports: [
     CommonModule,
