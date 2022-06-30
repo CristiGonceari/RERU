@@ -86,7 +86,7 @@
                         </td>
                         <td >
                             <button *ngIf="test.testStatus === enum.Terminated"
-                                [routerLink]="['../../tests/verify-test', item.id]" class="btn btn-light-success">
+                                [routerLink]="['../../tests/verify-test', test.id]" class="btn btn-light-success">
                                 {{ 'button.verify' | translate }}
                             </button>
                             <button
