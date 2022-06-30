@@ -969,6 +969,9 @@
     "run-evaluation": "Run evaluation",
     "start-evaluation": "Start evaluation",
     "view-evaluation": "View evaluation",
-    "evaluation-data": "Enter the evaluation details and confirm"
+    "evaluation-data": "Enter the evaluation details and confirm",
+    "received-evaluations": "Received evaluations",
+    "granted-evaluations": "Granted evaluations",
+    "performed-tests": "Performed tests"
   }
 }

@@ -146,6 +146,10 @@ export class TestService extends AbstractService {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-evaluations`, { params });
 	}
 
+	getUsersEvaluatedEvaluations(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-received-evaluations`, { params });
+	}
+
 	getUsersTestsByEvent(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-tests-by-event`, { params });
 	}
@@ -190,6 +194,13 @@ export class TestService extends AbstractService {
 
 	printUserEvaluations(data): Observable<any> {
 		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-user-evaluations`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
+	printUserEvaluatedEvaluations(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-user-received-evaluations`, data, {
 			responseType: 'blob',
 			observe: 'response',
 		});

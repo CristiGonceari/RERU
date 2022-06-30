@@ -971,6 +971,9 @@
     "run-evaluation": "Rulați evaluarea",
     "start-evaluation": "Începeți evaluarea",
     "view-evaluation": "Vizualizarea evaluării",
-    "evaluation-data": "Introduceți detaliile evaluării și confirmați"
+    "evaluation-data": "Introduceți detaliile evaluării și confirmați",
+    "received-evaluations": "Evaluări primite",
+    "granted-evaluations": "Evaluări acordate",
+    "performed-tests": "Teste efectuate"
   }
 }
