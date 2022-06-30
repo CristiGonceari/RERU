@@ -41,14 +41,27 @@
                     <span class="font-size-lg" *ngIf="item.locationNames">{{ item.locationNames }}</span>
                     <span class="font-size-lg" *ngIf="!item.locationNames.length">-</span>
                 </td>
-                <td>{{'statuses.' + status[item.testStatus] | translate}}</td>
                 <td>
-                    <p class="font-size-lg cursor-pointer text-hover-primary" *ngIf="item.testStatus === status.Verified" [routerLink]="['../my-activities/test-result', item.id]">{{ item.verificationProgress }}</p>
-                    <p class="font-size-lg cursor-pointer text-hover-primary" *ngIf="item.testStatus != status.Verified" style="text-decoration: none;">{{ item.verificationProgress }}</p>
+                    <p *ngIf="item.modeStatus == 0">{{'statuses.' + status[item.testStatus] | translate}}</p>
+                    <p *ngIf="item.modeStatus == 1 && (item.testStatus === status.Verified || item.testStatus === status.Terminated)">{{'statuses.Voted' | translate}}</p>
                 </td>
-                <td>{{'verify-test.' + result[item.result] | translate}}</td>
-                <td style="text-align: center;">{{ item.accumulatedPercentage }}</td>
-                <td style="text-align: center;">{{ item.minPercent }}</td>
+                <td>
+                    <p class="font-size-lg cursor-pointer text-hover-primary" *ngIf="item.testStatus === status.Verified && item.modeStatus == 0" [routerLink]="['../my-activities/test-result', item.id]">{{ item.verificationProgress }}</p>
+                    <p class="font-size-lg cursor-pointer text-hover-primary" *ngIf="item.testStatus != status.Verified && item.modeStatus == 0" style="text-decoration: none;">{{ item.verificationProgress }}</p>
+                    <p *ngIf="item.modeStatus == 1">-</p>
+                </td>
+                <td>
+                    <p *ngIf="item.modeStatus == 0">{{'verify-test.' + result[item.result] | translate}}</p>
+                    <p *ngIf="item.modeStatus == 1">-</p>
+                </td>
+                <td style="text-align: center;">
+                    <p *ngIf="item.modeStatus == 0">{{ item.accumulatedPercentage }}</p>
+                    <p *ngIf="item.modeStatus == 1">-</p>
+                </td>
+                <td style="text-align: center;">
+                    <span *ngIf="item.modeStatus == 0">{{ item.minPercent }}</span>
+                    <p *ngIf="item.modeStatus == 1">-</p>
+                </td>
                 <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
                     <div style="overflow: visible; position: relative; width: 0px">
                         <div ngbDropdown class="dropdown dropdown-inline">
