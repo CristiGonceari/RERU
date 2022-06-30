@@ -126,6 +126,9 @@ namespace RERU.Data.Persistence.Context
                     .SetDeleteBehavior(DeleteBehavior.Restrict));
         }
 
+        ///<summary>
+        ///Get new instance of AppDbContext for thread safe using
+        ///</summary>
         public static AppDbContext NewInstance(IConfiguration configuration) => new(new DbContextOptionsBuilder<AppDbContext>()
             .UseNpgsql(configuration.GetConnectionString(ConnectionString.Common))
             .Options);

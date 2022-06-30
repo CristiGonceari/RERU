@@ -26,6 +26,9 @@ namespace CVU.ERP.Identity.Context
             base.OnModelCreating(modelBuilder);
         }
 
+        ///<summary>
+        ///Get new instance of IdentityDbContext for thread safe using
+        ///</summary>
         public static IdentityDbContext NewInstance(IConfiguration configuration) => new(new DbContextOptionsBuilder<IdentityDbContext>()
             .UseNpgsql(configuration.GetConnectionString(ConnectionString.Identity))
             .Options);

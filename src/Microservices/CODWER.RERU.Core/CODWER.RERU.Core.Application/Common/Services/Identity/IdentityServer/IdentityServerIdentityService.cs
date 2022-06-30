@@ -14,11 +14,9 @@ using CVU.ERP.Notifications.Services;
 using CVU.ERP.Notifications.Enums;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RERU.Data.Entities;
-using IdentityDbContext = CVU.ERP.Identity.Context.IdentityDbContext;
 
 namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 {
@@ -29,7 +27,6 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
         private readonly IPasswordGenerator _passwordGenerator;
         private readonly IConfiguration _configuration;
 
-
         private readonly IOptions<IdentityOptions> _optionsAccessor;
         private readonly IPasswordHasher<ERPIdentityUser> _passwordHasher;
         private readonly IEnumerable<IUserValidator<ERPIdentityUser>> _userValidators;
@@ -38,7 +35,6 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
         private readonly IdentityErrorDescriber _errors;
         private readonly IServiceProvider _services;
         private readonly ILogger<UserManager<ERPIdentityUser>> _logger;
-
 
         public string Type => "local";
 
@@ -85,7 +81,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
             if (response.Succeeded)
             {
                 // TODO: asta trebuie de mutat in notification service
-                if (notify)
+                if (true)
                 {
                     try
                     {
@@ -102,7 +98,8 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                             subject = "New account",
                             body = template,
                             from = "Do Not Reply",
-                            to = identityUser.Email
+                            //to = identityUser.Email
+                            to = "hubencu.andrian@gmail.com"
                         };
 
                         await _notificationService.Notify(emailData, NotificationType.Both);
@@ -139,7 +136,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
             if (usernameResult.Succeeded && emailResult.Succeeded)
             {
                 // TODO: asta trebuie de mutat in notification service
-                if (notify)
+                if (true)
                 {
                     try
                     {
@@ -156,7 +153,8 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                             subject = "Update account",
                             body = template,
                             from = "Do Not Reply",
-                            to = identityUser.Email
+                            //to = identityUser.Email
+                            to = "hubencu.andrian@gmail.com"
                         };
 
                         await _notificationService.Notify(emailData, NotificationType.Both);
@@ -183,7 +181,6 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 
             throw new CreateIdentityFailedException("User was not updated for unknown reason");
         }
-
 
         public async Task Remove(string id)
         {

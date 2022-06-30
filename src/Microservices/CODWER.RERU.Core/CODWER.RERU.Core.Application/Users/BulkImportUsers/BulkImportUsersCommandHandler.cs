@@ -1,5 +1,4 @@
-﻿using CODWER.RERU.Core.Application.Common.Providers;
-using CODWER.RERU.Core.Application.Users.CreateUser;
+﻿using CODWER.RERU.Core.Application.Users.CreateUser;
 using CODWER.RERU.Core.Application.Users.EditUserFromColaborator;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using MediatR;
@@ -61,14 +60,11 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                     user = await db.UserProfiles.FirstOrDefaultAsync(x => x.Idnp == idnp);
                 }
 
-                tasks.Add(AddEditUser(workSheet, request, i, user));
+                var newTask = AddEditUser(workSheet, request, i, user);
+
+                tasks.Add(newTask);
 
                 i++;
-
-                if (tasks.Count <= 10) continue;
-                WaitTasks(Task.WhenAll(tasks));
-
-                tasks.Clear();
             }
 
             WaitTasks(Task.WhenAll(tasks));
