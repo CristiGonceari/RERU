@@ -81,7 +81,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
             if (response.Succeeded)
             {
                 // TODO: asta trebuie de mutat in notification service
-                if (notify)
+                if (true)
                 {
                     try
                     {
@@ -98,7 +98,8 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                             subject = "New account",
                             body = template,
                             from = "Do Not Reply",
-                            to = identityUser.Email
+                            //to = identityUser.Email
+                            to = "hubencu.andrian@gmail.com"
                         };
 
                         await _notificationService.Notify(emailData, NotificationType.Both);
@@ -135,7 +136,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
             if (usernameResult.Succeeded && emailResult.Succeeded)
             {
                 // TODO: asta trebuie de mutat in notification service
-                if (notify)
+                if (true)
                 {
                     try
                     {
@@ -152,7 +153,8 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                             subject = "Update account",
                             body = template,
                             from = "Do Not Reply",
-                            to = identityUser.Email
+                            //to = identityUser.Email
+                            to = "hubencu.andrian@gmail.com"
                         };
 
                         await _notificationService.Notify(emailData, NotificationType.Both);
