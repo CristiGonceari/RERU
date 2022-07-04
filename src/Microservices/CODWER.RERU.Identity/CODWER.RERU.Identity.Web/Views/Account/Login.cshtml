@@ -1,4 +1,4 @@
-@*@model LoginViewModel
+﻿@*@model LoginViewModel
 
     <div class="login-page">
         <div class="lead">
@@ -107,18 +107,18 @@
                     {
                         <div class="login-form login-signin">
                             <div class="text-center mb-10 mb-lg-20">
-                                <h2 class="font-weight-bold">Sign In</h2>
-                                <p class="text-muted font-weight-bold">Enter your username and password</p>
+                                <h2 class="font-weight-bold">Conectare</h2>
+                                <p class="text-muted font-weight-bold">Introduceți email-ul dvs. de utilizator și parola</p>
                             </div>
                             <form class="form" id="kt_login_signin_form" asp-route="Login">
 
                                 <input type="hidden" asp-for="ReturnUrl" />
 
                                 <div class="form-group py-3 m-0">
-                                    <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="Username" placeholder="Username" name="username" asp-for="Username" autofocus/>
+                                    <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="Username" placeholder="Email" name="username" asp-for="Username" autofocus/>
                                 </div>
                                 <div class="form-group py-3 border-top m-0">
-                                    <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="Password" placeholder="Password" asp-for="Password" name="password" autocomplete="off"/>
+                                    <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="Password" placeholder="Parola" asp-for="Password" name="password" autocomplete="off"/>
                                 </div>
 
                                 @if (Model.AllowRememberLogin)
@@ -127,7 +127,7 @@
                                         <div class="checkbox-inline">
                                             <label class="checkbox checkbox-outline m-0 text-muted" asp-for="RememberLogin">
                                                 <input type="checkbox" name="remember" asp-for="RememberLogin" />
-                                                <span></span>Remember me
+                                                <span></span>Ține-mă minte
                                             </label>
                                         </div>
                                     </div>
@@ -135,13 +135,13 @@
 
                                 <div class="form-group d-flex flex-wrap justify-content-between align-items-center mt-2">
                                     <div class="my-3 mr-2">
-                                        <span class="text-muted mr-2">Don't have an account?</span>
-                                        <a href="javascript:;" id="kt_login_signup" class="font-weight-bold">Signup</a>
+                                        <span class="text-muted mr-2">Nu aveți cont?</span>
+                                        <a href="/registration-page" id="kt_login_signup" class="font-weight-bold">Înregistrează-te</a>
                                     </div>
-                                    <button id="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3" name="button" value="login" >Sign In</button>
+                                    <button id="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3" name="button" value="login">Loghează-te</button>
                                 </div>
 
-                                @if (Model.VisibleExternalProviders.Any())
+                                @*@if (Model.VisibleExternalProviders.Any())
                                 {
                                     <div class="class="text-center"">
                                         <p>or sign in with:</p>
@@ -160,7 +160,7 @@
                                                     }
                                                 </ul>
                                         </div>
-                                }
+                                }*@
                             </form>
                         </div>
                     }
@@ -218,7 +218,7 @@
         <div class="order-1 order-lg-2 flex-column-auto flex-lg-row-fluid d-flex flex-column p-7 back-image image-config">
             <div class="d-flex flex-column-fluid flex-lg-center">
                 <div class="d-flex flex-column justify-content-center">
-                    <h3 class="display-3 font-weight-bold my-7 text-white">Bun venit pe platforma RERU !</h3>
+                    <h3 class="display-3 font-weight-bold my-7 text-white">Bună ziua! Vă mulțumim că ați accesat Platforma de Recrutare și Evaluare a personalului MAI!</h3>
                 </div>
             </div>
         </div>
