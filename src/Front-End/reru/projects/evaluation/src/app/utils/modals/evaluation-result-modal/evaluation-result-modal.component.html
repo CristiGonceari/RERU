@@ -1,0 +1,18 @@
+<div class="modal-header border-0 pb-0">
+    <h3 class="modal-title">{{'evaluations.finish-evaluation' | translate}}</h3>
+</div>
+<div class="modal-body px-7">
+    <div style="text-align: center;">
+        {{'evaluations.finish-evaluation-msg' | translate}}
+    </div>
+    <div class="modal-footer d-flex justify-content-between border-0 p-0 mt-4">
+        <div></div>
+        <div>
+            <button type="button" class="btn btn-light-success mr-2" (click)="setStatus(enum.Passed)">{{'statuses.passed' | translate}}</button>
+            <button type="button" class="btn btn-light-danger" (click)="setStatus(enum.NotPassed)">{{'statuses.not-passed' | translate}}</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-secondary" (click)="close()">{{'button.close' | translate}}</button>
+        </div>
+    </div>
+</div>

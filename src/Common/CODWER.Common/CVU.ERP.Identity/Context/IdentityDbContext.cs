@@ -1,6 +1,8 @@
-﻿using CVU.ERP.Identity.Models;
+﻿using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
+using CVU.ERP.Identity.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace CVU.ERP.Identity.Context
 {
@@ -23,5 +25,12 @@ namespace CVU.ERP.Identity.Context
 
             base.OnModelCreating(modelBuilder);
         }
+
+        ///<summary>
+        ///Get new instance of IdentityDbContext for thread safe using
+        ///</summary>
+        public static IdentityDbContext NewInstance(IConfiguration configuration) => new(new DbContextOptionsBuilder<IdentityDbContext>()
+            .UseNpgsql(configuration.GetConnectionString(ConnectionString.Identity))
+            .Options);
     }
 }

@@ -25,6 +25,10 @@ export class ReferenceService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/question-types-value/select-values`);
   }
 
+  getRequiredDocumentSelectValues(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/required-document/select-values`, { params });
+  }
+
   getQuestionCategory(): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/question-categories-value/select-values`);
   }

@@ -7,5 +7,7 @@ namespace RERU.Data.Entities
     {
         public string Name { get; set; }
         public bool IsActive { get; set; }
+
+        public virtual ICollection<RequiredDocumentPosition> RequiredDocumentPositions { get; set; }
     }
 }

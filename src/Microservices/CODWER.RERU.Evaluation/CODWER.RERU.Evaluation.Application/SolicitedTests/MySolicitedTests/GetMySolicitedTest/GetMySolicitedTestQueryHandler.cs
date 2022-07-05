@@ -26,7 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Get
         {
             var myUserProfile = await _userProfileService.GetCurrentUser();
 
-            var solicitedTest = await _appDbContext.SolicitedTests.FirstOrDefaultAsync(x => x.Id == request.Id);
+            var solicitedTest = await _appDbContext.SolicitedVacantPositions.FirstOrDefaultAsync(x => x.Id == request.Id);
             solicitedTest.UserProfileId = myUserProfile.Id;
 
             return _mapper.Map<SolicitedTestDto>(solicitedTest);

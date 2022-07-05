@@ -1,0 +1,79 @@
+<app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'10vh'" [height]="'5rem'" [width]="'5rem'"
+    [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+
+<div *ngIf="!isLoading && !downloadFile" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+    id="kt_datatable">
+    <table class="datatable table font-size-lg" style="overflow: visible">
+        <thead class="text-uppercase text-muted">
+            <tr>
+                <th scope="col">{{'require-documents.name' | translate}}</th>
+                <th scope="col" style="width: 300px">{{'require-documents.mandatory' | translate}}</th>
+                <th scope="col" style="width: 48px"></th>
+            </tr>
+        </thead>
+        <tbody class="datatable-body" *ngIf="tableData.length" >
+            <tr *ngFor="let item of tableData">
+                <td>
+                    {{item.name}}
+                </td>
+                <td *ngIf="item.mandatory">
+                    <i class="fa la-plus"></i>  
+                </td>
+                <td *ngIf="!item.mandatory">
+                    <i class="fa la-minus"></i>
+                </td>
+
+                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
+                    <div style="overflow: visible; position: relative; width: 0px">
+                        <div ngbDropdown class="dropdown dropdown-inline">
+                            <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                                <span class="svg-icon svg-icon-md" ngbDropdownToggle>
+                                    <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                        viewBox="0 0 24 24" version="1.1">
+                                        <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
+                                            <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3"
+                                                fill="black">
+                                            </rect>
+                                            <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3"
+                                                fill="black" fill-opacity="0.7"></rect>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                                <div ngbDropdownMenu aria-labelledby="action1">
+                                    <button class="navi-link align-items-baseline px-6" [routerLink]="['edit-document', item.id]"
+                                         ngbDropdownItem>
+                                        {{'button.edit' | translate}}
+                                    </button>
+                                    <button (click)="openConfirmationDeleteModal(item.id)" class="navi-link align-items-baseline px-6"
+                                         ngbDropdownItem>
+                                        {{'button.delete' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tbody class="datatable-body" *ngIf="!tableData.length">
+            <tr>
+                <td colspan="5" class="text-center">
+                    {{ 'message.no-record' | translate }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div pagination class="datatable-pager datatable-paging-loaded"
+        [page]="pagedSummary.currentPage"
+        [total]="pagedSummary.totalPages"
+        [totalRecords]="pagedSummary.totalCount"
+        [size]="pagedSummary.pageSize"
+        (sizeChange)="list({ page: pagedSummary.currentPage, itemsPerPage: $event })"
+        (pageChange)="list({ itemsPerPage: pagedSummary.pageSize, page: $event })">
+    </div>
+</div>

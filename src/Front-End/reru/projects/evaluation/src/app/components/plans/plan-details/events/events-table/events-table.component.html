@@ -13,7 +13,7 @@
     </thead>
     <tbody class="datatable-body" *ngIf="events.length">
       <tr *ngFor="let item of events">
-        <td>{{item.name}}</td>
+        <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../events/event', item.id]">{{item.name}}</td>
         <td>{{item.fromDate | date: 'dd/MM/yyyy'}}</td>
         <td>{{item.tillDate | date: 'dd/MM/yyyy'}}</td>
         <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
@@ -34,6 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
             {
                 TestTemplateName = request.TestTemplateName,
                 UserName = request.UserName,
+                EvaluatorName = request.EvaluatorName,
                 Email = request.Email,
                 TestStatus = request.TestStatus,
                 ResultStatus = request.ResultStatus,
@@ -45,6 +47,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
             };
 
             var tests = GetAndFilterTests.Filter(_appDbContext, filterData, curUser);
+
+            tests = tests.Where(x => x.TestTemplate.Mode == TestTemplateModeEnum.Poll || x.TestTemplate.Mode == TestTemplateModeEnum.Test);
 
             foreach (var testDto in tests.ToList())
             {

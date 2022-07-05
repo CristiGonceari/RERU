@@ -40,7 +40,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyPollsByEvent
                         StartTime = thisEvent.FromDate,
                         EndTime = thisEvent.TillDate,
                         TestTemplateName = t.TestTemplate.Name,
-                        Setting = t.TestTemplate.Settings.CanViewPollProgress,
+                        Setting = t.TestTemplate.Settings.CanViewPollProgress != null ? t.TestTemplate.Settings.CanViewPollProgress : false,
                         TestTemplateStatus = t.TestTemplate.Status }
                 )
                 .ToListAsync();

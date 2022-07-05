@@ -25,7 +25,7 @@ export class EventOverviewComponent implements OnInit {
    this.subsribeForParams();
   }
 
-  getLocation(){
+  get(){
     this.service.getDetailsEvent(this.id).subscribe(res => {
       if (res && res.data) {
         this.name = res.data.name;
@@ -41,7 +41,7 @@ export class EventOverviewComponent implements OnInit {
     this.activatedRoute.parent.params.subscribe(params => {
       this.id = params.id;
 			if (this.id) {
-        this.getLocation();
+        this.get();
     }});
 	}
 }

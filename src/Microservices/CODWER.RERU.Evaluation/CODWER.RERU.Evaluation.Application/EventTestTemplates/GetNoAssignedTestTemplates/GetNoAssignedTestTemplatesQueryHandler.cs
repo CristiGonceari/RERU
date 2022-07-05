@@ -6,6 +6,7 @@ using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.GetNoAssignedTestTemplates
@@ -25,7 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.GetNoAssignedTes
         {
             var testTemplates = _appDbContext.TestTemplates
                 .Include(x => x.EventTestTemplates)
-                .Where(x => !x.EventTestTemplates.Any(e => e.EventId == request.EventId))
+                .Where(x => !x.EventTestTemplates.Any(e => e.EventId == request.EventId) && x.Status == TestTemplateStatusEnum.Active)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(request.Keyword))

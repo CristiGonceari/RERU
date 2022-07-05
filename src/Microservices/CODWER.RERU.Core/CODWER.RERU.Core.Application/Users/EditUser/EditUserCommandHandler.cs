@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Core.Application.Users.EditUser {
-    public class EditUserCommandHandler : BaseHandler, IRequestHandler<EditUserCommand, Unit> {
-        private readonly UserManager<ERPIdentityUser> _userManager;
-        public EditUserCommandHandler (ICommonServiceProvider commonServicepProvider, UserManager<ERPIdentityUser> userManager) : base (commonServicepProvider) {
-            _userManager = userManager;
+    public class EditUserCommandHandler : BaseHandler, IRequestHandler<EditUserCommand, Unit> 
+    {
+        public EditUserCommandHandler (ICommonServiceProvider commonServiceProvider) : base (commonServiceProvider) 
+        {
         }
 
         public async Task<Unit> Handle (EditUserCommand request, CancellationToken cancellationToken) {

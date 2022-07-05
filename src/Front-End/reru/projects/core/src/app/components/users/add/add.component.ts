@@ -38,7 +38,7 @@ export class AddComponent implements OnInit {
   birthday;
   fromData = '';
   fromDate;
-  startDate;
+  startDate: string;
 
   constructor(
     private fb: FormBuilder,
@@ -100,7 +100,6 @@ export class AddComponent implements OnInit {
       fatherName: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'),]),
       idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
       email: this.fb.control(null, [Validators.required, Validators.email]),
-      birthday: this.fb.control(null, [Validators.required]),
       phoneNumber: this.fb.control(null, [Validators.required]),
       departmentColaboratorId: this.fb.control(null, [Validators.required]),
       roleColaboratorId: this.fb.control(null, [Validators.required]),
@@ -125,7 +124,7 @@ export class AddComponent implements OnInit {
       departmentColaboratorId: this.userForm.value.departmentColaboratorId,
       roleColaboratorId: this.userForm.value.roleColaboratorId,
       emailNotification: this.userForm.value.emailNotification,
-      birthday: this.userForm.value.birthday,
+      birthday: this.birthday != null ? new Date(`${this.birthday} EDT`).toISOString() : null,
       phoneNumber: this.userForm.value.phoneNumber,
       accessModeEnum: this.userForm.value.accessModeEnum
     }

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CODWER.DataTransferObjects\CVU.ERP.Common.DataTransferObjects.csproj" />
     <ProjectReference Include="..\CVU.ERP.Common.Data.Entities\CVU.ERP.Common.Data.Entities.csproj" />
   </ItemGroup>
 

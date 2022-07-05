@@ -6,6 +6,7 @@ using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTests
@@ -29,7 +30,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTests
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
                 .Include(t => t.Event)
-                .Where(t => t.UserProfileId == request.UserId && t.Event == null)
+                .Where(t => t.UserProfileId == request.UserId && t.Event == null && t.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .OrderByDescending(x => x.ProgrammedTime)
                 .AsQueryable();
 

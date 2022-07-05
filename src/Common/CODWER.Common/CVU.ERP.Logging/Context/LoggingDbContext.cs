@@ -1,5 +1,7 @@
-﻿using CVU.ERP.Logging.Entities;
+﻿using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
+using CVU.ERP.Logging.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace CVU.ERP.Logging.Context
 {
@@ -25,5 +27,12 @@ namespace CVU.ERP.Logging.Context
         {
             base.OnModelCreating(modelBuilder);
         }
+
+        ///<summary>
+        ///Get new instance of LoggingDbContext for thread safe using
+        ///</summary>
+        public static LoggingDbContext NewInstance(IConfiguration configuration) => new(new DbContextOptionsBuilder<LoggingDbContext>()
+            .UseNpgsql(configuration.GetConnectionString(ConnectionString.Logging))
+            .Options);
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
@@ -38,10 +39,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 EventName = request.EventName,
                 Idnp = request.Idnp,
                 ProgrammedTimeFrom = request.ProgrammedTimeFrom,
-                ProgrammedTimeTo = request.ProgrammedTimeTo
+                ProgrammedTimeTo = request.ProgrammedTimeTo,
+                EvaluatorName = request.EvaluatorName
             };
 
             var tests = GetAndFilterTests.Filter(_appDbContext, filterData, currentUser);
+
+            tests = tests.Where(x => x.TestTemplate.Mode == TestTemplateModeEnum.Poll || x.TestTemplate.Mode == TestTemplateModeEnum.Test);
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(tests, request);
 

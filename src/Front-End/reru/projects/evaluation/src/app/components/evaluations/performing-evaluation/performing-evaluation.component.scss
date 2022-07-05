@@ -1,0 +1,31 @@
+.table td {
+    vertical-align: middle;
+}
+
+.answered {
+	background-color: #b9d9f98a !important;
+	color: white !important;
+}
+
+.skipped {
+    background-color: #9c9c9c4f !important;
+	color: white !important;
+}
+
+.viewed {
+    color: #80808F !important;
+}
+
+.active-page {
+    border-color: #F64E60 !important;
+    background-color: white !important;
+    color: #F64E60 !important;
+}
+
+.option-label {
+    font-size: 16px;
+}
+      
+.progress {
+    height: 4px !important;
+}

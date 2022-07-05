@@ -244,7 +244,7 @@ export class TableComponent implements OnInit {
 
   sendEmail(): void {
     for (let i = 0; i < this.attachedUsers.length; i++) {
-      this.eventService.sendEmail(this.urlApi, this.attachedUsers[i]).subscribe();
+      this.eventService.sendEmail(this.urlApi, this.attachedUsers[i], this.importedId).subscribe();
     }
   }
 

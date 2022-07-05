@@ -19,6 +19,57 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
 
+            modelBuilder.Entity("RERU.Data.Entities.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("Apartment")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Building")
+                        .HasColumnType("text");
+
+                    b.Property<string>("City")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("PostCode")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Region")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Addresses");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.ArticleCore", b =>
                 {
                     b.Property<int>("Id")
@@ -89,6 +140,177 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasKey("Id");
 
                     b.ToTable("EvaluationArticles");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.Autobiography", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserProfileId")
+                        .IsUnique();
+
+                    b.ToTable("Autobiographies");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.Bulletin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<int?>("BirthPlaceId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("EmittedBy")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("ParentsResidenceAddressId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("ReleaseDay")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ResidenceAddressId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Series")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BirthPlaceId");
+
+                    b.HasIndex("ParentsResidenceAddressId");
+
+                    b.HasIndex("ResidenceAddressId");
+
+                    b.HasIndex("UserProfileId")
+                        .IsUnique();
+
+                    b.ToTable("Bulletins");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.CandidateCitizenship", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CitizenshipName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("TranslateId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CandidateCitizens");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.CandidateNationality", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("NationalityName")
+                        .HasColumnType("text");
+
+                    b.Property<int>("TranslateId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CandidateNationalities");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.CandidatePosition", b =>
@@ -577,6 +799,198 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.ToTable("EventUsers");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.EventVacantPosition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<int>("CandidatePositionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CandidatePositionId");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("EventVacantPositions");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.KinshipRelation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("BirthLocation")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Function")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("KinshipDegree")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ResidenceAddress")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("WorkLocation")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KinshipDegree");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("KinshipRelations");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.KinshipRelationCriminalData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserProfileId")
+                        .IsUnique();
+
+                    b.ToTable("KinshipRelationCriminalDatas");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.KinshipRelationWithUserProfile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Function")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("KinshipDegree")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Subdivision")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KinshipDegree");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("KinshipRelationWithUserProfiles");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.Location", b =>
                 {
                     b.Property<int>("Id")
@@ -706,6 +1120,231 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasIndex("UserProfileId");
 
                     b.ToTable("LocationResponsiblePersons");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.MaterialStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("MaterialStatusTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserProfileid")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaterialStatusTypeId");
+
+                    b.HasIndex("UserProfileid")
+                        .IsUnique();
+
+                    b.ToTable("MaterialStatuses");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.MaterialStatusType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int>("TranslateId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MaterialStatusTypes");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.MilitaryObligation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Degree")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Efectiv")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MilitaryBookletEminentAuthority")
+                        .HasColumnType("text");
+
+                    b.Property<int>("MilitaryBookletNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("MilitaryBookletReleaseDay")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("MilitaryBookletSeries")
+                        .HasColumnType("text");
+
+                    b.Property<int>("MilitaryObligationType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("MilitarySpecialty")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("MobilizationYear")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("WithdrawalYear")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MilitaryObligationType");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("MilitaryObligations");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.ModernLanguage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int>("TranslateId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ModernLanguages");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.ModernLanguageLevel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("KnowledgeQuelifiers")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ModernLanguageId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KnowledgeQuelifiers");
+
+                    b.HasIndex("ModernLanguageId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("ModernLanguageLevels");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.Module", b =>
@@ -1237,6 +1876,53 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.ToTable("QuestionUnitTags");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.RecommendationForStudy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Function")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Subdivision")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("RecommendationForStudies");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.RegistrationPageMessage", b =>
                 {
                     b.Property<int>("Id")
@@ -1268,6 +1954,82 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasKey("Id");
 
                     b.ToTable("RegistrationPageMessages");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.RequiredDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Mandatory")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RequiredDocuments");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.RequiredDocumentPosition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<int>("CandidatePositionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("RequiredDocumentId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CandidatePositionId");
+
+                    b.HasIndex("RequiredDocumentId");
+
+                    b.ToTable("RequiredDocumentPositions");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.Role", b =>
@@ -1306,7 +2068,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("RERU.Data.Entities.SolicitedTest", b =>
+            modelBuilder.Entity("RERU.Data.Entities.SolicitedVacantPosition", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1361,7 +2123,106 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.HasIndex("UserProfileId");
 
-                    b.ToTable("SolicitedTests");
+                    b.ToTable("SolicitedVacantPositions");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.Study", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Faculty")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("GraduationYear")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Institution")
+                        .HasColumnType("text");
+
+                    b.Property<string>("InstitutionAddress")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Specialty")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("StudyFrequency")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StudyTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("YearOfAdmission")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudyFrequency");
+
+                    b.HasIndex("StudyTypeId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("Studies");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.StudyType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int>("TrasnlateId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StudyTypes");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.Tag", b =>
@@ -1876,6 +2737,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<int?>("RequiredDocumentId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("UpdateById")
                         .HasColumnType("text");
 
@@ -1886,6 +2750,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RequiredDocumentId");
 
                     b.HasIndex("UserProfileId");
 
@@ -1902,8 +2768,17 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<int?>("AccessModeEnum")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime?>("BirthDate")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<DateTime?>("Birthday")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CandidateCitizenshipId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("CandidateNationalityId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("CreateById")
                         .HasColumnType("text");
@@ -1926,6 +2801,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
+                    b.Property<int?>("HomePhone")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Idnp")
                         .HasColumnType("text");
 
@@ -1941,6 +2819,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<string>("MediaFileId")
                         .HasColumnType("text");
 
+                    b.Property<int?>("MobilePhone")
+                        .HasColumnType("integer");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
@@ -1948,6 +2829,12 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("boolean");
 
                     b.Property<int?>("RoleColaboratorId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Sex")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("StateLanguageLevel")
                         .HasColumnType("integer");
 
                     b.Property<string>("Token")
@@ -1962,13 +2849,24 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<int?>("WorkPhone")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AccessModeEnum");
 
+                    b.HasIndex("CandidateCitizenshipId");
+
+                    b.HasIndex("CandidateNationalityId");
+
                     b.HasIndex("DepartmentColaboratorId");
 
                     b.HasIndex("RoleColaboratorId");
+
+                    b.HasIndex("Sex");
+
+                    b.HasIndex("StateLanguageLevel");
 
                     b.ToTable("UserProfiles");
                 });
@@ -2143,6 +3041,155 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 2,
                             Name = "Test"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.KinshipDegreeEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("KinshipDegreeEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Father"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Mother"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Brother"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Sister"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Wife"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Husband"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Children"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Parent"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "HusbandsBrothers"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "HusbandsSisters"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "WifesSisters"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "WifesBrothers"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.KnowledgeQuelifiersEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("KnowledgeQuelifiersEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "BasicKnowledge"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Good"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "VeryGood"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.MilitaryObligationTypeEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("MilitaryObligationTypeEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Recruit"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Reservist"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "PerformedMilitaryService"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "AlternativeService"
                         });
                 });
 
@@ -2418,6 +3465,34 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         });
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SexTypeEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("SexTypeEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Male"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Female"
+                        });
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedTestStatusEnum>", b =>
                 {
                     b.Property<int>("Id")
@@ -2448,6 +3523,72 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 2,
                             Name = "Approved"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.StateLanguageLevel>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("StateLanguageLevel");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Basic"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Medium"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Good"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "VeryGood"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.StudyFrequencyEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("StudyFrequencyEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Daily"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "LowFrequency"
                         });
                 });
 
@@ -2585,6 +3726,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 1,
                             Name = "Poll"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Evaluation"
                         });
                 });
 
@@ -2680,6 +3826,46 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                             Id = 2,
                             Name = "NotVerified"
                         });
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.Autobiography", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
+                        .WithOne("Autobiography")
+                        .HasForeignKey("RERU.Data.Entities.Autobiography", "UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.Bulletin", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.Address", "BirthPlace")
+                        .WithMany()
+                        .HasForeignKey("BirthPlaceId");
+
+                    b.HasOne("RERU.Data.Entities.Address", "ParentsResidenceAddress")
+                        .WithMany()
+                        .HasForeignKey("ParentsResidenceAddressId");
+
+                    b.HasOne("RERU.Data.Entities.Address", "ResidenceAddress")
+                        .WithMany()
+                        .HasForeignKey("ResidenceAddressId");
+
+                    b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
+                        .WithOne("Bulletin")
+                        .HasForeignKey("RERU.Data.Entities.Bulletin", "UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BirthPlace");
+
+                    b.Navigation("ParentsResidenceAddress");
+
+                    b.Navigation("ResidenceAddress");
+
+                    b.Navigation("UserProfile");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.Documents.DocumentTemplate", b =>
@@ -2823,6 +4009,70 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("UserProfile");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.EventVacantPosition", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.CandidatePosition", "CandidatePosition")
+                        .WithMany()
+                        .HasForeignKey("CandidatePositionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.Event", "Event")
+                        .WithMany("EventVacantPositions")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CandidatePosition");
+
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.KinshipRelation", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.KinshipDegreeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("KinshipDegree")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
+                        .WithMany("KinshipRelations")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.KinshipRelationCriminalData", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
+                        .WithOne("KinshipRelationCriminalData")
+                        .HasForeignKey("RERU.Data.Entities.KinshipRelationCriminalData", "UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.KinshipRelationWithUserProfile", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.KinshipDegreeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("KinshipDegree")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
+                        .WithMany("KinshipRelationWithUserProfiles")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.Location", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.TestingLocationType>", null)
@@ -2858,6 +4108,67 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .IsRequired();
 
                     b.Navigation("Location");
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.MaterialStatus", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.MaterialStatusType", "MaterialStatusType")
+                        .WithMany()
+                        .HasForeignKey("MaterialStatusTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
+                        .WithOne("MaterialStatus")
+                        .HasForeignKey("RERU.Data.Entities.MaterialStatus", "UserProfileid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MaterialStatusType");
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.MilitaryObligation", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.MilitaryObligationTypeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("MilitaryObligationType")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
+                        .WithMany("MilitaryObligations")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.ModernLanguageLevel", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.KnowledgeQuelifiersEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("KnowledgeQuelifiers")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.ModernLanguage", "ModernLanguage")
+                        .WithMany()
+                        .HasForeignKey("ModernLanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
+                        .WithMany("ModernLanguageLevels")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ModernLanguage");
 
                     b.Navigation("UserProfile");
                 });
@@ -3014,7 +4325,37 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("Tag");
                 });
 
-            modelBuilder.Entity("RERU.Data.Entities.SolicitedTest", b =>
+            modelBuilder.Entity("RERU.Data.Entities.RecommendationForStudy", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
+                        .WithMany("RecommendationForStudies")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.RequiredDocumentPosition", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.CandidatePosition", "CandidatePosition")
+                        .WithMany("RequiredDocumentPositions")
+                        .HasForeignKey("CandidatePositionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.RequiredDocument", "RequiredDocument")
+                        .WithMany("RequiredDocumentPositions")
+                        .HasForeignKey("RequiredDocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CandidatePosition");
+
+                    b.Navigation("RequiredDocument");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.SolicitedVacantPosition", b =>
                 {
                     b.HasOne("RERU.Data.Entities.CandidatePosition", "CandidatePosition")
                         .WithMany()
@@ -3047,6 +4388,30 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("Event");
 
                     b.Navigation("TestTemplate");
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.Study", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.StudyFrequencyEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("StudyFrequency")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("RERU.Data.Entities.StudyType", "StudyType")
+                        .WithMany()
+                        .HasForeignKey("StudyTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
+                        .WithMany("Studies")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StudyType");
 
                     b.Navigation("UserProfile");
                 });
@@ -3251,11 +4616,17 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
             modelBuilder.Entity("RERU.Data.Entities.UserFile", b =>
                 {
+                    b.HasOne("RERU.Data.Entities.RequiredDocument", "RequiredDocument")
+                        .WithMany("UserFiles")
+                        .HasForeignKey("RequiredDocumentId");
+
                     b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
                         .WithMany("UserFiles")
                         .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("RequiredDocument");
 
                     b.Navigation("UserProfile");
                 });
@@ -3267,6 +4638,14 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasForeignKey("AccessModeEnum")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("RERU.Data.Entities.CandidateCitizenship", "CandidateCitizenship")
+                        .WithMany()
+                        .HasForeignKey("CandidateCitizenshipId");
+
+                    b.HasOne("RERU.Data.Entities.CandidateNationality", "CandidateNationality")
+                        .WithMany()
+                        .HasForeignKey("CandidateNationalityId");
+
                     b.HasOne("RERU.Data.Entities.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentColaboratorId")
@@ -3276,6 +4655,20 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .WithMany()
                         .HasForeignKey("RoleColaboratorId")
                         .HasPrincipalKey("ColaboratorId");
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SexTypeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Sex")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.StateLanguageLevel>", null)
+                        .WithMany()
+                        .HasForeignKey("StateLanguageLevel")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("CandidateCitizenship");
+
+                    b.Navigation("CandidateNationality");
 
                     b.Navigation("Department");
 
@@ -3331,6 +4724,33 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.FileTypeEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.FileTypeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.KinshipDegreeEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.KinshipDegreeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.KnowledgeQuelifiersEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.KnowledgeQuelifiersEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.MilitaryObligationTypeEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.MilitaryObligationTypeEnum>", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -3418,9 +4838,36 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SexTypeEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SexTypeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedTestStatusEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedTestStatusEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.StateLanguageLevel>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.StateLanguageLevel>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.StudyFrequencyEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.StudyFrequencyEnum>", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -3490,6 +4937,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.CandidatePosition", b =>
+                {
+                    b.Navigation("RequiredDocumentPositions");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.Event", b =>
                 {
                     b.Navigation("EventEvaluators");
@@ -3501,6 +4953,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("EventTestTemplates");
 
                     b.Navigation("EventUsers");
+
+                    b.Navigation("EventVacantPositions");
 
                     b.Navigation("Tests");
                 });
@@ -3547,6 +5001,13 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("TestQuestions");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.RequiredDocument", b =>
+                {
+                    b.Navigation("RequiredDocumentPositions");
+
+                    b.Navigation("UserFiles");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.Tag", b =>
                 {
                     b.Navigation("QuestionUnitTags");
@@ -3582,6 +5043,10 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
             modelBuilder.Entity("RERU.Data.Entities.UserProfile", b =>
                 {
+                    b.Navigation("Autobiography");
+
+                    b.Navigation("Bulletin");
+
                     b.Navigation("EmailTestNotifications");
 
                     b.Navigation("EventResponsiblePersons");
@@ -3590,13 +5055,29 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.Navigation("Identities");
 
+                    b.Navigation("KinshipRelationCriminalData");
+
+                    b.Navigation("KinshipRelations");
+
+                    b.Navigation("KinshipRelationWithUserProfiles");
+
                     b.Navigation("LocationResponsiblePersons");
+
+                    b.Navigation("MaterialStatus");
+
+                    b.Navigation("MilitaryObligations");
+
+                    b.Navigation("ModernLanguageLevels");
 
                     b.Navigation("ModuleRoles");
 
                     b.Navigation("Notifications");
 
                     b.Navigation("PlanResponsiblePersons");
+
+                    b.Navigation("RecommendationForStudies");
+
+                    b.Navigation("Studies");
 
                     b.Navigation("Tests");
 

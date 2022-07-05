@@ -4,13 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Application.Services;
-using CVU.ERP.Logging;
-using CVU.ERP.Logging.Models;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
-using RERU.Data.Entities.StaticExtensions;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
@@ -19,17 +14,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
-        private readonly IInternalNotificationService _internalNotificationService;
-        private readonly ILoggerService<AddTestCommandHandler> _loggerService;
 
-        public AddTestCommandHandler(AppDbContext appDbContext, IMapper mapper, 
-            IInternalNotificationService internalNotificationService,
-            ILoggerService<AddTestCommandHandler> loggerService)
+        public AddTestCommandHandler(AppDbContext appDbContext, IMapper mapper)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
-            _internalNotificationService = internalNotificationService;
-            _loggerService = loggerService;
         }
 
         public async Task<int> Handle(AddTestCommand request, CancellationToken cancellationToken)
@@ -60,23 +49,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                     {
                         newTest.TestPassStatus = TestPassStatusEnum.Forbidden;
                     }
-                }
+                }   
             }
 
             _appDbContext.Tests.Add(newTest);
             await _appDbContext.SaveChangesAsync();
-
-            await _internalNotificationService.AddNotification(newTest.UserProfileId, NotificationMessages.YouHaveNewProgrammedTest);
-            
-            if(newTest.EvaluatorId != null) 
-            {
-                await _internalNotificationService.AddNotification((int)newTest.EvaluatorId, NotificationMessages.YouWereInvitedToTestAsEvaluator);
-            }
-
-            var user = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == newTest.UserProfileId);
-            var testTemplate = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == newTest.TestTemplateId);
-
-            await _loggerService.Log(LogData.AsEvaluation($"User {user.GetFullName()} was assigned to test with {testTemplate.Name} test template at {newTest.ProgrammedTime:dd/MM/yyyy HH:mm}"));
 
             return newTest.Id;
         }

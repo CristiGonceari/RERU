@@ -24,6 +24,8 @@
         public static string INEXISTENT_TEST_TEMPLATE_IN_EVENT = "03000206";
         public static string MUST_ADD_EVENT_OR_EVALUATOR = "03000207";
         public static string START_DAY_CANT_BE_FROM_PAST = "03000208";
+        public static string ONLY_ACTIVE_EVENT_CAN_BE_INACTIVE = "03000209";
+        public static string INACTIVE_EVENT_CANT_BE_CHANGED = "03000210";
 
         //event evaluator
         public static string EXISTENT_EVALUATOR_IN_EVENT = "03000301";
@@ -159,11 +161,15 @@
         public static string DOCUMENTS_NOT_FOUND = "03002104";
         public static string INVALID_DOCUMENT_TEMPLATE = "03002105";
 
-        //CANDIDATE_POSITION
+        //candidate position
         public static string INVALID_POSITION = "03002106";
         public static string EMPTY_POSITION_NAME = "03002107";
 
         //progress
         public static string INVALID_PROGRESS = "03002108";
+
+        //required documents
+        public static string MANDATORY_EMPTY = "03002109";
+        public static string INVALID_REQUIRED_DOCUMENT = "03002110";
     }
 }

@@ -24,6 +24,10 @@ export class TestService extends AbstractService {
 		return this.http.post(`${this.baseUrl}/${this.urlRoute}/tests`, data);
 	}
 
+	createEvaluations(data): Observable<any> {
+		return this.http.post(`${this.baseUrl}/${this.urlRoute}/evaluations`, data);
+	}
+
 	startAddProcess(data): Observable<any> {
 		return this.http.post(`${this.baseUrl}/${this.urlRoute}/process`, data);
 	}
@@ -91,16 +95,32 @@ export class TestService extends AbstractService {
 		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/finalize`, { testId: testId });
 	}
 
+	finalizeEvaluation(testId): Observable<any> {
+		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/finalize-evaluation`, { testId: testId });
+	}
+
 	getTests(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
+	}
+
+	getEvaluations(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/get-evaluations`, { params });
 	}
 
 	changeStatus(data): Observable<any> {
 		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/edit-status`, data);
 	}
 
+	setResult(data): Observable<any> {
+		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/edit-result`, data);
+	}
+
 	startTest(data): Observable<any> {
 		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/start-test`, data);
+	}
+
+	startEvaluation(data): Observable<any> {
+		return this.http.patch(`${this.baseUrl}/${this.urlRoute}/start-evaluation`, data);
 	}
 
 	deleteTest(params): Observable<any> {
@@ -122,6 +142,14 @@ export class TestService extends AbstractService {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-tests`, { params });
 	}
 
+	getUsersEvaluations(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-evaluations`, { params });
+	}
+
+	getUsersEvaluatedEvaluations(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-received-evaluations`, { params });
+	}
+
 	getUsersTestsByEvent(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-tests-by-event`, { params });
 	}
@@ -138,6 +166,10 @@ export class TestService extends AbstractService {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-tests-evaluated`, { params });
 	}
 
+	getMyEvaluations(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-evaluations`, { params });
+	}
+
 	getMyEvaluatedTestsCount(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-evaluated-tests-count`, { params });
 	}
@@ -148,6 +180,27 @@ export class TestService extends AbstractService {
 
 	print(data): Observable<any> {
 		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-tests`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
+	printEvaluations(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-evaluations`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
+	printUserEvaluations(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-user-evaluations`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
+	printUserEvaluatedEvaluations(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-user-received-evaluations`, data, {
 			responseType: 'blob',
 			observe: 'response',
 		});

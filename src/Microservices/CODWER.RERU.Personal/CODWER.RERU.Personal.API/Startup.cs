@@ -26,6 +26,7 @@ using NSwag.Generation.Processors.Security;
 using System;
 using System.Text;
 using CODWER.RERU.Personal.Application.CronJobs;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using Hangfire.PostgreSql;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
@@ -118,7 +119,7 @@ namespace CODWER.RERU.Personal.API
             //{ 
 
             services.AddHangfire(config =>
-                config.UsePostgreSqlStorage(Configuration.GetConnectionString("Default")));
+                config.UsePostgreSqlStorage(Configuration.GetConnectionString(ConnectionString.Personal)));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext appDbContext)

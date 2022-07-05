@@ -161,6 +161,25 @@ export class AppComponent {
       </svg>`,
 		},
 		{
+			permission: 'P03000601',
+			type: SidebarItemType.ITEM,
+			url: '/evaluations',
+			name: '',
+			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+			width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+			<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+			  <rect x="0" y="0" width="24" height="24" />
+			  <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,
+			  9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,
+			  5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000" />
+			  <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,
+			  21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,
+			  15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z"
+			  fill="#000000" opacity="0.3" />
+			</g>
+		  </svg>`,
+		},
+		{
 			permission: 'P03000901',
 			type: SidebarItemType.ITEM,
 			url: '/statistics',
@@ -265,6 +284,13 @@ export class AppComponent {
 			</svg>`,
 		},
 		{
+			// permission: 'P03001201',
+			type: SidebarItemType.ITEM,
+			url: '/required-documents',
+			name: '',
+			icon: `<i class="fa far fa-file-alt icon-lg"></i>`,
+		},
+		{
 			permissions: ['P03000001'],
 			type: SidebarItemType.SECTION,
 			url: '',
@@ -326,6 +352,7 @@ export class AppComponent {
 			this.translate.get('sidebar.test'),
 			this.translate.get('solicited-test.solicited-tests'),
 			this.translate.get('verify-test.title'),
+			this.translate.get('evaluations.evaluations'),
 			this.translate.get('statistics.statistics'),
 			this.translate.get('sidebar.events'),
 			this.translate.get('locations.locations'),
@@ -335,9 +362,10 @@ export class AppComponent {
 			this.translate.get('sidebar.documents-template'),
 			this.translate.get('sidebar.administration'),
 			this.translate.get('sidebar.positions'),
+			this.translate.get('sidebar.required-documents'),
 			this.translate.get('faq.help'),
 			this.translate.get('faq.faq'),
-		]).subscribe(([home, activities, settings, categories, questions, tests, test, solicitedTest, verifyTest, statistic, event, location, events, plan, documentsManagement, documentsTemplate, administration, position, help, faq]) => {
+		]).subscribe(([home, activities, settings, categories, questions, tests, test, solicitedTest, verifyTest, evaluations, statistic, event, location, events, plan, documentsManagement, documentsTemplate, administration, position, requiredDocuments, help, faq]) => {
 			this.sidebarItems[0].name = home;
 			this.sidebarItems[1].name = activities;
 			this.sidebarItems[2].name = settings;
@@ -347,17 +375,19 @@ export class AppComponent {
 			this.sidebarItems[6].name = test;
 			this.sidebarItems[7].name = solicitedTest;
 			this.sidebarItems[8].name = verifyTest;
-			this.sidebarItems[9].name = statistic;
-			this.sidebarItems[10].name = event;
-			this.sidebarItems[11].name = location;
-			this.sidebarItems[12].name = events;
-			this.sidebarItems[13].name = plan;
-			this.sidebarItems[14].name = documentsManagement;
-			this.sidebarItems[15].name = documentsTemplate;
-			this.sidebarItems[16].name = administration;
-			this.sidebarItems[17].name = position;
-			this.sidebarItems[18].name = help;
-			this.sidebarItems[19].name = faq;
+			this.sidebarItems[9].name = evaluations;
+			this.sidebarItems[10].name = statistic;
+			this.sidebarItems[11].name = event;
+			this.sidebarItems[12].name = location;
+			this.sidebarItems[13].name = events;
+			this.sidebarItems[14].name = plan;
+			this.sidebarItems[15].name = documentsManagement;
+			this.sidebarItems[16].name = documentsTemplate;
+			this.sidebarItems[17].name = administration;
+			this.sidebarItems[18].name = position;
+			this.sidebarItems[19].name = requiredDocuments;
+			this.sidebarItems[20].name = help;
+			this.sidebarItems[21].name = faq;
 		});
 	}
 

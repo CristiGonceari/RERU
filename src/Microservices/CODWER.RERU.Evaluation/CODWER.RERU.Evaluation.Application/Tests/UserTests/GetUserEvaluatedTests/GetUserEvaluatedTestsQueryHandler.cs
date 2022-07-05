@@ -6,6 +6,7 @@ using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluatedTests
@@ -27,8 +28,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluatedTes
                 .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Event)
-                .Where(t => t.EvaluatorId == request.UserId || 
-                            _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == request.UserId))
+                .Where(t => (t.EvaluatorId == request.UserId ||
+                             _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == request.UserId)) && 
+                            t.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .AsQueryable();
             
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(userTests, request);

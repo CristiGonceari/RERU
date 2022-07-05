@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Identity.Context;
 using CVU.ERP.Identity.Models;
 using IdentityServer4;
@@ -44,7 +45,7 @@ namespace CODWER.RERU.Identity.Web
             services.AddControllersWithViews();
 
             services.AddDbContext<IdentityDbContext>(options =>
-                        options.UseNpgsql(Configuration.GetConnectionString("Default"),
+                        options.UseNpgsql(Configuration.GetConnectionString(ConnectionString.Identity),
                             b => b.MigrationsAssembly(typeof(IdentityDbContext).GetTypeInfo().Assembly.GetName().Name)));
 
             services.AddIdentity<ERPIdentityUser, IdentityRole>()

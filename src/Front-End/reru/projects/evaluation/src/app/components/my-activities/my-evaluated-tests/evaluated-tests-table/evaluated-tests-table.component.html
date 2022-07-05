@@ -1,6 +1,4 @@
-<app-event-calendar 
-    (onDatePicked)="getListByDate($event)" 
-    (listOfDates)="getUserTests($event)"
+<app-event-calendar (onDatePicked)="getListByDate($event)" (listOfDates)="getUserTests($event)"
     (listOfCountedEvents)="getListOfCoutedTests($event)">
 </app-event-calendar>
 <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
@@ -86,17 +84,13 @@
                                     translate}}</span>
                             </span>
                         </td>
-                        <td>
-                            <button *ngIf="test.testStatus == enum.InProgress" class="btn btn-light-success"
-                                (click)="getTestById(test.id)">
-                                {{'button.continue' | translate}}
-                            </button>
-                            <button *ngIf="test.testStatus == enum.Programmed || test.testStatus == enum.AlowedToStart"
-                                class="btn btn-light-success" [routerLink]="['../start-test', test.id]">
-                                {{'button.start-test' | translate}}
+                        <td >
+                            <button *ngIf="test.testStatus === enum.Terminated"
+                                [routerLink]="['../../tests/verify-test', test.id]" class="btn btn-light-success">
+                                {{ 'button.verify' | translate }}
                             </button>
                             <button
-                                *ngIf="test.viewTestResult && (test.result == resultEnum.NotPassed || test.result == resultEnum.Passed)"
+                                *ngIf="test.testStatus === enum.Verified"
                                 class="btn btn-light-success" [routerLink]="['../test-result', test.id]">
                                 {{'tests.view' | translate}}
                             </button>
@@ -116,14 +110,12 @@
 
     <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
         *ngIf="selectedDay == null" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
-        [size]="pagedSummary.pageSize"
-        (sizeChange)="getUserTests({ page: 1, itemsPerPage: $event })"
+        [size]="pagedSummary.pageSize" (sizeChange)="getUserTests({ page: 1, itemsPerPage: $event })"
         (pageChange)="getUserTests({ page: $event, itemsPerPage: pagedSummary })">
     </div>
     <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
         *ngIf="selectedDay != null" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
-        [size]="pagedSummary.pageSize"
-        (sizeChange)="getListByDate({ page: 1, itemsPerPage: $event })"
+        [size]="pagedSummary.pageSize" (sizeChange)="getListByDate({ page: 1, itemsPerPage: $event })"
         (pageChange)="getListByDate({ page: $event, itemsPerPage: pagedSummary })">
     </div>
 </div>

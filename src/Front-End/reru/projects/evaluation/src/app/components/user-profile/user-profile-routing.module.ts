@@ -7,6 +7,8 @@ import { UserPollsComponent } from './user-polls/user-polls.component';
 import { UserProfileComponent } from './user-profile.component';
 import { UserSolicitedTestsComponent } from './user-solicited-tests/user-solicited-tests.component';
 import { UserTestsComponent } from './user-tests/user-tests.component';
+import { UserEvaluationsComponent } from './user-evaluations/user-evaluations.component';
+import { UserReceivedEvaluationsComponent } from './user-received-evaluations/user-received-evaluations.component';
 
 const routes: Routes = [
   {
@@ -20,6 +22,8 @@ const routes: Routes = [
       { path: 'user-polls', component: UserPollsComponent },
       { path: 'evaluated-tests', component: UserEvaluatedTestsComponent },
       { path: 'solicited-tests', component: UserSolicitedTestsComponent },
+      { path: 'user-evaluations', component: UserEvaluationsComponent },
+      { path: 'user-received-evaluations', component: UserReceivedEvaluationsComponent },
     ]
   }
 ];

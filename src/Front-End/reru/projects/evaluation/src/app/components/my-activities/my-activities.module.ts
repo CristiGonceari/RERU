@@ -24,6 +24,7 @@ import { MySolicitedTestsComponent } from './my-solicited-tests/my-solicited-tes
 import { SolicitedTestsTableComponent } from './my-solicited-tests/solicited-tests-table/solicited-tests-table.component';
 import { AddEditSolicitedTestComponent } from './my-solicited-tests/add-edit-solicited-test/add-edit-solicited-test.component';
 import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-datetime';
+import { MyEvaluationsComponent } from './my-evaluations/my-evaluations.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-dat
     MySolicitedTestsComponent,
     SolicitedTestsTableComponent,
     AddEditSolicitedTestComponent,
+    MyEvaluationsComponent,
   ],
   imports: [
     CommonModule,

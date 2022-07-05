@@ -1,0 +1,134 @@
+<app-page-title title="{{ 'evaluations.manage-evaluations' | translate }}"
+    subTitle="{{ 'evaluations.view-evaluation' | translate }}">
+</app-page-title>
+
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+    [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<div *ngIf="!isLoading" class="content main-content content-bg" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="card card-custom gutter-b w-100">
+                <div class="card-header font-size-lg">
+                    <div class="d-flex align-items-center">
+                        <span class="text-muted mr-3">{{'evaluations.evaluation' | translate}}:</span>
+                        <span class="mb-0 h4">{{testData.testTemplateName}}</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="text-muted mr-3">{{'verify-test.student' | translate}}:</span>
+                        <span class="mb-0 h4">{{testData.userName}} </span>
+                        <span class="text-dark-50 font-size-lg font-weight-light ml-2"> (idnp: {{testData.idnp}})
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="text-muted mr-3">{{'verify-test.result' | translate}}:</span>
+                        <span class="mb-0 h4" *ngIf="result == 1">{{'statuses.passed' | translate}}</span>
+                        <span class="mb-0 h4" *ngIf="result == 2">{{'statuses.not-passed' | translate}}</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="data-container">
+                        <span *ngIf="questionType == enum.HashedAnswer" class="font-size-lg">{{'verify-test.your-answer' | translate}}:</span>
+                        <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'"
+                            [width]="'3rem'" [colorClass]="'text-primary'">
+                        </app-loading-spinner>
+                        <div *ngIf="!isLoadingMedia" class="data-container mb-7 bg-gray-100 text-center rounded p-7">
+                            <p class="font-size-h2" [innerHTML]="question | safeHtml">
+                            </p>
+                            <div *ngIf="fileId">
+                                <app-get-media-file [fileId]="fileId"></app-get-media-file>
+                            </div>
+                        </div>
+                        <div *ngIf="questionType == enum.FreeText">
+                            <span class="font-size-lg">{{'verify-test.answer' | translate}}:</span>
+                            <p class="border rounded border-secondary p-7 my-7">{{answer}}</p>
+                        </div>
+                        <div class="container-fluid"
+                            *ngIf="questionType == enum.MultipleAnswers || questionType == enum.OneAnswer">
+                            <span class="h4">{{'tests.options' | translate}}:</span>
+                            <div *ngFor="let item of options"
+                                class="d-flex border border-secondary rounded d-flex py-3 my-5"
+                                [class.bg-successTransparent]="item.isSelected">
+                                <label class="px-4 checkbox checkbox-lg checkbox-inline" style="pointer-events: none;">
+                                    <input type="checkbox" value="{{ item.id }}" name="option"
+                                        [checked]="item.isSelected" />
+                                    <span [class.bg-success]="item.isSelected"></span>
+                                </label>
+                                {{ item.answer }}
+                                <div class="form-group row align-items-center">
+                                    <div class="col-lg-6 col-xl-3 w-100 d-flex">
+                                        <div *ngIf="item.optionMediaFileId">
+                                            <app-get-media-file [fileId]="item.optionMediaFileId">
+                                            </app-get-media-file>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-fluid"
+                            *ngIf="questionType == enum.MultipleAnswers || questionType == enum.OneAnswer">
+                            <div *ngIf="showNegativeMessage">
+                                <p class="text-muted">
+                                    {{'message.negative-message' | translate}}
+                                </p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-flex flex-row-reverse">
+                                <app-confirm-button class="btn" *ngIf="index != count" (handle)="next()"
+                                    [value]="'verify-test.next-question' | translate">
+                                </app-confirm-button>
+                                <button class="btn btn-light" *ngIf="index == count" (click)="close()">
+                                    {{'button.close' | translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mx-auto">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap mb-7">
+                        <div class="d-flex flex-wrap">
+                            <button class="btn btn-icon btn-light page-link" (click)="processTestQuestion(index - 1)"
+                                [disabled]="index === 1">
+                                <span class="svg-icon svg-icon-primary svg-icon-1x">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <polygon points="0 0 24 0 24 24 0 24" />
+                                            <path
+                                                d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
+                                                fill="#000000" fill-rule="nonzero"
+                                                transform="translate(12.000003, 11.999999) scale(-1, 1) rotate(-270.000000) translate(-12.000003, -11.999999) " />
+                                        </g>
+                                    </svg>
+                                </span>
+                            </button>
+
+                            <button class="btn btn-icon page-link" *ngFor="let page of pager"
+                                (click)="processTestQuestion(page)" [class.active-page]="page === index">
+                                {{page}}
+                            </button>
+
+                            <button class="btn btn-icon btn-light page-link" (click)="processTestQuestion(index + 1)"
+                                [disabled]="index === testData.questionCount">
+                                <span class="svg-icon svg-icon-primary svg-icon-1x">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <polygon points="0 0 24 0 24 24 0 24" />
+                                            <path
+                                                d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
+                                                fill="#000000" fill-rule="nonzero"
+                                                transform="translate(12.000003, 11.999999) rotate(-270.000000) translate(-12.000003, -11.999999) " />
+                                        </g>
+                                    </svg>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

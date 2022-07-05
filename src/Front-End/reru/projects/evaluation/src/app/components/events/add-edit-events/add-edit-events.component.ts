@@ -98,7 +98,6 @@ export class AddEditEventsComponent implements OnInit {
 				})
 			};
 		}
-		
 	}
 
 	add(): void {

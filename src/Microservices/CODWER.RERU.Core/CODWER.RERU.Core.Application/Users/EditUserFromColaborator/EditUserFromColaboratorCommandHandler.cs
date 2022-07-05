@@ -8,10 +8,9 @@ using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Logging;
-using CVU.ERP.Module.Application.Clients;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using RERU.Data.Entities;
-using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Users.EditUserFromColaborator
@@ -20,22 +19,20 @@ namespace CODWER.RERU.Core.Application.Users.EditUserFromColaborator
     {
         private readonly IEnumerable<IIdentityService> _identityServices;
         private readonly ILoggerService<EditUserFromColaboratorCommandHandler> _loggerService;
-        private readonly IEvaluationClient _evaluationClient;
         private readonly IMapper _mapper;
         private readonly AppDbContext _appDbContext;
 
         public EditUserFromColaboratorCommandHandler(ICommonServiceProvider commonServiceProvider,
             IEnumerable<IIdentityService> identityServices,
             ILoggerService<EditUserFromColaboratorCommandHandler> loggerService,
-            IEvaluationClient evaluationClient,
-            IMapper mapper, AppDbContext appDbContext)
+            IMapper mapper,
+            IConfiguration configuration)
             : base(commonServiceProvider)
         {
             _identityServices = identityServices;
             _loggerService = loggerService;
-            _evaluationClient = evaluationClient;
             _mapper = mapper;
-            _appDbContext = appDbContext;
+            _appDbContext = AppDbContext.NewInstance(configuration);
         }
 
         public async Task<int> Handle(EditUserFromColaboratorCommand request, CancellationToken cancellationToken)

@@ -2,12 +2,12 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Core.Application.Common.Providers;
-using CODWER.RERU.Core.Data.Persistence.Context;
 using CODWER.RERU.Core.Data.Persistence.Helpers;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Providers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Module.Providers
@@ -19,10 +19,10 @@ namespace CODWER.RERU.Core.Application.Module.Providers
 
         private const string DEFAULT_IDENTITY_SERVICE = "local";
 
-        public CoreApplicationUserProvider(ICommonServiceProvider commonServiceProvider)
+        public CoreApplicationUserProvider(IMapper mapper, IConfiguration configuration)
         {
-            _appDbContext = commonServiceProvider.AppDbContext;
-            _mapper = commonServiceProvider.Mapper;
+            _appDbContext = AppDbContext.NewInstance(configuration);
+            _mapper = mapper;
         }
 
         public async Task<ApplicationUser> Get(string id, string identityProvider = null)

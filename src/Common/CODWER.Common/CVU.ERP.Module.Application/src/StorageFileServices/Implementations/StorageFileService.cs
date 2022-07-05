@@ -13,6 +13,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using RERU.Data.Persistence.Context;
 using File = CVU.ERP.StorageService.Entities.File;
 
 namespace CVU.ERP.Module.Application.StorageFileServices.Implementations
@@ -22,9 +26,9 @@ namespace CVU.ERP.Module.Application.StorageFileServices.Implementations
         private readonly StorageDbContext _appDbContext;
         private readonly MinioClient _minio;
 
-        public StorageFileService(StorageDbContext appDbContext, IOptions<MinioSettings> fileOptions)
+        public StorageFileService(IOptions<MinioSettings> fileOptions, IConfiguration configuration)
         {
-            _appDbContext = appDbContext;
+            _appDbContext = StorageDbContext.NewInstance(configuration);
             _minio = new MinioClient(fileOptions.Value.Endpoint, fileOptions.Value.AccessKey, fileOptions.Value.SecretKey); ;
         }
 

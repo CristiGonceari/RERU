@@ -29,9 +29,13 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.ValidateTestTemplate
                 .Must(x => IsQuestionCountEqual(x) == true)
                 .WithErrorCode(ValidationCodes.QUESTION_COUNT_MUST_BE_EQUAL_TO_SELECTED_COUNT);
 
-            RuleFor(x => x.TestTemplateId)
-                .Must(x => IsSettings(x))
-                .WithErrorCode(ValidationCodes.EMPTY_FORMULA);
+            When(x => appDbContext.TestTemplates.First(t => t.Id == x.TestTemplateId).Mode == TestTemplateModeEnum.Test, () =>
+            {
+                RuleFor(x => x.TestTemplateId)
+                    .Must(x => IsSettings(x))
+                    .WithErrorCode(ValidationCodes.EMPTY_FORMULA);
+            });
+            
         }
 
         private bool IsSettings(int testTemplateId)

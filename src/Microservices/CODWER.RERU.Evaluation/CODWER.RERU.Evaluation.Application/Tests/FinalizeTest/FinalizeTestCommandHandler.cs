@@ -39,6 +39,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
                 .FirstAsync(x => x.Id == request.TestId);
 
             testToFinalize.TestStatus = TestStatusEnum.Terminated;
+            var autocheck = false;
 
             await _appDbContext.SaveChangesAsync();
 
@@ -50,10 +51,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
                 testToFinalize.TestStatus = TestStatusEnum.Verified;
                 await _appDbContext.SaveChangesAsync();
 
-                await SendEmailNotification(testToFinalize, true);
+                autocheck = true;
             }
 
-            await SendEmailNotification(testToFinalize, false);
+            if (testToFinalize.TestTemplate.Mode == TestTemplateModeEnum.Test)
+            {
+                await SendEmailNotification(testToFinalize, autocheck);
+            }
 
             return Unit.Value;
         }

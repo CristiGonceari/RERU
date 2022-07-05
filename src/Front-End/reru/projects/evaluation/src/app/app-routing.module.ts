@@ -59,6 +59,12 @@ const routes: Routes = [
 		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
 	{
+		path: 'evaluations',
+		loadChildren: () => import('./components/evaluations/evaluations.module').then(m => m.EvaluationsModule),
+		data: { permission: 'P03000601' },
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
+	},
+	{
 		path: 'polls',
 		loadChildren: () => import('./components/polls/polls.module').then(m => m.PollsModule),
 		canActivate: [AuthenticationGuard]
@@ -99,6 +105,11 @@ const routes: Routes = [
 	{
 		path: 'positions', 
 		loadChildren: () => import('./components/positions/positions.module').then(m => m.PositionsModule)
+	},
+	{
+		path: 'required-documents',
+		loadChildren: () => import('./components/required-documents/required-documents.module').then(m => m.RequiredDocumentsModule),
+		canActivate: [AuthenticationGuard]
 	},
 	{ path: '404', component: Exception404Component },
 	{ path: '**', redirectTo: '404' }

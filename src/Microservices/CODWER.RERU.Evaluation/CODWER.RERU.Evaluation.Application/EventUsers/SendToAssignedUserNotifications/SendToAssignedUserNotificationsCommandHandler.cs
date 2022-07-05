@@ -36,7 +36,7 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.SendToAssignedUserNotifi
 
             var eventUsers = _appDbContext.EventUsers
                 .Include(x => x.Event)
-                .FirstOrDefault(eu => eu.UserProfileId == request.UserProfileId);
+                .FirstOrDefault(eu => eu.UserProfileId == request.UserProfileId && eu.EventId == request.EventId);
 
             await _internalNotificationService.AddNotification(eventUsers.UserProfileId, NotificationMessages.YouWereInvitedToEventAsCandidate);
 

@@ -13,6 +13,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
     {
         public string TestTemplateName { get; set; }
         public string UserName { get; set; }
+        public string EvaluatorName { get; set; }
         public string Email { get; set; }
         public TestResultStatusEnum? ResultStatus { get; set; }
         public TestStatusEnum? TestStatus { get; set; }

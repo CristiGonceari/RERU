@@ -16,6 +16,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .Include(t => t.TestTemplate)
                 .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
+                .Include(t => t.Evaluator)
                 .Include(t => t.Location)
                 .Include(t => t.Event).ThenInclude(l => l.EventLocations).ThenInclude(l => l.Location)
                 .OrderByDescending(x => x.CreateDate)
@@ -28,6 +29,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                     Location = t.Location,
                     Event = t.Event,
                     AccumulatedPercentage = t.AccumulatedPercentage,
+                    Evaluator = t.Evaluator,
                     EvaluatorId = t.EvaluatorId,
                     EventId = t.EventId,
                     ResultStatus = t.ResultStatus,
@@ -59,7 +61,20 @@ namespace CODWER.RERU.Evaluation.Application.Tests
 
             if (!string.IsNullOrWhiteSpace(request.UserName))
             {
-                tests = tests.Where(x => x.UserProfile.FirstName.ToLower().Contains(request.UserName.ToLower()) || x.UserProfile.LastName.ToLower().Contains(request.UserName.ToLower()) || x.UserProfile.FatherName.ToLower().Contains(request.UserName.ToLower()));
+                tests = tests.Where(x => x.UserProfile.FirstName.ToLower().Contains(request.UserName.ToLower()) 
+                                         || x.UserProfile.LastName.ToLower().Contains(request.UserName.ToLower()) 
+                                         || x.UserProfile.FatherName.ToLower().Contains(request.UserName.ToLower())
+                                         || x.UserProfile.Idnp.ToLower().Contains(request.UserName.ToLower())
+                                         || x.UserProfile.Email.ToLower().Contains(request.UserName.ToLower()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.EvaluatorName))
+            {
+                tests = tests.Where(x => x.Evaluator.FirstName.ToLower().Contains(request.EvaluatorName.ToLower())
+                                         || x.Evaluator.LastName.ToLower().Contains(request.EvaluatorName.ToLower())
+                                         || x.Evaluator.FatherName.ToLower().Contains(request.EvaluatorName.ToLower())
+                                         || x.Evaluator.Idnp.ToLower().Contains(request.EvaluatorName.ToLower())
+                                         || x.Evaluator.Email.ToLower().Contains(request.EvaluatorName.ToLower()));
             }
 
             if (!string.IsNullOrWhiteSpace(request.Email))

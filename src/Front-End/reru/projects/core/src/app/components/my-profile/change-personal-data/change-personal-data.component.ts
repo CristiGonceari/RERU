@@ -18,6 +18,8 @@ export class ChangePersonalDataComponent implements OnInit {
 	isLoading: boolean = true;
 	title: string;
 	description: string;
+	startDate;
+	birthday;
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -72,13 +74,18 @@ export class ChangePersonalDataComponent implements OnInit {
 					'^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'
 				),
 			]),
+			phoneNumber: this.fb.control(oldPersonalData.phoneNumber, [
+				Validators.required,
+			]),
 		});
+		this.birthday = oldPersonalData.birthday;
 		this.isLoading = false;
 	}
 
 	parseRequest(data: PersonalData): PersonalData {
 		return {
 			...data,
+			birthday: this.birthday != null ? new Date(`${this.birthday} EDT`).toISOString() : null
 		};
 	}
 

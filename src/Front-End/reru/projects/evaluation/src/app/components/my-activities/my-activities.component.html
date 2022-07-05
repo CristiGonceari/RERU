@@ -66,6 +66,14 @@
 										</a>
 									</div> 
 									<div class="navi-item mb-2">
+										<a [routerLink]="['my-evaluations']" routerLinkActive="active" class="navi-link py-4">
+											<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
+											<span class="navi-text font-size-lg">
+												{{ 'evaluations.evaluations' | translate }}
+											</span>
+										</a>
+									</div> 
+									<div class="navi-item mb-2">
 										<a [routerLink]="['my-polls']" routerLinkActive="active" class="navi-link py-4">
 											<i class="fas fa-poll-h icon-md mr-3"></i>
 											<span class="navi-text font-size-lg">

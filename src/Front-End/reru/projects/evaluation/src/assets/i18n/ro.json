@@ -100,7 +100,8 @@
     "documents-template": "Șabloane",
     "documents-management": "Management de Șabloane",
     "administration": "Administrare",
-    "positions": "Poziții vacante"
+    "positions": "Poziții vacante",
+    "required-documents": "Documente Necesare"
   },
   "position": {
     "administration": "Administrare",
@@ -301,7 +302,7 @@
     "title": "Teste",
     "subtitle": "Gestionarea testelor",
     "new-test": "Adaugă test",
-    "add-test-template": "Adaugă șablonul",
+    "add-test-template": "Adaugă șablon",
     "update": "Modificați Testul",
     "test-option": "Opțiunile Tipului Testului",
     "test": "Test",
@@ -412,7 +413,7 @@
     "test-details": "Detaliile testului",
     "remove": "Ștergeți testul",
     "remove-msg": "Sigur doriți să ștergeți acest test?",
-    "view-test": "Vizializarea testului",
+    "view-test": "Vizualizarea testului",
     "verify-test": "Verificarea testului",
     "correct-answers": "Răspunsuri corecte",
     "point-value-not-selected": "Valoarea „Corect” sau „Incorect” nu este selectată",
@@ -439,7 +440,6 @@
     "have-a-good-day": "Bine ai venit!",
     "my-activities": "Activitățile mele",
     "my-evaluated-tests": "Testele personal evaluate"
-
   },
   "questions": {
     "count": "Număr de întrebări",
@@ -454,7 +454,7 @@
     "type": "Tipul",
     "subtitle": "Gestionarea întrebărilor",
     "new-question": "Întrebarea Nouă",
-    "add-question": "Adaugă Întrebarea",
+    "add-question": "Adaugă întrebare",
     "bulk-import": "Bulk Import",
     "search-question": "Căutare după întrebare",
     "search-category": "Căutare după categorie",
@@ -484,10 +484,23 @@
     "succes-add-msg": "Întrebarea a fost adăugată cu succes",
     "succes-add-multiple-msg": "Întrebarile au fost adăugate cu succes",
     "succes-update-msg": "Întrebarea a fost actualizată cu succes",
-    "succes-update-status-msg": "Statutul intrebării a fost actualizat",
+    "succes-update-status-msg": "Statutul a fost actualizat",
     "search-by-status": "Selecteaza statutul intrebării",
     "add-tags": "Insereaza taguri",
     "bulk-import-options-msg": "Vă rugăm să descărcați și să utilizați formularul nostru special pentru a importa opțiunile"
+  },
+  "require-documents":{
+    "document-details": "Detaliile documentului",
+    "name": "Nume",
+    "must-be-on-candidate": "Obligatoriu la candidare",
+    "document-added-msg": "Document adaugat cu success",
+    "document-edited-msg": "Document editat cu success",
+    "required-documents": "Documente necesare",
+    "add-document": "Adauga document",
+    "mandatory": "Obligatoriu",
+    "success-delete-mgs": "Documentul a fost sters cu success",
+    "want-to-del-msg": "Doriti sa stergeti acest document",
+    "document-application": "Gestionarea documentelor"
   },
   "processes":{
     "totalProcesses": "Procese Totale",
@@ -539,6 +552,7 @@
     "hashed-answer": "Completează textul",
     "Poll": "Sondaj",
     "Test": "Test",
+    "Evaluation": "Evaluare",
     "TestTemplate": "Șablon de test",
     "Voted": "Votat",
     "NotVoted": "Fără vot",
@@ -605,7 +619,7 @@
     "faq": "FAQ",
     "subtitle": "Întrebări frecvente",
     "manage-faq": "Gestionarea FAQ",
-    "new-article": "Adaugă Articol",
+    "new-article": "Adaugă articol",
     "delete-article": "Șterge Articol",
     "article-title": "Titlul Articolului",
     "name": "Nume",
@@ -617,9 +631,9 @@
     "succes-edit-msg": "Articol a fost editat cu succes"
   },
   "locations": {
-    "locations": "Locații de Testare",
-    "manage-locations": "Gestionarea locației",
-    "add-location": "Adaugă Locație",
+    "locations": "Locații de testare",
+    "manage-locations": "Gestionarea locațiilor",
+    "add-location": "Adaugă locație",
     "name": "Nume",
     "location-name": "Numele locației de testare",
     "address": "Adresa",
@@ -671,12 +685,12 @@
     "events": "Evenimente",
     "event": "Eveniment",
     "event-overview": "Vizualizarea generală a evenimentului",
-    "manage-events": "Gestionarea evenimentului",
+    "manage-events": "Gestionarea evenimentelor",
     "attach-to-event": "Atașați persoana responsabilă la eveniment",
     "attach-location-to-event": "Atașați locația la eveniment",
     "attach-location": "Atașați locația",
     "attach-user-to-event": "Atașați utilizatorul la eveniment",
-    "add-event": "Adaugă Eveniment",
+    "add-event": "Adaugă eveniment",
     "name": "Nume",
     "event-name": "Numele evenimentului",
     "location": "Locație",
@@ -735,6 +749,8 @@
     "show-user-name": "Afișează numele utilizatorului"
   },
   "test-template":{
+    "test-template": "Șablon de teste",
+    "manage-test-template": "Gestionarea șabloanelor de teste",
     "number-of-questions": "Numărul de întrebări",
     "succes-delete-msg": "Șablon de test a fost șters cu succes",
     "succes-add-msg": "Șablon de test a fost adăugat cu succes",
@@ -936,5 +952,28 @@
     "refuse-msg": "Sigur doriți să refuzați acest test solicitat?",
     "select-candidate-position": "Selectați poziția",
     "position-to-candidate": "Poziția pentru care candidați"
+  },
+  "evaluations": {
+    "evaluation": "Evaluare",
+    "evaluations": "Evaluări",
+    "manage-evaluations": "Gestionarea evaluărilor",
+    "add-evaluation": "Adaugă evaluare",
+    "add-evaluation-event-description": "Adăugarea unei evaluări care conține eveniment",
+    "add-evaluation-description": "Adăugarea unei evaluări fără eveniment",
+    "evaluated": "Evaluați",
+    "my-evaluations": "Evaluările mele",
+    "finish-evaluation": "Terminați evaluarea",
+    "finish-evaluation-msg": "Selectați calificativul final al evaluării (după selectare evaluarea se va finisa).",
+    "view-users": "Vizualizarea evaluaților",
+    "view-evaluators": "Vizualizarea evaluatorilor",
+    "view-templates": "Vizualizarea șabloanelor de teste",
+    "search-evaluator": "Caută evaluator",
+    "run-evaluation": "Rulați evaluarea",
+    "start-evaluation": "Începeți evaluarea",
+    "view-evaluation": "Vizualizarea evaluării",
+    "evaluation-data": "Introduceți detaliile evaluării și confirmați",
+    "received-evaluations": "Evaluări primite",
+    "granted-evaluations": "Evaluări acordate",
+    "performed-tests": "Teste efectuate"
   }
 }

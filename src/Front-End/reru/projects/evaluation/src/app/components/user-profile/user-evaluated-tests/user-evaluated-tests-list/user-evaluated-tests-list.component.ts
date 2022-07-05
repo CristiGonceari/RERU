@@ -16,7 +16,6 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./user-evaluated-tests-list.component.scss']
 })
 export class UserEvaluatedTestsListComponent implements OnInit {
-
   testRowList: [] = [];
   pagedSummary: PaginationModel = new PaginationModel();
   userId: number;
@@ -73,7 +72,7 @@ export class UserEvaluatedTestsListComponent implements OnInit {
 		let headersHtml = evaluatedTestTable.getElementsByTagName('th');
 		let headersDto = ['programmedTime', 'testStatus', 'testTemplateName', 'accumulatedPercentage', 'result'];
 		for (let i=0; i<headersHtml.length; i++) {
-			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
 		let printData = {
 			tableName: name,

@@ -2,6 +2,7 @@ using System.Reflection;
 using CVU.ERP.Common;
 using CVU.ERP.Common.Pagination;
 using CODWER.RERU.Core.Data.Persistence.Context;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -23,12 +24,12 @@ namespace CODWER.RERU.Core.API.Config {
             //            b => b.MigrationsAssembly (typeof (AppDbContext).GetTypeInfo ().Assembly.GetName ().FirstName)));
 
             services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("RERU"),
+                options.UseNpgsql(configuration.GetConnectionString(ConnectionString.Common),
                     b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name)));
 
             services
                 .AddDbContext<UserManagementDbContext> (options =>
-                    options.UseNpgsql(configuration.GetConnectionString ("Identity"),
+                    options.UseNpgsql(configuration.GetConnectionString (ConnectionString.Identity),
                         b => b.MigrationsAssembly (typeof (UserManagementDbContext).GetTypeInfo ().Assembly.GetName ().Name)));
 
         }

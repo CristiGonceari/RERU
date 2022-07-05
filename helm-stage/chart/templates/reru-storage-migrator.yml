@@ -21,6 +21,6 @@ spec:
         env:
         - name: TZ
           value: {{ .Values.timeZone }} 
-        - name: ConnectionStrings__Default
-          value: {{ .Values.reru_storage_migrator.database.connection_string }}   
+        - name: ConnectionStrings__Storage
+          value: {{ .Values.reru_storage_migrator.database.storage_connection_string }}   
 {{- end }}

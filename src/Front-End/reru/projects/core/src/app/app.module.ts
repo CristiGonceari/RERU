@@ -20,7 +20,6 @@ import { RolesComponent } from './components/roles/roles.component';
 import { MainComponent } from './components/main/main.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { DEFAULT_TIMEOUT, TimeoutInterceptor } from '../app/utils/specific-interceptor/timeout-intercepter';
-import { OwlDateTimeModule, OwlMomentDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';
 
 @NgModule({
 	declarations: [
@@ -53,10 +52,6 @@ import { OwlDateTimeModule, OwlMomentDateTimeModule, OwlNativeDateTimeModule } f
 		NgxDropzoneModule,
 		NgxDnDModule.forRoot(),
 		HttpClientModule,
-		OwlDateTimeModule,
-		OwlMomentDateTimeModule,
-		OwlNativeDateTimeModule,
-
 	],
 	schemas: [
 		CUSTOM_ELEMENTS_SCHEMA

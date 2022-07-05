@@ -1,40 +1,37 @@
+using System;
 using AutoMapper;
-using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
-using CVU.ERP.Module.Application.Clients;
-using CVU.ERP.Module.Application.Models.Internal;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using RERU.Data.Entities;
-using RERU.Data.Entities.Enums;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Users.CreateUser
 {
-    public class CreateUserCommandHandler : BaseHandler, IRequestHandler<CreateUserCommand, int>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
     {
         private readonly IEnumerable<IIdentityService> _identityServices;
         private readonly ILoggerService<CreateUserCommandHandler> _loggerService;
-        private readonly IEvaluationClient _evaluationClient;
+        private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
 
-        public CreateUserCommandHandler(ICommonServiceProvider commonServiceProvider,
+        public CreateUserCommandHandler(
             IEnumerable<IIdentityService> identityServices, 
             ILoggerService<CreateUserCommandHandler> loggerService, 
-            IEvaluationClient evaluationClient, 
-            IMapper mapper)
-            : base(commonServiceProvider)
+            IMapper mapper,
+            IConfiguration configuration)
         {
             _identityServices = identityServices;
             _loggerService = loggerService;
-            _evaluationClient = evaluationClient;
             _mapper = mapper;
+            _appDbContext = AppDbContext.NewInstance(configuration);
         }
 
         public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -54,8 +51,9 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
                 AccessModeEnum = (int)request.AccessModeEnum
             };
 
-            var userProfile = Mapper.Map<UserProfile>(newUser);
-            var defaultRoles = AppDbContext.Modules
+            var userProfile = _mapper.Map<UserProfile>(newUser);
+            
+            var defaultRoles = _appDbContext.Modules
                 .SelectMany(m => m.Roles.Where(r => r.IsAssignByDefault).Take(1))
                 .ToList();
 
@@ -81,8 +79,8 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
                 }
             }
 
-            AppDbContext.UserProfiles.Add(userProfile);
-            await AppDbContext.SaveChangesAsync();
+            _appDbContext.UserProfiles.Add(userProfile);
+            await _appDbContext.SaveChangesAsync();
 
             await LogAction(userProfile);
 

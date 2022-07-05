@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent
@@ -32,7 +33,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
                 .Include(t => t.Event)
-                .Where(p => p.UserProfileId == myUserProfile.Id && p.Event == null)
+                .Where(p => p.UserProfileId == myUserProfile.Id && p.Event == null && p.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .AsQueryable();
 
             var dates = new List<TestCount>();

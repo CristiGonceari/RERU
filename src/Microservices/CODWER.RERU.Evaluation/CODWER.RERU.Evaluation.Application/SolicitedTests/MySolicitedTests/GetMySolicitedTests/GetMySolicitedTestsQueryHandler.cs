@@ -28,7 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Get
         {
             var myUserProfile = await _userProfileService.GetCurrentUser();
 
-            var mySolicitedTests = _appDbContext.SolicitedTests
+            var mySolicitedTests = _appDbContext.SolicitedVacantPositions
                 .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
                 .Include(t => t.CandidatePosition)
@@ -37,7 +37,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Get
                 .OrderByDescending(x => x.Id)
                 .AsQueryable();
 
-            return await _paginationService.MapAndPaginateModelAsync<SolicitedTest, SolicitedTestDto>(mySolicitedTests, request);
+            return await _paginationService.MapAndPaginateModelAsync<SolicitedVacantPosition, SolicitedTestDto>(mySolicitedTests, request);
         }
     }
 }
