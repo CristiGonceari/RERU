@@ -13,6 +13,7 @@ export class AddUserProcessHistoryModalComponent implements OnInit {
 
   processesData: any;
   recivedData: boolean = false;
+  isRunningProcess: boolean = false;
 
   constructor(
     private activeModal: NgbActiveModal,
@@ -24,7 +25,25 @@ export class AddUserProcessHistoryModalComponent implements OnInit {
     this.processService.getProgressHistory().subscribe(res => {
       this.processesData = res.data,
       this.recivedData = true;
+      this.checkIfAreAnyNotDone(this.processesData);
     })
+  }
+
+  closeAllProcesses(){
+    this.processService.closeAllProcesses().subscribe(res => {
+      console.log("Closeres", res)
+    })
+
+    this.isRunningProcess = false;
+
+  }
+
+  checkIfAreAnyNotDone(items: any){
+    items.forEach(element => {
+      if(element.fileId == null){
+       this.isRunningProcess = true
+      }
+    });
   }
 
   close(): void {

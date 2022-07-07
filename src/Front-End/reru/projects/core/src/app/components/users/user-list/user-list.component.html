@@ -31,6 +31,10 @@
               <i class="far fa-file-excel"></i>
               {{ 'processes.history' | translate }}
             </button>
+            <button class="btn btn-light-warning font-weight-bold mr-3" (click)="userTable.startProcess()">
+              <i class="far fa-file-excel"></i>
+              startProcess
+            </button>
             <app-confirm-button class="btn mr-3" (click)="userTable.getHeaders(getTitle())">
               <i class="far fa-file-pdf text-white"></i>
               {{'button.print' | translate}}

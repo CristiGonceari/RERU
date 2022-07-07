@@ -231,7 +231,7 @@
     "succes-remove": "User profile was successfully removed!",
     "succes-edit": "User profile has been successfully updated!",
     "succes-create": "User profile has been successfully created!",
-    "please-wait": "Please wait while system add users ...",
+    "please-wait": "Please wait while system import users ...",
     "birthday": "Birthday",
     "phone": "Contact phone",
     "date-format": "Please provide a valid format ZZ.LL.AAAA"
