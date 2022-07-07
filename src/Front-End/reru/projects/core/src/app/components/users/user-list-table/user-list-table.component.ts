@@ -15,6 +15,7 @@ import { ImportUsersModalComponent } from '../../../utils/modals/import-users-mo
 import { ReferenceService } from '../../../utils/services/reference.service';
 import { saveAs } from 'file-saver';
 import { AccessModeEnum } from '../../../utils/models/access-mode.enum';
+import { ProcessService } from '../../../utils/services/process.service';
 
 @Component({
 	selector: 'app-user-list-table',
@@ -56,11 +57,18 @@ export class UserListTableComponent implements OnInit {
 		private notificationService: NotificationsService,
 		private userService: UserService,
 		private referenceService: ReferenceService,
+		private processService: ProcessService
 	) { }
 
 	ngOnInit(): void {
 		this.list();
 		this.checkPermission();
+	}
+
+	startProcess(){
+		this.userService.startAddProcess({ totalProcesses: null, processType: 1 }).subscribe(res => {
+			console.log(res)
+		})
 	}
 
 	setFilter(field: string, value): void {
@@ -201,7 +209,7 @@ export class UserListTableComponent implements OnInit {
 				this.processProgress = res.data;
 				this.toolBarValue = Math.round(this.processProgress.done * 100 / this.processProgress.total);
 			})
-		}, 10 * 300);
+		}, 10 * 1000);
 	}
 
 

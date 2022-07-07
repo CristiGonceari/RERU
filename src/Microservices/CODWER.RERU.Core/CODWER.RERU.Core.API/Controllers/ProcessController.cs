@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CVU.ERP.Module.Application.ImportProcesses.StopAllProcesses;
 
 namespace CODWER.RERU.Core.API.Controllers
 {
@@ -20,6 +21,14 @@ namespace CODWER.RERU.Core.API.Controllers
             var query = new GetProcessHistoryQuery();
 
             return await Mediator.Send(query);
+        }
+
+        [HttpGet("close")]
+        public async Task<Unit> CloseAllProcesses()
+        {
+            var command = new StopAllProcessesCommand();
+
+            return await Mediator.Send(command);
         }
     }
 }
