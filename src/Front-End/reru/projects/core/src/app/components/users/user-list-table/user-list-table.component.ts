@@ -209,7 +209,7 @@ export class UserListTableComponent implements OnInit {
 				this.processProgress = res.data;
 				this.toolBarValue = Math.round(this.processProgress.done * 100 / this.processProgress.total);
 			})
-		}, 10 * 800);
+		}, 10 * 1000);
 	}
 
 

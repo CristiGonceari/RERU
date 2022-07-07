@@ -37,7 +37,7 @@ export class UserListComponent {
               clearInterval(this.interval);
             }
           })
-        }, 10 * 800);
+        }, 10 * 1000);
       }
     })
   }
