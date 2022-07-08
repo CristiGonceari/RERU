@@ -178,14 +178,9 @@ export class UserListTableComponent implements OnInit {
 		this.isLoading = true;
 		this.isStartAddingUsers = true;
 
-		this.userService.startAddProcess({ totalProcesses: null, processType: 1 }).subscribe(res => {
-			this.processId = res.data
-
-			const interval = this.setIntervalGetProcess();
-
-			const form = new FormData();
+		const form = new FormData();
 			form.append('Data.File', data.file);
-			form.append('ProcessId', this.processId);
+			form.append('ProcessId', "1");
 			this.userService.bulkAddUsers(form).subscribe(response => {
 				if (response) {
 					const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
@@ -195,11 +190,17 @@ export class UserListTableComponent implements OnInit {
 				}
 				this.notificationService.success('Success', 'Users Imported!', NotificationUtil.getDefaultMidConfig());
 				this.isStartAddingUsers = false;
-				clearInterval(interval);
 				this.list();
 			}, () => { }, () => {
 				this.isLoading = false;
 			})
+
+		this.userService.startAddProcess({ totalProcesses: null, processType: 1 }).subscribe(res => {
+			this.processId = res.data
+
+			const interval = this.setIntervalGetProcess();
+
+			clearInterval(interval);
 		})
 	}
 
