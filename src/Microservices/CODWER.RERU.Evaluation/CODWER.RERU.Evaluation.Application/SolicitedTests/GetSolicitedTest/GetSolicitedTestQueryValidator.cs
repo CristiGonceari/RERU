@@ -12,7 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.GetSolicitedTest
         public GetSolicitedTestQueryValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.Id)
-                .SetValidator(x => new ItemMustExistValidator<SolicitedVacantPosition>(appDbContext, ValidationCodes.INVALID_SOLICITED_TEST,
+                .SetValidator(x => new ItemMustExistValidator<SolicitedVacantPosition>(appDbContext, ValidationCodes.INVALID_SOLICITED_POSITION,
                     ValidationMessages.InvalidReference));
         }
     }

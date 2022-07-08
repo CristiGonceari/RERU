@@ -5,6 +5,11 @@ namespace RERU.Data.Entities
 {
     public class RequiredDocument : SoftDeleteBaseEntity
     {
+        public RequiredDocument()
+        {
+            UserFiles = new HashSet<UserFile>();
+            RequiredDocumentPositions = new HashSet<RequiredDocumentPosition>();
+        }
         public string Name { get; set; }
         public bool Mandatory { get; set; }
 

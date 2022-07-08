@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 {
-    public class AssignDocumentsToPosition : IAssignDocumentsToPosition
+    public class AssignDocumentsAndEventsToPosition : IAssignDocumentsAndEventsToPosition
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMediator _mediator;
 
-        public AssignDocumentsToPosition(AppDbContext appDbContext, IMediator mediator)
+        public AssignDocumentsAndEventsToPosition(AppDbContext appDbContext, IMediator mediator)
         {
             _appDbContext = appDbContext;
             _mediator = mediator;
@@ -29,7 +29,6 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             foreach (var document in requiredDocuments)
             {
-
                 if (document.Value != 0)
                 {
                     await AddRequiredDocumentPosition(document.Value.Value, position.Id);
@@ -40,13 +39,30 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
                     await AddRequiredDocumentPosition(result, position.Id);
                 }
-
             }
 
             await _appDbContext.SaveChangesAsync();
         }
 
-        public async Task<int> AddRequiredDocumentCommand(AssignRequiredDocumentsDto document)
+        public async Task AssignEventToPosition(List<int> eventIds, CandidatePosition position)
+        {
+            var items = _appDbContext.EventVacantPositions.Where(x => x.CandidatePositionId == position.Id).ToList();
+
+            _appDbContext.EventVacantPositions.RemoveRange(items);
+
+            foreach (var item in eventIds.Select(id => new EventVacantPosition
+            {
+                EventId = id,
+                CandidatePositionId = position.Id
+            }))
+            {
+                await _appDbContext.EventVacantPositions.AddAsync(item);
+            }
+
+            await _appDbContext.SaveChangesAsync();
+        }
+
+        private async Task<int> AddRequiredDocumentCommand(AssignRequiredDocumentsDto document)
         {
             var requiredDocument = new AddEditRequiredDocumentsCommand
             {
@@ -60,7 +76,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             return await _mediator.Send(requiredDocument);
         }
 
-        public async Task AddRequiredDocumentPosition(int requiredDocumentId, int positionId)
+        private async Task AddRequiredDocumentPosition(int requiredDocumentId, int positionId)
         {
             var rdp = new RequiredDocumentPosition
             {

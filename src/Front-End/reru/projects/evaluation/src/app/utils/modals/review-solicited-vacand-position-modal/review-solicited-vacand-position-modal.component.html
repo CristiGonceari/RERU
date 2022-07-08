@@ -1,0 +1,44 @@
+<div class="modal-header border-0 pb-0">
+    <h3 class="modal-title">{{ userName }}</h3>
+    <h3 class="modal-title">{{ userEmail }}</h3>
+</div>
+<div class="modal-body px-7">
+    <div class="separator separator-dashed my-5"></div>
+    <div class="row ">
+        <div class="d-flex">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills" orientation="vertical">
+                <li [ngbNavItem]="0" (click)="getEmailMessage(messageEnum.Approve)">
+                    <a ngbNavLink>{{'solicited-position.approve' | translate}}</a>
+                    <ng-template ngbNavContent>
+                        <div class="mb-10">
+                            <ckeditor [editor]="Editor" [(ngModel)]="editorData" (ready)="onReady($event)"></ckeditor>
+                        </div>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="1" (click)="getEmailMessage(messageEnum.Reject)">
+                    <a ngbNavLink>{{'solicited-position.reject' | translate}}</a>
+                    <ng-template ngbNavContent>
+                        <div class="mb-10">
+                            <ckeditor [editor]="Editor" [(ngModel)]="editorData" (ready)="onReady($event)"></ckeditor>
+                        </div>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2" (click)="getEmailMessage(messageEnum.Waiting)">
+                    <a ngbNavLink>{{'solicited-position.waiting' | translate}}</a>
+                    <ng-template ngbNavContent>
+                        <div class="mb-10">
+                            <ckeditor [editor]="Editor" [(ngModel)]="editorData" (ready)="onReady($event)"></ckeditor>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+
+            <div [ngbNavOutlet]="nav" class="ms-4"></div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer border-0 pt-0">
+    <button type="button" class="btn btn-danger" (click)="dismiss()">{{'button.close' | translate}}</button>
+    <app-add-button class="btn mr-2" [value]="'button.confirm' | translate" (handle)="close()">
+    </app-add-button>
+</div>

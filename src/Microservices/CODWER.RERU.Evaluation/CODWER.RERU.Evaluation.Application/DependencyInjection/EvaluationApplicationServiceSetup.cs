@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.DependencyInjection
                 .AddScoped(typeof(IGetTestTemplateDocumentReplacedKeys), typeof(GetTestTemplateDocumentReplacedKeys))
                 .AddScoped(typeof(IGetTestDocumentReplacedKeys), typeof(GetTestDocumentReplacedKeys))
                 .AddScoped(typeof(IInternalNotificationService), typeof(InternalNotificationService))
-                .AddScoped(typeof(IAssignDocumentsToPosition), typeof(AssignDocumentsToPosition))
+                .AddScoped(typeof(IAssignDocumentsAndEventsToPosition), typeof(AssignDocumentsAndEventsToPosition))
                 .AddScoped(typeof(PlatformConfig));
 
         }

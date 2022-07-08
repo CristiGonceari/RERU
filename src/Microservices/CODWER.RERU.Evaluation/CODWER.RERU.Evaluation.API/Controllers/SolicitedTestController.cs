@@ -23,21 +23,20 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     public class SolicitedTestController : BaseController
     {
         [HttpGet]
-        public async Task<PaginatedModel<SolicitedTestDto>> GetSolicitedTests([FromQuery] GetSolicitedTestsQuery query)
+        public async Task<PaginatedModel<SolicitedCandidatePositionDto>> GetSolicitedTests([FromQuery] GetSolicitedTestsQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpGet("user-solicited-test")]
-        public async Task<PaginatedModel<SolicitedTestDto>> GetUserSolicitedTests([FromQuery] GetUserSolicitedTestsQuery query)
+        public async Task<PaginatedModel<SolicitedCandidatePositionDto>> GetUserSolicitedTests([FromQuery] GetUserSolicitedTestsQuery query)
         {
             return await Mediator.Send(query);
         }
 
-        [HttpGet("{id}")]
-        public async Task<SolicitedTestDto> GetSolicitedTest([FromRoute] int id)
+        [HttpGet("by-id")]
+        public async Task<SolicitedCandidatePositionDto> GetSolicitedTest([FromQuery] GetSolicitedTestQuery query)
         {
-            var query = new GetSolicitedTestQuery { Id = id };
             return await Mediator.Send(query);
         }
 
@@ -48,26 +47,26 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("my-solicited-tests")]
-        public async Task<PaginatedModel<SolicitedTestDto>> GetMySolicitedTests([FromQuery] GetMySolicitedTestsQuery query)
+        public async Task<PaginatedModel<SolicitedCandidatePositionDto>> GetMySolicitedTests([FromQuery] GetMySolicitedTestsQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpGet("my-solicited-test/{id}")]
-        public async Task<SolicitedTestDto> GetMySolicitedTest([FromRoute] int id)
+        public async Task<SolicitedCandidatePositionDto> GetMySolicitedTest([FromRoute] int id)
         {
             var query = new GetMySolicitedTestQuery { Id = id };
             return await Mediator.Send(query);
         }
 
         [HttpPost("add-my")]
-        public async Task<int> AddTests([FromBody] AddMySolicitedTestCommand command)
+        public async Task<AddSolicitedCandidatePositionResponseDto> AddTests([FromBody] AddMySolicitedTestCommand command)
         {
             return await Mediator.Send(command);
         }
 
         [HttpPatch("edit-my")]
-        public async Task<int> UpdateEvent([FromBody] EditMySolicitedTestCommand command)
+        public async Task<AddSolicitedCandidatePositionResponseDto> UpdateEvent([FromBody] EditMySolicitedTestCommand command)
         {
             return await Mediator.Send(command);
         }

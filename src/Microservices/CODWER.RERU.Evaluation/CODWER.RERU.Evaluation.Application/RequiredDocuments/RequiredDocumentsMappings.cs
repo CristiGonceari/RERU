@@ -14,7 +14,11 @@ namespace CODWER.RERU.Evaluation.Application.RequiredDocuments
                 .ForMember(x => x.Id, opts => opts.Ignore());
                 ;
 
-            CreateMap<RequiredDocument, RequiredDocumentDto>();
+            CreateMap<RequiredDocument, RequiredDocumentDto>()
+                .ForMember(x => x.Id, opts => opts.MapFrom(e => e.Id))
+                .ForMember(x => x.Name, opts => opts.MapFrom(e => e.Name))
+                .ForMember(x => x.Mandatory, opts => opts.MapFrom(e => e.Mandatory))
+                ;
 
             CreateMap<RequiredDocument, SelectItem>()
                 .ForMember(x => x.Value, opts => opts.MapFrom(e => e.Id))

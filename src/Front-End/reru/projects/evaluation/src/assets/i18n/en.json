@@ -367,7 +367,7 @@
     "tests-were-programmed":"Tests were successfully programmed",
     "finish-test-msg": "Do you want to finish test?",
     "stop-test-msg": "Are you sure you want to stop this test?",
-    "please-wait": "Please wait while system add tests for users ..."
+    "please-wait": "Please wait while system import tests for users ..."
   },
   "verify-test": {
     "title": "Tests",
@@ -571,6 +571,7 @@
     "New": "New",
     "Refused": "Refused",
     "Approved": "Approved",
+    "Wait": "Waiting",
     "approve": "Approve",
     "refuse": "Refuse",
     "NoResult": "No result",
@@ -800,6 +801,17 @@
   "select-format":{
     "please-select-format": "Please select format"
   },
+  "solicited-position":{
+    "solicited-positions": "Solictited positions",
+    "attached-documents": "Attached documents",
+    "required-documents": "Required documents",
+    "review" : "Review",
+    "reject" : "Reject",
+    "approve" : "Approve",
+    "waiting" : "Waiting",
+    "phone-number" : "Phone"
+  },
+
   "message-code": {
     "MAP0000001": "Unauthenticated application request",
     "MAP0000002": "Unauthorized request. You do not have permmissions",
@@ -934,20 +946,20 @@
     "title": "User Guide"
   },
   "solicited-test": {
-    "solicited-tests": "Solicited tests",
-    "my-solicited-tests": "My solicited tests",
+    "solicited-tests": "Solicited position",
+    "my-solicited-tests": "My solicited postion",
     "solicited-time": "Solicited time",
-    "add-test": "Solicit test",
-    "remove": "Remove solicited test",
-    "remove-msg": "Are you sure you want to remove this solicited test?",
-    "succes-remove-msg": "Solicited test was successfully deleted",
-    "subtitle": "Manage solicited tests",
-    "test-data": "Enter the solicited test details and confirm",
-    "test-details": "Solicited test details",
-    "succes-add-msg": "Solicited test was successfully added",
-    "succes-edit-msg": "Solicited test was successfully edited",
+    "add-test": "Solicit position",
+    "remove": "Remove solicited position",
+    "remove-msg": "Are you sure you want to remove this solicited position?",
+    "succes-remove-msg": "Solicited position was successfully deleted",
+    "subtitle": "Manage solicited positions",
+    "test-data": "Enter the solicited position details and confirm",
+    "test-details": "Solicited position details",
+    "succes-add-msg": "Solicited position was successfully added",
+    "succes-edit-msg": "Solicited position was successfully edited",
     "change-status": "Change status",
-    "refuse-msg": "Are you sure you want to refuse this solicited test?",
+    "refuse-msg": "Are you sure you want to refuse this solicited position?",
     "select-candidate-position": "Select Position",
     "position-to-candidate": "Position to Candidate"
   },

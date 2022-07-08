@@ -10,6 +10,7 @@ import { PositionsRoutingModule } from './positions-routing.module';
 import { AddEditPositionComponent } from './add-edit-position/add-edit-position.component';
 import { TagInputModule } from 'ngx-chips';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [AddEditPositionComponent],
@@ -25,10 +26,11 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     PositionsRoutingModule,
     NgbModule,
     TagInputModule,
-  ],
+    MatSelectModule
+    ],
   providers: [
     TranslatePipe,
     Location
-  ],
+  ]
 })
 export class PositionsModule { }

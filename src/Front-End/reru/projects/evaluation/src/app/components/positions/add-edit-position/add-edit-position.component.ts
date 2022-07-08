@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
@@ -9,6 +9,10 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { CandidatePositionModel } from '../../../utils/models/candidate-position.model';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { ReferenceService } from '../../../utils/services/reference/reference.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AttachUserModalComponent } from '../../../utils/components/attach-user-modal/attach-user-modal.component';
+import { SelectItem } from '../../../utils/models/select-item.model';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
 	selector: 'app-add-edit-position',
@@ -17,16 +21,27 @@ import { ReferenceService } from '../../../utils/services/reference/reference.se
 })
 export class AddEditPositionComponent implements OnInit {
 	isLoading: boolean = true;
+
 	positionId: number;
 	positionForm: FormGroup;
 	positionName: string;
+
 	title: string;
-	placeHolderString = '+ Tag'
-	items = [{ display: 'Item1', value: 0 }];
-	description: string;
+
+	placeHolderString = '+ Tag';
+
+	items = [];
+	eventList = [];
+
+	eventSelected: any[] = [];
 	tags: any[] = [];
 
+	description: string;
 
+	event = new SelectItem();
+	eventsList: any[] = [];
+
+	exceptUserIds = [];
 
 	constructor(
 		private fb: FormBuilder,
@@ -35,7 +50,9 @@ export class AddEditPositionComponent implements OnInit {
 		private route: ActivatedRoute,
 		private positionService: CandidatePositionService,
 		private location: Location,
-		private referenceService: ReferenceService
+		private referenceService: ReferenceService,
+		private modalService: NgbModal,
+
 	) { }
 
 	ngOnInit(): void {
@@ -46,6 +63,8 @@ export class AddEditPositionComponent implements OnInit {
 
 		this.onTextChange("");
 
+		this.getEvents();
+
 		this.route.params.subscribe(params => {
 			if (params.id) {
 				this.positionId = params.id;
@@ -54,6 +73,11 @@ export class AddEditPositionComponent implements OnInit {
 					res.data.requiredDocuments.forEach(element => {
 						this.tags.push({ display: element.label, value: +element.value })
 					});
+
+					res.data.events.forEach(el => {
+						this.eventSelected.push({ display: el.label, value: +el.value })
+					})
+					
 				})
 				this.isLoading = false;
 			} else {
@@ -63,24 +87,39 @@ export class AddEditPositionComponent implements OnInit {
 		});
 	}
 
-
-
 	initForm(data?): void {
 		this.positionForm = this.fb.group({
 			name: this.fb.control(data?.name || null, [Validators.required]),
 			isActive: this.fb.control(data?.isActive || false)
 		});
+		
+	}
+
+	getEvents() {
+		this.referenceService.getEvents().subscribe(res => {
+			if (res && res.data) {
+				res.data.forEach(el => {
+					this.eventList.push({ display: el.eventName, value: +el.eventId });
+				});
+			}
+		})
 	}
 
 	addRole(): void {
 		this.isLoading = true;
 
 		const tagsArr = this.tags.map(obj => typeof obj.value !== 'number' ? { ...obj, value: 0 } : obj);
+		const eventArr = [];
+
+		this.eventSelected.forEach(x => {
+			if (typeof x.value !== 'string') eventArr.push(x);
+		  })
 
 		let addPositionModel = {
 			name: this.positionForm.value.name,
 			isActive: this.positionForm.value.isActive,
-			requiredDocuments: tagsArr
+			requiredDocuments: tagsArr,
+			eventIds: eventArr.map(obj => obj.value)
 		} as CandidatePositionModel;
 		this.positionService.create(addPositionModel).subscribe(
 			() => {
@@ -102,12 +141,18 @@ export class AddEditPositionComponent implements OnInit {
 		this.isLoading = true;
 
 		const tagsArr = this.tags.map(obj => typeof obj.value !== 'number' ? { ...obj, value: 0 } : obj);
+		const eventArr = [];
+
+		this.eventSelected.forEach(x => {
+			if (typeof x.value !== 'string') eventArr.push(x);
+		  })
 
 		let editPositionModel = {
 			id: +this.positionId,
 			name: this.positionForm.value.name,
 			isActive: this.positionForm.value.isActive,
-			requiredDocuments: tagsArr
+			requiredDocuments: tagsArr,
+			eventIds: eventArr.map(obj => obj.value)
 		} as CandidatePositionModel;
 		this.positionService.editPosition(editPositionModel).subscribe(
 			() => {
@@ -125,6 +170,7 @@ export class AddEditPositionComponent implements OnInit {
 			}
 		);
 	}
+
 
 	submit(): void {
 		if (this.positionId) {

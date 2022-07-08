@@ -16,14 +16,14 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.EditCandidatePos
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly ILoggerService<EditCandidatePositionCommand> _loggerService;
-        private readonly IAssignDocumentsToPosition _assignDocumentsToPosition;
+        private readonly IAssignDocumentsAndEventsToPosition _assignDocumentsAndEventsToPosition;
 
-        public EditCandidatePositionCommandHandler(AppDbContext appDbContext, IMapper mapper, ILoggerService<EditCandidatePositionCommand> loggerService, IAssignDocumentsToPosition assignDocumentsToPosition)
+        public EditCandidatePositionCommandHandler(AppDbContext appDbContext, IMapper mapper, ILoggerService<EditCandidatePositionCommand> loggerService, IAssignDocumentsAndEventsToPosition assignDocumentsAndEventsToPosition)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _loggerService = loggerService;
-            _assignDocumentsToPosition = assignDocumentsToPosition;
+            _assignDocumentsAndEventsToPosition = assignDocumentsAndEventsToPosition;
         }
         public async Task<Unit> Handle(EditCandidatePositionCommand request, CancellationToken cancellationToken)
         {
@@ -32,7 +32,9 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.EditCandidatePos
             _mapper.Map(request.Data, positionToEdit);
             await _appDbContext.SaveChangesAsync();
 
-            await _assignDocumentsToPosition
+            await _assignDocumentsAndEventsToPosition.AssignEventToPosition(request.Data.EventIds, positionToEdit);
+
+            await _assignDocumentsAndEventsToPosition
                 .AssignRequiredDocumentsToPosition(request.Data.RequiredDocuments, positionToEdit);
 
             await LogAction(positionToEdit);

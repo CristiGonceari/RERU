@@ -153,7 +153,7 @@
         public static string INVALID_TEST_TEMPLATE_QUESTION_CATEGORY = "03002002";
 
         //solicited tests
-        public static string INVALID_SOLICITED_TEST = "03002101";
+        public static string INVALID_SOLICITED_POSITION = "03002101";
         public static string ONLY_NEW_SOLICITED_TEST_CAN_BE_UPDATED = "03002102";
         public static string ONLY_NEW_SOLICITED_TEST_CAN_BE_DELETED = "03002103";
 
@@ -171,5 +171,8 @@
         //required documents
         public static string MANDATORY_EMPTY = "03002109";
         public static string INVALID_REQUIRED_DOCUMENT = "03002110";
+
+        //solicited vacant position
+        public static string INVALID_SOLICITED_VACANT_POSITION = "03002200";
     }
 }

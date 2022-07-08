@@ -20,7 +20,7 @@ import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-dat
     SolicitedTestsComponent,
     SolicitedTestListComponent,
     SolicitedTestsTableComponent,
-    ApproveSolicitedTestComponent
+    ApproveSolicitedTestComponent,
   ],
   imports: [
     CommonModule,

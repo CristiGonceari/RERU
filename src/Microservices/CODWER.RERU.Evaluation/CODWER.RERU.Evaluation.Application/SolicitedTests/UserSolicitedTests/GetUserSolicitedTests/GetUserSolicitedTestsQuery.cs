@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedTests.GetUserSolicitedTests
 {
-    public  class GetUserSolicitedTestsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<SolicitedTestDto>>
+    public  class GetUserSolicitedTestsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<SolicitedCandidatePositionDto>>
     {
         public int UserId { get; set; }
     }

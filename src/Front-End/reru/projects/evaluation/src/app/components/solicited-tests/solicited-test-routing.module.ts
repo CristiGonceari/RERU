@@ -5,7 +5,7 @@ import { SolicitedTestListComponent } from './solicited-test-list/solicited-test
 
 const routes: Routes = [
   { path: '', component: SolicitedTestListComponent },
-  { path: 'approve/:id', component: ApproveSolicitedTestComponent },
+  { path: 'review/:id/:positionId', component: ApproveSolicitedTestComponent },
 ];
 
 @NgModule({

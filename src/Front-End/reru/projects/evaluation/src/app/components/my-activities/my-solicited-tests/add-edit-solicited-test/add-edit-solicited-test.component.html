@@ -1,8 +1,9 @@
-<app-page-title title="{{ 'solicited-test.subtitle' | translate }}" subTitle="{{ 'solicited-test.test-data' | translate }}">
+<app-page-title title="{{ 'Gestionare pozitiilor solicitate' | translate }}"
+    subTitle="{{ 'Introduceți detaliile pozitiiei solicitat și confirmați' | translate }}">
 </app-page-title>
 
 <app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
-  [colorClass]="'text-primary'">
+    [colorClass]="'text-primary'">
 </app-loading-spinner>
 
 <div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -16,67 +17,117 @@
                             <div class="col-xl-12 col-xxl-7">
                                 <div class="form" id="kt_contact_add_form">
                                     <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
-                                        <h3 class="mb-10 font-weight-bold text-dark">{{'solicited-test.test-details' |
+                                        <h3 class="mb-10 font-weight-bold text-dark">{{'Detaliile pozitiei solicitate' |
                                             translate}}</h3>
                                         <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="form-group row">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">
-                                                        {{'events.event' | translate}}</label>
+                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{
+                                                        'solicited-test.position-to-candidate' | translate }}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <select class="form-control form-control-lg form-control-solid"
-                                                            (change)="getActiveTestTemplate()" [(ngModel)]="event.value"
-                                                            name="searchEvent">
-                                                            <option value="">{{'questions.select' | translate}}</option>
-                                                            <option *ngFor="let item of eventsList"
-                                                                [ngValue]="item.eventId">
-                                                                {{ item.eventName }}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'verify-test.select-test-type' | translate}}</label>
-                                                    <div class="col-lg-9 col-xl-9">
-                                                        <select class="form-control form-control-lg form-control-solid"
-                                                            name="test" [(ngModel)]="testTemplate.value">
-                                                            <option value="">{{'questions.select' | translate}}</option>
-                                                            <option *ngFor="let testTemplate of selectActiveTests"
-                                                                [ngValue]="testTemplate.testTemplateId">
-                                                                {{testTemplate.testTemplateName}}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{ 'solicited-test.position-to-candidate' | translate }}</label>
-                                                    <div class="col-lg-9 col-xl-9">
-                                                        <select class="form-control form-control-lg form-control-solid"
-                                                            name="selectedStatus" id="selectedStatus" [(ngModel)]="candidatePositions.value">
-                                                            <option class="default-option text-muted" selected value="">{{ 'solicited-test.select-candidate-position' | translate }}
-                                                            </option>
-                                                            <option *ngFor="let item of candidatePositions" [value]="item.value">
+                                                            name="selectedStatus" id="selectedStatus"
+                                                            [(ngModel)]="candidatePositions.value"
+                                                            (change)="getEventsAndDocuments()">
+                                                            <option *ngFor="let item of candidatePositions" selected
+                                                                [ngValue]="item.value">
                                                                 {{ item.label }}
-                                                              </option>
+                                                            </option>
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="form-group row mb-10">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'solicited-test.solicited-time' | translate}}</label>
-                                                    <div class="col-lg-9 col-xl-9">
-                                                        <input id="from" [owlDateTime]="dtFrom"
-                                                            [owlDateTimeTrigger]="dtFrom" placeholder="Date Time"
-                                                            class="form-control form-control-lg form-control-solid"
-                                                            name="date" [(ngModel)]="date" autocomplete="off" />
-                                                        <owl-date-time #dtFrom></owl-date-time>
+                                                <div *ngIf="showCard">
+                                                    <div class="form-group row"
+                                                        *ngFor="let event of eventsWithTestList">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label text-right">{{
+                                                            'events.event' | translate }}</label>
+                                                        <div class="col-lg-9 col-xl-9">
+                                                            <p>{{ event.eventName }} :</p>
+                                                            <ol>
+                                                                <li *ngFor="let item of event.testTemplateNames">{{ item
+                                                                    }}</li>
+                                                            </ol>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="showCard && !isEdit">
+                                                    <div class="form-group row"
+                                                        *ngFor="let requiredDocument of requiredDocumentsList; let i = index">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label text-right">{{
+                                                            requiredDocument.name }}</label>
+                                                        <div class="col-lg-9 col-xl-9">
+                                                            <div class="form-group row">
+                                                                <div class="col">
+                                                                    <input
+                                                                        (change)="setFile($event, i, requiredDocument.id)"
+                                                                        class="form-control" type="file" name="file"
+                                                                        id="file" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <app-loading-spinner *ngIf="isDeleting" [contentHeight]="'20vh'"
+                                                    [height]="'5rem'" [width]="'5rem'" [colorClass]="'text-primary'">
+                                                </app-loading-spinner>
+                                                <div *ngIf="showCard && isEdit && !isDeleting">
+                                                    <div class="form-group row"
+                                                        *ngFor="let item of userFiles; let i = index">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                            {{ item.requiredDocumentName }}</label>
+                                                        <div class="col-lg-9 col-xl-9">
+                                                            <button *ngIf="item.fileName.length > 0"
+                                                                (click)="GetFile(item.fileId)"
+                                                                class="btn btn-light-success font-weight-bold mr-3">
+                                                                <i class="flaticon-profile"></i>
+                                                                {{ item.fileName }}
+                                                            </button>
+                                                            <span *ngIf="item.fileName.length > 0"
+                                                                (click)="deleteFile(item.fileId)"
+                                                                class="svg-icon svg-icon-primary svg-icon-2x">
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                    width="24px" height="24px" viewBox="0 0 24 24"
+                                                                    version="1.1">
+                                                                    <g stroke="none" stroke-width="1" fill="none"
+                                                                        fill-rule="evenodd">
+                                                                        <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)"
+                                                                            fill="#000000">
+                                                                            <rect x="0" y="7" width="16" height="2"
+                                                                                rx="1" />
+                                                                            <rect opacity="0.3"
+                                                                                transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) "
+                                                                                x="0" y="7" width="16" height="2"
+                                                                                rx="1" />
+                                                                        </g>
+                                                                    </g>
+                                                                </svg>
+                                                            </span>
+                                                            <b *ngIf="!item.fileName.length > 0">
+                                                                <div class="col-lg-9 col-xl-9">
+                                                                    <div class="form-group row">
+                                                                        <div class="col">
+                                                                            <input
+                                                                                (change)="setFile($event, i, item.requiredDocumentId)"
+                                                                                class="form-control" type="file"
+                                                                                name="file" id="file" required>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </b>
+
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="text-right border-top pt-10">
-                                            <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
+                                            <app-button class="btn mr-2" [value]="'button.cancel' | translate"
+                                                (handle)="backClicked()">
                                             </app-button>
-                                            <app-add-button class="btn mr-2" [value]="'button.confirm' | translate" (handle)="onSave()">
+                                            <app-add-button class="btn mr-2" [value]="'button.confirm' | translate"
+                                                (handle)="onSave()">
                                             </app-add-button>
                                         </div>
                                     </div>

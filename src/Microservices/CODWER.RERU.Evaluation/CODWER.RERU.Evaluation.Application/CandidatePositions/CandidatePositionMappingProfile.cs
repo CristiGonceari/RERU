@@ -20,11 +20,6 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions
             CreateMap<CandidatePosition, SelectItem>()
               .ForMember(x => x.Value, opts => opts.MapFrom(tt => tt.Id))
               .ForMember(x => x.Label, opts => opts.MapFrom(tt => tt.Name));
-
-            CreateMap<CandidatePosition, SelectItem>()
-                .ForMember(x => x.Value, opts => opts.MapFrom(tt => tt.RequiredDocumentPositions))
-                .ForMember(x => x.Label, opts => opts.MapFrom(tt => tt.Name));
-
         }
     }
 }

@@ -11,7 +11,7 @@ using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.GetMySolicitedTests
 {
-    public class GetMySolicitedTestsQueryHandler : IRequestHandler<GetMySolicitedTestsQuery, PaginatedModel<SolicitedTestDto>>
+    public class GetMySolicitedTestsQueryHandler : IRequestHandler<GetMySolicitedTestsQuery, PaginatedModel<SolicitedCandidatePositionDto>>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IUserProfileService _userProfileService;
@@ -24,20 +24,20 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Get
             _userProfileService = userProfileService;
         }
 
-        public async Task<PaginatedModel<SolicitedTestDto>> Handle(GetMySolicitedTestsQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedModel<SolicitedCandidatePositionDto>> Handle(GetMySolicitedTestsQuery request, CancellationToken cancellationToken)
         {
             var myUserProfile = await _userProfileService.GetCurrentUser();
 
             var mySolicitedTests = _appDbContext.SolicitedVacantPositions
-                .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
                 .Include(t => t.CandidatePosition)
-                .Include(t => t.Event)
+                .Include(x => x.SolicitedVacantPositionUserFiles)
+                .Include(x => x.CandidatePosition.RequiredDocumentPositions)
                 .Where(t => t.UserProfileId == myUserProfile.Id)
                 .OrderByDescending(x => x.Id)
                 .AsQueryable();
 
-            return await _paginationService.MapAndPaginateModelAsync<SolicitedVacantPosition, SolicitedTestDto>(mySolicitedTests, request);
+            return await _paginationService.MapAndPaginateModelAsync<SolicitedVacantPosition, SolicitedCandidatePositionDto>(mySolicitedTests, request);
         }
     }
 }

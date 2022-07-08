@@ -13,6 +13,7 @@ namespace RERU.Data.Persistence.Initializer
         {
             AddBaseDocumentTemplateKeys(appDbContext);
             AddCandidateCitizenship(appDbContext);
+            AddSolicitedVacantPositionMessages(appDbContext);
             AddCandidateNationality(appDbContext);
             AddModernLaguages(appDbContext);
         }
@@ -367,5 +368,60 @@ namespace RERU.Data.Persistence.Initializer
                 appDbContext.RegistrationPageMessages.Add(record);
             }
         }
+
+        private static void AddSolicitedVacantPositionMessages(AppDbContext appDbContext)
+        {
+            var existMessages = appDbContext.SolicitedVacantPositionEmailMessages.Any();
+
+            if (!existMessages)
+            {
+                const string messageToReject = "<p style=\\\"text-align:center;\\\">" +
+                                                "<strong>APLICAREA LA O POZITIE VACANTA</strong></p>" +
+                                                "<p style=\\\"margin-left:0px;\\\"><strong>Sir / Madam,</strong></p>" +
+                                                "<p style=\\\"margin-left:0px;\\\">&nbsp;</p>" +
+                                                "<p style=\\\"margin-left:0px;text-align:center;\\\">" +
+                                                "<strong>Vă mulțumim pentru aplicarea Cv-ului la concursului de angajare in cadrul pozitiei date, dar cu parere de rau nu sunteti o candidatura potrivita pentru pozitia data</strong></p>" +
+                                                "<p style=\\\"margin-left:0px;\\\">&nbsp;</p>" +
+                                                "<p style=\\\"margin-left:0px;\\\"><strong>Cu stimă, Mai</strong></p>";
+
+                var rejectMessage = new SolicitedVacantPositionEmailMessage
+                {
+                    Message = messageToReject,
+                    MessageType = SolicitedVacantPositionEmailMessageEnum.Reject
+                };
+
+                const string messageToApprove = "<p style=\\\"text-align:center;\\\"><strong>APLICAREA LA O POZITIE VACANTA</strong></p>" +
+                                                "<p style=\\\"margin-left:0px;\\\"><strong>Sir / Madam,</strong></p>" +
+                                                "<p style=\\\"margin-left:0px;\\\">&nbsp;</p>" +
+                                                "<p style=\\\"margin-left:0px;text-align:center;\\\"><strong>Vă mulțumim pentru aplicarea Cv-ului la concursului de angajare in cadrul pozitiei date, privind prezenta tuturor documentelor in regula, sunteti admisi pentru trecerea urmatoarelor probe</strong></p>" +
+                                                "<p style=\\\"margin-left:0px;\\\">&nbsp;</p>" +
+                                                "<p style=\\\"margin-left:0px;\\\"><strong>Cu stimă, Mai</strong></p>";
+
+                var approvalMessage = new SolicitedVacantPositionEmailMessage
+                {
+                    Message = messageToApprove,
+                    MessageType = SolicitedVacantPositionEmailMessageEnum.Approve
+                };
+
+                const string messageToWait = "<p style=\\\"text-align:center;\\\"><strong>APLICAREA LA O POZITIE VACANTA</strong></p>" +
+                                             "<p style=\\\"margin-left:0px;\\\"><strong>Sir / Madam,</strong></p>" +
+                                             "<p style=\\\"margin-left:0px;\\\">&nbsp;</p>" +
+                                             "<p style=\\\"margin-left:0px;text-align:center;\\\"><strong>Vă mulțumim pentru aplicarea Cv-ului la concursului de angajare in cadrul pozitiei date, la moment sunteti pozitionati intr-un statut de asteptare</strong></p>" +
+                                             "<p style=\\\"margin-left:0px;text-align:center;\\\"><strong>este necesar sa revizuiti integritatea tuturor documentelor incarcate si intro perioada scurta dosarul dvs. va fi revizuit din nou</strong></p>" +
+                                             "<p style=\\\"margin-left:0px;\\\">&nbsp;</p>" +
+                                             "<p style=\\\"margin-left:0px;\\\"><strong>Cu stimă, Mai</strong></p>";
+
+                var waitMessage = new SolicitedVacantPositionEmailMessage
+                {
+                    Message = messageToWait,
+                    MessageType = SolicitedVacantPositionEmailMessageEnum.Waiting
+                };
+
+                appDbContext.SolicitedVacantPositionEmailMessages.Add(rejectMessage);
+                appDbContext.SolicitedVacantPositionEmailMessages.Add(approvalMessage);
+                appDbContext.SolicitedVacantPositionEmailMessages.Add(waitMessage);
+            }
+        }
+
     }
 }
