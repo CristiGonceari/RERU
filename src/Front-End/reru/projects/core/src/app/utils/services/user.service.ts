@@ -44,15 +44,15 @@ export class UserService extends AbstractService {
 	}
 
 	startAddProcess(data): Observable<any> {
-		return this.http.post(`${this.baseUrl}/${this.routeUrl}/process`, data);
+		return this.http.post(`${this.coreUrl}/${this.routeUrl}/process`, data);
 	}
 
 	getImportProcess(id: number): Observable<any> {
-		return this.http.get(`${this.baseUrl}/${this.routeUrl}/process/${id}`);
+		return this.http.get(`${this.coreUrl}/${this.routeUrl}/process/${id}`);
 	}
 
 	getImportResult(fileId: number): Observable<any> {
-		return this.http.get(`${this.baseUrl}/${this.routeUrl}/process-result/${fileId}`, {
+		return this.http.get(`${this.coreUrl}/${this.routeUrl}/process-result/${fileId}`, {
 			responseType: 'blob' as 'json' ,
 			observe: 'response',
 		});
