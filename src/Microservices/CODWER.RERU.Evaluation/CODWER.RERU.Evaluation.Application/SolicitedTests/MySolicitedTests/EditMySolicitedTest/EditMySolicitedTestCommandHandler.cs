@@ -4,11 +4,12 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.EditMySolicitedTest
 {
-    public class EditMySolicitedTestCommandHandler : IRequestHandler<EditMySolicitedTestCommand, int>
+    public class EditMySolicitedTestCommandHandler : IRequestHandler<EditMySolicitedTestCommand, AddSolicitedCandidatePositionResponseDto>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
@@ -21,7 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Edi
             _userProfileService = userProfileService;
         }
 
-        public async Task<int> Handle(EditMySolicitedTestCommand request, CancellationToken cancellationToken)
+        public async Task<AddSolicitedCandidatePositionResponseDto> Handle(EditMySolicitedTestCommand request, CancellationToken cancellationToken)
         {
             var myUserProfile = await _userProfileService.GetCurrentUser();
 
@@ -32,7 +33,13 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Edi
             solicitedTest.UserProfileId = myUserProfile.Id;
             await _appDbContext.SaveChangesAsync();
 
-            return solicitedTest.Id;
+            var solicitedVacantPosition = new AddSolicitedCandidatePositionResponseDto
+            {
+                SolicitedVacantPositionId = solicitedTest.Id,
+                UserProfileId = solicitedTest.UserProfileId
+            };
+
+            return solicitedVacantPosition;
         }
     }
 }

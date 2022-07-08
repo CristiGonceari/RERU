@@ -12,7 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.PrintSolicitetTests
         public PrintSolicitetTestsCommandValidator()
         {
             RuleFor(x => x.Fields.Select(x => x.Value).ToList())
-               .SetValidator(new TableExporterValidator<SolicitedTestDto>(ValidationMessages.InvalidInput, ValidationCodes.INVALID_INPUT));
+               .SetValidator(new TableExporterValidator<SolicitedCandidatePositionDto>(ValidationMessages.InvalidInput, ValidationCodes.INVALID_INPUT));
         }
     }
 }

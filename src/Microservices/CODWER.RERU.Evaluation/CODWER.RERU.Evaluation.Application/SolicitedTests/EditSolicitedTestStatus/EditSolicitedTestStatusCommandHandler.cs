@@ -38,13 +38,12 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.EditSolicitedTestSta
         {
             var solicitedTest = await _appDbContext.SolicitedVacantPositions
                 .Include(s => s.UserProfile)
-                .Include(s => s.TestTemplate)
                 .FirstAsync(x => x.Id == request.Id);
-            solicitedTest.SolicitedTestStatus = request.Status;
+            solicitedTest.SolicitedPositionStatus = request.Status;
 
             await _appDbContext.SaveChangesAsync();
 
-            if(solicitedTest.SolicitedTestStatus == SolicitedTestStatusEnum.Refused)
+            if(solicitedTest.SolicitedPositionStatus == SolicitedPositionStatusEnum.Refused)
             {
                 await _internalNotificationService.AddNotification(solicitedTest.UserProfileId, NotificationMessages.YourSolicitedTestWasRefused);
 
@@ -60,15 +59,15 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.EditSolicitedTestSta
         {
             var user = await _appDbContext.SolicitedVacantPositions
                 .Include(s => s.UserProfile)
-                .Include(s => s.TestTemplate)
+                //.Include(s => s.TestTemplate)
                 .FirstOrDefaultAsync(x => x.UserProfileId == solicitedVacantPosition.UserProfileId);
 
             var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
             var template = await File.ReadAllTextAsync(path);
 
             template = template
-                .Replace("{user_name}", user.UserProfile.FirstName + " " + user.UserProfile.LastName)
-                .Replace("{email_message}", await GetTableContent(solicitedVacantPosition.TestTemplate.Name));
+                .Replace("{user_name}", user.UserProfile.FirstName + " " + user.UserProfile.LastName);
+                //.Replace("{email_message}", await GetTableContent(solicitedVacantPosition.TestTemplate.Name));
 
             var emailData = new EmailData
             {
@@ -92,11 +91,11 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.EditSolicitedTestSta
 
         private async Task LogAction(SolicitedVacantPosition item)
         {
-            if(item.SolicitedTestStatus == SolicitedTestStatusEnum.Refused)
+            if(item.SolicitedPositionStatus == SolicitedPositionStatusEnum.Refused)
             {
                 await _loggerService.Log(LogData.AsEvaluation($"Solicited test was refused", item));
             } 
-            else if (item.SolicitedTestStatus == SolicitedTestStatusEnum.Approved)
+            else if (item.SolicitedPositionStatus == SolicitedPositionStatusEnum.Approved)
             {
                 await _loggerService.Log(LogData.AsEvaluation($"Solicited test was approved", item));
             }

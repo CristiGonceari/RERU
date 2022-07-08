@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions;
-using CODWER.RERU.Evaluation.DataTransferObjects.Documents;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using RERU.Data.Entities;
 
 namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetCandidatePosition
 {
@@ -31,7 +31,15 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetCandidatePosi
 
             var mappedItem = _mapper.Map<CandidatePositionDto>(candidatePosition);
 
-            var requiredDocument = await _appDbContext.RequiredDocumentPositions
+            mappedItem.RequiredDocuments = await GetRequiredDocuments(candidatePosition);
+            mappedItem.Events = await GetAttachedEvents(candidatePosition);
+
+            return mappedItem;
+        }
+
+        private async Task<List<SelectItem>> GetRequiredDocuments(CandidatePosition candidatePosition)
+        {
+            return await _appDbContext.RequiredDocumentPositions
                 .Include(x => x.RequiredDocument)
                 .Where(x => x.CandidatePositionId == candidatePosition.Id)
                 .Select(x => new RequiredDocument
@@ -41,10 +49,19 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetCandidatePosi
                 })
                 .Select(e => _mapper.Map<SelectItem>(e))
                 .ToListAsync();
+        }
 
-            mappedItem.RequiredDocuments = requiredDocument;
-
-            return mappedItem;
+        private async Task<List<SelectItem>> GetAttachedEvents(CandidatePosition candidatePosition)
+        {
+            return await _appDbContext.EventVacantPositions
+                .Include(x => x.Event)
+                .Where(x => x.CandidatePositionId == candidatePosition.Id)
+                .Select(e => _mapper.Map<SelectItem>(new Event
+                {
+                    Id = e.Event.Id,
+                    Name = e.Event.Name
+                }))
+                .ToListAsync();
         }
     }
 }

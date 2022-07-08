@@ -13,23 +13,16 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Edi
     {
         public EditMySolicitedTestCommandValidator(AppDbContext appDbContext)
         {
-            RuleFor(x => x.Data.TestTemplateId)
-               .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
+            RuleFor(x => x.Data.CandidatePositionId)
+               .SetValidator(x => new ItemMustExistValidator<CandidatePosition>(appDbContext, ValidationCodes.INVALID_POSITION,
                    ValidationMessages.InvalidReference));
 
-            When(r => r.Data.EventId.HasValue, () =>
-            {
-                RuleFor(x => x.Data.EventId.Value)
-                    .SetValidator(x => new ItemMustExistValidator<Event>(appDbContext, ValidationCodes.INVALID_EVENT,
-                        ValidationMessages.InvalidReference));
-            });
-
-            RuleFor(x => x.Data.SolicitedTime)
-                .GreaterThan(new DateTime(2000, 1, 1))
-                .WithErrorCode(ValidationCodes.INVALID_TIME);
+            RuleFor(x => x.Data.Id.Value)
+                .SetValidator(x => new ItemMustExistValidator<SolicitedVacantPosition>(appDbContext, ValidationCodes.INVALID_SOLICITED_POSITION,
+                    ValidationMessages.InvalidReference));
 
             RuleFor(x => x.Data.SolicitedTestStatus)
-                .Must(x => x == SolicitedTestStatusEnum.New)
+                .Must(x => x == SolicitedPositionStatusEnum.New)
                 .WithErrorCode(ValidationCodes.ONLY_NEW_SOLICITED_TEST_CAN_BE_UPDATED);
         }
     }

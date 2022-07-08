@@ -21,13 +21,13 @@ import { ViewEvaluationResultComponent } from '../evaluations/view-evaluation-re
 const routes: Routes = [
   {path: '', component: MyActivitiesComponent,
   children: [
-    { path: '', redirectTo: 'my-solicited-tests', pathMatch: 'full' },
+    { path: '', redirectTo: 'my-solicited-position', pathMatch: 'full' },
     { path: 'my-tests', component: MyTestsComponent },
     { path: 'my-events', component: MyEventsComponent },
     { path: 'my-polls', component: MyPollsComponent },
     { path: 'my-evaluated-tests', component: MyEvaluatedTestsComponent },
-    { path: 'my-solicited-tests', component: MySolicitedTestsComponent },
     { path: 'my-evaluations', component: MyEvaluationsComponent },
+    { path: 'my-solicited-position', component: MySolicitedTestsComponent },
   ]},
   { path: 'start-test/:id', component: StartTestPageComponent },
   { path: 'start-evaluation/:id', component: StartEvaluationPageComponent },
@@ -38,8 +38,8 @@ const routes: Routes = [
   { path: 'test-result/:id', component: ViewTestResultComponent },
   { path: 'evaluation-result/:id', component: ViewEvaluationResultComponent },
   { path: 'finish-page/:id', component: FinishPageComponent },
-  { path: 'add-solicited-test', component: AddEditSolicitedTestComponent },
-  { path: 'edit-solicited-test/:id', component: AddEditSolicitedTestComponent }
+  { path: 'add-solicited-position', component: AddEditSolicitedTestComponent },
+  { path: 'edit-solicited-position/:id', component: AddEditSolicitedTestComponent }
 ];
 
 @NgModule({

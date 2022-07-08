@@ -3,14 +3,18 @@ using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.Attributes;
 using CVU.ERP.Module.Application.TableExportServices;
 using MediatR;
+using RERU.Data.Entities.Enums;
+using System;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedTests.PrintSolicitetTests
 {
     [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_TESTE_SOLICITATE)]
     public class PrintSolicitedTestsCommand : TableParameter, IRequest<FileDataDto>
     {
-        public string EventName { get; set; }
+        public int? PositionId { get; set; }
         public string UserName { get; set; }
-        public string TestName { get; set; }
+        public SolicitedPositionStatusEnum? Status { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? TillDate { get; set; }
     }
 }

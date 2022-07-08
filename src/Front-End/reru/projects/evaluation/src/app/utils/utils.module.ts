@@ -16,12 +16,14 @@ import { SharedModule } from '@erp/shared';
 import { AttachUserModalComponent } from './components/attach-user-modal/attach-user-modal.component';
 import { DateFilterPipe } from './pipes/date-filter.pipe';
 import { ConvertPdfDocumentModalComponent } from './modals/convert-pdf-document-modal/convert-pdf-document-modal.component';
-import { CKEditorModule } from 'ngx-ckeditor';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { GenerateDocumentModalComponent } from './modals/generate-document-modal/generate-document-modal.component';
 import { AddTestHistoryModalComponent } from './modals/add-test-history-modal/add-test-history-modal.component';
 import { ViewUsersModalComponent } from './modals/view-users-modal/view-users-modal.component';
 import { ViewTemplatesModalComponent } from './modals/view-templates-modal/view-templates-modal.component';
 import { EvaluationResultModalComponent } from './modals/evaluation-result-modal/evaluation-result-modal.component';
+import { OwlMomentDateTimeModule, OwlDateTimeModule } from '@busacca/ng-pick-datetime';
+import { ReviewSolicitedVacandPositionModalComponent } from './modals/review-solicited-vacand-position-modal/review-solicited-vacand-position-modal.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { EvaluationResultModalComponent } from './modals/evaluation-result-modal
     AddTestHistoryModalComponent,
     ViewUsersModalComponent,
     ViewTemplatesModalComponent,
-    EvaluationResultModalComponent
+    EvaluationResultModalComponent,
+    ReviewSolicitedVacandPositionModalComponent
   ],
   imports: [
     HttpClientModule,
@@ -49,7 +52,9 @@ import { EvaluationResultModalComponent } from './modals/evaluation-result-modal
     ReactiveFormsModule,
     NgxDropzoneModule,
     SharedModule,
-    CKEditorModule
+    CKEditorModule,
+    OwlDateTimeModule,
+    OwlMomentDateTimeModule
   ],
   providers: [
     { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter },

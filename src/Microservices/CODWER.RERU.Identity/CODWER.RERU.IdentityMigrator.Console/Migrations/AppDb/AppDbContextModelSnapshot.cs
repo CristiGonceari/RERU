@@ -2087,19 +2087,10 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("EventId")
-                        .HasColumnType("integer");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("SolicitedTestStatus")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("SolicitedTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("TestTemplateId")
+                    b.Property<int>("SolicitedPositionStatus")
                         .HasColumnType("integer");
 
                     b.Property<string>("UpdateById")
@@ -2115,15 +2106,97 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.HasIndex("CandidatePositionId");
 
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("SolicitedTestStatus");
-
-                    b.HasIndex("TestTemplateId");
+                    b.HasIndex("SolicitedPositionStatus");
 
                     b.HasIndex("UserProfileId");
 
                     b.ToTable("SolicitedVacantPositions");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.SolicitedVacantPositionEmailMessage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("text");
+
+                    b.Property<int>("MessageType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MessageType");
+
+                    b.ToTable("SolicitedVacantPositionEmailMessages");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.SolicitedVacantPositionUserFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("RequiredDocumentId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SolicitedVacantPositionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequiredDocumentId");
+
+                    b.HasIndex("SolicitedVacantPositionId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("SolicitedVacantPositionUserFiles");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.Study", b =>
@@ -3493,7 +3566,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         });
                 });
 
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedTestStatusEnum>", b =>
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedPositionStatusEnum>", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("integer");
@@ -3506,7 +3579,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("SolicitedTestStatusEnum");
+                    b.ToTable("SolicitedPositionStatusEnum");
 
                     b.HasData(
                         new
@@ -3523,6 +3596,44 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 2,
                             Name = "Approved"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Wait"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedVacantPositionEmailMessageEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("SolicitedVacantPositionEmailMessageEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 0,
+                            Name = "Approve"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Name = "Reject"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Waiting"
                         });
                 });
 
@@ -4361,20 +4472,10 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .WithMany()
                         .HasForeignKey("CandidatePositionId");
 
-                    b.HasOne("RERU.Data.Entities.Event", "Event")
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedPositionStatusEnum>", null)
                         .WithMany()
-                        .HasForeignKey("EventId");
-
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedTestStatusEnum>", null)
-                        .WithMany()
-                        .HasForeignKey("SolicitedTestStatus")
+                        .HasForeignKey("SolicitedPositionStatus")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("RERU.Data.Entities.TestTemplate", "TestTemplate")
-                        .WithMany()
-                        .HasForeignKey("TestTemplateId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
@@ -4385,9 +4486,41 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.Navigation("CandidatePosition");
 
-                    b.Navigation("Event");
+                    b.Navigation("UserProfile");
+                });
 
-                    b.Navigation("TestTemplate");
+            modelBuilder.Entity("RERU.Data.Entities.SolicitedVacantPositionEmailMessage", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedVacantPositionEmailMessageEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("MessageType")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.SolicitedVacantPositionUserFile", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.RequiredDocument", "RequiredDocument")
+                        .WithMany()
+                        .HasForeignKey("RequiredDocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.SolicitedVacantPosition", "SolicitedVacantPosition")
+                        .WithMany("SolicitedVacantPositionUserFiles")
+                        .HasForeignKey("SolicitedVacantPositionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
+                        .WithMany("SolicitedVacantPositionUserFiles")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RequiredDocument");
+
+                    b.Navigation("SolicitedVacantPosition");
 
                     b.Navigation("UserProfile");
                 });
@@ -4847,9 +4980,18 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedTestStatusEnum>", b =>
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedPositionStatusEnum>", b =>
                 {
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedTestStatusEnum>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedPositionStatusEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedVacantPositionEmailMessageEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedVacantPositionEmailMessageEnum>", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -5008,6 +5150,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("UserFiles");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.SolicitedVacantPosition", b =>
+                {
+                    b.Navigation("SolicitedVacantPositionUserFiles");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.Tag", b =>
                 {
                     b.Navigation("QuestionUnitTags");
@@ -5076,6 +5223,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("PlanResponsiblePersons");
 
                     b.Navigation("RecommendationForStudies");
+
+                    b.Navigation("SolicitedVacantPositionUserFiles");
 
                     b.Navigation("Studies");
 

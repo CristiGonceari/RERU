@@ -35,10 +35,8 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
 
         [HttpGet("select-values")]
-        public async Task<List<SelectItem>> GetCandidatePositionValue()
+        public async Task<List<SelectItem>> GetCandidatePositionValue([FromQuery] GetPositionsSelectValuesQuery query)
         {
-            var query = new GetPositionsSelectValuesQuery();
-
             return await Mediator.Send(query);
         }
 

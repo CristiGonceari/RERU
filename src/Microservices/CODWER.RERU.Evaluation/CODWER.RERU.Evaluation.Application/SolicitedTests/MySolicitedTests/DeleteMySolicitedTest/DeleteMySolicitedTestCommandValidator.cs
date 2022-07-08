@@ -18,7 +18,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Del
             _appDbContext = appDbContext;
 
             RuleFor(x => x.Id)
-                .SetValidator(x => new ItemMustExistValidator<SolicitedVacantPosition>(appDbContext, ValidationCodes.INVALID_SOLICITED_TEST,
+                .SetValidator(x => new ItemMustExistValidator<SolicitedVacantPosition>(appDbContext, ValidationCodes.INVALID_SOLICITED_POSITION,
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x.Id)
@@ -30,7 +30,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Del
         {
             var solicitedTest = _appDbContext.SolicitedVacantPositions.FirstOrDefault(x => x.Id == id);
 
-            if(solicitedTest.SolicitedTestStatus == SolicitedTestStatusEnum.New)
+            if(solicitedTest.SolicitedPositionStatus == SolicitedPositionStatusEnum.New)
             {
                 return true;
             }
