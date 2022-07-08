@@ -17,10 +17,10 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
 
         public async Task<string> Handle(GetSolicitedVacantPositionEmailMessageQuery request, CancellationToken cancellationToken)
         {
-            var message =
+            var item =
                 _appDbContext.SolicitedVacantPositionEmailMessages.First(x => x.MessageType == request.MessageType);
 
-            return  message.Message;
+            return  item.Message;
         }
     }
 }

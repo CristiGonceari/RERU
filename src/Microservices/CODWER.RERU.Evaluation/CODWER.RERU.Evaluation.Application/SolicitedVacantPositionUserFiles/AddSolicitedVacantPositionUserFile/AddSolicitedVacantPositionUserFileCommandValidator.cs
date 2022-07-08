@@ -16,11 +16,11 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionUserFiles.Ad
                     ValidationMessages.NotFound));
 
             RuleFor(x => x.SolicitedVacantPositionId)
-                .SetValidator(x => new ItemMustExistValidator<SolicitedVacantPosition>(appDbContext, ValidationCodes.INVALID_SOLICITED_VACANT_POSITION,
+                .SetValidator(x => new ItemMustExistValidator<SolicitedVacantPosition>(appDbContext, ValidationCodes.INVALID_SOLICITED_VACANT_POSITION_ID,
                     ValidationMessages.NotFound));
 
             RuleFor(x => x.RequiredDocumentId)
-                .SetValidator(x => new ItemMustExistValidator<RequiredDocument>(appDbContext, ValidationCodes.INVALID_SOLICITED_VACANT_POSITION,
+                .SetValidator(x => new ItemMustExistValidator<RequiredDocument>(appDbContext, ValidationCodes.INVALID_SOLICITED_VACANT_POSITION_ID,
                     ValidationMessages.NotFound));
         }
     }

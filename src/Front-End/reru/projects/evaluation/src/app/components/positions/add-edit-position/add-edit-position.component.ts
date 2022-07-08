@@ -9,11 +9,7 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { CandidatePositionModel } from '../../../utils/models/candidate-position.model';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { ReferenceService } from '../../../utils/services/reference/reference.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AttachUserModalComponent } from '../../../utils/components/attach-user-modal/attach-user-modal.component';
 import { SelectItem } from '../../../utils/models/select-item.model';
-import { MatSelect } from '@angular/material/select';
-
 @Component({
 	selector: 'app-add-edit-position',
 	templateUrl: './add-edit-position.component.html',
@@ -50,9 +46,7 @@ export class AddEditPositionComponent implements OnInit {
 		private route: ActivatedRoute,
 		private positionService: CandidatePositionService,
 		private location: Location,
-		private referenceService: ReferenceService,
-		private modalService: NgbModal,
-
+		private referenceService: ReferenceService
 	) { }
 
 	ngOnInit(): void {
@@ -60,16 +54,14 @@ export class AddEditPositionComponent implements OnInit {
 			name: new FormControl(),
 			isActive: new FormControl()
 		});
-
 		this.onTextChange("");
-
 		this.getEvents();
-
 		this.route.params.subscribe(params => {
 			if (params.id) {
 				this.positionId = params.id;
 				this.positionService.get(this.positionId).subscribe(res => {
 					this.initForm(res.data);
+
 					res.data.requiredDocuments.forEach(element => {
 						this.tags.push({ display: element.label, value: +element.value })
 					});
@@ -77,7 +69,6 @@ export class AddEditPositionComponent implements OnInit {
 					res.data.events.forEach(el => {
 						this.eventSelected.push({ display: el.label, value: +el.value })
 					})
-					
 				})
 				this.isLoading = false;
 			} else {
@@ -92,7 +83,6 @@ export class AddEditPositionComponent implements OnInit {
 			name: this.fb.control(data?.name || null, [Validators.required]),
 			isActive: this.fb.control(data?.isActive || false)
 		});
-		
 	}
 
 	getEvents() {
@@ -113,7 +103,7 @@ export class AddEditPositionComponent implements OnInit {
 
 		this.eventSelected.forEach(x => {
 			if (typeof x.value !== 'string') eventArr.push(x);
-		  })
+		})
 
 		let addPositionModel = {
 			name: this.positionForm.value.name,
@@ -121,6 +111,7 @@ export class AddEditPositionComponent implements OnInit {
 			requiredDocuments: tagsArr,
 			eventIds: eventArr.map(obj => obj.value)
 		} as CandidatePositionModel;
+
 		this.positionService.create(addPositionModel).subscribe(
 			() => {
 				forkJoin([
@@ -145,7 +136,7 @@ export class AddEditPositionComponent implements OnInit {
 
 		this.eventSelected.forEach(x => {
 			if (typeof x.value !== 'string') eventArr.push(x);
-		  })
+		})
 
 		let editPositionModel = {
 			id: +this.positionId,
@@ -154,6 +145,7 @@ export class AddEditPositionComponent implements OnInit {
 			requiredDocuments: tagsArr,
 			eventIds: eventArr.map(obj => obj.value)
 		} as CandidatePositionModel;
+
 		this.positionService.editPosition(editPositionModel).subscribe(
 			() => {
 				forkJoin([

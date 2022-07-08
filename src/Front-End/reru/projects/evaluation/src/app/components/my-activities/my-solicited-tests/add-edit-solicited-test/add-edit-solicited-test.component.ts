@@ -210,7 +210,6 @@ export class AddEditSolicitedTestComponent implements OnInit {
     this.files.forEach(el => {
       if (this.files[this.files.length - 1] === el) {
         let request = new FormData();
-
         request = this.parseFiles(request, res, el);
 
         if (el.file.file != null) {
@@ -219,9 +218,9 @@ export class AddEditSolicitedTestComponent implements OnInit {
             this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
           });
         }
+
       } else {
         let request = new FormData();
-
         request = this.parseFiles(request, res, el);
 
         if (el.file.file != null) {
@@ -245,7 +244,6 @@ export class AddEditSolicitedTestComponent implements OnInit {
   deleteFile(fileId) {
     this.isDeleting = true;
     this.solicitedVacantPositionUserFileService.deleteFile(fileId).subscribe(() => {
-
       this.getFiles()
     })
   }

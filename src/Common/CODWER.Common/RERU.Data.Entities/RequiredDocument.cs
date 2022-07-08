@@ -10,6 +10,7 @@ namespace RERU.Data.Entities
             UserFiles = new HashSet<UserFile>();
             RequiredDocumentPositions = new HashSet<RequiredDocumentPosition>();
         }
+
         public string Name { get; set; }
         public bool Mandatory { get; set; }
 

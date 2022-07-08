@@ -173,6 +173,6 @@
         public static string INVALID_REQUIRED_DOCUMENT = "03002110";
 
         //solicited vacant position
-        public static string INVALID_SOLICITED_VACANT_POSITION = "03002200";
+        public static string INVALID_SOLICITED_VACANT_POSITION_ID = "03002200";
     }
 }

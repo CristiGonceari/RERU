@@ -20,7 +20,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionUserFiles.Ge
             });
             
             RuleFor(x => x.SolicitedVacantPositionId)
-                .SetValidator(x => new ItemMustExistValidator<SolicitedVacantPosition>(appDbContext, ValidationCodes.INVALID_SOLICITED_VACANT_POSITION,
+                .SetValidator(x => new ItemMustExistValidator<SolicitedVacantPosition>(appDbContext, ValidationCodes.INVALID_SOLICITED_VACANT_POSITION_ID,
                     ValidationMessages.NotFound));
         }
     }

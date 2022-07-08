@@ -382,7 +382,7 @@ namespace RERU.Data.Persistence.Initializer
                                                 "<p style=\\\"margin-left:0px;text-align:center;\\\">" +
                                                 "<strong>Vă mulțumim pentru aplicarea Cv-ului la concursului de angajare in cadrul pozitiei date, dar cu parere de rau nu sunteti o candidatura potrivita pentru pozitia data</strong></p>" +
                                                 "<p style=\\\"margin-left:0px;\\\">&nbsp;</p>" +
-                                                "<p style=\\\"margin-left:0px;\\\"><strong>Cu stimă, Mai</strong></p>";
+                                                "<p style=\\\"margin-left:0px;\\\"><strong>Cu stimă, MAI</strong></p>";
 
                 var rejectMessage = new SolicitedVacantPositionEmailMessage
                 {
@@ -395,7 +395,7 @@ namespace RERU.Data.Persistence.Initializer
                                                 "<p style=\\\"margin-left:0px;\\\">&nbsp;</p>" +
                                                 "<p style=\\\"margin-left:0px;text-align:center;\\\"><strong>Vă mulțumim pentru aplicarea Cv-ului la concursului de angajare in cadrul pozitiei date, privind prezenta tuturor documentelor in regula, sunteti admisi pentru trecerea urmatoarelor probe</strong></p>" +
                                                 "<p style=\\\"margin-left:0px;\\\">&nbsp;</p>" +
-                                                "<p style=\\\"margin-left:0px;\\\"><strong>Cu stimă, Mai</strong></p>";
+                                                "<p style=\\\"margin-left:0px;\\\"><strong>Cu stimă, MAI</strong></p>";
 
                 var approvalMessage = new SolicitedVacantPositionEmailMessage
                 {
@@ -409,7 +409,7 @@ namespace RERU.Data.Persistence.Initializer
                                              "<p style=\\\"margin-left:0px;text-align:center;\\\"><strong>Vă mulțumim pentru aplicarea Cv-ului la concursului de angajare in cadrul pozitiei date, la moment sunteti pozitionati intr-un statut de asteptare</strong></p>" +
                                              "<p style=\\\"margin-left:0px;text-align:center;\\\"><strong>este necesar sa revizuiti integritatea tuturor documentelor incarcate si intro perioada scurta dosarul dvs. va fi revizuit din nou</strong></p>" +
                                              "<p style=\\\"margin-left:0px;\\\">&nbsp;</p>" +
-                                             "<p style=\\\"margin-left:0px;\\\"><strong>Cu stimă, Mai</strong></p>";
+                                             "<p style=\\\"margin-left:0px;\\\"><strong>Cu stimă, MAI</strong></p>";
 
                 var waitMessage = new SolicitedVacantPositionEmailMessage
                 {

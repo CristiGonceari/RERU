@@ -56,12 +56,11 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetCandidatePosi
             return await _appDbContext.EventVacantPositions
                 .Include(x => x.Event)
                 .Where(x => x.CandidatePositionId == candidatePosition.Id)
-                .Select(x => new Event
+                .Select(e => _mapper.Map<SelectItem>(new Event
                 {
-                    Id = x.Event.Id,
-                    Name = x.Event.Name
-                })
-                .Select(e => _mapper.Map<SelectItem>(e))
+                    Id = e.Event.Id,
+                    Name = e.Event.Name
+                }))
                 .ToListAsync();
         }
     }

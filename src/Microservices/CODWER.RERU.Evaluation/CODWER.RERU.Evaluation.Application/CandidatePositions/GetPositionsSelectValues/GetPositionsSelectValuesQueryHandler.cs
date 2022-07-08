@@ -14,6 +14,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionsSele
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private List<SelectItem> _list = new ();
 
         public GetPositionsSelectValuesQueryHandler(AppDbContext appDbContext, IMapper mapper)
         {
@@ -29,14 +30,9 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionsSele
                     .Include(c => c.CandidatePosition)
                     .FirstOrDefault(x => x.Id == request.Id);
 
-                return new List<SelectItem>
-                {
-                    new SelectItem
-                    {
-                        Label = item.CandidatePosition.Name,
-                        Value = item.CandidatePositionId.ToString()
-                    }
-                };
+                _list.Add(_mapper.Map<SelectItem>(item));
+
+                return _list;
             }
 
             return _appDbContext.CandidatePositions.AsQueryable()

@@ -1,7 +1,6 @@
 ﻿using CVU.ERP.Common.Data.Entities;
-using System;
-using System.Collections.Generic;
 using RERU.Data.Entities.Enums;
+using System.Collections.Generic;
 
 namespace RERU.Data.Entities
 {
@@ -11,6 +10,7 @@ namespace RERU.Data.Entities
         {
             SolicitedVacantPositionUserFiles = new HashSet<SolicitedVacantPositionUserFile>();
         }
+
         public int UserProfileId { get; set; }
         public UserProfile UserProfile { get; set; }
 
