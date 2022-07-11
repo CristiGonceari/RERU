@@ -42,8 +42,7 @@ export class ReviewSolicitedVacandPositionModalComponent implements OnInit {
   getEmailMessage(type){
   this.mesageType = type;
   this.solicitedVacantPositionEmailMessageService.getMessage({messageType: type}).subscribe(res => {
-    this.editorData = res.data,
-    console.log("this.editorData", this.editorData)
+    this.editorData = res.data
   })
   }
 
