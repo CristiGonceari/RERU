@@ -168,7 +168,7 @@ export class AddTestComponent implements OnInit {
     return _array.slice(idx, idx + _length);
   }
 
-  createTest() {
+  createTest(print: boolean) {
     this.disableBtn = true
     this.isStartAddingTests = true;
 
@@ -177,7 +177,7 @@ export class AddTestComponent implements OnInit {
 
       const interval = this.setIntervalGetProcess();
 
-      this.request = this.testService.createTest(this.parse()).subscribe(() => {
+      this.request = this.testService.createTest(this.parse()).subscribe((response) => {
         forkJoin([
           this.translate.get('modal.success'),
           this.translate.get('tests.tests-were-programmed'),
@@ -190,11 +190,12 @@ export class AddTestComponent implements OnInit {
 
         clearInterval(interval);
         this.isStartAddingTests = false;
+        this.performingTestPdf(response.data);
+
         this.backClicked();
         this.disableBtn = false;
         this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       });
-
     })
   }
 
@@ -225,23 +226,6 @@ export class AddTestComponent implements OnInit {
     }
   }
 
-  createTestAndPrint() {
-    this.disableBtn = true;
-    this.testService.createTest(this.parse()).subscribe((res) => {
-      forkJoin([
-        this.translate.get('modal.success'),
-        this.translate.get('tests.tests-were-programmed'),
-      ]).subscribe(([title, description]) => {
-        this.title = title;
-        this.description = description;
-      });
-      this.performingTestPdf(res.data);
-      this.backClicked();
-      this.disableBtn = false;
-      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-    });
-  }
-
   backClicked() {
     this.location.back();
   }
@@ -250,8 +234,8 @@ export class AddTestComponent implements OnInit {
     this.showName = event.target.checked;
   }
 
-  performingTestPdf(testIds) {
-    this.printService.getPerformingTestPdf({ testsIds: testIds }).subscribe((response: any) => {
+  performingTestPdf(testsIds) {
+    this.printService.getPerformingTestPdf({ testsIds: testsIds }).subscribe((response: any) => {
       let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
 
       if (response.body.type === 'application/pdf') {

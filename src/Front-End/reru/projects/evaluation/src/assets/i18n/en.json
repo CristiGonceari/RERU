@@ -235,6 +235,8 @@
     "ordered": "Ordered",
     "preview": "Preview",
     "print": "Print",
+    "print-result": "Print result",
+    "print-test-info": "Print test information",
     "performing-test": "Print performing test",
     "attach": "Attach file",
     "confirm-print": "Confirm and Print",

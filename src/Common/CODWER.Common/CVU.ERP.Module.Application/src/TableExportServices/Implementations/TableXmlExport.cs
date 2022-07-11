@@ -25,12 +25,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
 
             var prettyXml = PrettyXml(result);
 
-            return new FileDataDto()
-            {
-                Content = Encoding.ASCII.GetBytes(prettyXml),
-                Name = $"{data.Name}",
-                ContentType = "application/xml"
-            };
+            return FileDataDto.GetXml($"{data.Name}", Encoding.ASCII.GetBytes(prettyXml));
         }
 
         public FileDataDto ExportListTable(TableListData<TDestination> data)
@@ -39,12 +34,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
 
             var prettyXml = PrettyXml(result);
 
-            return new FileDataDto()
-            {
-                Content = Encoding.ASCII.GetBytes(prettyXml),
-                Name = $"{data.Name}",
-                ContentType = "application/xml"
-            };
+            return FileDataDto.GetXml($"{data.Name}", Encoding.ASCII.GetBytes(prettyXml));
         }
         private string CreateXmlString(List<TDestination> items)
         {

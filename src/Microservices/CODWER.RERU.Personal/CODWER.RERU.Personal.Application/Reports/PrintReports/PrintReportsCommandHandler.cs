@@ -120,12 +120,7 @@ namespace CODWER.RERU.Personal.Application.Reports.PrintReports
                 throw new Exception(e.Message);
             }
 
-            return new FileDataDto
-            {
-                Content = res,
-                ContentType = "application/pdf",
-                Name = "Report_List.pdf"
-            };
+            return FileDataDto.GetPdf("Report_List.pdf", res);
         }
 
         private IQueryable<ContractorFile> FilterContractors(IQueryable<ContractorFile> contractorFiles, PrintReportsCommand request)

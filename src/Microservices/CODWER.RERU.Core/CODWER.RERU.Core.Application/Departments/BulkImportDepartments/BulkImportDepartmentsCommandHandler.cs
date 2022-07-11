@@ -104,12 +104,7 @@ namespace CODWER.RERU.Core.Application.Departments.BulkImportDepartments
 
             var streamBytesArray = package.GetAsByteArray();
 
-            return new FileDataDto
-            {
-                Content = streamBytesArray,
-                Name = "Department-Import-Result",
-                ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            };
+            return FileDataDto.GetPdf("Department-Import-Result", streamBytesArray);
         }
 
         private bool CheckCreateDepartment(string name)

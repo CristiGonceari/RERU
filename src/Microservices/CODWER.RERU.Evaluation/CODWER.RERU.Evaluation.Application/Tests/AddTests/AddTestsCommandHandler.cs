@@ -252,12 +252,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             const string fileName = "AddTestResult.xlsx";
             var streamBytesArray = package.GetAsByteArray();
 
-            return new FileDataDto
-            {
-                Content = streamBytesArray,
-                Name = fileName,
-                ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            };
+            return FileDataDto.GetExcel(fileName, streamBytesArray);
         }
     }
 }

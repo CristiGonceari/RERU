@@ -33,12 +33,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
         {
             var res = Parse(source);
 
-            return new FileDataDto
-            {
-                Content = res,
-                ContentType = "application/pdf",
-                Name = testTemplateName
-            };
+            return FileDataDto.GetPdf(testTemplateName, res);
         }
 
         private byte[] Parse(string html)

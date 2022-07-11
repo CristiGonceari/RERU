@@ -144,13 +144,7 @@ namespace CVU.ERP.Module.Application.StorageFileServices.Implementations
                                                 }
                                             );
 
-                    return new FileDataDto
-                    {
-                        Content = fileStream.ToArray(),
-                        ContentType = dbFile.Type,
-                        Name = dbFile.FileName
-                    };
-
+                    return FileDataDto.GetByType(dbFile.FileName, fileStream.ToArray(), dbFile.Type);
                 }
             }
             catch (MinioException e)

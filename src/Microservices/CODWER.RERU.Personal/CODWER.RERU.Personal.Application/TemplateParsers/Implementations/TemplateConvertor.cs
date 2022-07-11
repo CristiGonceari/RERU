@@ -24,12 +24,7 @@ namespace CODWER.RERU.Personal.Application.TemplateParsers.Implementations
         {
             var res = Parse(content.FileContent);
 
-            return new FileDataDto
-            {
-                Content = res,
-                ContentType = "application/pdf",
-                Name = "Converted.pdf"
-            };
+            return FileDataDto.GetPdf("Converted.pdf", res);
         }
 
         public async Task<FileDataDto> GetPdfFromFile(IFormFile file)
@@ -37,12 +32,7 @@ namespace CODWER.RERU.Personal.Application.TemplateParsers.Implementations
             var html = await ReadAsStringAsync(file);
             var res = Parse(html);
 
-            return new FileDataDto
-            {
-                Content = res,
-                ContentType = "application/pdf",
-                Name = file.FileName.Replace(".html", ".pdf")
-            };
+            return FileDataDto.GetPdf(file.FileName.Replace(".html", ".pdf"), res);
         }
 
         public async Task<string> ReadAsStringAsync(IFormFile file)
@@ -67,12 +57,7 @@ namespace CODWER.RERU.Personal.Application.TemplateParsers.Implementations
 
             var res = Parse(source);
 
-            return new FileDataDto
-            {
-                Content = res,
-                ContentType = "application/pdf",
-                Name = fileName
-            };
+            return FileDataDto.GetPdf(fileName, res);
         }
 
         private byte[] Parse(string html)

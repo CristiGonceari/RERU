@@ -109,7 +109,10 @@
                                         {{ 'button.view' | translate }}
                                     </button>
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem (click)="printTest(item.id)">
-                                        {{ 'button.print' | translate }}
+                                        {{ 'button.print-test-info' | translate }}
+                                    </button>
+                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem (click)="printTestResult(item.id)">
+                                        {{ 'button.print-result' | translate }}
                                     </button>
                                     <button (click)="openGenerateDocumentModal(item.id, item.testTemplateName)" class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                         {{'documents-templates.generate-document'| translate}}

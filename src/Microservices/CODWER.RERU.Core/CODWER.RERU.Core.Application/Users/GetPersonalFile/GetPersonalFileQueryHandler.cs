@@ -13,12 +13,7 @@ namespace CODWER.RERU.Core.Application.Users.GetPersonalFile
             var path = new FileInfo("PersonalFile/Fisa_Personala.xlsx").FullName;
             var bytes = await File.ReadAllBytesAsync(path);
 
-            return new FileDataDto
-            {
-                Content = bytes,
-                ContentType = "application/xlsx",
-                Name = "Fisa Personala.xlsx"
-            };
+            return FileDataDto.GetExcel("Fisa Personala.xlsx", bytes);
         }
     }
 }
