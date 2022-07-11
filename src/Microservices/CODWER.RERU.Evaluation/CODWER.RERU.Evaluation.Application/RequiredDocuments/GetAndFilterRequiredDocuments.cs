@@ -8,7 +8,13 @@ namespace CODWER.RERU.Evaluation.Application.RequiredDocuments
     {
         public static IQueryable<RequiredDocument> Filter(AppDbContext appDbContext, string name, bool? mandatory)
         {
-            var items = appDbContext.RequiredDocuments.AsQueryable();
+            var items = appDbContext.RequiredDocuments
+                .AsQueryable()
+                .Select(x => new RequiredDocument
+                {
+                    Mandatory = x.Mandatory,
+                    Name = x.Name
+                });
 
             if (!string.IsNullOrEmpty(name))
             {

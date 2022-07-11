@@ -6,5 +6,6 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionsSele
 {
     public class GetPositionsSelectValuesQuery : IRequest<List<SelectItem>>
     {
+        public int? Id { get; set; }
     }
 }

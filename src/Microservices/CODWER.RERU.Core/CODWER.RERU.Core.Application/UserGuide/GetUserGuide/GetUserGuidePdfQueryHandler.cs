@@ -13,12 +13,7 @@ namespace CODWER.RERU.Core.Application.UserGuide.GetUserGuide
             var path = new FileInfo("UserGuide/GhidCore.pdf").FullName;
             var bytes = await File.ReadAllBytesAsync(path);
 
-            return new FileDataDto
-            {
-                Content = bytes,
-                ContentType = "application/pdf",
-                Name = "Ghidul Utilizatorului.pdf"
-            };
+            return FileDataDto.GetPdf("Ghidul Utilizatorului.pdf", bytes);
         }
     }
 }

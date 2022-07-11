@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationsService } from 'angular2-notifications';
 import { TestTemplateStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-template-status.enum';
 import { SelectItem } from 'projects/evaluation/src/app/utils/models/select-item.model';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { ReferenceService } from 'projects/evaluation/src/app/utils/services/reference/reference.service';
 import { TestTemplateService } from 'projects/evaluation/src/app/utils/services/test-template/test-template.service';
 import { SolicitedTest } from 'projects/evaluation/src/app/utils/models/solicitet-tests/solicited-test.model';
-import { forkJoin } from 'rxjs';
-import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { Location } from '@angular/common';
 import { SolicitedTestService } from 'projects/evaluation/src/app/utils/services/solicited-test/solicited-test.service';
 import { ActivatedRoute } from '@angular/router';
 import { AddEditTest } from 'projects/evaluation/src/app/utils/models/tests/add-edit-test.model';
 import { TestStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-status.enum';
-import { TestService } from 'projects/evaluation/src/app/utils/services/test/test.service';
-import { SolicitedTestStatusEnum } from 'projects/evaluation/src/app/utils/enums/solicited-test-status.model';
-import { EventService } from 'projects/evaluation/src/app/utils/services/event/event.service';
+import { SolicitedVacantPositionUserFileService } from 'projects/evaluation/src/app/utils/services/solicited-vacant-position-user-file/solicited-vacant-position-user-file.service';
+import { saveAs } from 'file-saver';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ReviewSolicitedVacandPositionModalComponent } from 'projects/evaluation/src/app/utils/modals/review-solicited-vacand-position-modal/review-solicited-vacand-position-modal.component';
+import { SolicitedVacantPositionEmailMessageService } from 'projects/evaluation/src/app/utils/services/solicited-vacant-position-email-message/solicited-vacant-position-email-message.service';
 
 @Component({
   selector: 'app-approve-solicited-test',
@@ -46,20 +45,24 @@ export class ApproveSolicitedTestComponent implements OnInit {
   needEvaluator: boolean = false;
   hasEventEvaluator: boolean = false;
 
+  candidatePositionId;
+
   messageText = "";
 
   userListToAdd: number[] = [];
 
+  userFiles: any[] = [];
+
   constructor(
     private referenceService: ReferenceService,
-    private testService: TestService,
     private solicitedTestService: SolicitedTestService,
     public translate: I18nService,
     private location: Location,
-    private notificationService: NotificationsService,
     public activatedRoute: ActivatedRoute,
-    private eventService: EventService,
-    private testTemplateService: TestTemplateService
+    private modalService: NgbModal,
+    private testTemplateService: TestTemplateService,
+    private solicitedVacantPositionUserFileService: SolicitedVacantPositionUserFileService,
+    private solicitedVacantPositionEmailMessageService: SolicitedVacantPositionEmailMessageService
   ) { }
 
   ngOnInit(): void {
@@ -70,19 +73,33 @@ export class ApproveSolicitedTestComponent implements OnInit {
   getEvents() {
     this.referenceService.getEvents().subscribe(res => {
       this.eventsList = res.data;
-    this.getActiveTestTemplate();
+      this.getActiveTestTemplate();
 
     });
   }
 
+  GetFile(fileId: string) {
+    this.solicitedVacantPositionUserFileService.get(fileId).subscribe(response => {
+      if (response) {
+        const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
+        const fileNameParsed = fileName.substring(1, fileName.length - 1);
+        const blob = new Blob([response.body], { type: response.body.type });
+        const file = new File([blob], fileName, { type: response.body.type });
+        saveAs(file);
+      }
+    }
+    )
+  }
+
   initData(): void {
     this.solicitedTestId = this.activatedRoute.snapshot.paramMap.get('id');
-    if (this.solicitedTestId != null) this.getSolicitedTest(this.solicitedTestId)
+    this.candidatePositionId = this.activatedRoute.snapshot.paramMap.get('positionId');
+    if (this.solicitedTestId != null) this.getSolicitedTest(this.solicitedTestId, this.candidatePositionId)
     else this.isLoading = false;
   }
 
-  getSolicitedTest(id) {
-    this.solicitedTestService.getSolicitedTest(id).subscribe(res => {
+  getSolicitedTest(id, positionId) {
+    this.solicitedTestService.getSolicitedTest({ id: id, candidatePositionId: positionId }).subscribe(res => {
       if (res && res.data) {
         this.solicitedTest = res.data;
         this.date = res.data.solicitedTime;
@@ -90,9 +107,12 @@ export class ApproveSolicitedTestComponent implements OnInit {
         this.checkIfEventHasEvaluator(res.data.eventId);
         this.checkIfIsOneAnswer(res.data.testTemplateId)
         this.userListToAdd.push(res.data.userProfileId);
-        console.log(this.solicitedTest)
       }
+      this.solicitedVacantPositionUserFileService.getList({ userId: this.solicitedTest.userProfileId, solicitedVacantPositionId: this.solicitedTestId, candidatePositionId: this.solicitedTest.candidatePositionId }).subscribe(res => {
+        this.userFiles = res.data
+      })
     });
+
   }
 
   getActiveTestTemplate() {
@@ -118,7 +138,6 @@ export class ApproveSolicitedTestComponent implements OnInit {
   checkIfIsOneAnswer(testTemplateId) {
     if (testTemplateId) {
       this.isTestTemplateOneAnswer = this.selectActiveTests.find(x => x.testTemplateId === testTemplateId).isOnlyOneAnswer;
-      console.log(testTemplateId, this.isTestTemplateOneAnswer)
     } else {
       this.isTestTemplateOneAnswer = false;
     }
@@ -136,9 +155,8 @@ export class ApproveSolicitedTestComponent implements OnInit {
   }
 
   checkIfEventHasEvaluator(event) {
-    if(event){
+    if (event) {
       this.hasEventEvaluator = this.eventsList.find(x => x.eventId === event).isEventEvaluator;
-      console.log(event, this.hasEventEvaluator)
     }
   }
 
@@ -163,27 +181,24 @@ export class ApproveSolicitedTestComponent implements OnInit {
   }
 
   createTest() {
-    this.testService.createTest(this.parse()).subscribe(() => {
-      this.changeStatus();
-
-      forkJoin([
-        this.translate.get('modal.success'),
-        this.translate.get('tests.tests-were-programmed'),
-      ]).subscribe(([title, description]) => {
-        this.title = title;
-        this.description = description;
-      });
-      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-    });
+    const modalRef: any = this.modalService.open(ReviewSolicitedVacandPositionModalComponent, { centered: true, size: 'xl' });
+    modalRef.componentInstance.userEmail = this.solicitedTest.email;
+    modalRef.componentInstance.userName = this.solicitedTest.userProfileName;
+    modalRef.result.then(() => {
+      this.sendEmailAndChangeStatus( modalRef.result.__zone_symbol__value)
+    }, () => { });
   }
 
-  changeStatus() {
-    let params: any = {
-      id: this.solicitedTestId,
-      status: SolicitedTestStatusEnum.Approved
+  sendEmailAndChangeStatus(data) {
+    let request = {
+      emailMessage: data.EmailMessage,
+      result: data.messageEnum,
+      solicitedVacantPositionId: this.solicitedTestId
     }
 
-    this.solicitedTestService.changeStatus(params).subscribe(res => this.backClicked());
+    this.solicitedVacantPositionEmailMessageService.changeStatusAndSendEmail(request).subscribe(res => {
+      this.backClicked();
+    })
   }
 
   backClicked() {

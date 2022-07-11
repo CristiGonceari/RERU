@@ -9,6 +9,6 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.EditSolicitedTestSta
     public class EditSolicitedTestStatusCommand : IRequest<Unit>
     {
         public int Id { get; set; }
-        public SolicitedTestStatusEnum Status { get; set; }
+        public SolicitedPositionStatusEnum Status { get; set; }
     }
 }

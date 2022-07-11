@@ -9,9 +9,10 @@
         <thead class="text-uppercase text-muted">
             <tr>
                 <th scope="col">{{'verify-test.student' | translate}}</th>
-                <th scope="col" class="text-left">{{'tests.name' | translate}}</th>
                 <th scope="col" class="text-left">{{'position.apply-for-position' | translate}}</th>
-                <th scope="col" class="text-left">{{'events.event' | translate}}</th>
+                <th scope="col" class="text-left">{{'solicited-position.attached-documents' | translate}}</th>
+                <th scope="col" class="text-left">{{'solicited-position.required-documents' | translate}}</th>
+                <th scope="col">{{'solicited-test.solicited-time' | translate}}</th>
                 <th scope="col" class="text-left">{{'tests.status' | translate}}</th>
                 <th scope="col" style="width: 48px"></th>
             </tr>
@@ -27,12 +28,10 @@
                         <span class="text-dark-50 font-size-lg font-weight-light">{{ item.userProfileIdnp }}</span>
                     </p>
                 </td>
-                <td>{{ item.testTemplateName }}</td>
                 <td>{{ item.candidatePositionName }}</td>
-                <td>
-                    <span *ngIf="item.eventName">{{ item.eventName }}</span>
-                    <span *ngIf="!item.eventName">-</span>
-                </td>
+                <td>{{ item.attachedFilesCount }}</td>
+                <td>{{ item.requiredAttachedFilesCount }}</td>
+                <td>{{ item.solicitedTime | date: 'dd/MM/yyyy, HH:mm'}}</td>
                 <td>{{'statuses.' + enum[item.solicitedTestStatus] | translate}}</td>
                 <td data-field="Actions" data-autohide-disabled="false"
                     class="datatable-cell datatable-cell-sort p-3">
@@ -53,15 +52,11 @@
                                     </svg>
                                 </span>
                             </div>
-                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left" *ngIf="item.solicitedTestStatus == enum.New">
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left" *ngIf="item.solicitedTestStatus == enum.New || item.solicitedTestStatus == enum.Wait">
                                 <div ngbDropdownMenu aria-labelledby="action1">
-                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem 
-                                        (click)="openConfirmationChangeModal(item.id)">
-                                        {{'statuses.refuse' | translate}}
-                                    </button>
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem
-                                        [routerLink]="['approve', item.id]">
-                                        {{'statuses.approve' | translate}}
+                                        [routerLink]="['review', item.id, item.candidatePositionId]">
+                                        {{'solicited-position.review' | translate}}
                                     </button>
                                 </div>
                             </div>

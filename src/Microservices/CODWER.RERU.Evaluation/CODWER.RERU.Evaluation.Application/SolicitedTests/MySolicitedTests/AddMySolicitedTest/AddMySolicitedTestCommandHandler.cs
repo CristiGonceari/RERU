@@ -1,17 +1,18 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.AddMySolicitedTest
 {
-    public class AddMySolicitedTestCommandHandler : IRequestHandler<AddMySolicitedTestCommand, int>
+    public class AddMySolicitedTestCommandHandler : IRequestHandler<AddMySolicitedTestCommand, AddSolicitedCandidatePositionResponseDto>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
@@ -26,19 +27,25 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Add
             _loggerService = loggerService;
         }
 
-        public async Task<int> Handle(AddMySolicitedTestCommand request, CancellationToken cancellationToken)
+        public async Task<AddSolicitedCandidatePositionResponseDto> Handle(AddMySolicitedTestCommand request, CancellationToken cancellationToken)
         {
             var myUserProfile = await _userProfileService.GetCurrentUser();
 
             var solicitedTest = _mapper.Map<SolicitedVacantPosition>(request.Data);
             solicitedTest.UserProfileId = myUserProfile.Id;
-            solicitedTest.SolicitedTestStatus = SolicitedTestStatusEnum.New;
+            solicitedTest.SolicitedPositionStatus = SolicitedPositionStatusEnum.New;
 
             await _appDbContext.SolicitedVacantPositions.AddAsync(solicitedTest);
             await _appDbContext.SaveChangesAsync();
             await LogAction(solicitedTest);
 
-            return solicitedTest.Id;
+            var solicitedVacantPosition = new AddSolicitedCandidatePositionResponseDto
+            {
+                SolicitedVacantPositionId = solicitedTest.Id,
+                UserProfileId = solicitedTest.UserProfileId
+            };
+
+            return solicitedVacantPosition;
         }
 
         private async Task LogAction(SolicitedVacantPosition item)

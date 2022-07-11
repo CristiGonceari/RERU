@@ -6,24 +6,19 @@
     <table for="kt_datatable" class="datatable table" style="overflow: visible" id="testsTable" *ngIf="!isLoading">
         <thead class="text-uppercase text-muted">
             <tr>
-                <th scope="col">{{'dashboard.test' | translate}}</th>
                 <th scope="col">{{'position.apply-for-position' | translate}}</th>
-                <th scope="col">{{'events.event' | translate}}</th>
                 <th scope="col">{{'solicited-test.solicited-time' | translate}}</th>
                 <th scope="col">{{'verify-test.status' | translate}}</th>
+                <th scope="col" class="text-center">{{'attached/required' | translate}}</th>
                 <th scope="col" style="width: 48px"></th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="solicitedTests.length">
             <tr *ngFor="let item of solicitedTests">
-                <td>{{ item.testTemplateName }}</td>
                 <td>{{ item.candidatePositionName }}</td>
-                <td>
-                    <span *ngIf="item.eventName">{{ item.eventName }}</span>
-                    <span *ngIf="!item.eventName">-</span>
-                </td>
                 <td>{{ item.solicitedTime | date: 'dd/MM/yyyy, HH:mm'}}</td>
                 <td>{{'statuses.' + enum[item.solicitedTestStatus] | translate }}</td>
+                <td class="text-center">{{ item.attachedFilesCount }} / {{ item.requiredAttachedFilesCount }}</td>
                 <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
                     <div style="overflow: visible; position: relative; width: 0px">
                         <div ngbDropdown class="dropdown dropdown-inline">
@@ -45,7 +40,7 @@
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                                 <div ngbDropdownMenu aria-labelledby="action1">
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem 
-                                        [routerLink]="['../edit-solicited-test', item.id]" *ngIf="item.solicitedTestStatus == enum.New">
+                                        [routerLink]="['../edit-solicited-position', item.id]" *ngIf="item.solicitedTestStatus == enum.New || item.solicitedTestStatus == enum.Wait">
                                         {{ 'button.edit' | translate }}
                                     </button>
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem 

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedTests.GetUserSolicitedTests
 {
-    public class GetUserSolicitedTestsQueryHandler : IRequestHandler<GetUserSolicitedTestsQuery, PaginatedModel<SolicitedTestDto>>
+    public class GetUserSolicitedTestsQueryHandler : IRequestHandler<GetUserSolicitedTestsQuery, PaginatedModel<SolicitedCandidatePositionDto>>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
@@ -22,16 +22,16 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.GetUserSolicitedTest
             _paginationService = paginationService;
         }
 
-        public async Task<PaginatedModel<SolicitedTestDto>> Handle(GetUserSolicitedTestsQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedModel<SolicitedCandidatePositionDto>> Handle(GetUserSolicitedTestsQuery request, CancellationToken cancellationToken)
         {
             var solicitedUserTests =  _appDbContext.SolicitedVacantPositions
-                .Include(t => t.TestTemplate)
-                .Include(t => t.UserProfile)
-                .Include(t => t.Event)
+                //.Include(t => t.TestTemplate)
+                //.Include(t => t.UserProfile)
+                //.Include(t => t.Event)
                 .Include(t => t.CandidatePosition)
                 .Where(x => x.UserProfileId == request.UserId).AsQueryable();
 
-            return await _paginationService.MapAndPaginateModelAsync<SolicitedVacantPosition, SolicitedTestDto>(solicitedUserTests, request);
+            return await _paginationService.MapAndPaginateModelAsync<SolicitedVacantPosition, SolicitedCandidatePositionDto>(solicitedUserTests, request);
         }
     }
 }

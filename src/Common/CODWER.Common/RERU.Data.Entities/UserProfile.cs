@@ -21,6 +21,7 @@ namespace RERU.Data.Entities
             UserFiles = new HashSet<UserFile>();
             ModuleRoles = new List<UserProfileModuleRole>();
             Identities = new List<UserProfileIdentity>();
+            SolicitedVacantPositionUserFiles = new HashSet<SolicitedVacantPositionUserFile>();
         }
 
         public string FirstName { get; set; }
@@ -97,5 +98,7 @@ namespace RERU.Data.Entities
         public virtual ICollection<KinshipRelation> KinshipRelations { get; set; }
         [JsonIgnore]
         public virtual ICollection<MilitaryObligation> MilitaryObligations { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<SolicitedVacantPositionUserFile> SolicitedVacantPositionUserFiles { get; set; }
     }
 }

@@ -40,12 +40,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
 
             var parsed = _generatePdf.GetPDF(source);
 
-            return new FileDataDto
-            {
-                Content = parsed,
-                ContentType = "application/pdf",
-                Name = $"{data.Name}"
-            };
+            return FileDataDto.GetPdf($"{data.Name}", parsed);
         }
 
         public FileDataDto ExportListTable(TableListData<TDestination> data)
@@ -67,12 +62,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
 
             var parsed = _generatePdf.GetPDF(source);
 
-            return new FileDataDto
-            {
-                Content = parsed,
-                ContentType = "application/pdf",
-                Name = $"{data.Name}"
-            };
+            return FileDataDto.GetPdf($"{data.Name}", parsed);
         }
 
         private string GetTableHeader(List<string> fields)

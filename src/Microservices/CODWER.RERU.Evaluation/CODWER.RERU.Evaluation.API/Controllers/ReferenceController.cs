@@ -140,7 +140,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         [HttpGet("solicited-test-status/select-values")]
         public List<SelectItem> GetSolicitedTestStatus()
         {
-            var items = EnumConverter<SolicitedTestStatusEnum>.SelectValues;
+            var items = EnumConverter<SolicitedPositionStatusEnum>.SelectValues;
 
             return items;
         }

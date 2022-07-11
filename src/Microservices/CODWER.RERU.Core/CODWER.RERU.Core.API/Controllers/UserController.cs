@@ -106,7 +106,8 @@ namespace CODWER.RERU.Core.API.Controllers
             return File(result.Content, result.ContentType, result.Name);
         }
 
-        [HttpPost("process")]
+        [HttpPost]
+        [Route("process")]
         public async Task<int> StartAddProcess([FromBody] StartImportProcessCommand command)
         {
             return await Mediator.Send(command);

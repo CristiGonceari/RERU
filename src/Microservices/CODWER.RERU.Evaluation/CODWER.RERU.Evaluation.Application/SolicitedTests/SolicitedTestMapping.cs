@@ -8,18 +8,22 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests
     {
         public SolicitedTestMapping()
         {
-            CreateMap<SolicitedVacantPosition, SolicitedTestDto>()
-                 .ForMember(x => x.EventName, opts => opts.MapFrom(src => src.Event.Name))
-                 .ForMember(x => x.TestTemplateName, opts => opts.MapFrom(src => src.TestTemplate.Name))
+            CreateMap<SolicitedVacantPosition, SolicitedCandidatePositionDto>()
                  .ForMember(x => x.UserProfileName, opts => opts.MapFrom(src => src.UserProfile.FirstName + " " + src.UserProfile.LastName + " " + src.UserProfile.FatherName))
                  .ForMember(x => x.UserProfileIdnp, opts => opts.MapFrom(src => src.UserProfile.Idnp))
-                 .ForMember(x => x.CandidatePositionName, opts => opts.MapFrom(src => src.CandidatePosition.Name));
+                 .ForMember(x => x.CandidatePositionName, opts => opts.MapFrom(src => src.CandidatePosition.Name))
+                 .ForMember(x => x.SolicitedTime, opts => opts.MapFrom(src => src.CreateDate))
+                 .ForMember(x => x.AttachedFilesCount, opts => opts.MapFrom(src => src.SolicitedVacantPositionUserFiles.Count))
+                 .ForMember(x => x.RequiredAttachedFilesCount, opts => opts.MapFrom(src => src.CandidatePosition.RequiredDocumentPositions.Count))
+                 .ForMember(x => x.PhoneNumber, opts => opts.MapFrom(src => src.UserProfile.PhoneNumber))
+                 .ForMember(x => x.Email, opts => opts.MapFrom(src => src.UserProfile.Email))
+                 .ForMember(x => x.SolicitedTestStatus, opts => opts.MapFrom(src => src.SolicitedPositionStatus));
 
-            CreateMap<SolicitedTestDto, SolicitedVacantPosition>()
+            CreateMap<SolicitedCandidatePositionDto, SolicitedVacantPosition>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
 
             CreateMap<AddEditSolicitedTestDto, SolicitedVacantPosition>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
-        }
+            }
     }
 }

@@ -6,8 +6,9 @@ using MediatR;
 namespace CODWER.RERU.Evaluation.Application.SolicitedTests.GetSolicitedTest
 {
     [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_TESTE_SOLICITATE)]
-    public class GetSolicitedTestQuery : IRequest<SolicitedTestDto>
+    public class GetSolicitedTestQuery : IRequest<SolicitedCandidatePositionDto>
     {
         public int Id { get; set; }
+        public int CandidatePositionId { get; set; }
     }
 }

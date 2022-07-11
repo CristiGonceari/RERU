@@ -227,12 +227,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         {
             var streamBytesArray = package.GetAsByteArray();
 
-            return new FileDataDto
-            {
-                Content = streamBytesArray,
-                Name = "User-Import-Result",
-                ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            };
+            return FileDataDto.GetExcel("User-Import-Result", streamBytesArray);
         }
     }
 }

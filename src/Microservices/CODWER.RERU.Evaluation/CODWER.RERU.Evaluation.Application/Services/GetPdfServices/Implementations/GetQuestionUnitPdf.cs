@@ -87,12 +87,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
 
             var res = Parse(source);
 
-            return new FileDataDto
-            {
-                Content = res,
-                ContentType = "application/pdf",
-                Name = "Intrebarea.pdf"
-            };
+            return FileDataDto.GetPdf("Intrebarea.pdf", res);
         }
 
         private async Task<Dictionary<string, string>> GetOrderDictionary(QuestionUnit items)

@@ -9,5 +9,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions
         public string Name { get; set; }
         public bool IsActive { get; set; }
         public List<SelectItem> RequiredDocuments { get; set; }
+        public List<SelectItem> Events { get; set; }
     }
 }

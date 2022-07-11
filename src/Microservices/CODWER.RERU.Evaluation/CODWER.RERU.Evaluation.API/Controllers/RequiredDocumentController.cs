@@ -3,13 +3,13 @@ using CODWER.RERU.Evaluation.Application.RequiredDocuments.AddEditRequiredDocume
 using CODWER.RERU.Evaluation.Application.RequiredDocuments.DeleteRequiredDocument;
 using CODWER.RERU.Evaluation.Application.RequiredDocuments.GetRequiredDocument;
 using CODWER.RERU.Evaluation.Application.RequiredDocuments.GetRequiredDocuments;
+using CODWER.RERU.Evaluation.Application.RequiredDocuments.PrintRequiredDocuments;
 using CODWER.RERU.Evaluation.DataTransferObjects.Documents;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Application.RequiredDocuments.PrintRequiredDocuments;
-using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {

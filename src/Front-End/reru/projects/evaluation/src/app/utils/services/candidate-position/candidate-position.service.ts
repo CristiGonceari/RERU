@@ -20,11 +20,11 @@ export class CandidatePositionService extends AbstractService{
 	}
 
 	getList(params): Observable<any> {
-		return this.client.get(`${this.baseUrl}/${this.urlRoute}`, {params});
+		return this.client.get(`${this.baseUrl}/${this.urlRoute}`, { params });
 	}
 
-  	getPositionValues(): Observable<any> {
-    	return this.client.get(`${this.baseUrl}/${this.urlRoute}/select-values`);
+  	getPositionValues(params): Observable<any> {
+    	return this.client.get(`${this.baseUrl}/${this.urlRoute}/select-values`, { params });
   	}
 
 	delete(id: number): Observable<CandidatePositionModel> {

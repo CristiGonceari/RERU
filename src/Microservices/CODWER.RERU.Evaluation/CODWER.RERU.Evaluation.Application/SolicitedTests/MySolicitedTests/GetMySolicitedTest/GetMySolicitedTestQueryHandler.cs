@@ -9,7 +9,7 @@ using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.GetMySolicitedTest
 {
-    public class GetMySolicitedTestQueryHandler : IRequestHandler<GetMySolicitedTestQuery, SolicitedTestDto>
+    public class GetMySolicitedTestQueryHandler : IRequestHandler<GetMySolicitedTestQuery, SolicitedCandidatePositionDto>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
@@ -22,14 +22,14 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.Get
             _userProfileService = userProfileService;
         }
 
-        public async Task<SolicitedTestDto> Handle(GetMySolicitedTestQuery request, CancellationToken cancellationToken)
+        public async Task<SolicitedCandidatePositionDto> Handle(GetMySolicitedTestQuery request, CancellationToken cancellationToken)
         {
             var myUserProfile = await _userProfileService.GetCurrentUser();
 
             var solicitedTest = await _appDbContext.SolicitedVacantPositions.FirstOrDefaultAsync(x => x.Id == request.Id);
             solicitedTest.UserProfileId = myUserProfile.Id;
 
-            return _mapper.Map<SolicitedTestDto>(solicitedTest);
+            return _mapper.Map<SolicitedCandidatePositionDto>(solicitedTest);
         }
     }
 }

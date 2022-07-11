@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionsSelectValues
 {
@@ -13,6 +14,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionsSele
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private List<SelectItem> _list = new ();
 
         public GetPositionsSelectValuesQueryHandler(AppDbContext appDbContext, IMapper mapper)
         {
@@ -22,6 +24,17 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionsSele
 
         public async Task<List<SelectItem>> Handle(GetPositionsSelectValuesQuery request, CancellationToken cancellationToken)
         {
+            if (request.Id != null)
+            {
+                var item = _appDbContext.SolicitedVacantPositions
+                    .Include(c => c.CandidatePosition)
+                    .FirstOrDefault(x => x.Id == request.Id);
+
+                _list.Add(_mapper.Map<SelectItem>(item));
+
+                return _list;
+            }
+
             return _appDbContext.CandidatePositions.AsQueryable()
                 .Where(tt => tt.IsActive).Select(tt => _mapper.Map<SelectItem>(tt))
                 .ToList();

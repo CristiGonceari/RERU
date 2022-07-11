@@ -13,7 +13,7 @@ namespace CODWER.RERU.Evaluation.Application.EventVacantPositions.GetEventVacant
         {
             RuleFor(x => x.Id)
                 .SetValidator(
-                    new ItemMustExistValidator<EventVacantPosition>(appDbContext, ValidationCodes.INVALID_ID, ValidationMessages.NotFound)
+                    new ItemMustExistValidator<CandidatePosition>(appDbContext, ValidationCodes.INVALID_ID, ValidationMessages.NotFound)
                 );
         }
     }

@@ -234,6 +234,8 @@
     "ordered": "Ordonat",
     "preview": "Previzualizare",
     "print": "Imprimă",
+    "print-result": "Imprimă rezultatul",
+    "print-test-info": "Imprimă informațiile testului",
     "performing-test": "Imprimarea efectuării testului",
     "attach": "Atașați fișierul",
     "confirm-print": "Confirmă și Printează",
@@ -366,7 +368,7 @@
     "tests-were-programmed": "Test a fost programat cu succes",
     "finish-test-msg": "Doriți sa terminați testul?",
     "stop-test-msg": "Sigur doriți să opriți acest test?",
-    "please-wait": "Vă rugăm să așteptați până sistemul adaugă teste pentru utilizatori ..."
+    "please-wait": "Vă rugăm să așteptați până sistemul importa teste pentru utilizatori ..."
   },
   "verify-test": {
     "title": "Teste",
@@ -797,6 +799,16 @@
   "select-format":{
     "please-select-format": "Selectati formatul necesar"
   },
+  "solicited-position":{
+    "solicited-positions": "Pozitia solicitata",
+    "attached-documents": "Documente atasate",
+    "required-documents": "Documente necesare",
+    "review" : "Revizuie",
+    "reject" : "Refuz",
+    "approve" : "Aproba",
+    "waiting" : "In asteptare",
+    "phone-number" : "Numar de contact"
+  },
   "message-code": {
     "MAP0000001": "Cerere către aplicație neautentificată",
     "MAP0000002": "Cerere neautorizată. Nu sunt permisiuni.",
@@ -936,20 +948,20 @@
     "title": "Ghidul Utilizatorului"
   },
   "solicited-test": {
-    "solicited-tests": "Teste solicitate",
-    "my-solicited-tests": "Testele mele solicitate",
+    "solicited-tests": "Pozitii solicitate",
+    "my-solicited-tests": "Pozitiile mele solicitate",
     "solicited-time": "Timp solicitat",
-    "add-test": "Solicita un test",
-    "remove": "Ștergeți testul solicitat",
-    "remove-msg": "Sigur doriți să ștergeți acest test solicitat?",
-    "succes-remove-msg": "Testul solicitat a fost șters cu succes",
-    "subtitle": "Gestionarea testelor solicitate",
-    "test-data": "Introduceți detaliile testului solicitat și confirmați",
-    "test-details": "Detaliile testului solicitat",
-    "succes-add-msg": "Testul solicitat a fost adăugat cu succes",
-    "succes-edit-msg": "Testul solicitat a fost editat cu succes",
+    "add-test": "Solicita o pozitie",
+    "remove": "Ștergeți pozitia solicitata",
+    "remove-msg": "Sigur doriți să ștergeți aceasta pozitie solicitata?",
+    "succes-remove-msg": "Pozitia solicitata a fost șters cu succes",
+    "subtitle": "Gestionarea pozitiilor solicitate",
+    "test-data": "Introduceți detaliile pozitiei solicitat și confirmați",
+    "test-details": "Detaliile pozitiei solicitate",
+    "succes-add-msg": "Pozitia solicitata a fost adăugat cu succes",
+    "succes-edit-msg": "Pozitia solicitata a fost editat cu succes",
     "change-status": "Schimba statutul",
-    "refuse-msg": "Sigur doriți să refuzați acest test solicitat?",
+    "refuse-msg": "Sigur doriți să refuzați aceasta pozitie solicitata?",
     "select-candidate-position": "Selectați poziția",
     "position-to-candidate": "Poziția pentru care candidați"
   },

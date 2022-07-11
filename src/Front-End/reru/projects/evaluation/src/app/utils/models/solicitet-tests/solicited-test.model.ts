@@ -5,6 +5,9 @@ export class SolicitedTest {
     userProfileId?: number;
     userProfileName: string;
     testTemplateId: number;
+    candidatePositionId: number;
+    email: string;
+    candidatePositionName: string;
     testTemplateName: string;
     eventId?: number;
     eventName: string;

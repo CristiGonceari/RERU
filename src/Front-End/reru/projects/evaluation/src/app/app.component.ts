@@ -350,7 +350,7 @@ export class AppComponent {
 			this.translate.get('sidebar.manage-questions'),
 			this.translate.get('sidebar.manage-tests'),
 			this.translate.get('sidebar.test'),
-			this.translate.get('solicited-test.solicited-tests'),
+			this.translate.get('solicited-position.solicited-positions'),
 			this.translate.get('verify-test.title'),
 			this.translate.get('evaluations.evaluations'),
 			this.translate.get('statistics.statistics'),
