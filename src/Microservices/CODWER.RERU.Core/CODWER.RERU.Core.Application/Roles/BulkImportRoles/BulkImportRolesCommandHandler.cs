@@ -101,12 +101,7 @@ namespace CODWER.RERU.Core.Application.Roles.BulkImportRoles
 
             var streamBytesArray = package.GetAsByteArray();
 
-            return new FileDataDto
-            {
-                Content = streamBytesArray,
-                Name = "Role-Import-Result",
-                ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            };
+            return FileDataDto.GetExcel("Role-Import-Result", streamBytesArray);
         }
 
         private bool CheckCreateRole(string name)

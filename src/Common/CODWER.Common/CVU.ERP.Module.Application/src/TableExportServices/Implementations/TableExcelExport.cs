@@ -29,12 +29,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
 
             var streamBytesArray = package.GetAsByteArray();
 
-            return new FileDataDto()
-            {
-                Content = streamBytesArray,
-                Name = $"{data.Name}",
-                ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            };
+            return FileDataDto.GetExcel($"{data.Name}", streamBytesArray);
         }
 
         public FileDataDto ExportListTable(TableListData<TDestination> data)
@@ -47,12 +42,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
 
             var streamBytesArray = package.GetAsByteArray();
 
-            return new FileDataDto()
-            {
-                Content = streamBytesArray,
-                Name = $"{data.Name}",
-                ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            };
+            return FileDataDto.GetExcel($"{data.Name}", streamBytesArray);
         }
 
         private void GetHeaderContent(ExcelWorksheet workSheet, List<string> fields)

@@ -115,12 +115,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
 
             var res = Parse(source);
 
-            return new FileDataDto
-            {
-                Content = res,
-                ContentType = "application/pdf",
-                Name = "Test.pdf"
-            };
+            return FileDataDto.GetPdf("Test.pdf", res);
         }
 
         private byte[] Parse(string html)

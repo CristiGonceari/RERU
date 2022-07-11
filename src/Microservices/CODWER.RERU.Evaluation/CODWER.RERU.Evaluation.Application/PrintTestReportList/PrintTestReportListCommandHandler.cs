@@ -71,12 +71,7 @@ namespace CODWER.RERU.Evaluation.Application.PrintTestReportList
                 throw new Exception(e.Message);
             }
 
-            return new FileDataDto
-            {
-                Content = res,
-                ContentType = "application/pdf",
-                Name = "TestReport_List.pdf"
-            };
+            return FileDataDto.GetPdf("TestReport_List.pdf", res);
         }
     }
 }
