@@ -111,7 +111,8 @@
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem (click)="printTest(item.id)">
                                         {{ 'button.print-test-info' | translate }}
                                     </button>
-                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem (click)="printTestResult(item.id)">
+                                    <button class="navi-link align-items-baseline px-6" *ngIf="item.testStatus === status.Verified" 
+                                        ngbDropdownItem (click)="printTestResult(item.id)">
                                         {{ 'button.print-result' | translate }}
                                     </button>
                                     <button (click)="openGenerateDocumentModal(item.id, item.testTemplateName)" class="navi-link align-items-baseline px-6" ngbDropdownItem>

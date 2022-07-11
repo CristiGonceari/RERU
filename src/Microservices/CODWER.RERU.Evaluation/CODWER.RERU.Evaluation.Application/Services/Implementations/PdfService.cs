@@ -1027,55 +1027,30 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
                 if (answers.Any(x=>x == option.value.Id))
                 {
-                    if (testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer)
-                    {
-                        content += $@"<input checked type=""radio"" style=""margin-left: 20px; margin-bottom: 15px;"">";
-                    }
-                    else
-                    {
-                        content += $@"<input checked type=""checkbox"" style=""margin-left: 20px; margin-bottom: 15px;"">";
-                    }
+                    content += testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer 
+                        ? $@"<input checked type=""radio"" style=""margin-left: 20px; margin-bottom: 15px;"">" 
+                        : $@"<input checked type=""checkbox"" style=""margin-left: 20px; margin-bottom: 15px;"">";
                 }
                 else
                 {
-                    if (testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer)
-                    {
-                        content += $@"<input type=""radio"" style=""margin-left: 20px; margin-bottom: 15px;"">";
-                    }
-                    else
-                    {
-                        content += $@"<input type=""checkbox"" style=""margin-left: 20px; margin-bottom: 15px;"">";
-                    }
+                    content += testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer
+                        ? $@"<input type=""radio"" style=""margin-left: 20px; margin-bottom: 15px;"">"
+                        : $@"<input type=""checkbox"" style=""margin-left: 20px; margin-bottom: 15px;"">";
                 }
 
-                content += $@"
-                                <span style="" height: 25px; width: 25px;"">{option.value.Answer}</span>
-                            </th>";
+                var isCorrect = option.value.IsCorrect ? "Corect" : "Incorect";
 
-                if (option.value.IsCorrect)
-                {
-                    content += $@"<th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Corect</th>
+                content += $@"<span style="" height: 25px; width: 25px;"">{option.value.Answer}</span>
+                            </th>
+                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">{isCorrect}</th>
                         </tr>";
-                }
-                else
-                {
-                    content += $@"<th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Incorect</th>
-                        </tr>";
-                }
             }
 
-            if (testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer)
-            {
-                content += $@"<tr>
-                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Tipul întrebării: Un răspuns</th>";
-            }
-            else
-            {
-                content += $@"<tr>
-                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Tipul întrebării: Răspunsuri multiple</th>";
-            }
+            var questionType = testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer ? "Un răspuns" : "Răspunsuri multiple";
 
-            content += $@"<th style=""border: 1px solid black; border-collapse: collapse; text-align: center; padding-left: 5px; height: 30px; color: red; margin: 5px 5px 5px 5px;"">{testQuestion.Points}/{testQuestion.QuestionUnit.QuestionPoints}p.</th>
+            content += $@"<tr>
+                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Tipul întrebării: {questionType}</th>
+                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: center; padding-left: 5px; height: 30px; color: red; margin: 5px 5px 5px 5px;"">{testQuestion.Points}/{testQuestion.QuestionUnit.QuestionPoints}p.</th>
                         </tr>
                       </table>";
 
