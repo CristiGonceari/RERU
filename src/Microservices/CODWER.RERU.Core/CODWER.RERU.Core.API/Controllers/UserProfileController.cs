@@ -18,6 +18,7 @@ using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Common.EnumConverters;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using RERU.Data.Entities.Enums;
+using CODWER.RERU.Core.Application.UserProfiles.GetCandidateProfile;
 
 namespace CODWER.RERU.Core.API.Controllers {
     [ApiController]
@@ -30,6 +31,12 @@ namespace CODWER.RERU.Core.API.Controllers {
         public Task<UserProfileDto> GetUserProfile([FromRoute] int id)
         {
             return Mediator.Send(new GetUserProfileQuery(id));
+        }
+
+        [HttpGet("candidate-profile/{id:int}")]
+        public Task<CandidateProfileDto> GetCandidateProfile([FromRoute] int id)
+        {
+            return Mediator.Send(new GetCandidateProfileQuery(id));
         }
 
         [HttpGet]

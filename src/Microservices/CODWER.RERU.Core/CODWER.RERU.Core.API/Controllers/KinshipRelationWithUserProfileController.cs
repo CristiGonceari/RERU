@@ -1,4 +1,5 @@
 ﻿using CODWER.RERU.Core.Application.KinshipRelationWithUserProfiles.AddKinshipRelationWithUserProfile;
+using CODWER.RERU.Core.Application.KinshipRelationWithUserProfiles.BulkAddEditKinshipRelationWithUserProfiles;
 using CODWER.RERU.Core.Application.KinshipRelationWithUserProfiles.GetKinshipRelationWithUserProfiles;
 using CODWER.RERU.Core.Application.KinshipRelationWithUserProfiles.RemoveKinshipRelationWithUserProfile;
 using CODWER.RERU.Core.Application.KinshipRelationWithUserProfiles.UpdateKinshipRelationWithUserProfile;
@@ -6,6 +7,7 @@ using CODWER.RERU.Core.DataTransferObjects.KinshipRelationWithUserProfile;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.API.Controllers
@@ -29,6 +31,16 @@ namespace CODWER.RERU.Core.API.Controllers
         {
             var command = new AddKinshipRelationWithUserProfileCommand(dto)
                 ;
+            var result = await Mediator.Send(command);
+
+            return result;
+        }
+
+        [HttpPut("bulk-import")]
+        public async Task<Unit> AddKinshipRelationWithUserProfile([FromBody] List<KinshipRelationWithUserProfileDto> dtoList)
+        {
+            var command = new BulkAddEditKinshipRelationWithUserProfilesCommand(dtoList);
+
             var result = await Mediator.Send(command);
 
             return result;

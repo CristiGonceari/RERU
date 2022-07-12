@@ -16,6 +16,8 @@ namespace RERU.Data.Persistence.Initializer
             AddSolicitedVacantPositionMessages(appDbContext);
             AddCandidateNationality(appDbContext);
             AddModernLaguages(appDbContext);
+            AddStudyType(appDbContext);
+            AddMaterialStatusTypes(appDbContext);
         }
 
         private static void AddBaseDocumentTemplateKeys(AppDbContext appDbContext)
@@ -335,6 +337,76 @@ namespace RERU.Data.Persistence.Initializer
             }
 
             appDbContext.SaveChanges();
+        }
+
+        private static void AddMaterialStatusTypes(AppDbContext appDbContext)
+        {
+            var materialStatusTypes = new List<MaterialStatusType>()
+            {
+                new MaterialStatusType{Name="Celibatar", TranslateId = 1 },
+                new MaterialStatusType{Name="Casatorit", TranslateId = 2 },
+                new MaterialStatusType{Name="Necasatorit", TranslateId = 3 },
+                new MaterialStatusType{Name="Vaduv", TranslateId = 4 },
+            };
+
+            var types = appDbContext.MaterialStatusTypes.ToList();
+
+            foreach (var item in materialStatusTypes)
+            {
+                var existentKey = types.FirstOrDefault(k => k.Name == item.Name);
+
+                if (existentKey == null)
+                {
+                    appDbContext.MaterialStatusTypes.Add(item);
+                }
+                else
+                {
+                    types.Remove(existentKey);
+                }
+            }
+
+            if (types.Any())
+            {
+                appDbContext.MaterialStatusTypes.RemoveRange(types);
+            }
+
+            appDbContext.SaveChanges();
+        }
+
+        private static void AddStudyType(AppDbContext appDbContext)
+        {
+            var newStudyTypes = new List<StudyType>()
+            {
+                new StudyType { Name = "Studii de Baza", TranslateId = 1 },
+                new StudyType { Name = "Universitare", TranslateId = 2 },
+                new StudyType { Name = "PostUniversitare", TranslateId = 3 },
+                new StudyType { Name = "Cursuri de Perfectionare", TranslateId = 4 },
+                new StudyType { Name = "Cursuri de Specializare", TranslateId = 5 },
+            };
+
+            var types = appDbContext.StudyTypes.ToList();
+
+            foreach (var item in newStudyTypes)
+            {
+                var existentKey = types.FirstOrDefault(k => k.Name == item.Name);
+
+                if (existentKey == null)
+                {
+                    appDbContext.StudyTypes.Add(item);
+                }
+                else
+                {
+                    types.Remove(existentKey);
+                }
+            }
+
+            if (types.Any())
+            {
+                appDbContext.StudyTypes.RemoveRange(types);
+            }
+
+            appDbContext.SaveChanges();
+
         }
 
         private static void AddRegistrationPageMessage(AppDbContext appDbContext)

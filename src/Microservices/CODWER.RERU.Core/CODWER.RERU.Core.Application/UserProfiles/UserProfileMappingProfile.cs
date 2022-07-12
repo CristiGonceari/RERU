@@ -20,10 +20,33 @@ namespace CODWER.RERU.Core.Application.UserProfiles
                 .ForMember(x => x.RoleName, opts => opts.MapFrom(src => src.Role.Name))
                 .ForMember(x => x.UserStatusEnum, opts => opts.MapFrom(src => src.DepartmentColaboratorId == null && src.RoleColaboratorId == null ? UserStatusEnum.Candidate : UserStatusEnum.Employee))
                 .ForMember(x => x.AccessModeEnum, opts => opts.MapFrom(src => src.AccessModeEnum != null ? src.AccessModeEnum : AccessModeEnum.CurrentDepartment))
-                .ForMember(x => x.UserName, opts => opts.MapFrom(src => src.LastName + " " + src.FirstName + " " + src.FatherName)); 
+                .ForMember(x => x.UserName, opts => opts.MapFrom(src => src.LastName + " " + src.FirstName + " " + src.FatherName));
+
+            CreateMap<UserProfile, CandidateProfileDto>()
+                .ForMember(x => x.DepartmentName, opts => opts.MapFrom(src => src.Department.Name))
+                .ForMember(x => x.RoleName, opts => opts.MapFrom(src => src.Role.Name))
+                .ForMember(x => x.UserStatusEnum, opts => opts.MapFrom(src => src.DepartmentColaboratorId == null && src.RoleColaboratorId == null ? UserStatusEnum.Candidate : UserStatusEnum.Employee))
+                .ForMember(x => x.AccessModeEnum, opts => opts.MapFrom(src => src.AccessModeEnum != null ? src.AccessModeEnum : AccessModeEnum.CurrentDepartment))
+                .ForMember(x => x.UserName, opts => opts.MapFrom(src => src.LastName + " " + src.FirstName + " " + src.FatherName))
+                .ForMember(x => x.BulletinId, opts => opts.MapFrom(src => src.Bulletin.Id))
+                .ForMember(x => x.StudyCount, opts => opts.MapFrom(src => src.Studies.Count()))
+                .ForMember(x => x.ModernLanguageLevelsCount, opts => opts.MapFrom(src => src.ModernLanguageLevels.Count()))
+                .ForMember(x => x.RecomendationsForStudyCount, opts => opts.MapFrom(src => src.RecommendationForStudies.Count()))
+                .ForMember(x => x.MaterialStatusId, opts => opts.MapFrom(src => src.MaterialStatus.Id))
+                .ForMember(x => x.KinshipRelationsCount, opts => opts.MapFrom(src => src.KinshipRelations.Count()))
+                .ForMember(x => x.KinshipRelationCriminalDataId, opts => opts.MapFrom(src => src.KinshipRelationCriminalData.Id))
+                .ForMember(x => x.KinshipRelationWithUserProfilesCount, opts => opts.MapFrom(src => src.KinshipRelationWithUserProfiles.Count()))
+                .ForMember(x => x.MilitaryObligationsCount, opts => opts.MapFrom(src => src.MilitaryObligations.Count()))
+                .ForMember(x => x.AutobiographyId, opts => opts.MapFrom(src => src.Autobiography.Id));
 
             CreateMap<UserProfileDto, UserProfile>()
                 .ForMember(x => x.Id, options => options.Ignore());
+
+            CreateMap<CandidateProfileDto, UserProfile>()
+                .ForMember(x => x.Id, options => options.Ignore());
+
+            CreateMap<UserProfile, CandidateRegistrationStepsDto>()
+                .ForMember(x => x.UserProfileId, opts => opts.MapFrom(src => src.Id));
 
             CreateMap<UserProfile, UserForRemoveDto>();
 

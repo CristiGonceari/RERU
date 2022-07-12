@@ -1,3 +1,4 @@
+using RERU.Data.Entities.Enums;
 using System;
 
 namespace CODWER.RERU.Core.DataTransferObjects.Users 

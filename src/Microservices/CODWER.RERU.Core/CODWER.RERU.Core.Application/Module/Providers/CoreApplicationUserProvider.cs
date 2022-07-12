@@ -31,6 +31,8 @@ namespace CODWER.RERU.Core.Application.Module.Providers
 
             var userProfile = await _appDbContext.UserProfiles
                                          .IncludeBasic()
+                                         .Include(up => up.Role)
+                                         .Include(up => up.Department)
                                          .FirstOrDefaultAsync(up => up.Identities.Any(upi => upi.Identificator == id && upi.Type == identityProvider));
             //if (userProfile == null)
             //{

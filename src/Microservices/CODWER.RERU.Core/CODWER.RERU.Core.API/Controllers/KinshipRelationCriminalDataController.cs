@@ -4,6 +4,7 @@ using CODWER.RERU.Core.Application.KinshipRelationCriminalDatas.UpdateKinshipRel
 using CODWER.RERU.Core.DataTransferObjects.KinshipRelationCriminalData;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.API.Controllers

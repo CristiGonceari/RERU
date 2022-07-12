@@ -1,4 +1,5 @@
 ﻿using CODWER.RERU.Core.Application.ModernLanguageLevels.AddModernLanguageLevel;
+using CODWER.RERU.Core.Application.ModernLanguageLevels.BulkAddEditModernLanguageLevels;
 using CODWER.RERU.Core.Application.ModernLanguageLevels.GetUserProfileModernLanguageLevels;
 using CODWER.RERU.Core.Application.ModernLanguageLevels.RemoveUserProfileModernLanguageLevel;
 using CODWER.RERU.Core.Application.ModernLanguageLevels.UpdateUserProfileModernLanguageLevel;
@@ -6,6 +7,7 @@ using CODWER.RERU.Core.DataTransferObjects.ModernLanguageLevel;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.API.Controllers
@@ -28,6 +30,16 @@ namespace CODWER.RERU.Core.API.Controllers
         public async Task<int> CreateModernLanguageLevel([FromBody] AddEditModernLanguageLevelDto dto)
         {
             var command = new AddModernLanguageLevelCommand(dto);
+
+            var result = await Mediator.Send(command);
+
+            return result;
+        }
+
+        [HttpPut("bulk-import")]
+        public async Task<Unit> AddEditModernLanguageLevels([FromBody] List<AddEditModernLanguageLevelDto> dtoList)
+        {
+            var command = new BulkAddEditModernLanguageLevelsCommand(dtoList);
 
             var result = await Mediator.Send(command);
 

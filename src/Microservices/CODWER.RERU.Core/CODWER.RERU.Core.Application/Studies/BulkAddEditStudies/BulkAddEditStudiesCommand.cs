@@ -2,11 +2,11 @@
 using MediatR;
 using System.Collections.Generic;
 
-namespace CODWER.RERU.Core.Application.Studies.BulkAddStudies
+namespace CODWER.RERU.Core.Application.Studies.BulkAddEditStudies
 {
-    public class BulkAddStudiesCommand : IRequest<Unit>
+    public class BulkAddEditStudiesCommand : IRequest<Unit>
     {
-        public BulkAddStudiesCommand(List<StudyDto> list)
+        public BulkAddEditStudiesCommand(List<StudyDto> list)
         {
             Data = list;
         }
