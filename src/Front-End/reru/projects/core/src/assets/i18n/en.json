@@ -37,6 +37,10 @@
     "upload-files": "Drop file here or click to upload",
     "personal-file-msg": "To complete the personal file, please download it by accessing the button below. After filling in the personal file, upload it in the area below together with the other necessary documents. Filling the form is mandatory"
   },
+  "vacant-positions-page": {
+    "title": "Vacant positions page",
+    "details": "Vacant position details"
+  },
   "files":{
     "title": "Documents",
     "files-list": "Documents list",

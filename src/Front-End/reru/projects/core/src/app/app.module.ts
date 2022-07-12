@@ -55,8 +55,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 		NgxDropzoneModule,
 		NgxDnDModule.forRoot(),
 		HttpClientModule,
-		
-		
 	],
 	schemas: [
 		CUSTOM_ELEMENTS_SCHEMA
