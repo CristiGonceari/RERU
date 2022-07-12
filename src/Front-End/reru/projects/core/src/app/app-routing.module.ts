@@ -23,6 +23,10 @@ const routes: Routes = [
 		path: 'registration-page',
 		loadChildren: () => import('./components/registration-page/registration-page.module').then(m => m.RegistrationPageModule)
 	},
+	{
+		path: 'vacant-positions-page',
+		loadChildren: () => import('./components/vacant-positions-page/vacant-positions-page.module').then(m => m.VacantPositionsPageModule)
+	},
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent},
 	{
 		path: '',

@@ -37,6 +37,10 @@
     "upload-files": "Plasați fișiere aici sau faceți clic pentru a încărca",
     "personal-file-msg": "Pentru a completa fișa personala vă rugăm să o descărcati, accesând butonul de mai jos. După ce completați fișa personala, o încărcați in zona de mai jos împreună cu celelalte documente necesare. Completarea fișei este obligatorie"
   },
+  "vacant-positions-page": {
+    "title": "Pagina de poziții vacante",
+    "details": "Detalii despre poziția vacantă"
+  },
   "files":{
     "title": "Documente",
     "files-list": "Lista de documente",

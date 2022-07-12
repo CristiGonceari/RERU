@@ -20,6 +20,7 @@ import { RolesComponent } from './components/roles/roles.component';
 import { MainComponent } from './components/main/main.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { DEFAULT_TIMEOUT, TimeoutInterceptor } from '../app/utils/specific-interceptor/timeout-intercepter';
+import { VacantPositionsPageComponent } from './components/vacant-positions-page/vacant-positions-page.component';
 
 @NgModule({
 	declarations: [
