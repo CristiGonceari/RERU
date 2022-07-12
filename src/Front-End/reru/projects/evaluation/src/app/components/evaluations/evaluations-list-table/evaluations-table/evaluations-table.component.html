@@ -82,6 +82,10 @@
                                     <!-- <button (click)="openGenerateDocumentModal(item.id, item.testTemplateName)" class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                         {{'documents-templates.generate-document'| translate}}
                                     </button> -->
+                                    <button class="navi-link align-items-baseline px-6" *ngIf="item.testStatus === status.Verified" 
+                                        ngbDropdownItem (click)="printTestResult(item.id)">
+                                        {{ 'button.print-result' | translate }}
+                                    </button>
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem
                                         (click)="removeTest(item.id)">
                                         {{ 'button.delete' | translate }}
