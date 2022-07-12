@@ -1,0 +1,86 @@
+<div class="modal-header border-0 pb-0">
+    <h3 class="modal-title">{{'Adresses' | translate}}</h3>
+</div>
+<div *ngIf="addressForm" class="modal-body">
+    <form [formGroup]="addressForm" autocomplete="off">
+        <div class="form-group row required">
+            <label class="col-form-label col-md-3 col-12">{{'entity.bulletin.country' | translate}}:</label>
+            <div class="col-md col-12">
+                <input autocomplete="off" class="form-control" type="text"
+                    [ngClass]="{'is-invalid': isTouched('country') && isInvalidPattern('country') }"
+                    formControlName="country" [placeholder]="'entity.bulletin.country' | translate">
+                <div *ngIf="isInvalidPattern('country')" class="invalid-feedback d-block">{{'validations.only-letters' |
+                    translate}}</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-md-3 col-12">{{'entity.bulletin.region' | translate}}:</label>
+            <div class="col-md col-12">
+                <input autocomplete="off" class="form-control" type="text" formControlName="region"
+                    [ngClass]="{'is-invalid': isTouched('region') && isInvalidPattern('region') }"
+                    [placeholder]="'entity.bulletin.region' | translate">
+                <div *ngIf="isInvalidPattern('region')" class="invalid-feedback d-block">{{'validations.only-letters' |
+                    translate}}</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-md-3 col-12">{{'entity.bulletin.city' | translate}}:</label>
+            <div class="col-md col-12">
+                <input autocomplete="off" class="form-control" type="text" formControlName="city"
+                    [ngClass]="{'is-invalid': isTouched('city') && isInvalidPattern('city') }"
+                    [placeholder]="'entity.bulletin.city' | translate">
+                <div *ngIf="isInvalidPattern('city')" class="invalid-feedback d-block">{{'validations.only-letters' |
+                    translate}}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group row">
+                    <label class="col-form-label col-md-3 col-12">{{'entity.bulletin.street' | translate}}:</label>
+                    <div class="col-md col-12">
+                        <input autocomplete="off" class="form-control" type="text" formControlName="street"
+                            [ngClass]="{'is-invalid': isTouched('street') && isInvalidPattern('street') }"
+                            [placeholder]="'entity.bulletin.street' | translate">
+                        <div *ngIf="isInvalidPattern('street')" class="invalid-feedback d-block">
+                            {{'validations.only-letters-numbers-and-some-symbols' | translate}}</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-md-3 col-12">{{'entity.bulletin.building' | translate}}:</label>
+                    <div class="col-md col-12">
+                        <input autocomplete="off" class="form-control" type="text" formControlName="building"
+                            [ngClass]="{'is-invalid': isTouched('building') && isInvalidPattern('building') }"
+                            [placeholder]="'entity.bulletin.building' | translate">
+                        <div *ngIf="isInvalidPattern('building')" class="invalid-feedback d-block">
+                            {{'validations.only-letters-numbers-and-symbols' | translate}}</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-md-3 col-12">{{'entity.bulletin.apartment' | translate}}:</label>
+                    <div class="col-md col-12">
+                        <input autocomplete="off" class="form-control" type="text" formControlName="apartment"
+                            [ngClass]="{'is-invalid': isTouched('apartment') && isInvalidPattern('apartment') }"
+                            [placeholder]="'entity.bulletin.apartment' | translate">
+                        <div *ngIf="isInvalidPattern('apartment')" class="invalid-feedback d-block">
+                            {{'validations.only-letters-numbers-and-dash' | translate}}</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-md-3 col-12">{{'post Code' | translate}}:</label>
+                    <div class="col-md col-12">
+                        <input autocomplete="off" class="form-control" type="text" formControlName="postCode"
+                            [ngClass]="{'is-invalid': isTouched('postCode') && isInvalidPattern('postCode') }"
+                            [placeholder]="'postCode' | translate">
+                        <div *ngIf="isInvalidPattern('postCode')" class="invalid-feedback d-block">
+                            {{'validations.only-letters-numbers-and-dash' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer border-0 pt-0">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.close' | translate}}</button>
+    <button type="button" class="btn btn-success" [disabled]="addressForm && addressForm.invalid"
+        (click)="close()">{{'button.save' | translate}}</button>
+</div>

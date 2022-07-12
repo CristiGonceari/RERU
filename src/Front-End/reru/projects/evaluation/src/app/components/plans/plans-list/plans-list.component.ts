@@ -32,6 +32,8 @@ export class PlansListComponent implements OnInit {
 
   isLoading: boolean = true;
 	downloadFile: boolean = false;
+  isLoadingCalendar: boolean = true;
+
 	headersToPrint = [];
 	printTranslates: any[];
 
@@ -258,6 +260,7 @@ export class PlansListComponent implements OnInit {
  }
 
  delete(id){
+  this.isLoadingCalendar = false;
    this.planService.delete(id).subscribe(() => {
     forkJoin([
       this.translate.get('modal.success'),
@@ -268,6 +271,7 @@ export class PlansListComponent implements OnInit {
       });
      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
      this.list();
+     this.isLoadingCalendar = true;
    })
  }
 

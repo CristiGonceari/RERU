@@ -1,3 +1,5 @@
+using CVU.ERP.Common.DataTransferObjects.Users;
+using RERU.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,6 +22,10 @@ namespace CVU.ERP.Module.Application.Models {
 
         public string Email { set; get; }
         public string Idnp { set; get; }
+
+        public Role Role { get; set; }
+        public int? DepartmentColaboratorId { get; set; }
+        public int? RoleColaboratorId { get; set; }
 
         public IEnumerable<ApplicationUserModule> Modules { set; get; }
         public IEnumerable<string> Permissions => Modules.SelectMany (m => m.Permissions);

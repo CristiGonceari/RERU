@@ -1153,14 +1153,14 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("UserProfileid")
+                    b.Property<int>("UserProfileId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MaterialStatusTypeId");
 
-                    b.HasIndex("UserProfileid")
+                    b.HasIndex("UserProfileId")
                         .IsUnique();
 
                     b.ToTable("MaterialStatuses");
@@ -1926,6 +1926,49 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.ToTable("RecommendationForStudies");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.RegistrationFluxStep", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Step")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Step");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("RegistrationFluxSteps");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.RegistrationPageMessage", b =>
                 {
                     b.Property<int>("Id")
@@ -2287,7 +2330,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<int>("TrasnlateId")
+                    b.Property<int>("TranslateId")
                         .HasColumnType("integer");
 
                     b.Property<string>("UpdateById")
@@ -2847,9 +2890,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime?>("Birthday")
-                        .HasColumnType("timestamp without time zone");
-
                     b.Property<int?>("CandidateCitizenshipId")
                         .HasColumnType("integer");
 
@@ -2894,9 +2934,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.Property<string>("MediaFileId")
                         .HasColumnType("text");
-
-                    b.Property<int?>("MobilePhone")
-                        .HasColumnType("integer");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
@@ -3421,6 +3458,59 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 2,
                             Name = "Inactive"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.RegistrationFluxStepEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("RegistrationFluxStepEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "GeneralData"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Bulletin"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Study"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "MaterialStatus"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "MilitaryObligation"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Autobiography"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Declaration"
                         });
                 });
 
@@ -4236,7 +4326,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
                         .WithOne("MaterialStatus")
-                        .HasForeignKey("RERU.Data.Entities.MaterialStatus", "UserProfileid")
+                        .HasForeignKey("RERU.Data.Entities.MaterialStatus", "UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -4443,6 +4533,23 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                 {
                     b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
                         .WithMany("RecommendationForStudies")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.RegistrationFluxStep", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.RegistrationFluxStepEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Step")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
+                        .WithMany("RegistrationFluxSteps")
                         .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -4938,6 +5045,15 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.RegistrationFluxStepEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.RegistrationFluxStepEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.RoleTypeEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.RoleTypeEnum>", null)
@@ -5228,6 +5344,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("RecommendationForStudies");
 
                     b.Navigation("SolicitedVacantPositionUserFiles");
+
+                    b.Navigation("RegistrationFluxSteps");
 
                     b.Navigation("Studies");
 

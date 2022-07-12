@@ -8,7 +8,7 @@ namespace RERU.Data.Entities
         public int MaterialStatusTypeId { get; set; }
         public MaterialStatusType MaterialStatusType { get; set; }
 
-        public int UserProfileid { get; set; }
+        public int UserProfileId { get; set; }
         public UserProfile UserProfile { get; set; }
     }
 }

@@ -5,6 +5,6 @@ namespace RERU.Data.Entities
     public class StudyType : SoftDeleteBaseEntity
     {
         public string Name { get; set; }
-        public int TrasnlateId { get; set; }
+        public int TranslateId { get; set; }
     }
 }

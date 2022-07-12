@@ -1,0 +1,159 @@
+<form *ngIf="militaryObligationForm" class="col border" [formGroup]="militaryObligationForm">
+    <app-loading-spinner *ngIf="isLoadingMilitaryObligation" contentHeight="20rem" height="5rem" width="5rem"
+        colorClass="text-primary"></app-loading-spinner>
+    <div *ngIf="!isLoadingMilitaryObligation">
+        <div class="row my-5">
+            <div class="col">
+                <h4>{{'Date biografice a rudelor apropiate candidatului ' | translate}}</h4>
+            </div>
+        </div>
+        <div formArrayName="obligations">
+            <table class="table table-bordered border-dark mb-10" [ngClass]="{'more': militaryObligationForm.controls.obligations.controls.length > 1  &&
+                (militaryObligationForm.controls.obligations.controls.length - 1) !== i}"
+                *ngFor="let obligation of militaryObligationForm.controls.obligations.controls; let i = index"
+                [formGroupName]="i">
+                <tbody>
+                    <tr>
+                        <th>Number</th>
+                        <td>
+                            {{i + 1}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Obligatiunea militara</th>
+                        <td>
+                            <select class="form-control" formControlName="militaryObligationType">
+                                <option value="null">{{'module-access.select' | translate}}</option>
+                                <option *ngFor="let item of militaryObligationTypeEnum" [value]="item.value">{{
+                                    item.label }}
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Anul mobilizarii</th>
+                        <td>
+                            <app-date [parent]="obligation" [date]="'mobilizationYear'"
+                                [placeholder]="'mobilizationYear' | translate"></app-date>
+                        </td>
+                    </tr>
+                    <tr>
+                    <tr>
+                        <th>Anul retragerii</th>
+                        <td>
+                            <app-date [parent]="obligation" [date]="'withdrawalYear'"
+                                [placeholder]="'withdrawalYear' | translate"></app-date>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Efectiv</th>
+                        <td>
+                            <input formControlName="efectiv" autocomplete="off" class="form-control form-control-solid"
+                                type="text" [placeholder]="'efectiv' | translate" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Specialitatea militara</th>
+                        <td>
+                            <input formControlName="militarySpecialty" autocomplete="off"
+                                class="form-control form-control-solid" type="text"
+                                [placeholder]="'militarySpecialty' | translate" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Gradul</th>
+                        <td>
+                            <input formControlName="degree" autocomplete="off" class="form-control form-control-solid"
+                                type="text" [placeholder]="'degree' | translate" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th rowspan="4">Livret militar</th>
+                        <td>
+                            <div class="row">
+                                <div class="col-2 text-center p-3">
+                                    Seria
+                                </div>
+                                <div class="col-10">
+                                    <input formControlName="militaryBookletSeries" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'militaryBookletSeries' | translate" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="col-2 text-center p-3">
+                                    Numarul
+                                </div>
+                                <div class="col-10">
+                                    <input formControlName="militaryBookletNumber" autocomplete="off"
+                                        class="form-control form-control-solid" type="number"
+                                        [placeholder]="'militaryBookletNumber' | translate" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="col-2 text-center p-3">
+                                    Data Eliberarii
+                                </div>
+                                <div class="col-10">
+                                        <app-date [parent]="obligation" [date]="'militaryBookletReleaseDay'"
+                                            [placeholder]="'militaryBookletReleaseDay' | translate"></app-date>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="col-2 text-center p-3">
+                                    Autoritatea Eminenta
+                                </div>
+                                <div class="col-10">
+                                    <input formControlName="militaryBookletEminentAuthority" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'militaryBookletEminentAuthority' | translate" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <div  class="d-flex justify-content-end">
+                                <button class="btn btn-icon"*ngIf="i > 0" (click)="removeMilitaryObligation(i)">
+                                    <span class="font-size-18px">&times;</span>
+                                </button>
+                            </div>
+                        </td>
+                      </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row justify-content-between ml-10">
+            <button class="btn btn-icon" (click)="addMilitaryObligation()"><span
+                    class="font-size-18px">+</span></button>
+        </div>
+        <div class="row justify-content-end m-7">
+            <button class="btn btn-success" *ngIf="addOrEditMilitaryObligationButton"
+                [disabled]="militaryObligationForm && militaryObligationForm.invalid "
+                (click)="createMilitaryObligations()">{{'Update' | translate}}</button>
+            <button class="btn btn-success" *ngIf="!addOrEditMilitaryObligationButton"
+                [disabled]="militaryObligationForm && militaryObligationForm.invalid"
+                (click)="createMilitaryObligations()">{{'Add' | translate}}</button>
+        </div>
+    </div>
+</form>
+<div class="row justify-content-end mt-10 mr-1">
+    <button class="btn btn-success" matStepperNext
+        [disabled]="(militaryObligationForm && militaryObligationForm.invalid)"
+        (click)="addRegistrationFluxStep()"
+        >{{'Next step' | translate}}</button>
+</div>

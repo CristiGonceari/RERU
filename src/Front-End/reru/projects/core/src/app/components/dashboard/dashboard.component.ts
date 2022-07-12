@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SidebarView } from '../../utils/models/sidebar.model';
 import {
   ApplicationUserService,
@@ -9,6 +9,10 @@ import {
 import { InternalService } from '../../utils/services/internal.service';
 import { NotificationsService } from 'angular2-notifications';
 import { I18nService } from '../../utils/services/i18n.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AccessModeEnum } from '../../utils/models/access-mode.enum';
+import { ProfileService } from '../../utils/services/profile.service';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -22,6 +26,7 @@ export class DashboardComponent implements OnInit {
 
   testId: string;
   showMultipleQuestionsPerPega: boolean;
+  user;
 
   constructor(
     private moduleService: AvailableModulesService,
@@ -29,20 +34,34 @@ export class DashboardComponent implements OnInit {
     private internalService: InternalService,
     public notificationService: NotificationsService,
     public translate: I18nService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private profileService: ProfileService
   ) {}
 
   ngOnInit(): void {
     this.list();
     this.subscribeForAuthChange();
     this.setIntrvl();
+    
   }
-
+  
   subscribeForAuthChange(): void {
-    this.userSubject.userChange.subscribe(
-      () => (this.modules = this.moduleService.get())
+    this.userSubject.userChange.subscribe((res) => {
+        this.modules = this.moduleService.get();
+        if (res.isCandidateStatus)
+        {
+          this.profileService.GetCandidateRegistrationSteps().subscribe(res => {
+            if (res.data.unfinishedSteps.length != 0){
+              this.modules == null
+              this.router.navigate(["./registration-flux",res.data.userProfileId,"step",res.data.unfinishedSteps[0]], { relativeTo: this.route });
+            }
+          })
+        }
+    }
     );
   }
-
+ 
   list(): void {
     this.modules = this.moduleService.get();
   }

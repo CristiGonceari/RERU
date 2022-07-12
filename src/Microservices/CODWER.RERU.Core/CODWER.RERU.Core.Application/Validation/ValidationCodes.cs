@@ -105,6 +105,9 @@ namespace CODWER.RERU.Core.Application.Validation
         public static string EMPTY_MILITARY_BOOKLET_AUTHORITY = "01006006";
         public static string MILITARY_OBLIGATION_NOT_FOUND= "01006007";
 
+        //RegistrationFluxStep
+        public static string REGISTRATION_FLUX_NOT_FOUND = "01007001";
+
 
     }
 }

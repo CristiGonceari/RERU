@@ -74,6 +74,10 @@ export class UserService extends AbstractService {
 		return this.http.patch(`${this.coreUrl}/${this.routeUrl}/personal-details`, {data});
 	}
 
+	editCandidateDetails(data): Observable<any> {
+		return this.http.patch(`${this.coreUrl}/${this.routeUrl}/edit-candidate-details`, {data});
+	}
+
 	resetPassword(id: string): Observable<any> {
 		return this.http.put(`${this.coreUrl}/${this.routeUrl}/${id}/password-reset`, {});
 	}

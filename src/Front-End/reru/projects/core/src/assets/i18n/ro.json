@@ -147,7 +147,10 @@
     "print": "Imprimă",
     "watch": "Priveste video",
     "import": "Importa",
-    "loading": "Se încarcă"
+    "loading": "Se încarcă",
+    "next": "Următorul",
+    "finish": "Finalizează",
+    "back": "Înapoi"
   },
   "pagination": {
     "displaing": "Se afișează",

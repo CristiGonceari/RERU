@@ -20,12 +20,6 @@
 							</div>
 						</div>
 						<div class="card-body">
-							<app-event-calendar 
-								(onDatePicked)="plansTable.getListByDate($event)" 
-								(listOfDates)="plansTable.list($event)"
-								(listOfCountedEvents)="plansTable.getListOfCoutedPlans($event)"
-								>
-							</app-event-calendar>
 							<app-plans-list #plansTable></app-plans-list>
 						</div>
 					</div>

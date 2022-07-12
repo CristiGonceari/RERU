@@ -148,7 +148,10 @@
     "print": "Print",
     "watch": "Watch video",
     "import": "Import",
-    "loading": "Loading"
+    "loading": "Loading",
+    "next": "Next",
+    "finish": "Finish",
+    "back": "Back"
   },
   "pagination": {
     "displaing": "Displaying",

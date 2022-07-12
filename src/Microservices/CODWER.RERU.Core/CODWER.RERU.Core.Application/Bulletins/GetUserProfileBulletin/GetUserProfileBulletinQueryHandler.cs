@@ -27,7 +27,9 @@ namespace CODWER.RERU.Core.Application.Bulletins.GetUserProfileBulletin
                                                 .Include(b => b.ParentsResidenceAddress)
                                                 .FirstOrDefaultAsync(b => b.UserProfileId == request.UserProfileId);
 
-            return _mapper.Map<BulletinDto>(bulletin);
+            var mappedBulletin = _mapper.Map<BulletinDto>(bulletin);
+
+            return mappedBulletin;
         }
     }
 }

@@ -1,0 +1,250 @@
+<form *ngIf="materialStatusForm" class="col border" [formGroup]="materialStatusForm">
+    <app-loading-spinner *ngIf="isLoadingMaterialStatus" contentHeight="20rem" height="5rem" width="5rem"
+    colorClass="text-primary"></app-loading-spinner>
+    <div *ngIf="!isLoadingMaterialStatus" >
+        <div class="row my-5">
+            <div class="col">
+                <h4>{{'Starea civila' | translate}}</h4>
+            </div>
+        </div>
+        <div class="row ml-10" >
+            <div class="col-xl-9 col-9">
+                <div class="form-group row required">
+                    <label class="col-xl-5 col-lg-6 col-form-label"
+                        for="materialStatusTypeId">{{'Starea civila da data compleatarii fisei personale ' | translate}}</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <select class="form-control" formControlName="materialStatusTypeId">
+                            <option value="null">{{'module-access.select' | translate}}</option>
+                            <option *ngFor="let item of materialStatusTypes" [value]="item.value">{{ item.label }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row justify-content-end m-7">
+            <button class="btn btn-success" *ngIf="addOrEditMaterialStatusButton"
+                [disabled]="(materialStatusForm.value.materialStatusTypeId == null) || (materialStatusForm.value.materialStatusTypeId == 'null')" (click)="updateMaterialStatus()">{{'Update' | translate}}</button>
+            <button class="btn btn-success" *ngIf="!addOrEditMaterialStatusButton"
+                [disabled]="materialStatusForm.value.materialStatusTypeId == null || (materialStatusForm.value.materialStatusTypeId == 'null')" (click)="createMaterialStatus()">{{'Add' | translate}}</button>
+        </div>
+    </div>
+</form>
+<form *ngIf="kinshipRelationWithUserProfileForm" class="col border" [formGroup]="kinshipRelationWithUserProfileForm">
+    <app-loading-spinner *ngIf="isLoadingKinshipRelationWithUserProfile" contentHeight="20rem" height="5rem" width="5rem"
+        colorClass="text-primary"></app-loading-spinner>
+    <div *ngIf="!isLoadingKinshipRelationWithUserProfile">
+        <div class="row my-5">
+            <div class="col">
+                <h4>{{'Relatii de rudenie sau afinate cu angajatii MAI' | translate}}</h4>
+            </div>
+        </div>
+        <div formArrayName="relationWithUserProfile" class="ml-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Number</th>
+                        <th scope="col">Gradul de rudenie</th>
+                        <th scope="col">Numele persoanei ce a recomandat</th>
+                        <th scope="col">Prenumele persoanei ce a recomandat</th>
+                        <th scope="col">Functia(postul) detinut </th>
+                        <th scope="col">Subdiviziunea MAI</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr [ngClass]="{'more': kinshipRelationWithUserProfileForm.controls.relationWithUserProfile.controls.length > 1  &&
+                                        (kinshipRelationWithUserProfileForm.controls.relationWithUserProfile.controls.length - 1) !== i}"
+                        *ngFor="let relation of kinshipRelationWithUserProfileForm.controls.relationWithUserProfile.controls; let i = index"
+                        [formGroupName]="i">
+                        <th scope="row">{{i + 1}}</th>
+                        <td>
+                            <select class="form-control" formControlName="kinshipDegree">
+                                <option value="null">{{'module-access.select' | translate}}</option>
+                                <option *ngFor="let item of kinshipDegreeEnum" [value]="item.value">{{ item.label }}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <input formControlName="name" autocomplete="off"
+                            class="form-control form-control-solid" type="text"
+                            [placeholder]="'first name' | translate" />
+                        </td>
+                        <td>
+                            <input formControlName="lastName" autocomplete="off"
+                            class="form-control form-control-solid" type="text"
+                            [placeholder]="'last name' | translate" />
+                        </td>
+                        <td>
+                            <input formControlName="function" autocomplete="off"
+                            class="form-control form-control-solid" type="text"
+                            [placeholder]="'function' | translate" />
+                        </td>
+                        <td>
+                            <input formControlName="subdivision" autocomplete="off"
+                            class="form-control form-control-solid" type="text"
+                            [placeholder]="'subdivision' | translate" />
+                        </td>
+                        <td>
+                            <div *ngIf="i > 0" class="row justify-content-end mb-3 mr-7">
+                                <button class="btn btn-icon" (click)="removeKinshipRelationWithUserProfile(i)">
+                                    <span class="font-size-18px">&times;</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div class="row justify-content-between ml-10">
+            <button class="btn btn-icon" (click)="addKinshipRelationWithUserProfile()"><span class="font-size-18px">+</span></button>
+        </div>
+        <div class="row justify-content-end m-7">
+            <button class="btn btn-success" *ngIf="addOrEditKinshipRelationWithUserProfileButton"
+                [disabled]="kinshipRelationWithUserProfileForm && kinshipRelationWithUserProfileForm.invalid "(click)="creteKinshipRelationWithUserProfile()">{{'Update' | translate}}</button>
+            <button class="btn btn-success" *ngIf="!addOrEditKinshipRelationWithUserProfileButton"
+                [disabled]="kinshipRelationWithUserProfileForm && kinshipRelationWithUserProfileForm.invalid" (click)="creteKinshipRelationWithUserProfile()">{{'Add' | translate}}</button>
+        </div>
+    </div>
+</form>
+<form *ngIf="kinshipRelationForm" class="col border" [formGroup]="kinshipRelationForm">
+    <app-loading-spinner *ngIf="isLoadingKinshipRelation" contentHeight="20rem" height="5rem" width="5rem"
+        colorClass="text-primary"></app-loading-spinner>
+    <div *ngIf="!isLoadingKinshipRelation">
+        <div class="row my-5">
+            <div class="col">
+                <h4>{{'Date biografice a rudelor apropiate candidatului ' | translate}}</h4>
+            </div>
+        </div>
+        <div formArrayName="relation">
+            <table class="table table-bordered border-dark mb-10" [ngClass]="{'more': kinshipRelationForm.controls.relation.controls.length > 1  &&
+                (kinshipRelationForm.controls.relation.controls.length - 1) !== i}"
+                *ngFor="let relation of kinshipRelationForm.controls.relation.controls; let i = index"
+                [formGroupName]="i">
+                <tbody>
+                    <tr>
+                    <th>Number</th>
+                    <td >
+                        {{i + 1}}
+                    </td>
+                  </tr>
+                  <tr >
+                    <th>Gradul de Rudenie </th>
+                    <td>
+                        <select class="form-control" formControlName="kinshipDegree">
+                        <option value="null">{{'module-access.select' | translate}}</option>
+                        <option *ngFor="let item of kinshipDegreeEnum" [value]="item.value">{{ item.label }}
+                        </option>
+                    </select></td>
+                  </tr>
+                  <tr>
+                    <th>Numele persoanei ce a recomandat</th>
+                    <td>
+                        <input formControlName="name" autocomplete="off"
+                            class="form-control form-control-solid" type="text"
+                            [placeholder]="'first name' | translate" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Prenumele persoanei ce a recomandat</th>
+                    <td>
+                        <input formControlName="lastName" autocomplete="off"
+                            class="form-control form-control-solid" type="text"
+                            [placeholder]="'last name' | translate" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Data Nasterii</th>
+                    <td >
+                        <app-date [parent]="relation" [date]="'birthDate'"
+                                [placeholder]="'birthDate' | translate"></app-date>
+                            </td>
+                  </tr>
+                  <tr>
+                    <th>Locul Nasterii</th>
+                    <td>
+                        <input formControlName="birthLocation" autocomplete="off"
+                            class="form-control form-control-solid" type="text"
+                            [placeholder]="'birthLocation' | translate" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Functia(postul) detinut</th>
+                    <td>
+                        <input formControlName="function" autocomplete="off"
+                            class="form-control form-control-solid" type="text"
+                            [placeholder]="'function' | translate" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Locul de munca</th>
+                    <td>
+                        <input formControlName="workLocation" autocomplete="off"
+                            class="form-control form-control-solid" type="text"
+                            [placeholder]="'workLocation' | translate" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Domiciliu</th>
+                    <td>
+                        <input formControlName="residenceAddress" autocomplete="off"
+                        class="form-control form-control-solid" type="text"
+                        [placeholder]="'residenceAddress' | translate" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th></th>
+                    <td>
+                        <div  class="justify-content-end">
+                            <button class="btn btn-icon"*ngIf="i > 0" (click)="removeKinshipRelation(i)">
+                                <span class="font-size-18px">&times;</span>
+                            </button>
+                        </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <div class="row justify-content-between ml-10">
+            <button class="btn btn-icon" (click)="addKinshipRelation()"><span class="font-size-18px">+</span></button>
+        </div>
+        <div class="row justify-content-end m-7">
+            <button class="btn btn-success" *ngIf="addOrEditKinshipRelationButton"
+                [disabled]="kinshipRelationForm && kinshipRelationForm.invalid "(click)="creteKinshipRelation()">{{'Update' | translate}}</button>
+            <button class="btn btn-success" *ngIf="!addOrEditKinshipRelationButton"
+                [disabled]="kinshipRelationForm && kinshipRelationForm.invalid" (click)="creteKinshipRelation()">{{'Add' | translate}}</button>
+        </div>
+    </div>
+</form>
+<form *ngIf="kinshipRelationCriminalDataForm" class="col border" [formGroup]="kinshipRelationCriminalDataForm">
+    <app-loading-spinner *ngIf="isLoadingKinshipRelationCriminalData" contentHeight="20rem" height="5rem" width="5rem"
+    colorClass="text-primary"></app-loading-spinner>
+    <div *ngIf="!isLoadingKinshipRelationCriminalData" >
+        <div class="row my-5">
+            <div class="col">
+                <h4>{{'Date ce se refera la raspunderea penala sau contraventionala a rudelor apropiate ale candidatului' | translate}}</h4>
+            </div>
+        </div>
+        <div class="row ml-10 mr-10" >
+						<ckeditor [editor]="Editor" class="w-100" name="editor1" skin="moono-lisa" language="en"
+                        formControlName="text"  (ready)="onReady($event)"></ckeditor>
+        </div>
+        <div class="row justify-content-end m-7">
+            <button class="btn btn-success" *ngIf="addOrEditKinshipRelationCriminalDataButton"
+                [disabled]="kinshipRelationCriminalDataForm.value.text == null || kinshipRelationCriminalDataForm.value.text == '' " (click)="updateKinshipRelationCriminalData()">{{'Update' | translate}}</button>
+            <button class="btn btn-success" *ngIf="!addOrEditKinshipRelationCriminalDataButton"
+                [disabled]="kinshipRelationCriminalDataForm.value.text == null || kinshipRelationCriminalDataForm.value.text == '' " (click)="createKinshipRelationCriminalData()">{{'Add' | translate}}</button>
+        </div>
+    </div>
+</form>
+<div class="row justify-content-end mt-10 mr-1">
+    <button class="btn btn-success" matStepperNext
+    [disabled]="(materialStatusForm && materialStatusForm.invalid) || 
+    (kinshipRelationWithUserProfileForm && kinshipRelationWithUserProfileForm.invalid) || 
+    (kinshipRelationForm && kinshipRelationForm.invalid) ||
+    (kinshipRelationCriminalDataForm && (kinshipRelationCriminalDataForm.value.text == null || kinshipRelationCriminalDataForm.value.text == ''))"
+    (click)="addRegistrationFluxStep()"
+        >{{'Next step' | translate}}</button>
+</div>

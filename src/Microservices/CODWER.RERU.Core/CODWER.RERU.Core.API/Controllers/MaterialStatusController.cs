@@ -15,7 +15,7 @@ namespace CODWER.RERU.Core.API.Controllers
         public MaterialStatusController(IMediator mediator) : base(mediator) { }
 
         [HttpGet("{id}")]
-        public async Task<MaterialStatusDto> GetMaterialStatus([FromRoute] int id)
+        public async Task<AddEditMaterialStatusDto> GetMaterialStatus([FromRoute] int id)
         {
             var query = new GetUserProfilesMaterialStatusQuery { UserProfileId = id };
             var result = await Mediator.Send(query);

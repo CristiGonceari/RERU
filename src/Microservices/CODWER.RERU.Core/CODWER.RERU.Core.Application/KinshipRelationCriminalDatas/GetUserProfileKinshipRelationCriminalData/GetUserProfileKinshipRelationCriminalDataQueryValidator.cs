@@ -15,7 +15,7 @@ namespace CODWER.RERU.Core.Application.KinshipRelationCriminalDatas.GetUserProfi
             _appDbContext = appDbContext;
 
             RuleFor(x => x.UserProfileId)
-                .SetValidator(new ItemMustExistValidator<KinshipRelationCriminalData>(appDbContext, ValidationCodes.KINSHIP_RELATION_NOT_FOUND,
+                .SetValidator(new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.USER_NOT_FOUND,
                     ValidationMessages.InvalidReference));
 
         }

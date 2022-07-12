@@ -11,7 +11,7 @@ namespace CODWER.RERU.Core.Application.Autobiographies
             CreateMap<AutobiographyDto, Autobiography>()
                            .ForMember(x => x.Id, opts => opts.Ignore());
 
-            CreateMap<Bulletin, AutobiographyDto>();
+            CreateMap<Autobiography, AutobiographyDto>();
         }
     }
 }
