@@ -1,4 +1,5 @@
 ﻿using CODWER.RERU.Core.Application.RecommendationForStudies.AddRecommendationForStudy;
+using CODWER.RERU.Core.Application.RecommendationForStudies.BulkAddEditRecommendationForStudy;
 using CODWER.RERU.Core.Application.RecommendationForStudies.GetUserProfileRecommendationForStudy;
 using CODWER.RERU.Core.Application.RecommendationForStudies.RemoveRecommendationForStudy;
 using CODWER.RERU.Core.Application.RecommendationForStudies.UpdateRecommendationForStudy;
@@ -6,6 +7,7 @@ using CODWER.RERU.Core.DataTransferObjects.RecommendationForStudyDto;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.API.Controllers
@@ -28,6 +30,16 @@ namespace CODWER.RERU.Core.API.Controllers
         public async Task<int> CreateRecommendationForStudy([FromBody] RecommendationForStudyDto dto)
         {
             var command = new AddRecommendationForStudiesCommand(dto);
+
+            var result = await Mediator.Send(command);
+
+            return result;
+        }
+
+        [HttpPut("bulk-import")]
+        public async Task<Unit> AddEditStudies([FromBody] List<RecommendationForStudyDto> dtoList)
+        {
+            var command = new BulkAddEditRecommendationForStudyCommand(dtoList);
 
             var result = await Mediator.Send(command);
 

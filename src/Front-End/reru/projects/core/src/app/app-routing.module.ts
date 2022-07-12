@@ -31,8 +31,12 @@ const routes: Routes = [
 		children: [
 			{
 				path: '',
-				component: DashboardComponent,
+				component : DashboardComponent,
 				canActivate: [AuthenticationGuard]
+			},
+			{ 
+				path: 'registration-flux', 
+				loadChildren: () => import('./components/candidate-registration-flux/candidate-registration-flux.module').then(m => m.CandidateRegistrationFluxModule)
 			},
 			{ 
 				path: 'personal-profile', 

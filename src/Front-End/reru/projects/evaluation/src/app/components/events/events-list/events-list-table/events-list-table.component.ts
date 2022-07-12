@@ -20,6 +20,7 @@ export class EventsListTableComponent implements OnInit {
 	events: Event;
 	pagination: PaginationModel = new PaginationModel();
 	isLoading: boolean = true;
+	isLoadingCalendar: boolean = true;
 	title: string;
 	description: string;
 	no: string;
@@ -101,7 +102,7 @@ export class EventsListTableComponent implements OnInit {
 
 	list(data: any = {}) {
 		this.selectedDay = null;
-    this.isLoading = true;
+    	this.isLoading = true;
 
 		if (data.fromDate != null && data.tillDate != null) {
 			this.tillDate = data.tillDate,
@@ -220,6 +221,7 @@ export class EventsListTableComponent implements OnInit {
 	}
 
 	delete(id) {
+		this.isLoadingCalendar = false;
 		this.eventService.deleteEvent(id).subscribe(() => {
 			forkJoin([
 				this.translate.get('modal.success'),
@@ -230,6 +232,7 @@ export class EventsListTableComponent implements OnInit {
 			});
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			this.list();
+			this.isLoadingCalendar = true;
 		})
 	}
 

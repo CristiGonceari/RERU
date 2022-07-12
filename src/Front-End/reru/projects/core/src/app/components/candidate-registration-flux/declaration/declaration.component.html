@@ -1,0 +1,21 @@
+<div class="card text-center">
+    <div class="card-header">
+      Declaratie
+    </div>
+    <div class="card-body">
+     <div class="form-check ">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="isChecked" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+            <p class="card-text font-weight-bold">Declar, pe propria raspundere, ca datele inscrise in aceasta fisa sunt veridice.
+                Sunt de acord ca autoritatiile competente sa-mi verifice datele din fisa si din actele prezentate.
+             </p>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-end mt-10 mr-1">
+    <button class="btn btn-success"
+    [disabled]="isChecked == false || !allowToFinish" 
+    (click)="addRegistrationFluxStep()"
+        >{{'End' | translate}}</button>
+</div>

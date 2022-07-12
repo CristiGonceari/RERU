@@ -29,14 +29,12 @@ namespace RERU.Data.Entities
         public string FatherName { get; set; }
         public string Idnp { get; set; }
         public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public DateTime? Birthday { get; set; }
         public string MediaFileId { get; set; }
         public bool RequiresDataEntry { get; set; }
 
         public int? WorkPhone { get; set; }
         public int? HomePhone { get; set; }
-        public int? MobilePhone { get; set; }
+        public string PhoneNumber { get; set; }
         public DateTime? BirthDate { get; set; }
 
         public SexTypeEnum? Sex { get; set; }
@@ -100,5 +98,7 @@ namespace RERU.Data.Entities
         public virtual ICollection<MilitaryObligation> MilitaryObligations { get; set; }
         [JsonIgnore]
         public virtual ICollection<SolicitedVacantPositionUserFile> SolicitedVacantPositionUserFiles { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<RegistrationFluxStep> RegistrationFluxSteps { get; set; }
     }
 }

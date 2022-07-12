@@ -1,3 +1,14 @@
+<app-loading-spinner *ngIf="!isLoadingCalendar" [contentHeight]="'20vh'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<app-event-calendar  *ngIf="isLoadingCalendar"
+    (onDatePicked)="getListByDate($event)" 
+    (listOfDates)="list($event)"
+    (listOfCountedEvents)="getListOfCoutedPlans($event)"
+    >
+</app-event-calendar>
+
 <app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'20vh'" [height]="'5rem'" [width]="'5rem'"
   [colorClass]="'text-primary'">
 </app-loading-spinner>

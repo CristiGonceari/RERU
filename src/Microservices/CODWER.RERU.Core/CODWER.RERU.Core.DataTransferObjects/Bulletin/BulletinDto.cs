@@ -9,7 +9,6 @@ namespace CODWER.RERU.Core.DataTransferObjects.Bulletin
         public string Series { get; set; }
         public DateTime ReleaseDay { get; set; }
         public string EmittedBy { get; set; }
-        public string Idnp { get; set; }
         public int UserProfileId { get; set; }
 
         public AddressDto BirthPlace { get; set; }

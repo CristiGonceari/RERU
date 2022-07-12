@@ -26,10 +26,6 @@ namespace CODWER.RERU.Core.Application.Users.EditCandidate
                 .SetValidator(x => new ItemMustExistValidator<CandidateNationality>(appDbContext, ValidationCodes.INVALID_ID,
                     ValidationMessages.InvalidReference));
 
-            RuleFor(x => x.Data.BirthDate).NotEmpty()
-                .WithMessage(ValidationMessages.InvalidInput)
-                .WithErrorCode(ValidationCodes.EMPTY_USER_BIRTH_DATE);
-
             RuleFor(x => x.Data.WorkPhone).NotEmpty()
                .WithMessage(ValidationMessages.InvalidInput)
                .WithErrorCode(ValidationCodes.EMPTY_USER_WORK_PHONE);
@@ -38,9 +34,6 @@ namespace CODWER.RERU.Core.Application.Users.EditCandidate
                .WithMessage(ValidationMessages.InvalidInput)
                .WithErrorCode(ValidationCodes.EMPTY_USER_HOME_PHONE);
 
-            RuleFor(x => x.Data.MobilePhone).NotEmpty()
-               .WithMessage(ValidationMessages.InvalidInput)
-               .WithErrorCode(ValidationCodes.EMPTY_USER_MOBILE_PHONE);
         }
     }
 }

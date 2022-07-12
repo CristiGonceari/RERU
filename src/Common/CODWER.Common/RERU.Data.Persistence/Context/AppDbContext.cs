@@ -67,6 +67,7 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<EmailVerification> EmailVerifications { get; set; }
         public virtual DbSet<SolicitedVacantPositionUserFile> SolicitedVacantPositionUserFiles { get; set; }
         public virtual DbSet<SolicitedVacantPositionEmailMessage> SolicitedVacantPositionEmailMessages { get; set; }
+        public virtual DbSet<RegistrationFluxStep> RegistrationFluxSteps { get; set; }
 
         #region FisaPersonala
         public virtual DbSet<CandidateNationality> CandidateNationalities { get; set; }

@@ -33,6 +33,15 @@ namespace CODWER.RERU.Core.Application.Me.GetMe {
             me.User = Mapper.Map<ApplicationUserDto> (currentUser);
             me.Tenant = _tenantDto;
 
+            if (currentUser.DepartmentColaboratorId == null && currentUser.RoleColaboratorId == null)
+            {
+                me.IsCandidateStatus = true;
+            }
+            else
+            {
+                me.IsCandidateStatus = false;
+            }
+           
             return me;
         }
     }

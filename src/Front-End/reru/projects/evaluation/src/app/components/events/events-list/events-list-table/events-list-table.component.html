@@ -1,4 +1,8 @@
-<app-event-calendar (onDatePicked)="getListByDate($event)" (listOfDates)="list($event)"
+<app-loading-spinner *ngIf="!isLoadingCalendar" [contentHeight]="'20vh'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<app-event-calendar (onDatePicked)="getListByDate($event)" (listOfDates)="list($event)" *ngIf="isLoadingCalendar"
   (listOfCountedEvents)="getListOfCoutedEvents($event)">
 </app-event-calendar>
 

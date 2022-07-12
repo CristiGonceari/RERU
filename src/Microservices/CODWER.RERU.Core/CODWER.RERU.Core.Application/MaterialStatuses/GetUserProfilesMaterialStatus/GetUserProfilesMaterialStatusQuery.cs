@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CODWER.RERU.Core.Application.MaterialStatuses.GetUserProfilesMaterialStatus
 {
-    public class GetUserProfilesMaterialStatusQuery : IRequest<MaterialStatusDto>
+    public class GetUserProfilesMaterialStatusQuery : IRequest<AddEditMaterialStatusDto>
     {
         public int UserProfileId { get; set; }
     }

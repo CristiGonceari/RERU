@@ -14,6 +14,8 @@ namespace CODWER.RERU.Core.Application.Bulletins.AddBulletin
 
         public AddBulletinCommandValidator(AppDbContext appDbContext)
         {
+            _appDbContext = appDbContext;
+
             RuleFor(x => x.Data)
                 .SetValidator(new BulletinValidator());
 

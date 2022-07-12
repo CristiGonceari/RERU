@@ -1,4 +1,5 @@
 ﻿using CODWER.RERU.Core.Application.KinshipRelations.AddKinshipRelation;
+using CODWER.RERU.Core.Application.KinshipRelations.BulkAddEditKinshipRelations;
 using CODWER.RERU.Core.Application.KinshipRelations.GetUserProfileKinshipRelations;
 using CODWER.RERU.Core.Application.KinshipRelations.RemoveKinshipRelation;
 using CODWER.RERU.Core.Application.KinshipRelations.UpdateKinshipRelation;
@@ -6,6 +7,7 @@ using CODWER.RERU.Core.DataTransferObjects.KinshipRelation;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.API.Controllers
@@ -29,6 +31,16 @@ namespace CODWER.RERU.Core.API.Controllers
         {
             var command = new AddKinshipRelationCommand(dto)
                 ;
+            var result = await Mediator.Send(command);
+
+            return result;
+        }
+
+        [HttpPut("bulk-import")]
+        public async Task<Unit> AddEditKinshipRelations([FromBody] List<KinshipRelationDto> dtoList)
+        {
+            var command = new BulkAddEditKinshipRelationsCommand(dtoList);
+
             var result = await Mediator.Send(command);
 
             return result;

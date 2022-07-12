@@ -12,6 +12,11 @@ namespace CODWER.RERU.Core.Application.MaterialStatuses
                 .ForMember(x => x.Id, opts => opts.Ignore());
 
             CreateMap<MaterialStatus, MaterialStatusDto>();
+
+            CreateMap<AddEditMaterialStatusDto, MaterialStatus>()
+                .ForMember(x => x.Id, opts => opts.Ignore());
+
+            CreateMap<MaterialStatus, AddEditMaterialStatusDto>();
         }
     }
 }
