@@ -3,6 +3,7 @@ import { TenantModel } from './tenant.model';
 
 export interface ApplicationUserModel {
 	isAuthenticated: boolean;
+	isCandidateStatus: boolean;
 	user: {
 		avatar: string;
 		lastname: string;
