@@ -26,13 +26,8 @@ namespace CODWER.RERU.Core.DataTransferObjects.UserProfiles
         public UserStatusEnum? UserStatusEnum { get; set; }
         public AccessModeEnum AccessModeEnum { get; set; }
         public bool IsActive { set; get; }
-        public int? WorkPhone { get; set; }
-        public int? HomePhone { get; set; }
-        public SexTypeEnum? Sex { get; set; }
-        public StateLanguageLevel? StateLanguageLevel { get; set; }
-        public int? CandidateNationalityId { get; set; }
-        public int? CandidateCitizenshipId { get; set; }
         public int BulletinId { get; set; }
+        public int UserProfileGeneralDataId { get; set; }
         public int StudyCount { get; set; }
         public int ModernLanguageLevelsCount { get; set; }
         public int RecomendationsForStudyCount { get; set; }
