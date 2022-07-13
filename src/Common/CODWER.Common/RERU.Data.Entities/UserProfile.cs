@@ -32,19 +32,8 @@ namespace RERU.Data.Entities
         public string MediaFileId { get; set; }
         public bool RequiresDataEntry { get; set; }
 
-        public int? WorkPhone { get; set; }
-        public int? HomePhone { get; set; }
         public string PhoneNumber { get; set; }
         public DateTime? BirthDate { get; set; }
-
-        public SexTypeEnum? Sex { get; set; }
-        public StateLanguageLevel? StateLanguageLevel { get; set; }
-
-        public int? CandidateNationalityId { get; set; }
-        public CandidateNationality CandidateNationality { get; set; }
-
-        public int? CandidateCitizenshipId { get; set; }
-        public CandidateCitizenship CandidateCitizenship { get; set; }
 
         public string Token { set; get; }
         public bool IsActive { set; get; }
@@ -58,6 +47,7 @@ namespace RERU.Data.Entities
         public Role Role { get; set; }
 
         public Bulletin Bulletin { get; set; }
+        public UserProfileGeneralData UserProfileGeneralData { get; set; }
         public MaterialStatus MaterialStatus { get; set; }
         public KinshipRelationCriminalData KinshipRelationCriminalData { get; set; }
         public Autobiography Autobiography { get; set; }

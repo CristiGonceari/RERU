@@ -25,6 +25,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetCandidateProfile
                 .Include(up => up.KinshipRelationWithUserProfiles)
                 .Include(up => up.MilitaryObligations)
                 .Include(up => up.Autobiography)
+                .Include(up => up.UserProfileGeneralData)
                 .FirstOrDefaultAsync(u => u.Id == request.Id);
 
             var userProfDto = Mapper.Map<CandidateProfileDto>(userProfile);

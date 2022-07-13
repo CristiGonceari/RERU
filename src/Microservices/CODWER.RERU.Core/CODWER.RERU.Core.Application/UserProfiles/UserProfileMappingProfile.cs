@@ -29,6 +29,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles
                 .ForMember(x => x.AccessModeEnum, opts => opts.MapFrom(src => src.AccessModeEnum != null ? src.AccessModeEnum : AccessModeEnum.CurrentDepartment))
                 .ForMember(x => x.UserName, opts => opts.MapFrom(src => src.LastName + " " + src.FirstName + " " + src.FatherName))
                 .ForMember(x => x.BulletinId, opts => opts.MapFrom(src => src.Bulletin.Id))
+                .ForMember(x => x.UserProfileGeneralDataId, opts => opts.MapFrom(src => src.UserProfileGeneralData.Id))
                 .ForMember(x => x.StudyCount, opts => opts.MapFrom(src => src.Studies.Count()))
                 .ForMember(x => x.ModernLanguageLevelsCount, opts => opts.MapFrom(src => src.ModernLanguageLevels.Count()))
                 .ForMember(x => x.RecomendationsForStudyCount, opts => opts.MapFrom(src => src.RecommendationForStudies.Count()))

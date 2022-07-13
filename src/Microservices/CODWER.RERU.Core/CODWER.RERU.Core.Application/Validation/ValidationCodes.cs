@@ -108,6 +108,10 @@ namespace CODWER.RERU.Core.Application.Validation
         //RegistrationFluxStep
         public static string REGISTRATION_FLUX_NOT_FOUND = "01007001";
 
-
+        //GenearalData
+        public static string USER_PROFILE_GENERAL_DATA_NOT_FOUND = "01008003";
+        public static string CONTRACTOR_HAS_GENERAL_DATA = "01008004";
+        public static string CANDIDATE_CITIZENSHIP_NOT_FOUND = "01008001";
+        public static string CANDIDATE_NATIONALITY_NOT_FOUND = "01008002";
     }
 }

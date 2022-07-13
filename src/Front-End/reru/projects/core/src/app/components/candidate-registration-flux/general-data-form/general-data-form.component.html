@@ -19,7 +19,7 @@
                       {{'user name' | translate}}:
                     </label>
                     <div class="col-lg-9 col-xl-6">
-                      <p class="font-size-lg m-0">{{generalDatas.userName || "not set"}}</p>
+                      <p class="font-size-lg m-0">{{userDatas.userName || "not set"}}</p>
                     </div>
                   </div>
                 </div>
@@ -29,7 +29,7 @@
                       {{'birthday' | translate}}:
                     </label>
                     <div class="col-lg-9 col-xl-6">
-                      <p class="font-size-lg m-0">{{(generalDatas.birthday | date: 'd/M/yy, HH:mm') || "not set"}}</p>
+                      <p class="font-size-lg m-0">{{(userDatas.birthday | date: 'd/M/yy, HH:mm') || "not set"}}</p>
                     </div>
                   </div>
                 </div>
@@ -40,7 +40,7 @@
                       {{'email' | translate}}:
                     </label>
                     <div class="col-lg-9 col-xl-6">
-                      <p class="font-size-lg m-0">{{generalDatas.email || "not set"}}</p>
+                      <p class="font-size-lg m-0">{{userDatas.email || "not set"}}</p>
                     </div>
                   </div>
                 </div>
@@ -50,7 +50,7 @@
                       {{'phone mobile' | translate}}:
                     </label>
                     <div class="col-lg-9 col-xl-6">
-                      <p class="font-size-lg m-0">{{generalDatas.phoneNumber || "not set"}}</p>
+                      <p class="font-size-lg m-0">{{userDatas.phoneNumber || "not set"}}</p>
                     </div>
                   </div>
                 </div>
@@ -122,9 +122,9 @@
         </div>
         <div class="col-xl-6 col-12">
           <div class="form-group row mb-10">
-            <label class="col-xl-3 col-lg-3 col-form-label text-right">{{ 'user.phone' | translate }}</label>
+            <label class="col-xl-3 col-lg-3 col-form-label text-right">{{ 'Home Phone' | translate }}</label>
             <div class="col-lg-9 col-xl-9">
-              <input class="form-control form-control-lg form-control-solid" name="homePhone" type="number"
+              <input class="form-control form-control-lg form-control-solid" name="homePhone" type="text"
                 formControlName="homePhone"
                 [ngClass]="{'is-invalid': hasErrors('homePhone'), 'is-valid': userForm.get('homePhone').valid}" />
               <div *ngIf="hasErrors('homePhone')" class="fv-plugins-message-container">
@@ -140,9 +140,9 @@
         </div>
         <div class="col-xl-6 col-12">
           <div class="form-group row mb-10">
-            <label class="col-xl-3 col-lg-3 col-form-label text-right">{{ 'user.phone' | translate }}</label>
+            <label class="col-xl-3 col-lg-3 col-form-label text-right">{{ 'Work Phone' | translate }}</label>
             <div class="col-lg-9 col-xl-9">
-              <input class="form-control form-control-lg form-control-solid" name="workPhone" type="number"
+              <input class="form-control form-control-lg form-control-solid" name="workPhone" type="text"
                 formControlName="workPhone"
                 [ngClass]="{'is-invalid': hasErrors('workPhone'), 'is-valid': userForm.get('workPhone').valid}" />
               <div *ngIf="hasErrors('workPhone')" class="fv-plugins-message-container">
@@ -159,8 +159,10 @@
       </div>
     </div>
     <div class="row justify-content-end">
-      <button class="btn btn-success" matStepperNext [disabled]="userForm && userForm.invalid"
-        (click)="updateUserProfile()">{{'Save and next' | translate}}</button>
+      <button class="btn btn-success" matStepperNext [disabled]="userForm && userForm.invalid" *ngIf="toAddOrUpdateButton"
+        (click)="updateUserProfileGeneralData()">{{'Update and next' | translate}}</button>
+        <button class="btn btn-success" matStepperNext [disabled]="userForm && userForm.invalid" *ngIf="!toAddOrUpdateButton"
+        (click)="createUserProfileGeneralData()">{{'Save and next' | translate}}</button>
     </div>
   </form>
 </div>

@@ -48,7 +48,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetCandidateRegistrationStep
 
             for (var i = 0; i < registrationSteps.Length; i++) 
             {
-                var check = userProfile.RegistrationFluxSteps.FirstOrDefault(rfs => rfs.Step.ToString() == registrationSteps.GetValue(i).ToString());
+                var check = userProfile?.RegistrationFluxSteps.FirstOrDefault(rfs => rfs.Step.ToString() == registrationSteps.GetValue(i).ToString());
 
                 if (check == null)
                 {

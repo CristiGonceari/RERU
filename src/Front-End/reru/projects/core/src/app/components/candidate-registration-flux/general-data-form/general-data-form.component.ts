@@ -11,6 +11,7 @@ import { ValidatorUtil } from '../../../utils/util/validator.util';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { DataService } from '../data.service';
+import { UserProfileGeneralDataService } from '../../../utils/services/user-profile-general-data.service';
 
 @Component({
   selector: 'app-general-data-form',
@@ -25,6 +26,7 @@ export class GeneralDataFormComponent implements OnInit {
   nationalities;
   citizenships;
   generalDatas;
+  userDatas;
 
   registrationFluxStep;
   registrationFluxStepId;
@@ -38,6 +40,8 @@ export class GeneralDataFormComponent implements OnInit {
   sexEnum: SelectItem[] = [{ label: "", value: "" }];
   stateLanguageLevelEnum: SelectItem[] = [{ label: "", value: "" }];
 
+  toAddOrUpdateButton: boolean;
+
   constructor( private referenceService: ReferenceService,
     private userProfile: UserProfileService,
     private fb: FormBuilder,
@@ -45,7 +49,8 @@ export class GeneralDataFormComponent implements OnInit {
     private userService: UserService,
     private registrationFluxService: RegistrationFluxStepService,
     public notificationService: NotificationsService,
-    private ds: DataService
+    private ds: DataService,
+    private userProfileGeneralDataService: UserProfileGeneralDataService
     ) { }
 
   ngOnInit(): void {
@@ -68,16 +73,25 @@ export class GeneralDataFormComponent implements OnInit {
   getUserGeneralDatas(){
     const request = this.userId;
     this.userProfile.getCandidateProfile(request).subscribe(res => {
-      
-      this.generalDatas = res.data;
+      this.userDatas = res.data;
       this.generealDatasLoading = false;
-
-      if (res.data != null){
-        this.initForm(this.generalDatas);
+      if (this.userDatas.userProfileGeneralDataId != 0){
+        this.getExistentGeneralData(this.userId);
+      }else{
+        this.toAddOrUpdateButton = false;
         this.isLoading = false;
       }
     })
 
+  }
+
+  getExistentGeneralData(userId){
+    this.userProfileGeneralDataService.get(userId).subscribe(res => {
+      this.generalDatas = res.data;
+      this.initForm(this.generalDatas);
+      this.isLoading = false;
+      this.toAddOrUpdateButton = true;
+    })
   }
 
   getSelectedValue(){
@@ -121,26 +135,50 @@ export class GeneralDataFormComponent implements OnInit {
 		);
 	}
 
-  parseUserProfileDetails(userId, generalData){
+  parseAddUserProfileDetails(userId, generalData){
     return {
-      id: userId,
+      userProfileId: userId,
       workPhone: generalData.workPhone,
       homePhone: generalData.homePhone,
-      sex: generalData.sex,
-      stateLanguageLevel: generalData.statelanguageLevel,
+      sex:  parseInt(generalData.sex),
+      stateLanguageLevel:  parseInt(generalData.statelanguageLevel),
       candidateNationalityId: parseInt(generalData.nationalityTypeId),
       candidateCitizenshipId: parseInt(generalData.citizenshipTypeId)
     }
   }
 
-  updateUserProfile(){
-    this.userService.editCandidateDetails(this.parseUserProfileDetails(this.userId, this.userForm.value)).subscribe(res =>{
-      this.checkRegistrationStep(this.registrationFluxStep);
+  parseEditUserProfileDetails(userId, generalData, id){
+    return {
+      id: id,
+      userProfileId: userId,
+      workPhone: generalData.workPhone,
+      homePhone: generalData.homePhone,
+      sex: parseInt(generalData.sex),
+      stateLanguageLevel: parseInt(generalData.statelanguageLevel),
+      candidateNationalityId: parseInt(generalData.nationalityTypeId),
+      candidateCitizenshipId: parseInt(generalData.citizenshipTypeId)
+    }
+  }
+
+  updateUserProfileGeneralData(){
+    this.userProfileGeneralDataService.update(this.parseEditUserProfileDetails(this.userId, this.userForm.value, this.generalDatas.id)).subscribe(res =>{
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , res.success, this.userId);
       this.notificationService.success('Success', 'Contractor details added!', NotificationUtil.getDefaultMidConfig());
 
     }, error => {
       this.notificationService.error('Failure', 'Contractor details was not added!', NotificationUtil.getDefaultMidConfig());
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , error.success, this.userId);
     })
+  }
+
+  createUserProfileGeneralData(){
+    this.userProfileGeneralDataService.add(this.parseAddUserProfileDetails(this.userId, this.userForm.value)).subscribe(res => {
+      this.notificationService.success('Success', 'Contractor details was added!', NotificationUtil.getDefaultMidConfig());
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , res.success, this.userId);
+     },error => {
+      this.notificationService.error('Success', 'Contractor details was not added!', NotificationUtil.getDefaultMidConfig());
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , error.success, this.userId);
+     })
   }
 
   getExistentStep(step){
@@ -155,18 +193,16 @@ export class GeneralDataFormComponent implements OnInit {
     })
   }
 
-  checkRegistrationStep(step){
+  checkRegistrationStep(stepData, stepId, success, userId){
     const datas= {
-      isDone: true,
+      isDone: success,
       stepId: this.stepId
     }
-
-    if (step.length == 0){
-      this.addCandidateRegistationStep(true, this.stepId, parseInt(this.userId) );
+    if(stepData.length == 0){
+      this.addCandidateRegistationStep(success, stepId, userId);
       this.ds.sendData(datas);
-    }
-    else{
-      this.updateCandidateRegistationStep(step[0].id, true, this.stepId, parseInt(this.userId))
+    }else{
+      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, userId);
       this.ds.sendData(datas);
     }
   }
