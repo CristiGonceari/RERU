@@ -50,6 +50,16 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return File(result.Content, result.ContentType, result.Name);
         }
 
+        [HttpGet("evaluation-result-pdf/{testId}")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> GetEvaluationResultPdf([FromRoute] int testId)
+        {
+            var result = await _pdfService.PrintEvaluationResultPdf(testId);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
         [HttpGet("performing-test-pdf")]
         [IgnoreResponseWrap]
         public async Task<IActionResult> GetPerformingTestPdf([FromQuery] List<int> testsIds)

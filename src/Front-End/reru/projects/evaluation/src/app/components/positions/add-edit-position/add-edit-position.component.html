@@ -1,5 +1,5 @@
 <app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
-[colorClass]="'text-primary'">
+  [colorClass]="'text-primary'">
 </app-loading-spinner>
 
 <div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -27,58 +27,57 @@
                 <form class="form" id="kt_contact_add_form" [formGroup]="positionForm">
                   <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
                     <h3 class="mb-10 font-weight-bold text-dark">
-                        {{ 'position.details' | translate }}
+                      {{ 'position.details' | translate }}
                     </h3>
                     <div class="row">
                       <div class="col-xl-12">
                         <div class="form-group row">
-                          <label class="col-xl-3 col-lg-3 col-form-label">{{ 'position.name' | translate }}:</label>
+                          <label class="col-xl-3 col-lg-3 col-form-label">{{ 'position.name' | translate }}</label>
                           <div class="col-lg-9 col-xl-9">
-                            <input class="form-control form-control-lg form-control-solid" name="name" type="text" 
-                              formControlName="name"/>
+                            <input class="form-control form-control-lg form-control-solid" name="name" type="text"
+                              formControlName="name" />
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label class="col-xl-3 col-lg-3 col-form-label">{{ 'position.is-active' | translate }}:</label>
+                          <label class="col-xl-3 col-lg-3 col-form-label">{{ 'position.is-active' | translate
+                            }}</label>
                           <div class="col-lg-9 col-xl-9">
                             <input class="form-control form-control-lg form-control-solid" style="width: 25px;"
                               name="isActive" type="checkbox" formControlName="isActive" />
                           </div>
                         </div>
-                        <div class="form-group row"> 
-                            <label class="col-xl-3 col-lg-3 col-form-label">
-                              {{'require-documents.required-documents' | translate}}
-                            </label>
-                            <div class="col-lg-9 col-xl-9">
-                              <tag-input class="py-0 form-control form-control-lg form-control-solid h-100"
-                                [ngModelOptions]="{standalone: true}"
-                                [(ngModel)]="tags" 
-                                >
-                                  <tag-input-dropdown 
-                                  [autocompleteItems]="items" 
-                                  [showDropdownIfEmpty]="true"
-                                  [dynamicUpdate]="true">
-                                  </tag-input-dropdown>
-                              </tag-input>
-                            </div>
+                        <div class="form-group row">
+                          <label class="col-xl-3 col-lg-3 col-form-label">
+                            {{'require-documents.required-documents' | translate}}
+                          </label>
+                          <div class="col-lg-9 col-xl-9">
+                            <tag-input class="py-0 form-control form-control-lg form-control-solid h-100"
+                              [ngModelOptions]="{standalone: true}" [(ngModel)]="tags">
+                              <tag-input-dropdown [autocompleteItems]="items" [showDropdownIfEmpty]="true"
+                                [dynamicUpdate]="true">
+                              </tag-input-dropdown>
+                            </tag-input>
+                          </div>
                         </div>
-                        <div class="form-group row"> 
+                        <div class="form-group row">
                           <label class="col-xl-3 col-lg-3 col-form-label">
                             {{'events.event' | translate}}
                           </label>
                           <div class="col-lg-9 col-xl-9">
                             <tag-input class="py-0 form-control form-control-lg form-control-solid h-100"
-                              [ngModelOptions]="{standalone: true}"
-                              [(ngModel)]="eventSelected" 
-                              >
-                                <tag-input-dropdown 
-                                [autocompleteItems]="eventList" 
-                                [showDropdownIfEmpty]="true"
+                              [ngModelOptions]="{standalone: true}" [(ngModel)]="eventSelected">
+                              <tag-input-dropdown [autocompleteItems]="eventList" [showDropdownIfEmpty]="true"
                                 [dynamicUpdate]="true">
-                                </tag-input-dropdown>
+                              </tag-input-dropdown>
                             </tag-input>
                           </div>
-                      </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-xl-3 col-lg-3 col-form-label">{{ 'locations.description' | translate }}</label>
+                          <div class="col-lg-9 col-xl-9">
+                            <ckeditor [editor]="Editor" [(ngModel)]="editorData" (ready)="onReady($event)" [ngModelOptions]="{standalone: true}"></ckeditor>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

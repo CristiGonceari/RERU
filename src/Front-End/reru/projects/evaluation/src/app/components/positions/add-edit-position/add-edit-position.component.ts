@@ -10,6 +10,7 @@ import { CandidatePositionModel } from '../../../utils/models/candidate-position
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { ReferenceService } from '../../../utils/services/reference/reference.service';
 import { SelectItem } from '../../../utils/models/select-item.model';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 @Component({
 	selector: 'app-add-edit-position',
 	templateUrl: './add-edit-position.component.html',
@@ -17,27 +18,28 @@ import { SelectItem } from '../../../utils/models/select-item.model';
 })
 export class AddEditPositionComponent implements OnInit {
 	isLoading: boolean = true;
-
 	positionId: number;
 	positionForm: FormGroup;
 	positionName: string;
-
 	title: string;
-
 	placeHolderString = '+ Tag';
-
 	items = [];
 	eventList = [];
-
 	eventSelected: any[] = [];
 	tags: any[] = [];
-
 	description: string;
-
 	event = new SelectItem();
 	eventsList: any[] = [];
-
 	exceptUserIds = [];
+	editorData: string = '';
+
+	public Editor = DecoupledEditor;
+	public onReady(editor) {
+		editor.ui.getEditableElement().parentElement.insertBefore(
+			editor.ui.view.toolbar.element,
+			editor.ui.getEditableElement()
+		);
+	}
 
 	constructor(
 		private fb: FormBuilder,
@@ -61,6 +63,7 @@ export class AddEditPositionComponent implements OnInit {
 				this.positionId = params.id;
 				this.positionService.get(this.positionId).subscribe(res => {
 					this.initForm(res.data);
+					this.editorData = res.data.description;
 
 					res.data.requiredDocuments.forEach(element => {
 						this.tags.push({ display: element.label, value: +element.value })
@@ -108,6 +111,7 @@ export class AddEditPositionComponent implements OnInit {
 		let addPositionModel = {
 			name: this.positionForm.value.name,
 			isActive: this.positionForm.value.isActive,
+			description: this.editorData,
 			requiredDocuments: tagsArr,
 			eventIds: eventArr.map(obj => obj.value)
 		} as CandidatePositionModel;
@@ -141,6 +145,7 @@ export class AddEditPositionComponent implements OnInit {
 		let editPositionModel = {
 			id: +this.positionId,
 			name: this.positionForm.value.name,
+			description: this.editorData,
 			isActive: this.positionForm.value.isActive,
 			requiredDocuments: tagsArr,
 			eventIds: eventArr.map(obj => obj.value)
