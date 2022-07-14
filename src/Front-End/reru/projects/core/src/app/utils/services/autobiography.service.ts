@@ -15,14 +15,14 @@ export class AutobiographyService extends AbstractService {
   }
 
   get(id: number): Observable<Response<AutobiographyModel>> {
-    return this.http.get<Response<AutobiographyModel>>(`${this.baseUrl}/${this.urlRoute}/${id}`);
+    return this.http.get<Response<AutobiographyModel>>(`${this.coreUrl}/${this.urlRoute}/${id}`);
   }
 
   add(data: AutobiographyModel): Observable<Response<number>> {
-    return this.http.post<Response<number>>(`${this.baseUrl}/${this.urlRoute}`, data);
+    return this.http.post<Response<number>>(`${this.coreUrl}/${this.urlRoute}`, data);
   }
 
   update(data): Observable<Response<any>> {
-    return this.http.patch<Response<any>>(`${this.baseUrl}/${this.urlRoute}`, data);
+    return this.http.patch<Response<any>>(`${this.coreUrl}/${this.urlRoute}`, data);
   }
 }

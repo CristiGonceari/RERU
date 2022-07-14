@@ -31,11 +31,6 @@ export class CandidateRegistrationFluxComponent implements OnInit {
   
   @ViewChild('stepper') stepper: MatStepper;
 
-  @ViewChild('generealDatasLoading') generealDatasLoading: GeneralDataFormComponent;
-
-  @ViewChild(GeneralDataFormComponent)
-  generalDatas: GeneralDataFormComponent;
-
   counter;
 
   state: string;

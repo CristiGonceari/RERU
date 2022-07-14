@@ -16,26 +16,26 @@ export class RecommendationForStudyService extends AbstractService {
 	}
 
 	get(data): Observable<Response<RecommendationForStudyModel[]>> {
-		return this.http.get<Response<RecommendationForStudyModel[]>>(`${this.baseUrl}/${this.urlRoute}`, { params: data });
+		return this.http.get<Response<RecommendationForStudyModel[]>>(`${this.coreUrl}/${this.urlRoute}`, { params: data });
 	}
 
 	add(data): Observable<Response<number>> {
-		return this.http.post<Response<number>>(`${this.baseUrl}/${this.urlRoute}`, data);
+		return this.http.post<Response<number>>(`${this.coreUrl}/${this.urlRoute}`, data);
 	}
 
 	addMultiple(data): Observable<Response<number>> {
-		return this.http.put<Response<number>>(`${this.baseUrl}/${this.urlRoute}/bulk-import`, data);
+		return this.http.put<Response<number>>(`${this.coreUrl}/${this.urlRoute}/bulk-import`, data);
 	}
 
 	update(data: RecommendationForStudyModel): Observable<Response<any>> {
-		return this.http.patch<Response<any>>(`${this.baseUrl}/${this.urlRoute}`, data);
+		return this.http.patch<Response<any>>(`${this.coreUrl}/${this.urlRoute}`, data);
 	}
 
 	delete(id: number): Observable<Response<any>> {
-		return this.http.delete<Response<any>>(`${this.baseUrl}/${this.urlRoute}/${id}`);
+		return this.http.delete<Response<any>>(`${this.coreUrl}/${this.urlRoute}/${id}`);
 	}
 
 	list(data: any): Observable<Response<any>> {
-		return this.http.get<Response<any>>(`${this.baseUrl}/${this.urlRoute}`, { params: data });
+		return this.http.get<Response<any>>(`${this.coreUrl}/${this.urlRoute}`, { params: data });
 	}
 }
