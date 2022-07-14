@@ -60,177 +60,59 @@
             </div>
         </div>
     </nav>
-    <div class="container-fluid" style="background-color: #eff1f3; height: 100%;">
+    <div class="container-fluid" style="background-color: #eff1f3;"
+        [ngClass]="{'first': positions.length > 5, 'second': positions.length < 5}">
         <div class="container" style="font-family: Georgia, serif;">
             <div class="row p-3 mt-4">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-xs-12"
                     style="padding: 2.25rem; background-color: #fff; border: 1px solid #dee2e6; border-radius: 0.25rem; max-width: 100%; height: auto; margin-left: 4%">
                     <h2 class="text-center" style="margin-bottom: 2.25rem; font-family: Georgia, serif;">
                         {{'vacant-positions-page.details' | translate }}</h2>
-
-                    <table class="datatable table font-size-lg" style="overflow: visible">
-                        <thead class="text-uppercase text-muted">
-                            <tr>
-                                <th scope="col">{{'sidebar.positions' | translate}}</th>
-                                <th scope="col">{{'table.description' | translate}}</th>
-                            </tr>
-                        </thead>
-                        <tbody class="datatable-body" *ngIf="positions">
-                            <tr *ngFor="let item of positions">
-                                <td style="cursor: pointer;">{{ item.name }}</td>
-                                <td style="cursor: pointer;">
-                                    <ckeditor [editor]="Editor" [(ngModel)]="item.description" class="disabled-area"></ckeditor>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tbody class="datatable-body" *ngIf="!positions.length">
-                            <tr>
-                                <td colspan="2" class="text-center">
-                                    {{ 'messages.no-records' | translate }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
-                        [total]="pagination.totalPages" [totalRecords]="pagination.totalCount"
-                        [size]="pagination.pageSize"
-                        (sizeChange)="get({ page: 1, itemsPerPage: $event })"
-                        (pageChange)="get({ page: $event, itemsPerPage: pagination.pageSize})"
-                        *ngIf="positions">
+                    <div class="row mb-5">
+                        <div class="col-11">
+                            <erp-shared-search-input (handleSearch)="get({name: $event, page: 1, itemsPerPage: pagination.pageSize})" [placeholder]="'button.search' | translate" #search></erp-shared-search-input>
+                        </div>
+                        <div class="col-1">
+                            <app-button (click)="search.clear()" [value]="'button.reset' | translate" class="mr-5"></app-button>
+                        </div>
                     </div>
-                    <!-- <form [formGroup]="userForm">
-                        <div class="form-row"> -->
-                    <!-- <div class="form-group col-md-4">
-                                <label for="inputEmail4">{{ 'table.name' | translate }}</label>
-                                <input class="form-control form-control-lg form-control-solid" name="firstName"
-                                    type="text" formControlName="firstName"
-                                    [ngClass]="{'is-invalid': hasErrors('firstName'), 'is-valid': userForm.get('firstName').valid}" />
-                                <div *ngIf="hasErrors('firstName')" class="fv-plugins-message-container">
-                                    <div *ngIf="hasError('firstName', 'required')" data-field="firstName"
-                                        data-validator="notEmpty" class="fv-help-block">
-                                        {{ 'user-profile.empty-name' | translate }}</div>
-                                    <div *ngIf="hasError('firstName', 'pattern')" data-field="firstName"
-                                        data-validator="notEmpty" class="fv-help-block">
-                                        {{ 'user-profile.wrong-name' | translate }}</div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="inputPassword4">{{ 'table.lastName' | translate }}</label>
-                                <input class="form-control form-control-lg form-control-solid" name="lastName"
-                                    type="text" formControlName="lastName"
-                                    [ngClass]="{'is-invalid': hasErrors('lastName'), 'is-valid': userForm.get('lastName').valid}" />
-                                <div *ngIf="hasErrors('lastName')" class="fv-plugins-message-container">
-                                    <div *ngIf="hasError('lastName', 'required')" data-field="lastName"
-                                        data-validator="notEmpty" class="fv-help-block">
-                                        {{ 'user-profile.empty-name' | translate }}</div>
-                                    <div *ngIf="hasError('lastName', 'pattern')" data-field="lastName"
-                                        data-validator="notEmpty" class="fv-help-block">
-                                        {{ 'user-profile.wrong-name' | translate }}</div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="inputPassword4">{{ 'table.father-name' | translate }}</label>
-                                <input class="form-control form-control-lg form-control-solid" name="fatherName"
-                                    type="text" formControlName="fatherName"
-                                    [ngClass]="{'is-invalid': hasErrors('fatherName'), 'is-valid': userForm.get('fatherName').valid}" />
-                                <div *ngIf="hasErrors('fatherName')" class="fv-plugins-message-container">
-                                    <div *ngIf="hasError('fatherName', 'required')" data-field="fatherName"
-                                        data-validator="notEmpty" class="fv-help-block">
-                                        {{ 'user-profile.empty-name' | translate }}</div>
-                                    <div *ngIf="hasError('fatherName', 'pattern')" data-field="fatherName"
-                                        data-validator="notEmpty" class="fv-help-block">
-                                        {{ 'user-profile.wrong-name' | translate }}</div>
-                                </div>
-                            </div>
+                    <app-loading-spinner *ngIf="isLoading" [contentHeight]="'10vh'" [height]="'5rem'" [width]="'5rem'"
+                        [colorClass]="'text-danger'">
+                    </app-loading-spinner>
+                    <div *ngIf="!isLoading" id="kt_datatable"
+                        class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded">
+                        <table *ngIf="!isLoading" class="datatable table font-size-lg" style="overflow: visible">
+                            <thead class="text-uppercase text-muted">
+                                <tr>
+                                    <th scope="col" style="width: 200px;">{{'sidebar.positions' | translate}}</th>
+                                    <th scope="col">{{'table.description' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody class="datatable-body" *ngIf="positions">
+                                <tr *ngFor="let item of positions">
+                                    <td style="vertical-align: middle;">{{ item.name }}</td>
+                                    <td>
+                                        <ckeditor [editor]="Editor" [(ngModel)]="item.description"
+                                            class="disabled-area">
+                                        </ckeditor>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody class="datatable-body" *ngIf="!positions.length">
+                                <tr>
+                                    <td colspan="2" class="text-center">
+                                        {{ 'messages.no-records' | translate }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage" style="margin-bottom: 30px;"
+                            [total]="pagination.totalPages" [totalRecords]="pagination.totalCount"
+                            [size]="pagination.pageSize" (sizeChange)="get({ page: 1, itemsPerPage: $event })"
+                            (pageChange)="get({ page: $event, itemsPerPage: pagination.pageSize})"
+                            *ngIf="positions.length">
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">{{ 'table.idnp' | translate }}</label>
-                                <input class="form-control form-control-lg form-control-solid" name="idnp"
-                                    maxlength="13" minlength="13"
-                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off"
-                                    type="text" formControlName="idnp"
-                                    [ngClass]="{'is-invalid': hasErrors('idnp'), 'is-valid': userForm.get('idnp').valid }" />
-                                <div *ngIf="isIdnpLengthValidator('idnp')" class="invalid-feedback d-block">
-                                    {{'user-profile.idnp-length'
-                                    | translate}}</div>
-                                <div *ngIf="hasErrors('idnp')" class="fv-plugins-message-container">
-                                    <div *ngIf="hasError('idnp', 'required')" data-field="idnp"
-                                        data-validator="notEmpty" class="fv-help-block">
-                                        {{ 'user-profile.idnp-length' | translate }}</div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputPassword4">{{ 'user.birthday' | translate }}</label>
-                                <input type="text" [owlDateTimeTrigger]="startDate"
-                                    class="form-control form-control-lg form-control-solid"
-                                    [value]="birthday | dateFilter:'dd/MM/yyyy'">
-                                <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
-                                    name="date_time" [(ngModel)]="birthday" [owlDateTime]="startDate"
-                                    [ngModelOptions]="{standalone: true}" [readonly]="true">
-                                <owl-date-time #startDate pickerType="calendar"></owl-date-time>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputPassword4">{{ 'user.phone' | translate }}</label>
-                                <input class="form-control form-control-lg form-control-solid" name="phoneNumber"
-                                    type="tel" formControlName="phoneNumber"
-                                    [ngClass]="{'is-invalid': hasErrors('phoneNumber'), 'is-valid': userForm.get('phoneNumber').valid}" />
-                                <div *ngIf="hasErrors('phoneNumber')" class="fv-plugins-message-container">
-                                    <div *ngIf="hasError('phoneNumber', 'required')" data-field="phoneNumber"
-                                        data-validator="notEmpty" class="fv-help-block">
-                                        {{ 'login.phone-is-required' | translate }}</div>
-                                    <div *ngIf="hasError('phoneNumber', 'phoneNumber')" data-field="phoneNumber"
-                                        data-validator="notEmpty" class="fv-help-block">
-                                        {{ 'login.phone-is-required' | translate }}</div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputPassword4">{{ 'table.email' | translate }}</label>
-                                <input class="form-control form-control-lg form-control-solid" name="email" type="email"
-                                    formControlName="email"
-                                    [ngClass]="{'is-invalid': hasErrors('email'), 'is-valid': userForm.get('email').valid}" />
-                                <div *ngIf="hasErrors('email')" class="fv-plugins-message-container">
-                                    <div *ngIf="hasError('email', 'required')" data-field="email"
-                                        data-validator="notEmpty" class="fv-help-block">
-                                        {{ 'login.email-is-required' | translate }}</div>
-                                    <div *ngIf="hasError('email', 'email')" data-field="email" data-validator="notEmpty"
-                                        class="fv-help-block">
-                                        {{ 'login.please-use-valid-email' | translate }}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group photo-upload col-md-6">
-                                <label for="inputAddress">{{ 'table.profile-photo' | translate }}</label>
-                                <div *ngIf="fileId">
-                                    <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)"
-                                        (disableBtn)="disableBtn">
-                                    </app-add-edit-media-file>
-                                </div>
-                                <div *ngIf="!fileId">
-                                    <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
-                                    </app-add-edit-media-file>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <p>
-                                    <input type="checkbox" id="checkbox" (change)="accept = !accept">
-                                    {{ 'registration-page.accept-condition' | translate }} <button type="button"
-                                        class="btn btn-link" (click)="openAcceptConditionsModal()">{{
-                                        'registration-page.registration-conditions' | translate
-                                        }}</button>
-                                </p>
-                            </div>
-                        </div>
-                        <button type="submit" [disabled]="!accept" class="btn btn-primary float-right"
-                            (click)="verifyEmailCode()">{{
-                            'button.confirm' |
-                            translate }}</button>
-                    </form> -->
+                    </div>
                 </div>
             </div>
         </div>

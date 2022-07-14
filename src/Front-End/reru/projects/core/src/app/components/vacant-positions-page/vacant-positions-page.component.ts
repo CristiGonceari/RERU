@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { I18nService } from '../../utils/services/i18n.service';
-import { CandidatePositionService } from '../../../../../evaluation/src/app/utils/services/candidate-position/candidate-position.service';
+import { CandidatePositionService } from '../../utils/services/candidate-position.service';
 import { PaginationSummary } from '../../utils/models/pagination-summary.model';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
@@ -10,6 +10,7 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
   styleUrls: ['./vacant-positions-page.component.scss']
 })
 export class VacantPositionsPageComponent implements OnInit {
+  isLoading = true;
   positions = [];
   pagination: PaginationSummary = new PaginationSummary();
   content: string ='';
@@ -29,22 +30,24 @@ export class VacantPositionsPageComponent implements OnInit {
   }
 
   get(data: any = {}){
-    let params: any = {
-			name: '',
+    const params: any = {
+			name: data.name || '',
 			page: data.page || this.pagination.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
 		};
 
     this.positionService.getList(params).subscribe(res => {
-      this.positions = res.data;
+      if (res && res.data) {
+        this.positions = res.data.items;
+        this.pagination = res.data.pagedSummary;
+        this.isLoading = false;
+      }
     })
   }
 
   getLang(): string {
     this.currentLanguage = this.translate.currentLanguage;
-
     const value = this.languageList.find(l => l.code == this.currentLanguage);
-
     return (value.label) || "Language";
   }
 

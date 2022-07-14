@@ -2,3 +2,27 @@
     cursor: default;
     pointer-events: none !important;
 }
+
+.first{
+    height: auto;
+}
+
+.second{
+    height: 100%;
+}
+
+.dropdown-toggle::after {
+    display:none;
+}
+
+tbody {
+	tr {
+		td {
+			vertical-align: middle !important;
+		}
+
+		button {
+			height: auto;
+		}
+	}
+}
