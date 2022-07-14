@@ -23,7 +23,8 @@ namespace CODWER.RERU.Core.Application.Me.GetMe {
 
         }
 
-        public async Task<MeDto> Handle (GetMeQuery request, CancellationToken cancellationToken) {
+        public async Task<MeDto> Handle (GetMeQuery request, CancellationToken cancellationToken) 
+        {
             var me = new MeDto ();
 
             if (!_currentUserProvider.IsAuthenticated) return me;
@@ -33,7 +34,10 @@ namespace CODWER.RERU.Core.Application.Me.GetMe {
             me.User = Mapper.Map<ApplicationUserDto> (currentUser);
             me.Tenant = _tenantDto;
 
-            if (currentUser.DepartmentColaboratorId == null && currentUser.RoleColaboratorId == null)
+            if (currentUser.DepartmentColaboratorId == null && 
+                currentUser.RoleColaboratorId == null
+                !string.IsNullOrEmpty(currentUser.Email)
+                )
             {
                 me.IsCandidateStatus = true;
             }

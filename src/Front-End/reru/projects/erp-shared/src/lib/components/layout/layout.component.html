@@ -3,12 +3,13 @@
 <div class="d-flex flex-column flex-root">
 	<!--begin::Page-->
 	<div class="d-flex flex-row flex-column-fluid page">
-		<app-sidenav [moduleId]="moduleId" [logo]="logo" [config]="config"></app-sidenav>
+		<app-sidenav [disableSidenav]="disableSidenav" [moduleId]="moduleId" [logo]="logo" [config]="config"></app-sidenav>
 
 		<!--begin::Wrapper-->
-		<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper" [ngClass]="{ collapsed: isCollapsed }">
+		<div class="d-flex flex-column flex-row-fluid" id="kt_wrapper" [ngClass]="{ collapsed: isCollapsed, wrapper: !disableSidenav  }">
 			<app-header [logo]="letter" [currentLanguage]="currentLanguage" [languages]="languages"
 				(changeLanguage)="changeLanguage.emit($event)" [isCustomHeader]="isCustomHeader" [user]="user"></app-header>
+				
 			<app-sidebar [title]="title" [menuItems]="sidebarItems" (navigate)="navigate.emit($event)"></app-sidebar>
 
 			<app-content [hasBackground]="hasBackground" [backgroundColor]="backgroundColor">

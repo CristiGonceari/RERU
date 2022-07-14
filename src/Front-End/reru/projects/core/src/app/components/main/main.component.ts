@@ -1,12 +1,18 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SidebarItemType } from '../../utils/models/sidebar.model';
 import { I18nService } from '../../utils/services/i18n.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LocalizeRouterService } from '@gilsdav/ngx-translate-router';
 import { forkJoin } from 'rxjs';
 import { AppSettingsService, IAppSettings, AuthenticationService } from '@erp/shared';
 import { RolesComponent } from '../roles/roles.component';
-
+import {
+	ApplicationUserService,
+	AvailableModulesService,
+	ApplicationUserModuleModel,
+  } from '@erp/shared';
+import { ProfileService } from '../../utils/services/profile.service';
+  
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -144,13 +150,21 @@ export class MainComponent implements OnInit {
 	];
 	appSettings: IAppSettings;
 	isCollapsed: boolean;
+	isCandidateStatus: boolean;
+	routerOutlet: boolean = false;
+
 	constructor(
 		public translate: I18nService,
 		private router: Router,
 		private localize: LocalizeRouterService,
 		private appConfigService: AppSettingsService,
 		private cd: ChangeDetectorRef,
-		private authenticationService: AuthenticationService
+		private authenticationService: AuthenticationService,
+		private userSubject: ApplicationUserService,
+		private profileService: ProfileService,
+		private route: ActivatedRoute,
+
+
 	) {
 		this.appSettings = this.appConfigService.settings;
 	}
@@ -158,7 +172,23 @@ export class MainComponent implements OnInit {
 	ngOnInit(): void {
 		this.translateData();
 		this.subscribeForLanguageChange();
+		this.subscribeForAuthChange();
 	}
+
+	subscribeForAuthChange(): void {
+		this.userSubject.userChange.subscribe((res) => {
+			this.isCandidateStatus = res.isCandidateStatus;
+			if (res.isCandidateStatus)
+			{
+			  this.profileService.GetCandidateRegistrationSteps().subscribe(res => {
+				if (res.data.unfinishedSteps.length != 0){
+				  this.router.navigate(["./registration-flux",res.data.userProfileId,"step",res.data.unfinishedSteps[0]], { relativeTo: this.route });
+				}
+			  })
+			}
+		});
+		this.routerOutlet = true;
+	  }
 
 	ngAfterViewInit(): void {
 		this.cd.detectChanges();
