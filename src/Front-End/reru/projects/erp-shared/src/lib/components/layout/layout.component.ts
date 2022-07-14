@@ -10,6 +10,7 @@ import { SidebarService } from '../../services/sidebar.service';
 })
 export class LayoutComponent implements OnInit {
   @Input() config: IAppSettings;
+  @Input() disableSidenav: boolean;
   @Input() logo: string;
   @Input() title: string;
   @Input() letter: string;
