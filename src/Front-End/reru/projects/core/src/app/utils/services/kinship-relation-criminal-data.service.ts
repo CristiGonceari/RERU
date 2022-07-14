@@ -16,14 +16,14 @@ export class KinshipRelationCriminalDataService extends AbstractService {
   }
 
   get(id: number): Observable<Response<KinshipRelationCriminalDataModel>> {
-    return this.http.get<Response<KinshipRelationCriminalDataModel>>(`${this.baseUrl}/${this.urlRoute}/${id}`);
+    return this.http.get<Response<KinshipRelationCriminalDataModel>>(`${this.coreUrl}/${this.urlRoute}/${id}`);
   }
 
   add(data: KinshipRelationCriminalDataModel): Observable<Response<number>> {
-    return this.http.post<Response<number>>(`${this.baseUrl}/${this.urlRoute}`, data);
+    return this.http.post<Response<number>>(`${this.coreUrl}/${this.urlRoute}`, data);
   }
 
   update(data): Observable<Response<any>> {
-    return this.http.patch<Response<any>>(`${this.baseUrl}/${this.urlRoute}`, data);
+    return this.http.patch<Response<any>>(`${this.coreUrl}/${this.urlRoute}`, data);
   }
 }

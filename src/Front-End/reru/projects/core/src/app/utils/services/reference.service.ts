@@ -15,55 +15,55 @@ export class ReferenceService extends AbstractService{
   }
 
   getProcesses(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/processes-value/select-values`);
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/processes-value/select-values`);
   }
 
   getCandidateSexEnum(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/candidate-sex/select-values`);
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/candidate-sex/select-values`);
   }
 
   getCandidateStateLanguageLevelEnum(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/candidate-state-language-level/select-values`);
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/candidate-state-language-level/select-values`);
   }
 
   getCandidateNationalities(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/candidate-nationalities/select-values`);
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/candidate-nationalities/select-values`);
   }
 
   getCandidateCitizenship(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/candidate-citizens/select-values`);
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/candidate-citizens/select-values`);
   }
   
   getRegistrationFluxStepsEnum(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/registration-flux-steps/select-values`);
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/registration-flux-steps/select-values`);
   }
 
   getStudyFrequencyEnum(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/studies-frequency/select-values`);
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/studies-frequency/select-values`);
   }
 
   getStudyTypes(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/study-types/select-values`);
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/study-types/select-values`);
   }
 
   getModernLanguages(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/modern-languages/select-values`);
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/modern-languages/select-values`);
   }
 
   getKnowledgeQuelifiersEnum(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/knowledge-quelifiers/select-values`);
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/knowledge-quelifiers/select-values`);
   }
 
   getMaterialStatusType(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/material-status-type/select-values`);
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/material-status-type/select-values`);
   }
 
   getKinshipDegreeEnum(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/kinship-degree/select-values`);
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/kinship-degree/select-values`);
   }
 
   getMilitaryObligationTypeEnum(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/military-obligation-type-enum/select-values`);
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/military-obligation-type-enum/select-values`);
   }
 
 }
