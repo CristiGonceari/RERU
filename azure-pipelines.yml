@@ -104,16 +104,16 @@ stages:
                       echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
                     }
 
-                  if ($name -like "src/Front-End/reru/projects/erp-shared/*" -or $override -eq 'True')
-                    {
+                  # if ($name -like "src/Front-End/reru/projects/erp-shared/*" -or $override -eq 'True')
+                  #   {
                       echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
                       echo "##vso[task.setvariable variable=BuildPersonalFE]True"
                       echo "##vso[task.setvariable variable=BuildCoreFe]True"
                       echo "##vso[task.setvariable variable=BuildLoggingFe]True"
-                    }
+                    # }
 
-                  if ($name -like "src/Common/*" -or $override -eq 'True')
-                    {
+                  # if ($name -like "src/Common/*" -or $override -eq 'True')
+                  #   {
                       echo "##vso[task.setvariable variable=BuildCore]True"
                       echo "##vso[task.setvariable variable=BuildEvaluation]True"
                       echo "##vso[task.setvariable variable=BuildPersonal]True"
@@ -124,7 +124,7 @@ stages:
                       echo "##vso[task.setvariable variable=BuildIdentityNew]True"
                       echo "##vso[task.setvariable variable=BuildPublicGateway]True"
                       echo "##vso[task.setvariable variable=BuildInternalGateway]True"
-                    }
+                    # }
                 }
 
           - task: CmdLine@2
