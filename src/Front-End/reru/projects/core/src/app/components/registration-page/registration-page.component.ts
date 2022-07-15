@@ -178,11 +178,11 @@ export class RegistrationPageComponent implements OnInit {
       email: this.userForm.value.email,
       idnp: this.userForm.value.idnp,
       emailNotification: this.userForm.value.emailNotification = true,
-      birthday: this.birthday != null ? new Date(`${this.birthday} EDT`).toISOString() : null,
+      birthday: this.userForm.value.birthday,
       phoneNumber: this.userForm.value.phoneNumber,
       code: this.code
     }
-
+    
     this.inregistrationService.inregistrateUser(data).subscribe(res => {
       this.modalRef.close();
 

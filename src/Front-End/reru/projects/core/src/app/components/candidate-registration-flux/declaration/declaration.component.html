@@ -1,13 +1,13 @@
 <div class="card text-center">
     <div class="card-header">
-      Declaratie
+      {{ 'step.Declaration' | translate }}
     </div>
     <div class="card-body">
      <div class="form-check ">
         <input class="form-check-input" type="checkbox" [(ngModel)]="isChecked" id="flexCheckDefault">
         <label class="form-check-label" for="flexCheckDefault">
-            <p class="card-text font-weight-bold">Declar, pe propria raspundere, ca datele inscrise in aceasta fisa sunt veridice.
-                Sunt de acord ca autoritatiile competente sa-mi verifice datele din fisa si din actele prezentate.
+            <p class="card-text font-weight-bold">
+              {{ 'declaration.paragraf' | translate}}
              </p>
         </label>
       </div>
@@ -17,5 +17,5 @@
     <button class="btn btn-success"
     [disabled]="isChecked == false || !allowToFinish" 
     (click)="addRegistrationFluxStep()"
-        >{{'End' | translate}}</button>
+        >{{'stepper.button-end' | translate}}</button>
 </div>
