@@ -2,7 +2,7 @@
 <form *ngIf="bulletinForm && !isLoading" class="col-lg col-md-8 col-sm-12 col-12 mx-auto" [formGroup]="bulletinForm">
     <div class="row my-5">
         <div class="col">
-            <h4>{{'Bulletin' | translate}}</h4>
+            <h4>{{'step.Bulletin' | translate}}</h4>
         </div>
     </div>
     <div class="row mb-10">
@@ -16,7 +16,7 @@
                       <div class="col">
                         <div class="form-group row align-items-center mb-2">
                           <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-left text-muted">
-                            {{'IDNP' | translate}}:
+                            {{'table.idnp' | translate}}:
                           </label>
                           <div class="col-lg-9 col-xl-6">
                             <p class="font-size-lg m-0">{{bulletinIdnp || "not set"}}</p>
@@ -40,14 +40,14 @@
                     <rect fill="#000000" opacity="0.3" x="0" y="11" width="24" height="2" rx="1"/>
                 </g>
             </svg><!--end::Svg Icon--></span>
-            {{'Series' | translate}}</label>
+            {{'bulletin.series' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
                 <input formControlName="series"
                        autocomplete="off"
                        class="form-control form-control-solid" 
                        type="text" 
                        [ngClass]="{'is-invalid': isTouched('series') && isInvalidPattern('series') }"
-                       [placeholder]="'personal.insert-series' | translate"/>
+                       [placeholder]="'bulletin.series' | translate"/>
                 <div *ngIf="isInvalidPattern('series')" class="invalid-feedback d-block">{{'validations.only-letters-numbers-dash-and-dot' | translate}}</div>
         </div>
     </div>
@@ -61,9 +61,9 @@
                     <path d="M4,21 L20,21 C20.5522847,21 21,21.4477153 21,22 L21,22.4 C21,22.7313708 20.7313708,23 20.4,23 L3.6,23 C3.26862915,23 3,22.7313708 3,22.4 L3,22 C3,21.4477153 3.44771525,21 4,21 Z" fill="#000000" opacity="0.3"/>
                 </g>
             </svg><!--end::Svg Icon--></span>
-            {{'Emited by' | translate}}</label>
+            {{'bulletin.emited-by' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
-                <input [ngClass]="{'is-invalid': isTouched('emittedBy') && isInvalidPattern('emittedBy') }" formControlName="emittedBy" autocomplete="off"  class="form-control form-control-solid" type="text" [placeholder]="'personal.insert-emitted-by' | translate"/>
+                <input [ngClass]="{'is-invalid': isTouched('emittedBy') && isInvalidPattern('emittedBy') }" formControlName="emittedBy" autocomplete="off"  class="form-control form-control-solid" type="text" [placeholder]="'bulletin.emited-by' | translate"/>
                 <div *ngIf="isInvalidPattern('emittedBy')" class="invalid-feedback d-block">{{'validations.only-letters-numbers-dash-and-dot' | translate}}</div>
         </div>
     </div>
@@ -77,32 +77,32 @@
                     <path d="M11.9630156,7.5 L12.0475062,7.5 C12.3043819,7.5 12.5194647,7.69464724 12.5450248,7.95024814 L13,12.5 L16.2480695,14.3560397 C16.403857,14.4450611 16.5,14.6107328 16.5,14.7901613 L16.5,15 C16.5,15.2109164 16.3290185,15.3818979 16.1181021,15.3818979 C16.0841582,15.3818979 16.0503659,15.3773725 16.0176181,15.3684413 L11.3986612,14.1087258 C11.1672824,14.0456225 11.0132986,13.8271186 11.0316926,13.5879956 L11.4644883,7.96165175 C11.4845267,7.70115317 11.7017474,7.5 11.9630156,7.5 Z" fill="#000000"/>
                 </g>
             </svg><!--end::Svg Icon--></span>
-            {{'Relase Day' | translate}}</label>
+            {{'bulletin.relase-day' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
-                <app-date [parent]="bulletinForm" [date]="'releaseDay'" [placeholder]="'personal.insert-release-day' | translate"></app-date>
+                <app-date [parent]="bulletinForm" [date]="'releaseDay'" [placeholder]="'bulletin.relase-day' | translate"></app-date>
         </div>
     </div>
     </div>
     <div class="row mb-5">
         <div class="col">
-            <h4>{{'Adresses' | translate}}</h4>
+            <h4>{{'bulletin.adresses' | translate}}</h4>
         </div>
     </div>
     <div class="ml-10 mr-10">
     <div class="form-group row required">
-        <label class="col-xl-3 col-lg-3 col-form-label">{{'Birth Place' | translate}}</label>
+        <label class="col-xl-3 col-lg-3 col-form-label">{{'bulletin.birth-place' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
                 <input readonly autocomplete="off" [value]="renderBirthPlace()" (click)="openBulletinAddressModal('birthPlace')" class="form-control form-control-solid pointer" type="text" [placeholder]="'personal.insert-birth-place' | translate"/>
         </div>
     </div>
     <div class="form-group row required">
-        <label class="col-xl-3 col-lg-3 col-form-label">{{' Residence Address' | translate}}</label>
+        <label class="col-xl-3 col-lg-3 col-form-label">{{'bulletin.residence-address' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
             <input readonly autocomplete="off" [value]="renderResidenceAddress()"  (click)="openBulletinAddressModal('residenceAddress')" class="form-control form-control-solid pointer" type="text" [placeholder]="'personal.insert-living-address' | translate"/>
         </div>
     </div>
     <div class="form-group row required">
-        <label class="col-xl-3 col-lg-3 col-form-label">{{'PArents Residence Address' | translate}}</label>
+        <label class="col-xl-3 col-lg-3 col-form-label">{{'bulletin.parents-residence-address' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
             <input readonly autocomplete="off" [value]="renderParentResidenceAddress()" (click)="openBulletinAddressModal('parentsResidenceAddress')" class="form-control form-control-solid pointer" type="text" [placeholder]="'personal.insert-residence-address' | translate"/>
         </div>
@@ -111,9 +111,9 @@
     <div class="row justify-content-end" >
         <button class="btn btn-success" matStepperNext
             [disabled]="bulletinForm && bulletinForm.invalid" *ngIf="toAddOrUpdateButton"
-            (click)="updateBulletin()">{{'Update and next' | translate}}</button>
+            (click)="updateBulletin()">{{'stepper.button-update-and-next' | translate}}</button>
             <button class="btn btn-success" matStepperNext
             [disabled]="bulletinForm && bulletinForm.invalid" *ngIf="!toAddOrUpdateButton"
-            (click)="createBulletin()">{{'Save and next' | translate}}</button>
+            (click)="createBulletin()">{{'stepper.button-save-and-next' | translate}}</button>
     </div>
 </form>

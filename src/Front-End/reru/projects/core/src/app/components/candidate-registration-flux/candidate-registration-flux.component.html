@@ -13,7 +13,7 @@
                                     <ng-template matStepLabel >
                                         <div class="row align-items-center" style="min-width: 1000px;">
                                             <div class="col-4">
-                                                {{ item.label }}
+                                                {{ 'step.' + stepsEnum[parseInt(item.value)] | translate}}
                                             </div>
                                             <div class="col-8 mt-5">
                                                 <div *ngIf="item.isDone" class="alert alert-success"> <strong>Done</strong></div>

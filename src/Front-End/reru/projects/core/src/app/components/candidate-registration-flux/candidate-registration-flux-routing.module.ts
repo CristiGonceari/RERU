@@ -17,6 +17,7 @@ const routes: Routes = [
     component: CandidateRegistrationFluxComponent, 
     canActivate: [AuthenticationGuard],
     children: [
+        { path: '', redirectTo: '1', pathMatch: 'full' },
         { path: '1', component: GeneralDataFormComponent },
         { path: '2', component: BulletinComponent },
         { path: '3', component: StudyComponent },

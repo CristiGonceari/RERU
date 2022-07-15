@@ -160,12 +160,8 @@
                 <label for="inputPassword4">{{ 'user.birthday' | translate }}</label>
                 <!-- <app-date [isDisabled]="false" [isReverse]="false" [parent]="userForm" [date]="'birthday'"
                   [placeholder]="dd-mm-yyyy"></app-date> -->
-                <input type="text" [owlDateTimeTrigger]="startDate"
-                  class="form-control form-control-lg form-control-solid" [value]="birthday | dateFilter:'dd/MM/yyyy'">
-                <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input" name="date_time"
-                  [(ngModel)]="birthday" [owlDateTime]="startDate" [ngModelOptions]="{standalone: true}"
-                  [readonly]="true">
-                <owl-date-time #startDate pickerType="calendar"></owl-date-time>
+                    <app-date [parent]="userForm" [date]="'birthday'"
+                        [placeholder]="'birthday' | translate"></app-date>
               </div>
             </div>
             <div class="form-row">
@@ -250,7 +246,7 @@
                 </p>
               </div>
             </div>
-            <button type="submit" [disabled]="!accept" class="btn btn-primary float-right"
+            <button type="submit" [disabled]="!accept || userForm.invalid" class="btn btn-primary float-right"
               (click)="verifyEmailCode()">{{
               'button.confirm' |
               translate }}</button>

@@ -182,7 +182,7 @@ export class MainComponent implements OnInit {
 			{
 			  this.profileService.GetCandidateRegistrationSteps().subscribe(res => {
 				if (res.data.unfinishedSteps.length != 0){
-				  this.router.navigate(["./registration-flux",res.data.userProfileId,"step",res.data.unfinishedSteps[0]], { relativeTo: this.route });
+				  this.router.navigate(["./registration-flux",res.data.userProfileId,"step"], { relativeTo: this.route });
 				}
 			  })
 			}

@@ -4,7 +4,7 @@
     <div *ngIf="!isLoadingStudies">
         <div class="row my-5">
             <div class="col">
-                <h4>{{'Studii' | translate}}</h4>
+                <h4>{{'step.Study' | translate}}</h4>
             </div>
         </div>
         <div formArrayName="studies" class="ml-10">
@@ -16,7 +16,7 @@
                         <div class="col-xl-6 col-12">
                             <div class="form-group row required">
                                 <label class="col-xl-3 col-lg-3 col-form-label"
-                                    for="studyTypeId">{{'entity.study.study-type' | translate}}</label>
+                                    for="studyTypeId">{{'study.study-type' | translate}}</label>
                                 <div class="col-lg-9 col-xl-9">
                                     <select class="form-control" formControlName="studyTypeId">
                                         <option value="null">{{'module-access.select' | translate}}</option>
@@ -28,7 +28,7 @@
                         </div>
                         <div class="col-xl-6 col-12">
                             <div class="form-group row required">
-                                <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.study.study-frequency' | translate}}</label>
+                                <label class="col-xl-3 col-lg-3 col-form-label">{{'study.study-frequency' | translate}}</label>
                                 <div class="col-lg-9 col-xl-9">
                                     <select class="form-control" formControlName="studyFrequency">
                                         <option value="null">{{'module-access.select' | translate}}</option>
@@ -42,11 +42,11 @@
                     <div class="row">
                         <div class="col-xl-6 col-12">
                             <div class="form-group row required">
-                                <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.study.institution' | translate}}</label>
+                                <label class="col-xl-3 col-lg-3 col-form-label">{{'study.institution' | translate}}</label>
                                 <div class="col-lg-9 col-xl-9">
                                     <input formControlName="institution" autocomplete="off"
                                         class="form-control form-control-solid" type="text"
-                                        [placeholder]="'personal.insert-institution' | translate" />
+                                        [placeholder]="'study.institution' | translate" />
                                     <div *ngIf="isInvalidPattern(study, 'institution')"
                                         class="invalid-feedback d-block">{{'validations.only-letters-and-dash' | translate}}</div>
                                 </div>
@@ -54,11 +54,11 @@
                         </div>
                         <div class="col-xl-6 col-12">
                             <div class="form-group row required">
-                                <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.study.specialty' | translate}}</label>
+                                <label class="col-xl-3 col-lg-3 col-form-label">{{'study.specialty' | translate}}</label>
                                 <div class="col-lg-9 col-xl-9">
                                     <input formControlName="specialty" autocomplete="off"
                                         class="form-control form-control-solid" type="text"
-                                        [placeholder]="'personal.insert-specialty' | translate" />
+                                        [placeholder]="'study.specialty' | translate" />
                                     <div *ngIf="isInvalidPattern(study, 'specialty')" class="invalid-feedback d-block">
                                         {{'validations.only-letters-and-dash' | translate}}</div>
                                 </div>
@@ -68,11 +68,11 @@
                     <div class="row">
                         <div class="col-xl-6 col-12">
                             <div class="form-group row required">
-                                <label class="col-xl-3 col-lg-3 col-form-label">{{'entity.study.faculty' | translate}}</label>
+                                <label class="col-xl-3 col-lg-3 col-form-label">{{'study.faculty' | translate}}</label>
                                 <div class="col-lg-9 col-xl-9">
                                     <input formControlName="faculty" autocomplete="off"
                                         class="form-control form-control-solid" type="text"
-                                        [placeholder]="'personal.insert-faculty' | translate" />
+                                        [placeholder]="'study.faculty' | translate" />
                                     <div *ngIf="isInvalidPattern(study, 'faculty')" class="invalid-feedback d-block">
                                         {{'validations.only-letters-and-dash' | translate}}</div>
                                 </div>
@@ -80,11 +80,11 @@
                         </div>
                         <div class="col-xl-6 col-12">
                             <div class="form-group row required">
-                                <label class="col-xl-3 col-lg-3 col-form-label">{{'institution adress' | translate}}</label>
+                                <label class="col-xl-3 col-lg-3 col-form-label">{{'study.institution-address' | translate}}</label>
                                 <div class="col-lg-9 col-xl-9">
                                     <input formControlName="institutionAddress" autocomplete="off"
                                         class="form-control form-control-solid" type="text"
-                                        [placeholder]="'institutionAddress' | translate" />
+                                        [placeholder]="'study.institution-address' | translate" />
                                     <div *ngIf="isInvalidPattern(study, 'institutionAddress')"
                                         class="invalid-feedback d-block">{{'validations.only-letters-and-dash' | translate}}</div>
                                 </div>
@@ -94,19 +94,19 @@
                     <div class="row">
                         <div class="col-xl-6 col-12">
                             <div class="form-group row required">
-                                <label class="col-xl-3 col-lg-3 col-form-label">{{'year of admision' | translate}}</label>
+                                <label class="col-xl-3 col-lg-3 col-form-label">{{'study.year-of-admision' | translate}}</label>
                                 <div class="col-lg-9 col-xl-9">
                                     <app-date [parent]="study" [date]="'yearOfAdmission'"
-                                        [placeholder]="'yearOfAdmission' | translate"></app-date>
+                                        [placeholder]="'study.year-of-admision' | translate"></app-date>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-6 col-12">
                             <div class="form-group row required">
-                                <label class="col-xl-3 col-lg-3 col-form-label">{{'Graduation Year' | translate}}</label>
+                                <label class="col-xl-3 col-lg-3 col-form-label">{{'study.graduation-year' | translate}}</label>
                                 <div class="col-lg-9 col-xl-9">
                                     <app-date [parent]="study" [date]="'graduationYear'"
-                                        [placeholder]="'graduationYear' | translate"></app-date>
+                                        [placeholder]="'study.graduation-year' | translate"></app-date>
                                 </div>
                             </div>
                         </div>
@@ -125,9 +125,9 @@
         </div>
         <div class="row justify-content-end m-7">
             <button class="btn btn-success" *ngIf="addOrEditStudyButton" [disabled]="studyForm && studyForm.invalid "
-                (click)="createStudies()">{{'Update' | translate}}</button>
+                (click)="createStudies()">{{'stepper.button-update' | translate}}</button>
             <button class="btn btn-success" *ngIf="!addOrEditStudyButton" [disabled]="studyForm && studyForm.invalid"
-                (click)="createStudies()">{{'Add' | translate}}</button>
+                (click)="createStudies()">{{'stepper.button-add' | translate}}</button>
         </div>
     </div>
 
@@ -138,16 +138,16 @@
     <div *ngIf="!isLoadingLanguages">
         <div class="row my-5">
             <div class="col">
-                <h4>{{'Nivelul de cunoastere a limbii moderne' | translate}}</h4>
+                <h4>{{'language.modern-language-level' | translate}}</h4>
             </div>
         </div>
         <div formArrayName="modernLanguages" class="ml-10">
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Number</th>
-                        <th scope="col">Denumirea limbii</th>
-                        <th scope="col">Calificativ de cunoastere</th>
+                        <th scope="col">{{'table.number' | translate}}</th>
+                        <th scope="col">{{ 'language.name' | translate}}</th>
+                        <th scope="col">{{ 'language.qualifier' |translate }}</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -159,14 +159,14 @@
                         <th scope="row">{{i + 1}}</th>
                         <td>
                             <select class="form-control" formControlName="modernLanguageId">
-                                <option value="null">{{'select language' | translate}}</option>
+                                <option value="null">{{'module-access.select' | translate}}</option>
                                 <option *ngFor="let item of modernLanguages" [value]="item.value">{{ item.label }}
                                 </option>
                             </select>
                         </td>
                         <td>
                             <select class="form-control" formControlName="knowledgeQuelifiers">
-                                <option value="null">{{'select language' | translate}}</option>
+                                <option value="null">{{'module-access.select' | translate}}</option>
                                 <option *ngFor="let item of knowledgeQuelifiersEnum" [value]="item.value">{{ item.label
                                     }}</option>
                             </select>
@@ -188,9 +188,9 @@
         </div>
         <div class="row justify-content-end m-7">
             <button class="btn btn-success" *ngIf="addOrEditLanguagesButton"
-                [disabled]="languageForm && languageForm.invalid " (click)="creteModernLanguage()">{{'Update' | translate}}</button>
+                [disabled]="languageForm && languageForm.invalid " (click)="creteModernLanguage()">{{'stepper.button-update' | translate}}</button>
             <button class="btn btn-success" *ngIf="!addOrEditLanguagesButton"
-                [disabled]="languageForm && languageForm.invalid" (click)="creteModernLanguage()">{{'Add' | translate}}</button>
+                [disabled]="languageForm && languageForm.invalid" (click)="creteModernLanguage()">{{'stepper.button-add' | translate}}</button>
         </div>
     </div>
 </form>
@@ -200,18 +200,18 @@
     <div *ngIf="!isLoadingRecommandations">
         <div class="row my-5">
             <div class="col">
-                <h4>{{'Recomandare la studiii' | translate}}</h4>
+                <h4>{{'recommendation.recommendation-name' | translate}}</h4>
             </div>
         </div>
         <div formArrayName="recommendation" class="ml-10">
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Number</th>
-                        <th scope="col">Numele persoanei ce a recomandat</th>
-                        <th scope="col">Prenumele persoanei ce a recomandat</th>
-                        <th scope="col">Functia(postul) detinut </th>
-                        <th scope="col">Subdiviziunea MAI</th>
+                        <th scope="col">{{ 'table.number' | translate }}</th>
+                        <th scope="col">{{ 'recommendation.table-user-name' | translate }}</th>
+                        <th scope="col">{{ 'recommendation.table-user-last-name' | translate }}</th>
+                        <th scope="col">{{ 'recommendation.table-function' | translate }}</th>
+                        <th scope="col">{{ 'recommendation.table-subdivision' | translate }}</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -224,22 +224,22 @@
                         <td>
                             <input formControlName="name" autocomplete="off"
                             class="form-control form-control-solid" type="text"
-                            [placeholder]="'first name' | translate" />
+                            [placeholder]="'recommendation.user-name' | translate" />
                         </td>
                         <td>
                             <input formControlName="lastName" autocomplete="off"
                             class="form-control form-control-solid" type="text"
-                            [placeholder]="'last name' | translate" />
+                            [placeholder]="'recommendation.last-name' | translate" />
                         </td>
                         <td>
                             <input formControlName="function" autocomplete="off"
                             class="form-control form-control-solid" type="text"
-                            [placeholder]="'function' | translate" />
+                            [placeholder]="'recommendation.table-function' | translate" />
                         </td>
                         <td>
                             <input formControlName="subdivision" autocomplete="off"
                             class="form-control form-control-solid" type="text"
-                            [placeholder]="'subdivision' | translate" />
+                            [placeholder]="'recommendation.table-subdivision' | translate" />
                         </td>
                         <td>
                             <div *ngIf="i > 0" class="row justify-content-end mb-3 mr-7">
@@ -258,9 +258,9 @@
         </div>
         <div class="row justify-content-end m-7">
             <button class="btn btn-success" *ngIf="addOrEditRecommendationsButton"
-                [disabled]="recommendationForm && recommendationForm.invalid " (click)="creteRecommendationForStudy()">{{'Update' | translate}}</button>
+                [disabled]="recommendationForm && recommendationForm.invalid " (click)="creteRecommendationForStudy()">{{'stepper.button-update' | translate}}</button>
             <button class="btn btn-success" *ngIf="!addOrEditRecommendationsButton"
-                [disabled]="recommendationForm && recommendationForm.invalid" (click)="creteRecommendationForStudy()">{{'Add' | translate}}</button>
+                [disabled]="recommendationForm && recommendationForm.invalid" (click)="creteRecommendationForStudy()">{{'stepper.button-add' | translate}}</button>
         </div>
     </div>
 </form>
@@ -268,5 +268,5 @@
     <button class="btn btn-success" matStepperNext
     [disabled]="(languageForm && languageForm.invalid) || (studyForm && studyForm.invalid) || (recommendationForm && recommendationForm.invalid)"
     (click)="addRegistrationFluxStep()"
-        >{{'Next step' | translate}}</button>
+        >{{'stepper.button-next' | translate}}</button>
 </div>

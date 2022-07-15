@@ -4,37 +4,37 @@
     <div *ngIf="!isLoadingAutobiography">
         <div class="row my-5">
             <div class="col">
-                <h4>{{'Autobiografia ' | translate}}</h4>
+                <h4>{{'step.Autobiography' | translate}}</h4>
             </div>
         </div>
         <div class="row ml-10 mr-10">
             <div class="text-center w-100">
                 <p class="font-weight-bold">
-                    {{'Autobiografia se scrie pesonal de candidat citet, ordonat, faracorectari si prescurtari, cu indicarea obligatorie a urmatoarei informatii:' | translate}}
+                    {{'autobiography.title' | translate}}
                 </p>
                 <p class="font-weight-normal">
-                    {{'- Numele, prenumele, patronimicul, data, si locul nasterii, originea sociala, limba materna;' | translate}}
+                    {{'autobiography.paragraf-1' | translate}}
                 </p>
                 <p class="font-weight-normal">
-                    {{'- Institutiile de invatatmant in care a studiat, anul absolvirii sau abandonarii lor, media generala, specialitatile, profesiile obtinute;' | translate}}
+                    {{'autobiography.paragraf-2' | translate}}
                 </p>
                 <p class="font-weight-normal">
-                    {{'- Starea civila, data casatoriei(divortului), nume, prenume, patronimicul sotiei(sotului), prenumele si anul nasterii copiilor;' | translate}}
+                    {{'autobiography.paragraf-3' | translate}}
                 </p>
                 <p class="font-weight-normal">
-                    {{'- Serviciul militar, perioada, centrul militar care a decis incorporarea; In caz ca nu a fost supus serviciului militar se indica temeiul;' | translate}}
+                    {{'autobiography.paragraf-4' | translate}}
                 </p>
                 <p class="font-weight-normal">
-                    {{'- Activitatea in organele elective (perioada si organul)' | translate}}
+                    {{'autobiography.paragraf-5' | translate}}
                 </p>
                 <p class="font-weight-normal">
-                    {{'- Posesia gradelor/titlurilor stiintifice, stiintifico-didactice, onorifice si sportive, data acordarii lor si autoritatea emitenta;' | translate}}
+                    {{'autobiography.paragraf-6' | translate}}
                 </p>
                 <p class="font-weight-normal">
-                    {{'- Existenta stagiului de munca oficial si neoficial (perioada, functia (postul), institutia,organizatia, intreprinderea);' | translate}}
+                    {{'autobiography.paragraf-7' | translate}}
                 </p>
                 <p class="font-weight-normal">
-                    {{'- Locul de trai si viza de domicilui(se indica ambele daca nu coincid)' | translate}}
+                    {{'autobiography.paragraf-8' | translate}}
                 </p>
             </div>
         </div>
@@ -45,15 +45,15 @@
         <div class="row justify-content-end m-7">
             <button class="btn btn-success" *ngIf="addOrEditAutobiographyButton"
                 [disabled]="autobiographyForm.value.text == null || autobiographyForm.value.text == '' "
-                (click)="updateAutobiography()">{{'Update' | translate}}</button>
+                (click)="updateAutobiography()">{{'stepper.button-update' | translate}}</button>
             <button class="btn btn-success" *ngIf="!addOrEditAutobiographyButton"
                 [disabled]="autobiographyForm.value.text == null || autobiographyForm.value.text == '' "
-                (click)="createAutobiography()">{{'Add' | translate}}</button>
+                (click)="createAutobiography()">{{'stepper.button-add' | translate}}</button>
         </div>
     </div>
 </form>
 <div class="row justify-content-end mt-10 mr-1">
-    <button class="btn btn-success" matStepperNext [disabled]="(autobiographyForm && autobiographyForm.invalid)" (click)="addRegistrationFluxStep()">
-        {{'Next step' | translate}}
+    <button class="btn btn-success" matStepperNext [disabled]="autobiographyData == null" (click)="addRegistrationFluxStep()">
+        {{'stepper.button-next' | translate}}
     </button>
 </div>
