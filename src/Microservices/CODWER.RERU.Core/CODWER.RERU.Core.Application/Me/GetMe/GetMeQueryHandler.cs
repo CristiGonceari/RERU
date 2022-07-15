@@ -35,7 +35,7 @@ namespace CODWER.RERU.Core.Application.Me.GetMe {
             me.Tenant = _tenantDto;
 
             if (currentUser.DepartmentColaboratorId == null && 
-                currentUser.RoleColaboratorId == null
+                currentUser.RoleColaboratorId == null && 
                 !string.IsNullOrEmpty(currentUser.Email)
                 )
             {
