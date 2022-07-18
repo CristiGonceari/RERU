@@ -12,6 +12,7 @@ import {
 	ApplicationUserModuleModel,
   } from '@erp/shared';
 import { ProfileService } from '../../utils/services/profile.service';
+import { ThrowStmt } from '@angular/compiler';
   
 @Component({
   selector: 'app-main',
@@ -150,8 +151,8 @@ export class MainComponent implements OnInit {
 	];
 	appSettings: IAppSettings;
 	isCollapsed: boolean;
-	isCandidateStatus: boolean;
 	routerOutlet: boolean = false;
+	showStepper: boolean;
 
 	constructor(
 		public translate: I18nService,
@@ -177,17 +178,18 @@ export class MainComponent implements OnInit {
 
 	subscribeForAuthChange(): void {
 		this.userSubject.userChange.subscribe((res) => {
-			this.isCandidateStatus = res.isCandidateStatus;
 			if (res.isCandidateStatus)
 			{
 			  this.profileService.GetCandidateRegistrationSteps().subscribe(res => {
 				if (res.data.unfinishedSteps.length != 0){
 				  this.router.navigate(["./registration-flux",res.data.userProfileId,"step"], { relativeTo: this.route });
+				  this.showStepper = true;
+				}else{
+				  this.showStepper = false;
 				}
 			  })
 			}
 		});
-		this.routerOutlet = true;
 	  }
 
 	ngAfterViewInit(): void {
