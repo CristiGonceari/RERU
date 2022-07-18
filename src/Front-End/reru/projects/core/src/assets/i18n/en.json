@@ -603,6 +603,54 @@
   "declaration":{
     "paragraf": "I declare, on my own responsibility, that the data entered in this form are true. I agree that the competent authorities shall verify the data in the file and the documents submitted to me"
   },
+  "sexType": {
+    "Male": "Male",
+    "Female": "Female"
+  },
+  "languageKnowledge":{
+    "Basic": "Basic knowledge",
+    "BasicKnowledge": "Basic knowledge",
+    "Medium": "Medium",
+    "Good" : "Good",
+    "VeryGood": "Very good"
+  },
+  "studyTypes":{
+    "1": "Basic Studies",
+    "2": "University",
+    "3": "Postgraduate",
+    "4": "Improvement courses",
+    "5": "Training courses"
+  },
+  "studyFrequency":{
+    "Daily":"Daily",
+    "LowFrequency": "Low Frequency"
+  },
+  "materialStatusType": {
+    "1": "Bachelor",
+    "2": "Married",
+    "3": "Unmarried",
+    "4": "Widower"
+  },
+  "kinshipDegree":{
+    "Brother" : "Brother",
+    "Children" : "Children",
+    "Father" : "Father",
+    "Husband" : "Husband",
+    "HusbandsBrothers" : "Husbands Brothers",
+    "HusbandsSisters" : "Husbands Sisters",
+    "Mother" : "Mother",
+    "Parent" : "Parent",
+    "Sister" : "Sister",
+    "Wife" : "Wife",
+    "WifesBrothers" : "Wifes Brothers",
+    "WifesSisters" : "Wifes Sisters"
+  },
+  "militaryObligationType":{
+    "AlternativeService" : "Alternative service",
+    "PerformedMilitaryService" : "Performed military service",
+    "Recruit" : "Recruit",
+    "Reservist" : "Reservist"
+  },
   "stepper":{
     "button-update-and-next":"Update and Next",
     "button-save-and-next":"Add and Next",

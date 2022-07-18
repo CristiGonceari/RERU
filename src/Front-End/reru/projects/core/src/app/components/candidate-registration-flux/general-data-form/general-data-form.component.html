@@ -101,7 +101,7 @@
               <select class="form-control form-control-lg form-control-solid" name="statelanguageLevel" id="role"
                 type="number" formControlName="statelanguageLevel">
                 <option value="null">{{'module-access.select' | translate}}</option>
-                <option *ngFor="let item of stateLanguageLevelEnum" [value]="item.value">{{ item.label }}</option>
+                <option *ngFor="let item of stateLanguageLevelEnum" [value]="item.value">{{ 'languageKnowledge.' + item.label | translate}}</option>
               </select>
             </div>
           </div>
@@ -115,7 +115,7 @@
               <select class="form-control form-control-lg form-control-solid" name="sex" id="role" type="number"
                 formControlName="sex">
                 <option value="null">{{'module-access.select' | translate}}</option>
-                <option *ngFor="let item of sexEnum" [value]="item.value">{{ item.label }}</option>
+                <option *ngFor="let item of sexEnum" [value]="item.value">{{ 'sexType.' + item.label | translate }}</option>
               </select>
             </div>
           </div>

@@ -136,7 +136,8 @@ export class StudyComponent implements OnInit {
     });
 
     this.referenceService.getStudyTypes().subscribe(res => {
-      this.studyTypes = res.data;
+      let types = res.data;
+      this.studyTypes = types.sort(function(a, b){return a.translateId - b.translateId});
     });
 
     this.referenceService.getModernLanguages().subscribe(res => {

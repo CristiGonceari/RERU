@@ -20,7 +20,7 @@
                                 <div class="col-lg-9 col-xl-9">
                                     <select class="form-control" formControlName="studyTypeId">
                                         <option value="null">{{'module-access.select' | translate}}</option>
-                                        <option *ngFor="let item of studyTypes" [value]="item.value">{{ item.label }}
+                                        <option *ngFor="let item of studyTypes" [value]="item.value">{{ 'studyTypes.' + item.translateId | translate}}
                                         </option>
                                     </select>
                                 </div>
@@ -32,8 +32,7 @@
                                 <div class="col-lg-9 col-xl-9">
                                     <select class="form-control" formControlName="studyFrequency">
                                         <option value="null">{{'module-access.select' | translate}}</option>
-                                        <option *ngFor="let item of studyFrequences" [value]="item.value">{{ item.label
-                                            }}</option>
+                                        <option *ngFor="let item of studyFrequences" [value]="item.value">{{ 'studyFrequency.' + item.label | translate}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -167,8 +166,7 @@
                         <td>
                             <select class="form-control" formControlName="knowledgeQuelifiers">
                                 <option value="null">{{'module-access.select' | translate}}</option>
-                                <option *ngFor="let item of knowledgeQuelifiersEnum" [value]="item.value">{{ item.label
-                                    }}</option>
+                                <option *ngFor="let item of knowledgeQuelifiersEnum" [value]="item.value">{{ 'languageKnowledge.' + item.label | translate}}</option>
                             </select>
                         </td>
                         <td>

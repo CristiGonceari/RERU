@@ -25,7 +25,7 @@
                             <select class="form-control" formControlName="militaryObligationType">
                                 <option value="null">{{'module-access.select' | translate}}</option>
                                 <option *ngFor="let item of militaryObligationTypeEnum" [value]="item.value">
-                                    {{ item.label }}
+                                    {{ 'militaryObligationType.' + item.label | translate }}
                                 </option>
                             </select>
                         </td>
@@ -153,7 +153,7 @@
 </form>
 <div class="row justify-content-end mt-10 mr-1">
     <button class="btn btn-success" matStepperNext
-        [disabled]="(militaryObligationForm && militaryObligationForm.invalid)"
+        [disabled]="(militaryObligationForm && militaryObligationForm.invalid || militaryObligationData == null)"
         (click)="addRegistrationFluxStep()"
         >{{'stepper.button-next' | translate}}</button>
 </div>

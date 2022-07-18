@@ -600,6 +600,54 @@
   "declaration":{
     "paragraf": "Declar, pe propria răspundere, că datele înscrise în această fișă sunt veridice. Sunt de acord ca autoritățile competente să-mi verifice datele din fișă și din actele prezentate"
   },
+  "sexType": {
+    "Male": "Masculin",
+    "Female": "Feminin"
+  },
+  "languageKnowledge":{
+    "Basic": "Cunostinte bază",
+    "BasicKnowledge": "Cunostinte bază",
+    "Medium": "Mediu",
+    "Good" : "Bine",
+    "VeryGood": "Foarte bine"
+  },
+  "studyTypes":{
+    "1": "Studii de bază",
+    "2": "Universitare",
+    "3": "PostUniversitare",
+    "4": "Cursuri de Perfectionare",
+    "5": "Cursuri de Specializare"
+  },
+  "studyFrequency":{
+    "Daily":"Frecvența zilnică",
+    "LowFrequency": "Frecvența redusa"
+  },
+  "materialStatusType": {
+    "1": "Celibatar",
+    "2": "Casatorit",
+    "3": "Necasatorit",
+    "4": "Vaduv"
+  },
+  "kinshipDegree":{
+    "Brother" : "Frate",
+    "Children" : "Copii",
+    "Father" : "Tată",
+    "Husband" : "Soțul",
+    "HusbandsBrothers" : "Frați soțului",
+    "HusbandsSisters" : "Surorile soțului",
+    "Mother" : "Mama",
+    "Parent" : "Părinte",
+    "Sister" : "Soră",
+    "Wife" : "Soție",
+    "WifesBrothers" : "Frații soției",
+    "WifesSisters" : "Surorile soției"
+  },
+  "militaryObligationType":{
+    "AlternativeService" : "Serviciu de alternativa",
+    "PerformedMilitaryService" : "Serviciul militar indeplinit",
+    "Recruit" : "Recrut",
+    "Reservist" : "Rezervist"
+  },
   "stepper":{
     "button-update-and-next":"Actualizeaza și treci la pasul următor",
     "button-save-and-next":"Adaugă și treci la pasul următor",

@@ -15,7 +15,7 @@
                     <div class="col-lg-9 col-xl-6">
                         <select class="form-control" formControlName="materialStatusTypeId">
                             <option value="null">{{'module-access.select' | translate}}</option>
-                            <option *ngFor="let item of materialStatusTypes" [value]="item.value">{{ item.label }}
+                            <option *ngFor="let item of materialStatusTypes" [value]="item.value">{{ 'materialStatusType.' + item.translateId | translate}}
                             </option>
                         </select>
                     </div>
@@ -62,7 +62,7 @@
                         <td>
                             <select class="form-control" formControlName="kinshipDegree">
                                 <option value="null">{{'module-access.select' | translate}}</option>
-                                <option *ngFor="let item of kinshipDegreeEnum" [value]="item.value">{{ item.label }}
+                                <option *ngFor="let item of kinshipDegreeEnum" [value]="item.value">{{ 'kinshipDegree.' + item.label | translate}}
                                 </option>
                             </select>
                         </td>
@@ -135,7 +135,7 @@
                     <td>
                         <select class="form-control" formControlName="kinshipDegree">
                         <option value="null">{{'module-access.select' | translate}}</option>
-                        <option *ngFor="let item of kinshipDegreeEnum" [value]="item.value">{{ item.label }}
+                        <option *ngFor="let item of kinshipDegreeEnum" [value]="item.value">{{ 'kinshipDegree.' + item.label | translate}}
                         </option>
                     </select></td>
                   </tr>

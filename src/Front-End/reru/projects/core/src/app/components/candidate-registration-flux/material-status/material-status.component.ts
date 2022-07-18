@@ -314,7 +314,8 @@ export class MaterialStatusComponent implements OnInit {
 
   retrieveDropdowns(): void {
     this.referenceService.getMaterialStatusType().subscribe(res => {
-      this.materialStatusTypes = res.data;
+      var enums = res.data;
+      this.materialStatusTypes = enums.sort(function(a, b){return a.value - b.value});
     });
 
     this.referenceService.getKinshipDegreeEnum().subscribe(res => {
