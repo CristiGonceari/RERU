@@ -13,7 +13,7 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
         public int? CandidatePositionId { set; get; }
         public bool EmailNotification { get; set; }
         public string PhoneNumber { get; set; }
-        public DateTime? Birthday { get; set; }
+        public DateTime? BirthDate { get; set; }
         public string Code { get; set; }
     }
 }

@@ -89,9 +89,9 @@
                           [placeholder]="dd-mm-yyyy"></app-date> -->
                         <input type="text" [owlDateTimeTrigger]="startDate"
                           class="form-control form-control-lg form-control-solid"
-                          [value]="birthday | dateFilter:'dd/MM/yyyy'">
+                          [value]="birthDate | dateFilter:'dd/MM/yyyy'">
                         <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
-                          name="date_time" [(ngModel)]="birthday" [owlDateTime]="startDate"
+                          name="date_time" [(ngModel)]="birthDate" [owlDateTime]="startDate"
                           [ngModelOptions]="{standalone: true}" [readonly]="true">
                         <owl-date-time #startDate pickerType="calendar"></owl-date-time>
                       </div>

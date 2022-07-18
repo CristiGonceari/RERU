@@ -32,7 +32,7 @@ export class EditComponent implements OnInit {
 	roles: SelectItem[] = [{ label: '', value: '' }];
 	accessModes: SelectItem[] = [{ label: '', value: '' }];
 
-	birthday;
+	birthDate;
 	startDate;
 
 	constructor(
@@ -120,7 +120,7 @@ export class EditComponent implements OnInit {
 			accessModeEnum: this.fb.control((user && user.accessModeEnum) || null, [Validators.required]),
 		});
 
-		this.birthday = user.birthday
+		this.birthDate = user.birthDate
 		this.isLoading = false;
 	}
 
@@ -131,7 +131,7 @@ export class EditComponent implements OnInit {
 			firstName: this.userForm.value.firstName,
 			lastName: this.userForm.value.lastName,
 			fatherName: this.userForm.value.fatherName,
-			birthday: this.birthday != null ? new Date(`${this.birthday} EDT`).toISOString() : null,
+			birthDate: this.birthDate != null ? new Date(`${this.birthDate} EDT`).toISOString() : null,
 			phoneNumber: this.userForm.value.phoneNumber,
 			departmentColaboratorId: +this.userForm.value.departmentColaboratorId,
 			roleColaboratorId: +this.userForm.value.roleColaboratorId,
