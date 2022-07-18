@@ -35,7 +35,7 @@ export class AddComponent implements OnInit {
   accessModes: SelectItem[] = [{ label: '', value: '' }];
   accesModeEnum = AccessModeEnum;
 
-  birthday;
+  birthDate;
   fromData = '';
   fromDate;
   startDate: string;
@@ -124,7 +124,7 @@ export class AddComponent implements OnInit {
       departmentColaboratorId: this.userForm.value.departmentColaboratorId,
       roleColaboratorId: this.userForm.value.roleColaboratorId,
       emailNotification: this.userForm.value.emailNotification,
-      birthday: this.birthday != null ? new Date(`${this.birthday} EDT`).toISOString() : null,
+      birthDate: this.birthDate != null ? new Date(`${this.birthDate} EDT`).toISOString() : null,
       phoneNumber: this.userForm.value.phoneNumber,
       accessModeEnum: this.userForm.value.accessModeEnum
     }

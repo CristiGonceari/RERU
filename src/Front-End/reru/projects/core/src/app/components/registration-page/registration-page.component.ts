@@ -178,7 +178,7 @@ export class RegistrationPageComponent implements OnInit {
       email: this.userForm.value.email,
       idnp: this.userForm.value.idnp,
       emailNotification: this.userForm.value.emailNotification = true,
-      birthday: this.userForm.value.birthday,
+      birthDate: this.userForm.value.birthday,
       phoneNumber: this.userForm.value.phoneNumber,
       code: this.code
     }
