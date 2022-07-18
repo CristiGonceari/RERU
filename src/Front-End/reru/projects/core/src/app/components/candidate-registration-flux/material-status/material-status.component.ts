@@ -217,7 +217,7 @@ export class MaterialStatusComponent implements OnInit {
   }
 
   getKinshipRelationCriminalData(userId){
-    this.isLoadingMaterialStatus = true;
+    this.isLoadingKinshipRelationCriminalData = true;
 
     this.kinshipRelationCriminalDataService.get(userId).subscribe(res => {
       this.kinshipRelationCriminalData = res.data;

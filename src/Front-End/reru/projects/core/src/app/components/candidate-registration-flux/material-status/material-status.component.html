@@ -159,7 +159,7 @@
                     <th>{{ 'material-status.birthday-date' | translate}}</th>
                     <td >
                         <app-date [parent]="relation" [date]="'birthDate'"
-                                [placeholder]="'aterial-status.birthday-date' | translate"></app-date>
+                                [placeholder]="'material-status.birthday-date' | translate"></app-date>
                             </td>
                   </tr>
                   <tr>
@@ -241,10 +241,10 @@
 </form>
 <div class="row justify-content-end mt-10 mr-1">
     <button class="btn btn-success" matStepperNext
-    [disabled]="(materialStatusForm && materialStatusForm.invalid) || 
-    (kinshipRelationWithUserProfileForm && kinshipRelationWithUserProfileForm.invalid) || 
-    (kinshipRelationForm && kinshipRelationForm.invalid) ||
-    (kinshipRelationCriminalDataForm && (kinshipRelationCriminalDataForm.value.text == null || kinshipRelationCriminalDataForm.value.text == ''))"
+    [disabled]="(materialStatusForm && materialStatusForm.invalid || userMaterialStatus == null) || 
+    (kinshipRelationWithUserProfileForm && kinshipRelationWithUserProfileForm.invalid || kinshipRelationWithUserProfileData == null) || 
+    (kinshipRelationForm && kinshipRelationForm.invalid || kinshipRelationData == null) ||
+    (kinshipRelationCriminalDataForm && (kinshipRelationCriminalDataForm.value.text == null || kinshipRelationCriminalDataForm.value.text == '') || kinshipRelationCriminalData == null)"
     (click)="addRegistrationFluxStep()"
         >{{'stepper.button-next' | translate}}</button>
 </div>
