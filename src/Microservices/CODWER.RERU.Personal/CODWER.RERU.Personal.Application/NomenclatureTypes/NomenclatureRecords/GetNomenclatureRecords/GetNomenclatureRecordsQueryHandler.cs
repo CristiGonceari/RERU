@@ -5,9 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Personal.DataTransferObjects.NomenclatureTypes.NomenclatureRecords;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.NomenclatureTypes.NomenclatureRecords.RecordValues;
-using CODWER.RERU.Personal.Data.Entities.NomenclatureType.NomenclatureRecords;
+using RERU.Data.Entities.PersonalEntities.NomenclatureType.NomenclatureRecords;
 
 namespace CODWER.RERU.Personal.Application.NomenclatureTypes.NomenclatureRecords.GetNomenclatureRecords
 {

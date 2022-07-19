@@ -2,11 +2,11 @@
 
 namespace CODWER.RERU.Personal.Application.OrganizationRoles.AddOrganizationRole
 {
-    public class AddOrganizationRoleCommandValidator : AbstractValidator<AddOrganizationRoleCommand>
+    public class AddRoleCommandValidator : AbstractValidator<AddRoleCommand>
     {
-        public AddOrganizationRoleCommandValidator()
+        public AddRoleCommandValidator()
         {
-            RuleFor(x => x.Data).SetValidator(new OrganizationRoleValidator());
+            RuleFor(x => x.Data).SetValidator(new RoleValidator());
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.IdentityDocuments;
 using CODWER.RERU.Personal.DataTransferObjects.Bulletin;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Personal.Application.Bulletins
 {

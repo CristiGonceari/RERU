@@ -4,10 +4,10 @@ using System.Linq;
 using CVU.ERP.Common.Extensions;
 using FluentValidation.Validators;
 using System;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Application.Validation;
-using CODWER.RERU.Personal.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities.Enums;
 using CODWER.RERU.Personal.DataTransferObjects.Vacations;
 
 namespace CODWER.RERU.Personal.Application.Profiles.Vacations.MyVacations.AddVacation
@@ -74,7 +74,7 @@ namespace CODWER.RERU.Personal.Application.Profiles.Vacations.MyVacations.AddVac
         private bool CheckVacationPeriod(AddMyVacationDto vacation)
         {
             var currentUserProfile = _userProfileService.GetCurrentUserProfile();
-            var contractorId = currentUserProfile.Result.ContractorId;
+            var contractorId = currentUserProfile.Result.Contractor.Id;
 
             var result = _appDbContext.Vacations
                 .Where(x => x.ContractorId == contractorId)

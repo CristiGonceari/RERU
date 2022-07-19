@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Application.Services.VacationInterval;
 using CODWER.RERU.Personal.Application.TemplateParsers;
-using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities.Enums;
+using RERU.Data.Persistence.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,7 +27,7 @@ namespace CODWER.RERU.Personal.Application.Profiles.Requests.Dismissal.Subordina
             var dismissalRequest = await _appDbContext.DismissalRequests
                 .Include(x=>x.Contractor)
                     .ThenInclude(x => x.Positions)
-                        .ThenInclude(x=>x.OrganizationRole)
+                        .ThenInclude(x=>x.Role)
                 .FirstAsync(x=>x.Id == request.Data.Id);
 
             if (request.Data.Approve)

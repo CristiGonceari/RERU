@@ -1,8 +1,8 @@
 ﻿using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Application.Validation;
 using CODWER.RERU.Personal.Application.Validators.EnumValidators;
-using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities.Enums;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Module.Common.MessageCodes;
 using CVU.ERP.StorageService.Entities;
 using FluentValidation;

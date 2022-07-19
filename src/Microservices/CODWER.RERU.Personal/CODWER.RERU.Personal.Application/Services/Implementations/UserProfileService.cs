@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CODWER.RERU.Personal.Application.Validation;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Entities.User;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Providers;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Personal.Application.Services.Implementations
 {
@@ -33,26 +33,21 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
 
             var userProfile = await _appDbContext.UserProfiles
                 .Include(x => x.Contractor)
-                .FirstOrDefaultAsync(x => x.UserId == user.Id);
+                .FirstOrDefaultAsync(x => x.Id == int.Parse(user.Id));
 
-            if (userProfile == null)
-            {
-                return await CreateUserProfile(user);
-            }
-
-            return userProfile;
+            return userProfile ?? new UserProfile();
         }
 
         public async Task<int> GetCurrentContractorId()
         {
             var userProfile = await GetCurrentUserProfile();
 
-            if (userProfile.ContractorId == null)
+            if (userProfile.Contractor == null)
             {
                 throw new Exception(ValidationCodes.NONEXISTENT_USER_PROFILE_CONTRACTOR);
             }
 
-            return (int) userProfile.ContractorId;
+            return (int) userProfile.Contractor.Id;
         }
 
         public async Task<Contractor> GetCurrentContractor()
@@ -60,31 +55,10 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             var contractorId = await GetCurrentContractorId();
 
             var contractor = await _appDbContext.Contractors
+                .Include(x=>x.UserProfile)
                 .FirstOrDefaultAsync(x => x.Id == contractorId);
 
             return contractor;
-        }
-
-        private async Task<UserProfile> CreateUserProfile(ApplicationUser appUser)
-        {
-            var checkExistent = await _appDbContext.UserProfiles.AnyAsync(x => x.Email == appUser.Email);
-            
-            if (checkExistent)
-            {
-                throw new Exception("User profile with this email exist");
-            }
-
-            var userProfile = new UserProfile
-            {
-                ContractorId = null,
-                UserId = appUser.Id,
-                Email = appUser.Email
-            };
-
-            await _appDbContext.UserProfiles.AddAsync(userProfile);
-            await _appDbContext.SaveChangesAsync();
-
-            return userProfile;
         }
     }
 }

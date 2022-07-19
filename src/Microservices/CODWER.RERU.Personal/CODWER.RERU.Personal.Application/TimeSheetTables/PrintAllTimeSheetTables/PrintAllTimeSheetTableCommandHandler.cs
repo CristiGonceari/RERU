@@ -5,9 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Personal.Application.Services;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Entities.StaticExtensions;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Entities.PersonalEntities.StaticExtensions;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CODWER.RERU.Personal.DataTransferObjects.TimeSheetTables;
 using MediatR;
@@ -35,7 +35,7 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.PrintAllTimeSheetTabl
                 .Include(r => r.Positions)
                 .ThenInclude(p => p.Department)
                 .Include(c => c.Positions)
-                .ThenInclude(p => p.OrganizationRole)
+                .ThenInclude(p => p.Role)
                 .Include(c => c.TimeSheetTables)
                 .InServiceAt(DateTime.Now)
                 .Select(c => new Contractor

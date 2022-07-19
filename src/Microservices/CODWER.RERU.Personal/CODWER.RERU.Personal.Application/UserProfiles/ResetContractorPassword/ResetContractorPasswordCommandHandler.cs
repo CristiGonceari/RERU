@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Module.Application.Clients;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -21,11 +21,11 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.ResetContractorPassword
 
         public async Task<Unit> Handle(ResetContractorPasswordCommand request, CancellationToken cancellationToken)
         {
-            var userProfile = await _appDbContext.UserProfiles.FirstAsync(up => up.ContractorId == request.ContractorId);
+            var userProfile = await _appDbContext.UserProfiles.FirstAsync(up => up.Contractor.Id == request.ContractorId);
 
             try
             {
-                await _coreClient.ResetPassword(userProfile.UserId);
+                await _coreClient.ResetPassword(userProfile.Id.ToString());
             }
             catch (Exception e)
             {

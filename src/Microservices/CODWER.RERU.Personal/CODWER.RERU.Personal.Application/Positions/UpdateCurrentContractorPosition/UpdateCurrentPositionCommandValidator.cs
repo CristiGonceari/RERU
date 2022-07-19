@@ -1,7 +1,7 @@
 ﻿using CODWER.RERU.Personal.Application.Validation;
 using CODWER.RERU.Personal.Application.Validators;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 
@@ -20,10 +20,10 @@ namespace CODWER.RERU.Personal.Application.Positions.UpdateCurrentContractorPosi
                     .SetValidator(new ItemMustExistValidator<Department>(appDbContext,ValidationCodes.DEPARTMENT_NOT_FOUND, ValidationMessages.InvalidReference));
             });
 
-            When(x => x.Data.OrganizationRoleId != null, () =>
+            When(x => x.Data.RoleId != null, () =>
             {
-                RuleFor(x => (int)x.Data.OrganizationRoleId)
-                    .SetValidator(new ItemMustExistValidator<OrganizationRole>(appDbContext,ValidationCodes.ORGANIZATION_ROLE_NOT_FOUND, ValidationMessages.InvalidReference));
+                RuleFor(x => (int)x.Data.RoleId)
+                    .SetValidator(new ItemMustExistValidator<Role>(appDbContext,ValidationCodes.ORGANIZATION_ROLE_NOT_FOUND, ValidationMessages.InvalidReference));
             });
         }
     }

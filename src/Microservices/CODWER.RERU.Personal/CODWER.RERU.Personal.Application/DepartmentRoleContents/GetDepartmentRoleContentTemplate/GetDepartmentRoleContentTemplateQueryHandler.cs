@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using MediatR;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleContents;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,7 +23,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.GetDepartmentR
         {
             var department = await _appDbContext.Departments
                 .Include(d => d.DepartmentRoleContents)
-                .ThenInclude(x => x.OrganizationRole)
+                .ThenInclude(x => x.Role)
                 .FirstAsync(d => d.Id == request.DepartmentId);
 
             var departmentRoleContent = _mapper.Map<DepartmentRoleContentDto>(department);

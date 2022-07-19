@@ -5,9 +5,9 @@ using MediatR;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using CODWER.RERU.Personal.DataTransferObjects.Studies;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.Application.Services;
-using CODWER.RERU.Personal.Data.Entities.Studies;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Personal.Application.Profiles.ContractorStudies.GetContractorStudies
 {
@@ -26,11 +26,11 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorStudies.GetContrac
 
         public async Task<PaginatedModel<StudyDataDto>> Handle(GetContractorStudiesQuery request, CancellationToken cancellationToken)
         {
-            var contractorId = await _userProfileService.GetCurrentContractorId();
+            var userProfile = await _userProfileService.GetCurrentUserProfile();
 
             var items = _appDbContext.Studies
                 .Include(x => x.StudyType)
-                .Where(x => x.ContractorId == contractorId)
+                .Where(x => x.UserProfileId == userProfile.Id)
                 .AsQueryable();
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Study, StudyDataDto>(items, request);

@@ -1,34 +1,34 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Persistence.Context;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Personal.Application.OrganizationRoles.AddOrganizationRole
 {
-    public class AddOrganizationRoleCommandHandler : IRequestHandler<AddOrganizationRoleCommand, int>
+    public class AddRoleCommandHandler : IRequestHandler<AddRoleCommand, int>
     {
 
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
-        private readonly ILoggerService<AddOrganizationRoleCommand> _loggerService;
+        private readonly ILoggerService<AddRoleCommand> _loggerService;
 
-        public AddOrganizationRoleCommandHandler(AppDbContext appDbContext, IMapper mapper,
-            ILoggerService<AddOrganizationRoleCommand> loggerService)
+        public AddRoleCommandHandler(AppDbContext appDbContext, IMapper mapper,
+            ILoggerService<AddRoleCommand> loggerService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _loggerService = loggerService;
         }
 
-        public async Task<int> Handle(AddOrganizationRoleCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(AddRoleCommand request, CancellationToken cancellationToken)
         {
-            var item = _mapper.Map<OrganizationRole>(request.Data);
+            var item = _mapper.Map<Role>(request.Data);
 
-            await _appDbContext.OrganizationRoles.AddAsync(item);
+            await _appDbContext.Roles.AddAsync(item);
             await _appDbContext.SaveChangesAsync();
 
             await LogAction(item);
@@ -36,9 +36,9 @@ namespace CODWER.RERU.Personal.Application.OrganizationRoles.AddOrganizationRole
             return item.Id;
         }
 
-        private async Task LogAction(OrganizationRole organizationRole)
+        private async Task LogAction(Role Role)
         {
-            await _loggerService.Log(LogData.AsPersonal($"{organizationRole.Name} was added to Roles list", organizationRole));
+            await _loggerService.Log(LogData.AsPersonal($"{Role.Name} was added to Roles list", Role));
         }
     }
 }

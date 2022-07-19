@@ -3,7 +3,7 @@ using System.Threading;
 using AutoMapper;
 using MediatR;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Contracts;
 using CODWER.RERU.Personal.DataTransferObjects.Instructions;
 using Microsoft.EntityFrameworkCore;

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
+using RERU.Data.Entities.PersonalEntities.ContractorEvents;
 using CODWER.RERU.Personal.DataTransferObjects.Ranks;
 
 namespace CODWER.RERU.Personal.Application.Ranks

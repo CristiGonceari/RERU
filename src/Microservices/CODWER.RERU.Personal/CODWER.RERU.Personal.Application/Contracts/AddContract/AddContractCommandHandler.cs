@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Personal.Application.TemplateParsers;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Employers;
 using CVU.ERP.StorageService;
 using MediatR;
@@ -13,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities.PersonalEntities.ContractorEvents;
 using FileTypeEnum = CVU.ERP.StorageService.Entities.FileTypeEnum;
 
 namespace CODWER.RERU.Personal.Application.Contracts.AddContract
@@ -80,16 +80,17 @@ namespace CODWER.RERU.Personal.Application.Contracts.AddContract
             var myDictionary = new Dictionary<string, string>();
 
             var contractor = _appDbContext.Contractors
-                .Include(x => x.Bulletin)
-                    .ThenInclude(x => x.LivingAddress)
+                .Include(x => x.UserProfile)
+                .ThenInclude(x=>x.Bulletin)
+                    .ThenInclude(x => x.ResidenceAddress)
                 .Include(x => x.Positions)
-                    .ThenInclude(x => x.OrganizationRole)
+                    .ThenInclude(x => x.Role)
                 .First(x => x.Id == contractorId);
 
             var currency = _appDbContext.NomenclatureRecords.FirstOrDefault(x => x.Id == contract.CurrencyTypeId)?.Name;
-            var bulletin = contractor.Bulletin;
+            var bulletin = contractor.UserProfile.Bulletin;
             var position = contractor.GetLastPosition();
-            var address = bulletin.LivingAddress;
+            var address = bulletin.ResidenceAddress;
 
             myDictionary.Add("{nr_contract_replace}", contract.No);
 
@@ -100,7 +101,7 @@ namespace CODWER.RERU.Personal.Application.Contracts.AddContract
             myDictionary.Add("{salariatName}", contractor.FirstName);
             myDictionary.Add("{salariatLastName}", contractor.LastName);
 
-            myDictionary.Add("{functia_replace}", position.OrganizationRole.Name);
+            myDictionary.Add("{functia_replace}", position.Role.Name);
             myDictionary.Add("{data_contract_replace}", position.GeneratedDate?.ToString("dd/MM/yyyy"));
 
             myDictionary.Add("{locul_de_munca_replace}", position.WorkPlace);
@@ -116,7 +117,7 @@ namespace CODWER.RERU.Personal.Application.Contracts.AddContract
             myDictionary.Add("{eliberat_buletin_replace}", bulletin.EmittedBy);
             myDictionary.Add("{buletin_data_replace}", bulletin.ReleaseDay.ToString("dd/MM/yyyy"));
 
-            myDictionary.Add("{idnp_replace}", bulletin.Idnp);
+            myDictionary.Add("{idnp_replace}", bulletin.UserProfile.Idnp);
 
             myDictionary.Add("{adresa_replace}", $"{address.City}, {address.Street}");
 

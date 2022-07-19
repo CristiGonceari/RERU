@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleContents;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 
@@ -19,9 +19,9 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents
                 .ForMember(x => x.Roles, opts => opts.MapFrom(op => op.DepartmentRoleContents));
 
             CreateMap<DepartmentRoleContent, RoleFromDepartment>()
-                .ForMember(x => x.OrganizationRoleId, opts => opts.MapFrom(x => x.OrganizationRoleId))
-                .ForMember(x => x.OrganizationRoleName, opts => opts.MapFrom(x => x.OrganizationRole.Name))
-                .ForMember(x => x.OrganizationRoleCount, opts => opts.MapFrom(x => x.OrganizationRoleCount))
+                .ForMember(x => x.OrganizationRoleId, opts => opts.MapFrom(x => x.RoleId))
+                .ForMember(x => x.OrganizationRoleName, opts => opts.MapFrom(x => x.Role.Name))
+                .ForMember(x => x.OrganizationRoleCount, opts => opts.MapFrom(x => x.RoleCount))
                 .ForMember(x => x.DepartmentRoleContentId, opts => opts.MapFrom(x => x.Id))
                 .ForMember(x => x.ContractorIds, opts => opts.MapFrom(x => new List<SelectItem>()))
                 ;

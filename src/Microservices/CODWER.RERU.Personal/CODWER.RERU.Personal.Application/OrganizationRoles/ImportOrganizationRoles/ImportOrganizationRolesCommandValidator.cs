@@ -11,9 +11,9 @@ using OfficeOpenXml;
 
 namespace CODWER.RERU.Personal.Application.OrganizationRoles.ImportOrganizationRoles
 {
-    public class ImportOrganizationRolesCommandValidator : AbstractValidator<ImportOrganizationRolesCommand>
+    public class ImportRolesCommandValidator : AbstractValidator<ImportRolesCommand>
     {
-        public ImportOrganizationRolesCommandValidator()
+        public ImportRolesCommandValidator()
         {
             RuleFor(x => x.Data.File.FileName)
                 .NotEmpty()

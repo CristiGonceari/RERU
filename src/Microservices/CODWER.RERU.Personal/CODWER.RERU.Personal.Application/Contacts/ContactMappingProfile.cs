@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Entities.StaticExtensions;
+using RERU.Data.Entities.PersonalEntities;
 using CODWER.RERU.Personal.DataTransferObjects.Contacts;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
+using RERU.Data.Entities.PersonalEntities.StaticExtensions;
 
 namespace CODWER.RERU.Personal.Application.Contacts
 {

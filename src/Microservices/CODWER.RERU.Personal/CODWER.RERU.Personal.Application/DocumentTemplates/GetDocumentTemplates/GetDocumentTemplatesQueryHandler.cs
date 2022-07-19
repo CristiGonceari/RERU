@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Entities.Documents;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Documents;
 using CVU.ERP.Common.Pagination;
 using MediatR;
+using RERU.Data.Entities.PersonalEntities.Documents;
 
 namespace CODWER.RERU.Personal.Application.DocumentTemplates.GetDocumentTemplates
 {
@@ -22,7 +22,7 @@ namespace CODWER.RERU.Personal.Application.DocumentTemplates.GetDocumentTemplate
 
         public async Task<PaginatedModel<AddEditDocumentTemplateDto>> Handle(GetDocumentTemplatesQuery request, CancellationToken cancellationToken)
         {
-            var items = _appDbContext.DocumentTemplates
+            var items = _appDbContext.HrDocumentTemplates
                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(request.Name))
@@ -30,7 +30,7 @@ namespace CODWER.RERU.Personal.Application.DocumentTemplates.GetDocumentTemplate
                 items = items.Where(x => x.Name.ToLower().Contains(request.Name.ToLower()));
             }
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<DocumentTemplate, AddEditDocumentTemplateDto>(items, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<HrDocumentTemplate, AddEditDocumentTemplateDto>(items, request);
 
             return paginatedModel;
 

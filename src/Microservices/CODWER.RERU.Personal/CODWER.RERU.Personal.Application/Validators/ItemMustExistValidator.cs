@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Common.Data.Entities;
 using CVU.ERP.Common.Extensions;
 using FluentValidation;

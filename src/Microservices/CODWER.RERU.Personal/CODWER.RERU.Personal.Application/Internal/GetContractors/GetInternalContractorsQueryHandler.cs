@@ -5,8 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CODWER.RERU.Personal.DataTransferObjects.Contractors;
-using CODWER.RERU.Personal.Data.Persistence.Context;
-using CODWER.RERU.Personal.Data.Entities;
+using RERU.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Personal.Application.Internal.GetContractors
 {
@@ -27,7 +27,7 @@ namespace CODWER.RERU.Personal.Application.Internal.GetContractors
                 .Include(c => c.Positions)
                     .ThenInclude(p => p.Department)
                 .Include(c => c.Positions)
-                    .ThenInclude(p => p.OrganizationRole)
+                    .ThenInclude(p => p.Role)
                 .AsQueryable();
 
             var keywordWords = request.Keyword.Split(' ').ToList();

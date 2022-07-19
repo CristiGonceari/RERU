@@ -1,12 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.Documents;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.PersonalEntities.Documents;
 
 namespace CODWER.RERU.Personal.Application.DocumentTemplates.UpdateDocumentTemplate
 {
@@ -28,7 +28,7 @@ namespace CODWER.RERU.Personal.Application.DocumentTemplates.UpdateDocumentTempl
 
         public async Task<Unit> Handle(UpdateDocumentTemplateCommand request, CancellationToken cancellationToken)
         {
-            var item = await _appDbContext.DocumentTemplates.FirstAsync(x => x.Id == request.Data.Id);
+            var item = await _appDbContext.HrDocumentTemplates.FirstAsync(x => x.Id == request.Data.Id);
 
             _mapper.Map(request.Data, item);
             await _appDbContext.SaveChangesAsync();
@@ -37,7 +37,7 @@ namespace CODWER.RERU.Personal.Application.DocumentTemplates.UpdateDocumentTempl
 
             return Unit.Value;
         }
-        private async Task LogAction(DocumentTemplate documentTemplate)
+        private async Task LogAction(HrDocumentTemplate documentTemplate)
         {
             await _loggerService.Log(LogData.AsPersonal($"{documentTemplate.Name} was edited", documentTemplate));
         }

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.OrganizationRoles.ImportOrganizationRoles
 {
-    public class ImportOrganizationRolesCommand : IRequest<Unit>
+    public class ImportRolesCommand : IRequest<Unit>
     {
         public ExcelDataDto Data { get; set; }
     }

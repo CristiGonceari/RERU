@@ -1,7 +1,5 @@
 ﻿using CODWER.RERU.Personal.Application.Services;
-using CODWER.RERU.Personal.Data.Entities.StaticExtensions;
-using CODWER.RERU.Personal.Data.Entities.TimeSheetTables;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
@@ -9,6 +7,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities.PersonalEntities.TimeSheetTables;
 
 namespace CODWER.RERU.Personal.Application.TimeSheetTables.RemoveTimeSheetValues
 {

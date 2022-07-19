@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Entities.Configurations;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Holidays;
 using CVU.ERP.Common.Pagination;
 using MediatR;
+using RERU.Data.Entities.PersonalEntities.Configurations;
 
 namespace CODWER.RERU.Personal.Application.Holidays.GetHolidays
 {

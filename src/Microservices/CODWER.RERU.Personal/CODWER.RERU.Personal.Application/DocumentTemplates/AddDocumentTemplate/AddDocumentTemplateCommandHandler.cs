@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.Documents;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
+using RERU.Data.Entities.Documents;
 
 namespace CODWER.RERU.Personal.Application.DocumentTemplates.AddDocumentTemplate
 {

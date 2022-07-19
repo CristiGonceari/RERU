@@ -7,6 +7,6 @@ namespace CODWER.RERU.Personal.DataTransferObjects.Positions
         public int ContractorId { get; set; }
         public DateTime? FromDate { get; set; }
         public int? DepartmentId { get; set; }
-        public int? OrganizationRoleId { get; set; }
+        public int? RoleId { get; set; }
     }
 }

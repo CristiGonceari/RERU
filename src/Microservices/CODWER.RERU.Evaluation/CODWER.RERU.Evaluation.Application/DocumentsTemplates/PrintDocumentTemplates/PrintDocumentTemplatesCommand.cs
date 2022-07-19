@@ -2,6 +2,7 @@
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.Attributes;
 using CVU.ERP.Module.Application.TableExportServices;
+using CVU.ERP.StorageService.Entities;
 using MediatR;
 using RERU.Data.Entities.Enums;
 

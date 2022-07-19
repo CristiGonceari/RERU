@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using CODWER.RERU.Personal.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities.Enums;
 using CODWER.RERU.Personal.DataTransferObjects.Contacts;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Personal.DataTransferObjects.Profiles
 {

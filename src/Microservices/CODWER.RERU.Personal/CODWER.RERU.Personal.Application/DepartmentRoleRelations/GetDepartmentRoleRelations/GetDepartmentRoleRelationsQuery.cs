@@ -10,6 +10,6 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetDepartment
     public class GetDepartmentRoleRelationsQuery : IRequest<DepartmentRoleRelationDto>
     {
         public int? ParentDepartmentId { get; set; }
-        public int? ParentOrganizationRoleId { get; set; }
+        public int? ParentRoleId { get; set; }
     }
 }

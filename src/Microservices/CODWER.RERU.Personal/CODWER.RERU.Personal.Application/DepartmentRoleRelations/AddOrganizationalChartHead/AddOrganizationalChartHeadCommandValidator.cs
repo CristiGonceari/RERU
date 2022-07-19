@@ -1,8 +1,8 @@
 ﻿using CODWER.RERU.Personal.Application.Validation;
 using CODWER.RERU.Personal.Application.Validators;
 using CODWER.RERU.Personal.Application.Validators.DepartmentRoleRelations;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleRelations;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
@@ -30,10 +30,10 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.AddOrganizati
                     .SetValidator(new ItemMustExistValidator<Department>(appDbContext, ValidationCodes.DEPARTMENT_NOT_FOUND, ValidationMessages.InvalidReference));
             });
 
-            When(x => x.Type == OrganizationalChartItemType.OrganizationRole, () =>
+            When(x => x.Type == OrganizationalChartItemType.Role, () =>
             {
                 RuleFor(x => x.HeadId)
-                    .SetValidator(new ItemMustExistValidator<OrganizationRole>(appDbContext, ValidationCodes.ORGANIZATION_ROLE_NOT_FOUND, ValidationMessages.InvalidReference));
+                    .SetValidator(new ItemMustExistValidator<Role>(appDbContext, ValidationCodes.ORGANIZATION_ROLE_NOT_FOUND, ValidationMessages.InvalidReference));
             });
         }
     }

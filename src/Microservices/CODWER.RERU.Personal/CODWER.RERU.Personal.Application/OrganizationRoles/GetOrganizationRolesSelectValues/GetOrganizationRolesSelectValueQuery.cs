@@ -8,7 +8,7 @@ namespace CODWER.RERU.Personal.Application.OrganizationRoles.GetOrganizationRole
 {
     [ModuleOperation(permission: PermissionCodes.ORGANIZATION_ROLES_GENERAL_ACCESS)]
 
-    public class GetOrganizationRolesSelectValuesQuery : IRequest<List<SelectItem>>
+    public class GetRolesSelectValuesQuery : IRequest<List<SelectItem>>
     {
         public string SearchWord { get; set; }
     }

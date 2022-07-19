@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Entities.User;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Contractors;
 using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.StorageService;
@@ -11,6 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.StorageService.Entities;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
 {
@@ -35,16 +35,18 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
         public async Task<ContractorDetailsDto> Handle(GetContractorQuery request, CancellationToken cancellationToken)
         {
             var contractor = await _appDbContext.Contractors
+                .Include(x=>x.UserProfile)
+                .ThenInclude(x=>x.Bulletin)
+                .Include(x => x.UserProfile)
+                .ThenInclude(x => x.Studies)
                 .Include(r => r.Positions)
                     .ThenInclude(p => p.Department)
                 .Include(c => c.Positions)
-                    .ThenInclude(p => p.OrganizationRole)
+                    .ThenInclude(p => p.Role)
                 .Include(r => r.BloodType)
-                .Include(r => r.Studies)
                 .Include( r=> r.Contacts)
                 .Include(x => x.Contracts)
                 .Include(x => x.UserProfile)
-                .Include(x => x.Bulletin)
                 .Include(x => x.Avatar)
                 .Select(c => new Contractor
                 {
@@ -57,11 +59,11 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
                     Sex = c.Sex,
                     Positions = c.Positions,
                     BloodTypeId = c.BloodTypeId,
-                    Studies = c.Studies,
+                    //Studies = c.UserProfile.Studies,
                     Contacts = c.Contacts,
                     Contracts = c.Contracts,
                     UserProfile = c.UserProfile,
-                    Bulletin = c.Bulletin,
+                    //Bulletin = c.Bulletin,
                     Avatar = c.Avatar
                 })
                 .FirstAsync(rt => rt.Id == request.Id);
@@ -69,7 +71,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
 
             var mappedContractor = _mapper.Map<ContractorDetailsDto>(contractor);
 
-            mappedContractor.HasUserProfile = await GetUserProfile(contractor.UserProfile);
+            //mappedContractor.HasUserProfile = await GetUserProfile(contractor.UserProfile);
             mappedContractor.HasEmploymentRequest = await _personalStorageClient.HasFile(request.Id, FileTypeEnum.request);
             mappedContractor.HasIdentityDocuments = await _personalStorageClient.HasFile(request.Id, FileTypeEnum.identityfiles);
 

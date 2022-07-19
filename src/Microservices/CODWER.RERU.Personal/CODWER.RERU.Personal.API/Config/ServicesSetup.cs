@@ -3,7 +3,7 @@ using CODWER.RERU.Personal.Application.DependencyInjection;
 using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Application.Services.Implementations;
 using CODWER.RERU.Personal.Application.Validation;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Common;
 using CVU.ERP.Common.Interfaces;
 using CVU.ERP.Common.Pagination;

@@ -1,8 +1,7 @@
 using AutoMapper.EquivalencyExpression;
 using CODWER.RERU.Personal.Application.Security;
 using CODWER.RERU.Personal.Application.Validation;
-using CODWER.RERU.Personal.Data.Persistence.Context;
-using CODWER.RERU.Personal.Data.Persistence.Initializer;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Employers;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CVU.ERP.Infrastructure.Email;
@@ -135,11 +134,6 @@ namespace CODWER.RERU.Personal.API
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
-            // if (env.IsDevelopment())
-            // {
-            DatabaseSeeder.SeedDb(appDbContext);
-            // }
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();

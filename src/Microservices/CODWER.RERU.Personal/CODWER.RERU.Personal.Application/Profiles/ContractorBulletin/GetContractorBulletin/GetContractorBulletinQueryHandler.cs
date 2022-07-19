@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Personal.Application.Services;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Bulletin;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -27,10 +27,10 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorBulletin.GetContra
             var contractorId = await _userProfileService.GetCurrentContractorId();
 
             var bulletin = await _appDbContext.Bulletins
+                .Include(x=>x.UserProfile)
                 .Include(x=>x.BirthPlace)
-                .Include(x=>x.LivingAddress)
                 .Include(x=>x.ResidenceAddress)
-                .FirstOrDefaultAsync(x => x.ContractorId == contractorId);
+                .FirstOrDefaultAsync(x => x.UserProfile.Contractor.Id == contractorId);
 
             return _mapper.Map<BulletinsDataDto>(bulletin);
         }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using CVU.ERP.Common.Data.Entities;
 using RERU.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities;
+using Role = RERU.Data.Entities.PersonalEntities.Role;
 
 namespace RERU.Data.Entities
 {
@@ -46,6 +48,7 @@ namespace RERU.Data.Entities
         public int? RoleColaboratorId { get; set; }
         public Role Role { get; set; }
 
+        public Contractor Contractor { get; set; }
         public Bulletin Bulletin { get; set; }
         public UserProfileGeneralData UserProfileGeneralData { get; set; }
         public MaterialStatus MaterialStatus { get; set; }

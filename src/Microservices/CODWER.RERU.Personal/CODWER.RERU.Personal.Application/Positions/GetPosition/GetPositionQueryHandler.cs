@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Positions;
 using CVU.ERP.StorageService;
 using MediatR;
@@ -28,7 +28,7 @@ namespace CODWER.RERU.Personal.Application.Positions.GetPosition
         {
             var item = await _appDbContext.Positions
                 .Include(x=>x.Department)
-                .Include(x=>x.OrganizationRole)
+                .Include(x=>x.Role)
                 .Include(x => x.Contractor)
                 .FirstAsync(x => x.Id == request.Id);
 

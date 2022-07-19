@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Entities.StaticExtensions;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities.StaticExtensions;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleContents;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using MediatR;
@@ -27,7 +27,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.GetDepartmentR
             var positions = _appDbContext.Positions
                 .Include(p => p.Contractor)
                 .Include(p => p.Department)
-                .Include(p => p.OrganizationRole)
+                .Include(p => p.Role)
                 .Where(p => p.DepartmentId == request.DepartmentId)
                 .ToList()
                 .Where(p =>
@@ -44,7 +44,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.GetDepartmentR
                     DepartmentName = drc.Key.Name,
 
                     Roles = drc
-                        .GroupBy(p=>p.OrganizationRole) // group by organization role
+                        .GroupBy(p=>p.Role) // group by organization role
                         .Select(rfd=> new RoleFromDepartment
                         {
                             OrganizationRoleId = rfd.Key.Id,

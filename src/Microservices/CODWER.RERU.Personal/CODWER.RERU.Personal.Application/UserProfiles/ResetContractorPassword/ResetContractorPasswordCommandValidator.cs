@@ -3,9 +3,9 @@ using FluentValidation;
 using FluentValidation.Validators;
 using System.Linq;
 using CVU.ERP.Common.Extensions;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.Application.Validation;
-using CODWER.RERU.Personal.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using CODWER.RERU.Personal.Application.Validators;
 
 namespace CODWER.RERU.Personal.Application.UserProfiles.ResetContractorPassword
@@ -28,7 +28,7 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.ResetContractorPassword
 
         private void ExistentUserProfile(int contractorId, CustomContext context)
         {
-            var exist = _appDbContext.UserProfiles.Any(x => x.ContractorId == contractorId);
+            var exist = _appDbContext.UserProfiles.Any(x => x.Contractor.Id == contractorId);
 
             if (!exist)
             {

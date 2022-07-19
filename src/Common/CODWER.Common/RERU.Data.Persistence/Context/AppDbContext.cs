@@ -5,6 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Documents;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Entities.PersonalEntities.NomenclatureType.NomenclatureRecords.RecordValues;
+using RERU.Data.Entities.PersonalEntities.OrganizationRoleRelations;
 using SpatialFocus.EntityFrameworkCore.Extensions;
 
 namespace RERU.Data.Persistence.Context
@@ -19,75 +22,11 @@ namespace RERU.Data.Persistence.Context
         {
         }
 
-        public DbSet<Module> Modules { set; get; }
-        public DbSet<ModulePermission> ModulePermissions { set; get; }
-        public DbSet<ModuleRole> ModuleRoles { set; get; }
-        public DbSet<ModuleRolePermission> ModuleRolePermissions { set; get; }
-        public DbSet<UserProfileModuleRole> UserProfileModuleRoles { set; get; }
-        public DbSet<CandidatePosition> CandidatePositions { set; get; }
-        public DbSet<UserFile> UserFiles { set; get; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
-        public virtual DbSet<QuestionCategory> QuestionCategories { get; set; }
-        public virtual DbSet<TestTemplateQuestionCategory> TestTemplateQuestionCategories { get; set; }
-        public virtual DbSet<TestTemplate> TestTemplates { get; set; }
-        public virtual DbSet<TestTemplateSettings> TestTemplateSettings { get; set; }
-        public virtual DbSet<Test> Tests { get; set; }
-        public virtual DbSet<QuestionUnit> QuestionUnits { get; set; }
-        public virtual DbSet<Option> Options { get; set; }
-        public virtual DbSet<TestQuestion> TestQuestions { get; set; }
-        public virtual DbSet<TestAnswer> TestAnswers { get; set; }
-        public virtual DbSet<ArticleCore> CoreArticles { get; set; }
-        public virtual DbSet<ArticleEvaluation> EvaluationArticles { get; set; }
-        public virtual DbSet<Location> Locations { get; set; }
-        public virtual DbSet<LocationResponsiblePerson> LocationResponsiblePersons { get; set; }
-        public virtual DbSet<LocationClient> LocationClients { get; set; }
-        public virtual DbSet<Event> Events { get; set; }
-        public virtual DbSet<EventResponsiblePerson> EventResponsiblePersons { get; set; }
-        public virtual DbSet<EventUser> EventUsers { get; set; }
-        public virtual DbSet<EventLocation> EventLocations { get; set; }
-        public virtual DbSet<EventEvaluator> EventEvaluators { get; set; }
-        public virtual DbSet<EventTestTemplate> EventTestTemplates { get; set; }
-        public virtual DbSet<TestCategoryQuestion> TestCategoryQuestions { get; set; }
-        public virtual DbSet<Plan> Plans { get; set; }
-        public virtual DbSet<PlanResponsiblePerson> PlanResponsiblePersons { get; set; }
-        public virtual DbSet<Tag> Tags { get; set; }
-        public virtual DbSet<QuestionUnitTag> QuestionUnitTags { get; set; }
-        public virtual DbSet<Notification> Notifications { get; set; }
-        public virtual DbSet<EmailTestNotification> EmailTestNotifications { get; set; }
-        public virtual DbSet<SolicitedVacantPosition> SolicitedVacantPositions { get; set; }
-        public virtual DbSet<RequiredDocument> RequiredDocuments { get; set; }
-        public virtual DbSet<RequiredDocumentPosition> RequiredDocumentPositions { get; set; }
-        public virtual DbSet<EventVacantPosition> EventVacantPositions { get; set; }
-        public virtual DbSet<DocumentTemplate> DocumentTemplates { get; set; }
-        public virtual DbSet<DocumentTemplateKey> DocumentTemplateKeys { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<RegistrationPageMessage> RegistrationPageMessages { get; set; }
-        public virtual DbSet<Process> Processes { get; set; }
-        public virtual DbSet<EmailVerification> EmailVerifications { get; set; }
-        public virtual DbSet<SolicitedVacantPositionUserFile> SolicitedVacantPositionUserFiles { get; set; }
-        public virtual DbSet<SolicitedVacantPositionEmailMessage> SolicitedVacantPositionEmailMessages { get; set; }
-        public virtual DbSet<RegistrationFluxStep> RegistrationFluxSteps { get; set; }
 
-        #region FisaPersonala
-        public virtual DbSet<CandidateNationality> CandidateNationalities { get; set; }
-        public virtual DbSet<CandidateCitizenship> CandidateCitizens { get; set; }
-        public virtual DbSet<Bulletin> Bulletins { get; set; }
-        public virtual DbSet<UserProfileGeneralData> UserProfileGeneralDatas { get; set; }
-        public virtual DbSet<Address> Addresses { get; set; }
-        public virtual DbSet<Study> Studies { get; set; }
-        public virtual DbSet<StudyType> StudyTypes { get; set; }
-        public virtual DbSet<ModernLanguageLevel> ModernLanguageLevels { get; set; }
-        public virtual DbSet<ModernLanguage> ModernLanguages { get; set; }
-        public virtual DbSet<RecommendationForStudy> RecommendationForStudies { get; set; }
-        public virtual DbSet<MaterialStatus> MaterialStatuses { get; set; }
-        public virtual DbSet<MaterialStatusType> MaterialStatusTypes { get; set; }
-        public virtual DbSet<KinshipRelationWithUserProfile> KinshipRelationWithUserProfiles { get; set; }
-        public virtual DbSet<KinshipRelation> KinshipRelations { get; set; }
-        public virtual DbSet<KinshipRelationCriminalData> KinshipRelationCriminalDatas { get; set; }
-        public virtual DbSet<MilitaryObligation> MilitaryObligations { get; set; }
-        public virtual DbSet<Autobiography> Autobiographies { get; set; }
-        #endregion
+        public virtual DbSet<RegistrationFluxStep> RegistrationFluxSteps { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -128,6 +67,87 @@ namespace RERU.Data.Persistence.Context
                     .SetNamingScheme(n => n)
                     .UseNumberAsIdentifier()
                     .SetDeleteBehavior(DeleteBehavior.Restrict));
+
+
+
+
+
+
+
+
+
+
+
+
+            #region HR
+
+            #region NomenclatureTypes
+
+            modelBuilder.Entity<RecordValueBoolean>().Property(x => x.Value).HasColumnName("ValueAsBoolean");
+            modelBuilder.Entity<RecordValueChar>().Property(x => x.Value).HasColumnName("ValueAsChar");
+            modelBuilder.Entity<RecordValueDate>().Property(x => x.Value).HasColumnName("ValueAsDateTime");
+            modelBuilder.Entity<RecordValueDateTime>().Property(x => x.Value).HasColumnName("ValueAsDateTime");
+            modelBuilder.Entity<RecordValueDouble>().Property(x => x.Value).HasColumnName("ValueAsDouble");
+            modelBuilder.Entity<RecordValueEmail>().Property(x => x.Value).HasColumnName("ValueAsText");
+            modelBuilder.Entity<RecordValueInteger>().Property(x => x.Value).HasColumnName("ValueAsInteger");
+            modelBuilder.Entity<RecordValueText>().Property(x => x.Value).HasColumnName("ValueAsText");
+
+            #endregion
+
+
+            modelBuilder.Entity<IndividualContract>()
+                .HasOne(d => d.Superior)
+                .WithMany(x => x.Contractors)
+                .HasForeignKey(x => x.SuperiorId);
+
+            modelBuilder.Entity<IndividualContract>()
+                .HasOne(d => d.Contractor)
+                .WithMany(x => x.Contracts)
+                .HasForeignKey(x => x.ContractorId);
+
+
+
+            #region Department-Department
+            modelBuilder.Entity<ParentDepartmentChildDepartment>()
+                .Property(x => x.ParentDepartmentId)
+                .HasColumnName("ParentDepartmentId");
+
+            modelBuilder.Entity<ParentDepartmentChildDepartment>()
+                .Property(x => x.ChildDepartmentId)
+                .HasColumnName("ChildDepartmentId");
+            #endregion
+
+            #region Department-Role
+            modelBuilder.Entity<ParentDepartmentChildRole>()
+                .Property(x => x.ParentDepartmentId)
+                .HasColumnName("ParentDepartmentId");
+
+            modelBuilder.Entity<ParentDepartmentChildRole>()
+                .Property(x => x.ChildRoleId)
+                .HasColumnName("ChildRoleId");
+            #endregion
+
+            #region Role-Department
+            modelBuilder.Entity<ParentRoleChildDepartment>()
+                .Property(x => x.ParentRoleId)
+                .HasColumnName("ParentRoleId");
+
+            modelBuilder.Entity<ParentRoleChildDepartment>()
+                .Property(x => x.ChildDepartmentId)
+                .HasColumnName("ChildDepartmentId");
+            #endregion
+
+            #region Role-Role
+            modelBuilder.Entity<ParentRoleChildRole>()
+                .Property(x => x.ParentRoleId)
+                .HasColumnName("ParentRoleId");
+
+            modelBuilder.Entity<ParentRoleChildRole>()
+                .Property(x => x.ChildRoleId)
+                .HasColumnName("ChildRoleId");
+            #endregion
+
+            #endregion
         }
 
         ///<summary>

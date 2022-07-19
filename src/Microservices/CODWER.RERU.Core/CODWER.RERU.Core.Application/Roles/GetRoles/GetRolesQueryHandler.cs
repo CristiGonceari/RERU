@@ -5,6 +5,7 @@ using CODWER.RERU.Core.DataTransferObjects.Roles;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Roles.GetRoles

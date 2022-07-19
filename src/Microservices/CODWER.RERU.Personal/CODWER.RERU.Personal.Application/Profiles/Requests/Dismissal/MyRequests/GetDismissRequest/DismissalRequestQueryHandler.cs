@@ -1,6 +1,6 @@
 ﻿using CODWER.RERU.Personal.Application.Services;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities.ContractorEvents;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.DismissalRequests;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.StorageService;
@@ -33,7 +33,7 @@ namespace CODWER.RERU.Personal.Application.Profiles.Requests.Dismissal.MyRequest
 
             var items = _appDbContext.DismissalRequests
                 .Include(x=>x.Position)
-                    .ThenInclude(x=>x.OrganizationRole)
+                    .ThenInclude(x=>x.Role)
                 .Where(x => x.ContractorId == contractorId);
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<DismissalRequest, MyDismissalRequestDto>(items, request);

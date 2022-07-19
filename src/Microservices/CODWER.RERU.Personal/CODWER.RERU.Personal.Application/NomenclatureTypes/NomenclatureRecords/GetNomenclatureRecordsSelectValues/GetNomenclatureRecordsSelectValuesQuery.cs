@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CODWER.RERU.Personal.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities.Enums;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using MediatR;
 

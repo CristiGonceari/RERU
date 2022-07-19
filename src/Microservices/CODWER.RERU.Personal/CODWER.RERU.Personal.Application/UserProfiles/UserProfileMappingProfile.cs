@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.User;
 using CODWER.RERU.Personal.DataTransferObjects.UserProfiles;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Personal.Application.UserProfiles
 {

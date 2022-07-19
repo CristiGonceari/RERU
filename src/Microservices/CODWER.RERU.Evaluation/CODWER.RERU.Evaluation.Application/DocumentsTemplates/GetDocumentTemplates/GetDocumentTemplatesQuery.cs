@@ -2,6 +2,7 @@
 using CODWER.RERU.Evaluation.DataTransferObjects.Documents;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Module.Application.Attributes;
+using CVU.ERP.StorageService.Entities;
 using MediatR;
 using RERU.Data.Entities.Enums;
 

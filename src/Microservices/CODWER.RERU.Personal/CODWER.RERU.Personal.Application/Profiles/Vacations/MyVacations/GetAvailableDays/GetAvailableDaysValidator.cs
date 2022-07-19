@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using CVU.ERP.Common.Extensions;
 using FluentValidation.Validators;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Application.Validation;
 

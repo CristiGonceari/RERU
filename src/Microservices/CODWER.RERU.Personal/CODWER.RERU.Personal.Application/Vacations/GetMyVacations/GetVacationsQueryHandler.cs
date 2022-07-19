@@ -1,6 +1,6 @@
 ﻿using CODWER.RERU.Personal.Application.Services;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities.ContractorEvents;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Vacations;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.StorageService;
@@ -37,11 +37,11 @@ namespace CODWER.RERU.Personal.Application.Vacations.GetMyVacations
 
             var userProfile = await _userProfileService.GetCurrentUserProfile();
 
-            Console.WriteLine("----GetMyVacation : ContractorId = " + userProfile.ContractorId);
+            Console.WriteLine("----GetMyVacation : ContractorId = " + userProfile.Contractor.Id);
             
-            if (userProfile?.ContractorId != null)
+            if (userProfile?.Contractor?.Id != null)
             {
-                items = items.Where(x => x.ContractorId == userProfile.ContractorId);
+                items = items.Where(x => x.ContractorId == userProfile.Contractor.Id);
             }
             else
             {

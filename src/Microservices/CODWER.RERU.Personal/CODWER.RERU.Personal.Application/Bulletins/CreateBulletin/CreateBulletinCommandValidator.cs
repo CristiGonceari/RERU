@@ -2,9 +2,10 @@
 using FluentValidation.Validators;
 using System.Linq;
 using CODWER.RERU.Personal.Application.Validation;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
+using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Personal.Application.Bulletins.CreateBulletin
 {
@@ -27,7 +28,10 @@ namespace CODWER.RERU.Personal.Application.Bulletins.CreateBulletin
 
         private void CheckIfContractorHasBulletin(int contractorId, CustomContext context)
         {
-            var exist = _appDbContext.Bulletins.Any(x => x.ContractorId == contractorId);
+            var exist = _appDbContext.Bulletins
+                .Include(x=>x.UserProfile)
+                .ThenInclude(x=>x.Contractor)
+                .Any(x => x.UserProfile.Contractor.Id == contractorId);
 
             if (exist)
             {
@@ -37,7 +41,10 @@ namespace CODWER.RERU.Personal.Application.Bulletins.CreateBulletin
 
         private void CheckIfUniqueIdnpOnCreate(string idnp, CustomContext context)
         {
-            var exist = _appDbContext.Bulletins.Any(x => x.Idnp == idnp);
+            var exist = _appDbContext.Bulletins
+                .Include(x => x.UserProfile)
+                .ThenInclude(x => x.Contractor)
+                .Any(x => x.UserProfile.Idnp == idnp);
 
             if (exist)
             {

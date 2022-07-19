@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Personal.Application.Services;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Entities.User;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Profiles;
 using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Entities;
@@ -11,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContractorProfile
 {
@@ -37,13 +37,13 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContrac
                 .Include(r => r.Positions)
                 .ThenInclude(p => p.Department)
                 .Include(c => c.Positions)
-                .ThenInclude(p => p.OrganizationRole)
+                .ThenInclude(p => p.Role)
                 .Include(r => r.BloodType)
-                .Include(r => r.Studies)
+                //.Include(r => r.Studies)
                 .Include(r => r.Contacts)
                 .Include(x => x.Contracts)
                 .Include(x => x.UserProfile)
-                .Include(x => x.Bulletin)
+              //  .Include(x => x.Bulletin)
                 .Include(x => x.ContractorFiles)
                 .Select(c => new Contractor
                  {
@@ -57,18 +57,18 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContrac
                      BloodTypeId = c.BloodTypeId,
                      Positions = c.Positions,
                      BloodType = c.BloodType,
-                     Studies = c.Studies,
+                    // Studies = c.Studies,
                      Contacts = c.Contacts,
                      Contracts = c.Contracts,
                      UserProfile = c.UserProfile,
-                     Bulletin = c.Bulletin
+                    // Bulletin = c.Bulletin
                  })
-                .FirstAsync(rt => rt.Id == _userProfile.ContractorId);
+                .FirstAsync(rt => rt.Id == _userProfile.Contractor.Id);
 
             var mappedContractor = _mapper.Map<ContractorProfileDto>(contractor);
 
-            mappedContractor.HasEmploymentRequest = await _personalStorageClient.HasFile(_userProfile.ContractorId ?? 0, FileTypeEnum.request);
-            mappedContractor.HasIdentityDocuments = await _personalStorageClient.HasFile(_userProfile.ContractorId ?? 0, FileTypeEnum.identityfiles);
+            mappedContractor.HasEmploymentRequest = await _personalStorageClient.HasFile(_userProfile.Contractor.Id, FileTypeEnum.request);
+            mappedContractor.HasIdentityDocuments = await _personalStorageClient.HasFile(_userProfile.Contractor.Id, FileTypeEnum.identityfiles);
 
             return mappedContractor;
         }
