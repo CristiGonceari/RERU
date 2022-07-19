@@ -4,7 +4,7 @@
     <div *ngIf="!isLoadingMilitaryObligation">
         <div class="row my-5">
             <div class="col">
-                <h4>{{'Date biografice a rudelor apropiate candidatului ' | translate}}</h4>
+                <h4>{{'military-obligation.paragraf-name' | translate}}</h4>
             </div>
         </div>
         <div formArrayName="obligations">
@@ -14,71 +14,71 @@
                 [formGroupName]="i">
                 <tbody>
                     <tr>
-                        <th>Number</th>
+                        <th>{{ 'table.number' | translate}}</th>
                         <td>
                             {{i + 1}}
                         </td>
                     </tr>
                     <tr>
-                        <th>Obligatiunea militara</th>
+                        <th>{{ 'military-obligation.name' | translate}}</th>
                         <td>
                             <select class="form-control" formControlName="militaryObligationType">
                                 <option value="null">{{'module-access.select' | translate}}</option>
-                                <option *ngFor="let item of militaryObligationTypeEnum" [value]="item.value">{{
-                                    item.label }}
+                                <option *ngFor="let item of militaryObligationTypeEnum" [value]="item.value">
+                                    {{ 'militaryObligationType.' + item.label | translate }}
                                 </option>
                             </select>
                         </td>
                     </tr>
                     <tr>
-                        <th>Anul mobilizarii</th>
+                        <th>{{'military-obligation.year-of-mobilization' | translate}}</th>
                         <td>
                             <app-date [parent]="obligation" [date]="'mobilizationYear'"
-                                [placeholder]="'mobilizationYear' | translate"></app-date>
+                                [placeholder]="'military-obligation.year-of-mobilization' | translate"></app-date>
                         </td>
                     </tr>
                     <tr>
                     <tr>
-                        <th>Anul retragerii</th>
+                        <th>{{'military-obligation.year-of-withdrawal' | translate}}</th>
                         <td>
                             <app-date [parent]="obligation" [date]="'withdrawalYear'"
-                                [placeholder]="'withdrawalYear' | translate"></app-date>
+                                [placeholder]="'military-obligation.year-of-withdrawal' | translate"></app-date>
                         </td>
                     </tr>
                     <tr>
-                        <th>Efectiv</th>
+                        <th>{{'military-obligation.efectiv' | translate}}</th>
                         <td>
                             <input formControlName="efectiv" autocomplete="off" class="form-control form-control-solid"
-                                type="text" [placeholder]="'efectiv' | translate" />
+                                type="text" [placeholder]="'military-obligation.efectiv' | translate" />
                         </td>
                     </tr>
                     <tr>
-                        <th>Specialitatea militara</th>
+                        <th>{{'military-obligation.military-specialty' | translate}}</th>
                         <td>
                             <input formControlName="militarySpecialty" autocomplete="off"
                                 class="form-control form-control-solid" type="text"
-                                [placeholder]="'militarySpecialty' | translate" />
+                                [placeholder]="'military-obligation.military-specialty' | translate" />
                         </td>
                     </tr>
                     <tr>
-                        <th>Gradul</th>
+                        <th>{{'military-obligation.degree' | translate}}</th>
                         <td>
                             <input formControlName="degree" autocomplete="off" class="form-control form-control-solid"
-                                type="text" [placeholder]="'degree' | translate" />
+                                type="text" [placeholder]="'military-obligation.degree' | translate" />
                         </td>
                     </tr>
 
                     <tr>
-                        <th rowspan="4">Livret militar</th>
+                        <th rowspan="4">{{'military-obligation.military-booklet' | translate}}</th>
                         <td>
                             <div class="row">
                                 <div class="col-2 text-center p-3">
-                                    Seria
+                                    {{'military-obligation.series' | translate}}
                                 </div>
                                 <div class="col-10">
                                     <input formControlName="militaryBookletSeries" autocomplete="off"
                                         class="form-control form-control-solid" type="text"
-                                        [placeholder]="'militaryBookletSeries' | translate" />
+                                        [placeholder]="'military-obligation.series' | translate" />
                                 </div>
                             </div>
                         </td>
@@ -87,12 +87,12 @@
                         <td>
                             <div class="row">
                                 <div class="col-2 text-center p-3">
-                                    Numarul
+                                    {{'military-obligation.number' | translate}}
                                 </div>
                                 <div class="col-10">
                                     <input formControlName="militaryBookletNumber" autocomplete="off"
                                         class="form-control form-control-solid" type="number"
-                                        [placeholder]="'militaryBookletNumber' | translate" />
+                                        [placeholder]="'military-obligation.number' | translate" />
                                 </div>
                             </div>
                         </td>
@@ -101,11 +101,11 @@
                         <td>
                             <div class="row">
                                 <div class="col-2 text-center p-3">
-                                    Data Eliberarii
+                                    {{'military-obligation.relase-day' | translate}}
                                 </div>
                                 <div class="col-10">
                                         <app-date [parent]="obligation" [date]="'militaryBookletReleaseDay'"
-                                            [placeholder]="'militaryBookletReleaseDay' | translate"></app-date>
+                                            [placeholder]="'military-obligation.relase-day' | translate"></app-date>
                                 </div>
                             </div>
                         </td>
@@ -114,12 +114,12 @@
                         <td>
                             <div class="row">
                                 <div class="col-2 text-center p-3">
-                                    Autoritatea Eminenta
+                                    {{'military-obligation.eminent-authority' | translate}}
                                 </div>
                                 <div class="col-10">
                                     <input formControlName="militaryBookletEminentAuthority" autocomplete="off"
                                         class="form-control form-control-solid" type="text"
-                                        [placeholder]="'militaryBookletEminentAuthority' | translate" />
+                                        [placeholder]="'military-obligation.eminent-authority' | translate" />
                                 </div>
                             </div>
                         </td>
@@ -144,16 +144,16 @@
         <div class="row justify-content-end m-7">
             <button class="btn btn-success" *ngIf="addOrEditMilitaryObligationButton"
                 [disabled]="militaryObligationForm && militaryObligationForm.invalid "
-                (click)="createMilitaryObligations()">{{'Update' | translate}}</button>
+                (click)="createMilitaryObligations()">{{'stepper.button-update' | translate}}</button>
             <button class="btn btn-success" *ngIf="!addOrEditMilitaryObligationButton"
                 [disabled]="militaryObligationForm && militaryObligationForm.invalid"
-                (click)="createMilitaryObligations()">{{'Add' | translate}}</button>
+                (click)="createMilitaryObligations()">{{'stepper.button-add' | translate}}</button>
         </div>
     </div>
 </form>
 <div class="row justify-content-end mt-10 mr-1">
     <button class="btn btn-success" matStepperNext
-        [disabled]="(militaryObligationForm && militaryObligationForm.invalid)"
+        [disabled]="(militaryObligationForm && militaryObligationForm.invalid || militaryObligationData == null)"
         (click)="addRegistrationFluxStep()"
-        >{{'Next step' | translate}}</button>
+        >{{'stepper.button-next' | translate}}</button>
 </div>

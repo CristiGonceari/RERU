@@ -149,7 +149,7 @@ export class MilitaryObligationComponent implements OnInit {
       efectiv: this.fb.control((militaryObligation && militaryObligation.efectiv) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       militarySpecialty: this.fb.control((militaryObligation && militaryObligation.militarySpecialty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       degree: this.fb.control((militaryObligation && militaryObligation.degree) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      militaryBookletSeries: this.fb.control((militaryObligation && militaryObligation.militaryBookletSeries) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      militaryBookletSeries: this.fb.control((militaryObligation && militaryObligation.militaryBookletSeries) || null, [Validators.required]),
       militaryBookletNumber: this.fb.control((militaryObligation && militaryObligation.militaryBookletNumber) || null, []),
       militaryBookletReleaseDay: this.fb.control((militaryObligation && militaryObligation.militaryBookletReleaseDay) || null, [Validators.required]),
       militaryBookletEminentAuthority: this.fb.control((militaryObligation && militaryObligation.militaryBookletEminentAuthority) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),

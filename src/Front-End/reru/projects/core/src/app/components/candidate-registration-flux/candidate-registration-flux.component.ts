@@ -32,7 +32,7 @@ export class CandidateRegistrationFluxComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
 
   counter;
-
+  stepsEnum = RegistrationFluxStepEnum;
   state: string;
   userId;
   steps;
@@ -92,20 +92,25 @@ export class CandidateRegistrationFluxComponent implements OnInit {
 
     this.getAllSteps();
   }
-
+  
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     this.subscription.unsubscribe();
   }
-
+    
   ngAfterViewInit() {
       setTimeout(()=>{
         this.stepper.selectedIndex = this.stepperEvent.selectedIndex; 
       },0);
       
-    }
+  }
 
-    selectionChanged(event: any) {
+  parseInt(value){
+    return parseInt(value);
+        
+  }
+
+  selectionChanged(event: any) {
       
       this.selectedStepIndex = event.selectedIndex;
       

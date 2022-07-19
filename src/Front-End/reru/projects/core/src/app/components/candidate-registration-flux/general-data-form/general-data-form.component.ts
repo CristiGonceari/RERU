@@ -100,7 +100,8 @@ export class GeneralDataFormComponent implements OnInit {
     });
 
     this.referenceService.getCandidateStateLanguageLevelEnum().subscribe((res) => {
-      this.stateLanguageLevelEnum = res.data;
+      let languageEnum = res.data
+      this.stateLanguageLevelEnum = languageEnum.sort(function(a, b){return a.value - b.value});
     });
 
     this.referenceService.getCandidateCitizenship().subscribe((res) => {

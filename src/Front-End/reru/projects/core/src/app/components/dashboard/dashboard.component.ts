@@ -40,8 +40,8 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.list();
     this.subscribeForAuthChange();
+    this.list();
     this.setIntrvl();
     
   }
@@ -49,14 +49,6 @@ export class DashboardComponent implements OnInit {
   subscribeForAuthChange(): void {
     this.userSubject.userChange.subscribe((res) => {
         this.modules = this.moduleService.get();
-        if (res.isCandidateStatus)
-        {
-          this.profileService.GetCandidateRegistrationSteps().subscribe(res => {
-            if (res.data.unfinishedSteps.length != 0){
-              this.router.navigate(["./registration-flux",res.data.userProfileId,"step",res.data.unfinishedSteps[0]], { relativeTo: this.route });
-            }
-          })
-        }
     }
     );
   }

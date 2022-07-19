@@ -19,7 +19,7 @@ export class ChangePersonalDataComponent implements OnInit {
 	title: string;
 	description: string;
 	startDate;
-	birthday;
+	birthDate;
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -78,14 +78,14 @@ export class ChangePersonalDataComponent implements OnInit {
 				Validators.required,
 			]),
 		});
-		this.birthday = oldPersonalData.birthday;
+		this.birthDate = oldPersonalData.birthDate;
 		this.isLoading = false;
 	}
 
 	parseRequest(data: PersonalData): PersonalData {
 		return {
 			...data,
-			birthday: this.birthday != null ? new Date(`${this.birthday} EDT`).toISOString() : null
+			birthDate: this.birthDate != null ? new Date(`${this.birthDate} EDT`).toISOString() : null
 		};
 	}
 
