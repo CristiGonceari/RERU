@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Entities.Documents;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.PersonalEntities.Documents;
 
 namespace CODWER.RERU.Personal.Application.DocumentTemplates.RemoveDocumentTemplate
 {
@@ -22,9 +22,9 @@ namespace CODWER.RERU.Personal.Application.DocumentTemplates.RemoveDocumentTempl
 
         public async Task<Unit> Handle(RemoveDocumentTemplateCommand request, CancellationToken cancellationToken)
         {
-            var toRemove = await _appDbContext.DocumentTemplates.FirstAsync(d => d.Id == request.Id);
+            var toRemove = await _appDbContext.HrDocumentTemplates.FirstAsync(d => d.Id == request.Id);
 
-            _appDbContext.DocumentTemplates.Remove(toRemove);
+            _appDbContext.HrDocumentTemplates.Remove(toRemove);
             await _appDbContext.SaveChangesAsync();
 
             await LogAction(toRemove);
@@ -32,7 +32,7 @@ namespace CODWER.RERU.Personal.Application.DocumentTemplates.RemoveDocumentTempl
             return Unit.Value;
         }
 
-        private async Task LogAction(DocumentTemplate documentTemplate)
+        private async Task LogAction(HrDocumentTemplate documentTemplate)
         {
             await _loggerService.Log(LogData.AsPersonal($"{documentTemplate.Name} was removed from document templates list", documentTemplate));
         }

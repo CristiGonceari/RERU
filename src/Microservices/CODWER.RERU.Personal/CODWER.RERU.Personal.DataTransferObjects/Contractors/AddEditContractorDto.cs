@@ -1,5 +1,5 @@
 ﻿using System;
-using CODWER.RERU.Personal.Data.Entities.Enums;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Personal.DataTransferObjects.Contractors
 {

@@ -23,7 +23,7 @@ namespace CODWER.RERU.Personal.Application.Validators.UserProfiles
         {
             var contractor = _userProfileService.GetCurrentUserProfile().Result;
 
-            var existent = contractor?.ContractorId != null;
+            var existent = contractor?.Contractor != null;
                 
             if (!existent)
             {

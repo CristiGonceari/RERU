@@ -7,7 +7,6 @@ using CODWER.RERU.Personal.Application.DocumentTemplates.GetDocumentTemplates;
 using CODWER.RERU.Personal.Application.DocumentTemplates.GetDoucmentKeys;
 using CODWER.RERU.Personal.Application.DocumentTemplates.RemoveDocumentTemplate;
 using CODWER.RERU.Personal.Application.DocumentTemplates.UpdateDocumentTemplate;
-using CODWER.RERU.Personal.Data.Entities.Documents;
 using CODWER.RERU.Personal.DataTransferObjects.Documents;
 using CVU.ERP.Common.Pagination;
 using MediatR;

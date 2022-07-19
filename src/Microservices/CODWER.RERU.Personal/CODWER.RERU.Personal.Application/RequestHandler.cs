@@ -6,11 +6,11 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Persistence.ReferenceData;
 using CVU.ERP.Common.Data.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using RERU.Data.Entities.PersonalEntities;
 using ISession = CODWER.RERU.Personal.Application.Interfaces.ISession;
 
 namespace CODWER.RERU.Personal.Application

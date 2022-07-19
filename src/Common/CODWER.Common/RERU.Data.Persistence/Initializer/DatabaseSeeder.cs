@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CVU.ERP.StorageService.Entities;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Documents;
 using RERU.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities.Documents;
+using RERU.Data.Entities.PersonalEntities.Enums;
+using RERU.Data.Entities.PersonalEntities.NomenclatureType;
 using RERU.Data.Persistence.Context;
 
 namespace RERU.Data.Persistence.Initializer
@@ -18,6 +22,7 @@ namespace RERU.Data.Persistence.Initializer
             AddModernLaguages(appDbContext);
             AddStudyType(appDbContext);
             AddMaterialStatusTypes(appDbContext);
+            AddBaseNomenclatureTypes(appDbContext);
         }
 
         private static void AddBaseDocumentTemplateKeys(AppDbContext appDbContext)
@@ -25,50 +30,50 @@ namespace RERU.Data.Persistence.Initializer
             
             var newValues = new List<DocumentTemplateKey>()
             {
-                //TestType TestTemplate
-                new DocumentTemplateKey { KeyName="{cheie_cu_data_de_azi}", Description= "Data pentru ziua de azi", FileType = FileTypeEnum.TestTemplate, TranslateId = 1 },
-                new DocumentTemplateKey { KeyName="{cheia_numelui_șablonului_de_testare}", Description= "Numele șablonului de test", FileType = FileTypeEnum.TestTemplate, TranslateId = 22 },
-                new DocumentTemplateKey { KeyName="{cheia_numelui_categoriei_șablonului_de_testare}", Description= "Numarul de categorii din șablonul de test", FileType = FileTypeEnum.TestTemplate, TranslateId = 23 },
-                new DocumentTemplateKey { KeyName="{cheia_regulilor}", Description= "Reguli", FileType = FileTypeEnum.TestTemplate, TranslateId = 24 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_numarul_total_de_întrebări}", Description= "Numarul de intrebari", FileType = FileTypeEnum.TestTemplate, TranslateId = 25 },
-                new DocumentTemplateKey { KeyName="{cheie_minim_punctaj}", Description= "Punctajul Minim", FileType = FileTypeEnum.TestTemplate, TranslateId = 26 },
-                new DocumentTemplateKey { KeyName="{cheie_de_durată}", Description= "Durata", FileType = FileTypeEnum.TestTemplate, TranslateId = 27 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_numarul_de_maxim_posibile_erori}", Description= "Maxim posibile erori", FileType = FileTypeEnum.TestTemplate, TranslateId = 28 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_formula_pentru_un_singur_raspuns}", Description= "Formula pentru intrebari cu un raspuns", FileType = FileTypeEnum.TestTemplate, TranslateId = 29 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_formula_pentru_răspunsuri_multiple}", Description= "Formula pentru intrebari cu respunsuri multiple", FileType = FileTypeEnum.TestTemplate, TranslateId = 30 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_statutul_șablonului}", Description= "Statutul șablonului de test", FileType = FileTypeEnum.TestTemplate, TranslateId = 31 },
-                new DocumentTemplateKey { KeyName="{cheie_modul_șablonului}", Description= "Modul șablonului de test", FileType = FileTypeEnum.TestTemplate, TranslateId = 32 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_ordinea_întrebărilor_in_test}", Description= "Ordinea întrebărilor in test", FileType = FileTypeEnum.TestTemplate, TranslateId = 33 },
+                //testType testtemplate
+                new DocumentTemplateKey { KeyName="{cheie_cu_data_de_azi}", Description= "Data pentru ziua de azi", FileType = FileTypeEnum.testtemplate, TranslateId = 1 },
+                new DocumentTemplateKey { KeyName="{cheia_numelui_șablonului_de_testare}", Description= "Numele șablonului de test", FileType = FileTypeEnum.testtemplate, TranslateId = 22 },
+                new DocumentTemplateKey { KeyName="{cheia_numelui_categoriei_șablonului_de_testare}", Description= "Numarul de categorii din șablonul de test", FileType = FileTypeEnum.testtemplate, TranslateId = 23 },
+                new DocumentTemplateKey { KeyName="{cheia_regulilor}", Description= "Reguli", FileType = FileTypeEnum.testtemplate, TranslateId = 24 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_numarul_total_de_întrebări}", Description= "Numarul de intrebari", FileType = FileTypeEnum.testtemplate, TranslateId = 25 },
+                new DocumentTemplateKey { KeyName="{cheie_minim_punctaj}", Description= "Punctajul Minim", FileType = FileTypeEnum.testtemplate, TranslateId = 26 },
+                new DocumentTemplateKey { KeyName="{cheie_de_durată}", Description= "Durata", FileType = FileTypeEnum.testtemplate, TranslateId = 27 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_numarul_de_maxim_posibile_erori}", Description= "Maxim posibile erori", FileType = FileTypeEnum.testtemplate, TranslateId = 28 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_formula_pentru_un_singur_raspuns}", Description= "Formula pentru intrebari cu un raspuns", FileType = FileTypeEnum.testtemplate, TranslateId = 29 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_formula_pentru_răspunsuri_multiple}", Description= "Formula pentru intrebari cu respunsuri multiple", FileType = FileTypeEnum.testtemplate, TranslateId = 30 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_statutul_șablonului}", Description= "Statutul șablonului de test", FileType = FileTypeEnum.testtemplate, TranslateId = 31 },
+                new DocumentTemplateKey { KeyName="{cheie_modul_șablonului}", Description= "Modul șablonului de test", FileType = FileTypeEnum.testtemplate, TranslateId = 32 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_ordinea_întrebărilor_in_test}", Description= "Ordinea întrebărilor in test", FileType = FileTypeEnum.testtemplate, TranslateId = 33 },
 
-                //TestType Test
-                new DocumentTemplateKey { KeyName="{cheie_pentru_data_de_azi}", Description= "Data pentru ziua de azi", FileType = FileTypeEnum.Test, TranslateId = 34 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_punctaj_acumulat}", Description= "Punctaj Acumulat", FileType = FileTypeEnum.Test, TranslateId = 35 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_statutul_testului}", Description= "Statutul testului", FileType = FileTypeEnum.Test, TranslateId = 37 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_rezultatul_testului}", Description= "Rezultatul testului", FileType = FileTypeEnum.Test, TranslateId = 38 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_data_programata_a_testului}", Description= "Data programata pentru inceperea testului", FileType = FileTypeEnum.Test, TranslateId = 21 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_data_de_inceput_a_testului}", Description= "Data cand sa inceput testului", FileType = FileTypeEnum.Test, TranslateId = 20 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_numele_evenimentului}", Description= "Numele evenimentul la care este atasat testul", FileType = FileTypeEnum.Test, TranslateId = 9 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_descrierea_evenimentului}", Description= "Detalii despre evenimentul la care este atasat testul", FileType = FileTypeEnum.Test, TranslateId = 2 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_data_de_inceput_a_evenimentului}", Description= "Data de incepere a evenimentul la care este atasat testul", FileType = FileTypeEnum.Test,  TranslateId = 3 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_data_de_incheiere_a_evenimentului}", Description= "Data de incheiere a evenimentul la care este atasat testul", FileType = FileTypeEnum.Test, TranslateId = 4 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_numele_locatiei}", Description= "Numele locatiei la care este atasat testul", FileType = FileTypeEnum.Test, TranslateId = 5 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_descrierea_locatiei}", Description= "Detalii despre locatia la care este atasat testul", FileType = FileTypeEnum.Test, TranslateId = 6 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_adresa_locatiei}", Description= "Adresa locatiei la care este atasat testul", FileType = FileTypeEnum.Test, TranslateId = 7 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_numarul_de_locuri_ale_locatiei}", Description= "Numarul de locuri ale locatiei la care este atasat testul", FileType = FileTypeEnum.Test, TranslateId = 10 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_numele_testului}", Description= "Numele Testului", FileType = FileTypeEnum.Test, TranslateId = 41 },
+                //testType test
+                new DocumentTemplateKey { KeyName="{cheie_pentru_data_de_azi}", Description= "Data pentru ziua de azi", FileType = FileTypeEnum.test, TranslateId = 34 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_punctaj_acumulat}", Description= "Punctaj Acumulat", FileType = FileTypeEnum.test, TranslateId = 35 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_statutul_testului}", Description= "Statutul testului", FileType = FileTypeEnum.test, TranslateId = 37 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_rezultatul_testului}", Description= "Rezultatul testului", FileType = FileTypeEnum.test, TranslateId = 38 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_data_programata_a_testului}", Description= "Data programata pentru inceperea testului", FileType = FileTypeEnum.test, TranslateId = 21 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_data_de_inceput_a_testului}", Description= "Data cand sa inceput testului", FileType = FileTypeEnum.test, TranslateId = 20 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_numele_evenimentului}", Description= "Numele evenimentul la care este atasat testul", FileType = FileTypeEnum.test, TranslateId = 9 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_descrierea_evenimentului}", Description= "Detalii despre evenimentul la care este atasat testul", FileType = FileTypeEnum.test, TranslateId = 2 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_data_de_inceput_a_evenimentului}", Description= "Data de incepere a evenimentul la care este atasat testul", FileType = FileTypeEnum.test,  TranslateId = 3 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_data_de_incheiere_a_evenimentului}", Description= "Data de incheiere a evenimentul la care este atasat testul", FileType = FileTypeEnum.test, TranslateId = 4 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_numele_locatiei}", Description= "Numele locatiei la care este atasat testul", FileType = FileTypeEnum.test, TranslateId = 5 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_descrierea_locatiei}", Description= "Detalii despre locatia la care este atasat testul", FileType = FileTypeEnum.test, TranslateId = 6 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_adresa_locatiei}", Description= "Adresa locatiei la care este atasat testul", FileType = FileTypeEnum.test, TranslateId = 7 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_numarul_de_locuri_ale_locatiei}", Description= "Numarul de locuri ale locatiei la care este atasat testul", FileType = FileTypeEnum.test, TranslateId = 10 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_numele_testului}", Description= "Numele testului", FileType = FileTypeEnum.test, TranslateId = 41 },
 
                         //Evaluated person
-                new DocumentTemplateKey { KeyName="{cheie_cu_numele_evaluatului}", Description= "Numele evaluatului", FileType = FileTypeEnum.Test, TranslateId = 18 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_prenumele_evaluatului}", Description= "Prenumele evaluatului", FileType = FileTypeEnum.Test, TranslateId = 11 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_patronimicul_evaluatului}", Description= "Patronimicul evaluatului", FileType = FileTypeEnum.Test, TranslateId = 12 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_IDNP_evaluatului}", Description= "IDNP din buletinul evaluatului", FileType = FileTypeEnum.Test, TranslateId = 13 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_email_evaluatului}", Description= "E-mailul evaluatului", FileType = FileTypeEnum.Test, TranslateId = 14 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_numele_evaluatului}", Description= "Numele evaluatului", FileType = FileTypeEnum.test, TranslateId = 18 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_prenumele_evaluatului}", Description= "Prenumele evaluatului", FileType = FileTypeEnum.test, TranslateId = 11 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_patronimicul_evaluatului}", Description= "Patronimicul evaluatului", FileType = FileTypeEnum.test, TranslateId = 12 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_IDNP_evaluatului}", Description= "IDNP din buletinul evaluatului", FileType = FileTypeEnum.test, TranslateId = 13 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_email_evaluatului}", Description= "E-mailul evaluatului", FileType = FileTypeEnum.test, TranslateId = 14 },
                         //Evaluator
-                new DocumentTemplateKey { KeyName="{cheie_cu_numele_evaluatorului}", Description= "Numele evaluatorului", FileType = FileTypeEnum.Test, TranslateId = 15 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_prenumele_evaluatorului}", Description= "Prenumele evaluatorului", FileType = FileTypeEnum.Test, TranslateId = 16 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_patronimicul_evaluatorului}", Description= "Patronimicul evaluatorului", FileType = FileTypeEnum.Test, TranslateId = 17 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_IDNP_evaluatorului}", Description= "IDNP din buletinul evaluatorului", FileType = FileTypeEnum.Test, TranslateId = 39 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_email_evaluatorului}", Description= "E-mailul evaluatorului", FileType = FileTypeEnum.Test, TranslateId = 40 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_numele_evaluatorului}", Description= "Numele evaluatorului", FileType = FileTypeEnum.test, TranslateId = 15 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_prenumele_evaluatorului}", Description= "Prenumele evaluatorului", FileType = FileTypeEnum.test, TranslateId = 16 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_patronimicul_evaluatorului}", Description= "Patronimicul evaluatorului", FileType = FileTypeEnum.test, TranslateId = 17 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_IDNP_evaluatorului}", Description= "IDNP din buletinul evaluatorului", FileType = FileTypeEnum.test, TranslateId = 39 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_email_evaluatorului}", Description= "E-mailul evaluatorului", FileType = FileTypeEnum.test, TranslateId = 40 },
             };
 
             var keys = appDbContext.DocumentTemplateKeys.ToList(); 
@@ -420,13 +425,13 @@ namespace RERU.Data.Persistence.Initializer
                                        "<p style=\"text-align:center;\">" +
                                        "<span class=\"text-huge\">Pentru a vă înregistra în calitate de candidat, este necesar să completați formularul de mai jos.</span></p>" +
                                        "<p style=\"text-align:center;\"><span class=\"text-huge\">După înregistrare, vi se va expedia un email cu credențialele dvs.</span></p><p>&nbsp;</p>" +
-                                       "<p><span class=\"text-big\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Cu ajutorul acestor credențiale trebuie să vă autentificați. După autentificare mergeți la modulul „Evaluare și Testare”. (Pasul 1)</span></p>" +
+                                       "<p><span class=\"text-big\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Cu ajutorul acestor credențiale trebuie să vă autentificați. După autentificare mergeți la modulul „Evaluare și testare”. (Pasul 1)</span></p>" +
                                        "<p>&nbsp;</p><p><span class=\"text-big\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Solicitați un test din secțiunea „Activitățile mele”.(Pasul 2)</span></p>" +
-                                       "<p>&nbsp;</p><p><span class=\"text-big\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Opțiunea „Teste solicitate” (Pasul 3)</span></p><p>&nbsp;</p>" +
+                                       "<p>&nbsp;</p><p><span class=\"text-big\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Opțiunea „teste solicitate” (Pasul 3)</span></p><p>&nbsp;</p>" +
                                        "<p><span class=\"text-big\">&nbsp; &nbsp; &nbsp; Apăsați butonul „Solicită test” (Pasul 4) si completați formularul cu datele dorite (Pasul 5)</span></p>" +
                                        "<ul>" +
                                        "<li><span class=\"text-big\">&nbsp;- Eveniment</span></li>" +
-                                       "<li><span class=\"text-big\">- Test</span></li>" +
+                                       "<li><span class=\"text-big\">- test</span></li>" +
                                        "<li><span class=\"text-big\">- Timpul comod</span></li>" +
                                        "</ul>" +
                                        "<p><span class=\"text-big\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Apasăti butonul „Confirmă” (Pasul 6) pentru a finaliza procedura.</span></p><p>&nbsp;" +
@@ -495,5 +500,112 @@ namespace RERU.Data.Persistence.Initializer
             }
         }
 
+
+        private static void AddBaseNomenclatureTypes(AppDbContext appDbContext)
+        {
+            if (!appDbContext.NomenclatureTypes.Any(x => x.BaseNomenclature == BaseNomenclatureTypesEnum.BloodTypes))
+            {
+                appDbContext.NomenclatureTypes.Add(new NomenclatureType
+                {
+                    Name = "Grupa Sanguina",
+                    BaseNomenclature = BaseNomenclatureTypesEnum.BloodTypes,
+                    IsActive = true
+                });
+            }
+
+            if (!appDbContext.NomenclatureTypes.Any(x => x.BaseNomenclature == BaseNomenclatureTypesEnum.Currency))
+            {
+                appDbContext.NomenclatureTypes.Add(new NomenclatureType
+                {
+                    Name = "Valuta",
+                    BaseNomenclature = BaseNomenclatureTypesEnum.Currency,
+                    IsActive = true
+                });
+            }
+
+            if (!appDbContext.NomenclatureTypes.Any(x => x.BaseNomenclature == BaseNomenclatureTypesEnum.Rank))
+            {
+                appDbContext.NomenclatureTypes.Add(new NomenclatureType
+                {
+                    Name = "Grade militare",
+                    BaseNomenclature = BaseNomenclatureTypesEnum.Rank,
+                    IsActive = true
+                });
+            }
+
+            if (!appDbContext.NomenclatureTypes.Any(x => x.BaseNomenclature == BaseNomenclatureTypesEnum.FamilyComponent))
+            {
+                appDbContext.NomenclatureTypes.Add(new NomenclatureType
+                {
+                    Name = "Relatii de rudenie",
+                    BaseNomenclature = BaseNomenclatureTypesEnum.FamilyComponent,
+                    IsActive = true
+                });
+            }
+
+            if (!appDbContext.NomenclatureTypes.Any(x => x.BaseNomenclature == BaseNomenclatureTypesEnum.StudyType))
+            {
+                appDbContext.NomenclatureTypes.Add(new NomenclatureType
+                {
+                    Name = "Tipuri de studii",
+                    BaseNomenclature = BaseNomenclatureTypesEnum.StudyType,
+                    IsActive = true
+                });
+            }
+
+            if (!appDbContext.HrDocumentTemplateCategories.Any(dc => dc.Id >= 1))
+            {
+                appDbContext.HrDocumentTemplateCategories.AddRange(new List<HrDocumentTemplateCategory>()
+                {
+                     new HrDocumentTemplateCategory
+                    {
+                            Id = 1,
+                            Name = "Angajat",
+                    },
+                     new HrDocumentTemplateCategory
+                    {
+                            Id = 2,
+                            Name = "Companie",
+                     }
+                }
+                );
+            }
+
+            if (!appDbContext.DocumentTemplateKeys.Any(dc => dc.Id >= 1))
+            {
+                appDbContext.HrDocumentTemplateKeys.AddRange(new List<HrDocumentTemplateKey>()
+                    {
+                        new HrDocumentTemplateKey {Id = 1, KeyName = "{today_date_key}", Description = "Data pentru ziua de azi", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 2, KeyName = "{c_name_key}", Description = "Numele Angajatului", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 3, KeyName = "{c_last_name_key}", Description = "Prenumele Angajatului", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 4, KeyName = "{c_father_name_key}", Description = "Patronimicul Angajatului", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 5, KeyName = "{c_idnp_key}", Description = "IDNP din buletin", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 6, KeyName = "{c_bulletin_series_key}", Description = "Seria buletinului", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 7, KeyName = "{c_bulletin_release_by_key}", Description = "Buletinul angajatului a fost emis de", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 8, KeyName = "{c_bulletin_release_day_key}", Description = "Data emiterii buletinului", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 9, KeyName = "{c_birthday_key}", Description = "Ziua de nastere a angajatului", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 10, KeyName = "{c_work_place_key}", Description = "Locul de munca a angajatului", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 11, KeyName = "{c_employment_date_key}", Description = "Ziua angajarii", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 12, KeyName = "{c_work_hours_key}", Description = "Numarul ore de munca pe zi conform contractului", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 13, KeyName = "{c_salary_key}", Description = "Salariu angajatului", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 14, KeyName = "{c_sex_type_key}", Description = "Sexul angajatului", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 15, KeyName = "{c_role_key}", Description = "Rolul angajatului in companie", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 16, KeyName = "{c_dissmisal_date_key}", Description = "Data demisionarii angajatului", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 17, KeyName = "{c_internship_days_key}", Description = "Zilele de stagiere a angajatului", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 18, KeyName = "{c_address_key}", Description = "Adresa de locuinta a angajatului", HrDocumentCategoriesId= 1},
+                        new HrDocumentTemplateKey {Id = 19, KeyName = "{company_key}", Description = "Numele companiei", HrDocumentCategoriesId= 2} ,
+                        new HrDocumentTemplateKey {Id = 20, KeyName = "{company_post_code_key}", Description = "Codul postal al companiei", HrDocumentCategoriesId= 2},
+                        new HrDocumentTemplateKey {Id = 21, KeyName = "{company_city_key}", Description = "Orasul de locatiune al compamiei", HrDocumentCategoriesId= 2},
+                        new HrDocumentTemplateKey {Id = 22, KeyName = "{company_street_key}", Description = "Adresa de locatie a companiei", HrDocumentCategoriesId= 2},
+                        new HrDocumentTemplateKey {Id = 23, KeyName = "{company_idno_key}", Description = "IDNO-ul companiei", HrDocumentCategoriesId= 2},
+                        new HrDocumentTemplateKey {Id = 24, KeyName = "{director_name_key}", Description = "Numele directorului", HrDocumentCategoriesId= 2},
+                        new HrDocumentTemplateKey {Id = 25, KeyName = "{director_last_name_key}", Description = "Prenumele directorului", HrDocumentCategoriesId= 2},
+                        new HrDocumentTemplateKey {Id = 26, KeyName = "{minister_srl_key}", Description = "Tipul companiei", HrDocumentCategoriesId= 2},
+                    }
+                 );
+            };
+
+            appDbContext.SaveChanges();
+        }
     }
 }

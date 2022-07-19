@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
-using CODWER.RERU.Personal.Data.Entities.StaticExtensions;
+using RERU.Data.Entities.PersonalEntities.ContractorEvents;
+using RERU.Data.Entities.PersonalEntities.StaticExtensions;
 using CODWER.RERU.Personal.DataTransferObjects.Badges;
 
 namespace CODWER.RERU.Personal.Application.Badges

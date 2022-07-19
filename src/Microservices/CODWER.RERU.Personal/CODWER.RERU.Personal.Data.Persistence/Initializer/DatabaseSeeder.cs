@@ -1,10 +1,10 @@
 ﻿using CODWER.RERU.Personal.Data.Entities.Documents;
-using CODWER.RERU.Personal.Data.Entities.Enums;
 using CODWER.RERU.Personal.Data.Entities.NomenclatureType;
-using CODWER.RERU.Personal.Data.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using CODWER.RERU.Personal.Data.Entities.Enums;
+using CODWER.RERU.Personal.Data.Persistence.Context;
 
 namespace CODWER.RERU.Personal.Data.Persistence.Initializer
 {

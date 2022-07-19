@@ -1,11 +1,12 @@
 ﻿using System;
 using CODWER.RERU.Personal.Application.Enums;
 using CODWER.RERU.Personal.Application.Permissions;
-using CODWER.RERU.Personal.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities.Enums;
 using CODWER.RERU.Personal.DataTransferObjects.Contractors;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
 {
@@ -34,6 +35,6 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
 
         public DateTime? EmploymentDateFrom { get; set; }
         public DateTime? EmploymentDateTo { get; set; }
-        public int? OrganizationRoleId { get; set; }
+        public int? RoleId { get; set; }
     }
 }

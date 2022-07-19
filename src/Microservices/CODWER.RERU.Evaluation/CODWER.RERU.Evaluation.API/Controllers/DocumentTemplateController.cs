@@ -14,6 +14,7 @@ using CODWER.RERU.Evaluation.Application.DocumentsTemplates.GetDocumentKeys;
 using RERU.Data.Entities.Enums;
 using CODWER.RERU.Evaluation.Application.DocumentsTemplates.PrintDocumentTemplates;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
+using CVU.ERP.StorageService.Entities;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {

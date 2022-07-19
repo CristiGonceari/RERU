@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Linq;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Personal.Application.Contractors.ContractorMappings
 {
-    public class OrganizationRoleConverter : IValueConverter<Contractor, string>
+    public class RoleConverter : IValueConverter<Contractor, string>
     {
         public string Convert(Contractor contractor, ResolutionContext context)
         {
             var currentPosition = contractor.GetCurrentPositionOnData(DateTime.Now);
 
             return currentPosition != null
-                ? currentPosition.OrganizationRole?.Name
-                : GetLastOrganizationRole(contractor);
+                ? currentPosition.Role?.Name
+                : GetLastRole(contractor);
         }
 
-        private string GetLastOrganizationRole(Contractor sourceMember)
+        private string GetLastRole(Contractor sourceMember)
         {
             var now = DateTime.Now;
 
@@ -26,7 +26,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.ContractorMappings
                 .FirstOrDefault();
 
             return lastPosition != null
-                ? lastPosition.OrganizationRole?.Name
+                ? lastPosition.Role?.Name
                 : "-";
         }
     }

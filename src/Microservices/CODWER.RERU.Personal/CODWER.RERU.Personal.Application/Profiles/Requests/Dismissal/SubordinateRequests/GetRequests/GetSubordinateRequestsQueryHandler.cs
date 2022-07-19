@@ -5,9 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CODWER.RERU.Personal.DataTransferObjects.DismissalRequests;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.Application.Services;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
+using RERU.Data.Entities.PersonalEntities.ContractorEvents;
 using CVU.ERP.StorageService;
 
 namespace CODWER.RERU.Personal.Application.Profiles.Requests.Dismissal.SubordinateRequests.GetRequests
@@ -39,7 +39,7 @@ namespace CODWER.RERU.Personal.Application.Profiles.Requests.Dismissal.Subordina
                     .ThenInclude(c=>c.Contracts)
                 .Include(x => x.Contractor)
                     .ThenInclude(c => c.Positions)
-                        .ThenInclude(p=>p.OrganizationRole)
+                        .ThenInclude(p=>p.Role)
                 .Where(x => x.Contractor.Contracts.Any(c => c.SuperiorId == contractorId));
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<DismissalRequest, DismissalRequestDto>(items, request);

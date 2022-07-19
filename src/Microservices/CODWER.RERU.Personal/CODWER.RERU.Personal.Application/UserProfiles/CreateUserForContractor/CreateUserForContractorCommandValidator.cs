@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 using CODWER.RERU.Personal.Application.Validation;
 using CODWER.RERU.Personal.Application.Validators;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 using FluentValidation.Validators;
+using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
 {
@@ -33,7 +34,9 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
 
         private void CheckExistentUserProfileWithSameEmail(CreateUserForContractorCommand req, CustomContext context)
         {
-            var exist = _appDbContext.UserProfiles.Any(x => x.Email == req.Email && x.ContractorId != req.ContractorId && x.ContractorId != null);
+            var exist = _appDbContext.UserProfiles
+                .Include(x=>x.Contractor)
+                .Any(x => x.Email == req.Email && x.Contractor.Id != req.ContractorId && x.Contractor.Id != null);
 
             if (exist)
             {

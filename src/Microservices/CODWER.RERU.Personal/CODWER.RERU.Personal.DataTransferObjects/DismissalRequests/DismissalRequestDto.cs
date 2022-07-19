@@ -1,5 +1,5 @@
 ﻿using System;
-using CODWER.RERU.Personal.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities.Enums;
 
 namespace CODWER.RERU.Personal.DataTransferObjects.DismissalRequests
 {
@@ -20,6 +20,6 @@ namespace CODWER.RERU.Personal.DataTransferObjects.DismissalRequests
         public string OrderName { get; set; }
 
         public int PositionId { get; set; }
-        public string PositionOrganizationRoleName { get; set; }
+        public string PositionRoleName { get; set; }
     }
 }

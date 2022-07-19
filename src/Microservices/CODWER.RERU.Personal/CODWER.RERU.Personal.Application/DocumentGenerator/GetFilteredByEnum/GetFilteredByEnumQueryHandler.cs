@@ -3,9 +3,9 @@ using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Entities.Documents;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Documents;
+using RERU.Data.Entities.Documents;
 
 namespace CODWER.RERU.Personal.Application.DocumentGenerator.GetFilteredByEnum
 {

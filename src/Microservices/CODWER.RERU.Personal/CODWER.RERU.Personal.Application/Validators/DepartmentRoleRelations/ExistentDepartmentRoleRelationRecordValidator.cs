@@ -1,5 +1,5 @@
 ﻿using CODWER.RERU.Personal.Application.Validation;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleRelations;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleRelations.Add;
 using CVU.ERP.Common.Extensions;
@@ -39,7 +39,7 @@ namespace CODWER.RERU.Personal.Application.Validators.DepartmentRoleRelations
 
                 case DepartmentRoleRelationTypeEnum.DepartmentRole:
                     {
-                        var existent = _appDbContext.ParentDepartmentChildOrganizationRoles.Any(x => x.ParentDepartmentId == parentId && x.ChildOrganizationRoleId == childId && x.OrganizationalChartId == orgChartId);
+                        var existent = _appDbContext.ParentDepartmentChildRoles.Any(x => x.ParentDepartmentId == parentId && x.ChildRoleId == childId && x.OrganizationalChartId == orgChartId);
 
                         if (existent)
                         {
@@ -50,7 +50,7 @@ namespace CODWER.RERU.Personal.Application.Validators.DepartmentRoleRelations
 
                 case DepartmentRoleRelationTypeEnum.RoleDepartment:
                     {
-                        var existent = _appDbContext.ParentOrganizationRoleChildDepartments.Any(x => x.ParentOrganizationRoleId == parentId && x.ChildDepartmentId == childId && x.OrganizationalChartId == orgChartId);
+                        var existent = _appDbContext.ParentRoleChildDepartments.Any(x => x.ParentRoleId == parentId && x.ChildDepartmentId == childId && x.OrganizationalChartId == orgChartId);
 
                         if (existent)
                         {
@@ -61,7 +61,7 @@ namespace CODWER.RERU.Personal.Application.Validators.DepartmentRoleRelations
 
                 case DepartmentRoleRelationTypeEnum.RoleRole:
                     {
-                        var existent = _appDbContext.ParentOrganizationRoleChildOrganizationRoles.Any(x => x.ParentOrganizationRoleId == parentId && x.ChildOrganizationRoleId == childId && x.OrganizationalChartId == orgChartId);
+                        var existent = _appDbContext.ParentRoleChildRoles.Any(x => x.ParentRoleId == parentId && x.ChildRoleId == childId && x.OrganizationalChartId == orgChartId);
 
                         if (existent)
                         {

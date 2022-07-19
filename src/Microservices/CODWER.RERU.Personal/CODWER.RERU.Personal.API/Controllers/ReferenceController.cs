@@ -11,10 +11,11 @@ using CODWER.RERU.Personal.Application.NomenclatureTypes.NomenclatureRecords.Get
 using CODWER.RERU.Personal.Application.OrganizationalCharts.GetDepartments;
 using CODWER.RERU.Personal.Application.OrganizationalCharts.GetOrganizationRoles;
 using CODWER.RERU.Personal.Application.OrganizationRoles.GetOrganizationRolesSelectValues;
-using CODWER.RERU.Personal.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities.Enums;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using Microsoft.AspNetCore.Mvc;
 using CVU.ERP.Common.EnumConverters;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Personal.API.Controllers
 {
@@ -69,7 +70,7 @@ namespace CODWER.RERU.Personal.API.Controllers
         }
 
         [HttpGet("organization-roles/select-values")]
-        public async Task<List<SelectItem>> GetOrganizationRoles([FromQuery] GetOrganizationRolesSelectValuesQuery query)
+        public async Task<List<SelectItem>> GetOrganizationRoles([FromQuery] GetRolesSelectValuesQuery query)
         {
             return await Mediator.Send(query);
         }
@@ -110,7 +111,7 @@ namespace CODWER.RERU.Personal.API.Controllers
         [HttpGet("organization-roles/chart/{chartId}")]
         public async Task<List<SelectItem>> GetOrganizationRolesForChart([FromRoute] int chartId)
         {
-            var query = new GetOrganizationRolesChartQuery{OrganizationalChartId = chartId};
+            var query = new GetRolesChartQuery{OrganizationalChartId = chartId};
 
             return await Mediator.Send(query);
         }

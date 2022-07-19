@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Personal.Application.TemplateParsers;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
-using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.StorageService;
-using CVU.ERP.StorageService.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,6 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities.ContractorEvents;
+using FileTypeEnum = CVU.ERP.StorageService.Entities.FileTypeEnum;
 
 namespace CODWER.RERU.Personal.Application.Positions.AddPosition
 {
@@ -69,8 +69,8 @@ namespace CODWER.RERU.Personal.Application.Positions.AddPosition
             var contractor = await _appDbContext.Contractors
                 .FirstAsync(x => x.Id == contractorId);
 
-            var organizationRole = await _appDbContext.OrganizationRoles
-                .FirstAsync(x => x.Id == position.OrganizationRoleId);
+            var Role = await _appDbContext.Roles
+                .FirstAsync(x => x.Id == position.RoleId);
 
             var myDictionary = new Dictionary<string, string>();
 
@@ -81,7 +81,7 @@ namespace CODWER.RERU.Personal.Application.Positions.AddPosition
             myDictionary.Add("{cererea_replace}",  $"{sexType} {contractor.FirstName} {contractor.LastName}");
             myDictionary.Add("{name_replace}", contractor.FirstName);
             myDictionary.Add("{lastName_replace}", contractor.LastName);
-            myDictionary.Add("{functia_replace}", organizationRole.Name);
+            myDictionary.Add("{functia_replace}", Role.Name);
             myDictionary.Add("{termen_de_proba_replace}", position.ProbationDayPeriod.ToString());
             myDictionary.Add("{data_replace}", position.FromDate?.ToString("dd/MM/yyyy"));
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.Configurations;
 using CODWER.RERU.Personal.DataTransferObjects.Holidays;
+using RERU.Data.Entities.PersonalEntities.Configurations;
 
 namespace CODWER.RERU.Personal.Application.Holidays
 {

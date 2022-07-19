@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Personal.Application.Contractors.ContractorMappings
 {

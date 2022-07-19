@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.Configurations;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.PersonalEntities.Configurations;
 
 namespace CODWER.RERU.Personal.Application.VacationConfigurations.AddUpdateVacationConfigurations
 {

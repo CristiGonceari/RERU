@@ -3,6 +3,6 @@
     public enum OrganizationalChartItemType
     {
         Department = 1,
-        OrganizationRole = 2
+        Role = 2
     }
 }

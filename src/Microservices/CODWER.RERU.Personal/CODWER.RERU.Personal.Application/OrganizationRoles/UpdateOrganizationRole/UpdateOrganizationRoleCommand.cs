@@ -7,8 +7,8 @@ namespace CODWER.RERU.Personal.Application.OrganizationRoles.UpdateOrganizationR
 {
     [ModuleOperation(permission: PermissionCodes.ORGANIZATION_ROLES_GENERAL_ACCESS)]
 
-    public class UpdateOrganizationRoleCommand : IRequest<Unit>
+    public class UpdateRoleCommand : IRequest<Unit>
     {
-        public AddEditOrganizationRoleDto Data { get; set; }
+        public AddEditRoleDto Data { get; set; }
     }
 }

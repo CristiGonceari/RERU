@@ -13,6 +13,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Roles.BulkImportRoles

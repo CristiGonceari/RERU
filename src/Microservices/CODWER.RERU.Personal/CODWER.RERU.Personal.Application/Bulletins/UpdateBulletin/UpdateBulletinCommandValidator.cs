@@ -1,13 +1,13 @@
 ﻿using System.Linq;
 using CODWER.RERU.Personal.Application.Validation;
 using CODWER.RERU.Personal.Application.Validators;
-using CODWER.RERU.Personal.Data.Entities.IdentityDocuments;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Bulletin;
 using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 using FluentValidation.Validators;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Personal.Application.Bulletins.UpdateBulletin
 {
@@ -30,15 +30,15 @@ namespace CODWER.RERU.Personal.Application.Bulletins.UpdateBulletin
             //    .Custom(CheckIfUniqueIdnpOnUpdate);
         }
 
-        private void CheckIfUniqueIdnpOnUpdate(BulletinsDataDto dto, CustomContext context)
-        {
-            var exist = _appDbContext.Bulletins.Any(x => x.Idnp == dto.Idnp
-                                                        && x.ContractorId != dto.ContractorId);
+        //private void CheckIfUniqueIdnpOnUpdate(BulletinsDataDto dto, CustomContext context)
+        //{
+        //    var exist = _appDbContext.Bulletins.Any(x => x.Idnp == dto.Idnp
+        //                                                && x.ContractorId != dto.ContractorId);
 
-            if (exist)
-            {
-                context.AddFail(ValidationCodes.DUPLICATE_IDNP_IN_SYSTEM, ValidationMessages.InvalidReference);
-            }
-        }
+        //    if (exist)
+        //    {
+        //        context.AddFail(ValidationCodes.DUPLICATE_IDNP_IN_SYSTEM, ValidationMessages.InvalidReference);
+        //    }
+        //}
     }
 }

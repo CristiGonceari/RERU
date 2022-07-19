@@ -1,5 +1,5 @@
-﻿using CODWER.RERU.Personal.Data.Entities.Files;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+﻿using RERU.Data.Entities.PersonalEntities.Files;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Context;
 using CVU.ERP.StorageService.Entities;

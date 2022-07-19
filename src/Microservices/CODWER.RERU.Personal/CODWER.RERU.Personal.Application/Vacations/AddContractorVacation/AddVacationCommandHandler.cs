@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Application.Services.VacationInterval;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
-using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities.ContractorEvents;
+using RERU.Data.Entities.PersonalEntities.Enums;
+using RERU.Data.Persistence.Context;
 using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Vacations.AddContractorVacation

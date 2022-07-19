@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.OrganizationalCharts;
 using CVU.ERP.Common.Pagination;
 using MediatR;

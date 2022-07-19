@@ -1,4 +1,4 @@
-﻿using CODWER.RERU.Personal.Data.Entities;
+﻿using RERU.Data.Entities.PersonalEntities;
 using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.Services

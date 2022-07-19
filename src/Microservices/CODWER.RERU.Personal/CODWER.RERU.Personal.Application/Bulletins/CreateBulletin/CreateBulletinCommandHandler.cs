@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.IdentityDocuments;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using MediatR;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Personal.Application.Bulletins.CreateBulletin
 {

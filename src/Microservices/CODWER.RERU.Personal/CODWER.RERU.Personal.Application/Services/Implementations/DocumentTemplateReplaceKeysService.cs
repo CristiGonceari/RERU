@@ -1,6 +1,6 @@
 ﻿using CODWER.RERU.Personal.Application.Services.VacationInterval;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Employers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -26,11 +26,12 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         public async Task<Dictionary<string, string>> GetContractorGeneralValues(int contractorId)
         {
             var contractorValues = _appDbContext.Contractors
+                .Include(x => x.UserProfile)
+                .ThenInclude(c => c.Bulletin)
+                .ThenInclude(b => b.ResidenceAddress)
                 .Where(c => c.Id == contractorId)
                 .Include(c => c.Positions)
-                .ThenInclude(c => c.OrganizationRole)
-                .Include(c => c.Bulletin)
-                .ThenInclude(b => b.LivingAddress)
+                .ThenInclude(c => c.Role)
                 .Include(c => c.Positions)
                 .ThenInclude(p => p.DismissalRequests)
                 .Include(c => c.Contracts)
@@ -75,19 +76,19 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
                             break;
                         case "{c_idnp_key}":
 
-                            myDictionary.Add(item, value.Bulletin.Idnp);
+                            myDictionary.Add(item, value.UserProfile.Idnp);
                             break;
 
                         case "{c_bulletin_series_key}":
-                            myDictionary.Add(item, value.Bulletin.Series);
+                            myDictionary.Add(item, value.UserProfile.Bulletin.Series);
                             break;
 
                         case "{c_bulletin_release_by_key}":
-                            myDictionary.Add(item, value.Bulletin.EmittedBy);
+                            myDictionary.Add(item, value.UserProfile.Bulletin.EmittedBy);
                             break;
 
                         case "{c_bulletin_release_day_key}":
-                            myDictionary.Add(item, value.Bulletin.ReleaseDay.ToString());
+                            myDictionary.Add(item, value.UserProfile.Bulletin.ReleaseDay.ToString());
                             break;
 
                         case "{c_birthday_key}":
@@ -117,7 +118,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
                             break;
 
                         case "{c_role_key}":
-                            myDictionary.Add(item, value.Positions.Select(p => p.OrganizationRole).FirstOrDefault().Name);
+                            myDictionary.Add(item, value.Positions.Select(p => p.Role).FirstOrDefault().Name);
                             break;
 
                         case "{c_dissmisal_date_key}":
@@ -129,7 +130,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
                             break;
 
                         case "{c_address_key}":
-                            myDictionary.Add(item, value.Bulletin.LivingAddress.Street);
+                            myDictionary.Add(item, value.UserProfile.Bulletin.ResidenceAddress.Street);
                             break;
 
                         case "{company_key}":

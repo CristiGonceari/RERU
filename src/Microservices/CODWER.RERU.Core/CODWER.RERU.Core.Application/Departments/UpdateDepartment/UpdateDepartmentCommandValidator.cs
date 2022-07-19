@@ -2,7 +2,7 @@
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
-using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Departments.UpdateDepartment

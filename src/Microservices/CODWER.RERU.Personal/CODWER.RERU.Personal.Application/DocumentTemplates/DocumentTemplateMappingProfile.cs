@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.Documents;
 using CODWER.RERU.Personal.DataTransferObjects.Documents;
+using RERU.Data.Entities.Documents;
+using RERU.Data.Entities.PersonalEntities.Documents;
 
 namespace CODWER.RERU.Personal.Application.DocumentTemplates
 {
@@ -14,8 +15,8 @@ namespace CODWER.RERU.Personal.Application.DocumentTemplates
           
             CreateMap<DocumentTemplate, AddEditDocumentTemplateDto>();
 
-            CreateMap<DocumentTemplateCategory, DocumentTemplateCategoryDto>()
-                .ForMember(x => x.DocumentTemplateKeys, opts => opts.MapFrom(x => x.DocumentKeys));
+            CreateMap<HrDocumentTemplateCategory, DocumentTemplateCategoryDto>()
+                .ForMember(x => x.DocumentTemplateKeys, opts => opts.MapFrom(x => x.HrDocumentKeys));
 
             CreateMap<DocumentTemplateKey, DocumentTemplateKeyDto>();
             CreateMap<DocumentTemplateKeyDto, DocumentTemplateKey>();

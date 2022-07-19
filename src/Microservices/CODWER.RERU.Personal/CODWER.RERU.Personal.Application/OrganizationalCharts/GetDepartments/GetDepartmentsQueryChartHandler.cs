@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.OrganizationRoleRelations;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using MediatR;
+using RERU.Data.Entities.PersonalEntities.OrganizationRoleRelations;
 
 namespace CODWER.RERU.Personal.Application.OrganizationalCharts.GetDepartments
 {
@@ -27,7 +27,7 @@ namespace CODWER.RERU.Personal.Application.OrganizationalCharts.GetDepartments
 
             var organizationalChartRelations = _appDbContext.DepartmentRoleRelations
                 .Where(x => x.OrganizationalChartId == request.OrganizationalChartId)
-                .Where(x => x is ParentDepartmentChildDepartment || x is ParentDepartmentChildOrganizationRole || x is ParentOrganizationRoleChildDepartment);
+                .Where(x => x is ParentDepartmentChildDepartment || x is ParentDepartmentChildRole || x is ParentRoleChildDepartment);
 
             var organizationalChartDepartments = new List<int>();
 
@@ -43,14 +43,14 @@ namespace CODWER.RERU.Personal.Application.OrganizationalCharts.GetDepartments
                     var childDepartmentId = dd.ChildDepartmentId;
                         organizationalChartDepartments.Add(childDepartmentId);
                 }
-                else if (relation is ParentDepartmentChildOrganizationRole dr)
+                else if (relation is ParentDepartmentChildRole dr)
                 {
                     var parentDepartmentId = dr.ParentDepartmentId;
 
                     if (parentDepartmentId != null)
                         organizationalChartDepartments.Add(parentDepartmentId.Value);
                 }
-                else if (relation is ParentOrganizationRoleChildDepartment od)
+                else if (relation is ParentRoleChildDepartment od)
                 {
                     var childDepartmentId = od.ChildDepartmentId;
                     organizationalChartDepartments.Add(childDepartmentId);

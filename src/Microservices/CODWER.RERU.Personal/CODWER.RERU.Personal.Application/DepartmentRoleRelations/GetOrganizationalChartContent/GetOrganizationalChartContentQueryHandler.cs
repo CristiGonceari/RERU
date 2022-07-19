@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Entities.OrganizationRoleRelations;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleRelations;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleRelations.Get;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.PersonalEntities.OrganizationRoleRelations;
 
 namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetOrganizationalChartContent
 {
@@ -36,7 +36,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetOrganizati
             var abstractHead = await _appDbContext.DepartmentRoleRelations.FirstOrDefaultAsync(x =>
                 x.OrganizationalChartId == organizationalChartId
                 && ((x is ParentDepartmentChildDepartment) && ((ParentDepartmentChildDepartment)x).ParentDepartmentId == null
-                    || (x is ParentDepartmentChildOrganizationRole) && ((ParentDepartmentChildOrganizationRole)x).ParentDepartmentId == null));
+                    || (x is ParentDepartmentChildRole) && ((ParentDepartmentChildRole)x).ParentDepartmentId == null));
 
             if (abstractHead is ParentDepartmentChildDepartment)
             {
@@ -49,16 +49,16 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetOrganizati
                 result.RelationId = item.Id;
                 result.Type = OrganizationalChartItemType.Department;
             }
-            else if (abstractHead is ParentDepartmentChildOrganizationRole)
+            else if (abstractHead is ParentDepartmentChildRole)
             {
-                var item = await _appDbContext.ParentDepartmentChildOrganizationRoles
-                    .Include(x => x.ChildOrganizationRole)
+                var item = await _appDbContext.ParentDepartmentChildRoles
+                    .Include(x => x.ChildRole)
                     .FirstOrDefaultAsync(x => x.Id == abstractHead.Id);
 
-                result.Id = item.ChildOrganizationRole.Id;
-                result.Name = item.ChildOrganizationRole.Name;
+                result.Id = item.ChildRole.Id;
+                result.Name = item.ChildRole.Name;
                 result.RelationId = item.Id;
-                result.Type = OrganizationalChartItemType.OrganizationRole;
+                result.Type = OrganizationalChartItemType.Role;
             }
 
             return result;
@@ -76,8 +76,8 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetOrganizati
                         .Include(x => x.ChildDepartment)
                         .Where(x => x.OrganizationalChartId == organizationalChartId && x.ParentDepartmentId == parentId);
 
-                    var departmentRoles = _appDbContext.ParentDepartmentChildOrganizationRoles
-                        .Include(x => x.ChildOrganizationRole)
+                    var departmentRoles = _appDbContext.ParentDepartmentChildRoles
+                        .Include(x => x.ChildRole)
                         .Where(x => x.OrganizationalChartId == organizationalChartId && x.ParentDepartmentId == parentId);
 
                     foreach (var dd in departmentDepartments.ToList())
@@ -96,26 +96,26 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetOrganizati
                     {
                         listResult.Add(new OrganizationalChartContentDto
                         {
-                            Id = dr.ChildOrganizationRole.Id,
-                            Name = dr.ChildOrganizationRole.Name,
-                            Type = OrganizationalChartItemType.OrganizationRole,
+                            Id = dr.ChildRole.Id,
+                            Name = dr.ChildRole.Name,
+                            Type = OrganizationalChartItemType.Role,
                             RelationId = dr.Id,
-                            Childs = await GetChildrens(dr.ChildOrganizationRole.Id, OrganizationalChartItemType.OrganizationRole, organizationalChartId)
+                            Childs = await GetChildrens(dr.ChildRole.Id, OrganizationalChartItemType.Role, organizationalChartId)
                         });
                     }
 
                     break;
                 }
 
-                case OrganizationalChartItemType.OrganizationRole:
+                case OrganizationalChartItemType.Role:
                 {
-                    var roleDepartments = _appDbContext.ParentOrganizationRoleChildDepartments
+                    var roleDepartments = _appDbContext.ParentRoleChildDepartments
                         .Include(x => x.ChildDepartment)
-                        .Where(x => x.OrganizationalChartId == organizationalChartId && x.ParentOrganizationRoleId == parentId);
+                        .Where(x => x.OrganizationalChartId == organizationalChartId && x.ParentRoleId == parentId);
 
-                    var roleRoles = _appDbContext.ParentOrganizationRoleChildOrganizationRoles
-                        .Include(x => x.ChildOrganizationRole)
-                        .Where(x => x.OrganizationalChartId == organizationalChartId && x.ParentOrganizationRoleId == parentId);
+                    var roleRoles = _appDbContext.ParentRoleChildRoles
+                        .Include(x => x.ChildRole)
+                        .Where(x => x.OrganizationalChartId == organizationalChartId && x.ParentRoleId == parentId);
 
                     foreach (var rd in roleDepartments.ToList())
                     {
@@ -133,11 +133,11 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetOrganizati
                     {
                         listResult.Add(new OrganizationalChartContentDto
                         {
-                            Id = rr.ChildOrganizationRole.Id,
-                            Name = rr.ChildOrganizationRole.Name,
-                            Type = OrganizationalChartItemType.OrganizationRole,
+                            Id = rr.ChildRole.Id,
+                            Name = rr.ChildRole.Name,
+                            Type = OrganizationalChartItemType.Role,
                             RelationId = rr.Id,
-                            Childs = await GetChildrens(rr.ChildOrganizationRole.Id, OrganizationalChartItemType.OrganizationRole, organizationalChartId)
+                            Childs = await GetChildrens(rr.ChildRole.Id, OrganizationalChartItemType.Role, organizationalChartId)
                         });
                     }
 

@@ -2,6 +2,7 @@ using CVU.ERP.Common.DataTransferObjects.Users;
 using RERU.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CVU.ERP.Module.Application.Models {
     ///<summary>

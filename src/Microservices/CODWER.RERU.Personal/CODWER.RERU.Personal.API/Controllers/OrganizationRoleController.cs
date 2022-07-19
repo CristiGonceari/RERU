@@ -19,7 +19,7 @@ namespace CODWER.RERU.Personal.API.Controllers
     public class OrganizationRoleController : BaseController
     {
         [HttpGet]
-        public async Task<PaginatedModel<OrganizationRoleDto>> GetOrganizationRoles([FromQuery] GetOrganizationRolesQuery query)
+        public async Task<PaginatedModel<RoleDto>> GetOrganizationRoles([FromQuery] GetRolesQuery query)
         {
             var result = await Mediator.Send(query);
 
@@ -27,16 +27,16 @@ namespace CODWER.RERU.Personal.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<OrganizationRoleDto> GetOrganizationRole([FromRoute] int id)
+        public async Task<RoleDto> GetOrganizationRole([FromRoute] int id)
         {
-            var query = new GetOrganizationRoleQuery { Id = id };
+            var query = new GetRoleQuery { Id = id };
             var result = await Mediator.Send(query);
 
             return result;
         }
 
         [HttpPost]
-        public async Task<int> CreateOrganizationRole([FromBody] AddOrganizationRoleCommand command)
+        public async Task<int> CreateOrganizationRole([FromBody] AddRoleCommand command)
         {
             var result = await Mediator.Send(command);
 
@@ -44,7 +44,7 @@ namespace CODWER.RERU.Personal.API.Controllers
         }
 
         [HttpPatch]
-        public async Task<Unit> UpdateOrganizationRole([FromBody] UpdateOrganizationRoleCommand command)
+        public async Task<Unit> UpdateOrganizationRole([FromBody] UpdateRoleCommand command)
         {
             var result = await Mediator.Send(command);
 
@@ -54,7 +54,7 @@ namespace CODWER.RERU.Personal.API.Controllers
         [HttpDelete("{id}")]
         public async Task<Unit> RemoveOrganizationRole([FromRoute] int id)
         {
-            var command = new RemoveOrganizationRoleCommand { Id = id };
+            var command = new RemoveRoleCommand { Id = id };
             var result = await Mediator.Send(command);
 
             return result;
@@ -63,7 +63,7 @@ namespace CODWER.RERU.Personal.API.Controllers
         [HttpPut("excel-import")]
         public async Task ImportFromExcelFile([FromForm] ExcelDataDto dto)
         {
-            var command = new ImportOrganizationRolesCommand { Data = dto };
+            var command = new ImportRolesCommand { Data = dto };
 
             await Mediator.Send(command);
         }

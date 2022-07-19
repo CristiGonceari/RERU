@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.Documents;
 using CODWER.RERU.Personal.DataTransferObjects.Documents;
+using RERU.Data.Entities.Documents;
 
 namespace CODWER.RERU.Personal.Application.DocumentGenerator
 {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.NomenclatureType;
 using CODWER.RERU.Personal.DataTransferObjects.NomenclatureTypes;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
+using RERU.Data.Entities.PersonalEntities.NomenclatureType;
 
 namespace CODWER.RERU.Personal.Application.NomenclatureTypes.Nomenclatures
 {

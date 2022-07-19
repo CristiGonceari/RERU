@@ -1,6 +1,6 @@
 ﻿using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Application.Validators.UserProfiles;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 

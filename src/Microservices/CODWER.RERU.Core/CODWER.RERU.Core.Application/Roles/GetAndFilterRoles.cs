@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Roles

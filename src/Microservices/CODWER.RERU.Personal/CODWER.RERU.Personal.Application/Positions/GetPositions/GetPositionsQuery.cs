@@ -11,7 +11,7 @@ namespace CODWER.RERU.Personal.Application.Positions.GetPositions
     public class GetPositionsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<PositionDto>>
     {
         public int? DepartmentId { get; set; }
-        public int? OrganizationRoleId { get; set; }
+        public int? RoleId { get; set; }
         public int? ContractorId { get; set; }
     }
 }

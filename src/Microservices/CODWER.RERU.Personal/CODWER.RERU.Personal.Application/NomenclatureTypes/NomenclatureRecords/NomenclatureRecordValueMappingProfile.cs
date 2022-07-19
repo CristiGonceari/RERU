@@ -1,10 +1,10 @@
 ﻿using System;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.NomenclatureType.NomenclatureRecords;
-using CODWER.RERU.Personal.Data.Entities.NomenclatureType.NomenclatureRecords.RecordValues;
 using CODWER.RERU.Personal.DataTransferObjects.NomenclatureTypes.NomenclatureRecords;
 using CODWER.RERU.Personal.DataTransferObjects.NomenclatureTypes.NomenclatureRecords.RecordValues;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
+using RERU.Data.Entities.PersonalEntities.NomenclatureType.NomenclatureRecords;
+using RERU.Data.Entities.PersonalEntities.NomenclatureType.NomenclatureRecords.RecordValues;
 
 namespace CODWER.RERU.Personal.Application.NomenclatureTypes.NomenclatureRecords
 {

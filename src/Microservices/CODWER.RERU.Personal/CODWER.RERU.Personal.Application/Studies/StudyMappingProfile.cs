@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.Studies;
 using CODWER.RERU.Personal.DataTransferObjects.Studies;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Personal.Application.Studies
 {

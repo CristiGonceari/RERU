@@ -1,7 +1,7 @@
 ﻿using CODWER.RERU.Personal.Application.TemplateParsers;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
-using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities.ContractorEvents;
+using RERU.Data.Entities.PersonalEntities.Enums;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Employers;
 using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Entities;
@@ -59,7 +59,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         {
             var contractor = await _appDbContext.Contractors
                 .Include(x => x.Positions)
-                .ThenInclude(x => x.OrganizationRole)
+                .ThenInclude(x => x.Role)
                 .FirstAsync(x => x.Id == contractorId);
 
             var myDictionary = new Dictionary<string, string>();
@@ -72,7 +72,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
 
             myDictionary.Add("{company_replace}", _employerData.Name);
 
-            myDictionary.Add("{functia_replace}", contractor.GetCurrentPositionOnData(DateTime.Now)?.OrganizationRole.Name);
+            myDictionary.Add("{functia_replace}", contractor.GetCurrentPositionOnData(DateTime.Now)?.Role.Name);
 
             myDictionary.Add("{from_replace}", vacation.FromDate.ToString("dd/MM/yyyy"));
             myDictionary.Add("{to_replace}", vacation.ToDate != null ? vacation.ToDate?.ToString("dd/MM/yyyy") : vacation.FromDate.ToString("dd/MM/yyyy"));
@@ -123,7 +123,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         {
             var contractor = await _appDbContext.Contractors
                 .Include(x => x.Positions)
-                .ThenInclude(x => x.OrganizationRole)
+                .ThenInclude(x => x.Role)
                 .FirstAsync(x => x.Id == contractorId);
 
             var myDictionary = new Dictionary<string, string>();

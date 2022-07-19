@@ -114,7 +114,7 @@ reru_personal:
   image:
     repository: cvuintell/reru-personal
   database:
-    personal_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Personal-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
 

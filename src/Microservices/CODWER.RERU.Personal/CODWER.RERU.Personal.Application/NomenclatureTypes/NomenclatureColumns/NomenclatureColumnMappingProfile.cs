@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.NomenclatureType;
 using CODWER.RERU.Personal.DataTransferObjects.NomenclatureTypes.NomenclatureColumns;
+using RERU.Data.Entities.PersonalEntities.NomenclatureType;
 
 namespace CODWER.RERU.Personal.Application.NomenclatureTypes.NomenclatureColumns
 {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Persistence.Context;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 
@@ -33,11 +33,11 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
                     string code = workSheet?.Cells[i, 2]?.Value?.ToString();
                     string shortCode = workSheet?.Cells[i, 3]?.Value?.ToString();
 
-                    await _appDbContext.OrganizationRoles.AddAsync(new OrganizationRole
+                    await _appDbContext.Roles.AddAsync(new Role
                     {
                         Name = name,
-                        Code = code,
-                        ShortCode = shortCode
+                        //Code = code,
+                        //ShortCode = shortCode
                     });
 
                     if (i % 100 == 0 || i == totalRows)

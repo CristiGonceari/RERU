@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CODWER.RERU.Personal.Application.Validation;
-using CODWER.RERU.Personal.Data.Entities.NomenclatureType;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.NomenclatureTypes.NomenclatureColumns;
 using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 using FluentValidation.Validators;
+using RERU.Data.Entities.PersonalEntities.NomenclatureType;
 
 namespace CODWER.RERU.Personal.Application.Validators.NomenclatureTableHeader
 {

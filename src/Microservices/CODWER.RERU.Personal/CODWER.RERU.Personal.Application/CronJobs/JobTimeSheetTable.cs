@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CODWER.RERU.Personal.Data.Entities.Configurations;
-using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Entities.StaticExtensions;
-using CODWER.RERU.Personal.Data.Entities.TimeSheetTables;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities.Configurations;
+using RERU.Data.Entities.PersonalEntities.Enums;
+using RERU.Data.Entities.PersonalEntities.StaticExtensions;
+using RERU.Data.Entities.PersonalEntities.TimeSheetTables;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Personal.Application.CronJobs
 {

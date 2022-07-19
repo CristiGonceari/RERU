@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Entities.TimeSheetTables;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CODWER.RERU.Personal.DataTransferObjects.TimeSheetTables;
 using CVU.ERP.Common.Pagination;
+using RERU.Data.Entities.PersonalEntities.TimeSheetTables;
 
 namespace CODWER.RERU.Personal.Application.Services
 {

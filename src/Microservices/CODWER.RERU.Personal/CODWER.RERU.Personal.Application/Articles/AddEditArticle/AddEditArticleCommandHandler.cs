@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using CODWER.RERU.Personal.Data.Persistence.Context;
-using CODWER.RERU.Personal.Data.Entities;
+using RERU.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Personal.Application.Articles.AddEditArticle
 {

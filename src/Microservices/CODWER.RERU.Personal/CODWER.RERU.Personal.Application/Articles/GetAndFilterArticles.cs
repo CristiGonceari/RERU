@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Personal.Application.Articles
 {

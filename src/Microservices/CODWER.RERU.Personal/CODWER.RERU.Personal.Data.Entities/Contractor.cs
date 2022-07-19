@@ -1,5 +1,5 @@
 ﻿using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
-using CODWER.RERU.Personal.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities.Enums;
 using CODWER.RERU.Personal.Data.Entities.Files;
 using CODWER.RERU.Personal.Data.Entities.IdentityDocuments;
 using CODWER.RERU.Personal.Data.Entities.NomenclatureType.NomenclatureRecords;

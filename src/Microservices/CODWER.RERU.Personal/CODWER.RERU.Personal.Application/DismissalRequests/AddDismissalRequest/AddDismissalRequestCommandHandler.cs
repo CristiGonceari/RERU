@@ -2,10 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Personal.Application.Services;
-using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities.Enums;
+using RERU.Data.Persistence.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.PersonalEntities.ContractorEvents;
 
 namespace CODWER.RERU.Personal.Application.DismissalRequests.AddDismissalRequest
 {
@@ -29,7 +30,7 @@ namespace CODWER.RERU.Personal.Application.DismissalRequests.AddDismissalRequest
             var contractorPosition = contractor.GetCurrentPositionOnData(DateTime.Now);
             contractorPosition.ToDate = request.Data.From;
 
-            var requestToAdd = new Data.Entities.ContractorEvents.DismissalRequest
+            var requestToAdd = new DismissalRequest
             {
                 From = request.Data.From,
                 Status = StageStatusEnum.Approved,

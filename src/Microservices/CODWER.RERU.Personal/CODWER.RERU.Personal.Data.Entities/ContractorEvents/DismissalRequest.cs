@@ -1,5 +1,5 @@
 ﻿using System;
-using CODWER.RERU.Personal.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities.Enums;
 using CODWER.RERU.Personal.Data.Entities.Files;
 using CVU.ERP.Common.Data.Entities;
 

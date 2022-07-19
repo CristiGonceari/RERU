@@ -5,7 +5,7 @@ using CODWER.RERU.Personal.Application.Addresses.AddAddress;
 using CODWER.RERU.Personal.Application.Addresses.GetAddress;
 using CODWER.RERU.Personal.Application.Addresses.RemoveAddress;
 using CODWER.RERU.Personal.Application.Addresses.UpdateAddress;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Address;
 using CVU.ERP.Module.Application.Clients;
 using MediatR;

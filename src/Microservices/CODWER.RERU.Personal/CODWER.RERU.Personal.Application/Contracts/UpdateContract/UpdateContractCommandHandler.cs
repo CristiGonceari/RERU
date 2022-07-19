@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Personal.Application.Contracts.UpdateContract

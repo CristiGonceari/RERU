@@ -2,6 +2,7 @@
 using MediatR;
 using RERU.Data.Entities.Enums;
 using System.Collections.Generic;
+using CVU.ERP.StorageService.Entities;
 
 namespace CODWER.RERU.Evaluation.Application.DocumentsTemplates.GetDocumentKeys
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using CODWER.RERU.Personal.DataTransferObjects.Enums;
 
 namespace CODWER.RERU.Personal.Application.Contractors.ContractorMappings

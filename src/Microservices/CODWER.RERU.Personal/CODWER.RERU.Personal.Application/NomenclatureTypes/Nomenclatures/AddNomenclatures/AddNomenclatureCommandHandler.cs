@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.NomenclatureType;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using MediatR;
+using RERU.Data.Entities.PersonalEntities.NomenclatureType;
 
 namespace CODWER.RERU.Personal.Application.NomenclatureTypes.Nomenclatures.AddNomenclatures
 {

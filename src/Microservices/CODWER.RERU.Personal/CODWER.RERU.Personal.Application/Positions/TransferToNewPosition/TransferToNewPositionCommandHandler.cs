@@ -2,8 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities.ContractorEvents;
+using RERU.Data.Persistence.Context;
 using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Positions.TransferToNewPosition

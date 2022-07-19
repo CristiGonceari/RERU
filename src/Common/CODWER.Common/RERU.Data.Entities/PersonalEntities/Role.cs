@@ -1,6 +1,6 @@
 ﻿using CVU.ERP.Common.Data.Entities;
 
-namespace RERU.Data.Entities
+namespace RERU.Data.Entities.PersonalEntities
 {
     public class Role : SoftDeleteBaseEntity
     {

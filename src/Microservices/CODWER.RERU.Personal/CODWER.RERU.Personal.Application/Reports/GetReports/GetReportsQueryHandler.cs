@@ -1,6 +1,6 @@
-﻿using CODWER.RERU.Personal.Data.Entities.Files;
-using CODWER.RERU.Personal.Data.Entities.StaticExtensions;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+﻿using RERU.Data.Entities.PersonalEntities.Files;
+using RERU.Data.Entities.PersonalEntities.StaticExtensions;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Reports;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.StorageService;

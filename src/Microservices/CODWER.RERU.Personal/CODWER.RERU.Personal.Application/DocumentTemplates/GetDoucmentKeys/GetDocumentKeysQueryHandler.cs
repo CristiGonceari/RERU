@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Application.Services;
-using CODWER.RERU.Personal.Data.Entities.Documents;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Documents;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +25,7 @@ namespace CODWER.RERU.Personal.Application.DocumentTemplates.GetDoucmentKeys
 
         public async Task<List<DocumentTemplateCategoryDto>> Handle(GetDocumentKeysQuery request, CancellationToken cancellationToken)
         {
-            var items = _appDbContext.DocumentTemplateCategories.Include(dc => dc.DocumentKeys).AsQueryable();
+            var items = _appDbContext.HrDocumentTemplateCategories.Include(dc => dc.HrDocumentKeys).AsQueryable();
 
             var mappedItems = _mapper.Map<List<DocumentTemplateCategoryDto>>(items);
 

@@ -242,7 +242,7 @@ services:
     environment:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__Personal=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Personal;
+      - ConnectionStrings__RERU=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Common;
       - ConnectionStrings__Log=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Logging;
     volumes:
       - ./docker-settings/Personal/appsettings.json:/app/appsettings.json

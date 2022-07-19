@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Articles;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
