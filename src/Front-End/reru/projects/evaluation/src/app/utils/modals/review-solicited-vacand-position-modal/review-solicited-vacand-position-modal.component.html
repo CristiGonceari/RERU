@@ -10,24 +10,24 @@
                 <li [ngbNavItem]="0" (click)="getEmailMessage(messageEnum.Approve)">
                     <a ngbNavLink>{{'solicited-position.approve' | translate}}</a>
                     <ng-template ngbNavContent>
-                        <div class="mb-10">
-                            <ckeditor [editor]="Editor" [(ngModel)]="editorData" (ready)="onReady($event)"></ckeditor>
+                        <div class="mb-10 editor-class">
+                            <ckeditor [editor]="Editor"  [config]="{height: 1134, width: 794}"  [(ngModel)]="editorData" (ready)="onReady($event)"></ckeditor>
                         </div>
                     </ng-template>
                 </li>
                 <li [ngbNavItem]="1" (click)="getEmailMessage(messageEnum.Reject)">
                     <a ngbNavLink>{{'solicited-position.reject' | translate}}</a>
                     <ng-template ngbNavContent>
-                        <div class="mb-10">
-                            <ckeditor [editor]="Editor" [(ngModel)]="editorData" (ready)="onReady($event)"></ckeditor>
+                        <div class="mb-10 editor-class" >
+                            <ckeditor [editor]="Editor" class="w-75" [(ngModel)]="editorData" (ready)="onReady($event)"></ckeditor>
                         </div>
                     </ng-template>
                 </li>
                 <li [ngbNavItem]="2" (click)="getEmailMessage(messageEnum.Waiting)">
                     <a ngbNavLink>{{'solicited-position.waiting' | translate}}</a>
                     <ng-template ngbNavContent>
-                        <div class="mb-10">
-                            <ckeditor [editor]="Editor" [(ngModel)]="editorData" (ready)="onReady($event)"></ckeditor>
+                        <div class="mb-10 editor-class">
+                            <ckeditor [editor]="Editor"  [config]="{height: 1134, width: 794}"  [(ngModel)]="editorData" (ready)="onReady($event)"></ckeditor>
                         </div>
                     </ng-template>
                 </li>

@@ -577,7 +577,8 @@
     "Passed": "Susținut",
     "NotPassed": "Nesusținut",
     "employee": "Angajat",
-    "candidate": "Candidat"
+    "candidate": "Candidat",
+    "Wait" : "Asteptare"
   },
   "options": {
     "start-without-confirmation": "Este posibil să porniți testul fără confirmare",
@@ -800,13 +801,13 @@
     "please-select-format": "Selectati formatul necesar"
   },
   "solicited-position":{
-    "solicited-positions": "Pozitia solicitata",
+    "solicited-positions": "Pozitie solicitate",
     "attached-documents": "Documente atasate",
     "required-documents": "Documente necesare",
     "review" : "Revizuie",
     "reject" : "Refuz",
     "approve" : "Aproba",
-    "waiting" : "In asteptare",
+    "waiting" : "Asteptare",
     "phone-number" : "Numar de contact"
   },
   "message-code": {

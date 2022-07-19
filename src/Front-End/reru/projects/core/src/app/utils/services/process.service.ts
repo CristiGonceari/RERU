@@ -15,10 +15,10 @@ export class ProcessService extends AbstractService {
   }
 
   getProgressHistory(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}`);
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}`);
   }
 
   closeAllProcesses(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.urlRoute}/close`);
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/close`);
   }
 }
