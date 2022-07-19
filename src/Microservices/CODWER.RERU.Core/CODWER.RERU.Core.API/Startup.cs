@@ -146,7 +146,7 @@ namespace CODWER.RERU.Core.API
                 );
             }
 
-            DatabaseSeeder.SeedDb(appDbContext);
+            //DatabaseSeeder.SeedDb(appDbContext);
 
             app.UseERPMiddlewares();
             app.UseAuthorization();

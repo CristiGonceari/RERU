@@ -125,7 +125,7 @@ namespace CODWER.RERU.Evaluation.API
                 app.UseHsts();
             }
 
-            DatabaseSeeder.SeedDb(appDbContext);
+            //DatabaseSeeder.SeedDb(appDbContext);
 
             //app.UseHangfireDashboard();
             //app.UseHangfireServer();
