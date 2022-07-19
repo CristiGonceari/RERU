@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CVU.ERP.Identity.Context;
 using CVU.ERP.Identity.Models;
 using Microsoft.AspNetCore.Identity;

@@ -8,6 +8,7 @@ using CVU.ERP.Identity.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.Initializer;
 
 namespace CODWER.RERU.IdentityMigrator.Console
 {
@@ -46,6 +47,7 @@ namespace CODWER.RERU.IdentityMigrator.Console
 
             var reruCommonContext = provider.GetService<AppDbContext>();
             reruCommonContext.Database.Migrate();
+            DatabaseSeeder.SeedDb(reruCommonContext);
 
             System.Console.WriteLine("Latest migrations applied");
         }
