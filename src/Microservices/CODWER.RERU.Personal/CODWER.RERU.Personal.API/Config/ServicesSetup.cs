@@ -28,7 +28,7 @@ namespace CODWER.RERU.Personal.API.Config
         {
             // Add framework services.
             services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString(ConnectionString.Personal),
+                options.UseNpgsql(configuration.GetConnectionString(ConnectionString.Common),
                     b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name)));
         }
         #endregion

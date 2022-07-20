@@ -118,7 +118,7 @@ namespace CODWER.RERU.Personal.API
             //{ 
 
             services.AddHangfire(config =>
-                config.UsePostgreSqlStorage(Configuration.GetConnectionString(ConnectionString.Personal)));
+                config.UsePostgreSqlStorage(Configuration.GetConnectionString(ConnectionString.Common)));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext appDbContext)
