@@ -1,19 +1,17 @@
-﻿using System.IO;
-using AutoMapper;
+﻿using AutoMapper;
+using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.DataTransferObjects.Events;
+using CVU.ERP.Notifications.Services;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
+using RERU.Data.Persistence.Context;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
-using CVU.ERP.Notifications.Services;
-using Microsoft.EntityFrameworkCore;
-using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Application.Services;
-using System.Collections.Generic;
-using CODWER.RERU.Evaluation.DataTransferObjects.Events;
-using System.Linq;
-using RERU.Data.Entities;
-using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignResponsiblePersonToEvent
 {
@@ -56,8 +54,13 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
                     var result = _mapper.Map<EventResponsiblePerson>(newEventResponsiblePerson);
 
                     await _appDbContext.EventResponsiblePersons.AddAsync(result);
+                    await _appDbContext.SaveChangesAsync();
 
                     eventUsersIds.Add(userId);
+
+                    await _internalNotificationService.AddNotification(result.UserProfileId, NotificationMessages.YouWereInvitedToEventAsCandidate);
+
+                    await AddEmailNotification(result);
 
                 }
                 else
@@ -78,6 +81,19 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
             await _appDbContext.SaveChangesAsync();
 
             return eventUsersIds;
+        }
+
+        private async Task AddEmailNotification(EventResponsiblePerson eventResponsiblePerson)
+        {
+            var item = new EmailNotification
+            {
+                ItemId = eventResponsiblePerson.Id,
+                EmailType = EmailType.AssignResponsiblePersonToEvent,
+                IsSend = false
+            };
+
+            await _appDbContext.EmailNotifications.AddAsync(item);
+            await _appDbContext.SaveChangesAsync();
         }
     }
 }
