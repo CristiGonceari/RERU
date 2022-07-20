@@ -1,10 +1,12 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
@@ -14,9 +16,9 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
     {
         private readonly AppDbContext _appDbContext;
 
-        public AssignUserToEventCommandValidator(AppDbContext appDbContext)
+        public AssignUserToEventCommandValidator(IServiceProvider serviceProvider)
         {
-            _appDbContext = appDbContext;
+            _appDbContext = serviceProvider.GetRequiredService<AppDbContext>();
 
             RuleFor(r => r)
                 .NotNull()
@@ -26,7 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
             {
 
                 RuleFor(x => x.EventId)
-                    .SetValidator(x => new ItemMustExistValidator<Event>(appDbContext, ValidationCodes.INVALID_EVENT,
+                    .SetValidator(x => new ItemMustExistValidator<Event>(_appDbContext, ValidationCodes.INVALID_EVENT,
                         ValidationMessages.InvalidReference));
 
                 RuleFor(x => x)
@@ -66,7 +68,6 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
         private bool ExistentEvaluatorSameWithCandidate(AssignUserToEventCommand data)
         {
             var listOfResults = new List<bool>();
-
 
             foreach (var userId in data.UserProfileId)
             {

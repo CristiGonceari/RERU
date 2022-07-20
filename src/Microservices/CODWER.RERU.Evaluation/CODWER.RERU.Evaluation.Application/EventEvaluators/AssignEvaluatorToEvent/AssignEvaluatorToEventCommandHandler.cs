@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using System.Linq;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEvent
@@ -58,8 +59,13 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
                     var result = _mapper.Map<EventEvaluator>(newEventEvaluator);
 
                     await _appDbContext.EventEvaluators.AddAsync(result);
+                    await _appDbContext.SaveChangesAsync();
 
                     eventEvaluatorIds.Add(evaluatorId);
+
+                    await _internalNotificationService.AddNotification(result.EvaluatorId, NotificationMessages.YouWereInvitedToEventAsCandidate);
+
+                    await AddEmailNotification(result);
                 }
                 else
                 {
@@ -70,7 +76,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
 
             }
 
-            if (eventValues.Count() > 0)
+            if (eventValues.Any())
             {
 
                 _appDbContext.EventEvaluators.RemoveRange(eventValues);
@@ -79,6 +85,19 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
             await _appDbContext.SaveChangesAsync();
 
             return eventEvaluatorIds;
+        }
+
+        private async Task AddEmailNotification(EventEvaluator eventEvaluator)
+        {
+            var item = new EmailNotification
+            {
+                ItemId = eventEvaluator.Id,
+                EmailType = EmailType.AssignEvaluatorToEvent,
+                IsSend = false
+            };
+
+            await _appDbContext.EmailNotifications.AddAsync(item);
+            await _appDbContext.SaveChangesAsync();
         }
     }
 }

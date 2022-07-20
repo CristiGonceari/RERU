@@ -205,7 +205,7 @@ export class AddTestComponent implements OnInit {
         this.processProgress = res.data;
         this.toolBarValue = Math.round(this.processProgress.done * 100 / this.processProgress.total);
       })
-    }, 10 * 300);
+    }, 10 * 1000);
   }
 
   downloadProcessResult() {

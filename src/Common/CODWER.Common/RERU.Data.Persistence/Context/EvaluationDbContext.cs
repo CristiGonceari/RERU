@@ -45,5 +45,6 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<EmailVerification> EmailVerifications { get; set; }
         public virtual DbSet<SolicitedVacantPositionUserFile> SolicitedVacantPositionUserFiles { get; set; }
         public virtual DbSet<SolicitedVacantPositionEmailMessage> SolicitedVacantPositionEmailMessages { get; set; }
+        public virtual DbSet<EmailNotification> EmailNotifications { get; set; }
     }
 }

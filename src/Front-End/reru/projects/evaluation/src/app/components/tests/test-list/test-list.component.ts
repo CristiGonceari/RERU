@@ -41,7 +41,7 @@ export class TestListComponent implements OnInit {
               clearInterval(this.interval);
             }
           })
-        }, 10 * 300);
+        }, 10 * 1000);
       }
     })
   }

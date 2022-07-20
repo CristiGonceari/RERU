@@ -1,45 +1,47 @@
-﻿using System.IO;
-using AutoMapper;
+﻿using AutoMapper;
+using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.DataTransferObjects.Events;
+using CVU.ERP.Notifications.Services;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
+using RERU.Data.Persistence.Context;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
-using CVU.ERP.Notifications.Services;
-using Microsoft.EntityFrameworkCore;
-using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Application.Services;
-using System.Collections.Generic;
-using CODWER.RERU.Evaluation.DataTransferObjects.Events;
-using System.Linq;
-using RERU.Data.Entities;
-using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 {
     public class AssignUserToEventCommandHandler : IRequestHandler<AssignUserToEventCommand, List<int>>
     {
-        private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
         private readonly IInternalNotificationService _internalNotificationService;
+        private readonly IConfiguration _configuration;
 
         public AssignUserToEventCommandHandler(AppDbContext appDbContext,
             IMapper mapper,
             INotificationService notificationService,
-            IInternalNotificationService internalNotificationService)
+            IInternalNotificationService internalNotificationService,
+            IConfiguration configuration)
         {
-            _appDbContext = appDbContext;
             _mapper = mapper;
             _notificationService = notificationService;
             _internalNotificationService = internalNotificationService;
+            _configuration = configuration;
         }
 
         public async Task<List<int>> Handle(AssignUserToEventCommand request, CancellationToken cancellationToken)
         {
             var eventUsersIds = new List<int>();
 
-            var eventValues = await _appDbContext.EventUsers.Where(eu => eu.EventId == request.EventId).ToListAsync();
+            await using var db = AppDbContext.NewInstance(_configuration);
+            var eventValues = await db.EventUsers.ToListAsync();
 
             foreach (var userId in request.UserProfileId)
             {
@@ -55,29 +57,51 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 
                     var result = _mapper.Map<EventUser>(newEventUser);
 
-                    await _appDbContext.EventUsers.AddAsync(result);
+                    await db.EventUsers.AddAsync(result);
+                    await db.SaveChangesAsync();
 
-                    eventUsersIds.Add(userId);
+                    var eventName = await db.EventUsers
+                       .Include(x => x.Event)
+                       .Include(x => x.UserProfile)
+                       .FirstAsync(x => x.EventId == request.EventId && x.UserProfileId == userId);
+
+                    eventUsersIds.Add(eventName.Id);
+
+                    await _internalNotificationService.AddNotification(result.UserProfileId, NotificationMessages.YouWereInvitedToEventAsCandidate);
+
+                    await AddEmailNotification(result);
                 }
                 else
                 {
-                    eventUsersIds.Add(eventUser.UserProfileId);
+                    eventUsersIds.Add(eventUser.Id);
                 }
 
                 eventValues = eventValues.Where(l => l.UserProfileId != userId).ToList();
-
             }
 
-            if (eventValues.Count() > 0)
+            if (eventValues.Count > 0)
             {
 
-                _appDbContext.EventUsers.RemoveRange(eventValues);
-               
+                db.EventUsers.RemoveRange(eventValues);
+                await db.SaveChangesAsync();
             }
 
-            await _appDbContext.SaveChangesAsync();
-
             return eventUsersIds;
+        }
+
+        private async Task AddEmailNotification(EventUser eventUser)
+        {
+            await using var db = AppDbContext.NewInstance(_configuration);
+
+            var item = new EmailNotification
+            {
+                ItemId = eventUser.Id,
+                EmailType = EmailType.AssignUserToEvent,
+                IsSend = false
+            };
+
+            await db.EmailNotifications.AddAsync(item);
+            await db.SaveChangesAsync();
         }
     }
 }

@@ -577,7 +577,8 @@
     "Passed": "Пройден",
     "NotPassed": "Не пройден",
     "employee": "Сотрудник",
-    "candidate": "Кандидат"
+    "candidate": "Кандидат",
+    "Wait" : "In asteptare"
   },
   "options": {
     "start-without-confirmation": "Возможен запуск теста без подтверждения",
@@ -808,7 +809,7 @@
     "review" : "рассмотрение",
     "reject" : "Отказ",
     "approve" : "Одобрить",
-    "waiting" : "На удерживании",
+    "waiting" : "Удерживании",
     "phone-number" : "Контактный номер"
   },
   "message-code": {

@@ -28,6 +28,7 @@ using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
 using CODWER.RERU.Evaluation.Application.Models;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 
 namespace CODWER.RERU.Evaluation.API
 {
@@ -107,8 +108,8 @@ namespace CODWER.RERU.Evaluation.API
 
             services.AddCommonLoggingContext(Configuration);
 
-            //services.AddHangfire(config =>
-            //    config.UsePostgreSqlStorage(Configuration.GetConnectionString("RERU")));
+            services.AddHangfire(config =>
+                config.UsePostgreSqlStorage(Configuration.GetConnectionString(ConnectionString.Common)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -127,10 +128,11 @@ namespace CODWER.RERU.Evaluation.API
 
             //DatabaseSeeder.SeedDb(appDbContext);
 
-            //app.UseHangfireDashboard();
-            //app.UseHangfireServer();
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
 
             //RecurringJob.AddOrUpdate<SendEmailNotificationBeforeTest>(x => x.SendNotificationBeforeTest(), "*/5 * * * *");
+            RecurringJob.AddOrUpdate<SendMultipleEmailNotifications>(x => x.SendEmailNotifications(), "*/5 * * * *");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
