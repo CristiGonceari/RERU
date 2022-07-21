@@ -25,14 +25,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.EventName, opts => opts.MapFrom(src => src.Event.Name))
                 .ForMember(x => x.EvaluatorId, opts => opts.MapFrom(src => src.EvaluatorId))
                 .ForMember(x => x.EventId, opts => opts.MapFrom(src => src.EventId))
-                .ForMember(x => x.UserName, opts => opts.MapFrom(src => src.UserProfile.FirstName + " " + src.UserProfile.LastName + " " + src.UserProfile.FatherName))
+                .ForMember(x => x.UserName, opts => opts.MapFrom(src => src.UserProfile.FullName))
                 .ForMember(x => x.Idnp, opts => opts.MapFrom(src => src.UserProfile.Idnp))
                 .ForMember(x => x.Rules, opts => opts.MapFrom(src => src.TestTemplate.Rules))
                 .ForMember(x => x.VerificationProgress, opts => opts.MapFrom(src => GetVerifiationStatus(src)))
                 .ForMember(x => x.Result, opts => opts.MapFrom(src => src.ResultStatus))
                 .ForMember(x => x.ViewTestResult, opts => opts.MapFrom(src => src.TestTemplate.Settings.CanViewResultWithoutVerification))
                 .ForMember(x => x.ModeStatus, opts => opts.MapFrom(src => src.TestTemplate.Mode))
-                .ForMember(x => x.EvaluatorName, opts => opts.MapFrom(src => src.Evaluator.FirstName + " " + src.Evaluator.LastName + " " + src.Evaluator.FatherName))
+                .ForMember(x => x.EvaluatorName, opts => opts.MapFrom(src => src.Evaluator.FullName))
                 .ForMember(x => x.EvaluatorIdnp, opts => opts.MapFrom(src => src.Evaluator.Idnp));
 
             CreateMap<AddEditTestDto, Test>()
