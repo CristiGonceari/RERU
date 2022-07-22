@@ -83,23 +83,6 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
 
         private async Task AddEmailNotification(EventEvaluator eventEvaluator)
         {
-            //var item = new EmailNotification
-            //{
-            //    ItemId = eventEvaluator.Id,
-            //    EmailType = EmailType.AssignEvaluatorToEvent,
-            //    IsSend = false
-            //};
-
-            //await _appDbContext.EmailNotifications.AddAsync(item);
-            //await _appDbContext.SaveChangesAsync();
-
-
-            //var template = await GetFilePath();
-
-            //template = template
-            //    .Replace("{user_name}", item.Evaluator.FirstName + " " + item.Evaluator.LastName)
-            //    .Replace("{email_message}", await GetTableContent(item));
-
             var item = await _appDbContext.EventEvaluators
                 .Include(eu => eu.Evaluator)
                 .Include(eu => eu.Event)

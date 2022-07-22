@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Application.VerificationTests.AutoCheckTestScore;
 using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -56,23 +54,6 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.FinalizeTestVerif
             var test = await _appDbContext.Tests
                 .Include(x => x.TestTemplate)
                 .FirstOrDefaultAsync(x => x.Id == testToFinalize.Id);
-
-            //var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            //var template = await File.ReadAllTextAsync(path);
-
-            //template = template
-            //    .Replace("{user_name}", user.FirstName + " " + user.LastName)
-            //    .Replace("{email_message}", await GetTableContent(test));
-
-            //var emailData = new EmailData()
-            //{
-            //    subject = "Rezultatul testului",
-            //    body = template,
-            //    from = "Do Not Reply",
-            //    to = user.Email
-            //};
-
-            //await _notificationService.Notify(emailData, NotificationType.Both);
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {

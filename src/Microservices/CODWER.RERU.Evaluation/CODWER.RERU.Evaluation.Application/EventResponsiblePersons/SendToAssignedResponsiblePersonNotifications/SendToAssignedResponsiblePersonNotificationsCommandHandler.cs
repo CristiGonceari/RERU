@@ -2,13 +2,11 @@
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -49,23 +47,6 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.SendToAssig
                 .Include(eu => eu.UserProfile)
                 .Include(eu => eu.Event)
                 .FirstOrDefaultAsync(x => x.Id == eventResponsiblePerson.Id);
-
-            //var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            //var template = await File.ReadAllTextAsync(path);
-
-            //template = template
-            //    .Replace("{user_name}", user.UserProfile.FirstName + " " + user.UserProfile.LastName)
-            //    .Replace("{email_message}", await GetTableContent(eventResponsiblePerson.Event.Name));
-
-            //var emailData = new EmailData()
-            //{
-            //    subject = "Invitație la eveniment",
-            //    body = template,
-            //    from = "Do Not Reply",
-            //    to = user.UserProfile.Email
-            //};
-
-            //await _notificationService.Notify(emailData, NotificationType.Both);
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {

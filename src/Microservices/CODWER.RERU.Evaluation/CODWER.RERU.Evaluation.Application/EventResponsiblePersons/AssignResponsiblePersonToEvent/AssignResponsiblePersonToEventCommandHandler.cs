@@ -6,7 +6,6 @@ using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
-using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,22 +83,6 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
 
         private async Task AddEmailNotification(EventResponsiblePerson eventResponsiblePerson)
         {
-            //var item = new EmailNotification
-            //{
-            //    ItemId = eventResponsiblePerson.Id,
-            //    EmailType = EmailType.AssignResponsiblePersonToEvent,
-            //    IsSend = false
-            //};
-
-            //await _appDbContext.EmailNotifications.AddAsync(item);
-            //await _appDbContext.SaveChangesAsync();
-
-            //var template = await GetFilePath();
-
-            //template = template
-            //    .Replace("{user_name}", item.UserProfile.FirstName + " " + item.UserProfile.LastName)
-            //    .Replace("{email_message}", await GetTableContent(item));
-
             var item = await _appDbContext.EventResponsiblePersons
                 .Include(eu => eu.UserProfile)
                 .Include(eu => eu.Event)

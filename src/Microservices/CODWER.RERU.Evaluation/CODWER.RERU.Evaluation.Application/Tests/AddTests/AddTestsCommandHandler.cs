@@ -152,9 +152,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
         private async Task<Unit> SendEmailNotification(AddTestCommand testCommand, AddTestsCommand request, int testId)
         {
-            //var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            //var template = await File.ReadAllTextAsync(path);
-
             var user = new UserProfile();
             var test = await _appDbContext.Tests
                 .Include(x => x.TestTemplate)

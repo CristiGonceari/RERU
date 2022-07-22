@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using CVU.ERP.Common.Interfaces;
 using CVU.ERP.Notifications.Enums;
 using System.Threading.Tasks;
 using CVU.ERP.Notifications.Email;
 using Microsoft.Extensions.Configuration;
 using RERU.Data.Entities;
-using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CVU.ERP.Notifications.Services.Implementations
