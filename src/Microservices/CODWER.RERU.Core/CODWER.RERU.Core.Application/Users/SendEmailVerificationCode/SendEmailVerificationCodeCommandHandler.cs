@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Core.Application.Common.Services.PasswordGenerator;
 using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -56,28 +52,6 @@ namespace CODWER.RERU.Core.Application.Users.SendEmailVerificationCode
                 _appDbContext.EmailVerifications.Add(emailVerification);
                 await _appDbContext.SaveChangesAsync();
             }
-
-            //try
-            //{
-            //    var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
-            //    var template = await File.ReadAllTextAsync(assemblyPath + "/EmailVerification.html");
-
-            //    template = template.Replace("{Code}", code);
-
-            //    var emailData = new EmailData()
-            //    {
-            //        subject = "Email verification",
-            //        body = template,
-            //        from = "Do Not Reply",
-            //        to = request.Email
-            //    };
-
-            //    await _notificationService.Notify(emailData, NotificationType.Both);
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine($"ERROR {e.Message}");
-            //}
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {

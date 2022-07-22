@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
@@ -10,7 +9,6 @@ using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -92,25 +90,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
                 .Include(x => x.Evaluator)
                 .Include(x => x.TestTemplate)
                 .FirstOrDefaultAsync(x => x.Id == testId);
-
-            //var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            //var template = await File.ReadAllTextAsync(path);
-
-            ////var user = new UserProfile();
-
-
-            //template = template.Replace("{user_name}", test.Evaluator.FirstName + " " + test.Evaluator.LastName);
-            //template = template.Replace("{email_message}", await GetTableContent(test, multipleTests));
-
-            //var emailData = new EmailData()
-            //{
-            //    subject = "Invitație la evaluare",
-            //    body = template,
-            //    from = "Do Not Reply",
-            //    to = test.Evaluator.Email
-            //};
-
-            //await _notificationService.Notify(emailData, NotificationType.Both);
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
