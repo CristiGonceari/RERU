@@ -81,33 +81,46 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
             if (response.Succeeded)
             {
                 // TODO: asta trebuie de mutat in notification service
-                if (true)
+                if (notify)
                 {
-                    try
+                    //try
+                    //{
+                    //    var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
+                    //    var template = await File.ReadAllTextAsync(assemblyPath + "/UserRegister.html");
+
+                    //    template = template
+                    //        .Replace("{FirstName}", $"{userProfile.FirstName} {userProfile.LastName}")
+                    //        .Replace("{Login}", userProfile.Email)
+                    //        .Replace("{Password}", password);
+
+                    //    var emailData = new EmailData()
+                    //    {
+                    //        subject = "New account",
+                    //        body = template,
+                    //        from = "Do Not Reply",
+                    //        //to = identityUser.Email
+                    //        to = "hubencu.andrian@gmail.com"
+                    //    };
+
+                    //    await _notificationService.Notify(emailData, NotificationType.Both);
+                    //}
+                    //catch (Exception e)
+                    //{
+                    //    Console.WriteLine($"ERROR {e.Message}");
+                    //}
+
+                    await _notificationService.PutEmailInQueue(new QueuedEmailData
                     {
-                        var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
-                        var template = await File.ReadAllTextAsync(assemblyPath + "/UserRegister.html");
-
-                        template = template
-                            .Replace("{FirstName}", $"{userProfile.FirstName} {userProfile.LastName}")
-                            .Replace("{Login}", userProfile.Email)
-                            .Replace("{Password}", password);
-
-                        var emailData = new EmailData()
+                        Subject = "New account",
+                        To = identityUser.Email,
+                        HtmlTemplateAddress = "Templates/UserRegister.html",
+                        ReplacedValues = new Dictionary<string, string>()
                         {
-                            subject = "New account",
-                            body = template,
-                            from = "Do Not Reply",
-                            //to = identityUser.Email
-                            to = "hubencu.andrian@gmail.com"
-                        };
-
-                        await _notificationService.Notify(emailData, NotificationType.Both);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine($"ERROR {e.Message}");
-                    }
+                            { "{FirstName}", userProfile.FullName },
+                            { "{Password}", password },
+                            { "{Login}", userProfile.Email }
+                        }
+                    });
                 }
                 // end
 
@@ -138,31 +151,44 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                 // TODO: asta trebuie de mutat in notification service
                 if (true)
                 {
-                    try
+                    //try
+                    //{
+                    //    var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
+                    //    var template = await File.ReadAllTextAsync(assemblyPath + "/UserRegister.html");
+
+                    //    template = template
+                    //        .Replace("{FirstName}", $"{userName}")
+                    //        .Replace("{Login}", newEmail)
+                    //        .Replace("{Password}", password);
+
+                    //    var emailData = new EmailData()
+                    //    {
+                    //        subject = "Update account",
+                    //        body = template,
+                    //        from = "Do Not Reply",
+                    //        //to = identityUser.Email
+                    //        to = "hubencu.andrian@gmail.com"
+                    //    };
+
+                    //    await _notificationService.Notify(emailData, NotificationType.Both);
+                    //}
+                    //catch (Exception e)
+                    //{
+                    //    Console.WriteLine($"ERROR {e.Message}");
+                    //}
+
+                    await _notificationService.PutEmailInQueue(new QueuedEmailData
                     {
-                        var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
-                        var template = await File.ReadAllTextAsync(assemblyPath + "/UserRegister.html");
-
-                        template = template
-                            .Replace("{FirstName}", $"{userName}")
-                            .Replace("{Login}", newEmail)
-                            .Replace("{Password}", password);
-
-                        var emailData = new EmailData()
+                        Subject = "Update account",
+                        To = identityUser.Email,
+                        HtmlTemplateAddress = "Templates/UserRegister.html",
+                        ReplacedValues = new Dictionary<string, string>()
                         {
-                            subject = "Update account",
-                            body = template,
-                            from = "Do Not Reply",
-                            //to = identityUser.Email
-                            to = "hubencu.andrian@gmail.com"
-                        };
-
-                        await _notificationService.Notify(emailData, NotificationType.Both);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine($"ERROR {e.Message}");
-                    }
+                            { "{FirstName}", userName },
+                            { "{Password}", password },
+                            { "{Login}", newEmail }
+                        }
+                    });
                 }
                 // end
 
@@ -208,23 +234,37 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                 await _userManager.RemovePasswordAsync(user);
                 await _userManager.AddPasswordAsync(user, password);
 
-                string assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
-                var template = await File.ReadAllTextAsync(assemblyPath + "/ResetPassword.html");
+                //string assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
+                //var template = await File.ReadAllTextAsync(assemblyPath + "/ResetPassword.html");
 
-                template = template
-                    .Replace("{FirstName}", user.UserName)
-                    .Replace("{Login}", user.Email)
-                    .Replace("{Password}", password);
+                //template = template
+                //    .Replace("{FirstName}", user.UserName)
+                //    .Replace("{Login}", user.Email)
+                //    .Replace("{Password}", password);
 
-                var emailData = new EmailData()
+                //var emailData = new EmailData()
+                //{
+                //    subject = "Reset Password",
+                //    body = template,
+                //    from = "Do Not Reply",
+                //    to = user.Email
+                //};
+
+
+                //await _notificationService.Notify(emailData, NotificationType.Both);
+
+                await _notificationService.PutEmailInQueue(new QueuedEmailData
                 {
-                    subject = "Reset Password",
-                    body = template,
-                    from = "Do Not Reply",
-                    to = user.Email
-                };
-
-                await _notificationService.Notify(emailData, NotificationType.Both);
+                    Subject = "Reset Password",
+                    To = user.Email,
+                    HtmlTemplateAddress = "Templates/ResetPassword.html",
+                    ReplacedValues = new Dictionary<string, string>()
+                    {
+                        { "{FirstName}", user.UserName },
+                        { "{Password}", password },
+                        { "{Login}", user.Email }
+                    }
+                });
             }
         }
     }

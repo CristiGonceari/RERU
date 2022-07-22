@@ -1,4 +1,5 @@
-﻿using CODWER.RERU.Evaluation.Application.Services;
+﻿using System.Collections.Generic;
+using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Application.VerificationTests.AutoCheckTestScore;
 using CODWER.RERU.Evaluation.Application.VerificationTests.AutoVerificationTestQuestions;
@@ -64,8 +65,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 
         private async Task<Unit> SendEmailNotification(Test testToFinalize, bool autoCheck)
         {
-            var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            var template = await File.ReadAllTextAsync(path);
+            //var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
+            //var template = await File.ReadAllTextAsync(path);
 
             var eventEvaluators = await _appDbContext.EventEvaluators
                     .Include(x => x.Evaluator)
@@ -77,7 +78,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 
             if (autoCheck)
             {
-                await Send(candidate, testToFinalize, template, autoCheck);
+                await Send(candidate, testToFinalize, autoCheck);
 
                 await _internalNotificationService.AddNotification(candidate.Id, NotificationMessages.YourTestWasVerified);
             }
@@ -99,7 +100,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 
                     if (userTests)
                     {
-                        await Send(evaluator.Evaluator, testToFinalize, template, autoCheck);
+                        await Send(evaluator.Evaluator, testToFinalize, autoCheck);
 
                         await _internalNotificationService.AddNotification(evaluator.EvaluatorId, NotificationMessages.AllCandidatesFinishedTest);
                     }
@@ -113,21 +114,33 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
             return Unit.Value;
         }
 
-        private async Task<Unit> Send(UserProfile user, Test test, string template, bool autoCheck)
+        private async Task<Unit> Send(UserProfile user, Test test, bool autoCheck)
         {
-            template = template
-                .Replace("{user_name}", user.FirstName + " " + user.LastName)
-                .Replace("{email_message}", await GetTableContent(test, autoCheck));
+            //template = template
+            //    .Replace("{user_name}", user.FirstName + " " + user.LastName)
+            //    .Replace("{email_message}", await GetTableContent(test, autoCheck));
 
-            var emailData = new EmailData()
+            //var emailData = new EmailData()
+            //{
+            //    subject = "Rezultatul testului",
+            //    body = template,
+            //    from = "Do Not Reply",
+            //    to = user.Email
+            //};
+
+            //await _notificationService.Notify(emailData, NotificationType.Both);
+
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                subject = "Rezultatul testului",
-                body = template,
-                from = "Do Not Reply",
-                to = user.Email
-            };
-
-            await _notificationService.Notify(emailData, NotificationType.Both);
+                Subject = "Rezultatul testului",
+                To = user.Email,
+                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", user.FullName },
+                    { "{email_message}", await GetTableContent(test, autoCheck) }
+                }
+            });
 
             return Unit.Value;
         }

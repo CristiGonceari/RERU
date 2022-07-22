@@ -7,13 +7,12 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RERU.Data.Entities;
-using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Notifications.Email;
 
 namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 {
@@ -79,9 +78,8 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
                 eventValues = eventValues.Where(l => l.UserProfileId != userId).ToList();
             }
 
-            if (eventValues.Count > 0)
+            if (eventValues.Any())
             {
-
                 db.EventUsers.RemoveRange(eventValues);
                 await db.SaveChangesAsync();
             }
@@ -93,15 +91,42 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
         {
             await using var db = AppDbContext.NewInstance(_configuration);
 
-            var item = new EmailNotification
-            {
-                ItemId = eventUser.Id,
-                EmailType = EmailType.AssignUserToEvent,
-                IsSend = false
-            };
+            //var item = new EmailNotification
+            //{
+            //    ItemId = eventUser.Id,
+            //    EmailType = EmailType.AssignUserToEvent,
+            //    IsSend = false
+            //};
 
-            await db.EmailNotifications.AddAsync(item);
-            await db.SaveChangesAsync();
+            //await db.EmailNotifications.AddAsync(item);
+            //await db.SaveChangesAsync();
+
+
+            //var template = await GetFilePath();
+
+            //template = template
+            //    .Replace("{user_name}", item.UserProfile.FirstName + " " + item.UserProfile.LastName)
+            //    .Replace("{email_message}", await GetTableContent(item));
+
+            var item = await db.EventUsers
+                .Include(x => x.UserProfile)
+                .Include(x => x.Event)
+                .FirstOrDefaultAsync(x => x.Id == eventUser.Id);
+
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
+            {
+                Subject = "Invitație la eveniment",
+                To = item.UserProfile.Email,
+                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", item.UserProfile.FullName },
+                    { "{email_message}", GetTableContent(item) }
+                }
+            });
         }
+
+        private string GetTableContent(EventUser eventUser)
+            => $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la evenimentul ""{eventUser.Event.Name}"" în rol de candidat.</p>";
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -56,27 +57,38 @@ namespace CODWER.RERU.Core.Application.Users.SendEmailVerificationCode
                 await _appDbContext.SaveChangesAsync();
             }
 
-            try
+            //try
+            //{
+            //    var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
+            //    var template = await File.ReadAllTextAsync(assemblyPath + "/EmailVerification.html");
+
+            //    template = template.Replace("{Code}", code);
+
+            //    var emailData = new EmailData()
+            //    {
+            //        subject = "Email verification",
+            //        body = template,
+            //        from = "Do Not Reply",
+            //        to = request.Email
+            //    };
+
+            //    await _notificationService.Notify(emailData, NotificationType.Both);
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine($"ERROR {e.Message}");
+            //}
+
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
-                var template = await File.ReadAllTextAsync(assemblyPath + "/EmailVerification.html");
-
-                template = template.Replace("{Code}", code);
-
-                var emailData = new EmailData()
+                Subject = "Email verification",
+                To = request.Email,
+                HtmlTemplateAddress = "Templates/EmailVerification.html",
+                ReplacedValues = new Dictionary<string, string>()
                 {
-                    subject = "Email verification",
-                    body = template,
-                    from = "Do Not Reply",
-                    to = request.Email
-                };
-
-                await _notificationService.Notify(emailData, NotificationType.Both);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"ERROR {e.Message}");
-            }
+                    { "{Code}", code }
+                }
+            });
 
             return newEmailVerification.Id;
         }

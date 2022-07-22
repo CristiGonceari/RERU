@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -12,6 +13,7 @@ using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.StaticExtensions;
 
 namespace CODWER.RERU.Core.Application.Users.ActivateUser {
     class ActivateUserCommandHandler : BaseHandler, IRequestHandler<ActivateUserCommand, Unit> 
@@ -34,29 +36,40 @@ namespace CODWER.RERU.Core.Application.Users.ActivateUser {
                 userProfile.IsActive = true;
                 await AppDbContext.SaveChangesAsync();
 
-                try
+                //try
+                //{
+                //    string assemblyPath =
+                //        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
+                //    var template = await File.ReadAllTextAsync(assemblyPath + "/ActivateUser.html", cancellationToken);
+
+                //    template = template
+                //        .Replace("{FirstName}", userProfile.FirstName + ' ' + userProfile.LastName);
+
+                //    var emailData = new EmailData()
+                //    {
+                //        subject = "Account Activation",
+                //        body = template,
+                //        from = "Do Not Reply",
+                //        to = userProfile.Email
+                //    };
+
+                //    await _notificationService.Notify(emailData, NotificationType.Both);
+                //}
+                //catch (Exception e)
+                //{
+                //    Console.WriteLine($"ERROR {e.Message}");
+                //}
+
+                await _notificationService.PutEmailInQueue(new QueuedEmailData
                 {
-                    string assemblyPath =
-                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
-                    var template = await File.ReadAllTextAsync(assemblyPath + "/ActivateUser.html", cancellationToken);
-
-                    template = template
-                        .Replace("{FirstName}", userProfile.FirstName + ' ' + userProfile.LastName);
-
-                    var emailData = new EmailData()
+                    Subject = "Account Activation",
+                    To = userProfile.Email,
+                    HtmlTemplateAddress = "Templates/ActivateUser.html",
+                    ReplacedValues = new Dictionary<string, string>()
                     {
-                        subject = "Account Activation",
-                        body = template,
-                        from = "Do Not Reply",
-                        to = userProfile.Email
-                    };
-
-                    await _notificationService.Notify(emailData, NotificationType.Both);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"ERROR {e.Message}");
-                }
+                        { "{FirstName}", userProfile.FullName }
+                    }
+                });
             }
 
             return Unit.Value;

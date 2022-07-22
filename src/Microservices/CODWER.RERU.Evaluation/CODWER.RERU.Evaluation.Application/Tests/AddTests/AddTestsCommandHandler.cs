@@ -152,8 +152,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
         private async Task<Unit> SendEmailNotification(AddTestCommand testCommand, AddTestsCommand request, int testId)
         {
-            var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            var template = await File.ReadAllTextAsync(path);
+            //var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
+            //var template = await File.ReadAllTextAsync(path);
 
             var user = new UserProfile();
             var test = await _appDbContext.Tests
@@ -163,7 +163,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             if (testCommand != null)
             {
                 user = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == testCommand.Data.UserProfileId);
-                template = template.Replace("{email_message}", await GetTableContent(test, true));
+                //template = template.Replace("{email_message}", await GetTableContent(test, true));
 
                 await _internalNotificationService.AddNotification(test.UserProfileId, NotificationMessages.YouHaveNewProgrammedTest);
             }
@@ -172,7 +172,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 if (request.EvaluatorId != null)
                 {
                     user = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == request.EvaluatorId);
-                    template = template.Replace("{email_message}", await GetTableContent(test, false));
+                    //template = template.Replace("{email_message}", await GetTableContent(test, false));
 
                     await _internalNotificationService.AddNotification((int)test.EvaluatorId, NotificationMessages.YouWereInvitedToTestAsEvaluator);
                 }
@@ -182,17 +182,31 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 }
             }
 
-            template = template.Replace("{user_name}", user.FirstName + " " + user.LastName);
+            //template = template.Replace("{user_name}", user.FirstName + " " + user.LastName);
+            //template = template.Replace("{email_message}", await GetTableContent(test, testCommand != null));
 
-            var emailData = new EmailData()
+
+            //var emailData = new EmailData()
+            //{
+            //    subject = "Invitație la test",
+            //    body = template,
+            //    from = "Do Not Reply",
+            //    to = user.Email
+            //};
+
+            //await _notificationService.Notify(emailData, NotificationType.Both);
+
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                subject = "Invitație la test",
-                body = template,
-                from = "Do Not Reply",
-                to = user.Email
-            };
-
-            await _notificationService.Notify(emailData, NotificationType.Both);
+                Subject = "Invitație la test",
+                To = user.Email,
+                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", user.FullName },
+                    { "{email_message}", await GetTableContent(test, testCommand != null) }
+                }
+            });
 
             return Unit.Value;
         }
