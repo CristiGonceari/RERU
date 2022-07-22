@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
@@ -6,7 +6,6 @@ using CODWER.RERU.Evaluation.Application.Validation;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +38,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.EditSolicitedTestSta
             var solicitedTest = await _appDbContext.SolicitedVacantPositions
                 .Include(s => s.UserProfile)
                 .FirstAsync(x => x.Id == request.Id);
+            
             solicitedTest.SolicitedPositionStatus = request.Status;
 
             await _appDbContext.SaveChangesAsync();
@@ -47,7 +47,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.EditSolicitedTestSta
             {
                 await _internalNotificationService.AddNotification(solicitedTest.UserProfileId, NotificationMessages.YourSolicitedTestWasRefused);
 
-                await SendEmailNotification(solicitedTest);
+                //await SendEmailNotification(solicitedTest);
             }
 
             await LogAction(solicitedTest);
@@ -62,29 +62,29 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedTests.EditSolicitedTestSta
                 //.Include(s => s.TestTemplate)
                 .FirstOrDefaultAsync(x => x.UserProfileId == solicitedVacantPosition.UserProfileId);
 
-            var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            var template = await File.ReadAllTextAsync(path);
+            //var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
+            //var template = await File.ReadAllTextAsync(path);
 
-            template = template
-                .Replace("{user_name}", user.UserProfile.FirstName + " " + user.UserProfile.LastName);
-                //.Replace("{email_message}", await GetTableContent(solicitedVacantPosition.TestTemplate.Name));
+            //template = template
+            //    .Replace("{user_name}", user.UserProfile.FirstName + " " + user.UserProfile.LastName);
+            //    //.Replace("{email_message}", await GetTableContent(solicitedVacantPosition.TestTemplate.Name));
 
-            var emailData = new EmailData
-            {
-                subject = "Invitație la eveniment",
-                body = template,
-                from = "Do Not Reply",
-                to = user.UserProfile.Email
-            };
+            //var emailData = new EmailData
+            //{
+            //    subject = "Invitație la eveniment",
+            //    body = template,
+            //    from = "Do Not Reply",
+            //    to = user.UserProfile.Email
+            //};
 
-            await _notificationService.Notify(emailData, NotificationType.Both);
+            //await _notificationService.Notify(emailData, NotificationType.Both);
 
             return Unit.Value;
         }
 
-        private async Task<string> GetTableContent(string testName)
+        private async Task<string> GetTableContent()
         {
-            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">Testul ""{testName}"" solicitat de dumneavoastră a fost refuzat.</p>";
+            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">Solicitarea dumneavoastră a fost refuzată.</p>";
 
             return content;
         }

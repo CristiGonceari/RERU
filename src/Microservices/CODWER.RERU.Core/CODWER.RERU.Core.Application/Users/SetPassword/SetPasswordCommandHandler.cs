@@ -62,28 +62,40 @@ namespace CODWER.RERU.Core.Application.Users.SetPassword {
                     }
 
                     if (request.Data.EmailNotification) {
-                        try {
-                            string assemblyPath = Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location) + "/Templates";
-                            var template = File.ReadAllText (assemblyPath + "/SetPassword.html");
+                        //try {
+                        //    string assemblyPath = Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location) + "/Templates";
+                        //    var template = File.ReadAllText (assemblyPath + "/SetPassword.html");
 
-                            template = template
-                                .Replace ("{FirstName}", identityServerUser.UserName)
-                                .Replace ("{Password}", request.Data.Password);
+                        //    template = template
+                        //        .Replace ("{FirstName}", identityServerUser.UserName)
+                        //        .Replace ("{Password}", request.Data.Password);
 
-                            var emailData = new EmailData()
-                            {
-                                subject = "New password",
-                                body = template,
-                                from = "Do Not Reply",
-                                to = identityServerUser.Email
-                            };
+                        //    var emailData = new EmailData()
+                        //    {
+                        //        subject = "New password",
+                        //        body = template,
+                        //        from = "Do Not Reply",
+                        //        to = identityServerUser.Email
+                        //    };
 
-                            await _notificationService.Notify(emailData, NotificationType.Both);
-                        } 
-                        catch (Exception e) 
+                        //    await _notificationService.Notify(emailData, NotificationType.Both);
+                        //} 
+                        //catch (Exception e) 
+                        //{
+                        //    Console.WriteLine ($"ERROR {e.Message}");
+                        //}
+
+                        await _notificationService.PutEmailInQueue(new QueuedEmailData
                         {
-                            Console.WriteLine ($"ERROR {e.Message}");
-                        }
+                            Subject = "New password",
+                            To = identityServerUser.Email,
+                            HtmlTemplateAddress = "Templates/SetPassword.html",
+                            ReplacedValues = new Dictionary<string, string>()
+                            {
+                                { "{FirstName}", identityServerUser.UserName },
+                                { "{Password}", request.Data.Password }
+                            }
+                        });
                     }
                 }
             }

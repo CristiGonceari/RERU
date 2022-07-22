@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
@@ -56,22 +57,34 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.FinalizeTestVerif
                 .Include(x => x.TestTemplate)
                 .FirstOrDefaultAsync(x => x.Id == testToFinalize.Id);
 
-            var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            var template = await File.ReadAllTextAsync(path);
+            //var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
+            //var template = await File.ReadAllTextAsync(path);
 
-            template = template
-                .Replace("{user_name}", user.FirstName + " " + user.LastName)
-                .Replace("{email_message}", await GetTableContent(test));
+            //template = template
+            //    .Replace("{user_name}", user.FirstName + " " + user.LastName)
+            //    .Replace("{email_message}", await GetTableContent(test));
 
-            var emailData = new EmailData()
+            //var emailData = new EmailData()
+            //{
+            //    subject = "Rezultatul testului",
+            //    body = template,
+            //    from = "Do Not Reply",
+            //    to = user.Email
+            //};
+
+            //await _notificationService.Notify(emailData, NotificationType.Both);
+
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                subject = "Rezultatul testului",
-                body = template,
-                from = "Do Not Reply",
-                to = user.Email
-            };
-
-            await _notificationService.Notify(emailData, NotificationType.Both);
+                Subject = "Rezultatul testului",
+                To = user.Email,
+                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", user.FullName },
+                    { "{email_message}", await GetTableContent(test) }
+                }
+            });
 
             return Unit.Value;
         }

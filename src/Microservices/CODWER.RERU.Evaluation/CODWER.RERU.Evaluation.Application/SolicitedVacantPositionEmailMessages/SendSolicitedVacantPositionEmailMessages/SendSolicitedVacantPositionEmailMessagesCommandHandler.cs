@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
-using RERU.Data.Entities.StaticExtensions;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessages.SendSolicitedVacantPositionEmailMessages
@@ -91,18 +88,30 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
 
         private async Task SendEmail(string template, SolicitedVacantPosition solicitedPosition, SendSolicitedVacantPositionEmailMessagesCommand request)
         {
-            template = template.Replace("{user_name}", solicitedPosition.UserProfile.GetFullName());
-            template = template.Replace("{email_message}", request.EmailMessage);
+            //template = template.Replace("{user_name}", solicitedPosition.UserProfile.GetFullName());
+            //template = template.Replace("{email_message}", request.EmailMessage);
 
-            var emailData = new EmailData()
+            //var emailData = new EmailData()
+            //{
+            //    subject = "Invitație la test",
+            //    body = template,
+            //    from = "Do Not Reply",
+            //    to = solicitedPosition.UserProfile.Email
+            //};
+
+            //await _notificationService.Notify(emailData, NotificationType.Both);
+
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                subject = "Invitație la test",
-                body = template,
-                from = "Do Not Reply",
-                to = solicitedPosition.UserProfile.Email
-            };
-
-            await _notificationService.Notify(emailData, NotificationType.Both);
+                Subject = "Pozitie solicitata",
+                To = solicitedPosition.UserProfile.Email,
+                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", solicitedPosition.UserProfile.FullName },
+                    { "{email_message}", request.EmailMessage }
+                }
+            });
         }
     }
 }

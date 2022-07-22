@@ -26,6 +26,8 @@ namespace RERU.Data.Entities
             SolicitedVacantPositionUserFiles = new HashSet<SolicitedVacantPositionUserFile>();
         }
 
+        public string FullName => $"{FirstName} {LastName} {FatherName}";
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FatherName { get; set; }

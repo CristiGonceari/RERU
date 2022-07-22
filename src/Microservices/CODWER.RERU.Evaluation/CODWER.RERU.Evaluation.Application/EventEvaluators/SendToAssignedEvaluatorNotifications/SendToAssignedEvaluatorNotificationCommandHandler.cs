@@ -53,22 +53,34 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.SendToAssignedEvalu
                 .Include(eu => eu.Event)
                 .FirstOrDefaultAsync(x => x.Id == eventEvaluator.Id);
 
-            var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            var template = await File.ReadAllTextAsync(path);
+            //var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
+            //var template = await File.ReadAllTextAsync(path);
 
-            template = template
-                .Replace("{user_name}", user.Evaluator.FirstName + " " + user.Evaluator.LastName)
-                .Replace("{email_message}", await GetTableContent(eventEvaluator.Event.Name));
+            //template = template
+            //    .Replace("{user_name}", user.Evaluator.FirstName + " " + user.Evaluator.LastName)
+            //    .Replace("{email_message}", await GetTableContent(eventEvaluator.Event.Name));
 
-            var emailData = new EmailData
+            //var emailData = new EmailData
+            //{
+            //    subject = "Invitație la eveniment",
+            //    body = template,
+            //    from = "Do Not Reply",
+            //    to = user.Evaluator.Email
+            //};
+
+            //await _notificationService.Notify(emailData, NotificationType.Both);
+
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                subject = "Invitație la eveniment",
-                body = template,
-                from = "Do Not Reply",
-                to = user.Evaluator.Email
-            };
-
-            await _notificationService.Notify(emailData, NotificationType.Both);
+                Subject = "Invitație la eveniment",
+                To = user.Evaluator.Email,
+                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", user.Evaluator.FullName },
+                    { "{email_message}", await GetTableContent(eventEvaluator.Event.Name) }
+                }
+            });
 
             return Unit.Value;
         }

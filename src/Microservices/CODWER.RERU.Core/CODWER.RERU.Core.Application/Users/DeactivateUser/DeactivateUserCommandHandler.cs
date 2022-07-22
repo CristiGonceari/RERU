@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -32,30 +33,42 @@ namespace CODWER.RERU.Core.Application.Users.DeactivateUser {
                 userProfile.IsActive = false;
                 await AppDbContext.SaveChangesAsync();
 
-                try
-                {
-                    string assemblyPath =
-                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
-                    var template =
-                        await File.ReadAllTextAsync(assemblyPath + "/DeactivateUser.html", cancellationToken);
+                //try
+                //{
+                //    string assemblyPath =
+                //        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
+                //    var template =
+                //        await File.ReadAllTextAsync(assemblyPath + "/DeactivateUser.html", cancellationToken);
 
-                    template = template
-                        .Replace("{FirstName}", userProfile.FirstName + ' ' + userProfile.LastName);
+                //    template = template
+                //        .Replace("{FirstName}", userProfile.FirstName + ' ' + userProfile.LastName);
                     
-                    var emailData = new EmailData()
-                    {
-                        subject = "Account Deactivation",
-                        body = template,
-                        from = "Do Not Reply",
-                        to = userProfile.Email
-                    };
+                //    var emailData = new EmailData()
+                //    {
+                //        subject = "Account Deactivation",
+                //        body = template,
+                //        from = "Do Not Reply",
+                //        to = userProfile.Email
+                //    };
 
-                    await _notificationService.Notify(emailData, NotificationType.Both);
-                }
-                catch (Exception e)
+                //    await _notificationService.Notify(emailData, NotificationType.Both);
+                //}
+                //catch (Exception e)
+                //{
+                //    Console.WriteLine($"ERROR {e.Message}");
+                //}
+
+
+                await _notificationService.PutEmailInQueue(new QueuedEmailData
                 {
-                    Console.WriteLine($"ERROR {e.Message}");
-                }
+                    Subject = "Account Deactivation",
+                    To = userProfile.Email,
+                    HtmlTemplateAddress = "Templates/DeactivateUser.html",
+                    ReplacedValues = new Dictionary<string, string>()
+                    {
+                        { "{FirstName}", userProfile.FullName }
+                    }
+                });
             }
 
             return Unit.Value;

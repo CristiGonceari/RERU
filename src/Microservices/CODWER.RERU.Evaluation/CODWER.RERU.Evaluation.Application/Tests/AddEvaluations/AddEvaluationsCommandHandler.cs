@@ -88,27 +88,43 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
 
         private async Task<Unit> SendEmailNotification(int testId, bool multipleTests)
         {
-            var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            var template = await File.ReadAllTextAsync(path);
-
-            var user = new UserProfile();
             var test = await _appDbContext.Tests
                 .Include(x => x.Evaluator)
                 .Include(x => x.TestTemplate)
                 .FirstOrDefaultAsync(x => x.Id == testId);
 
-            template = template.Replace("{user_name}", test.Evaluator.FirstName + " " + test.Evaluator.LastName);
-            template = template.Replace("{email_message}", await GetTableContent(test, multipleTests));
+            //var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
+            //var template = await File.ReadAllTextAsync(path);
 
-            var emailData = new EmailData()
+            ////var user = new UserProfile();
+
+
+            //template = template.Replace("{user_name}", test.Evaluator.FirstName + " " + test.Evaluator.LastName);
+            //template = template.Replace("{email_message}", await GetTableContent(test, multipleTests));
+
+            //var emailData = new EmailData()
+            //{
+            //    subject = "Invitație la evaluare",
+            //    body = template,
+            //    from = "Do Not Reply",
+            //    to = test.Evaluator.Email
+            //};
+
+            //await _notificationService.Notify(emailData, NotificationType.Both);
+
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                subject = "Invitație la evaluare",
-                body = template,
-                from = "Do Not Reply",
-                to = user.Email
-            };
+                Subject = "Invitație la evaluare",
+                To = test.Evaluator.Email,
+                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", test.Evaluator.FullName },
+                    { "{email_message}", await GetTableContent(test, multipleTests) }
+                }
+            });
 
-            await _notificationService.Notify(emailData, NotificationType.Both);
+
             await _internalNotificationService.AddNotification((int)test.EvaluatorId, NotificationMessages.YouWereInvitedToTestAsEvaluator);
 
             return Unit.Value;
