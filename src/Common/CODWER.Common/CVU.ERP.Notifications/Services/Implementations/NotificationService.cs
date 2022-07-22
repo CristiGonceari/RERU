@@ -56,8 +56,7 @@ namespace CVU.ERP.Notifications.Services.Implementations
                     HtmlTemplateAddress = email.HtmlTemplateAddress,
                     Type = (byte)type,
 
-                    Properties = email.ReplacedValues
-                        .Select(x => new EmailNotificationProperty
+                    Properties = email.ReplacedValues.Select(x => new EmailNotificationProperty
                     {
                         KeyToReplace = x.Key,
                         ValueToReplace = x.Value
