@@ -9,6 +9,8 @@
     <NoWarn>1701;1702;CS4014</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+  <PackageReference Include="Hangfire.AspNetCore" Version="1.7.29" />
+  <PackageReference Include="Hangfire.PostgreSql" Version="1.8.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.2">
       <PrivateAssets>all</PrivateAssets>
