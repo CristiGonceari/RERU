@@ -68,7 +68,9 @@ namespace CODWER.RERU.Core.Application.CronJobs
 
                 await _notificationService.Notify(emailData, (NotificationType)emailNotification.Type);
 
-                _appDbContext.EmailNotifications.Remove(emailNotification);
+                emailNotification.Status = "Sent";
+
+                Console.WriteLine($@" Email trimis {emailData.body} {emailData.to}");
             }
             catch (Exception e)
             {

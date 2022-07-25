@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace RERU.Data.Entities
 {
@@ -20,6 +21,7 @@ namespace RERU.Data.Entities
         public string Status { get; set; }
 
         public byte Type { get; set; } // 0 - Local, 1 - MNotify, 2 - Both
+        public DateTime Created { get; set; }
 
         public virtual ICollection<EmailNotificationProperty> Properties { get; set; }
     }
