@@ -25,6 +25,11 @@ namespace CODWER.RERU.Core.Application.CronJobs
 
         public async Task SendEmailNotification()
         {
+            if (!_appDbContext.EmailNotifications.Any(en => en.IsSend == false && en.InUpdateProcess == false))
+            {
+                return;
+            }
+
             var emails = _appDbContext.EmailNotifications
                 .Include(en => en.Properties)
                 .Where(en => en.IsSend == false && en.InUpdateProcess == false);
@@ -68,7 +73,9 @@ namespace CODWER.RERU.Core.Application.CronJobs
 
                 await _notificationService.Notify(emailData, (NotificationType)emailNotification.Type);
 
-                _appDbContext.EmailNotifications.Remove(emailNotification);
+                emailNotification.Status = "Sent";
+
+                Console.WriteLine($@" Email trimis {emailData.body} {emailData.to}");
             }
             catch (Exception e)
             {

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using CVU.ERP.Common.Interfaces;
 using CVU.ERP.Notifications.Enums;
 using System.Threading.Tasks;
@@ -53,6 +54,7 @@ namespace CVU.ERP.Notifications.Services.Implementations
                     InUpdateProcess = false,
                     HtmlTemplateAddress = email.HtmlTemplateAddress,
                     Type = (byte)type,
+                    Created = DateTime.Now,
 
                     Properties = email.ReplacedValues.Select(x => new EmailNotificationProperty
                     {
