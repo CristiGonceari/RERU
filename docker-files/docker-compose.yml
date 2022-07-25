@@ -212,7 +212,8 @@ services:
       - ConnectionStrings__RERU=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Common;
       - ConnectionStrings__Identity=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Identity;
       - ConnectionStrings__Log=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Logging;
-
+      - ConnectionStrings__Storage=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Storage;
+      - ConnectionStrings__HangfireCore=server=db;Port=5432;Username=postgres;Password=postgres;Database=Hangfire-Core;
     volumes:
       - ./docker-settings/Core/appsettings.json:/app/appsettings.json
     depends_on:
@@ -244,6 +245,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - ConnectionStrings__RERU=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Common;
       - ConnectionStrings__Log=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Logging;
+      - ConnectionStrings__HangfirePersonal=server=db;Port=5432;Username=postgres;Password=postgres;Database=Hangfire-Personal;
     volumes:
       - ./docker-settings/Personal/appsettings.json:/app/appsettings.json
     depends_on:
@@ -274,7 +276,7 @@ services:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__RERU=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Common;
-      - ConnectionStrings__HangfireConnection=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Common;
+      - ConnectionStrings__HangfireEvaluation=server=db;Port=5432;Username=postgres;Password=postgres;Database=Hangfire-Evaluation;
       - ConnectionStrings__Log=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Logging;
     volumes:
       - ./docker-settings/Evaluation/appsettings.json:/app/appsettings.json

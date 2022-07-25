@@ -27,6 +27,10 @@ namespace CODWER.RERU.Core.API.Config {
                 options.UseNpgsql(configuration.GetConnectionString(ConnectionString.Common),
                     b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name)));
 
+            services.AddDbContext<HangfireDbContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString(ConnectionString.HangfireCore),
+                    b => b.MigrationsAssembly(typeof(HangfireDbContext).GetTypeInfo().Assembly.GetName().Name)));
+
             services
                 .AddDbContext<UserManagementDbContext> (options =>
                     options.UseNpgsql(configuration.GetConnectionString (ConnectionString.Identity),
