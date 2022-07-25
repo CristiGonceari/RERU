@@ -70,6 +70,7 @@ reru_core:
     identity_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    hangfirecore_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Core-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
 
 reru_identity_migrator:
   enabled: true
@@ -111,6 +112,7 @@ reru_personal:
     reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    hangfirepersonal_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Personal-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
 
 reru_evaluation_fe:
   name: "reru-evaluation-fe"
@@ -124,10 +126,10 @@ reru_evaluation:
   image:
     repository: cvuintell/reru-evaluation
   database:
-    # connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Evaluation-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
     reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    hangfireevaluation_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Evaluation-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
 
 reru_logging_fe:
   name: "reru-logging-fe"

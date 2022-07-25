@@ -8,10 +8,8 @@ using CODWER.RERU.Evaluation.Application.DependencyInjection;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CVU.ERP.Common;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
-using CVU.ERP.Common.Interfaces;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Infrastructure;
-using CVU.ERP.Infrastructure.Email;
 using Microsoft.AspNetCore.Http;
 using RERU.Data.Persistence.Context;
 using ISession = CODWER.RERU.Evaluation.Application.Interfaces.ISession;
@@ -32,6 +30,10 @@ namespace CODWER.RERU.Evaluation.API.Config
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString(ConnectionString.Common),
                     b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name)));
+
+            services.AddDbContext<HangfireDbContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString(ConnectionString.HangfireEvaluation),
+                    b => b.MigrationsAssembly(typeof(HangfireDbContext).GetTypeInfo().Assembly.GetName().Name)));
         }
         #endregion
 

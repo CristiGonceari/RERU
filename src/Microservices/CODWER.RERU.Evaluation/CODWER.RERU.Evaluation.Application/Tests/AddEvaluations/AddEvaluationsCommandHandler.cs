@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
@@ -10,7 +9,6 @@ using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -88,27 +86,24 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
 
         private async Task<Unit> SendEmailNotification(int testId, bool multipleTests)
         {
-            var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            var template = await File.ReadAllTextAsync(path);
-
-            var user = new UserProfile();
             var test = await _appDbContext.Tests
                 .Include(x => x.Evaluator)
                 .Include(x => x.TestTemplate)
                 .FirstOrDefaultAsync(x => x.Id == testId);
 
-            template = template.Replace("{user_name}", test.Evaluator.FirstName + " " + test.Evaluator.LastName);
-            template = template.Replace("{email_message}", await GetTableContent(test, multipleTests));
-
-            var emailData = new EmailData()
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                subject = "Invitație la evaluare",
-                body = template,
-                from = "Do Not Reply",
-                to = user.Email
-            };
+                Subject = "Invitație la evaluare",
+                To = test.Evaluator.Email,
+                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", test.Evaluator.FullName },
+                    { "{email_message}", await GetTableContent(test, multipleTests) }
+                }
+            });
 
-            await _notificationService.Notify(emailData, NotificationType.Both);
+
             await _internalNotificationService.AddNotification((int)test.EvaluatorId, NotificationMessages.YouWereInvitedToTestAsEvaluator);
 
             return Unit.Value;

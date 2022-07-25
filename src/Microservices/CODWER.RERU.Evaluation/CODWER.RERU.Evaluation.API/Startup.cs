@@ -29,6 +29,7 @@ using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
 using CODWER.RERU.Evaluation.Application.Models;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
+using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Evaluation.API
 {
@@ -109,11 +110,11 @@ namespace CODWER.RERU.Evaluation.API
             services.AddCommonLoggingContext(Configuration);
 
             services.AddHangfire(config =>
-                config.UsePostgreSqlStorage(Configuration.GetConnectionString(ConnectionString.Common)));
+                config.UsePostgreSqlStorage(Configuration.GetConnectionString(ConnectionString.HangfireEvaluation)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext appDbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, HangfireDbContext hangfireDb)
         {
             if (env.IsDevelopment())
             {
@@ -126,13 +127,12 @@ namespace CODWER.RERU.Evaluation.API
                 app.UseHsts();
             }
 
-            //DatabaseSeeder.SeedDb(appDbContext);
+            hangfireDb.Database.Migrate();
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();
 
-            //RecurringJob.AddOrUpdate<SendEmailNotificationBeforeTest>(x => x.SendNotificationBeforeTest(), "*/5 * * * *");
-            RecurringJob.AddOrUpdate<SendMultipleEmailNotifications>(x => x.SendEmailNotifications(), "*/5 * * * *");
+            RecurringJob.AddOrUpdate<SendEmailNotificationBeforeTest>(x => x.SendNotificationBeforeTest(), "*/5 * * * *");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

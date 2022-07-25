@@ -1,13 +1,12 @@
-﻿using CODWER.RERU.Evaluation.Application.Services;
+﻿using System.Collections.Generic;
+using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +18,6 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.SendToAssignedUserNotifi
         private readonly AppDbContext _appDbContext;
         private readonly IInternalNotificationService _internalNotificationService;
         private readonly INotificationService _notificationService;
-
 
         public SendToAssignedUserNotificationsCommandHandler(
             AppDbContext appDbContext, 
@@ -52,22 +50,17 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.SendToAssignedUserNotifi
                 .Include(eu => eu.Event)
                 .FirstOrDefaultAsync(x => x.Id == eventUser.Id);
 
-            var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            var template = await File.ReadAllTextAsync(path);
-
-            template = template
-                .Replace("{user_name}", user.UserProfile.FirstName + " " + user.UserProfile.LastName)
-                .Replace("{email_message}", await GetTableContent(eventUser.Event.Name));
-
-            var emailData = new EmailData()
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                subject = "Invitație la eveniment",
-                body = template,
-                from = "Do Not Reply",
-                to = user.UserProfile.Email
-            };
-
-            await _notificationService.Notify(emailData, NotificationType.Both);
+                Subject = "Invitație la eveniment",
+                To = user.UserProfile.Email,
+                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", user.UserProfile.FullName },
+                    { "{email_message}", await GetTableContent(eventUser.Event.Name) }
+                }
+            });
 
             return Unit.Value;
         }

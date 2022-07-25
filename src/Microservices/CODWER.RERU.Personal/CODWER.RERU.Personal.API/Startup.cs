@@ -27,6 +27,7 @@ using System.Text;
 using CODWER.RERU.Personal.Application.CronJobs;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using Hangfire.PostgreSql;
+using Microsoft.EntityFrameworkCore;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Personal.API.Config.ServicesSetup;
@@ -118,10 +119,10 @@ namespace CODWER.RERU.Personal.API
             //{ 
 
             services.AddHangfire(config =>
-                config.UsePostgreSqlStorage(Configuration.GetConnectionString(ConnectionString.Common)));
+                config.UsePostgreSqlStorage(Configuration.GetConnectionString(ConnectionString.HangfirePersonal)));
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext appDbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, HangfireDbContext hangfireDbContext)
         {
 
             if (env.IsDevelopment())
@@ -134,6 +135,8 @@ namespace CODWER.RERU.Personal.API
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+
+            hangfireDbContext.Database.Migrate();
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();

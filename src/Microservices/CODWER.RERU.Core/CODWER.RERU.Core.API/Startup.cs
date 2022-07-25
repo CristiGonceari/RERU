@@ -23,6 +23,11 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using RERU.Data.Persistence.Context;
 using System.Text;
+using CODWER.RERU.Core.Application.CronJobs;
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
+using Hangfire;
+using Hangfire.PostgreSql;
+using Microsoft.EntityFrameworkCore;
 using RERU.Data.Persistence.Initializer;
 using Wkhtmltopdf.NetCore;
 
@@ -113,12 +118,15 @@ namespace CODWER.RERU.Core.API
             services.AddERPModuleServices(Configuration)
                 .AddCoreModuleApplication(Configuration)
                 .AddCommonLoggingContext(Configuration);
+
+            services.AddHangfire(config =>
+                config.UsePostgreSqlStorage(Configuration.GetConnectionString(ConnectionString.HangfireCore)));
         }
 
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext appDbContext, IMediator mediator)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext appDbContext, IMediator mediator, HangfireDbContext hangfireDbContext)
         {
 
             //app.UseApiResponseAndExceptionWrapper ()
@@ -130,6 +138,12 @@ namespace CODWER.RERU.Core.API
                 settings.Path = "/api";
                 settings.DocumentPath = "/api/specification.json";
             });
+
+            hangfireDbContext.Database.Migrate();
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
+
+            RecurringJob.AddOrUpdate<SendEmailJob>(x => x.SendEmailNotification(), "*/1 * * * *");
 
             app.UseRouting();
             // global cors policy

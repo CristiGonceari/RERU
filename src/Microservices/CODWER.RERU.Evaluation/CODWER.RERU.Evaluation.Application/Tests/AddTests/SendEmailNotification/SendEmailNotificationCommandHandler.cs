@@ -1,13 +1,12 @@
-﻿using CODWER.RERU.Evaluation.Application.Models;
+﻿using System.Collections.Generic;
+using CODWER.RERU.Evaluation.Application.Models;
 using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,15 +16,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotificatio
     {
         private readonly AppDbContext _appDbContext;
         private readonly INotificationService _notificationService;
-        private readonly IOptions<PlatformConfig> _options;
         private readonly PlatformConfig _platformConfig;
-        public SendEmailNotificationCommandHandler(AppDbContext appDbContext, INotificationService notificationService, IOptions<PlatformConfig> options, PlatformConfig platformConfig)
+
+        public SendEmailNotificationCommandHandler(AppDbContext appDbContext, INotificationService notificationService, IOptions<PlatformConfig> options)
         {
             _appDbContext = appDbContext;
             _notificationService = notificationService;
             _platformConfig = options.Value;
-            _options = options;
-          
         }
 
         public async Task<Unit> Handle(SendEmailNotificationCommand request, CancellationToken cancellationToken)
@@ -41,9 +38,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotificatio
 
         private async Task<Unit> SendEmailNotification(bool forEvaluat, int testId)
         {
-            var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            var template = await File.ReadAllTextAsync(path);
-
             var user = new UserProfile();
             var test = await _appDbContext.Tests
                 .Include(x => x.TestTemplate)
@@ -52,14 +46,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotificatio
             if (forEvaluat)
             {
                 user = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == test.UserProfileId);
-                template = template.Replace("{email_message}", await GetTableContent(test, true));
             }
             else
             {
                 if (test.EvaluatorId != null)
                 {
                     user = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == test.EvaluatorId);
-                    template = template.Replace("{email_message}", await GetTableContent(test, false));
                 }
                 else
                 {
@@ -67,17 +59,17 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotificatio
                 }
             }
 
-            template = template.Replace("{user_name}", user.FirstName + " " + user.LastName);
-
-            var emailData = new EmailData()
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                subject = "Invitație la test",
-                body = template,
-                from = "Do Not Reply",
-                to = user.Email
-            };
-
-            await _notificationService.Notify(emailData, NotificationType.Both);
+                Subject = "Invitație la test",
+                To = user.Email,
+                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", user.FullName },
+                    { "{email_message}", await GetTableContent(test, forEvaluat) }
+                }
+            });
 
             return Unit.Value;
         }
