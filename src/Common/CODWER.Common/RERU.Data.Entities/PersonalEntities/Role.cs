@@ -6,5 +6,7 @@ namespace RERU.Data.Entities.PersonalEntities
     {
         public string Name { get; set; }
         public int ColaboratorId { get; set; }
+        public string Code { get; set; }
+        public string ShortCode { get; set; }
     }
 }

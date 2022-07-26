@@ -2,9 +2,9 @@
 using CVU.ERP.Common.DataTransferObjects.Files;
 using MediatR;
 
-namespace CODWER.RERU.Personal.Application.OrganizationRoles.ImportOrganizationRoles
+namespace CODWER.RERU.Personal.Application.Departments.BulkImportDepartments
 {
-    public class ImportRolesCommand : IRequest<FileDataDto>
+    public class BulkImportDepartmentsCommand : IRequest<FileDataDto>
     {
         public ExcelDataDto Data { get; set; }
     }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RERU.Data.Persistence.Context;
@@ -9,9 +10,10 @@ using RERU.Data.Persistence.Context;
 namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220722141356_Add_Code_and_ShortCode_To_Roles")]
+    partial class Add_Code_and_ShortCode_To_Roles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -444,56 +446,38 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("HtmlTemplateAddress")
+                    b.Property<string>("CreateById")
                         .HasColumnType("text");
 
-                    b.Property<bool>("InUpdateProcess")
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("EmailType")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<bool>("IsSend")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Subject")
-                        .HasColumnType("text");
-
-                    b.Property<string>("To")
-                        .HasColumnType("text");
-
-                    b.Property<byte>("Type")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EmailNotifications");
-                });
-
-            modelBuilder.Entity("RERU.Data.Entities.EmailNotificationProperty", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<int>("EmailNotificationId")
+                    b.Property<int>("ItemId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("KeyToReplace")
+                    b.Property<string>("UpdateById")
                         .HasColumnType("text");
 
-                    b.Property<string>("ValueToReplace")
-                        .HasColumnType("text");
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmailNotificationId");
+                    b.HasIndex("EmailType");
 
-                    b.ToTable("EmailNotificationProperty");
+                    b.ToTable("EmailNotifications");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.EmailTestNotification", b =>
@@ -4765,6 +4749,54 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         });
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EmailType>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("EmailType");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "AddTestCandidateEmail"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "AddTestEvaluatorEmail"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "AssignUserToEvent"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "AssignEvaluatorToEvent"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "AssignResponsiblePersonToEvent"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "AddUser"
+                        });
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.KinshipDegreeEnum>", b =>
                 {
                     b.Property<int>("Id")
@@ -6340,15 +6372,13 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RERU.Data.Entities.EmailNotificationProperty", b =>
+            modelBuilder.Entity("RERU.Data.Entities.EmailNotification", b =>
                 {
-                    b.HasOne("RERU.Data.Entities.EmailNotification", "EmailNotification")
-                        .WithMany("Properties")
-                        .HasForeignKey("EmailNotificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EmailType>", null)
+                        .WithMany()
+                        .HasForeignKey("EmailType")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("EmailNotification");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.EmailTestNotification", b =>
@@ -7651,6 +7681,15 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EmailType>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EmailType>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.KinshipDegreeEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.KinshipDegreeEnum>", null)
@@ -8010,11 +8049,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("RERU.Data.Entities.CandidatePosition", b =>
                 {
                     b.Navigation("RequiredDocumentPositions");
-                });
-
-            modelBuilder.Entity("RERU.Data.Entities.EmailNotification", b =>
-                {
-                    b.Navigation("Properties");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.Event", b =>

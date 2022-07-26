@@ -18,23 +18,26 @@ export class RoleService extends AbstractService {
 		return this.http.get<ApiResponse<RoleModel>>(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}
 
-	add(data: RoleModel): Observable<ApiResponse<any>> {
-		return this.http.post<ApiResponse<any>>(`${this.baseUrl}/${this.urlRoute}`, { data });
-	}
+	// add(data: RoleModel): Observable<ApiResponse<any>> {
+	// 	return this.http.post<ApiResponse<any>>(`${this.baseUrl}/${this.urlRoute}`, { data });
+	// }
 
-	update(data: RoleModel): Observable<ApiResponse<any>> {
-		return this.http.patch<ApiResponse<any>>(`${this.baseUrl}/${this.urlRoute}`, { data });
-	}
+	// update(data: RoleModel): Observable<ApiResponse<any>> {
+	// 	return this.http.patch<ApiResponse<any>>(`${this.baseUrl}/${this.urlRoute}`, { data });
+	// }
 
-	delete(id: number): Observable<ApiResponse<any>> {
-		return this.http.delete<ApiResponse<RoleModel>>(`${this.baseUrl}/${this.urlRoute}/${id}`);
-	}
+	// delete(id: number): Observable<ApiResponse<any>> {
+	// 	return this.http.delete<ApiResponse<RoleModel>>(`${this.baseUrl}/${this.urlRoute}/${id}`);
+	// }
 
 	list(data: any): Observable<ApiResponse<any>> {
 		return this.http.get<ApiResponse<any>>(`${this.baseUrl}/${this.urlRoute}`, { params: data });
 	}
 
-	import(data: FormData): Observable<ApiResponse<any>> {
-		return this.http.put<ApiResponse<any>>(`${this.baseUrl}/${this.urlRoute}/excel-import`, data);
+	bulkImport(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/excel-import`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
 	}
 }

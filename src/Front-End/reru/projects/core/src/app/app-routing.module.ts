@@ -62,10 +62,10 @@ const routes: Routes = [
 				data: { permission: 'P00000012' },
 				canActivate: [PermissionRouteGuard]
 			},
-			{ 
-				path: 'roles', 
-				loadChildren: () => import('./components/roles/roles.module').then(m => m.RolesModule)
-			},
+			// { 
+			// 	path: 'roles', 
+			// 	loadChildren: () => import('./components/roles/roles.module').then(m => m.RolesModule)
+			// },
 			{ 
 				path: 'my-profile', 
 				loadChildren: () => import('./components/my-profile/my-profile.module').then(m => m.MyProfileModule)
@@ -76,12 +76,12 @@ const routes: Routes = [
 				data: { permission: 'P00000025' },
 				canActivate: [PermissionRouteGuard]
 			},
-			{
-				path: 'departments',
-				loadChildren: () => import('./components/departments/departments.module').then(m => m.DepartmentsModule),
-				data: { permission: 'P00000026' },
-				canActivate: [PermissionRouteGuard]
-			},
+			// {
+			// 	path: 'departments',
+			// 	loadChildren: () => import('./components/departments/departments.module').then(m => m.DepartmentsModule),
+			// 	data: { permission: 'P00000026' },
+			// 	canActivate: [PermissionRouteGuard]
+			// },
 			{
 				path: 'user-roles',
 				loadChildren: () => import('./components/user-roles/user-roles.module').then(m => m.UserRolesModule),

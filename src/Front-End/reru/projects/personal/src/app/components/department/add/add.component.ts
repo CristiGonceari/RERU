@@ -29,17 +29,18 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
     this.initForm();
   }
 
+  //commented for future use
   submit() {
-    this.departmentService.add(this.departmentForm.value).subscribe((response: ApiResponse<any>) => {
-      this.ngZone.run(() => this.router.navigate(['../', response.data], { relativeTo: this.route }));
-      this.notificationService.success('Success', 'Department created!', NotificationUtil.getDefaultMidConfig());
-    }, (error) => {
-      if (error.status === 400) {
-        this.notificationService.warn('Validation error', 'Please fill in department name!', NotificationUtil.getDefaultMidConfig());
-        return;
-      }
-      this.notificationService.error('Server error occured!', null, NotificationUtil.getDefaultMidConfig());
-    });
+    // this.departmentService.add(this.departmentForm.value).subscribe((response: ApiResponse<any>) => {
+    //   this.ngZone.run(() => this.router.navigate(['../', response.data], { relativeTo: this.route }));
+    //   this.notificationService.success('Success', 'Department created!', NotificationUtil.getDefaultMidConfig());
+    // }, (error) => {
+    //   if (error.status === 400) {
+    //     this.notificationService.warn('Validation error', 'Please fill in department name!', NotificationUtil.getDefaultMidConfig());
+    //     return;
+    //   }
+    //   this.notificationService.error('Server error occured!', null, NotificationUtil.getDefaultMidConfig());
+    // });
   }
 
   initForm(): void {

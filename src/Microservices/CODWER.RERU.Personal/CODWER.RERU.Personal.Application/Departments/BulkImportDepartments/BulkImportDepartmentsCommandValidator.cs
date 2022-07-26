@@ -1,6 +1,6 @@
 ﻿using CODWER.RERU.Personal.Application.Validation;
 using CVU.ERP.Common.Extensions;
-using CVU.ERP.Module.Common.MessageCodes;
+using CVU.ERP.Common.Validation;
 using FluentValidation;
 using FluentValidation.Validators;
 using Microsoft.AspNetCore.Http;
@@ -9,11 +9,11 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace CODWER.RERU.Personal.Application.OrganizationRoles.ImportOrganizationRoles
+namespace CODWER.RERU.Personal.Application.Departments.BulkImportDepartments
 {
-    public class ImportRolesCommandValidator : AbstractValidator<ImportRolesCommand>
+    public class BulkImportDepartmentsCommandValidator : AbstractValidator<BulkImportDepartmentsCommand>
     {
-        public ImportRolesCommandValidator()
+        public BulkImportDepartmentsCommandValidator()
         {
             RuleFor(x => x.Data.File.FileName)
                 .NotEmpty()
@@ -50,4 +50,5 @@ namespace CODWER.RERU.Personal.Application.OrganizationRoles.ImportOrganizationR
             }
         }
     }
+
 }

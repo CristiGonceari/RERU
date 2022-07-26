@@ -1,14 +1,17 @@
-﻿using System.Threading.Tasks;
-using CODWER.RERU.Personal.API.Config;
+﻿using CODWER.RERU.Personal.API.Config;
 using CODWER.RERU.Personal.Application.Departments.AddDepartment;
+using CODWER.RERU.Personal.Application.Departments.BulkImportDepartments;
 using CODWER.RERU.Personal.Application.Departments.GetDepartment;
 using CODWER.RERU.Personal.Application.Departments.GetDepartments;
 using CODWER.RERU.Personal.Application.Departments.RemoveDepartment;
 using CODWER.RERU.Personal.Application.Departments.UpdateDepartment;
 using CODWER.RERU.Personal.DataTransferObjects.Departments;
+using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.API.Controllers
 {
@@ -33,29 +36,41 @@ namespace CODWER.RERU.Personal.API.Controllers
             return result;
         }
 
-        [HttpPost]
-        public async Task<int> CreateDepartment([FromBody] AddDepartmentCommand command)
+        //[HttpPost]
+        //public async Task<int> CreateDepartment([FromBody] AddDepartmentCommand command)
+        //{
+        //    var result = await Mediator.Send(command);
+
+        //    return result;
+        //}
+
+        //[HttpPatch]
+        //public async Task<Unit> UpdateDepartment([FromBody] UpdateDepartmentCommand command)
+        //{
+        //    var result = await Mediator.Send(command);
+
+        //    return result;
+        //}
+
+        //[HttpDelete("{id}")]
+        //public async Task<Unit> RemoveDepartment([FromRoute] int id)
+        //{
+        //    var command = new RemoveDepartmentCommand { Id = id };
+        //    var result = await Mediator.Send(command);
+
+        //    return result;
+        //}
+
+        [HttpPut("excel-import")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> ImportFromExcelFile([FromForm] ExcelDataDto dto)
         {
+            var command = new BulkImportDepartmentsCommand { Data = dto };
+
             var result = await Mediator.Send(command);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
-            return result;
-        }
-
-        [HttpPatch]
-        public async Task<Unit> UpdateDepartment([FromBody] UpdateDepartmentCommand command)
-        {
-            var result = await Mediator.Send(command);
-
-            return result;
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<Unit> RemoveDepartment([FromRoute] int id)
-        {
-            var command = new RemoveDepartmentCommand { Id = id };
-            var result = await Mediator.Send(command);
-
-            return result;
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }

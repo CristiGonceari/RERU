@@ -18,19 +18,26 @@ export class DepartmentService extends AbstractService {
     return this.http.get<ApiResponse<DepartmentModel>>(`${this.baseUrl}/${this.urlRoute}/${id}`);
   }
 
-  add(data: DepartmentModel): Observable<ApiResponse<any>> {
-    return this.http.post<ApiResponse<any>>(`${this.baseUrl}/${this.urlRoute}`, { data });
-  }
+  // add(data: DepartmentModel): Observable<ApiResponse<any>> {
+  //   return this.http.post<ApiResponse<any>>(`${this.baseUrl}/${this.urlRoute}`, { data });
+  // }
 
-  update(data: DepartmentModel): Observable<ApiResponse<any>> {
-    return this.http.patch<ApiResponse<any>>(`${this.baseUrl}/${this.urlRoute}`, { data });
-  }
+  // update(data: DepartmentModel): Observable<ApiResponse<any>> {
+  //   return this.http.patch<ApiResponse<any>>(`${this.baseUrl}/${this.urlRoute}`, { data });
+  // }
 
-  delete(id: number): Observable<ApiResponse<any>> {
-    return this.http.delete<ApiResponse<DepartmentModel>>(`${this.baseUrl}/${this.urlRoute}/${id}`);
-  }
+  // delete(id: number): Observable<ApiResponse<any>> {
+  //   return this.http.delete<ApiResponse<DepartmentModel>>(`${this.baseUrl}/${this.urlRoute}/${id}`);
+  // }
 
   list(data: any): Observable<ApiResponse<any>> {
     return this.http.get<ApiResponse<any>>(`${this.baseUrl}/${this.urlRoute}`, { params: data });
   }
+
+  bulkImport(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/excel-import`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }

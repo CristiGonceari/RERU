@@ -79,7 +79,7 @@ import { CkEditorConfigComponent } from './components/ck-editor-config/ck-editor
 import { CKEditorModule } from 'ngx-ckeditor';
 import { MaterialModule } from '../material.module';
 import { SharedModule } from '@erp/shared';
-
+import { ImportDepartmentsModalComponent } from './modals/import-departments-modal/import-departments-modal.component';
 
 const commonComponents = [
   Exception404Component,
@@ -150,7 +150,9 @@ const commonComponents = [
   AddEditTimesheetValuesComponent,
   DeleteDocumentsTemplatesModalComponent,
   ConvertPdfDocumentModalComponent,
-  CkEditorConfigComponent
+  CkEditorConfigComponent,
+  ImportDepartmentsModalComponent
+
 ];
 
 @NgModule({
@@ -221,7 +223,9 @@ const commonComponents = [
     SignFileModalComponent,
     AddRequestByHrModalComponent,
     ConvertPdfDocumentModalComponent,
-    CkEditorConfigComponent
+    CkEditorConfigComponent,
+    ImportDepartmentsModalComponent
+
   ],
 })
 export class UtilsModule { }

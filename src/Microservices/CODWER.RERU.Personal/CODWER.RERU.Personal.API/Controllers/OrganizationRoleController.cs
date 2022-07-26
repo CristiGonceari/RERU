@@ -9,6 +9,7 @@ using CODWER.RERU.Personal.Application.OrganizationRoles.UpdateOrganizationRole;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CODWER.RERU.Personal.DataTransferObjects.OrganizationRoles;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,37 +36,41 @@ namespace CODWER.RERU.Personal.API.Controllers
             return result;
         }
 
-        [HttpPost]
-        public async Task<int> CreateOrganizationRole([FromBody] AddRoleCommand command)
-        {
-            var result = await Mediator.Send(command);
+        //[HttpPost]
+        //public async Task<int> CreateOrganizationRole([FromBody] AddRoleCommand command)
+        //{
+        //    var result = await Mediator.Send(command);
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        [HttpPatch]
-        public async Task<Unit> UpdateOrganizationRole([FromBody] UpdateRoleCommand command)
-        {
-            var result = await Mediator.Send(command);
+        //[HttpPatch]
+        //public async Task<Unit> UpdateOrganizationRole([FromBody] UpdateRoleCommand command)
+        //{
+        //    var result = await Mediator.Send(command);
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        [HttpDelete("{id}")]
-        public async Task<Unit> RemoveOrganizationRole([FromRoute] int id)
-        {
-            var command = new RemoveRoleCommand { Id = id };
-            var result = await Mediator.Send(command);
+        //[HttpDelete("{id}")]
+        //public async Task<Unit> RemoveOrganizationRole([FromRoute] int id)
+        //{
+        //    var command = new RemoveRoleCommand { Id = id };
+        //    var result = await Mediator.Send(command);
 
-            return result;
-        }
+        //    return result;
+        //}
 
         [HttpPut("excel-import")]
-        public async Task ImportFromExcelFile([FromForm] ExcelDataDto dto)
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> ImportFromExcelFile([FromForm] ExcelDataDto dto)
         {
             var command = new ImportRolesCommand { Data = dto };
 
-            await Mediator.Send(command);
+            var result = await Mediator.Send(command);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }
