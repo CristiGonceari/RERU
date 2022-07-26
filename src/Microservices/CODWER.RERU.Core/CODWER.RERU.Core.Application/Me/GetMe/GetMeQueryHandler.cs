@@ -33,7 +33,7 @@ namespace CODWER.RERU.Core.Application.Me.GetMe {
             var currentUser = await _currentUserProvider.Get ();
             me.User = Mapper.Map<ApplicationUserDto> (currentUser);
             me.Tenant = _tenantDto;
-
+           
             if (currentUser.DepartmentColaboratorId == null && 
                 currentUser.RoleColaboratorId == null && 
                 !string.IsNullOrEmpty(currentUser.Email)

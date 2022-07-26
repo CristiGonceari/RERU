@@ -12,7 +12,10 @@ namespace CODWER.RERU.Personal.Application.Departments
             CreateMap<AddEditDepartmentDto, Department>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
 
-            CreateMap<Department, DepartmentDto>();
+            CreateMap<Department, DepartmentDto>() ;
+
+            CreateMap<DepartmentDto, Department>()
+                .ForMember(x => x.Id, opts => opts.Ignore());
 
             CreateMap<Department, SelectItem>()
                 .ForMember(x => x.Value, opts => opts.MapFrom(op => op.Id.ToString()))

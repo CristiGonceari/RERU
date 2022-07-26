@@ -3105,6 +3105,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
                     b.Property<int>("ColaboratorId")
                         .HasColumnType("integer");
 
@@ -3121,6 +3124,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("boolean");
 
                     b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ShortCode")
                         .HasColumnType("text");
 
                     b.Property<string>("UpdateById")

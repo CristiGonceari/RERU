@@ -9,7 +9,7 @@
     </div>
     <form [formGroup]="uploadForm">
         <div class="form-group row">
-            <label for="file" class="col-form-label col-auto">{{'files.import-departments' | translate }}:</label>
+            <label for="file" class="col-form-label col-auto">{{'document.file' | translate}}:</label>
             <div class="col">
                 <input (change)="setFile($event)" class="form-control" type="file" name="file" id="file">
             </div>

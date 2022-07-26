@@ -39,17 +39,18 @@ export class EditComponent extends EnterSubmitListener implements OnInit {
     })
   }
 
+  //commented for future use
   submit() {
-    this.roleService.update(this.roleForm.value).subscribe((response: ApiResponse<any>) => {
-      this.ngZone.run(() => this.router.navigate(['../../', this.role.id], { relativeTo: this.route }));
-      this.notificationService.success('Success', 'Role updated!', NotificationUtil.getDefaultMidConfig());
-    }, (error) => {
-      if (error.status === 400) {
-        this.notificationService.warn('Validation error', 'Please fill in role name!', NotificationUtil.getDefaultMidConfig());
-        return;
-      }
-      this.notificationService.error('Server error occured!', null, NotificationUtil.getDefaultMidConfig());
-    });
+    // this.roleService.update(this.roleForm.value).subscribe((response: ApiResponse<any>) => {
+    //   this.ngZone.run(() => this.router.navigate(['../../', this.role.id], { relativeTo: this.route }));
+    //   this.notificationService.success('Success', 'Role updated!', NotificationUtil.getDefaultMidConfig());
+    // }, (error) => {
+    //   if (error.status === 400) {
+    //     this.notificationService.warn('Validation error', 'Please fill in role name!', NotificationUtil.getDefaultMidConfig());
+    //     return;
+    //   }
+    //   this.notificationService.error('Server error occured!', null, NotificationUtil.getDefaultMidConfig());
+    // });
   }
 
   initForm(data): void {

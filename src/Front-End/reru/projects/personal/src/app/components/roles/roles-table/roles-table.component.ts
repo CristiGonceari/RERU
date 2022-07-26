@@ -8,6 +8,7 @@ import { RoleModel } from '../../../utils/models/role.model';
 import { RoleService } from '../../../utils/services/role.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { ObjectUtil } from '../../../utils/util/object.util';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-roles-table',
@@ -49,20 +50,20 @@ export class RolesTableComponent implements OnInit {
     });
   }
 
-  openConfirmationDeleteModal(id: number): void {
-    const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
-    modalRef.componentInstance.title = 'Delete';
-    modalRef.componentInstance.description = 'Are you sure you want to delete it?';
-    modalRef.result.then(() => this.delete(id), () => { });
-  }
+  // openConfirmationDeleteModal(id: number): void {
+  //   const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
+  //   modalRef.componentInstance.title = 'Delete';
+  //   modalRef.componentInstance.description = 'Are you sure you want to delete it?';
+  //   modalRef.result.then(() => this.delete(id), () => { });
+  // }
 
-  delete(id: number): void {
-    this.isLoading = true;
-    this.roleService.delete(id).subscribe(response => {
-      this.list();
-      this.notificationService.success('Success', 'Role deleted!', NotificationUtil.getDefaultMidConfig());
-    });
-  }
+  // delete(id: number): void {
+  //   this.isLoading = true;
+  //   this.roleService.delete(id).subscribe(response => {
+  //     this.list();
+  //     this.notificationService.success('Success', 'Role deleted!', NotificationUtil.getDefaultMidConfig());
+  //   });
+  // }
 
   openImportModal(): void {
     const modalRef: any = this.modalService.open(ImportRoleModalComponent, { centered: true, backdrop: 'static', size: 'lg' });
@@ -73,7 +74,13 @@ export class RolesTableComponent implements OnInit {
     this.isLoading = true;
     const form = new FormData();
     form.append('file', data.file);
-    this.roleService.import(form).subscribe(() => {
+    this.roleService.bulkImport(form).subscribe(response => {
+			if(response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], fileName, { type: response.body.type });
+				saveAs(file);
+			}
       this.notificationService.success('Success', 'Roles imported!', NotificationUtil.getDefaultMidConfig());
       this.list();
     }, () => {}, () => {

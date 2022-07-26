@@ -14,6 +14,9 @@ namespace CODWER.RERU.Personal.Application.OrganizationRoles
 
             CreateMap<Role, RoleDto>();
 
+            CreateMap<RoleDto, Role>()
+                .ForMember(x => x.Id, opts => opts.Ignore()); 
+
             CreateMap<Role, SelectItem>()
                 .ForMember(x => x.Value, opts => opts.MapFrom(op => op.Id.ToString()))
                 .ForMember(x => x.Label, opts => opts.MapFrom(op => op.Name));
