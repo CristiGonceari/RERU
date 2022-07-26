@@ -84,6 +84,10 @@
                                   [routerLink]="['../edit-position', position.id]">
                                   {{ 'button.edit' | translate }}
                                 </button>
+                                <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
+                                  [routerLink]="['../diagram', position.id]">
+                                  {{ 'position.position-diagram' | translate }} 
+                                </button>
                                 <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
                                   (click)="openRemoveModal(position.id, position.name)">
                                   {{'button.delete' | translate}}

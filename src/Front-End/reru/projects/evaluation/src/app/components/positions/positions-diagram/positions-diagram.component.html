@@ -1,0 +1,108 @@
+<app-page-title title="{{ 'position.vacant-position' | translate }}" subTitle="{{ 'position.subtitle' | translate }}">
+</app-page-title>
+
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+    [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card card-custom gutter-b">
+                        <div class="card-header flex-wrap border-0 py-0">
+                            <div class="card-title">
+                                <h3 class="card-label" id="documentTitle">
+                                    {{ 'position.position-diagram' | translate }}
+                                </h3>
+                            </div>
+                            <!-- <div class="card-toolbar">
+                                <app-confirm-button class="btn mr-3" (click)="getHeaders(getTitle())">
+                                    <i class="far fa-file-pdf text-white"></i>
+                                    {{'button.print' | translate}}
+                                </app-confirm-button>
+                                <app-add-button class="btn" routerLink="../add-position"
+                                    [value]="'position.add' | translate">
+                                </app-add-button>
+                            </div> -->
+                        </div>
+                        <div class="card-body">
+                            <!-- <div class="row mb-5">
+                                <div class="col">
+                                    <erp-shared-search-input
+                                        (handleSearch)="getPositions({name: $event, page: 1, itemsPerPage: pagination.pageSize})"
+                                        [placeholder]="'button.search' | translate" #search></erp-shared-search-input>
+                                </div>
+                                <app-button (click)="search.clear()" [value]="'button.reset' | translate" class="mr-5">
+                                </app-button>
+                            </div> -->
+                            <!-- <div id="kt_datatable"
+                                class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"> -->
+                            <table class="table table-bordered font-size-lg">
+                                <thead class="text-uppercase text-muted">
+                                    <tr>
+                                        <th rowspan="2" style="vertical-align: middle; width: 20%;">Utilizatori</th>
+                                        <th [attr.colspan]="event.testTemplates.length" *ngFor="let event of eventsDiagram"
+                                            class="text-center mx-4">{{event.eventName}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th *ngFor="let template of testTemplates">
+                                            {{template.template.name}}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-dark-75">
+                                    <tr *ngFor="let user of usersDiagram">
+                                        <th style="vertical-align: middle;">{{ user.fullName }}</th>
+                                        <td *ngFor="let tests of user.testsByTestTemplate">
+                                            <span *ngFor="let test of tests.tests">
+                                                -{{'verify-test.' + test.result | translate}},
+                                                {{test.passDate | date: 'dd/MM/yyyy HH:mm'}}, 
+                                                {{'statuses.' + status[test.status] | translate}} <br>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- <table class="table-bordered">
+                                    <thead>
+                                      <tr>
+                                        <th rowspan="2">User</th>
+                                        <th colspan="2" style="text-align: center" *ngFor="let event of eventsDiagram">{{event.eventName}}</th>
+                                      </tr>
+                                      <tr>
+                                        <th *ngFor="let template of event.testTemplates">{{template.name}}</th>
+                                        <th>Sondaj2</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                          gigelss
+                                          </td>
+                                          <td>
+                                            gigelss
+                                            </td>
+                                            <td>
+                                              gigelss
+                                              </td>
+                                      </tr>
+                                    </tbody>
+                                  </table> -->
+                            <!-- <div pagination class="datatable-pager datatable-paging-loaded"
+                                    [page]="pagination.currentPage" [total]="pagination.totalPages"
+                                    [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
+                                    (sizeChange)="getPositions({ name: keyword, page: 1, itemsPerPage: $event })"
+                                    (pageChange)="getPositions({ name: keyword, page: $event, itemsPerPage: pagination.pageSize})"
+                                    *ngIf="positions">
+                                </div> -->
+                        </div>
+                        <!-- </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
