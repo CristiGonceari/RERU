@@ -14,6 +14,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagram;
+using CODWER.RERU.Evaluation.DataTransferObjects.PositionDiagram;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -25,6 +27,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<CandidatePositionDto> GetCandidatePosition([FromRoute] int id)
         {
             return await Mediator.Send(new GetCandidatePositionQuery { Id = id });
+        }
+
+        [HttpGet("diagram")]
+        public async Task<PositionDiagramDto> GetPositionDiagram([FromQuery] GetPositionDiagramQuery query)
+        {
+            return await Mediator.Send(query);
         }
 
         [HttpGet]

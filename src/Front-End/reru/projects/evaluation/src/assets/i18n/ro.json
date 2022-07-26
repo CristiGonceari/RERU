@@ -119,7 +119,9 @@
       "name": "Denumirea poziției",
       "status": "Statut",
       "is-active": "Activ",
-      "apply-for-position": "Poziție candidată"
+      "apply-for-position": "Poziție candidată",
+      "position-diagram": "Borderoul poziției",
+      "vacant-position": "Poziția vacantă"
   },
   "documents-templates":{
     "title": "Șabloane",

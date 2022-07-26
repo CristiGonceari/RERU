@@ -190,7 +190,7 @@ export class AddTestComponent implements OnInit {
 
         clearInterval(interval);
         this.isStartAddingTests = false;
-        this.performingTestPdf(response.data);
+        if(print) this.performingTestPdf(response.data);
 
         this.backClicked();
         this.disableBtn = false;

@@ -119,7 +119,9 @@
     "name": "Position name",
     "status": "Status",
     "is-active": "Is active",
-    "apply-for-position": "Candided position"
+    "apply-for-position": "Candided position",
+    "position-diagram": "Position diagram",
+    "vacant-position": "Vacant position"
   },
   "documents-templates":{
     "title": "Document Templates",

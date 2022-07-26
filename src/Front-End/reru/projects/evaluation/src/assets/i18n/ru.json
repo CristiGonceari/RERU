@@ -119,7 +119,9 @@
     "name": "Название позиции",
     "status": "Статус",
     "is-active": "Активна",
-    "apply-for-position": "Кандидатская позиция"
+    "apply-for-position": "Кандидатская позиция",
+    "position-diagram": "Таблица вакансий",
+    "vacant-position": "Вакантная должность"
   },
   "documents-templates":{
     "title": "Шаблоны документов",

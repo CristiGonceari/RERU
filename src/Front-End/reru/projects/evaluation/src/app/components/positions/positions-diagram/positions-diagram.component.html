@@ -1,0 +1,54 @@
+<app-page-title title="{{ 'position.vacant-position' | translate }}" subTitle="{{ 'position.subtitle' | translate }}">
+</app-page-title>
+
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+    [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card card-custom gutter-b">
+                        <div class="card-header flex-wrap border-0 py-0">
+                            <div class="card-title">
+                                <h3 class="card-label" id="documentTitle">
+                                    {{ 'position.position-diagram' | translate }}
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered font-size-lg">
+                                <thead class="text-uppercase text-muted">
+                                    <tr>
+                                        <th rowspan="2" style="vertical-align: middle; width: 20%;">Utilizatori</th>
+                                        <th [attr.colspan]="event.testTemplates.length" *ngFor="let event of eventsDiagram"
+                                            class="text-center mx-4">{{event.eventName}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th *ngFor="let template of testTemplates">
+                                            {{template.template.name}}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-dark-75">
+                                    <tr *ngFor="let user of usersDiagram">
+                                        <th style="vertical-align: middle;">{{ user.fullName }}</th>
+                                        <td *ngFor="let tests of user.testsByTestTemplate">
+                                            <span *ngFor="let test of tests.tests">
+                                                -{{'verify-test.' + test.result | translate}},
+                                                {{test.passDate | date: 'dd/MM/yyyy HH:mm'}}, 
+                                                {{'statuses.' + status[test.status] | translate}} <br>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
