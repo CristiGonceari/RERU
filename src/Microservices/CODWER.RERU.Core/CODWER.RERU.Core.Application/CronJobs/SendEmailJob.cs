@@ -25,38 +25,27 @@ namespace CODWER.RERU.Core.Application.CronJobs
 
         public async Task SendEmailNotification()
         {
-            if (!_appDbContext.EmailNotifications.Any(en => en.IsSend == false && en.InUpdateProcess == false))
+            while (_appDbContext.EmailNotifications.Any(en => en.IsSend == false && en.InUpdateProcess == false))
             {
-                return;
-            }
+                var email = await _appDbContext.EmailNotifications
+                    .Include(en => en.Properties)
+                    .FirstOrDefaultAsync(en => en.IsSend == false && en.InUpdateProcess == false);
 
-            var emails = _appDbContext.EmailNotifications
-                .Include(en => en.Properties)
-                .Where(en => en.IsSend == false && en.InUpdateProcess == false);
+                if (email == null) return;
 
-            await emails.ForEachAsync(x => x.InUpdateProcess = true);
-            await _appDbContext.SaveChangesAsync();
+                email.InUpdateProcess = true;
+                await _appDbContext.SaveChangesAsync();
 
-            var emailCount = 0;
+                var template = await GetFileContent(email.HtmlTemplateAddress);
 
-            foreach (var emailNotification in emails)
-            {
-                emailCount++;
-                var template = await GetFileContent(emailNotification.HtmlTemplateAddress);
-
-                template = emailNotification.Properties
+                template = email.Properties
                     .Aggregate(template, (current, property) => current
                         .Replace(property.KeyToReplace, property.ValueToReplace));
 
-                await SendEmail(emailNotification, template);
+                await SendEmail(email, template);
 
-                if (emailCount <= 20) continue;
-                
                 await _appDbContext.SaveChangesAsync();
-                emailCount=0;
             }
-
-            await _appDbContext.SaveChangesAsync();
         }
 
         private async Task SendEmail(EmailNotification emailNotification, string template)
