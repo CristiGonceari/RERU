@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
@@ -39,16 +40,16 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
             int testId = 0;
             var testsIds = new List<int>();
 
-            for (int i = 0; i < request.EvaluatorId.Count; i++)
+            for (int i = 0; i < request.EvaluatorIds.Count; i++)
             {
-                for (int j = 0; j < request.UserProfileId.Count; j++)
+                for (int j = 0; j < request.UserProfileIds.Count; j++)
                 {
                     var addCommand = new AddTestCommand
                     {
                         Data = new AddEditTestDto
                         {
-                            UserProfileId = request.UserProfileId[j],
-                            EvaluatorId = request.EvaluatorId[i],
+                            UserProfileId = request.UserProfileIds[j],
+                            EvaluatorId = request.EvaluatorIds[i],
                             ShowUserName = request.ShowUserName,
                             TestTemplateId = request.TestTemplateId,
                             EventId = request.EventId,
@@ -69,60 +70,52 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
                     await _mediator.Send(generateCommand);
                     await LogAction(testId);
                 }
-
-                if (request.UserProfileId.Count > 1)
-                {
-                    await SendEmailNotification(testId, true);
-                }
-                else
-                {
-                    await SendEmailNotification(testId, false);
-                }
-
             }
+
+            await SendEmailNotification(request.EvaluatorIds, request.UserProfileIds, request.TestTemplateId);
 
             return testsIds;
         }
 
-        private async Task<Unit> SendEmailNotification(int testId, bool multipleTests)
+        private async Task<Unit> SendEmailNotification(List<int> evaluatorIds, List<int> userProfileIds, int testTemplateId)
         {
-            var test = await _appDbContext.Tests
-                .Include(x => x.Evaluator)
-                .Include(x => x.TestTemplate)
-                .FirstOrDefaultAsync(x => x.Id == testId);
+            var testTemplate = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == testTemplateId);
 
-            await _notificationService.PutEmailInQueue(new QueuedEmailData
+            foreach (var evaluatorId in evaluatorIds)
             {
-                Subject = "Invitație la evaluare",
-                To = test.Evaluator.Email,
-                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
-                ReplacedValues = new Dictionary<string, string>()
+                var evaluator = await _appDbContext.UserProfiles
+                    .FirstOrDefaultAsync(x => x.Id == evaluatorId);
+
+                await _notificationService.PutEmailInQueue(new QueuedEmailData
                 {
-                    { "{user_name}", test.Evaluator.FullName },
-                    { "{email_message}", await GetTableContent(test, multipleTests) }
-                }
-            });
+                    Subject = "Invitație la evaluare",
+                    To = evaluator.Email,
+                    HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
+                    ReplacedValues = new Dictionary<string, string>()
+                    {
+                        { "{user_name}", evaluator.FullName },
+                        { "{email_message}",  await GetEmailContent(userProfileIds, testTemplate.Name)}
+                    }
+                });
 
-
-            await _internalNotificationService.AddNotification((int)test.EvaluatorId, NotificationMessages.YouWereInvitedToTestAsEvaluator);
+                await _internalNotificationService.AddNotification(evaluatorId, NotificationMessages.YouWereInvitedToTestAsEvaluator);
+            }
 
             return Unit.Value;
         }
 
-        private async Task<string> GetTableContent(Test item, bool multipleTests)
+        private async Task<string> GetEmailContent(List<int> userProfileIds, string testName)
         {
-            var content = string.Empty;
+            var userNames = new List<string>();
 
-            if (!multipleTests)
+            foreach (var userProfileId in userProfileIds)
             {
-                content += $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la evaluarea ""{item.TestTemplate.Name}"" în rol de evaluator.</p>";
-            }
-            else
-            {
-                content += $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la us set de evaluări cu denumirea ""{item.TestTemplate.Name}"" în rol de evaluator.</p>";
+                var userProfile = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == userProfileId);
+
+                userNames.Add(userProfile.FullName);
             }
 
-            return content;
+            return new StringBuilder( $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la evaluarea {testName} pentru {string.Join(",", userNames.ToArray())} în rol de evaluator.</p>").ToString();
         }
 
         private async Task LogAction(int testId)

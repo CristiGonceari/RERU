@@ -123,15 +123,15 @@ export class AddEvaluationComponent implements OnInit {
   }
 
   parse() {
-    return new AddEditTest({
-      userProfileId: this.userListToAdd,
+    return {
+      userProfileIds: this.userListToAdd,
       programmedTime: null,
       eventId: +this.event.value || null,
-      evaluatorId: this.evaluatorList || null,
+      evaluatorIds: this.evaluatorList || null,
       testStatus: TestStatusEnum.Programmed,
       testTemplateId: +this.testTemplate.value || 0,
       showUserName: true
-    })
+    }
   }
 
   createTest() {
