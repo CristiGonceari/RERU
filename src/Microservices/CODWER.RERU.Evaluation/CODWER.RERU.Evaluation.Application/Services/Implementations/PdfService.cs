@@ -12,10 +12,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagram;
+using CODWER.RERU.Evaluation.DataTransferObjects.PositionDiagram;
+using CVU.ERP.Module.Application.TableExportServices;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 using Wkhtmltopdf.NetCore;
+using Wkhtmltopdf.NetCore.Options;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 {
@@ -132,6 +136,13 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             return await GetPdf(testsIds);
         }
 
+        public async Task<FileDataDto> PrintPositionDiagramPdf(int positionId)
+        {
+            var item = _appDbContext.CandidatePositions.FirstOrDefault(t => t.Id == positionId);
+
+            return await GetPdf(item);
+        }
+
         #region GetPdf
 
         private async Task<FileDataDto> GetPdf(TestTemplate testTemplate)
@@ -235,6 +246,26 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             return FileDataDto.GetPdf("Evaluation_Result.pdf", res);
         }
 
+        private async Task<FileDataDto> GetPdf(CandidatePosition item)
+        {
+            var path = new FileInfo("PdfTemplates/PositionDiagram.html").FullName;
+            var source = await File.ReadAllTextAsync(path);
+            var myDictionary = await GetDictionary(item);
+
+            source = ReplaceKeys(source, myDictionary);
+
+            var options = new ConvertOptions
+            {
+                PageOrientation = Orientation.Landscape
+            };
+
+            _generatePdf.SetConvertOptions(options);
+
+            var parsed = _generatePdf.GetPDF(source);
+
+            return FileDataDto.GetPdf("Position_Diagram.pdf", parsed);
+        }
+
         #endregion
 
 
@@ -323,6 +354,19 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             myDictionary.Add("{status}", item.ResultStatus == TestResultStatusEnum.Passed ? "Admis" : "Respins");
             myDictionary.Add("{evaluator_name}", GetEvaluatorName(item));
             myDictionary.Add("{content}", await GetTableContent(item, true));
+
+            return myDictionary;
+        }
+
+        private async Task<Dictionary<string, string>> GetDictionary(CandidatePosition item)
+        {
+            var command = new GetPositionDiagramQuery { PositionId = item.Id };
+
+            var eventsDiagram = await _mediator.Send(command);
+            var myDictionary = new Dictionary<string, string>();
+
+            myDictionary.Add("{position_name}", item.Name);
+            myDictionary.Add("{table_content}", await GetTableContent(eventsDiagram));
 
             return myDictionary;
         }
@@ -496,7 +540,6 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         private async Task<string> GetOptionFileToString(Option option)
         {
-
             var optionFile = _storageDbContext.Files.FirstOrDefault(f => f.Id.ToString() == option.MediaFileId && f.Type.Contains("image"));
 
             string setOptionFile = null;
@@ -551,6 +594,51 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             var content = await GetTestQuestionResultContent(item);
 
             return content;
+        }
+
+        private async Task<string> GetTableContent(PositionDiagramDto eventsDiagram)
+        {
+            var content = new StringBuilder($@"<thead><tr><th rowspan=""2"" style=""border: 1px solid black; border-collapse: collapse; vertical-align: middle; width: 20%;"">Utilizatori</th>");
+
+            foreach (var eventDiagram in eventsDiagram.EventsDiagram)
+            {
+                content.Append($@"<th colspan=""{eventDiagram.TestTemplates.Count()}"" style=""border: 1px solid black; border-collapse: collapse;"">{eventDiagram.EventName}</th>");
+            }
+
+            content.Append($@"</tr><tr>");
+
+            foreach (var eventDiagram in eventsDiagram.EventsDiagram)
+            {
+                foreach (var testTemplate in eventDiagram.TestTemplates)
+                {
+                    content.Append($@"<th style=""border: 1px solid black; border-collapse: collapse;"">{testTemplate.Name}</th>");
+                }
+            }
+
+            content.Append($@"</tr></thead><tbody>");
+
+            foreach (var user in eventsDiagram.UsersDiagram)
+            {
+                content.Append($@"<tr><th style=""border: 1px solid black; border-collapse: collapse;"">{user.FullName}</th>");
+
+                foreach (var testTemplate in user.TestsByTestTemplate)
+                {
+                    content.Append($@"<td style=""border: 1px solid black; border-collapse: collapse;"">");
+
+                    foreach (var test in testTemplate.Tests)
+                    {
+                        content.Append($@"<span>- {EnumMessages.EnumMessages.GetTestResultStatus(test.Result)}, {test.PassDate.ToString("dd/MM/yyyy HH:mm")}, {EnumMessages.EnumMessages.GetTestStatus(test.Status)}</span><br>");
+                    }
+
+                    content.Append($@"</td>");
+                }
+
+                content.Append($@"</tr>");
+            }
+
+            content.Append($@"</tbody>");
+
+            return content.ToString();
         }
 
         #endregion

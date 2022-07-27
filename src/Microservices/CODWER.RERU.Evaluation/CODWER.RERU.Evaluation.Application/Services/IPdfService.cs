@@ -12,5 +12,6 @@ namespace CODWER.RERU.Evaluation.Application.Services
         public Task<FileDataDto> PrintEvaluationResultPdf(int testId);
         public Task<FileDataDto> PrintPerformingTestPdf(List<int> testsIds);
         public Task<FileDataDto> PrintQuestionUnitPdf(int questionId);
+        public Task<FileDataDto> PrintPositionDiagramPdf(int positionId);
     }
 }

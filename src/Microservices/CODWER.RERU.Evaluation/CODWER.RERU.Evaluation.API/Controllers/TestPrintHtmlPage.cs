@@ -40,6 +40,16 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return File(result.Content, result.ContentType, result.Name);
         }
 
+        [HttpGet("position-diagram-pdf/{positionId}")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> GetPositionDiagramPdf([FromRoute] int positionId)
+        {
+            var result = await _pdfService.PrintPositionDiagramPdf(positionId);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
         [HttpGet("test-result-pdf/{testId}")]
         [IgnoreResponseWrap]
         public async Task<IActionResult> GetTestResultPdf([FromRoute] int testId)

@@ -62,6 +62,9 @@
 	<None Update="PdfTemplates\PerformingTest.html">
 		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	</None>
+	<None Update="PdfTemplates\PositionDiagram.html">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
     <None Update="PdfTemplates\Test.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
