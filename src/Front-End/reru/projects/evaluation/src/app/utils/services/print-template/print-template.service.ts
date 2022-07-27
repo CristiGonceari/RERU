@@ -36,4 +36,8 @@ export class PrintTemplateService extends AbstractService {
   getQuestionUnitPdf(questionId): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/question-pdf/${questionId}`, { responseType: 'blob', observe: 'response' });
   }
+
+  getPositionDiagramPdf(positionId): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/position-diagram-pdf/${positionId}`, { responseType: 'blob', observe: 'response' });
+  }
 }

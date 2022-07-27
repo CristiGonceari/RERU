@@ -25,6 +25,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
         {
             var eventDiagram = new PositionDiagramDto();
             var allUsers = new List<UserDiagramDto>();
+            var allTestTemplates = new List<TestTemplateDiagramDto>();
 
             eventDiagram.EventsDiagram = _appDbContext.EventVacantPositions
                 .Include(x => x.Event)
@@ -50,17 +51,20 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
                     .ToList();
 
                 allUsers.AddRange(eventUsers);
+                allTestTemplates.AddRange(positionEvent.TestTemplates);
 
-                CalculateTestsFromTestTemplates(eventDiagram, allUsers, positionEvent);
+                eventDiagram.UsersDiagram = allUsers.GroupBy(x => x.UserProfileId).Select(x => x.First()).ToList();
+
+                CalculateTestsFromTestTemplates(eventDiagram, positionEvent);
             }
+
+            GenerateTestTemplatesForAllUsers(eventDiagram, allTestTemplates);
 
             return eventDiagram;
         }
 
-        private void CalculateTestsFromTestTemplates(PositionDiagramDto eventDiagram, List<UserDiagramDto> allUsers, EventDiagramDto positionEvent)
+        private void CalculateTestsFromTestTemplates(PositionDiagramDto eventDiagram, EventDiagramDto positionEvent)
         {
-            eventDiagram.UsersDiagram = allUsers.GroupBy(x => x.UserProfileId).Select(x => x.First()).ToList();
-
             foreach (var user in eventDiagram.UsersDiagram)
             {
                 foreach (var testTemplate in positionEvent.TestTemplates)
@@ -86,6 +90,33 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
 
                         test.Tests.AddRange(tests);
                     }
+                }
+            }
+        }
+
+        private void GenerateTestTemplatesForAllUsers(PositionDiagramDto eventDiagram, List<TestTemplateDiagramDto> allTestTemplates)
+        {
+            foreach (var positionEvent in eventDiagram.EventsDiagram)
+            {
+                foreach (var user in eventDiagram.UsersDiagram)
+                {
+                    foreach (var testTemplate in positionEvent.TestTemplates)
+                    {
+                        if (user.TestsByTestTemplate.Count() < allTestTemplates.Count())
+                        {
+                            if (user.TestsByTestTemplate.Any(x => x.TestTemplateId != testTemplate.TestTemplateId))
+                            {
+                                user.TestsByTestTemplate.Add(new TestsByTestTemplateDiagramDto()
+                                {
+                                    EventId = positionEvent.EventId,
+                                    TestTemplateId = testTemplate.TestTemplateId,
+                                    Tests = new List<TestResultDiagramDto>()
+                                });
+                            }
+                        }
+                    }
+
+                    user.TestsByTestTemplate = user.TestsByTestTemplate.OrderBy(x => x.EventId).ThenBy(x => x.TestTemplateId).ToList();
                 }
             }
         }

@@ -4,6 +4,8 @@ import { TestResultStatusEnum } from '../../../utils/enums/test-result-status.en
 import { TestStatusEnum } from '../../../utils/enums/test-status.enum';
 import { PaginationModel } from '../../../utils/models/pagination.model';
 import { CandidatePositionService } from '../../../utils/services/candidate-position/candidate-position.service';
+import { PrintTemplateService } from '../../../utils/services/print-template/print-template.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-positions-diagram',
@@ -22,7 +24,8 @@ export class PositionsDiagramComponent implements OnInit {
 
   constructor(
     private positionService: CandidatePositionService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private printService: PrintTemplateService
   ) { }
 
   ngOnInit(): void {
@@ -45,22 +48,23 @@ export class PositionsDiagramComponent implements OnInit {
             this.testTemplates.push({ template: element, eventId: event.eventId })
           });
         });
-
-        this.testTemplates.forEach(testTemplate => {
-          this.usersDiagram.forEach(userProfile => {
-            userProfile.testsByTestTemplate.find(x => x.testTemplateId == testTemplate.template.testTemplateId && x.eventId == testTemplate.template.eventId);
-
-            if (userProfile.testsByTestTemplate.length < this.testTemplates.length) {
-              if (userProfile.testsByTestTemplate.some(x => x.testTemplateId != testTemplate.testTemplateId))
-                userProfile.testsByTestTemplate.push({ testTemplateId: testTemplate.template.testTemplateId, eventId: testTemplate.eventId, tests: [] })
-            }
-
-            userProfile.testsByTestTemplate.sort((a, b) => (a.testTemplateId < b.testTemplateId) ? -1 : 1)
-            userProfile.testsByTestTemplate.sort((a, b) => (a.eventId < b.eventId) ? -1 : 1)
-          });
-        })
+        
         this.isLoading = false;
       }
     })
+  }
+
+  printPositionDiagram() {
+    this.printService.getPositionDiagramPdf(this.positionId).subscribe((response: any) => {
+      let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+
+      if (response.body.type === 'application/pdf') {
+        fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
+      }
+
+      const blob = new Blob([response.body], { type: response.body.type });
+      const file = new File([blob], fileName, { type: response.body.type });
+      saveAs(file);
+    });
   }
 }
