@@ -129,7 +129,7 @@
     "edit-user": "Editarea profilului utilizatorului",
     "delete-user": "Ștergerea utilizatorului",
     "activate-user": "Activarea utilizatorului",
-    "deactivate-user": "Deactivarea utilizatorului",
+    "deactivate-user": "Dezactivarea utilizatorului",
     "add-module": "Adaugarea modulului",
     "edit-module": "Editarea modulului",
     "add-role": "Adaugarea rolului",
@@ -280,10 +280,10 @@
     "special-character": "1 caracter special"
   },
   "deactivate-user": {
-    "title": "Deactivarea utilizatorului",
-    "deactivate": "Sigur doriți să deactivați acest utilizator?",
-    "deactivate-msg": "Sigur doriți să deactivați ",
-    "success-deactivate": "Utilizatorul a fost deactivat cu succes!"
+    "title": "Dezactivarea utilizatorului",
+    "deactivate": "Sigur doriți să dezactivați acest utilizator?",
+    "deactivate-msg": "Sigur doriți să dezactivați ",
+    "success-deactivate": "Utilizatorul a fost dezactivat cu succes!"
   },
   "activate-user": {
     "title": "Activarea utilizatorului",

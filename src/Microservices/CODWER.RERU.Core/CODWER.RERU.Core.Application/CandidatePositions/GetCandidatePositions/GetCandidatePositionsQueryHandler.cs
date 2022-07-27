@@ -22,7 +22,9 @@ namespace CODWER.RERU.Core.Application.CandidatePositions.GetCandidatePositions
 
         public async Task<PaginatedModel<CandidatePositionDto>> Handle(GetCandidatePositionsQuery request, CancellationToken cancellationToken)
         {
-            var positions = _appDbContext.CandidatePositions.AsQueryable();
+            var positions = _appDbContext.CandidatePositions
+                .Where(x => x.IsActive)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(request.Name))
             {

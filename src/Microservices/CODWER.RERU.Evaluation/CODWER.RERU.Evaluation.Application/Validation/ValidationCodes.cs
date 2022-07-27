@@ -31,6 +31,7 @@
         public static string EXISTENT_EVALUATOR_IN_EVENT = "03000301";
         public static string EXISTENT_EVALUATOR_IN_TEST = "03000302";
         public static string EVALUATOR_AND_CANDIDATE_CANT_BE_THE_SAME = "03000303";
+        public static string INEXISTENT_EVALUATOR_IN_EVENT = "03000304";
 
         //event location
         public static string EXISTENT_LOCATION_IN_EVENT = "03000401";
@@ -151,6 +152,7 @@
         //user
         public static string INVALID_USER = "03002001";
         public static string INVALID_TEST_TEMPLATE_QUESTION_CATEGORY = "03002002";
+        public static string INVALID_EVALUATOR = "03002003";
 
         //solicited tests
         public static string INVALID_SOLICITED_POSITION = "03002101";
