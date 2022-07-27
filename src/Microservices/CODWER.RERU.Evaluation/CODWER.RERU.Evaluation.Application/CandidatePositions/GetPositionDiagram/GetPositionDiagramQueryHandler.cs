@@ -64,6 +64,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
                 .Include(x => x.TestTemplate)
                 .Where(x => x.EventId == eventId)
                 .OrderBy(x => x.EventId)
+                .ThenBy(x => x.TestTemplateId)
                 .Select(x => _mapper.Map<TestTemplateDiagramDto>(x))
                 .ToList();
         }
