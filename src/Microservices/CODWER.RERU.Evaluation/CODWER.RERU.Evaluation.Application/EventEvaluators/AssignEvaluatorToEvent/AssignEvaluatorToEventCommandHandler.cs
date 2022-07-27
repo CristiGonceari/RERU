@@ -92,7 +92,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
             {
                 Subject = "Notificare de test",
                 To = item.Evaluator.Email,
-                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
                 {
                     { "{user_name}", item.Evaluator.FullName },

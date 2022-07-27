@@ -88,24 +88,11 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
 
         private async Task SendEmail(string template, SolicitedVacantPosition solicitedPosition, SendSolicitedVacantPositionEmailMessagesCommand request)
         {
-            //template = template.Replace("{user_name}", solicitedPosition.UserProfile.GetFullName());
-            //template = template.Replace("{email_message}", request.EmailMessage);
-
-            //var emailData = new EmailData()
-            //{
-            //    subject = "Invitație la test",
-            //    body = template,
-            //    from = "Do Not Reply",
-            //    to = solicitedPosition.UserProfile.Email
-            //};
-
-            //await _notificationService.Notify(emailData, NotificationType.Both);
-
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
                 Subject = "Pozitie solicitata",
                 To = solicitedPosition.UserProfile.Email,
-                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
                 {
                     { "{user_name}", solicitedPosition.UserProfile.FullName },

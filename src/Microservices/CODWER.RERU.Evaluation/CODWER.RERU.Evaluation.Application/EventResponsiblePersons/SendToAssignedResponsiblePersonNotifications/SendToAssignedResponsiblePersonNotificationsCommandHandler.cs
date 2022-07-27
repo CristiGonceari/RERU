@@ -52,7 +52,7 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.SendToAssig
             {
                 Subject = "Invitație la eveniment",
                 To = user.UserProfile.Email,
-                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
                 {
                     { "{user_name}", user.UserProfile.FullName },

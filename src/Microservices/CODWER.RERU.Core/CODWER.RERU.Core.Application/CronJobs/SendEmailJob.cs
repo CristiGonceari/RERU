@@ -52,19 +52,24 @@ namespace CODWER.RERU.Core.Application.CronJobs
         {
             try
             {
-                var emailData = new EmailData
+                if (!string.IsNullOrEmpty(emailNotification.To))
                 {
-                    subject = emailNotification.Subject,
-                    body = template,
-                    from = "Do Not Reply",
-                    to = emailNotification.To
-                };
+                    var emailData = new EmailData
+                    {
+                        subject = emailNotification.Subject,
+                        body = template,
+                        from = "Do Not Reply",
+                        to = emailNotification.To
+                    };
 
-                await _notificationService.Notify(emailData, (NotificationType)emailNotification.Type);
+                    await _notificationService.Notify(emailData, (NotificationType)emailNotification.Type);
 
-                emailNotification.Status = "Sent";
-
-                Console.WriteLine($@" Email trimis {emailData.body} {emailData.to}");
+                    emailNotification.Status = "Sent";
+                }
+                else
+                {
+                    emailNotification.Status = "Email recipient is empty";
+                }
             }
             catch (Exception e)
             {
@@ -72,6 +77,8 @@ namespace CODWER.RERU.Core.Application.CronJobs
             }
             finally
             {
+                _appDbContext.EmailNotificationProperties.RemoveRange(emailNotification.Properties);
+
                 emailNotification.InUpdateProcess = false;
                 emailNotification.IsSend = true;
             }

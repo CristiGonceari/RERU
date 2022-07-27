@@ -95,7 +95,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
             {
                 Subject = "Invitație la evaluare",
                 To = test.Evaluator.Email,
-                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
                 {
                     { "{user_name}", test.Evaluator.FullName },

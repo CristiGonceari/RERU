@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <style>
+        body {
+            height: 1309px;
+            width: 900px;
+            font-family: 'Times New Roman';
+            font-size: 18px;
+            padding: 0cm 1.32cm 3.67cm 1.9cm;
+            margin: 0;
+        }
+
+        div.header {
+            width: 900px;
+            float: right;
+            height: 10%;
+        }
+
+        div.body {
+            text-align: justify;
+            height: 70%;
+        }
+
+        div.footer {
+            height: 20%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+            div.footer div.container-signature {
+                display: flex;
+                justify-content: space-between;
+                width: 900px;
+            }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+            html, body {
+                width: 210mm;
+                height: 297mm;
+            }
+        }
+    </style>
+</head>
+<body>
+    {content}
+</body>
