@@ -92,7 +92,7 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
             {
                 Subject = "Notificare de test",
                 To = item.UserProfile.Email,
-                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
                 {
                     { "{user_name}", item.UserProfile.FullName },

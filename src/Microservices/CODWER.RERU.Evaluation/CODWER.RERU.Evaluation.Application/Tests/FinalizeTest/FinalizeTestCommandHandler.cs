@@ -115,7 +115,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
             {
                 Subject = "Rezultatul testului",
                 To = user.Email,
-                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
                 {
                     { "{user_name}", user.FullName },
