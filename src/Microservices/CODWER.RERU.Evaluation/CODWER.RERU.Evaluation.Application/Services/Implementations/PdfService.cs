@@ -598,47 +598,47 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         private async Task<string> GetTableContent(PositionDiagramDto eventsDiagram)
         {
-            var content = $@"<thead><tr><th rowspan=""2"" style=""border: 1px solid black; border-collapse: collapse; vertical-align: middle; width: 20%;"">Utilizatori</th>";
+            var content = new StringBuilder($@"<thead><tr><th rowspan=""2"" style=""border: 1px solid black; border-collapse: collapse; vertical-align: middle; width: 20%;"">Utilizatori</th>");
 
             foreach (var eventDiagram in eventsDiagram.EventsDiagram)
             {
-                content += $@"<th colspan=""{eventDiagram.TestTemplates.Count()}"" style=""border: 1px solid black; border-collapse: collapse;"">{eventDiagram.EventName}</th>";
+                content.Append($@"<th colspan=""{eventDiagram.TestTemplates.Count()}"" style=""border: 1px solid black; border-collapse: collapse;"">{eventDiagram.EventName}</th>");
             }
 
-            content += $@"</tr><tr>";
+            content.Append($@"</tr><tr>");
 
             foreach (var eventDiagram in eventsDiagram.EventsDiagram)
             {
                 foreach (var testTemplate in eventDiagram.TestTemplates)
                 {
-                    content += $@"<th style=""border: 1px solid black; border-collapse: collapse;"">{testTemplate.Name}</th>";
+                    content.Append($@"<th style=""border: 1px solid black; border-collapse: collapse;"">{testTemplate.Name}</th>");
                 }
             }
 
-            content += $@"</tr></thead><tbody>";
+            content.Append($@"</tr></thead><tbody>");
 
             foreach (var user in eventsDiagram.UsersDiagram)
             {
-                content += $@"<tr><th style=""border: 1px solid black; border-collapse: collapse;"">{user.FullName}</th>";
+                content.Append($@"<tr><th style=""border: 1px solid black; border-collapse: collapse;"">{user.FullName}</th>");
 
                 foreach (var testTemplate in user.TestsByTestTemplate)
                 {
-                    content += $@"<td style=""border: 1px solid black; border-collapse: collapse;"">";
+                    content.Append($@"<td style=""border: 1px solid black; border-collapse: collapse;"">");
 
                     foreach (var test in testTemplate.Tests)
                     {
-                        content += $@"<span>- {EnumMessages.EnumMessages.GetTestResultStatus(test.Result)}, {test.PassDate.ToString("dd/MM/yyyy HH:mm")}, {EnumMessages.EnumMessages.GetTestStatus(test.Status)}</span><br>";
+                        content.Append($@"<span>- {EnumMessages.EnumMessages.GetTestResultStatus(test.Result)}, {test.PassDate.ToString("dd/MM/yyyy HH:mm")}, {EnumMessages.EnumMessages.GetTestStatus(test.Status)}</span><br>");
                     }
 
-                    content += $@"</td>";
+                    content.Append($@"</td>");
                 }
 
-                content += $@"</tr>";
+                content.Append($@"</tr>");
             }
 
-            content += $@"</tbody> ";
+            content.Append($@"</tbody>");
 
-            return content;
+            return content.ToString();
         }
 
         #endregion
