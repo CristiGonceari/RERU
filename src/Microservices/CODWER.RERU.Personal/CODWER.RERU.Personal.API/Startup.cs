@@ -59,6 +59,8 @@ namespace CODWER.RERU.Personal.API
             services.Configure<DocumentOptions>(Configuration.GetSection("DocumentOptions"));
             services.Configure<EmployerData>(Configuration.GetSection("EmployerData"));
 
+            services.AddModuleServiceProvider(); // before conf AppDbContext
+
             ServicesSetup.ConfigureEntity(services, Configuration);
             ServicesSetup.ConfigurePolicies(services);
             ServicesSetup.ConfigureInjection(services, CurrentEnvironment);
@@ -110,8 +112,7 @@ namespace CODWER.RERU.Personal.API
 
             services.AddERPModuleServices(Configuration);
             services.AddCommonModuleApplication(Configuration);
-            services.AddModuleApplicationServices()
-                .AddCommonLoggingContext(Configuration);
+            services.AddCommonLoggingContext(Configuration);
 
             //if (CurrentEnvironment.IsDevelopment())
             //{

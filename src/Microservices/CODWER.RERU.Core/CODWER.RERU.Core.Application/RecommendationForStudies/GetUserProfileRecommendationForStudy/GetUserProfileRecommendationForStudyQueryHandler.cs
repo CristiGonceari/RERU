@@ -1,11 +1,11 @@
-﻿using CODWER.RERU.Core.DataTransferObjects.RecommendationForStudyDto;
-using CVU.ERP.Common.Pagination;
+﻿using CVU.ERP.Common.Pagination;
 using MediatR;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Core.DataTransferObjects.RecommendationForStudy;
 
 namespace CODWER.RERU.Core.Application.RecommendationForStudies.GetUserProfileRecommendationForStudy
 {

@@ -1,10 +1,11 @@
-﻿using CVU.ERP.Common.Extensions;
+﻿using System;
+using CODWER.RERU.Evaluation.Application.Validation;
+using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 using FluentValidation.Validators;
-using System;
 
-namespace CODWER.RERU.Evaluation.Application.Validation.EnumValidators
+namespace CODWER.RERU.Evaluation.Application.Validators.EnumValidators
 {
     public class ExistInEnumValidator<T> : AbstractValidator<int>
     {

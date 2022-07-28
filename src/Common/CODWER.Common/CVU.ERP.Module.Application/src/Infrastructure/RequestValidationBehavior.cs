@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.Common.DataTransferObjects.Response.Messages;
-using CVU.ERP.Module.Application.Exceptions;
+using CVU.ERP.ServiceProvider.Exceptions;
 using FluentValidation;
 using MediatR;
 

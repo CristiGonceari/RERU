@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests;
+using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.TableExportServices;
 using MediatR;

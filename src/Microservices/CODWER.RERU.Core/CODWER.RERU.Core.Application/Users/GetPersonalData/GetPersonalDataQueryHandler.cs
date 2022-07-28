@@ -5,7 +5,7 @@ using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Identity.Models;
-using CVU.ERP.Module.Application.Providers;
+using CVU.ERP.ServiceProvider;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

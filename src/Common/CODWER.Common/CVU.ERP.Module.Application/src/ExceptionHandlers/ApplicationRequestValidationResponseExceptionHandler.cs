@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using CVU.ERP.Common.DataTransferObjects.Response;
 using CVU.ERP.Common.DataTransferObjects.Response.Messages;
 using CVU.ERP.Module.Common.ExceptionHandlers;
-using CVU.ERP.Module.Application.Exceptions;
+using CVU.ERP.ServiceProvider.Exceptions;
 
 namespace CVU.ERP.Module.Application.ExceptionHandlers
 {

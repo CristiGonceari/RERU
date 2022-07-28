@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Evaluation.Application.Services;
-using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests;
+using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Persistence.Context;

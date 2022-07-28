@@ -2,13 +2,13 @@
 using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Contractors;
-using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.StorageService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.ServiceProvider.Clients;
 using CVU.ERP.StorageService.Entities;
 using RERU.Data.Entities;
 

@@ -1,6 +1,6 @@
-﻿using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests;
-using MediatR;
+﻿using MediatR;
 using System.Collections.Generic;
+using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionUserFiles.GetSolicitedVacantPositionUserFiles
 {

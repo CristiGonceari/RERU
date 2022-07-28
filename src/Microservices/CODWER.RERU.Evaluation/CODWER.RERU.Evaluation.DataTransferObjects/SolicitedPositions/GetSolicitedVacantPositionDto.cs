@@ -1,4 +1,4 @@
-﻿namespace CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests
+﻿namespace CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions
 {
     public class GetSolicitedVacantPositionDto
     {

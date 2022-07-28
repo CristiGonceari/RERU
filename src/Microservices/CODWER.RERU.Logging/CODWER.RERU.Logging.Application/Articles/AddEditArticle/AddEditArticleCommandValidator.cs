@@ -1,5 +1,5 @@
-﻿using FluentValidation;
-using CODWER.RERU.Logging.Application.Validation;
+﻿using CODWER.RERU.Logging.Application.Validations;
+using FluentValidation;
 
 namespace CODWER.RERU.Logging.Application.Articles.AddEditArticle
 {

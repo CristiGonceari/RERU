@@ -26,12 +26,12 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
             IEnumerable<IIdentityService> identityServices, 
             ILoggerService<CreateUserCommandHandler> loggerService, 
             IMapper mapper,
-            IConfiguration configuration)
+            AppDbContext appDbContext)
         {
             _identityServices = identityServices;
             _loggerService = loggerService;
             _mapper = mapper;
-            _appDbContext = AppDbContext.NewInstance(configuration);
+            _appDbContext = appDbContext.NewInstance();
         }
 
         public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)

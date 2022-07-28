@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Evaluation.Application.Services;
-using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests;
+using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;

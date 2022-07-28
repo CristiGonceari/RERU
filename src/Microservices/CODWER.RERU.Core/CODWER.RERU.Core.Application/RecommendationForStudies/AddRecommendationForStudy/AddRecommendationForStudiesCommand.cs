@@ -1,4 +1,4 @@
-﻿using CODWER.RERU.Core.DataTransferObjects.RecommendationForStudyDto;
+﻿using CODWER.RERU.Core.DataTransferObjects.RecommendationForStudy;
 using MediatR;
 
 namespace CODWER.RERU.Core.Application.RecommendationForStudies.AddRecommendationForStudy

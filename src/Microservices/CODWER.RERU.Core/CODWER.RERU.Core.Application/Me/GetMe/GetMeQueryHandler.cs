@@ -4,7 +4,7 @@ using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.DataTransferObjects.Me;
 using CODWER.RERU.Core.DataTransferObjects.Users;
-using CVU.ERP.Module.Application.Providers;
+using CVU.ERP.ServiceProvider;
 using MediatR;
 using Microsoft.Extensions.Options;
 
@@ -34,17 +34,17 @@ namespace CODWER.RERU.Core.Application.Me.GetMe {
             me.User = Mapper.Map<ApplicationUserDto> (currentUser);
             me.Tenant = _tenantDto;
            
-            if (currentUser.DepartmentColaboratorId == null && 
-                currentUser.RoleColaboratorId == null && 
-                !string.IsNullOrEmpty(currentUser.Email)
-                )
-            {
-                me.IsCandidateStatus = true;
-            }
-            else
-            {
-                me.IsCandidateStatus = false;
-            }
+            //if (currentUser.DepartmentColaboratorId == null && 
+            //    currentUser.RoleColaboratorId == null && 
+            //    !string.IsNullOrEmpty(currentUser.Email)
+            //    )
+            //{
+            //    me.IsCandidateStatus = true;
+            //}
+            //else
+            //{
+            //    me.IsCandidateStatus = false;
+            //}
            
             return me;
         }

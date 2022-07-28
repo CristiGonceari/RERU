@@ -5,7 +5,8 @@ using AutoMapper;
 using CODWER.RERU.Core.Data.Persistence.Helpers;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Module.Application.Models;
-using CVU.ERP.Module.Application.Providers;
+using CVU.ERP.ServiceProvider;
+using CVU.ERP.ServiceProvider.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RERU.Data.Persistence.Context;
@@ -19,9 +20,9 @@ namespace CODWER.RERU.Core.Application.Module.Providers
 
         private const string DEFAULT_IDENTITY_SERVICE = "local";
 
-        public CoreApplicationUserProvider(IMapper mapper, IConfiguration configuration)
+        public CoreApplicationUserProvider(AppDbContext appDbContext, IMapper mapper)
         {
-            _appDbContext = AppDbContext.NewInstance(configuration);
+            _appDbContext = appDbContext.NewInstance();
             _mapper = mapper;
         }
 

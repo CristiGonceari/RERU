@@ -18,6 +18,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Reflection;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
+using RERU.Data.Persistence.Context;
 using Wkhtmltopdf.NetCore;
 
 namespace CODWER.RERU.Logging.API
@@ -34,6 +35,11 @@ namespace CODWER.RERU.Logging.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString(ConnectionString.Common),
+                    b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name)));
+
             services.AddDbContext<LoggingDbContext>(options =>
                     options.UseNpgsql(Configuration.GetConnectionString(ConnectionString.Logging),
                             b => b.MigrationsAssembly(typeof(DatabaseSeeder).GetTypeInfo().Assembly.GetName().Name)));
@@ -55,8 +61,9 @@ namespace CODWER.RERU.Logging.API
             services.AddLoggingApplication();
 
             services.AddERPModuleServices(Configuration);
-            services.AddCommonModuleApplication(Configuration);
-            services.AddModuleApplicationServices();
+            //services.AddCommonModuleApplication(Configuration);
+            //services.AddModuleApplicationServices();
+            services.AddLoggingSetup(Configuration);
 
 
             services.AddSwaggerGen(c =>

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests;
+using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions;
 using RERU.Data.Entities;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedPositions

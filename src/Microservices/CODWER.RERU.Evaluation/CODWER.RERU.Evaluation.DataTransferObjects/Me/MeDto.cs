@@ -1,4 +1,4 @@
-﻿using CVU.ERP.Module.Application.Models;
+﻿using CVU.ERP.ServiceProvider.Models;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.Me
 {

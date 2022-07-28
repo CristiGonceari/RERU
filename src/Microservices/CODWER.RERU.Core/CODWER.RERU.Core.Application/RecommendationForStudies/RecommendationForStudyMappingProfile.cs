@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Core.DataTransferObjects.RecommendationForStudyDto;
+using CODWER.RERU.Core.DataTransferObjects.RecommendationForStudy;
 using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.RecommendationForStudies

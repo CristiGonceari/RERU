@@ -3,12 +3,12 @@ using CODWER.RERU.Core.Application.RecommendationForStudies.BulkAddEditRecommend
 using CODWER.RERU.Core.Application.RecommendationForStudies.GetUserProfileRecommendationForStudy;
 using CODWER.RERU.Core.Application.RecommendationForStudies.RemoveRecommendationForStudy;
 using CODWER.RERU.Core.Application.RecommendationForStudies.UpdateRecommendationForStudy;
-using CODWER.RERU.Core.DataTransferObjects.RecommendationForStudyDto;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CODWER.RERU.Core.DataTransferObjects.RecommendationForStudy;
 
 namespace CODWER.RERU.Core.API.Controllers
 {

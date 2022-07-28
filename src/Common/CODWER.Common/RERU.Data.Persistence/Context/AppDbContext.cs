@@ -1,10 +1,10 @@
-﻿using CVU.ERP.Common.Data.Persistence.EntityFramework;
+﻿using System.Linq;
+using CVU.ERP.Common.Data.Persistence.EntityFramework;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using RERU.Data.Entities;
-using RERU.Data.Entities.Documents;
 using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Entities.PersonalEntities.NomenclatureType.NomenclatureRecords.RecordValues;
 using RERU.Data.Entities.PersonalEntities.OrganizationRoleRelations;
@@ -14,12 +14,20 @@ namespace RERU.Data.Persistence.Context
 {
     public partial class AppDbContext : ModuleDbContext
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration _configuration;
+        private const string DEFAULT_IDENTITY_SERVICE = "local";
+
         public AppDbContext()
         {
         }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration, IHttpContextAccessor httpContextAccessor) 
+            : base(options)
         {
+            _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
+            _currentUserId = GetAuthenticatedUserId();
         }
 
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
@@ -27,7 +35,6 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<Role> Roles { get; set; }
 
         public virtual DbSet<RegistrationFluxStep> RegistrationFluxSteps { get; set; }
-
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -153,8 +160,64 @@ namespace RERU.Data.Persistence.Context
         ///<summary>
         ///Get new instance of AppDbContext for thread safe using
         ///</summary>
-        public static AppDbContext NewInstance(IConfiguration configuration) => new(new DbContextOptionsBuilder<AppDbContext>()
-            .UseNpgsql(configuration.GetConnectionString(ConnectionString.Common))
-            .Options);
+        //public static AppDbContext NewInstance(IConfiguration configuration, ICurrentApplicationUserProvider currentApplicationUserProvider) 
+        //    => new(new DbContextOptionsBuilder<AppDbContext>()
+        //    .UseNpgsql(configuration.GetConnectionString(ConnectionString.Common))
+        //    .Options, currentApplicationUserProvider, configuration);
+
+        public AppDbContext NewInstance()
+        {
+            return new(new DbContextOptionsBuilder<AppDbContext>()
+                .UseNpgsql(_configuration.GetConnectionString(ConnectionString.Common))
+                .Options, _configuration, _httpContextAccessor);
+        }
+
+
+        #region Get Current User()
+
+        public string GetAuthenticatedUserId() => IsAuthenticated() ? GetUserProfileId(IdentityId, IdentityProvider) : "0";
+
+        public bool IsAuthenticated()
+        {
+            if (_httpContextAccessor == null) return false;
+            if (_httpContextAccessor.HttpContext != null)
+            {
+                return _httpContextAccessor.HttpContext.User.Identity != null && _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+            }
+
+            return false;
+
+        }
+        //public bool IsAuthenticated => _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+
+        public string IdentityId
+        {
+            get
+            {
+                var identityUser = _httpContextAccessor.HttpContext.User;
+                return identityUser.FindFirst("sub")?.Value;
+            }
+        }
+
+        public string IdentityProvider
+        {
+            get
+            {
+                var identityUser = _httpContextAccessor.HttpContext.User;
+                return identityUser.FindFirst("idp")?.Value;
+            }
+        }
+
+        private string GetUserProfileId(string id, string identityProvider = null)
+        {
+            identityProvider = identityProvider ?? DEFAULT_IDENTITY_SERVICE;
+
+            var userProfile = UserProfiles
+                .Include(x=>x.Identities)
+                .FirstOrDefault(up => up.Identities.Any(upi => upi.Identificator == id && upi.Type == identityProvider));
+
+            return userProfile != null ? userProfile.Id.ToString() : "0";
+        }
+        #endregion
     }
 }

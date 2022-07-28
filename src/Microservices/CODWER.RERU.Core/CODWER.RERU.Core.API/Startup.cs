@@ -25,11 +25,14 @@ using RERU.Data.Persistence.Context;
 using System.Text;
 using CODWER.RERU.Core.Application.CronJobs;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
+using CVU.ERP.Module.Application.DependencyInjection;
 using Hangfire;
 using Hangfire.PostgreSql;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Persistence.Initializer;
 using Wkhtmltopdf.NetCore;
+using ServicesSetup = CODWER.RERU.Core.API.Config.ServicesSetup;
+
 
 
 namespace CODWER.RERU.Core.API
@@ -60,6 +63,8 @@ namespace CODWER.RERU.Core.API
             //services.Configure<ModuleConfiguration> (Configuration.GetSection ("ERPModule"));
             services.Configure<TenantDto>(Configuration.GetSection("CoreSettings").GetSection("Tenant"));
             services.Configure<ActiveTimeDto>(Configuration.GetSection("CoreSettings").GetSection("ActiveTime"));
+
+            services.AddCoreServiceProvider(); // before conf AppDbContext
 
             ServicesSetup.ConfigureEntity(services, Configuration);
             ServicesSetup.ConfigureInjection(services);

@@ -2,13 +2,13 @@
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.DataTransferObjects.Files;
 using CVU.ERP.Common.Pagination;
-using CVU.ERP.Module.Application.Providers;
 using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Entities;
 using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.ServiceProvider;
 
 namespace CODWER.RERU.Core.Application.MyProfile.Files.GetFiles
 {

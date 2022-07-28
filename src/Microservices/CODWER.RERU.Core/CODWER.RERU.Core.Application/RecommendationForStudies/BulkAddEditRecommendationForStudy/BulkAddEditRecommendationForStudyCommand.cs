@@ -1,6 +1,6 @@
-﻿using CODWER.RERU.Core.DataTransferObjects.RecommendationForStudyDto;
-using MediatR;
+﻿using MediatR;
 using System.Collections.Generic;
+using CODWER.RERU.Core.DataTransferObjects.RecommendationForStudy;
 
 namespace CODWER.RERU.Core.Application.RecommendationForStudies.BulkAddEditRecommendationForStudy
 {

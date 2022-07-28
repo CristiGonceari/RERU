@@ -2,10 +2,8 @@ using CVU.ERP.Common.Interfaces;
 using CVU.ERP.Infrastructure.Email;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Context;
-using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.ExceptionHandlers;
 using CVU.ERP.Module.Application.Infrastructure;
-using CVU.ERP.Module.Application.Providers;
 using CVU.ERP.Module.Application.StorageFileServices.Implementations;
 using CVU.ERP.Module.Application.TableExportServices;
 using CVU.ERP.Module.Application.TableExportServices.Implementations;
@@ -35,6 +33,8 @@ using System;
 using System.Reflection;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Module.Application.LoggerService.Implementations;
+using CVU.ERP.ServiceProvider;
+using CVU.ERP.ServiceProvider.Clients;
 
 namespace CVU.ERP.Module.Application.DependencyInjection
 {
@@ -58,25 +58,8 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); //Automapper
             services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies()); //Mediator
             services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()); // FluentValidation
-            //
-            services.AddHttpContextAccessor();
-            //BL
-
-            var sp = services.BuildServiceProvider();
-            var erpConfiguration = sp.GetService<IOptions<ModuleConfiguration>>()?.Value;
-
-            //if use mock
-            if (erpConfiguration is not null && erpConfiguration.UseMockApplicationUser)
-            {
-                services.AddTransient<ICurrentApplicationUserProvider, MockCurrentApplicationUserProvider>();
-            }
-            else
-            {
-                services.AddTransient<ICurrentApplicationUserProvider, CurrentApplicationUserProvider>();
-            }
-            //
-            services.AddTransient<IRestClient, RestClient>();
-            services.AddTransient<IModuleClient, ModuleClient>();
+            
+            //notification service
             services.AddNotificationService();
 
             //storage service
@@ -91,11 +74,106 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             return services;
         }
 
+        public static IServiceCollection AddLoggingSetup(this IServiceCollection services, IConfiguration configuration)
+        {
+            //Exception Handlers
+            services.AddTransient<IResponseExceptionHandler, ApplicationRequestValidationResponseExceptionHandler>();
+            services.AddTransient<IResponseExceptionHandler, ApplicationUnauthenticatedResponseExceptionHandler>();
+            services.AddTransient<IResponseExceptionHandler, ApplicationUnauthorizedResponseExceptionHandler>();
+            services.AddTransient<IResponseExceptionHandler, CoreClientResponseNotSuccessfulExceptionHandler>();
+
+            //Mediator Pipeline behaviors
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestAuthorizationBehaviour<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+
+            //Common API
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); //Automapper
+            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies()); //Mediator
+            services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()); // FluentValidation
+
+
+            services.AddHttpContextAccessor();
+            //BL
+
+            var sp = services.BuildServiceProvider();
+            var erpConfiguration = sp.GetService<IOptions<ModuleConfiguration>>()?.Value;
+
+            //if use mock
+            if (erpConfiguration != null && erpConfiguration.UseMockApplicationUser)
+            {
+                services.AddTransient<ICurrentApplicationUserProvider, MockCurrentApplicationUserProvider>();
+            }
+            else
+            {
+                services.AddTransient<ICurrentApplicationUserProvider, CurrentApplicationUserProvider>();
+            }
+            //
+            services.AddTransient<IRestClient, RestClient>();
+            services.AddTransient<IModuleClient, ModuleClient>();
+
+
+            //log service 
+            services.AddTransient(typeof(ILoggerService<>), typeof(LoggerService<>));
+
+            //export data table services 
+            services.AddExportTableServices();
+
+            //storage service
+            services.AddStorageService(configuration);
+
+            services.AddTransient<ICoreClient, CoreClient>();
+            services.AddTransient<IApplicationUserProvider, ModuleApplicationUserProvider>();
+
+            return services;
+
+        }
+
         public static IServiceCollection AddModuleApplicationServices(this IServiceCollection services)
         {
             //check if not core
             services.AddTransient<ICoreClient, CoreClient>();
             services.AddTransient<IApplicationUserProvider, ModuleApplicationUserProvider>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddModuleServiceProvider(this IServiceCollection services)
+        {
+            services.AddServiceProvider();
+            services.AddModuleApplicationServices();
+
+            return services;
+        }
+
+        public static IServiceCollection AddCoreServiceProvider(this IServiceCollection services)
+        {
+            services.AddServiceProvider();
+
+            return services;
+        }
+
+        private static IServiceCollection AddServiceProvider(this IServiceCollection services)
+        {
+            services.AddHttpContextAccessor();
+            //BL
+
+            var sp = services.BuildServiceProvider();
+            var erpConfiguration = sp.GetService<IOptions<ModuleConfiguration>>()?.Value;
+
+            //if use mock
+            if (erpConfiguration != null && erpConfiguration.UseMockApplicationUser)
+            {
+                services.AddTransient<ICurrentApplicationUserProvider, MockCurrentApplicationUserProvider>();
+            }
+            else
+            {
+                services.AddTransient<ICurrentApplicationUserProvider, CurrentApplicationUserProvider>();
+            }
+            //
+            services.AddTransient<IRestClient, RestClient>();
+            services.AddTransient<IModuleClient, ModuleClient>();
 
             return services;
         }
@@ -131,14 +209,11 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             services.Configure<KestrelServerOptions>(options =>
                 {
                     options.AllowSynchronousIO = true;
-                    //options.Limits.MaxRequestBodySize = null; --did not worked
                     options.Limits.MaxRequestBodySize = int.MaxValue;
                 })
-                // If using IIS:
                 .Configure<IISServerOptions>(options =>
                 {
                     options.AllowSynchronousIO = true;
-                    //options.MaxRequestBodySize = null;
                     options.MaxRequestBodySize = int.MaxValue;
                 })
                 .Configure<FormOptions>(options =>

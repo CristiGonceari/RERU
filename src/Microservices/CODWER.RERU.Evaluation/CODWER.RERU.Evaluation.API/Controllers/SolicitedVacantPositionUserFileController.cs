@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.SolicitedVacantPositionUserFiles.DeleteSolicitedVacantPositionUserFile;
 using CODWER.RERU.Evaluation.DataTransferObjects.Documents;
-using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests;
+using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions;
 using MediatR;
 
 namespace CODWER.RERU.Evaluation.API.Controllers

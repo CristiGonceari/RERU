@@ -7,9 +7,9 @@ using RERU.Data.Entities.PersonalEntities.Enums;
 using RERU.Data.Persistence.Context;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
-using CVU.ERP.Module.Application.Clients;
-using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Models.Internal;
+using CVU.ERP.ServiceProvider.Clients;
+using CVU.ERP.ServiceProvider.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
@@ -80,14 +80,16 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
 
         private async Task<ApplicationUser> GetOrCreateCoreUser(Contractor currentContractor, CreateUserForContractorCommand request, bool skipGetApplicationUser)
         {
-            return !skipGetApplicationUser && await _coreClient.ExistUserInCore(currentContractor.UserProfile.Id.ToString())
-                    ? await _coreClient.GetApplicationUser(currentContractor.UserProfile.ToString())
-                    : await CreateUserInCore(currentContractor, request);
+            //return !skipGetApplicationUser && await _coreClient.ExistUserInCore(currentContractor.UserProfile.Id.ToString())
+            //        ? await _coreClient.GetApplicationUser(currentContractor.UserProfile.ToString())
+            //        : await CreateUserInCore(currentContractor, request);
+            return new ApplicationUser();
         }
 
         private async Task<ApplicationUser> CreateUserInCore(Contractor currentContractor, CreateUserForContractorCommand request)
         {
-            ApplicationUser userApplication;
+            //ApplicationUser userApplication;
+            ApplicationUser userApplication = new ApplicationUser();
             var newUser = new InternalUserProfileCreate
             {
                 Name = currentContractor.FirstName,
@@ -101,7 +103,7 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
 
             try
             {
-                userApplication = await _coreClient.CreateUserProfile(newUser);
+                //userApplication = await _coreClient.CreateUserProfile(newUser);
             }
             catch (Exception e)
             {
