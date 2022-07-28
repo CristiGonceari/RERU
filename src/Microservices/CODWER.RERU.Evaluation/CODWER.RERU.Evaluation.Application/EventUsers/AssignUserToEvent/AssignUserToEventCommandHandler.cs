@@ -21,50 +21,32 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
         private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
         private readonly IInternalNotificationService _internalNotificationService;
-        private readonly IConfiguration _configuration;
+        private readonly AppDbContext _appDbContext;
+        private readonly List<int> _addedUsersIds = new();
 
         public AssignUserToEventCommandHandler(AppDbContext appDbContext,
             IMapper mapper,
             INotificationService notificationService,
-            IInternalNotificationService internalNotificationService,
-            IConfiguration configuration)
+            IInternalNotificationService internalNotificationService
+            )
         {
+            _appDbContext = appDbContext;
             _mapper = mapper;
             _notificationService = notificationService;
             _internalNotificationService = internalNotificationService;
-            _configuration = configuration;
         }
 
         public async Task<List<int>> Handle(AssignUserToEventCommand request, CancellationToken cancellationToken)
         {
-            var eventUsersIds = new List<int>();
-
-            await using var db = AppDbContext.NewInstance(_configuration);
-            var eventValues = await db.EventUsers.ToListAsync();
-
             foreach (var userId in request.UserProfileId)
             {
-                var eventUser = eventValues.FirstOrDefault(l => l.UserProfileId == userId);
+                var exist = ExistEventUser(userId, request.EventId);
 
-                if (eventUser == null)
+                if (!exist)
                 {
-                    var newEventUser = new AddEventPersonDto()
-                    {
-                        UserProfileId = userId,
-                        EventId = request.EventId,
-                    };
+                    var result = await AssignUserToEvent(userId, request.EventId);
 
-                    var result = _mapper.Map<EventUser>(newEventUser);
-
-                    await db.EventUsers.AddAsync(result);
-                    await db.SaveChangesAsync();
-
-                    var eventName = await db.EventUsers
-                       .Include(x => x.Event)
-                       .Include(x => x.UserProfile)
-                       .FirstAsync(x => x.EventId == request.EventId && x.UserProfileId == userId);
-
-                    eventUsersIds.Add(eventName.Id);
+                    _addedUsersIds.Add(result.UserProfileId);
 
                     await _internalNotificationService.AddNotification(result.UserProfileId, NotificationMessages.YouWereInvitedToEventAsCandidate);
 
@@ -72,26 +54,46 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
                 }
                 else
                 {
-                    eventUsersIds.Add(eventUser.Id);
+                    _addedUsersIds.Add(userId);
                 }
-
-                eventValues = eventValues.Where(l => l.UserProfileId != userId).ToList();
             }
 
-            if (eventValues.Any())
+            await UnassignUsersFromEvent(request.EventId);
+
+            return _addedUsersIds;
+        }
+
+        private async Task<EventUser> AssignUserToEvent(int userId, int eventId)
+        {
+            var newEventUser = new AddEventPersonDto()
             {
-                db.EventUsers.RemoveRange(eventValues);
-                await db.SaveChangesAsync();
-            }
+                UserProfileId = userId,
+                EventId = eventId,
+            };
 
-            return eventUsersIds;
+            var result = _mapper.Map<EventUser>(newEventUser);
+
+            await _appDbContext.EventUsers.AddAsync(result);
+            await _appDbContext.SaveChangesAsync();
+
+            return result;
+        }
+
+        private async Task UnassignUsersFromEvent(int eventId)
+        {
+            var userEventsToDelete = _appDbContext.EventUsers
+                .Where(eu => _addedUsersIds.All(p2 => p2 != eu.UserProfileId) && eu.EventId == eventId);
+
+            if (userEventsToDelete.Any())
+            {
+                _appDbContext.EventUsers.RemoveRange(userEventsToDelete);
+                await _appDbContext.SaveChangesAsync();
+            }
         }
 
         private async Task AddEmailNotification(EventUser eventUser)
         {
-            await using var db = AppDbContext.NewInstance(_configuration);
-
-            var item = await db.EventUsers
+            var item = await _appDbContext.EventUsers
                 .Include(x => x.UserProfile)
                 .Include(x => x.Event)
                 .FirstOrDefaultAsync(x => x.Id == eventUser.Id);
@@ -111,5 +113,9 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 
         private string GetTableContent(EventUser eventUser)
             => $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la evenimentul ""{eventUser.Event.Name}"" în rol de candidat.</p>";
+
+        private bool ExistEventUser(int userId, int eventId) => 
+            _appDbContext.EventUsers.Any(x =>
+            x.UserProfileId == userId && x.EventId == eventId);
     }
 }
