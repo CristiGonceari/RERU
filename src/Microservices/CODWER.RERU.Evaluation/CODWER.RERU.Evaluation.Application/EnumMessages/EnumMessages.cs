@@ -20,8 +20,8 @@ namespace CODWER.RERU.Evaluation.Application.EnumMessages
         public const string Active = "Activ";
         public const string Inactive = "Inactiv";
         public const string NoResult = "Fără rezultat";
-        public const string Passed = "Admis";
-        public const string NotPassed = "Neadmis";
+        public const string Passed = "Se recomandă";
+        public const string NotPassed = "Nu se recomandă";
 
         public static string GetTestStatus(TestStatusEnum testStatus)
         {
