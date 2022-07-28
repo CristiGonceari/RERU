@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using RERU.Data.Entities.Enums;
 
-namespace CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests
+namespace CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions
 {
     public class SolicitedCandidatePositionDto
     {

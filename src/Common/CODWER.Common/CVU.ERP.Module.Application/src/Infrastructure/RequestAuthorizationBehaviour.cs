@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.Module.Application.Attributes;
-using CVU.ERP.Module.Application.Exceptions;
-using CVU.ERP.Module.Application.Providers;
+using CVU.ERP.ServiceProvider;
+using CVU.ERP.ServiceProvider.Exceptions;
 using MediatR;
 
 namespace CVU.ERP.Module.Application.Infrastructure {

@@ -1,5 +1,5 @@
 ﻿using CODWER.RERU.Core.Application.Validation;
-using CODWER.RERU.Core.DataTransferObjects.RecommendationForStudyDto;
+using CODWER.RERU.Core.DataTransferObjects.RecommendationForStudy;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 using RERU.Data.Persistence.Context;

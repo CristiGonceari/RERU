@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
-using CVU.ERP.Module.Application.Providers;
+using CVU.ERP.ServiceProvider;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;

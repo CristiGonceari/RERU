@@ -128,19 +128,19 @@ namespace CVU.ERP.ServiceProvider.Clients
         }
 
 
-        //public async Task<List<ModuleRolesDto>> GetModuleRoles()
-        //{
-        //    var resourceUrl = $"{ModuleBasePath}";
-        //    var request = NewJsonRequest(resourceUrl);
+        public async Task<List<ModuleRolesDto>> GetModuleRoles()
+        {
+            var resourceUrl = $"{ModuleBasePath}";
+            var request = NewJsonRequest(resourceUrl);
 
-        //    var response = await _restClient.GetAsync<Response<List<ModuleRolesDto>>>(request, new CancellationToken());
+            var response = await _restClient.GetAsync<Response<List<ModuleRolesDto>>>(request, new CancellationToken());
 
-        //    if (!response.Success)
-        //    {
-        //        throw new CoreClientResponseNotSuccessfulException(response.Messages);
-        //    }
-        //    return response?.Data;
-        //}
+            if (!response.Success)
+            {
+                throw new CoreClientResponseNotSuccessfulException(response.Messages);
+            }
+            return response?.Data;
+        }
 
         private RestRequest NewJsonRequest(string resource)
         {

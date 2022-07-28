@@ -1,4 +1,4 @@
-﻿namespace CODWER.RERU.Core.DataTransferObjects.RecommendationForStudyDto
+﻿namespace CODWER.RERU.Core.DataTransferObjects.RecommendationForStudy
 {
     public class RecommendationForStudyDto
     {

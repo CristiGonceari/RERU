@@ -1,5 +1,4 @@
-﻿using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests;
-using CVU.ERP.StorageService;
+﻿using CVU.ERP.StorageService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Persistence.Context;
@@ -7,8 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CVU.ERP.Module.Application.Models;
-using CVU.ERP.Module.Application.Providers;
+using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions;
+using CVU.ERP.ServiceProvider;
+using CVU.ERP.ServiceProvider.Models;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionUserFiles.GetSolicitedVacantPositionUserFiles
 {

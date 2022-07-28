@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CVU.ERP.ServiceProvider.Models;
 
@@ -13,6 +14,6 @@ namespace CVU.ERP.ServiceProvider.Clients
         //Task<ApplicationUser> CreateUserProfile(InternalUserProfileCreate userProfileDto);
         //Task ResetPassword(string coreUserProfileId);
         //Task DeactivateUserProfile(string coreUserProfileId);
-        //Task<List<ModuleRolesDto>> GetModuleRoles();
+        Task<List<ModuleRolesDto>> GetModuleRoles();
     }
 }

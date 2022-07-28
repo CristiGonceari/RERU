@@ -19,10 +19,11 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 {
     public class IdentityServerIdentityService : IIdentityService
     {
+        private readonly UserManagementDbContext _userManagementDbContext;
+
         private readonly UserManager<ERPIdentityUser> _userManager;
         private readonly INotificationService _notificationService;
         private readonly IPasswordGenerator _passwordGenerator;
-        private readonly IConfiguration _configuration;
 
         private readonly IOptions<IdentityOptions> _optionsAccessor;
         private readonly IPasswordHasher<ERPIdentityUser> _passwordHasher;
@@ -35,11 +36,22 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 
         public string Type => "local";
 
-        public IdentityServerIdentityService(IServiceProvider serviceProvider, INotificationService notificationService, IPasswordGenerator passwordGenerator, IConfiguration configuration, IOptions<IdentityOptions> optionsAccessor, IPasswordHasher<ERPIdentityUser> passwordHasher, IEnumerable<IUserValidator<ERPIdentityUser>> userValidators, IEnumerable<IPasswordValidator<ERPIdentityUser>> passwordValidators, ILookupNormalizer keyNormalizer, IdentityErrorDescriber errors, IServiceProvider services, ILogger<UserManager<ERPIdentityUser>> logger)
+        public IdentityServerIdentityService(UserManagementDbContext userManagementDbContext,
+            INotificationService notificationService,
+            IPasswordGenerator passwordGenerator,
+            IOptions<IdentityOptions> optionsAccessor,
+            IPasswordHasher<ERPIdentityUser> passwordHasher,
+            IEnumerable<IUserValidator<ERPIdentityUser>> userValidators,
+            IEnumerable<IPasswordValidator<ERPIdentityUser>> passwordValidators,
+            ILookupNormalizer keyNormalizer,
+            IdentityErrorDescriber errors,
+            IServiceProvider services,
+            ILogger<UserManager<ERPIdentityUser>> logger)
         {
+            _userManagementDbContext = userManagementDbContext;
+
             _notificationService = notificationService;
             _passwordGenerator = passwordGenerator;
-            _configuration = configuration;
             
             _optionsAccessor = optionsAccessor;
             _passwordHasher = passwordHasher;
@@ -53,8 +65,8 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
             _userManager = UserManagerInstance;
         }
 
-        private UserManager<ERPIdentityUser> UserManagerInstance => new UserManager<ERPIdentityUser>(
-            new UserStore<ERPIdentityUser>(UserManagementDbContext.NewInstance(_configuration)),
+        private UserManager<ERPIdentityUser> UserManagerInstance => new (
+            new UserStore<ERPIdentityUser>(_userManagementDbContext.NewInstance()),
             _optionsAccessor,
             _passwordHasher,
             _userValidators,

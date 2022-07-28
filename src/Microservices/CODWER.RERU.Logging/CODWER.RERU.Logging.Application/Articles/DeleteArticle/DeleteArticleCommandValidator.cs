@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using CVU.ERP.Logging.Context;
-using CODWER.RERU.Logging.Application.Validation;
 using System.Linq;
+using CODWER.RERU.Logging.Application.Validations;
 
 namespace CODWER.RERU.Logging.Application.Articles.DeleteArticle
 {

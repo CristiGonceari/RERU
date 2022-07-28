@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CVU.ERP.Module.Application.Models;
-using CVU.ERP.Module.Application.Providers;
 using CVU.ERP.Module.Common.Providers;
+using CVU.ERP.ServiceProvider;
+using CVU.ERP.ServiceProvider.Models;
 
 namespace CODWER.RERU.Personal.Application.Services.Implementations
 {

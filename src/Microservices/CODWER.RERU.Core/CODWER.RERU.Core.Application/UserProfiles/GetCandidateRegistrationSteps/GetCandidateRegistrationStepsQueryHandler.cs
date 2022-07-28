@@ -1,11 +1,7 @@
 ﻿using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
-using CODWER.RERU.Core.Data.Persistence.Helpers;
 using CODWER.RERU.Core.DataTransferObjects.RegistrationFluxSteps;
 using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
-using CVU.ERP.Common.DataTransferObjects.SelectValues;
-using CVU.ERP.Common.EnumConverters;
-using CVU.ERP.Module.Application.Providers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities.Enums;
@@ -14,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.ServiceProvider;
 
 namespace CODWER.RERU.Core.Application.UserProfiles.GetCandidateRegistrationSteps
 {

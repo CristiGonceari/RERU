@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.Models;
+using CVU.ERP.ServiceProvider.Clients;
+using CVU.ERP.ServiceProvider.Models;
 using MediatR;
 
 namespace CODWER.RERU.Personal.Application.UserProfiles.GetAvailableModuleRoles

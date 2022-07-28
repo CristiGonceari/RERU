@@ -7,11 +7,11 @@ using CODWER.RERU.Core.Application.Common.Services.Implementation;
 using CODWER.RERU.Core.Application.Common.Services.PasswordGenerator;
 using CODWER.RERU.Core.Application.Module.Providers;
 using CODWER.RERU.Core.Application.Permissions;
-using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.DependencyInjection;
-using CVU.ERP.Module.Application.Providers;
 using CVU.ERP.Module.Common.ExceptionHandlers;
 using CVU.ERP.Module.Common.Providers;
+using CVU.ERP.ServiceProvider;
+using CVU.ERP.ServiceProvider.Clients;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

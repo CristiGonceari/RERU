@@ -1,4 +1,4 @@
-﻿using CODWER.RERU.Core.DataTransferObjects.RecommendationForStudyDto;
+﻿using CODWER.RERU.Core.DataTransferObjects.RecommendationForStudy;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 

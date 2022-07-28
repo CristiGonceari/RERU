@@ -4,8 +4,8 @@ using CODWER.RERU.Core.Application.ApplicationUsers.Internal.GetInternalApplicat
 using CODWER.RERU.Core.Application.UserProfiles.Internal.CreateInternalUserProfile;
 using CODWER.RERU.Core.Application.UserProfiles.Internal.DeactivateUserProfile;
 using CODWER.RERU.Core.Application.UserProfiles.Internal.ResetPassword;
-using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Models.Internal;
+using CVU.ERP.ServiceProvider.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

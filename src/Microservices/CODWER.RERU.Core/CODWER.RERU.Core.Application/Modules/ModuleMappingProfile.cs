@@ -1,6 +1,7 @@
 using AutoMapper;
 using CODWER.RERU.Core.DataTransferObjects.Modules;
 using CVU.ERP.Module.Application.Models;
+using CVU.ERP.ServiceProvider.Models;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 

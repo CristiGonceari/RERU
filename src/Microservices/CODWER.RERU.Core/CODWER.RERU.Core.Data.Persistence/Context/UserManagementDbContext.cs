@@ -1,20 +1,26 @@
 ﻿using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Identity.Models;
+using CVU.ERP.ServiceProvider;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace CODWER.RERU.Core.Data.Persistence.Context
 {
-    public partial class UserManagementDbContext : IdentityDbContext<ERPIdentityUser>
+    public class UserManagementDbContext : IdentityDbContext<ERPIdentityUser>
     {
+        private readonly ICurrentApplicationUserProvider _currentApplicationUserProvider;
+        private readonly IConfiguration _configuration;
+
         public UserManagementDbContext()
         {
         }
 
-        public UserManagementDbContext(DbContextOptions<UserManagementDbContext> options)
+        public UserManagementDbContext(DbContextOptions<UserManagementDbContext> options, ICurrentApplicationUserProvider currentApplicationUserProvider, IConfiguration configuration)
             : base(options)
         {
+            _currentApplicationUserProvider = currentApplicationUserProvider;
+            _configuration = configuration;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -33,8 +39,15 @@ namespace CODWER.RERU.Core.Data.Persistence.Context
         ///<summary>
         ///Get new instance of UserManagementDbContext for thread safe using
         ///</summary>
-        public static UserManagementDbContext NewInstance(IConfiguration configuration) => new(new DbContextOptionsBuilder<UserManagementDbContext>()
-            .UseNpgsql(configuration.GetConnectionString(ConnectionString.Identity))
-            .Options);
+        //public static UserManagementDbContext NewInstance(IConfiguration configuration) => new(new DbContextOptionsBuilder<UserManagementDbContext>()
+        //    .UseNpgsql(configuration.GetConnectionString(ConnectionString.Identity))
+        //    .Options);
+
+        public UserManagementDbContext NewInstance()
+        {
+            return new(new DbContextOptionsBuilder<UserManagementDbContext>()
+                .UseNpgsql(_configuration.GetConnectionString(ConnectionString.Identity))
+                .Options, _currentApplicationUserProvider, _configuration);
+        }
     }
 }

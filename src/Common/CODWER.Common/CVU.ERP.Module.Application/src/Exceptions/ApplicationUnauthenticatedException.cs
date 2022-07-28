@@ -1,6 +1,6 @@
-using System;
+//using System;
 
-namespace CVU.ERP.Module.Application.Exceptions 
-{
-    public class ApplicationUnauthenticatedException : Exception { }
-}
+//namespace CVU.ERP.Module.Application.Exceptions 
+//{
+//    public class ApplicationUnauthenticatedException : Exception { }
+//}

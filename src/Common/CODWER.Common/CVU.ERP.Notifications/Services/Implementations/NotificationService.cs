@@ -13,12 +13,12 @@ namespace CVU.ERP.Notifications.Services.Implementations
     public class NotificationService : INotificationService
     {
         private readonly IEmailService _emailService;
-        private readonly IConfiguration _configuration;
+        private readonly AppDbContext _appDbContext;
 
-        public NotificationService(IEmailService emailService, IConfiguration configuration)
+        public NotificationService(IEmailService emailService, AppDbContext appDbContext)
         {
             _emailService = emailService;
-            _configuration = configuration;
+            _appDbContext = appDbContext;
         }
         
         public async Task<IEmailService> Notify(EmailData data, NotificationType type)
@@ -44,7 +44,7 @@ namespace CVU.ERP.Notifications.Services.Implementations
 
         public async Task PutEmailInQueue(QueuedEmailData email, NotificationType type = NotificationType.Both)
         {
-            await using (var db = AppDbContext.NewInstance(_configuration))
+            await using (var db = _appDbContext.NewInstance())
             {
                 var item = new EmailNotification
                 {

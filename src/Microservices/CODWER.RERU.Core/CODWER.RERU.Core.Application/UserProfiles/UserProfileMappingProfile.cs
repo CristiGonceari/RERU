@@ -6,6 +6,7 @@ using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Models.Internal;
+using CVU.ERP.ServiceProvider.Models;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 

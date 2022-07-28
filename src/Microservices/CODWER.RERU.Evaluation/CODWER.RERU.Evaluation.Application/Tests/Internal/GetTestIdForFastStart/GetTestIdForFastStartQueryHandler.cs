@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using CVU.ERP.Common.DataTransferObjects.TestDatas;
-using CVU.ERP.Module.Application.Providers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities.Enums;
@@ -9,6 +8,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.ServiceProvider;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStart
 {

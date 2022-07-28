@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using RERU.Data.Persistence.Context;
-using CVU.ERP.Module.Application.Clients;
+using CVU.ERP.ServiceProvider.Clients;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,7 +25,7 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.ResetContractorPassword
 
             try
             {
-                await _coreClient.ResetPassword(userProfile.Id.ToString());
+                //await _coreClient.ResetPassword(userProfile.Id.ToString());
             }
             catch (Exception e)
             {

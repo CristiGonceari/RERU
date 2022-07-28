@@ -17,10 +17,10 @@ namespace CODWER.RERU.Core.Application.CronJobs
         private readonly AppDbContext _appDbContext;
         private readonly INotificationService _notificationService;
 
-        public SendEmailJob(IConfiguration configurationService, INotificationService notificationService)
+        public SendEmailJob(AppDbContext appDbContext, INotificationService notificationService)
         {
+            _appDbContext = appDbContext.NewInstance();
             _notificationService = notificationService;
-            _appDbContext = AppDbContext.NewInstance(configurationService);
         }
 
         public async Task SendEmailNotification()

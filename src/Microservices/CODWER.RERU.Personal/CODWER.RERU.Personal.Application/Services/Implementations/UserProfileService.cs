@@ -3,8 +3,7 @@ using System.Threading.Tasks;
 using CODWER.RERU.Personal.Application.Validation;
 using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
-using CVU.ERP.Module.Application.Models;
-using CVU.ERP.Module.Application.Providers;
+using CVU.ERP.ServiceProvider;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 

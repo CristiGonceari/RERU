@@ -1,7 +1,6 @@
-﻿using System;
-using RERU.Data.Entities.Enums;
+﻿using RERU.Data.Entities.Enums;
 
-namespace CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests
+namespace CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions
 {
     public class AddEditSolicitedPositionDto
     {

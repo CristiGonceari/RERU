@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests;
+using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions;
 using CVU.ERP.Common.Validation;
 using CVU.ERP.Module.Application.TableExportServices.Validators;
 using FluentValidation;

@@ -1,5 +1,4 @@
 ﻿using CODWER.RERU.Evaluation.API.Config;
-using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
@@ -11,6 +10,7 @@ using CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPositions
 using CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPositions.EditMySolicitedPosition;
 using CODWER.RERU.Evaluation.Application.SolicitedPositions.PrintSolicitedPositions;
 using CODWER.RERU.Evaluation.Application.SolicitedPositions.UserSolicitedTests.GetUserSolicitedTests;
+using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions;
 using GetMySolicitedPositionQuery = CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPositions.GetMySolicitedPosition.GetMySolicitedPositionQuery;
 using GetSolicitedPositionQuery = CODWER.RERU.Evaluation.Application.SolicitedPositions.GetSolicitedPosition.GetSolicitedPositionQuery;
 

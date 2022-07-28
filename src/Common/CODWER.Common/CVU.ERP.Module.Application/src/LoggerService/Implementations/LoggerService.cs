@@ -5,17 +5,13 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Context;
 using CVU.ERP.Logging.Entities;
 using CVU.ERP.Logging.Models;
-using CVU.ERP.Module.Application.Providers;
-using Microsoft.EntityFrameworkCore;
+using CVU.ERP.ServiceProvider;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using RERU.Data.Entities;
-using RERU.Data.Persistence.Context;
 
 namespace CVU.ERP.Module.Application.LoggerService.Implementations
 {
@@ -23,9 +19,9 @@ namespace CVU.ERP.Module.Application.LoggerService.Implementations
     {
         private readonly LoggingDbContext _localLoggingDbContext;
         private readonly IEnumerable<ICurrentApplicationUserProvider> _userProvider;
-        public LoggerService(IEnumerable<ICurrentApplicationUserProvider> userProvider, IConfiguration configuration)
+        public LoggerService(IEnumerable<ICurrentApplicationUserProvider> userProvider, LoggingDbContext loggingDbContext)
         {
-            _localLoggingDbContext = LoggingDbContext.NewInstance(configuration);
+            _localLoggingDbContext = loggingDbContext.NewInstance();
             _userProvider = userProvider;
         }
 
