@@ -223,6 +223,8 @@
     "logout-msg": "Are you sure you want to logout from the system?",
     "empty-name": "The field must contain only Latin letters",
     "wrong-name": "The field must contain only Latin letters",
+    "empty-phone": "The field must not be empty",
+    "wrong-phone": "Please provide a valid format +37311111111",
     "available-modules": "Available modules",
     "idnp-length": "IDNP should consist of 13 numbers!",
     "search-by-user-state": "Search by user state",
@@ -442,7 +444,9 @@
     "01000301": "Invalid position",
     "01000302": "Invalid position name",
     "01000106": "Empty access mode",
-    "01000108": "Invalid code"
+    "01000108": "Invalid code",
+    "01000109": "Minimum age must be 18",
+    "01000115": "Invalid user phone"
   },
   "print": {
     "print-table": "Print table",

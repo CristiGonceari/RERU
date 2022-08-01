@@ -19,6 +19,7 @@ export class PositionsDiagramComponent implements OnInit {
   testTemplates = [];
   pagination: PaginationModel = new PaginationModel();
   positionId;
+  positionName;
   status = TestStatusEnum;
   result = TestResultStatusEnum;
 
@@ -31,6 +32,7 @@ export class PositionsDiagramComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       this.positionId = params.id;
+      this.positionService.get(this.positionId).subscribe(res => this.positionName = res.data.name);
     });
     this.getDiagram();
   }
