@@ -7,6 +7,7 @@ using CVU.ERP.Logging.Models;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Evaluation.Application.UserProfiles.Internal.AddUpdateUserProfile
 {
@@ -36,6 +37,8 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.Internal.AddUpdateUser
             else
             {
                 var mappedItem = _mapper.Map<UserProfile>(request.Data);
+                mappedItem.Contractor = new Contractor();
+
                 await _appDbContext.UserProfiles.AddAsync(mappedItem);
 
                 await SaveAndLog(mappedItem, "was created");

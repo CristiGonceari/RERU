@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { NavigationService } from '@erp/shared'
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApplicationUserService, NavigationService } from '@erp/shared'
+import { ProfileService } from './utils/services/profile.service';
 
 @Component({
 	selector: 'app-root',
@@ -16,4 +18,5 @@ export class AppComponent {
 	};
 	
 	constructor(public navigation: NavigationService) { this.navigation.startSaveHistory()}
+
 }

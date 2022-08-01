@@ -1,8 +1,7 @@
-﻿using CVU.ERP.Common.DataTransferObjects.Users;
-using RERU.Data.Entities;
+﻿using CODWER.RERU.Core.DataTransferObjects.Users;
+using CVU.ERP.Common.DataTransferObjects.Users;
 using RERU.Data.Entities.Enums;
 using System;
-using System.Collections.Generic;
 
 namespace CODWER.RERU.Core.DataTransferObjects.UserProfiles
 {
@@ -16,7 +15,7 @@ namespace CODWER.RERU.Core.DataTransferObjects.UserProfiles
         public string Email { get; set; }
         public string Idnp { get; set; }
         public string PhoneNumber { get; set; }
-        public DateTime? Birthday { get; set; }
+        public DateTime? BirthDate { get; set; }
         public string? MediaFileId { get; set; }
         public int? CandidatePositionId { set; get; }
         public int? DepartmentColaboratorId { get; set; }
@@ -27,7 +26,6 @@ namespace CODWER.RERU.Core.DataTransferObjects.UserProfiles
         public AccessModeEnum AccessModeEnum { get; set; }
         public bool IsActive { set; get; }
         public int BulletinId { get; set; }
-        public int UserProfileGeneralDataId { get; set; }
         public int StudyCount { get; set; }
         public int ModernLanguageLevelsCount { get; set; }
         public int RecomendationsForStudyCount { get; set; }
@@ -37,6 +35,7 @@ namespace CODWER.RERU.Core.DataTransferObjects.UserProfiles
         public int KinshipRelationWithUserProfilesCount { get; set; }
         public int MilitaryObligationsCount { get; set; }
         public int AutobiographyId { get; set; }
+        public int ContractorId { get; set; }
 
     }
 }

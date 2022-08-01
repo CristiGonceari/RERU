@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../models/api-response.model';
 import { AbstractService, AppSettingsService } from '@erp/shared';
-import { BulletinModel } from '../../utils/models/bulletin.model';
+import { ContractorBulletinModel, BulletinModel} from '../../utils/models/bulletin.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +14,15 @@ export class BulletinService extends AbstractService {
     super(appSettingsService);
   }
 
-  get(id: number): Observable<ApiResponse<BulletinModel>> {
-    return this.http.get<ApiResponse<BulletinModel>>(`${this.baseUrl}/${this.urlRoute}/${id}`);
+  get(id: number): Observable<ApiResponse<ContractorBulletinModel>> {
+    return this.http.get<ApiResponse<ContractorBulletinModel>>(`${this.baseUrl}/${this.urlRoute}/${id}`);
   }
 
   add(data: BulletinModel): Observable<ApiResponse<number>> {
+    return this.http.post<ApiResponse<number>>(`${this.baseUrl}/${this.urlRoute}`, data);
+  }
+
+  addContractor(data: ContractorBulletinModel): Observable<ApiResponse<number>> {
     return this.http.post<ApiResponse<number>>(`${this.baseUrl}/${this.urlRoute}`, data);
   }
 

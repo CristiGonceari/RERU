@@ -31,7 +31,6 @@ namespace CODWER.RERU.Core.Application.RecommendationForStudies.BulkAddEditRecom
 
                 if (existentRecommendation == null)
                 {
-
                     var item = _mapper.Map<RecommendationForStudy>(recommendationForStudyDto);
 
                     await _appDbContext.RecommendationForStudies.AddAsync(item);

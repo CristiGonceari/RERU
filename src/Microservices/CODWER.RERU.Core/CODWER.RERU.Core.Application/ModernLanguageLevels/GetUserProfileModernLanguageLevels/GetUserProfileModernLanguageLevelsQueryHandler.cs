@@ -25,7 +25,7 @@ namespace CODWER.RERU.Core.Application.ModernLanguageLevels.GetUserProfileModern
         {
             var modernLanguage = _appDbContext.ModernLanguageLevels
                                                 .Include(mll => mll.ModernLanguage)
-                                                .Where(mll => mll.UserProfileId == request.UserProfileId)
+                                                .Where(mll => mll.ContractorId == request.ContractorId)
                                                 .AsQueryable();
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<ModernLanguageLevel, ModernLanguageLevelDto>(modernLanguage, request);

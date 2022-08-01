@@ -52,15 +52,15 @@ namespace CODWER.RERU.Personal.Application.Contractors.RemoveContractor
             _appDbContext.ContractorFiles.RemoveRange(contractorFiles);
 
             var contractorBulletins = _appDbContext.Bulletins
-                .Include(x=>x.UserProfile)
-                .ThenInclude(x=>x.Contractor)
-                .Where(x => x.UserProfile.Contractor.Id == contractorId);
+                .Include(x=>x.Contractor)
+                .ThenInclude(x=>x.UserProfile)
+                .Where(x => x.Contractor.Id == contractorId);
             _appDbContext.Bulletins.RemoveRange(contractorBulletins);
 
             var contractorStudies = _appDbContext.Studies
-                .Include(x => x.UserProfile)
-                .ThenInclude(x => x.Contractor)
-                .Where(x => x.UserProfile.Contractor.Id == contractorId);
+                .Include(x => x.Contractor)
+                .ThenInclude(x => x.UserProfile)
+                .Where(x => x.Contractor.Id == contractorId);
 
             _appDbContext.Studies.RemoveRange(contractorStudies);
         }

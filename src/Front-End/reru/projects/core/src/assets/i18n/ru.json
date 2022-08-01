@@ -633,7 +633,7 @@
   "materialStatusType": {
     "1": "Холостяк",
     "2": "Женатый",
-    "3": "Hе замужем",
+    "3": "Повторно женился",
     "4": "Bдовец"
   },
   "kinshipDegree":{
@@ -672,5 +672,9 @@
     "MilitaryObligation": "Bоенная обязанность",
     "Autobiography": "Автобиография",
     "Declaration": "Декларация"
+  },
+  "step-status":{
+    "done": "Завершенный",
+    "not-done": "Hезавершенный"
   }
 }

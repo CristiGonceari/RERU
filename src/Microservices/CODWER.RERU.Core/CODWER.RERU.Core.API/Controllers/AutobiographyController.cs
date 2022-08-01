@@ -19,7 +19,7 @@ namespace CODWER.RERU.Core.API.Controllers
         [HttpGet("{id}")]
         public async Task<AutobiographyDto> GetAutobiography([FromRoute] int id)
         {
-            var query = new GetUserProfileAutobiographyQuery { UserProfileId = id };
+            var query = new GetUserProfileAutobiographyQuery { ContractorId = id };
             var result = await Mediator.Send(query);
 
             return result;

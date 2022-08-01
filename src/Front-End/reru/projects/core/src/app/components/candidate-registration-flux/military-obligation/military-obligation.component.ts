@@ -23,6 +23,7 @@ export class MilitaryObligationComponent implements OnInit {
   userGeneralData;
   userId;
   stepId;
+  contractorId;
 
   addOrEditMilitaryObligationButton: boolean;
   isLoadingMilitaryObligation: boolean = true;
@@ -53,7 +54,6 @@ export class MilitaryObligationComponent implements OnInit {
     this.userId = parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
 
     this.stepId =parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
-    this.getExistentStep(this.stepId);
 
     this.initForm();
     this.retrieveDropdowns();
@@ -63,7 +63,7 @@ export class MilitaryObligationComponent implements OnInit {
   ngOnDestroy(){
     // clear message
     this.ds.clearData();
-}
+  }
 
   initForm(data?): void {
     console.log("data", data);
@@ -75,7 +75,7 @@ export class MilitaryObligationComponent implements OnInit {
     }
     else {
       this.militaryObligationForm = this.fb.group({
-        obligations: this.fb.array([this.generateMilitaryObligations(data, this.userId)])
+        obligations: this.fb.array([this.generateMilitaryObligations(data, this.contractorId)])
       });
     }
     
@@ -92,6 +92,8 @@ export class MilitaryObligationComponent implements OnInit {
     this.userProfile.getCandidateProfile(this.userId).subscribe( res => {
 
       this.userGeneralData = res.data;
+      this.contractorId = res.data.contractorId;
+
       const userData = res.data;
 
       if (userData.militaryObligationsCount != 0) {
@@ -103,15 +105,16 @@ export class MilitaryObligationComponent implements OnInit {
         this.isLoadingMilitaryObligation = false;
         this.militaryObligationData = null;
       }
-      
+
+      this.getExistentStep(this.stepId, this.contractorId);
     })
   }
 
-  getMilitaryObligations(userId) {
+  getMilitaryObligations(contractorId) {
     this.isLoadingMilitaryObligation = true;
 
     const request = {
-      userProfileId: userId
+      contractorId: contractorId
     }
 
     this.militaryObligationService.list(request).subscribe(res => {
@@ -139,21 +142,21 @@ export class MilitaryObligationComponent implements OnInit {
     }
   }
 
-  generateMilitaryObligations(militaryObligation?, userProfileId?) {
+  generateMilitaryObligations(militaryObligation?, contractorId?) {
     
     return this.fb.group({
       id: this.fb.control((militaryObligation && militaryObligation.id) || null, []),
       militaryObligationType: this.fb.control((militaryObligation && militaryObligation.militaryObligationType) || null, [Validators.required]),
       mobilizationYear: this.fb.control((militaryObligation && militaryObligation.mobilizationYear) || null, [Validators.required]),
       withdrawalYear: this.fb.control((militaryObligation && militaryObligation.withdrawalYear) || null, [Validators.required]),
-      efectiv: this.fb.control((militaryObligation && militaryObligation.efectiv) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      efectiv: this.fb.control((militaryObligation && militaryObligation.efectiv) || null, [Validators.required]),
       militarySpecialty: this.fb.control((militaryObligation && militaryObligation.militarySpecialty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       degree: this.fb.control((militaryObligation && militaryObligation.degree) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       militaryBookletSeries: this.fb.control((militaryObligation && militaryObligation.militaryBookletSeries) || null, [Validators.required]),
       militaryBookletNumber: this.fb.control((militaryObligation && militaryObligation.militaryBookletNumber) || null, []),
       militaryBookletReleaseDay: this.fb.control((militaryObligation && militaryObligation.militaryBookletReleaseDay) || null, [Validators.required]),
-      militaryBookletEminentAuthority: this.fb.control((militaryObligation && militaryObligation.militaryBookletEminentAuthority) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      userProfileId: this.fb.control(userProfileId || null, []),
+      militaryBookletEminentAuthority: this.fb.control((militaryObligation && militaryObligation.militaryBookletEminentAuthority) || null, [Validators.required]),
+      contractorId: this.fb.control(contractorId || null, []),
     });
   }
 
@@ -167,15 +170,15 @@ export class MilitaryObligationComponent implements OnInit {
   }
 
   buildMilitaryObligationForm(): Observable<any> {
-    const request = this.parseMilitaryObligations(this.militaryObligationForm.getRawValue().obligations, this.userId);
+    const request = this.parseMilitaryObligations(this.militaryObligationForm.getRawValue().obligations, this.contractorId);
     return this.militaryObligationService.addMultiple(request);
   }
 
-  parseMilitaryObligations(data: MilitaryObligationModel[], userProfileId: number): MilitaryObligationModel[] {
-    return data.map(el => this.parseMilitaryObligation(el, userProfileId));
+  parseMilitaryObligations(data: MilitaryObligationModel[], contractorId: number): MilitaryObligationModel[] {
+    return data.map(el => this.parseMilitaryObligation(el, contractorId));
   }
 
-  parseMilitaryObligation(data: MilitaryObligationModel, userProfileId): MilitaryObligationModel {
+  parseMilitaryObligation(data: MilitaryObligationModel, contractorId): MilitaryObligationModel {
     return ObjectUtil.preParseObject({
       id: data.id,
       militaryObligationType: parseInt(data.militaryObligationType),
@@ -188,7 +191,7 @@ export class MilitaryObligationComponent implements OnInit {
       militaryBookletNumber : data.militaryBookletNumber,
       militaryBookletReleaseDay : data.militaryBookletReleaseDay,
       militaryBookletEminentAuthority : data.militaryBookletEminentAuthority,
-      userProfileId: userProfileId
+      contractorId: contractorId
     })
   }
 
@@ -202,7 +205,7 @@ export class MilitaryObligationComponent implements OnInit {
       (<FormArray>this.militaryObligationForm.controls.obligations).controls.push(
         this.generateMilitaryObligations(
           obligation,
-          this.userId
+          this.contractorId
         )
       );
     }
@@ -215,9 +218,9 @@ export class MilitaryObligationComponent implements OnInit {
     (<FormArray>this.militaryObligationForm.controls.obligations).controls.splice(index, 1);
   }
 
-  getExistentStep(step){
+  getExistentStep(step, contractorId){
     const request = {
-      userProfileId : this.userId,
+      contractorId : contractorId,
       step: step
     };
 
@@ -228,32 +231,32 @@ export class MilitaryObligationComponent implements OnInit {
 
   addRegistrationFluxStep(){
     if(this.militaryObligationData != null){
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.userId);
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.contractorId);
     }
     else{
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.userId);
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractorId);
     }
   }
 
-  checkRegistrationStep(stepData, stepId, success, userId){
+  checkRegistrationStep(stepData, stepId, success, contractorId){
     const datas= {
       isDone: success,
       stepId: this.stepId
     }
     if(stepData.length == 0){
-      this.addCandidateRegistationStep(success, stepId, userId);
+      this.addCandidateRegistationStep(success, stepId, contractorId);
       this.ds.sendData(datas);
     }else{
-      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, userId);
+      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId);
       this.ds.sendData(datas);
     }
   }
 
-  addCandidateRegistationStep(isDone, step, userId ){
+  addCandidateRegistationStep(isDone, step, contractorId ){
     const request = {
       isDone: isDone,
       step : step,
-      userProfileId: userId 
+      contractorId: contractorId 
     }
     this.registrationFluxService.add(request).subscribe(res => {
       this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
@@ -262,12 +265,12 @@ export class MilitaryObligationComponent implements OnInit {
     })
   }
 
-  updateCandidateRegistationStep(id, isDone, step, userId ){
+  updateCandidateRegistationStep(id, isDone, step, contractorId ){
     const request = {
       id: id,
       isDone: isDone,
       step : step,
-      userProfileId: userId 
+      contractorId: contractorId 
     }
     
     this.registrationFluxService.update(request).subscribe(res => {

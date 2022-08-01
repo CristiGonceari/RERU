@@ -154,6 +154,7 @@ export class MainComponent implements OnInit {
 	routerOutlet: boolean = false;
 	showStepper: boolean;
 
+
 	constructor(
 		public translate: I18nService,
 		private router: Router,
@@ -164,24 +165,24 @@ export class MainComponent implements OnInit {
 		private userSubject: ApplicationUserService,
 		private profileService: ProfileService,
 		private route: ActivatedRoute,
-
-
 	) {
 		this.appSettings = this.appConfigService.settings;
 	}
 
 	ngOnInit(): void {
+		this.subscribeForAuthChange();
 		this.translateData();
 		this.subscribeForLanguageChange();
-		this.subscribeForAuthChange();
 	}
 
 	subscribeForAuthChange(): void {
-		this.userSubject.userChange.subscribe((res) => {
-			if (res.isCandidateStatus)
+		this.userSubject.userChange.subscribe((response) => {
+			if (response.isCandidateStatus)
 			{
-			  this.profileService.GetCandidateRegistrationSteps().subscribe(res => {
+			  this.profileService.getCandidateRegistrationSteps().subscribe(res => {
 				if (res.data.unfinishedSteps.length != 0){
+				  response.user.permissions = null;
+				  
 				  this.router.navigate(["./registration-flux",res.data.userProfileId,"step"], { relativeTo: this.route });
 				  this.showStepper = true;
 				}else{

@@ -30,7 +30,6 @@ namespace CODWER.RERU.Core.Application.KinshipRelationWithUserProfiles.BulkAddEd
 
                 if (existentRelation == null)
                 {
-
                     var item = _mapper.Map<KinshipRelationWithUserProfile>(relation);
 
                     await _appDbContext.KinshipRelationWithUserProfiles.AddAsync(item);

@@ -21,11 +21,13 @@ import { ProfileService } from '../../utils/services/profile.service';
 export class DashboardComponent implements OnInit {
   sidebarView = SidebarView;
   type: string;
+
   messageText: string;
   modules: ApplicationUserModuleModel[];
 
   testId: string;
   showMultipleQuestionsPerPega: boolean;
+  isLoading: boolean = true;
   user;
 
   constructor(
@@ -34,9 +36,6 @@ export class DashboardComponent implements OnInit {
     private internalService: InternalService,
     public notificationService: NotificationsService,
     public translate: I18nService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private profileService: ProfileService
   ) {}
 
   ngOnInit(): void {
@@ -47,8 +46,10 @@ export class DashboardComponent implements OnInit {
   }
   
   subscribeForAuthChange(): void {
+    this.isLoading = true;
     this.userSubject.userChange.subscribe((res) => {
         this.modules = this.moduleService.get();
+        this.isLoading = false;
     }
     );
   }

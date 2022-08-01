@@ -23,7 +23,7 @@ namespace CODWER.RERU.Core.Application.MaterialStatuses.GetUserProfilesMaterialS
         {
             var item = await _appDbContext.MaterialStatuses
                                             .Include(ms => ms.MaterialStatusType)
-                                            .FirstOrDefaultAsync(ms => ms.UserProfileId == request.UserProfileId);
+                                            .FirstOrDefaultAsync(ms => ms.ContractorId == request.ContractorId);
 
             return _mapper.Map<AddEditMaterialStatusDto>(item);
         }

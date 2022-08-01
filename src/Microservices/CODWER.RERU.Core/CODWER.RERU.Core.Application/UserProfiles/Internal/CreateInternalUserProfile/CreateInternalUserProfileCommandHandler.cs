@@ -11,6 +11,7 @@ using CVU.ERP.ServiceProvider.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Core.Application.UserProfiles.Internal.CreateInternalUserProfile
 {
@@ -35,7 +36,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.Internal.CreateInternalUserP
             if (existUserProfileByIdnp == null)
             {
                 var userProfile = Mapper.Map<UserProfile>(request.Data);
-
+                userProfile.Contractor = new Contractor();
 
                 if (request.Data.ModuleRoles != null)
                 {

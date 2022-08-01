@@ -6,6 +6,6 @@ namespace CODWER.RERU.Core.Application.RecommendationForStudies.GetUserProfileRe
 {
     public class GetUserProfileRecommendationForStudyQuery : PaginatedQueryParameter, IRequest<PaginatedModel<RecommendationForStudyDto>>
     {
-        public int UserProfileId { get; set; }
+        public int ContractorId { get; set; }
     }
 }

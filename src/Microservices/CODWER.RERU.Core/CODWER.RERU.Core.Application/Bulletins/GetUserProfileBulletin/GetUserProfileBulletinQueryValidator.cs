@@ -5,6 +5,7 @@ using CVU.ERP.Common.Validation;
 using FluentValidation;
 using FluentValidation.Validators;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 using System.Linq;
 
@@ -17,8 +18,8 @@ namespace CODWER.RERU.Core.Application.Bulletins.GetUserProfileBulletin
         {
             _appDbContext = appDbContext;
 
-            RuleFor(x => x.UserProfileId)
-                .SetValidator(new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.USER_NOT_FOUND,
+            RuleFor(x => x.ContractorId)
+                .SetValidator(new ItemMustExistValidator<Contractor>(appDbContext, ValidationCodes.USER_NOT_FOUND,
                     ValidationMessages.InvalidReference));
 
         }

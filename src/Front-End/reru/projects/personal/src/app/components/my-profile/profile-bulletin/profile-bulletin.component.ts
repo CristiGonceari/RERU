@@ -25,13 +25,13 @@ export class ProfileBulletinComponent implements OnInit {
   initForm(data: BulletinModel): void {
     this.bulletinForm = this.fb.group({
       id: this.fb.control(data.id),
-      idnp: this.fb.control({value: data.idnp, disabled: true }, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
+      // idnp: this.fb.control({value: data.idnp, disabled: true }, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
       releaseDay: this.fb.control({value: data.releaseDay, disabled: true }, [Validators.required]),
       series: this.fb.control({value: data.series, disabled: true }, [Validators.required]),
       emittedBy: this.fb.control({value: data.emittedBy, disabled: true }, [Validators.required]),
-      contractorId: this.fb.control(data.contractorId, [Validators.required]),
+      // contractorId: this.fb.control(data.contractorId, [Validators.required]),
       birthPlace: this.buildAddress(data.birthPlace),
-      livingAddress: this.buildAddress(data.livingAddress),
+      // livingAddress: this.buildAddress(data.livingAddress),
       residenceAddress: this.buildAddress(data.residenceAddress)
     });
     this.isLoading = false;

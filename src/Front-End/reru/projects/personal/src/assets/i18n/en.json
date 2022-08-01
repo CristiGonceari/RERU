@@ -74,7 +74,8 @@
     "modify-contractor-contact": "Modify contractor's contact",
     "state": {
       "InService": "In service",
-      "Dismissed": "Dismissed"
+      "Dismissed": "Dismissed",
+      "Candidate": "Candidate"
     },
     "are-you-sure-you-want-to-dismiss-contractor": "Are you sure you want to dismiss the contractor <b>{{name}}</b>?",
     "are-you-sure-you-want-to-delete-contact-from-contractor": "Are you sure you want to delete the contact <b>{{type}} {{value}}</b> from employee <b>{{name}}</b>?",
@@ -462,7 +463,8 @@
     "import": "Import",
     "reset": "Reset",
     "upload": "Upload",
-    "applay": "Apply filter"
+    "applay": "Apply filter",
+    "update":"Update"
   },
   "entity": {
     "personal": {
@@ -965,5 +967,180 @@
     "sorted-by": "Sorted by",
     "error-msg": "Please select fields for print",
     "print-msg": "Please specify the print orientation and necessary fields."
+  },
+  "general-datas":{
+    "general-data":"General Data",
+    "nationality": "Nationality",
+    "citizenship":"Citizenship",
+    "state-language-level":"Level of knowledge of the state language",
+    "sex":"Gender",
+    "home-phone":"Home Phone",
+    "work-phone":"Work phone",
+    "phone": "Personal phone"
+  },
+  "bulletin":{
+    "name":"Bulletin",
+    "series":"Series",
+    "emited-by":"Issued from",
+    "relase-day":"Release day",
+    "adresses":"Address",
+    "birth-place":"Birth place",
+    "residence-address":"Residence address",
+    "parents-residence-address":"Parents' residence address",
+    "modal":{
+      "country": "Country",
+      "region": "Region",
+      "city": "City",
+      "street": "Street",
+      "building": "Building",
+      "apartment": "Apartment",
+      "post-code": "Postal code"
+    }
+  },
+  "study":{
+    "institution": "Institution",
+    "study-frequency": "Study frequency",
+    "study-type": "Study type",
+    "faculty": "Faculty",
+    "specialty": "Specialty",
+    "diploma-number": "Graduation certificate number",
+    "diploma-release-day": "Graduation date",
+    "student": "Student",
+    "qualification": "Qualification",
+    "institution-address": "Institution Address",
+    "year-of-admision": "Year of admission",
+    "graduation-year" : "Graduation Year"
+  },
+  "language":{
+    "modern-language-level": "The level of knowledge of the modern language",
+    "name": "language Name",
+    "qualifier" : "Qualifier of knowledge"
+  },
+  "recommendation":{
+    "recommendation-name": "Study recommendation",
+    "table-user-name": "First name of the person who recommended",
+    "table-user-last-name": "Last name of the person who recommended",
+    "table-function": "Position held",
+    "table-subdivision": "MAI subdivision",
+    "user-name": "First Name",
+    "last-name": "Last Name"
+  },
+  "material-status":{
+    "name": "Marital status on the date of completion of the personal file",
+    "kinship-relation": "Kinship or related relations with MAI employees",
+    "kinship-degree" : "The degree of kinship",
+    "table-function": "Position held",
+    "table-subdivision": "MAI subdivision",
+    "user-name": "First Name",
+    "last-name": "Last Name",
+    "biography-data": "Biographical data of the relatives close to the candidate",
+    "birth-place":"Place of birth",
+    "birthday-date": "Date of birth",
+    "residence": "Residence",
+    "work-place": "Work place",
+    "kinship-criminal-data-name": "Data on the criminal or misdemeanor liability of the candidate's close relatives"
+  },
+  "military-obligation":{
+    "paragraf-name": "Biographical data of the relatives close to the candidate",
+    "name": "Military obligation",
+    "year-of-mobilization" : "Year of mobilization",
+    "year-of-withdrawal" : "Year of withdrawal",
+    "efectiv": "Effective",
+    "military-specialty": "Military specialty",
+    "degree": "Degree",
+    "military-booklet": "Military booklet",
+    "series":"Series",
+    "number": "Number",
+    "relase-day":"Release day",
+    "eminent-authority" : "Eminent Authority"
+  },
+  "autobiography":{
+    "title":"The autobiography is written personally by the candidate read, ordered, without corrections and abbreviations, with the obligatory indication of the following information:",
+    "paragraf-1": "- Name, surname, patronymic, date and place of birth, social origin, mother tongue;",
+    "paragraf-2": "- The educational institutions in which he studied, the year of their graduation or abandonment, the general average, the specialties, the professions obtained;",
+    "paragraf-3": "- Marital status, date of marriage (divorce), name, surname, patronymic of the wife (husband), first name and year of birth of the children;",
+    "paragraf-4": "- Military service, period, military center that decided to join; if he has not been subjected to military service, the grounds shall be indicated;",
+    "paragraf-5": "- Activity in elective bodies (period and body);",
+    "paragraf-6": "- Possession of scientific, scientific-didactic, honorary and sports degrees / titles, date of their granting and issuing authority;",
+    "paragraf-7": "- Existence of official and unofficial work experience (period, position (position), institution, organization, enterprise);",
+    "paragraf-8": "- Place of residence and home visa (both indicated if they do not coincide)."
+  },
+  "declaration":{
+    "paragraf": "I declare, on my own responsibility, that the data entered in this form are true. I agree that the competent authorities shall verify the data in the file and the documents submitted to me"
+  },
+  "sexType": {
+    "Male": "Male",
+    "Female": "Female"
+  },
+  "languageKnowledge":{
+    "Basic": "Basic knowledge",
+    "BasicKnowledge": "Basic knowledge",
+    "Medium": "Medium",
+    "Good" : "Good",
+    "VeryGood": "Very good"
+  },
+  "studyTypes":{
+    "1": "Basic Studies",
+    "2": "University",
+    "3": "Postgraduate",
+    "4": "Improvement courses",
+    "5": "Training courses"
+  },
+  "studyFrequency":{
+    "Daily":"Daily",
+    "LowFrequency": "Low Frequency"
+  },
+  "materialStatusType": {
+    "1": "Bachelor",
+    "2": "Married",
+    "3": "Remarried",
+    "4": "Widower"
+  },
+  "kinshipDegree":{
+    "Brother" : "Brother",
+    "Children" : "Children",
+    "Father" : "Father",
+    "Husband" : "Husband",
+    "HusbandsBrothers" : "Husbands Brothers",
+    "HusbandsSisters" : "Husbands Sisters",
+    "Mother" : "Mother",
+    "Parent" : "Parent",
+    "Sister" : "Sister",
+    "Wife" : "Wife",
+    "WifesBrothers" : "Wifes Brothers",
+    "WifesSisters" : "Wifes Sisters"
+  },
+  "militaryObligationType":{
+    "AlternativeService" : "Alternative service",
+    "PerformedMilitaryService" : "Performed military service",
+    "Recruit" : "Recruit",
+    "Reservist" : "Reservist"
+  },
+  "stepper":{
+    "button-update-and-next":"Update and Next",
+    "button-save-and-next":"Add and Next",
+    "button-next":"Complete the step",
+    "button-update":"Update",
+    "button-add":"Add",
+    "button-end": "Complete"
+  },
+  "step":{
+    "GeneralData": "General Data",
+    "Bulletin": "Bulletin",
+    "Study": "Study",
+    "MaterialStatus": "Material Status",
+    "MilitaryObligation": "Military Obligation",
+    "Autobiography": "Autobiography",
+    "Declaration": "Declaration"
+  },
+  "step-status":{
+    "done": "Completed",
+    "not-done": "Uncompleted"
+  },
+  "module-access": {
+    "select": "Select"
+  },
+  "table": {
+    "number" : "Number"
   }
 }

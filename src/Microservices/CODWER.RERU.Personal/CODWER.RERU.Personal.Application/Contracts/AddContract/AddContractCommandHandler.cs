@@ -81,14 +81,14 @@ namespace CODWER.RERU.Personal.Application.Contracts.AddContract
 
             var contractor = _appDbContext.Contractors
                 .Include(x => x.UserProfile)
-                .ThenInclude(x=>x.Bulletin)
+                .Include(x=>x.Bulletin)
                     .ThenInclude(x => x.ResidenceAddress)
                 .Include(x => x.Positions)
                     .ThenInclude(x => x.Role)
                 .First(x => x.Id == contractorId);
 
             var currency = _appDbContext.NomenclatureRecords.FirstOrDefault(x => x.Id == contract.CurrencyTypeId)?.Name;
-            var bulletin = contractor.UserProfile.Bulletin;
+            var bulletin = contractor.UserProfile.Contractor.Bulletin;
             var position = contractor.GetLastPosition();
             var address = bulletin.ResidenceAddress;
 
@@ -117,7 +117,7 @@ namespace CODWER.RERU.Personal.Application.Contracts.AddContract
             myDictionary.Add("{eliberat_buletin_replace}", bulletin.EmittedBy);
             myDictionary.Add("{buletin_data_replace}", bulletin.ReleaseDay.ToString("dd/MM/yyyy"));
 
-            myDictionary.Add("{idnp_replace}", bulletin.UserProfile.Idnp);
+            myDictionary.Add("{idnp_replace}", bulletin.Contractor.Idnp);
 
             myDictionary.Add("{adresa_replace}", $"{address.City}, {address.Street}");
 

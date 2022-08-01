@@ -23,7 +23,7 @@ namespace CODWER.RERU.Core.Application.MilitaryObligations.GetUserProfileMilitar
         public async Task<PaginatedModel<MilitaryObligationDto>> Handle(GetUserProfileMilitaryObligationsQuery request, CancellationToken cancellationToken)
         {
             var items = _appDbContext.MilitaryObligations
-                .Where(x => x.UserProfileId == request.UserProfileId)
+                .Where(x => x.ContractorId == request.ContractorId)
                 .AsQueryable();
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<MilitaryObligation, MilitaryObligationDto>(items, request);

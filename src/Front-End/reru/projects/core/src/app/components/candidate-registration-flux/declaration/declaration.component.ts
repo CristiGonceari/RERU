@@ -4,6 +4,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { RegistrationFluxStepEnum } from '../../../utils/models/registrationFluxStep.enum';
 import { ProfileService } from '../../../utils/services/profile.service';
 import { RegistrationFluxStepService } from '../../../utils/services/registration-flux-step.service';
+import { UserProfileService } from '../../../utils/services/user-profile.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { DataService } from '../data.service';
 
@@ -17,11 +18,15 @@ export class DeclarationComponent implements OnInit {
   @Output() counterChange = new EventEmitter<boolean>();
 
   isChecked: boolean = false;
+
   userId;
   stepId;
+  contractorId;
+
   userRegistrationFluxStepData;
   registrationFluxStep;
   registrationFluxSteps: [];
+
   unfinishedSteps;
   allowToFinish: boolean;
 
@@ -31,15 +36,16 @@ export class DeclarationComponent implements OnInit {
     private notificationService: NotificationsService,
     private router: Router,
     private ds: DataService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private userProfile: UserProfileService,
     ) { }
 
   ngOnInit(): void {
     this.userId = parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
     this.stepId = parseInt(this.route['_routerState'].snapshot.url.split("/").pop())
 
-    this.getExistentStep(this.stepId);
     this.getUnfinishedSteps();
+    this.getUserGeneralData();
   }
 
   ngOnDestroy(){
@@ -47,9 +53,20 @@ export class DeclarationComponent implements OnInit {
     this.ds.clearData();
   }
 
-  getExistentStep(step){
+  getUserGeneralData() {
+
+    this.userProfile.getCandidateProfile(this.userId).subscribe( res => {
+
+      this.contractorId = res.data.contractorId;
+
+      this.getExistentStep(this.stepId, this.contractorId)
+      
+    })
+  }
+
+  getExistentStep(step, contractorId){
     const request = {
-      userProfileId : this.userId,
+      contractorId : contractorId,
       step: step
     };
 
@@ -59,7 +76,7 @@ export class DeclarationComponent implements OnInit {
   }
 
   getUnfinishedSteps(){
-    this.profileService.GetCandidateRegistrationSteps().subscribe(res => {
+    this.profileService.getCandidateRegistrationSteps().subscribe(res => {
       this.unfinishedSteps = res.data.unfinishedSteps;
 
       if(this.unfinishedSteps.length <= 1 && this.unfinishedSteps[0] == this.stepId){
@@ -73,34 +90,34 @@ export class DeclarationComponent implements OnInit {
 
   addRegistrationFluxStep(){
     if(this.isChecked){
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.userId);
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.contractorId);
 
         this.counterChange.emit(this.isChecked == true);
        this.router.navigate(["../../../../"], { relativeTo: this.route });
     }else{
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.userId);
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractorId);
     }
   }
 
-  checkRegistrationStep(stepData, stepId, success, userId){
+  checkRegistrationStep(stepData, stepId, success, contractorId){
     const datas= {
       isDone: success,
       stepId: this.stepId
     }
     if(stepData.length == 0){
-      this.addCandidateRegistationStep(success, stepId, userId);
+      this.addCandidateRegistationStep(success, stepId, contractorId);
       this.ds.sendData(datas);
     }else{
-      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, userId);
+      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId);
       this.ds.sendData(datas);
     }
   }
 
-  addCandidateRegistationStep(isDone, step, userId ){
+  addCandidateRegistationStep(isDone, step, contractorId ){
     const request = {
       isDone: isDone,
       step : step,
-      userProfileId: userId 
+      contractorId: contractorId 
     }
     this.registrationFluxService.add(request).subscribe(res => {
       this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
@@ -109,12 +126,12 @@ export class DeclarationComponent implements OnInit {
     })
   }
 
-  updateCandidateRegistationStep(id, isDone, step, userId ){
+  updateCandidateRegistationStep(id, isDone, step, contractorId ){
     const request = {
       id: id,
       isDone: isDone,
       step : step,
-      userProfileId: userId 
+      contractorId: contractorId 
     }
     
     this.registrationFluxService.update(request).subscribe(res => {

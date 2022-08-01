@@ -27,10 +27,10 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorBulletin.GetContra
             var contractorId = await _userProfileService.GetCurrentContractorId();
 
             var bulletin = await _appDbContext.Bulletins
-                .Include(x=>x.UserProfile)
+                .Include(x=>x.Contractor)
                 .Include(x=>x.BirthPlace)
                 .Include(x=>x.ResidenceAddress)
-                .FirstOrDefaultAsync(x => x.UserProfile.Contractor.Id == contractorId);
+                .FirstOrDefaultAsync(x => x.Contractor.Id == contractorId);
 
             return _mapper.Map<BulletinsDataDto>(bulletin);
         }

@@ -16,8 +16,8 @@
                                                 {{ 'step.' + stepsEnum[parseInt(item.value)] | translate}}
                                             </div>
                                             <div class="col-8 mt-5">
-                                                <div *ngIf="item.isDone" class="alert alert-success"> <strong>Done</strong></div>
-                                                <div *ngIf="!item.isDone" class="alert alert-danger"><strong>Not Done</strong></div>
+                                                <div *ngIf="item.isDone" class="alert alert-success"> <strong>{{ 'step-status.done' | translate}}</strong></div>
+                                                <div *ngIf="!item.isDone" class="alert alert-danger"><strong>{{ 'step-status.not-done' | translate}}</strong></div>
                                             </div>
                                         </div>
                                       </ng-template>

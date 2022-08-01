@@ -5,6 +5,7 @@ using CVU.ERP.Identity.Models;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using System.Linq;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Core.Application.Users
 {
@@ -52,6 +53,11 @@ namespace CODWER.RERU.Core.Application.Users
             CreateMap<UserProfile, EditCandidateDto>();
 
             CreateMap<EditCandidateDto, UserProfile>()
+                .ForMember(destinationMember => destinationMember.Id, options => options.Ignore());
+
+            CreateMap<Contractor, EditCandidateDto>();
+
+            CreateMap<EditCandidateDto, Contractor>()
                 .ForMember(destinationMember => destinationMember.Id, options => options.Ignore());
 
             CreateMap<Test, UserTestDto>()

@@ -40,17 +40,29 @@ namespace CODWER.RERU.Personal.Application.Contractors.ContractorMappings
                 .ForMember(r => r.Id, opts => opts.MapFrom(op => op.Id))
                 .ForMember(r => r.FirstName, opts => opts.MapFrom(op => op.FirstName))
                 .ForMember(r => r.LastName, opts => opts.MapFrom(op => op.LastName))
+                .ForMember(r => r.Idnp, opts => opts.MapFrom(op => op.Idnp))
                 .ForMember(x => x.DepartmentName, opts => opts.ConvertUsing(new DepartmentNameConverter(), op => op))
                 .ForMember(x => x.OrganizationRoleName, opts => opts.ConvertUsing(new RoleConverter(), op => op))
                 .ForMember(x => x.Contacts, opts => opts.MapFrom(op => op.Contacts))
                 .ForMember(x => x.EmployerState, opts => opts.ConvertUsing(new EmployerStateConverter(), op => op))
 
+                .ForMember(x => x.HasAutobiography, opts => opts.MapFrom(op => op.Autobiography != null))
+                .ForMember(x => x.HasMilitaryObligations, opts => opts.MapFrom(op => op.MilitaryObligations.Any()))
+                .ForMember(x => x.HasRecommendationsForStudy, opts => opts.MapFrom(op => op.RecommendationForStudies.Any()))
+                .ForMember(x => x.HasMaterialStatus, opts => opts.MapFrom(op => op.MaterialStatus != null))
+                .ForMember(x => x.HasKinshipRelations, opts => opts.MapFrom(op => op.KinshipRelations.Any()))
+                .ForMember(x => x.HasKinshipRelationCriminalData, opts => opts.MapFrom(op => op.KinshipRelationCriminalData != null))
+                .ForMember(x => x.HasKinshipRelationWithUserProfiles, opts => opts.MapFrom(op => op.KinshipRelationWithUserProfiles.Any()))
+                .ForMember(x => x.HasModernLanguages, opts => opts.MapFrom(op => op.ModernLanguageLevels.Any()))
                 .ForMember(x => x.HasUserProfile, opts => opts.MapFrom(op => op.UserProfile != null))
                 .ForMember(x => x.HasAvatar, opts => opts.MapFrom(op => op.Avatar.MediaFileId.Any()))
-                .ForMember(x => x.HasBulletin, opts => opts.MapFrom(op => op.UserProfile.Bulletin != null))
-                .ForMember(x => x.HasStudies, opts => opts.MapFrom(op => op.UserProfile.Studies.Any()))
+                .ForMember(x => x.HasBulletin, opts => opts.MapFrom(op => op.UserProfile.Contractor.Bulletin != null))
+                .ForMember(x => x.HasStudies, opts => opts.MapFrom(op => op.UserProfile.Contractor.Studies.Any()))
                 .ForMember(x => x.HasPositions, opts => opts.MapFrom(op => op.Positions.Any()))
                 .ForMember(x => x.HasCim, opts => opts.MapFrom(op => op.Contracts.Any()));
+
+            CreateMap<Contractor, CandidateContractorStepsDto>()
+                .ForMember(x => x.ContractorId, opts => opts.MapFrom(src => src.Id));
 
             CreateMap<ContractorAvatar, ContractorAvatarDetailsDto>();
                 

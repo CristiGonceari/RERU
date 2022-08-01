@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public int MaterialStatusTypeId { get; set; }
-        public int UserProfileId { get; set; }
+        public int ContractorId { get; set; }
     }
 }
