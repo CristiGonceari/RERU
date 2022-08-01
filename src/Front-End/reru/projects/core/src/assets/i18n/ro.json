@@ -222,6 +222,8 @@
     "logout-msg": "Sunteți sigur(-ă) că doriți să ieșiți din sistem?",
     "empty-name": "Câmpul trebuie sa conțină doar litere latine",
     "wrong-name": "Câmpul trebuie sa conțină doar litere latine",
+    "empty-phone": "Câmpul nu trebuie să fie gol",
+    "wrong-phone": "Vă rugăm să furnizați un format valid +37311111111",
     "available-modules": "Module disponibile",
     "idnp-length": "IDNP trebuie să conține 13 cifre!",
     "search-by-user-state": "Căutați după statutul utilizatorului",
@@ -440,7 +442,9 @@
     "01000301": "Postul nevalid",
     "01000302": "Introduceti denumirea pozitiei",
     "01000106": "Modul de acces necompletat",
-    "01000108": "Cod incorect"
+    "01000108": "Cod incorect",
+    "01000109": "Vârsta minimă trebuie să fie de 18 ani",
+    "01000115": "Telefon nevalid"
   },
   "print": {
     "print-table": "Printare tabel",

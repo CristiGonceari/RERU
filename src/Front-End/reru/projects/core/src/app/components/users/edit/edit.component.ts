@@ -63,9 +63,9 @@ export class EditComponent implements OnInit {
 		this.roleService.getValues().subscribe(res => this.roles = res.data);
 	}
 
-	getAccessMode(){
+	getAccessMode() {
 		this.userProfileService.getAccessMode().subscribe(res => this.accessModes = res.data);
-	  }
+	}
 
 	initData(): void {
 		this.activatedRoute.params.subscribe(response => {
@@ -114,18 +114,22 @@ export class EditComponent implements OnInit {
 					'^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'
 				),
 			]),
-			phoneNumber: this.fb.control(user && user.phoneNumber, [Validators.required]),
+			phoneNumber: this.fb.control((user && user.phoneNumber) || "", [
+				Validators.required,
+				Validators.pattern(
+					"^((\\+373-?)|0)?[0-9]{8}$"
+				),
+			]),
 			departmentColaboratorId: this.fb.control((user && user.departmentColaboratorId) || null, Validators.required),
 			roleColaboratorId: this.fb.control((user && user.roleColaboratorId) || null, [Validators.required]),
 			accessModeEnum: this.fb.control((user && user.accessModeEnum) || null, [Validators.required]),
 		});
 
-		this.birthDate = user.birthDate
+		this.birthDate = user.birthDate;
 		this.isLoading = false;
 	}
 
 	editUser(): void {
-		this.isLoading = true;
 		let data = {
 			id: this.userForm.value.id,
 			firstName: this.userForm.value.firstName,
