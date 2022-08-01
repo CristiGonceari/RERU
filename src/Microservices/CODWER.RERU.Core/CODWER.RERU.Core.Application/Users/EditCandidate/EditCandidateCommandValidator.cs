@@ -3,6 +3,7 @@ using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Users.EditCandidate
@@ -15,7 +16,7 @@ namespace CODWER.RERU.Core.Application.Users.EditCandidate
             _appDbContext = appDbContext;
 
             RuleFor(x => x.Data.Id)
-                .SetValidator(x => new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.INVALID_ID,
+                .SetValidator(x => new ItemMustExistValidator<Contractor>(appDbContext, ValidationCodes.INVALID_ID,
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x.Data.CandidateCitizenshipId)

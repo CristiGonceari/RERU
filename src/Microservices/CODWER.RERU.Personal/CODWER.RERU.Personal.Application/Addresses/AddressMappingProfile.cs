@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using RERU.Data.Entities.PersonalEntities;
 using CODWER.RERU.Personal.DataTransferObjects.Address;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Personal.Application.Addresses
 {

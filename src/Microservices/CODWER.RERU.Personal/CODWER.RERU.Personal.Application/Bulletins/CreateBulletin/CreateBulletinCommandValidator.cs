@@ -29,9 +29,9 @@ namespace CODWER.RERU.Personal.Application.Bulletins.CreateBulletin
         private void CheckIfContractorHasBulletin(int contractorId, CustomContext context)
         {
             var exist = _appDbContext.Bulletins
-                .Include(x=>x.UserProfile)
-                .ThenInclude(x=>x.Contractor)
-                .Any(x => x.UserProfile.Contractor.Id == contractorId);
+                .Include(x=>x.Contractor)
+                .ThenInclude(x=>x.UserProfile)
+                .Any(x => x.Contractor.Id == contractorId);
 
             if (exist)
             {
@@ -42,9 +42,9 @@ namespace CODWER.RERU.Personal.Application.Bulletins.CreateBulletin
         private void CheckIfUniqueIdnpOnCreate(string idnp, CustomContext context)
         {
             var exist = _appDbContext.Bulletins
-                .Include(x => x.UserProfile)
-                .ThenInclude(x => x.Contractor)
-                .Any(x => x.UserProfile.Idnp == idnp);
+                .Include(x => x.Contractor)
+                .ThenInclude(x => x.UserProfile)
+                .Any(x => x.Contractor.Idnp == idnp);
 
             if (exist)
             {

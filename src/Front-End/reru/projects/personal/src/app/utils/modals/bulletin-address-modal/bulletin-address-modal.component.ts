@@ -23,7 +23,7 @@ export class BulletinAddressModalComponent extends EnterSubmitListener {
   isInvalidPattern(field: string): boolean {
     return ValidatorUtil.isInvalidPattern(this.addressForm, field);
   }
-
+  
   close(): void {
     this.activeModal.close(this.addressForm.value);
   }

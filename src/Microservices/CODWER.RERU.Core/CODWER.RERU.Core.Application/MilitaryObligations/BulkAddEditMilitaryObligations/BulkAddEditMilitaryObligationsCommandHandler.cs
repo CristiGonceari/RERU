@@ -30,7 +30,6 @@ namespace CODWER.RERU.Core.Application.MilitaryObligations.BulkAddEditMilitaryOb
 
                 if (existentRelation == null)
                 {
-
                     var item = _mapper.Map<MilitaryObligation>(relationDto);
 
                     await _appDbContext.MilitaryObligations.AddAsync(item);

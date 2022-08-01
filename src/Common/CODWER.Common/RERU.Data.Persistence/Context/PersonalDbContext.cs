@@ -20,7 +20,6 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<CandidateNationality> CandidateNationalities { get; set; }
         public virtual DbSet<CandidateCitizenship> CandidateCitizens { get; set; }
         public virtual DbSet<Bulletin> Bulletins { get; set; }
-        public virtual DbSet<UserProfileGeneralData> UserProfileGeneralDatas { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Study> Studies { get; set; }
         public virtual DbSet<StudyType> StudyTypes { get; set; }

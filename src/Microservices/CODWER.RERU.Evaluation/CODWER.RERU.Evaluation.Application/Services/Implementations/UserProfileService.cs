@@ -6,6 +6,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.ServiceProvider;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations
@@ -26,12 +27,14 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             var coreUser = await _userProvider.FirstOrDefault(x => x.IsAuthenticated)?.Get();
             var currentUserProfile = new UserProfile();
+            currentUserProfile.Contractor = new Contractor();
 
             if (coreUser != null)
             {
                 currentUserProfile = _appDbContext.UserProfiles
                     .Include(x => x.Department)
                     .Include(x => x.Role)
+                    .Include(x => x.Contractor)
                     .FirstOrDefault(x => x.Id == int.Parse(coreUser.Id));
 
 

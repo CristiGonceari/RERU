@@ -1,5 +1,6 @@
 ﻿using CVU.ERP.Common.Data.Entities;
 using RERU.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace RERU.Data.Entities
 {
@@ -11,7 +12,7 @@ namespace RERU.Data.Entities
         public KinshipDegreeEnum KinshipDegree { get; set; }
         public string Subdivision { get; set; }
 
-        public int UserProfileId { get; set; }
-        public UserProfile UserProfile { get; set; }
+        public int? ContractorId { get; set; }
+        public Contractor Contractor { get; set; }
     }
 }

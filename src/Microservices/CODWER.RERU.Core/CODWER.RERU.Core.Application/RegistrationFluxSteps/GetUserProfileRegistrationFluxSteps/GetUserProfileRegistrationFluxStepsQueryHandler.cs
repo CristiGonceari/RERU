@@ -24,7 +24,7 @@ namespace CODWER.RERU.Core.Application.RegistrationFluxSteps.GetUserProfileRegis
         public async Task<List<RegistrationFluxStepDto>> Handle(GetUserProfileRegistrationFluxStepsQuery request, CancellationToken cancellationToken)
         {
             var items =  await _appDbContext.RegistrationFluxSteps
-                                                .Where(rfs => rfs.UserProfileId == request.UserProfileId)
+                                                .Where(rfs => rfs.ContractorId == request.ContractorId)
                                                 .ToListAsync();
                                         
             if (request.Step != null) 

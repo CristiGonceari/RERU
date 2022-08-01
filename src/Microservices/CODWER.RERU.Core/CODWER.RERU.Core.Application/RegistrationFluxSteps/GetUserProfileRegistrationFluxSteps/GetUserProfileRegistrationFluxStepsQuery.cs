@@ -7,7 +7,7 @@ namespace CODWER.RERU.Core.Application.RegistrationFluxSteps.GetUserProfileRegis
 {
     public class GetUserProfileRegistrationFluxStepsQuery : IRequest<List<RegistrationFluxStepDto>>
     {
-        public int UserProfileId { get; set; }
+        public int ContractorId { get; set; }
         public RegistrationFluxStepEnum? Step { get; set; }
     }
 }

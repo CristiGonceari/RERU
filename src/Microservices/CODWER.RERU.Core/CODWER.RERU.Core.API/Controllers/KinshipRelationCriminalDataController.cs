@@ -20,7 +20,7 @@ namespace CODWER.RERU.Core.API.Controllers
         [HttpGet("{id}")]
         public async Task<KinshipRelationCriminalDataDto> GetKinshipRelationCriminalData([FromRoute] int id)
         {
-            var query = new GetUserProfileKinshipRelationCriminalDataQuery { UserProfileId = id };
+            var query = new GetUserProfileKinshipRelationCriminalDataQuery { ContractorId = id };
             var result = await Mediator.Send(query);
 
             return result;

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule, DatePipe, Location } from '@angular/common';
 
 import { ContractorsRoutingModule } from './contractors-routing.module';
 import { ListComponent } from './list/list.component';
@@ -31,6 +31,7 @@ import { EmployeePositionComponent } from './list/employee-position/employee-pos
 import { SearchByDepartmentComponent } from './list/search-by-department/search-by-department.component';
 import { RequestToEmployDataFormComponent } from './add/request-to-employ-data-form/request-to-employ-data-form.component';
 import { ContractorsTableComponent } from './contractors-table/contractors-table.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';
 
 @NgModule({
   declarations: [
@@ -68,11 +69,14 @@ import { ContractorsTableComponent } from './contractors-table/contractors-table
     NgbModule,
     SharedModule,
     MaterialModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ],
   providers: [
     TranslatePipe,
-    Location
+    Location,
+    DatePipe
   ]
 })
 export class ContractorsModule { }

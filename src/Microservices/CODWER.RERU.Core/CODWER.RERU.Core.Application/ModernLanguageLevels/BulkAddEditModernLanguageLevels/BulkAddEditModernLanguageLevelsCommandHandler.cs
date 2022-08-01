@@ -34,7 +34,6 @@ namespace CODWER.RERU.Core.Application.ModernLanguageLevels.BulkAddEditModernLan
 
                 if (existentModernLanguageLevels == null)
                 {
-
                     var item = _mapper.Map<ModernLanguageLevel>(addEditModernLanguageLevelDto);
 
                     await _appDbContext.ModernLanguageLevels.AddAsync(item);

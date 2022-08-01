@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { UtilsModule } from '../../../utils/utils.module';
-import { SharedModule } from '@erp/shared';
+import { SharedModule, SvgModule } from '@erp/shared';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PositionTableComponent } from './position-table/position-table.component';
 import { PositionDropdownDetailsComponent } from './position-dropdown-details/position-dropdown-details.component';
@@ -27,6 +27,10 @@ import { VacantionsComponent } from './vacantions/vacantions.component';
 import { VacantionCardComponent } from './vacantion-card/vacantion-card.component';
 import { DismissalRequestComponent } from './dismissal-request/dismissal-request.component';
 import { DismissalRequestCardComponent } from './dismissal-request-card/dismissal-request-card.component';
+import { DataService } from './data.service';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { AutobiographyComponent } from './autobiography/autobiography.component';
+
 
 @NgModule({
   declarations: [
@@ -47,7 +51,8 @@ import { DismissalRequestCardComponent } from './dismissal-request-card/dismissa
     VacantionsComponent,
     VacantionCardComponent,
     DismissalRequestComponent,
-    DismissalRequestCardComponent
+    DismissalRequestCardComponent,
+    AutobiographyComponent
   ],
   imports: [
     CommonModule,
@@ -59,11 +64,14 @@ import { DismissalRequestCardComponent } from './dismissal-request-card/dismissa
     DetailsRoutingModule,
     UtilsModule,
     SharedModule,
-    NgbModule
+    NgbModule,
+    SvgModule,
+    CKEditorModule
   ],
   providers: [
     TranslatePipe,
-    Location
+    Location,
+    DataService
   ]
 })
 export class DetailsModule { }

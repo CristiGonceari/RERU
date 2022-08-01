@@ -90,7 +90,6 @@ export class CandidateRegistrationFluxComponent implements OnInit {
     this.selectionChanged(event);
     this.isLoading = false;
 
-    this.getAllSteps();
   }
   
   ngOnDestroy() {
@@ -132,7 +131,7 @@ export class CandidateRegistrationFluxComponent implements OnInit {
   getStepEnum(){
     let step = [];
 
-    this.profileService.GetCandidateRegistrationSteps().subscribe(res => {
+    this.profileService.getCandidateRegistrationSteps().subscribe(res => {
       step = res.data.checkedSteps;
       step.sort(function(a, b){return a.value - b.value});
       this.steps = step;
@@ -145,16 +144,6 @@ export class CandidateRegistrationFluxComponent implements OnInit {
     })
   }
 
-  getAllSteps(){
-    const request = {
-      userProfileId : this.userId,
-    };
-
-    this.registrationFluxService.get(request).subscribe(res => {
-      this.registrationFluxStepsData = res.data;
-    })
-  }
-
   endRegistrationFluxStep(steps, existentSteps){
 
     for (let i = 0; i < steps.length; i++){
@@ -164,10 +153,7 @@ export class CandidateRegistrationFluxComponent implements OnInit {
             if(steps[i].step == existentSteps[i].step && existentSteps[i].isDone == true){
 
             }else{
-              console.log("aaaaaaa", steps[i].value);
-              
               this.router.navigate([this.userId,"step",steps[i].value], { relativeTo: this.route });
-
               break;
             }
         }

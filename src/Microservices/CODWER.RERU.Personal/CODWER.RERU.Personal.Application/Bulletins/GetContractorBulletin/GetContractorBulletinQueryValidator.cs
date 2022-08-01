@@ -23,9 +23,9 @@ namespace CODWER.RERU.Personal.Application.Bulletins.GetContractorBulletin
         private void Validate(int contractorId, CustomContext context)
         {
             var existent = _appDbContext.Bulletins
-                .Include(x => x.UserProfile)
-                .ThenInclude(x=>x.Contractor)
-                .FirstOrDefault(x => x.UserProfile.Contractor.Id == contractorId);
+                .Include(x => x.Contractor)
+                .ThenInclude(x=>x.UserProfile)
+                .FirstOrDefault(x => x.Contractor.Id == contractorId);
 
             if (existent == null)
             {

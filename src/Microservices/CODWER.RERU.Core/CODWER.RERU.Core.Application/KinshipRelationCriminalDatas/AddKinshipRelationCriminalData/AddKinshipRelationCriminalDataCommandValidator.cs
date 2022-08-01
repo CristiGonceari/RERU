@@ -19,13 +19,13 @@ namespace CODWER.RERU.Core.Application.KinshipRelationCriminalDatas.AddKinshipRe
             RuleFor(x => x.Data)
                 .SetValidator(new KinshipRelationCriminalDataValidator(appDbContext));
 
-            RuleFor(x => x.Data.UserProfileId)
+            RuleFor(x => x.Data.ContractorId)
                 .Custom(CheckIfUserProfileExistentKinshipRelationDate);
         }
 
-        private void CheckIfUserProfileExistentKinshipRelationDate(int userProfileId, CustomContext context)
+        private void CheckIfUserProfileExistentKinshipRelationDate(int contractorId, CustomContext context)
         {
-            var exist = _appDbContext.KinshipRelationCriminalDatas.FirstOrDefault(x => x.UserProfileId == userProfileId);
+            var exist = _appDbContext.KinshipRelationCriminalDatas.FirstOrDefault(x => x.ContractorId == contractorId);
 
             if (exist != null)
             {

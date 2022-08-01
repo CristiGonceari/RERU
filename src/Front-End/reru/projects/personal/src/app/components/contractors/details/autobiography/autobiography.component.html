@@ -1,0 +1,65 @@
+<div class="card card-custom">
+    <div class="card-header py-3">
+      <div class="card-title align-items-start flex-column">
+        <h3 class="card-label font-weight-bolder text-dark">{{'step.Autobiography' | translate}}</h3>
+        <span class="text-muted font-weight-bold font-size-sm mt-1">{{'personal.change-your-account-details' | translate}}</span>
+      </div>
+      <div class="card-toolbar" *ngIf="steps == null">
+        <button class="btn btn-success" [disabled]="autobiographyData == null" (click)="addRegistrationFluxStep()">
+            {{'stepper.button-next' | translate}}
+        </button>
+      </div>
+    </div>
+    <div *ngIf="isLoading"  class="card-body">
+      <app-loading-spinner [contentHeight]="'20rem'" [height]="'5rem'" [width]="'5rem'" [colorClass]="'text-primary'"></app-loading-spinner>
+    </div>
+<form *ngIf="autobiographyForm" class="col border" [formGroup]="autobiographyForm">
+    <app-loading-spinner *ngIf="isLoadingAutobiography" contentHeight="20rem" height="5rem" width="5rem"
+        colorClass="text-primary"></app-loading-spinner>
+    <div *ngIf="!isLoadingAutobiography">
+        <div class="row ml-10 mr-10">
+            <div class="text-center w-100">
+                <p class="font-weight-bold">
+                    {{'autobiography.title' | translate}}
+                </p>
+                <p class="font-weight-normal">
+                    {{'autobiography.paragraf-1' | translate}}
+                </p>
+                <p class="font-weight-normal">
+                    {{'autobiography.paragraf-2' | translate}}
+                </p>
+                <p class="font-weight-normal">
+                    {{'autobiography.paragraf-3' | translate}}
+                </p>
+                <p class="font-weight-normal">
+                    {{'autobiography.paragraf-4' | translate}}
+                </p>
+                <p class="font-weight-normal">
+                    {{'autobiography.paragraf-5' | translate}}
+                </p>
+                <p class="font-weight-normal">
+                    {{'autobiography.paragraf-6' | translate}}
+                </p>
+                <p class="font-weight-normal">
+                    {{'autobiography.paragraf-7' | translate}}
+                </p>
+                <p class="font-weight-normal">
+                    {{'autobiography.paragraf-8' | translate}}
+                </p>
+            </div>
+        </div>
+        <div class="row ml-10 mr-10">
+            <ckeditor [editor]="Editor" class="w-100" name="editor1" skin="moono-lisa" language="en"
+                formControlName="text" (ready)="onReady($event)"></ckeditor>
+        </div>
+        <div class="row justify-content-end m-7">
+            <button class="btn btn-success" *ngIf="addOrEditAutobiographyButton"
+                [disabled]="autobiographyForm.value.text == null || autobiographyForm.value.text == '' "
+                (click)="updateAutobiography()">{{'stepper.button-update' | translate}}</button>
+            <button class="btn btn-success" *ngIf="!addOrEditAutobiographyButton"
+                [disabled]="autobiographyForm.value.text == null || autobiographyForm.value.text == '' "
+                (click)="createAutobiography()">{{'stepper.button-add' | translate}}</button>
+        </div>
+    </div>
+</form>
+</div>

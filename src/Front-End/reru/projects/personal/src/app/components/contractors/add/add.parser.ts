@@ -14,9 +14,16 @@ export class ContractorParser {
             firstName: data.firstName,
             lastName: data.lastName,
             fatherName: data.fatherName,
+            homePhone: data.homePhone,
+            phoneNumber: data.phoneNumber,
+            workPhone: data.workPhone,
+            candidateNationalityId: data.candidateNationalityId,
+            candidateCitizenshipId: data.candidateCitizenshipId,
+            stateLanguageLevel: data.stateLanguageLevel,
             birthDate: data.birthDate,
             bloodTypeId: data.bloodTypeId ? +data.bloodTypeId : null,
             sex: data.sex ? +data.sex : null,
+            idnp : data.idnp
         })
     }
 

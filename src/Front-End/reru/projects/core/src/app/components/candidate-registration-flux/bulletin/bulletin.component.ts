@@ -28,6 +28,7 @@ export class BulletinComponent implements OnInit {
   userId;
   existentBulletin;
   bulletinId;
+  contractorId;
 
   bulletinValuesLoading: boolean = true;
   bulletinIdnp;
@@ -50,7 +51,6 @@ export class BulletinComponent implements OnInit {
     this.userId =parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
 
     this.stepId =parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
-    this.getExistentStep(this.stepId, this.userId);
 
     this.initForm(this.userId);
     this.getUserGeneralDatas(this.userId);
@@ -65,6 +65,7 @@ export class BulletinComponent implements OnInit {
     this.userProfile.getCandidateProfile(userId).subscribe(res => {
       this.bulletinId = res.data.bulletinId;
       this.bulletinIdnp = res.data.idnp;
+      this.contractorId = res.data.contractorId;
 
         this.bulletinValuesLoading = false;
 
@@ -73,13 +74,15 @@ export class BulletinComponent implements OnInit {
       }else{
         this.toAddOrUpdateButton = false;
       }
+
+      this.getExistentStep(this.stepId, this.contractorId);
     })
 
   }
 
-  getExistentStep(stepId, userId){
+  getExistentStep(stepId, contractorId){
     const request = {
-      userProfileId : userId,
+      contractorId : contractorId,
       step: stepId
     };
 
@@ -115,26 +118,26 @@ export class BulletinComponent implements OnInit {
     };
   }
 
-  initForm(userId? : number): void {
+  initForm(contractorId? : number): void {
    
     this.bulletinForm = this.fb.group({
       releaseDay: this.fb.control(null, [Validators.required]),
       series: this.fb.control(null, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
       emittedBy: this.fb.control(null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9-. ]+$/)]),
-      userProfileId: this.fb.control(userId, []),
+      contractorId: this.fb.control(contractorId, []),
       birthPlace: this.buildAddress(),
       parentsResidenceAddress: this.buildAddress(),
       residenceAddress: this.buildAddress()
     });
   }
 
-  initExistentForm(userId? : number, bulletinId?, existentBulletin?, birthPlace?, residenceAddress? , parentsResidenceAddress?): void {
+  initExistentForm(contractorId? : number, bulletinId?, existentBulletin?, birthPlace?, residenceAddress? , parentsResidenceAddress?): void {
    
     this.bulletinForm = this.fb.group({
       releaseDay: this.fb.control((existentBulletin && existentBulletin.releaseDay) || null, [Validators.required]),
       series: this.fb.control((existentBulletin && existentBulletin.series) || null, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
       emittedBy: this.fb.control( (existentBulletin && existentBulletin.emittedBy) || null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9-. ]+$/)]),
-      userProfileId: this.fb.control(userId, []),
+      contractorId: this.fb.control(contractorId, []),
       id: this.fb.control(bulletinId, []),
       birthPlace: this.buildExistentAddress(this.parseAddress(birthPlace)),
       parentsResidenceAddress: this.buildExistentAddress(this.parseAddress(residenceAddress)),
@@ -247,14 +250,14 @@ export class BulletinComponent implements OnInit {
         birthPlace: data.birthPlace,
         parentsResidenceAddress: data.parentsResidenceAddress,
         residenceAddress: data.residenceAddress,
-        userProfileId: this.userId
+        contractorId: this.contractorId
     })
 }
 
   updateBulletin(){
     this.bulletinService.update(this.parseBulletin(this.bulletinForm.value)).subscribe(res => {
       this.notificationService.success('Success', 'Bulletin was updated!', NotificationUtil.getDefaultMidConfig());
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , res.success, this.userId);
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , res.success, this.contractorId);
 
       },error => {
       this.notificationService.error('Error', 'Bulletin was not updated!', NotificationUtil.getDefaultMidConfig());
@@ -264,32 +267,32 @@ export class BulletinComponent implements OnInit {
   createBulletin(){
     this.bulletinService.add(this.parseBulletin(this.bulletinForm.value)).subscribe(res => {
       this.notificationService.success('Success', 'Bulletin was added!', NotificationUtil.getDefaultMidConfig());
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , res.success, this.userId);
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , res.success, this.contractorId);
      },error => {
       this.notificationService.error('Success', 'Bulletin was not added!', NotificationUtil.getDefaultMidConfig());
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , error.success, this.userId);
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , error.success, this.contractorId);
      })
   }
 
-  checkRegistrationStep(stepData, stepId, success, userId){
+  checkRegistrationStep(stepData, stepId, success, contractorId){
     const datas= {
       isDone: success,
       stepId: this.stepId
     }
     if(stepData.length == 0){
-      this.addCandidateRegistationStep(success, stepId, userId);
+      this.addCandidateRegistationStep(success, stepId, contractorId);
       this.ds.sendData(datas);
     }else{
-      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, userId);
+      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId);
       this.ds.sendData(datas);
     }
   }
 
-  addCandidateRegistationStep(isDone, step, userId ){
+  addCandidateRegistationStep(isDone, step, contractorId ){
     const request = {
       isDone: isDone,
       step : step,
-      userProfileId: userId 
+      contractorId: contractorId 
     }
     this.registrationFluxService.add(request).subscribe(res => {
       this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
@@ -298,12 +301,12 @@ export class BulletinComponent implements OnInit {
     })
   }
 
-  updateCandidateRegistationStep(id, isDone, step, userId ){
+  updateCandidateRegistationStep(id, isDone, step, contractorId ){
     const request = {
       id: id,
       isDone: isDone,
       step : step,
-      userProfileId: userId 
+      contractorId: contractorId 
     }
     
     this.registrationFluxService.update(request).subscribe(res => {

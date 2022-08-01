@@ -30,7 +30,6 @@ namespace CODWER.RERU.Core.Application.KinshipRelations.BulkAddEditKinshipRelati
 
                 if (existentRelation == null)
                 {
-
                     var item = _mapper.Map<KinshipRelation>(relation);
 
                     await _appDbContext.KinshipRelations.AddAsync(item);

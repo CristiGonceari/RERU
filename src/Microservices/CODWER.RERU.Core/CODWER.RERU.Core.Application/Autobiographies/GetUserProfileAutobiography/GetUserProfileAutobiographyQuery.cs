@@ -5,6 +5,6 @@ namespace CODWER.RERU.Core.Application.Autobiographies.GetUserProfileAutobiograp
 {
     public class GetUserProfileAutobiographyQuery : IRequest<AutobiographyDto>
     {
-        public int UserProfileId { get; set; }
+        public int ContractorId { get; set; }
     }
 }

@@ -50,12 +50,8 @@ namespace RERU.Data.Entities
         public int? RoleColaboratorId { get; set; }
         public Role Role { get; set; }
 
-        public Contractor Contractor { get; set; }
-        public Bulletin Bulletin { get; set; }
-        public UserProfileGeneralData UserProfileGeneralData { get; set; }
-        public MaterialStatus MaterialStatus { get; set; }
-        public KinshipRelationCriminalData KinshipRelationCriminalData { get; set; }
-        public Autobiography Autobiography { get; set; }
+        public  Contractor Contractor { get; set; }
+
 
         [JsonIgnore]
         public List<UserProfileModuleRole> ModuleRoles { set; get; }
@@ -80,20 +76,6 @@ namespace RERU.Data.Entities
         [JsonIgnore]
         public virtual ICollection<EmailTestNotification> EmailTestNotifications { get; set; }
         [JsonIgnore]
-        public virtual ICollection<Study> Studies { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<ModernLanguageLevel> ModernLanguageLevels { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<RecommendationForStudy> RecommendationForStudies { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<KinshipRelationWithUserProfile> KinshipRelationWithUserProfiles { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<KinshipRelation> KinshipRelations { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<MilitaryObligation> MilitaryObligations { get; set; }
-        [JsonIgnore]
         public virtual ICollection<SolicitedVacantPositionUserFile> SolicitedVacantPositionUserFiles { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<RegistrationFluxStep> RegistrationFluxSteps { get; set; }
     }
 }

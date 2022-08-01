@@ -30,7 +30,7 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorStudies.GetContrac
 
             var items = _appDbContext.Studies
                 .Include(x => x.StudyType)
-                .Where(x => x.UserProfileId == userProfile.Id)
+                .Where(x => x.ContractorId == userProfile.Id)
                 .AsQueryable();
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Study, StudyDataDto>(items, request);

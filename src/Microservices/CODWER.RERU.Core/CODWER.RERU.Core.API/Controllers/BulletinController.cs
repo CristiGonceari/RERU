@@ -19,7 +19,7 @@ namespace CODWER.RERU.Core.API.Controllers
         [HttpGet("{id}")]
         public async Task<BulletinDto> GetBulletinData([FromRoute] int id)
         {
-            var query = new GetUserProfileBulletinQuery { UserProfileId = id };
+            var query = new GetUserProfileBulletinQuery { ContractorId = id };
             var result = await Mediator.Send(query);
 
             return result;

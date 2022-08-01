@@ -21,4 +21,5 @@ export class User {
   kinshipRelationsCount: number;
   militaryObligationsCount: number;
   autobiographyId: number;
+  contractorId: number;
 }

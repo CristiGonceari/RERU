@@ -24,10 +24,10 @@ namespace CODWER.RERU.Personal.Application.Studies.GetContractorStudies
         public async Task<PaginatedModel<StudyDataDto>> Handle(GetContractorStudiesQuery request, CancellationToken cancellationToken)
         {
             var items = _appDbContext.Studies
-                .Include(x=>x.UserProfile)
-                .ThenInclude(x=>x.Contractor)
+                .Include(x=>x.Contractor)
+                .ThenInclude(x=>x.UserProfile)
                 .Include(x => x.StudyType)
-                .Where(x => x.UserProfile.Contractor.Id == request.ContractorId)
+                .Where(x => x.Contractor.Id == request.ContractorId)
                 .AsQueryable();
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Study, StudyDataDto>(items, request);

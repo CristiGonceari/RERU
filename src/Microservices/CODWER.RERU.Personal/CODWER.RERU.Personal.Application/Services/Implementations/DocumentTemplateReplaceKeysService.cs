@@ -27,7 +27,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         {
             var contractorValues = _appDbContext.Contractors
                 .Include(x => x.UserProfile)
-                .ThenInclude(c => c.Bulletin)
+                .Include(c => c.Bulletin)
                 .ThenInclude(b => b.ResidenceAddress)
                 .Where(c => c.Id == contractorId)
                 .Include(c => c.Positions)
@@ -80,15 +80,15 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
                             break;
 
                         case "{c_bulletin_series_key}":
-                            myDictionary.Add(item, value.UserProfile.Bulletin.Series);
+                            myDictionary.Add(item, value.UserProfile.Contractor.Bulletin.Series);
                             break;
 
                         case "{c_bulletin_release_by_key}":
-                            myDictionary.Add(item, value.UserProfile.Bulletin.EmittedBy);
+                            myDictionary.Add(item, value.UserProfile.Contractor.Bulletin.EmittedBy);
                             break;
 
                         case "{c_bulletin_release_day_key}":
-                            myDictionary.Add(item, value.UserProfile.Bulletin.ReleaseDay.ToString());
+                            myDictionary.Add(item, value.UserProfile.Contractor.Bulletin.ReleaseDay.ToString());
                             break;
 
                         case "{c_birthday_key}":
@@ -130,7 +130,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
                             break;
 
                         case "{c_address_key}":
-                            myDictionary.Add(item, value.UserProfile.Bulletin.ResidenceAddress.Street);
+                            myDictionary.Add(item, value.UserProfile.Contractor.Bulletin.ResidenceAddress.Street);
                             break;
 
                         case "{company_key}":

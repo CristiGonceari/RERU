@@ -51,6 +51,7 @@ export class MaterialStatusComponent implements OnInit {
   userGeneralData
   userId;
   stepId;
+  contractorId;
   materialStatusTypes;
   userMaterialStatus;
 
@@ -87,7 +88,6 @@ export class MaterialStatusComponent implements OnInit {
     this.userId = parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
 
     this.stepId =parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
-    this.getExistentStep(this.stepId);
 
     this.initForm();
     this.retrieveDropdowns();
@@ -106,13 +106,13 @@ export class MaterialStatusComponent implements OnInit {
       this.materialStatusForm = this.fb.group({
         id: this.fb.control( null, []),
         materialStatusTypeId: this.fb.control( null, []),
-        userProfileId: this.fb.control( null, [])
+        contractorId: this.fb.control( null, [])
       });
 
       this.kinshipRelationCriminalDataForm = this.fb.group({
         id: this.fb.control(null, []),
         text: this.fb.control(null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-        userProfileId: this.fb.control(null, [])
+        contractorId: this.fb.control(null, [])
       });
 
       this.kinshipRelationWithUserProfileForm = this.fb.group({
@@ -129,20 +129,20 @@ export class MaterialStatusComponent implements OnInit {
       this.materialStatusForm = this.fb.group({
         id: this.fb.control((data && data.id) || null, []),
         materialStatusTypeId: this.fb.control((data && data.materialStatusTypeId) || null, []),
-        userProfileId: this.fb.control(data.userProfileId || null, [])
+        contractorId: this.fb.control(data.contractorId || null, [])
       });
 
     }
     else if (materialStatusEnum == MaterialStatusEnum.KinshipRelationWithUserProfile){
        
       this.kinshipRelationWithUserProfileForm = this.fb.group({
-        relationWithUserProfile: this.fb.array([this.generateKinshipRelationWithUserProfile(data, this.userId)])
+        relationWithUserProfile: this.fb.array([this.generateKinshipRelationWithUserProfile(data, this.contractorId)])
       });
     }
     else if(materialStatusEnum == MaterialStatusEnum.KinshipRelation){
       
       this.kinshipRelationForm = this.fb.group({
-        relation: this.fb.array([this.generateKinshipRelation(data, this.userId)])
+        relation: this.fb.array([this.generateKinshipRelation(data, this.contractorId)])
       });
     } 
     else if(materialStatusEnum == MaterialStatusEnum.KinshipRelationCriminalData){
@@ -150,7 +150,7 @@ export class MaterialStatusComponent implements OnInit {
       this.kinshipRelationCriminalDataForm = this.fb.group({
         id: this.fb.control((data && data.id) || null, []),
         text: this.fb.control((data && data.text) ||null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-        userProfileId: this.fb.control(data.userProfileId || null, [])
+        contractorId: this.fb.control(data.contractorId || null, [])
       });
     } 
   }
@@ -160,6 +160,7 @@ export class MaterialStatusComponent implements OnInit {
     this.userProfile.getCandidateProfile(this.userId).subscribe( res => {
 
       this.userGeneralData = res.data;
+      this.contractorId = res.data.contractorId;
       const userData = res.data;
 
       if (userData.materialStatusId != 0) {
@@ -201,13 +202,15 @@ export class MaterialStatusComponent implements OnInit {
           this.isLoadingKinshipRelation = false;
           this.kinshipRelationData = null;
         }
+
+    this.getExistentStep(this.stepId, this.contractorId);
     })
   }
 
-  getUserMaterialStatus(userId){
+  getUserMaterialStatus(contractorId){
     this.isLoadingMaterialStatus = true;
 
-    this.materialStatusService.get(userId).subscribe(res => {
+    this.materialStatusService.get(contractorId).subscribe(res => {
       this.userMaterialStatus = res.data;
       this.initForm(this.userMaterialStatus, MaterialStatusEnum.MaterialStatus);
       this.isLoadingMaterialStatus = false;
@@ -216,10 +219,10 @@ export class MaterialStatusComponent implements OnInit {
     
   }
 
-  getKinshipRelationCriminalData(userId){
+  getKinshipRelationCriminalData(contractorId){
     this.isLoadingKinshipRelationCriminalData = true;
 
-    this.kinshipRelationCriminalDataService.get(userId).subscribe(res => {
+    this.kinshipRelationCriminalDataService.get(contractorId).subscribe(res => {
       this.kinshipRelationCriminalData = res.data;
       this.initForm(this.kinshipRelationCriminalData, MaterialStatusEnum.KinshipRelationCriminalData);
       this.isLoadingKinshipRelationCriminalData = false;
@@ -228,11 +231,11 @@ export class MaterialStatusComponent implements OnInit {
     
   }
 
-  getKinshipRelationWithUserProfile(userId) {
+  getKinshipRelationWithUserProfile(contractorId) {
     this.isLoadingKinshipRelationWithUserProfile = true;
 
     const request = {
-      userProfileId: userId
+      contractorId: contractorId
     }
 
     this.kinshipRelationWithUserProfileService.list(request).subscribe(res => {
@@ -243,11 +246,11 @@ export class MaterialStatusComponent implements OnInit {
     })
   }
 
-  getKinshipRelation(userId) {
+  getKinshipRelation(contractorId) {
     this.isLoadingKinshipRelation = true;
 
     const request = {
-      userProfileId: userId
+      contractorId: contractorId
     }
 
     this.kinshipRelationService.list(request).subscribe(res => {
@@ -283,7 +286,7 @@ export class MaterialStatusComponent implements OnInit {
     }
   }
 
-  generateKinshipRelationWithUserProfile(kinship?, userProfileId?) {
+  generateKinshipRelationWithUserProfile(kinship?, contractorId?) {
     
     return this.fb.group({
       id: this.fb.control((kinship && kinship.id) || null, []),
@@ -292,11 +295,11 @@ export class MaterialStatusComponent implements OnInit {
       function: this.fb.control((kinship && kinship.function) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       subdivision: this.fb.control((kinship && kinship.subdivision) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       kinshipDegree: this.fb.control((kinship && kinship.kinshipDegree) || null, []),
-      userProfileId: this.fb.control(userProfileId || null, []),
+      contractorId: this.fb.control(contractorId || null, []),
     });
   }
 
-  generateKinshipRelation(kinship?, userProfileId?) {
+  generateKinshipRelation(kinship?, contractorId?) {
     
     return this.fb.group({
       id: this.fb.control((kinship && kinship.id) || null, []),
@@ -308,7 +311,7 @@ export class MaterialStatusComponent implements OnInit {
       function: this.fb.control((kinship && kinship.function) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       workLocation: this.fb.control((kinship && kinship.workLocation) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       residenceAddress: this.fb.control((kinship && kinship.residenceAddress) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      userProfileId: this.fb.control(userProfileId || null, []),
+      contractorId: this.fb.control(contractorId || null, []),
     });
   }
 
@@ -325,9 +328,9 @@ export class MaterialStatusComponent implements OnInit {
   
   createMaterialStatus(){
     
-    this.materialStatusService.add(this.parseMaterialStatus(this.materialStatusForm.value, this.userId)).subscribe(res => {
+    this.materialStatusService.add(this.parseMaterialStatus(this.materialStatusForm.value, this.contractorId)).subscribe(res => {
       this.notificationService.success('Success', 'Material status was added!', NotificationUtil.getDefaultMidConfig());
-      this.getUserMaterialStatus(this.userId);
+      this.getUserMaterialStatus(this.contractorId);
     }, errpr => {
       this.notificationService.error('Error', 'Material status was not added!', NotificationUtil.getDefaultMidConfig());
     })
@@ -335,27 +338,27 @@ export class MaterialStatusComponent implements OnInit {
 
   createKinshipRelationCriminalData(){
     
-    this.kinshipRelationCriminalDataService.add(this.parseKinshipRelationCriminalData(this.kinshipRelationCriminalDataForm.value, this.userId)).subscribe(res => {
+    this.kinshipRelationCriminalDataService.add(this.parseKinshipRelationCriminalData(this.kinshipRelationCriminalDataForm.value, this.contractorId)).subscribe(res => {
       this.notificationService.success('Success', 'Kinship relation was added!', NotificationUtil.getDefaultMidConfig());
-      this.getKinshipRelationCriminalData(this.userId);
+      this.getKinshipRelationCriminalData(this.contractorId);
     }, errpr => {
       this.notificationService.error('Error', 'Kinship relation was not added!', NotificationUtil.getDefaultMidConfig());
     })
   }
 
   updateMaterialStatus(){
-    this.materialStatusService.update(this.parseMaterialStatus(this.materialStatusForm.value, this.userId)).subscribe(res => {
+    this.materialStatusService.update(this.parseMaterialStatus(this.materialStatusForm.value, this.contractorId)).subscribe(res => {
       this.notificationService.success('Success', 'Material status was updated!', NotificationUtil.getDefaultMidConfig());
-      this.getUserMaterialStatus(this.userId);
+      this.getUserMaterialStatus(this.contractorId);
     }, errpr => {
       this.notificationService.error('Error', 'Material status was not updated!', NotificationUtil.getDefaultMidConfig());
     })
   }
 
   updateKinshipRelationCriminalData(){
-    this.kinshipRelationCriminalDataService.update(this.parseKinshipRelationCriminalData(this.kinshipRelationCriminalDataForm.value, this.userId)).subscribe(res => {
+    this.kinshipRelationCriminalDataService.update(this.parseKinshipRelationCriminalData(this.kinshipRelationCriminalDataForm.value, this.contractorId)).subscribe(res => {
       this.notificationService.success('Success', 'Kinship relation status was updated!', NotificationUtil.getDefaultMidConfig());
-      this.getKinshipRelationCriminalData(this.userId);
+      this.getKinshipRelationCriminalData(this.contractorId);
     }, errpr => {
       this.notificationService.error('Error', 'Kinship relation was not updated!', NotificationUtil.getDefaultMidConfig());
     })
@@ -380,24 +383,24 @@ export class MaterialStatusComponent implements OnInit {
   }
 
   buildKinshipRelationWithUserProfileForm(): Observable<any> {
-    const request = this.parseKinshipRelationsWithUserProfile(this.kinshipRelationWithUserProfileForm.getRawValue().relationWithUserProfile, this.userId);
+    const request = this.parseKinshipRelationsWithUserProfile(this.kinshipRelationWithUserProfileForm.getRawValue().relationWithUserProfile, this.contractorId);
     return this.kinshipRelationWithUserProfileService.addMultiple(request);
   }
 
   buildKinshipRelationForm(): Observable<any> {
-    const request = this.parseKinshipRelations(this.kinshipRelationForm.getRawValue().relation, this.userId);
+    const request = this.parseKinshipRelations(this.kinshipRelationForm.getRawValue().relation, this.contractorId);
     return this.kinshipRelationService.addMultiple(request);
   }
 
-  parseKinshipRelationsWithUserProfile(data: KinshipRelationWithUserProfileModel[], userProfileId: number): KinshipRelationWithUserProfileModel[] {
-    return data.map(el => this.parseKinshipRelationWithUserProfile(el, userProfileId));
+  parseKinshipRelationsWithUserProfile(data: KinshipRelationWithUserProfileModel[], contractorId: number): KinshipRelationWithUserProfileModel[] {
+    return data.map(el => this.parseKinshipRelationWithUserProfile(el, contractorId));
   }
 
-  parseKinshipRelations(data: KinshipRelationModel[], userProfileId: number): KinshipRelationModel[] {
-    return data.map(el => this.parseKinshipRelation(el, userProfileId));
+  parseKinshipRelations(data: KinshipRelationModel[], contractorId: number): KinshipRelationModel[] {
+    return data.map(el => this.parseKinshipRelation(el, contractorId));
   }
 
-  parseKinshipRelationWithUserProfile(data: KinshipRelationWithUserProfileModel, userProfileId): KinshipRelationWithUserProfileModel {
+  parseKinshipRelationWithUserProfile(data: KinshipRelationWithUserProfileModel, contractorId): KinshipRelationWithUserProfileModel {
     return ObjectUtil.preParseObject({
       id: data.id,
       name: data.name,
@@ -405,11 +408,11 @@ export class MaterialStatusComponent implements OnInit {
       function: data.function,
       subdivision: data.subdivision,
       kinshipDegree: parseInt(data.kinshipDegree),
-      userProfileId: userProfileId
+      contractorId: contractorId
     })
   }
 
-  parseKinshipRelation(data: KinshipRelationModel, userProfileId): KinshipRelationModel {
+  parseKinshipRelation(data: KinshipRelationModel, contractorId): KinshipRelationModel {
     return ObjectUtil.preParseObject({
       id: data.id,
       name: data.name,
@@ -420,25 +423,25 @@ export class MaterialStatusComponent implements OnInit {
       workLocation: data.workLocation,
       residenceAddress: data.residenceAddress,
       kinshipDegree: parseInt(data.kinshipDegree),
-      userProfileId: userProfileId
+      contractorId: contractorId
     })
   }
 
-  parseKinshipRelationCriminalData(data, userId): KinshipRelationCriminalDataModel {
+  parseKinshipRelationCriminalData(data, contractorId): KinshipRelationCriminalDataModel {
     
     return ObjectUtil.preParseObject({
       id: data.id,
       text: data.text,
-      userProfileId: userId
+      contractorId: contractorId
     })
   }
 
-  parseMaterialStatus(data, userId): MaterialStatusModel {
+  parseMaterialStatus(data, contractorId): MaterialStatusModel {
     
     return ObjectUtil.preParseObject({
       id: data.id,
       materialStatusTypeId: parseInt(data.materialStatusTypeId),
-      userProfileId: userId
+      contractorId: contractorId
     })
   }
 
@@ -452,7 +455,7 @@ export class MaterialStatusComponent implements OnInit {
       (<FormArray>this.kinshipRelationWithUserProfileForm.controls.relationWithUserProfile).controls.push(
         this.generateKinshipRelationWithUserProfile(
           kinship,
-          this.userId
+          this.contractorId
         )
       );
     }
@@ -470,7 +473,7 @@ export class MaterialStatusComponent implements OnInit {
       (<FormArray>this.kinshipRelationForm.controls.relation).controls.push(
         this.generateKinshipRelation(
           kinship,
-          this.userId
+          this.contractorId
         )
       );
     }
@@ -490,9 +493,9 @@ export class MaterialStatusComponent implements OnInit {
     (<FormArray>this.kinshipRelationForm.controls.relation).controls.splice(index, 1);
   }
 
-  getExistentStep(step){
+  getExistentStep(step, contractorId){
     const request = {
-      userProfileId : this.userId,
+      contractorId : contractorId,
       step: step
     };
 
@@ -503,32 +506,32 @@ export class MaterialStatusComponent implements OnInit {
 
   addRegistrationFluxStep(){
     if(this.userMaterialStatus != null || this.kinshipRelationCriminalData != null || this.kinshipRelationWithUserProfileData != null || this.kinshipRelationData != null){
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.userId);
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.contractorId);
     }
     else{
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.userId);
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractorId);
     }
   }
 
-  checkRegistrationStep(stepData, stepId, success, userId){
+  checkRegistrationStep(stepData, stepId, success, contractorId){
     const datas= {
       isDone: success,
       stepId: this.stepId
     }
     if(stepData.length == 0){
-      this.addCandidateRegistationStep(success, stepId, userId);
+      this.addCandidateRegistationStep(success, stepId, contractorId);
       this.ds.sendData(datas);
     }else{
-      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, userId);
+      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId);
       this.ds.sendData(datas);
     }
   }
 
-  addCandidateRegistationStep(isDone, step, userId ){
+  addCandidateRegistationStep(isDone, step, contractorId ){
     const request = {
       isDone: isDone,
       step : step,
-      userProfileId: userId 
+      contractorId: contractorId 
     }
     this.registrationFluxService.add(request).subscribe(res => {
       this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
@@ -537,12 +540,12 @@ export class MaterialStatusComponent implements OnInit {
     })
   }
 
-  updateCandidateRegistationStep(id, isDone, step, userId ){
+  updateCandidateRegistationStep(id, isDone, step, contractorId ){
     const request = {
       id: id,
       isDone: isDone,
       step : step,
-      userProfileId: userId 
+      contractorId: contractorId 
     }
     
     this.registrationFluxService.update(request).subscribe(res => {

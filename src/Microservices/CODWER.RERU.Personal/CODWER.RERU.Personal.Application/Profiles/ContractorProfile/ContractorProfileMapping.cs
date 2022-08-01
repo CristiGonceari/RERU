@@ -21,8 +21,8 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorProfile
                 .ForMember(x => x.EmployerState, opts => opts.ConvertUsing(new EmployerStateConverter(), op => op))
 
                 .ForMember(x => x.HasUserProfile, opts => opts.MapFrom(op => op.UserProfile != null))
-                .ForMember(x => x.HasBulletin, opts => opts.MapFrom(op => op.UserProfile.Bulletin != null))
-                .ForMember(x => x.HasStudies, opts => opts.MapFrom(op => op.UserProfile.Studies.Any()))
+                .ForMember(x => x.HasBulletin, opts => opts.MapFrom(op => op.UserProfile.Contractor.Bulletin != null))
+                .ForMember(x => x.HasStudies, opts => opts.MapFrom(op => op.UserProfile.Contractor.Studies.Any()))
                 .ForMember(x => x.HasPositions, opts => opts.MapFrom(op => op.Positions.Any()))
                 .ForMember(x => x.HasCim, opts => opts.MapFrom(op => op.Contracts.Any()));
 
