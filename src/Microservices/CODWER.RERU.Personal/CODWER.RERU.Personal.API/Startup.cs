@@ -59,7 +59,6 @@ namespace CODWER.RERU.Personal.API
             services.Configure<DocumentOptions>(Configuration.GetSection("DocumentOptions"));
             services.Configure<EmployerData>(Configuration.GetSection("EmployerData"));
 
-            services.AddERPModuleServices(Configuration); //before service provider
             services.AddModuleServiceProvider(); // before conf AppDbContext
 
             ServicesSetup.ConfigureEntity(services, Configuration);
@@ -111,6 +110,7 @@ namespace CODWER.RERU.Personal.API
                 .AddERPModuleControllers();
             services.AddWkhtmltopdf();
 
+            services.AddERPModuleServices(Configuration); 
             services.AddCommonModuleApplication(Configuration);
             services.AddCommonLoggingContext(Configuration);
 
