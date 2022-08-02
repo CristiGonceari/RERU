@@ -22,11 +22,12 @@ namespace CODWER.RERU.Personal.Application.Bulletins.GetContractorBulletin
         public async Task<BulletinsDataDto> Handle(GetContractorBulletinQuery request, CancellationToken cancellationToken)
         {
             var item = await _appDbContext.Bulletins
-                .Include(x=>x.UserProfile)
-                .ThenInclude(x=>x.Contractor)
-                .Include(x=>x.BirthPlace)
-                .Include(x=>x.ResidenceAddress)
-                .FirstAsync(x => x.UserProfile.Contractor.Id == request.ContractorId);
+                .Include(x=>x.Contractor)
+                .ThenInclude(x=>x.UserProfile)
+                .Include(b => b.BirthPlace)
+                .Include(b => b.ResidenceAddress)
+                .Include(b => b.ParentsResidenceAddress)
+                .FirstAsync(x => x.Contractor.Id == request.ContractorId);
 
             return _mapper.Map<BulletinsDataDto>(item);
         }

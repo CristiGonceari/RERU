@@ -37,7 +37,7 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
             {
                 var currentContractor = await _appDbContext.Contractors
                     .Include(x=>x.UserProfile)
-                    .ThenInclude(x => x.Bulletin)
+                    .Include(x => x.Bulletin)
                     .Include(x => x.Permission)
                     .Include(x => x.UserProfile)
                     .FirstAsync(x => x.Id == request.ContractorId);

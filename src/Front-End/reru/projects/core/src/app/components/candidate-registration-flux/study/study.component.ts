@@ -46,6 +46,7 @@ export class StudyComponent implements OnInit {
   studyFrequences;
   userId;
   stepId;
+  contractorId;
   userGeneralData;
   registrationFluxStep;
 
@@ -77,10 +78,8 @@ export class StudyComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
-    this.getUserStudies(this.userId);
 
     this.stepId =parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
-    this.getExistentStep(this.stepId);
 
     this.initForm();
     this.getUserGeneralData();
@@ -112,20 +111,20 @@ export class StudyComponent implements OnInit {
     else if (studyType == StudyEnum.Studies ){
 
       this.studyForm = this.fb.group({
-        studies: this.fb.array([this.generateStudies(data, this.userId)]),
+        studies: this.fb.array([this.generateStudies(data, this.contractorId)]),
       });
 
     }
     else if (studyType == StudyEnum.ModernLanguageLevels){
        
       this.languageForm = this.fb.group({
-        modernLanguages: this.fb.array([this.generateModernLanguage(data, data.modernLanguage,  this.userId)])
+        modernLanguages: this.fb.array([this.generateModernLanguage(data, data.modernLanguageId,  this.contractorId)])
       });
     }
     else if(studyType == StudyEnum.Recommandations){
 
       this.recommendationForm = this.fb.group({
-        recommendation: this.fb.array([this.generateRecommendation(data, this.userId)])
+        recommendation: this.fb.array([this.generateRecommendation(data, this.contractorId)])
       });
     } 
   }
@@ -153,6 +152,8 @@ export class StudyComponent implements OnInit {
     this.userProfile.getCandidateProfile(this.userId).subscribe( res => {
 
       this.userGeneralData = res.data;
+      this.contractorId = res.data.contractorId;
+
       const userData = res.data;
 
       if (userData.studyCount != 0) {
@@ -184,14 +185,16 @@ export class StudyComponent implements OnInit {
           this.isLoadingRecommandations = false;
           this.recommendationForStudy = null;
         }
+
+        this.getExistentStep(this.stepId, this.contractorId);
     })
   }
 
-  getUserStudies(userId) {
+  getUserStudies(contractorId) {
     this.isLoadingStudies = true;
 
     const request = {
-      userProfileId: userId
+      contractorId: contractorId
     }
     this.studyService.list(request).subscribe(res => {
       this.userStudies = res.data.items;
@@ -201,11 +204,11 @@ export class StudyComponent implements OnInit {
     })
   }
 
-  getUserModernLanguages(userId) {
+  getUserModernLanguages(contractorId) {
     this.isLoadingLanguages = true;
 
     const request = {
-      userProfileId: userId
+      contractorId: contractorId
     }
     this.modernLanguageLevelService.list(request).subscribe(res => {
       this.userModernLanguages = res.data.items;
@@ -215,11 +218,11 @@ export class StudyComponent implements OnInit {
     })
   }
 
-  getUserRecommendation(userId) {
+  getUserRecommendation(contractorId) {
     this.isLoadingRecommandations = true;
 
     const request = {
-      userProfileId: userId
+      contractorId: contractorId
     }
 
     this.recommendationForStudyService.list(request).subscribe(res => {
@@ -277,7 +280,7 @@ export class StudyComponent implements OnInit {
     }
   }
 
-  generateStudies(study?, userProfileId?): FormGroup {
+  generateStudies(study?, contractorId?): FormGroup {
 
     return this.fb.group({
       id: this.fb.control((study && study.id) || null, []),
@@ -289,21 +292,21 @@ export class StudyComponent implements OnInit {
       specialty: this.fb.control((study && study.specialty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       yearOfAdmission: this.fb.control((study && study.yearOfAdmission) || null, [Validators.required]),
       graduationYear: this.fb.control((study && study.graduationYear) || null, [Validators.required]),
-      userProfileId: this.fb.control(userProfileId || null, [])
+      contractorId: this.fb.control(contractorId || null, [])
     });
   }
 
-  generateModernLanguage(language?, modernLanguageId?, userProfileId?) {
+  generateModernLanguage(language?, modernLanguageId?, contractorId?) {
     
     return this.fb.group({
       id: this.fb.control((language && language.id) || null, []),
       knowledgeQuelifiers: this.fb.control((language && language.knowledgeQuelifiers)  || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
-      userProfileId: this.fb.control(userProfileId || null, []),
-      modernLanguageId: this.fb.control((modernLanguageId && modernLanguageId.id)  || null, []),
+      contractorId: this.fb.control(contractorId || null, []),
+      modernLanguageId: this.fb.control(modernLanguageId || null, []),
     });
   }
 
-  generateRecommendation(recommendation?, userProfileId?) {
+  generateRecommendation(recommendation?, contractorId?) {
     
     return this.fb.group({
       id: this.fb.control((recommendation && recommendation.id) || null, []),
@@ -311,7 +314,7 @@ export class StudyComponent implements OnInit {
       lastName: this.fb.control((recommendation && recommendation.lastName) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       function: this.fb.control((recommendation && recommendation.function) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       subdivision: this.fb.control((recommendation && recommendation.subdivision) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      userProfileId: this.fb.control(userProfileId || null, []),
+      contractorId: this.fb.control(contractorId || null, []),
     });
   }
 
@@ -368,33 +371,33 @@ export class StudyComponent implements OnInit {
   }
 
   buildStudiesForm(): Observable<any> {
-    const request = this.parseStudies(this.studyForm.getRawValue().studies, this.userId);
+    const request = this.parseStudies(this.studyForm.getRawValue().studies, this.contractorId);
     return this.studyService.addMultiple(request);
   }
 
   buildModernLanguageForm(): Observable<any> {
-    const request = this.parseModernLanguages(this.languageForm.getRawValue().modernLanguages, this.userId);
+    const request = this.parseModernLanguages(this.languageForm.getRawValue().modernLanguages, this.contractorId);
     return this.modernLanguageLevelService.addMultiple(request);
   }
 
   buildReommendationForStudyForm(): Observable<any> {
-    const request = this.parseRecommendationsForStudy(this.recommendationForm.getRawValue().recommendation, this.userId);
+    const request = this.parseRecommendationsForStudy(this.recommendationForm.getRawValue().recommendation, this.contractorId);
     return this.recommendationForStudyService.addMultiple(request);
   }
 
-  parseStudies(data: StudyModel[], userProfileId: number): StudyModel[] {
-    return data.map(el => this.parseStudy(el, userProfileId));
+  parseStudies(data: StudyModel[], contractorId: number): StudyModel[] {
+    return data.map(el => this.parseStudy(el, contractorId));
   }
 
-  parseModernLanguages(data: ModernLanguageLevelModel[], userProfileId: number): ModernLanguageLevelModel[] {
-    return data.map(el => this.parseModernLanguage(el, userProfileId));
+  parseModernLanguages(data: ModernLanguageLevelModel[], contractorId: number): ModernLanguageLevelModel[] {
+    return data.map(el => this.parseModernLanguage(el, contractorId));
   }
 
-  parseRecommendationsForStudy(data: RecommendationForStudyModel[], userProfileId: number): RecommendationForStudyModel[] {
-    return data.map(el => this.parseRecomendationForStudy(el, userProfileId));
+  parseRecommendationsForStudy(data: RecommendationForStudyModel[], contractorId: number): RecommendationForStudyModel[] {
+    return data.map(el => this.parseRecomendationForStudy(el, contractorId));
   }
 
-  parseStudy(data: StudyModel, userProfileId): StudyModel {
+  parseStudy(data: StudyModel, contractorId): StudyModel {
     return ObjectUtil.preParseObject({
       id: data.id,
       institution: data.institution,
@@ -405,27 +408,27 @@ export class StudyComponent implements OnInit {
       specialty: data.specialty,
       yearOfAdmission: data.yearOfAdmission,
       graduationYear: data.graduationYear,
-      userProfileId: userProfileId
+      contractorId: contractorId
     })
   }
 
-  parseModernLanguage(data: ModernLanguageLevelModel, userProfileId): ModernLanguageLevelModel {
+  parseModernLanguage(data: ModernLanguageLevelModel, contractorId): ModernLanguageLevelModel {
     return ObjectUtil.preParseObject({
       id: data.id,
       modernLanguageId: data.modernLanguageId,
       knowledgeQuelifiers: data.knowledgeQuelifiers,
-      userProfileId: userProfileId
+      contractorId: contractorId
     })
   }
 
-  parseRecomendationForStudy(data: RecommendationForStudyModel, userProfileId): RecommendationForStudyModel {
+  parseRecomendationForStudy(data: RecommendationForStudyModel, contractorId): RecommendationForStudyModel {
     return ObjectUtil.preParseObject({
       id: data.id,
       name: data.name,
       lastName: data.lastName,
       function: data.function,
       subdivision: data.subdivision,
-      userProfileId: userProfileId
+      contractorId: contractorId
     })
   }
 
@@ -439,7 +442,7 @@ export class StudyComponent implements OnInit {
       (<FormArray>this.studyForm.controls.studies).controls.push(
         this.generateStudies(
           study,
-          this.userId
+          this.contractorId
         )
       );
     }
@@ -456,7 +459,7 @@ export class StudyComponent implements OnInit {
         this.generateModernLanguage(
           language,
           language.modernLanguage,
-          this.userId
+          this.contractorId
         )
       );
     }
@@ -472,15 +475,15 @@ export class StudyComponent implements OnInit {
       (<FormArray>this.recommendationForm.controls.recommendation).controls.push(
         this.generateRecommendation(
           recommendation,
-          this.userId
+          this.contractorId
         )
       );
     }
   }
 
-  getExistentStep(step){
+  getExistentStep(step, contractorId){
     const request = {
-      userProfileId : this.userId,
+      contractorId : contractorId,
       step: step
     };
 
@@ -495,34 +498,34 @@ export class StudyComponent implements OnInit {
 
   addRegistrationFluxStep(){
     if(this.userStudies != null || this.userModernLanguages != null || this.recommendationForStudy != null){
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.userId);
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.contractorId);
     
     }
     else{
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.userId);
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractorId);
     }
   }
 
-  checkRegistrationStep(stepData, stepId, success, userId){
+  checkRegistrationStep(stepData, stepId, success, contractorId){
     const datas= {
       isDone: success,
       stepId: this.stepId
     }
 
     if(stepData.length == 0){
-      this.addCandidateRegistationStep(success, stepId, userId);
+      this.addCandidateRegistationStep(success, stepId, contractorId);
       this.ds.sendData(datas);
     }else{
-      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, userId);
+      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId);
       this.ds.sendData(datas);
     }
   }
 
-  addCandidateRegistationStep(isDone, step, userId ){
+  addCandidateRegistationStep(isDone, step, contractorId ){
     const request = {
       isDone: isDone,
       step : step,
-      userProfileId: userId 
+      contractorId: contractorId 
     }
     this.registrationFluxService.add(request).subscribe(res => {
       this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
@@ -531,12 +534,12 @@ export class StudyComponent implements OnInit {
     })
   }
 
-  updateCandidateRegistationStep(id, isDone, step, userId ){
+  updateCandidateRegistationStep(id, isDone, step, contractorId ){
     const request = {
       id: id,
       isDone: isDone,
       step : step,
-      userProfileId: userId 
+      contractorId: contractorId 
     }
     
     this.registrationFluxService.update(request).subscribe(res => {

@@ -27,6 +27,8 @@ export class AutobiographyComponent implements OnInit {
 
   userId;
   stepId;
+  contractorId;
+
   userGeneralData;
   autobiographyData;
   registrationFluxStep;
@@ -51,7 +53,6 @@ export class AutobiographyComponent implements OnInit {
     this.userId = parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
 
     this.stepId =parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
-    this.getExistentStep(this.stepId);
 
     this.initForm();
     this.getUserGeneralData();
@@ -64,7 +65,7 @@ export class AutobiographyComponent implements OnInit {
       this.autobiographyForm = this.fb.group({
         id: this.fb.control( null, []),
         text: this.fb.control( null, []),
-        userProfileId: this.fb.control( null, [])
+        contractorId: this.fb.control( null, [])
       });
 
     }
@@ -72,7 +73,7 @@ export class AutobiographyComponent implements OnInit {
       this.autobiographyForm = this.fb.group({
         id: this.fb.control((data && data.id) || null, []),
         text: this.fb.control((data && data.text) || null, []),
-        userProfileId: this.fb.control(data.userProfileId || null, [])
+        contractorId: this.fb.control(data.contractorId || null, [])
       });
 
     }
@@ -83,6 +84,8 @@ export class AutobiographyComponent implements OnInit {
     this.userProfile.getCandidateProfile(this.userId).subscribe( res => {
 
       this.userGeneralData = res.data;
+      this.contractorId = res.data.contractorId;
+      
       const userData = res.data;
 
       if (userData.autobiographyId != 0) {
@@ -94,14 +97,15 @@ export class AutobiographyComponent implements OnInit {
         this.isLoadingAutobiography = false;
         this.autobiographyData = null;
       }
-      
+
+      this.getExistentStep(this.stepId, this.contractorId);
     })
   }
 
-  getUserAutobiography(userId){
+  getUserAutobiography(contractorId){
     this.isLoadingAutobiography = true;
 
-    this.autobiographyService.get(userId).subscribe(res => {
+    this.autobiographyService.get(contractorId).subscribe(res => {
       this.autobiographyData = res.data;
       this.initForm(this.autobiographyData);
       this.isLoadingAutobiography = false;
@@ -112,35 +116,35 @@ export class AutobiographyComponent implements OnInit {
 
   createAutobiography(){
     
-    this.autobiographyService.add(this.parseAutobiography(this.autobiographyForm.value, this.userId)).subscribe(res => {
+    this.autobiographyService.add(this.parseAutobiography(this.autobiographyForm.value, this.contractorId)).subscribe(res => {
       this.notificationService.success('Success', 'Autobiography was added!', NotificationUtil.getDefaultMidConfig());
-      this.getUserAutobiography(this.userId);
+      this.getUserAutobiography(this.contractorId);
     }, error => {
       this.notificationService.error('Error', 'Autobiography was not added!', NotificationUtil.getDefaultMidConfig());
     })
   }
 
-  parseAutobiography(data, userId): AutobiographyModel {
+  parseAutobiography(data, contractorId): AutobiographyModel {
     
     return ObjectUtil.preParseObject({
       id: data.id,
       text: data.text,
-      userProfileId: userId
+      contractorId: contractorId
     })
   }
 
   updateAutobiography(){
-    this.autobiographyService.update(this.parseAutobiography(this.autobiographyForm.value, this.userId)).subscribe(res => {
+    this.autobiographyService.update(this.parseAutobiography(this.autobiographyForm.value, this.contractorId)).subscribe(res => {
       this.notificationService.success('Success', 'Autobiography was updated!', NotificationUtil.getDefaultMidConfig());
-      this.getUserAutobiography(this.userId);
+      this.getUserAutobiography(this.contractorId);
     }, error => {
       this.notificationService.error('Error', 'Autobiography was not updated!', NotificationUtil.getDefaultMidConfig());
     })
   }
 
-  getExistentStep(step){
+  getExistentStep(step, contractorId){
     const request = {
-      userProfileId : this.userId,
+      contractorId : contractorId,
       step: step
     };
 
@@ -151,32 +155,32 @@ export class AutobiographyComponent implements OnInit {
 
   addRegistrationFluxStep(){
     if(this.autobiographyData != null){
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.userId);
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.contractorId);
     }
     else{
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.userId);
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractorId);
     }
   }
 
-  checkRegistrationStep(stepData, stepId, success, userId){
+  checkRegistrationStep(stepData, stepId, success, contractorId){
     const datas= {
       isDone: success,
       stepId: this.stepId
     }
     if(stepData.length == 0){
-      this.addCandidateRegistationStep(success, stepId, userId);
+      this.addCandidateRegistationStep(success, stepId, contractorId);
       this.ds.sendData(datas);
     }else{
-      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, userId);
+      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId);
       this.ds.sendData(datas);
     }
   }
 
-  addCandidateRegistationStep(isDone, step, userId ){
+  addCandidateRegistationStep(isDone, step, contractorId ){
     const request = {
       isDone: isDone,
       step : step,
-      userProfileId: userId 
+      contractorId: contractorId 
     }
     this.registrationFluxService.add(request).subscribe(res => {
       this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
@@ -185,12 +189,12 @@ export class AutobiographyComponent implements OnInit {
     })
   }
 
-  updateCandidateRegistationStep(id, isDone, step, userId ){
+  updateCandidateRegistationStep(id, isDone, step, contractorId ){
     const request = {
       id: id,
       isDone: isDone,
       step : step,
-      userProfileId: userId 
+      contractorId: contractorId 
     }
     
     this.registrationFluxService.update(request).subscribe(res => {

@@ -24,10 +24,9 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.UserSolicitedTes
         public async Task<PaginatedModel<SolicitedCandidatePositionDto>> Handle(GetUserSolicitedTestsQuery request, CancellationToken cancellationToken)
         {
             var solicitedUserTests =  _appDbContext.SolicitedVacantPositions
-                //.Include(t => t.TestTemplate)
-                //.Include(t => t.UserProfile)
-                //.Include(t => t.Event)
-                .Include(t => t.CandidatePosition)
+                .Include(x => x.CandidatePosition)
+                    .ThenInclude(x => x.RequiredDocumentPositions)
+                .Include(x => x.SolicitedVacantPositionUserFiles)
                 .Where(x => x.UserProfileId == request.UserId).AsQueryable();
 
             return await _paginationService.MapAndPaginateModelAsync<SolicitedVacantPosition, SolicitedCandidatePositionDto>(solicitedUserTests, request);

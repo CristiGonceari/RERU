@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 using System.Linq;
 using System.Threading;
@@ -19,7 +21,10 @@ namespace CODWER.RERU.Core.Application.Users.EditCandidate
         }
         public async Task<int> Handle(EditCandidateCommand request, CancellationToken cancellationToken)
         {
-            var userProfile = _appDbContext.UserProfiles.FirstOrDefault(uf => uf.Id == request.Data.Id);
+            var userProfile = _appDbContext.Contractors
+                                            .Include(up => up.UserProfile)
+                                            .FirstOrDefault(uf => uf.Id == request.Data.Id);
+                                             
 
             _mapper.Map(request.Data, userProfile);
             await _appDbContext.SaveChangesAsync();

@@ -6,6 +6,6 @@ namespace CODWER.RERU.Core.Application.KinshipRelations.GetUserProfileKinshipRel
 {
     public class GetUserProfileKinshipRelationsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<KinshipRelationDto>>
     {
-        public int UserProfileId { get; set; }
+        public int ContractorId { get; set; }
     }
 }

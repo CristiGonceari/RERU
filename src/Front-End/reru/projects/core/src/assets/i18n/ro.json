@@ -623,13 +623,13 @@
     "5": "Cursuri de Specializare"
   },
   "studyFrequency":{
-    "Daily":"Frecvența zilnică",
+    "Daily":"Frecvența la zi",
     "LowFrequency": "Frecvența redusa"
   },
   "materialStatusType": {
     "1": "Celibatar",
     "2": "Casatorit",
-    "3": "Necasatorit",
+    "3": "Recasatorit",
     "4": "Vaduv"
   },
   "kinshipDegree":{
@@ -668,5 +668,9 @@
     "MilitaryObligation": "Obligație militară",
     "Autobiography": "Autobiografie",
     "Declaration": "Declaraţie"
+  },
+  "step-status":{
+    "done": "Efectuat",
+    "not-done": "Nefinalizat"
   }
 }

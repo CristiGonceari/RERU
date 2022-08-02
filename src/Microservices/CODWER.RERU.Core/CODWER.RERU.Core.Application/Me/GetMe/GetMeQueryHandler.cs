@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
@@ -33,18 +35,20 @@ namespace CODWER.RERU.Core.Application.Me.GetMe {
             var currentUser = await _currentUserProvider.Get ();
             me.User = Mapper.Map<ApplicationUserDto> (currentUser);
             me.Tenant = _tenantDto;
-           
-            //if (currentUser.DepartmentColaboratorId == null && 
-            //    currentUser.RoleColaboratorId == null && 
-            //    !string.IsNullOrEmpty(currentUser.Email)
-            //    )
-            //{
-            //    me.IsCandidateStatus = true;
-            //}
-            //else
-            //{
-            //    me.IsCandidateStatus = false;
-            //}
+
+            var userProfile = AppDbContext.UserProfiles.FirstOrDefault(up => up.Id == int.Parse(currentUser.Id));
+
+            if (userProfile.DepartmentColaboratorId == null &&
+                userProfile.RoleColaboratorId == null && 
+                !string.IsNullOrEmpty(userProfile.Email)
+                )
+            {
+                me.IsCandidateStatus = true;
+            }
+            else
+            {
+                me.IsCandidateStatus = false;
+            }
            
             return me;
         }

@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.ServiceProvider.Clients;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Core.Application.Users.InregistrateUser
 {
@@ -48,10 +49,13 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
                 CandidatePositionId = request.CandidatePositionId,
                 EmailNotification = request.EmailNotification,
                 BirthDate = request.BirthDate,
-                PhoneNumber = request.PhoneNumber
+                PhoneNumber = request.PhoneNumber,
             };
 
             var userProfile = Mapper.Map<UserProfile>(newUser);
+            userProfile.Contractor = new Contractor();
+            
+
             var defaultRoles = AppDbContext.Modules
                 .SelectMany(m => m.Roles.Where(r => r.IsAssignByDefault).Take(1))
                 .ToList();

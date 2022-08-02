@@ -17,7 +17,7 @@ namespace CODWER.RERU.Core.API.Controllers
         [HttpGet("{id}")]
         public async Task<AddEditMaterialStatusDto> GetMaterialStatus([FromRoute] int id)
         {
-            var query = new GetUserProfilesMaterialStatusQuery { UserProfileId = id };
+            var query = new GetUserProfilesMaterialStatusQuery { ContractorId = id };
             var result = await Mediator.Send(query);
 
             return result;

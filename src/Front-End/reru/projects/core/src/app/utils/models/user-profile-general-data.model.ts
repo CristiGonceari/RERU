@@ -3,7 +3,6 @@ export interface UserProfileGeneralDataModel {
     workPhone: number;
     homePhone: number;
     sex: number;
-    userProfileId?: number;
     stateLanguageLevel: number;
     candidateNationalityId: number;
     candidateCitizenshipId: number;

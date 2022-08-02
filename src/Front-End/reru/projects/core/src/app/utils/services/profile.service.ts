@@ -20,7 +20,7 @@ export class ProfileService extends AbstractService {
 		return this.http.get<Response<MyProfile>>(`${this.coreUrl}/${this.routeUrl}`);
 	}
 
-	GetCandidateRegistrationSteps(): Observable<Response<any>> {
+	getCandidateRegistrationSteps(): Observable<Response<any>> {
 		return this.http.get<Response<any>>(`${this.coreUrl}/${this.routeUrl}/candidate-registration-steps`);
 	}
 

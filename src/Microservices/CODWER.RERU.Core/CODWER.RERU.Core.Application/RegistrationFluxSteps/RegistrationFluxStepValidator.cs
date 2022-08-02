@@ -6,6 +6,7 @@ using CVU.ERP.Common.Validation;
 using FluentValidation;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.RegistrationFluxSteps
@@ -22,8 +23,8 @@ namespace CODWER.RERU.Core.Application.RegistrationFluxSteps
                 .WithErrorCode(ValidationCodes.INVALID_INPUT)
                 .WithMessage(ValidationMessages.InvalidInput);
 
-            RuleFor(x => x.UserProfileId)
-                .SetValidator(new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.USER_NOT_FOUND, ValidationMessages.NotFound));
+            RuleFor(x => x.ContractorId)
+                .SetValidator(new ItemMustExistValidator<Contractor>(appDbContext, ValidationCodes.USER_NOT_FOUND, ValidationMessages.NotFound));
         }
     }
 }

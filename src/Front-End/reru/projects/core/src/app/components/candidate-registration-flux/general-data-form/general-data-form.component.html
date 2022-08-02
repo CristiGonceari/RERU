@@ -29,7 +29,7 @@
                       {{'user.birthday' | translate}}:
                     </label>
                     <div class="col-lg-9 col-xl-6">
-                      <p class="font-size-lg m-0">{{(userDatas.birthday | date: 'd/M/yy, HH:mm') || "not set"}}</p>
+                      <p class="font-size-lg m-0">{{(userDatas.birthDate | date: 'd/M/yy, HH:mm') || "not set"}}</p>
                     </div>
                   </div>
                 </div>
@@ -159,10 +159,8 @@
       </div>
     </div>
     <div class="row justify-content-end">
-      <button class="btn btn-success" matStepperNext [disabled]="userForm && userForm.invalid" *ngIf="toAddOrUpdateButton"
+      <button class="btn btn-success" matStepperNext [disabled]="userForm && userForm.invalid"
         (click)="updateUserProfileGeneralData()">{{'stepper.button-update-and-next' | translate}}</button>
-        <button class="btn btn-success" matStepperNext [disabled]="userForm && userForm.invalid" *ngIf="!toAddOrUpdateButton"
-        (click)="createUserProfileGeneralData()">{{'stepper.button-save-and-next' | translate}}</button>
     </div>
   </form>
 </div>

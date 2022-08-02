@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Core.Application.Users.CreateUser
 {
@@ -52,6 +53,7 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
             };
 
             var userProfile = _mapper.Map<UserProfile>(newUser);
+            userProfile.Contractor = new Contractor();
             
             var defaultRoles = _appDbContext.Modules
                 .SelectMany(m => m.Roles.Where(r => r.IsAssignByDefault).Take(1))

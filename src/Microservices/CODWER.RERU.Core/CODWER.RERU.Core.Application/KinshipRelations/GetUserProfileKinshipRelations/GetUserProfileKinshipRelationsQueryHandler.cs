@@ -22,7 +22,7 @@ namespace CODWER.RERU.Core.Application.KinshipRelations.GetUserProfileKinshipRel
         public async Task<PaginatedModel<KinshipRelationDto>> Handle(GetUserProfileKinshipRelationsQuery request, CancellationToken cancellationToken)
         {
             var items = _appDbContext.KinshipRelations
-                 .Where(x => x.UserProfileId == request.UserProfileId)
+                 .Where(x => x.ContractorId == request.ContractorId)
                  .AsQueryable();
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<KinshipRelation, KinshipRelationDto>(items, request);

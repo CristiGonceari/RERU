@@ -3,6 +3,7 @@ using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.MilitaryObligations.GetUserProfileMilitaryObligations
@@ -11,8 +12,8 @@ namespace CODWER.RERU.Core.Application.MilitaryObligations.GetUserProfileMilitar
     {
         public GetUserProfileMilitaryObligationsQueryValidator(AppDbContext appDbContext)
         {
-            RuleFor(x => x.UserProfileId)
-               .SetValidator(new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.USER_NOT_FOUND,
+            RuleFor(x => x.ContractorId)
+               .SetValidator(new ItemMustExistValidator<Contractor>(appDbContext, ValidationCodes.USER_NOT_FOUND,
                    ValidationMessages.InvalidReference));
         }
     }

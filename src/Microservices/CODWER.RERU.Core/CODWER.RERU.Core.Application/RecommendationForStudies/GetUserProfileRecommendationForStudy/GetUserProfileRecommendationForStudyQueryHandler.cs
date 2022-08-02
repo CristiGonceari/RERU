@@ -21,7 +21,7 @@ namespace CODWER.RERU.Core.Application.RecommendationForStudies.GetUserProfileRe
         }
         public async Task<PaginatedModel<RecommendationForStudyDto>> Handle(GetUserProfileRecommendationForStudyQuery request, CancellationToken cancellationToken)
         {
-            var items = _appDbContext.RecommendationForStudies.Where(rfs => rfs.UserProfileId == request.UserProfileId);
+            var items = _appDbContext.RecommendationForStudies.Where(rfs => rfs.ContractorId == request.ContractorId);
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<RecommendationForStudy, RecommendationForStudyDto>(items, request);
 

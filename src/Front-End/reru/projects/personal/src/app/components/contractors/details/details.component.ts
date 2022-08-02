@@ -15,6 +15,9 @@ import { ConfirmationDismissModalComponent } from '../../../utils/modals/confirm
 import { ConfirmationDeleteContractorComponent } from '../../../utils/modals/confirmation-delete-contractor/confirmation-delete-contractor.component';
 import { TransferNewPositionModalComponent } from '../../../utils/modals/transfer-new-position-modal/transfer-new-position-modal.component';
 import { AddOldPositionModalComponent } from '../../../utils/modals/add-old-position-modal/add-old-position-modal.component';
+import { RegistrationFluxStepEnum } from '../../../utils/models/registrationFluxStep.enum';
+import { DataService } from './data.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-details',
@@ -27,6 +30,12 @@ export class DetailsComponent implements OnInit {
   isLoading: boolean = true;
   avatarLoading: boolean = true;
   sexEnum = SexEnum;
+  steps;
+  
+  subscription: Subscription;
+
+  dataPassed: any;
+  stepEnum = RegistrationFluxStepEnum;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +44,18 @@ export class DetailsComponent implements OnInit {
     private notificationService: NotificationsService,
     private positionService: PositionService,
     private ngZone: NgZone,
-    private router: Router) { }
+    private router: Router,
+    private ds: DataService,
+    ) {
+      this.subscription = this.ds.getData().subscribe((x) => {
+        this.dataPassed = x;
+        
+        if(this.dataPassed){
+          var stepIndex = this.steps.findIndex(x => x.value == this.dataPassed.stepId );
+          this.steps[stepIndex].isDone = this.dataPassed.isDone;
+        }
+     })
+    }
 
   ngOnInit(): void {
     this.subscribeForChangeParams();
@@ -45,8 +65,19 @@ export class DetailsComponent implements OnInit {
     this.route.params.subscribe(response => {
       if (response.id) {
         this.subscribeForFetchContractor(+response.id);
+        this.subscribeForContractorSteps(response.id);
       }
     })
+  }
+
+  subscribeForContractorSteps(contractorId: number){
+    let step = [];
+
+    this.contractorService.getCandidateSteps(contractorId).subscribe(res => {
+      step = res.data.checkedSteps;
+      step.sort(function(a, b){return a.value - b.value});
+      this.steps = step;
+    });
   }
 
   subscribeForFetchContractor(id: number): void {

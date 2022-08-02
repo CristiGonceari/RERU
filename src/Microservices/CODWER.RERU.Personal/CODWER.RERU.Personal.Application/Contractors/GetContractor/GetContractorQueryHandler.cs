@@ -36,9 +36,8 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
         {
             var contractor = await _appDbContext.Contractors
                 .Include(x=>x.UserProfile)
-                .ThenInclude(x=>x.Bulletin)
-                .Include(x => x.UserProfile)
-                .ThenInclude(x => x.Studies)
+                .Include(x=>x.Bulletin)
+                .Include(x => x.Studies)
                 .Include(r => r.Positions)
                     .ThenInclude(p => p.Department)
                 .Include(c => c.Positions)
@@ -50,6 +49,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
                 .Include(x => x.Avatar)
                 .Select(c => new Contractor
                 {
+                    UserProfile = c.UserProfile,
                     Id = c.Id,
                     Code = c.Code,
                     FirstName = c.FirstName,
@@ -57,14 +57,27 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
                     FatherName = c.FatherName,
                     BirthDate = c.BirthDate,
                     Sex = c.Sex,
+                    PhoneNumber = c.PhoneNumber,
+                    WorkPhone = c.WorkPhone,
+                    HomePhone = c.HomePhone,
+                    CandidateNationalityId = c.CandidateNationalityId,
+                    CandidateCitizenshipId = c.CandidateCitizenshipId,
+                    StateLanguageLevel = c.StateLanguageLevel,
                     Positions = c.Positions,
                     BloodTypeId = c.BloodTypeId,
-                    //Studies = c.UserProfile.Studies,
+                    Studies = c.Studies,
                     Contacts = c.Contacts,
                     Contracts = c.Contracts,
-                    UserProfile = c.UserProfile,
-                    //Bulletin = c.Bulletin,
-                    Avatar = c.Avatar
+                    Bulletin = c.Bulletin,
+                    Avatar = c.Avatar,
+                    RecommendationForStudies = c.RecommendationForStudies,
+                    ModernLanguageLevels = c.ModernLanguageLevels,
+                    MaterialStatus = c.MaterialStatus,
+                    KinshipRelations = c.KinshipRelations,
+                    KinshipRelationCriminalData = c.KinshipRelationCriminalData,
+                    KinshipRelationWithUserProfiles = c.KinshipRelationWithUserProfiles,
+                    MilitaryObligations = c.MilitaryObligations,
+                    Autobiography = c.Autobiography
                 })
                 .FirstAsync(rt => rt.Id == request.Id);
 

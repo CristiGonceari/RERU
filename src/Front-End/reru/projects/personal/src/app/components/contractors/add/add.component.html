@@ -1,7 +1,7 @@
 
 <app-page-title [title]="'personal.adding-personal' | translate"></app-page-title>
 <app-content>
-  <div class="card card-custom">
+  <!-- <div class="card card-custom">
     <div class="card-body">
       <mat-horizontal-stepper linear #stepper>
         <mat-step [completed]="completedEvents[0]" [stepControl]="firstForm" [label]="'personal.general-data' | translate" [editable]="isEditable">
@@ -57,6 +57,138 @@
           </div>
         </mat-step>
       </mat-horizontal-stepper>
+    </div>
+  </div> -->
+  <app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'">
+</app-loading-spinner>
+  <div class="card card-custom" *ngIf="!isLoading">
+    <div class="card-body">
+      <form [formGroup]="userForm">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputEmail4">{{ 'table.name' | translate }}</label>
+            <input class="form-control form-control-lg form-control-solid" name="firstName" type="text"
+              formControlName="firstName"
+              [ngClass]="{'is-invalid': hasErrors('firstName'), 'is-valid': userForm.get('firstName').valid}" />
+            <div *ngIf="hasErrors('firstName')" class="fv-plugins-message-container">
+              <div *ngIf="hasError('firstName', 'required')" data-field="firstName" data-validator="notEmpty"
+                class="fv-help-block">
+                {{ 'user-profile.empty-name' | translate }}</div>
+              <div *ngIf="hasError('firstName', 'pattern')" data-field="firstName" data-validator="notEmpty"
+                class="fv-help-block">
+                {{ 'user-profile.wrong-name' | translate }}</div>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">{{ 'table.lastName' | translate }}</label>
+            <input class="form-control form-control-lg form-control-solid" name="lastName" type="text"
+              formControlName="lastName"
+              [ngClass]="{'is-invalid': hasErrors('lastName'), 'is-valid': userForm.get('lastName').valid}" />
+            <div *ngIf="hasErrors('lastName')" class="fv-plugins-message-container">
+              <div *ngIf="hasError('lastName', 'required')" data-field="lastName" data-validator="notEmpty"
+                class="fv-help-block">
+                {{ 'user-profile.empty-name' | translate }}</div>
+              <div *ngIf="hasError('lastName', 'pattern')" data-field="lastName" data-validator="notEmpty"
+                class="fv-help-block">
+                {{ 'user-profile.wrong-name' | translate }}</div>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">{{ 'table.father-name' | translate }}</label>
+            <input class="form-control form-control-lg form-control-solid" name="fatherName" type="text"
+              formControlName="fatherName"
+              [ngClass]="{'is-invalid': hasErrors('fatherName'), 'is-valid': userForm.get('fatherName').valid}" />
+            <div *ngIf="hasErrors('fatherName')" class="fv-plugins-message-container">
+              <div *ngIf="hasError('fatherName', 'required')" data-field="fatherName" data-validator="notEmpty"
+                class="fv-help-block">
+                {{ 'user-profile.empty-name' | translate }}</div>
+              <div *ngIf="hasError('fatherName', 'pattern')" data-field="fatherName" data-validator="notEmpty"
+                class="fv-help-block">
+                {{ 'user-profile.wrong-name' | translate }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputEmail4">{{ 'table.idnp' | translate }}</label>
+            <input class="form-control form-control-lg form-control-solid" name="idnp" maxlength="13" minlength="13"
+              onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off" type="text"
+              formControlName="idnp"
+              [ngClass]="{'is-invalid': hasErrors('idnp'), 'is-valid': userForm.get('idnp').valid }" />
+            <div *ngIf="isIdnpLengthValidator('idnp')" class="invalid-feedback d-block">{{'user-profile.idnp-length'
+              | translate}}</div>
+            <div *ngIf="hasErrors('idnp')" class="fv-plugins-message-container">
+              <div *ngIf="hasError('idnp', 'required')" data-field="idnp" data-validator="notEmpty"
+                class="fv-help-block">
+                {{ 'user-profile.idnp-length' | translate }}</div>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputPassword4">{{ 'user.birthday' | translate }}</label>
+            <!-- <app-date [isDisabled]="false" [isReverse]="false" [parent]="userForm" [date]="'birthday'"
+              [placeholder]="dd-mm-yyyy"></app-date> -->
+                <!-- <app-date [parent]="userForm" [date]="'birthday'"
+                    [placeholder]="'birthday' | translate"></app-date> -->
+                    <div class="col-lg-9 col-xl-9" style="height: 44px;">
+                    <input type="text" [owlDateTimeTrigger]="startDate"
+                          class="form-control form-control-lg form-control-solid"
+                          [value]="birthDate | dateFilter:'dd/MM/yyyy'">
+                        <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
+                          name="date_time" [(ngModel)]="birthDate" [owlDateTime]="startDate"
+                          [ngModelOptions]="{standalone: true}" [readonly]="true">
+                        <owl-date-time #startDate pickerType="calendar"></owl-date-time>
+                        </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputPassword4">{{ 'user.phone' | translate }}</label>
+            <input class="form-control form-control-lg form-control-solid" name="phoneNumber" type="tel"
+              formControlName="phoneNumber"
+              [ngClass]="{'is-invalid': hasErrors('phoneNumber'), 'is-valid': userForm.get('phoneNumber').valid}" />
+            <div *ngIf="hasErrors('phoneNumber')" class="fv-plugins-message-container">
+              <div *ngIf="hasError('phoneNumber', 'required')" data-field="phoneNumber" data-validator="notEmpty"
+                class="fv-help-block">
+                {{ 'login.phone-is-required' | translate }}</div>
+              <div *ngIf="hasError('phoneNumber', 'phoneNumber')" data-field="phoneNumber" data-validator="notEmpty"
+                class="fv-help-block">
+                {{ 'login.phone-is-required' | translate }}</div>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputPassword4">{{ 'table.email' | translate }}</label>
+            <input class="form-control form-control-lg form-control-solid" name="email" type="email"
+              formControlName="email"
+              [ngClass]="{'is-invalid': hasErrors('email'), 'is-valid': userForm.get('email').valid}" />
+            <div *ngIf="hasErrors('email')" class="fv-plugins-message-container">
+              <div *ngIf="hasError('email', 'required')" data-field="email" data-validator="notEmpty"
+                class="fv-help-block">
+                {{ 'login.email-is-required' | translate }}</div>
+              <div *ngIf="hasError('email', 'email')" data-field="email" data-validator="notEmpty"
+                class="fv-help-block">
+                {{ 'login.please-use-valid-email' | translate }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-12">
+            <p>
+              <!-- <input type="checkbox" id="checkbox" (change)="accept = !accept">
+              {{ 'registration-page.accept-condition' | translate }} <button type="button" class="btn btn-link"
+                (click)="openAcceptConditionsModal()">{{ 'registration-page.registration-conditions' | translate
+                }}</button> -->
+            </p>
+          </div>
+        </div>
+        <!-- <button type="submit" [disabled]="!accept || userForm.invalid" class="btn btn-primary float-right"
+          (click)="verifyEmailCode()">{{
+          'button.confirm' |
+          translate }}</button> -->
+          
+
+           <button type="submit"  (click)="addUser()" class="btn btn-primary float-right">{{'Add User' | translate }}</button>
+      </form>
     </div>
   </div>
 </app-content>

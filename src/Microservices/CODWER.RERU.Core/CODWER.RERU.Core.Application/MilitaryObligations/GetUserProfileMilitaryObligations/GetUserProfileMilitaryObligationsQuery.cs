@@ -6,6 +6,6 @@ namespace CODWER.RERU.Core.Application.MilitaryObligations.GetUserProfileMilitar
 {
     public class GetUserProfileMilitaryObligationsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<MilitaryObligationDto>>
     {
-        public int UserProfileId { get; set; }
+        public int ContractorId { get; set; }
     }
 }

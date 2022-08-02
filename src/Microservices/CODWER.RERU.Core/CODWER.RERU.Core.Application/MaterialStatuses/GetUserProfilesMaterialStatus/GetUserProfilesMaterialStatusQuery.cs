@@ -5,6 +5,6 @@ namespace CODWER.RERU.Core.Application.MaterialStatuses.GetUserProfilesMaterialS
 {
     public class GetUserProfilesMaterialStatusQuery : IRequest<AddEditMaterialStatusDto>
     {
-        public int UserProfileId { get; set; }
+        public int ContractorId { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using CODWER.RERU.Personal.API.Config;
 using CODWER.RERU.Personal.Application.Contractors.AddContractor;
 using CODWER.RERU.Personal.Application.Contractors.AddUpdateContractorPermissions;
 using CODWER.RERU.Personal.Application.Contractors.EditContractorAvatar;
+using CODWER.RERU.Personal.Application.Contractors.GetCandidateContractorSteps;
 using CODWER.RERU.Personal.Application.Contractors.GetContractor;
 using CODWER.RERU.Personal.Application.Contractors.GetContractorAvatar;
 using CODWER.RERU.Personal.Application.Contractors.GetContractorFiles;
@@ -115,6 +116,17 @@ namespace CODWER.RERU.Personal.API.Controllers
         public async Task<ContractorLocalPermissionsDto> GetPermission([FromRoute] int contractorId)
         {
             var query = new GetContractorPermissionsQuery
+            {
+                ContractorId = contractorId
+            };
+
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("candidate-registration-steps/{contractorId}")]
+        public async Task<CandidateContractorStepsDto> GetContractorCandidateSteps([FromRoute] int contractorId)
+        {
+            var query = new GetCandidateContractorStepsQuery()
             {
                 ContractorId = contractorId
             };

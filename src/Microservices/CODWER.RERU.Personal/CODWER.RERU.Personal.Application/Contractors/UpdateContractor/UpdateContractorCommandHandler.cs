@@ -23,11 +23,12 @@ namespace CODWER.RERU.Personal.Application.Contractors.UpdateContractor
         {
             var contractor = await _appDbContext.Contractors
                 .Include(c => c.Positions)
+                .Include(c => c.UserProfile)
                 .FirstAsync(r => r.Id == request.Data.Id);
 
-            var position = contractor.Positions.LastOrDefault();
+            //var position = contractor.Positions.LastOrDefault();
 
-            _mapper.Map(request.Data, contractor);
+             _mapper.Map(request.Data, contractor);
             //_mapper.Map(request.Data.CurrentPosition ?? new AddEditPositionFromContractorDto(), position);
 
             await _appDbContext.SaveChangesAsync();

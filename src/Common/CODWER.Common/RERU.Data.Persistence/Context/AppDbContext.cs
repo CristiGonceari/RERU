@@ -64,6 +64,14 @@ namespace RERU.Data.Persistence.Context
                 .HasForeignKey(up => up.RoleColaboratorId)
                 .HasPrincipalKey(r => r.ColaboratorId);
 
+            modelBuilder.Entity<Contractor>()
+                        .Ignore(b => b.FirstName)
+                        .Ignore(b => b.LastName)
+                        .Ignore(b => b.FatherName)
+                        .Ignore(b => b.Idnp)
+                        .Ignore(b => b.PhoneNumber)
+                        .Ignore(b => b.BirthDate);
+
             modelBuilder
                 .ApplyConfigurationsFromAssembly(typeof(AppDbContext)
                     .Assembly);
@@ -75,13 +83,10 @@ namespace RERU.Data.Persistence.Context
                     .UseNumberAsIdentifier()
                     .SetDeleteBehavior(DeleteBehavior.Restrict));
 
-
-
-
-
-
-
-
+            modelBuilder.Entity<UserProfile>()
+                .HasOne(up => up.Contractor)
+                .WithOne(up => up.UserProfile)
+                .HasForeignKey<Contractor>(b => b.UserProfileId);
 
 
 

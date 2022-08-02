@@ -32,12 +32,12 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetCandidateRegistrationStep
 
             var userProfile = await AppDbContext.UserProfiles
                 .Include(x => x.Department)
-                .Include(x => x.RegistrationFluxSteps)
+                .Include(x => x.Contractor)
+                .ThenInclude(x => x.RegistrationFluxSteps)
                 .Include(x => x.Role)
                 .FirstOrDefaultAsync(up => up.Id == int.Parse(currentApplicationUser.Id));
 
             var userProfDto = Mapper.Map<CandidateRegistrationStepsDto>(userProfile);
-
 
             var registrationSteps = Enum.GetValues(typeof(RegistrationFluxStepEnum));
             var list = new List<int>();
@@ -45,7 +45,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetCandidateRegistrationStep
 
             for (var i = 0; i < registrationSteps.Length; i++) 
             {
-                var check = userProfile?.RegistrationFluxSteps.FirstOrDefault(rfs => rfs.Step.ToString() == registrationSteps.GetValue(i).ToString());
+                var check = userProfile?.Contractor.RegistrationFluxSteps.FirstOrDefault(rfs => rfs.Step.ToString() == registrationSteps.GetValue(i).ToString());
 
                 if (check == null)
                 {

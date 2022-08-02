@@ -16,17 +16,13 @@
 //        public string Id { set; get; }
 //        public bool IsAnonymous => string.IsNullOrEmpty(Id);
 //        //public string FirstName { set; get; }
-        
+
 //        public string FirstName { set; get; }
 //        public string LastName { get; set; }
 //        public string FatherName { get; set; }
 
 //        public string Email { set; get; }
 //        public string Idnp { set; get; }
-
-//        public Role Role { get; set; }
-//        public int? DepartmentColaboratorId { get; set; }
-//        public int? RoleColaboratorId { get; set; }
 
 //        public IEnumerable<ApplicationUserModule> Modules { set; get; }
 //        public IEnumerable<string> Permissions => Modules.SelectMany (m => m.Permissions);

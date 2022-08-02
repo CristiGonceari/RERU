@@ -8,6 +8,7 @@
         public static string NULL_OR_EMPTY_INPUT = "02000002";
         public static string EXISTENT_RECORD = "02000003";
         public static string INVALID_NAME = "02000004";
+        public static string INVALID_ID = "02000005";
 
         //contractor
         public static string CONTRACTOR_NOT_FOUND = "02000101";
@@ -150,10 +151,10 @@
         //studies
         public static string EMPTY_STUDY_INSTITUTION = "02008001";
         public static string EMPTY_STUDY_FACULTY = "02008002";
-        public static string EMPTY_STUDY_QUALIFICATION = "02008003";
+        public static string EMPTY_STUDY_INSTITUTION_ADDRESS = "02008003";
         public static string EMPTY_STUDY_SPECIALITY = "02008004";
-        public static string EMPTY_STUDY_DIPLOMA_NUMBER = "02008005";
-        public static string EMPTY_STUDY_DIPLOMA_RELEASE_DAY = "02008006";
+        public static string EMPTY_STUDY_YEAR_OF_AMISION = "02008005";
+        public static string EMPTY_STUDY_GRADUATION_YEAR = "02008006";
         public static string INVALID_STUDY_TYPE = "02008007";
         public static string STUDY_NOT_FOUND = "02008008";
 
@@ -181,6 +182,48 @@
         public static string EMPTY_CONTENT = "02016001";
         public static string EMPTY_NAME = "02016002";
         public static string ARTICLE_NOT_FOUND = "02016003";
+
+        //RegistrationFluxStep
+        public static string REGISTRATION_FLUX_NOT_FOUND = "02017001";
+
+        //ModernLanguage
+        public static string MODERN_LANGUAGE_NOT_FOUND = "02018001";
+
+        //RecomandationForStudy
+        public static string EMPTY_RECOMANDATION_NAME = "02019001";
+        public static string EMPTY_RECOMANDATION_LAST_NAME = "02019002";
+        public static string EMPTY_RECOMANDATION_FUNCTION = "01019003";
+        public static string EMPTY_RECOMANDATION_SUBDIVISION = "01019004";
+        public static string RECOMANDATION_NOT_FOUND = "01019005";
+
+        //MaterialStatus
+        public static string MATERIAL_STATUS_NOT_FOUND = "02020001";
+        public static string MATERIAL_STATUS_TYPE_NOT_FOUND = "01020002";
+
+        //KinshipRelation
+        public static string EMPTY_KINSHIP_RELATION_NAME = "02021001";
+        public static string EMPTY_KINSHIP_RELATION_LAST_NAME = "02021002";
+        public static string EMPTY_KINSHIP_RELATION_FUNCTION = "02021003";
+        public static string EMPTY_KINSHIP_RELATION_SUBDIVISION = "02021004";
+        public static string KINSHIP_RELATION_NOT_FOUND = "02021005";
+        public static string EMPTY_KINSHIP_RELATION_BIRTH_LOCATION = "02021006";
+        public static string EMPTY_KINSHIP_RELATION_WORK_LOCATION = "02021007";
+        public static string EMPTY_KINSHIP_RELATION_RESIDENCE_ADDRESS = "02021008";
+        public static string EXISTENT_KINSHIP_RELATION_IN_SISTEM = "02021009";
+
+        //Autobiography 
+        public static string EMPTY_AUTOBIOGRAPHY_TEXT = "02022001";
+        public static string AUTOBIOGRAPHY_NOT_FOUND = "02022002";
+
+        //MilitaryObligation
+        public static string EMPTY_MILITARY_OBLIGATION_EFECTIVE = "02023001";
+        public static string EMPTY_MILITARY_OBLIGATION_SPECIALITY = "02023001";
+        public static string EMPTY_MILITARY_OBLIGATION_DEGREE = "02023001";
+        public static string EMPTY_MILITARY_BOOKLET_SERIES = "02023001";
+        public static string EMPTY_MILITARY_BOOKLET_NUMBER = "02023001";
+        public static string EMPTY_MILITARY_BOOKLET_AUTHORITY = "02023001";
+        public static string MILITARY_OBLIGATION_NOT_FOUND = "02023001";
     }
+
 
 }

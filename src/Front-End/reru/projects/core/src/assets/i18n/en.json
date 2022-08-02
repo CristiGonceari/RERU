@@ -632,7 +632,7 @@
   "materialStatusType": {
     "1": "Bachelor",
     "2": "Married",
-    "3": "Unmarried",
+    "3": "Remarried",
     "4": "Widower"
   },
   "kinshipDegree":{
@@ -671,5 +671,9 @@
     "MilitaryObligation": "Military Obligation",
     "Autobiography": "Autobiography",
     "Declaration": "Declaration"
+  },
+  "step-status":{
+    "done": "Completed",
+    "not-done": "Uncompleted"
   }
 }

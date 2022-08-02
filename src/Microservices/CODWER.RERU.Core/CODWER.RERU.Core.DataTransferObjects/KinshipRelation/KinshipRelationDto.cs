@@ -14,7 +14,7 @@ namespace CODWER.RERU.Core.DataTransferObjects.KinshipRelation
         public string Function { get; set; }
         public string WorkLocation { get; set; }
         public string ResidenceAddress { get; set; }
-        public int UserProfileId { get; set; }
+        public int ContractorId { get; set; }
 
     }
 }
