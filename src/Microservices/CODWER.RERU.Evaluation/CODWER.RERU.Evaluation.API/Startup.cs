@@ -55,7 +55,6 @@ namespace CODWER.RERU.Evaluation.API
             services.Configure<RabbitMq>(Configuration.GetSection("MessageQueue"));
             services.Configure<PlatformConfig>(Configuration.GetSection("PlatformConfig"));
 
-            services.AddERPModuleServices(Configuration); //before service provider
             services.AddModuleServiceProvider(); // before conf AppDbContext
 
             ServicesSetup.ConfigureEntity(services, Configuration);
@@ -105,6 +104,7 @@ namespace CODWER.RERU.Evaluation.API
             //services.ForAddMigration(Configuration);
             //end important
 
+            services.AddERPModuleServices(Configuration); 
             services.AddCommonModuleApplication(Configuration);
             services.AddCommonLoggingContext(Configuration);
 
