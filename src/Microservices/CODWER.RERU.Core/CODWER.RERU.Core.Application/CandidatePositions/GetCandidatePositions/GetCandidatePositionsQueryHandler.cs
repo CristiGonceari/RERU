@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using RERU.Data.Entities;
@@ -23,7 +24,7 @@ namespace CODWER.RERU.Core.Application.CandidatePositions.GetCandidatePositions
         public async Task<PaginatedModel<CandidatePositionDto>> Handle(GetCandidatePositionsQuery request, CancellationToken cancellationToken)
         {
             var positions = _appDbContext.CandidatePositions
-                .Where(x => x.IsActive)
+                .Where(x => x.From <= DateTime.Today && x.To >= DateTime.Today && x.IsActive)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(request.Name))

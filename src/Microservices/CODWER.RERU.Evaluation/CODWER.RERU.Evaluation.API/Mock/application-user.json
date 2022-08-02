@@ -1,10 +1,11 @@
 ﻿{
-
   "id": "9999",
   "firstName": "RERU Client",
   "lastName": "Evaluation",
-  "fatherName":  "Mock User",
+  "fatherName": "Mock User",
   "email": "andrian.hubencu@codwer.com",
+  "createById": "1",
+  "updateById": "1",
   "avatar": null,
   "modules": [
     {

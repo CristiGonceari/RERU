@@ -9,7 +9,6 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.EditCandidatePos
     public class EditCandidatePositionCommand : IRequest<Unit>
     {
         public AddEditCandidatePositionDto Data { get; set; }
-
     }
     
 }

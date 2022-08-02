@@ -14,7 +14,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.AddDepartmentR
                 .SetValidator(new ExistentDepartmentRoleContentRecordValidator(appDbContext, ValidationMessages.InvalidInput));
 
             RuleFor(x => x.Data)
-                    .Must(x => x.OrganizationRoleCount > 0)
+                    .Must(x => x.RoleCount > 0)
                     .WithMessage(ValidationMessages.InvalidInput)
                     .WithErrorCode(ValidationCodes.INVALID_INPUT);
         }

@@ -90,12 +90,13 @@ export class DetailsComponent implements OnInit {
   }
 
   addDepartmentContent(data): void {
-    // this.departmentContentService.add({departmentId: this.department.id, organizationRoleId: +data.organizationRoleId, organizationRoleCount: + data.organizationRoleCount}).subscribe(response => {
-    //   this.retrieveDepartmentContent(this.department.id);
-    //   this.notificationService.success('Success', 'Role attached!', NotificationUtil.getDefaultConfig());
-    // }, (error) => {
-    //   this.notificationService.error('Error', 'There was an error attaching', NotificationUtil.getDefaultConfig());
-    // });
+    console.log("this.department", this.department)
+    this.departmentContentService.add({departmentId: this.department.id, RoleId: +data.organizationRoleId, RoleCount: + data.organizationRoleCount}).subscribe(response => {
+      this.retrieveDepartmentContent(this.department.id);
+      this.notificationService.success('Success', 'Role attached!', NotificationUtil.getDefaultConfig());
+    }, (error) => {
+      this.notificationService.error('Error', 'There was an error attaching', NotificationUtil.getDefaultConfig());
+    });
   }
 
   openDeleteDepartmentContentModal(item): void {

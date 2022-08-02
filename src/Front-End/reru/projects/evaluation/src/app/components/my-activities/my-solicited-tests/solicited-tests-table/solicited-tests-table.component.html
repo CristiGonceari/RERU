@@ -40,10 +40,12 @@
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                                 <div ngbDropdownMenu aria-labelledby="action1">
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem 
-                                        [routerLink]="['../edit-solicited-position', item.id]" *ngIf="item.solicitedTestStatus == enum.New || item.solicitedTestStatus == enum.Wait">
+                                        [routerLink]="['../edit-solicited-position', item.id]" 
+                                        *ngIf="item.solicitedTestStatus == enum.New || item.solicitedTestStatus == enum.Wait">
                                         {{ 'button.edit' | translate }}
                                     </button>
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem 
+                                    *ngIf="item.solicitedTestStatus == enum.New || item.solicitedTestStatus == enum.Wait"
                                         (click)="openDeleteModal(item.id)">
                                         {{'button.delete' | translate}}
                                     </button>

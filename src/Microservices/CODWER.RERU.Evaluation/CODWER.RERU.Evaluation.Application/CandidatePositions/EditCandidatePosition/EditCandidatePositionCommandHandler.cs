@@ -18,7 +18,11 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.EditCandidatePos
         private readonly ILoggerService<EditCandidatePositionCommand> _loggerService;
         private readonly IAssignDocumentsAndEventsToPosition _assignDocumentsAndEventsToPosition;
 
-        public EditCandidatePositionCommandHandler(AppDbContext appDbContext, IMapper mapper, ILoggerService<EditCandidatePositionCommand> loggerService, IAssignDocumentsAndEventsToPosition assignDocumentsAndEventsToPosition)
+        public EditCandidatePositionCommandHandler(
+            AppDbContext appDbContext, 
+            IMapper mapper, 
+            ILoggerService<EditCandidatePositionCommand> loggerService, 
+            IAssignDocumentsAndEventsToPosition assignDocumentsAndEventsToPosition)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;

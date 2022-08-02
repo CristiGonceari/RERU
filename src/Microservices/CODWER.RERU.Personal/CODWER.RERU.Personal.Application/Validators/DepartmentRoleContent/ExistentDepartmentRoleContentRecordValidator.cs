@@ -22,7 +22,7 @@ namespace CODWER.RERU.Personal.Application.Validators.DepartmentRoleContent
         private void ExistentRecord(AddEditDepartmentRoleContentDto data, string errorMessage, CustomContext context)
         {
             var existent = _appDbContext.DepartmentRoleContents.Any(dr =>
-                dr.DepartmentId == data.DepartmentId && dr.RoleId == data.OrganizationRoleId);
+                dr.DepartmentId == data.DepartmentId && dr.RoleId == data.RoleId);
 
             if (existent)
             {

@@ -52,8 +52,8 @@
                           </label>
                           <div class="col-lg-9 col-xl-9">
                             <tag-input class="py-0 form-control form-control-lg form-control-solid h-100"
-                              [ngModelOptions]="{standalone: true}" [(ngModel)]="tags">
-                              <tag-input-dropdown [autocompleteItems]="items" [showDropdownIfEmpty]="true"
+                              [ngModelOptions]="{standalone: true}" [(ngModel)]="tags" [placeholder]="placeHolderStringRequireDocuments">
+                              <tag-input-dropdown [autocompleteItems]="items" [showDropdownIfEmpty]="true" [keepOpen]="true"
                                 [dynamicUpdate]="true">
                               </tag-input-dropdown>
                             </tag-input>
@@ -65,17 +65,48 @@
                           </label>
                           <div class="col-lg-9 col-xl-9">
                             <tag-input class="py-0 form-control form-control-lg form-control-solid h-100"
-                              [ngModelOptions]="{standalone: true}" [(ngModel)]="eventSelected">
-                              <tag-input-dropdown [autocompleteItems]="eventList" [showDropdownIfEmpty]="true"
+                              [ngModelOptions]="{standalone: true}" [(ngModel)]="eventSelected" [placeholder]="placeHolderStringRequireEvents">
+                              <tag-input-dropdown [autocompleteItems]="eventList" [showDropdownIfEmpty]="true" [keepOpen]="true"
                                 [dynamicUpdate]="true">
                               </tag-input-dropdown>
                             </tag-input>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label class="col-xl-3 col-lg-3 col-form-label">{{ 'locations.description' | translate }}</label>
+                          <label class="col-xl-3 col-lg-3 col-form-label">
+                            {{'events.start-date' | translate}}
+                          </label>
                           <div class="col-lg-9 col-xl-9">
-                            <ckeditor [editor]="Editor" [(ngModel)]="editorData" (ready)="onReady($event)" [ngModelOptions]="{standalone: true}"></ckeditor>
+                            <input id="from" [owlDateTime]="fromDate" placeholder="Date Time" class="shadow-input"
+                              name="date" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}"
+                              autocomplete="off" />
+                            <input id="from" [owlDateTimeTrigger]="fromDate" placeholder="Date Time" autocomplete="off"
+                              class="form-control form-control-lg form-control-solid"
+                              [value]="startDate | dateFilter:'dd/MM/yy HH:mm'" />
+                            <owl-date-time #fromDate></owl-date-time>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-xl-3 col-lg-3 col-form-label">
+                            {{'events.end-date' | translate}}
+                          </label>
+                          <div class="col-lg-9 col-xl-9">
+                            <input id="tillDate" [owlDateTime]="tillDate" placeholder="Date Time" class="shadow-input"
+                              name="date" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}"
+                              autocomplete="off" />
+                            <input id="tillDate" [owlDateTimeTrigger]="tillDate" placeholder="Date Time"
+                              autocomplete="off" class="form-control form-control-lg form-control-solid"
+                              [value]="endDate | dateFilter:'dd/MM/yy HH:mm'" />
+                            <owl-date-time #tillDate></owl-date-time>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-xl-3 col-lg-3 col-form-label">
+                            {{ 'locations.description' | translate }}
+                          </label>
+                          <div class="col-lg-9 col-xl-9">
+                            <ckeditor [editor]="Editor" [(ngModel)]="editorData" (ready)="onReady($event)"
+                              [ngModelOptions]="{standalone: true}"></ckeditor>
                           </div>
                         </div>
                       </div>

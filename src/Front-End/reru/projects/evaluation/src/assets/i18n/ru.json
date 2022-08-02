@@ -966,7 +966,9 @@
     "change-status": "Изменить статус",
     "refuse-msg": "Вы уверены, что хотите отклонить эту запрошенную должность?",
     "select-candidate-position": "Выберите должность",
-    "position-to-candidate": "Кандидируемая позиция"
+    "position-to-candidate": "Кандидируемая позиция",
+    "aviable-from": "Действителен с",
+    "aviable-to": "Годен до"
   },
   "evaluations": {
     "evaluation": "Оценка",

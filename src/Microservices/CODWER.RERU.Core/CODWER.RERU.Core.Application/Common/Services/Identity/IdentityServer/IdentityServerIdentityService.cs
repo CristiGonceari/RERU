@@ -94,7 +94,8 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                     await _notificationService.PutEmailInQueue(new QueuedEmailData
                     {
                         Subject = "New account",
-                        To = identityUser.Email,
+                        //To = identityUser.Email,
+                        To = "cristi.gordelenco@gmail.com",
                         HtmlTemplateAddress = "Templates/UserRegister.html",
                         ReplacedValues = new Dictionary<string, string>()
                         {
@@ -134,7 +135,8 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                     await _notificationService.PutEmailInQueue(new QueuedEmailData
                     {
                         Subject = "Update account",
-                        To = identityUser.Email,
+                        //To = identityUser.Email,
+                        To = "cristi.gordelenco@gmail.com",
                         HtmlTemplateAddress = "Templates/UserRegister.html",
                         ReplacedValues = new Dictionary<string, string>()
                         {

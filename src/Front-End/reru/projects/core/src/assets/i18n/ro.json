@@ -39,7 +39,9 @@
   },
   "vacant-positions-page": {
     "title": "Pagina de poziții vacante",
-    "details": "Detalii despre poziția vacantă"
+    "details": "Detalii despre poziția vacantă",
+    "aviable-from": "Valabil de la",
+    "aviable-to": "Valabil pana la"
   },
   "files":{
     "title": "Documente",

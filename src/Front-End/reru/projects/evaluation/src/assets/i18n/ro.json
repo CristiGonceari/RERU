@@ -968,7 +968,9 @@
     "change-status": "Schimba statutul",
     "refuse-msg": "Sigur doriți să refuzați aceasta pozitie solicitata?",
     "select-candidate-position": "Selectați poziția",
-    "position-to-candidate": "Poziția pentru care candidați"
+    "position-to-candidate": "Poziția pentru care candidați",
+    "aviable-from": "Valabil de la",
+    "aviable-to": "Valabil pana la"
   },
   "evaluations": {
     "evaluation": "Evaluare",
