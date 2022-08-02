@@ -3,10 +3,8 @@ using CODWER.RERU.Core.DataTransferObjects.SelectValues;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Persistence.Context;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,7 +23,7 @@ namespace CODWER.RERU.Core.Application.References.GetModernLanguages
 
         public async Task<List<SelectValue>> Handle(GetModernLanguageQuery request, CancellationToken cancellationToken)
         {
-            var languages = await _appDbContext.ModernLanguages.ToListAsync();
+            var languages = await _appDbContext.ModernLanguages.OrderBy(x => x.Name).ToListAsync();
 
             var mapper = _mapper.Map<List<SelectValue>>(languages);
 

@@ -241,10 +241,7 @@
 </form>
 <div class="row justify-content-end mt-10 mr-1">
     <button class="btn btn-success" matStepperNext
-    [disabled]="(materialStatusForm && materialStatusForm.invalid || userMaterialStatus == null) || 
-    (kinshipRelationWithUserProfileForm && kinshipRelationWithUserProfileForm.invalid || kinshipRelationWithUserProfileData == null) || 
-    (kinshipRelationForm && kinshipRelationForm.invalid || kinshipRelationData == null) ||
-    (kinshipRelationCriminalDataForm && (kinshipRelationCriminalDataForm.value.text == null || kinshipRelationCriminalDataForm.value.text == '') || kinshipRelationCriminalData == null)"
+    [disabled]="(materialStatusForm && materialStatusForm.invalid || userMaterialStatus == null)"
     (click)="addRegistrationFluxStep()"
         >{{'stepper.button-next' | translate}}</button>
 </div>

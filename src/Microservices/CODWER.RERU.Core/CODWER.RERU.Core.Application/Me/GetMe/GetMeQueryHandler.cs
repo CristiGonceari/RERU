@@ -40,7 +40,7 @@ namespace CODWER.RERU.Core.Application.Me.GetMe {
 
             if (userProfile.DepartmentColaboratorId == null &&
                 userProfile.RoleColaboratorId == null && 
-                !string.IsNullOrEmpty(userProfile.Email)
+                !string.IsNullOrEmpty(userProfile.Idnp)
                 )
             {
                 me.IsCandidateStatus = true;

@@ -312,8 +312,8 @@ export class StudyComponent implements OnInit {
       id: this.fb.control((recommendation && recommendation.id) || null, []),
       name: this.fb.control((recommendation && recommendation.name) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       lastName: this.fb.control((recommendation && recommendation.lastName) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      function: this.fb.control((recommendation && recommendation.function) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      subdivision: this.fb.control((recommendation && recommendation.subdivision) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      function: this.fb.control((recommendation && recommendation.function) || null, [Validators.required]),
+      subdivision: this.fb.control((recommendation && recommendation.subdivision) || null, [Validators.required]),
       contractorId: this.fb.control(contractorId || null, []),
     });
   }

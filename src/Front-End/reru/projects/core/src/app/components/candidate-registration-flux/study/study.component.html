@@ -264,7 +264,7 @@
 </form>
 <div class="row justify-content-end mt-10 mr-1" >
     <button class="btn btn-success" matStepperNext
-    [disabled]="(languageForm && languageForm.invalid || userStudies == null) || (studyForm && studyForm.invalid || userStudies == null) || (recommendationForm && recommendationForm.invalid || recommendationForStudy == null)"
+    [disabled]="(studyForm && studyForm.invalid || userStudies == null)"
     (click)="addRegistrationFluxStep()"
         >{{'stepper.button-next' | translate}}</button>
 </div>
