@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Persistence.Context;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace CODWER.RERU.Core.Application.References.GetMaterialStatusType
 
         public async Task<List<SelectValue>> Handle(GetMaterialStatusTypeQuery request, CancellationToken cancellationToken)
         {
-            var materialStatusTypes = await _appDbContext.MaterialStatusTypes.ToListAsync();
+            var materialStatusTypes = await _appDbContext.MaterialStatusTypes.OrderBy(x => x.Name).ToListAsync();
 
             var mapper = _mapper.Map<List<SelectValue>>(materialStatusTypes);
 

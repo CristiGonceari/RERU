@@ -53,7 +53,7 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
             };
 
             var userProfile = Mapper.Map<UserProfile>(newUser);
-            userProfile.Contractor = new Contractor();
+            userProfile.Contractor = new Contractor() { UserProfile = userProfile };
             
 
             var defaultRoles = AppDbContext.Modules

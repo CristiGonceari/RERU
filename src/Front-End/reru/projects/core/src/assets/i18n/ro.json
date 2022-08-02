@@ -9,7 +9,8 @@
     "my-profile": "Profilul meu",
     "change-password": "Schimbarea parolei",
     "logout": "Ieșire",
-    "registration": "Înregistrare Core"
+    "registration": "Înregistrare Core",
+    "core-dashboard": "Tabloul de bord principal"
   },
   "registration-page":{
     "about-us": "E bine să știi",
@@ -351,7 +352,7 @@
       "title": "Gestionarea rolulilor de acces"
     },
     "dashboard": {
-      "title": "Dashboard",
+      "title": "Tabloul de bord principal",
       "subtitle": "Pagina de start"
     },
     "modules-details": {

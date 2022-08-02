@@ -9,7 +9,8 @@
     "my-profile": "My profile",
     "change-password": "Change password",
     "logout": "Logout",
-    "registration": "Core Registration"
+    "registration": "Core Registration",
+    "core-dashboard": "Core Dashboard"
   },
   "registration-page":{
     "about-us": "Good to know",
@@ -353,7 +354,7 @@
       "title": "Manage application acceess roles"
     },
     "dashboard": {
-      "title": "Dashboard",
+      "title": "Core Dashboard",
       "subtitle": "Start page"
     },
     "modules-details": {

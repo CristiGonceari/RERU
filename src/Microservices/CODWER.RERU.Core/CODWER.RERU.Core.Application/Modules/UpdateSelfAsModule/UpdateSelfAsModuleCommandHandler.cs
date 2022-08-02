@@ -87,7 +87,7 @@ namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule
                 userProfileModuleRoles.UserProfile.LastName = "Platforma";
                 userProfileModuleRoles.UserProfile.IsActive = true;
                 userProfileModuleRoles.UserProfile.RequiresDataEntry = true;
-                userProfileModuleRoles.UserProfile.Contractor = new Contractor();
+                userProfileModuleRoles.UserProfile.Contractor = new Contractor() { UserProfile = userProfileModuleRoles.UserProfile };
 
                 var ident = new UserProfileIdentity
                 {

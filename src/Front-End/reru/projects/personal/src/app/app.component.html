@@ -1,4 +1,4 @@
-<app-layout [title]="'Personal'" [moduleId]="1" [hasBackground]="true" [config]="appSettings"
+<app-layout [title]="'pages.start.title' | translate" [moduleId]="1" [hasBackground]="true" [config]="appSettings"
   [languages]="translate.langs" [currentLanguage]="translate.currentLanguage" [sidebarItems]="sidebarItems"
   [letter]="'assets/personal.png'" [logo]="'assets/logo_transparent.png'" (navigate)="navigate($event)"
   (changeLanguage)="translate.use($event)" (logout)="logout()">

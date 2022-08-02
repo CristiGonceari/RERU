@@ -93,7 +93,6 @@ export class DeclarationComponent implements OnInit {
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.contractorId);
 
         this.counterChange.emit(this.isChecked == true);
-       this.router.navigate(["../../../../"], { relativeTo: this.route });
     }else{
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractorId);
     }
@@ -107,9 +106,11 @@ export class DeclarationComponent implements OnInit {
     if(stepData.length == 0){
       this.addCandidateRegistationStep(success, stepId, contractorId);
       this.ds.sendData(datas);
+      this.router.navigate(["../../../../"], { relativeTo: this.route}).then(() => {window.location.reload()});
     }else{
       this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId);
       this.ds.sendData(datas);
+      this.router.navigate(["../../../../"], { relativeTo: this.route}).then(() => {window.location.reload()});
     }
   }
 

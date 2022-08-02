@@ -9,7 +9,8 @@
     "my-profile": "Мой профиль",
     "change-password": "Смена пароля",
     "logout": "Выход",
-    "registration": "Core pегистрация"
+    "registration": "Core pегистрация",
+    "core-dashboard": "Основная панель"
   },
   "registration-page":{
     "about-us": "Полезно знать",
@@ -353,7 +354,7 @@
       "title": "Управление ролями доступа"
     },
     "dashboard": {
-      "title": "Dashboard",
+      "title": "Основная панель",
       "subtitle": "Стартовая странница"
     },
     "modules-details": {

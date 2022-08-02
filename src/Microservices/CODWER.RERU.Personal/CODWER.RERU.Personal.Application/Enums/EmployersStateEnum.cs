@@ -4,6 +4,7 @@
     {
         All = 0,
         InService = 1,
-        Dismissed = 2
+        Dismissed = 2,
+        Candidate = 3
     }
 }

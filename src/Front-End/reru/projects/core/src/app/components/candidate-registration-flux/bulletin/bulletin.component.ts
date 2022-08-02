@@ -158,9 +158,9 @@ export class BulletinComponent implements OnInit {
       country: this.fb.control(data.country || 'Moldova', [Validators.required]),
       region: this.fb.control(data.region, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
       city: this.fb.control(data.city,[Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      street: this.fb.control(data.street, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      building: this.fb.control(data.building, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      apartment: this.fb.control(data.apartment, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
+      street: this.fb.control(data.street, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
+      building: this.fb.control(data.building, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
+      apartment: this.fb.control(data.apartment, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
       postCode: this.fb.control(data.postCode, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)])
 
     });
@@ -172,9 +172,9 @@ export class BulletinComponent implements OnInit {
       country: this.fb.control(data.country || 'Moldova', [Validators.required]),
       region: this.fb.control(data.region, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
       city: this.fb.control(data.city,[Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      street: this.fb.control(data.street, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      building: this.fb.control(data.building, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      apartment: this.fb.control(data.apartment, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
+      street: this.fb.control(data.street, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
+      building: this.fb.control(data.building, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
+      apartment: this.fb.control(data.apartment, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
       postCode: this.fb.control(data.postCode, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)])
 
     });

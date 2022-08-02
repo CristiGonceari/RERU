@@ -36,7 +36,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.Internal.CreateInternalUserP
             if (existUserProfileByIdnp == null)
             {
                 var userProfile = Mapper.Map<UserProfile>(request.Data);
-                userProfile.Contractor = new Contractor();
+                userProfile.Contractor = new Contractor() { UserProfile = userProfile };
 
                 if (request.Data.ModuleRoles != null)
                 {

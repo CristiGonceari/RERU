@@ -51,7 +51,8 @@ namespace RERU.Data.Entities
         public int? RoleColaboratorId { get; set; }
         public Role Role { get; set; }
 
-        public  Contractor Contractor { get; set; }
+        [JsonIgnore]
+        public Contractor Contractor { get; set; }
 
 
         [JsonIgnore]

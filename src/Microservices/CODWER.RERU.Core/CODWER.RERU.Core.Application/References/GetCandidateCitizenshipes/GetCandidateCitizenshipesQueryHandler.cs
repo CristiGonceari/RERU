@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Persistence.Context;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace CODWER.RERU.Core.Application.References.GetCandidateCitizenshipes
 
         public async Task<List<SelectValue>> Handle(GetCandidateCitizenshipesQuery request, CancellationToken cancellationToken)
         {
-            var citizenships = await _appDbContext.CandidateCitizens.ToListAsync();
+            var citizenships = await _appDbContext.CandidateCitizens.OrderBy(x => x.CitizenshipName).ToListAsync();
 
             var mapper = _mapper.Map<List<SelectValue>>(citizenships);
 
