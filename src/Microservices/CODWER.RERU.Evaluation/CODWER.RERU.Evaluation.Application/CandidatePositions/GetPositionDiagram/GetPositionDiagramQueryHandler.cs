@@ -25,7 +25,6 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
         {
             var eventDiagram = new PositionDiagramDto();
             var allUsers = new List<UserDiagramDto>();
-            var allTestTemplates = new List<TestTemplateDiagramDto>();
 
             eventDiagram.EventsDiagram = GetEvenstDiagram(request.PositionId);
 
@@ -33,17 +32,21 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
             {
                 positionEvent.TestTemplates = GetTestTemplatesDiagram(positionEvent.EventId);
 
+                if (!positionEvent.TestTemplates.Any())
+                {
+                    positionEvent.TestTemplates.Add(new TestTemplateDiagramDto());
+                }
+
                 var eventUsers = GetUsersDiagram(positionEvent.EventId);
 
                 allUsers.AddRange(eventUsers);
-                allTestTemplates.AddRange(positionEvent.TestTemplates);
 
                 eventDiagram.UsersDiagram = allUsers.GroupBy(x => x.UserProfileId).Select(x => x.First()).ToList();
 
                 CalculateTestsFromTestTemplates(eventDiagram, positionEvent);
             }
 
-            GenerateTestTemplatesForAllUsers(eventDiagram, allTestTemplates);
+            GenerateTestTemplatesForAllUsers(eventDiagram);
 
             return eventDiagram;
         }
@@ -120,30 +123,27 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
                 .ToList();
         }
 
-        private void GenerateTestTemplatesForAllUsers(PositionDiagramDto eventDiagram, List<TestTemplateDiagramDto> allTestTemplates)
+        private void GenerateTestTemplatesForAllUsers(PositionDiagramDto eventDiagram)
         {
-            foreach (var positionEvent in eventDiagram.EventsDiagram)
+            foreach (var user in eventDiagram.UsersDiagram) 
             {
-                foreach (var user in eventDiagram.UsersDiagram)
+                foreach (var positionEvent in eventDiagram.EventsDiagram)
                 {
-                    foreach (var testTemplate in positionEvent.TestTemplates)
+                    if (user.TestsByTestTemplate.All(x => x.EventId != positionEvent.EventId))
                     {
-                        if (user.TestsByTestTemplate.Count() < allTestTemplates.Count())
+                        foreach (var testTemplate in positionEvent.TestTemplates)
                         {
-                            if (user.TestsByTestTemplate.Any(x => x.TestTemplateId != testTemplate.TestTemplateId))
+                            user.TestsByTestTemplate.Add(new TestsByTestTemplateDiagramDto()
                             {
-                                user.TestsByTestTemplate.Add(new TestsByTestTemplateDiagramDto()
-                                {
-                                    EventId = positionEvent.EventId,
-                                    TestTemplateId = testTemplate.TestTemplateId,
-                                    Tests = new List<TestResultDiagramDto>()
-                                });
-                            }
+                                EventId = positionEvent.EventId,
+                                TestTemplateId = testTemplate.TestTemplateId,
+                                Tests = new List<TestResultDiagramDto>()
+                            });
                         }
                     }
-
-                    user.TestsByTestTemplate = user.TestsByTestTemplate.OrderBy(x => x.EventId).ThenBy(x => x.TestTemplateId).ToList();
                 }
+
+                user.TestsByTestTemplate = user.TestsByTestTemplate.OrderBy(x => x.EventId).ThenBy(x => x.TestTemplateId).ToList();
             }
         }
     }
