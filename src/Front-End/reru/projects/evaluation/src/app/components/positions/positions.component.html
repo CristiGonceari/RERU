@@ -40,16 +40,37 @@
                   <thead class="text-uppercase text-muted">
                     <tr>
                       <th scope="col">{{'position.name' | translate}}</th>
+                      <th scope="col">{{'locations.person' | translate}}</th>
+                      <th scope="col">{{'events.start-date' | translate}}</th>
+                      <th scope="col">{{'events.end-date' | translate}}</th>
                       <th scope="col"  style="width: 75px; text-align: center; vertical-align: middle">{{'position.status' | translate}}</th>
                       <th scope="col" style="width: 50px"></th>
                     </tr>
                   </thead>
                   <tbody class="text-dark-75">
                     <tr *ngFor="let position of positions">
-                      <td>
-                        <a [routerLink]="['../edit-position', position.id]"
+                      <td [routerLink]="['../edit-position', position.id]">
+                        <a 
                           class="font-size-lg text-dark-50 text-hover-dark-75">
                           {{ position.name }}
+                        </a>
+                      </td>
+                      <td [routerLink]="['../edit-position', position.id]">
+                        <a 
+                          class="font-size-lg text-dark-50 text-hover-dark-75">
+                          {{ position.responsiblePerson}}
+                        </a>
+                      </td>
+                      <td [routerLink]="['../edit-position', position.id]">
+                        <a 
+                          class="font-size-lg text-dark-50 text-hover-dark-75">
+                          {{ position.from | date: 'dd/MM/yyyy, HH:mm'}}
+                        </a>
+                      </td>
+                      <td [routerLink]="['../edit-position', position.id]">
+                        <a 
+                          class="font-size-lg text-dark-50 text-hover-dark-75">
+                          {{ position.to | date: 'dd/MM/yyyy, HH:mm'}}
                         </a>
                       </td>
                       <td>

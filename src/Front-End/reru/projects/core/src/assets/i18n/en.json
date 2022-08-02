@@ -39,7 +39,9 @@
   },
   "vacant-positions-page": {
     "title": "Vacant positions page",
-    "details": "Vacant position details"
+    "details": "Vacant position details",
+    "aviable-from": "Aviable from",
+    "aviable-to": "Aviable to"
   },
   "files":{
     "title": "Documents",

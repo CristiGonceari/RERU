@@ -182,7 +182,12 @@ export class AddEditSolicitedTestComponent implements OnInit {
 
       this.isLoading = true;
 
-      this.uploadFiles(res);
+      if (this.files.length > 0) {
+        this.uploadFiles(res);
+      } else {
+        this.isLoading = false
+        this.backClicked();
+      }
     });
   }
 

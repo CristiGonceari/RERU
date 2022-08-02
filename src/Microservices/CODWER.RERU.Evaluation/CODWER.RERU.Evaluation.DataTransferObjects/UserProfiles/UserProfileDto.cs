@@ -19,5 +19,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles
         public UserStatusEnum? UserStatusEnum { get; set; }
         public AccessModeEnum? AccessModeEnum { get; set; }
         public IEnumerable<string> Permissions { get; set; }
+
+        public string FullName => $"{FirstName} {LastName} {FatherName}";
     }
 }

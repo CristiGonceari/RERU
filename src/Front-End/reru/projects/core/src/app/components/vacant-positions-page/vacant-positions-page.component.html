@@ -86,16 +86,19 @@
                                 <tr>
                                     <th scope="col" style="width: 200px;">{{'sidebar.positions' | translate}}</th>
                                     <th scope="col">{{'table.description' | translate}}</th>
+                                    <th scope="col">{{'vacant-positions-page.aviable-from' | translate }}</th>
+                                    <th scope="col">{{'vacant-positions-page.aviable-to' | translate }}</th>
                                 </tr>
                             </thead>
                             <tbody class="datatable-body" *ngIf="positions">
                                 <tr *ngFor="let item of positions">
                                     <td style="vertical-align: middle;">{{ item.name }}</td>
-                                    <td>
-                                        <ckeditor [editor]="Editor" [(ngModel)]="item.description"
-                                            class="disabled-area">
-                                        </ckeditor>
+                                    <td [innerHTML]="item.description">
+                                        {{item.description}}
                                     </td>
+                                    <td style="vertical-align: middle;">{{ item.from | date: 'dd/MM/yyyy, HH:mm'}}</td>
+                                    <td style="vertical-align: middle;">{{ item.to | date: 'dd/MM/yyyy, HH:mm'}}</td>
+
                                 </tr>
                             </tbody>
                             <tbody class="datatable-body" *ngIf="!positions.length">

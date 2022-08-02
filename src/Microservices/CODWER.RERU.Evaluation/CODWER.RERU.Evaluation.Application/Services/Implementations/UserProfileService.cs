@@ -25,7 +25,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         public async Task<UserProfileDto> GetCurrentUser()
         {
-            var coreUser = await _userProvider.FirstOrDefault(x => x.IsAuthenticated)?.Get();
+            var coreUser = await _userProvider.FirstOrDefault(x => true)?.Get();
             var currentUserProfile = new UserProfile();
             currentUserProfile.Contractor = new Contractor();
 

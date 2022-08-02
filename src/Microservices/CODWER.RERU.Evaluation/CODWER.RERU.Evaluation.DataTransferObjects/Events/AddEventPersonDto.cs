@@ -4,5 +4,6 @@
     {
         public int EventId { get; set; }
         public int UserProfileId { get; set; }
+        public int PositionId { get; set; }
     }
 }
