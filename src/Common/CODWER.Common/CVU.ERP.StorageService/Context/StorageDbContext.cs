@@ -44,7 +44,7 @@ namespace CVU.ERP.StorageService.Context
         public StorageDbContext NewInstance()
         {
             return new(new DbContextOptionsBuilder<StorageDbContext>()
-                .UseNpgsql(_configuration.GetConnectionString(ConnectionString.Identity))
+                .UseNpgsql(_configuration.GetConnectionString(ConnectionString.Storage))
                 .Options, _configuration);
         }
     }
