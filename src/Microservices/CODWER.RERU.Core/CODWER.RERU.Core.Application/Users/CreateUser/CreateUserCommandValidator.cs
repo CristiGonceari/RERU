@@ -9,6 +9,7 @@ using FluentValidation.Validators;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 using System.Linq;
+using System.Text.RegularExpressions;
 using CODWER.RERU.Core.Application.Validators.IDNP;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -51,9 +52,16 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
                 RuleFor(x => x.RoleColaboratorId.Value).Custom(CheckExistentRole);
             });
 
+            RuleFor(r => r.PhoneNumber)
+                .Must(x => Regex.IsMatch(x, @"^(\+373[0-9]{8})$"))
+                .WithErrorCode(ValidationCodes.INVALID_USER_PHONE);
+
+            RuleFor(r => r.BirthDate)
+                .Must(x => x < DateTime.Now.AddYears(-18))
+                .WithErrorCode(ValidationCodes.INVALID_USER_BIRTH_DATE);
+
             RuleFor(x => x.AccessModeEnum)
                 .NotNull()
-                .WithMessage(ValidationMessages.InvalidInput)
                 .WithErrorCode(ValidationCodes.EMPTY_ACCESS_MODE);
 
             //RuleFor(x => x.Idnp)
@@ -66,7 +74,6 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
         private void CheckExistentDepartment(int colId, CustomContext context)
         {
-
             var exist = _appDbContext.Departments.Any(x => x.ColaboratorId == colId);
 
             if (!exist)
@@ -78,7 +85,6 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
         private void CheckExistentRole(int roleId, CustomContext context)
         {
-
             var exist = _appDbContext.Roles.Any(x => x.ColaboratorId == roleId);
 
             if (!exist)

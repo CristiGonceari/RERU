@@ -439,6 +439,10 @@
     "01000003": "IDNP shout not consist only zeroes",
     "01000004": "Invalid IDNP!",
     "01000005": "Duplicate IDNP in the system!",
+    "01000101": "Empty user name",
+    "01000102": "Empty user last name",
+    "01000103": "Empty user father name",
+    "01000104": "Empty user email",
     "01000201": "Empty name!",
     "01000202": "Empty content!",
     "01000203": "Invalid input!",
@@ -448,7 +452,9 @@
     "01000106": "Empty access mode",
     "01000108": "Invalid code",
     "01000109": "Minimum age must be 18",
-    "01000115": "Invalid user phone"
+    "01000115": "Invalid user phone",
+    "01000501": "Invalid role",
+    "01000602": "Invalid department"
   },
   "print": {
     "print-table": "Print table",
