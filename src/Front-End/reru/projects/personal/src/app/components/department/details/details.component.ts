@@ -90,7 +90,6 @@ export class DetailsComponent implements OnInit {
   }
 
   addDepartmentContent(data): void {
-    console.log("this.department", this.department)
     this.departmentContentService.add({departmentId: this.department.id, RoleId: +data.organizationRoleId, RoleCount: + data.organizationRoleCount}).subscribe(response => {
       this.retrieveDepartmentContent(this.department.id);
       this.notificationService.success('Success', 'Role attached!', NotificationUtil.getDefaultConfig());
