@@ -44,13 +44,11 @@ export class PositionsDiagramComponent implements OnInit {
         this.usersDiagram = res.data.usersDiagram;
 
         this.eventsDiagram.forEach(event => {
-          if (event.testTemplates.length == 0) this.testTemplates.push({ template: "", eventId: event.eventId })
-
           event.testTemplates.forEach(element => {
-            this.testTemplates.push({ template: element, eventId: event.eventId })
+            this.testTemplates.push(element)
           });
         });
-        
+
         this.isLoading = false;
       }
     })
