@@ -437,6 +437,10 @@
     "01000003": "IDNP nu trebuie să conține doar zero",
     "01000004": "IDNP nevalid!",
     "01000005": "IDNP duplicat în sistem!",
+    "01000101": "Numele utilizatorului necompletat",
+    "01000102": "Numele de familie al utilizatorului necompletat",
+    "01000103": "Patronimicul utilizatorului necompletat",
+    "01000104": "E-mailul utilizatorului necompletat",
     "01000201": "Nume necompletat!",
     "01000202": "Conținut necompletat!",
     "01000203": "Date nevalide!",
@@ -446,7 +450,9 @@
     "01000106": "Modul de acces necompletat",
     "01000108": "Cod incorect",
     "01000109": "Vârsta minimă trebuie să fie de 18 ani",
-    "01000115": "Telefon nevalid"
+    "01000115": "Telefon nevalid",
+    "01000501": "Rol nevalid",
+    "01000602": "Departament nevalid"
   },
   "print": {
     "print-table": "Printare tabel",

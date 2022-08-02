@@ -32,7 +32,8 @@ export class EditComponent implements OnInit {
 	roles: SelectItem[] = [{ label: '', value: '' }];
 	accessModes: SelectItem[] = [{ label: '', value: '' }];
 
-	birthDate;
+	birthDate: Date;
+	date: string;
 	startDate;
 
 	constructor(
@@ -129,16 +130,24 @@ export class EditComponent implements OnInit {
 		this.isLoading = false;
 	}
 
+	setBirthDate(): void {
+		if (this.birthDate) {
+			const date = new Date(this.birthDate);
+			this.date = new Date(date.getTime() - (new Date(this.birthDate).getTimezoneOffset() * 60000)).toISOString();
+		}
+	}
+
 	editUser(): void {
+		this.setBirthDate();
 		let data = {
 			id: this.userForm.value.id,
 			firstName: this.userForm.value.firstName,
 			lastName: this.userForm.value.lastName,
 			fatherName: this.userForm.value.fatherName,
-			birthDate: this.birthDate != null ? new Date(`${this.birthDate} EDT`).toISOString() : null,
+			birthDate: this.date || null,
 			phoneNumber: this.userForm.value.phoneNumber,
-			departmentColaboratorId: +this.userForm.value.departmentColaboratorId,
-			roleColaboratorId: +this.userForm.value.roleColaboratorId,
+			departmentColaboratorId: +this.userForm.value.departmentColaboratorId || null,
+			roleColaboratorId: +this.userForm.value.roleColaboratorId || null,
 			accessModeEnum: this.userForm.value.accessModeEnum
 		}
 
