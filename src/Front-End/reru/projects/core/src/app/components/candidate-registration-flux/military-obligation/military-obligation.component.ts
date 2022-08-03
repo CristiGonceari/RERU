@@ -98,7 +98,7 @@ export class MilitaryObligationComponent implements OnInit {
 
       if (userData.militaryObligationsCount != 0) {
 
-        this.getMilitaryObligations(this.userGeneralData.id);
+        this.getMilitaryObligations(this.contractorId);
       }
       else {
         this.addOrEditMilitaryObligationButton = false;
@@ -163,7 +163,7 @@ export class MilitaryObligationComponent implements OnInit {
   createMilitaryObligations(){
     this.buildMilitaryObligationForm().subscribe(response => {
       this.notificationService.success('Success', 'Military obligation relation added!', NotificationUtil.getDefaultMidConfig());
-      this.getMilitaryObligations(this.userGeneralData.id);
+      this.getMilitaryObligations(this.contractorId);
     }, error => {
       this.notificationService.error('Failure', 'Military obligation relation was not added!', NotificationUtil.getDefaultMidConfig());
     });

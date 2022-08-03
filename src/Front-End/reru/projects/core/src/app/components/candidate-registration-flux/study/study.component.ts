@@ -158,7 +158,7 @@ export class StudyComponent implements OnInit {
 
       if (userData.studyCount != 0) {
 
-        this.getUserStudies(this.userGeneralData.id);
+        this.getUserStudies(this.contractorId);
       }
       else {
         this.addOrEditStudyButton = false;
@@ -168,7 +168,7 @@ export class StudyComponent implements OnInit {
 
       if (userData.modernLanguageLevelsCount != 0) {
 
-        this.getUserModernLanguages(this.userGeneralData.id);
+        this.getUserModernLanguages(this.contractorId);
       }
       else {
         this.addOrEditLanguagesButton = false;
@@ -178,7 +178,7 @@ export class StudyComponent implements OnInit {
 
       if (userData.recomendationsForStudyCount != 0) {
 
-          this.getUserRecommendation(this.userGeneralData.id);
+          this.getUserRecommendation(this.contractorId);
         }
         else {
           this.addOrEditRecommendationsButton = false;
@@ -346,7 +346,7 @@ export class StudyComponent implements OnInit {
   createStudies(): void {
     this.buildStudiesForm().subscribe(response => {
       this.notificationService.success('Success', 'Studies added!', NotificationUtil.getDefaultMidConfig());
-      this.getUserStudies(this.userGeneralData.id);
+      this.getUserStudies(this.contractorId);
     }, error => {
       this.notificationService.error('Failure', 'Studies was not added!', NotificationUtil.getDefaultMidConfig());
     });
@@ -355,7 +355,7 @@ export class StudyComponent implements OnInit {
   creteModernLanguage(){
     this.buildModernLanguageForm().subscribe(response => {
       this.notificationService.success('Success', 'Modern Language added!', NotificationUtil.getDefaultMidConfig());
-      this.getUserModernLanguages(this.userGeneralData.id);
+      this.getUserModernLanguages(this.contractorId);
     }, error => {
       this.notificationService.error('Failure', 'Modern Language was not added!', NotificationUtil.getDefaultMidConfig());
     });
@@ -364,7 +364,7 @@ export class StudyComponent implements OnInit {
   creteRecommendationForStudy(){
     this.buildReommendationForStudyForm().subscribe(response => {
       this.notificationService.success('Success', 'Recommendation added!', NotificationUtil.getDefaultMidConfig());
-      this.getUserRecommendation(this.userGeneralData.id);
+      this.getUserRecommendation(this.contractorId);
     }, error => {
       this.notificationService.error('Failure', 'Recommendation was not added!', NotificationUtil.getDefaultMidConfig());
     });
