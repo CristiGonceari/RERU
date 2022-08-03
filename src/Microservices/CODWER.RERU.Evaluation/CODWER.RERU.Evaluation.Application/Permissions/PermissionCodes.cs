@@ -29,5 +29,7 @@
         public const string ACCES_GENERAL_LA_POZITII_CANDIDATULUI = "P03001201";
 
         public const string ACCES_GENERAL_LA_SABLOANELE_DE_DOCUMENTE = "P03001301";
+
+        public const string ACCES_GENERAL_LA_DOCUMENTE_NECESARE = "P03001401";
     }
 }

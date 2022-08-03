@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.RequiredDocuments.GetRequiredDocument
 {
-    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_SABLOANELE_DE_DOCUMENTE)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_DOCUMENTE_NECESARE)]
     public class GetRequiredDocumentQuery : IRequest<RequiredDocumentDto>
     {
         public int Id { get; set; }
