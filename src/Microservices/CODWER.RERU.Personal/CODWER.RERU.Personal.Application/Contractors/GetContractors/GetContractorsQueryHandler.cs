@@ -40,12 +40,12 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
         {
 
             var contractors = _appDbContext.Contractors
+                .Include(c => c.UserProfile)
                 .Include(r => r.Positions)
                 .ThenInclude(p => p.Department)
                 .Include(c => c.Positions)
                 .ThenInclude(p => p.Role)
                 .Include(r => r.Contacts)
-                .Include(c => c.UserProfile)
                 .AsQueryable();
 
             contractors = Filter(contractors, request);
