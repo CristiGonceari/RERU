@@ -10,6 +10,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.ContractorMappings
     {
         public string Convert(Contractor sourceMember, ResolutionContext context)
         {
+
             var now = DateTime.Now;
 
             return sourceMember.Positions.Any(p =>
