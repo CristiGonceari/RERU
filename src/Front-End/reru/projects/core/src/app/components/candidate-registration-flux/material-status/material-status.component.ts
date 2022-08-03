@@ -165,7 +165,7 @@ export class MaterialStatusComponent implements OnInit {
 
       if (userData.materialStatusId != 0) {
 
-        this.getUserMaterialStatus(this.userGeneralData.id);
+        this.getUserMaterialStatus(this.contractorId);
       }
       else {
         this.addOrEditMaterialStatusButton = false;
@@ -175,7 +175,7 @@ export class MaterialStatusComponent implements OnInit {
 
       if (userData.kinshipRelationCriminalDataId != 0) {
 
-        this.getKinshipRelationCriminalData(this.userGeneralData.id);
+        this.getKinshipRelationCriminalData(this.contractorId);
       }
       else {
         this.addOrEditKinshipRelationCriminalDataButton = false;
@@ -185,7 +185,7 @@ export class MaterialStatusComponent implements OnInit {
 
       if (userData.kinshipRelationWithUserProfilesCount != 0) {
 
-        this.getKinshipRelationWithUserProfile(this.userGeneralData.id);
+        this.getKinshipRelationWithUserProfile(this.contractorId);
       }
       else {
         this.addOrEditKinshipRelationWithUserProfileButton = false;
@@ -195,7 +195,7 @@ export class MaterialStatusComponent implements OnInit {
 
       if (userData.kinshipRelationsCount != 0) {
 
-          this.getKinshipRelation(this.userGeneralData.id);
+          this.getKinshipRelation(this.contractorId);
         }
         else {
           this.addOrEditKinshipRelationButton = false;
@@ -367,7 +367,7 @@ export class MaterialStatusComponent implements OnInit {
   creteKinshipRelationWithUserProfile(){
     this.buildKinshipRelationWithUserProfileForm().subscribe(response => {
       this.notificationService.success('Success', 'Kinship relation was added!', NotificationUtil.getDefaultMidConfig());
-      this.getKinshipRelationWithUserProfile(this.userGeneralData.id);
+      this.getKinshipRelationWithUserProfile(this.contractorId);
     }, error => {
       this.notificationService.error('Failure', 'Kinship relation was not added!', NotificationUtil.getDefaultMidConfig());
     });
@@ -376,7 +376,7 @@ export class MaterialStatusComponent implements OnInit {
   creteKinshipRelation(){
     this.buildKinshipRelationForm().subscribe(response => {
       this.notificationService.success('Success', 'Kinship relation added!', NotificationUtil.getDefaultMidConfig());
-      this.getKinshipRelation(this.userGeneralData.id);
+      this.getKinshipRelation(this.contractorId);
     }, error => {
       this.notificationService.error('Failure', 'Kinship relation was not added!', NotificationUtil.getDefaultMidConfig());
     });

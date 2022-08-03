@@ -132,10 +132,9 @@ export class GeneralDataFormComponent implements OnInit {
 		);
 	}
  
-  parseEditUserProfileDetails(contractorId, generalData, id){
+  parseEditUserProfileDetails(contractorId, generalData){
     return {
-      id: id,
-      contractorId: contractorId,
+      id: contractorId,
       workPhone: generalData.workPhone,
       homePhone: generalData.homePhone,
       sex: parseInt(generalData.sex),
@@ -146,7 +145,7 @@ export class GeneralDataFormComponent implements OnInit {
   }
 
   updateUserProfileGeneralData(){
-    this.user.editCandidateDetails(this.parseEditUserProfileDetails(this.contractorId, this.userForm.value, this.generalDatas.id)).subscribe(res =>{
+    this.user.editCandidateDetails(this.parseEditUserProfileDetails(this.contractorId, this.userForm.value)).subscribe(res =>{
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId , res.success, this.contractorId);
       this.notificationService.success('Success', 'Contractor details added!', NotificationUtil.getDefaultMidConfig());
 

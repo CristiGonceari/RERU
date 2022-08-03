@@ -70,7 +70,7 @@ export class BulletinComponent implements OnInit {
         this.bulletinValuesLoading = false;
 
       if (this.bulletinId != 0){
-        this.getExistentBulletin(this.userId);
+        this.getExistentBulletin(this.contractorId);
       }else{
         this.toAddOrUpdateButton = false;
       }
