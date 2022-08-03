@@ -3,7 +3,6 @@
     public enum EmployerStateEnum
     {
         InService = 1,
-        Dismissed = 2,
-        Candidate = 3
+        Dismissed = 2
     }
 }
