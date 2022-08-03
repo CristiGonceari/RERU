@@ -110,7 +110,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
         const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
         const fileNameParsed = fileName.substring(1, fileName.length - 1);
         const blob = new Blob([response.body], { type: response.body.type });
-        const file = new File([blob], fileName, { type: response.body.type });
+        const file = new File([blob], fileNameParsed, { type: response.body.type });
         saveAs(file);
       }
     }
