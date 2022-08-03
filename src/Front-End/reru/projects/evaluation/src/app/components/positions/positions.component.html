@@ -58,20 +58,28 @@
                       <td [routerLink]="['../edit-position', position.id]">
                         <a 
                           class="font-size-lg text-dark-50 text-hover-dark-75">
-                          {{ position.responsiblePerson}}
+                          {{ position.responsiblePerson || '-'}}
                         </a>
                       </td>
                       <td [routerLink]="['../edit-position', position.id]">
-                        <a 
+                        <a *ngIf="position.from"
                           class="font-size-lg text-dark-50 text-hover-dark-75">
                           {{ position.from | date: 'dd/MM/yyyy, HH:mm'}}
                         </a>
+                        <a *ngIf="!position.from"
+                          class="font-size-lg text-dark-50 text-hover-dark-75">
+                            -
+                        </a>
                       </td>
                       <td [routerLink]="['../edit-position', position.id]">
-                        <a 
+                        <a *ngIf="position.to"
                           class="font-size-lg text-dark-50 text-hover-dark-75">
-                          {{ position.to | date: 'dd/MM/yyyy, HH:mm'}}
+                          {{ position.to | date: 'dd/MM/yyyy, HH:mm' }}
                         </a>
+                        <a *ngIf="!position.to"
+                        class="font-size-lg text-dark-50 text-hover-dark-75">
+                            -
+                      </a>
                       </td>
                       <td>
                         <svg-icon *ngIf="position.isActive === false" key="error" [width]="24" [height]="24"

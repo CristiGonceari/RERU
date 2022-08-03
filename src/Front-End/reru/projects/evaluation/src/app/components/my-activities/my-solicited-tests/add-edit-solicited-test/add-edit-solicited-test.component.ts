@@ -24,6 +24,8 @@ export class AddEditSolicitedTestComponent implements OnInit {
   isEdit: boolean = false;
   isDeleting: boolean = false;
 
+  selected;
+
   eventsList: [] = [];
   selectActiveTests: [] = [];
   user = new SelectItem();
@@ -76,13 +78,15 @@ export class AddEditSolicitedTestComponent implements OnInit {
     this.isEdit = true;
     this.candidatePosition.getPositionValues({ id: solicitedPositionId }).subscribe((res) => (
       this.candidatePositions = res.data,
+      this.selected = this.candidatePositions[0],
+      this.getEventsAndDocuments(),
       this.isLoading = false
     ));
   }
 
   getFiles() {
     if (this.isEdit) {
-      this.solicitedVacantPositionUserFileService.getList({ solicitedVacantPositionId: this.solicitedPositionId, candidatePositionId: this.candidatePositions.value }).subscribe(res => {
+      this.solicitedVacantPositionUserFileService.getList({ solicitedVacantPositionId: this.solicitedPositionId, candidatePositionId: +this.selected.value }).subscribe(res => {
         this.userFiles = res.data;
         this.isDeleting = false;
       })
@@ -113,23 +117,39 @@ export class AddEditSolicitedTestComponent implements OnInit {
     )
   }
 
-  getEventsAndDocuments(id) {
-    this.eventCandidatePositionService.getEventVacandPostition(+this.candidatePositions.value).subscribe(res => {
-      if (res && res.data) {
-        this.eventsWithTestList = res.data.events;
-        this.requiredDocumentsList = res.data.requiredDocuments;
-        this.getFiles(),
-
-          this.showCard = true;
-      } else {
-        this.showCard = false;
-      }
-    })
+  getEventsAndDocuments() {
+    if (this.isEdit) {
+      this.eventCandidatePositionService.getEventVacandPostition(+this.selected.value).subscribe(res => {
+        if (res && res.data) {
+          this.eventsWithTestList = res.data.events;
+          this.requiredDocumentsList = res.data.requiredDocuments;
+          this.getFiles(),
+  
+            this.showCard = true;
+        } else {
+          this.showCard = false;
+        }
+      })
+    } else {
+      this.eventCandidatePositionService.getEventVacandPostition(+this.candidatePositions.value).subscribe(res => {
+        if (res && res.data) {
+          this.eventsWithTestList = res.data.events;
+          this.requiredDocumentsList = res.data.requiredDocuments;
+          this.getFiles(),
+  
+            this.showCard = true;
+        } else {
+          this.showCard = false;
+        }
+      })
+    }
   }
 
   retrievePositions() {
     this.candidatePosition.getPositionValues({}).subscribe((res) => (
       this.candidatePositions = res.data,
+      this.selected = this.candidatePosition[0],
+      console.log("this.selected", this.selected),
       this.isLoading = false
     ));
   }
@@ -164,7 +184,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
     return {
       data: {
         id: this.solicitedPositionId,
-        candidatePositionId: this.candidatePositions.value,
+        candidatePositionId: +this.selected.value,
         solicitedTestStatus: 0
       }
     }
@@ -220,7 +240,6 @@ export class AddEditSolicitedTestComponent implements OnInit {
         if (el.file.file != null) {
           this.solicitedVacantPositionUserFileService.create(request).subscribe(res => {
             this.backClicked();
-            this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
           });
         }
 

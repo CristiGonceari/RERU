@@ -40,7 +40,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionsSele
 
         private async Task<List<SelectItem>> GetCandidatePositionsSelectValues() =>
                _appDbContext.CandidatePositions.AsQueryable()
-                .Where(x => x.From <= DateTime.Today && x.To >= DateTime.Today && x.IsActive)
+                .Where(x => x.From <= DateTime.Now && x.To >= DateTime.Now && x.IsActive)
                 .Select(tt => _mapper.Map<SelectItem>(tt))
                 .ToList();
         

@@ -100,16 +100,20 @@ const routes: Routes = [
 	{
 		path: 'documents-templates',
 		loadChildren: () => import('./components/document-templates/document-templates.module').then(m => m.DocumentTemplatesModule),
-		canActivate: [AuthenticationGuard],
+		data: { permission: 'P03001301' },
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
 	{
 		path: 'positions', 
-		loadChildren: () => import('./components/positions/positions.module').then(m => m.PositionsModule)
+		loadChildren: () => import('./components/positions/positions.module').then(m => m.PositionsModule),
+		data: { permission: 'P03001201' },
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
 	{
 		path: 'required-documents',
 		loadChildren: () => import('./components/required-documents/required-documents.module').then(m => m.RequiredDocumentsModule),
-		canActivate: [AuthenticationGuard]
+		data: { permission: 'P03001401' },
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
 	{ path: '404', component: Exception404Component },
 	{ path: '**', redirectTo: '404' }
