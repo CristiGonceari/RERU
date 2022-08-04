@@ -4,5 +4,5 @@ export interface RecommendationForStudyModel {
     lastName : string;
     function : string;
     subdivision : string;
-    userProfileId: number
+    contractorId: number
 }

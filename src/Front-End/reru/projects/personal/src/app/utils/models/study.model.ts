@@ -24,5 +24,5 @@ export interface ContractorStudyModel {
     yearOfAdmission: Date;
     graduationYear: Date;
     studyTypeId: number;
-    userProfileId: number
+    contractorId: number
 }

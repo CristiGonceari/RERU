@@ -3,7 +3,7 @@ export interface BulletinModel {
     series: string;
     releaseDay: string;
     emittedBy: string;
-    userProfileId?: number;
+    contractorId?: number;
     birthPlace: AddressModel;
     parentsResidenceAddress: AddressModel;
     residenceAddress: AddressModel;

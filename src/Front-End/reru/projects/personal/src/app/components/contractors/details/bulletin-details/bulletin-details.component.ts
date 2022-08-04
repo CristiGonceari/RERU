@@ -192,10 +192,22 @@ export class BulletinDetailsComponent implements OnInit {
     const modalRef = this.modalService.open(BulletinAddressModalComponent);
     modalRef.componentInstance.addressForm = this.buildAddress((<FormGroup>this.bulletinForm.get(field)).getRawValue());
     modalRef.result.then((address: AddressModel) => this.updateAddress(address, field), () => {});
+    if (this.existentBulletin != null){
+      modalRef.componentInstance.addressForm = this.buildExistentAddress((<FormGroup>this.bulletinForm.get(field)).getRawValue());
+      modalRef.result.then((address: AddressModel) => this.updateExistentAddress(address, field), () => {});
+    }else{
+      modalRef.componentInstance.addressForm = this.buildAddress((<FormGroup>this.bulletinForm.get(field)).getRawValue());
+      modalRef.result.then((address: AddressModel) => this.updateAddress(address, field), () => {});
+    }
   }
 
   updateAddress(address: AddressModel, field: string): void {
     this.bulletinForm.controls[field] = this.buildAddress(address);
+    this.bulletinForm.updateValueAndValidity();
+  }
+
+  updateExistentAddress(address: AddressModel, field: string): void {
+    this.bulletinForm.controls[field] = this.buildExistentAddress(address);
     this.bulletinForm.updateValueAndValidity();
   }
 
@@ -255,12 +267,25 @@ export class BulletinDetailsComponent implements OnInit {
         series: data.series,
         releaseDay: data.releaseDay,
         emittedBy: data.emittedBy,
-        birthPlace: data.birthPlace,
-        parentsResidenceAddress: data.parentsResidenceAddress,
-        residenceAddress: data.residenceAddress,
+        birthPlace: this.parseAddress(data.birthPlace),
+        parentsResidenceAddress: this.parseAddress(data.parentsResidenceAddress) ,
+        residenceAddress: this.parseAddress(data.residenceAddress),
         contractorId: this.contractor.id
     })
-}
+  }
+
+  parseAdresses(data: AddressModel): AddressModel {
+    return ObjectUtil.preParseObject({
+        id: data.id,
+        country: data.country,
+        region: data.region,
+        city: data.city,
+        street: data.street,
+        building: data.building,
+        apartment: data.apartment,
+        postCode: data.postCode
+    })
+  }
 
   updateBulletin(){
     this.bulletinService.update(this.parseBulletin(this.bulletinForm.value)).subscribe(res => {

@@ -5,5 +5,5 @@ export class KinshipRelationWithUserProfileModel {
     function : string;
     subdivision : string;
     kinshipDegree: string;
-    userProfileId: number;
+    contractorId: number;
 }

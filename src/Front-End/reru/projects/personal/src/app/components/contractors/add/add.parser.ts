@@ -23,7 +23,6 @@ export class ContractorParser {
             birthDate: data.birthDate,
             bloodTypeId: data.bloodTypeId ? +data.bloodTypeId : null,
             sex: data.sex ? +data.sex : null,
-            idnp : data.idnp
         })
     }
 

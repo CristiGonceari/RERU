@@ -308,7 +308,7 @@ export class StudyDetailsComponent implements OnInit {
     return this.fb.group({
       id: this.fb.control((study && study.id) || null, []),
       institution: this.fb.control((study && study.institution) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      institutionAddress: this.fb.control((study && study.institutionAddress) ||  null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      institutionAddress: this.fb.control((study && study.institutionAddress) ||  null, [Validators.required]),
       studyTypeId: this.fb.control((study && study.studyTypeId) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       studyFrequency: this.fb.control((study && study.studyFrequency) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       faculty: this.fb.control((study && study.faculty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),

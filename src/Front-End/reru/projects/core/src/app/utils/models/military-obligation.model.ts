@@ -10,5 +10,5 @@ export class MilitaryObligationModel {
     militaryBookletNumber : number;
     militaryBookletReleaseDay : Date;
     militaryBookletEminentAuthority : string;
-    userProfileId: number;
+    contractorId: number;
 }
