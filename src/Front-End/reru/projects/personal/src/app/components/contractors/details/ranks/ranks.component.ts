@@ -59,6 +59,7 @@ export class RanksComponent implements OnInit {
 
     this.stepId =parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
 
+    this.initForm();
     this.retrieveDropdowns();
     this.subscribeForParams();
   }
@@ -69,21 +70,17 @@ export class RanksComponent implements OnInit {
   }
 
   subscribeForParams(): void {
-    if (!this.contractor) {
     this.getUser(this.contractorId);
-    } else {
-    this.initForm(this.contractor);
-    }
 
     this.getExistentStep(this.stepId, this.contractor.id);
-    this.subscribeForData();
+    // this.subscribeForData();
     this.isLoading = false;
   }
 
 getUser(id: number): void {
   this.contractorService.get(id).subscribe((response: ApiResponse<Contractor>) => {
     this.contractor = response.data;
-    this.initForm(this.contractor);
+    this.subscribeForData(response.data)
   });
 }
 
@@ -107,11 +104,11 @@ getUser(id: number): void {
     });
   }
 
-  subscribeForData() {
+  subscribeForData(contractor) {
 
-      if (this.contractor.hasMilitaryObligations) {
+      if (contractor.hasMilitaryObligations) {
 
-        this.getMilitaryObligations(this.contractor.id);
+        this.getMilitaryObligations(contractor.id);
       }
       else {
         this.addOrEditMilitaryObligationButton = false;

@@ -101,7 +101,7 @@ export class StudyDetailsComponent implements OnInit {
 
     this.initForm();
     this.subscribeForParams();
-    this.subscribeForStudies();
+    // this.subscribeForStudies();
     this.retrieveDropdowns();
   }
 
@@ -111,9 +111,7 @@ export class StudyDetailsComponent implements OnInit {
   }
 
   subscribeForParams(): void {
-      if (!this.contractor) {
       this.getUser(this.contractorId);
-      }
 
       this.getExistentStep(this.stepId, this.contractor.id);
       this.isLoading = false;
@@ -122,6 +120,7 @@ export class StudyDetailsComponent implements OnInit {
   getUser(id: number): void {
     this.contractorService.get(id).subscribe((response: ApiResponse<Contractor>) => {
       this.contractor = response.data;
+      this.subscribeForStudies(response.data);
     });
   }
 
@@ -181,10 +180,10 @@ export class StudyDetailsComponent implements OnInit {
     });
   }
 
-  subscribeForStudies() {
-      if (this.contractor.hasStudies) {
+  subscribeForStudies(contractor) {
+      if (contractor.hasStudies) {
 
-        this.getUserStudies(this.contractor.id);
+        this.getUserStudies(contractor.id);
       }
       else {
         this.addOrEditStudyButton = false;
@@ -192,9 +191,9 @@ export class StudyDetailsComponent implements OnInit {
         this.userStudies = null;
       }
 
-      if (this.contractor.hasModernLanguages) {
+      if (contractor.hasModernLanguages) {
 
-        this.getUserModernLanguages(this.contractor.id);
+        this.getUserModernLanguages(contractor.id);
       }
       else {
         this.addOrEditLanguagesButton = false;
@@ -202,9 +201,9 @@ export class StudyDetailsComponent implements OnInit {
         this.userModernLanguages = null;
       }
 
-      if (this.contractor.hasRecommendationsForStudy) {
+      if (contractor.hasRecommendationsForStudy) {
 
-          this.getUserRecommendation(this.contractor.id);
+          this.getUserRecommendation(contractor.id);
         }
         else {
           this.addOrEditRecommendationsButton = false;

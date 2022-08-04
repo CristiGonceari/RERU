@@ -58,8 +58,8 @@ export class BulletinDetailsComponent implements OnInit {
 
     this.stepId =parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
 
-    this.initForm(this.contractor.id);
-    this.subscribeForBulletin();
+    this.initForm();
+    this.subscribeForUser();
   }
 
   ngOnDestroy(){
@@ -67,26 +67,25 @@ export class BulletinDetailsComponent implements OnInit {
     this.ds.clearData();
   }
 
-  subscribeForBulletin(){
-    if(!this.contractor){
-      this.getUser(this.contractorId)
-    }
-
-    if (this.contractor.hasBulletin){
-      this.getExistentBulletin(this.contractor.id);
-    }else{
-      this.toAddOrUpdateButton = false;
-      this.isLoading = false;
-    }
-        
+  subscribeForUser(){
+    this.getUser(this.contractorId)
     this.getExistentStep(this.stepId, this.contractor.id);
   }
 
   getUser(id: number): void {
     this.contractorService.get(id).subscribe((response: ApiResponse<Contractor>) => {
       this.contractor = response.data;
-      this.contractorService.contractor.next(response.data);
+      this.subscribeForBulletin(response.data)
     });
+  }
+
+  subscribeForBulletin(contractor){
+    if (contractor.hasBulletin){
+      this.getExistentBulletin(contractor.id);
+    }else{
+      this.toAddOrUpdateButton = false;
+      this.isLoading = false;
+    }
   }
 
   getExistentStep(stepId, contractorId){

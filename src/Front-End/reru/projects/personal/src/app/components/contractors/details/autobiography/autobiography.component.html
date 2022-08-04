@@ -4,7 +4,7 @@
         <h3 class="card-label font-weight-bolder text-dark">{{'step.Autobiography' | translate}}</h3>
         <span class="text-muted font-weight-bold font-size-sm mt-1">{{'personal.change-your-account-details' | translate}}</span>
       </div>
-      <div class="card-toolbar" *ngIf="steps == null">
+      <div class="card-toolbar">
         <button class="btn btn-success" [disabled]="autobiographyData == null" (click)="addRegistrationFluxStep()">
             {{'stepper.button-next' | translate}}
         </button>

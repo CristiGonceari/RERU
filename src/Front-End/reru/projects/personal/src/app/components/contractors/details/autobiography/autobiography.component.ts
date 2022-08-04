@@ -86,20 +86,15 @@ export class AutobiographyComponent implements OnInit {
   }
 
   subscribeForParams(){
-    if (!this.contractor) {
-      this.getUser(this.contractorId);
-      } else {
-      this.initForm(this.contractor);
-    }
+    this.getUser(this.contractorId);
 
-    this.subscribeForData();
     this.subscribeForContractorSteps(this.contractor.id);
     this.isLoading = false;
   }
 
-  subscribeForData() {
-      if (this.contractor.hasAutobiography) {
-        this.getUserAutobiography(this.contractor.id);
+  subscribeForData(contractor) {
+      if (contractor.hasAutobiography) {
+        this.getUserAutobiography(contractor.id);
       }
       else {
         this.addOrEditAutobiographyButton = false;
@@ -111,7 +106,7 @@ export class AutobiographyComponent implements OnInit {
   getUser(id: number): void {
     this.contractorService.get(id).subscribe((response: ApiResponse<Contractor>) => {
       this.contractor = response.data;
-      this.initForm(this.contractor.id);
+      this.subscribeForData(response.data)
     });
   }
 
@@ -201,7 +196,7 @@ export class AutobiographyComponent implements OnInit {
           this.ds.sendData(datas);
         }
       }else{
-      this.notificationService.error('Error', 'Need to complete all steps!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error('Error', 'Need to complete step ' + el + '!', NotificationUtil.getDefaultMidConfig());
       }
     });
   }
