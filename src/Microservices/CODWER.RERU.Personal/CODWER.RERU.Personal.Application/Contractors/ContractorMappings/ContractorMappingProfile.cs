@@ -32,6 +32,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.ContractorMappings
                 .ForMember(r => r.LastName, opts => opts.MapFrom(op => op.LastName))
                 .ForMember(r => r.FatherName, opts => opts.MapFrom(op => op.FatherName))
                 .ForMember(r => r.Contacts, opts => opts.MapFrom(op => op.Contacts))
+                .ForMember(r => r.Idnp, opts => opts.MapFrom(op => op.Idnp))
                 .ForMember(x => x.DepartmentName, opts => opts.ConvertUsing( new DepartmentNameConverter(), op=>op))
                 .ForMember(x => x.OrganizationRoleName, opts => opts.ConvertUsing(new RoleConverter(), op => op))
                 .ForMember(x => x.EmployerState, opts => opts.ConvertUsing(new EmployerStateConverter(), op => op));

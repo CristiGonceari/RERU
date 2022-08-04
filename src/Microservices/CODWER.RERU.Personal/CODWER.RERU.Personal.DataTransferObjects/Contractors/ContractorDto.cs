@@ -11,6 +11,7 @@ namespace CODWER.RERU.Personal.DataTransferObjects.Contractors
         public string LastName { get; set; }
         public string FatherName { get; set; }
         public string EmployerState { get; set; }
+        public string Idnp { get; set; }
 
         //position fields
         //public int PositionId { get; set; }
