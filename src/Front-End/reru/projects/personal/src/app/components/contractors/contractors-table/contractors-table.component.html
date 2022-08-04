@@ -8,6 +8,7 @@
                 <th [ngStyle]="{'width.%' : 30}">{{'entity.personal.name' | translate}}</th>
                 <th [ngStyle]="{'width.%' : 20}" class="text-center">{{'entity.role.title' | translate}}</th>
                 <th [ngStyle]="{'width.%' : 20}"class="text-center">{{'entity.department.title' | translate}}</th>
+                <th [ngStyle]="{'width.%' : 20}"class="text-center">{{'entity.personal.idnp' | translate}}</th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
@@ -19,6 +20,9 @@
                 </td>
                 <td class="text-center">
                     <app-last-department-label [item]="item"></app-last-department-label>
+                </td>
+                <td class="text-center">
+                    {{ item.idnp }}
                 </td>
                 <td class="text-right">
                     <app-personal-dropdown-details [index]="i" 
