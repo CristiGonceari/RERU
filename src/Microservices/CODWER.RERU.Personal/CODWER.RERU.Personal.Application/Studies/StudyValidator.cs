@@ -1,11 +1,12 @@
 ﻿using CODWER.RERU.Personal.Application.Validation;
 using CODWER.RERU.Personal.Application.Validators.EnumValidators;
-using CODWER.RERU.Personal.Application.Validators.NomenclatureRecordValue;
-using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Studies;
 using CVU.ERP.Module.Common.MessageCodes;
 using FluentValidation;
+using RERU.Data.Entities.Enums;
+using CODWER.RERU.Personal.Application.Validators;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Personal.Application.Studies
 {
@@ -14,23 +15,21 @@ namespace CODWER.RERU.Personal.Application.Studies
         public StudyValidator(AppDbContext appDbContext)
         {
             RuleFor(x => (int)x.StudyFrequency)
-                .SetValidator(new ExistInEnumValidator<StudyFrequencyEnum>());
+               .SetValidator(new ExistInEnumValidator<StudyFrequencyEnum>());
 
-            RuleFor(x => BaseNomenclatureTypesEnum.StudyType.NewRecordToValidate(x.StudyTypeId))
-                .SetValidator(new RecordFromBaseNomenclatureTypesValidator(appDbContext));
+            RuleFor(x => x.StudyTypeId)
+                .SetValidator(new ItemMustExistValidator<StudyType>(appDbContext, ValidationCodes.EMPTY_BULLETIN_EMITTER,
+                    ValidationMessages.InvalidReference));
 
-            When(x=> !x.IsActiveStudy, () =>
-            {
-                RuleFor(x => x.DiplomaNumber)
-                    .NotEmpty()
-                    .WithErrorCode(ValidationCodes.EMPTY_STUDY_DIPLOMA_NUMBER)
-                    .WithMessage(ValidationMessages.InvalidInput);
+            RuleFor(x => x.YearOfAdmission)
+                .NotEmpty()
+                .WithErrorCode(ValidationCodes.EMPTY_STUDY_YEAR_OF_AMISION)
+                .WithMessage(ValidationMessages.InvalidInput);
 
-                RuleFor(x => x.DiplomaReleaseDay)
-                    .NotNull()
-                    .WithErrorCode(ValidationCodes.EMPTY_STUDY_DIPLOMA_RELEASE_DAY)
-                    .WithMessage(ValidationMessages.InvalidInput);
-            });
+            RuleFor(x => x.GraduationYear)
+                .NotNull()
+                .WithErrorCode(ValidationCodes.EMPTY_STUDY_GRADUATION_YEAR)
+                .WithMessage(ValidationMessages.InvalidInput);
         }
     }
 }

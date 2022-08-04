@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
-using RERU.Data.Entities.StaticExtensions;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessages.SendSolicitedVacantPositionEmailMessages
@@ -42,29 +39,21 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
         {
             var template = await File.ReadAllTextAsync(_path);
 
-            var solicitedTest = _appDbContext.SolicitedVacantPositions
-                .Include(x => x.CandidatePosition)
-                .Include(x => x.UserProfile)
-                .First(x => x.Id == request.SolicitedVacantPositionId);
+            var solicitedVacantPosition = await GetSolicitedVacantPosition(request);
 
-            var events = await _appDbContext.EventVacantPositions
-                .Include(c => c.Event)
-                .AsQueryable()
-                .Where(x => x.CandidatePositionId == solicitedTest.CandidatePositionId)
-                .Select(tt => _mapper.Map<EventsWithTestTemplateDto>(tt))
-                .ToListAsync();
+            var events = await GetEventsWithTestTemplateList(solicitedVacantPosition);
 
             switch (request.Result)
             {
                 case SolicitedVacantPositionEmailMessageEnum.Approve:
-                    await AttachUserToEvents(events, new List<int> {solicitedTest.UserProfileId});
-                    solicitedTest.SolicitedPositionStatus = SolicitedPositionStatusEnum.Approved;
+                    await AttachUserToEvents(events, solicitedVacantPosition.UserProfileId, solicitedVacantPosition.CandidatePosition.Id);
+                    solicitedVacantPosition.SolicitedPositionStatus = SolicitedPositionStatusEnum.Approved;
                     break;
                 case SolicitedVacantPositionEmailMessageEnum.Waiting:
-                    solicitedTest.SolicitedPositionStatus = SolicitedPositionStatusEnum.Wait;
+                    solicitedVacantPosition.SolicitedPositionStatus = SolicitedPositionStatusEnum.Wait;
                     break;
                 case SolicitedVacantPositionEmailMessageEnum.Reject:
-                    solicitedTest.SolicitedPositionStatus = SolicitedPositionStatusEnum.Refused;
+                    solicitedVacantPosition.SolicitedPositionStatus = SolicitedPositionStatusEnum.Refused;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -72,37 +61,62 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
 
             await _appDbContext.SaveChangesAsync();
 
-            await SendEmail(template, solicitedTest, request);
+            await SendEmail(template, solicitedVacantPosition, request);
 
-            return solicitedTest.Id;
+            return solicitedVacantPosition.Id;
         }
 
-        private async Task AttachUserToEvents(List<EventsWithTestTemplateDto> events, List<int> userProfileList)
+        private async Task AttachUserToEvents(List<EventsWithTestTemplateDto> events, int userProfileId, int positionId)
         {
-            foreach (var command in events.Select(userEvent => new AssignUserToEventCommand
+            foreach (var eventDto in events)
             {
-                EventId = userEvent.Id,
-                UserProfileId = userProfileList
-            }))
-            {
-                await _mediator.Send(command);
+                if (await ExistEventUser(userProfileId, eventDto.Id)) continue;
+
+                var newEventUser = new AddEventPersonDto
+                {
+                    UserProfileId = userProfileId,
+                    EventId = eventDto.Id,
+                    PositionId = positionId
+                };
+
+                var result = _mapper.Map<EventUser>(newEventUser);
+
+                await _appDbContext.EventUsers.AddAsync(result);
             }
+            await _appDbContext.SaveChangesAsync();
         }
 
         private async Task SendEmail(string template, SolicitedVacantPosition solicitedPosition, SendSolicitedVacantPositionEmailMessagesCommand request)
         {
-            template = template.Replace("{user_name}", solicitedPosition.UserProfile.GetFullName());
-            template = template.Replace("{email_message}", request.EmailMessage);
-
-            var emailData = new EmailData()
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                subject = "Invitație la test",
-                body = template,
-                from = "Do Not Reply",
-                to = solicitedPosition.UserProfile.Email
-            };
-
-            await _notificationService.Notify(emailData, NotificationType.Both);
+                Subject = "Pozitie solicitata",
+                To = solicitedPosition.UserProfile.Email,
+                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", solicitedPosition.UserProfile.FullName },
+                    { "{email_message}", request.EmailMessage }
+                }
+            });
         }
+
+        private async Task<SolicitedVacantPosition> GetSolicitedVacantPosition(SendSolicitedVacantPositionEmailMessagesCommand request) => 
+                 _appDbContext.SolicitedVacantPositions
+                .Include(x => x.CandidatePosition)
+                .Include(x => x.UserProfile)
+                .First(x => x.Id == request.SolicitedVacantPositionId);
+        
+        private async Task<List<EventsWithTestTemplateDto>> GetEventsWithTestTemplateList(SolicitedVacantPosition solicitedVacantPosition) =>
+            await _appDbContext.EventVacantPositions
+                .Include(c => c.Event)
+                .AsQueryable()
+                .Where(x => x.CandidatePositionId == solicitedVacantPosition.CandidatePositionId)
+                .Select(tt => _mapper.Map<EventsWithTestTemplateDto>(tt))
+                .ToListAsync();
+
+        private async Task<bool> ExistEventUser(int userProfileId, int eventId) => 
+            await _appDbContext.EventUsers.AnyAsync(x =>
+                x.EventId == eventId && x.UserProfileId == userProfileId);
     }
 }

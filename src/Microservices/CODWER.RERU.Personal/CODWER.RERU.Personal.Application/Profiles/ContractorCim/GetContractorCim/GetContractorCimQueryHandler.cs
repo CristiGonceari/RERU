@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using CODWER.RERU.Personal.DataTransferObjects.Contracts;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.DataTransferObjects.Instructions;
 

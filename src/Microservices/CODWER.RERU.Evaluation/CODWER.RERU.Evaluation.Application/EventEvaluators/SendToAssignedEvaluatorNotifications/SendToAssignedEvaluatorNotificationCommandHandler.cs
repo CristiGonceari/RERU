@@ -1,14 +1,12 @@
 ﻿using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +18,6 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.SendToAssignedEvalu
         private readonly AppDbContext _appDbContext;
         private readonly IInternalNotificationService _internalNotificationService;
         private readonly INotificationService _notificationService;
-
 
         public SendToAssignedEvaluatorNotificationCommandHandler(
             AppDbContext appDbContext,
@@ -34,7 +31,6 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.SendToAssignedEvalu
 
         public async Task<Unit> Handle(SendToAssignedEvaluatorNotificationCommand request, CancellationToken cancellationToken)
         {
-
             var eventEvaluator = _appDbContext.EventEvaluators
                 .Include(x => x.Event)
                 .FirstOrDefault(ee => ee.EvaluatorId == request.UserProfileId && ee.EventId == request.EventId);
@@ -53,22 +49,17 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.SendToAssignedEvalu
                 .Include(eu => eu.Event)
                 .FirstOrDefaultAsync(x => x.Id == eventEvaluator.Id);
 
-            var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            var template = await File.ReadAllTextAsync(path);
-
-            template = template
-                .Replace("{user_name}", user.Evaluator.FirstName + " " + user.Evaluator.LastName)
-                .Replace("{email_message}", await GetTableContent(eventEvaluator.Event.Name));
-
-            var emailData = new EmailData
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                subject = "Invitație la eveniment",
-                body = template,
-                from = "Do Not Reply",
-                to = user.Evaluator.Email
-            };
-
-            await _notificationService.Notify(emailData, NotificationType.Both);
+                Subject = "Invitație la eveniment",
+                To = user.Evaluator.Email,
+                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", user.Evaluator.FullName },
+                    { "{email_message}", await GetTableContent(eventEvaluator.Event.Name) }
+                }
+            });
 
             return Unit.Value;
         }

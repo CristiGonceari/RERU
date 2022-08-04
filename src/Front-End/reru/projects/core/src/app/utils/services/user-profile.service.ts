@@ -21,6 +21,14 @@ export class UserProfileService extends AbstractService {
 		return this.http.get<Response<User>>(`${this.coreUrl}/${this.routeUrl}/${id}`);
 	}
 
+	getCandidateProfile(id: number): Observable<Response<User>> {
+		return this.http.get<Response<User>>(`${this.coreUrl}/${this.routeUrl}/candidate-profile/${id}`);
+	}
+
+	getCandidateGeneralDatas(id: number): Observable<Response<any>> {
+		return this.http.get<Response<any>>(`${this.coreUrl}/${this.routeUrl}/candidate-general-datas/${id}`);
+	}
+
 	getUserProfiles(data): Observable<any> {
 		return this.http.get(`${this.coreUrl}/${this.routeUrl}`, { params: data });
 	}

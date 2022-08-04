@@ -1,0 +1,166 @@
+<div class="mt-5">
+  <form class="col-lg col-md-8 col-sm-12 col-12 mx-auto" [formGroup]="userForm">
+    <div class="row mb-5">
+      <div class="col">
+        <h4>{{'step.GeneralData' | translate}}</h4>
+      </div>
+    </div>
+    <div class="row mb-10">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <app-loading-spinner *ngIf="generealDatasLoading" contentHeight="20rem" height="5rem" width="5rem"
+              colorClass="text-primary"></app-loading-spinner>
+            <div class="container" *ngIf="!generealDatasLoading">
+              <div class="row">
+                <div class="col">
+                  <div class="form-group row align-items-center mb-2">
+                    <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                      {{'table.name' | translate}}:
+                    </label>
+                    <div class="col-lg-9 col-xl-6">
+                      <p class="font-size-lg m-0">{{userDatas.userName || "not set"}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group row align-items-center mb-2">
+                    <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                      {{'user.birthday' | translate}}:
+                    </label>
+                    <div class="col-lg-9 col-xl-6">
+                      <p class="font-size-lg m-0">{{(userDatas.birthDate | date: 'd/M/yy, HH:mm') || "not set"}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="w-100"></div>
+                <div class="col">
+                  <div class="form-group row align-items-center mb-2">
+                    <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                      {{'pages.user-details.email' | translate}}:
+                    </label>
+                    <div class="col-lg-9 col-xl-6">
+                      <p class="font-size-lg m-0">{{userDatas.email || "not set"}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group row align-items-center mb-2">
+                    <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                      {{'user.phone' | translate}}:
+                    </label>
+                    <div class="col-lg-9 col-xl-6">
+                      <p class="font-size-lg m-0">{{userDatas.phoneNumber || "not set"}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <app-loading-spinner *ngIf="isLoading" contentHeight="20rem" height="5rem" width="5rem" colorClass="text-primary">
+      </app-loading-spinner>
+      <div class="row" *ngIf="!isLoading">
+        <div class="col-xl-6 col-12">
+          <div class="form-group row align-items-center mb-9">
+            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+              {{'general-datas.nationality' | translate }}
+            </label>
+            <div class="col-lg-9 col-xl-9">
+              <select class="form-control form-control-lg form-control-solid" name="sex" id="role" type="number"
+                formControlName="nationalityTypeId">
+                <option value="null">{{'module-access.select' | translate}}</option>
+                <option *ngFor="let item of nationalities" [value]="item.value">{{ item.label }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-12">
+          <div class="form-group row align-items-center mb-9">
+            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+              {{'general-datas.citizenship' | translate }}
+            </label>
+            <div class="col-lg-9 col-xl-9">
+              <select class="form-control form-control-lg form-control-solid" name="sex" id="role" type="number"
+                formControlName="citizenshipTypeId">
+                <option value="null">{{'module-access.select' | translate}}</option>
+                <option *ngFor="let item of citizenships" [value]="item.value">{{ item.label }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-12">
+          <div class="form-group row align-items-center mb-9">
+            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+              {{'general-datas.state-language-level' | translate }}
+            </label>
+            <div class="col-lg-9 col-xl-9">
+              <select class="form-control form-control-lg form-control-solid" name="statelanguageLevel" id="role"
+                type="number" formControlName="statelanguageLevel">
+                <option value="null">{{'module-access.select' | translate}}</option>
+                <option *ngFor="let item of stateLanguageLevelEnum" [value]="item.value">{{ 'languageKnowledge.' + item.label | translate}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-12">
+          <div class="form-group row align-items-center mb-9">
+            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+              {{'general-datas.sex' | translate }}
+            </label>
+            <div class="col-lg-9 col-xl-9">
+              <select class="form-control form-control-lg form-control-solid" name="sex" id="role" type="number"
+                formControlName="sex">
+                <option value="null">{{'module-access.select' | translate}}</option>
+                <option *ngFor="let item of sexEnum" [value]="item.value">{{ 'sexType.' + item.label | translate }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-12">
+          <div class="form-group row mb-10">
+            <label class="col-xl-3 col-lg-3 col-form-label text-right">{{ 'general-datas.home-phone' | translate }}</label>
+            <div class="col-lg-9 col-xl-9">
+              <input class="form-control form-control-lg form-control-solid" name="homePhone" type="text"
+                formControlName="homePhone"
+                [ngClass]="{'is-invalid': hasErrors('homePhone'), 'is-valid': userForm.get('homePhone').valid}" />
+              <div *ngIf="hasErrors('homePhone')" class="fv-plugins-message-container">
+                <div *ngIf="hasError('homePhone', 'required')" data-field="homePhone" data-validator="notEmpty"
+                  class="fv-help-block">
+                  {{ 'user-profile.empty-name' | translate }}</div>
+                <div *ngIf="hasError('homePhone', 'pattern')" data-field="homePhone" data-validator="notEmpty"
+                  class="fv-help-block">
+                  {{ 'user-profile.wrong-name' | translate }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-12">
+          <div class="form-group row mb-10">
+            <label class="col-xl-3 col-lg-3 col-form-label text-right">{{ 'general-datas.work-phone' | translate }}</label>
+            <div class="col-lg-9 col-xl-9">
+              <input class="form-control form-control-lg form-control-solid" name="workPhone" type="text"
+                formControlName="workPhone"
+                [ngClass]="{'is-invalid': hasErrors('workPhone'), 'is-valid': userForm.get('workPhone').valid}" />
+              <div *ngIf="hasErrors('workPhone')" class="fv-plugins-message-container">
+                <div *ngIf="hasError('workPhone', 'required')" data-field="workPhone" data-validator="notEmpty"
+                  class="fv-help-block">
+                  {{ 'user-profile.empty-name' | translate }}</div>
+                <div *ngIf="hasError('workPhone', 'pattern')" data-field="workPhone" data-validator="notEmpty"
+                  class="fv-help-block">
+                  {{ 'user-profile.wrong-name' | translate }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-end">
+      <button class="btn btn-success" matStepperNext [disabled]="userForm && userForm.invalid"
+        (click)="updateUserProfileGeneralData()">{{'stepper.button-update-and-next' | translate}}</button>
+    </div>
+  </form>
+</div>

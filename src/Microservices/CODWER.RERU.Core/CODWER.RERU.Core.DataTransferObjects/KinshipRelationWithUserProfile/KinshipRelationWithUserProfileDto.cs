@@ -11,6 +11,6 @@ namespace CODWER.RERU.Core.DataTransferObjects.KinshipRelationWithUserProfile
         public KinshipDegreeEnum KinshipDegree { get; set; }
         public string Subdivision { get; set; }
 
-        public int UserProfileId { get; set; }
+        public int ContractorId { get; set; }
     }
 }

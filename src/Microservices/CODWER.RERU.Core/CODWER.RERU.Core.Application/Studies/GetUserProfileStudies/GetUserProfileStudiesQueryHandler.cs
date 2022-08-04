@@ -25,7 +25,7 @@ namespace CODWER.RERU.Core.Application.Studies.GetUserProfileStudies
         {
             var items = _appDbContext.Studies
                 .Include(x => x.StudyType)
-                .Where(x => x.UserProfileId == request.UserProfileId)
+                .Where(x => x.ContractorId == request.ContractorId)
                 .AsQueryable();
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Study, StudyDto>(items, request);

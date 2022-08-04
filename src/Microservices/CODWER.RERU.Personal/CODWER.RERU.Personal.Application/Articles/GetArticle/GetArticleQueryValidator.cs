@@ -1,8 +1,8 @@
 ﻿using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
-using CODWER.RERU.Personal.Data.Persistence.Context;
-using CODWER.RERU.Personal.Data.Entities;
+using RERU.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
 using CODWER.RERU.Personal.Application.Validation;
 
 namespace CODWER.RERU.Personal.Application.Articles.GetArticle

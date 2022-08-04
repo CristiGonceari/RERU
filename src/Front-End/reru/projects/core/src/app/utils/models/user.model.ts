@@ -11,4 +11,15 @@ export class User {
   birthday: string;
   phoneNumber: string;
   isActive: boolean;
+  bulletinId: number;
+  modernLanguageLevelsCount: number;
+  recomendationsForStudyCount: number;
+  studyCount:number;
+  materialStatusId: number;
+  kinshipRelationWithUserProfilesCount: number;
+  kinshipRelationCriminalDataId: number;
+  kinshipRelationsCount: number;
+  militaryObligationsCount: number;
+  autobiographyId: number;
+  contractorId: number;
 }

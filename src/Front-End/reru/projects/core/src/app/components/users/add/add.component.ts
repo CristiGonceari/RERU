@@ -35,9 +35,8 @@ export class AddComponent implements OnInit {
   accessModes: SelectItem[] = [{ label: '', value: '' }];
   accesModeEnum = AccessModeEnum;
 
-  birthday;
-  fromData = '';
-  fromDate;
+  birthDate: Date;
+  date: string;
   startDate: string;
 
   constructor(
@@ -100,7 +99,7 @@ export class AddComponent implements OnInit {
       fatherName: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'),]),
       idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
       email: this.fb.control(null, [Validators.required, Validators.email]),
-      phoneNumber: this.fb.control(null, [Validators.required]),
+      phoneNumber: this.fb.control(null, [Validators.required, Validators.pattern("^((\\+373-?)|0)?[0-9]{8}$")]),
       departmentColaboratorId: this.fb.control(null, [Validators.required]),
       roleColaboratorId: this.fb.control(null, [Validators.required]),
       emailNotification: this.fb.control(false, [Validators.required]),
@@ -112,9 +111,15 @@ export class AddComponent implements OnInit {
     return ValidatorUtil.isIdnpLengthValidator(this.userForm, field);
   }
 
-  addUser(): void {
-    this.isLoading = true;
+  setBirthDate(): void {
+		if (this.birthDate) {
+			const date = new Date(this.birthDate);
+			this.date = new Date(date.getTime() - (new Date(this.birthDate).getTimezoneOffset() * 60000)).toISOString();
+		}
+	}
 
+  addUser(): void {
+    this.setBirthDate();
     let data = {
       firstName: this.userForm.value.firstName,
       lastName: this.userForm.value.lastName,
@@ -124,7 +129,7 @@ export class AddComponent implements OnInit {
       departmentColaboratorId: this.userForm.value.departmentColaboratorId,
       roleColaboratorId: this.userForm.value.roleColaboratorId,
       emailNotification: this.userForm.value.emailNotification,
-      birthday: this.birthday != null ? new Date(`${this.birthday} EDT`).toISOString() : null,
+      birthDate: this.date || null,
       phoneNumber: this.userForm.value.phoneNumber,
       accessModeEnum: this.userForm.value.accessModeEnum
     }

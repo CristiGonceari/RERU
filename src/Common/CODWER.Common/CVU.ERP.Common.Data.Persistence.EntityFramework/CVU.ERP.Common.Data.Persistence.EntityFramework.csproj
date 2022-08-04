@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CVU.ERP.Common.Data.Entities\CVU.ERP.Common.Data.Entities.csproj" />
+    <ProjectReference Include="..\CVU.ERP.ServiceProvider\CVU.ERP.ServiceProvider.csproj" />
   </ItemGroup>
 
 </Project>

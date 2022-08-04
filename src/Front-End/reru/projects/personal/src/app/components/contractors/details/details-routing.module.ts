@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AutobiographyComponent } from './autobiography/autobiography.component';
 import { BulletinDetailsComponent } from './bulletin-details/bulletin-details.component';
 import { CimComponent } from './cim/cim.component';
 import { DetailsComponent } from './details.component';
@@ -17,17 +18,19 @@ const routes: Routes = [{
   component: DetailsComponent,
   path: '',
   children: [
-    { path: '', component: GeneralComponent, pathMatch: 'full' },
-    { path: 'positions', component: PositionTableComponent },
-    { path: 'bulletin', component: BulletinDetailsComponent },
-    { path: 'studies', component: StudyDetailsComponent },
-    { path: 'ranks', component: RanksComponent },
-    { path: 'family', component: FamilyComponent },
-    { path: 'cim', component: CimComponent },
-    { path: 'documents', component: DocumentsTableComponent },
-    { path: 'permissions', component: PermissionsComponent },
-    { path: 'vacantions', component: VacantionsComponent },
-    { path: 'dismissal', component: DismissalRequestComponent }
+    { path: '', redirectTo: 'general-data/1', pathMatch: 'full' },
+    { path: 'general-data/1', component: GeneralComponent, pathMatch: 'full' },
+    // { path: 'positions', component: PositionTableComponent },
+    { path: 'bulletin/2', component: BulletinDetailsComponent },
+    { path: 'studies/3', component: StudyDetailsComponent },
+    { path: 'ranks/5', component: RanksComponent },
+    { path: 'family/4', component: FamilyComponent },
+    // { path: 'cim', component: CimComponent },
+    // { path: 'documents', component: DocumentsTableComponent },
+    // { path: 'permissions', component: PermissionsComponent },
+    // { path: 'vacantions', component: VacantionsComponent },
+    // { path: 'dismissal', component: DismissalRequestComponent },
+    { path: 'autobiography/6', component: AutobiographyComponent }
   ]
 }];
 

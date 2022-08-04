@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SidebarView } from '../../utils/models/sidebar.model';
 import {
   ApplicationUserService,
@@ -9,6 +9,10 @@ import {
 import { InternalService } from '../../utils/services/internal.service';
 import { NotificationsService } from 'angular2-notifications';
 import { I18nService } from '../../utils/services/i18n.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AccessModeEnum } from '../../utils/models/access-mode.enum';
+import { ProfileService } from '../../utils/services/profile.service';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -17,11 +21,14 @@ import { I18nService } from '../../utils/services/i18n.service';
 export class DashboardComponent implements OnInit {
   sidebarView = SidebarView;
   type: string;
+
   messageText: string;
   modules: ApplicationUserModuleModel[];
 
   testId: string;
   showMultipleQuestionsPerPega: boolean;
+  isLoading: boolean = true;
+  user;
 
   constructor(
     private moduleService: AvailableModulesService,
@@ -32,17 +39,21 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.list();
     this.subscribeForAuthChange();
+    this.list();
     this.setIntrvl();
+    
   }
-
+  
   subscribeForAuthChange(): void {
-    this.userSubject.userChange.subscribe(
-      () => (this.modules = this.moduleService.get())
+    this.isLoading = true;
+    this.userSubject.userChange.subscribe((res) => {
+        this.modules = this.moduleService.get();
+        this.isLoading = false;
+    }
     );
   }
-
+ 
   list(): void {
     this.modules = this.moduleService.get();
   }

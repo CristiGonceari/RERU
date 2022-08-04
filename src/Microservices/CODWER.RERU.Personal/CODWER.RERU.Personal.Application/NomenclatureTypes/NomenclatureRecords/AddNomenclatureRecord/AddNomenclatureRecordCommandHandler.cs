@@ -3,11 +3,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Personal.Application.NomenclatureTypes.Services;
-using CODWER.RERU.Personal.Data.Entities.NomenclatureType.NomenclatureRecords;
-using CODWER.RERU.Personal.Data.Entities.NomenclatureType.NomenclatureRecords.RecordValues;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.NomenclatureTypes.NomenclatureRecords.RecordValues;
 using MediatR;
+using RERU.Data.Entities.PersonalEntities.NomenclatureType.NomenclatureRecords;
+using RERU.Data.Entities.PersonalEntities.NomenclatureType.NomenclatureRecords.RecordValues;
 
 namespace CODWER.RERU.Personal.Application.NomenclatureTypes.NomenclatureRecords.AddNomenclatureRecord
 {

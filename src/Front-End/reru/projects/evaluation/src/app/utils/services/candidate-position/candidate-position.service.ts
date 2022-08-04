@@ -19,6 +19,10 @@ export class CandidatePositionService extends AbstractService{
 		return this.client.get<any>(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}
 
+	getDiagram(params): Observable<any> {
+		return this.client.get<any>(`${this.baseUrl}/${this.urlRoute}/diagram`, {params});
+	}
+
 	getList(params): Observable<any> {
 		return this.client.get(`${this.baseUrl}/${this.urlRoute}`, { params });
 	}

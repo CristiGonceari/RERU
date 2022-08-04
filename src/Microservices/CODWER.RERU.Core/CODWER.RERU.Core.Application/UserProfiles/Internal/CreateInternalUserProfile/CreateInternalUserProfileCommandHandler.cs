@@ -6,12 +6,12 @@ using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CODWER.RERU.Core.Data.Persistence.Helpers;
-using CVU.ERP.Module.Application.Clients;
-using CVU.ERP.Module.Application.Models;
-using CVU.ERP.Module.Application.Models.Internal;
+using CVU.ERP.ServiceProvider.Clients;
+using CVU.ERP.ServiceProvider.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Core.Application.UserProfiles.Internal.CreateInternalUserProfile
 {
@@ -36,7 +36,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.Internal.CreateInternalUserP
             if (existUserProfileByIdnp == null)
             {
                 var userProfile = Mapper.Map<UserProfile>(request.Data);
-
+                userProfile.Contractor = new Contractor() { UserProfile = userProfile };
 
                 if (request.Data.ModuleRoles != null)
                 {

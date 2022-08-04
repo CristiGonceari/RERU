@@ -10,6 +10,7 @@ import { CandidatePositionModel } from '../../../utils/models/candidate-position
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { ReferenceService } from '../../../utils/services/reference/reference.service';
 import { SelectItem } from '../../../utils/models/select-item.model';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 @Component({
 	selector: 'app-add-edit-position',
 	templateUrl: './add-edit-position.component.html',
@@ -17,27 +18,34 @@ import { SelectItem } from '../../../utils/models/select-item.model';
 })
 export class AddEditPositionComponent implements OnInit {
 	isLoading: boolean = true;
-
 	positionId: number;
 	positionForm: FormGroup;
 	positionName: string;
-
 	title: string;
-
-	placeHolderString = '+ Tag';
-
+	placeHolderStringRequireDocuments = '+ Document';
+	placeHolderStringRequireEvents = '+ Eveniment';
 	items = [];
 	eventList = [];
-
 	eventSelected: any[] = [];
 	tags: any[] = [];
-
 	description: string;
-
 	event = new SelectItem();
 	eventsList: any[] = [];
-
 	exceptUserIds = [];
+	editorData: string = '';
+
+	startDate;
+	endDate;
+	fromDate;
+	tillDate;
+
+	public Editor = DecoupledEditor;
+	public onReady(editor) {
+		editor.ui.getEditableElement().parentElement.insertBefore(
+			editor.ui.view.toolbar.element,
+			editor.ui.getEditableElement()
+		);
+	}
 
 	constructor(
 		private fb: FormBuilder,
@@ -60,7 +68,11 @@ export class AddEditPositionComponent implements OnInit {
 			if (params.id) {
 				this.positionId = params.id;
 				this.positionService.get(this.positionId).subscribe(res => {
+					console.log("role:", res)
 					this.initForm(res.data);
+					this.editorData = res.data.description;
+                    this.startDate = res.data.from;
+				    this.endDate =  res.data.to;
 
 					res.data.requiredDocuments.forEach(element => {
 						this.tags.push({ display: element.label, value: +element.value })
@@ -76,6 +88,17 @@ export class AddEditPositionComponent implements OnInit {
 				this.isLoading = false;
 			}
 		});
+	}
+
+	setTimeToSearch(): void {
+		if (this.startDate) {
+			const date = new Date(this.startDate);
+			this.fromDate = new Date(date.getTime() - (new Date(this.startDate).getTimezoneOffset() * 60000)).toISOString();
+		}
+		if (this.endDate) {
+			const date = new Date(this.endDate);
+			this.tillDate = new Date(date.getTime() - (new Date(this.endDate).getTimezoneOffset() * 60000)).toISOString();
+		}
 	}
 
 	initForm(data?): void {
@@ -96,6 +119,7 @@ export class AddEditPositionComponent implements OnInit {
 	}
 
 	addRole(): void {
+		this.setTimeToSearch();
 		this.isLoading = true;
 
 		const tagsArr = this.tags.map(obj => typeof obj.value !== 'number' ? { ...obj, value: 0 } : obj);
@@ -108,6 +132,9 @@ export class AddEditPositionComponent implements OnInit {
 		let addPositionModel = {
 			name: this.positionForm.value.name,
 			isActive: this.positionForm.value.isActive,
+			from: this.fromDate,
+			to: this.tillDate,
+			description: this.editorData,
 			requiredDocuments: tagsArr,
 			eventIds: eventArr.map(obj => obj.value)
 		} as CandidatePositionModel;
@@ -129,6 +156,8 @@ export class AddEditPositionComponent implements OnInit {
 	}
 
 	editRole(): void {
+		this.setTimeToSearch();
+
 		this.isLoading = true;
 
 		const tagsArr = this.tags.map(obj => typeof obj.value !== 'number' ? { ...obj, value: 0 } : obj);
@@ -141,6 +170,9 @@ export class AddEditPositionComponent implements OnInit {
 		let editPositionModel = {
 			id: +this.positionId,
 			name: this.positionForm.value.name,
+			from: this.fromDate,
+			to: this.tillDate,
+			description: this.editorData,
 			isActive: this.positionForm.value.isActive,
 			requiredDocuments: tagsArr,
 			eventIds: eventArr.map(obj => obj.value)

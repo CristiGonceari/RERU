@@ -1,0 +1,24 @@
+.disabled-area{
+    cursor: default;
+    pointer-events: none !important;
+}
+
+.first{
+    height: auto;
+}
+
+.second{
+    height: 100%;
+}
+
+tbody {
+	tr {
+		td {
+			vertical-align: middle !important;
+		}
+
+		button {
+			height: auto;
+		}
+	}
+}

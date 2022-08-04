@@ -7,6 +7,7 @@ using CODWER.RERU.Personal.Application.UserProfiles.GetOrCreateUserProfile;
 using CODWER.RERU.Personal.Application.UserProfiles.ResetContractorPassword;
 using CODWER.RERU.Personal.DataTransferObjects.UserProfiles;
 using CVU.ERP.Module.Application.Models;
+using CVU.ERP.ServiceProvider.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

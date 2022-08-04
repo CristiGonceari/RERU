@@ -1,4 +1,4 @@
-﻿using CODWER.RERU.Personal.Data.Entities.Enums;
+﻿using RERU.Data.Entities.PersonalEntities.Enums;
 using FluentValidation;
 
 namespace CODWER.RERU.Personal.Application.FieldTypes.Validators

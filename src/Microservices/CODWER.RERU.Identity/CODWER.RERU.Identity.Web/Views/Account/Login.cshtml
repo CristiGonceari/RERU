@@ -91,7 +91,7 @@
         </div>
     </div>*@
 
-@model LoginViewModel
+@model CODWER.RERU.Identity.Web.Quickstart.Account.LoginViewModel
 <div class="d-flex flex-column flex-root">
     <div class="login login-2 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white" id="kt_login">
         <div class="login-aside order-2 order-lg-1 d-flex flex-column-fluid flex-lg-row-auto bgi-size-cover bgi-no-repeat p-7 p-lg-10">
@@ -133,13 +133,17 @@
                                     </div>
                                 }
 
-                                <div class="form-group d-flex flex-wrap justify-content-between align-items-center mt-2">
-                                    <div class="my-3 mr-2">
-                                        <span class="text-muted mr-2">Nu aveți cont?</span>
-                                        <a href="http://reru.codwer.com/#/registration-page" id="kt_login_signup" class="font-weight-bold">Înregistrează-te</a>
-                                    </div>
-                                    <button id="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3" name="button" value="login">Loghează-te</button>
+                            <div class="form-group d-flex flex-wrap justify-content-between align-items-center mt-2">
+                                <div class="my-3 mr-2">
+                                    <span class="text-muted mr-2">Nu aveți cont?</span>
+                                    <a href="http://reru.codwer.com/#/registration-page" id="kt_login_signup" class="font-weight-bold">Înregistrează-te</a>
                                 </div>
+                                <button id="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3" name="button" value="login">Loghează-te</button>
+                                <div class="my-3 mr-2">
+                                    <span class="text-muted mr-2">Vreți să candidați?</span>
+                                    <a href="http://reru.codwer.com/#/vacant-positions-page" id="kt_login_signup" class="font-weight-bold">Poziții vacante</a>
+                                </div>
+                            </div>
 
                                 @*@if (Model.VisibleExternalProviders.Any())
                                 {

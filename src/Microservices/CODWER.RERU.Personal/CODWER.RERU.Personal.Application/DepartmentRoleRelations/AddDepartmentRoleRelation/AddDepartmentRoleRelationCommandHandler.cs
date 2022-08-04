@@ -1,12 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Entities.OrganizationRoleRelations;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleRelations;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.PersonalEntities.OrganizationRoleRelations;
 
 namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.AddDepartmentRoleRelation
 {
@@ -68,33 +68,33 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.AddDepartment
             };
         }
 
-        private ParentDepartmentChildOrganizationRole NewDepartmentToRoleRelation(AddDepartmentRoleRelationCommand request)
+        private ParentDepartmentChildRole NewDepartmentToRoleRelation(AddDepartmentRoleRelationCommand request)
         {
             return new()
             {
                 OrganizationalChartId = request.Data.OrganizationalChartId,
                 ParentDepartmentId = request.Data.ParentId,
-                ChildOrganizationRoleId = request.Data.ChildId
+                ChildRoleId = request.Data.ChildId
             };
         }
 
-        private ParentOrganizationRoleChildDepartment NewRoleToDepartmentRelation(AddDepartmentRoleRelationCommand request)
+        private ParentRoleChildDepartment NewRoleToDepartmentRelation(AddDepartmentRoleRelationCommand request)
         {
             return new()
             {
                 OrganizationalChartId = request.Data.OrganizationalChartId,
-                ParentOrganizationRoleId = request.Data.ParentId,
+                ParentRoleId = request.Data.ParentId,
                 ChildDepartmentId = request.Data.ChildId
             };
         }
 
-        private ParentOrganizationRoleChildOrganizationRole NewRoleToRoleRelation(AddDepartmentRoleRelationCommand request)
+        private ParentRoleChildRole NewRoleToRoleRelation(AddDepartmentRoleRelationCommand request)
         {
             return new()
             {
                 OrganizationalChartId = request.Data.OrganizationalChartId,
-                ParentOrganizationRoleId = request.Data.ParentId,
-                ChildOrganizationRoleId = request.Data.ChildId
+                ParentRoleId = request.Data.ParentId,
+                ChildRoleId = request.Data.ChildId
             };
         }
     }

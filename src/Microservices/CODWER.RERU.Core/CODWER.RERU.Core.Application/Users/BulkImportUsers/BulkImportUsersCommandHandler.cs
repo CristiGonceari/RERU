@@ -21,12 +21,13 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
     {
         private readonly IStorageFileService _storageFileService;
         private readonly IMediator _mediator;
-        private readonly IConfiguration _configuration;
+        private readonly AppDbContext _appDbContext;
 
-        public BulkImportUsersCommandHandler(IStorageFileService storageFileService, IConfiguration configuration, IMediator mediator)
+
+        public BulkImportUsersCommandHandler(AppDbContext appDbContext, IStorageFileService storageFileService, IMediator mediator)
         {
+            _appDbContext = appDbContext;
             _storageFileService = storageFileService;
-            _configuration = configuration;
             _mediator = mediator;
         }
 
@@ -55,7 +56,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
                 UserProfile user;
 
-                await using (var db = AppDbContext.NewInstance(_configuration))
+                await using (var db = _appDbContext.NewInstance())
                 {
                     user = await db.UserProfiles.FirstOrDefaultAsync(x => x.Idnp == idnp);
                 }
@@ -109,7 +110,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
         private async Task SetTotalNumberOfProcesses(int processId, int totalUsers)
         {
-            await using (var db = AppDbContext.NewInstance(_configuration))
+            await using (var db = _appDbContext.NewInstance())
             {
                 var process = await db.Processes.FirstAsync(x => x.Id == processId);
                 process.Total = totalUsers;
@@ -158,7 +159,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
         private async Task UpdateProcesses(int processId)
         {
-            await using (var db = AppDbContext.NewInstance(_configuration))
+            await using (var db = _appDbContext.NewInstance())
             {
                 var process = await db.Processes.FirstAsync(x => x.Id == processId);
                 process.Done++;
@@ -171,7 +172,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         {
             var fileId = await _storageFileService.AddFile(excelFile.Name, CVU.ERP.StorageService.Entities.FileTypeEnum.procesfile, excelFile.ContentType, excelFile.Content);
 
-            await using (var db = AppDbContext.NewInstance(_configuration))
+            await using (var db = _appDbContext.NewInstance())
             {
                 var process =await db.Processes.FirstAsync(x => x.Id == processId);
 
@@ -196,7 +197,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0"),
                 RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
                 EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "False"),
-                Birthday = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[0]), int.Parse(dateStrings[1])),
+                BirthDate = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[0]), int.Parse(dateStrings[1])),
                 PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString(),
                 AccessModeEnum = AccessModeEnum.CurrentDepartment
             };

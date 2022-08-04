@@ -119,7 +119,9 @@
       "name": "Denumirea poziției",
       "status": "Statut",
       "is-active": "Activ",
-      "apply-for-position": "Poziție candidată"
+      "apply-for-position": "Poziție candidată",
+      "position-diagram": "Borderoul poziției",
+      "vacant-position": "Poziția vacantă"
   },
   "documents-templates":{
     "title": "Șabloane",
@@ -392,8 +394,8 @@
     "result": "Rezultat",
     "score": "Puncte (%)",
     "NoResult": "Fără Rezultat",
-    "Passed": "Susținut",
-    "NotPassed": "Nesusținut",
+    "Passed": "Se recomandă",
+    "NotPassed": "Nu se recomandă",
     "status-0": "Programat",
     "status-1": "Permis să înceapă",
     "status-2": "În progres",
@@ -530,8 +532,8 @@
     "Closed": "Închis",
     "Terminated": "Finisat",
     "started": "Început",
-    "passed": "Admis",
-    "not-passed": "Respins",
+    "passed": "Se recomandă",
+    "not-passed": "Nu se recomandă",
     "Canceled": "Anulat",
     "Padding": "În așteptare",
     "Active": "Activ",
@@ -574,10 +576,11 @@
     "approve": "Aprobă",
     "refuse": "Refuză",
     "NoResult": "Fără rezultat",
-    "Passed": "Susținut",
-    "NotPassed": "Nesusținut",
+    "Passed": "Se recomandă",
+    "NotPassed": "Nu se recomandă",
     "employee": "Angajat",
-    "candidate": "Candidat"
+    "candidate": "Candidat",
+    "Wait" : "Asteptare"
   },
   "options": {
     "start-without-confirmation": "Este posibil să porniți testul fără confirmare",
@@ -800,13 +803,13 @@
     "please-select-format": "Selectati formatul necesar"
   },
   "solicited-position":{
-    "solicited-positions": "Pozitia solicitata",
+    "solicited-positions": "Pozitie solicitate",
     "attached-documents": "Documente atasate",
     "required-documents": "Documente necesare",
     "review" : "Revizuie",
     "reject" : "Refuz",
     "approve" : "Aproba",
-    "waiting" : "In asteptare",
+    "waiting" : "Asteptare",
     "phone-number" : "Numar de contact"
   },
   "message-code": {
@@ -832,6 +835,7 @@
     "03000301": "Evaluatorul există deja în eveniment",
     "03000302": "Evaluatorul există deja în test",
     "03000303": "Evaluatorul și candidatul nu pot fi aceeași persoană",
+    "03000304": "Evaluator inexistent în eveniment",
     "03000401": "Locația există deja în eveniment",
     "03000501": "Utilizatorul nu este responsabil pentru acest eveniment",
     "03000502": "Evaluatorul și persoana responsabilă nu pot fi aceeași persoană",
@@ -915,6 +919,7 @@
     "03001904": "Starea nevalidă pentru verificare",
     "03001905": "Limita punctelor de întrebare este greșită",
     "03002001": "Utilizator nevalid",
+    "03002003": "Evaluator nevalid",
     "03030101": "Sunteți invitat la eveniment",
     "03030201": "Aveți un nou test programat",
     "03030202": "Testul dvs. a fost verificat", 
@@ -963,7 +968,9 @@
     "change-status": "Schimba statutul",
     "refuse-msg": "Sigur doriți să refuzați aceasta pozitie solicitata?",
     "select-candidate-position": "Selectați poziția",
-    "position-to-candidate": "Poziția pentru care candidați"
+    "position-to-candidate": "Poziția pentru care candidați",
+    "aviable-from": "Valabil de la",
+    "aviable-to": "Valabil pana la"
   },
   "evaluations": {
     "evaluation": "Evaluare",

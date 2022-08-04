@@ -1,4 +1,4 @@
-﻿using CODWER.RERU.Personal.Data.Entities.Enums;
+﻿using RERU.Data.Entities.PersonalEntities.Enums;
 using CVU.ERP.Common.Data.Entities;
 using System;
 using System.Collections.Generic;

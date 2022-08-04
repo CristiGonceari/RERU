@@ -8,7 +8,7 @@ namespace CODWER.RERU.Personal.Application.OrganizationRoles.GetOrganizationRole
 {
     [ModuleOperation(permission: PermissionCodes.ORGANIZATION_ROLES_GENERAL_ACCESS)]
 
-    public class GetOrganizationRolesQuery : PaginatedQueryParameter, IRequest<PaginatedModel<OrganizationRoleDto>>
+    public class GetRolesQuery : PaginatedQueryParameter, IRequest<PaginatedModel<RoleDto>>
     {
         public string Name { get; set; }
         public string Code { get; set; }

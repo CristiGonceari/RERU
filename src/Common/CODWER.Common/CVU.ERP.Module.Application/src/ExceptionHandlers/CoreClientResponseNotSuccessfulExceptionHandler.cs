@@ -2,8 +2,8 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using CVU.ERP.Common.DataTransferObjects.Response;
-using CVU.ERP.Module.Application.Exceptions;
 using CVU.ERP.Module.Common.ExceptionHandlers;
+using CVU.ERP.ServiceProvider.Exceptions;
 
 namespace src.ExceptionHandlers
 {

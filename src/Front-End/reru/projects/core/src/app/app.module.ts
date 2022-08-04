@@ -20,16 +20,19 @@ import { RolesComponent } from './components/roles/roles.component';
 import { MainComponent } from './components/main/main.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { DEFAULT_TIMEOUT, TimeoutInterceptor } from '../app/utils/specific-interceptor/timeout-intercepter';
+import { GeneralDataFormComponent } from './components/candidate-registration-flux/general-data-form/general-data-form.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
 	declarations: [
 		//AuthenticationCallbackComponent,
 		AppComponent,
 		//    LoginComponent,
-		DashboardComponent,
 		ModulesComponent,
 		RolesComponent,
-		MainComponent
+		MainComponent,
+		DashboardComponent
 	],
 	imports: [
 		BrowserModule,

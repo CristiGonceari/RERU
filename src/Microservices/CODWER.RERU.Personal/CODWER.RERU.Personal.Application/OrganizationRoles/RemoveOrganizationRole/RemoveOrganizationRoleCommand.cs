@@ -6,7 +6,7 @@ namespace CODWER.RERU.Personal.Application.OrganizationRoles.RemoveOrganizationR
 {
     [ModuleOperation(permission: PermissionCodes.ORGANIZATION_ROLES_GENERAL_ACCESS)]
 
-    public class RemoveOrganizationRoleCommand : IRequest<Unit>
+    public class RemoveRoleCommand : IRequest<Unit>
     {
         public int Id { get; set; }
     }

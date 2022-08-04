@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using CODWER.RERU.Personal.Application.Validation;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Contacts;
 using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;

@@ -6,6 +6,6 @@ namespace CODWER.RERU.Core.Application.Bulletins.GetUserProfileBulletin
     public class GetUserProfileBulletinQuery : IRequest<BulletinDto>
     {
 
-        public int UserProfileId { get; set; }
+        public int ContractorId { get; set; }
     }
 }

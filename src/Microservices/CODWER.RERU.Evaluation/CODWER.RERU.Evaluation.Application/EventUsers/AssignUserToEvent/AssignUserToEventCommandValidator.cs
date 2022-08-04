@@ -1,23 +1,21 @@
-﻿using FluentValidation;
-using System.Linq;
-using CODWER.RERU.Evaluation.Application.Validation;
+﻿using CODWER.RERU.Evaluation.Application.Validation;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using FluentValidation;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 {
     public class AssignUserToEventCommandValidator : AbstractValidator<AssignUserToEventCommand>
     {
         private readonly AppDbContext _appDbContext;
-
         public AssignUserToEventCommandValidator(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
-
             RuleFor(r => r)
                 .NotNull()
                 .WithErrorCode(ValidationCodes.NULL_OR_EMPTY_INPUT);
@@ -66,7 +64,6 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
         private bool ExistentEvaluatorSameWithCandidate(AssignUserToEventCommand data)
         {
             var listOfResults = new List<bool>();
-
 
             foreach (var userId in data.UserProfileId)
             {

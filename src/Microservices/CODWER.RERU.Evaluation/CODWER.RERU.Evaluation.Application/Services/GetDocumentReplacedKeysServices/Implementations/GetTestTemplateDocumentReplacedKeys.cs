@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CVU.ERP.StorageService.Entities;
 using Wkhtmltopdf.NetCore;
 
 namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices.Implementations
@@ -62,7 +63,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
         public async Task<Dictionary<string, string>> GetDictionay(TestTemplate testTemplate)
         {
             var keys = _appDbContext.DocumentTemplateKeys
-                                        .Where(dtk => dtk.FileType == FileTypeEnum.TestTemplate)
+                                        .Where(dtk => dtk.FileType == FileTypeEnum.testtemplate)
                                         .Select(dtk => dtk.KeyName)
                                         .ToList();
 

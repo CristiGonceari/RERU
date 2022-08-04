@@ -9,7 +9,9 @@ namespace CODWER.RERU.Evaluation.Application.Services
         public Task<FileDataDto> PrintTestTemplatePdf(int testTemplateId);
         public Task<FileDataDto> PrintTestPdf(int testId);
         public Task<FileDataDto> PrintTestResultPdf(int testId);
+        public Task<FileDataDto> PrintEvaluationResultPdf(int testId);
         public Task<FileDataDto> PrintPerformingTestPdf(List<int> testsIds);
         public Task<FileDataDto> PrintQuestionUnitPdf(int questionId);
+        public Task<FileDataDto> PrintPositionDiagramPdf(int positionId);
     }
 }

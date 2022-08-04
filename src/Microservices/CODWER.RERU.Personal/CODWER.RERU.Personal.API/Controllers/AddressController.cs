@@ -5,9 +5,9 @@ using CODWER.RERU.Personal.Application.Addresses.AddAddress;
 using CODWER.RERU.Personal.Application.Addresses.GetAddress;
 using CODWER.RERU.Personal.Application.Addresses.RemoveAddress;
 using CODWER.RERU.Personal.Application.Addresses.UpdateAddress;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Address;
-using CVU.ERP.Module.Application.Clients;
+using CVU.ERP.ServiceProvider.Clients;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -41,7 +41,8 @@ namespace CODWER.RERU.Personal.API.Controllers
         [HttpGet("getcore/{id}")]
         public async Task<bool> GetCore([FromRoute] string id)
         {
-            return await _coreClient.ExistUserInCore(id);
+            return false;
+            //return await _coreClient.ExistUserInCore(id);
         }
 
         [HttpGet("{id}")]

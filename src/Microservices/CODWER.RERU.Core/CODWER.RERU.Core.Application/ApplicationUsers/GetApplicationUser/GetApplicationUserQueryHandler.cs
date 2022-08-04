@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Data.Persistence.Helpers;
-using CVU.ERP.Module.Application.Models;
-using CVU.ERP.Module.Application.Providers;
+using CVU.ERP.ServiceProvider;
+using CVU.ERP.ServiceProvider.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

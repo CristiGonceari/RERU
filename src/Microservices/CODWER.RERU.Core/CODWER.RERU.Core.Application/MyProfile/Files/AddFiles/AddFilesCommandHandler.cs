@@ -1,10 +1,10 @@
 ﻿using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
-using CVU.ERP.Module.Application.Providers;
 using CVU.ERP.StorageService;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.ServiceProvider;
 using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.MyProfile.Files.AddFiles

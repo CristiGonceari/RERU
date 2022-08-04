@@ -1,12 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Entities.OrganizationRoleRelations;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleRelations;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.PersonalEntities.OrganizationRoleRelations;
 
 namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.AddOrganizationalChartHead
 {
@@ -21,7 +21,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.AddOrganizati
             _loggerService = loggerService;
         }
 
-        //head is saved like DepartmentToDepartment or DepartmentToOrganizationRole relation with null ParentId
+        //head is saved like DepartmentToDepartment or DepartmentToRole relation with null ParentId
         public async Task<int> Handle(AddOrganizationalChartHeadCommand request, CancellationToken cancellationToken)
         {
             DepartmentRoleRelation item = new ParentDepartmentChildDepartment();
@@ -31,7 +31,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.AddOrganizati
                 case OrganizationalChartItemType.Department:
                     item = NewDepartmentToDepartmentRelation(request);
                     break;
-                case OrganizationalChartItemType.OrganizationRole:
+                case OrganizationalChartItemType.Role:
                     item = NewDepartmentToRoleRelation(request);
                     break;
             }
@@ -62,12 +62,12 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.AddOrganizati
             };
         }
 
-        private ParentDepartmentChildOrganizationRole NewDepartmentToRoleRelation(AddOrganizationalChartHeadCommand request)
+        private ParentDepartmentChildRole NewDepartmentToRoleRelation(AddOrganizationalChartHeadCommand request)
         {
             return new()
             {
                 OrganizationalChartId = request.OrganizationalChartId,
-                ChildOrganizationRoleId = request.HeadId
+                ChildRoleId = request.HeadId
             };
         }
     }

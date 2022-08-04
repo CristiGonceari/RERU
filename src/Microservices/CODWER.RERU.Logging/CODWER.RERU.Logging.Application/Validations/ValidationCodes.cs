@@ -1,4 +1,4 @@
-﻿namespace CODWER.RERU.Logging.Application.Validation
+﻿namespace CODWER.RERU.Logging.Application.Validations
 {
     public class ValidationCodes
     {

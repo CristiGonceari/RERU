@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace IdentityServerHost.Quickstart.UI
+namespace CODWER.RERU.Identity.Web.Quickstart.Consent
 {
     public class ConsentInputModel
     {

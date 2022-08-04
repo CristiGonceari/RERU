@@ -18,6 +18,6 @@ namespace CODWER.RERU.Core.DataTransferObjects.MilitaryObligation
         public DateTime MilitaryBookletReleaseDay { get; set; }
         public string MilitaryBookletEminentAuthority { get; set; }
 
-        public int UserProfileId { get; set; }
+        public int ContractorId { get; set; }
     }
 }

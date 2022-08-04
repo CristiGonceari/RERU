@@ -3,7 +3,7 @@ using CODWER.RERU.Personal.Application.DependencyInjection;
 using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Application.Services.Implementations;
 using CODWER.RERU.Personal.Application.Validation;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Common;
 using CVU.ERP.Common.Interfaces;
 using CVU.ERP.Common.Pagination;
@@ -16,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
+using HangfireDbContext = RERU.Data.Persistence.Context.HangfireDbContext;
 using ISession = CODWER.RERU.Personal.Application.Interfaces.ISession;
 
 namespace CODWER.RERU.Personal.API.Config
@@ -28,8 +29,12 @@ namespace CODWER.RERU.Personal.API.Config
         {
             // Add framework services.
             services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString(ConnectionString.Personal),
+                options.UseNpgsql(configuration.GetConnectionString(ConnectionString.Common),
                     b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name)));
+
+            services.AddDbContext<HangfireDbContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString(ConnectionString.HangfirePersonal),
+                    b => b.MigrationsAssembly(typeof(HangfireDbContext).GetTypeInfo().Assembly.GetName().Name)));
         }
         #endregion
 

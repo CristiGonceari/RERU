@@ -1,0 +1,21 @@
+<div class="card text-center">
+    <div class="card-header">
+      {{ 'step.Declaration' | translate }}
+    </div>
+    <div class="card-body">
+     <div class="form-check ">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="isChecked" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+            <p class="card-text font-weight-bold">
+              {{ 'declaration.paragraf' | translate}}
+             </p>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-end mt-10 mr-1">
+    <button class="btn btn-success"
+    [disabled]="isChecked == false || !allowToFinish" 
+    (click)="addRegistrationFluxStep()"
+        >{{'stepper.button-end' | translate}}</button>
+</div>

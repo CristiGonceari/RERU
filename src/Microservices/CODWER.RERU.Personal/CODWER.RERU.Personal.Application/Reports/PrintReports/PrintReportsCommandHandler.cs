@@ -1,6 +1,4 @@
-﻿using CODWER.RERU.Personal.Data.Entities.Files;
-using CODWER.RERU.Personal.Data.Entities.StaticExtensions;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+﻿using RERU.Data.Persistence.Context;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Context;
@@ -12,6 +10,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities.PersonalEntities.Files;
+using RERU.Data.Entities.PersonalEntities.StaticExtensions;
 using Wkhtmltopdf.NetCore;
 using File = System.IO.File;
 

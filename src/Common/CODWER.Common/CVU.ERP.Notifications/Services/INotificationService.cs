@@ -8,5 +8,6 @@ namespace CVU.ERP.Notifications.Services
     public interface INotificationService
     {
         Task<IEmailService> Notify(EmailData data, NotificationType type);
+        Task PutEmailInQueue(QueuedEmailData email, NotificationType type= NotificationType.Both);
     }
 }

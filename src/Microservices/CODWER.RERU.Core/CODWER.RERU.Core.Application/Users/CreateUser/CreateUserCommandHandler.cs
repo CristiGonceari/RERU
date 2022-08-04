@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Core.Application.Users.CreateUser
 {
@@ -26,12 +27,12 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
             IEnumerable<IIdentityService> identityServices, 
             ILoggerService<CreateUserCommandHandler> loggerService, 
             IMapper mapper,
-            IConfiguration configuration)
+            AppDbContext appDbContext)
         {
             _identityServices = identityServices;
             _loggerService = loggerService;
             _mapper = mapper;
-            _appDbContext = AppDbContext.NewInstance(configuration);
+            _appDbContext = appDbContext.NewInstance();
         }
 
         public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -43,7 +44,7 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
                 FatherName = request.FatherName,
                 Idnp = request.Idnp,
                 Email = request.Email,
-                Birthday = request.Birthday,
+                BirthDate = request.BirthDate,
                 PhoneNumber = request.PhoneNumber,
                 DepartmentColaboratorId = request.DepartmentColaboratorId == 0 ? null : request.DepartmentColaboratorId,
                 RoleColaboratorId = request.RoleColaboratorId == 0 ? null : request.RoleColaboratorId,
@@ -52,6 +53,7 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
             };
 
             var userProfile = _mapper.Map<UserProfile>(newUser);
+            userProfile.Contractor = new Contractor() { UserProfile = userProfile };
             
             var defaultRoles = _appDbContext.Modules
                 .SelectMany(m => m.Roles.Where(r => r.IsAssignByDefault).Take(1))

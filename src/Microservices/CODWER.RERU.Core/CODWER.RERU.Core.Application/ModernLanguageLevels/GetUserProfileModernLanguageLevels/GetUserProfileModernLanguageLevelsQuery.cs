@@ -6,6 +6,6 @@ namespace CODWER.RERU.Core.Application.ModernLanguageLevels.GetUserProfileModern
 {
     public class GetUserProfileModernLanguageLevelsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<ModernLanguageLevelDto>>
     {
-        public int UserProfileId { get; set; }
+        public int ContractorId { get; set; }
     }
 }

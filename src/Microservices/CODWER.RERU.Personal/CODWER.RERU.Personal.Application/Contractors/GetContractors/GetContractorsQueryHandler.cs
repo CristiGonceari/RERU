@@ -5,9 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Personal.Application.Enums;
 using CODWER.RERU.Personal.Application.Services;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Entities.StaticExtensions;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Entities.PersonalEntities.StaticExtensions;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Contractors;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Logging;
@@ -40,10 +40,11 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
         {
 
             var contractors = _appDbContext.Contractors
+                .Include(c => c.UserProfile)
                 .Include(r => r.Positions)
                 .ThenInclude(p => p.Department)
                 .Include(c => c.Positions)
-                .ThenInclude(p => p.OrganizationRole)
+                .ThenInclude(p => p.Role)
                 .Include(r => r.Contacts)
                 .AsQueryable();
 
@@ -94,10 +95,10 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
                     .Where(x => x.Positions.OrderByDescending(p => p.FromDate).First().FromDate <= request.EmploymentDateTo);
             }
 
-            if (request.OrganizationRoleId != null)
+            if (request.RoleId != null)
             {
                 items = items.Where(x => x.Positions.Any())
-                    .Where(x => x.Positions.OrderByDescending(p => p.FromDate).First().OrganizationRoleId == request.OrganizationRoleId);
+                    .Where(x => x.Positions.OrderByDescending(p => p.FromDate).First().RoleId == request.RoleId);
             }
 
             if (request.DepartmentId != null)

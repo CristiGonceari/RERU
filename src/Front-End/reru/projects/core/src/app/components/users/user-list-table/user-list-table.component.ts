@@ -65,12 +65,6 @@ export class UserListTableComponent implements OnInit {
 		this.checkPermission();
 	}
 
-	startProcess(){
-		this.userService.startAddProcess({ totalProcesses: null, processType: 1 }).subscribe(res => {
-			console.log(res)
-		})
-	}
-
 	setFilter(field: string, value): void {
 		this.filters[field] = value;
 		this.pagination.currentPage = 1;

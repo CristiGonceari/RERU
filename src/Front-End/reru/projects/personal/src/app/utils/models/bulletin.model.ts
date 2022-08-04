@@ -18,4 +18,16 @@ export interface AddressModel {
     street: string;
     building: string;
     apartment: string;
+    postCode: string;
+}
+
+export interface ContractorBulletinModel {
+    id?: number;
+    series: string;
+    releaseDay: string;
+    emittedBy: string;
+    contractorId?: number;
+    birthPlace: AddressModel;
+    parentsResidenceAddress: AddressModel;
+    residenceAddress: AddressModel;
 }

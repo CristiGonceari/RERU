@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule 
 {
@@ -86,6 +87,7 @@ namespace CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule
                 userProfileModuleRoles.UserProfile.LastName = "Platforma";
                 userProfileModuleRoles.UserProfile.IsActive = true;
                 userProfileModuleRoles.UserProfile.RequiresDataEntry = true;
+                userProfileModuleRoles.UserProfile.Contractor = new Contractor() { UserProfile = userProfileModuleRoles.UserProfile };
 
                 var ident = new UserProfileIdentity
                 {

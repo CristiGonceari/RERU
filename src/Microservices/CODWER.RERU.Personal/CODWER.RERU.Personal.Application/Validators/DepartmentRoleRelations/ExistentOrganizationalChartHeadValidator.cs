@@ -1,10 +1,10 @@
 ﻿using CODWER.RERU.Personal.Application.Validation;
-using CODWER.RERU.Personal.Data.Entities.OrganizationRoleRelations;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Common.Extensions;
 using FluentValidation;
 using FluentValidation.Validators;
 using System.Linq;
+using RERU.Data.Entities.PersonalEntities.OrganizationRoleRelations;
 
 namespace CODWER.RERU.Personal.Application.Validators.DepartmentRoleRelations
 {
@@ -24,7 +24,7 @@ namespace CODWER.RERU.Personal.Application.Validators.DepartmentRoleRelations
             var headDb = _appDbContext.DepartmentRoleRelations.FirstOrDefault(x =>
                 x.OrganizationalChartId == id
                 && ((x is ParentDepartmentChildDepartment) && ((ParentDepartmentChildDepartment)x).ParentDepartmentId == null
-                    || (x is ParentDepartmentChildOrganizationRole) && ((ParentDepartmentChildOrganizationRole)x).ParentDepartmentId == null));
+                    || (x is ParentDepartmentChildRole) && ((ParentDepartmentChildRole)x).ParentDepartmentId == null));
 
             if (headDb != null)
             {

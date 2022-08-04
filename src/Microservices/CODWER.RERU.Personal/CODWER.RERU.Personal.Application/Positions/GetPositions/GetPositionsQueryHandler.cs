@@ -1,5 +1,5 @@
-﻿using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+﻿using RERU.Data.Entities.PersonalEntities.ContractorEvents;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Positions;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.StorageService;
@@ -29,7 +29,7 @@ namespace CODWER.RERU.Personal.Application.Positions.GetPositions
         {
             var items = _appDbContext.Positions
                 .Include(x => x.Department)
-                .Include(x => x.OrganizationRole)
+                .Include(x => x.Role)
                 .Include(x => x.Contractor)
                 .AsQueryable();
 
@@ -38,9 +38,9 @@ namespace CODWER.RERU.Personal.Application.Positions.GetPositions
                 items = items.Where(x => x.DepartmentId == request.DepartmentId);
             }
 
-            if (request.OrganizationRoleId != null)
+            if (request.RoleId != null)
             {
-                items = items.Where(x => x.OrganizationRoleId == request.OrganizationRoleId);
+                items = items.Where(x => x.RoleId == request.RoleId);
             }
 
             if (request.ContractorId != null)

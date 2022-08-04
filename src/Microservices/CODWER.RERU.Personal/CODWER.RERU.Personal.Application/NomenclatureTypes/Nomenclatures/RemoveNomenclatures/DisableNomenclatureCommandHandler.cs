@@ -3,7 +3,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Personal.Application.NomenclatureTypes.Nomenclatures.RemoveNomenclatures
 {

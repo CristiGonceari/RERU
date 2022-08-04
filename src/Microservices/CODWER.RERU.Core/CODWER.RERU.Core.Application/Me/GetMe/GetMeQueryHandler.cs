@@ -1,10 +1,12 @@
+using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.DataTransferObjects.Me;
 using CODWER.RERU.Core.DataTransferObjects.Users;
-using CVU.ERP.Module.Application.Providers;
+using CVU.ERP.ServiceProvider;
 using MediatR;
 using Microsoft.Extensions.Options;
 
@@ -23,7 +25,8 @@ namespace CODWER.RERU.Core.Application.Me.GetMe {
 
         }
 
-        public async Task<MeDto> Handle (GetMeQuery request, CancellationToken cancellationToken) {
+        public async Task<MeDto> Handle (GetMeQuery request, CancellationToken cancellationToken) 
+        {
             var me = new MeDto ();
 
             if (!_currentUserProvider.IsAuthenticated) return me;
@@ -33,6 +36,20 @@ namespace CODWER.RERU.Core.Application.Me.GetMe {
             me.User = Mapper.Map<ApplicationUserDto> (currentUser);
             me.Tenant = _tenantDto;
 
+            var userProfile = AppDbContext.UserProfiles.FirstOrDefault(up => up.Id == int.Parse(currentUser.Id));
+
+            if (userProfile.DepartmentColaboratorId == null &&
+                userProfile.RoleColaboratorId == null && 
+                !string.IsNullOrEmpty(userProfile.Idnp)
+                )
+            {
+                me.IsCandidateStatus = true;
+            }
+            else
+            {
+                me.IsCandidateStatus = false;
+            }
+           
             return me;
         }
     }

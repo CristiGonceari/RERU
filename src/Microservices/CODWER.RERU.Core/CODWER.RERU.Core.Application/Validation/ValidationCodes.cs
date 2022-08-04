@@ -20,11 +20,13 @@ namespace CODWER.RERU.Core.Application.Validation
         public static string EMPTY_ACCESS_MODE = "01000106";
         public static string DUPLICATE_EMAIL_IN_SYSTEM = "01000107";
         public static string INVALID_CODE = "01000108";
-        public static string EMPTY_USER_BIRTH_DATE = "01000109";
+        public static string INVALID_USER_BIRTH_DATE = "01000109";
         public static string EMPTY_USER_WORK_PHONE = "01000110";
         public static string EMPTY_USER_HOME_PHONE = "01000111";
         public static string EMPTY_USER_MOBILE_PHONE = "01000112";
         public static string USER_NOT_FOUND = "01000113";
+        public static string NULL_OR_EMPTY_INPUT = "01000114";
+        public static string INVALID_USER_PHONE = "01000115";
 
         //ARTICLES
         public static string EMPTY_NAME = "01000201";
@@ -74,7 +76,7 @@ namespace CODWER.RERU.Core.Application.Validation
         public static string EMPTY_RECOMANDATION_LAST_NAME = "01002002";
         public static string EMPTY_RECOMANDATION_FUNCTION = "01002003";
         public static string EMPTY_RECOMANDATION_SUBDIVISION = "01002004";
-        public static string RECOMANDATION_NOT_FOUND= "01002005";
+        public static string RECOMANDATION_NOT_FOUND = "01002005";
 
 
         //MaterialStatus
@@ -103,8 +105,15 @@ namespace CODWER.RERU.Core.Application.Validation
         public static string EMPTY_MILITARY_BOOKLET_SERIES = "01006004";
         public static string EMPTY_MILITARY_BOOKLET_NUMBER = "01006005";
         public static string EMPTY_MILITARY_BOOKLET_AUTHORITY = "01006006";
-        public static string MILITARY_OBLIGATION_NOT_FOUND= "01006007";
+        public static string MILITARY_OBLIGATION_NOT_FOUND = "01006007";
 
+        //RegistrationFluxStep
+        public static string REGISTRATION_FLUX_NOT_FOUND = "01007001";
 
+        //GenearalData
+        public static string USER_PROFILE_GENERAL_DATA_NOT_FOUND = "01008003";
+        public static string CONTRACTOR_HAS_GENERAL_DATA = "01008004";
+        public static string CANDIDATE_CITIZENSHIP_NOT_FOUND = "01008001";
+        public static string CANDIDATE_NATIONALITY_NOT_FOUND = "01008002";
     }
 }

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.Common.Data.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -16,6 +17,9 @@ namespace CVU.ERP.Common.Data.Persistence.EntityFramework
     {
         private static MethodInfo ConfigureGlobalFiltersMethodInfo = typeof(ModuleDbContext).GetMethod(nameof(ConfigureGlobalFilters), BindingFlags.Instance | BindingFlags.NonPublic);
 
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private const string DEFAULT_IDENTITY_SERVICE = "local";
+        protected string _currentUserId = "0";
         public ModuleDbContext()
         {
         }
@@ -91,9 +95,6 @@ namespace CVU.ERP.Common.Data.Persistence.EntityFramework
         {
             ChangeTracker.DetectChanges();
 
-            //Method to get current user
-            var currentUserId = "1"; // GetCurrentUser();
-
             var markedAsDeleted = ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted);
             var markedAsCreated = ChangeTracker.Entries().Where(x => x.State == EntityState.Added);
             var markedAsEdited = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified);
@@ -102,7 +103,7 @@ namespace CVU.ERP.Common.Data.Persistence.EntityFramework
             {
                 foreach (var item in markedAsDeleted)
                 {
-                    AssignOnDeleting(item, currentUserId);
+                    AssignOnDeleting(item);
                 }
             }
 
@@ -110,8 +111,8 @@ namespace CVU.ERP.Common.Data.Persistence.EntityFramework
             {
                 foreach (var item in markedAsCreated)
                 {
-                    AssignOnCreation(item, currentUserId);
-                    AssignOnEditing(item, currentUserId);
+                    AssignOnCreation(item);
+                    AssignOnEditing(item);
                 }
             }
 
@@ -119,34 +120,34 @@ namespace CVU.ERP.Common.Data.Persistence.EntityFramework
             {
                 foreach (var item in markedAsEdited)
                 {
-                    AssignOnEditing(item, currentUserId);
+                    AssignOnEditing(item);
                 }
             }
         }
 
-        private void AssignOnCreation(EntityEntry item, string currentUserId)
+        private void AssignOnCreation(EntityEntry item)
         {
             if (item.Entity is ITrackingEntity trackingEntity)
             {
-                trackingEntity.CreateById = currentUserId;
+                trackingEntity.CreateById = _currentUserId;
                 trackingEntity.CreateDate = DateTime.Now;
             }
         }
 
-        private void AssignOnEditing(EntityEntry item, string currentUserId)
+        private void AssignOnEditing(EntityEntry item)
         {
             if (item.Entity is ITrackingEntity trackingEntity)
             {
-                trackingEntity.UpdateById = currentUserId;
+                trackingEntity.UpdateById = _currentUserId;
                 trackingEntity.UpdateDate = DateTime.Now;
             }
         }
 
-        private void AssignOnDeleting(EntityEntry item, string currentUserId)
+        private void AssignOnDeleting(EntityEntry item)
         {
             if (item.Entity is ISoftDeleteEntity entity)
             {
-                AssignOnEditing(item, currentUserId);
+                AssignOnEditing(item);
 
                 if (entity.IsDeleted == false)
                 {

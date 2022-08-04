@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Personal.Application.Contractors.ContractorMappings
 {
@@ -11,7 +11,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.ContractorMappings
             return new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("department", new DepartmentNameConverter().Convert(sourceMember, context)),
-                new KeyValuePair<string, string>("position", new OrganizationRoleConverter().Convert(sourceMember,context))
+                new KeyValuePair<string, string>("position", new RoleConverter().Convert(sourceMember,context))
             };
         }
     }

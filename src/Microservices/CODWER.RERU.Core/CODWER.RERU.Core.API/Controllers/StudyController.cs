@@ -1,4 +1,5 @@
 ﻿using CODWER.RERU.Core.Application.Studies.AddStudy;
+using CODWER.RERU.Core.Application.Studies.BulkAddEditStudies;
 using CODWER.RERU.Core.Application.Studies.GetUserProfileStudies;
 using CODWER.RERU.Core.Application.Studies.RemoveStudy;
 using CODWER.RERU.Core.Application.Studies.UpdateStudy;
@@ -6,6 +7,7 @@ using CODWER.RERU.Core.DataTransferObjects.Studies;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.API.Controllers
@@ -30,6 +32,16 @@ namespace CODWER.RERU.Core.API.Controllers
         {
             var command = new AddStudyCommand(dto)
                 ;
+            var result = await Mediator.Send(command);
+
+            return result;
+        }
+
+        [HttpPut("bulk-import")]
+        public async Task<Unit> AddEditStudies([FromBody] List<StudyDto> dtoList)
+        {
+            var command = new BulkAddEditStudiesCommand(dtoList);
+
             var result = await Mediator.Send(command);
 
             return result;

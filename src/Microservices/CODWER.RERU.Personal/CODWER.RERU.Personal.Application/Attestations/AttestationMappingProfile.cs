@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
-using CODWER.RERU.Personal.Data.Entities.StaticExtensions;
 using CODWER.RERU.Personal.DataTransferObjects.Attestations;
+using RERU.Data.Entities.PersonalEntities.ContractorEvents;
+using RERU.Data.Entities.PersonalEntities.StaticExtensions;
 
 namespace CODWER.RERU.Personal.Application.Attestations
 {

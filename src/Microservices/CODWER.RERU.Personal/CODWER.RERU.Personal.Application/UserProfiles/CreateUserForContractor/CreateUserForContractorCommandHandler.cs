@@ -2,17 +2,17 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Entities.User;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Entities.PersonalEntities.Enums;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
-using CVU.ERP.Module.Application.Clients;
-using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Models.Internal;
+using CVU.ERP.ServiceProvider.Clients;
+using CVU.ERP.ServiceProvider.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
 {
@@ -36,6 +36,7 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
             try
             {
                 var currentContractor = await _appDbContext.Contractors
+                    .Include(x=>x.UserProfile)
                     .Include(x => x.Bulletin)
                     .Include(x => x.Permission)
                     .Include(x => x.UserProfile)
@@ -50,10 +51,7 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
 
                 var skipGetApplicationUser = currentContractor.UserProfile == null;
 
-                currentContractor.UserProfile ??= new UserProfile
-                {
-                    ContractorId = currentContractor.Id
-                };
+                currentContractor.UserProfile ??= new UserProfile();
 
                 var userApplication = await GetOrCreateCoreUser(currentContractor, request, skipGetApplicationUser);
 
@@ -67,9 +65,9 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
 
         private async Task<int> AssignCoreUserToUserProfile(UserProfile userProfile, ApplicationUser coreUser)
         {
-            await AddContractorContact((int)userProfile.ContractorId, coreUser.Email);
+            await AddContractorContact((int)userProfile.Contractor.Id, coreUser.Email);
 
-            userProfile.UserId = coreUser.Id;
+            userProfile.Id = int.Parse(coreUser.Id);
             userProfile.Email = coreUser.Email;
             userProfile.Idnp = coreUser.Idnp;
 
@@ -82,20 +80,22 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
 
         private async Task<ApplicationUser> GetOrCreateCoreUser(Contractor currentContractor, CreateUserForContractorCommand request, bool skipGetApplicationUser)
         {
-            return !skipGetApplicationUser && await _coreClient.ExistUserInCore(currentContractor.UserProfile.UserId)
-                    ? await _coreClient.GetApplicationUser(currentContractor.UserProfile.UserId)
-                    : await CreateUserInCore(currentContractor, request);
+            //return !skipGetApplicationUser && await _coreClient.ExistUserInCore(currentContractor.UserProfile.Id.ToString())
+            //        ? await _coreClient.GetApplicationUser(currentContractor.UserProfile.ToString())
+            //        : await CreateUserInCore(currentContractor, request);
+            return new ApplicationUser();
         }
 
         private async Task<ApplicationUser> CreateUserInCore(Contractor currentContractor, CreateUserForContractorCommand request)
         {
-            ApplicationUser userApplication;
+            //ApplicationUser userApplication;
+            ApplicationUser userApplication = new ApplicationUser();
             var newUser = new InternalUserProfileCreate
             {
                 Name = currentContractor.FirstName,
                 LastName = currentContractor.LastName,
                 FatherName = currentContractor.FatherName,
-                Idnp = currentContractor.Bulletin.Idnp,
+                Idnp = currentContractor.UserProfile.Idnp,
                 Email = request.Email,
                 NotifyAccountCreated = true,
                 ModuleRoles = request.ModuleRoles
@@ -103,7 +103,7 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
 
             try
             {
-                userApplication = await _coreClient.CreateUserProfile(newUser);
+                //userApplication = await _coreClient.CreateUserProfile(newUser);
             }
             catch (Exception e)
             {

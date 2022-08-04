@@ -1,13 +1,12 @@
-﻿using CODWER.RERU.Evaluation.Application.Services;
+﻿using System.Collections.Generic;
+using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Application.VerificationTests.AutoCheckTestScore;
 using CODWER.RERU.Evaluation.Application.VerificationTests.AutoVerificationTestQuestions;
 using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,19 +22,32 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
         private readonly IMediator _mediator;
         private readonly INotificationService _notificationService;
         private readonly IInternalNotificationService _internalNotificationService;
+        private readonly ICandidatePositionService _candidatePositionService;
 
-        public FinalizeTestCommandHandler(AppDbContext appDbContext, IMediator mediator, INotificationService notificationService, IInternalNotificationService internalNotificationService)
+        public FinalizeTestCommandHandler(
+            AppDbContext appDbContext, 
+            IMediator mediator, 
+            INotificationService notificationService, 
+            IInternalNotificationService internalNotificationService, 
+            ICandidatePositionService candidatePositionService)
         {
             _appDbContext = appDbContext;
             _mediator = mediator;
             _notificationService = notificationService;
             _internalNotificationService = internalNotificationService;
+            _candidatePositionService = candidatePositionService;
         }
 
         public async Task<Unit> Handle(FinalizeTestCommand request, CancellationToken cancellationToken)
         {
             var testToFinalize = await _appDbContext.Tests
                 .Include(x => x.TestTemplate)
+                .Include(x => x.Event)
+                    .ThenInclude(x => x.EventUsers)
+                        .ThenInclude(x => x.CandidatePosition)
+                .Include(x => x.Event)
+                    .ThenInclude(x => x.EventVacantPositions)
+                        .ThenInclude(x => x.CandidatePosition)
                 .FirstAsync(x => x.Id == request.TestId);
 
             testToFinalize.TestStatus = TestStatusEnum.Terminated;
@@ -52,11 +64,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
                 await _appDbContext.SaveChangesAsync();
 
                 autocheck = true;
+
             }
 
             if (testToFinalize.TestTemplate.Mode == TestTemplateModeEnum.Test)
             {
                 await SendEmailNotification(testToFinalize, autocheck);
+                await EmailPositionResponsiblePerson(testToFinalize);
             }
 
             return Unit.Value;
@@ -64,9 +78,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 
         private async Task<Unit> SendEmailNotification(Test testToFinalize, bool autoCheck)
         {
-            var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-            var template = await File.ReadAllTextAsync(path);
-
             var eventEvaluators = await _appDbContext.EventEvaluators
                     .Include(x => x.Evaluator)
                     .Include(x => x.Event)
@@ -77,7 +88,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 
             if (autoCheck)
             {
-                await Send(candidate, testToFinalize, template, autoCheck);
+                await Send(candidate, testToFinalize, autoCheck);
 
                 await _internalNotificationService.AddNotification(candidate.Id, NotificationMessages.YourTestWasVerified);
             }
@@ -99,7 +110,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 
                     if (userTests)
                     {
-                        await Send(evaluator.Evaluator, testToFinalize, template, autoCheck);
+                        await Send(evaluator.Evaluator, testToFinalize, autoCheck);
 
                         await _internalNotificationService.AddNotification(evaluator.EvaluatorId, NotificationMessages.AllCandidatesFinishedTest);
                     }
@@ -113,21 +124,48 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
             return Unit.Value;
         }
 
-        private async Task<Unit> Send(UserProfile user, Test test, string template, bool autoCheck)
+        private async Task EmailPositionResponsiblePerson(Test test)
         {
-            template = template
-                .Replace("{user_name}", user.FirstName + " " + user.LastName)
-                .Replace("{email_message}", await GetTableContent(test, autoCheck));
+            var eventUser = test.Event.EventUsers
+                .FirstOrDefault(x => x.UserProfileId == test.UserProfileId);
 
-            var emailData = new EmailData()
+            var position = _appDbContext.CandidatePositions.FirstOrDefault(x => x.Id == eventUser.PositionId);
+
+            var responsiblePerson = _candidatePositionService.GetResponsiblePerson(int.Parse(position?.CreateById ?? "0"));
+
+            await SendEmailForCandidatePosition(responsiblePerson, test, position?.Name);
+        }
+
+        private async Task<Unit> Send(UserProfile user, Test test, bool autoCheck)
+        {
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                subject = "Rezultatul testului",
-                body = template,
-                from = "Do Not Reply",
-                to = user.Email
-            };
+                Subject = "Rezultatul testului",
+                To = user.Email,
+                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", user.FullName },
+                    { "{email_message}", await GetTableContent(test, autoCheck) }
+                }
+            });
 
-            await _notificationService.Notify(emailData, NotificationType.Both);
+            return Unit.Value;
+        }
+
+        private async Task<Unit> SendEmailForCandidatePosition(UserProfile user, Test test, string positionName)
+        {
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
+            {
+                Subject = "Pozitia candidata",
+                To = user.Email,
+                HtmlTemplateAddress = "PdfTemplates/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", user.FullName },
+                    { "{email_message}", await GetEmailContentForCandidatePosition(test, test.UserProfile.FullName, positionName) }
+                }
+            });
 
             return Unit.Value;
         }
@@ -150,5 +188,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 
             return content;
         }
+
+        private async Task<string> GetEmailContentForCandidatePosition(Test finalizeTest, string userProfileName, string positionName) => 
+                         $@"<p style=""font-size: 22px; font-weight: 300;"">Candidatul ""{userProfileName}"" a finalizat testul</p>
+                            <p style=""font-size: 22px;font-weight: 300;""> La testul ""{finalizeTest.TestTemplate.Name}"" din evenimentul ""{finalizeTest.Event.Name}"".</p>
+                            <p style=""font-size: 22px;font-weight: 300;"">Care a candidat la pozitia ""{positionName}"".</p>";
     }
 }

@@ -77,11 +77,11 @@ export class DetailsComponent implements OnInit {
   }
 
   delete(): void {
-    this.isLoading = true;
-    this.departmentService.delete(this.department.id).subscribe(response => {
-      this.notificationService.success('Success', 'Department deleted!', NotificationUtil.getDefaultMidConfig());
-      this.ngZone.run(() => this.router.navigate(['../'], { relativeTo: this.route }));
-    });
+    // this.isLoading = true;
+    // this.departmentService.delete(this.department.id).subscribe(response => {
+    //   this.notificationService.success('Success', 'Department deleted!', NotificationUtil.getDefaultMidConfig());
+    //   this.ngZone.run(() => this.router.navigate(['../'], { relativeTo: this.route }));
+    // });
   }
 
   addDepartmentContentModal(): void {
@@ -90,7 +90,7 @@ export class DetailsComponent implements OnInit {
   }
 
   addDepartmentContent(data): void {
-    this.departmentContentService.add({departmentId: this.department.id, organizationRoleId: +data.organizationRoleId, organizationRoleCount: + data.organizationRoleCount}).subscribe(response => {
+    this.departmentContentService.add({departmentId: this.department.id, RoleId: +data.organizationRoleId, RoleCount: + data.organizationRoleCount}).subscribe(response => {
       this.retrieveDepartmentContent(this.department.id);
       this.notificationService.success('Success', 'Role attached!', NotificationUtil.getDefaultConfig());
     }, (error) => {

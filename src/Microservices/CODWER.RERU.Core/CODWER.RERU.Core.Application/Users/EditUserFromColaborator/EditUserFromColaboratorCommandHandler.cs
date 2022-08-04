@@ -15,24 +15,22 @@ using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Users.EditUserFromColaborator
 {
-    public class EditUserFromColaboratorCommandHandler : BaseHandler, IRequestHandler<EditUserFromColaboratorCommand, int>
+    public class EditUserFromColaboratorCommandHandler : IRequestHandler<EditUserFromColaboratorCommand, int>
     {
         private readonly IEnumerable<IIdentityService> _identityServices;
         private readonly ILoggerService<EditUserFromColaboratorCommandHandler> _loggerService;
         private readonly IMapper _mapper;
         private readonly AppDbContext _appDbContext;
 
-        public EditUserFromColaboratorCommandHandler(ICommonServiceProvider commonServiceProvider,
+        public EditUserFromColaboratorCommandHandler(AppDbContext appDbContext,
             IEnumerable<IIdentityService> identityServices,
             ILoggerService<EditUserFromColaboratorCommandHandler> loggerService,
-            IMapper mapper,
-            IConfiguration configuration)
-            : base(commonServiceProvider)
+            IMapper mapper)
         {
             _identityServices = identityServices;
             _loggerService = loggerService;
             _mapper = mapper;
-            _appDbContext = AppDbContext.NewInstance(configuration);
+            _appDbContext = appDbContext.NewInstance();
         }
 
         public async Task<int> Handle(EditUserFromColaboratorCommand request, CancellationToken cancellationToken)

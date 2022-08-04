@@ -1,4 +1,4 @@
-﻿namespace CODWER.RERU.Core.DataTransferObjects.RecommendationForStudyDto
+﻿namespace CODWER.RERU.Core.DataTransferObjects.RecommendationForStudy
 {
     public class RecommendationForStudyDto
     {
@@ -7,6 +7,6 @@
         public string LastName { get; set; }
         public string Function { get; set; }
         public string Subdivision { get; set; }
-        public int UserProfileId { get; set; }
+        public int ContractorId { get; set; }
     }
 }

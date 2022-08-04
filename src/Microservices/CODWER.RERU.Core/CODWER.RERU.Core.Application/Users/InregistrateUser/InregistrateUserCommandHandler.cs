@@ -5,14 +5,15 @@ using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
-using CVU.ERP.Module.Application.Clients;
 using CVU.ERP.Module.Application.Models.Internal;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.ServiceProvider.Clients;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Core.Application.Users.InregistrateUser
 {
@@ -47,11 +48,14 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
                 Email = request.Email,
                 CandidatePositionId = request.CandidatePositionId,
                 EmailNotification = request.EmailNotification,
-                Birthday = request.Birthday,
-                PhoneNumber = request.PhoneNumber
+                BirthDate = request.BirthDate,
+                PhoneNumber = request.PhoneNumber,
             };
 
             var userProfile = Mapper.Map<UserProfile>(newUser);
+            userProfile.Contractor = new Contractor() { UserProfile = userProfile };
+            
+
             var defaultRoles = AppDbContext.Modules
                 .SelectMany(m => m.Roles.Where(r => r.IsAssignByDefault).Take(1))
                 .ToList();
@@ -91,11 +95,6 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
         private async Task LogAction(UserProfile userProfile)
         {
             await _loggerService.LogWithoutUser(LogData.AsCore($"User {userProfile.FirstName} {userProfile.LastName} was inregistrated to system", userProfile));
-        }
-
-        private async Task SyncUserProfile(UserProfile userProfile)
-        {
-            await _evaluationClient.SyncUserProfileByAnonymous(_mapper.Map<BaseUserProfile>(userProfile));
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
+using RERU.Data.Entities.PersonalEntities.ContractorEvents;
 
 namespace CODWER.RERU.Personal.Application.Services
 {

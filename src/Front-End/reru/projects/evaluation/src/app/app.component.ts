@@ -265,7 +265,7 @@ export class AppComponent {
 		</svg>`,
 		},
 		{
-			permissions: ['P03001201'],
+			permissions: ['P03001201', 'P03001401'],
 			type: SidebarItemType.SECTION,
 			url: '',
 			name: '',
@@ -284,7 +284,7 @@ export class AppComponent {
 			</svg>`,
 		},
 		{
-			// permission: 'P03001201',
+			permission: 'P03001401',
 			type: SidebarItemType.ITEM,
 			url: '/required-documents',
 			name: '',

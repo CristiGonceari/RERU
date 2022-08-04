@@ -20,6 +20,10 @@ export class ProfileService extends AbstractService {
 		return this.http.get<Response<MyProfile>>(`${this.coreUrl}/${this.routeUrl}`);
 	}
 
+	getCandidateRegistrationSteps(): Observable<Response<any>> {
+		return this.http.get<Response<any>>(`${this.coreUrl}/${this.routeUrl}/candidate-registration-steps`);
+	}
+
 	uploadAvatar(file): Observable<any> {
 		return this.http.post<any>(`${this.coreUrl}/${this.routeUrl}/avatar`, file);
 	}

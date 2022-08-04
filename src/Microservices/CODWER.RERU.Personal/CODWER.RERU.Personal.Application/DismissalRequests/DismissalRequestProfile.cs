@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
+using RERU.Data.Entities.PersonalEntities.ContractorEvents;
 using CODWER.RERU.Personal.DataTransferObjects.DismissalRequests;
 
 namespace CODWER.RERU.Personal.Application.DismissalRequests
@@ -12,7 +12,8 @@ namespace CODWER.RERU.Personal.Application.DismissalRequests
                 .ForMember(x => x.ContractorName, opts => opts.MapFrom(x => x.Contractor.FirstName))
                 .ForMember(x => x.ContractorLastName, opts => opts.MapFrom(x => x.Contractor.LastName))
 
-                .ForMember(x => x.PositionOrganizationRoleName, opts => opts.MapFrom(x => x.Position.OrganizationRole.Name));
+                .ForMember(x => x.PositionRoleName, opts => opts.MapFrom(x => x.Position.Role.Name))
+                ;
         }
     }
 }

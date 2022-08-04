@@ -25,11 +25,14 @@
                                                     <label class="col-xl-3 col-lg-3 col-form-label text-right">{{
                                                         'solicited-test.position-to-candidate' | translate }}</label>
                                                     <div class="col-lg-9 col-xl-9">
-                                                        <select class="form-control form-control-lg form-control-solid"
+                                                        <div *ngIf="isEdit" class="form-control form-control-lg form-control-solid">
+                                                            {{selected.label}}
+                                                        </div>
+                                                        <select class="form-control form-control-lg form-control-solid" *ngIf="!isEdit"
                                                             name="selectedStatus" id="selectedStatus"
                                                             [(ngModel)]="candidatePositions.value"
                                                             (change)="getEventsAndDocuments()">
-                                                            <option *ngFor="let item of candidatePositions" selected
+                                                            <option  *ngFor="let item of candidatePositions" 
                                                                 [ngValue]="item.value">
                                                                 {{ item.label }}
                                                             </option>

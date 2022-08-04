@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Personal.Application.Contractors.ContractorMappings;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Entities.TimeSheetTables;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Entities.PersonalEntities.Enums;
 using CODWER.RERU.Personal.DataTransferObjects.TimeSheetTables;
+using RERU.Data.Entities.PersonalEntities.TimeSheetTables;
 
 namespace CODWER.RERU.Personal.Application.TimeSheetTables
 {
@@ -34,7 +34,7 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables
                 .ForMember(x => x.Department, 
                     opts => opts.ConvertUsing(new DepartmentNameConverter(), op => op))
                 .ForMember(x => x.Role,
-                    opts => opts.ConvertUsing(new OrganizationRoleConverter(), op => op));
+                    opts => opts.ConvertUsing(new RoleConverter(), op => op));
 
             CreateMap<Contractor, ContractorProfileTimeSheetTableDto>()
                 .ForMember(x => x.ContractorName,

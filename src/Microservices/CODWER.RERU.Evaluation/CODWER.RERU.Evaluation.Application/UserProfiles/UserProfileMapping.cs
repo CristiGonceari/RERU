@@ -4,6 +4,7 @@ using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Models.Internal;
+using CVU.ERP.ServiceProvider.Models;
 using RERU.Data.Entities;
 
 namespace CODWER.RERU.Evaluation.Application.UserProfiles

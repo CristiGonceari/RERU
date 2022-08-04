@@ -1,4 +1,4 @@
-﻿using CODWER.RERU.Personal.Data.Entities.Enums;
+﻿using RERU.Data.Entities.PersonalEntities.Enums;
 using CODWER.RERU.Personal.DataTransferObjects.Vacations;
 using CVU.ERP.Common.Pagination;
 using MediatR;

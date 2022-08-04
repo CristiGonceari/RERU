@@ -11,9 +11,12 @@ import { AddEditPositionComponent } from './add-edit-position/add-edit-position.
 import { TagInputModule } from 'ngx-chips';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import {MatSelectModule} from '@angular/material/select';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { PositionsDiagramComponent } from './positions-diagram/positions-diagram.component';
+import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-datetime';
 
 @NgModule({
-  declarations: [AddEditPositionComponent],
+  declarations: [AddEditPositionComponent, PositionsDiagramComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -26,7 +29,10 @@ import {MatSelectModule} from '@angular/material/select';
     PositionsRoutingModule,
     NgbModule,
     TagInputModule,
-    MatSelectModule
+    MatSelectModule,
+    CKEditorModule,
+    OwlDateTimeModule,
+    OwlMomentDateTimeModule,
     ],
   providers: [
     TranslatePipe,

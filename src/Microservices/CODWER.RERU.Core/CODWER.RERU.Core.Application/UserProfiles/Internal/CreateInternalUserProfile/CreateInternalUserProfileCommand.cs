@@ -1,5 +1,6 @@
 using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Models.Internal;
+using CVU.ERP.ServiceProvider.Models;
 using MediatR;
 
 namespace CODWER.RERU.Core.Application.UserProfiles.Internal.CreateInternalUserProfile

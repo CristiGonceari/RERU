@@ -25,8 +25,9 @@
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Infrastructure\CVU.ERP.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Module.Application\src\CVU.ERP.Module.Application.csproj" />
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Module.Common\src\CVU.ERP.Module.Common.csproj" />
-    <ProjectReference Include="..\CODWER.RERU.Personal.Data.Entities\CODWER.RERU.Personal.Data.Entities.csproj" />
-    <ProjectReference Include="..\CODWER.RERU.Personal.Data.Persistence\CODWER.RERU.Personal.Data.Persistence.csproj" />
+    <ProjectReference Include="..\..\..\Common\CODWER.Common\RERU.Data.Persistence\RERU.Data.Persistence.csproj" />
+    <!--<ProjectReference Include="..\CODWER.RERU.Personal.Data.Entities\CODWER.RERU.Personal.Data.Entities.csproj" />-->
+    <!--<ProjectReference Include="..\CODWER.RERU.Personal.Data.Persistence\CODWER.RERU.Personal.Data.Persistence.csproj" />-->
     <ProjectReference Include="..\CODWER.RERU.Personal.DataTransferObjects\CODWER.RERU.Personal.DataTransferObjects.csproj" />
   </ItemGroup>
 

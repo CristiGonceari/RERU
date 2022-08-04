@@ -16,6 +16,6 @@ namespace CODWER.RERU.Core.DataTransferObjects.Studies
 
         public int StudyTypeId { get; set; } 
 
-        public int UserProfileId { get; set; }
+        public int ContractorId { get; set; }
     }
 }

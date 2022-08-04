@@ -5,6 +5,6 @@ namespace CODWER.RERU.Core.Application.KinshipRelationCriminalDatas.GetUserProfi
 {
     public class GetUserProfileKinshipRelationCriminalDataQuery : IRequest<KinshipRelationCriminalDataDto>
     {
-        public int UserProfileId { get; set; }
+        public int ContractorId { get; set; }
     }
 }

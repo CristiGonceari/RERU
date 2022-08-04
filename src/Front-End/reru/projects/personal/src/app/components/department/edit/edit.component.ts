@@ -39,17 +39,18 @@ export class EditComponent extends EnterSubmitListener implements OnInit {
     })
   }
 
+  //commented for future use
   submit() {
-    this.departmentService.update(this.departmentForm.value).subscribe((response: ApiResponse<any>) => {
-      this.navigateBack();
-      this.notificationService.success('Success', 'Department updated!', NotificationUtil.getDefaultMidConfig());
-    }, (error) => {
-      if (error.status === 400) {
-        this.notificationService.warn('Validation error', 'Please fill in department name!', NotificationUtil.getDefaultMidConfig());
-        return;
-      }
-      this.notificationService.error('Server error occured!', null, NotificationUtil.getDefaultMidConfig());
-    });
+    // this.departmentService.update(this.departmentForm.value).subscribe((response: ApiResponse<any>) => {
+    //   this.navigateBack();
+    //   this.notificationService.success('Success', 'Department updated!', NotificationUtil.getDefaultMidConfig());
+    // }, (error) => {
+    //   if (error.status === 400) {
+    //     this.notificationService.warn('Validation error', 'Please fill in department name!', NotificationUtil.getDefaultMidConfig());
+    //     return;
+    //   }
+    //   this.notificationService.error('Server error occured!', null, NotificationUtil.getDefaultMidConfig());
+    // });
   }
 
   navigateBack(): void {

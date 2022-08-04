@@ -14,15 +14,17 @@ namespace CODWER.RERU.Core.Application.Bulletins.AddBulletin
 
         public AddBulletinCommandValidator(AppDbContext appDbContext)
         {
+            _appDbContext = appDbContext;
+
             RuleFor(x => x.Data)
                 .SetValidator(new BulletinValidator());
 
-            RuleFor(x => x.Data.UserProfileId)
+            RuleFor(x => x.Data.ContractorId)
                 .Custom(CheckIfContractorHasBulletin);
         }
-        private void CheckIfContractorHasBulletin(int userProfileId, CustomContext context)
+        private void CheckIfContractorHasBulletin(int contractorId, CustomContext context)
         {
-            var exist = _appDbContext.Bulletins.Any(x => x.UserProfileId == userProfileId);
+            var exist = _appDbContext.Bulletins.Any(x => x.ContractorId == contractorId);
 
             if (exist)
             {

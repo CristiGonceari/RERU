@@ -11,8 +11,6 @@ namespace CODWER.RERU.Core.Application.Bulletins
     {
         public BulletinValidator()
         {
-            RuleFor(x => x.Idnp)
-                .SetValidator(new IdnpValidator());
 
             RuleFor(x => x.Series)
                 .NotEmpty()

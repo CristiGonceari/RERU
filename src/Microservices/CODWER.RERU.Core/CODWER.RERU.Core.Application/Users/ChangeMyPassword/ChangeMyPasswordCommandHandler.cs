@@ -1,7 +1,6 @@
 ﻿using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CVU.ERP.Identity.Models;
-using CVU.ERP.Module.Application.Providers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.ServiceProvider;
 
 namespace CODWER.RERU.Core.Application.Users.ChangeMyPassword
 {

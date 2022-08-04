@@ -30,9 +30,7 @@ namespace CODWER.RERU.Core.Application.Bulletins.UpdateBulletin
 
         private void CheckIfUniqueIdnpOnUpdate(BulletinDto dto, CustomContext context)
         {
-            var existBulletin = _appDbContext.Bulletins.Include(b => b.UserProfile).Any(x => x.UserProfile.Idnp == dto.Idnp
-                                                        && x.UserProfileId != dto.UserProfileId);
-             
+            var existBulletin = _appDbContext.Bulletins.Include(b => b.Contractor).Any(x => x.ContractorId != dto.ContractorId);
             
             if (existBulletin)
             {

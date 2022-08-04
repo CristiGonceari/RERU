@@ -3,6 +3,7 @@ using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Users.EditCandidate
@@ -15,7 +16,7 @@ namespace CODWER.RERU.Core.Application.Users.EditCandidate
             _appDbContext = appDbContext;
 
             RuleFor(x => x.Data.Id)
-                .SetValidator(x => new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.INVALID_ID,
+                .SetValidator(x => new ItemMustExistValidator<Contractor>(appDbContext, ValidationCodes.INVALID_ID,
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x.Data.CandidateCitizenshipId)
@@ -26,10 +27,6 @@ namespace CODWER.RERU.Core.Application.Users.EditCandidate
                 .SetValidator(x => new ItemMustExistValidator<CandidateNationality>(appDbContext, ValidationCodes.INVALID_ID,
                     ValidationMessages.InvalidReference));
 
-            RuleFor(x => x.Data.BirthDate).NotEmpty()
-                .WithMessage(ValidationMessages.InvalidInput)
-                .WithErrorCode(ValidationCodes.EMPTY_USER_BIRTH_DATE);
-
             RuleFor(x => x.Data.WorkPhone).NotEmpty()
                .WithMessage(ValidationMessages.InvalidInput)
                .WithErrorCode(ValidationCodes.EMPTY_USER_WORK_PHONE);
@@ -38,9 +35,6 @@ namespace CODWER.RERU.Core.Application.Users.EditCandidate
                .WithMessage(ValidationMessages.InvalidInput)
                .WithErrorCode(ValidationCodes.EMPTY_USER_HOME_PHONE);
 
-            RuleFor(x => x.Data.MobilePhone).NotEmpty()
-               .WithMessage(ValidationMessages.InvalidInput)
-               .WithErrorCode(ValidationCodes.EMPTY_USER_MOBILE_PHONE);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Application.Validation.EnumValidators;
+using CODWER.RERU.Evaluation.Application.Validators.EnumValidators;
 using CODWER.RERU.Evaluation.DataTransferObjects.Documents;
 using CVU.ERP.Common.Validation;
 using CVU.ERP.StorageService.Entities;

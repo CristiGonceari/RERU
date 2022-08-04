@@ -30,7 +30,9 @@ spec:
         - name: ConnectionStrings__Log
           value: {{ .Values.reru_core.database.log_connection_string }}   
         - name: ConnectionStrings__Storage
-          value: {{ .Values.reru_core.database.storage_connection_string }}   
+          value: {{ .Values.reru_core.database.storage_connection_string }}
+        - name: ConnectionStrings__HangfireCore
+          value: {{ .Values.reru_core.database.hangfirecore_connection_string }}   
         - name: TZ
           value: {{ .Values.timeZone }}
         {{- if .Values.dotnet_microservice.deployment.env }}

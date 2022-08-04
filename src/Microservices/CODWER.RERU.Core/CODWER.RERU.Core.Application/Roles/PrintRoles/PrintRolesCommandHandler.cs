@@ -5,6 +5,7 @@ using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.TableExportServices;
 using MediatR;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Roles.PrintRoles

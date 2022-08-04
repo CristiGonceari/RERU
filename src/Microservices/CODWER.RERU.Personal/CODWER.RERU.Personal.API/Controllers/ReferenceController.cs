@@ -11,10 +11,17 @@ using CODWER.RERU.Personal.Application.NomenclatureTypes.NomenclatureRecords.Get
 using CODWER.RERU.Personal.Application.OrganizationalCharts.GetDepartments;
 using CODWER.RERU.Personal.Application.OrganizationalCharts.GetOrganizationRoles;
 using CODWER.RERU.Personal.Application.OrganizationRoles.GetOrganizationRolesSelectValues;
-using CODWER.RERU.Personal.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities.Enums;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using Microsoft.AspNetCore.Mvc;
 using CVU.ERP.Common.EnumConverters;
+using RERU.Data.Entities.Enums;
+using CODWER.RERU.Personal.DataTransferObjects.SelectValues;
+using CODWER.RERU.Personal.Application.References.GetCandidateCitizenshipes;
+using CODWER.RERU.Personal.Application.References.GetCandidateNationalites;
+using CODWER.RERU.Personal.Application.References.GetStudyTypes;
+using CODWER.RERU.Personal.Application.References.GetModernLanguages;
+using CODWER.RERU.Personal.Application.References.GetMaterialStatusType;
 
 namespace CODWER.RERU.Personal.API.Controllers
 {
@@ -69,7 +76,7 @@ namespace CODWER.RERU.Personal.API.Controllers
         }
 
         [HttpGet("organization-roles/select-values")]
-        public async Task<List<SelectItem>> GetOrganizationRoles([FromQuery] GetOrganizationRolesSelectValuesQuery query)
+        public async Task<List<SelectItem>> GetOrganizationRoles([FromQuery] GetRolesSelectValuesQuery query)
         {
             return await Mediator.Send(query);
         }
@@ -110,7 +117,7 @@ namespace CODWER.RERU.Personal.API.Controllers
         [HttpGet("organization-roles/chart/{chartId}")]
         public async Task<List<SelectItem>> GetOrganizationRolesForChart([FromRoute] int chartId)
         {
-            var query = new GetOrganizationRolesChartQuery{OrganizationalChartId = chartId};
+            var query = new GetRolesChartQuery{OrganizationalChartId = chartId};
 
             return await Mediator.Send(query);
         }
@@ -145,6 +152,105 @@ namespace CODWER.RERU.Personal.API.Controllers
             var query = new GetContractorEmailQuery { Id = contractorId };
 
             return await Mediator.Send(query);
+        }
+
+
+
+
+        [HttpGet("candidate-citizens/select-values")]
+        public async Task<List<SelectValue>> GetCandidateCitizens()
+        {
+            var query = new GetCandidateCitizenshipesQuery();
+
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("candidate-nationalities/select-values")]
+        public async Task<List<SelectValue>> GetCandidateNationalities()
+        {
+            var query = new GetCandidateNationalitesQuery();
+
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("candidate-sex/select-values")]
+        public async Task<List<SelectItem>> GetSexEnum()
+        {
+            var items = EnumConverter<SexTypeEnum>.SelectValues;
+
+            return items;
+        }
+
+        [HttpGet("candidate-state-language-level/select-values")]
+        public async Task<List<SelectItem>> GetStateLanguageLevelEnum()
+        {
+            var items = EnumConverter<StateLanguageLevel>.SelectValues;
+
+            return items;
+        }
+
+        [HttpGet("registration-flux-steps/select-values")]
+        public async Task<List<SelectItem>> GetRegistrationFluxStepsEnum()
+        {
+            var items = EnumConverter<RegistrationFluxStepEnum>.SelectValues;
+
+            return items;
+        }
+
+        [HttpGet("studies-frequency/select-values")]
+        public async Task<List<SelectItem>> GetStudyFrequencyEnum()
+        {
+            var items = EnumConverter<StudyFrequencyEnum>.SelectValues;
+
+            return items;
+        }
+
+        [HttpGet("study-types/select-values")]
+        public async Task<List<SelectValue>> GetStudyTypes()
+        {
+            var query = new GetStudyTypesQuery();
+
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("modern-languages/select-values")]
+        public async Task<List<SelectValue>> GetModernLanguages()
+        {
+            var query = new GetModernLanguageQuery();
+
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("knowledge-quelifiers/select-values")]
+        public async Task<List<SelectItem>> GetKnowledgeQuelifiersEnum()
+        {
+            var items = EnumConverter<KnowledgeQuelifiersEnum>.SelectValues;
+
+            return items;
+        }
+
+        [HttpGet("material-status-type/select-values")]
+        public async Task<List<SelectValue>> GetMaterialStatusType()
+        {
+            var query = new GetMaterialStatusTypeQuery();
+
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("kinship-degree/select-values")]
+        public async Task<List<SelectItem>> GetKinshipDegreeEnum()
+        {
+            var items = EnumConverter<KinshipDegreeEnum>.SelectValues;
+
+            return items;
+        }
+
+        [HttpGet("military-obligation-type-enum/select-values")]
+        public async Task<List<SelectItem>> GetMilitaryObligationTypeEnum()
+        {
+            var items = EnumConverter<MilitaryObligationTypeEnum>.SelectValues;
+
+            return items;
         }
     }
 }

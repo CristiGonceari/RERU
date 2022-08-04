@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using CVU.ERP.Common.Data.Entities;
 using RERU.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities;
+using Role = RERU.Data.Entities.PersonalEntities.Role;
 
 namespace RERU.Data.Entities
 {
@@ -22,31 +24,21 @@ namespace RERU.Data.Entities
             ModuleRoles = new List<UserProfileModuleRole>();
             Identities = new List<UserProfileIdentity>();
             SolicitedVacantPositionUserFiles = new HashSet<SolicitedVacantPositionUserFile>();
+            SolicitedVacantPositions = new HashSet<SolicitedVacantPosition>();
         }
+
+        public string FullName => $"{FirstName} {LastName} {FatherName}";
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FatherName { get; set; }
         public string Idnp { get; set; }
         public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public DateTime? Birthday { get; set; }
         public string MediaFileId { get; set; }
         public bool RequiresDataEntry { get; set; }
 
-        public int? WorkPhone { get; set; }
-        public int? HomePhone { get; set; }
-        public int? MobilePhone { get; set; }
+        public string PhoneNumber { get; set; }
         public DateTime? BirthDate { get; set; }
-
-        public SexTypeEnum? Sex { get; set; }
-        public StateLanguageLevel? StateLanguageLevel { get; set; }
-
-        public int? CandidateNationalityId { get; set; }
-        public CandidateNationality CandidateNationality { get; set; }
-
-        public int? CandidateCitizenshipId { get; set; }
-        public CandidateCitizenship CandidateCitizenship { get; set; }
 
         public string Token { set; get; }
         public bool IsActive { set; get; }
@@ -59,10 +51,9 @@ namespace RERU.Data.Entities
         public int? RoleColaboratorId { get; set; }
         public Role Role { get; set; }
 
-        public Bulletin Bulletin { get; set; }
-        public MaterialStatus MaterialStatus { get; set; }
-        public KinshipRelationCriminalData KinshipRelationCriminalData { get; set; }
-        public Autobiography Autobiography { get; set; }
+        [JsonIgnore]
+        public Contractor Contractor { get; set; }
+
 
         [JsonIgnore]
         public List<UserProfileModuleRole> ModuleRoles { set; get; }
@@ -87,18 +78,10 @@ namespace RERU.Data.Entities
         [JsonIgnore]
         public virtual ICollection<EmailTestNotification> EmailTestNotifications { get; set; }
         [JsonIgnore]
-        public virtual ICollection<Study> Studies { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<ModernLanguageLevel> ModernLanguageLevels { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<RecommendationForStudy> RecommendationForStudies { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<KinshipRelationWithUserProfile> KinshipRelationWithUserProfiles { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<KinshipRelation> KinshipRelations { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<MilitaryObligation> MilitaryObligations { get; set; }
-        [JsonIgnore]
         public virtual ICollection<SolicitedVacantPositionUserFile> SolicitedVacantPositionUserFiles { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<RegistrationFluxStep> RegistrationFluxSteps { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<SolicitedVacantPosition> SolicitedVacantPositions { get; set; }
     }
 }

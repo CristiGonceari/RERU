@@ -1,19 +1,17 @@
-﻿using System.IO;
-using AutoMapper;
+﻿using AutoMapper;
+using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.DataTransferObjects.Events;
+using CVU.ERP.Notifications.Services;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
-using CVU.ERP.Notifications.Services;
-using Microsoft.EntityFrameworkCore;
-using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Application.Services;
-using System.Collections.Generic;
-using CODWER.RERU.Evaluation.DataTransferObjects.Events;
-using System.Linq;
-using RERU.Data.Entities;
-using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignResponsiblePersonToEvent
 {
@@ -39,7 +37,9 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
         {
             var eventUsersIds = new List<int>();
 
-            var eventValues = await _appDbContext.EventResponsiblePersons.Where(erp => erp.EventId == request.EventId).ToListAsync();
+            var eventValues = await _appDbContext.EventResponsiblePersons
+                .Where(erp => erp.EventId == request.EventId)
+                .ToListAsync();
 
             foreach (var userId in request.UserProfileId)
             {
@@ -56,22 +56,23 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
                     var result = _mapper.Map<EventResponsiblePerson>(newEventResponsiblePerson);
 
                     await _appDbContext.EventResponsiblePersons.AddAsync(result);
+                    await _appDbContext.SaveChangesAsync();
 
                     eventUsersIds.Add(userId);
 
+                    await _internalNotificationService.AddNotification(result.UserProfileId, NotificationMessages.YouWereInvitedToEventAsCandidate);
+
+                    await AddEmailNotification(result);
                 }
                 else
                 {
                     eventUsersIds.Add(eventResponsiblePerson.UserProfileId);
                 }
-
                 eventValues = eventValues.Where(l => l.UserProfileId != userId).ToList();
-
             }
 
-            if (eventValues.Count() > 0)
+            if (eventValues.Any())
             {
-
                 _appDbContext.EventResponsiblePersons.RemoveRange(eventValues);
             }
 
@@ -79,5 +80,28 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
 
             return eventUsersIds;
         }
+
+        private async Task AddEmailNotification(EventResponsiblePerson eventResponsiblePerson)
+        {
+            var item = await _appDbContext.EventResponsiblePersons
+                .Include(eu => eu.UserProfile)
+                .Include(eu => eu.Event)
+                .FirstOrDefaultAsync(x => x.Id == eventResponsiblePerson.Id);
+
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
+            {
+                Subject = "Notificare de test",
+                To = item.UserProfile.Email,
+                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", item.UserProfile.FullName },
+                    { "{email_message}", GetTableContent(item) }
+                }
+            });
+        }
+
+        private string GetTableContent(EventResponsiblePerson eventResponsiblePerson)
+         => $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la evenimentul ""{eventResponsiblePerson.Event.Name}"" în rol de persoană responsabilă.</p>";
     }
 }

@@ -6,6 +6,10 @@
         public static string Identity => "Identity";
         public static string Storage => "Storage";
         public static string Logging => "Log";
-        public static string Personal => "Personal";
+
+        public static string HangfireCore => "HangfireCore";
+        public static string HangfirePersonal => "HangfirePersonal";
+        public static string HangfireEvaluation => "HangfireEvaluation";
+
     }
 }

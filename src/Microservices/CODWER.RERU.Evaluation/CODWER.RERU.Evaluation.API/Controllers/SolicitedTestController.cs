@@ -1,20 +1,18 @@
 ﻿using CODWER.RERU.Evaluation.API.Config;
-using CODWER.RERU.Evaluation.Application.SolicitedTests.EditSolicitedTestStatus;
-using CODWER.RERU.Evaluation.Application.SolicitedTests.GetSolicitedTest;
-using CODWER.RERU.Evaluation.Application.SolicitedTests.GetSolicitedTests;
-using CODWER.RERU.Evaluation.Application.SolicitedTests.GetUserSolicitedTests;
-using CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.AddMySolicitedTest;
-using CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.DeleteMySolicitedTest;
-using CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.EditMySolicitedTest;
-using CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.GetMySolicitedTest;
-using CODWER.RERU.Evaluation.Application.SolicitedTests.MySolicitedTests.GetMySolicitedTests;
-using CODWER.RERU.Evaluation.Application.SolicitedTests.PrintSolicitetTests;
-using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedTests;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.SolicitedPositions.EditSolicitedPositionStatus;
+using CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPositions.AddMySolicitedPosition;
+using CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPositions.DeleteMySolicitedPosition;
+using CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPositions.EditMySolicitedPosition;
+using CODWER.RERU.Evaluation.Application.SolicitedPositions.PrintSolicitedPositions;
+using CODWER.RERU.Evaluation.Application.SolicitedPositions.UserSolicitedTests.GetUserSolicitedTests;
+using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions;
+using GetMySolicitedPositionQuery = CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPositions.GetMySolicitedPosition.GetMySolicitedPositionQuery;
+using GetSolicitedPositionQuery = CODWER.RERU.Evaluation.Application.SolicitedPositions.GetSolicitedPosition.GetSolicitedPositionQuery;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -23,7 +21,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     public class SolicitedTestController : BaseController
     {
         [HttpGet]
-        public async Task<PaginatedModel<SolicitedCandidatePositionDto>> GetSolicitedTests([FromQuery] GetSolicitedTestsQuery query)
+        public async Task<PaginatedModel<SolicitedCandidatePositionDto>> GetSolicitedTests([FromQuery] Application.SolicitedPositions.GetSolicitedPositions.GetSolicitedPositionQuery query)
         {
             return await Mediator.Send(query);
         }
@@ -35,19 +33,19 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("by-id")]
-        public async Task<SolicitedCandidatePositionDto> GetSolicitedTest([FromQuery] GetSolicitedTestQuery query)
+        public async Task<SolicitedCandidatePositionDto> GetSolicitedTest([FromQuery] GetSolicitedPositionQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpPatch("status")]
-        public async Task<Unit> ChangeStatus([FromBody] EditSolicitedTestStatusCommand command)
+        public async Task<Unit> ChangeStatus([FromBody] EditSolicitedPositionStatusCommand command)
         {
             return await Mediator.Send(command);
         }
 
         [HttpGet("my-solicited-tests")]
-        public async Task<PaginatedModel<SolicitedCandidatePositionDto>> GetMySolicitedTests([FromQuery] GetMySolicitedTestsQuery query)
+        public async Task<PaginatedModel<SolicitedCandidatePositionDto>> GetMySolicitedTests([FromQuery] Application.SolicitedPositions.MySolicitedPositions.GetMySolicitedTests.GetMySolicitedPositionQuery query)
         {
             return await Mediator.Send(query);
         }
@@ -55,18 +53,18 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         [HttpGet("my-solicited-test/{id}")]
         public async Task<SolicitedCandidatePositionDto> GetMySolicitedTest([FromRoute] int id)
         {
-            var query = new GetMySolicitedTestQuery { Id = id };
+            var query = new GetMySolicitedPositionQuery { Id = id };
             return await Mediator.Send(query);
         }
 
         [HttpPost("add-my")]
-        public async Task<AddSolicitedCandidatePositionResponseDto> AddTests([FromBody] AddMySolicitedTestCommand command)
+        public async Task<AddSolicitedCandidatePositionResponseDto> AddTests([FromBody] AddMySolicitedPositionCommand command)
         {
             return await Mediator.Send(command);
         }
 
         [HttpPatch("edit-my")]
-        public async Task<AddSolicitedCandidatePositionResponseDto> UpdateEvent([FromBody] EditMySolicitedTestCommand command)
+        public async Task<AddSolicitedCandidatePositionResponseDto> UpdateEvent([FromBody] EditMySolicitedPositionCommand command)
         {
             return await Mediator.Send(command);
         }
@@ -74,13 +72,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         [HttpDelete("delete-my/{id}")]
         public async Task<Unit> DeleteEvent([FromRoute] int id)
         {
-            var command = new DeleteMySolicitedTestCommand { Id = id };
+            var command = new DeleteMySolicitedPositionCommand { Id = id };
             return await Mediator.Send(command);
         }
 
         [HttpPut("print")]
         [IgnoreResponseWrap]
-        public async Task<IActionResult> PrintSolicitedTests([FromBody] PrintSolicitedTestsCommand command)
+        public async Task<IActionResult> PrintSolicitedTests([FromBody] PrintSolicitedPositionsCommand command)
         {
             var result = await Mediator.Send(command);
 

@@ -13,6 +13,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Identity\CVU.ERP.Identity.csproj" />
+	  <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.ServiceProvider\CVU.ERP.ServiceProvider.csproj" />
 	  <ProjectReference Include="..\..\..\Common\CODWER.Common\RERU.Data.Persistence\RERU.Data.Persistence.csproj" />
 	</ItemGroup>
 

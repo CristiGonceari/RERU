@@ -3,6 +3,7 @@ using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 using System;
 using System.Linq;
+using CVU.ERP.StorageService.Entities;
 
 namespace CODWER.RERU.Evaluation.Application.DocumentsTemplates
 {

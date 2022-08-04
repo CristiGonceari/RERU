@@ -85,13 +85,11 @@
                       <label class="col-xl-3 col-lg-3 col-form-label">{{'user.birthday' |
                         translate}}</label>
                       <div class="col-lg-9 col-xl-9" style="height: 44px;">
-                        <!-- <app-date style="height: 44px;" [isDisabled]="false" [isReverse]="false" [parent]="userForm" [date]="'birthday'"
-                          [placeholder]="dd-mm-yyyy"></app-date> -->
                         <input type="text" [owlDateTimeTrigger]="startDate"
                           class="form-control form-control-lg form-control-solid"
-                          [value]="birthday | dateFilter:'dd/MM/yyyy'">
+                          [value]="birthDate | dateFilter:'dd/MM/yyyy'">
                         <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
-                          name="date_time" [(ngModel)]="birthday" [owlDateTime]="startDate"
+                          name="date_time" [(ngModel)]="birthDate" [owlDateTime]="startDate"
                           [ngModelOptions]="{standalone: true}" [readonly]="true">
                         <owl-date-time #startDate pickerType="calendar"></owl-date-time>
                       </div>
@@ -121,10 +119,10 @@
                         <div *ngIf="hasErrors('phoneNumber')" class="fv-plugins-message-container">
                           <div *ngIf="hasError('phoneNumber', 'required')" data-field="phoneNumber"
                             data-validator="notEmpty" class="fv-help-block">
-                            {{ 'login.phone-is-required' | translate }}</div>
-                          <div *ngIf="hasError('phoneNumber', 'phoneNumber')" data-field="phoneNumber"
+                            {{ 'user-profile.empty-phone' | translate }}</div>
+                          <div *ngIf="hasError('phoneNumber', 'pattern')" data-field="phoneNumber"
                             data-validator="notEmpty" class="fv-help-block">
-                            {{ 'login.phone-is-required' | translate }}</div>
+                            {{ 'user-profile.wrong-phone' | translate }}</div>
                         </div>
                       </div>
                     </div>

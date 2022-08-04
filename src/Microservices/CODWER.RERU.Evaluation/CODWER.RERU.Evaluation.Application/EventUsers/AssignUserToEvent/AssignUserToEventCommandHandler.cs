@@ -1,33 +1,34 @@
-﻿using System.IO;
-using AutoMapper;
+﻿using AutoMapper;
+using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.DataTransferObjects.Events;
+using CVU.ERP.Notifications.Services;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
-using CVU.ERP.Notifications.Services;
-using Microsoft.EntityFrameworkCore;
-using CODWER.RERU.Evaluation.Application.Validation;
-using CODWER.RERU.Evaluation.Application.Services;
-using System.Collections.Generic;
-using CODWER.RERU.Evaluation.DataTransferObjects.Events;
-using System.Linq;
-using RERU.Data.Entities;
-using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 {
     public class AssignUserToEventCommandHandler : IRequestHandler<AssignUserToEventCommand, List<int>>
     {
-        private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
         private readonly IInternalNotificationService _internalNotificationService;
+        private readonly AppDbContext _appDbContext;
+        private readonly List<int> _addedUsersIds = new();
 
         public AssignUserToEventCommandHandler(AppDbContext appDbContext,
             IMapper mapper,
             INotificationService notificationService,
-            IInternalNotificationService internalNotificationService)
+            IInternalNotificationService internalNotificationService
+            )
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
@@ -37,47 +38,84 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 
         public async Task<List<int>> Handle(AssignUserToEventCommand request, CancellationToken cancellationToken)
         {
-            var eventUsersIds = new List<int>();
-
-            var eventValues = await _appDbContext.EventUsers.Where(eu => eu.EventId == request.EventId).ToListAsync();
-
             foreach (var userId in request.UserProfileId)
             {
-                var eventUser = eventValues.FirstOrDefault(l => l.UserProfileId == userId);
+                var exist = ExistEventUser(userId, request.EventId);
 
-                if (eventUser == null)
+                if (!exist)
                 {
-                    var newEventUser = new AddEventPersonDto()
-                    {
-                        UserProfileId = userId,
-                        EventId = request.EventId,
-                    };
+                    var result = await AssignUserToEvent(userId, request.EventId);
 
-                    var result = _mapper.Map<EventUser>(newEventUser);
+                    _addedUsersIds.Add(result.UserProfileId);
 
-                    await _appDbContext.EventUsers.AddAsync(result);
+                    await _internalNotificationService.AddNotification(result.UserProfileId, NotificationMessages.YouWereInvitedToEventAsCandidate);
 
-                    eventUsersIds.Add(userId);
+                    await AddEmailNotification(result);
                 }
                 else
                 {
-                    eventUsersIds.Add(eventUser.UserProfileId);
+                    _addedUsersIds.Add(userId);
                 }
-
-                eventValues = eventValues.Where(l => l.UserProfileId != userId).ToList();
-
             }
 
-            if (eventValues.Count() > 0)
+            await UnassignUsersFromEvent(request.EventId);
+
+            return _addedUsersIds;
+        }
+
+        private async Task<EventUser> AssignUserToEvent(int userId, int eventId)
+        {
+            var newEventUser = new AddEventPersonDto()
             {
+                UserProfileId = userId,
+                EventId = eventId,
+            };
 
-                _appDbContext.EventUsers.RemoveRange(eventValues);
-               
-            }
+            var result = _mapper.Map<EventUser>(newEventUser);
 
+            await _appDbContext.EventUsers.AddAsync(result);
             await _appDbContext.SaveChangesAsync();
 
-            return eventUsersIds;
+            return result;
         }
+
+        private async Task UnassignUsersFromEvent(int eventId)
+        {
+            var userEventsToDelete = _appDbContext.EventUsers
+                .Where(eu => _addedUsersIds.All(p2 => p2 != eu.UserProfileId) && eu.EventId == eventId);
+
+            if (userEventsToDelete.Any())
+            {
+                _appDbContext.EventUsers.RemoveRange(userEventsToDelete);
+                await _appDbContext.SaveChangesAsync();
+            }
+        }
+
+        private async Task AddEmailNotification(EventUser eventUser)
+        {
+            var item = await _appDbContext.EventUsers
+                .Include(x => x.UserProfile)
+                .Include(x => x.Event)
+                .FirstOrDefaultAsync(x => x.Id == eventUser.Id);
+
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
+            {
+                Subject = "Invitație la eveniment",
+                To = item.UserProfile.Email,
+                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", item.UserProfile.FullName },
+                    { "{email_message}", GetTableContent(item) }
+                }
+            });
+        }
+
+        private string GetTableContent(EventUser eventUser)
+            => $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la evenimentul ""{eventUser.Event.Name}"" în rol de candidat.</p>";
+
+        private bool ExistEventUser(int userId, int eventId) => 
+            _appDbContext.EventUsers.Any(x =>
+            x.UserProfileId == userId && x.EventId == eventId);
     }
 }

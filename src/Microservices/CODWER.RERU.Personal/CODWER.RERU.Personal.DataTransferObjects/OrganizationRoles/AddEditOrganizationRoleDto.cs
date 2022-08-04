@@ -1,6 +1,6 @@
 ﻿namespace CODWER.RERU.Personal.DataTransferObjects.OrganizationRoles
 {
-    public class AddEditOrganizationRoleDto
+    public class AddEditRoleDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

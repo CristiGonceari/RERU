@@ -5,6 +5,7 @@ using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.DataTransferObjects.Modules;
 using CVU.ERP.Module.Application.Models;
+using CVU.ERP.ServiceProvider.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

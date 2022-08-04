@@ -22,7 +22,7 @@ namespace CODWER.RERU.Core.Application.Autobiographies.GetUserProfileAutobiograp
         public async  Task<AutobiographyDto> Handle(GetUserProfileAutobiographyQuery request, CancellationToken cancellationToken)
         {
             var item = await _appDbContext.Autobiographies
-               .FirstAsync(x => x.UserProfileId == request.UserProfileId);
+               .FirstAsync(x => x.ContractorId == request.ContractorId);
 
             return _mapper.Map<AutobiographyDto>(item);
         }

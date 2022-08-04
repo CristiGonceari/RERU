@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.StorageService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -22,13 +22,15 @@ namespace CODWER.RERU.Personal.Application.Contractors.RemoveContractor
         public async Task<Unit> Handle(RemoveContractorCommand request, CancellationToken cancellationToken)
         {
             var contractor = await _appDbContext.Contractors.FirstAsync(rt => rt.Id == request.Id);
-            var userProfile = await _appDbContext.UserProfiles.FirstOrDefaultAsync(up => up.ContractorId == request.Id);
+            var userProfile = await _appDbContext.UserProfiles
+                .Include(x => x.Contractor)
+                .FirstOrDefaultAsync(up => up.Contractor.Id == request.Id);
 
             _appDbContext.Contractors.Remove(contractor);
 
             if (userProfile !=  null)
             {
-                userProfile.ContractorId = null;
+                userProfile.Contractor = null;
             }
 
             RemoveAllData(request.Id);
@@ -49,10 +51,17 @@ namespace CODWER.RERU.Personal.Application.Contractors.RemoveContractor
 
             _appDbContext.ContractorFiles.RemoveRange(contractorFiles);
 
-            var contractorBulletins = _appDbContext.Bulletins.Where(x => x.ContractorId == contractorId);
+            var contractorBulletins = _appDbContext.Bulletins
+                .Include(x=>x.Contractor)
+                .ThenInclude(x=>x.UserProfile)
+                .Where(x => x.Contractor.Id == contractorId);
             _appDbContext.Bulletins.RemoveRange(contractorBulletins);
 
-            var contractorStudies = _appDbContext.Studies.Where(x => x.ContractorId == contractorId);
+            var contractorStudies = _appDbContext.Studies
+                .Include(x => x.Contractor)
+                .ThenInclude(x => x.UserProfile)
+                .Where(x => x.Contractor.Id == contractorId);
+
             _appDbContext.Studies.RemoveRange(contractorStudies);
         }
     }

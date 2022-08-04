@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using CODWER.RERU.Personal.Application.Validation;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleContents;
 using CVU.ERP.Common.Extensions;
 using FluentValidation;
@@ -22,7 +22,7 @@ namespace CODWER.RERU.Personal.Application.Validators.DepartmentRoleContent
         private void ExistentRecord(AddEditDepartmentRoleContentDto data, string errorMessage, CustomContext context)
         {
             var existent = _appDbContext.DepartmentRoleContents.Any(dr =>
-                dr.DepartmentId == data.DepartmentId && dr.OrganizationRoleId == data.OrganizationRoleId);
+                dr.DepartmentId == data.DepartmentId && dr.RoleId == data.RoleId);
 
             if (existent)
             {

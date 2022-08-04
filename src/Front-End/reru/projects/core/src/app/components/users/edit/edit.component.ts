@@ -32,7 +32,8 @@ export class EditComponent implements OnInit {
 	roles: SelectItem[] = [{ label: '', value: '' }];
 	accessModes: SelectItem[] = [{ label: '', value: '' }];
 
-	birthday;
+	birthDate: Date;
+	date: string;
 	startDate;
 
 	constructor(
@@ -63,9 +64,9 @@ export class EditComponent implements OnInit {
 		this.roleService.getValues().subscribe(res => this.roles = res.data);
 	}
 
-	getAccessMode(){
+	getAccessMode() {
 		this.userProfileService.getAccessMode().subscribe(res => this.accessModes = res.data);
-	  }
+	}
 
 	initData(): void {
 		this.activatedRoute.params.subscribe(response => {
@@ -114,27 +115,39 @@ export class EditComponent implements OnInit {
 					'^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'
 				),
 			]),
-			phoneNumber: this.fb.control(user && user.phoneNumber, [Validators.required]),
+			phoneNumber: this.fb.control((user && user.phoneNumber) || "", [
+				Validators.required,
+				Validators.pattern(
+					"^((\\+373-?)|0)?[0-9]{8}$"
+				),
+			]),
 			departmentColaboratorId: this.fb.control((user && user.departmentColaboratorId) || null, Validators.required),
 			roleColaboratorId: this.fb.control((user && user.roleColaboratorId) || null, [Validators.required]),
 			accessModeEnum: this.fb.control((user && user.accessModeEnum) || null, [Validators.required]),
 		});
 
-		this.birthday = user.birthday
+		this.birthDate = user.birthDate;
 		this.isLoading = false;
 	}
 
+	setBirthDate(): void {
+		if (this.birthDate) {
+			const date = new Date(this.birthDate);
+			this.date = new Date(date.getTime() - (new Date(this.birthDate).getTimezoneOffset() * 60000)).toISOString();
+		}
+	}
+
 	editUser(): void {
-		this.isLoading = true;
+		this.setBirthDate();
 		let data = {
 			id: this.userForm.value.id,
 			firstName: this.userForm.value.firstName,
 			lastName: this.userForm.value.lastName,
 			fatherName: this.userForm.value.fatherName,
-			birthday: this.birthday != null ? new Date(`${this.birthday} EDT`).toISOString() : null,
+			birthDate: this.date || null,
 			phoneNumber: this.userForm.value.phoneNumber,
-			departmentColaboratorId: +this.userForm.value.departmentColaboratorId,
-			roleColaboratorId: +this.userForm.value.roleColaboratorId,
+			departmentColaboratorId: +this.userForm.value.departmentColaboratorId || null,
+			roleColaboratorId: +this.userForm.value.roleColaboratorId || null,
 			accessModeEnum: this.userForm.value.accessModeEnum
 		}
 

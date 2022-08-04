@@ -1,6 +1,6 @@
 ﻿using CODWER.RERU.Personal.Application.Validation;
 using CODWER.RERU.Personal.Application.Validators.DepartmentRoleContent;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 
@@ -14,7 +14,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.AddDepartmentR
                 .SetValidator(new ExistentDepartmentRoleContentRecordValidator(appDbContext, ValidationMessages.InvalidInput));
 
             RuleFor(x => x.Data)
-                    .Must(x => x.OrganizationRoleCount > 0)
+                    .Must(x => x.RoleCount > 0)
                     .WithMessage(ValidationMessages.InvalidInput)
                     .WithErrorCode(ValidationCodes.INVALID_INPUT);
         }

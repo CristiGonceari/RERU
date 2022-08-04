@@ -1,8 +1,7 @@
 using AutoMapper.EquivalencyExpression;
 using CODWER.RERU.Personal.Application.Security;
 using CODWER.RERU.Personal.Application.Validation;
-using CODWER.RERU.Personal.Data.Persistence.Context;
-using CODWER.RERU.Personal.Data.Persistence.Initializer;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Employers;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CVU.ERP.Infrastructure.Email;
@@ -28,6 +27,7 @@ using System.Text;
 using CODWER.RERU.Personal.Application.CronJobs;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using Hangfire.PostgreSql;
+using Microsoft.EntityFrameworkCore;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Personal.API.Config.ServicesSetup;
@@ -58,6 +58,8 @@ namespace CODWER.RERU.Personal.API
             services.Configure<RabbitMq>(Configuration.GetSection("MessageQueue"));
             services.Configure<DocumentOptions>(Configuration.GetSection("DocumentOptions"));
             services.Configure<EmployerData>(Configuration.GetSection("EmployerData"));
+
+            services.AddModuleServiceProvider(); // before conf AppDbContext
 
             ServicesSetup.ConfigureEntity(services, Configuration);
             ServicesSetup.ConfigurePolicies(services);
@@ -108,10 +110,9 @@ namespace CODWER.RERU.Personal.API
                 .AddERPModuleControllers();
             services.AddWkhtmltopdf();
 
-            services.AddERPModuleServices(Configuration);
+            services.AddERPModuleServices(Configuration); 
             services.AddCommonModuleApplication(Configuration);
-            services.AddModuleApplicationServices()
-                .AddCommonLoggingContext(Configuration);
+            services.AddCommonLoggingContext(Configuration);
 
             //if (CurrentEnvironment.IsDevelopment())
             //{
@@ -119,10 +120,10 @@ namespace CODWER.RERU.Personal.API
             //{ 
 
             services.AddHangfire(config =>
-                config.UsePostgreSqlStorage(Configuration.GetConnectionString(ConnectionString.Personal)));
+                config.UsePostgreSqlStorage(Configuration.GetConnectionString(ConnectionString.HangfirePersonal)));
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext appDbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, HangfireDbContext hangfireDbContext)
         {
 
             if (env.IsDevelopment())
@@ -136,10 +137,7 @@ namespace CODWER.RERU.Personal.API
                 app.UseHsts();
             }
 
-            // if (env.IsDevelopment())
-            // {
-            DatabaseSeeder.SeedDb(appDbContext);
-            // }
+            hangfireDbContext.Database.Migrate();
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();

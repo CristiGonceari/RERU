@@ -3,7 +3,7 @@
 
 
 
-namespace IdentityServerHost.Quickstart.UI
+namespace CODWER.RERU.Identity.Web.Quickstart.Account
 {
     public class RedirectViewModel
     {

@@ -1,7 +1,7 @@
 ﻿using CODWER.RERU.Personal.Application.Services.VacationInterval;
 using CODWER.RERU.Personal.Application.TemplateParsers;
-using CODWER.RERU.Personal.Data.Entities.Enums;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities.Enums;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Employers;
 using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Entities;
@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Personal.Application.Services.Implementations
 {
@@ -78,7 +79,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         {
             var contractor = await _appDbContext.Contractors
                 .Include(x => x.Positions)
-                .ThenInclude(x => x.OrganizationRole)
+                .ThenInclude(x => x.Role)
                 .FirstAsync(x => x.Id == contractorId);
 
             var myDictionary = new Dictionary<string, string>();
@@ -91,7 +92,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             myDictionary.Add("{nume_replace}", contractor.LastName);
             myDictionary.Add("{prenume_replace}", contractor.FirstName);
 
-            myDictionary.Add("{functia_replace}", contractor.GetCurrentPositionOnData(DateTime.Now)?.OrganizationRole.Name);
+            myDictionary.Add("{functia_replace}", contractor.GetCurrentPositionOnData(DateTime.Now)?.Role.Name);
 
             myDictionary.Add("{data_demisia_replace}", from.ToString("dd/MM/yyyy"));
             myDictionary.Add("{data_replace}", DateTime.Now.ToString("dd/MM/yyyy"));
@@ -103,7 +104,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         {
             var contractor = await _appDbContext.Contractors
               .Include(x => x.Positions)
-              .ThenInclude(x => x.OrganizationRole)
+              .ThenInclude(x => x.Role)
               .FirstAsync(x => x.Id == contractorId);
 
             var position = contractor.GetCurrentPositionOnData(DateTime.Now);
@@ -120,7 +121,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             myDictionary.Add("{nume_replace}", contractor.LastName);
             myDictionary.Add("{prenume_replace}", contractor.FirstName);
 
-            myDictionary.Add("{functia_replace}", position?.OrganizationRole.Name);
+            myDictionary.Add("{functia_replace}", position?.Role.Name);
 
             myDictionary.Add("{data_demisia_replace}", from.ToString("dd/MM/yyyy"));
 

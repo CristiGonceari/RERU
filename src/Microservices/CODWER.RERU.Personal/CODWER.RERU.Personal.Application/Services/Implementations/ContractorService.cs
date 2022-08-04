@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Entities;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Personal.Application.Services.Implementations
@@ -26,7 +26,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             }
 
             var currentContractor = await _appDbContext.Contractors
-                .FirstOrDefaultAsync(x => x.Id == currentUserProfile.ContractorId);
+                .FirstOrDefaultAsync(x => x.Id == currentUserProfile.Contractor.Id);
 
             return currentContractor;
         }

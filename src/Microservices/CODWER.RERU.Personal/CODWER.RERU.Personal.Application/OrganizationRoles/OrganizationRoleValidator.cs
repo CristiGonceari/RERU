@@ -5,9 +5,9 @@ using FluentValidation;
 
 namespace CODWER.RERU.Personal.Application.OrganizationRoles
 {
-    public class OrganizationRoleValidator : AbstractValidator<AddEditOrganizationRoleDto>
+    public class RoleValidator : AbstractValidator<AddEditRoleDto>
     {
-        public OrganizationRoleValidator()
+        public RoleValidator()
         {
             RuleFor(x => x.Name).NotEmpty()
                 .WithMessage(ValidationMessages.InvalidInput)

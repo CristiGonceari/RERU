@@ -1,9 +1,9 @@
 ﻿using CODWER.RERU.Personal.Application.Validation;
 using CODWER.RERU.Personal.Application.Validators;
-using CODWER.RERU.Personal.Data.Entities.NomenclatureType;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
+using RERU.Data.Entities.PersonalEntities.NomenclatureType;
 
 namespace CODWER.RERU.Personal.Application.NomenclatureTypes.Nomenclatures.GetNomenclature
 {

@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Services.Identity.Exceptions;
 using CODWER.RERU.Core.Application.Common.Services.PasswordGenerator;
@@ -11,7 +9,6 @@ using CVU.ERP.Identity.Models;
 using CVU.ERP.Notifications.Email;
 using Microsoft.AspNetCore.Identity;
 using CVU.ERP.Notifications.Services;
-using CVU.ERP.Notifications.Enums;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -22,10 +19,11 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 {
     public class IdentityServerIdentityService : IIdentityService
     {
+        private readonly UserManagementDbContext _userManagementDbContext;
+
         private readonly UserManager<ERPIdentityUser> _userManager;
         private readonly INotificationService _notificationService;
         private readonly IPasswordGenerator _passwordGenerator;
-        private readonly IConfiguration _configuration;
 
         private readonly IOptions<IdentityOptions> _optionsAccessor;
         private readonly IPasswordHasher<ERPIdentityUser> _passwordHasher;
@@ -38,11 +36,22 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 
         public string Type => "local";
 
-        public IdentityServerIdentityService(IServiceProvider serviceProvider, INotificationService notificationService, IPasswordGenerator passwordGenerator, IConfiguration configuration, IOptions<IdentityOptions> optionsAccessor, IPasswordHasher<ERPIdentityUser> passwordHasher, IEnumerable<IUserValidator<ERPIdentityUser>> userValidators, IEnumerable<IPasswordValidator<ERPIdentityUser>> passwordValidators, ILookupNormalizer keyNormalizer, IdentityErrorDescriber errors, IServiceProvider services, ILogger<UserManager<ERPIdentityUser>> logger)
+        public IdentityServerIdentityService(UserManagementDbContext userManagementDbContext,
+            INotificationService notificationService,
+            IPasswordGenerator passwordGenerator,
+            IOptions<IdentityOptions> optionsAccessor,
+            IPasswordHasher<ERPIdentityUser> passwordHasher,
+            IEnumerable<IUserValidator<ERPIdentityUser>> userValidators,
+            IEnumerable<IPasswordValidator<ERPIdentityUser>> passwordValidators,
+            ILookupNormalizer keyNormalizer,
+            IdentityErrorDescriber errors,
+            IServiceProvider services,
+            ILogger<UserManager<ERPIdentityUser>> logger)
         {
+            _userManagementDbContext = userManagementDbContext;
+
             _notificationService = notificationService;
             _passwordGenerator = passwordGenerator;
-            _configuration = configuration;
             
             _optionsAccessor = optionsAccessor;
             _passwordHasher = passwordHasher;
@@ -56,8 +65,8 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
             _userManager = UserManagerInstance;
         }
 
-        private UserManager<ERPIdentityUser> UserManagerInstance => new UserManager<ERPIdentityUser>(
-            new UserStore<ERPIdentityUser>(UserManagementDbContext.NewInstance(_configuration)),
+        private UserManager<ERPIdentityUser> UserManagerInstance => new (
+            new UserStore<ERPIdentityUser>(_userManagementDbContext.NewInstance()),
             _optionsAccessor,
             _passwordHasher,
             _userValidators,
@@ -80,36 +89,21 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 
             if (response.Succeeded)
             {
-                // TODO: asta trebuie de mutat in notification service
-                if (true)
+                if (notify)
                 {
-                    try
+                    await _notificationService.PutEmailInQueue(new QueuedEmailData
                     {
-                        var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
-                        var template = await File.ReadAllTextAsync(assemblyPath + "/UserRegister.html");
-
-                        template = template
-                            .Replace("{FirstName}", $"{userProfile.FirstName} {userProfile.LastName}")
-                            .Replace("{Login}", userProfile.Email)
-                            .Replace("{Password}", password);
-
-                        var emailData = new EmailData()
+                        Subject = "New account",
+                        To = identityUser.Email,
+                        HtmlTemplateAddress = "Templates/UserRegister.html",
+                        ReplacedValues = new Dictionary<string, string>()
                         {
-                            subject = "New account",
-                            body = template,
-                            from = "Do Not Reply",
-                            //to = identityUser.Email
-                            to = "hubencu.andrian@gmail.com"
-                        };
-
-                        await _notificationService.Notify(emailData, NotificationType.Both);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine($"ERROR {e.Message}");
-                    }
+                            { "{FirstName}", userProfile.FullName },
+                            { "{Password}", password },
+                            { "{Login}", userProfile.Email }
+                        }
+                    });
                 }
-                // end
 
                 return identityUser.Id;
             }
@@ -135,36 +129,21 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 
             if (usernameResult.Succeeded && emailResult.Succeeded)
             {
-                // TODO: asta trebuie de mutat in notification service
-                if (true)
+                if (notify)
                 {
-                    try
+                    await _notificationService.PutEmailInQueue(new QueuedEmailData
                     {
-                        var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
-                        var template = await File.ReadAllTextAsync(assemblyPath + "/UserRegister.html");
-
-                        template = template
-                            .Replace("{FirstName}", $"{userName}")
-                            .Replace("{Login}", newEmail)
-                            .Replace("{Password}", password);
-
-                        var emailData = new EmailData()
+                        Subject = "Update account",
+                        To = identityUser.Email,
+                        HtmlTemplateAddress = "Templates/UserRegister.html",
+                        ReplacedValues = new Dictionary<string, string>()
                         {
-                            subject = "Update account",
-                            body = template,
-                            from = "Do Not Reply",
-                            //to = identityUser.Email
-                            to = "hubencu.andrian@gmail.com"
-                        };
-
-                        await _notificationService.Notify(emailData, NotificationType.Both);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine($"ERROR {e.Message}");
-                    }
+                            { "{FirstName}", userName },
+                            { "{Password}", password },
+                            { "{Login}", newEmail }
+                        }
+                    });
                 }
-                // end
 
                 return identityUser.Id;
             }
@@ -208,23 +187,18 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                 await _userManager.RemovePasswordAsync(user);
                 await _userManager.AddPasswordAsync(user, password);
 
-                string assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Templates";
-                var template = await File.ReadAllTextAsync(assemblyPath + "/ResetPassword.html");
-
-                template = template
-                    .Replace("{FirstName}", user.UserName)
-                    .Replace("{Login}", user.Email)
-                    .Replace("{Password}", password);
-
-                var emailData = new EmailData()
+                await _notificationService.PutEmailInQueue(new QueuedEmailData
                 {
-                    subject = "Reset Password",
-                    body = template,
-                    from = "Do Not Reply",
-                    to = user.Email
-                };
-
-                await _notificationService.Notify(emailData, NotificationType.Both);
+                    Subject = "Reset Password",
+                    To = user.Email,
+                    HtmlTemplateAddress = "Templates/ResetPassword.html",
+                    ReplacedValues = new Dictionary<string, string>()
+                    {
+                        { "{FirstName}", $"{user.Name} {user.LastName}" },
+                        { "{Password}", password },
+                        { "{Login}", user.Email }
+                    }
+                });
             }
         }
     }

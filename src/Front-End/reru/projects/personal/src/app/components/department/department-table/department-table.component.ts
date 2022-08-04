@@ -7,6 +7,8 @@ import { PagedSummary } from '../../../utils/models/paged-summary.model';
 import { DepartmentService } from '../../../utils/services/department.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { ObjectUtil } from '../../../utils/util/object.util';
+import { ImportDepartmentsModalComponent } from '../../../utils/modals/import-departments-modal/import-departments-modal.component';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-department-table',
@@ -45,18 +47,41 @@ export class DepartmentTableComponent implements OnInit {
     });
   }
 
-  openConfirmationDeleteModal(department: DepartmentModel): void {
-    const modalRef: any = this.modalService.open(DeleteDepartmentModalComponent, { centered: true });
-    modalRef.componentInstance.name = department.name;
-    modalRef.result.then(() => this.delete(department.id), () => { });
+  openImportDepartmentsModal(){
+    const modalRef: any = this.modalService.open(ImportDepartmentsModalComponent, { centered: true });
+    modalRef.result.then((data) => this.import(data), () => { });
   }
 
-  delete(id: number): void {
-    this.isLoading = true;
-    this.departmentService.delete(id).subscribe(response => {
-      this.list();
-      this.notificationService.success('Success', 'Department deleted!', NotificationUtil.getDefaultMidConfig());
-    });
-  }
+  import(data): void {
+		this.isLoading = true;
+		const form = new FormData();
+		form.append('File', data.file);
+		this.departmentService.bulkImport(form).subscribe(response => {
+			if(response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], fileName, { type: response.body.type });
+				saveAs(file);
+			}
+			this.notificationService.success('Success', 'Users Imported!', NotificationUtil.getDefaultMidConfig());
+			this.list();
+		}, () => { }, () => {
+			this.isLoading = false;
+		})
+	}
+
+  // openConfirmationDeleteModal(department: DepartmentModel): void {
+  //   const modalRef: any = this.modalService.open(DeleteDepartmentModalComponent, { centered: true });
+  //   modalRef.componentInstance.name = department.name;
+  //   modalRef.result.then(() => this.delete(department.id), () => { });
+  // }
+
+  // delete(id: number): void {
+  //   this.isLoading = true;
+  //   this.departmentService.delete(id).subscribe(response => {
+  //     this.list();
+  //     this.notificationService.success('Success', 'Department deleted!', NotificationUtil.getDefaultMidConfig());
+  //   });
+  // }
 
 }

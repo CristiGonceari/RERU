@@ -1,10 +1,8 @@
-﻿using System.IO;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using Microsoft.EntityFrameworkCore;
 using CODWER.RERU.Evaluation.Application.Services;
@@ -37,7 +35,6 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
 
         public async Task<List<int>> Handle(AssignEvaluatorToEventCommand request, CancellationToken cancellationToken)
         {
-
             var eventEvaluatorIds = new List<int>();
 
             var eventValues = await _appDbContext.EventEvaluators.Where(ee => ee.EventId == request.EventId).ToListAsync();
@@ -58,8 +55,13 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
                     var result = _mapper.Map<EventEvaluator>(newEventEvaluator);
 
                     await _appDbContext.EventEvaluators.AddAsync(result);
+                    await _appDbContext.SaveChangesAsync();
 
                     eventEvaluatorIds.Add(evaluatorId);
+
+                    await _internalNotificationService.AddNotification(result.EvaluatorId, NotificationMessages.YouWereInvitedToEventAsCandidate);
+
+                    await AddEmailNotification(result);
                 }
                 else
                 {
@@ -67,12 +69,10 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
                 }
 
                 eventValues = eventValues.Where(l => l.EvaluatorId != evaluatorId).ToList();
-
             }
 
-            if (eventValues.Count() > 0)
+            if (eventValues.Any())
             {
-
                 _appDbContext.EventEvaluators.RemoveRange(eventValues);
             }
 
@@ -80,5 +80,28 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
 
             return eventEvaluatorIds;
         }
+
+        private async Task AddEmailNotification(EventEvaluator eventEvaluator)
+        {
+            var item = await _appDbContext.EventEvaluators
+                .Include(eu => eu.Evaluator)
+                .Include(eu => eu.Event)
+                .FirstOrDefaultAsync(x => x.Id == eventEvaluator.Id);
+
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
+            {
+                Subject = "Notificare de test",
+                To = item.Evaluator.Email,
+                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", item.Evaluator.FullName },
+                    { "{email_message}", GetTableContent(item) }
+                }
+            });
+        }
+
+        private  string GetTableContent(EventEvaluator eventEvaluator)
+            => $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la evenimentul ""{eventEvaluator.Event.Name}"" în rol de evaluator.</p>";
     }
 }

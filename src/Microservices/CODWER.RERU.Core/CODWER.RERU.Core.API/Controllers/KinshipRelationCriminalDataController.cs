@@ -4,6 +4,7 @@ using CODWER.RERU.Core.Application.KinshipRelationCriminalDatas.UpdateKinshipRel
 using CODWER.RERU.Core.DataTransferObjects.KinshipRelationCriminalData;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.API.Controllers
@@ -19,7 +20,7 @@ namespace CODWER.RERU.Core.API.Controllers
         [HttpGet("{id}")]
         public async Task<KinshipRelationCriminalDataDto> GetKinshipRelationCriminalData([FromRoute] int id)
         {
-            var query = new GetUserProfileKinshipRelationCriminalDataQuery { UserProfileId = id };
+            var query = new GetUserProfileKinshipRelationCriminalDataQuery { ContractorId = id };
             var result = await Mediator.Send(query);
 
             return result;

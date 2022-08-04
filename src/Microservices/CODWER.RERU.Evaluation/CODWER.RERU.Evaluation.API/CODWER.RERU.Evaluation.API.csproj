@@ -53,11 +53,17 @@
     <None Update="PdfTemplates\EmailNotificationTemplate.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="PdfTemplates\EvaluationResult.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="PdfTemplates\one_multiple_question.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
 	<None Update="PdfTemplates\PerformingTest.html">
 		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
+	<None Update="PdfTemplates\PositionDiagram.html">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	</None>
     <None Update="PdfTemplates\Test.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

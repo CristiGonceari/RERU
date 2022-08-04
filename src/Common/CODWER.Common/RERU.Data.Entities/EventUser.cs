@@ -9,5 +9,8 @@ namespace RERU.Data.Entities
 
         public int UserProfileId { get; set; }
         public UserProfile UserProfile { get; set; }
+
+        public int? PositionId { get; set; }
+        public CandidatePosition CandidatePosition { get; set; }
     }
 }

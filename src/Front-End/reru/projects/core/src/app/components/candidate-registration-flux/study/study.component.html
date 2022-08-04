@@ -1,0 +1,270 @@
+<form *ngIf="studyForm" class="col border" [formGroup]="studyForm">
+    <app-loading-spinner *ngIf="isLoadingStudies" contentHeight="20rem" height="5rem" width="5rem"
+        colorClass="text-primary"></app-loading-spinner>
+    <div *ngIf="!isLoadingStudies">
+        <div class="row my-5">
+            <div class="col">
+                <h4>{{'step.Study' | translate}}</h4>
+            </div>
+        </div>
+        <div formArrayName="studies" class="ml-10">
+            <div class="box-square" [ngClass]="{'more': studyForm.controls.studies.controls.length > 1  &&
+                            (studyForm.controls.studies.controls.length - 1) !== i}"
+                *ngFor="let study of studyForm.controls.studies.controls;let i = index">
+                <div [formGroupName]="i">
+                    <div class="row">
+                        <div class="col-xl-6 col-12">
+                            <div class="form-group row required">
+                                <label class="col-xl-3 col-lg-3 col-form-label"
+                                    for="studyTypeId">{{'study.study-type' | translate}}</label>
+                                <div class="col-lg-9 col-xl-9">
+                                    <select class="form-control" formControlName="studyTypeId">
+                                        <option value="null">{{'module-access.select' | translate}}</option>
+                                        <option *ngFor="let item of studyTypes" [value]="item.value">{{ 'studyTypes.' + item.translateId | translate}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-12">
+                            <div class="form-group row required">
+                                <label class="col-xl-3 col-lg-3 col-form-label">{{'study.study-frequency' | translate}}</label>
+                                <div class="col-lg-9 col-xl-9">
+                                    <select class="form-control" formControlName="studyFrequency">
+                                        <option value="null">{{'module-access.select' | translate}}</option>
+                                        <option *ngFor="let item of studyFrequences" [value]="item.value">{{ 'studyFrequency.' + item.label | translate}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 col-12">
+                            <div class="form-group row required">
+                                <label class="col-xl-3 col-lg-3 col-form-label">{{'study.institution' | translate}}</label>
+                                <div class="col-lg-9 col-xl-9">
+                                    <input formControlName="institution" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'study.institution' | translate" />
+                                    <div *ngIf="isInvalidPattern(study, 'institution')"
+                                        class="invalid-feedback d-block">{{'validations.only-letters-and-dash' | translate}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-12">
+                            <div class="form-group row required">
+                                <label class="col-xl-3 col-lg-3 col-form-label">{{'study.specialty' | translate}}</label>
+                                <div class="col-lg-9 col-xl-9">
+                                    <input formControlName="specialty" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'study.specialty' | translate" />
+                                    <div *ngIf="isInvalidPattern(study, 'specialty')" class="invalid-feedback d-block">
+                                        {{'validations.only-letters-and-dash' | translate}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 col-12">
+                            <div class="form-group row required">
+                                <label class="col-xl-3 col-lg-3 col-form-label">{{'study.faculty' | translate}}</label>
+                                <div class="col-lg-9 col-xl-9">
+                                    <input formControlName="faculty" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'study.faculty' | translate" />
+                                    <div *ngIf="isInvalidPattern(study, 'faculty')" class="invalid-feedback d-block">
+                                        {{'validations.only-letters-and-dash' | translate}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-12">
+                            <div class="form-group row required">
+                                <label class="col-xl-3 col-lg-3 col-form-label">{{'study.institution-address' | translate}}</label>
+                                <div class="col-lg-9 col-xl-9">
+                                    <input formControlName="institutionAddress" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'study.institution-address' | translate" />
+                                    <div *ngIf="isInvalidPattern(study, 'institutionAddress')"
+                                        class="invalid-feedback d-block">{{'validations.only-letters-and-dash' | translate}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 col-12">
+                            <div class="form-group row required">
+                                <label class="col-xl-3 col-lg-3 col-form-label">{{'study.year-of-admision' | translate}}</label>
+                                <div class="col-lg-9 col-xl-9">
+                                    <app-date [parent]="study" [date]="'yearOfAdmission'"
+                                        [placeholder]="'study.year-of-admision' | translate"></app-date>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-12">
+                            <div class="form-group row required">
+                                <label class="col-xl-3 col-lg-3 col-form-label">{{'study.graduation-year' | translate}}</label>
+                                <div class="col-lg-9 col-xl-9">
+                                    <app-date [parent]="study" [date]="'graduationYear'"
+                                        [placeholder]="'study.graduation-year' | translate"></app-date>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="i > 0" class="row justify-content-end mb-3 mr-7">
+                    <button class="btn btn-icon" (click)="removeStudy(i)">
+                        <span class="font-size-18px">&times;</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        <div class="row justify-content-between ml-10">
+            <button class="btn btn-icon" (click)="addStudy()"><span class="font-size-18px">+</span></button>
+        </div>
+        <div class="row justify-content-end m-7">
+            <button class="btn btn-success" *ngIf="addOrEditStudyButton" [disabled]="studyForm && studyForm.invalid "
+                (click)="createStudies()">{{'stepper.button-update' | translate}}</button>
+            <button class="btn btn-success" *ngIf="!addOrEditStudyButton" [disabled]="studyForm && studyForm.invalid"
+                (click)="createStudies()">{{'stepper.button-add' | translate}}</button>
+        </div>
+    </div>
+
+</form>
+<form *ngIf="languageForm" class="col border" [formGroup]="languageForm">
+    <app-loading-spinner *ngIf="isLoadingLanguages" contentHeight="20rem" height="5rem" width="5rem"
+        colorClass="text-primary"></app-loading-spinner>
+    <div *ngIf="!isLoadingLanguages">
+        <div class="row my-5">
+            <div class="col">
+                <h4>{{'language.modern-language-level' | translate}}</h4>
+            </div>
+        </div>
+        <div formArrayName="modernLanguages" class="ml-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">{{'table.number' | translate}}</th>
+                        <th scope="col">{{ 'language.name' | translate}}</th>
+                        <th scope="col">{{ 'language.qualifier' |translate }}</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr [ngClass]="{'more': languageForm.controls.modernLanguages.controls.length > 1  &&
+              (languageForm.controls.modernLanguages.controls.length - 1) !== i}"
+                        *ngFor="let modernLanguage of languageForm.controls.modernLanguages.controls;let i = index"
+                        [formGroupName]="i">
+                        <th scope="row">{{i + 1}}</th>
+                        <td>
+                            <select class="form-control" formControlName="modernLanguageId">
+                                <option value="null">{{'module-access.select' | translate}}</option>
+                                <option *ngFor="let item of modernLanguages" [value]="item.value">{{ item.label }}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" formControlName="knowledgeQuelifiers">
+                                <option value="null">{{'module-access.select' | translate}}</option>
+                                <option *ngFor="let item of knowledgeQuelifiersEnum" [value]="item.value">{{ 'languageKnowledge.' + item.label | translate}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <div *ngIf="i > 0" class="row justify-content-end mb-3 mr-7">
+                                <button class="btn btn-icon" (click)="removeModernLanguage(i)">
+                                    <span class="font-size-18px">&times;</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div class="row justify-content-between ml-10">
+            <button class="btn btn-icon" (click)="addModernLanguage()"><span class="font-size-18px">+</span></button>
+        </div>
+        <div class="row justify-content-end m-7">
+            <button class="btn btn-success" *ngIf="addOrEditLanguagesButton"
+                [disabled]="languageForm && languageForm.invalid " (click)="creteModernLanguage()">{{'stepper.button-update' | translate}}</button>
+            <button class="btn btn-success" *ngIf="!addOrEditLanguagesButton"
+                [disabled]="languageForm && languageForm.invalid" (click)="creteModernLanguage()">{{'stepper.button-add' | translate}}</button>
+        </div>
+    </div>
+</form>
+<form *ngIf="recommendationForm" class="col border" [formGroup]="recommendationForm">
+    <app-loading-spinner *ngIf="isLoadingRecommandations" contentHeight="20rem" height="5rem" width="5rem"
+        colorClass="text-primary"></app-loading-spinner>
+    <div *ngIf="!isLoadingRecommandations">
+        <div class="row my-5">
+            <div class="col">
+                <h4>{{'recommendation.recommendation-name' | translate}}</h4>
+            </div>
+        </div>
+        <div formArrayName="recommendation" class="ml-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">{{ 'table.number' | translate }}</th>
+                        <th scope="col">{{ 'recommendation.table-user-name' | translate }}</th>
+                        <th scope="col">{{ 'recommendation.table-user-last-name' | translate }}</th>
+                        <th scope="col">{{ 'recommendation.table-function' | translate }}</th>
+                        <th scope="col">{{ 'recommendation.table-subdivision' | translate }}</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr [ngClass]="{'more': recommendationForm.controls.recommendation.controls.length > 1  &&
+                                        (recommendationForm.controls.recommendation.controls.length - 1) !== i}"
+                        *ngFor="let recommendation of recommendationForm.controls.recommendation.controls; let i = index"
+                        [formGroupName]="i">
+                        <th scope="row">{{i + 1}}</th>
+                        <td>
+                            <input formControlName="name" autocomplete="off"
+                            class="form-control form-control-solid" type="text"
+                            [placeholder]="'recommendation.user-name' | translate" />
+                        </td>
+                        <td>
+                            <input formControlName="lastName" autocomplete="off"
+                            class="form-control form-control-solid" type="text"
+                            [placeholder]="'recommendation.last-name' | translate" />
+                        </td>
+                        <td>
+                            <input formControlName="function" autocomplete="off"
+                            class="form-control form-control-solid" type="text"
+                            [placeholder]="'recommendation.table-function' | translate" />
+                        </td>
+                        <td>
+                            <input formControlName="subdivision" autocomplete="off"
+                            class="form-control form-control-solid" type="text"
+                            [placeholder]="'recommendation.table-subdivision' | translate" />
+                        </td>
+                        <td>
+                            <div *ngIf="i > 0" class="row justify-content-end mb-3 mr-7">
+                                <button class="btn btn-icon" (click)="removeRecommendation(i)">
+                                    <span class="font-size-18px">&times;</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div class="row justify-content-between ml-10">
+            <button class="btn btn-icon" (click)="addRecommandation()"><span class="font-size-18px">+</span></button>
+        </div>
+        <div class="row justify-content-end m-7">
+            <button class="btn btn-success" *ngIf="addOrEditRecommendationsButton"
+                [disabled]="recommendationForm && recommendationForm.invalid " (click)="creteRecommendationForStudy()">{{'stepper.button-update' | translate}}</button>
+            <button class="btn btn-success" *ngIf="!addOrEditRecommendationsButton"
+                [disabled]="recommendationForm && recommendationForm.invalid" (click)="creteRecommendationForStudy()">{{'stepper.button-add' | translate}}</button>
+        </div>
+    </div>
+</form>
+<div class="row justify-content-end mt-10 mr-1" >
+    <button class="btn btn-success" matStepperNext
+    [disabled]="(studyForm && studyForm.invalid || userStudies == null)"
+    (click)="addRegistrationFluxStep()"
+        >{{'stepper.button-next' | translate}}</button>
+</div>

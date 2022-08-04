@@ -20,6 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { DateFilterPipe } from './pipes/date-filter.pipe';
 import { NgbDateFRParserFormatter } from './services/date-parse-formatter.service';
+import { BulletinAddressModalComponent } from './modals/bulletin-address-modal/bulletin-address-modal.component';
 
 const commonComponents = [
   Exception404Component,
@@ -33,7 +34,8 @@ const commonComponents = [
   ImportRoleModalComponent,
   AddUserProcessHistoryModalComponent,
   VerifyEmailCodeModalComponent,
-  DateFilterPipe
+  DateFilterPipe,
+  BulletinAddressModalComponent
 ];
 
 @NgModule({

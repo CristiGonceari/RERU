@@ -1,5 +1,6 @@
 ﻿using System;
-using CODWER.RERU.Personal.Data.Entities.Enums;
+using RERU.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities.Enums;
 
 namespace CODWER.RERU.Personal.DataTransferObjects.Studies
 {
@@ -9,13 +10,12 @@ namespace CODWER.RERU.Personal.DataTransferObjects.Studies
         public string Institution { get; set; }
         public StudyFrequencyEnum StudyFrequency { get; set; }
         public string Faculty { get; set; }
-        public string Qualification { get; set; }
+        public string InstitutionAddress { get; set; }
         public string Specialty { get; set; }
-        public string DiplomaNumber { get; set; }
-        public DateTime? DiplomaReleaseDay { get; set; }
-        public bool IsActiveStudy { get; set; }
+        public DateTime YearOfAdmission { get; set; }
+        public DateTime GraduationYear { get; set; }
 
-        public int StudyTypeId { get; set; } // nomenclature
+        public int StudyTypeId { get; set; }
 
         public int ContractorId { get; set; }
     }

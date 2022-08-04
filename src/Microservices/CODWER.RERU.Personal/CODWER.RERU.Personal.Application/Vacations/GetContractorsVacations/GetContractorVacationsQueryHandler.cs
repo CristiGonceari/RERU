@@ -1,5 +1,5 @@
-﻿using CODWER.RERU.Personal.Data.Entities.ContractorEvents;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+﻿using RERU.Data.Entities.PersonalEntities.ContractorEvents;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Vacations;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.StorageService;

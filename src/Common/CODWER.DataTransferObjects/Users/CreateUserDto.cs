@@ -16,6 +16,6 @@ namespace CVU.ERP.Common.DataTransferObjects.Users
         public bool EmailNotification { get; set; }
         public int AccessModeEnum { get; set; }
         public string PhoneNumber { get; set; }
-        public DateTime? Birthday { get; set; }
+        public DateTime? BirthDate { get; set; }
     }
 }

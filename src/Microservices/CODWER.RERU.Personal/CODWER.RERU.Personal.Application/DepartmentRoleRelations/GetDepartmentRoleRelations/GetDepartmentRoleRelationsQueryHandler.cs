@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleRelations.Get;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -31,8 +31,8 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetDepartment
                     .Include(p=>p.ChildDepartment)
                     .Where(d => d.ParentDepartmentId == request.ParentDepartmentId);
 
-                var roles = _appDbContext.ParentDepartmentChildOrganizationRoles
-                    .Include(p=>p.ChildOrganizationRole)
+                var roles = _appDbContext.ParentDepartmentChildRoles
+                    .Include(p=>p.ChildRole)
                     .Where(x => x.ParentDepartmentId == request.ParentDepartmentId);
 
                 response = new DepartmentRoleRelationDto
@@ -41,15 +41,15 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetDepartment
                     Roles = _mapper.Map<List<RoleRelationDto>>(roles)
                 };
             }
-            else if (request.ParentOrganizationRoleId != null)
+            else if (request.ParentRoleId != null)
             {
-                var departments = _appDbContext.ParentOrganizationRoleChildDepartments
+                var departments = _appDbContext.ParentRoleChildDepartments
                     .Include(p => p.ChildDepartment)
-                    .Where(d => d.ParentOrganizationRoleId == request.ParentOrganizationRoleId);
+                    .Where(d => d.ParentRoleId == request.ParentRoleId);
 
-                var roles = _appDbContext.ParentOrganizationRoleChildOrganizationRoles
-                    .Include(p => p.ChildOrganizationRole)
-                    .Where(x => x.ParentOrganizationRoleId == request.ParentOrganizationRoleId);
+                var roles = _appDbContext.ParentRoleChildRoles
+                    .Include(p => p.ChildRole)
+                    .Where(x => x.ParentRoleId == request.ParentRoleId);
 
                 response = new DepartmentRoleRelationDto
                 {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.Application.MaterialStatuses.GetUserProfilesMaterialStatus
 {
-    public class GetUserProfilesMaterialStatusQueryHandler : IRequestHandler<GetUserProfilesMaterialStatusQuery, MaterialStatusDto>
+    public class GetUserProfilesMaterialStatusQueryHandler : IRequestHandler<GetUserProfilesMaterialStatusQuery, AddEditMaterialStatusDto>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
@@ -19,13 +19,13 @@ namespace CODWER.RERU.Core.Application.MaterialStatuses.GetUserProfilesMaterialS
             _mapper = mapper;
         }
 
-        public async Task<MaterialStatusDto> Handle(GetUserProfilesMaterialStatusQuery request, CancellationToken cancellationToken)
+        public async Task<AddEditMaterialStatusDto> Handle(GetUserProfilesMaterialStatusQuery request, CancellationToken cancellationToken)
         {
             var item = await _appDbContext.MaterialStatuses
                                             .Include(ms => ms.MaterialStatusType)
-                                            .FirstOrDefaultAsync(ms => ms.UserProfileid == request.UserProfileId);
+                                            .FirstOrDefaultAsync(ms => ms.ContractorId == request.ContractorId);
 
-            return _mapper.Map<MaterialStatusDto>(item);
+            return _mapper.Map<AddEditMaterialStatusDto>(item);
         }
     }
 }

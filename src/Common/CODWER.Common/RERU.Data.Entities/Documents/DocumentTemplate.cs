@@ -1,5 +1,5 @@
 ﻿using CVU.ERP.Common.Data.Entities;
-using RERU.Data.Entities.Enums;
+using CVU.ERP.StorageService.Entities;
 
 namespace RERU.Data.Entities.Documents
 {

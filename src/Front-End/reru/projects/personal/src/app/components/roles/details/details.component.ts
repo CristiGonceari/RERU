@@ -53,12 +53,12 @@ export class DetailsComponent implements OnInit {
     modalRef.componentInstance.description = 'Are you sure you want to delete it?';
     modalRef.result.then(() => this.delete(), () => { });
   }
-
+//commented for future use
   delete(): void {
-    this.isLoading = true;
-    this.roleService.delete(this.role.id).subscribe(response => {
-      this.notificationService.success('Success', 'Module has been successfully deleted!', NotificationUtil.getDefaultMidConfig());
-      this.ngZone.run(() => this.router.navigate(['../'], { relativeTo: this.route }));
-    });
+    // this.isLoading = true;
+    // this.roleService.delete(this.role.id).subscribe(response => {
+    //   this.notificationService.success('Success', 'Module has been successfully deleted!', NotificationUtil.getDefaultMidConfig());
+    //   this.ngZone.run(() => this.router.navigate(['../'], { relativeTo: this.route }));
+    // });
   }
 }

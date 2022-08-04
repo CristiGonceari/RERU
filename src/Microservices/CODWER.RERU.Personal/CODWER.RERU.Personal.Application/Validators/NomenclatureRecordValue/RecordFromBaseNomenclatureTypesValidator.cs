@@ -5,7 +5,7 @@ using System.Linq;
 using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
 using CODWER.RERU.Personal.DataTransferObjects.NomenclatureTypes.NomenclatureRecords;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.Application.Validation;
 
 namespace CODWER.RERU.Personal.Application.Validators.NomenclatureRecordValue

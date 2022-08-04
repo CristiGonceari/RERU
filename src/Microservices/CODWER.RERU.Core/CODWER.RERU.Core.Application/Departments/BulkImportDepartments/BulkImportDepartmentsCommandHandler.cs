@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Core.DataTransferObjects.Departemnts;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.Departments.BulkImportDepartments

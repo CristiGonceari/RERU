@@ -1,4 +1,5 @@
-﻿using RERU.Data.Entities.Enums;
+﻿using CVU.ERP.StorageService.Entities;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.Documents
 {

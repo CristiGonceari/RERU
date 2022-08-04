@@ -1,8 +1,9 @@
 using System;
+using CODWER.RERU.Identity.Web.Quickstart.Account;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IdentityServerHost.Quickstart.UI
+namespace CODWER.RERU.Identity.Web.Quickstart
 {
     public static class Extensions
     {

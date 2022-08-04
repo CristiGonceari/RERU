@@ -60,11 +60,9 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
 
         private async Task SendEmailNotificationToUsers(IQueryable<Test> tests)
         {
-            var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-
             foreach (var test in tests)
             {
-                await GetContentForEmailAndNotify(test, path);
+                await GetContentForEmailAndNotify(test);
 
                 var emailTestNotification = new EmailTestNotification
                 {
@@ -78,8 +76,10 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
             await _appDbContext.SaveChangesAsync();
         }
 
-        private async Task GetContentForEmailAndNotify(Test test, string path)
+        private async Task GetContentForEmailAndNotify(Test test)
         {
+            var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
+
             var template = await File.ReadAllTextAsync(path);
 
             template = template
@@ -98,14 +98,8 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
         }
 
         private string GetEmailContent()
-        {
-            var content = string.Empty;
-
-            content += $@"<p style=""font-size: 22px; font-weight: 300;"">Iti reamintim ca in decurs de 15 minute se va incepe testul la care ai fost asignat, poti accesa linkul: </p>
+        => $@"<p style=""font-size: 22px; font-weight: 300;"">Iti reamintim ca in decurs de 15 minute se va incepe testul la care ai fost asignat, poti accesa linkul: </p>
                             <p style=""font-size: 22px;font-weight: 300;"">{_platformConfig.BaseUrl}</p>";
-
-            return content;
-        }
 
     }
 }

@@ -1,5 +1,5 @@
 ﻿using CODWER.RERU.Personal.Application.Validation;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Vacations;
 using CVU.ERP.Common.Validation;
 using FluentValidation;

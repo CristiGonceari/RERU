@@ -1,20 +1,23 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities;
 using CODWER.RERU.Personal.DataTransferObjects.OrganizationRoles;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Personal.Application.OrganizationRoles
 {
-    public class OrganizationRoleMappingProfile: Profile
+    public class RoleMappingProfile: Profile
     {
-        public OrganizationRoleMappingProfile()
+        public RoleMappingProfile()
         {
-            CreateMap<AddEditOrganizationRoleDto, OrganizationRole>()
+            CreateMap<AddEditRoleDto, Role>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
 
-            CreateMap<OrganizationRole, OrganizationRoleDto>();
+            CreateMap<Role, RoleDto>();
 
-            CreateMap<OrganizationRole, SelectItem>()
+            CreateMap<RoleDto, Role>()
+                .ForMember(x => x.Id, opts => opts.Ignore()); 
+
+            CreateMap<Role, SelectItem>()
                 .ForMember(x => x.Value, opts => opts.MapFrom(op => op.Id.ToString()))
                 .ForMember(x => x.Label, opts => opts.MapFrom(op => op.Name));
         }

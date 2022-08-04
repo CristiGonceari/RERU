@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using CODWER.RERU.Personal.DataTransferObjects.Articles;
 
 namespace CODWER.RERU.Personal.Application.Articles

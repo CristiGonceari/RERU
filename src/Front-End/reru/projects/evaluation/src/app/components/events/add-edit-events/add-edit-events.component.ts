@@ -9,12 +9,12 @@ import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
 @Component({
-  selector: 'app-add-edit-events',
-  templateUrl: './add-edit-events.component.html',
-  styleUrls: ['./add-edit-events.component.scss']
+	selector: 'app-add-edit-events',
+	templateUrl: './add-edit-events.component.html',
+	styleUrls: ['./add-edit-events.component.scss']
 })
 export class AddEditEventsComponent implements OnInit {
-  eventId;
+	eventId;
 	eventName;
 	name;
 	startDate;
@@ -78,17 +78,17 @@ export class AddEditEventsComponent implements OnInit {
 
 	parse() {
 		this.setTimeToSearch();
-		if(this.eventId != null){
+		if (this.eventId != null) {
 			return {
-			data: new Event({
-				id: this.eventId,
-				name: this.name,
-				fromDate: this.fromDate,
-				tillDate: this.tillDate,
-				description: this.description
-			})
-		};
-		}else{
+				data: new Event({
+					id: this.eventId,
+					name: this.name,
+					fromDate: this.fromDate,
+					tillDate: this.tillDate,
+					description: this.description
+				})
+			};
+		} else {
 			return {
 				data: new Event({
 					name: this.name,
@@ -105,10 +105,10 @@ export class AddEditEventsComponent implements OnInit {
 			forkJoin([
 				this.translate.get('modal.success'),
 				this.translate.get('events.succes-add-event-msg'),
-			  ]).subscribe(([title, description1]) => {
+			]).subscribe(([title, description1]) => {
 				this.title = title;
 				this.description1 = description1;
-				});
+			});
 			this.backClicked();
 			this.notificationService.success(this.title, this.description1, NotificationUtil.getDefaultMidConfig());
 		});
@@ -119,10 +119,10 @@ export class AddEditEventsComponent implements OnInit {
 			forkJoin([
 				this.translate.get('modal.success'),
 				this.translate.get('events.succes-edit-event-msg'),
-			  ]).subscribe(([title, description1]) => {
+			]).subscribe(([title, description1]) => {
 				this.title = title;
 				this.description1 = description1;
-				});
+			});
 			this.backClicked();
 			this.notificationService.success(this.title, this.description1, NotificationUtil.getDefaultMidConfig());
 		});

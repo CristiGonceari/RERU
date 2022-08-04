@@ -9,7 +9,8 @@
     "my-profile": "Profilul meu",
     "change-password": "Schimbarea parolei",
     "logout": "Ieșire",
-    "registration": "Înregistrare Core"
+    "registration": "Înregistrare Core",
+    "core-dashboard": "Tabloul de bord principal"
   },
   "registration-page":{
     "about-us": "E bine să știi",
@@ -36,6 +37,12 @@
     "personal-form-file": "Formular pentru completarea datelor personale",
     "upload-files": "Plasați fișiere aici sau faceți clic pentru a încărca",
     "personal-file-msg": "Pentru a completa fișa personala vă rugăm să o descărcati, accesând butonul de mai jos. După ce completați fișa personala, o încărcați in zona de mai jos împreună cu celelalte documente necesare. Completarea fișei este obligatorie"
+  },
+  "vacant-positions-page": {
+    "title": "Pagina de poziții vacante",
+    "details": "Detalii despre poziția vacantă",
+    "aviable-from": "Valabil de la",
+    "aviable-to": "Valabil pana la"
   },
   "files":{
     "title": "Documente",
@@ -125,7 +132,7 @@
     "edit-user": "Editarea profilului utilizatorului",
     "delete-user": "Ștergerea utilizatorului",
     "activate-user": "Activarea utilizatorului",
-    "deactivate-user": "Deactivarea utilizatorului",
+    "deactivate-user": "Dezactivarea utilizatorului",
     "add-module": "Adaugarea modulului",
     "edit-module": "Editarea modulului",
     "add-role": "Adaugarea rolului",
@@ -143,7 +150,10 @@
     "print": "Imprimă",
     "watch": "Priveste video",
     "import": "Importa",
-    "loading": "Se încarcă"
+    "loading": "Se încarcă",
+    "next": "Următorul",
+    "finish": "Finalizează",
+    "back": "Înapoi"
   },
   "pagination": {
     "displaing": "Se afișează",
@@ -170,12 +180,13 @@
     "title": "Titlul",
     "username": "Numele utilizatorului",
     "active": "Activ",
-    "description": "Descripție",
+    "description": "Descriere",
     "permission": "Permisiune",
     "default": "Implicit",
     "priority":"Prioritate",
     "status": "Statut",
-    "profile-photo": "Poza de profil"
+    "profile-photo": "Poza de profil",
+    "number" : "Numarul"
   },
   "menu": {
     "menu-sections": {
@@ -214,6 +225,8 @@
     "logout-msg": "Sunteți sigur(-ă) că doriți să ieșiți din sistem?",
     "empty-name": "Câmpul trebuie sa conțină doar litere latine",
     "wrong-name": "Câmpul trebuie sa conțină doar litere latine",
+    "empty-phone": "Câmpul nu trebuie să fie gol",
+    "wrong-phone": "Vă rugăm să furnizați un format valid +37311111111",
     "available-modules": "Module disponibile",
     "idnp-length": "IDNP trebuie să conține 13 cifre!",
     "search-by-user-state": "Căutați după statutul utilizatorului",
@@ -272,10 +285,10 @@
     "special-character": "1 caracter special"
   },
   "deactivate-user": {
-    "title": "Deactivarea utilizatorului",
-    "deactivate": "Sigur doriți să deactivați acest utilizator?",
-    "deactivate-msg": "Sigur doriți să deactivați ",
-    "success-deactivate": "Utilizatorul a fost deactivat cu succes!"
+    "title": "Dezactivarea utilizatorului",
+    "deactivate": "Sigur doriți să dezactivați acest utilizator?",
+    "deactivate-msg": "Sigur doriți să dezactivați ",
+    "success-deactivate": "Utilizatorul a fost dezactivat cu succes!"
   },
   "activate-user": {
     "title": "Activarea utilizatorului",
@@ -339,7 +352,7 @@
       "title": "Gestionarea rolulilor de acces"
     },
     "dashboard": {
-      "title": "Dashboard",
+      "title": "Tabloul de bord principal",
       "subtitle": "Pagina de start"
     },
     "modules-details": {
@@ -425,6 +438,10 @@
     "01000003": "IDNP nu trebuie să conține doar zero",
     "01000004": "IDNP nevalid!",
     "01000005": "IDNP duplicat în sistem!",
+    "01000101": "Numele utilizatorului necompletat",
+    "01000102": "Numele de familie al utilizatorului necompletat",
+    "01000103": "Patronimicul utilizatorului necompletat",
+    "01000104": "E-mailul utilizatorului necompletat",
     "01000201": "Nume necompletat!",
     "01000202": "Conținut necompletat!",
     "01000203": "Date nevalide!",
@@ -432,7 +449,11 @@
     "01000301": "Postul nevalid",
     "01000302": "Introduceti denumirea pozitiei",
     "01000106": "Modul de acces necompletat",
-    "01000108": "Cod incorect"
+    "01000108": "Cod incorect",
+    "01000109": "Vârsta minimă trebuie să fie de 18 ani",
+    "01000115": "Telefon nevalid",
+    "01000501": "Rol nevalid",
+    "01000602": "Departament nevalid"
   },
   "print": {
     "print-table": "Printare tabel",
@@ -493,5 +514,172 @@
     "succes-edit-msg": "Rolul a fost editat cu succes",
     "user-role-data": "Introduceți detaliile rolului și confirmați",
     "user-role-details": "Detaliile rolului"
+  },
+  "general-datas":{
+    "nationality": "Naţionalitatea",
+    "citizenship":"Cetățenia",
+    "state-language-level":"Nivelul de cunoaștere a limbii de stat",
+    "sex":"Sex",
+    "home-phone":"Telefon fix",
+    "work-phone":"Telefon de serviciu"
+  },
+  "bulletin":{
+    "series":"Seria",
+    "emited-by":"Emis de",
+    "relase-day":"Data eliberarii",
+    "adresses":"Adresa",
+    "birth-place":"Locul nasterii",
+    "residence-address":"Adresa de rezidenta",
+    "parents-residence-address":"Adresa de reședință a părinților",
+    "modal":{
+      "country": "Țara",
+      "region": "Regiunea",
+      "city": "Orașul",
+      "street": "Strada",
+      "building": "Bloc",
+      "apartment": "Apartament",
+      "post-code": "Cod poștal"
+    }
+  },
+  "study":{
+    "institution": "Instituția de învățâmânt",
+    "study-frequency": "Frecvența",
+    "study-type": "Tip studii",
+    "faculty": "Facultatea",
+    "specialty": "Specialitatea",
+    "diploma-number": "Numărul diplomei de absolvire",
+    "diploma-release-day": "Data absolvirii",
+    "student": "Student",
+    "qualification": "Calificarea",
+    "institution-address": "Adresa instituţiei",
+    "year-of-admision": "Anul admiterii",
+    "graduation-year" : "Anul absolvirii"
+  },
+  "language":{
+    "modern-language-level": "Nivelul de cunoaștere a limbii moderne",
+    "name": "Denumirea limbii",
+    "qualifier" : "Calificator al cunoștințelor"
+  },
+  "recommendation":{
+    "recommendation-name": "Recomandare la studiii",
+    "table-user-name": "Numele persoanei ce a recomandat",
+    "table-user-last-name": "Prenumele persoanei ce a recomandat",
+    "table-function": "Funcția (poziția) deținută",
+    "table-subdivision": "Subdiviziune MAI",
+    "user-name": "Numele persoanei",
+    "last-name": "Prenumele persoanei"
+
+  },
+  "material-status":{
+    "name": "Starea civilă lă data completării dosarului personal",
+    "kinship-relation": "Relații de rudenie sau afinate cu angajații MAI",
+    "kinship-degree" : "Gradul de rudenie",
+    "table-function": "Funcția (poziția) deținută",
+    "table-subdivision": "Subdiviziune MAI",
+    "user-name": "Numele persoanei",
+    "last-name": "Prenumele persoanei",
+    "biography-data": "Date biografice ale rudelor apropiate candidatului",
+    "birth-place":"Locul nasterii",
+    "birthday-date": "Data nasterii",
+    "residence": "Domiciliu",
+    "work-place": "Locul de muncă",
+    "kinship-criminal-data-name": "Date referitoare la răspunderea penală sau contravențională a rudelor apropiate ale candidatului"
+  },
+  "military-obligation":{
+    "paragraf-name": "Date biografice a rudelor apropiate candidatului",
+    "name": "Obligație militară",
+    "year-of-mobilization" : "Anul mobilizării",
+    "year-of-withdrawal" : "Anul retragerii",
+    "efectiv": "Efectiv",
+    "military-specialty": "Specialitate militară",
+    "degree": "Gradul",
+    "military-booklet": "Livret militar",
+    "series":"Seria",
+    "number": "Numărul",
+    "relase-day":"Data eliberării",
+    "eminent-authority" : "Autoritatea Eminentă"
+  },
+  "autobiography":{
+    "title":"Autobiografia se scrie personal de candidat citeț, ordonat, fără corectări și prescurtări, cu indicarea obligatorie a următoarei informații:",
+    "paragraf-1": "– Numele, prenumele, patronimicul, data și locul nașterii, originea socială, limba maternă;",
+    "paragraf-2": "– Instituțiile de învățământ în care a studiat, anul absolvirii sau abandonării lor, media generală, specialitățile, profesiile obținute;",
+    "paragraf-3": "– Starea civilă, data căsătoriei (divorțului), numele, prenumele, patronimicul soției (soțului), prenumele și anul nașterii copiilor;",
+    "paragraf-4": "– Serviciul militar, perioada, centrul militar care a decis încorporarea; în caz că nu a fost supus serviciului militar se indică temeiul;",
+    "paragraf-5": "– Activitatea în organele elective (perioada și organul);",
+    "paragraf-6": "– Posesia gradelor/titlurilor științifice, științifico-didactice, onorifice și sportive, data acordării lor și autoritatea emitentă;",
+    "paragraf-7": "– Existența stagiului de muncă oficial și neoficial (perioada, funcția (postul), instituția, organizația, întreprinderea);",
+    "paragraf-8": "– Locul de trai și viza de domiciliu (se indică ambele dacă nu coincid)."
+  },
+  "declaration":{
+    "paragraf": "Declar, pe propria răspundere, că datele înscrise în această fișă sunt veridice. Sunt de acord ca autoritățile competente să-mi verifice datele din fișă și din actele prezentate"
+  },
+  "sexType": {
+    "Male": "Masculin",
+    "Female": "Feminin"
+  },
+  "languageKnowledge":{
+    "Basic": "Cunostinte bază",
+    "BasicKnowledge": "Cunostinte bază",
+    "Medium": "Mediu",
+    "Good" : "Bine",
+    "VeryGood": "Foarte bine"
+  },
+  "studyTypes":{
+    "1": "Studii de bază",
+    "2": "Universitare",
+    "3": "PostUniversitare",
+    "4": "Cursuri de Perfectionare",
+    "5": "Cursuri de Specializare"
+  },
+  "studyFrequency":{
+    "Daily":"Frecvența la zi",
+    "LowFrequency": "Frecvența redusa"
+  },
+  "materialStatusType": {
+    "1": "Celibatar",
+    "2": "Casatorit",
+    "3": "Recasatorit",
+    "4": "Vaduv"
+  },
+  "kinshipDegree":{
+    "Brother" : "Frate",
+    "Children" : "Copii",
+    "Father" : "Tată",
+    "Husband" : "Soțul",
+    "HusbandsBrothers" : "Frați soțului",
+    "HusbandsSisters" : "Surorile soțului",
+    "Mother" : "Mama",
+    "Parent" : "Părinte",
+    "Sister" : "Soră",
+    "Wife" : "Soție",
+    "WifesBrothers" : "Frații soției",
+    "WifesSisters" : "Surorile soției"
+  },
+  "militaryObligationType":{
+    "AlternativeService" : "Serviciu de alternativa",
+    "PerformedMilitaryService" : "Serviciul militar indeplinit",
+    "Recruit" : "Recrut",
+    "Reservist" : "Rezervist"
+  },
+  "stepper":{
+    "button-update-and-next":"Actualizeaza și treci la pasul următor",
+    "button-save-and-next":"Adaugă și treci la pasul următor",
+    "button-next":"Treci la pasul următor",
+    "button-update":"Actualizează",
+    "button-add":"Adaugă",
+    "button-end": "Finalizează"
+  },
+  "step":{
+    "GeneralData": "Date Generale",
+    "Bulletin": "Bulletin",
+    "Study": "Studii",
+    "MaterialStatus": "Starea civila",
+    "MilitaryObligation": "Obligație militară",
+    "Autobiography": "Autobiografie",
+    "Declaration": "Declaraţie"
+  },
+  "step-status":{
+    "done": "Efectuat",
+    "not-done": "Nefinalizat"
   }
 }

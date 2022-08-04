@@ -1,4 +1,4 @@
-﻿using CODWER.RERU.Personal.Data.Persistence.Context;
+﻿using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.DismissalRequests;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.StorageService;
@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities.PersonalEntities.ContractorEvents;
 
 namespace CODWER.RERU.Personal.Application.DismissalRequests.GetDismissalByContractorId
 {
@@ -27,10 +28,10 @@ namespace CODWER.RERU.Personal.Application.DismissalRequests.GetDismissalByContr
         {
             var items = _appDbContext.DismissalRequests
                 .Include(x => x.Position)
-                    .ThenInclude(x => x.OrganizationRole)
+                    .ThenInclude(x => x.Role)
                 .Where(x => x.ContractorId == request.ContractorId);
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Data.Entities.ContractorEvents.DismissalRequest, MyDismissalRequestDto>(items, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<DismissalRequest, MyDismissalRequestDto>(items, request);
 
             paginatedModel = await GetOrderAndRequestName(paginatedModel);
 

@@ -1,9 +1,9 @@
-﻿using CODWER.RERU.Logging.Application.Validation;
-using CODWER.RERU.Logging.DataTransferObjects;
+﻿using CODWER.RERU.Logging.DataTransferObjects;
 using CVU.ERP.Common.Validation;
 using CVU.ERP.Module.Application.TableExportServices.Validators;
 using FluentValidation;
 using System.Linq;
+using CODWER.RERU.Logging.Application.Validations;
 
 namespace CODWER.RERU.Logging.Application.Articles.PrintArticles
 {

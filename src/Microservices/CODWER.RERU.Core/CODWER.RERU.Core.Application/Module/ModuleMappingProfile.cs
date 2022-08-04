@@ -1,7 +1,7 @@
 using AutoMapper;
 using CODWER.RERU.Core.DataTransferObjects.Modules;
 using CODWER.RERU.Core.DataTransferObjects.Users;
-using CVU.ERP.Module.Application.Models;
+using CVU.ERP.ServiceProvider.Models;
 
 namespace CODWER.RERU.Core.Application.Module {
     public class ModuleMappingProfile : Profile 

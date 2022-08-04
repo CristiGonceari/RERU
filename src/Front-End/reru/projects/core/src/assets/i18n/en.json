@@ -9,7 +9,8 @@
     "my-profile": "My profile",
     "change-password": "Change password",
     "logout": "Logout",
-    "registration": "Core Registration"
+    "registration": "Core Registration",
+    "core-dashboard": "Core Dashboard"
   },
   "registration-page":{
     "about-us": "Good to know",
@@ -36,6 +37,12 @@
     "personal-form-file": "Form for filling in personal data",
     "upload-files": "Drop file here or click to upload",
     "personal-file-msg": "To complete the personal file, please download it by accessing the button below. After filling in the personal file, upload it in the area below together with the other necessary documents. Filling the form is mandatory"
+  },
+  "vacant-positions-page": {
+    "title": "Vacant positions page",
+    "details": "Vacant position details",
+    "aviable-from": "Aviable from",
+    "aviable-to": "Aviable to"
   },
   "files":{
     "title": "Documents",
@@ -144,7 +151,10 @@
     "print": "Print",
     "watch": "Watch video",
     "import": "Import",
-    "loading": "Loading"
+    "loading": "Loading",
+    "next": "Next",
+    "finish": "Finish",
+    "back": "Back"
   },
   "pagination": {
     "displaing": "Displaying",
@@ -176,7 +186,8 @@
     "default": "Default",
     "priority":"Priority",
     "status": "Status",
-    "profile-photo": "Profile Photo"
+    "profile-photo": "Profile Photo",
+    "number" : "Number"
   },
   "menu": {
     "menu-sections": {
@@ -215,6 +226,8 @@
     "logout-msg": "Are you sure you want to logout from the system?",
     "empty-name": "The field must contain only Latin letters",
     "wrong-name": "The field must contain only Latin letters",
+    "empty-phone": "The field must not be empty",
+    "wrong-phone": "Please provide a valid format +37311111111",
     "available-modules": "Available modules",
     "idnp-length": "IDNP should consist of 13 numbers!",
     "search-by-user-state": "Search by user state",
@@ -341,7 +354,7 @@
       "title": "Manage application acceess roles"
     },
     "dashboard": {
-      "title": "Dashboard",
+      "title": "Core Dashboard",
       "subtitle": "Start page"
     },
     "modules-details": {
@@ -427,6 +440,10 @@
     "01000003": "IDNP shout not consist only zeroes",
     "01000004": "Invalid IDNP!",
     "01000005": "Duplicate IDNP in the system!",
+    "01000101": "Empty user name",
+    "01000102": "Empty user last name",
+    "01000103": "Empty user father name",
+    "01000104": "Empty user email",
     "01000201": "Empty name!",
     "01000202": "Empty content!",
     "01000203": "Invalid input!",
@@ -434,7 +451,11 @@
     "01000301": "Invalid position",
     "01000302": "Invalid position name",
     "01000106": "Empty access mode",
-    "01000108": "Invalid code"
+    "01000108": "Invalid code",
+    "01000109": "Minimum age must be 18",
+    "01000115": "Invalid user phone",
+    "01000501": "Invalid role",
+    "01000602": "Invalid department"
   },
   "print": {
     "print-table": "Print table",
@@ -495,5 +516,173 @@
     "succes-edit-msg": "Role was successfully edited",
     "user-role-data": "Enter the role details and confirm",
     "user-role-details": "Role details"
+  },
+  "general-datas":{
+    "general-data":"General Data",
+    "nationality": "Nationality",
+    "citizenship":"Citizenship",
+    "state-language-level":"Level of knowledge of the state language",
+    "sex":"Gender",
+    "home-phone":"Home Phone",
+    "work-phone":"Work phone"
+  },
+  "bulletin":{
+    "name":"Bulletin",
+    "series":"Series",
+    "emited-by":"Issued from",
+    "relase-day":"Release day",
+    "adresses":"Address",
+    "birth-place":"Birth place",
+    "residence-address":"Residence address",
+    "parents-residence-address":"Parents' residence address",
+    "modal":{
+      "country": "Country",
+      "region": "Region",
+      "city": "City",
+      "street": "Street",
+      "building": "Building",
+      "apartment": "Apartment",
+      "post-code": "Postal code"
+    }
+  },
+  "study":{
+    "institution": "Institution",
+    "study-frequency": "Study frequency",
+    "study-type": "Study type",
+    "faculty": "Faculty",
+    "specialty": "Specialty",
+    "diploma-number": "Graduation certificate number",
+    "diploma-release-day": "Graduation date",
+    "student": "Student",
+    "qualification": "Qualification",
+    "institution-address": "Institution Address",
+    "year-of-admision": "Year of admission",
+    "graduation-year" : "Graduation Year"
+  },
+  "language":{
+    "modern-language-level": "The level of knowledge of the modern language",
+    "name": "language Name",
+    "qualifier" : "Qualifier of knowledge"
+  },
+  "recommendation":{
+    "recommendation-name": "Study recommendation",
+    "table-user-name": "First name of the person who recommended",
+    "table-user-last-name": "Last name of the person who recommended",
+    "table-function": "Position held",
+    "table-subdivision": "MAI subdivision",
+    "user-name": "First Name",
+    "last-name": "Last Name"
+  },
+  "material-status":{
+    "name": "Marital status on the date of completion of the personal file",
+    "kinship-relation": "Kinship or related relations with MAI employees",
+    "kinship-degree" : "The degree of kinship",
+    "table-function": "Position held",
+    "table-subdivision": "MAI subdivision",
+    "user-name": "First Name",
+    "last-name": "Last Name",
+    "biography-data": "Biographical data of the relatives close to the candidate",
+    "birth-place":"Place of birth",
+    "birthday-date": "Date of birth",
+    "residence": "Residence",
+    "work-place": "Work place",
+    "kinship-criminal-data-name": "Data on the criminal or misdemeanor liability of the candidate's close relatives"
+  },
+  "military-obligation":{
+    "paragraf-name": "Biographical data of the relatives close to the candidate",
+    "name": "Military obligation",
+    "year-of-mobilization" : "Year of mobilization",
+    "year-of-withdrawal" : "Year of withdrawal",
+    "efectiv": "Effective",
+    "military-specialty": "Military specialty",
+    "degree": "Degree",
+    "military-booklet": "Military booklet",
+    "series":"Series",
+    "number": "Number",
+    "relase-day":"Release day",
+    "eminent-authority" : "Eminent Authority"
+  },
+  "autobiography":{
+    "title":"The autobiography is written personally by the candidate read, ordered, without corrections and abbreviations, with the obligatory indication of the following information:",
+    "paragraf-1": "- Name, surname, patronymic, date and place of birth, social origin, mother tongue;",
+    "paragraf-2": "- The educational institutions in which he studied, the year of their graduation or abandonment, the general average, the specialties, the professions obtained;",
+    "paragraf-3": "- Marital status, date of marriage (divorce), name, surname, patronymic of the wife (husband), first name and year of birth of the children;",
+    "paragraf-4": "- Military service, period, military center that decided to join; if he has not been subjected to military service, the grounds shall be indicated;",
+    "paragraf-5": "- Activity in elective bodies (period and body);",
+    "paragraf-6": "- Possession of scientific, scientific-didactic, honorary and sports degrees / titles, date of their granting and issuing authority;",
+    "paragraf-7": "- Existence of official and unofficial work experience (period, position (position), institution, organization, enterprise);",
+    "paragraf-8": "- Place of residence and home visa (both indicated if they do not coincide)."
+  },
+  "declaration":{
+    "paragraf": "I declare, on my own responsibility, that the data entered in this form are true. I agree that the competent authorities shall verify the data in the file and the documents submitted to me"
+  },
+  "sexType": {
+    "Male": "Male",
+    "Female": "Female"
+  },
+  "languageKnowledge":{
+    "Basic": "Basic knowledge",
+    "BasicKnowledge": "Basic knowledge",
+    "Medium": "Medium",
+    "Good" : "Good",
+    "VeryGood": "Very good"
+  },
+  "studyTypes":{
+    "1": "Basic Studies",
+    "2": "University",
+    "3": "Postgraduate",
+    "4": "Improvement courses",
+    "5": "Training courses"
+  },
+  "studyFrequency":{
+    "Daily":"Daily",
+    "LowFrequency": "Low Frequency"
+  },
+  "materialStatusType": {
+    "1": "Bachelor",
+    "2": "Married",
+    "3": "Remarried",
+    "4": "Widower"
+  },
+  "kinshipDegree":{
+    "Brother" : "Brother",
+    "Children" : "Children",
+    "Father" : "Father",
+    "Husband" : "Husband",
+    "HusbandsBrothers" : "Husbands Brothers",
+    "HusbandsSisters" : "Husbands Sisters",
+    "Mother" : "Mother",
+    "Parent" : "Parent",
+    "Sister" : "Sister",
+    "Wife" : "Wife",
+    "WifesBrothers" : "Wifes Brothers",
+    "WifesSisters" : "Wifes Sisters"
+  },
+  "militaryObligationType":{
+    "AlternativeService" : "Alternative service",
+    "PerformedMilitaryService" : "Performed military service",
+    "Recruit" : "Recruit",
+    "Reservist" : "Reservist"
+  },
+  "stepper":{
+    "button-update-and-next":"Update and Next",
+    "button-save-and-next":"Add and Next",
+    "button-next":"Next Step",
+    "button-update":"Update",
+    "button-add":"Add",
+    "button-end": "Complete"
+  },
+  "step":{
+    "GeneralData": "General Data",
+    "Bulletin": "Bulletin",
+    "Study": "Study",
+    "MaterialStatus": "Material Status",
+    "MilitaryObligation": "Military Obligation",
+    "Autobiography": "Autobiography",
+    "Declaration": "Declaration"
+  },
+  "step-status":{
+    "done": "Completed",
+    "not-done": "Uncompleted"
   }
 }

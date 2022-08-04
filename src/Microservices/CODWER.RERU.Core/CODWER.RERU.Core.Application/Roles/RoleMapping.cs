@@ -2,6 +2,7 @@
 using CODWER.RERU.Core.DataTransferObjects.Roles;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Core.Application.Roles
 {

@@ -12,10 +12,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagram;
+using CODWER.RERU.Evaluation.DataTransferObjects.PositionDiagram;
+using CVU.ERP.Module.Application.TableExportServices;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 using Wkhtmltopdf.NetCore;
+using Wkhtmltopdf.NetCore.Options;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 {
@@ -86,12 +90,26 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 .ThenInclude(t => t.Options)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Evaluator)
-                .Include(t => t.Event)
-                .ThenInclude(e => e.EventEvaluators)
-                .Include(t => t.Location)
                 .FirstOrDefault(t => t.Id == testId);
 
             return await GetPdf(item, true);
+        }
+
+        public async Task<FileDataDto> PrintEvaluationResultPdf(int testId)
+        {
+            var item = _appDbContext.Tests
+                .Include(t => t.TestQuestions)
+                .ThenInclude(t => t.TestAnswers)
+                .Include(t => t.TestTemplate)
+                .ThenInclude(tt => tt.TestTemplateQuestionCategories)
+                .ThenInclude(tc => tc.QuestionCategory)
+                .ThenInclude(c => c.QuestionUnits)
+                .ThenInclude(t => t.Options)
+                .Include(t => t.UserProfile)
+                .Include(t => t.Evaluator)
+                .FirstOrDefault(t => t.Id == testId);
+
+            return await GetEvaluationPdf(item);
         }
 
         public async Task<FileDataDto> PrintQuestionUnitPdf(int questionId)
@@ -116,6 +134,13 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         public async Task<FileDataDto> PrintPerformingTestPdf(List<int> testsIds)
         {
             return await GetPdf(testsIds);
+        }
+
+        public async Task<FileDataDto> PrintPositionDiagramPdf(int positionId)
+        {
+            var item = _appDbContext.CandidatePositions.FirstOrDefault(t => t.Id == positionId);
+
+            return await GetPdf(item);
         }
 
         #region GetPdf
@@ -208,6 +233,39 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             return FileDataDto.GetPdf("PerformingTest.pdf", res);
         }
 
+        private async Task<FileDataDto> GetEvaluationPdf(Test item)
+        {
+            var path = new FileInfo("PdfTemplates/EvaluationResult.html").FullName;
+            var source = await File.ReadAllTextAsync(path);
+            var myDictionary = await GetEvaluationDictionary(item);
+
+            source = ReplaceKeys(source, myDictionary);
+
+            var res = Parse(source);
+
+            return FileDataDto.GetPdf("Evaluation_Result.pdf", res);
+        }
+
+        private async Task<FileDataDto> GetPdf(CandidatePosition item)
+        {
+            var path = new FileInfo("PdfTemplates/PositionDiagram.html").FullName;
+            var source = await File.ReadAllTextAsync(path);
+            var myDictionary = await GetDictionary(item);
+
+            source = ReplaceKeys(source, myDictionary);
+
+            var options = new ConvertOptions
+            {
+                PageOrientation = Orientation.Landscape
+            };
+
+            _generatePdf.SetConvertOptions(options);
+
+            var parsed = _generatePdf.GetPDF(source);
+
+            return FileDataDto.GetPdf("Position_Diagram.pdf", parsed);
+        }
+
         #endregion
 
 
@@ -283,6 +341,32 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             var myDictionary = new Dictionary<string, string>();
 
             myDictionary.Add("{content}", await GetTableContent(testsIds));
+
+            return myDictionary;
+        }
+
+        private async Task<Dictionary<string, string>> GetEvaluationDictionary(Test item)
+        {
+            var myDictionary = new Dictionary<string, string>();
+            
+            myDictionary.Add("{evaluated_name}", $"{item.UserProfile.FirstName} {item.UserProfile.LastName}");
+            myDictionary.Add("{test_name}", item.TestTemplate.Name);
+            myDictionary.Add("{status}", item.ResultStatus == TestResultStatusEnum.Passed ? "Admis" : "Respins");
+            myDictionary.Add("{evaluator_name}", GetEvaluatorName(item));
+            myDictionary.Add("{content}", await GetTableContent(item, true));
+
+            return myDictionary;
+        }
+
+        private async Task<Dictionary<string, string>> GetDictionary(CandidatePosition item)
+        {
+            var command = new GetPositionDiagramQuery { PositionId = item.Id };
+
+            var eventsDiagram = await _mediator.Send(command);
+            var myDictionary = new Dictionary<string, string>();
+
+            myDictionary.Add("{position_name}", item.Name);
+            myDictionary.Add("{table_content}", await GetTableContent(eventsDiagram));
 
             return myDictionary;
         }
@@ -456,7 +540,6 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         private async Task<string> GetOptionFileToString(Option option)
         {
-
             var optionFile = _storageDbContext.Files.FirstOrDefault(f => f.Id.ToString() == option.MediaFileId && f.Type.Contains("image"));
 
             string setOptionFile = null;
@@ -511,6 +594,51 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             var content = await GetTestQuestionResultContent(item);
 
             return content;
+        }
+
+        private async Task<string> GetTableContent(PositionDiagramDto eventsDiagram)
+        {
+            var content = new StringBuilder($@"<thead><tr><th rowspan=""2"" style=""border: 1px solid black; border-collapse: collapse; vertical-align: middle; width: 20%;"">Utilizatori</th>");
+
+            foreach (var eventDiagram in eventsDiagram.EventsDiagram)
+            {
+                content.Append($@"<th colspan=""{eventDiagram.TestTemplates.Count()}"" style=""border: 1px solid black; border-collapse: collapse;"">{eventDiagram.EventName}</th>");
+            }
+
+            content.Append($@"</tr><tr>");
+
+            foreach (var eventDiagram in eventsDiagram.EventsDiagram)
+            {
+                foreach (var testTemplate in eventDiagram.TestTemplates)
+                {
+                    content.Append($@"<th style=""border: 1px solid black; border-collapse: collapse;"">{testTemplate.Name}</th>");
+                }
+            }
+
+            content.Append($@"</tr></thead><tbody>");
+
+            foreach (var user in eventsDiagram.UsersDiagram)
+            {
+                content.Append($@"<tr><th style=""border: 1px solid black; border-collapse: collapse;"">{user.FullName}</th>");
+
+                foreach (var testTemplate in user.TestsByTestTemplate)
+                {
+                    content.Append($@"<td style=""border: 1px solid black; border-collapse: collapse;"">");
+
+                    foreach (var test in testTemplate.Tests)
+                    {
+                        content.Append($@"<span>- {EnumMessages.EnumMessages.GetTestResultStatus(test.Result)}, {test.PassDate.ToString("dd/MM/yyyy HH:mm")}, {EnumMessages.EnumMessages.GetTestStatus(test.Status)}</span><br>");
+                    }
+
+                    content.Append($@"</td>");
+                }
+
+                content.Append($@"</tr>");
+            }
+
+            content.Append($@"</tbody>");
+
+            return content.ToString();
         }
 
         #endregion
@@ -770,14 +898,8 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             foreach (var testQuestion in item.TestQuestions.Select((value, i) => new { i, value }))
             {
-                if (testQuestion.value.QuestionUnit.QuestionType == QuestionTypeEnum.HashedAnswer)
-                { 
-                    content = await GetQuestionTemplateByType(testQuestion.value.QuestionUnit, content);
-                }
-
-                content += $@"<div style=""margin-bottom: 20px; width: 930px;""><b>{testQuestion.i + 1}. {testQuestion.value.QuestionUnit.Question}</b> ({testQuestion.value.QuestionUnit.QuestionPoints}p)</div>";
-
-                content = await GetQuestionTemplateByType(testQuestion.value.QuestionUnit, content);
+                content += $@"<div style=""margin-bottom: 20px; width: 930px;""><b>{testQuestion.i + 1}. ";
+                content = await GetQuestionTemplateByType(testQuestion.value.QuestionUnit, content, testQuestion.value);
             }
 
             return content;
@@ -796,13 +918,8 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             return content;
         }
 
-        private async Task<string> GetQuestionTemplateByType(QuestionUnit question, string content)
+        private async Task<string> GetQuestionTemplateByType(QuestionUnit question, string content, TestQuestion testQuestion)
         {
-            if (question.MediaFileId != null)
-            {
-                content += await GetTestMedia(question.MediaFileId);
-            }
-
             if (question.QuestionType == QuestionTypeEnum.HashedAnswer)
             {
                 question = await _questionUnitService.GetUnHashedQuestionUnit(question.Id);
@@ -814,6 +931,13 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                         question.Question = question.Question.Replace($"[answer]{option.Answer}[/answer]", "________________");
                     }
                 }
+            }
+
+            content += $@"{testQuestion.QuestionUnit.Question}</b> ({testQuestion.QuestionUnit.QuestionPoints}p)</div>";
+
+            if (question.MediaFileId != null)
+            {
+                content += await GetTestMedia(question.MediaFileId);
             }
 
             if (question.QuestionType == QuestionTypeEnum.FreeText)
@@ -873,11 +997,6 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         private async Task<string> GetQuestionResultTemplateByType(TestQuestion testQuestion, string content)
         {
-            if (testQuestion.QuestionUnit.MediaFileId != null)
-            {
-                content += await GetTestMedia(testQuestion.QuestionUnit.MediaFileId);
-            }
-
             if (testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.HashedAnswer)
             {
                 content = await GetHashedAnswerQuestion(testQuestion, content);
@@ -924,9 +1043,14 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                             <tr>
                                 <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"" colspan=""2"">
                                     <span style=""text-decoration: underline; margin: 5px 5px 5px 5px;"">Întrebarea:</span> <br> 
-                                    {testQuestion.QuestionUnit.Question}
-                                </th>
-                            </tr>";
+                                    {testQuestion.QuestionUnit.Question}";
+
+            if (testQuestion.QuestionUnit.MediaFileId != null)
+            {
+                content += await GetTestMedia(testQuestion.QuestionUnit.MediaFileId);
+            }
+
+            content += $@"</th></tr>";
 
             if (testQuestion.TestAnswers != null)
             {
@@ -936,12 +1060,14 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 }
             }
 
+            var answerText = testQuestion.Test.TestTemplate.Mode == TestTemplateModeEnum.Test ? "Răspunsul evaluatului" : "Răspunsul evaluatorului";
+           
             content += $@"<tr>
-                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"" colspan=""2"">
-                                <span style=""text-decoration: underline;"">Răspunsul evaluatului:</span> <br> 
-                                {testQuestion.QuestionUnit.Question}
-                            </th>
-                        </tr>";
+                        <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"" colspan=""2"">
+                            <span style=""text-decoration: underline;"">{answerText}:</span> <br> 
+                            {testQuestion.QuestionUnit.Question}
+                        </th>
+                    </tr>";
 
             if (question.Options != null)
             {
@@ -952,23 +1078,33 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 }
             }
 
-            content += $@"<tr>
-                                <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"" colspan=""2"">
-                                    <span style=""text-decoration: underline;"">Răspunsul corect:</span> <br> 
-                                    {testQuestion.QuestionUnit.Question}
-                                </th>
-                            </tr>
-                            <tr>
-                                <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"" colspan=""2"">
-                                    <span style=""text-decoration: underline;"">Comentariul evaluatorului:</span> <br> 
-                                    {testQuestion.Comment}
-                                </th>
-                            </tr>
-                            <tr>
-                                <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Tipul întrebării: Completează textul</th>
-                                <th style=""border: 1px solid black; border-collapse: collapse; text-align: center; padding-left: 5px; height: 30px; color: red; margin: 5px 5px 5px 5px;"">{testQuestion.Points}/{testQuestion.QuestionUnit.QuestionPoints}p.</th>
+            if (testQuestion.Test.TestTemplate.Mode == TestTemplateModeEnum.Test)
+            {
+                content += $@"<tr>
+                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"" colspan=""2"">
+                                <span style=""text-decoration: underline;"">Răspunsul corect:</span> <br> 
+                                {testQuestion.QuestionUnit.Question}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"" colspan=""2"">
+                                <span style=""text-decoration: underline;"">Comentariul evaluatorului:</span> <br> 
+                                {testQuestion.Comment}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Tipul întrebării: Completează textul</th>
+                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: center; padding-left: 5px; height: 30px; color: red; margin: 5px 5px 5px 5px;"">{testQuestion.Points}/{testQuestion.QuestionUnit.QuestionPoints}p.</th>
+                        </tr>
+                      </table>";
+            }
+            else
+            {
+                content += $@"<tr>
+                                <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"" colspan=""2"">Tipul întrebării: Completează textul</th>
                             </tr>
                           </table>";
+            }
 
             return content;
         }
@@ -977,30 +1113,50 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             var answer = _appDbContext.TestAnswers.FirstOrDefault(x => x.TestQuestionId == testQuestion.Id);
 
+            var answerText = testQuestion.Test.TestTemplate.Mode == TestTemplateModeEnum.Test ? "Răspunsul evaluatului" : "Răspunsul evaluatorului";
+
             content += $@"<table style=""border: 1px solid black; border-collapse: collapse; width: 100%; margin-bottom: 20px; vertical-align: middle;"">
                             <tr>
                                 <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"" colspan=""2"">
                                     <span style=""text-decoration: underline; margin: 5px 5px 5px 5px;"">Întrebarea:</span> <br> 
-                                    {testQuestion.QuestionUnit.Question}
-                                </th>
+                                    {testQuestion.QuestionUnit.Question}";
+
+            if (testQuestion.QuestionUnit.MediaFileId != null)
+            {
+                content += await GetTestMedia(testQuestion.QuestionUnit.MediaFileId);
+            }
+
+            content += $@"</th>
                             </tr>
                             <tr>
                                 <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"" colspan=""2"">
-                                    <span style=""text-decoration: underline;"">Răspunsul evaluatului:</span> <br> 
+                                    <span style=""text-decoration: underline;"">{answerText}:</span> <br> 
                                     {answer.AnswerValue}
                                 </th>
-                            </tr>
-                            <tr>
-                                <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"" colspan=""2"">
-                                    <span style=""text-decoration: underline;"">Comentariul evaluatorului:</span> <br> 
-                                    {testQuestion.Comment}
-                                </th>
-                            </tr>
-                            <tr>
-                                <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Tipul întrebării: Formă liberă</th>
-                                <th style=""border: 1px solid black; border-collapse: collapse; text-align: center; padding-left: 5px; height: 30px; color: red; margin: 5px 5px 5px 5px;"">{testQuestion.Points}/{testQuestion.QuestionUnit.QuestionPoints}p.</th>
+                            </tr>";
+
+            if (testQuestion.Test.TestTemplate.Mode == TestTemplateModeEnum.Test)
+            {
+                content += $@"<tr>
+                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"" colspan=""2"">
+                                <span style=""text-decoration: underline;"">Comentariul evaluatorului:</span> <br> 
+                                {testQuestion.Comment}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Tipul întrebării: Formă liberă</th>
+                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: center; padding-left: 5px; height: 30px; color: red; margin: 5px 5px 5px 5px;"">{testQuestion.Points}/{testQuestion.QuestionUnit.QuestionPoints}p.</th>
+                        </tr>
+                      </table>";
+            }
+            else
+            {
+                content += $@"<tr>
+                                <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"" colspan=""2"">Tipul întrebării: Formă liberă</th>
                             </tr>
                           </table>";
+            }
+            
 
             return content;
         }
@@ -1013,11 +1169,21 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                                     <span style=""text-decoration: underline; margin: 5px 5px 5px 5px;"">Întrebarea:</span> <br> 
                                     {testQuestion.QuestionUnit.Question}
                                 </th>
-                            </tr>
-                            <tr>
-                                <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Răspunsuri selectate:</th>
-                                <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Corect/Incorect</th>
                             </tr>";
+
+            if (testQuestion.Test.TestTemplate.Mode == TestTemplateModeEnum.Test)
+            {
+                content += $@"<tr>
+                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Răspunsuri selectate:</th>
+                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Corect/Incorect</th>
+                        </tr>";
+            }
+            else
+            {
+                content += $@"<tr>
+                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"" colspan=""2"">Răspunsuri selectate:</th>
+                        </tr>";
+            }
 
             foreach (var option in testQuestion.QuestionUnit.Options.Select((value, i) => new {i, value}))
             {
@@ -1027,57 +1193,53 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
                 if (answers.Any(x=>x == option.value.Id))
                 {
-                    if (testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer)
-                    {
-                        content += $@"<input checked type=""radio"" style=""margin-left: 20px; margin-bottom: 15px;"">";
-                    }
-                    else
-                    {
-                        content += $@"<input checked type=""checkbox"" style=""margin-left: 20px; margin-bottom: 15px;"">";
-                    }
+                    content += testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer 
+                        ? $@"<input checked type=""radio"" style=""margin-left: 20px; margin-bottom: 15px;"">" 
+                        : $@"<input checked type=""checkbox"" style=""margin-left: 20px; margin-bottom: 15px;"">";
                 }
                 else
                 {
-                    if (testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer)
-                    {
-                        content += $@"<input type=""radio"" style=""margin-left: 20px; margin-bottom: 15px;"">";
-                    }
-                    else
-                    {
-                        content += $@"<input type=""checkbox"" style=""margin-left: 20px; margin-bottom: 15px;"">";
-                    }
+                    content += testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer
+                        ? $@"<input type=""radio"" style=""margin-left: 20px; margin-bottom: 15px;"">"
+                        : $@"<input type=""checkbox"" style=""margin-left: 20px; margin-bottom: 15px;"">";
                 }
 
-                content += $@"
-                                <span style="" height: 25px; width: 25px;"">{option.value.Answer}</span>
-                            </th>";
+                content += $@"<span style="" height: 25px; width: 25px;"">{option.value.Answer}</span>";
 
-                if (option.value.IsCorrect)
+                if (option.value.MediaFileId != null)
                 {
-                    content += $@"<th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Corect</th>
-                        </tr>";
+                    content += await GetTestMedia(option.value.MediaFileId);
+                }
+
+                if (testQuestion.Test.TestTemplate.Mode == TestTemplateModeEnum.Test)
+                {
+                    var isCorrect = option.value.IsCorrect ? "Corect" : "Incorect";
+
+                    content += $@"</th><th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">{isCorrect}</th></tr>";
                 }
                 else
                 {
-                    content += $@"<th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Incorect</th>
-                        </tr>";
+                    content += $@"</th></tr>";
                 }
             }
 
-            if (testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer)
+            var questionType = testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer ? "Un răspuns" : "Răspunsuri multiple";
+
+            if (testQuestion.Test.TestTemplate.Mode == TestTemplateModeEnum.Test)
             {
                 content += $@"<tr>
-                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Tipul întrebării: Un răspuns</th>";
+                                <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Tipul întrebării: {questionType}</th>
+                                <th style=""border: 1px solid black; border-collapse: collapse; text-align: center; padding-left: 5px; height: 30px; color: red; margin: 5px 5px 5px 5px;"">{testQuestion.Points}/{testQuestion.QuestionUnit.QuestionPoints}p.</th>
+                            </tr>
+                          </table>";
             }
             else
             {
                 content += $@"<tr>
-                            <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Tipul întrebării: Răspunsuri multiple</th>";
+                                <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">Tipul întrebării: {questionType}</th>
+                            </tr>
+                          </table>";
             }
-
-            content += $@"<th style=""border: 1px solid black; border-collapse: collapse; text-align: center; padding-left: 5px; height: 30px; color: red; margin: 5px 5px 5px 5px;"">{testQuestion.Points}/{testQuestion.QuestionUnit.QuestionPoints}p.</th>
-                        </tr>
-                      </table>";
 
             return content;
         }

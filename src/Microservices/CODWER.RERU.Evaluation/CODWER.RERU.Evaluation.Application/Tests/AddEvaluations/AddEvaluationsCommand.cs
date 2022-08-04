@@ -8,8 +8,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
     public class AddEvaluationsCommand : IRequest<List<int>>
     {
         public int Id { get; set; }
-        public List<int> UserProfileId { get; set; }
-        public List<int>? EvaluatorId { get; set; }
+        public List<int> UserProfileIds { get; set; }
+        public List<int> EvaluatorIds { get; set; }
         public bool? ShowUserName { get; set; }
         public int TestTemplateId { get; set; }
         public int? EventId { get; set; }

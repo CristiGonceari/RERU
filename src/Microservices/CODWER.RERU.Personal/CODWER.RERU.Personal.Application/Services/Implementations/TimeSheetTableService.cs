@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
-using CODWER.RERU.Personal.Data.Entities.Configurations;
-using CODWER.RERU.Personal.Data.Entities.TimeSheetTables;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CODWER.RERU.Personal.DataTransferObjects.TimeSheetTables;
 using CVU.ERP.Common.Pagination;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using RERU.Data.Entities.PersonalEntities.Configurations;
+using RERU.Data.Entities.PersonalEntities.TimeSheetTables;
 
 namespace CODWER.RERU.Personal.Application.Services.Implementations
 {

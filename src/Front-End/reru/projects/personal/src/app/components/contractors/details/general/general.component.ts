@@ -3,10 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
-import { AddAccessModalComponent } from 'projects/personal/src/app/utils/modals/add-access-modal/add-access-modal.component';
-import { AddDocumentModalComponent } from 'projects/personal/src/app/utils/modals/add-document-modal/add-document-modal.component';
 import { AddPhotoModalComponent } from 'projects/personal/src/app/utils/modals/add-photo-modal/add-photo-modal.component';
-import { AskGenerateOrderModalComponent } from 'projects/personal/src/app/utils/modals/ask-generate-order-modal/ask-generate-order-modal.component';
 import { ConfirmResetPasswordModalComponent } from 'projects/personal/src/app/utils/modals/confirm-reset-password-modal/confirm-reset-password-modal.component';
 import { ApiResponse } from 'projects/personal/src/app/utils/models/api-response.model';
 import { AvatarModel } from 'projects/personal/src/app/utils/models/avatar.model';
@@ -15,11 +12,13 @@ import { Contractor } from 'projects/personal/src/app/utils/models/contractor.mo
 import { SelectItem } from 'projects/personal/src/app/utils/models/select-item.model';
 import { ContractorService } from 'projects/personal/src/app/utils/services/contractor.service';
 import { ReferenceService } from 'projects/personal/src/app/utils/services/reference.service';
+import { RegistrationFluxStepService } from 'projects/personal/src/app/utils/services/registration-flux-step.service';
 import { UserProfileService } from 'projects/personal/src/app/utils/services/user-profile.service';
 import { NotificationUtil } from 'projects/personal/src/app/utils/util/notification.util';
+import { ValidatorUtil } from 'projects/personal/src/app/utils/util/validator.util';
 import { merge, Observable, OperatorFunction, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { ContractorParser } from '../../add/add.parser';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-general',
@@ -45,6 +44,16 @@ export class GeneralComponent implements OnInit {
   attachedFile: File;
   contractorId: any;
   mediaFileId: string;
+  stepId;
+
+  registrationFluxStep;
+  registrationFluxStepId;
+
+  sexEnum: SelectItem[] = [{ label: "", value: "" }];
+  stateLanguageLevelEnum: SelectItem[] = [{ label: "", value: "" }];
+
+  nationalities;
+  citizenships;
 
   constructor(private fb: FormBuilder,
     private contractorService: ContractorService,
@@ -53,42 +62,62 @@ export class GeneralComponent implements OnInit {
     private modalService: NgbModal,
     private userProfileService: UserProfileService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private ds: DataService,
+    private registrationFluxService: RegistrationFluxStepService,
+    ) { }
 
   ngOnInit(): void {
     this.originalContractor = { ...this.contractor };
-    this.subscribeForParams();
+    this.contractorId = parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
+
+    this.stepId =parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
+    
+    this.initForm();
     this.retrieveDropdowns();
+    this.subscribeForParams();
   }
 
   getUser(id: number): void {
+    this.isLoading = true;
     this.contractorService.get(id).subscribe((response: ApiResponse<Contractor>) => {
-      this.isLoading = false;
-      this.contractorId == response.data.id;
       this.contractor = response.data;
       this.contacts = response.data.contacts;
       this.avatar = response.data.avatar;
       this.initForm(this.contractor);
+      this.isLoading = false;
     });
   }
 
   subscribeForParams(): void {
+    this.isLoading = true;
     this.route.params.subscribe(response => {
       if (response.order) {
-        this.openGenerateOrderModal();
+        // this.openGenerateOrderModal();
       }
+
+      this.getUser(this.contractorId);
+      this.getExistentStep(this.stepId, this.contractor.id);
     })
   }
 
   retrieveDropdowns(): void {
-    this.referenceService.listNomenclatureRecords({ nomenclaturebaseType: 1 }).subscribe(response => {
-      this.bloodTypes = response.data;
-      if (!this.contractor) {
-        this.getUser(this.contractor.id);
-      } else {
-        this.initForm(this.contractor);
-      }
+    this.referenceService.getCandidateSexEnum().subscribe((res) => {
+      this.sexEnum = res.data;
     });
+
+    this.referenceService.getCandidateStateLanguageLevelEnum().subscribe((res) => {
+      let languageEnum = res.data
+      this.stateLanguageLevelEnum = languageEnum.sort(function(a, b){return a.value - b.value});
+    });
+
+    this.referenceService.getCandidateCitizenship().subscribe((res) => {
+      this.citizenships = res.data;
+    });
+
+    this.referenceService.getCandidateNationalities().subscribe((res) => {
+      this.nationalities = res.data;
+    })
   }
 
   initForm(contractor: Contractor = <Contractor>{}): void {
@@ -97,28 +126,44 @@ export class GeneralComponent implements OnInit {
       firstName: this.fb.control(contractor.firstName, [Validators.required]),
       lastName: this.fb.control(contractor.lastName, [Validators.required]),
       fatherName: this.fb.control(contractor.fatherName, [Validators.required]),
+      // idnp: this.fb.control((contractor && contractor.idnp)  || null, [Validators.required]),
       birthDate: this.fb.control(contractor.birthDate, [Validators.required]),
-      bloodTypeId: this.fb.control(contractor.bloodTypeId, [Validators.required]),
-      sex: this.fb.control(contractor.sex, [Validators.required])
+      sex: this.fb.control(contractor.sex, [Validators.required]),
+      homePhone: this.fb.control((contractor && contractor.homePhone)  || null, [Validators.required]),
+      phoneNumber: this.fb.control((contractor && contractor.phoneNumber)  || null, [Validators.required]),
+      workPhone: this.fb.control((contractor && contractor.workPhone)  || null, [Validators.required]),
+      candidateNationalityId: this.fb.control( (contractor && contractor.candidateNationalityId) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      candidateCitizenshipId: this.fb.control((contractor && contractor.candidateCitizenshipId)  || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      stateLanguageLevel: this.fb.control( (contractor && contractor.stateLanguageLevel)  || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
     });
-    const bloodType = this.bloodTypes.find(el => +el.value === contractor.bloodTypeId);
-    this.selectedItem = bloodType;
-    this.isLoading = false;
     this.isLoadingAccessButton = false;
   }
 
-  searchBloodType: OperatorFunction<string, readonly SelectItem[]> = (text$: Observable<string>) => {
-    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
-    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => this.instance && !this.instance.isPopupOpen()));
-    const inputFocus$ = this.focus$;
+  // searchBloodType: OperatorFunction<string, readonly SelectItem[]> = (text$: Observable<string>) => {
+  //   const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+  //   const clicksWithClosedPopup$ = this.click$.pipe(filter(() => this.instance && !this.instance.isPopupOpen()));
+  //   const inputFocus$ = this.focus$;
 
-    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-      map(term => (term === '' ? this.bloodTypes
-        : this.bloodTypes.filter(v => v.label.toLowerCase().indexOf(term.toLowerCase()) > -1))));
-  }
+  //   return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+  //     map(term => (term === '' ? this.bloodTypes
+  //       : this.bloodTypes.filter(v => v.label.toLowerCase().indexOf(term.toLowerCase()) > -1))));
+  // }
 
-  selectBloodType(bloodType: SelectItem): void {
-    this.generalForm.get('bloodTypeId').patchValue(bloodType ? +bloodType.value : null);
+  // selectBloodType(bloodType: SelectItem): void {
+  //   this.generalForm.get('bloodTypeId').patchValue(bloodType ? +bloodType.value : null);
+  // }
+
+  getExistentStep(step, contractorId){
+    
+    const request = {
+      contractorId : contractorId,
+      step: step
+    };
+
+    this.registrationFluxService.get(request).subscribe(res => {
+      this.registrationFluxStep = res.data;
+      this.registrationFluxStepId = res.data.id;
+    })
   }
 
   formatter = (x: SelectItem) => x.label;
@@ -129,34 +174,84 @@ export class GeneralComponent implements OnInit {
     this.contractorService.update(request).subscribe(response => {
       this.isLoading = false;
       this.contractorService.fetchContractor.next();
-      this.notificationService.success('Success', 'Contractor updated!', NotificationUtil.getDefaultConfig());
-    }, () => {
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , response.success, this.contractor.id);
+      this.notificationService.success('Success', 'Contractor details updated!', NotificationUtil.getDefaultConfig());
+    }, error => {
       this.isLoading = false;
+      this.notificationService.error('Failure', 'Contractor details was not updated!', NotificationUtil.getDefaultMidConfig());
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , error.success, this.contractor.id);
     });
   }
 
   resetContractor(): void {
     this.isLoading = true;
-    this.initForm(this.originalContractor);
+    if (!this.contractor) {
+      this.getUser(this.contractor.id);
+      this.isLoading = false;
+      } else {
+      this.initForm(this.contractor);
+      this.isLoading = false;
+      }
   }
 
-  openAccessModal(): void {
-    this.getUser(this.contractor.id);
-    const modalRef = this.modalService.open(AddAccessModalComponent, { centered: true, backdrop: 'static' });
-    modalRef.componentInstance.contractorId = this.originalContractor.id;
-    modalRef.result.then((response) => this.createAccess(response), () => { this.getUser(this.contractor.id); })
+  checkRegistrationStep(stepData, stepId, success, contractorId){
+    const datas= {
+      isDone: success,
+      stepId: this.stepId
+    }
+    if(stepData.length == 0){
+      this.addCandidateRegistationStep(success, stepId, contractorId);
+      this.ds.sendData(datas);
+    }else{
+      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId);
+      this.ds.sendData(datas);
+    }
   }
 
-  createAccess(data): void {
-    this.isLoadingAccessButton = true;
-    this.userProfileService.addAccess({ email: data.email, contractorId: this.contractor.id, moduleRoles: data.moduleRoles }).subscribe(() => {
-      this.getUser(this.contractor.id);
-      this.notificationService.success('Success', 'User access added!', NotificationUtil.getDefaultConfig());
-      this.getUser(this.contractor.id);
-    }, () => {
-      this.isLoadingAccessButton = false;
-    });
+  addCandidateRegistationStep(isDone, step, contractorId ){
+    const request = {
+      isDone: isDone,
+      step : step,
+      contractorId: contractorId 
+    }
+    this.registrationFluxService.add(request).subscribe(res => {
+      this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
+    }, error => {
+      this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
+    })
   }
+
+  updateCandidateRegistationStep(id, isDone, step, contractorId ){
+    const request = {
+      id: id,
+      isDone: isDone,
+      step : step,
+      contractorId: contractorId 
+    }
+    
+    this.registrationFluxService.update(request).subscribe(res => {
+      this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
+    }, error => {
+      this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
+    })
+  }
+  // openAccessModal(): void {
+  //   this.getUser(this.contractor.id);
+  //   const modalRef = this.modalService.open(AddAccessModalComponent, { centered: true, backdrop: 'static' });
+  //   modalRef.componentInstance.contractorId = this.originalContractor.id;
+  //   modalRef.result.then((response) => this.createAccess(response), () => { this.getUser(this.contractor.id); })
+  // }
+
+  // createAccess(data): void {
+  //   this.isLoadingAccessButton = true;
+  //   this.userProfileService.addAccess({ email: data.email, contractorId: this.contractor.id, moduleRoles: data.moduleRoles }).subscribe(() => {
+  //     this.getUser(this.contractor.id);
+  //     this.notificationService.success('Success', 'User access added!', NotificationUtil.getDefaultConfig());
+  //     this.getUser(this.contractor.id);
+  //   }, () => {
+  //     this.isLoadingAccessButton = false;
+  //   });
+  // }
 
   openResetPasswordModal(): void {
     const modalRef = this.modalService.open(ConfirmResetPasswordModalComponent, { centered: true, backdrop: 'static' });
@@ -169,10 +264,10 @@ export class GeneralComponent implements OnInit {
     });
   }
 
-  openGenerateOrderModal(): void {
-    const modalRef = this.modalService.open(AskGenerateOrderModalComponent, { centered: true, backdrop: 'static' });
-    modalRef.result.then(() => this.router.navigate(['../../order', this.contractor.id], { relativeTo: this.route }), () => { });
-  }
+  // openGenerateOrderModal(): void {
+  //   const modalRef = this.modalService.open(AskGenerateOrderModalComponent, { centered: true, backdrop: 'static' });
+  //   modalRef.result.then(() => this.router.navigate(['../../order', this.contractor.id], { relativeTo: this.route }), () => { });
+  // }
 
   openUploadProfilePhoto(): void {
     const modalRef = this.modalService.open(AddPhotoModalComponent, { centered: true, backdrop: 'static' });

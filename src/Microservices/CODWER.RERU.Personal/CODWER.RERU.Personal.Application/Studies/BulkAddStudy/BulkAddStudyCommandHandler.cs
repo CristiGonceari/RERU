@@ -1,9 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Entities.Studies;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using MediatR;
+using RERU.Data.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CODWER.RERU.Personal.Application.Studies.BulkAddStudy
 {
@@ -21,11 +23,30 @@ namespace CODWER.RERU.Personal.Application.Studies.BulkAddStudy
 
         public async Task<Unit> Handle(BulkAddStudyCommand request, CancellationToken cancellationToken)
         {
+            var studies = await _appDbContext.Studies.ToListAsync();
+
             foreach (var studyDataDto in request.Data)
             {
-                var item = _mapper.Map<Study>(studyDataDto);
+                var existentStudy = studies.FirstOrDefault(s => s.Id == studyDataDto.Id);
 
-                await _appDbContext.Studies.AddAsync(item);
+                if (existentStudy == null)
+                {
+
+                    var item = _mapper.Map<Study>(studyDataDto);
+
+                    await _appDbContext.Studies.AddAsync(item);
+                }
+                else
+                {
+                    _mapper.Map(studyDataDto, existentStudy);
+
+                    studies.Remove(existentStudy);
+                }
+            }
+
+            if (studies.Any())
+            {
+                _appDbContext.Studies.RemoveRange(studies);
             }
 
             await _appDbContext.SaveChangesAsync();

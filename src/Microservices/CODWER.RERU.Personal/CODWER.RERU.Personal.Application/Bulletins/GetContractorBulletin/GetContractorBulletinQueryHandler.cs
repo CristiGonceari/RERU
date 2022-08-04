@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Personal.Data.Persistence.Context;
+using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Bulletin;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,10 +22,12 @@ namespace CODWER.RERU.Personal.Application.Bulletins.GetContractorBulletin
         public async Task<BulletinsDataDto> Handle(GetContractorBulletinQuery request, CancellationToken cancellationToken)
         {
             var item = await _appDbContext.Bulletins
-                .Include(x=>x.LivingAddress)
-                .Include(x=>x.BirthPlace)
-                .Include(x=>x.ResidenceAddress)
-                .FirstAsync(x => x.ContractorId == request.ContractorId);
+                .Include(x=>x.Contractor)
+                .ThenInclude(x=>x.UserProfile)
+                .Include(b => b.BirthPlace)
+                .Include(b => b.ResidenceAddress)
+                .Include(b => b.ParentsResidenceAddress)
+                .FirstAsync(x => x.Contractor.Id == request.ContractorId);
 
             return _mapper.Map<BulletinsDataDto>(item);
         }

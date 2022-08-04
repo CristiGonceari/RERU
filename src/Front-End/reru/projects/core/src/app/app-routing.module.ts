@@ -23,6 +23,10 @@ const routes: Routes = [
 		path: 'registration-page',
 		loadChildren: () => import('./components/registration-page/registration-page.module').then(m => m.RegistrationPageModule)
 	},
+	{
+		path: 'vacant-positions-page',
+		loadChildren: () => import('./components/vacant-positions-page/vacant-positions-page.module').then(m => m.VacantPositionsPageModule)
+	},
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent},
 	{
 		path: '',
@@ -31,8 +35,12 @@ const routes: Routes = [
 		children: [
 			{
 				path: '',
-				component: DashboardComponent,
+				component : DashboardComponent,
 				canActivate: [AuthenticationGuard]
+			},
+			{ 
+				path: 'registration-flux', 
+				loadChildren: () => import('./components/candidate-registration-flux/candidate-registration-flux.module').then(m => m.CandidateRegistrationFluxModule)
 			},
 			{ 
 				path: 'personal-profile', 
@@ -68,18 +76,18 @@ const routes: Routes = [
 				data: { permission: 'P00000025' },
 				canActivate: [PermissionRouteGuard]
 			},
-			{
-				path: 'departments',
-				loadChildren: () => import('./components/departments/departments.module').then(m => m.DepartmentsModule),
-				data: { permission: 'P00000026' },
-				canActivate: [PermissionRouteGuard]
-			},
-			{
-				path: 'user-roles',
-				loadChildren: () => import('./components/user-roles/user-roles.module').then(m => m.UserRolesModule),
-				data: { permission: 'P00000027' },
-				canActivate: [PermissionRouteGuard]
-			}
+			// {
+			// 	path: 'departments',
+			// 	loadChildren: () => import('./components/departments/departments.module').then(m => m.DepartmentsModule),
+			// 	data: { permission: 'P00000026' },
+			// 	canActivate: [PermissionRouteGuard]
+			// },
+			// {
+			// 	path: 'user-roles',
+			// 	loadChildren: () => import('./components/user-roles/user-roles.module').then(m => m.UserRolesModule),
+			// 	data: { permission: 'P00000027' },
+			// 	canActivate: [PermissionRouteGuard]
+			// }
 		],
 	},
 	{ path: '404', component: Exception404Component },
