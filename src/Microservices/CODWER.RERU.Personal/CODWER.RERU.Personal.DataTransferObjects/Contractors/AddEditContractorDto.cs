@@ -15,7 +15,7 @@ namespace CODWER.RERU.Personal.DataTransferObjects.Contractors
         public string PhoneNumber { get; set; }
         public string WorkPhone { get; set; }
         public string HomePhone { get; set; }
-        public string Idnp { get; set; }
+        //public string Idnp { get; set; }
 
         public DateTime BirthDate { get; set; }
         public int? BloodTypeId { get; set; } // nomenclature

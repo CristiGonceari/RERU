@@ -9,7 +9,7 @@ import { Response, AppSettingsService, AbstractService } from '@erp/shared';
 })
 export class KinshipRelationCriminalDataService extends AbstractService {
 
-  private readonly urlRoute: string = 'KinshipRelationCriminalData';
+  private readonly urlRoute: string = 'KinshipRelationWithCriminalData';
   
   constructor(private http: HttpClient, protected appSettingsService: AppSettingsService) {
     super(appSettingsService);

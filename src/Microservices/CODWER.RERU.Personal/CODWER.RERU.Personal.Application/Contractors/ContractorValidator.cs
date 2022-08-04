@@ -38,9 +38,6 @@ namespace CODWER.RERU.Personal.Application.Contractors
             RuleFor(x => (int)x.Sex)
                 .SetValidator(new ExistInEnumValidator<SexTypeEnum>());
 
-            RuleFor(x => x.Idnp)
-                .SetValidator(new IdnpValidator());
-
             //RuleFor(x => BaseNomenclatureTypesEnum.BloodTypes.NewRecordToValidate(x.BloodTypeId))
             //    .SetValidator(new RecordFromBaseNomenclatureTypesValidator(appDbContext));
 

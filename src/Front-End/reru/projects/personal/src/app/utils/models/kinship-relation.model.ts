@@ -8,5 +8,5 @@ export class KinshipRelationModel {
     workLocation : string;
     residenceAddress : string;
     kinshipDegree: string;
-    userProfileId: number;
+    contractorId: number;
 }

@@ -23,18 +23,18 @@ namespace CODWER.RERU.Personal.Application.Contractors.UpdateContractor
 
             RuleFor(x => x.Data).SetValidator(new ContractorValidator(appDbContext));
 
-            RuleFor(x => x.Data.Idnp)
-               .Custom(CheckIfUniqueIdnpOnCreate);
+            //RuleFor(x => x.Data.Idnp)
+            //   .Custom(CheckIfUniqueIdnpOnCreate);
         }
-        private void CheckIfUniqueIdnpOnCreate(string idnp, CustomContext context)
-        {
-            var exist = _appDbContext.UserProfiles
-                .Any(x => x.Idnp == idnp);
+        //private void CheckIfUniqueIdnpOnCreate(string idnp, CustomContext context)
+        //{
+        //    var exist = _appDbContext.UserProfiles
+        //        .Any(x => x.Idnp == idnp);
 
-            if (exist)
-            {
-                context.AddFail(ValidationCodes.DUPLICATE_IDNP_IN_SYSTEM, ValidationMessages.InvalidReference);
-            }
-        }
+        //    if (exist)
+        //    {
+        //        context.AddFail(ValidationCodes.DUPLICATE_IDNP_IN_SYSTEM, ValidationMessages.InvalidReference);
+        //    }
+        //}
     }
 }

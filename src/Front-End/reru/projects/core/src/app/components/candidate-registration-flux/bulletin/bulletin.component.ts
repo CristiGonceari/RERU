@@ -185,10 +185,7 @@ export class BulletinComponent implements OnInit {
     if (this.existentBulletin != null){
       modalRef.componentInstance.addressForm = this.buildExistentAddress((<FormGroup>this.bulletinForm.get(field)).getRawValue());
       modalRef.result.then((address: AddressModel) => this.updateExistentAddress(address, field), () => {});
-      console.log("1");
-      
     }else{
-      console.log("2");
       modalRef.componentInstance.addressForm = this.buildAddress((<FormGroup>this.bulletinForm.get(field)).getRawValue());
       modalRef.result.then((address: AddressModel) => this.updateAddress(address, field), () => {});
     }
