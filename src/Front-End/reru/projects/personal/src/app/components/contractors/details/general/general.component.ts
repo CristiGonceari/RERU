@@ -72,16 +72,20 @@ export class GeneralComponent implements OnInit {
     this.contractorId = parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
 
     this.stepId =parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
+    
+    this.initForm();
     this.retrieveDropdowns();
     this.subscribeForParams();
   }
 
   getUser(id: number): void {
+    this.isLoading = true;
     this.contractorService.get(id).subscribe((response: ApiResponse<Contractor>) => {
       this.contractor = response.data;
       this.contacts = response.data.contacts;
       this.avatar = response.data.avatar;
       this.initForm(this.contractor);
+      this.isLoading = false;
     });
   }
 
@@ -92,14 +96,7 @@ export class GeneralComponent implements OnInit {
         // this.openGenerateOrderModal();
       }
 
-      if (!this.contractor) {
       this.getUser(this.contractorId);
-      this.isLoading = false;
-      } else {
-      this.initForm(this.contractor);
-      this.isLoading = false;
-      }
-
       this.getExistentStep(this.stepId, this.contractor.id);
     })
   }

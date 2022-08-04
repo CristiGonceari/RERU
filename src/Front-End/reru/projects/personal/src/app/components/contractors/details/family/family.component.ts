@@ -97,7 +97,7 @@ export class FamilyComponent implements OnInit {
     this.initForm();
     this.subscribeForParams();
     this.retrieveDropdowns();
-    this.subscribeForData();
+    // this.subscribeForData();
   }
 
   
@@ -163,62 +163,62 @@ export class FamilyComponent implements OnInit {
   }
 
   subscribeForParams(): void {
-    if (!this.contractor) {
     this.getUser(this.contractorId);
-    } 
 
     this.getExistentStep(this.stepId, this.contractor.id);
     this.isLoading = false;
 }
 
-  subscribeForData() {
-      if (this.contractor.hasMaterialStatus) {
-
-        this.getUserMaterialStatus(this.contractor.id);
-      }
-      else {
-        this.addOrEditMaterialStatusButton = false;
-        this.isLoadingMaterialStatus = false;
-        this.userMaterialStatus = null;
-      }
-
-      if (this.contractor.hasKinshipRelationCriminalData) {
-
-        this.getKinshipRelationCriminalData(this.contractor.id);
-      }
-      else {
-        this.addOrEditKinshipRelationCriminalDataButton = false;
-        this.isLoadingKinshipRelationCriminalData = false;
-        this.kinshipRelationCriminalData = null;
-      }
-
-      if (this.contractor.hasKinshipRelationWithUserProfiles) {
-
-        this.getKinshipRelationWithUserProfile(this.contractor.id);
-      }
-      else {
-        this.addOrEditKinshipRelationWithUserProfileButton = false;
-        this.isLoadingKinshipRelationWithUserProfile = false;
-        this.kinshipRelationWithUserProfileData = null;
-      }
-
-      if (this.contractor.hasKinshipRelations) {
-
-          this.getKinshipRelation(this.contractor.id);
-        }
-        else {
-          this.addOrEditKinshipRelationButton = false;
-          this.isLoadingKinshipRelation = false;
-          this.kinshipRelationData = null;
-        }
-  }
+  
 
   getUser(id: number): void {
     this.contractorService.get(id).subscribe((response: ApiResponse<Contractor>) => {
       this.contractor = response.data;
-      // this.initForm(this.contractor);
+      this.subscribeForData(response.data)
     });
   }
+
+  subscribeForData(contractor) {
+    if (contractor.hasMaterialStatus) {
+
+      this.getUserMaterialStatus(contractor.id);
+    }
+    else {
+      this.addOrEditMaterialStatusButton = false;
+      this.isLoadingMaterialStatus = false;
+      this.userMaterialStatus = null;
+    }
+
+    if (contractor.hasKinshipRelationCriminalData) {
+
+      this.getKinshipRelationCriminalData(contractor.id);
+    }
+    else {
+      this.addOrEditKinshipRelationCriminalDataButton = false;
+      this.isLoadingKinshipRelationCriminalData = false;
+      this.kinshipRelationCriminalData = null;
+    }
+
+    if (contractor.hasKinshipRelationWithUserProfiles) {
+
+      this.getKinshipRelationWithUserProfile(contractor.id);
+    }
+    else {
+      this.addOrEditKinshipRelationWithUserProfileButton = false;
+      this.isLoadingKinshipRelationWithUserProfile = false;
+      this.kinshipRelationWithUserProfileData = null;
+    }
+
+    if (contractor.hasKinshipRelations) {
+
+        this.getKinshipRelation(contractor.id);
+      }
+      else {
+        this.addOrEditKinshipRelationButton = false;
+        this.isLoadingKinshipRelation = false;
+        this.kinshipRelationData = null;
+      }
+}
 
   getUserMaterialStatus(contractorId){
     this.isLoadingMaterialStatus = true;
