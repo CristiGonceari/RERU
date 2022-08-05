@@ -9,6 +9,7 @@ import { UserSolicitedTestsComponent } from './user-solicited-tests/user-solicit
 import { UserTestsComponent } from './user-tests/user-tests.component';
 import { UserEvaluationsComponent } from './user-evaluations/user-evaluations.component';
 import { UserReceivedEvaluationsComponent } from './user-received-evaluations/user-received-evaluations.component';
+import { UserPositionDiagramComponent } from './user-solicited-tests/user-position-diagram/user-position-diagram.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
       { path: 'solicited-tests', component: UserSolicitedTestsComponent },
       { path: 'user-evaluations', component: UserEvaluationsComponent },
       { path: 'user-received-evaluations', component: UserReceivedEvaluationsComponent },
+      { path: 'user-diagram/:id', component: UserPositionDiagramComponent }
     ]
   }
 ];

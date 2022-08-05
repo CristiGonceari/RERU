@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagram;
+using CODWER.RERU.Evaluation.Application.CandidatePositions.GetUserSolicitedPositionDiagram;
 using CODWER.RERU.Evaluation.DataTransferObjects.PositionDiagram;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
@@ -31,6 +32,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpGet("diagram")]
         public async Task<PositionDiagramDto> GetPositionDiagram([FromQuery] GetPositionDiagramQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("user-diagram")]
+        public async Task<UserPositionDiagramDto> GetUserPositionDiagram([FromQuery] GetUserSolicitedPositionDiagramQuery query)
         {
             return await Mediator.Send(query);
         }
