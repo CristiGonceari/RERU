@@ -39,13 +39,17 @@
                             </div>
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                                 <div ngbDropdownMenu aria-labelledby="action1">
-                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem 
-                                        [routerLink]="['../edit-solicited-position', item.id]" 
+                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem
+                                        [routerLink]="['../edit-solicited-position', item.id]"
                                         *ngIf="item.solicitedTestStatus == enum.New || item.solicitedTestStatus == enum.Wait">
                                         {{ 'button.edit' | translate }}
                                     </button>
-                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem 
-                                    *ngIf="item.solicitedTestStatus == enum.New || item.solicitedTestStatus == enum.Wait"
+                                    <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
+                                        [routerLink]="['../my-diagram', item.candidatePositionId]">
+                                        {{ 'position.position-diagram' | translate }}
+                                    </button>
+                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem
+                                        *ngIf="item.solicitedTestStatus == enum.New || item.solicitedTestStatus == enum.Wait"
                                         (click)="openDeleteModal(item.id)">
                                         {{'button.delete' | translate}}
                                     </button>
@@ -66,8 +70,7 @@
     </table>
     <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
         *ngIf="solicitedTests.length" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
-        [size]="pagedSummary.pageSize"
-        (sizeChange)="getMySolicitedTests({ page: 1, itemsPerPage: $event })"
+        [size]="pagedSummary.pageSize" (sizeChange)="getMySolicitedTests({ page: 1, itemsPerPage: $event })"
         (pageChange)="getMySolicitedTests({ page: $event, itemsPerPage: pagedSummary.pageSize })">
     </div>
 </div>

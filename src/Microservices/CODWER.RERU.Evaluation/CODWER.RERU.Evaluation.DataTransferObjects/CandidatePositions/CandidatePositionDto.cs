@@ -13,6 +13,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions
         public DateTime? From { get; set; }
         public DateTime? To { get; set; }
         public string ResponsiblePerson { get; set; }
+        public int ResponsiblePersonId { get; set; }
         public List<SelectItem> RequiredDocuments { get; set; }
         public List<SelectItem> Events { get; set; }
     }

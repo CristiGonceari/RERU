@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TestResultStatusEnum } from '../../../utils/enums/test-result-status.enum';
-import { TestStatusEnum } from '../../../utils/enums/test-status.enum';
-import { CandidatePositionService } from '../../../utils/services/candidate-position/candidate-position.service';
-import { PrintTemplateService } from '../../../utils/services/print-template/print-template.service';
+import { TestResultStatusEnum } from '../../../../utils/enums/test-result-status.enum';
+import { TestStatusEnum } from '../../../../utils/enums/test-status.enum';
+import { CandidatePositionService } from '../../../../utils/services/candidate-position/candidate-position.service';
+import { PrintTemplateService } from '../../../../utils/services/print-template/print-template.service';
 import { saveAs } from 'file-saver';
+import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-positions-diagram',
-  templateUrl: './positions-diagram.component.html',
-  styleUrls: ['./positions-diagram.component.scss']
+  selector: 'app-my-position-diagram',
+  templateUrl: './my-position-diagram.component.html',
+  styleUrls: ['./my-position-diagram.component.scss']
 })
-export class PositionsDiagramComponent implements OnInit {
+export class MyPositionDiagramComponent implements OnInit {
   isLoading = true;
   eventsDiagram = [];
-  usersDiagram = [];
-  testTemplates = [];
+  userDiagram;
   positionId;
   positionName;
   status = TestStatusEnum;
@@ -24,7 +24,8 @@ export class PositionsDiagramComponent implements OnInit {
   constructor(
     private positionService: CandidatePositionService,
     private activatedRoute: ActivatedRoute,
-    private printService: PrintTemplateService
+    private printService: PrintTemplateService,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -32,24 +33,24 @@ export class PositionsDiagramComponent implements OnInit {
       this.positionId = params.id;
       this.positionService.get(this.positionId).subscribe(res => this.positionName = res.data.name);
     });
-    this.getDiagram();
+    this.getUserDiagram();
   }
 
-  getDiagram(): void {
-    this.positionService.getDiagram({ positionId: this.positionId }).subscribe(res => {
+  getUserDiagram(): void {
+    this.positionService.getUserDiagram({ positionId: this.positionId }).subscribe(res => {
       if (res && res.data) {
         this.eventsDiagram = res.data.eventsDiagram;
-        this.usersDiagram = res.data.usersDiagram;
-
-        this.eventsDiagram.forEach(event => {
-          event.testTemplates.forEach(element => {
-            this.testTemplates.push(element)
-          });
-        });
-
+        this.userDiagram = res.data.userDiagram;
         this.isLoading = false;
       }
     })
+  }
+  
+  getTests(testTemplateId, eventId){
+    let test = [];
+    test = this.userDiagram.testsByTestTemplate.filter(e => e.testTemplateId === testTemplateId && e.eventId == eventId);
+
+    return test;
   }
 
   printPositionDiagram() {
@@ -64,5 +65,9 @@ export class PositionsDiagramComponent implements OnInit {
       const file = new File([blob], fileName, { type: response.body.type });
       saveAs(file);
     });
+  }
+
+  back(){
+    this.location.back();
   }
 }

@@ -51,19 +51,20 @@
                     <tr *ngFor="let position of positions">
                       <td [routerLink]="['../edit-position', position.id]">
                         <a 
-                          class="font-size-lg text-dark-50 text-hover-dark-75">
+                          class="font-size-lg cursor-pointer text-dark-50 text-hover-dark-75">
                           {{ position.name }}
                         </a>
                       </td>
-                      <td [routerLink]="['../edit-position', position.id]">
-                        <a 
-                          class="font-size-lg text-dark-50 text-hover-dark-75">
+                      <td>
+                        <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
+                          [routerLink]="['../../user-profile', position.responsiblePersonId]"
+                          style="white-space: nowrap;">
                           {{ position.responsiblePerson || '-'}}
-                        </a>
+                        </p>
                       </td>
                       <td [routerLink]="['../edit-position', position.id]">
                         <a *ngIf="position.from"
-                          class="font-size-lg text-dark-50 text-hover-dark-75">
+                          class="font-size-lg cursor-pointer text-dark-50 text-hover-dark-75">
                           {{ position.from | date: 'dd/MM/yyyy, HH:mm'}}
                         </a>
                         <a *ngIf="!position.from"
@@ -73,7 +74,7 @@
                       </td>
                       <td [routerLink]="['../edit-position', position.id]">
                         <a *ngIf="position.to"
-                          class="font-size-lg text-dark-50 text-hover-dark-75">
+                          class="font-size-lg cursor-pointer text-dark-50 text-hover-dark-75">
                           {{ position.to | date: 'dd/MM/yyyy, HH:mm' }}
                         </a>
                         <a *ngIf="!position.to"
