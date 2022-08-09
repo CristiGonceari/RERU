@@ -13,6 +13,7 @@
                 <th scope="col" class="text-left">{{'solicited-position.required-documents' | translate}}</th>
                 <th scope="col">{{'solicited-test.solicited-time' | translate}}</th>
                 <th scope="col">{{'verify-test.status' | translate}}</th>
+                <th scope="col" style="width: 48px"></th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="solicitedTests.length">
@@ -22,6 +23,35 @@
                 <td>{{ item.requiredAttachedFilesCount }}</td>
                 <td>{{ item.solicitedTime | date: 'dd/MM/yyyy, HH:mm'}}</td>
                 <td>{{'statuses.' + enum[item.solicitedTestStatus] | translate }}</td>
+                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
+                    <div style="overflow: visible; position: relative; width: 0px">
+                        <div ngbDropdown class="dropdown dropdown-inline">
+                            <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                                <span class="svg-icon svg-icon-md" ngbDropdownToggle>
+                                    <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                        viewBox="0 0 24 24" version="1.1">
+                                        <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
+                                            <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3"
+                                                fill="black">
+                                            </rect>
+                                            <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3"
+                                                fill="black" fill-opacity="0.7"></rect>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                                <div ngbDropdownMenu aria-labelledby="action1">
+                                    <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
+                                        [routerLink]="['../user-diagram', item.candidatePositionId]">
+                                        {{ 'position.position-diagram' | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
             </tr>
         </tbody>
         <tbody class="datatable-body" *ngIf="!solicitedTests.length">

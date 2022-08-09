@@ -17,18 +17,21 @@ import { MyTestsComponent } from './my-tests/my-tests.component';
 import { StartEvaluationPageComponent } from '../evaluations/start-evaluation-page/start-evaluation-page.component';
 import { PerformingEvaluationComponent } from '../evaluations/performing-evaluation/performing-evaluation.component';
 import { ViewEvaluationResultComponent } from '../evaluations/view-evaluation-result/view-evaluation-result.component';
+import { MyPositionDiagramComponent } from './my-solicited-tests/my-position-diagram/my-position-diagram.component';
 
 const routes: Routes = [
   {path: '', component: MyActivitiesComponent,
-  children: [
-    { path: '', redirectTo: 'my-solicited-position', pathMatch: 'full' },
-    { path: 'my-tests', component: MyTestsComponent },
-    { path: 'my-events', component: MyEventsComponent },
-    { path: 'my-polls', component: MyPollsComponent },
-    { path: 'my-evaluated-tests', component: MyEvaluatedTestsComponent },
-    { path: 'my-evaluations', component: MyEvaluationsComponent },
-    { path: 'my-solicited-position', component: MySolicitedTestsComponent },
-  ]},
+    children: [
+      { path: '', redirectTo: 'my-solicited-position', pathMatch: 'full' },
+      { path: 'my-tests', component: MyTestsComponent },
+      { path: 'my-events', component: MyEventsComponent },
+      { path: 'my-polls', component: MyPollsComponent },
+      { path: 'my-evaluated-tests', component: MyEvaluatedTestsComponent },
+      { path: 'my-evaluations', component: MyEvaluationsComponent },
+      { path: 'my-solicited-position', component: MySolicitedTestsComponent },
+      { path: 'my-diagram/:id', component: MyPositionDiagramComponent }
+    ]
+  },
   { path: 'start-test/:id', component: StartTestPageComponent },
   { path: 'start-evaluation/:id', component: StartEvaluationPageComponent },
   { path: 'one-test-per-page/:id', component: OnePerPagePerformingTestComponent},
@@ -39,7 +42,7 @@ const routes: Routes = [
   { path: 'evaluation-result/:id', component: ViewEvaluationResultComponent },
   { path: 'finish-page/:id', component: FinishPageComponent },
   { path: 'add-solicited-position', component: AddEditSolicitedTestComponent },
-  { path: 'edit-solicited-position/:id', component: AddEditSolicitedTestComponent }
+  { path: 'edit-solicited-position/:id', component: AddEditSolicitedTestComponent },
 ];
 
 @NgModule({

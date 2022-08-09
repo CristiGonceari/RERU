@@ -46,6 +46,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetCandidatePosi
                 var position = positions.FirstOrDefault(x => x.Id == item.Id);
 
                 item.ResponsiblePerson = _candidatePositionService.GetResponsiblePersonName(int.Parse(position?.CreateById ?? "0"));
+                item.ResponsiblePersonId = int.Parse(position?.CreateById ?? "0");
             }
 
             return paginatedModel;
