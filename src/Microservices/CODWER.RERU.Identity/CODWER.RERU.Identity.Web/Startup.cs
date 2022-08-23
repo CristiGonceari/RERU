@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using CODWER.RERU.Identity.Web.Quickstart.Models;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Identity.Context;
 using CVU.ERP.Identity.Models;
@@ -33,6 +34,8 @@ namespace CODWER.RERU.Identity.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<PlatformConfig>(Configuration.GetSection("PlatformConfig"));
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
