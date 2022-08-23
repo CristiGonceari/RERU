@@ -2,6 +2,7 @@
 {
     public class PlatformConfig
     {
-        public string BaseUrl { get; set; }
+        public string RegistrationPageUrl { get; set; }
+        public string PositionsPageUrl { get; set; }
     }
 }

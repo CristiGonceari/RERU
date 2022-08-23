@@ -232,8 +232,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                     EnableLocalLogin = local,
                     ReturnUrl = returnUrl,
                     Username = context?.LoginHint,
-                    RegistrationPageUrl = _platformConfig.BaseUrl + "registration-page",
-                    PositionsPageUrl = _platformConfig.BaseUrl + "vacant-positions-page"
+                    RegistrationPageUrl = _platformConfig.RegistrationPageUrl,
+                    PositionsPageUrl = _platformConfig.PositionsPageUrl
                 };
 
                 if (!local)
