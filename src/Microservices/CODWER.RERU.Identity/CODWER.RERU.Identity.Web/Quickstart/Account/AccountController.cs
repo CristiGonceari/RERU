@@ -275,7 +275,9 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 EnableLocalLogin = allowLocal && AccountOptions.AllowLocalLogin,
                 ReturnUrl = returnUrl,
                 Username = context?.LoginHint,
-                ExternalProviders = providers.ToArray()
+                ExternalProviders = providers.ToArray(),
+                RegistrationPageUrl = _platformConfig.RegistrationPageUrl,
+                PositionsPageUrl = _platformConfig.PositionsPageUrl
             };
         }
 
