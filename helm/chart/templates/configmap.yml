@@ -341,6 +341,10 @@ data:
             "AccessTokenLifetime": 3600
           }
         ]
+      },
+      "PlatformConfig": {
+        "RegistrationPageUrl": "http://reru.codwer.com/#/registration-page",
+        "PositionsPageUrl": "http://reru.codwer.com/#/vacant-positions-page"
       }
     }
 
