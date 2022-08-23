@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using CODWER.RERU.Identity.Web.Quickstart.Models;
 using CVU.ERP.Identity.Models;
 using IdentityModel;
 using IdentityServer4.Events;
@@ -16,6 +17,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace CODWER.RERU.Identity.Web.Quickstart.Account
 {
@@ -29,6 +31,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
+        private readonly PlatformConfig _platformConfig;
 
         public AccountController(
             UserManager<ERPIdentityUser> userManager,
@@ -36,7 +39,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
-            IEventService events)
+            IEventService events,
+            IOptions<PlatformConfig> options)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -44,6 +48,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             _clientStore = clientStore;
             _schemeProvider = schemeProvider;
             _events = events;
+            _platformConfig = options.Value;
         }
 
         /// <summary>
@@ -227,6 +232,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                     EnableLocalLogin = local,
                     ReturnUrl = returnUrl,
                     Username = context?.LoginHint,
+                    RegistrationPageUrl = _platformConfig.RegistrationPageUrl,
+                    PositionsPageUrl = _platformConfig.PositionsPageUrl
                 };
 
                 if (!local)
