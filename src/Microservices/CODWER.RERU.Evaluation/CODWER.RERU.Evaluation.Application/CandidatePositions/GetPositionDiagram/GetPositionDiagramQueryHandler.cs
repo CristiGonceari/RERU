@@ -37,7 +37,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
                     positionEvent.TestTemplates.Add(new TestTemplateDiagramDto());
                 }
 
-                var eventUsers = GetUsersDiagram(positionEvent.EventId);
+                var eventUsers = GetUsersDiagram(positionEvent.EventId, request.PositionId);
 
                 allUsers.AddRange(eventUsers);
 
@@ -72,11 +72,11 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
                 .ToList();
         }
 
-        private List<UserDiagramDto> GetUsersDiagram(int eventId)
+        private List<UserDiagramDto> GetUsersDiagram(int eventId, int positionId)
         {
             return _appDbContext.EventUsers
                 .Include(x => x.UserProfile)
-                .Where(x => x.EventId == eventId)
+                .Where(x => x.EventId == eventId && x.PositionId == positionId)
                 .OrderBy(x => x.EventId)
                 .Select(x => _mapper.Map<UserDiagramDto>(x))
                 .ToList();
