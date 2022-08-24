@@ -115,7 +115,9 @@ export class EventsListTableComponent implements OnInit {
 
 		let params = {
 			page: data.page || this.pagination.currentPage,
-			itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10,
+			fromDate: this.parseDates(data.tillDate),
+			tillDate: this.parseDates(data.tillDate)
 		}
 
 		this.service.getEvents(params).subscribe(
