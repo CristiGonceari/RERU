@@ -37,8 +37,10 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
         {
             var tests = _appDbContext.Tests
                 .Include(x => x.UserProfile)
+                .Include(x => x.TestTemplate)
                     .Where(test => test.ProgrammedTime <= _timeRangeBeforeStart && 
                                    test.ProgrammedTime >= _timeRangeAfterStart &&
+                                   test.TestTemplate.Mode == TestTemplateModeEnum.Test &&
                                    test.TestStatus == TestStatusEnum.Programmed || test.TestStatus == TestStatusEnum.AlowedToStart &&
                                        !test.EmailTestNotifications
                                            .Any(notification => notification.TestId == test.Id && notification.UserProfileId == test.UserProfileId))
