@@ -4,16 +4,21 @@ using CVU.ERP.Common.Validation;
 using FluentValidation;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Linq;
 
 namespace CODWER.RERU.Evaluation.Application.CandidatePositions.DeleteCandidatePosition
 {
     public class DeleteCandidatePositionCommandValidator : AbstractValidator<DeleteCandidatePositionCommand>
     {
-        public DeleteCandidatePositionCommandValidator(AppDbContext coreDbContext)
+        public DeleteCandidatePositionCommandValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.Id)
-               .SetValidator(x => new ItemMustExistValidator<CandidatePosition>(coreDbContext, ValidationCodes.INVALID_POSITION,
+               .SetValidator(x => new ItemMustExistValidator<CandidatePosition>(appDbContext, ValidationCodes.INVALID_POSITION,
                    ValidationMessages.NotFound));
+
+            RuleFor(x => x.Id)
+                .Must(x => !appDbContext.SolicitedVacantPositions.Any(s => s.CandidatePositionId.Value == x))
+                .WithErrorCode(ValidationCodes.CAN_NOT_DELETE_USED_CANDIDATE_POSITION);
         }
     }
 }

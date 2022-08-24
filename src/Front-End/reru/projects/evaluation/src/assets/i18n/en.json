@@ -931,7 +931,8 @@
     "03030205": "You were invited to the event as an evaluator",
     "03030206": "You were invited to the test as an evaluator",
     "03030207": "All candidates from event finished test",
-    "03030208": "Your solicited test was refused"
+    "03030208": "Your solicited test was refused",
+    "03002201": "You can not delete used candidate position"
   },
   "login": {
     "colaborator-id": "Collaborator ID",
