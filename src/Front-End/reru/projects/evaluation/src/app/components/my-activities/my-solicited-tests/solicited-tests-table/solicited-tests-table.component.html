@@ -45,6 +45,7 @@
                                         {{ 'button.edit' | translate }}
                                     </button>
                                     <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
+                                        *ngIf="item.events.length"
                                         [routerLink]="['../my-diagram', item.candidatePositionId]">
                                         {{ 'position.position-diagram' | translate }}
                                     </button>

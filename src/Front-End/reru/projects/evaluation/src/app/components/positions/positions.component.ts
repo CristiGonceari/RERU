@@ -141,7 +141,7 @@ export class PositionsComponent implements OnInit {
 		this.positionService.delete(id).subscribe(res => {
 			forkJoin([
 				this.translate.get('modal.success'),
-				this.translate.get('pages.positions.delete-msg'),
+				this.translate.get('position.success-delete'),
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
