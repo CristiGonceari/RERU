@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace CODWER.RERU.Evaluation.Application.References.GetEventsValues
         public async Task<List<SelectEventValueDto>> Handle(GetEventsValueQuery request, CancellationToken cancellationToken)
         {
             var events = await _appDbContext.Events
+                .Where(x => x.FromDate <= DateTime.Now && x.TillDate >= DateTime.Now)
                 .AsQueryable()
                 .Select(e => _mapper.Map<SelectEventValueDto>(e))
                 .ToListAsync();
