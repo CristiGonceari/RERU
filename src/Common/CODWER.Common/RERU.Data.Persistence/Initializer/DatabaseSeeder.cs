@@ -381,7 +381,6 @@ namespace RERU.Data.Persistence.Initializer
                 new MaterialStatusType{Name="Celibatar", TranslateId = 1 },
                 new MaterialStatusType{Name="Casatorit", TranslateId = 2 },
                 new MaterialStatusType{Name="Recasatorit", TranslateId = 3 },
-                new MaterialStatusType{Name="Vaduv", TranslateId = 4 },
             };
 
             var types = appDbContext.MaterialStatusTypes.ToList();

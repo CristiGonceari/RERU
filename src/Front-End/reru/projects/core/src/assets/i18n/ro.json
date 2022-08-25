@@ -571,8 +571,8 @@
 
   },
   "material-status":{
-    "name": "Starea civilă lă data completării dosarului personal",
-    "kinship-relation": "Relații de rudenie sau afinate cu angajații MAI",
+    "name": "Starea civilă la data completării dosarului personal",
+    "kinship-relation": "Relații de rudenie sau afinitate cu angajații MAI",
     "kinship-degree" : "Gradul de rudenie",
     "table-function": "Funcția (poziția) deținută",
     "table-subdivision": "Subdiviziune MAI",
@@ -636,9 +636,9 @@
     "LowFrequency": "Frecvența redusa"
   },
   "materialStatusType": {
-    "1": "Celibatar",
-    "2": "Casatorit",
-    "3": "Recasatorit",
+    "1": "Celibatar/ă",
+    "2": "Casatorit/ă",
+    "3": "Recasatorit/ă",
     "4": "Vaduv"
   },
   "kinshipDegree":{
@@ -673,7 +673,7 @@
     "GeneralData": "Date Generale",
     "Bulletin": "Bulletin",
     "Study": "Studii",
-    "MaterialStatus": "Starea civila",
+    "MaterialStatus": "Starea civilă",
     "MilitaryObligation": "Obligație militară",
     "Autobiography": "Autobiografie",
     "Declaration": "Declaraţie"
