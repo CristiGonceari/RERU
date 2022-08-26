@@ -201,6 +201,10 @@ export class ApproveSolicitedTestComponent implements OnInit {
     })
   }
 
+  ceckFileNameLength(fileName: string) {
+    return fileName.length <= 20 ? fileName : fileName.slice(0, 20) + "...";
+  }
+
   backClicked() {
     this.location.back();
   }

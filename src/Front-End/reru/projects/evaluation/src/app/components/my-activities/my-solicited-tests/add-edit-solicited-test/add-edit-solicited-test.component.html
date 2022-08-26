@@ -81,9 +81,9 @@
                                                         <div class="col-lg-9 col-xl-9">
                                                             <button *ngIf="item.fileName.length > 0"
                                                                 (click)="GetFile(item.fileId)"
-                                                                class="btn btn-light-success font-weight-bold mr-3">
+                                                                class="btn btn-light-success font-weight-bold mr-3" ngbTooltip="{{item.fileName}}">
                                                                 <i class="flaticon-profile"></i>
-                                                                {{ item.fileName }}
+                                                                {{ ceckFileNameLength(item.fileName) }}
                                                             </button>
                                                             <span *ngIf="item.fileName.length > 0"
                                                                 (click)="deleteFile(item.fileId)"
