@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent;
+﻿using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Services;
@@ -13,7 +6,14 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
+using RERU.Data.Entities.StaticExtensions;
 using RERU.Data.Persistence.Context;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessages.SendSolicitedVacantPositionEmailMessages
 {
@@ -81,6 +81,8 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
 
                 var result = _mapper.Map<EventUser>(newEventUser);
 
+                await AddEmailEventUserNotification(result);
+
                 await _appDbContext.EventUsers.AddAsync(result);
             }
             await _appDbContext.SaveChangesAsync();
@@ -100,6 +102,30 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
                 }
             });
         }
+
+        private async Task AddEmailEventUserNotification(EventUser eventUser)
+        {
+            var item = await _appDbContext.EventUsers
+                .Include(x => x.UserProfile)
+                .Include(x => x.Event)
+                .FirstOrDefaultAsync(x => x.Id == eventUser.Id);
+
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
+            {
+                Subject = "Invitație la eveniment",
+                To = item.UserProfile.Email,
+                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", item.UserProfile.FullName },
+                    { "{email_message}", GetTableContent(item) }
+                }
+            });
+        }
+
+        private string GetTableContent(EventUser eventUser)
+            => $@"Dl/Dna {eventUser.UserProfile.GetFullName()}, sunteți invitat/ă la evenimentul “{eventUser.Event.Name}”, 
+                în rol de candidat. În scurt timp veți primi invitație la test.Acesta v-a fi desfășurat online.";
 
         private async Task<SolicitedVacantPosition> GetSolicitedVacantPosition(SendSolicitedVacantPositionEmailMessagesCommand request) => 
                  _appDbContext.SolicitedVacantPositions
