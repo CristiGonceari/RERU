@@ -44,8 +44,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStar
 
             var test = _appDbContext.Tests
                 .Include(x => x.TestTemplate.Settings)
+                .Include(x => x.TestTemplate)
                 .Where(test => test.UserProfileId == int.Parse(currentUser.Id) &&
-                    (test.TestStatus == TestStatusEnum.Programmed || test.TestStatus == TestStatusEnum.AlowedToStart))
+                            test.TestTemplate.Mode == TestTemplateModeEnum.Test &&
+                            (test.TestStatus == TestStatusEnum.Programmed || test.TestStatus == TestStatusEnum.AlowedToStart))
                 .FirstOrDefault(test => test.Event == null
                     ? test.ProgrammedTime <= _timeRangeBeforeStart && test.ProgrammedTime >= _timeRangeAfterStart
                     : test.Event.FromDate <= DateTime.Now && test.Event.TillDate >= DateTime.Now);
