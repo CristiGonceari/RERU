@@ -124,7 +124,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
           this.eventsWithTestList = res.data.events;
           this.requiredDocumentsList = res.data.requiredDocuments;
           this.getFiles(),
-  
+
             this.showCard = true;
         } else {
           this.showCard = false;
@@ -136,7 +136,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
           this.eventsWithTestList = res.data.events;
           this.requiredDocumentsList = res.data.requiredDocuments;
           this.getFiles(),
-  
+
             this.showCard = true;
         } else {
           this.showCard = false;
@@ -270,6 +270,10 @@ export class AddEditSolicitedTestComponent implements OnInit {
     this.solicitedVacantPositionUserFileService.deleteFile(fileId).subscribe(() => {
       this.getFiles()
     })
+  }
+
+  ceckFileNameLength(fileName: string) {
+    return fileName.length <= 20 ? fileName : fileName.slice(0, 20) + "...";
   }
 
   backClicked() {
