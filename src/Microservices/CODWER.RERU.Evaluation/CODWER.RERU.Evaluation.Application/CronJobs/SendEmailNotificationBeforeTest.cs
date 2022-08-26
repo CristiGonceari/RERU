@@ -23,7 +23,7 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
         private readonly IOptions<PlatformConfig> _options;
         private readonly PlatformConfig _platformConfig;
 
-        public SendEmailNotificationBeforeTest(AppDbContext appDbContext, INotificationService notificationService, IOptions<PlatformConfig> options, PlatformConfig platformConfig)
+        public SendEmailNotificationBeforeTest(AppDbContext appDbContext, INotificationService notificationService, IOptions<PlatformConfig> options)
         {
             _appDbContext = appDbContext;
             _notificationService = notificationService;
