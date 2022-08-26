@@ -18,7 +18,7 @@
                             <th scope="col">{{'verify-test.student' | translate}}</th>
                             <th scope="col">{{'events.event' | translate}}</th>
                             <th scope="col">{{'dashboard.status' | translate}}</th>
-                            <th scope="col">{{'dashboard.result' | translate}}</th>
+                            <!-- <th scope="col">{{'dashboard.result' | translate}}</th> -->
                             <th scope="col" style="width: 150px"></th>
                         </tr>
                     </thead>
@@ -53,7 +53,7 @@
                                     </span>
                                 </div>
                             </td>
-                            <td>
+                            <!-- <td>
                                 <span>
                                     <span class="font-size-lg"
                                         *ngIf="test.result == resultEnum.NoResult">{{'statuses.NoResult' |
@@ -65,7 +65,7 @@
                                         *ngIf="test.result == resultEnum.NotPassed">{{'statuses.not-passed' |
                                         translate}}</span>
                                 </span>
-                            </td>
+                            </td> -->
                             <td>
                                 <button *ngIf="test.testStatus == enum.InProgress" class="btn btn-light-success"
                                     [routerLink]="['../performing-evaluation', test.id]">
