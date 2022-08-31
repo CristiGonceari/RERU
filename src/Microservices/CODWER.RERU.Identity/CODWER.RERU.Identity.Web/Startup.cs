@@ -88,7 +88,7 @@ namespace CODWER.RERU.Identity.Web
                                     {
                                         LoadMetadata = true
                                     });
-                                // options.SPOptions.PublicOrigin = new Uri("ms/identity-new/saml2");
+                                //options.SPOptions.PublicOrigin = new Uri("ms/identity-new/saml2");
                                 options.SPOptions.ServiceCertificates.Add(new X509Certificate2("erp_platform.pfx", "7Q[CM8fbv(!^JdJD"));
                                 options.SPOptions.ValidateCertificates = false;
                                 options.SPOptions.MinIncomingSigningAlgorithm = "http://www.w3.org/2000/09/xmldsig#rsa-sha1";
