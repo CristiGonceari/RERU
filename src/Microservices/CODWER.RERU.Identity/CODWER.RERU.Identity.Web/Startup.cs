@@ -82,18 +82,18 @@ namespace CODWER.RERU.Identity.Web
                                 options.SignOutScheme = IdentityServerConstants.DefaultCookieAuthenticationScheme;
                                 // options.SPOptions.ReturnUrl = new Uri("http://localhost:5000");
                                 options.SPOptions.EntityId = new EntityId(Configuration.GetValue<string>("SAML_ENTITY_ID"));
-                                options.IdentityProviders.Add(
-                                    new IdentityProvider(
-                                        new EntityId(Configuration.GetValue<string>("SAML_METADATA_ENDPOINT")), options.SPOptions)
-                                    {
-                                        LoadMetadata = true
-                                    });
+                                // options.IdentityProviders.Add(
+                                //     new IdentityProvider(
+                                //         new EntityId(Configuration.GetValue<string>("SAML_METADATA_ENDPOINT")), options.SPOptions)
+                                //     {
+                                //         LoadMetadata = true
+                                //     });
                                 //options.SPOptions.PublicOrigin = new Uri("ms/identity-new/saml2");
                                 options.SPOptions.ServiceCertificates.Add(new X509Certificate2("erp_platform.pfx", "7Q[CM8fbv(!^JdJD"));
                                 options.SPOptions.ValidateCertificates = false;
                                 options.SPOptions.MinIncomingSigningAlgorithm = "http://www.w3.org/2000/09/xmldsig#rsa-sha1";
                             });
-            
+
             services.AddCors();
             services.AddSwaggerGen();
         }
