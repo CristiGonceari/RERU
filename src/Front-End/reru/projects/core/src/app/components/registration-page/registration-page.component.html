@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,24 +9,22 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0">
+  <nav class="topbar navbar navbar-expand-lg navbar-dark bg-dark p-0">
     <div class="container-fluid">
       <div class="d-flex pt-2">
         <img src="../../../assets/logo_2.png" alt="..." class="img-thumbnail" style="max-height: 40px;">
-        <h2 style="color: white; font-family: Georgia, serif;" class="ml-3 pt-1 mb-3">
+        <h2 style="color: white;" class="ml-3 pt-1 mb-3">
           {{'registration-page.registration-candidate-page' | translate }}</h2>
       </div>
       <div class=" d-flex justify-content-end" id="navbarSupportedContent">
         <div class="topbar">
           <div ngbDropdown #languageDropdown="ngbDropdown" class="dropdown">
             <div class="topbar-item mr-4" data-toggle="dropdown" data-offset="10px,0px" aria-expanded="false">
-              <div ngbDropdownToggle id="languageDropdown" class="btn btn-light-primary px-3"
-                style="border-radius:10px; font-weight: bold;">
+              <div ngbDropdownToggle id="languageDropdown" class="btn btn-light-primary px-3">
                 {{ getLang() }}
               </div>
             </div>
-            <div ngbDropdownMenu aria-labelledby="languageDropdown" style="border-radius: 7px; border: white;"
-              class="dropdown-menu p-0 m-0 dropdown-menu-left dropdown-menu-anim-up">
+            <div ngbDropdownMenu aria-labelledby="languageDropdown" class="dropdown-menu p-0 m-0 dropdown-menu-left dropdown-menu-anim-up">
               <ul class="navi navi-hover py-3">
                 <li class="navi-item">
                   <a href="javascript:;" (click)="useLanguage('ro'); languageDropdown.close()"
@@ -88,12 +86,12 @@
   <!-- </div> -->
 
   <div class="container-fluid" style="background-color: #eff1f3; height: 100%;">
-    <div class="container" style="font-family: Georgia, serif;">
+    <div class="container">
       <div class="row p-3 mt-4">
         <!-- <h1 class="text-center mb-4">{{ 'registration-page.registration' | translate }}</h1> -->
         <div *ngIf="!success" class="col-xl-12 col-lg-12 col-md-12 col-xs-12"
-          style="padding: 2.25rem; background-color: #fff; border: 1px solid #dee2e6; border-radius: 0.25rem; max-width: 100%; height: auto; margin-left: 4%">
-          <h2 class="text-center" style="margin-bottom: 2.25rem; font-family: Georgia, serif;">{{
+          style="padding: 2.25rem; background-color: #fff; border: 1px solid #dee2e6; border-radius: 0.25rem; max-width: 100%; height: auto;">
+          <h2 class="text-center" style="margin-bottom: 2.25rem;">{{
             'registration-page.registration-datas' | translate
             }}</h2>
           <form [formGroup]="userForm">
@@ -101,7 +99,7 @@
               <div class="form-group col-md-4">
                 <label for="inputEmail4">{{ 'table.name' | translate }}</label>
                 <input class="form-control form-control-lg form-control-solid" name="firstName" type="text"
-                  formControlName="firstName"
+                  formControlName="firstName" [placeholder]="'table.name' | translate"
                   [ngClass]="{'is-invalid': hasErrors('firstName'), 'is-valid': userForm.get('firstName').valid}" />
                 <div *ngIf="hasErrors('firstName')" class="fv-plugins-message-container">
                   <div *ngIf="hasError('firstName', 'required')" data-field="firstName" data-validator="notEmpty"
@@ -115,7 +113,7 @@
               <div class="form-group col-md-4">
                 <label for="inputPassword4">{{ 'table.lastName' | translate }}</label>
                 <input class="form-control form-control-lg form-control-solid" name="lastName" type="text"
-                  formControlName="lastName"
+                  formControlName="lastName" [placeholder]="'table.lastName' | translate"
                   [ngClass]="{'is-invalid': hasErrors('lastName'), 'is-valid': userForm.get('lastName').valid}" />
                 <div *ngIf="hasErrors('lastName')" class="fv-plugins-message-container">
                   <div *ngIf="hasError('lastName', 'required')" data-field="lastName" data-validator="notEmpty"
@@ -129,7 +127,7 @@
               <div class="form-group col-md-4">
                 <label for="inputPassword4">{{ 'table.father-name' | translate }}</label>
                 <input class="form-control form-control-lg form-control-solid" name="fatherName" type="text"
-                  formControlName="fatherName"
+                  formControlName="fatherName" [placeholder]="'table.father-name' | translate"
                   [ngClass]="{'is-invalid': hasErrors('fatherName'), 'is-valid': userForm.get('fatherName').valid}" />
                 <div *ngIf="hasErrors('fatherName')" class="fv-plugins-message-container">
                   <div *ngIf="hasError('fatherName', 'required')" data-field="fatherName" data-validator="notEmpty"
@@ -144,7 +142,8 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputEmail4">{{ 'table.idnp' | translate }}</label>
-                <input class="form-control form-control-lg form-control-solid" name="idnp" maxlength="13" minlength="13"
+                <input class="form-control form-control-lg form-control-solid"
+                  [placeholder]="'table.idnp' | translate" name="idnp" maxlength="13" minlength="13"
                   onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off" type="text"
                   formControlName="idnp"
                   [ngClass]="{'is-invalid': hasErrors('idnp'), 'is-valid': userForm.get('idnp').valid }" />
@@ -161,14 +160,14 @@
                 <!-- <app-date [isDisabled]="false" [isReverse]="false" [parent]="userForm" [date]="'birthday'"
                   [placeholder]="dd-mm-yyyy"></app-date> -->
                     <app-date [parent]="userForm" [date]="'birthday'"
-                        [placeholder]="'birthday' | translate"></app-date>
+                        [placeholder]="'user.birthday' | translate"></app-date>
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputPassword4">{{ 'user.phone' | translate }}</label>
                 <input class="form-control form-control-lg form-control-solid" name="phoneNumber" type="tel"
-                  formControlName="phoneNumber"
+                  formControlName="phoneNumber" [placeholder]="'user.phone' | translate"
                   [ngClass]="{'is-invalid': hasErrors('phoneNumber'), 'is-valid': userForm.get('phoneNumber').valid}" />
                 <div *ngIf="hasErrors('phoneNumber')" class="fv-plugins-message-container">
                   <div *ngIf="hasError('phoneNumber', 'required')" data-field="phoneNumber" data-validator="notEmpty"
@@ -182,7 +181,7 @@
               <div class="form-group col-md-6">
                 <label for="inputPassword4">{{ 'table.email' | translate }}</label>
                 <input class="form-control form-control-lg form-control-solid" name="email" type="email"
-                  formControlName="email"
+                  formControlName="email" [placeholder]="'table.email' | translate"
                   [ngClass]="{'is-invalid': hasErrors('email'), 'is-valid': userForm.get('email').valid}" />
                 <div *ngIf="hasErrors('email')" class="fv-plugins-message-container">
                   <div *ngIf="hasError('email', 'required')" data-field="email" data-validator="notEmpty"
@@ -238,18 +237,18 @@
             </div> -->
             <div class="form-row">
               <div class="col-md-12">
-                <p>
-                  <input type="checkbox" id="checkbox" (change)="accept = !accept">
-                  {{ 'registration-page.accept-condition' | translate }} <button type="button" class="btn btn-link"
-                    (click)="openAcceptConditionsModal()">{{ 'registration-page.registration-conditions' | translate
-                    }}</button>
-                </p>
+                <div class="d-flex align-items-center gap-2">
+                  <input type="checkbox" id="termsAndConditions" (change)="accept = !accept">
+                  <label class="m-0" for="termsAndConditions">
+                    {{ 'registration-page.accept-condition' | translate }}
+                    <span class="p-0 btn btn-link" (click)="openAcceptConditionsModal()">{{ 'registration-page.registration-conditions' | translate }}
+                    </span>.
+                  </label>
+                  </div>
               </div>
             </div>
-            <button type="submit" [disabled]="!accept || userForm.invalid" class="btn btn-primary float-right"
-              (click)="verifyEmailCode()">{{
-              'button.confirm' |
-              translate }}</button>
+            <button type="submit" [disabled]="!accept || userForm.invalid" class="btn btn-primary float-right mt-3 mt-sm-3 mt-md-0"
+              (handle)="verifyEmailCode()">{{ 'button.confirm' | translate }}</button>
           </form>
         </div>
         <div *ngIf="success" class="col-xl-12 col-lg-12 col-md-12 col-xs-12"
@@ -267,7 +266,7 @@
     </div>
   </div>
 
-  <div class="footer fixed-bottom container-fluid bg-dark navbar-dark py-2">
+  <div class="d-none d-md-block footer container-fluid bg-dark navbar-dark py-2">
     <p class="text-center text-muted mt-1">&copy; {{ year }} Company, Inc</p>
   </div>
 

@@ -1,4 +1,20 @@
-::ng-deep .my-class .modal-dialog { 
+::ng-deep .my-class .modal-dialog {
     max-width: 80%;
     width: 80%;
+}
+
+:host {
+  .btn.btn-link {
+    font-family: 'Roboto', sans-serif;
+  }
+  button[type="submit"] {
+    @media screen and (max-width: 576px) {
+      width: 100%;
+    }
+  }
+
+  #navbarSupportedContent .topbar {
+    top: 50px;
+  }
+
 }

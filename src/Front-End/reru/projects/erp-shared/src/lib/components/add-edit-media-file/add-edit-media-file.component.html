@@ -10,7 +10,7 @@
 </div>
 <div *ngIf="!isLoadingMedia">
     <div class="d-flex">
-        <app-confirm-button type="button" class="btn mb-5" (click)="drop.showFileSelector()">{{'button.attach' | translate}}</app-confirm-button> 
+        <app-confirm-button type="button" class="btn p-0" (click)="drop.showFileSelector()">{{'button.attach' | translate}}</app-confirm-button>
         <p class="mb-0 ml-5 mt-1 font-weght-lighter" *ngIf="attachedFile">{{attachedFile.name}}</p>
         <p class="mb-0 ml-5 mt-2 font-weght-lighter" *ngIf="fileId">{{fileName}}</p>
     </div>
@@ -31,4 +31,3 @@
         <p *ngIf="imageUrl || videoUrl || audioUrl" class="mx-5 my-auto h1 cursor-pointer" (click)="onRemoved()"> &#215; </p>
     </div>
 </div>
- 
