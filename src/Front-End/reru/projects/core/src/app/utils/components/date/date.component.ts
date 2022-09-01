@@ -16,9 +16,9 @@ export class DateComponent implements OnChanges {
   @Input() isReverse: boolean;
   @Input() isDisabled: boolean;
   isPatternError: boolean;
-  
+
   constructor() { }
-  
+
   dateModel: any;
 
   ngOnChanges(): void {
@@ -35,6 +35,12 @@ export class DateComponent implements OnChanges {
     } else if (this.parent && (!this.parent.get(date) || this.parent.get(date) && !this.parent.get(date).value)) {
       this.dateModel = null;
     }
+  }
+
+  get isInvalid(): boolean {
+    return this.parent.invalid &&
+          (this.parent.dirty ||
+          this.parent.touched);
   }
 
   handleChange(event: any): void {

@@ -1,9 +1,17 @@
-div.input-group-append {
-  button {
-    height: auto;
+:host {
+  div.input-group-append {
+    button {
+      height: auto;
+    }
   }
-}
 
-input {
-  height: 45px;
+  input {
+    height: 45px;
+  }
+
+  input.is-invalid + .input-group-append button {
+    border-color: #dc3545;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
 }

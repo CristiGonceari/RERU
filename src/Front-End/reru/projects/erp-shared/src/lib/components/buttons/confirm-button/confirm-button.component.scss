@@ -1,3 +1,5 @@
+@import "../responsive-buttons";
+
 :host {
   padding: 0;
 
@@ -20,5 +22,8 @@
       color: #FFF;
       background: #6993FF;
     }
+    @include responsive-container;
   }
+
+  @include responsive-container;
 }

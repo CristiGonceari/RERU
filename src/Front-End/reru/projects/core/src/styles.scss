@@ -34,9 +34,9 @@ app-login,
 }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: 'Roboto', "Helvetica Neue", sans-serif; }
 
-.form-group.required label:after { 
+.form-group.required label:after {
     content:"*";
     color:red;
     padding: 0 0 0 4px;

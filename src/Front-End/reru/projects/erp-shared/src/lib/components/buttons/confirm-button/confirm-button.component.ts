@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
@@ -6,18 +6,13 @@ import { SafeHtml } from '@angular/platform-browser';
   templateUrl: './confirm-button.component.html',
   styleUrls: ['./confirm-button.component.scss']
 })
-export class ConfirmButtonComponent implements OnInit {
-  @Input() value: string; 
+export class ConfirmButtonComponent {
+  @Input() type: string = 'button';
+  @Input() value: string;
   @Input() icon: string;
   @Input() disabled: boolean;
   @Input() width: string;
   @Output() handle: EventEmitter<void> = new EventEmitter<void>();
 
   providers: [SafeHtml]
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

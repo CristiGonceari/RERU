@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
@@ -6,17 +6,12 @@ import { SafeHtml } from '@angular/platform-browser';
   templateUrl: './add-button.component.html',
   styleUrls: ['./add-button.component.scss']
 })
-export class AddButtonComponent implements OnInit {
-  @Input() value: string; 
+export class AddButtonComponent {
+  @Input() type: string = 'button';
+  @Input() value: string;
   @Input() icon: string;
   @Input() disabled: boolean;
   @Output() handle: EventEmitter<void> = new EventEmitter<void>();
 
   providers: [SafeHtml]
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }
