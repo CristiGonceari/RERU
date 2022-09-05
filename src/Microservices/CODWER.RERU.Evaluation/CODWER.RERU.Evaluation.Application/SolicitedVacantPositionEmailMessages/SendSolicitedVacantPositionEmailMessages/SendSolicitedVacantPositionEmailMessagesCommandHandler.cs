@@ -81,9 +81,11 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
 
                 var result = _mapper.Map<EventUser>(newEventUser);
 
+                await _appDbContext.EventUsers.AddAsync(result);
+                await _appDbContext.SaveChangesAsync();
+
                 await AddEmailEventUserNotification(result);
 
-                await _appDbContext.EventUsers.AddAsync(result);
             }
             await _appDbContext.SaveChangesAsync();
         }
