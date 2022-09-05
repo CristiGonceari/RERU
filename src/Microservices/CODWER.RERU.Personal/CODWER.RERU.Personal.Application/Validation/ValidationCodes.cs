@@ -157,6 +157,7 @@
         public static string EMPTY_STUDY_GRADUATION_YEAR = "02008006";
         public static string INVALID_STUDY_TYPE = "02008007";
         public static string STUDY_NOT_FOUND = "02008008";
+        public static string INVALID_TIME_RANGE = "02008009";
 
         //contract
         public static string CONTRACT_NOT_FOUND = "02009008";
