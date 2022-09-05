@@ -32,6 +32,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public TestTemplateModeEnum ModeStatus { get; set; }
         public TestResultStatusEnum Result { get; set; }
         public DateTime ProgrammedTime { get; set; }
+        public DateTime? EndProgrammedTime { get; set; }
         public DateTime? EndTime { get; set; }
         public bool? ViewTestResult { get; set; }
     }
