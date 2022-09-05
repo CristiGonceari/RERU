@@ -454,7 +454,8 @@
     "01000115": "Telefon nevalid",
     "01000501": "Rol nevalid",
     "01000602": "Departament nevalid",
-    "01000107": "Email dublicat in sistem"
+    "01000107": "Email dublicat in sistem",
+    "01000909": "Interval de timp nevalid"
   },
   "print": {
     "print-table": "Printare tabel",
