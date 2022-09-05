@@ -960,7 +960,7 @@
     "add-test": "Solicita o pozitie",
     "remove": "Ștergeți pozitia solicitata",
     "remove-msg": "Sigur doriți să ștergeți aceasta pozitie solicitata?",
-    "succes-remove-msg": "Pozitia solicitata a fost șters cu succes",
+    "succes-remove-msg": "Pozitia solicitata a fost ștearsa cu succes",
     "subtitle": "Gestionarea pozitiilor solicitate",
     "test-data": "Introduceți detaliile pozitiei solicitat și confirmați",
     "test-details": "Detaliile pozitiei solicitate",
