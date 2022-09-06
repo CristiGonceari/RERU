@@ -96,7 +96,6 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPosit
         }
 
         private async Task<string> GetEmailContentForCandidatePosition(string candidateName, string positionName) =>
-                               $@"<p style=""font-size: 22px; font-weight: 300;"">Candidatul ""{candidateName}""</p>
-                            <p style=""font-size: 22px;font-weight: 300;"">A candidat la pozitia ""{positionName}"".</p>";
+                               $@"<p style=""font-size: 22px; font-weight: 300;"">candidatul ""{candidateName}"", a candidat la pozitia ""{positionName}"".</p>";
     }
 }

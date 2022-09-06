@@ -66,7 +66,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.SendToAssignedEvalu
 
         private async Task<string> GetTableContent(string eventName)
         {
-            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la evenimentul ""{eventName}"" în rol de evaluator.</p>";
+            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la evenimentul ""{eventName}"", în rol de evaluator.</p>";
 
             return content;
         }

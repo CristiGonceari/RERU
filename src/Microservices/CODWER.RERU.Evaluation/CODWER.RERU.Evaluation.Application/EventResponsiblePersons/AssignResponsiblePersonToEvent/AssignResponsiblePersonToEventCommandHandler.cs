@@ -102,6 +102,6 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
         }
 
         private string GetTableContent(EventResponsiblePerson eventResponsiblePerson)
-         => $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la evenimentul ""{eventResponsiblePerson.Event.Name}"" în rol de persoană responsabilă.</p>";
+         => $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la evenimentul ""{eventResponsiblePerson.Event.Name}"", în rol de persoană responsabilă.</p>";
     }
 }
