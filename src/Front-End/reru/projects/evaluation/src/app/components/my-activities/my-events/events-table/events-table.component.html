@@ -14,7 +14,7 @@
                 <th scope="col" style="width: 170px;">
                     {{'dashboard.score' | translate}} / {{'dashboard.min-score' | translate}}
                 </th>
-                <th scope="col" style="width: 100px;">{{'dashboard.result' | translate}}</th>
+                <!-- <th scope="col" style="width: 100px;">{{'dashboard.result' | translate}}</th> -->
                 <th scope="col" style="width: 120px"></th>
             </tr>
         </thead>
@@ -48,7 +48,7 @@
                     <span *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</span>
                     <span *ngIf="test.result != resultEnum.NoResult">{{ test.accumulatedPercentage }}% / {{test.minPercent}}%</span>
                 </td>
-                <td>
+                <!-- <td>
                     <span *ngIf="test.testStatus == enum.AlowedToStart">
                         {{'statuses.AlowedToStart' | translate}}
                     </span>
@@ -68,7 +68,7 @@
                         <span *ngIf="test.result == resultEnum.Passed">{{'statuses.passed' | translate}}</span>
                         <span *ngIf="test.result == resultEnum.NotPassed">{{'statuses.not-passed' | translate}}</span>
                     </span>
-                </td>
+                </td> -->
                 <td>
                     <button *ngIf="test.testStatus == enum.InProgress" class="btn btn-light-success"
                         [routerLink]="['../one-test-per-page', test.id]">

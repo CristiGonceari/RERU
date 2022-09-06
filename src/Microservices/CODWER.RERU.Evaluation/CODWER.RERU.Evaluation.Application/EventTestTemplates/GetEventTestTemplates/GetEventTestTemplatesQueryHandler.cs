@@ -26,6 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.GetEventTestTemp
             var eventTestTemplates = _appDbContext.EventTestTemplates
                 .Include(x => x.TestTemplate)
                 .Where(x => x.EventId == request.EventId)
+                .OrderBy(x => x.CreateDate)
                 .Select(x => x.TestTemplate)
                 .AsQueryable();
 
