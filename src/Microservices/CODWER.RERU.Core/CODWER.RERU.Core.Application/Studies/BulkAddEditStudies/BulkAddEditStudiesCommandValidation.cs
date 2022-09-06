@@ -13,9 +13,8 @@ namespace CODWER.RERU.Core.Application.Studies.BulkAddEditStudies
                 .SetValidator(new StudyValidator(appDbContext));
 
             RuleForEach(x => x.Data)
-               .Must(x => x.YearOfAdmission < x.GraduationYear);
-                //.WithErrorCode(ValidationCodes.INVALID_TIME_RANGE);
-
+               .Must(x => x.YearOfAdmission < x.GraduationYear)
+                .WithErrorCode(ValidationCodes.INVALID_TIME_RANGE);
         }
     }
 }
