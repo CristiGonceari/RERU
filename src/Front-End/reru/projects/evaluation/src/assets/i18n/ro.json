@@ -928,7 +928,8 @@
     "03030205": "Ați fost invitat la eveniment ca evaluator",
     "03030206": "Ați fost invitat la test ca evaluator",
     "03030207": "Toți candidații din eveniment au terminat testul",
-    "03030208": "Testul dvs. solicitat a fost refuzat"
+    "03030208": "Testul dvs. solicitat a fost refuzat",
+    "03002201": "Nu puteti sterge pozitia la care cineva a aplicat"
   },
   "login": {
     "colaborator-id": "Colaborator ID",
@@ -959,7 +960,7 @@
     "add-test": "Solicita o pozitie",
     "remove": "Ștergeți pozitia solicitata",
     "remove-msg": "Sigur doriți să ștergeți aceasta pozitie solicitata?",
-    "succes-remove-msg": "Pozitia solicitata a fost șters cu succes",
+    "succes-remove-msg": "Pozitia solicitata a fost ștearsa cu succes",
     "subtitle": "Gestionarea pozitiilor solicitate",
     "test-data": "Introduceți detaliile pozitiei solicitat și confirmați",
     "test-details": "Detaliile pozitiei solicitate",

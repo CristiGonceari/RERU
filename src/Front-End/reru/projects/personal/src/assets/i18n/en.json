@@ -898,7 +898,9 @@
     "02008008": "The studies were not found",
     "02016001": "Empty content",
     "02016002": "Empty name",
-    "02016003": "Article not found"
+    "02016003": "Article not found",
+    "02008009": "Invalid time range"
+
   },
   "expired-token": {
     "title": "Expired session",

@@ -110,20 +110,31 @@
                                 <h2 class="font-weight-bold">Conectare</h2>
                                 <p class="text-muted font-weight-bold">Introduceți email-ul dvs. de utilizator și parola</p>
                             </div>
-                            <form class="form" id="kt_login_signin_form" asp-route="Login">
+                            <form class="form" id="kt_login_signin_form" asp-route="Login" autocomplete="off">
 
                                 <input type="hidden" asp-for="ReturnUrl" />
 
                                 <div class="form-group py-3 m-0">
-                                    <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="Username" placeholder="Email" name="username" asp-for="Username" autofocus/>
+                                    <input autocomplete="off" class="form-control h-auto placeholder-dark-75" type="email" placeholder="Email" asp-for="Username" autofocus/>
                                 </div>
-                                <div class="form-group py-3 border-top m-0">
-                                    <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="Password" placeholder="Parola" asp-for="Password" name="password" autocomplete="off"/>
+                                <div class="input-group py-3 border-top m-0">
+                                    <input id="id_password" class="form-control h-auto placeholder-dark-75" type="password" placeholder="Parola" asp-for="Password" autocomplete="off" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text cursor-pointer" id="togglePassword">
+                                            <span class="svg-icon svg-icon-2x"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"/>
+                                                    <path d="M3,12 C3,12 5.45454545,6 12,6 C16.9090909,6 21,12 21,12 C21,12 16.9090909,18 12,18 C5.45454545,18 3,12 3,12 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+                                                    <path d="M12,15 C10.3431458,15 9,13.6568542 9,12 C9,10.3431458 10.3431458,9 12,9 C13.6568542,9 15,10.3431458 15,12 C15,13.6568542 13.6568542,15 12,15 Z" fill="#000000" opacity="0.3"/>
+                                                </g>
+                                            </svg></span>
+                                        </span>
+                                    </div>
                                 </div>
 
                                 @if (Model.AllowRememberLogin)
                                 {
-                                    <div class="form-group d-flex flex-wrap justify-content-between align-items-center mt-3">
+                                    <div class="form-group d-flex flex-wrap justify-content-between align-items-end mt-3">
                                         <div class="checkbox-inline">
                                             <label class="checkbox checkbox-outline m-0 text-muted" asp-for="RememberLogin">
                                                 <input type="checkbox" name="remember" asp-for="RememberLogin" />
@@ -133,13 +144,13 @@
                                     </div>
                                 }
 
-                            <div class="form-group d-flex flex-wrap justify-content-between align-items-center mt-2">
+                            <div class="form-group d-flex flex-wrap justify-content-between align-items-end mt-2">
                                 <div class="my-3 mr-2">
                                     <span class="text-muted mr-2">Nu aveți cont?</span>
                                     <a href="@(Model.RegistrationPageUrl)" id="kt_login_signup" class="font-weight-bold">Înregistrează-te</a>
                                  </div>
- 
-                                 <button id="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3" name="button" value="login">Loghează-te</button>
+
+                                 <button id="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-7 py-3 my-3" name="button" value="login">Logare</button>
                                 <div class="my-3 mr-2">
                                     <span class="text-muted mr-2">Vreți să candidați?</span>
                                     <a href="@(Model.PositionsPageUrl)" id="kt_login_signup" class="font-weight-bold">Poziții vacante</a>
@@ -176,15 +187,15 @@
                         </div>
                         <form class="form" novalidate="novalidate" id="kt_login_signup_form">
                             <div class="form-group py-3 m-0">
-                                <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="text" placeholder="Fullname" name="fullname" autocomplete="off" />
+                                <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="text" placeholder="Fullname" autocomplete="off" />
                             </div>
                             <div class="form-group py-3 border-top m-0">
-                                <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="password" placeholder="Email" name="email" autocomplete="off" />
+                                <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="password" placeholder="Email" autocomplete="off" />
                             </div>
                             <div class="form-group py-3 border-top m-0">
                                 <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="password" placeholder="Password" name="password" autocomplete="off" />
                             </div>
-                            <div class="form-group py-3 border-top m-0">
+                            <div class="input-group py-3 border-top m-0">
                                 <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="password" placeholder="Confirm password" name="cpassword" autocomplete="off" />
                             </div>
                             <div class="form-group mt-5">
@@ -222,10 +233,15 @@
         </div>
         <div class="order-1 order-lg-2 flex-column-auto flex-lg-row-fluid d-flex flex-column p-7 back-image image-config">
             <div class="d-flex flex-column-fluid flex-lg-center">
-                <div class="d-flex flex-column justify-content-center">
+                <div class="d-none d-sm-none d-md-flex flex-column justify-content-center">
                     <h3 class="display-3 font-weight-bold my-7 text-white text-center">Bună ziua!</h3>
                     <h3 class="display-3 font-weight-bold my-7 text-white text-center">Vă mulțumim că ați accesat</h3>
                     <h3 class="display-3 font-weight-bold my-7 text-white text-center">Platforma de Recrutare și Evaluare a personalului MAI!</h3>
+                </div>
+                <div class="d-flex d-md-none flex-column justify-content-center m-auto">
+                    <h3 class="font-weight-bold my-7 text-white text-center">Bună ziua!</h3>
+                    <h3 class="font-weight-bold my-7 text-white text-center">Vă mulțumim că ați accesat</h3>
+                    <h3 class="font-weight-bold my-7 text-white text-center">Platforma de Recrutare și Evaluare a personalului MAI!</h3>
                 </div>
             </div>
         </div>

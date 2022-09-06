@@ -901,7 +901,9 @@
     "02008008": "Studiile nu au fost găsite",
     "02016001": "Conținut gol",
     "02016002": "Nume gol",
-    "02016003": "Articolul nu a fost găsit"
+    "02016003": "Articolul nu a fost găsit",
+    "02008009": "Interval de timp nevalid"
+
   },
   "expired-token": {
     "title": "Sesiune expirată",

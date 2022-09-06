@@ -455,7 +455,9 @@
     "01000109": "Minimum age must be 18",
     "01000115": "Invalid user phone",
     "01000501": "Invalid role",
-    "01000602": "Invalid department"
+    "01000602": "Invalid department",
+    "01000107": "Duplicate email in system",
+    "01000909": "Invalid time range"
   },
   "print": {
     "print-table": "Print table",

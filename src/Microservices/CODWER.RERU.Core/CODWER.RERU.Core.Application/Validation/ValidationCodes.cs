@@ -67,6 +67,7 @@ namespace CODWER.RERU.Core.Application.Validation
         public static string EMPTY_STUDY_GRADUATION_YEAR = "01000906";
         public static string INVALID_STUDY_TYPE = "01000907";
         public static string STUDY_NOT_FOUND = "01000908";
+        public static string INVALID_TIME_RANGE = "01000909";
 
         //ModernLanguage
         public static string MODERN_LANGUAGE_NOT_FOUND = "01001001";

@@ -30,6 +30,7 @@ namespace CODWER.RERU.Core.Application.Users.RemoveUser
         {
             var userProfile = await AppDbContext.UserProfiles
                 .Include(x => x.Identities)
+                .Include(x => x.Contractor)
                 .FirstOrDefaultAsync(u => u.Id == request.Id);
 
             foreach (var identity in userProfile.Identities)
@@ -39,6 +40,7 @@ namespace CODWER.RERU.Core.Application.Users.RemoveUser
             }
 
             AppDbContext.UserProfiles.Remove(userProfile);
+            AppDbContext.Contractors.Remove(userProfile.Contractor);
 
             await AppDbContext.SaveChangesAsync();
 

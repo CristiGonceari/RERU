@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions;
 using RERU.Data.Entities;
 
@@ -24,6 +25,8 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions
 
             CreateMap<AddEditSolicitedPositionDto, SolicitedVacantPosition>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
-            }
+
+            CreateMap<Event, EventsWithTestTemplateDto>();
+        }
     }
 }

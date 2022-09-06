@@ -45,11 +45,12 @@
                                         {{ 'button.edit' | translate }}
                                     </button>
                                     <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
+                                        *ngIf="item.events.length"
                                         [routerLink]="['../my-diagram', item.candidatePositionId]">
                                         {{ 'position.position-diagram' | translate }}
                                     </button>
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem
-                                        *ngIf="item.solicitedTestStatus == enum.New || item.solicitedTestStatus == enum.Wait"
+                                        *ngIf="item.solicitedTestStatus == enum.New"
                                         (click)="openDeleteModal(item.id)">
                                         {{'button.delete' | translate}}
                                     </button>

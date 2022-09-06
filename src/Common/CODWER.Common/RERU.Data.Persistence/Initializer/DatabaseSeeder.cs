@@ -381,7 +381,6 @@ namespace RERU.Data.Persistence.Initializer
                 new MaterialStatusType{Name="Celibatar", TranslateId = 1 },
                 new MaterialStatusType{Name="Casatorit", TranslateId = 2 },
                 new MaterialStatusType{Name="Recasatorit", TranslateId = 3 },
-                new MaterialStatusType{Name="Vaduv", TranslateId = 4 },
             };
 
             var types = appDbContext.MaterialStatusTypes.ToList();
@@ -483,13 +482,11 @@ namespace RERU.Data.Persistence.Initializer
             if (!existMessages)
             {
                 const string messageToReject = "<p style=\\\"text-align:center;\\\">" +
-                                                "<strong>APLICAREA LA O POZITIE VACANTA</strong></p>" +
-                                                "<p style=\\\"margin-left:0px;\\\"><strong>Sir / Madam,</strong></p>" +
-                                                "<p style=\\\"margin-left:0px;\\\">&nbsp;</p>" +
-                                                "<p style=\\\"margin-left:0px;text-align:center;\\\">" +
-                                                "<strong>Vă mulțumim pentru aplicarea Cv-ului la concursului de angajare in cadrul pozitiei date, dar cu parere de rau nu sunteti o candidatura potrivita pentru pozitia data</strong></p>" +
-                                                "<p style=\\\"margin-left:0px;\\\">&nbsp;</p>" +
-                                                "<p style=\\\"margin-left:0px;\\\"><strong>Cu stimă, MAI</strong></p>";
+                                               "<span style=\\\"color:black;\\\">" +
+                                               "<i>Dl/Dna Maculețchi Mihaela, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i></span>" +
+                                               "</p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
+                                               "<i>Ne pare rău, nu sunteți eligibil pentru testele de evaluare.</i></span></p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
+                                               "<i>Cu respect MAI.</i></span></p>";
 
                 var rejectMessage = new SolicitedVacantPositionEmailMessage
                 {
@@ -497,12 +494,13 @@ namespace RERU.Data.Persistence.Initializer
                     MessageType = SolicitedVacantPositionEmailMessageEnum.Reject
                 };
 
-                const string messageToApprove = "<p style=\\\"text-align:center;\\\"><strong>APLICAREA LA O POZITIE VACANTA</strong></p>" +
-                                                "<p style=\\\"margin-left:0px;\\\"><strong>Sir / Madam,</strong></p>" +
-                                                "<p style=\\\"margin-left:0px;\\\">&nbsp;</p>" +
-                                                "<p style=\\\"margin-left:0px;text-align:center;\\\"><strong>Vă mulțumim pentru aplicarea Cv-ului la concursului de angajare in cadrul pozitiei date, privind prezenta tuturor documentelor in regula, sunteti admisi pentru trecerea urmatoarelor probe</strong></p>" +
-                                                "<p style=\\\"margin-left:0px;\\\">&nbsp;</p>" +
-                                                "<p style=\\\"margin-left:0px;\\\"><strong>Cu stimă, MAI</strong></p>";
+                const string messageToApprove = "<p style=\\\"text-align:center;\\\">" +
+                                                "<span style=\\\"color:black;\\\">" +
+                                                "<i>Dl/Dna Maculețchi Mihaela, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i>" +
+                                                "</span></p><p style=\\\"text-align:center;\\\">" +
+                                                "<span style=\\\"color:black;\\\"><i>Sunteți admis la probele de evaluare.</i></span></p>" +
+                                                "<p style=\\\"text-align:center;\\\">" +
+                                                "<span style=\\\"color:black;\\\"><i>În următoarele zile veți primi notificări pe adresa electoronica cu privire la data/ora /locația și modul de desfășurare a acestora.</i></span></p>";
 
                 var approvalMessage = new SolicitedVacantPositionEmailMessage
                 {
@@ -510,13 +508,11 @@ namespace RERU.Data.Persistence.Initializer
                     MessageType = SolicitedVacantPositionEmailMessageEnum.Approve
                 };
 
-                const string messageToWait = "<p style=\\\"text-align:center;\\\"><strong>APLICAREA LA O POZITIE VACANTA</strong></p>" +
-                                             "<p style=\\\"margin-left:0px;\\\"><strong>Sir / Madam,</strong></p>" +
-                                             "<p style=\\\"margin-left:0px;\\\">&nbsp;</p>" +
-                                             "<p style=\\\"margin-left:0px;text-align:center;\\\"><strong>Vă mulțumim pentru aplicarea Cv-ului la concursului de angajare in cadrul pozitiei date, la moment sunteti pozitionati intr-un statut de asteptare</strong></p>" +
-                                             "<p style=\\\"margin-left:0px;text-align:center;\\\"><strong>este necesar sa revizuiti integritatea tuturor documentelor incarcate si intro perioada scurta dosarul dvs. va fi revizuit din nou</strong></p>" +
-                                             "<p style=\\\"margin-left:0px;\\\">&nbsp;</p>" +
-                                             "<p style=\\\"margin-left:0px;\\\"><strong>Cu stimă, MAI</strong></p>";
+                const string messageToWait = "<p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
+                                             "<i>Dl/Dna Maculețchi Mihaela, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i></span></p>" +
+                                             "<p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
+                                             "<i>Sunteți asignat cu statut de asteptare.</i></span></p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
+                                             "<i>Vă rugăm să examinați documentele necesare atașate postului vacant.</i></span></p>";
 
                 var waitMessage = new SolicitedVacantPositionEmailMessage
                 {

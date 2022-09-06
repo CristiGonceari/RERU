@@ -182,7 +182,7 @@ export class RegistrationPageComponent implements OnInit {
       phoneNumber: this.userForm.value.phoneNumber,
       code: this.code
     }
-    
+
     this.inregistrationService.inregistrateUser(data).subscribe(res => {
       this.modalRef.close();
 
