@@ -115,7 +115,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
                 userNames.Add(userProfile.FullName);
             }
 
-            return $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la evaluarea {testName} pentru {string.Join(",", userNames.ToArray())} în rol de evaluator.</p>";
+            return $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la evaluarea ""{testName}"" pentru {string.Join(",", userNames.ToArray())} în rol de evaluator.</p>";
         }
 
         private async Task LogAction(int testId)

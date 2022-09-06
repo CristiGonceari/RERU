@@ -82,7 +82,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotificatio
             {
                 if (item.EventId != null)
                 {
-                    content += $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la testul ""{item.TestTemplate.Name}"" în rol de candidat.</p>
+                    content += $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la testul ""{item.TestTemplate.Name}"", în rol de candidat.</p>
                             <p style=""font-size: 22px; font-weight: 300;""> Testul va avea loc din data de : {item.ProgrammedTime.ToString("dd/MM/yyyy")}.</p> 
                             <p style=""font-size: 22px; font-weight: 300;""> Până pe data de: {item.EndProgrammedTime?.ToString("dd/MM/yyyy")}.</p> 
                             <p>Pentru a accesa testul programat pe Dvs, urmati pasii:</p>
@@ -96,7 +96,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotificatio
                 }
                 else 
                 {
-                    content += $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la testul ""{item.TestTemplate.Name}"" în rol de candidat.</p>
+                    content += $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la testul ""{item.TestTemplate.Name}"", în rol de candidat.</p>
                             <p style=""font-size: 22px; font-weight: 300;""> Testul va avea loc pe data: {item.ProgrammedTime.ToString("dd/MM/yyyy")}.</p> 
                             <p>Pentru a accesa testul programat pe Dvs, urmati pasii:</p>
                             <p>1. Logati- va pe pagina {_platformConfig.BaseUrl} </p>
@@ -110,7 +110,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotificatio
             }
             else
             {
-                content += $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la testul ""{item.TestTemplate.Name}"" în rol de evaluator.</p>";
+                content += $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la testul ""{item.TestTemplate.Name}"", în rol de evaluator.</p>";
             }
 
             return content;

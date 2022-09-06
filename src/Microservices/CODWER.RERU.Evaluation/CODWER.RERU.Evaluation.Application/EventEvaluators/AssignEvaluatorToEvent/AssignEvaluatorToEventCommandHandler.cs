@@ -90,7 +90,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                Subject = "Notificare de test",
+                Subject = "Notificare de eveniment",
                 To = item.Evaluator.Email,
                 HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
@@ -101,7 +101,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
             });
         }
 
-        private  string GetTableContent(EventEvaluator eventEvaluator)
-            => $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la evenimentul ""{eventEvaluator.Event.Name}"" în rol de evaluator.</p>";
+        private string GetTableContent(EventEvaluator eventEvaluator)
+            => $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la evenimentul ""{eventEvaluator.Event.Name}"", în rol de evaluator.</p>";
     }
 }

@@ -176,13 +176,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 
             if (autoCheck)
             {
-                content = $@"<p style=""font-size: 22px; font-weight: 300;"">Testul ""{test.TestTemplate.Name}"" a fost verificat.</p>
-                            <p style=""font-size: 22px;font-weight: 300;"">Ați acumulat {test.AccumulatedPercentage}% din 100 %.</p>
-                            <p style=""font-size: 22px;font-weight: 300;"">Testul a fost trecut {EnumMessages.EnumMessages.GetTestResultStatus(test.ResultStatus)}.</p> ";
+                content = $@"<p style=""font-size: 22px; font-weight: 300;"">testul ""{test.TestTemplate.Name}"" a fost verificat.</p>
+                            <p style=""font-size: 22px;font-weight: 300;"">Ați acumulat {test.AccumulatedPercentage}% din 100 %.</p>";
             }
             else
             {
-                content += $@"<p style=""font-size: 22px; font-weight: 300;"">Toți candidații asignati la evenimentul ""{test.Event.Name}"" au finisat testul.</p>
+                content += $@"<p style=""font-size: 22px; font-weight: 300;"">toți candidații asignati la evenimentul ""{test.Event.Name}"" au finisat testul.</p>
                          <p style=""font-size: 22px;font-weight: 300;"">Puteți începe verificarea.</p>";
             }
 
@@ -190,8 +189,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
         }
 
         private async Task<string> GetEmailContentForCandidatePosition(Test finalizeTest, string userProfileName, string positionName) => 
-                         $@"<p style=""font-size: 22px; font-weight: 300;"">Candidatul ""{userProfileName}"" a finalizat testul</p>
-                            <p style=""font-size: 22px;font-weight: 300;""> La testul ""{finalizeTest.TestTemplate.Name}"" din evenimentul ""{finalizeTest.Event.Name}"".</p>
+                         $@"<p style=""font-size: 22px; font-weight: 300;"">candidatul ""{userProfileName}"" a finalizat testul.</p>
+                            <p style=""font-size: 22px;font-weight: 300;"">La testul ""{finalizeTest.TestTemplate.Name}"" din evenimentul ""{finalizeTest.Event.Name}"".</p>
                             <p style=""font-size: 22px;font-weight: 300;"">Care a candidat la pozitia ""{positionName}"".</p>";
     }
 }

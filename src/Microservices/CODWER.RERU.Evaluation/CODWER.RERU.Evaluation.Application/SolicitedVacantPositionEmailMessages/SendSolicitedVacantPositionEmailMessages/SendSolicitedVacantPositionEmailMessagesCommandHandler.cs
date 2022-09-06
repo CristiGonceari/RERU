@@ -126,8 +126,8 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
         }
 
         private string GetTableContent(EventUser eventUser)
-            => $@"Dl/Dna {eventUser.UserProfile.GetFullName()}, sunteți invitat/ă la evenimentul “{eventUser.Event.Name}”, 
-                în rol de candidat. În scurt timp veți primi invitație la test.Acesta v-a fi desfășurat online.";
+            => $@"sunteți invitat/ă la evenimentul “{eventUser.Event.Name}”, 
+                în rol de candidat. În scurt timp veți primi invitație la test. Acesta v-a fi desfășurat online.";
 
         private async Task<SolicitedVacantPosition> GetSolicitedVacantPosition(SendSolicitedVacantPositionEmailMessagesCommand request) => 
                  _appDbContext.SolicitedVacantPositions

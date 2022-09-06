@@ -100,7 +100,7 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
         }
 
         private string GetEmailContent()
-        => $@"<p style=""font-size: 22px; font-weight: 300;"">Iti reamintim ca in decurs de 15 minute se va incepe testul la care ai fost asignat, poti accesa linkul: </p>
+        => $@"<p style=""font-size: 22px; font-weight: 300;"">vă reamintim ca in decurs de 15 minute se va incepe testul la care ați fost asignat, puteți accesa linkul: </p>
                             <p style=""font-size: 22px;font-weight: 300;"">{_platformConfig.BaseUrl}</p>";
 
     }
