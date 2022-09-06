@@ -25,13 +25,13 @@
                                     <p class="font-weight-bolder font-size-h5 text-dark-75">
                                         {{ user.firstName }} {{user.lastName}}
                                     </p>
-									<p class="text-muted" *ngIf="user.departmentColaboratorId != null || user.roleColaboratorId != null">
+									<p class="text-muted" *ngIf="user.departmentColaboratorId != null && user.roleColaboratorId != null">
                                         <span class="mr-2">
                                             <svg-icon key="user" [width]="16" [height]="16"></svg-icon>
                                         </span>
                                         {{'statuses.employee' | translate}}
                                     </p>
-                                    <p class="text-muted" *ngIf="user.departmentColaboratorId == null && user.roleColaboratorId == null ">
+                                    <p class="text-muted" *ngIf="user.departmentColaboratorId == null || user.roleColaboratorId == null">
                                         <span class="mr-2">
                                             <svg-icon key="user" [width]="16" [height]="16"></svg-icon>
                                         </span>
@@ -65,7 +65,7 @@
 											</span>
 										</a>
 									</div> 
-									<div class="navi-item mb-2">
+									<div class="navi-item mb-2" *ngIf="user.departmentColaboratorId != null && user.roleColaboratorId != null">
 										<a [routerLink]="['my-evaluations']" routerLinkActive="active" class="navi-link py-4">
 											<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
 											<span class="navi-text font-size-lg">
@@ -81,7 +81,7 @@
 											</span>
 										</a>
 									</div>
-									<div class="navi-item mb-2">
+									<div class="navi-item mb-2" *ngIf="user.departmentColaboratorId != null && user.roleColaboratorId != null">
 										<a [routerLink]="['my-evaluated-tests']" routerLinkActive="active" class="navi-link py-4">
 											<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
 											<span class="navi-text font-size-lg">
