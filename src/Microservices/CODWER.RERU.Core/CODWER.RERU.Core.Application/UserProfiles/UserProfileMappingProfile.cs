@@ -20,7 +20,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles
                 .ForMember(x => x.DepartmentName, opts => opts.MapFrom(src => src.Department.Name))
                 .ForMember(x => x.RoleName, opts => opts.MapFrom(src => src.Role.Name))
                 .ForMember(x => x.UserStatusEnum, opts => opts.MapFrom(src => src.DepartmentColaboratorId == null && src.RoleColaboratorId == null ? UserStatusEnum.Candidate : UserStatusEnum.Employee))
-                .ForMember(x => x.AccessModeEnum, opts => opts.MapFrom(src => src.AccessModeEnum != null ? src.AccessModeEnum : AccessModeEnum.CurrentDepartment))
+                .ForMember(x => x.AccessModeEnum, opts => opts.MapFrom(src => src.AccessModeEnum != null ? src.AccessModeEnum : AccessModeEnum.OnlyCandidates))
                 .ForMember(x => x.UserName, opts => opts.MapFrom(src => src.LastName + " " + src.FirstName + " " + src.FatherName));
 
             CreateMap<UserProfile, CandidateProfileDto>()
@@ -28,7 +28,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles
                 .ForMember(x => x.RoleName, opts => opts.MapFrom(src => src.Role.Name))
                 .ForMember(x => x.BirthDate, opts => opts.MapFrom(src => src.BirthDate))
                 .ForMember(x => x.UserStatusEnum, opts => opts.MapFrom(src => src.DepartmentColaboratorId == null && src.RoleColaboratorId == null ? UserStatusEnum.Candidate : UserStatusEnum.Employee))
-                .ForMember(x => x.AccessModeEnum, opts => opts.MapFrom(src => src.AccessModeEnum != null ? src.AccessModeEnum : AccessModeEnum.CurrentDepartment))
+                .ForMember(x => x.AccessModeEnum, opts => opts.MapFrom(src => src.AccessModeEnum != null ? src.AccessModeEnum : AccessModeEnum.OnlyCandidates))
                 .ForMember(x => x.UserName, opts => opts.MapFrom(src => src.LastName + " " + src.FirstName + " " + src.FatherName))
                 .ForMember(x => x.BulletinId, opts => opts.MapFrom(src => src.Contractor.Bulletin.Id))
                 .ForMember(x => x.StudyCount, opts => opts.MapFrom(src => src.Contractor.Studies.Count()))
