@@ -58,7 +58,7 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.SendToAssignedUserNotifi
                 ReplacedValues = new Dictionary<string, string>()
                 {
                     { "{user_name}", user.UserProfile.FullName },
-                    { "{email_message}", await GetTableContent(eventUser) }
+                    { "{email_message}", GetTableContent(eventUser) }
                 }
             });
 
