@@ -123,7 +123,7 @@ export class EditComponent implements OnInit {
 			]),
 			departmentColaboratorId: this.fb.control((user && user.departmentColaboratorId) || null, Validators.required),
 			roleColaboratorId: this.fb.control((user && user.roleColaboratorId) || null, [Validators.required]),
-			accessModeEnum: this.fb.control((user && user.accessModeEnum) || null, [Validators.required]),
+			accessModeEnum: this.fb.control((user && user.accessModeEnum) || 0, [Validators.required]),
 		});
 
 		this.birthDate = user.birthDate;
