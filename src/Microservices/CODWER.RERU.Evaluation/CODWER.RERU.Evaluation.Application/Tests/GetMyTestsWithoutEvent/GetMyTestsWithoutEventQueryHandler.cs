@@ -37,7 +37,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent
                 .Include(t => t.Location)
                 .Include(t => t.Event)
                 .Where(t => t.UserProfileId == myUserProfile.Id && t.Event == null && t.TestTemplate.Mode == TestTemplateModeEnum.Test)
-                .OrderByDescending(x => x.ProgrammedTime)
+                .OrderByDescending(x => x.Id)
                 .AsQueryable();
 
 
