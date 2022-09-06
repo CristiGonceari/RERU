@@ -37,7 +37,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEventByDate
                 .Include(t => t.Location)
                 .Include(t => t.Event)
                 .Where(t => t.UserProfileId == myUserProfile.Id && t.Event == null && t.ProgrammedTime.Date == request.Date.Date && t.TestTemplate.Mode == TestTemplateModeEnum.Test)
-                .OrderByDescending(x => x.ProgrammedTime)
+                .OrderByDescending(x => x.Id)
                 .AsQueryable();
 
             return await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myTests, request); 

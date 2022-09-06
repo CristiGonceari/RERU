@@ -33,6 +33,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluations
                 .Include(t => t.UserProfile)
                 .Include(t => t.Event)
                 .Where(t => t.EvaluatorId == currentUser.Id && t.TestTemplate.Mode == TestTemplateModeEnum.Evaluation)
+                .OrderByDescending(x => x.Id)
                 .AsQueryable();
 
             return await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myTests, request);

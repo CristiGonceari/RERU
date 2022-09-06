@@ -37,6 +37,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.GetMyEval
                                     _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == currentUser.Id)) && 
                                   t.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .Where(t => t.ProgrammedTime.Date == request.Date.Date)
+                .OrderByDescending(x => x.Id)
                 .AsQueryable();
 
 
