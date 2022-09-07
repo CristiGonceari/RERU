@@ -68,9 +68,9 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.SendToAssignedUserNotifi
         private string GetTableContent(EventUser eventUser)
         {
             var content = $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la evenimentul ""{eventUser.Event.Name}"", în rol de candidat, care v-a avea loc în perioada 
-                            ""{eventUser.Event.FromDate.ToString("dd/MM/yyyy HH:mm")}""-""{eventUser.Event.TillDate.ToString("dd/MM/yyyy HH:mm")},""";
+                            {eventUser.Event.FromDate.ToString("dd/MM/yyyy HH:mm")}-{eventUser.Event.TillDate.ToString("dd/MM/yyyy HH:mm")}";
 
-            content += eventUser.Event.EventLocations.Any() ? $@"locația ""{GetLocationName(eventUser.Event)}""</p>" : $@"</p>";
+            content += eventUser.Event.EventLocations.Any() ? $@", locația {GetLocationName(eventUser.Event)}.</p>" : $@".</p>";
 
             return content;
         }
@@ -84,8 +84,6 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.SendToAssignedUserNotifi
                 .Include(e => e.Location)
                 .Where(e => e.EventId == eventDb.Id)
                 .ToList();
-
-            //var combineString = locations.Count() > 2 ? string.Join(", ", list) : eventDb.Location.Name + "-" + location.Location.Address;
 
             list.AddRange(locations.Select(location => location.Location.Name + "-" + location.Location.Address));
             var combineString = string.Join(", ", list);
