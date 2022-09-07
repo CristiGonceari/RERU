@@ -8,7 +8,9 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions
     {
         public static IQueryable<CandidatePosition> Filter(AppDbContext appDbContext, string name)
         {
-            var positions = appDbContext.CandidatePositions.AsQueryable();
+            var positions = appDbContext.CandidatePositions
+                .OrderByDescending(x => x.Id)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(name))
             {

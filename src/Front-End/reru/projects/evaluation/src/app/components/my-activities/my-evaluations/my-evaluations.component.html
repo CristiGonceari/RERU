@@ -8,13 +8,31 @@
                 [width]="'5rem'" [colorClass]="'text-primary'">
             </app-loading-spinner>
             <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
-
+                <div class="row w-100 mb-5 mt-0">
+                    <div class="col">
+                        <erp-shared-search-input (handleSearch)="setFilter('evaluationName', $event)" 
+                            [placeholder]="'tests.search-test' | translate" #evaluationName></erp-shared-search-input>
+                    </div>
+                    <div class="col">
+                        <erp-shared-search-input (handleSearch)="setFilter('evaluatedName', $event)"
+                            [placeholder]="'verify-test.search-student' | translate" #evaluatedName></erp-shared-search-input>
+                    </div>
+                    <div class="col">
+                        <erp-shared-search-input (handleSearch)="setFilter('eventName', $event)"
+                            [placeholder]="'events.search-event' | translate" #eventName></erp-shared-search-input>
+                    </div>
+                    <div class="col-1">
+                        <div class="w-100 text-right">
+                            <app-button (handle)="resetFilters()" [value]="'button.reset' | translate"></app-button>
+                        </div>
+                    </div>
+                </div>
             <div class="datatable datatable-bordered datatable-default datatable-loaded" id="kt_datatable">
                 <table for="kt_datatable" class="datatable table" style="overflow: visible" id="evaluatedTestTable"
                     *ngIf="!isLoading && !downloadFile">
                     <thead class="text-uppercase text-muted">
                         <tr>
-                            <th scope="col">{{'dashboard.test' | translate}}</th>
+                            <th scope="col">{{'evaluations.evaluation' | translate}}</th>
                             <th scope="col">{{'verify-test.student' | translate}}</th>
                             <th scope="col">{{'events.event' | translate}}</th>
                             <th scope="col">{{'dashboard.status' | translate}}</th>

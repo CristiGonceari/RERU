@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrintModalComponent } from '@erp/shared';
@@ -11,58 +11,78 @@ import { saveAs } from 'file-saver';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-my-evaluations',
-  templateUrl: './my-evaluations.component.html',
-  styleUrls: ['./my-evaluations.component.scss']
+	selector: 'app-my-evaluations',
+	templateUrl: './my-evaluations.component.html',
+	styleUrls: ['./my-evaluations.component.scss']
 })
 export class MyEvaluationsComponent implements OnInit {
-  testRowList: [] = [];
-  pagedSummary: PaginationModel = new PaginationModel();
-  userId: number;
-  isLoading: boolean = true;
-  enum = TestStatusEnum;
-  resultEnum = TestResultStatusEnum;
-  downloadFile: boolean = false;
-  headersToPrint = [];
-  printTranslates: any[];
-  title: string;
-  
-  constructor(
-    private testService: TestService, 
-    private activatedRoute: ActivatedRoute,
-    public translate: I18nService,
-	  private modalService: NgbModal
-  ) { }
+	@ViewChild('evaluationName') evaluationName: any;
+	@ViewChild('evaluatedName') evaluatedName: any;
+	@ViewChild('eventName') eventName: any;
+	testRowList: [] = [];
+	pagedSummary: PaginationModel = new PaginationModel();
+	userId: number;
+	isLoading: boolean = true;
+	enum = TestStatusEnum;
+	resultEnum = TestResultStatusEnum;
+	downloadFile: boolean = false;
+	headersToPrint = [];
+	printTranslates: any[];
+	title: string;
+	filters: any = {};
 
-  ngOnInit(): void {
-    this.getUserTests();
-  }
+	constructor(
+		private testService: TestService,
+		private activatedRoute: ActivatedRoute,
+		public translate: I18nService,
+		private modalService: NgbModal
+	) { }
 
-  getUserTests(data: any = {}) {
-    const params: any = {
-      page: data.page || this.pagedSummary.currentPage,
+	ngOnInit(): void {
+		this.getUserTests();
+	}
+
+	getUserTests(data: any = {}) {
+		const params: any = {
+			evaluationName: this.filters.evaluationName || '',
+			evaluatedName: this.filters.evaluatedName || '',
+			eventName: this.filters.eventName || '',
+			page: data.page || this.pagedSummary.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
-    }
+		}
 
-    this.testService.getMyEvaluations(params).subscribe(
-      res => {
-        if (res && res.data) {
-          this.testRowList = res.data.items;
-          this.pagedSummary = res.data.pagedSummary;
-          this.isLoading = false;
-        }
-      }
-    )
-  }
+		this.testService.getMyEvaluations(params).subscribe(
+			res => {
+				if (res && res.data) {
+					this.testRowList = res.data.items;
+					this.pagedSummary = res.data.pagedSummary;
+					this.isLoading = false;
+				}
+			}
+		)
+	}
 
-  
+	setFilter(field: string, value): void {
+		this.filters[field] = value;
+		this.pagedSummary.currentPage = 1;
+		this.getUserTests();
+	}
 
-  getHeaders(name: string): void {
+	resetFilters(): void {
+		this.filters = {};
+		this.evaluationName.key = '';
+		this.evaluatedName.key = '';
+		this.eventName.key = '';
+		this.pagedSummary.currentPage = 1;
+		this.getUserTests();
+	}
+
+	getHeaders(name: string): void {
 		this.translateData();
 		let evaluatedTestTable = document.getElementById('evaluatedTestTable')
 		let headersHtml = evaluatedTestTable.getElementsByTagName('th');
 		let headersDto = ['programmedTime', 'testStatus', 'testTemplateName', 'accumulatedPercentage', 'result'];
-		for (let i=0; i<headersHtml.length; i++) {
+		for (let i = 0; i < headersHtml.length; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
 		}
 		let printData = {
@@ -78,7 +98,7 @@ export class MyEvaluationsComponent implements OnInit {
 		this.headersToPrint = [];
 	}
 
-  
+
 	translateData(): void {
 		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
 		forkJoin([
@@ -88,7 +108,7 @@ export class MyEvaluationsComponent implements OnInit {
 			this.translate.get('button.cancel')
 		]).subscribe(
 			(items) => {
-				for (let i=0; i<this.printTranslates.length; i++) {
+				for (let i = 0; i < this.printTranslates.length; i++) {
 					this.printTranslates[i] = items[i];
 				}
 			}
