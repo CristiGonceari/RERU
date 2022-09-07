@@ -40,7 +40,11 @@ namespace CODWER.RERU.Core.Application.Users.RemoveUser
             }
 
             AppDbContext.UserProfiles.Remove(userProfile);
-            AppDbContext.Contractors.Remove(userProfile.Contractor);
+
+            if (userProfile.Contractor != null)
+            {
+                AppDbContext.Contractors.Remove(userProfile.Contractor);
+            }
 
             await AppDbContext.SaveChangesAsync();
 
