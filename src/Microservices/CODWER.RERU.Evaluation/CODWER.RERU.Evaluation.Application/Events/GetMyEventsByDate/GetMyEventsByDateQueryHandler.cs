@@ -40,6 +40,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetMyEventsByDate
                     .Where(x => x.EventUsers.Any(e => e.UserProfileId == curUser.Id) 
                                                     && x.EventTestTemplates.Any(e => e.TestTemplate.Mode == request.TestTemplateMode) 
                                                     && x.FromDate.Date <= request.Date && x.TillDate.Date >= request.Date)
+                    .OrderByDescending(x => x.Id)
                     .AsQueryable();
 
                 return await _paginationService.MapAndPaginateModelAsync<Event, EventDto>(myEvents, request);

@@ -65,7 +65,7 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.SendToAssig
 
         private async Task<string> GetTableContent(string eventName)
         {
-            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la evenimentul ""{eventName}"" în rol de persoană responsabilă.</p>";
+            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la evenimentul ""{eventName}"", în rol de persoană responsabilă.</p>";
 
             return content;
         }

@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.Notifications.Email;
+using System;
 
 namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 {
@@ -96,6 +97,7 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
             var item = await _appDbContext.EventUsers
                 .Include(x => x.UserProfile)
                 .Include(x => x.Event)
+                    .ThenInclude(x => x.EventLocations)
                 .FirstOrDefaultAsync(x => x.Id == eventUser.Id);
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
@@ -112,10 +114,33 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
         }
 
         private string GetTableContent(EventUser eventUser)
-            => $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la evenimentul ""{eventUser.Event.Name}"" în rol de candidat.</p>";
+        {
+            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la evenimentul ""{eventUser.Event.Name}"", în rol de candidat, care v-a avea loc în perioada 
+                            {eventUser.Event.FromDate.ToString("dd/MM/yyyy HH:mm")}-{eventUser.Event.TillDate.ToString("dd/MM/yyyy HH:mm")}";
+
+            content += eventUser.Event.EventLocations.Any() ? $@", locația {GetLocationName(eventUser.Event)}.</p>" : $@".</p>";
+
+            return content;
+        }
 
         private bool ExistEventUser(int userId, int eventId) => 
             _appDbContext.EventUsers.Any(x =>
             x.UserProfileId == userId && x.EventId == eventId);
+
+        private string GetLocationName(Event eventDb)
+        {
+            var locations = new List<EventLocation>();
+            var list = new List<string>();
+
+            locations = _appDbContext.EventLocations
+                .Include(e => e.Location)
+                .Where(e => e.EventId == eventDb.Id)
+                .ToList();
+
+            list.AddRange(locations.Select(location => location.Location.Name + "-" + location.Location.Address));
+            var combineString = string.Join(", ", list);
+
+            return combineString;
+        }
     }
 }
