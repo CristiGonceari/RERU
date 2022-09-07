@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -106,16 +107,18 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
 
         private async Task<string> GetEmailContent(List<int> userProfileIds, string testName)
         {
-            var userNames = new List<string>();
+            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la evaluarea ""{testName}"" pentru: </p>";
 
-            foreach (var userProfileId in userProfileIds)
+            foreach (var userProfileId in userProfileIds.Select((value, i) => new { i, value }))
             {
-                var userProfile = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == userProfileId);
+                var userProfile = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == userProfileId.value);
 
-                userNames.Add(userProfile.FullName);
+                content += $@"<div style=""font-size: 22px; font-weight: 300; text-align:center;"">{userProfileId.i}. {userProfile.FullName}</div>";
             }
 
-            return $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la evaluarea ""{testName}"" pentru {string.Join(",", userNames.ToArray())} în rol de evaluator.</p>";
+            content += $@"<p style=""font-size: 22px; font-weight: 300;"">în rol de evaluator.</p>";
+
+            return content;
         }
 
         private async Task LogAction(int testId)
