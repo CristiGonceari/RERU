@@ -198,20 +198,29 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
             if (evaluat)
             {
-                content += $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la testul ""{item.TestTemplate.Name}"", în rol de candidat.</p>
-                          <p style=""font-size: 22px; font-weight: 300;"">Testul va avea loc pe data: {item.ProgrammedTime.ToString("dd/MM/yyyy")}.</p> 
-                          <p>Pentru a accesa testul programat pe Dvs, urmati pasii:</p>
-                          <p>1. Logati- va pe pagina {_platformConfig.BaseUrl}</p>
-                          <p>2.Click pe butonul ""Evaluare"" </p>
-                          <p> 3.Click pe butonul ""Activitatile mele"" </p>
-                          <p> 4.Din meniul din stanga alegeti optiunea ""Eveniment"", daca testul a fost programat cu eveniment </p>
-                          <p> 5.Din meniul din stanga alegeti optiunea ""Teste"", daca testul a fost programat fara eveniment </p>
-                          <p> 6.Pentru a incepe testul, click ""Incepe Testul"" din partea dreapta de jos a paginii </p>
-                          <p> 7.Bifati acceptarea regulilor, selecteaza ""Accepta"", si click butonul ""Incepe"" </p>";
+                content += $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la testul ""{item.TestTemplate.Name}"", în rol de candidat.</p>";
+
+                if (item.EventId != null)
+                {
+                    content += $@" <p style=""font-size: 22px; font-weight: 300;"">Testul va avea loc în perioada: {item.ProgrammedTime.ToString("dd/MM/yyyy HH:mm")}-{item.EndProgrammedTime?.ToString("dd/MM/yyyy HH:mm")}.</p>";
+                }
+                else
+                {
+                    content += $@" <p style=""font-size: 22px; font-weight: 300;"">Testul va avea loc pe data: {item.ProgrammedTime.ToString("dd/MM/yyyy HH:mm")}.</p>";
+                }
+
+                content += $@"<p>Pentru a accesa testul programat pe Dvs, urmați pașii:</p>
+                          <p> 1.Logați-vă pe pagina {_platformConfig.BaseUrl}</p>
+                          <p> 2.Click pe butonul ""Evaluare"" </p>
+                          <p> 3.Click pe butonul ""Activitățile mele"" </p>
+                          <p> 4.Din meniul din stânga alegeți opțiunea ""Eveniment"", dacă testul a fost programat cu eveniment</p>
+                          <p> 5.Din meniul din stânga alegeți opțiunea ""Teste"", dacă testul a fost programat fără eveniment</p>
+                          <p> 6.Pentru a începe testul, click ""Începe Testul"" din partea dreaptă de jos a paginii </p>
+                          <p> 7.Bifați acceptarea regulilor, selectează ""Acceptă"", și click butonul ""Începe"" </p>";
             }
             else
             {
-                content += $@"<p style=""font-size: 22px; font-weight: 300;"">Ați fost invitat la testul ""{item.TestTemplate.Name}"" în rol de evaluator.</p>";
+                content += $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la testul ""{item.TestTemplate.Name}"" în rol de evaluator.</p>";
             }
 
             return content;
