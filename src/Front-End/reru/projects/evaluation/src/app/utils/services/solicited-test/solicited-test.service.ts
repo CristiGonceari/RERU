@@ -16,6 +16,10 @@ export class SolicitedTestService extends AbstractService {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params });
 	}
 
+  getAllSolicitedTests(): Observable<any> {
+	    return this.http.get(`${this.baseUrl}/${this.urlRoute}/all`);
+    }
+
   getSolicitedTest(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/by-id`, { params });
 	}
