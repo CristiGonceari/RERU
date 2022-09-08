@@ -113,7 +113,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
             {
                 var userProfile = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == userProfileId.value);
 
-                content += $@"<div style=""font-size: 22px; font-weight: 300; text-align:center;"">{userProfileId.i}. {userProfile.FullName}</div>";
+                content += $@"<div style=""font-size: 22px; font-weight: 300; text-align:center;"">{userProfileId.i + 1}. {userProfile.FullName}</div>";
             }
 
             content += $@"<p style=""font-size: 22px; font-weight: 300;"">în rol de evaluator.</p>";

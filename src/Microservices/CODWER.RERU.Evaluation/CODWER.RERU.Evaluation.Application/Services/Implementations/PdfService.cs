@@ -351,7 +351,6 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             
             myDictionary.Add("{evaluated_name}", $"{item.UserProfile.FirstName} {item.UserProfile.LastName}");
             myDictionary.Add("{test_name}", item.TestTemplate.Name);
-            myDictionary.Add("{status}", item.ResultStatus == TestResultStatusEnum.Passed ? "Admis" : "Respins");
             myDictionary.Add("{evaluator_name}", GetEvaluatorName(item));
             myDictionary.Add("{content}", await GetTableContent(item, true));
 

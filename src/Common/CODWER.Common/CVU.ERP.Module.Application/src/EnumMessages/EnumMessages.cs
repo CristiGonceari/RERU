@@ -1,6 +1,6 @@
 ﻿using RERU.Data.Entities.Enums;
 
-namespace CODWER.RERU.Evaluation.Application.EnumMessages
+namespace CVU.ERP.Module.Application.EnumMessages
 {
     public static class EnumMessages
     {

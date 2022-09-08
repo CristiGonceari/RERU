@@ -23,8 +23,7 @@
                     </div>
                     <div class="d-flex align-items-center">
                         <span class="text-muted mr-3">{{'verify-test.result' | translate}}:</span>
-                        <span class="mb-0 h4" *ngIf="result == 1">{{'statuses.passed' | translate}}</span>
-                        <span class="mb-0 h4" *ngIf="result == 2">{{'statuses.not-passed' | translate}}</span>
+                        <span class="mb-0 h4">{{'verify-test.' + resultEnum[result] | translate}}</span>
                     </div>
                 </div>
                 <div class="card-body">

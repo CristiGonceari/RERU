@@ -579,8 +579,8 @@
     "approve": "Approve",
     "refuse": "Refuse",
     "NoResult": "No result",
-    "Passed": "Is recommended",
-    "NotPassed":"Not recommended",
+    "Passed": "Passed",
+    "NotPassed":"Not passed",
     "employee": "Employee",
     "candidate": "Candidate"
   },

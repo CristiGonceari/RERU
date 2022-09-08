@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.TableExportServices.Interfaces;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +29,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             source = source
                 .Replace("{table_name}", data.Name)
                 .Replace("{table_header}", GetTableHeader(data.Fields.Select(x=>x.Label).ToList()))
-                .Replace("{table_content}", GetTableContent(_mapper.Map<List<TDestination>>(data.Items), data.Fields.Select(x=>x.Value).ToList()));
+                .Replace("{table_content}", GetTableContent(data.Name, _mapper.Map<List<TDestination>>(data.Items), data.Fields.Select(x=>x.Value).ToList()));
 
             var options = new ConvertOptions
             {
@@ -49,7 +51,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             source = source
                 .Replace("{table_name}", data.Name)
                 .Replace("{table_header}", GetTableHeader(data.Fields.Select(x => x.Label).ToList()))
-                .Replace("{table_content}", GetTableContent(data.Items, data.Fields.Select(x => x.Value).ToList()));
+                .Replace("{table_content}", GetTableContent(data.Name, data.Items, data.Fields.Select(x => x.Value).ToList()));
 
             var options = new ConvertOptions
             {
@@ -70,7 +72,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             return $"<tr>{string.Join(" ", fields.Select(f => $"<th>{f}</th>"))}</tr>";
         }
 
-        private string GetTableContent(List<TDestination> items, List<string> fields)
+        private string GetTableContent(string tableName, List<TDestination> items, List<string> fields)
         {
             var records = string.Empty;
 
@@ -84,7 +86,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                 {
                     var propInfo = GetPropertyInfo(objType, field);
 
-                    records += $"<td>{ParseByDataType(propInfo, item)}</td>";
+                    records += $"<td>{ParseByDataType(propInfo, item, tableName)}</td>";
                 }
 
                 records += "</tr>";
@@ -132,7 +134,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             return type.GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public);
         }
 
-        private string ParseByDataType(PropertyInfo propInfo, object item)
+        private string ParseByDataType(PropertyInfo propInfo, object item, string tableName)
         {
             var result = propInfo.GetValue(item, null);
 
@@ -153,12 +155,36 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             {
                 result = Convert.ToBoolean(result) ? "+" : "-";
             }
+            else if (propInfo.PropertyType == typeof(TestResultStatusEnum))
+            {
+                result = ParseDataByTestEnum(tableName, result);
+            }
+            else if (propInfo.PropertyType == typeof(TestStatusEnum))
+            {
+                result = EnumMessages.EnumMessages.GetTestStatus((TestStatusEnum)result);
+            }
             else if (result == null)
             {
                 result = "-";
             }
 
             return result.ToString();
+        }
+
+        private object ParseDataByTestEnum(string tableName, object result)
+        {
+            var names = new List<string> { "Evaluări ", "Evaluări primite", "Evaluări acordate" };
+
+            if (names.Contains(tableName))
+            {
+                result = EnumMessages.EnumMessages.GetEvaluationResultStatus((TestResultStatusEnum)result);
+            }
+            else
+            {
+                result = EnumMessages.EnumMessages.GetTestResultStatus((TestResultStatusEnum)result);
+            }
+
+            return result;
         }
     }
 }
