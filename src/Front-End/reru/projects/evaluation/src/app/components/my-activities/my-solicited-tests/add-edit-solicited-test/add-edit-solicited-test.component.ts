@@ -246,6 +246,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
       } else {
         let request = new FormData();
         request = this.parseFiles(request, res, el);
+        request = this.parseFiles(request, res, el);
 
         if (el.file.file != null) {
           this.solicitedVacantPositionUserFileService.create(request).subscribe();
