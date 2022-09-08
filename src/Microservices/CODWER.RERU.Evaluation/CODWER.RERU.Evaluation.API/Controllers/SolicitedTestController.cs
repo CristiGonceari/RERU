@@ -13,9 +13,6 @@ using CODWER.RERU.Evaluation.Application.SolicitedPositions.UserSolicitedTests.G
 using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions;
 using GetMySolicitedPositionQuery = CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPositions.GetMySolicitedPosition.GetMySolicitedPositionQuery;
 using GetSolicitedPositionQuery = CODWER.RERU.Evaluation.Application.SolicitedPositions.GetSolicitedPosition.GetSolicitedPositionQuery;
-using CODWER.RERU.Evaluation.Application.SolicitedPositions.GetAllSolicitedPositions;
-using System.Collections.Generic;
-using RERU.Data.Entities;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -25,13 +22,6 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     {
         [HttpGet]
         public async Task<PaginatedModel<SolicitedCandidatePositionDto>> GetSolicitedTests([FromQuery] Application.SolicitedPositions.GetSolicitedPositions.GetSolicitedPositionQuery query)
-        {
-            return await Mediator.Send(query);
-
-        }
-
-        [HttpGet("all")]
-        public async Task<List<SolicitedVacantPosition>> GetAllSolicitedTests([FromQuery] GetAllSolicitedPositionQuery query)
         {
             return await Mediator.Send(query);
         }
