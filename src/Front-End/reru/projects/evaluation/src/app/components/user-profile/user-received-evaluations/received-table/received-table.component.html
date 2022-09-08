@@ -1,9 +1,10 @@
-<app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
-  [colorClass]="'text-primary'">
-</app-loading-spinner>
 <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
-<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable">
+<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+    id="kt_datatable">
+    <app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'20vh'" [height]="'5rem'" [width]="'5rem'"
+        [colorClass]="'text-primary'">
+    </app-loading-spinner>
     <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading && !downloadFile">
         <thead class="text-uppercase text-muted">
             <tr>
@@ -19,9 +20,8 @@
                 <td><span class="font-size-lg">{{ item.testTemplateName }}</span></td>
                 <td>
                     <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
-                        [routerLink]="['../../../user-profile', item.userId]"
-                        style="white-space: nowrap;">
-                            {{ item.evaluatorName }}
+                        [routerLink]="['../../../user-profile', item.userId]" style="white-space: nowrap;">
+                        {{ item.evaluatorName }}
                         <br>
                         <span class="text-dark-50 font-size-lg font-weight-light">{{ item.evaluatorIdnp }}</span>
                     </p>
@@ -42,9 +42,9 @@
             </tr>
         </tbody>
     </table>
-    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage" 
-    *ngIf="testRowList.length" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
-    (sizeChange)="getUsersEvaluations({ page: 1, itemsPerPage: $event })"
-    (pageChange)="getUsersEvaluations({ page: $event, itemsPerPage: pagedSummary.pageSize })">
-  </div>
+    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
+        *ngIf="testRowList.length" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
+        [size]="pagedSummary.pageSize" (sizeChange)="getUsersEvaluations({ page: 1, itemsPerPage: $event })"
+        (pageChange)="getUsersEvaluations({ page: $event, itemsPerPage: pagedSummary.pageSize })">
+    </div>
 </div>

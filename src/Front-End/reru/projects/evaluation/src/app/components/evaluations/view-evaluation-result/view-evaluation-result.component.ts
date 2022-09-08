@@ -8,6 +8,7 @@ import { TestVerificationProcessService } from '../../../utils/services/test-ver
 import { TestService } from '../../../utils/services/test/test.service';
 import { TestQuestionService } from '../../../utils/services/test-question/test-question.service';
 import { HashOptionInputComponent } from '../../../utils/components/hash-option-input/hash-option-input.component';
+import { TestResultStatusEnum } from '../../../utils/enums/test-result-status.enum';
 
 @Component({
   selector: 'app-view-evaluation-result',
@@ -28,6 +29,7 @@ export class ViewEvaluationResultComponent implements OnInit {
   verifiedStatus = [];
   questionType;
   enum = QuestionUnitTypeEnum;
+  resultEnum = TestResultStatusEnum;
   correctAnswer: any;
   notCorrectAnswer: any;
   pager: number[] = [];

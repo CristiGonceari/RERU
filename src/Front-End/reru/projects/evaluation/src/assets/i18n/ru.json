@@ -576,8 +576,8 @@
     "approve": "Одобрить",
     "refuse": "Отказать",
     "NoResult": "Без Результата",
-    "Passed": "Рекомендовано",
-    "NotPassed": "Не рекомендуется",
+    "Passed": "Пройдено",
+    "NotPassed": "Не пройдено",
     "employee": "Сотрудник",
     "candidate": "Кандидат",
     "Wait" : "In asteptare"
