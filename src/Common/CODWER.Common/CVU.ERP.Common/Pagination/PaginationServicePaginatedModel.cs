@@ -12,8 +12,10 @@ namespace CVU.ERP.Common.Pagination
         ///</summary>
         public async Task<PaginatedList<TDestination>> Create<TSource, TDestination>(IQueryable<TSource> source, int pageNumber, int pageSize)
         {
-            var count = source.Count();
-            var items = await (source.Skip((pageNumber - 1) * pageSize).Take(pageSize)).ToListAsync();
+            var count = source.ToArray().Count();
+            var skipCount = (pageNumber - 1) * pageSize;
+
+            var items = (source.ToArray().Skip(skipCount).Take(pageSize)).ToList();
             var mappedItems = _mapper.Map<List<TDestination>>(items).ToList();
 
             return new PaginatedList<TDestination>(mappedItems, count, pageNumber, pageSize);
