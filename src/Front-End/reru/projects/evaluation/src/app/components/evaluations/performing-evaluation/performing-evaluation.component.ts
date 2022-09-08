@@ -15,11 +15,10 @@ import { TestAnswer } from '../../../utils/models/test-questions/test-answer.mod
 import { TestTemplate } from '../../../utils/models/test-templates/test-template.model';
 import { TestTemplateSettings } from '../../../utils/models/test-templates/test-template-settings.model';
 import { AddTestQuestion } from '../../../utils/models/test-questions/add-test-question.model';
-import { SafeHtmlPipe } from '../../../utils/pipes/safe-html.pipe';
-import { ConfirmModalComponent } from '@erp/shared';
-import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { EvaluationResultModalComponent } from '../../../utils/modals/evaluation-result-modal/evaluation-result-modal.component';
+import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/file-test-answer.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-performing-evaluation',
@@ -66,6 +65,11 @@ export class PerformingEvaluationComponent implements OnInit {
   videoUrl: any;
   fileId: string;
 
+  files: any[] = [];
+  fileName: string;
+  answerFileid: string;
+  hadFile: boolean = false;
+
   optionFileId = [];
   isLoadingOptionMedia: boolean = true;
 
@@ -78,6 +82,7 @@ export class PerformingEvaluationComponent implements OnInit {
     public translate: I18nService,
     private router: Router,
     private testTemplateService: TestTemplateService,
+    private fileTestAnswerService: FileTestAnswerService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
@@ -102,6 +107,53 @@ export class PerformingEvaluationComponent implements OnInit {
       }
     })
   }
+
+  checkIfHadFile(){
+    let params = {
+      questionIndex: this.questionIndex,
+      testId: this.testId
+    };
+
+    this.fileTestAnswerService.getList(params).subscribe(res => {
+      if(res.data.fileId !== null){
+        this.answerFileid = res.data.fileId;
+        this.fileName = res.data.fileName;
+        this.hadFile = true;
+      } else {
+        this.hadFile = false;
+      }
+    })
+  }
+
+  GetFile() {
+    this.fileTestAnswerService.getFile(this.answerFileid).subscribe(response => {
+      if (response) {
+        const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
+        // const fileNameParsed = fileName.substring(1, fileName.length - 1);
+        const blob = new Blob([response.body], { type: response.body.type });
+        const file = new File([blob], fileName, { type: response.body.type });
+        saveAs(file);
+      }
+    }
+    )
+  }
+
+  deleteFile(){
+    this.hadFile = false;
+  }
+
+  ceckFileNameLength() {
+    return this.fileName.length <= 20 ? this.fileName : this.fileName.slice(0, 20) + "...";
+  }
+
+
+  setFile(event){
+    this.files[0] = event.addedFiles[0];
+  }
+
+  onRemove(event): void {
+		this.files.splice(this.files.indexOf(event), 1);
+	}
 
   ngDoBoostrap() {
     const el = createCustomElement(HashOptionInputComponent, { injector: this.injector });
@@ -160,6 +212,7 @@ export class PerformingEvaluationComponent implements OnInit {
         }
       }
     });
+
   }
 
   parseTextAnswer() {
@@ -198,6 +251,24 @@ export class PerformingEvaluationComponent implements OnInit {
       });
     }
     this.postAnswer(+this.answerStatusEnum.Answered);
+
+    if(this.questionUnit.questionType == this.questionTypeEnum.FileAnswer){
+      let request = new FormData();
+
+      request = this.parseFiles(request);
+
+     this.fileTestAnswerService.create(request).subscribe();
+    }
+  }
+
+  parseFiles(request: FormData) {
+    const fileType = '5';
+    request.append('QuestionIndex', this.questionIndex.toString());
+    request.append('TestId', this.testId.toString());
+    request.append('FileDto.File', this.files[0]);
+    request.append('FileDto.Type', fileType);
+
+    return request;
   }
 
   getTestTemplateSettings(testTemplateId) {
@@ -246,6 +317,7 @@ export class PerformingEvaluationComponent implements OnInit {
     this.isLoading = true;
     this.questionIndex = questionIndex == null ? this.questionIndex : questionIndex;
 
+
     this.testQuestionService.getTestQuestion({ testId: this.testId, questionIndex: this.questionIndex })
       .subscribe(
         (res) => {
@@ -264,6 +336,8 @@ export class PerformingEvaluationComponent implements OnInit {
                   });
               });
           this.ngDoBoostrap();
+          this.checkIfHadFile();
+          this.files = [];
         }
       )
   }

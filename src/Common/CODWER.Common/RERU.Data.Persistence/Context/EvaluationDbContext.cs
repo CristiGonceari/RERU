@@ -32,6 +32,7 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<QuestionUnitTag> QuestionUnitTags { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<EmailTestNotification> EmailTestNotifications { get; set; }
+        public virtual DbSet<FileTestAnswer> FileTestAnswers { get; set; }
         public virtual DbSet<SolicitedVacantPosition> SolicitedVacantPositions { get; set; }
         public virtual DbSet<RequiredDocument> RequiredDocuments { get; set; }
         public virtual DbSet<RequiredDocumentPosition> RequiredDocumentPositions { get; set; }

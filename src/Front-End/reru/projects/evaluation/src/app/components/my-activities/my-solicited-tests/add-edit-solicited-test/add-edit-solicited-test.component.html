@@ -25,14 +25,15 @@
                                                     <label class="col-xl-3 col-lg-3 col-form-label text-right">{{
                                                         'solicited-test.position-to-candidate' | translate }}</label>
                                                     <div class="col-lg-9 col-xl-9">
-                                                        <div *ngIf="isEdit" class="form-control form-control-lg form-control-solid">
+                                                        <div *ngIf="isEdit"
+                                                            class="form-control form-control-lg form-control-solid">
                                                             {{selected.label}}
                                                         </div>
-                                                        <select class="form-control form-control-lg form-control-solid" *ngIf="!isEdit"
-                                                            name="selectedStatus" id="selectedStatus"
+                                                        <select class="form-control form-control-lg form-control-solid"
+                                                            *ngIf="!isEdit" name="selectedStatus" id="selectedStatus"
                                                             [(ngModel)]="candidatePositions.value"
                                                             (change)="getEventsAndDocuments()">
-                                                            <option  *ngFor="let item of candidatePositions" 
+                                                            <option *ngFor="let item of candidatePositions"
                                                                 [ngValue]="item.value">
                                                                 {{ item.label }}
                                                             </option>
@@ -81,15 +82,15 @@
                                                         <div class="col-lg-9 col-xl-9">
                                                             <button *ngIf="item.fileName.length > 0"
                                                                 (click)="GetFile(item.fileId)"
-                                                                class="btn btn-light-success font-weight-bold mr-3" ngbTooltip="{{item.fileName}}">
+                                                                class="btn btn-light-success font-weight-bold mr-3"
+                                                                ngbTooltip="{{item.fileName}}">
                                                                 <i class="flaticon-profile"></i>
                                                                 {{ ceckFileNameLength(item.fileName) }}
                                                             </button>
                                                             <span *ngIf="item.fileName.length > 0"
                                                                 (click)="deleteFile(item.fileId)"
                                                                 class="svg-icon svg-icon-primary svg-icon-2x">
-                                                                <svg
-                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                <svg xmlns="http://www.w3.org/2000/svg"
                                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
                                                                     width="24px" height="24px" viewBox="0 0 24 24"
                                                                     version="1.1">
@@ -119,7 +120,6 @@
                                                                     </div>
                                                                 </div>
                                                             </b>
-
                                                         </div>
                                                     </div>
                                                 </div>
