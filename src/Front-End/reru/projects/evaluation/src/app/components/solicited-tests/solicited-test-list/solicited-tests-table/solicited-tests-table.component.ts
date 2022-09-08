@@ -36,6 +36,17 @@ export class SolicitedTestsTableComponent implements OnInit {
 	ngOnInit(): void {
 		this.list();
 	}
+	test()
+	{
+		
+		this.solicitedTestService.getAllSolicitedTests().subscribe(res => {
+			if (res && res.data) {
+				console.log("res.data", res.data);
+				
+				
+			}
+		});
+	}
 
 	list(data: any = {}) {
 		this.isLoading = true;
