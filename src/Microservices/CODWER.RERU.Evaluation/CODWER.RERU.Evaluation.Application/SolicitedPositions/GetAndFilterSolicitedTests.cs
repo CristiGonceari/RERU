@@ -16,7 +16,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions
                 .Include(t => t.CandidatePosition)
                 .Include(t => t.CandidatePosition.RequiredDocumentPositions)
                 .Include(x => x.SolicitedVacantPositionUserFiles)
-                .OrderByDescending(x => x.Id)
+                .OrderBy(x => x.CreateDate)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(userName))
