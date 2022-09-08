@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeEvaluation
                 .FirstOrDefaultAsync(x => x.Id == request.TestId);
 
             testToFinalize.TestStatus = TestStatusEnum.Verified;
+            testToFinalize.EndTime = DateTime.Now;
 
             await _appDbContext.SaveChangesAsync();
 

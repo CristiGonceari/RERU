@@ -43,7 +43,12 @@
                     </thead>
                     <tbody class="datatable-body" *ngIf="testRowList.length">
                         <tr *ngFor="let test of testRowList">
-                            <td><b>{{ test.testTemplateName }}</b></td>
+                            <td>
+                                <b>{{ test.testTemplateName }}</b>
+                                <span class="text-dark-50 d-block mb-0">
+                                    {{ test.endTime | date: 'dd/MM/yyyy, HH:mm'}}
+                                </span>
+                            </td>
                             <td>
                                 <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
                                     [routerLink]="['../../user-profile', test.userId]" style="white-space: nowrap;">

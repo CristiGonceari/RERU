@@ -21,7 +21,7 @@
             <tr *ngFor="let test of tests">
                 <td>
                     <span class="colored d-block mb-0">
-                        <b>{{ test.programmedTime | date: 'dd/MM/yyyy, HH:mm'}}</b>
+                        <b>{{ test.programmedTime | date: 'dd/MM/yyyy'}} - {{ test.endProgrammedTime | date: 'dd/MM/yyyy'}}</b>
                     </span>
                 </td>
                 <td>{{ test.testTemplateName }}</td>
