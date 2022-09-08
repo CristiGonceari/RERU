@@ -78,7 +78,9 @@
             <label class="col-xl-3 col-lg-3 col-form-label text-right">
               {{'verify-test.student' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
-              <button class="btn btn-light-primary" (click)="attachUsers()">
+              <button class="btn btn-light" (click)="attachUsers()" 
+                [style.background-color]="userListToAdd.length > 0 ? '#C9F7F5': '#FFE2E5'"
+                [style.color]="userListToAdd.length > 0 ? '#0bb7af': '#F64E60'">
                 {{'events.attach-evaluated' | translate}}
               </button>
             </div>
@@ -102,7 +104,8 @@
               {{'events.evaluator' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
               <button class="btn btn-light-primary" *ngIf="!(hasEventEvaluator || isTestTemplateOneAnswer)"
-                (click)="attachEvaluators()">
+                (click)="attachEvaluators()" [style.background-color]="evaluatorList.length > 0 ? '#C9F7F5': '#FFE2E5'"
+                [style.color]="evaluatorList.length > 0 ? '#0bb7af': '#F64E60'">
                 {{'events.attach-evaluator' | translate}}
               </button>
               <span *ngIf="isTestTemplateOneAnswer" class="label label-lg label-light label-inline h-45px px-5 w-100">
