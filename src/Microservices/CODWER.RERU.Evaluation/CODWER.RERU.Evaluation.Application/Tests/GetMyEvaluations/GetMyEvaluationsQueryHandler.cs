@@ -36,9 +36,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluations
                 .OrderByDescending(x => x.Id)
                 .AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(request.EvaluationName))
+            if (request.FromDate.HasValue)
             {
-                myEvaluations = myEvaluations.Where(x => x.TestTemplate.Name.ToLower().Contains(request.EvaluationName.ToLower()));
+                myEvaluations = myEvaluations.Where(x => x.EndTime >= request.FromDate);
+            }
+
+            if (request.ToDate.HasValue)
+            {
+                myEvaluations = myEvaluations.Where(x => x.EndTime <= request.ToDate);
             }
 
             if (!string.IsNullOrWhiteSpace(request.EvaluatedName))
@@ -47,11 +52,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluations
                                          || x.UserProfile.LastName.ToLower().Contains(request.EvaluatedName.ToLower())
                                          || x.UserProfile.FatherName.ToLower().Contains(request.EvaluatedName.ToLower())
                                          || x.UserProfile.Idnp.ToLower().Contains(request.EvaluatedName.ToLower()));
-            }
-
-            if (!string.IsNullOrWhiteSpace(request.EventName))
-            {
-                myEvaluations = myEvaluations.Where(x => x.Event.Name.ToLower().Contains(request.EventName.ToLower()));
             }
 
             return await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myEvaluations, request);
