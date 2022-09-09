@@ -20,8 +20,10 @@ namespace CODWER.RERU.Evaluation.Application.EnumMessages
         public const string Active = "Activ";
         public const string Inactive = "Inactiv";
         public const string NoResult = "Fără rezultat";
-        public const string Passed = "Se recomandă";
-        public const string NotPassed = "Nu se recomandă";
+        public const string Passed = "Susținut";
+        public const string NotPassed = "Nesusținut";
+        public const string IsRecommended = "Se recomandă";
+        public const string NotRecommended = "Nu se recomandă";
 
         public static string GetTestStatus(TestStatusEnum testStatus)
         {
@@ -77,6 +79,17 @@ namespace CODWER.RERU.Evaluation.Application.EnumMessages
                 TestResultStatusEnum.NoResult => NoResult,
                 TestResultStatusEnum.Passed => Passed,
                 TestResultStatusEnum.NotPassed => NotPassed,
+                _ => "-"
+            };
+        }
+
+        public static string GetEvaluationResultStatus(TestResultStatusEnum testResultStatus)
+        {
+            return testResultStatus switch
+            {
+                TestResultStatusEnum.NoResult => NoResult,
+                TestResultStatusEnum.Passed => IsRecommended,
+                TestResultStatusEnum.NotPassed => NotRecommended,
                 _ => "-"
             };
         }

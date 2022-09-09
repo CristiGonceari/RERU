@@ -28,7 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluations
         {
             var currentUser = await _userProfileService.GetCurrentUser();
 
-            var myTests = _appDbContext.Tests
+            var myEvaluations = _appDbContext.Tests
                 .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Event)
@@ -36,7 +36,25 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluations
                 .OrderByDescending(x => x.Id)
                 .AsQueryable();
 
-            return await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myTests, request);
+            if (!string.IsNullOrWhiteSpace(request.EvaluationName))
+            {
+                myEvaluations = myEvaluations.Where(x => x.TestTemplate.Name.ToLower().Contains(request.EvaluationName.ToLower()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.EvaluatedName))
+            {
+                myEvaluations = myEvaluations.Where(x => x.UserProfile.FirstName.ToLower().Contains(request.EvaluatedName.ToLower())
+                                         || x.UserProfile.LastName.ToLower().Contains(request.EvaluatedName.ToLower())
+                                         || x.UserProfile.FatherName.ToLower().Contains(request.EvaluatedName.ToLower())
+                                         || x.UserProfile.Idnp.ToLower().Contains(request.EvaluatedName.ToLower()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.EventName))
+            {
+                myEvaluations = myEvaluations.Where(x => x.Event.Name.ToLower().Contains(request.EventName.ToLower()));
+            }
+
+            return await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myEvaluations, request);
         }
     }
 }

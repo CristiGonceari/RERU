@@ -70,7 +70,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
             if (testToFinalize.TestTemplate.Mode == TestTemplateModeEnum.Test)
             {
                 await SendEmailNotification(testToFinalize, autocheck);
-                await EmailPositionResponsiblePerson(testToFinalize);
+
+                if (testToFinalize.Event != null)
+                {
+                    await EmailPositionResponsiblePerson(testToFinalize);
+                }
             }
 
             return Unit.Value;

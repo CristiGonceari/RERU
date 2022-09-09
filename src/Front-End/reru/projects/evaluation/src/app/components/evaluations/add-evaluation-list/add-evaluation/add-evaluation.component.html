@@ -57,7 +57,9 @@
                         <label class="col-xl-3 col-lg-3 col-form-label text-right">
                             {{'evaluations.evaluated' | translate}}</label>
                         <div class="col-lg-9 col-xl-9">
-                            <button class="btn btn-light-primary" (click)="attachUsers()">
+                            <button class="btn btn-light-primary" (click)="attachUsers()"
+                                [style.background-color]="userListToAdd.length > 0 ? '#C9F7F5': '#FFE2E5'"
+                                [style.color]="userListToAdd.length > 0 ? '#0bb7af': '#F64E60'">
                                 {{'events.attach-evaluated' | translate}}
                             </button>
                         </div>
@@ -84,7 +86,9 @@
                         <label class="col-xl-3 col-lg-3 col-form-label text-right">
                             {{'events.evaluator' | translate}}</label>
                         <div class="col-lg-9 col-xl-9">
-                            <button class="btn btn-light-primary" (click)="attachEvaluators()">
+                            <button class="btn btn-light-primary" (click)="attachEvaluators()"
+                                [style.background-color]="evaluatorList.length > 0 ? '#C9F7F5': '#FFE2E5'"
+                                [style.color]="evaluatorList.length > 0 ? '#0bb7af': '#F64E60'">
                                 {{'events.attach-evaluator' | translate}}
                             </button>
                         </div>

@@ -9,6 +9,7 @@ namespace RERU.Data.Entities
         public TestQuestion()
         {
             TestAnswers = new HashSet<TestAnswer>();
+            FileTestAnswers = new HashSet<FileTestAnswer>();
         }
 
         public int Index { get; set; }
@@ -27,5 +28,6 @@ namespace RERU.Data.Entities
         public Test Test { get; set; }
 
         public virtual ICollection<TestAnswer> TestAnswers { get; set; }
+        public virtual ICollection<FileTestAnswer> FileTestAnswers { get; set; }
     }
 }

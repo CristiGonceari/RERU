@@ -879,6 +879,44 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.ToTable("EventVacantPositions");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.FileTestAnswer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("TestQuestionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestQuestionId");
+
+                    b.ToTable("FileTestAnswers");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.KinshipRelation", b =>
                 {
                     b.Property<int>("Id")
@@ -4999,6 +5037,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 4,
                             Name = "HashedAnswer"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "FileAnswer"
                         });
                 });
 
@@ -6459,6 +6502,17 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("CandidatePosition");
 
                     b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.FileTestAnswer", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.TestQuestion", "TestQuestion")
+                        .WithMany("FileTestAnswers")
+                        .HasForeignKey("TestQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TestQuestion");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.KinshipRelation", b =>
@@ -8120,6 +8174,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
             modelBuilder.Entity("RERU.Data.Entities.TestQuestion", b =>
                 {
+                    b.Navigation("FileTestAnswers");
+
                     b.Navigation("TestAnswers");
                 });
 

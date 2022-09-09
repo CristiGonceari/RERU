@@ -31,6 +31,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsByEvent
 
             var myTests = _appDbContext.Tests
                 .Include(t => t.TestTemplate)
+                    .ThenInclude(t => t.Settings)
                 .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)

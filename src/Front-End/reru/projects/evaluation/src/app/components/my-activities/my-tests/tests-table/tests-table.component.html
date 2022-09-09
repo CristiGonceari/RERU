@@ -24,7 +24,6 @@
                         <th scope="col" style="width: 170px;">
                             {{'dashboard.score' | translate}} / {{'dashboard.min-score' | translate}}
                         </th>
-                        <!-- <th scope="col" style="width: 170px;">{{'dashboard.result' | translate}}</th> -->
                         <th scope="col" style="width: 120px"></th>
                     </tr>
                 </thead>
@@ -61,31 +60,6 @@
                             <b *ngIf="test.result != resultEnum.NoResult">{{ test.accumulatedPercentage }}% /
                                 {{test.minPercent}}%</b>
                         </td>
-                        <!-- <td>
-                            <span *ngIf="test.testStatus == enum.AlowedToStart" class="font-size-lg">
-                                {{'statuses.AlowedToStart' | translate}}
-                            </span>
-                            <span *ngIf="test.testStatus == enum.InProgress" class="font-size-lg">
-                                {{'statuses.InProgress' | translate}}
-                            </span>
-                            <span class="font-size-lg" *ngIf="test.testStatus == enum.Terminated">
-                                {{'statuses.verify' | translate}}
-                            </span>
-                            <span class="font-size-lg" *ngIf="test.testStatus == enum.Programmed">
-                                {{'verify-test.status-0' | translate}}
-                            </span>
-                            <span class="font-size-lg" *ngIf="test.testStatus == enum.Closed">
-                                {{'statuses.Closed' | translate}}
-                            </span>
-                            <span *ngIf="test.testStatus != enum.Closed">
-                                <span class="font-size-lg" *ngIf="test.result == resultEnum.Passed">{{'statuses.passed'
-                                    |
-                                    translate}}</span>
-                                <span class="font-size-lg"
-                                    *ngIf="test.result == resultEnum.NotPassed">{{'statuses.not-passed' |
-                                    translate}}</span>
-                            </span>
-                        </td> -->
                         <td>
                             <button *ngIf="test.testStatus == enum.InProgress" class="btn btn-light-success"
                                 (click)="getTestById(test.id)">
