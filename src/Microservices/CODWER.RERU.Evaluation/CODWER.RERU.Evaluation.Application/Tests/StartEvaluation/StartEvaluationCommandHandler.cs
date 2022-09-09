@@ -25,6 +25,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartEvaluation
 
             test.TestStatus = TestStatusEnum.InProgress;
             test.ProgrammedTime = DateTime.Now;
+            test.StartTime = DateTime.Now;
 
             await _appDbContext.SaveChangesAsync();
 
