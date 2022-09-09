@@ -471,9 +471,9 @@
   "faq": {
     "overview": "Overview",
     "help": "Help",
-    "faq": "FAQ",
+    "faq": "Frequent questions",
     "subtitle": "Frequently Asked Questions",
-    "manage-faq": "Manage FAQ",
+    "manage-faq": "Manage questions",
     "new-article": "Add Article",
     "delete-article": "Delete Article",
     "article-title": "Article Titile",
