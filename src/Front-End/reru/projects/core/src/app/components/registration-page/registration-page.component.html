@@ -248,7 +248,7 @@
               </div>
             </div>
             <button type="submit" [disabled]="!accept || userForm.invalid" class="btn btn-primary float-right mt-3 mt-sm-3 mt-md-0"
-              (handle)="verifyEmailCode()">{{ 'button.confirm' | translate }}</button>
+              (click)="verifyEmailCode()">{{ 'button.confirm' | translate }}</button>
           </form>
         </div>
         <div *ngIf="success" class="col-xl-12 col-lg-12 col-md-12 col-xs-12"

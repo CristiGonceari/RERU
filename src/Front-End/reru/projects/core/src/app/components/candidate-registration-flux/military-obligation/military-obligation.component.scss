@@ -1,22 +1,45 @@
 .btn.btn-icon {
-    background: #3699ff;
-    color: #FFF;
+  background: #3699ff;
+  color: #FFF;
+  span {
+    color: inherit;
+  }
+
+  &:hover {
+    background: #FFF;
+    border: 1px solid #3699ff;
+    color: #3699ff;
+  }
 }
 
 .box-square {
-    margin: 0 0 20px 0;
-    &.more {
-        &::after {
-            content: '';
-            display: block;
-            width: 100%;
-            height: 2px;
-            border-bottom: 1px solid #CCC;
-        }
+  margin: 0 0 20px 0;
+
+  &.more {
+    &::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 2px;
+      border-bottom: 1px solid #CCC;
     }
-}
-.font-size-18px {
-    font-size: 25px;
-    color: #FFF;
+  }
 }
 
+form {
+  border: 1px solid #EBEDF3;
+
+  @media screen and (max-width: 992px) {
+    border: 0;
+  }
+}
+
+.font-size-18px {
+  font-size: 25px;
+}
+
+button {
+  @media screen and (max-width: 992px) {
+    width: 100%;
+  }
+}

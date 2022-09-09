@@ -9,13 +9,13 @@
                     <div class="card card-custom gutter-b card-stretch card-shadowless">
                         <div class="card-body">
                             <mat-vertical-stepper (selectionChange)="selectionChanged($event)" #stepper >
-                                <mat-step *ngFor="let item of steps; let index = index;"  [completed]="counter" [state]="state" >
-                                    <ng-template matStepLabel >
-                                        <div class="row align-items-center" style="min-width: 1000px;">
-                                            <div class="col-4">
+                                <mat-step *ngFor="let item of steps; let index = index;"  [completed]="counter" [state]="state" class="w-100">
+                                    <ng-template matStepLabel class="w-100">
+                                        <div class="row align-items-center w-100">
+                                            <div class="col-lg-2 col-md">
                                                 {{ 'step.' + stepsEnum[parseInt(item.value)] | translate}}
                                             </div>
-                                            <div class="col-8 mt-5">
+                                            <div class="col-lg-6 col-md mt-5">
                                                 <div *ngIf="item.isDone" class="alert alert-success"> <strong>{{ 'step-status.done' | translate}}</strong></div>
                                                 <div *ngIf="!item.isDone" class="alert alert-danger"><strong>{{ 'step-status.not-done' | translate}}</strong></div>
                                             </div>

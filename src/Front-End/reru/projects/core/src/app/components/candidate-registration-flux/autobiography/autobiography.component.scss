@@ -1,0 +1,12 @@
+form {
+    border: 1px solid #EBEDF3;
+    @media screen and (max-width: 992px) {
+        border: 0;
+    }
+}
+
+button {
+    @media screen and (max-width: 992px) {
+        width: 100%;
+    }
+}
