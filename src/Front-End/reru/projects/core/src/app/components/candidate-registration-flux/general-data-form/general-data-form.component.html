@@ -1,5 +1,5 @@
 <div class="mt-5">
-  <form class="col-lg col-md-8 col-sm-12 col-12 mx-auto" [formGroup]="userForm">
+  <form class="col-lg col-md-12 col-sm-12 col-12 mx-auto" [formGroup]="userForm">
     <div class="row mb-5">
       <div class="col">
         <h4>{{'step.GeneralData' | translate}}</h4>
@@ -13,43 +13,43 @@
               colorClass="text-primary"></app-loading-spinner>
             <div class="container" *ngIf="!generealDatasLoading">
               <div class="row">
-                <div class="col">
+                <div class="col-md-6 col-12">
                   <div class="form-group row align-items-center mb-2">
-                    <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                    <label class="col-xl-4 col-lg-4 col-form-label font-weight-bold text-left text-lg-right text-muted">
                       {{'table.name' | translate}}:
                     </label>
-                    <div class="col-lg-9 col-xl-6">
+                    <div class="col-lg-8 col-xl-6">
                       <p class="font-size-lg m-0">{{userDatas.userName || "not set"}}</p>
                     </div>
                   </div>
                 </div>
-                <div class="col">
+                <div class="col-md-6 col-12">
                   <div class="form-group row align-items-center mb-2">
-                    <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                    <label class="col-xl-4 col-lg-4 col-form-label font-weight-bold text-left text-lg-right text-muted">
                       {{'user.birthday' | translate}}:
                     </label>
-                    <div class="col-lg-9 col-xl-6">
+                    <div class="col-xl-6 col-lg-8">
                       <p class="font-size-lg m-0">{{(userDatas.birthDate | date: 'd/M/yy, HH:mm') || "not set"}}</p>
                     </div>
                   </div>
                 </div>
                 <div class="w-100"></div>
-                <div class="col">
+                <div class="col-md-6 col-12">
                   <div class="form-group row align-items-center mb-2">
-                    <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                    <label class="col-xl-4 col-lg-4 col-form-label font-weight-bold text-left text-lg-right text-muted">
                       {{'pages.user-details.email' | translate}}:
                     </label>
-                    <div class="col-lg-9 col-xl-6">
+                    <div class="col-xl-6 col-lg-8">
                       <p class="font-size-lg m-0">{{userDatas.email || "not set"}}</p>
                     </div>
                   </div>
                 </div>
-                <div class="col">
+                <div class="col-md-6 col-12">
                   <div class="form-group row align-items-center mb-2">
-                    <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                    <label class="col-xl-4 col-lg-4 col-form-label font-weight-bold text-left text-lg-right text-muted">
                       {{'user.phone' | translate}}:
                     </label>
-                    <div class="col-lg-9 col-xl-6">
+                    <div class="col-xl-6 col-lg-8">
                       <p class="font-size-lg m-0">{{userDatas.phoneNumber || "not set"}}</p>
                     </div>
                   </div>
@@ -66,7 +66,7 @@
       <div class="row" *ngIf="!isLoading">
         <div class="col-xl-6 col-12">
           <div class="form-group row align-items-center mb-9">
-            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+            <label class="col-xl-3 col-lg-3 col-form-label text-left text-lg-right">
               {{'general-datas.nationality' | translate }}
             </label>
             <div class="col-lg-9 col-xl-9">
@@ -80,7 +80,7 @@
         </div>
         <div class="col-xl-6 col-12">
           <div class="form-group row align-items-center mb-9">
-            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+            <label class="col-xl-3 col-lg-3 col-form-label text-left text-lg-right">
               {{'general-datas.citizenship' | translate }}
             </label>
             <div class="col-lg-9 col-xl-9">
@@ -94,7 +94,7 @@
         </div>
         <div class="col-xl-6 col-12">
           <div class="form-group row align-items-center mb-9">
-            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+            <label class="col-xl-3 col-lg-3 col-form-label text-left text-lg-right">
               {{'general-datas.state-language-level' | translate }}
             </label>
             <div class="col-lg-9 col-xl-9">
@@ -108,7 +108,7 @@
         </div>
         <div class="col-xl-6 col-12">
           <div class="form-group row align-items-center mb-9">
-            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+            <label class="col-xl-3 col-lg-3 col-form-label text-left text-lg-right">
               {{'general-datas.sex' | translate }}
             </label>
             <div class="col-lg-9 col-xl-9">
@@ -122,7 +122,7 @@
         </div>
         <div class="col-xl-6 col-12">
           <div class="form-group row mb-10">
-            <label class="col-xl-3 col-lg-3 col-form-label text-right">{{ 'general-datas.home-phone' | translate }}</label>
+            <label class="col-xl-3 col-lg-3 col-form-label text-left text-lg-right">{{ 'general-datas.home-phone' | translate }}</label>
             <div class="col-lg-9 col-xl-9">
               <input class="form-control form-control-lg form-control-solid" name="homePhone" type="text"
                 formControlName="homePhone"
@@ -140,7 +140,7 @@
         </div>
         <div class="col-xl-6 col-12">
           <div class="form-group row mb-10">
-            <label class="col-xl-3 col-lg-3 col-form-label text-right">{{ 'general-datas.work-phone' | translate }}</label>
+            <label class="col-xl-3 col-lg-3 col-form-label text-left text-lg-right">{{ 'general-datas.work-phone' | translate }}</label>
             <div class="col-lg-9 col-xl-9">
               <input class="form-control form-control-lg form-control-solid" name="workPhone" type="text"
                 formControlName="workPhone"
@@ -158,9 +158,13 @@
         </div>
       </div>
     </div>
-    <div class="row justify-content-end">
-      <button class="btn btn-success" matStepperNext [disabled]="userForm && userForm.invalid"
-        (click)="updateUserProfileGeneralData()">{{'stepper.button-update-and-next' | translate}}</button>
+    <div class="row">
+      <div class="col">
+        <div class="d-flex justify-content-md-end">
+          <button class="btn btn-success" matStepperNext [disabled]="userForm && userForm.invalid"
+            (click)="updateUserProfileGeneralData()">{{'stepper.button-update-and-next' | translate}}</button>
+        </div>
+      </div>
     </div>
   </form>
 </div>

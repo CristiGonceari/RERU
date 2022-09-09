@@ -1,0 +1,10 @@
+button {
+    @media screen and (max-width: 992px) {
+        width: 100%;
+    }
+}
+
+input[type="checkbox"] {
+    height: 15px;
+    width: 15px;
+}

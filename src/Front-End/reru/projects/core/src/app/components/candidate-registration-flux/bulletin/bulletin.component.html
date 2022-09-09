@@ -1,5 +1,5 @@
 <app-loading-spinner *ngIf="isLoading" contentHeight="20rem" height="5rem" width="5rem" colorClass="text-primary"></app-loading-spinner>
-<form *ngIf="bulletinForm && !isLoading" class="col-lg col-md-8 col-sm-12 col-12 mx-auto" [formGroup]="bulletinForm">
+<form *ngIf="bulletinForm && !isLoading" class="col-lg col-md-12 col-sm-12 col-12 mx-auto" [formGroup]="bulletinForm">
     <div class="row my-5">
         <div class="col">
             <h4>{{'step.Bulletin' | translate}}</h4>
@@ -11,7 +11,7 @@
             <div class="card-body">
               <app-loading-spinner *ngIf="bulletinValuesLoading" contentHeight="20rem" height="5rem" width="5rem"
                 colorClass="text-primary"></app-loading-spinner>
-                <div class="container" *ngIf="!bulletinValuesLoading">
+                <div class="container p-lg-2 p-0" *ngIf="!bulletinValuesLoading">
                     <div class="row">
                       <div class="col">
                         <div class="form-group row align-items-center mb-2">
@@ -29,7 +29,7 @@
                 </div>
                 </div>
             </div>
-    <div class="ml-10 mr-10">
+    <div class="ml-lg-10 mr-lg-10 m-0">
     <div class="form-group row required">
         <label class="col-xl-3 col-lg-3 col-form-label d-flex align-items-center">
             <span class="svg-icon  svg-icon-2x mr-2"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo5/dist/../src/media/svg/icons/Shopping/Barcode-scan.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -88,7 +88,7 @@
             <h4>{{'bulletin.adresses' | translate}}</h4>
         </div>
     </div>
-    <div class="ml-10 mr-10">
+    <div class="ml-lg-10 mr-lg-10 m-0">
     <div class="form-group row required">
         <label class="col-xl-3 col-lg-3 col-form-label">{{'bulletin.birth-place' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
@@ -108,12 +108,16 @@
         </div>
     </div>
     </div>
-    <div class="row justify-content-end" >
-        <button class="btn btn-success" matStepperNext
-            [disabled]="bulletinForm && bulletinForm.invalid" *ngIf="toAddOrUpdateButton"
-            (click)="updateBulletin()">{{'stepper.button-update-and-next' | translate}}</button>
-            <button class="btn btn-success" matStepperNext
-            [disabled]="bulletinForm && bulletinForm.invalid" *ngIf="!toAddOrUpdateButton"
-            (click)="createBulletin()">{{'stepper.button-save-and-next' | translate}}</button>
+    <div class="row">
+        <div class="col">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-success" matStepperNext
+                    [disabled]="bulletinForm && bulletinForm.invalid" *ngIf="toAddOrUpdateButton"
+                    (click)="updateBulletin()">{{'stepper.button-update-and-next' | translate}}</button>
+                    <button class="btn btn-success" matStepperNext
+                    [disabled]="bulletinForm && bulletinForm.invalid" *ngIf="!toAddOrUpdateButton"
+                    (click)="createBulletin()">{{'stepper.button-save-and-next' | translate}}</button>
+            </div>
+        </div>
     </div>
 </form>

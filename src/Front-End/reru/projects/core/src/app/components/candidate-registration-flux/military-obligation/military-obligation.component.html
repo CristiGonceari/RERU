@@ -1,4 +1,4 @@
-<form *ngIf="militaryObligationForm" class="col border" [formGroup]="militaryObligationForm">
+<form *ngIf="militaryObligationForm" class="col" [formGroup]="militaryObligationForm">
     <app-loading-spinner *ngIf="isLoadingMilitaryObligation" contentHeight="20rem" height="5rem" width="5rem"
         colorClass="text-primary"></app-loading-spinner>
     <div *ngIf="!isLoadingMilitaryObligation">
@@ -68,7 +68,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    <tr class="d-lg-table-row d-none">
                         <th rowspan="4">{{'military-obligation.military-booklet' | translate}}</th>
                         <td>
                             <div class="row">
@@ -83,7 +83,25 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="d-lg-none d-table-row">
+                        <th colspan="2">{{'military-obligation.military-booklet' | translate}}</th>
+                    </tr>
+                    <tr class="d-lg-none d-table-row">
+                        <td colspan="2">
+                            <div class="row">
+                                <div class="col-sm col-12 text-center p-3">
+                                    {{'military-obligation.series' | translate}}
+                                </div>
+                                <div class="col-sm col-12">
+                                    <input formControlName="militaryBookletSeries" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'military-obligation.series' | translate" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr class="d-lg-table-row d-none">
                         <td>
                             <div class="row">
                                 <div class="col-2 text-center p-3">
@@ -97,7 +115,23 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+
+                    <tr class="d-lg-none d-table-row">
+                        <td colspan="2">
+                            <div class="row">
+                                <div class="col-sm col-12 text-center p-3">
+                                    {{'military-obligation.number' | translate}}
+                                </div>
+                                <div class="col-sm col-12">
+                                    <input formControlName="militaryBookletNumber" autocomplete="off"
+                                        class="form-control form-control-solid" type="number"
+                                        [placeholder]="'military-obligation.number' | translate" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr class="d-lg-table-row d-none">
                         <td>
                             <div class="row">
                                 <div class="col-2 text-center p-3">
@@ -110,7 +144,21 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="d-lg-none d-table-row">
+                        <td colspan="2">
+                            <div class="row">
+                                <div class="col-sm col-12 text-center p-3">
+                                    {{'military-obligation.relase-day' | translate}}
+                                </div>
+                                <div class="col-sm col-12">
+                                        <app-date [parent]="obligation" [date]="'militaryBookletReleaseDay'"
+                                            [placeholder]="'military-obligation.relase-day' | translate"></app-date>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr class="d-lg-table-row d-none">
                         <td>
                             <div class="row">
                                 <div class="col-2 text-center p-3">
@@ -124,11 +172,26 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="d-lg-none d-table-row">
+                        <td colspan="2">
+                            <div class="row">
+                                <div class="col-sm col-12 text-center p-3">
+                                    {{'military-obligation.eminent-authority' | translate}}
+                                </div>
+                                <div class="col-sm col-12">
+                                    <input formControlName="militaryBookletEminentAuthority" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'military-obligation.eminent-authority' | translate" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="i > 0">
                         <th></th>
                         <td>
                             <div  class="d-flex justify-content-end">
-                                <button class="btn btn-icon"*ngIf="i > 0" (click)="removeMilitaryObligation(i)">
+                                <button class="btn btn-icon" (click)="removeMilitaryObligation(i)">
                                     <span class="font-size-18px">&times;</span>
                                 </button>
                             </div>
@@ -137,23 +200,34 @@
                 </tbody>
             </table>
         </div>
-        <div class="row justify-content-between ml-10">
-            <button class="btn btn-icon" (click)="addMilitaryObligation()"><span
-                    class="font-size-18px">+</span></button>
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-icon" (click)="addMilitaryObligation()"><span class="font-size-18px">+</span></button>
+                </div>
+            </div>
         </div>
-        <div class="row justify-content-end m-7">
-            <button class="btn btn-success" *ngIf="addOrEditMilitaryObligationButton"
-                [disabled]="militaryObligationForm && militaryObligationForm.invalid "
-                (click)="createMilitaryObligations()">{{'stepper.button-update' | translate}}</button>
-            <button class="btn btn-success" *ngIf="!addOrEditMilitaryObligationButton"
-                [disabled]="militaryObligationForm && militaryObligationForm.invalid"
-                (click)="createMilitaryObligations()">{{'stepper.button-add' | translate}}</button>
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-end mb-3 mt-lg-0 mt-3">
+                    <button class="btn btn-success" *ngIf="addOrEditMilitaryObligationButton"
+                        [disabled]="militaryObligationForm && militaryObligationForm.invalid "
+                        (click)="createMilitaryObligations()">{{'stepper.button-update' | translate}}</button>
+                    <button class="btn btn-outline-success" *ngIf="!addOrEditMilitaryObligationButton"
+                        [disabled]="militaryObligationForm && militaryObligationForm.invalid"
+                        (click)="createMilitaryObligations()">{{'stepper.button-add' | translate}}</button>
+                </div>
+            </div>
         </div>
     </div>
 </form>
-<div class="row justify-content-end mt-10 mr-1">
-    <button class="btn btn-success" matStepperNext
-        [disabled]="(militaryObligationForm && militaryObligationForm.invalid || militaryObligationData == null)"
-        (click)="addRegistrationFluxStep()"
-        >{{'stepper.button-next' | translate}}</button>
+<div class="row">
+    <div class="col">
+        <div class="col d-flex justify-content-end mt-3 mr-1">
+            <button class="btn btn-success" matStepperNext
+                [disabled]="(militaryObligationForm && militaryObligationForm.invalid || militaryObligationData == null)"
+                (click)="addRegistrationFluxStep()"
+                >{{'stepper.button-next' | translate}}</button>
+        </div>
+    </div>
 </div>

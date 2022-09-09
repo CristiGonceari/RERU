@@ -89,7 +89,7 @@ export class CandidateRegistrationFluxComponent implements OnInit {
     
     this.selectionChanged(event);
     this.isLoading = false;
-
+    this.navigate(1)
   }
   
   ngOnDestroy() {

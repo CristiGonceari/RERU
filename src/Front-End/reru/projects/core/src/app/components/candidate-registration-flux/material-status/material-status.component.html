@@ -1,18 +1,18 @@
-<form *ngIf="materialStatusForm" class="col border" [formGroup]="materialStatusForm">
+<form *ngIf="materialStatusForm" class="col mb-md-3 mb-0" [formGroup]="materialStatusForm">
     <app-loading-spinner *ngIf="isLoadingMaterialStatus" contentHeight="20rem" height="5rem" width="5rem"
     colorClass="text-primary"></app-loading-spinner>
     <div *ngIf="!isLoadingMaterialStatus" >
         <div class="row my-5">
             <div class="col">
-                <h4>{{'step.MaterialStatus' | translate}}</h4>
+                <h4 class="mx-lg-10 mx-0">{{'step.MaterialStatus' | translate}}</h4>
             </div>
         </div>
-        <div class="row ml-10" >
-            <div class="col-xl-9 col-9">
+        <div class="row ml-lg-10">
+            <div class="col">
                 <div class="form-group row required">
-                    <label class="col-xl-5 col-lg-6 col-form-label"
+                    <label class="col-auto col-form-label"
                         for="materialStatusTypeId">{{'material-status.name' | translate}}</label>
-                    <div class="col-lg-9 col-xl-6">
+                    <div class="col-lg-4 col-12">
                         <select class="form-control" formControlName="materialStatusTypeId">
                             <option value="null">{{'module-access.select' | translate}}</option>
                             <option *ngFor="let item of materialStatusTypes" [value]="item.value">{{ 'materialStatusType.' + item.translateId | translate}}
@@ -23,24 +23,28 @@
             </div>
 
         </div>
-        <div class="row justify-content-end m-7">
-            <button class="btn btn-success" *ngIf="addOrEditMaterialStatusButton"
-                [disabled]="(materialStatusForm.value.materialStatusTypeId == null) || (materialStatusForm.value.materialStatusTypeId == 'null')" (click)="updateMaterialStatus()">{{'stepper.button-update' | translate}}</button>
-            <button class="btn btn-success" *ngIf="!addOrEditMaterialStatusButton"
-                [disabled]="materialStatusForm.value.materialStatusTypeId == null || (materialStatusForm.value.materialStatusTypeId == 'null')" (click)="createMaterialStatus()">{{'stepper.button-add' | translate}}</button>
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-end mb-3">
+                    <button class="btn btn-outline-success" *ngIf="addOrEditMaterialStatusButton"
+                        [disabled]="(materialStatusForm.value.materialStatusTypeId == null) || (materialStatusForm.value.materialStatusTypeId == 'null')" (click)="updateMaterialStatus()">{{'stepper.button-update' | translate}}</button>
+                    <button class="btn btn-outline-success" *ngIf="!addOrEditMaterialStatusButton"
+                        [disabled]="materialStatusForm.value.materialStatusTypeId == null || (materialStatusForm.value.materialStatusTypeId == 'null')" (click)="createMaterialStatus()">{{'stepper.button-add' | translate}}</button>
+                </div>
+            </div>
         </div>
     </div>
 </form>
-<form *ngIf="kinshipRelationWithUserProfileForm" class="col border" [formGroup]="kinshipRelationWithUserProfileForm">
+<form *ngIf="kinshipRelationWithUserProfileForm" class="col mb-md-3 mb-0" [formGroup]="kinshipRelationWithUserProfileForm">
     <app-loading-spinner *ngIf="isLoadingKinshipRelationWithUserProfile" contentHeight="20rem" height="5rem" width="5rem"
         colorClass="text-primary"></app-loading-spinner>
     <div *ngIf="!isLoadingKinshipRelationWithUserProfile">
         <div class="row my-5">
             <div class="col">
-                <h4>{{'material-status.kinship-relation' | translate}}</h4>
+                <h4 class="mx-lg-10 mx-0">{{'material-status.kinship-relation' | translate}}</h4>
             </div>
         </div>
-        <div formArrayName="relationWithUserProfile" class="ml-10">
+        <div formArrayName="relationWithUserProfile" class="ml-lg-10 ml-0">
             <table class="table">
                 <thead>
                     <tr>
@@ -98,27 +102,35 @@
 
             </table>
         </div>
-        <div class="row justify-content-between ml-10">
-            <button class="btn btn-icon" (click)="addKinshipRelationWithUserProfile()"><span class="font-size-18px">+</span></button>
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-between ml-lg-10 ml-0">
+                    <button class="btn btn-icon" (click)="addKinshipRelationWithUserProfile()"><span class="font-size-18px">+</span></button>
+                </div>
+            </div>
         </div>
-        <div class="row justify-content-end m-7">
-            <button class="btn btn-success" *ngIf="addOrEditKinshipRelationWithUserProfileButton"
-                [disabled]="kinshipRelationWithUserProfileForm && kinshipRelationWithUserProfileForm.invalid "(click)="creteKinshipRelationWithUserProfile()">{{'stepper.button-update' | translate}}</button>
-            <button class="btn btn-success" *ngIf="!addOrEditKinshipRelationWithUserProfileButton"
-                [disabled]="kinshipRelationWithUserProfileForm && kinshipRelationWithUserProfileForm.invalid" (click)="creteKinshipRelationWithUserProfile()">{{'stepper.button-add' | translate}}</button>
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-end mb-3 mt-lg-0 mt-3">
+                    <button class="btn btn-success" *ngIf="addOrEditKinshipRelationWithUserProfileButton"
+                        [disabled]="kinshipRelationWithUserProfileForm && kinshipRelationWithUserProfileForm.invalid "(click)="creteKinshipRelationWithUserProfile()">{{'stepper.button-update' | translate}}</button>
+                    <button class="btn btn-outline-success" *ngIf="!addOrEditKinshipRelationWithUserProfileButton"
+                        [disabled]="kinshipRelationWithUserProfileForm && kinshipRelationWithUserProfileForm.invalid" (click)="creteKinshipRelationWithUserProfile()">{{'stepper.button-add' | translate}}</button>
+                </div>
+            </div>
         </div>
     </div>
 </form>
-<form *ngIf="kinshipRelationForm" class="col border" [formGroup]="kinshipRelationForm">
+<form *ngIf="kinshipRelationForm" class="col mb-md-3 mb-0" [formGroup]="kinshipRelationForm">
     <app-loading-spinner *ngIf="isLoadingKinshipRelation" contentHeight="20rem" height="5rem" width="5rem"
         colorClass="text-primary"></app-loading-spinner>
     <div *ngIf="!isLoadingKinshipRelation">
         <div class="row my-5">
             <div class="col">
-                <h4>{{'material-status.biography-data' | translate}}</h4>
+                <h4 class="mx-lg-10 mx-0">{{'material-status.biography-data' | translate}}</h4>
             </div>
         </div>
-        <div formArrayName="relation">
+        <div formArrayName="relation" class="ml-lg-10 ml-0">
             <table class="table table-bordered border-dark mb-10" [ngClass]="{'more': kinshipRelationForm.controls.relation.controls.length > 1  &&
                 (kinshipRelationForm.controls.relation.controls.length - 1) !== i}"
                 *ngFor="let relation of kinshipRelationForm.controls.relation.controls; let i = index"
@@ -194,11 +206,11 @@
                         [placeholder]="'material-status.residence' | translate" />
                     </td>
                   </tr>
-                  <tr>
+                  <tr *ngIf="i > 0">
                     <th></th>
                     <td>
                         <div  class="justify-content-end">
-                            <button class="btn btn-icon"*ngIf="i > 0" (click)="removeKinshipRelation(i)">
+                            <button class="btn btn-icon" (click)="removeKinshipRelation(i)">
                                 <span class="font-size-18px">&times;</span>
                             </button>
                         </div>
@@ -207,41 +219,57 @@
                 </tbody>
               </table>
         </div>
-        <div class="row justify-content-between ml-10">
-            <button class="btn btn-icon" (click)="addKinshipRelation()"><span class="font-size-18px">+</span></button>
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-between ml-lg-10 ml-0">
+                    <button class="btn btn-icon" (click)="addKinshipRelation()"><span class="font-size-18px">+</span></button>
+                </div>
+            </div>
         </div>
-        <div class="row justify-content-end m-7">
-            <button class="btn btn-success" *ngIf="addOrEditKinshipRelationButton"
-                [disabled]="kinshipRelationForm && kinshipRelationForm.invalid "(click)="creteKinshipRelation()">{{'stepper.button-update' | translate}}</button>
-            <button class="btn btn-success" *ngIf="!addOrEditKinshipRelationButton"
-                [disabled]="kinshipRelationForm && kinshipRelationForm.invalid" (click)="creteKinshipRelation()">{{'stepper.button-add' | translate}}</button>
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-end mb-3 mt-lg-0 mt-3 ml-md-10 ml-0">
+                    <button class="btn btn-success" *ngIf="addOrEditKinshipRelationButton"
+                        [disabled]="kinshipRelationForm && kinshipRelationForm.invalid "(click)="creteKinshipRelation()">{{'stepper.button-update' | translate}}</button>
+                    <button class="btn btn-outline-success" *ngIf="!addOrEditKinshipRelationButton"
+                        [disabled]="kinshipRelationForm && kinshipRelationForm.invalid" (click)="creteKinshipRelation()">{{'stepper.button-add' | translate}}</button>
+                </div>
+            </div>
         </div>
     </div>
 </form>
-<form *ngIf="kinshipRelationCriminalDataForm" class="col border" [formGroup]="kinshipRelationCriminalDataForm">
+<form *ngIf="kinshipRelationCriminalDataForm" class="col mb-md-3 mb-0" [formGroup]="kinshipRelationCriminalDataForm">
     <app-loading-spinner *ngIf="isLoadingKinshipRelationCriminalData" contentHeight="20rem" height="5rem" width="5rem"
     colorClass="text-primary"></app-loading-spinner>
     <div *ngIf="!isLoadingKinshipRelationCriminalData" >
         <div class="row my-5">
             <div class="col">
-                <h4>{{'material-status.kinship-criminal-data-name' | translate}}</h4>
+                <h4 class="mx-lg-10 mx-0">{{'material-status.kinship-criminal-data-name' | translate}}</h4>
             </div>
         </div>
-        <div class="row ml-10 mr-10" >
+        <div class="row mx-md-10 mx-0" >
 						<ckeditor [editor]="Editor" class="w-100" name="editor1" skin="moono-lisa" language="en"
                         formControlName="text"  (ready)="onReady($event)"></ckeditor>
         </div>
-        <div class="row justify-content-end m-7">
-            <button class="btn btn-success" *ngIf="addOrEditKinshipRelationCriminalDataButton"
-                [disabled]="kinshipRelationCriminalDataForm.value.text == null || kinshipRelationCriminalDataForm.value.text == '' " (click)="updateKinshipRelationCriminalData()">{{'stepper.button-update' | translate}}</button>
-            <button class="btn btn-success" *ngIf="!addOrEditKinshipRelationCriminalDataButton"
-                [disabled]="kinshipRelationCriminalDataForm.value.text == null || kinshipRelationCriminalDataForm.value.text == '' " (click)="createKinshipRelationCriminalData()">{{'stepper.button-add' | translate}}</button>
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-end mb-3">
+                    <button class="btn btn-success" *ngIf="addOrEditKinshipRelationCriminalDataButton"
+                        [disabled]="kinshipRelationCriminalDataForm.value.text == null || kinshipRelationCriminalDataForm.value.text == '' " (click)="updateKinshipRelationCriminalData()">{{'stepper.button-update' | translate}}</button>
+                    <button class="btn btn-outline-success" *ngIf="!addOrEditKinshipRelationCriminalDataButton"
+                        [disabled]="kinshipRelationCriminalDataForm.value.text == null || kinshipRelationCriminalDataForm.value.text == '' " (click)="createKinshipRelationCriminalData()">{{'stepper.button-add' | translate}}</button>
+                </div>
+            </div>
         </div>
     </div>
 </form>
-<div class="row justify-content-end mt-10 mr-1">
-    <button class="btn btn-success" matStepperNext
-    [disabled]="(materialStatusForm && materialStatusForm.invalid || userMaterialStatus == null)"
-    (click)="addRegistrationFluxStep()"
-        >{{'stepper.button-next' | translate}}</button>
+<div class="row">
+    <div class="col">
+        <div class="col-xl-none col-lg-none col d-flex justify-content-end mt-3 mr-1">
+            <button class="btn btn-success" matStepperNext
+            [disabled]="(materialStatusForm && materialStatusForm.invalid || userMaterialStatus == null)"
+            (click)="addRegistrationFluxStep()"
+                >{{'stepper.button-next' | translate}}</button>
+        </div>
+    </div>
 </div>
