@@ -30,7 +30,7 @@
     "guide-description": "Гид пользователя",
     "documentsTemplates" : "Шаблоны документов",
     "help": "Помощь",
-    "faq": "FAQ"
+    "faq": "Частые вопросы"
   },
   "my-profile":{
     "title":"Мой профиль",
@@ -949,9 +949,9 @@
   },
   "faq": {
     "help": "Помощь",
-    "faq": "FAQ",
+    "faq": "Частые вопросы",
     "subtitle": "Часто задаваемые вопросы",
-    "manage-faq": "Управление FAQ",
+    "manage-faq": "Управление вопросов",
     "new-article": "Добавить Статью",
     "delete-article": "Удалить Статью",
     "article-title": "Название Статьи",
