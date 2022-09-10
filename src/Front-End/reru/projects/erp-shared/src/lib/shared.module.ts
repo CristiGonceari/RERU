@@ -1,11 +1,4 @@
-import {
-	APP_INITIALIZER,
-	ClassProvider,
-	InjectionToken,
-	ModuleWithProviders,
-	NgModule,
-	TemplateRef,
-} from '@angular/core';
+import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderMobileComponent } from './components/header-mobile/header-mobile.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -13,8 +6,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SidebarRightComponent } from './components/sidebar-right/sidebar-right.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
-import { SafeHtmlPipe } from './pipes/safe-html.pipe';
-import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { PageTitleComponent } from './components/page-title/page-title.component';
@@ -118,5 +110,17 @@ const commonExports = [
 	],
 })
 export class SharedModule {
+	public static forRoot(environment: any): ModuleWithProviders<SharedModule> {
+
+        return {
+            ngModule: SharedModule,
+            providers: [
+                {
+                    provide: 'env',
+                    useValue: environment
+                }
+            ]
+        };
+    }
 }
 

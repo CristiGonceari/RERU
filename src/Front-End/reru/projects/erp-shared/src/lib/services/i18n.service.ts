@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -19,8 +19,6 @@ import {
   LANGUAGE_CODE_EN,
   LANGUAGE_CODE_RU,
 } from '../constants/i18n.constant';
-
-import { environment } from '../environments/environment';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -46,7 +44,7 @@ export function ManualLoaderFactory(
 })
 export class I18nService {
   private readonly languageKey = LOCALIZE_DEFAULT_LANGUAGE;
-  private readonly defaultLanguage = environment.DEFAULT_LANGUAGE;
+  private readonly defaultLanguage = 'ro';
   private readonly change$ = new BehaviorSubject<string>(null);
   private readonly languages = [
     {
@@ -66,7 +64,9 @@ export class I18nService {
   constructor(
     private translate: TranslateService,
     private cookieService: CookieService,
+    @Inject('env') environment
   ) {
+    this.defaultLanguage = environment.DEFAULT_LANGUAGE;
     this.browserLanguage = translate.getBrowserLang();
     translate.addLangs([LANGUAGE_CODE_RO, LANGUAGE_CODE_EN, LANGUAGE_CODE_RU]);
     this.initializeAppTranslation();
