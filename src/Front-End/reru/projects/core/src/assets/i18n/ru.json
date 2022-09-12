@@ -41,8 +41,8 @@
   "vacant-positions-page": {
     "title": "Страница вакантных должностей",
     "details": "Сведения о вакантной должности",
-    "aviable-from": "Годен с",
-    "aviable-to": "Годен до"
+    "available-from": "Годен с",
+    "available-to": "Годен до"
   },
   "files":{
     "title": "Документы",

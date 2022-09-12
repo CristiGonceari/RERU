@@ -968,8 +968,8 @@
     "refuse-msg": "Вы уверены, что хотите отклонить эту запрошенную должность?",
     "select-candidate-position": "Выберите должность",
     "position-to-candidate": "Кандидируемая позиция",
-    "aviable-from": "Действителен с",
-    "aviable-to": "Годен до"
+    "available-from": "Действителен с",
+    "available-to": "Годен до"
   },
   "evaluations": {
     "evaluation": "Оценка",

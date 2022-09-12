@@ -970,8 +970,8 @@
     "refuse-msg": "Sigur doriți să refuzați aceasta pozitie solicitata?",
     "select-candidate-position": "Selectați poziția",
     "position-to-candidate": "Poziția pentru care candidați",
-    "aviable-from": "Valabil de la",
-    "aviable-to": "Valabil pana la"
+    "available-from": "Valabil de la",
+    "available-to": "Valabil pana la"
   },
   "evaluations": {
     "evaluation": "Evaluare",
