@@ -1,18 +1,12 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SidebarItemType } from '../../utils/models/sidebar.model';
 import { I18nService } from '../../utils/services/i18n.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalizeRouterService } from '@gilsdav/ngx-translate-router';
 import { forkJoin } from 'rxjs';
 import { AppSettingsService, IAppSettings, AuthenticationService } from '@erp/shared';
-import { RolesComponent } from '../roles/roles.component';
-import {
-	ApplicationUserService,
-	AvailableModulesService,
-	ApplicationUserModuleModel,
-  } from '@erp/shared';
+import { ApplicationUserService } from '@erp/shared';
 import { ProfileService } from '../../utils/services/profile.service';
-import { ThrowStmt } from '@angular/compiler';
   
 @Component({
   selector: 'app-main',

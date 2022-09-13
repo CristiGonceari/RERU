@@ -21,7 +21,7 @@
                           <div class="col-lg-9 col-xl-9">
                             <input class="form-control form-control-lg form-control-solid" name="firstName" type="text"
                               formControlName="firstName"
-                              [ngClass]="{'is-invalid': hasErrors('firstName'), 'is-valid': personalDataForm.get('firstName').valid}" />
+                              [ngClass]="{'is-invalid': hasErrors('firstName'), 'is-valid': personalDataForm?.get('firstName').valid}" />
                             <div *ngIf="hasErrors('firstName')" class="fv-plugins-message-container">
                               <div *ngIf="hasError('firstName', 'required')" data-field="firstName"
                                 data-validator="notEmpty" class="fv-help-block">
@@ -39,7 +39,7 @@
                           <div class="col-lg-9 col-xl-9">
                             <input class="form-control form-control-lg form-control-solid" name="lastName" type="text"
                               formControlName="lastName"
-                              [ngClass]="{'is-invalid': hasErrors('lastName'), 'is-valid': personalDataForm.get('lastName').valid}" />
+                              [ngClass]="{'is-invalid': hasErrors('lastName'), 'is-valid': personalDataForm?.get('lastName').valid}" />
                             <div *ngIf="hasErrors('lastName')" class="fv-plugins-message-container">
                               <div *ngIf="hasError('lastName', 'required')" data-field="lastName"
                                 data-validator="notEmpty" class="fv-help-block">
@@ -57,7 +57,7 @@
                           <div class="col-lg-9 col-xl-9">
                             <input class="form-control form-control-lg form-control-solid" name="fatherName" type="text"
                               formControlName="fatherName"
-                              [ngClass]="{'is-invalid': hasErrors('fatherName'), 'is-valid': personalDataForm.get('fatherName').valid}" />
+                              [ngClass]="{'is-invalid': hasErrors('fatherName'), 'is-valid': personalDataForm?.get('fatherName').valid}" />
                             <div *ngIf="hasErrors('fatherName')" class="fv-plugins-message-container">
                               <div *ngIf="hasError('fatherName', 'required')" data-field="fatherName"
                                 data-validator="notEmpty" class="fv-help-block">
@@ -91,7 +91,7 @@
                           <div class="col-lg-9 col-xl-9">
                             <input class="form-control form-control-lg form-control-solid" name="phoneNumber"
                               type="text" formControlName="phoneNumber"
-                              [ngClass]="{'is-invalid': hasErrors('phoneNumber'), 'is-valid': personalDataForm.get('phoneNumber').valid}" />
+                              [ngClass]="{'is-invalid': hasErrors('phoneNumber'), 'is-valid': personalDataForm?.get('phoneNumber').valid}" />
                             <div *ngIf="hasErrors('phoneNumber')" class="fv-plugins-message-container">
                               <div *ngIf="hasError('phoneNumber', 'required')" data-field="phoneNumber"
                                 data-validator="notEmpty" class="fv-help-block">

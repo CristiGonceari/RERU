@@ -971,8 +971,8 @@
     "refuse-msg": "Are you sure you want to refuse this solicited position?",
     "select-candidate-position": "Select Position",
     "position-to-candidate": "Position to Candidate",
-    "aviable-from": "Aviable from",
-    "aviable-to": "Aviable to"
+    "available-from": "Aviable from",
+    "available-to": "Aviable to"
   },
   "evaluations": {
     "evaluation": "Evaluation",

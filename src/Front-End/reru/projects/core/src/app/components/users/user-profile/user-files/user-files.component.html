@@ -3,15 +3,18 @@
 <div *ngIf="!isLoading" id="kt_content" class="content d-flex flex-column flex-column-fluid">
   <div class="card card-custom gutter-b">
     <div class="card-header flex-wrap border-0 py-5">
-      <div class="w-100 d-flex justify-content-between align-items-center">
+      <div class="w-100 d-flex justify-content-between align-items-center flex-lg-row flex-column">
         <div class="card-title">{{'files.title' | translate}}</div>
-        <div class="card-toolbar">
+        <div class="card-toolbar d-lg-none d-flex w-100">
+          <app-add-button class="btn" width="100%" [value]="'files.upload-doc' | translate" (click)="openUploadDocumentModal()"></app-add-button>
+        </div>
+        <div class="card-toolbar d-lg-flex d-none">
           <app-add-button class="btn" [value]="'files.upload-doc' | translate" (click)="openUploadDocumentModal()"></app-add-button>
         </div>
       </div>
     </div>
     <div class="card-body">
-      <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+      <div class="table-responsive-xl datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
         id="kt_datatable">
         <table class="datatable table font-size-lg">
           <thead class="text-uppercase text-muted">

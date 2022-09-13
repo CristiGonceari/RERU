@@ -1,3 +1,18 @@
+
+:host {
+	::ng-deep {
+		erp-shared-search-input {
+			input[type="text"] {
+				font-size: 1.25rem;
+				padding: 0.5rem 1rem;
+			}
+		}
+		app-button button {
+			height: 100%;
+			width: 100%;
+		}
+	}
+}
 .disabled-area{
     cursor: default;
     pointer-events: none !important;
