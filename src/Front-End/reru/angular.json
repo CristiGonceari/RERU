@@ -43,7 +43,11 @@
               "projects/erp-shared/src/lib/styles/plugins.bundle.css",
               "projects/core/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "file-saver",
+              "@swimlane/dragula"
+            ]
           },
           "configurations": {
             "production": {

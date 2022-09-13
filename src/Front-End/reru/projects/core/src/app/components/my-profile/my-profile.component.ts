@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileService } from '../../utils/services/profile.service';
-import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
 import { MyProfile } from '../../utils/models/user-profile.model';
 import { I18nService } from '../../utils/services/i18n.service';
 import { forkJoin } from 'rxjs';
@@ -16,7 +15,7 @@ export class MyProfileComponent implements OnInit {
   userProfile: MyProfile;
 	userProfileItems: any[];
 	acronym: string;
-	isLoading = false;
+	isLoading = true;
 	avatarString: string;
 	deleteTitle: string;
 	deleteMsg: string;
@@ -44,7 +43,6 @@ export class MyProfileComponent implements OnInit {
 	}
 
 	getAvatar(): void {
-		this.isLoading = true;
 		this.profileService.getUserProfile().subscribe(res => {
 			this.userProfile = res.data;
 			if (res.data.mediaFileId !== null) {
