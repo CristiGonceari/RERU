@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { PersonalData } from '../../../utils/models/personal-data.model';
 import { UserService } from '../../../utils/services/user.service';
@@ -26,8 +26,7 @@ export class ChangePersonalDataComponent implements OnInit {
 		public translate: I18nService,
 		private fb: FormBuilder,
 		private userService: UserService,
-		private notificationService: NotificationsService,
-		private router: Router
+		private notificationService: NotificationsService
 	) { }
 
 	ngOnInit(): void {
@@ -43,7 +42,7 @@ export class ChangePersonalDataComponent implements OnInit {
 	}
 
 	hasErrors(field): boolean {
-		return this.personalDataForm.touched && this.personalDataForm.get(field).invalid;
+		return this.personalDataForm?.touched && this.personalDataForm?.get(field)?.invalid;
 	}
 
 	hasError(field: string, error = 'required'): boolean {

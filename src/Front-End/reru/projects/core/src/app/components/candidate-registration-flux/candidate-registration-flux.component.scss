@@ -1,3 +1,26 @@
-// :host ::ng-deep .mat-vertical-content {
-//     padding:0 !important;
-// }
+:host {
+    ::ng-deep {
+        div.mat-vertical-stepper-content {
+            div.mat-vertical-content {
+                @media screen and (max-width: 992px) {
+                    padding: 0 0 0 12px;
+                }
+            }
+        }
+        mat-step-header.mat-step-header {
+            height: auto;
+            .mat-step-label {
+                width: 100%;
+            }
+
+            div.mat-step-icon {
+                background-color: #F64E60;
+                span {
+                    color: #FFF;
+                }
+            }
+        }
+
+
+    }
+}

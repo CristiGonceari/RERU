@@ -12,14 +12,22 @@
       <div class="row">
         <div class="col">
           <div class="card card-custom gutter-b">
-            <div class="card-header flex-wrap border-0 py-0">
+            <div class="card-header row border-0 py-0">
               <div class="card-title">
                 <h3 class="card-label" id="documentTitle">
                   {{ 'pages.modules.list-module' | translate }}
                 </h3>
               </div>
-              <div class="card-toolbar" *permission="'P00000002'">
-                <app-confirm-button class="btn mr-3" (click)="getHeaders(getTitle())">
+              <div class="card-toolbar d-md-flex d-none" *permission="'P00000002'">
+                <app-confirm-button class="btn mr-md-3 mr-0 mb-sm-0 mb-3" (click)="getHeaders(getTitle())">
+									<i class="far fa-file-pdf text-white"></i>
+									{{'button.print' | translate}}
+								</app-confirm-button>
+                <app-add-button class="btn" routerLink="../new" [value]="'button.add-module' | translate">
+                </app-add-button>
+              </div>
+              <div class="card-toolbar d-md-none d-flex w-100" *permission="'P00000002'">
+                <app-confirm-button class="btn mr-md-3 mr-0 mb-sm-0 mb-3" (click)="getHeaders(getTitle())">
 									<i class="far fa-file-pdf text-white"></i>
 									{{'button.print' | translate}}
 								</app-confirm-button>
@@ -29,7 +37,7 @@
             </div>
             <div class="card-body">
               <div
-                class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+                class="table-responsive datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
                 id="kt_datatable">
                 <table class="datatable table font-size-lg">
                   <thead class="text-uppercase text-muted">

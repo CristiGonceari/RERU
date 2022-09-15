@@ -96,7 +96,7 @@
     "manage-questions": "Questions",
     "test": "Test",
     "events": "Events",
-    "faq": "FAQ",
+    "faq": "Frequent questions",
     "documents-template": "Document Templates",
     "documents-management": "Document Management",
     "administration": "Administration",
@@ -625,9 +625,9 @@
   },
   "faq": {
     "help": "Help",
-    "faq": "FAQ",
+    "faq": "Frequent questions",
     "subtitle": "Frequently Asked Questions",
-    "manage-faq": "Manage FAQ",
+    "manage-faq": "Manage questions",
     "new-article": "Add article",
     "delete-article": "Delete Article",
     "article-title": "Article Titile",
@@ -971,8 +971,8 @@
     "refuse-msg": "Are you sure you want to refuse this solicited position?",
     "select-candidate-position": "Select Position",
     "position-to-candidate": "Position to Candidate",
-    "aviable-from": "Aviable from",
-    "aviable-to": "Aviable to"
+    "available-from": "Aviable from",
+    "available-to": "Aviable to"
   },
   "evaluations": {
     "evaluation": "Evaluation",

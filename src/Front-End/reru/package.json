@@ -17,6 +17,10 @@
     "posttest": "npm.cmd run check"
   },
   "private": true,
+  "engines": {
+    "node": "<=12.6.0",
+    "npm": "<=6.9.0"
+  },
   "dependencies": {
     "@angular/animations": "^10.1.2",
     "@angular/cdk": "^11.2.3",

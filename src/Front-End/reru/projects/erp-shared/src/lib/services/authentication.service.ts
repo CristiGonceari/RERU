@@ -7,7 +7,6 @@ import { BaseService } from './base.service';
 // import { BaseService } from "../../shared/base.service";
 // import { ConfigService } from '../../shared/config.service';
 import { AppSettingsService } from './app-settings.service';
-import { environment } from '../environments/environment';
 import { MOCK_AUTHENTICATION } from '../constants/injection-tokens';
 
 @Injectable({

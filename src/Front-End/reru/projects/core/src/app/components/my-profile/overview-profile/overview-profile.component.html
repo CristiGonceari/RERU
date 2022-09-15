@@ -54,28 +54,30 @@
       <div class="card-title">{{'user-profile.available-modules' | translate}}</div>
     </div>
     <div class="card-body">
-      <table class="datatable table font-size-lg">
-        <thead class="text-uppercase text-muted">
-          <tr>
-            <th scope="col" style="width: 48px"></th>
-            <th scope="col">{{ 'table.module' | translate }}</th>
-            <th scope="col">{{'table.role' | translate}}</th>
-            <th scope="col" style="width: 180px"></th>
-          </tr>
-        </thead>
-        <tbody class="text-dark-75">
-          <tr *ngFor="let item of profileData.modules">
-            <td>
-              <svg-icon [key]="item.moduleIcon" [width]="32" [height]="32"></svg-icon>
-            </td>
-            <td>{{ item.module }}</td>
-            <td>{{ item.role }}</td>
-            <td class="text-right">
-              <app-confirm-button [value]="'button.navigate' | translate" (click)="navigate(item.modulePublicUrl)"></app-confirm-button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive-xl">
+        <table class="datatable table font-size-lg">
+          <thead class="text-uppercase text-muted">
+            <tr>
+              <th scope="col" style="width: 48px"></th>
+              <th scope="col">{{ 'table.module' | translate }}</th>
+              <th scope="col">{{'table.role' | translate}}</th>
+              <th scope="col" style="width: 180px"></th>
+            </tr>
+          </thead>
+          <tbody class="text-dark-75">
+            <tr *ngFor="let item of profileData.modules">
+              <td>
+                <svg-icon [key]="item.moduleIcon" [width]="32" [height]="32"></svg-icon>
+              </td>
+              <td>{{ item.module }}</td>
+              <td>{{ item.role }}</td>
+              <td class="text-right">
+                <app-confirm-button [value]="'button.navigate' | translate" (click)="navigate(item.modulePublicUrl)"></app-confirm-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

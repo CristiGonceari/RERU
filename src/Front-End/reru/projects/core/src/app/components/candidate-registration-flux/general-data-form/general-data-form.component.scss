@@ -1,0 +1,16 @@
+.card {
+    @media screen and (max-width: 992px) {
+        border: 0;
+    }
+    .card-body {
+        @media screen and (max-width: 992px) {
+            padding: 0;
+        }
+    }
+}
+
+button {
+    @media screen and (max-width: 992px) {
+        width: 100%;
+    }
+}

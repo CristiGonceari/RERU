@@ -1,4 +1,4 @@
-<form *ngIf="studyForm" class="col border" [formGroup]="studyForm">
+<form *ngIf="studyForm" class="col mb-md-3 mb-0" [formGroup]="studyForm">
     <app-loading-spinner *ngIf="isLoadingStudies" contentHeight="20rem" height="5rem" width="5rem"
         colorClass="text-primary"></app-loading-spinner>
     <div *ngIf="!isLoadingStudies">
@@ -7,7 +7,7 @@
                 <h4>{{'step.Study' | translate}}</h4>
             </div>
         </div>
-        <div formArrayName="studies" class="ml-10">
+        <div formArrayName="studies" class="ml-md-10 ml-0">
             <div class="box-square" [ngClass]="{'more': studyForm.controls.studies.controls.length > 1  &&
                             (studyForm.controls.studies.controls.length - 1) !== i}"
                 *ngFor="let study of studyForm.controls.studies.controls;let i = index">
@@ -111,36 +111,49 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="i > 0" class="row justify-content-end mb-3 mr-7">
-                    <button class="btn btn-icon" (click)="removeStudy(i)">
-                        <span class="font-size-18px">&times;</span>
-                    </button>
+                <div *ngIf="i > 0" class="row">
+                    <div class="col">
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-icon" (click)="removeStudy(i)">
+                                <span class="font-size-18px">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                    
                 </div>
 
             </div>
         </div>
-        <div class="row justify-content-between ml-10">
-            <button class="btn btn-icon" (click)="addStudy()"><span class="font-size-18px">+</span></button>
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-between ml-md-10 ml-0">
+                    <button class="btn btn-icon" (click)="addStudy()"><span class="font-size-18px">+</span></button>
+                </div>
+            </div>
         </div>
-        <div class="row justify-content-end m-7">
-            <button class="btn btn-success" *ngIf="addOrEditStudyButton" [disabled]="studyForm && studyForm.invalid "
-                (click)="createStudies()">{{'stepper.button-update' | translate}}</button>
-            <button class="btn btn-success" *ngIf="!addOrEditStudyButton" [disabled]="studyForm && studyForm.invalid"
-                (click)="createStudies()">{{'stepper.button-add' | translate}}</button>
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-end mb-3 mt-lg-0 mt-3 ml-md-10 ml-0">
+                    <button class="btn btn-success" *ngIf="addOrEditStudyButton" [disabled]="studyForm && studyForm.invalid "
+                        (click)="createStudies()">{{'stepper.button-update' | translate}}</button>
+                    <button class="btn btn-outline-success" *ngIf="!addOrEditStudyButton" [disabled]="studyForm && studyForm.invalid"
+                        (click)="createStudies()">{{'stepper.button-add' | translate}}</button>
+                </div>
+            </div>
         </div>
     </div>
 
 </form>
-<form *ngIf="languageForm" class="col border" [formGroup]="languageForm">
+<form *ngIf="languageForm" class="col mb-md-3 mb-0" [formGroup]="languageForm">
     <app-loading-spinner *ngIf="isLoadingLanguages" contentHeight="20rem" height="5rem" width="5rem"
         colorClass="text-primary"></app-loading-spinner>
     <div *ngIf="!isLoadingLanguages">
         <div class="row my-5">
             <div class="col">
-                <h4>{{'language.modern-language-level' | translate}}</h4>
+                <h4 class="mx-lg-10 mx-0">{{'language.modern-language-level' | translate}}</h4>
             </div>
         </div>
-        <div formArrayName="modernLanguages" class="ml-10">
+        <div formArrayName="modernLanguages" class="ml-md-10 ml-0">
             <table class="table">
                 <thead>
                     <tr>
@@ -181,27 +194,35 @@
 
             </table>
         </div>
-        <div class="row justify-content-between ml-10">
-            <button class="btn btn-icon" (click)="addModernLanguage()"><span class="font-size-18px">+</span></button>
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-between ml-md-10 ml-0">
+                    <button class="btn btn-icon" (click)="addModernLanguage()"><span class="font-size-18px">+</span></button>
+                </div>
+            </div>
         </div>
-        <div class="row justify-content-end m-7">
-            <button class="btn btn-success" *ngIf="addOrEditLanguagesButton"
-                [disabled]="languageForm && languageForm.invalid " (click)="creteModernLanguage()">{{'stepper.button-update' | translate}}</button>
-            <button class="btn btn-success" *ngIf="!addOrEditLanguagesButton"
-                [disabled]="languageForm && languageForm.invalid" (click)="creteModernLanguage()">{{'stepper.button-add' | translate}}</button>
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-end mb-3 mt-lg-0 mt-3 ml-md-10 ml-0">
+                    <button class="btn btn-success" *ngIf="addOrEditLanguagesButton"
+                        [disabled]="languageForm && languageForm.invalid " (click)="creteModernLanguage()">{{'stepper.button-update' | translate}}</button>
+                    <button class="btn btn-outline-success" *ngIf="!addOrEditLanguagesButton"
+                        [disabled]="languageForm && languageForm.invalid" (click)="creteModernLanguage()">{{'stepper.button-add' | translate}}</button>
+                </div>
+            </div>
         </div>
     </div>
 </form>
-<form *ngIf="recommendationForm" class="col border" [formGroup]="recommendationForm">
+<form *ngIf="recommendationForm" class="col mb-md-3 mb-0" [formGroup]="recommendationForm">
     <app-loading-spinner *ngIf="isLoadingRecommandations" contentHeight="20rem" height="5rem" width="5rem"
         colorClass="text-primary"></app-loading-spinner>
     <div *ngIf="!isLoadingRecommandations">
         <div class="row my-5">
             <div class="col">
-                <h4>{{'recommendation.recommendation-name' | translate}}</h4>
+                <h4 class="mx-lg-10 mx-0">{{'recommendation.recommendation-name' | translate}}</h4>
             </div>
         </div>
-        <div formArrayName="recommendation" class="ml-10">
+        <div formArrayName="recommendation" class="ml-md-10 ml-0">
             <table class="table">
                 <thead>
                     <tr>
@@ -251,20 +272,32 @@
 
             </table>
         </div>
-        <div class="row justify-content-between ml-10">
-            <button class="btn btn-icon" (click)="addRecommandation()"><span class="font-size-18px">+</span></button>
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-between ml-md-10 ml-0">
+                    <button class="btn btn-icon" (click)="addRecommandation()"><span class="font-size-18px">+</span></button>
+                </div>
+            </div>
         </div>
-        <div class="row justify-content-end m-7">
-            <button class="btn btn-success" *ngIf="addOrEditRecommendationsButton"
-                [disabled]="recommendationForm && recommendationForm.invalid " (click)="creteRecommendationForStudy()">{{'stepper.button-update' | translate}}</button>
-            <button class="btn btn-success" *ngIf="!addOrEditRecommendationsButton"
-                [disabled]="recommendationForm && recommendationForm.invalid" (click)="creteRecommendationForStudy()">{{'stepper.button-add' | translate}}</button>
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-end mb-3 mt-lg-0 mt-3 ml-md-10 ml-0">
+                    <button class="btn btn-success" *ngIf="addOrEditRecommendationsButton"
+                        [disabled]="recommendationForm && recommendationForm.invalid " (click)="creteRecommendationForStudy()">{{'stepper.button-update' | translate}}</button>
+                    <button class="btn btn-outline-success" *ngIf="!addOrEditRecommendationsButton"
+                        [disabled]="recommendationForm && recommendationForm.invalid" (click)="creteRecommendationForStudy()">{{'stepper.button-add' | translate}}</button>
+                </div>
+            </div>
         </div>
     </div>
 </form>
-<div class="row justify-content-end mt-10 mr-1" >
-    <button class="btn btn-success" matStepperNext
-    [disabled]="(studyForm && studyForm.invalid || userStudies == null)"
-    (click)="addRegistrationFluxStep()"
-        >{{'stepper.button-next' | translate}}</button>
+<div class="row">
+    <div class="col">
+        <div class="col d-flex justify-content-end mt-3 mr-1">
+            <button class="btn btn-success" matStepperNext
+            [disabled]="(studyForm && studyForm.invalid || userStudies == null)"
+            (click)="addRegistrationFluxStep()"
+                >{{'stepper.button-next' | translate}}</button>
+        </div>
+    </div>
 </div>

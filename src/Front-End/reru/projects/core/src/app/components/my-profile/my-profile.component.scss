@@ -3,3 +3,10 @@
     margin-top: -10px !important;
     margin-left: -10px !important;
 }
+
+.mobile-container-menu {
+    display: none;
+    @media screen and (max-width: 992px) {
+        display: flex;
+    }
+}

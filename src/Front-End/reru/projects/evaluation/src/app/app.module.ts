@@ -30,7 +30,7 @@ import { PositionsComponent } from './components/positions/positions.component';
 				deps: [HttpClient],
 			},
 		}),
-		SharedModule,
+		SharedModule.forRoot(environment),
 		AppRoutingModule,
 		NgbModule,
 		UtilsModule,

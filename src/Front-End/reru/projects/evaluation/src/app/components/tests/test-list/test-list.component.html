@@ -91,7 +91,6 @@
                 </div>
                 <div class="col-lg-2 col-12">
                   <div class="input-group input-group-sm input-group-solid">
-
                     <input id="from" [owlDateTime]="toDate" [placeholder]="'events.search-to' | translate"
                       class="shadow-input" name="date" [(ngModel)]="testsTable.dateTimeTo"
                       (ngModelChange)="testsTable.getTests({toDate: $event})" autocomplete="off" />

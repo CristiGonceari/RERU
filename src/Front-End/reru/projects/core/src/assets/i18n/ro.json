@@ -41,8 +41,8 @@
   "vacant-positions-page": {
     "title": "Pagina de poziții vacante",
     "details": "Detalii despre poziția vacantă",
-    "aviable-from": "Valabil de la",
-    "aviable-to": "Valabil pana la"
+    "available-from": "Valabil de la",
+    "available-to": "Valabil pana la"
   },
   "files":{
     "title": "Documente",
@@ -469,9 +469,9 @@
   "faq": {
     "overview": "Prezentare generală",
     "help": "Ajutor",
-    "faq": "FAQ",
+    "faq": "Întrebări frecvente",
     "subtitle": "Întrebări frecvente",
-    "manage-faq": "Gestionarea FAQ",
+    "manage-faq": "Gestionarea întrebărilor",
     "new-article": "Adaugă Articol",
     "delete-article": "Șterge Articol",
     "article-title": "Titlul Articolului",

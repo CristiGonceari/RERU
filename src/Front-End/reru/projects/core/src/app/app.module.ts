@@ -46,7 +46,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 				deps: [HttpClient],
 			},
 		}),
-		SharedModule,
+		SharedModule.forRoot(environment),
 		AppRoutingModule,
 		NgbModule,
 		UtilsModule,
@@ -70,4 +70,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 	],
 	bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+	constructor() {
+		console.log('CONSTRUCTOR APP MODULE', environment)
+	}
+ }

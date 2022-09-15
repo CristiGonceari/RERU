@@ -16,9 +16,9 @@ import { forkJoin } from 'rxjs';
 	styleUrls: ['./my-evaluations.component.scss']
 })
 export class MyEvaluationsComponent implements OnInit {
-	@ViewChild('evaluationName') evaluationName: any;
 	@ViewChild('evaluatedName') evaluatedName: any;
-	@ViewChild('eventName') eventName: any;
+	fromDate: string;
+	tillDate: string;
 	testRowList: [] = [];
 	pagedSummary: PaginationModel = new PaginationModel();
 	userId: number;
@@ -30,6 +30,8 @@ export class MyEvaluationsComponent implements OnInit {
 	printTranslates: any[];
 	title: string;
 	filters: any = {};
+	searchFrom: string;
+	searchTo: string;
 
 	constructor(
 		private testService: TestService,
@@ -43,10 +45,11 @@ export class MyEvaluationsComponent implements OnInit {
 	}
 
 	getUserTests(data: any = {}) {
+		this.setTimeToSearch();
 		const params: any = {
-			evaluationName: this.filters.evaluationName || '',
 			evaluatedName: this.filters.evaluatedName || '',
-			eventName: this.filters.eventName || '',
+			fromDate: this.searchFrom || '',
+			toDate: this.searchTo || '',
 			page: data.page || this.pagedSummary.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
 		}
@@ -62,6 +65,17 @@ export class MyEvaluationsComponent implements OnInit {
 		)
 	}
 
+	setTimeToSearch(): void {
+		if (this.fromDate) {
+			const date1 = new Date(this.fromDate);
+			this.searchFrom = new Date(date1.getTime() - (new Date(this.fromDate).getTimezoneOffset() * 60000)).toISOString();
+		}
+		if (this.tillDate) {
+			const date2 = new Date(this.tillDate);
+			this.searchTo = new Date(date2.getTime() - (new Date(this.tillDate).getTimezoneOffset() * 60000)).toISOString();
+		}
+	}
+
 	setFilter(field: string, value): void {
 		this.filters[field] = value;
 		this.pagedSummary.currentPage = 1;
@@ -70,9 +84,11 @@ export class MyEvaluationsComponent implements OnInit {
 
 	resetFilters(): void {
 		this.filters = {};
-		this.evaluationName.key = '';
 		this.evaluatedName.key = '';
-		this.eventName.key = '';
+		this.searchFrom = '';
+		this.searchTo = '';
+		this.fromDate = '';
+		this.tillDate = '';
 		this.pagedSummary.currentPage = 1;
 		this.getUserTests();
 	}

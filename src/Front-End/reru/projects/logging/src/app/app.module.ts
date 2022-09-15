@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { environment } from '../environments/environment.prod';
+import { environment } from '../environments/environment';
 import { HttpLoaderFactory, MOCK_AUTHENTICATION, SharedModule } from '@erp/shared'
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe, Location } from '@angular/common';
@@ -27,7 +27,7 @@ import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-dat
     AppRoutingModule,
     BrowserModule,
     CommonModule,
-    SharedModule,
+    SharedModule.forRoot(environment),
     NgbModule,
     ReactiveFormsModule,
     FormsModule,

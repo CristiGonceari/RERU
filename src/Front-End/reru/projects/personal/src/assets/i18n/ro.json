@@ -31,7 +31,7 @@
     "guide-description": "Ghidul Utilizatorului",
     "documentsTemplates" : "Șabloane",
     "help": "Ajutor",
-    "faq": "FAQ"
+    "faq": "Întrebări frecvente"
   },
   "my-profile":{
     "title":"Profilul meu",
@@ -952,9 +952,9 @@
   },
   "faq": {
     "help": "Ajutor",
-    "faq": "FAQ",
+    "faq": "Întrebări frecvente",
     "subtitle": "Întrebări frecvente",
-    "manage-faq": "Gestionarea FAQ",
+    "manage-faq": "Gestionarea întrebărilor",
     "new-article": "Adaugă Articol",
     "delete-article": "Șterge Articol",
     "article-title": "Titlul Articolului",

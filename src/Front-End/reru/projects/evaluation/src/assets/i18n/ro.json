@@ -96,7 +96,7 @@
     "manage-questions": "Întrebări",
     "test": "Test",
     "events": "Evenimente",
-    "faq": "FAQ",
+    "faq": "Întrebări frecvente",
     "documents-template": "Șabloane",
     "documents-management": "Management de Șabloane",
     "administration": "Administrare",
@@ -621,9 +621,9 @@
   },
   "faq": {
     "help": "Ajutor",
-    "faq": "FAQ",
+    "faq": "Întrebări frecvente",
     "subtitle": "Întrebări frecvente",
-    "manage-faq": "Gestionarea FAQ",
+    "manage-faq": "Gestionarea întrebărilor",
     "new-article": "Adaugă articol",
     "delete-article": "Șterge Articol",
     "article-title": "Titlul Articolului",
@@ -970,8 +970,8 @@
     "refuse-msg": "Sigur doriți să refuzați aceasta pozitie solicitata?",
     "select-candidate-position": "Selectați poziția",
     "position-to-candidate": "Poziția pentru care candidați",
-    "aviable-from": "Valabil de la",
-    "aviable-to": "Valabil pana la"
+    "available-from": "Valabil de la",
+    "available-to": "Valabil pana la"
   },
   "evaluations": {
     "evaluation": "Evaluare",

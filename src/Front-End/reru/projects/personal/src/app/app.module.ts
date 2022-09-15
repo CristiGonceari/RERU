@@ -30,7 +30,7 @@ import { environment } from '../environments/environment';
 				deps: [HttpClient],
 			},
 		}),
-		SharedModule,
+		SharedModule.forRoot(environment),
 		AppRoutingModule,
 		NgbModule,
 		UtilsModule,

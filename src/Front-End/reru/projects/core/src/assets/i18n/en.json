@@ -41,8 +41,8 @@
   "vacant-positions-page": {
     "title": "Vacant positions page",
     "details": "Vacant position details",
-    "aviable-from": "Aviable from",
-    "aviable-to": "Aviable to"
+    "available-from": "Aviable from",
+    "available-to": "Aviable to"
   },
   "files":{
     "title": "Documents",
@@ -471,9 +471,9 @@
   "faq": {
     "overview": "Overview",
     "help": "Help",
-    "faq": "FAQ",
+    "faq": "Frequent questions",
     "subtitle": "Frequently Asked Questions",
-    "manage-faq": "Manage FAQ",
+    "manage-faq": "Manage questions",
     "new-article": "Add Article",
     "delete-article": "Delete Article",
     "article-title": "Article Titile",
