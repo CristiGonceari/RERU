@@ -75,8 +75,9 @@ export class ListModuleComponent implements OnInit {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
 		let headersDto = ['icon', 'name', 'code', 'type', 'priority', 'status'];
+		
 		for (let i=1; i<headersHtml.length-1; i++) {
-			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
 		let printData = {
 			tableName: name,
