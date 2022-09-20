@@ -554,6 +554,8 @@
     "multiple-answers": "Несколько ответов",
     "free-text": "Свободная форма",
     "hashed-answer": "Дополняемый текст",
+    "file-answer": "Загрузить файл",
+    "FileAnswer": "Загрузить файл",
     "Poll": "Голосование",
     "Test": "Tест",
     "Evaluation": "Оценка",

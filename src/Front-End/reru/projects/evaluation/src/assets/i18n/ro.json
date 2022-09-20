@@ -554,6 +554,8 @@
     "multiple-answers": "Răspunsuri multiple",
     "free-text": "Formă liberă",
     "hashed-answer": "Completează textul",
+    "file-answer": "Încărcare fișier",
+    "FileAnswer": "Încărcare fișier",
     "Poll": "Sondaj",
     "Test": "Test",
     "Evaluation": "Evaluare",
