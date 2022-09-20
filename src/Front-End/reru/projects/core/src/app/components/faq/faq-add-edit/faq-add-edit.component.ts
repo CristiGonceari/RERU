@@ -61,6 +61,7 @@ export class FaqAddEditComponent implements OnInit {
   }
 
   saveArticle(): void {
+    this.isLoading = true;
     const createData = {
       name: this.title,
       content: this.editorData
@@ -72,31 +73,18 @@ export class FaqAddEditComponent implements OnInit {
       content: this.editorData
     }
 
-    if (this.articleId) {
-      this.articleService.create(editData).subscribe(() => {
-        forkJoin([
-          this.translate.get('modal.success'),
-          this.translate.get('faq.succes-edit-msg'),
-          ]).subscribe(([title1, description]) => {
-          this.title1 = title1;
-          this.description = description;
-          });
-        this.backClicked();
-			  this.notificationService.success(this.title1, this.description, NotificationUtil.getDefaultMidConfig());
+    this.articleService.create(this.articleId ? editData : createData).subscribe(() => {
+    forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('faq.succes-edit-msg'),
+      ]).subscribe(([title1, description]) => {
+        this.title1 = title1;
+        this.description = description;
+        this.isLoading = false;
       });
-    } else {
-      this.articleService.create(createData).subscribe(() => {
-        forkJoin([
-          this.translate.get('modal.success'),
-          this.translate.get('faq.succes-add-msg'),
-          ]).subscribe(([title1, description]) => {
-          this.title1 = title1;
-          this.description = description;
-          });
-        this.backClicked();
-			  this.notificationService.success(this.title1, this.description, NotificationUtil.getDefaultMidConfig());
-      });
-    }
+      this.backClicked();
+      this.notificationService.success(this.title1, this.description, NotificationUtil.getDefaultMidConfig());
+    });
   }
 
   backClicked() {
