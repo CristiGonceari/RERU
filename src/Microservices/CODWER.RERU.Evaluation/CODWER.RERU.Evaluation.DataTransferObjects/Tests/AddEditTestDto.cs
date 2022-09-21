@@ -14,5 +14,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public int? LocationId { get; set; }
         public TestStatusEnum TestStatus { get; set; }
         public DateTime? ProgrammedTime { get; set; }
+        public DateTime? SolicitedTime { get; set; }
     }
 }

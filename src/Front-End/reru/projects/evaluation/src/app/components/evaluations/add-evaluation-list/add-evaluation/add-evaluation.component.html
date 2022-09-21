@@ -9,7 +9,7 @@
                             {{'events.event' | translate}}</label>
                         <div class="col-lg-9 col-xl-9">
                             <select class="form-control form-control-lg form-control-solid"
-                                (change)="getActiveTestTemplate()" (ngModelChange)="onChange($event)"
+                                (change)="getActiveTestTemplate()" (change)="getActiveLocations()" (ngModelChange)="onChange($event)"
                                 [(ngModel)]="event.value" name="searchEvent">
                                 <option value="">{{'questions.select' | translate}}</option>
                                 <option *ngFor="let item of eventsList" [ngValue]="item.eventId">
@@ -92,6 +92,46 @@
                                 {{'events.attach-evaluator' | translate}}
                             </button>
                         </div>
+                    </div>
+                    <div class="form-group row" [formGroup]="settingsForm" *ngIf="showEventCard">
+                          
+                        <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                            {{'Email' | translate}}</label>
+                            <span></span>
+                            <button type="button" class="btn btn-icon" ngbTooltip="{{'tooltips.option11' | translate}}">
+                                <i class="fas fa-question-circle"></i>
+                              </button>
+                            <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
+                                <input type="checkbox" name="sendTimeAndLocationEmail" formControlName="sendTimeAndLocationEmail">
+                                <span></span>
+                              </label>
+                    </div>
+                    <div class="form-group row" *ngIf="settingsForm.value.sendTimeAndLocationEmail && showEventCard">
+                        <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                            {{'verify-test.programmed-time' | translate}}</label>
+                          <div class="col-lg-9 col-xl-9">
+                            <input id="from" [owlDateTime]="dtFrom" placeholder="Date Time" autocomplete="off" class="shadow-input"
+                              name="date" [(ngModel)]="date" />
+                            <input id="from" [owlDateTimeTrigger]="dtFrom" placeholder="Date Time" autocomplete="off"
+                              class="form-control form-control-lg form-control-solid" [value]="date | dateFilter:'dd/MM/yy HH:mm'" />
+                            <owl-date-time #dtFrom></owl-date-time>
+                          </div>
+                    </div>
+                    <div class="form-group row"  *ngIf="settingsForm.value.sendTimeAndLocationEmail && showEventCard">
+                        <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                            {{'events.location' | translate}}
+                        </label>
+                        <div class="col-lg-9 col-xl-9">
+                            <select class="form-control form-control-lg form-control-solid" name="test"
+                                [(ngModel)]="locationId">
+                                <option value="">{{'locations.address' | translate}}</option>
+                                <option *ngFor="let location of selectActiveLocations"
+                                    [ngValue]="location.id">
+                                    {{location.address}}
+                                </option>
+                            </select>
+                        </div>
+                        
                     </div>
                 </div>
             </div>

@@ -621,7 +621,8 @@
     "option7": "User can view poll progress",
     "option8": "User will not be able to see the pagination",
     "option9": "User can view more questions per page",
-    "option10": "User will not be able to continue the test if the maximum number of errors was made"
+    "option10": "User will not be able to continue the test if the maximum number of errors was made",
+    "option11": "User will get an email including information about location or/and specify time"
   },
   "faq": {
     "help": "Help",
