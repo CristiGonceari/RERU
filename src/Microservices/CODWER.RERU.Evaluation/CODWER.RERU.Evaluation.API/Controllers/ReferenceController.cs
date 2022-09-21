@@ -10,8 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.References.GetAddTestProcesses;
+using CODWER.RERU.Evaluation.Application.References.GetEventLocationValue;
 using CODWER.RERU.Evaluation.Application.References.GetRequiredDocumentsValue;
 using CODWER.RERU.Evaluation.DataTransferObjects.BulkProcesses;
+using CODWER.RERU.Evaluation.DataTransferObjects.Locations;
 using CVU.ERP.Module.Application.ImportProcesses;
 using CVU.ERP.StorageService.Entities;
 using RERU.Data.Entities.Enums;
@@ -97,6 +99,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         {
             var query = new GetAddTestProcessesQuery();
 
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("event-locations/select-values")]
+        public async Task<List<LocationDto>> GetEventLocations([FromQuery] GetEventLocationValueQuery query)
+        {
             return await Mediator.Send(query);
         }
 

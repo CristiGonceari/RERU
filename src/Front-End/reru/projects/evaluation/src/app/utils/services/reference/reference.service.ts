@@ -41,6 +41,10 @@ export class ReferenceService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/users-value/select-values`, { params });
   }
 
+  getEventLocations(params): Observable<any>{
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/event-locations/select-values`, { params });
+  }
+
   getStatisticEnum(): Observable<any>{
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/statistics/select-values`);
   }

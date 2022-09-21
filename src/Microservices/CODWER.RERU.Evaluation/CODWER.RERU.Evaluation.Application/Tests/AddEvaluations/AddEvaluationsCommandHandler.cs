@@ -55,7 +55,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
                             TestTemplateId = request.TestTemplateId,
                             EventId = request.EventId,
                             TestStatus = request.TestStatus,
-                            ProgrammedTime = request.ProgrammedTime
+                            ProgrammedTime = request.ProgrammedTime,
+                            SolicitedTime = request.SolicitedTime,
+                            LocationId = request.LocationId
                         }
                     };
 

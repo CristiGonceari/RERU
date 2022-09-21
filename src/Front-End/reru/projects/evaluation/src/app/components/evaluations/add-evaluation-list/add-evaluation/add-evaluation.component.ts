@@ -8,7 +8,7 @@ import { TestTemplateStatusEnum } from 'projects/evaluation/src/app/utils/enums/
 import { TestStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-status.enum';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { AddEditTest } from '../../../../utils/models/tests/add-edit-test.model';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
 import { forkJoin } from 'rxjs';
 import { saveAs } from 'file-saver';
@@ -34,6 +34,7 @@ export class AddEvaluationComponent implements OnInit {
 
   eventsList: any;
   selectActiveTests: any;
+  selectActiveLocations: any;
   eventDatas: any;
   evaluatorList = [];
   userListToAdd: number[] = [];
@@ -72,6 +73,9 @@ export class AddEvaluationComponent implements OnInit {
   asignedEvaluators = [];
   asignedTemplates = [];
   templatesIds = [];
+  settingsForm: FormGroup;
+  disable: boolean = false;
+  locationId: any;
 
   constructor(
     private referenceService: ReferenceService,
@@ -87,6 +91,10 @@ export class AddEvaluationComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.settingsForm = new FormGroup({
+			sendTimeAndLocationEmail: new FormControl()
+		});
+
     this.getEvents();
   }
 
@@ -104,10 +112,26 @@ export class AddEvaluationComponent implements OnInit {
     else this.showEventCard = false;
   }
 
+  getActiveLocations(){
+    let params = {
+      eventId: this.event.value
+    }
+
+    this.referenceService.getEventLocations(params).subscribe(res => {this.selectActiveLocations = res.data; console.log("locations:", this.selectActiveLocations)})
+  }
+
+  setTimeToSearch(): void {
+    if (this.date) {
+      const date = new Date(this.date);
+      this.search = new Date(date.getTime() - (new Date(this.date).getTimezoneOffset() * 60000)).toISOString();
+    }
+  }
+
   getEvents() {
     this.referenceService.getEvents().subscribe(res => {
       this.eventsList = res.data;
       this.getActiveTestTemplate();
+      this.getActiveLocations();
     });
   }
 
@@ -123,20 +147,23 @@ export class AddEvaluationComponent implements OnInit {
   }
 
   parse() {
+    this.setTimeToSearch();
+    console.log("locationId:", this.locationId)
     return {
       userProfileIds: this.userListToAdd,
       programmedTime: null,
+      solicitedTime: this.search,
       eventId: +this.event.value || null,
       evaluatorIds: this.evaluatorList || null,
       testStatus: TestStatusEnum.Programmed,
       testTemplateId: +this.testTemplate.value || 0,
+      locationId: this.locationId || null,
       showUserName: true
     }
   }
 
   createTest() {
     this.disableBtn = true
-    console.log(this.parse())
 
     this.testService.createEvaluations(this.parse()).subscribe(() => {
       forkJoin([
