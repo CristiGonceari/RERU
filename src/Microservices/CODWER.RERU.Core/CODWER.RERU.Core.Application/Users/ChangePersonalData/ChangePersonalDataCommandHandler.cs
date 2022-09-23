@@ -33,10 +33,12 @@ namespace CODWER.RERU.Core.Application.Users.ChangePersonalData
                 userProfile = new UserProfile();
                 AppDbContext.UserProfiles.Add(userProfile);
                 await AppDbContext.SaveChangesAsync();
+
+                return Unit.Value;
             }
 
-            userProfile.FirstName = request.User.FirstName;
-            userProfile.LastName = request.User.LastName;
+            Mapper.Map(request.User, userProfile);
+
             await AppDbContext.SaveChangesAsync();
 
             return Unit.Value;

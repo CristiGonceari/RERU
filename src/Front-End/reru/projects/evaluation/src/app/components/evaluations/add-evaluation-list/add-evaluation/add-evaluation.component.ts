@@ -117,7 +117,7 @@ export class AddEvaluationComponent implements OnInit {
       eventId: this.event.value
     }
 
-    this.referenceService.getEventLocations(params).subscribe(res => {this.selectActiveLocations = res.data; console.log("locations:", this.selectActiveLocations)})
+    this.referenceService.getEventLocations(params).subscribe(res => {this.selectActiveLocations = res.data;})
   }
 
   setTimeToSearch(): void {
@@ -148,7 +148,6 @@ export class AddEvaluationComponent implements OnInit {
 
   parse() {
     this.setTimeToSearch();
-    console.log("locationId:", this.locationId)
     return {
       userProfileIds: this.userListToAdd,
       programmedTime: null,
@@ -157,27 +156,49 @@ export class AddEvaluationComponent implements OnInit {
       evaluatorIds: this.evaluatorList || null,
       testStatus: TestStatusEnum.Programmed,
       testTemplateId: +this.testTemplate.value || 0,
+      processId: this.processId || null,
       locationId: this.locationId || null,
       showUserName: true
     }
   }
 
   createTest() {
-    this.disableBtn = true
+    this.disableBtn = true;
+    this.isStartAddingTests = true;
 
-    this.testService.createEvaluations(this.parse()).subscribe(() => {
-      forkJoin([
-        this.translate.get('modal.success'),
-        this.translate.get('tests.tests-were-programmed'),
-      ]).subscribe(([title, description]) => {
-        this.title = title;
-        this.description = description;
+    this.testService.startAddProcess({ totalProcesses: this.parse().userProfileIds.length, processType: 2}).subscribe(res => {
+      this.processId = res.data;
+
+      const interval = this.setIntervalGetProcess();
+
+      this.testService.createEvaluations(this.parse()).subscribe(() => {
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('tests.tests-were-programmed'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+  
+        clearInterval(interval);
+        this.isStartAddingTests = false;
+  
+        this.backClicked();
+        this.disableBtn = false;
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       });
+    })
 
-      this.backClicked();
-      this.disableBtn = false;
-      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-    });
+  
+  }
+
+  setIntervalGetProcess() {
+    return setInterval(() => {
+      this.testService.getImportProcess(this.processId).subscribe(res => {
+        this.processProgress = res.data;
+        this.toolBarValue = Math.round(this.processProgress.done * 100 / this.processProgress.total);
+      })
+    }, 10 * 1000);
   }
 
   createTestAndPrint() {

@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Application.Services;
+﻿using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions;
 using CODWER.RERU.Evaluation.Application.Tests.AddTest;
 using CODWER.RERU.Evaluation.Application.Validation;
@@ -14,8 +9,11 @@ using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
 {
@@ -40,6 +38,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
         {
             int testId = 0;
             var testsIds = new List<int>();
+
+            var processId = request.ProcessId;
 
             for (int i = 0; i < request.EvaluatorIds.Count; i++)
             {
@@ -71,9 +71,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
                     };
 
                     await _mediator.Send(generateCommand);
+
+                    await UpdateProcesses(processId);
+
                     await LogAction(testId);
                 }
             }
+
+            await CloseProcess(processId);
 
             await SendEmailNotification(request.EvaluatorIds, request.UserProfileIds, request.TestTemplateId);
 
@@ -121,6 +126,22 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
             content += $@"<p style=""font-size: 22px; font-weight: 300;"">în rol de evaluator.</p>";
 
             return content;
+        }
+
+        private async Task UpdateProcesses(int processId)
+        {
+            var process = _appDbContext.Processes.First(x => x.Id == processId);
+            process.Done++;
+
+            await _appDbContext.SaveChangesAsync();
+        }
+
+        private async Task CloseProcess(int processId)
+        {
+            var process = _appDbContext.Processes.First(x => x.Id == processId);
+            process.IsDone = true;
+
+            await _appDbContext.SaveChangesAsync();
         }
 
         private async Task LogAction(int testId)
