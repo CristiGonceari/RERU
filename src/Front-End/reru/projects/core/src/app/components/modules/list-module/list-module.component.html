@@ -67,8 +67,8 @@
                       <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">{{ module.code }}
                       </td>
                       <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
-                        <span style="width: 120px" class="font-size-lg" *ngIf="module.type === 0">Dynamic</span>
-                        <span style="width: 120px" class="font-size-lg" *ngIf="module.type === 1">Default</span>
+                        <span style="width: 120px" class="font-size-lg" *ngIf="module.type === 0">{{'module-type.dynamic' | translate}}</span>
+                        <span style="width: 120px" class="font-size-lg" *ngIf="module.type === 1">{{'module-type.default' | translate}}</span>
                       </td>
                       <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
                         {{ module.priority }}</td>

@@ -33,8 +33,8 @@
                 <svg-icon *ngIf="role.isAssignByDefault === true" key="success" [width]="24" [height]="24"></svg-icon>
               </td>
               <td [class.no-actions]="!viewPermissions" (dblclick)="navigateToPermissions(role.id)">
-                <span *ngIf="role.type === 1" class="font-size-lg text-dark-75">Default</span>
-                <span *ngIf="role.type === 2" class="font-size-lg text-dark-75">Dynamic</span>
+                <span *ngIf="role.type === 1" class="font-size-lg text-dark-75">{{'module-type.default' | translate}}</span>
+                <span *ngIf="role.type === 2" class="font-size-lg text-dark-75">{{'module-type.dynamic' | translate}}</span>
               </td>
               <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
                 <div style="overflow: visible; position: relative; width: 0px">

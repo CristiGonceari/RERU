@@ -44,6 +44,10 @@
     "available-from": "Valabil de la",
     "available-to": "Valabil pana la"
   },
+  "module-type": {
+    "dynamic": "Dinamic",
+    "default": "Static"
+  },
   "files":{
     "title": "Documente",
     "files-list": "Lista de documente",
@@ -175,8 +179,8 @@
     "type": "Tip",
     "code": "Cod",
     "color": "Culoare",
-    "publicUrl": "Public URL",
-    "internalUrl": "Internal Gateway",
+    "publicUrl": "Adresă URL publică",
+    "internalUrl": "Gateway intern",
     "title": "Titlul",
     "username": "Numele utilizatorului",
     "active": "Activ",
