@@ -104,10 +104,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
             if (location != null)
             {
                 content += $@"Pe strada ""{location.Address}"" orasul ""{location.Name}""";
-                content += $@"""{location.Description}""";
+                content += $@" ""{location.Description}""";
             }
 
-            content += $@"Cu prezență fizică.";
+            content += $@" Cu prezență fizică.";
 
             return content;
         }
