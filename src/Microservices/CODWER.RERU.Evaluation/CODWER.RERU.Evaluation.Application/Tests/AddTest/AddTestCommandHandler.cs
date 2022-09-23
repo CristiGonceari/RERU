@@ -98,16 +98,16 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
         {
             var location = _appDbContext.Locations.FirstOrDefault(x => x.Id == locationId);
 
-            var content = $@"sunteți invitat/ă la evaluarea ""{testName}"" pentru:  
-                    a susține probele. Timpul Solicitat: ""{time.Value.ToString("MM/dd/yyyy HH:mm")}"". ";
+            var content = $@"<p>sunteți invitat/ă la evaluarea ""{testName}""</p>. 
+                             <p> Data și ora: ""{time.Value.ToString("dd/MM/yyyy HH:mm")}"". </p> ";
 
             if (location != null)
             {
-                content += $@"Pe strada ""{location.Address}"" orasul ""{location.Name}""";
-                content += $@" ""{location.Description}""";
+                content += $@"<p> Locatia: ""{location.Address}"", ""{location.Name}"" </p>";
+                content += $@"<p> ""{location.Description}""</p>";
             }
 
-            content += $@" Cu prezență fizică.";
+            content += $@"<p> Prezența fizică este obligatorie. </p>";
 
             return content;
         }
