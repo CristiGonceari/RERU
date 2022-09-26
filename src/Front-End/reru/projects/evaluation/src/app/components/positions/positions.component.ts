@@ -71,7 +71,7 @@ export class PositionsComponent implements OnInit {
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['name', 'isActive'];
+		let headersDto = ['name', 'responsiblePerson', 'from', 'to', 'isActive'];
 		for (let i=0; i<headersHtml.length-1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
@@ -150,9 +150,9 @@ export class PositionsComponent implements OnInit {
 				this.getPositions()
 			);
 		},
-			() => {
-				this.notificationService.error('Errror', 'An error occured!', NotificationUtil.getDefaultMidConfig());
-			}
+			// () => {
+			// 	this.notificationService.error('Errror', 'An error occured!', NotificationUtil.getDefaultMidConfig());
+			// }
 		);
 	}
 

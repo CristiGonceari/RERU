@@ -82,7 +82,7 @@ export class AddEditLocationComponent implements OnInit {
 				name: this.formBuilder.control((location && location.name) || null, [Validators.required]),
 				address: this.formBuilder.control((location && location.address) || null, [Validators.required]),
 				type: this.formBuilder.control((location && !isNaN(location.type) ? location.type : null), [Validators.required]),
-				places: this.formBuilder.control((location && location.places) || null, [Validators.required, Validators.pattern('/^[1-9]\d*$/'),Validators.min(1)]),
+				places: this.formBuilder.control((location && location.places) || 0, [Validators.required, Validators.pattern('/^[1-9]\d*$/'),Validators.min(1)]),
 				description: this.formBuilder.control((location && location.description) || null, [Validators.required]),
 			});
 			this.isLoading = false;
@@ -92,7 +92,7 @@ export class AddEditLocationComponent implements OnInit {
 				name: this.formBuilder.control(null, [Validators.required]),
 				address: this.formBuilder.control(null, [Validators.required]),
 				type: this.formBuilder.control(0, [Validators.required]),
-				places: this.formBuilder.control([Validators.required]),
+				places: this.formBuilder.control(0, [Validators.required]),
 				description: this.formBuilder.control(null, [Validators.required])
 			});
 			this.isLoading = false;

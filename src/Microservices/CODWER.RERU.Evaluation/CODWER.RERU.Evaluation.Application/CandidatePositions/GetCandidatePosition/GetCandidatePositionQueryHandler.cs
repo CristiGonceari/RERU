@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using MediatR;
@@ -16,11 +17,13 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetCandidatePosi
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly ICandidatePositionService _candidatePositionService;
 
-        public GetCandidatePositionQueryHandler(AppDbContext appDbContext, IMapper mapper)
+        public GetCandidatePositionQueryHandler(AppDbContext appDbContext, IMapper mapper, ICandidatePositionService candidatePositionService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _candidatePositionService = candidatePositionService;
         }
 
         public async Task<CandidatePositionDto> Handle(GetCandidatePositionQuery request, CancellationToken cancellationToken)
@@ -33,6 +36,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetCandidatePosi
 
             mappedItem.RequiredDocuments = await GetRequiredDocuments(candidatePosition);
             mappedItem.Events = await GetAttachedEvents(candidatePosition);
+            mappedItem.ResponsiblePerson = _candidatePositionService.GetResponsiblePersonName(int.Parse(candidatePosition?.CreateById ?? "0"));
 
             return mappedItem;
         }

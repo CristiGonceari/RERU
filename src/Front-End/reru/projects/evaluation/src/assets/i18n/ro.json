@@ -932,7 +932,8 @@
     "03030206": "Ați fost invitat la test ca evaluator",
     "03030207": "Toți candidații din eveniment au terminat testul",
     "03030208": "Testul dvs. solicitat a fost refuzat",
-    "03002201": "Nu puteti sterge pozitia la care cineva a aplicat"
+    "03002201": "Nu puteti sterge pozitia la care cineva a aplicat",
+    "03002107": "Numele poziției este gol"
   },
   "login": {
     "colaborator-id": "Colaborator ID",
