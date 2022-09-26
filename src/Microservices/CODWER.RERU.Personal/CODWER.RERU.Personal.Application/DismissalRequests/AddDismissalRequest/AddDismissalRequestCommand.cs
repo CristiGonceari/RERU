@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.DismissalRequests.AddDismissalRequest
 {
-    [ModuleOperation(permission: PermissionCodes.DISMISSAL_REQUEST_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_CEREREA_DEMISIEI)]
     public class AddDismissalRequestCommand: IRequest<int>
     {
         public AddDismissalRequestCommand(DismissalRequestFluxDto data)

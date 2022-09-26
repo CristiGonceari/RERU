@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Departments.GetDepartmentsSelectValues
 {
-    [ModuleOperation(permission: PermissionCodes.DEPARTMENTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_DEPARTAMENTE)]
 
     public class GetDepartmentsSelectValuesQuery : IRequest<List<SelectItem>>
     {

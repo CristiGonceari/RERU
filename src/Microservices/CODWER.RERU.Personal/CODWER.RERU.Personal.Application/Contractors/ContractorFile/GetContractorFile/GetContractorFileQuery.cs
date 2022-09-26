@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Contractors.ContractorFile.GetContractorFile
 {
-    [ModuleOperation(permission: PermissionCodes.CONTRACTOR_FILE_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_DOCUMENTELE_CONTRACTORILOR)]
     public class GetContractorFileQuery : IRequest<FileDataDto>
     {
         public string FileId { get; set; }

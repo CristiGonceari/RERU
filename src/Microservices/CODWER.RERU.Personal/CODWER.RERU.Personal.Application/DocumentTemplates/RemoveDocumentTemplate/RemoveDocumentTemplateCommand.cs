@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.DocumentTemplates.RemoveDocumentTemplate
 {
-    [ModuleOperation(permission: PermissionCodes.DOCUMENTS_TEMPLATE_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_SABLOANE_DE_DOCUMENTE)]
     public class RemoveDocumentTemplateCommand : IRequest<Unit>
     {
         public int Id { get; set; }

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Badges.GetBadge
 {
-    [ModuleOperation(permission: PermissionCodes.BADGES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_BADGE)]
 
     public class GetBadgeQuery : IRequest<BadgeDto>
     {

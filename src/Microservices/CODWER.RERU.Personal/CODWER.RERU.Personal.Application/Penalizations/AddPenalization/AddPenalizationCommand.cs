@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Penalizations.AddPenalization
 {
-    [ModuleOperation(permission: PermissionCodes.PENALIZATIONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_PENALIZARI)]
 
     public class AddPenalizationCommand : IRequest<int>
     {

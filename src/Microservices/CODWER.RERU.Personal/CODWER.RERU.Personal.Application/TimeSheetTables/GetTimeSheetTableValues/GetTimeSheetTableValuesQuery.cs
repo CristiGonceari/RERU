@@ -7,7 +7,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.TimeSheetTables.GetTimeSheetTableValues
 {
-    [ModuleOperation(permission: PermissionCodes.TIME_SHEET_TABLE_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_TABELA_DE_PONTAJ)]
     public class GetTimeSheetTableValuesQuery : PaginatedQueryParameter, IRequest<PaginatedModel<ContractorTimeSheetTableDto>>
     {
         public string ContractorName { get; set; }

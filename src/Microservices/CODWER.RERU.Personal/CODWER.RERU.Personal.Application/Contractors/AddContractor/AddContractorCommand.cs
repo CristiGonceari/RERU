@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Contractors.AddContractor
 {
-    [ModuleOperation(permission: PermissionCodes.CONTRACTORS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_CONTRATORI)]
 
     public class AddContractorCommand : IRequest<int>
     {

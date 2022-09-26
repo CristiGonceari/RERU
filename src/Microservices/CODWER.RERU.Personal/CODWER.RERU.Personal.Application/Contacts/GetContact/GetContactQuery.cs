@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Contacts.GetContact
 {
-    [ModuleOperation(permission: PermissionCodes.CONTACTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_CONTACTE)]
 
     public class GetContactQuery : IRequest<ContactDto>
     {

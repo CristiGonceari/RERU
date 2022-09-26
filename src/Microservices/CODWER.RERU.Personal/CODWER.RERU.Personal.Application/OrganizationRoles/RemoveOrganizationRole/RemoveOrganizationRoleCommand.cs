@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.OrganizationRoles.RemoveOrganizationRole
 {
-    [ModuleOperation(permission: PermissionCodes.ORGANIZATION_ROLES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_ROLURI)]
 
     public class RemoveRoleCommand : IRequest<Unit>
     {

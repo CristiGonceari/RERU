@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.DismissalRequests.GetDismissalByContractorId
 {
-    [ModuleOperation(permission: PermissionCodes.DISMISSAL_REQUEST_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_CEREREA_DEMISIEI)]
     public class DismissalByContractorIdQuery: PaginatedQueryParameter, IRequest<PaginatedModel<MyDismissalRequestDto>>
     {
         public int ContractorId { get; set; }

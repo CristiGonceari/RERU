@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.OrganizationRoles.GetOrganizationRolesSelectValues
 {
-    [ModuleOperation(permission: PermissionCodes.ORGANIZATION_ROLES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_ROLURI)]
 
     public class GetRolesSelectValuesQuery : IRequest<List<SelectItem>>
     {

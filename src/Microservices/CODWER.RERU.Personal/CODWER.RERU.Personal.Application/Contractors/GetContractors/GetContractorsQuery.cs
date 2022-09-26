@@ -10,7 +10,7 @@ using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
 {
-    [ModuleOperation(permission: PermissionCodes.CONTRACTORS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_CONTRATORI)]
 
     public class GetContractorsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<ContractorDto>>
     {
