@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Contacts.GetContacts
 {
-    [ModuleOperation(permission: PermissionCodes.CONTACTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_CONTACTE)]
 
     public class GetContactsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<ContactDto>>
     {

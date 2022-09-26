@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Badges.UpdateBadge
 {
-    [ModuleOperation(permission: PermissionCodes.BADGES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_BADGE)]
 
     public class UpdateBadgeCommand : IRequest<Unit>
     {

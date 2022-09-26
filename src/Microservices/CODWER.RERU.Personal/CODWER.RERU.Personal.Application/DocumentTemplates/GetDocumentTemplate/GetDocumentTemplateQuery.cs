@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.DocumentTemplates.GetDocumentTemplate
 {
-    [ModuleOperation(permission: PermissionCodes.DOCUMENTS_TEMPLATE_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_SABLOANE_DE_DOCUMENTE)]
     public class GetDocumentTemplateQuery : IRequest<AddEditDocumentTemplateDto>
     {
         public int Id { get; set; }

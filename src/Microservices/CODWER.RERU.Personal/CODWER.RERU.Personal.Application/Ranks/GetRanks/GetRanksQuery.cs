@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Ranks.GetRanks
 {
-    [ModuleOperation(permission: PermissionCodes.RANKS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_RANKURI)]
 
     public class GetRanksQuery : PaginatedQueryParameter, IRequest<PaginatedModel<RankDto>>
     {

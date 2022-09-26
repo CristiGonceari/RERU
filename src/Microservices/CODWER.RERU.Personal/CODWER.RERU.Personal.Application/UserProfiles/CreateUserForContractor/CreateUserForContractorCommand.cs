@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
 {
-    [ModuleOperation(permission: PermissionCodes.USER_PROFILE_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_PROFILUL_UTILIZATORULUI)]
     public class CreateUserForContractorCommand : IRequest<int>
     {
         public int ContractorId { get; set; }

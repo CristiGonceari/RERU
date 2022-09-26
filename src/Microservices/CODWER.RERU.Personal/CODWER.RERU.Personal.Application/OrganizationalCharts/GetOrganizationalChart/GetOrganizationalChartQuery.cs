@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.OrganizationalCharts.GetOrganizationalChart
 {
-    [ModuleOperation(permission: PermissionCodes.ORGANIZATIONAL_CHART_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_ORGANIGRAMA)]
 
     public class GetOrganizationalChartQuery : IRequest<OrganizationalChartDto>
     {

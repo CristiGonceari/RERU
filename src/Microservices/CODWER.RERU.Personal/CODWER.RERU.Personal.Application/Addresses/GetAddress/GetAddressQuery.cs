@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Addresses.GetAddress
 {
-    [ModuleOperation(permission: PermissionCodes.ADDRESS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ADRESA)]
     public class GetAddressQuery : IRequest<AddressDto>
     {
         public int Id { get; set; }

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Profiles.ContractorTimeSheetTable
 {
-    [ModuleOperation(permission: PermissionCodes.TIME_SHEET_TABLE_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_TABELA_DE_PONTAJ)]
     public class GetTimeSheetTableQuery : IRequest<ContractorProfileTimeSheetTableDto>
     {
         public DateTime FromDate { get; set; }

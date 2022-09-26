@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Ranks.GetRank
 {
-    [ModuleOperation(permission: PermissionCodes.RANKS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_RANKURI)]
 
     public class GetRankQuery : IRequest<RankDto>
     {

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Positions.GetPositions
 {
-    [ModuleOperation(permission: PermissionCodes.POSITIONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_POZITII)]
 
     public class GetPositionsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<PositionDto>>
     {

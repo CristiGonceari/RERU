@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Attestations.AddAttestation
 {
-    [ModuleOperation(permission: PermissionCodes.ATTESTATIONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_ATESTARI)]
     public class AddAttestationCommand : IRequest<int>
     {
         public AddEditAttestationDto Data { get; set; }

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.TimeSheetTables.AddTimeSheetTableValue
 {
-    [ModuleOperation(permission: PermissionCodes.TIME_SHEET_TABLE_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_TABELA_DE_PONTAJ)]
     public class AddEditTimeSheetTableCommand : IRequest<int>
     {
         public AddEditTimeSheetTableDto Data { get; set; }
