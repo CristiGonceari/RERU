@@ -160,7 +160,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
-				});
+			});
 			this.testId = res.data; 
 			this.getTestTemplate();
 			this.backClicked()
