@@ -95,7 +95,7 @@ id="kt_datatable">
         <div class="text-right border-top pt-7">
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
-                    <app-confirm-button class="btn h-35px mr-5" [value]="'Refresh'" *ngIf="preview" (handle)="refresh()"></app-confirm-button>
+                    <app-confirm-button class="btn h-35px mr-5" [value]="'button.refresh' | translate" *ngIf="preview" (handle)="refresh()"></app-confirm-button>
                 </div>
                 <div class="d-flex">
                     <app-button class="btn mr-2" [value]="'button.reset' | translate" (handle)="reset()"></app-button>

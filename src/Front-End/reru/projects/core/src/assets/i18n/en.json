@@ -44,6 +44,10 @@
     "available-from": "Aviable from",
     "available-to": "Aviable to"
   },
+  "module-type": {
+    "dynamic": "Dynamic",
+    "default": "Default"
+  },
   "files":{
     "title": "Documents",
     "files-list": "Documents list",

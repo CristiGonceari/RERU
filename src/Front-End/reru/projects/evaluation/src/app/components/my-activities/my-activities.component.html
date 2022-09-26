@@ -94,7 +94,45 @@
 						</div>
 					</div>
 				</div>
-				<div class="flex-row-fluid">
+				<div class="flex-row-fluid ml-lg-8">
+					<div class="mobile-container-menu">
+						<div class="card card-custom mb-7 w-100">
+						  <div class="card-body pb-4 overflow-auto">
+							<div class="d-flex navi navi-bold navi-hover navi-active navi-link-rounded">
+							  <div class="navi-item mb-2">
+								<a [routerLink]="['my-solicited-position']" routerLinkActive="active" class="navi-link py-4">
+									<i class="fas fa-poll-h icon-md mr-3"></i>
+								</a>
+							  </div>
+							  <div class="navi-item mb-2">
+								<a [routerLink]="['my-tests']" routerLinkActive="active" class="navi-link py-4">
+									<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
+								</a>
+							  </div>
+							  <div class="navi-item mb-2">
+								<a [routerLink]="['my-events']" routerLinkActive="active" class="navi-link py-4">
+									<i class="far fa-question-circle icon-md mr-3"></i>
+								</a>
+							  </div>
+							  <div class="navi-item mb-2">
+								<a [routerLink]="['my-evaluations']" routerLinkActive="active" class="navi-link py-4">
+									<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
+								</a>
+							  </div>
+							  <div class="navi-item mb-2">
+								<a [routerLink]="['my-polls']" routerLinkActive="active" class="navi-link py-4">
+									<i class="fas fa-poll-h icon-md mr-3"></i>
+								</a>
+							  </div>
+							  <div class="navi-item">
+								<a [routerLink]="['my-evaluated-tests']" routerLinkActive="active" class="navi-link py-4">
+									<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
+								</a>
+							  </div>
+							</div>
+						  </div>
+						</div>
+					  </div>
 					<router-outlet></router-outlet>
 				</div>
 			</div>

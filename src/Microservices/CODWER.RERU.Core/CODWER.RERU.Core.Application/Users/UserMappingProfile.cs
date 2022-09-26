@@ -19,6 +19,7 @@ namespace CODWER.RERU.Core.Application.Users
             CreateMap<ERPIdentityUser, UserPersonalDataDto>();
 
             CreateMap<UserProfile, UserPersonalDataDto>();
+            CreateMap<UserPersonalDataDto, UserProfile>();
 
             CreateMap<UserDto, ERPIdentityUser>()
                 .ForMember(destinationMember => destinationMember.LockoutEnabled, options => options.Ignore())

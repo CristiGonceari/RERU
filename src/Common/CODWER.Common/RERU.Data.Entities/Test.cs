@@ -25,6 +25,7 @@ namespace RERU.Data.Entities
         public DateTime? EndProgrammedTime { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
+        public DateTime? SolicitedTime { get; set; }
 
         public int UserProfileId { get; set; }
         public UserProfile UserProfile { get; set; }

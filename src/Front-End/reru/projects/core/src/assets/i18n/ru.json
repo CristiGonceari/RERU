@@ -44,6 +44,10 @@
     "available-from": "Годен с",
     "available-to": "Годен до"
   },
+  "module-type": {
+    "dynamic": "Динамический",
+    "default": "По умолчанию"
+  },
   "files":{
     "title": "Документы",
     "files-list": "Список документов",
@@ -180,8 +184,8 @@
     "type": "Тип",
     "code": "Код",
     "color": "Цвет",
-    "publicUrl": "Public URL",
-    "internalUrl": "Internal Gateway",
+    "publicUrl": "Общедоступный URL-адрес",
+    "internalUrl": "Внутренний шлюз",
     "title": "Название",
     "username": "Имя пользователя",
     "active": "Активен",

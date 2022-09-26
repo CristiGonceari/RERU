@@ -554,6 +554,8 @@
     "multiple-answers": "Răspunsuri multiple",
     "free-text": "Formă liberă",
     "hashed-answer": "Completează textul",
+    "file-answer": "Încărcare fișier",
+    "FileAnswer": "Încărcare fișier",
     "Poll": "Sondaj",
     "Test": "Test",
     "Evaluation": "Evaluare",
@@ -617,7 +619,8 @@
     "option7": "Utilizatorul poate vizualiza progresul sondajului",
     "option8": "Utilizatorul nu va putea vedea paginarea",
     "option9": "Utilizatorul poate vizualiza mai multe întrebări pe pagină",
-    "option10": "Utilizatorul nu va putea continua testul dacă a făcut numărul maxim de erori posibile"
+    "option10": "Utilizatorul nu va putea continua testul dacă a făcut numărul maxim de erori posibile",
+    "option11": "Utilizatorul va primi un email care va contine informatii despre ora si/sau locatia specifica"
   },
   "faq": {
     "help": "Ajutor",
