@@ -50,9 +50,9 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.GetQuestionUnits
 
             foreach (var unit in hashedQuestions)
             {
-                items.Remove(unit);
+                var index = items.FindIndex(x => x.Id == unit.Id);
                 var unhashedQuestion = await _questionUnitService.GetUnHashedQuestionUnit(unit.Id);
-                items.Add(_mapper.Map<QuestionUnitDto>(unhashedQuestion));
+                items[index] = _mapper.Map<QuestionUnitDto>(unhashedQuestion);
             }
 
             paginatedModel.Items = items;
