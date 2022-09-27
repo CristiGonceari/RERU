@@ -25,7 +25,8 @@
 							data-toggle="tab"
 							data-target="#kt_aside_tab_1"
 							role="tab"
-							[ngClass]="{ active: userModule.module.id === moduleId }">
+							[ngClass]="{ active: userModule.module.id === moduleId }"
+							routerLinkActive="active">
 							<svg-icon [key]="userModule.module.icon" [width]="24" [height]="24"></svg-icon>
 						</a>
 					</li>

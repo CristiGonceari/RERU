@@ -53,7 +53,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         public async Task<QuestionUnit> GetUnHashedQuestionUnit(int questionUnitId)
         {
-            var question = await _appDbContext.QuestionUnits.FirstOrDefaultAsync(x => x.Id == questionUnitId);
+            var question = await _appDbContext.QuestionUnits
+                .Include(x => x.QuestionCategory)
+                .FirstOrDefaultAsync(x => x.Id == questionUnitId);
+
             var options = await _appDbContext.Options
                 .Where(x => x.QuestionUnitId == questionUnitId)
                 .ToListAsync();

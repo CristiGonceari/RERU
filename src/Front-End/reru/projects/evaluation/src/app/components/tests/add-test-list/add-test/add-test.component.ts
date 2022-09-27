@@ -112,6 +112,9 @@ export class AddTestComponent implements OnInit {
       this.selectActiveTests = res.data;
     })
 
+    this.userListToAdd = [];
+    this.evaluatorList = [];
+
     if (params.eventId != null) {
       this.getEvent(params.eventId);
     }
