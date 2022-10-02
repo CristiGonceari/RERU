@@ -27,10 +27,6 @@ export class TestTemplateService extends AbstractService {
     return this.http.patch(`${this.baseUrl}/${this.urlRoute}`, data);
   }
 
-  changeTestTesmplateCanBeSolicited(data): Observable<any> {
-    return this.http.patch(`${this.baseUrl}/${this.urlRoute}/can-be-solicited`, data);
-  }
-
   getTestTemplate(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}` );
   }

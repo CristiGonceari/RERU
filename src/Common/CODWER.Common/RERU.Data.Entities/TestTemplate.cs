@@ -25,8 +25,6 @@ namespace RERU.Data.Entities
         public TestTemplateModeEnum Mode { get; set; }
         public SequenceEnum CategoriesSequence { get; set; }
 
-        public bool? CanBeSolicited { get; set; }
-
         public Guid PdfFileId { get; set; }
 
         public virtual ICollection<Test> Tests { get; set; }

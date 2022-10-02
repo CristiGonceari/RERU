@@ -22,10 +22,6 @@ export class FaqListComponent {
 		return this.title
 	}
 
-  tryLongRequest(){
-    this.tryLongRequestService.getLongRequest().subscribe(res => console.log("res", res))
-  }
-
   downloadFile(): void {
     this.isLoadingButton = true;
 		this.guideService.get().subscribe((response : any) => {

@@ -11,7 +11,6 @@ import { ReferenceService } from '../../../utils/services/reference/reference.se
 export class TestListComponent implements OnInit {
 
   title: string;
-  processesData: any;
   interval: any;
 
   @ViewChild('testName') testName: any;
@@ -24,26 +23,10 @@ export class TestListComponent implements OnInit {
   @ViewChild('selectedResult') selectedResult: any;
 
   constructor(
-    private referenceService: ReferenceService,
     private modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
-    this.referenceService.getProcesses().subscribe(res => {
-      this.processesData = res.data;
-
-      if (this.processesData && !this.processesData.isDone) {
-        this.interval = setInterval(() => {
-          this.referenceService.getProcesses().subscribe(res => {
-            this.processesData = res.data;
-
-            if (this.processesData.length <= 0) {
-              clearInterval(this.interval);
-            }
-          })
-        }, 10 * 1000);
-      }
-    })
   }
 
   getTitle(): string {
@@ -60,11 +43,6 @@ export class TestListComponent implements OnInit {
     this.idnp.key = '';
     this.selectedStatus.getTestStatuses();
     this.selectedResult.getTestResults();
-  }
-
-  getPercents(item) {
-    var percents =  Math.round(item.done * 100 / item.total)
-    return `${percents} %`;
   }
 
   openHistoryModal() {
