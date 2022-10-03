@@ -53,7 +53,7 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
             });
 
             RuleFor(r => r.PhoneNumber)
-                .Must(x => Regex.IsMatch(x, @"^(\+373[0-9]{8})$"))
+                .Must(x => Regex.IsMatch(x, @"^([\+]?373[-]?|[0])?[0-9]{8}$"))
                 .WithErrorCode(ValidationCodes.INVALID_USER_PHONE);
 
             RuleFor(r => r.BirthDate)

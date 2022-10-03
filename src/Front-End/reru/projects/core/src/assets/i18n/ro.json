@@ -168,10 +168,10 @@
     "add": "Adaugă",
     "icon": "Iconiță",
     "module": "Titlul modulului",
-    "name": "Nume",
+    "name": "Prenume",
     "full-name": "NPP",
     "email":"Poștă electronică",
-    "lastName": "Prenume",
+    "lastName": "Numele de familie",
     "father-name": "Patronimic",
     "idnp": "IDNP",
     "role": "Rolul",
@@ -687,5 +687,20 @@
   "step-status":{
     "done": "Efectuat",
     "not-done": "Nefinalizat"
+  },
+  "validations": {
+    "file-is-empty": "Fișierul este pustiu",
+    "minimum-one-character": "Trebuie să conțină minim 1 caracter",
+    "02003004": "Fișierul cu așa denumire există!",
+    "02002402": "Contactul deja există!",
+    "idnp-length": "IDNP trebuie să conțină 13 cifre!",
+    "only-letters": "Trebuie să conțină doar litere",
+    "only-numbers":"Trebuie să conţină doar cifre",
+    "only-letters-and-dash": "Trebuie să conțină doar litere și - (cratimă)",
+    "only-letters-numbers-and-dash": "Trebuie să conţină doar litere, cifre şi - (cratimă)",
+    "only-letters-numbers-dash-and-dot": "Trebuie să conţină doar litere, cifre şi - .",
+    "only-letters-numbers-and-symbols": "Trebuie să conţină doar litere, cifre şi - , . ",
+    "only-letters-numbers-and-some-symbols": "Trebuie să conţină doar litere, cifre şi - , . \" \" ",
+    "valid-email": "Email trebuie să fie valid. De exemplu: codwer@mail.com"
   }
 }

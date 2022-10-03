@@ -691,5 +691,20 @@
   "step-status":{
     "done": "Завершенный",
     "not-done": "Hезавершенный"
+  },
+  "validations": {
+    "file-is-empty": "Файл пустой!",
+    "minimum-one-character": "Должен содержать минимум один символ!",
+    "02003004": "Файл с таким именем уже существует!",
+    "02002402": "Такой контакт уже существует!",
+    "idnp-length": "IDNP должен состоять из 13 цифр!",
+    "only-letters": "Должен содержать только буквы",
+    "only-numbers": "Должен содержать только цифры",
+    "only-letters-and-dash": "Должен содержать только буквы и - (тире)",
+    "only-letters-numbers-and-dash": "Должен содержать только буквы, цифры и - (тире)",
+    "only-letters-numbers-dash-and-dot": "Должен содержать только буквы, цифры и - .",
+    "only-letters-numbers-and-symbols": "Должен содержать только буквы, цифры и - , . ",
+    "only-letters-numbers-and-some-symbols": "Должен содержать только буквы, цифры и - , . \" \" ",
+    "valid-email": "Необходимо ввести валидный еmail. Пример: codwer@mail.com"
   }
 }

@@ -28,6 +28,5 @@
         public const string ACCES_GENERAL_LA_ARTICOLE = "P00000025";
         public const string ACCES_GENERAL_LA_DEPARTAMENTE = "P00000026";
         public const string ACCES_GENERAL_LA_ROLURI = "P00000027";
-        public const string PAGINA_DE_INREGISTRARE = "P00000028";
     }
 }

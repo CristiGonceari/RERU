@@ -308,7 +308,7 @@
     "role": "Role",
     "manage": "Manage Module Access",
     "module-access-info": "Module Access Info",
-    "user-name": "User's Name",
+    "user-name": "User name",
     "select": "Select",
     "remove-access-message": "Are you sure you want to remove access to this module?",
     "module-role-upd": "Module access role is updated!"
@@ -690,5 +690,20 @@
   "step-status":{
     "done": "Completed",
     "not-done": "Uncompleted"
+  },
+  "validations": {
+    "file-is-empty": "The file is empty!",
+    "minimum-one-character": "Must be at least one character",
+    "02003004": "The file name already exists!",
+    "02002402": "The contact already exists!",
+    "idnp-length": "IDNP should consist of 13 numbers!",
+    "only-letters":"Should contain only letters",
+    "only-numbers":"Should contain only numbers",
+    "only-letters-and-dash": "Should contain only letters and - (dash)",
+    "only-letters-numbers-and-dash": "Should contain only letters, numbers and - (dash)",
+    "only-letters-numbers-dash-and-dot": "Should contain only letters, numbers and - .",
+    "only-letters-numbers-and-symbols": "Should contain only letters, numbers and - , . ",
+    "only-letters-numbers-and-some-symbols": "Should contain only letters, numbers and - , . \" \" ",
+    "valid-email": "Email needs to be valid. For example: codwer@mail.com"
   }
 }

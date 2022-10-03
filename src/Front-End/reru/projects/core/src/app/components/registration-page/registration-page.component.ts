@@ -13,7 +13,6 @@ import { ValidatorUtil } from '../../utils/util/validator.util';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WatchInfoVideoModalComponent } from '../../utils/modals/watch-info-video-modal/watch-info-video-modal.component'
 import { UserFilesService } from '../../utils/services/user-files.service';
-import { RegistrationPageService } from '../../utils/services/registration-page.service'
 import { ApplicationUserService } from '@erp/shared';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { AcceptConditionsModalComponent } from '../../utils/modals/accept-conditions-modal/accept-conditions-modal.component';
@@ -73,7 +72,6 @@ export class RegistrationPageComponent implements OnInit {
     private notificationService: NotificationsService,
     public translate: I18nService,
     private modalService: NgbModal,
-    private registrationPageService: RegistrationPageService,
     private applicationUserService: ApplicationUserService,
     private route: ActivatedRoute,
     private router: Router
@@ -81,7 +79,6 @@ export class RegistrationPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    this.getMessage();
     this.inregistrationService.code.subscribe((val: any) => {
       if (val) {
         this.code = val;
@@ -120,20 +117,6 @@ export class RegistrationPageComponent implements OnInit {
       this.userForm.get(field).touched &&
       this.userForm.get(field).hasError(error)
     );
-  }
-
-  getMessage() {
-    this.registrationPageService.getMessage().subscribe(res => {
-      this.textValue = res.data
-      var user = this.applicationUserService.getCurrentUser();
-      if (user.isAuthenticated && user.user.permissions.includes('P00000028')) {
-        this.canEdit = true;
-      }
-    })
-  }
-
-  editMessage() {
-    this.registrationPageService.editMessage({ message: this.textValue }).subscribe();
   }
 
   isIdnpLengthValidator(field: string): boolean {
