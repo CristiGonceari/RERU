@@ -378,6 +378,7 @@
     "succes-order-update": "Order was successfully updated",
     "succes-update-settings-msg": "Settings were successfully updated",
     "tests-were-programmed":"Tests were successfully programmed",
+    "evaliations-were-programmed":"Evaluations were successfully programmed",
     "finish-test-msg": "Do you want to finish test?",
     "stop-test-msg": "Are you sure you want to stop this test?",
     "please-wait": "Please wait while system import tests for users ..."
@@ -1007,5 +1008,10 @@
     "received-evaluations": "Received evaluations",
     "granted-evaluations": "Granted evaluations",
     "performed-tests": "Performed tests"
+  },
+  "footer": {
+    "all-rights-reserved": "All rights reserved",
+    "about": "About",
+    "contact": "Contact"
   }
 }

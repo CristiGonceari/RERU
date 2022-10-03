@@ -13,12 +13,14 @@ export class QuestionOverviewComponent implements OnInit {
   questionId: number;
   questionName: string;
   category: string;
-  type: string;
+  questionType: string;
   status: string;
   isLoading: boolean = true;
   questionPoints: number;
   tags = [];
   fileId: string;
+	type = QuestionUnitTypeEnum;
+	questionEnum = QuestionUnitStatusEnum;
 
   constructor(
 		private questionService: QuestionService,
@@ -28,6 +30,7 @@ export class QuestionOverviewComponent implements OnInit {
   
   ngOnInit(): void {
    this.subsribeForParams();
+
   }
 
   get(){
@@ -35,7 +38,7 @@ export class QuestionOverviewComponent implements OnInit {
       if (res && res.data) {
         this.questionName = res.data.question;
         this.category = res.data.categoryName;
-        this.type = QuestionUnitTypeEnum[res.data.questionType];
+        this.questionType = QuestionUnitTypeEnum[res.data.questionType];
         this.status = QuestionUnitStatusEnum[res.data.status];
         this.questionPoints = res.data.questionPoints;
         if (res.data.tags[0] != null && res.data.tags[0] != 'undefined') {
