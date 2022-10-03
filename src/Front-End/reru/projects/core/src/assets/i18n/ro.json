@@ -229,7 +229,7 @@
     "logout-msg": "Sunteți sigur(-ă) că doriți să ieșiți din sistem?",
     "empty-name": "Câmpul trebuie sa conțină doar litere latine",
     "wrong-name": "Câmpul trebuie sa conțină doar litere latine",
-    "empty-phone": "Câmpul nu trebuie să fie gol",
+    "empty-phone": "Câmpul este obligatoriu",
     "wrong-phone": "Vă rugăm să furnizați un format valid +37311111111",
     "available-modules": "Module disponibile",
     "idnp-length": "IDNP trebuie să conține 13 cifre!",

@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Bonuses.RemoveBonus
 {
-    [ModuleOperation(permission: PermissionCodes.BONUSES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_BONUSURI)]
 
     public class RemoveBonusCommand : IRequest<Unit>
     {

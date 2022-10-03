@@ -117,12 +117,6 @@ export class TestTemplateListTableComponent implements OnInit {
 		}, () => this.downloadFile = false);
 	}
 
-	editCanBeSolicitedTestTemplate(testTemplateId: number) {
-		this.testTemplateService.changeTestTesmplateCanBeSolicited({testTemplateId: testTemplateId}).subscribe(res => {
-			this.list();
-		})
-	}
-
 	list(data: any = {}) {
 		this.isLoading = true;
 		let params: any = {

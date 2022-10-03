@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Addresses.UpdateAddress
 {
-    [ModuleOperation(permission: PermissionCodes.ADDRESS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_ADRESA)]
     public class UpdateAddressCommand : IRequest<Unit>
     {
         public AddressDto Data { get; set; }

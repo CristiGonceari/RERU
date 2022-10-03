@@ -138,7 +138,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
         {
             var result = propInfo.GetValue(item, null);
 
-            if (propInfo.PropertyType == typeof(DateTime))
+            if (propInfo.PropertyType == typeof(DateTime) || propInfo.PropertyType == typeof(DateTime?))
             {
                 result = Convert.ToDateTime(result).ToString("dd/MM/yyyy, HH:mm");
             }

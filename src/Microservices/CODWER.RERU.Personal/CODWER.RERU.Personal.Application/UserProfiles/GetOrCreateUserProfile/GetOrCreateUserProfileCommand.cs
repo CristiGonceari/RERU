@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.UserProfiles.GetOrCreateUserProfile
 {
-    [ModuleOperation(permission: PermissionCodes.USER_PROFILE_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_PROFILUL_UTILIZATORULUI)]
     public class GetOrCreateUserProfileCommand : IRequest<UserProfileDto>
     {
     }

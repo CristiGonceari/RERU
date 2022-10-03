@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Departments.UpdateDepartment
 {
-    [ModuleOperation(permission: PermissionCodes.DEPARTMENTS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_DEPARTAMENTE)]
 
     public class UpdateDepartmentCommand : IRequest<Unit>
     {

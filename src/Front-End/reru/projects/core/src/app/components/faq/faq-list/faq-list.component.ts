@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { GuideService } from '../../../utils/services/guide.service';
-import { TryLongRequestService } from '../../../utils/services/try-long-request.service';
 import { saveAs } from 'file-saver';
 
 @Component({
@@ -14,17 +13,12 @@ export class FaqListComponent {
   isLoading: boolean = true;
 
   constructor(private guideService: GuideService,
-              private tryLongRequestService: TryLongRequestService
     ) { }
 
   getTitle(): string {
 		this.title = document.getElementById('title').innerHTML;
 		return this.title
 	}
-
-  tryLongRequest(){
-    this.tryLongRequestService.getLongRequest().subscribe(res => console.log("res", res))
-  }
 
   downloadFile(): void {
     this.isLoadingButton = true;

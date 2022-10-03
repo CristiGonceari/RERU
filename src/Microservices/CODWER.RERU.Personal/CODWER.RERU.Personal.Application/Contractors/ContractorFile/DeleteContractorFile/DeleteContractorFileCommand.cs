@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Contractors.ContractorFile.DeleteContractorFile
 {
-    [ModuleOperation(permission: PermissionCodes.CONTRACTOR_FILE_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_DOCUMENTELE_CONTRACTORILOR)]
     public class DeleteContractorFileCommand : IRequest<Unit>
     {
         public string FileId { get; set; }

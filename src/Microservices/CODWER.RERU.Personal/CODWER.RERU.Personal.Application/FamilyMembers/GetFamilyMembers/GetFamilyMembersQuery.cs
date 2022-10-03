@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.FamilyMembers.GetFamilyMembers
 {
-    [ModuleOperation(permission: PermissionCodes.FAMILY_COMPONENT_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_COMPONENTA_FAMILIEI)]
 
     public class GetFamilyMembersQuery : PaginatedQueryParameter, IRequest<PaginatedModel<FamilyMemberDto>>
     {

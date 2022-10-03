@@ -174,7 +174,7 @@ export class AddEvaluationComponent implements OnInit {
       this.testService.createEvaluations(this.parse()).subscribe(() => {
         forkJoin([
           this.translate.get('modal.success'),
-          this.translate.get('tests.tests-were-programmed'),
+          this.translate.get('tests.evaliations-were-programmed'),
         ]).subscribe(([title, description]) => {
           this.title = title;
           this.description = description;

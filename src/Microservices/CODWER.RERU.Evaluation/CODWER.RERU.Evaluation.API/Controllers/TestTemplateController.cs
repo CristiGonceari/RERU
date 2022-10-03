@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices;
-using CODWER.RERU.Evaluation.Application.TestTemplates.AddEditTestTemplateCanBeSolicited;
 using CODWER.RERU.Evaluation.Application.TestTemplates.AddEditTestTemplateSettings;
 using CODWER.RERU.Evaluation.Application.TestTemplates.AddTestTemplate;
 using CODWER.RERU.Evaluation.Application.TestTemplates.AddTestTemplateRules;
@@ -89,11 +88,6 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
-        [HttpPatch("can-be-solicited")]
-        public async Task<int> ChangeTestTemplateCanBeSolicitedStatus([FromBody] AddEditTestTemplateCanBeSolicitedCommand command)
-        {
-            return await Mediator.Send(command);
-        }
 
         [HttpPatch("settings")]
         public async Task<Unit> ChangeTestTemplateSettings([FromBody] AddEditTestTemplateSettingsCommand command)

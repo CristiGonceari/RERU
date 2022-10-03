@@ -10,6 +10,10 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.AddCandidatePosi
             RuleFor(r => r.Data.Name)
                 .NotEmpty()
                 .WithErrorCode(ValidationCodes.EMPTY_POSITION_NAME);
+
+            RuleFor(r => r.Data)
+                    .Must(x => x.To > x.From)
+                    .WithErrorCode(ValidationCodes.INVALID_TIME_RANGE);
         }
     }
 }

@@ -12,9 +12,6 @@
 								<h3 class="card-label" id="title">{{'faq.subtitle' | translate}}</h3>
 							</div>
 							<div class="card-toolbar d-sm-flex d-none">
-								<app-confirm-button class="btn mr-3" (click)="tryLongRequest()">
-									Try Long Request
-								</app-confirm-button>
 								<app-confirm-button class="btn mr-3" (click)="table.getHeaders(getTitle())">
 									<i class="far fa-file-pdf text-white"></i>
 									{{'button.print' | translate}}
@@ -32,9 +29,6 @@
 								</app-add-button>
 							</div>
 							<div class="card-toolbar d-sm-none d-flex w-100">
-								<app-confirm-button class="btn mb-3" (click)="tryLongRequest()">
-									Try Long Request
-								</app-confirm-button>
 								<app-confirm-button class="btn mb-3" width="100%" (click)="table.getHeaders(getTitle())">
 									<i class="far fa-file-pdf text-white"></i>
 									{{'button.print' | translate}}

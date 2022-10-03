@@ -140,8 +140,17 @@
   "document-test-modal":{
     "all": "All",
     "there-are-no-records-at-the-moment": "There are no records at the moment",
-    "1": "Test Template",
-    "2": "Test",
+    "1": "Question",
+    "2": "Test Template",
+    "3": "Test",
+    "4": "Media",
+    "5": "Documents",
+    "6": "Identity Files",
+    "7": "Photos",
+    "8": "Request",
+    "9": "Order",
+    "10": "Cim",
+    "11": "Process File",
     "reports":{
       "name": "Name",
       "personFullName": "Full name",
@@ -369,6 +378,7 @@
     "succes-order-update": "Order was successfully updated",
     "succes-update-settings-msg": "Settings were successfully updated",
     "tests-were-programmed":"Tests were successfully programmed",
+    "evaliations-were-programmed":"Evaluations were successfully programmed",
     "finish-test-msg": "Do you want to finish test?",
     "stop-test-msg": "Are you sure you want to stop this test?",
     "please-wait": "Please wait while system import tests for users ..."
@@ -935,7 +945,8 @@
     "03030206": "You were invited to the test as an evaluator",
     "03030207": "All candidates from event finished test",
     "03030208": "Your solicited test was refused",
-    "03002201": "You can not delete used candidate position"
+    "03002201": "You can not delete used candidate position",
+    "03002107": "Empty position name"
   },
   "login": {
     "colaborator-id": "Collaborator ID",
@@ -997,5 +1008,10 @@
     "received-evaluations": "Received evaluations",
     "granted-evaluations": "Granted evaluations",
     "performed-tests": "Performed tests"
+  },
+  "footer": {
+    "all-rights-reserved": "All rights reserved",
+    "about": "About",
+    "contact": "Contact"
   }
 }

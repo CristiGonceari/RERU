@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Vacations.UpdateVacationFile
 {
-    [ModuleOperation(permission: PermissionCodes.VACATIONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_VACANTE)]
 
     public class UpdateVacationFileCommand : IRequest<Unit>
     {

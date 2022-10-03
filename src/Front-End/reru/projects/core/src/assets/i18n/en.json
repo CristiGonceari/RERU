@@ -230,7 +230,7 @@
     "logout-msg": "Are you sure you want to logout from the system?",
     "empty-name": "The field must contain only Latin letters",
     "wrong-name": "The field must contain only Latin letters",
-    "empty-phone": "The field must not be empty",
+    "empty-phone": "The field is required",
     "wrong-phone": "Please provide a valid format +37311111111",
     "available-modules": "Available modules",
     "idnp-length": "IDNP should consist of 13 numbers!",

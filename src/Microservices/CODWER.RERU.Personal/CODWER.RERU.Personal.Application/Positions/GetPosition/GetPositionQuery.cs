@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Positions.GetPosition
 {
-    [ModuleOperation(permission: PermissionCodes.POSITIONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_POZITII)]
 
     public class GetPositionQuery : IRequest<PositionDto>
     {

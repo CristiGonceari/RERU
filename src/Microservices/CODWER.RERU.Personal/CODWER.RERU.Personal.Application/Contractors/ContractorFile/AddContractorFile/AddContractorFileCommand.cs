@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Contractors.ContractorFile.AddContractorFile
 {
-    [ModuleOperation(permission: PermissionCodes.CONTRACTOR_FILE_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_DOCUMENTELE_CONTRACTORILOR)]
     public class AddContractorFileCommand : IRequest<string>
     {
         public CreateFileDto Data { get; set; }

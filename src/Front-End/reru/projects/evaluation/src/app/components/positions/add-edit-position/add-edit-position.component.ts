@@ -120,7 +120,6 @@ export class AddEditPositionComponent implements OnInit {
 
 	addRole(): void {
 		this.setTimeToSearch();
-		this.isLoading = true;
 
 		const tagsArr = this.tags.map(obj => typeof obj.value !== 'number' ? { ...obj, value: 0 } : obj);
 		const eventArr = [];

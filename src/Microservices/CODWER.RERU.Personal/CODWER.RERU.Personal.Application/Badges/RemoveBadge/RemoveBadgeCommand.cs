@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Badges.RemoveBadge
 {
-    [ModuleOperation(permission: PermissionCodes.BADGES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_BADGE)]
 
     public class RemoveBadgeCommand : IRequest<Unit>
     {

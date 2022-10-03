@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.OrganizationalCharts.RemoveOrganizationalChart
 {
-    [ModuleOperation(permission: PermissionCodes.ORGANIZATIONAL_CHART_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_ORGANIGRAMA)]
 
     public class RemoveOrganizationalChartCommand : IRequest<Unit>
     {

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Badges.GetBadges
 {
-    [ModuleOperation(permission: PermissionCodes.BADGES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_BADGE)]
 
     public class GetBadgesQuery : PaginatedQueryParameter, IRequest<PaginatedModel<BadgeDto>>
     {

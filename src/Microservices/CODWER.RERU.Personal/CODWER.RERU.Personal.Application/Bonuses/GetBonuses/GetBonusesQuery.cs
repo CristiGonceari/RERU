@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Bonuses.GetBonuses
 {
-    [ModuleOperation(permission: PermissionCodes.BONUSES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_BONUSURI)]
 
     public class GetBonusesQuery : PaginatedQueryParameter, IRequest<PaginatedModel<BonusDto>>
     {

@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Articles.RemoveArticle
 {
-    [ModuleOperation(permission: PermissionCodes.ARTICLES_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_ARTICOLE)]
     public class RemoveArticleCommand : IRequest<Unit>
     {
         public int Id { get; set; }

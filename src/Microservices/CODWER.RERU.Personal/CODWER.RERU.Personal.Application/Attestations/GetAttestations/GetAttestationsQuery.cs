@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CODWER.RERU.Personal.Application.Attestations.GetAttestations
 {
-    [ModuleOperation(permission: PermissionCodes.ATTESTATIONS_GENERAL_ACCESS)]
+    [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_ATESTARI)]
     public class GetAttestationsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<AttestationDto>>
     {
         public int? ContractorId { get; set; }

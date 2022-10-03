@@ -35,8 +35,6 @@ export class RequiredDocumentsTableComponent implements OnInit {
 	headersToPrint = [];
 	downloadFile: boolean;
 
-
-
 	constructor(
 		private requiredDocumentService: RequiredDocumentService,
 		public translate: I18nService,
@@ -140,7 +138,7 @@ export class RequiredDocumentsTableComponent implements OnInit {
 		this.requiredDocumentService.delete(id).subscribe(() => {
 			forkJoin([
 				this.translate.get('modal.success'),
-				this.translate.get('require-documents.succes-delete-msg'),
+				this.translate.get('require-documents.success-delete-mgs'),
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
