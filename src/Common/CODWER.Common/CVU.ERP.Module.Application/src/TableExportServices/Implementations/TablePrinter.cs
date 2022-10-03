@@ -163,6 +163,14 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             {
                 result = EnumMessages.EnumMessages.GetTestStatus((TestStatusEnum)result);
             }
+            else if (propInfo.PropertyType == typeof(QuestionTypeEnum))
+            {
+                result = EnumMessages.EnumMessages.GetQuestionType((QuestionTypeEnum)result);
+            }
+            else if (propInfo.PropertyType == typeof(QuestionUnitStatusEnum))
+            {
+                result = EnumMessages.EnumMessages.GetQuestionStatus((QuestionUnitStatusEnum)result);
+            }
             else if (result == null)
             {
                 result = "-";

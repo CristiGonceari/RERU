@@ -38,6 +38,9 @@ export class DateComponent implements OnChanges {
   }
 
   get isInvalid(): boolean {
+    if(this.isPatternError == false){
+      return false;
+    }
     return this.parent.invalid &&
           (this.parent.dirty ||
           this.parent.touched);
