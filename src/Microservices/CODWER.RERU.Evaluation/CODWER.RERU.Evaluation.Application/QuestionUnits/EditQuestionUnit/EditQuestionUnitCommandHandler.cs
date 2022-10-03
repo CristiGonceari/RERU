@@ -45,6 +45,8 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit
                 _appDbContext.Options.RemoveRange(deleteOptions);
             }
 
+            _mapper.Map(request.Data, editQuestionUnit);
+
             if (request.Data.FileDto != null)
             {
 
@@ -56,8 +58,6 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits.EditQuestionUnit
             {
                 editQuestionUnit.MediaFileId = request.Data.MediaFileId;
             }
-
-            _mapper.Map(request.Data, editQuestionUnit);
 
             await _appDbContext.SaveChangesAsync();
 
