@@ -282,7 +282,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
 		this.files.splice(this.files.indexOf(event), 1);
 	}
 
-  GetFile() {
+  getFile() {
     this.fileTestAnswerService.getFile(this.answerFileid).subscribe(response => {
       if (response) {
         const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
@@ -295,7 +295,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     )
   }
 
-  ceckFileNameLength() {
+  checkFileNameLength() {
     return this.fileName.length <= 20 ? this.fileName : this.fileName.slice(0, 20) + "...";
   }
 

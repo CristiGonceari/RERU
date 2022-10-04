@@ -108,7 +108,7 @@ export class TestVerificationProcessComponent implements OnInit {
 		})
 	}
 
-	GetFile() {
+	getFile() {
 		this.fileTestAnswerService.getFile(this.answerFileid).subscribe(response => {
 			if (response) {
 				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
@@ -121,7 +121,7 @@ export class TestVerificationProcessComponent implements OnInit {
 		)
 	}
 
-	ceckFileNameLength() {
+	checkFileNameLength() {
 		return this.fileName.length <= 20 ? this.fileName : this.fileName.slice(0, 20) + "...";
 	}
 

@@ -104,10 +104,10 @@
                     </div>
                     <div class="data-container answer text-center"
                         *ngIf="questionUnit.questionType == 5 && hadFile == true">
-                        <button (click)="GetFile()" class="btn btn-light-success font-weight-bold mr-3"
+                        <button (click)="getFile()" class="btn btn-light-success font-weight-bold mr-3"
                             ngbTooltip="{{fileName}}">
                             <i class="flaticon-profile"></i>
-                            {{ ceckFileNameLength() }}
+                            {{ checkFileNameLength() }}
                         </button>
                         <span (click)="deleteFile()" class="svg-icon svg-icon-primary svg-icon-2x">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

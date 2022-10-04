@@ -83,10 +83,10 @@
               </div>
             </div>
             <div class="container-fluid text-center" *ngIf="questionType == 5 && hadFile == true">
-              <button (click)="GetFile()" class="btn btn-light-success font-weight-bold mr-3"
+              <button (click)="getFile()" class="btn btn-light-success font-weight-bold mr-3"
                   ngbTooltip="{{fileName}}">
                   <i class="flaticon-profile"></i>
-                  {{ ceckFileNameLength() }}
+                  {{ checkFileNameLength() }}
               </button>
           </div>
           <div class="container-fluid text-center" *ngIf="questionType == 5 && hadFile == false">
