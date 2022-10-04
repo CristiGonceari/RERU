@@ -21,12 +21,15 @@ export class AttachUserModalComponent implements OnInit {
   @ViewChild('fatherName') fatherName: any;
   @ViewChild('idnp') idnp: any;
   @ViewChild('email') email: any;
+  @ViewChild('department') department: any;
+  @ViewChild('role') role: any;
   @Input() exceptUserIds: any;
   @Input() attachedItems: number[];
   @Input() inputType: string;
   @Input() eventId: number;
   @Input() page: string;
   @Input() whichUser: boolean;
+  showEventCard: boolean = false;
 
   constructor(
     private userService: UserProfileService,
@@ -148,6 +151,8 @@ export class AttachUserModalComponent implements OnInit {
     this.fatherName.key = '';
     this.idnp.key = '';
     this.email.key = '';
+    this.department.key = '';
+    this.role.key = '';
     this.filters = {};
     this.getUsers();
 	}

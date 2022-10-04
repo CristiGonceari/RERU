@@ -9,6 +9,8 @@ using CODWER.RERU.Evaluation.Application.EventTestTemplates.GetEventTestTemplate
 using CODWER.RERU.Evaluation.Application.EventTestTemplates.GetNoAssignedTestTemplates;
 using CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTemplateToEvent;
 using CODWER.RERU.Evaluation.Application.EventTestTemplates.UnassignTestTemplateFromEvent;
+using CODWER.RERU.Evaluation.Application.EventTestTemplates.GetTestTemplatesByEventsIds;
+using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -24,6 +26,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpGet("no-assigned")]
         public async Task<List<TestTemplateDto>> GetNoAssignedTestTemplates([FromQuery] GetNoAssignedTestTemplatesQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("by-event")]
+        public async Task<List<TestTemplatesByEventDto>> GetTestTemplatesByEventsIds([FromQuery] GetTestTemplatesByEventsIdsQuery query)
         {
             return await Mediator.Send(query);
         }
