@@ -52,9 +52,11 @@
                           </label>
                           <div class="col-lg-9 col-xl-9">
                             <tag-input class="py-0 form-control form-control-lg form-control-solid h-100"
-                              [ngModelOptions]="{standalone: true}" [(ngModel)]="tags" [placeholder]="placeHolderStringRequireDocuments" [secondaryPlaceholder]="placeHolderStringRequireDocuments">
-                              <tag-input-dropdown [autocompleteItems]="items" [showDropdownIfEmpty]="true" [keepOpen]="true"
-                                [dynamicUpdate]="true">
+                              [ngModelOptions]="{standalone: true}" [(ngModel)]="tags"
+                              [placeholder]="placeHolderStringRequireDocuments"
+                              [secondaryPlaceholder]="placeHolderStringRequireDocuments">
+                              <tag-input-dropdown [autocompleteItems]="items" [showDropdownIfEmpty]="true"
+                                [keepOpen]="true" [dynamicUpdate]="true">
                               </tag-input-dropdown>
                             </tag-input>
                           </div>
@@ -65,11 +67,30 @@
                           </label>
                           <div class="col-lg-9 col-xl-9">
                             <tag-input class="py-0 form-control form-control-lg form-control-solid h-100"
-                              [ngModelOptions]="{standalone: true}" [(ngModel)]="eventSelected" [placeholder]="placeHolderStringRequireEvents" [secondaryPlaceholder]="placeHolderStringRequireEvents">
-                              <tag-input-dropdown [autocompleteItems]="eventList" [showDropdownIfEmpty]="true" [keepOpen]="true"
-                                [dynamicUpdate]="true">
+                              [ngModelOptions]="{standalone: true}" [(ngModel)]="eventSelected"
+                              [placeholder]="placeHolderStringRequireEvents" (onAdd)="onAddEvent($event)" (onRemove)="onRemovingEvent($event)"
+                              [secondaryPlaceholder]="placeHolderStringRequireEvents">
+                              <tag-input-dropdown [autocompleteItems]="eventList" [showDropdownIfEmpty]="true"
+                                [keepOpen]="true" [dynamicUpdate]="true">
                               </tag-input-dropdown>
                             </tag-input>
+                          </div>
+                        </div>
+                        <div class="form-group row" *ngIf="showEventCard">
+                          <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                            {{'events.event-template-details' | translate}}</label>
+                          <div class="card ml-5 col-lg-8 col-xl-8">
+                            <div class="card-body" *ngIf="!isLoading">
+                              <div class="bordered form-group row align-items-center mb-2">
+                                <label *ngFor="let event of eventsListForDescription" class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-muted">
+                                  <p class="text-muted mb-2">{{event.eventName}}:</p>
+                                  <p *ngIf="!event.testTemplates.length">-</p>
+                                  <p *ngFor="let testTemplate of event.testTemplates" class="font-weight-bold text-left">
+                                    {{testTemplate.testTemplateName}}
+                                  </p>
+                                </label>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <div class="form-group row">
@@ -77,10 +98,11 @@
                             {{'events.start-date' | translate}}
                           </label>
                           <div class="col-lg-9 col-xl-9">
-                            <input id="from" [owlDateTime]="fromDate" placeholder=" {{'events.start-date' | translate}}" class="shadow-input"
-                              name="date" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}"
-                              autocomplete="off" />
-                            <input id="from" [owlDateTimeTrigger]="fromDate" placeholder=" {{'events.start-date' | translate}}" autocomplete="off"
+                            <input id="from" [owlDateTime]="fromDate" placeholder=" {{'events.start-date' | translate}}"
+                              class="shadow-input" name="date" [(ngModel)]="startDate"
+                              [ngModelOptions]="{standalone: true}" autocomplete="off" />
+                            <input id="from" [owlDateTimeTrigger]="fromDate"
+                              placeholder=" {{'events.start-date' | translate}}" autocomplete="off"
                               class="form-control form-control-lg form-control-solid"
                               [value]="startDate | dateFilter:'dd/MM/yy HH:mm'" />
                             <owl-date-time #fromDate></owl-date-time>
@@ -91,11 +113,12 @@
                             {{'events.end-date' | translate}}
                           </label>
                           <div class="col-lg-9 col-xl-9">
-                            <input id="tillDate" [owlDateTime]="tillDate" placeholder="{{'events.end-date' | translate}}" class="shadow-input"
-                              name="date" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}"
-                              autocomplete="off" />
-                            <input id="tillDate" [owlDateTimeTrigger]="tillDate" placeholder="{{'events.end-date' | translate}}"
-                              autocomplete="off" class="form-control form-control-lg form-control-solid"
+                            <input id="tillDate" [owlDateTime]="tillDate"
+                              placeholder="{{'events.end-date' | translate}}" class="shadow-input" name="date"
+                              [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}" autocomplete="off" />
+                            <input id="tillDate" [owlDateTimeTrigger]="tillDate"
+                              placeholder="{{'events.end-date' | translate}}" autocomplete="off"
+                              class="form-control form-control-lg form-control-solid"
                               [value]="endDate | dateFilter:'dd/MM/yy HH:mm'" />
                             <owl-date-time #tillDate></owl-date-time>
                           </div>

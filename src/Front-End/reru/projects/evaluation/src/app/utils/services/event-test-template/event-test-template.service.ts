@@ -28,4 +28,8 @@ export class EventTestTemplateService extends AbstractService {
   detachTestTemplate(eventId, testTemplateId){
     return this.http.delete(`${this.baseUrl}/${this.urlRoute}/Event=${eventId}&&TestTemplate=${testTemplateId}`);
   }
+
+  getTestTemplateByEventsIds(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}/EventTestTemplate/by-event`, { params });
+  }
 }

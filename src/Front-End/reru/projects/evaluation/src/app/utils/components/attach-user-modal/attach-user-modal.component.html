@@ -15,18 +15,26 @@
 			<erp-shared-search-input (handleSearch)="setFilter('fatherName', $event)"
 			[placeholder]="'login.father-name' | translate" #fatherName></erp-shared-search-input>
 		</div>
-	</div>
-	<div class="row mb-5">
 		<div class="col">
 			<erp-shared-search-input (handleSearch)="setFilter('idnp', $event)"
 				[placeholder]="'verify-test.search-student-idnp' | translate" #idnp></erp-shared-search-input>
 		</div>
+	</div>
+	<div class="row mb-5">
 		<div class="col">
 			<erp-shared-search-input (handleSearch)="setFilter('email', $event)"
 				[placeholder]="'user-profile.user-email'  | translate" #email></erp-shared-search-input>
 		</div>
-		<div class="col text-right">
-			<app-button (click)="resetFilters()">{{'button.reset-filters' | translate}}</app-button>
+		<div class="col">
+			<erp-shared-search-input (handleSearch)="setFilter('department', $event)"
+				[placeholder]="'departments.department'  | translate" #department></erp-shared-search-input>
+		</div>
+		<div class="col">
+			<erp-shared-search-input (handleSearch)="setFilter('role', $event)"
+				[placeholder]="'user-roles.role'  | translate" #role></erp-shared-search-input>
+		</div>
+		<div class="col text-center w-100">
+			<app-button class="block" (click)="resetFilters()">{{'button.reset-filters' | translate}}</app-button>
 		</div>
 	</div>
 
@@ -63,10 +71,10 @@
 						</span>
 					</th>
 					<th scope="col"> {{ 'login.last-name' | translate }} </th>
-					<th scope="col"> {{ 'login.first-name' | translate }} </th>
-					<th scope="col"> {{ 'login.father-name' | translate }} </th>
 					<th scope="col"> {{ 'login.idnp' | translate }} </th>
 					<th scope="col"> {{ 'user-profile.user-email' | translate }} </th>
+					<th scope="col"> {{ 'departments.department' | translate }} </th>
+					<th scope="col"> {{ 'user-roles.role' | translate }} </th>
 				</tr>
 			</thead>
 			<tbody class="datatable-body">
@@ -78,11 +86,17 @@
 							<span></span>
 						</label>
 					</td>
-					<td> {{ user.lastName }} </td>
-					<td> {{ user.firstName }} </td>
-					<td> {{ user.fatherName }} </td>
+					<td> {{ user.lastName }} {{ user.firstName }} {{ user.fatherName }}</td>
 					<td> {{ user.idnp }} </td>
 					<td> {{ user.email }} </td>
+					<td>
+						<span *ngIf="!user.departmentName">-</span> 
+						<span *ngIf="user.departmentName">{{ user.departmentName }}</span> 
+					</td>
+					<td> 
+						<span *ngIf="!user.roleName">-</span> 
+						<span *ngIf="user.roleName">{{ user.roleName }}</span>
+					</td>
 				</tr>
 			</tbody>
 			<tbody class="datatable-body">

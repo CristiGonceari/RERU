@@ -74,6 +74,16 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
                 items = items.Where(x => x.Idnp.Contains(request.Idnp));
             }
 
+            if (!string.IsNullOrEmpty(request.Department))
+            {
+                items = items.Where(x => x.Department.Name.ToLower().Contains(request.Department.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(request.Role))
+            {
+                items = items.Where(x => x.Role.Name.ToLower().Contains(request.Role.ToLower()));
+            }
+
             if (request.ExceptUserIds.Count>0)
             {
                 items = items.Where(x => !request.ExceptUserIds.Contains(x.Id));
