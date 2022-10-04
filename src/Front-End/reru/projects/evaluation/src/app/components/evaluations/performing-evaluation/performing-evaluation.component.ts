@@ -146,7 +146,6 @@ export class PerformingEvaluationComponent implements OnInit {
     return this.fileName.length <= 20 ? this.fileName : this.fileName.slice(0, 20) + "...";
   }
 
-
   setFile(event){
     this.files[0] = event.addedFiles[0];
   }

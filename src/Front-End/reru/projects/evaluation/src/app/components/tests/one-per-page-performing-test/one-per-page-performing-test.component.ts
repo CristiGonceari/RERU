@@ -19,6 +19,8 @@ import { SafeHtmlPipe } from '../../../utils/pipes/safe-html.pipe';
 import { ConfirmModalComponent } from '@erp/shared';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
+import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/file-test-answer.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-one-per-page-performing-test',
@@ -75,6 +77,11 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   videoUrl: any;
   fileId: string;
 
+  files: any[] = [];
+  answerFileid: string;
+  fileName: string;
+  hadFile: boolean = false;
+
   optionFileId = [];
   isLoadingOptionMedia:  boolean = true;
 
@@ -87,6 +94,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
 	  public translate: I18nService,
     private router: Router,
     private testTemplateService: TestTemplateService,
+    private fileTestAnswerService: FileTestAnswerService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
@@ -250,6 +258,70 @@ export class OnePerPagePerformingTestComponent implements OnInit {
       });
     }
     this.postAnswer(+this.answerStatusEnum.Answered);
+
+    if(this.questionUnit.questionType == this.questionTypeEnum.FileAnswer){
+      let request = new FormData();
+
+      request = this.parseFiles(request);
+
+     this.fileTestAnswerService.create(request).subscribe();
+    }
+  }
+
+  parseFiles(request: FormData) {
+    const fileType = '5';
+    request.append('QuestionIndex', this.questionIndex.toString());
+    request.append('TestId', this.testId.toString());
+    request.append('FileDto.File', this.files[0]);
+    request.append('FileDto.Type', fileType);
+
+    return request;
+  }
+
+  onRemove(event): void {
+		this.files.splice(this.files.indexOf(event), 1);
+	}
+
+  GetFile() {
+    this.fileTestAnswerService.getFile(this.answerFileid).subscribe(response => {
+      if (response) {
+        const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
+        // const fileNameParsed = fileName.substring(1, fileName.length - 1);
+        const blob = new Blob([response.body], { type: response.body.type });
+        const file = new File([blob], fileName, { type: response.body.type });
+        saveAs(file);
+      }
+    }
+    )
+  }
+
+  ceckFileNameLength() {
+    return this.fileName.length <= 20 ? this.fileName : this.fileName.slice(0, 20) + "...";
+  }
+
+  deleteFile(){
+    this.hadFile = false;
+  }
+
+  checkIfHadFile(){
+    let params = {
+      questionIndex: this.questionIndex,
+      testId: this.testId
+    };
+
+    this.fileTestAnswerService.getList(params).subscribe(res => {
+      if(res.data.fileId !== null){
+        this.answerFileid = res.data.fileId;
+        this.fileName = res.data.fileName;
+        this.hadFile = true;
+      } else {
+        this.hadFile = false;
+      }
+    })
+  }
+
+  setFile(event){
+    this.files[0] = event.addedFiles[0];
   }
 
   checkIfDisabled(index) {
@@ -341,6 +413,8 @@ export class OnePerPagePerformingTestComponent implements OnInit {
                   });
               });
           this.ngDoBoostrap();
+          this.checkIfHadFile();
+          this.files = [];
         },
         (error) => {
           error.error.messages.some(x => {

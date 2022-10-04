@@ -56,12 +56,11 @@
                     [colorClass]="'text-primary'">
                 </app-loading-spinner>
                 <div class="text-container mt-5 mx-auto w-80" *ngIf="!isLoading">
-                    <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
-                        [colorClass]="'text-primary'">
+                    <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'"
+                        [width]="'3rem'" [colorClass]="'text-primary'">
                     </app-loading-spinner>
                     <div *ngIf="!isLoadingMedia" class="data-container mb-7 bg-gray-100 text-center rounded p-7">
-                        <p class="font-size-h2"
-                            [innerHTML]="questionUnit.question | safeHtml">
+                        <p class="font-size-h2" [innerHTML]="questionUnit.question | safeHtml">
                         </p>
                         <div *ngIf="fileId">
                             <app-get-media-file [fileId]="fileId"></app-get-media-file>
@@ -82,13 +81,48 @@
                                 {{ option.answer }}
                                 <div class="form-group row align-items-center">
                                     <div class="col-lg-6 col-xl-3">
-                                      <div *ngIf="option.mediaFileId" class="w-100">
-                                        <app-get-media-file [fileId]="option.mediaFileId"></app-get-media-file>
-                                      </div>
+                                        <div *ngIf="option.mediaFileId" class="w-100">
+                                            <app-get-media-file [fileId]="option.mediaFileId"></app-get-media-file>
+                                        </div>
                                     </div>
-                                  </div>
+                                </div>
                             </div>
                         </label>
+                    </div>
+                    <div class="data-container answer"
+                        *ngIf="questionUnit.questionType == 5 && hadFile == false">
+                        <ngx-dropzone
+                            accept="image/jpeg,image/jpg,image/png,.doc,.docx,.txt,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                            [multiple]="false" [expandable]="true" (change)="setFile($event)" class="font-weight-light">
+                            <ngx-dropzone-label>
+                                <h4>{{'button.attach' | translate}}</h4>
+                            </ngx-dropzone-label>
+                            <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                                <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+                            </ngx-dropzone-preview>
+                        </ngx-dropzone>
+                    </div>
+                    <div class="data-container answer text-center"
+                        *ngIf="questionUnit.questionType == 5 && hadFile == true">
+                        <button (click)="GetFile()" class="btn btn-light-success font-weight-bold mr-3"
+                            ngbTooltip="{{fileName}}">
+                            <i class="flaticon-profile"></i>
+                            {{ ceckFileNameLength() }}
+                        </button>
+                        <span (click)="deleteFile()" class="svg-icon svg-icon-primary svg-icon-2x">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)"
+                                        fill="#000000">
+                                        <rect x="0" y="7" width="16" height="2" rx="1" />
+                                        <rect opacity="0.3"
+                                            transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) "
+                                            x="0" y="7" width="16" height="2" rx="1" />
+                                    </g>
+                                </g>
+                            </svg>
+                        </span>
                     </div>
                     <div class="data-container answer" *ngIf="questionUnit.questionType == questionTypeEnum.FreeText">
                         <textarea class="form-control border rounded border-secondary p-7 my-7 w-100" rows="7"
@@ -97,7 +131,8 @@
                     </div>
                     <div class="d-flex justify-content-between my-15">
                         <div class="d-flex">
-                            <button *ngIf="testTemplateSettings.possibleChangeAnswer && testTemplateSettings.hidePagination"
+                            <button
+                                *ngIf="testTemplateSettings.possibleChangeAnswer && testTemplateSettings.hidePagination"
                                 type="button" class="btn btn-secondary h6 mr-10 py-auto pb-9"
                                 (click)="getTestQuestions(questionIndex - 1)"
                                 [disabled]="questionIndex==1">{{'button.back' | translate}}</button>

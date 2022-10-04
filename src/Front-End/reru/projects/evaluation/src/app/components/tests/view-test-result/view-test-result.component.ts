@@ -10,6 +10,8 @@ import { TestService } from '../../../utils/services/test/test.service';
 import { TestQuestionService } from '../../../utils/services/test-question/test-question.service';
 import { HashOptionInputComponent } from '../../../utils/components/hash-option-input/hash-option-input.component';
 import { TestResultStatusEnum } from '../../../utils/enums/test-result-status.enum';
+import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/file-test-answer.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-view-test-result',
@@ -46,6 +48,11 @@ export class ViewTestResultComponent implements OnInit {
 	fileId: string;
   showNegativeMessage: boolean;
 
+  files: any[] = [];
+  fileName: string;
+  answerFileid: string;
+  hadFile: boolean = false;
+
   optionFileId = [];
   isLoadingOptionMedia:  boolean = true;
   
@@ -57,6 +64,7 @@ export class ViewTestResultComponent implements OnInit {
     private testQuestionService: TestQuestionService,
     private router: Router,
     private location: Location,
+    private fileTestAnswerService: FileTestAnswerService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
@@ -74,6 +82,43 @@ export class ViewTestResultComponent implements OnInit {
     const el = createCustomElement(HashOptionInputComponent, { injector: this.injector });
 
     customElements.get('app-hash-option-input') || customElements.define('app-hash-option-input', el);
+  }
+
+  checkIfHadFile(){
+    let params = {
+      questionIndex: this.index,
+      testId: this.testId
+    };
+
+    console.log("params:", params)
+
+    this.fileTestAnswerService.getList(params).subscribe(res => {
+      console.log("response:", res)
+      if(res.data.fileId !== null){
+        this.answerFileid = res.data.fileId;
+        this.fileName = res.data.fileName;
+        this.hadFile = true;
+      } else {
+        this.hadFile = false;
+      }
+    })
+  }
+
+  GetFile() {
+    this.fileTestAnswerService.getFile(this.answerFileid).subscribe(response => {
+      if (response) {
+        const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
+				const fileNameParsed = fileName.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, '');
+        const blob = new Blob([response.body], { type: response.body.type });
+        const file = new File([blob], fileNameParsed, { type: response.body.type });
+        saveAs(file);
+      }
+    }
+    )
+  }
+
+  ceckFileNameLength() {
+    return this.fileName.length <= 20 ? this.fileName : this.fileName.slice(0, 20) + "...";
   }
 
   getTestById() {
@@ -118,6 +163,9 @@ export class ViewTestResultComponent implements OnInit {
       questionIndex: this.index,
       toEvaluate: false
     };
+
+    console.log("need to ceckFile:")
+    this.checkIfHadFile();
 
     this.verifyService.getTest(testData).subscribe(
       (res) => {
