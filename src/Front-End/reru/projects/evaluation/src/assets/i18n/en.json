@@ -719,6 +719,7 @@
     "computers": "Computers",
     "person": "Person",
     "event-data": "Enter the event details and confirm",
+    "event-template-details": "Events details",
     "event-details": "Event details",
     "delete": "Delete event",
     "attach": "Attach person",
@@ -1013,5 +1014,39 @@
     "all-rights-reserved": "All rights reserved",
     "about": "About",
     "contact": "Contact"
+  },
+  "departments": {
+    "overview": "Overview",
+    "help": "Help",
+    "departments": "Departments",
+    "department": "Department",
+    "subtitle": "Manage departments",
+    "new-department": "Add department",
+    "delete-department": "Delete department",
+    "name": "Name",
+    "remove": "Remove department",
+    "remove-msg": "Are you sure you want to remove this department?",
+    "succes-remove-msg": "Department was successfully deleted",
+    "succes-add-msg": "Department was successfully added",
+    "succes-edit-msg": "Department was successfully edited",
+    "department-data": "Enter the department details and confirm",
+    "department-details": "Department details"
+  },
+  "user-roles": {
+    "overview": "Overview",
+    "help": "Help",
+    "roles": "Roles",
+    "role": "Role",
+    "subtitle": "Manage roles",
+    "new-role": "Add role",
+    "delete-role": "Delete role",
+    "name": "Name",
+    "remove": "Remove role",
+    "remove-msg": "Are you sure you want to remove this role?",
+    "succes-remove-msg": "Role was successfully deleted",
+    "succes-add-msg": "Role was successfully added",
+    "succes-edit-msg": "Role was successfully edited",
+    "user-role-data": "Enter the role details and confirm",
+    "user-role-details": "Role details"
   }
 }

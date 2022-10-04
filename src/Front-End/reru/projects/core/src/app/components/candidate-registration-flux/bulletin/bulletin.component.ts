@@ -122,8 +122,8 @@ export class BulletinComponent implements OnInit {
    
     this.bulletinForm = this.fb.group({
       releaseDay: this.fb.control(null, [Validators.required]),
-      series: this.fb.control(null, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      emittedBy: this.fb.control(null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9-. ]+$/)]),
+      series: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      emittedBy: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
       contractorId: this.fb.control(contractorId, []),
       birthPlace: this.buildAddress(),
       parentsResidenceAddress: this.buildAddress(),
@@ -135,8 +135,8 @@ export class BulletinComponent implements OnInit {
    
     this.bulletinForm = this.fb.group({
       releaseDay: this.fb.control((existentBulletin && existentBulletin.releaseDay) || null, [Validators.required]),
-      series: this.fb.control((existentBulletin && existentBulletin.series) || null, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      emittedBy: this.fb.control( (existentBulletin && existentBulletin.emittedBy) || null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9-. ]+$/)]),
+      series: this.fb.control((existentBulletin && existentBulletin.series) || null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      emittedBy: this.fb.control( (existentBulletin && existentBulletin.emittedBy) || null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
       contractorId: this.fb.control(contractorId, []),
       id: this.fb.control(bulletinId, []),
       birthPlace: this.buildExistentAddress(this.parseAddress(birthPlace)),
@@ -156,12 +156,12 @@ export class BulletinComponent implements OnInit {
   buildAddress(data: AddressModel = <AddressModel>{}): FormGroup {
     return this.fb.group({
       country: this.fb.control(data.country || 'Moldova', [Validators.required]),
-      region: this.fb.control(data.region, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      city: this.fb.control(data.city,[Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      street: this.fb.control(data.street, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      building: this.fb.control(data.building, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      apartment: this.fb.control(data.apartment, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      postCode: this.fb.control(data.postCode, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)])
+      region: this.fb.control(data.region, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      city: this.fb.control(data.city,[Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      street: this.fb.control(data.street, [Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      building: this.fb.control(data.building, [Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      apartment: this.fb.control(data.apartment, [Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      postCode: this.fb.control(data.postCode, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')])
 
     });
   }
@@ -170,12 +170,12 @@ export class BulletinComponent implements OnInit {
     return this.fb.group({
       id: this.fb.control(data.id, []),
       country: this.fb.control(data.country || 'Moldova', [Validators.required]),
-      region: this.fb.control(data.region, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      city: this.fb.control(data.city,[Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      street: this.fb.control(data.street, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      building: this.fb.control(data.building, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      apartment: this.fb.control(data.apartment, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      postCode: this.fb.control(data.postCode, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)])
+      region: this.fb.control(data.region, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      city: this.fb.control(data.city,[Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      street: this.fb.control(data.street, [Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      building: this.fb.control(data.building, [Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      apartment: this.fb.control(data.apartment, [Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      postCode: this.fb.control(data.postCode, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')])
 
     });
   }

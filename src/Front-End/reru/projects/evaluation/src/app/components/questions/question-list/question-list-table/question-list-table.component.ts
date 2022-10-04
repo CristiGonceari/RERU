@@ -103,17 +103,29 @@ export class QuestionListTableComponent implements OnInit {
 
 	printTable(data): void {
 		this.downloadFile = true;
+		let fileName: string;
 		this.questionService.print(data).subscribe(response => {
 			if (response) {
-				let fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(1).slice(0, -1);
+				fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
+				fileName = this.ceckFileName(fileName);
+				
 				const blob = new Blob([response.body], { type: response.body.type });
 				const file = new File([blob], fileName, { type: response.body.type });
-				console.log("file:", file)
 				saveAs(file);
 				this.downloadFile = false;
 			}
 		}, () => this.downloadFile = false);
 	}
+
+	ceckFileName(fileName): string {
+		if(fileName.includes("_") && (fileName.match(new RegExp("_", "g")) || []).length <= 3){
+			fileName = "Întrebari";
+		} else if(fileName.includes("_")){
+			fileName = "Вопросы";
+		}
+
+		return fileName;
+	} 
 
 	list(data: any = {}): void {
 		let params = {

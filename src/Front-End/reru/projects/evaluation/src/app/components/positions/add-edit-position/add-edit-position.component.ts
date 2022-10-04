@@ -11,6 +11,7 @@ import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { ReferenceService } from '../../../utils/services/reference/reference.service';
 import { SelectItem } from '../../../utils/models/select-item.model';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import { EventTestTemplateService } from '../../../utils/services/event-test-template/event-test-template.service';
 @Component({
 	selector: 'app-add-edit-position',
 	templateUrl: './add-edit-position.component.html',
@@ -38,6 +39,9 @@ export class AddEditPositionComponent implements OnInit {
 	endDate;
 	fromDate;
 	tillDate;
+	showEventCard: boolean = false;
+	eventsTagsList = [];
+	eventsListForDescription = [];
 
 	public Editor = DecoupledEditor;
 	public onReady(editor) {
@@ -54,7 +58,8 @@ export class AddEditPositionComponent implements OnInit {
 		private route: ActivatedRoute,
 		private positionService: CandidatePositionService,
 		private location: Location,
-		private referenceService: ReferenceService
+		private referenceService: ReferenceService,
+		private eventTestTemplateService: EventTestTemplateService
 	) { }
 
 	ngOnInit(): void {
@@ -71,8 +76,8 @@ export class AddEditPositionComponent implements OnInit {
 					console.log("role:", res)
 					this.initForm(res.data);
 					this.editorData = res.data.description;
-                    this.startDate = res.data.from;
-				    this.endDate =  res.data.to;
+					this.startDate = res.data.from;
+					this.endDate = res.data.to;
 
 					res.data.requiredDocuments.forEach(element => {
 						this.tags.push({ display: element.label, value: +element.value })
@@ -88,6 +93,28 @@ export class AddEditPositionComponent implements OnInit {
 				this.isLoading = false;
 			}
 		});
+	}
+
+	onAddEvent(event) {
+		this.eventsTagsList.push(event);
+		this.showEventCard = true;
+		this.getTestTemplateByEventsIds(this.eventsTagsList);
+	}
+
+	onRemovingEvent(event) {
+		const index = this.eventsTagsList.indexOf(event);
+		if (index !== -1) {
+			this.eventsTagsList.splice(index, 1);
+		}
+
+		if(this.eventsTagsList.length < 1) this.showEventCard = false;
+		this.getTestTemplateByEventsIds(this.eventsTagsList);
+	}
+
+	getTestTemplateByEventsIds(eventsTagsList) {
+		this.eventTestTemplateService.getTestTemplateByEventsIds({ eventIds: eventsTagsList.map(x => x.value) }).subscribe(res => {
+			this.eventsListForDescription = res.data;
+		})
 	}
 
 	setTimeToSearch(): void {

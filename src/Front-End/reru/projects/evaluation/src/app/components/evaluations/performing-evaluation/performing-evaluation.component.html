@@ -84,11 +84,11 @@
                     </div>
                     <div class="data-container answer text-center" *ngIf="questionUnit.questionType == questionTypeEnum.FileAnswer && hadFile == true">
                         <button 
-                            (click)="GetFile()"
+                            (click)="getFile()"
                             class="btn btn-light-success font-weight-bold mr-3"
                             ngbTooltip="{{fileName}}">
                             <i class="flaticon-profile"></i>
-                            {{ ceckFileNameLength() }}
+                            {{ checkFileNameLength() }}
                         </button>
                         <span 
                             (click)="deleteFile()"

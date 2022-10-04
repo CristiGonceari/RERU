@@ -25,6 +25,7 @@ import { TestVerificationProcessComponent } from './test-verification-process/te
 import { AddTestListComponent } from './add-test-list/add-test-list.component';
 import { TestListTableComponent } from './test-list/test-list-table/test-list-table.component';
 import { SearchResultComponent } from './test-list/search-result/search-result.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { SearchResultComponent } from './test-list/search-result/search-result.c
     MaterialModule,
     MatButtonModule, 
     MatCheckboxModule, 
-    MatProgressBarModule
+    MatProgressBarModule,
+    NgxDropzoneModule,
   ],
   schemas: [
 		CUSTOM_ELEMENTS_SCHEMA
