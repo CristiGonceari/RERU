@@ -103,7 +103,7 @@
                                 <app-confirm-button class="btn" *ngIf="index != count" (handle)="next()"
                                     [value]="'verify-test.next-question' | translate">
                                 </app-confirm-button>
-                                <button class="btn btn-light" *ngIf="index == count" (click)="close()">
+                                <button class="btn btn-light" *ngIf="index == count" (click)="backClicked()">
                                     {{'button.close' | translate}}
                                 </button>
                             </div>

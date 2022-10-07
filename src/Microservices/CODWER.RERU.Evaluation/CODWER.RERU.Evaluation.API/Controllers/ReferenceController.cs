@@ -161,5 +161,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
             return items;
         }
+
+        [HttpGet("medical-enum/select-values")]
+        public async Task<List<SelectItem>> GetMedicalColumnEnum()
+        {
+            var items = EnumConverter<MedicalColumnEnum>.SelectValues;
+
+            return items;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RERU.Data.Entities.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions
@@ -11,6 +12,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions
         public string Description { get; set; }
         public DateTime? From { get; set; }
         public DateTime? To { get; set; }
+        public MedicalColumnEnum? MedicalColumn { get; set; }
         public List<AssignRequiredDocumentsDto> RequiredDocuments { get; set; }
         public List<int> EventIds { get; set; }
     }

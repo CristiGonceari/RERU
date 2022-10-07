@@ -121,7 +121,9 @@
       "is-active": "Activ",
       "apply-for-position": "Poziție candidată",
       "position-diagram": "Borderoul poziției",
-      "vacant-position": "Poziția vacantă"
+      "vacant-position": "Poziția vacantă",
+      "medical-column": "Coloana medicală",
+      "column": "Coloana"
   },
   "documents-templates":{
     "title": "Șabloane",
@@ -592,7 +594,11 @@
     "NotPassed": "Nesusținut",
     "employee": "Angajat",
     "candidate": "Candidat",
-    "Wait" : "Asteptare"
+    "Wait" : "În aşteptare",
+    "Column1": "Coloana 1",
+    "Column2": "Coloana 2",
+    "Column3": "Coloana 3",
+    "Column4": "Coloana 4"
   },
   "options": {
     "start-without-confirmation": "Este posibil să porniți testul fără confirmare",

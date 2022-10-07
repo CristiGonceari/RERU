@@ -68,7 +68,8 @@
                           <div class="col-lg-9 col-xl-9">
                             <tag-input class="py-0 form-control form-control-lg form-control-solid h-100"
                               [ngModelOptions]="{standalone: true}" [(ngModel)]="eventSelected"
-                              [placeholder]="placeHolderStringRequireEvents" (onAdd)="onAddEvent($event)" (onRemove)="onRemovingEvent($event)"
+                              [placeholder]="placeHolderStringRequireEvents" (onAdd)="onAddEvent($event)"
+                              (onRemove)="onRemovingEvent($event)"
                               [secondaryPlaceholder]="placeHolderStringRequireEvents">
                               <tag-input-dropdown [autocompleteItems]="eventList" [showDropdownIfEmpty]="true"
                                 [keepOpen]="true" [dynamicUpdate]="true">
@@ -82,15 +83,31 @@
                           <div class="card ml-5 col-lg-8 col-xl-8">
                             <div class="card-body" *ngIf="!isLoading">
                               <div class="bordered form-group row align-items-center mb-2">
-                                <label *ngFor="let event of eventsListForDescription" class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-muted">
+                                <label *ngFor="let event of eventsListForDescription"
+                                  class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-muted">
                                   <p class="text-muted mb-2">{{event.eventName}}:</p>
                                   <p *ngIf="!event.testTemplates.length">-</p>
-                                  <p *ngFor="let testTemplate of event.testTemplates" class="font-weight-bold text-left">
+                                  <p *ngFor="let testTemplate of event.testTemplates"
+                                    class="font-weight-bold text-left">
                                     {{testTemplate.testTemplateName}}
                                   </p>
                                 </label>
                               </div>
                             </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-xl-3 col-lg-3 col-form-label">
+                            {{'position.medical-column' | translate}}
+                          </label>
+                          <div class="col-lg-9 col-xl-9">
+                            <select class="form-control form-control-lg form-control-solid" name="column"
+                            [formControl]="positionForm.controls['medicalColumn']">
+                              <option value="">{{'questions.select' | translate}}</option>
+                              <option *ngFor="let column of medicalColumsList" [value]="column.value">
+                                {{'statuses.' + column.label | translate}}
+                              </option>
+                            </select>
                           </div>
                         </div>
                         <div class="form-group row">

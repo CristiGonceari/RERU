@@ -9,6 +9,7 @@ import { NotificationUtil } from '../../utils/util/notification.util';
 import { I18nService } from '../../utils/services/i18n/i18n.service';
 import { PaginationModel } from '../../utils/models/pagination.model';
 import { saveAs } from 'file-saver';
+import { MedicalColumnEnum } from 'projects/evaluation/src/app/utils/enums/medical-column.enum';
 
 @Component({
 	selector: 'app-positions',
@@ -29,6 +30,7 @@ export class PositionsComponent implements OnInit {
 	downloadFile: boolean = false;
 	headersToPrint = [];
 	printTranslates: any[];
+	medicalEnum = MedicalColumnEnum;
 	
 	constructor(
 		private positionService: CandidatePositionService,
