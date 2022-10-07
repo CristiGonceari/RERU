@@ -1,6 +1,7 @@
 ﻿using System;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using System.Collections.Generic;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions
 {
@@ -14,6 +15,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions
         public DateTime? To { get; set; }
         public string ResponsiblePerson { get; set; }
         public int ResponsiblePersonId { get; set; }
+        public MedicalColumnEnum? MedicalColumn { get; set; }
         public List<SelectItem> RequiredDocuments { get; set; }
         public List<SelectItem> Events { get; set; }
     }

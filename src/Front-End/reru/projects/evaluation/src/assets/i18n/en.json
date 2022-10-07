@@ -121,7 +121,9 @@
     "is-active": "Is active",
     "apply-for-position": "Candided position",
     "position-diagram": "Position diagram",
-    "vacant-position": "Vacant position"
+    "vacant-position": "Vacant position",
+    "medical-column": "Medical column",
+    "column": "Column"
   },
   "documents-templates":{
     "title": "Document Templates",
@@ -594,7 +596,11 @@
     "Passed": "Passed",
     "NotPassed":"Not passed",
     "employee": "Employee",
-    "candidate": "Candidate"
+    "candidate": "Candidate",
+    "Column1": "Column 1",
+    "Column2": "Column 2",
+    "Column3": "Column 3",
+    "Column4": "Column 4"
   },
   "options": {
     "start-without-confirmation": "Possible to start test without confirmation",

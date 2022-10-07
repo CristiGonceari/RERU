@@ -92,4 +92,8 @@ export class ReferenceService extends AbstractService {
   getDocumentTemplateType(): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/document-template-type/select-values`);
   }
+
+  getMedicalColumnEnum(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/medical-enum/select-values`);
+  }
 }

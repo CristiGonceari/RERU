@@ -121,7 +121,9 @@
     "is-active": "Активна",
     "apply-for-position": "Кандидатская позиция",
     "position-diagram": "Таблица вакансий",
-    "vacant-position": "Вакантная должность"
+    "vacant-position": "Вакантная должность",
+    "medical-column": "Медицинский столбец",
+    "column": "Столбец"
   },
   "documents-templates":{
     "title": "Шаблоны документов",
@@ -592,7 +594,11 @@
     "NotPassed": "Не пройдено",
     "employee": "Сотрудник",
     "candidate": "Кандидат",
-    "Wait" : "In asteptare"
+    "Wait" : "Ожидающий",
+    "Column1": "Столбец 1",
+    "Column2": "Столбец 2",
+    "Column3": "Столбец 3",
+    "Column4": "Столбец 4"
   },
   "options": {
     "start-without-confirmation": "Возможен запуск теста без подтверждения",

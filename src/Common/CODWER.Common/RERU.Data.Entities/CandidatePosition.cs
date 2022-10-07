@@ -1,6 +1,7 @@
 ﻿using System;
 using CVU.ERP.Common.Data.Entities;
 using System.Collections.Generic;
+using RERU.Data.Entities.Enums;
 
 namespace RERU.Data.Entities
 {
@@ -11,6 +12,7 @@ namespace RERU.Data.Entities
         public string Description { get; set; }
         public DateTime? From { get; set; }
         public DateTime? To { get; set; }
+        public MedicalColumnEnum? MedicalColumn { get; set; }
 
         public virtual ICollection<RequiredDocumentPosition> RequiredDocumentPositions { get; set; }
     }

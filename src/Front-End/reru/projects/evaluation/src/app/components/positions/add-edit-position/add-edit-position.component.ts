@@ -12,6 +12,7 @@ import { ReferenceService } from '../../../utils/services/reference/reference.se
 import { SelectItem } from '../../../utils/models/select-item.model';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { EventTestTemplateService } from '../../../utils/services/event-test-template/event-test-template.service';
+import { MedicalColumnEnum } from '../../../utils/enums/medical-column.enum';
 @Component({
 	selector: 'app-add-edit-position',
 	templateUrl: './add-edit-position.component.html',
@@ -42,6 +43,7 @@ export class AddEditPositionComponent implements OnInit {
 	showEventCard: boolean = false;
 	eventsTagsList = [];
 	eventsListForDescription = [];
+	medicalColumsList: SelectItem[] = [{ label: '', value: '' }];
 
 	public Editor = DecoupledEditor;
 	public onReady(editor) {
@@ -65,10 +67,12 @@ export class AddEditPositionComponent implements OnInit {
 	ngOnInit(): void {
 		this.positionForm = new FormGroup({
 			name: new FormControl(),
-			isActive: new FormControl()
+			isActive: new FormControl(),
+			medicalColumn: new FormControl()
 		});
 		this.onTextChange("");
 		this.getEvents();
+		this.getMedicalColumnsEnum();
 		this.route.params.subscribe(params => {
 			if (params.id) {
 				this.positionId = params.id;
@@ -95,6 +99,10 @@ export class AddEditPositionComponent implements OnInit {
 		});
 	}
 
+	getMedicalColumnsEnum() {
+		this.referenceService.getMedicalColumnEnum().subscribe(res => this.medicalColumsList = res.data);
+	}
+
 	onAddEvent(event) {
 		this.eventsTagsList.push(event);
 		this.showEventCard = true;
@@ -107,7 +115,7 @@ export class AddEditPositionComponent implements OnInit {
 			this.eventsTagsList.splice(index, 1);
 		}
 
-		if(this.eventsTagsList.length < 1) this.showEventCard = false;
+		if (this.eventsTagsList.length < 1) this.showEventCard = false;
 		this.getTestTemplateByEventsIds(this.eventsTagsList);
 	}
 
@@ -129,10 +137,19 @@ export class AddEditPositionComponent implements OnInit {
 	}
 
 	initForm(data?): void {
-		this.positionForm = this.fb.group({
-			name: this.fb.control(data?.name || null, [Validators.required]),
-			isActive: this.fb.control(data?.isActive || false)
-		});
+		if (data) {
+			this.positionForm = this.fb.group({
+				name: this.fb.control(data?.name || null, [Validators.required]),
+				isActive: this.fb.control(data?.isActive || false),
+				medicalColumn: this.fb.control((data && !isNaN(data.medicalColumn) ? data.medicalColumn : null), [Validators.required])
+			});
+		} else {
+			this.positionForm = this.fb.group({
+				name: this.fb.control(null, [Validators.required]),
+				isActive: this.fb.control(false, [Validators.required]),
+				medicalColumn: this.fb.control(null, [Validators.required]),
+			});
+		}
 	}
 
 	getEvents() {
@@ -161,6 +178,7 @@ export class AddEditPositionComponent implements OnInit {
 			from: this.fromDate,
 			to: this.tillDate,
 			description: this.editorData,
+			medicalColumn: this.positionForm.value.medicalColumn,
 			requiredDocuments: tagsArr,
 			eventIds: eventArr.map(obj => obj.value)
 		} as CandidatePositionModel;
@@ -199,6 +217,7 @@ export class AddEditPositionComponent implements OnInit {
 			from: this.fromDate,
 			to: this.tillDate,
 			description: this.editorData,
+			medicalColumn: this.positionForm.value.medicalColumn,
 			isActive: this.positionForm.value.isActive,
 			requiredDocuments: tagsArr,
 			eventIds: eventArr.map(obj => obj.value)

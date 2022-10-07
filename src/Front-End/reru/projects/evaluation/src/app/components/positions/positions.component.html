@@ -43,6 +43,7 @@
                       <th scope="col">{{'locations.person' | translate}}</th>
                       <th scope="col">{{'events.start-date' | translate}}</th>
                       <th scope="col">{{'events.end-date' | translate}}</th>
+                      <th scope="col">{{'position.column' | translate}}</th>
                       <th scope="col"  style="width: 75px; text-align: center; vertical-align: middle">{{'position.status' | translate}}</th>
                       <th scope="col" style="width: 50px"></th>
                     </tr>
@@ -81,6 +82,10 @@
                         class="font-size-lg text-dark-50 text-hover-dark-75">
                             -
                       </a>
+                      </td>
+                      <td [routerLink]="['../edit-position', position.id]">
+                        <a class="font-size-lg cursor-pointer text-dark-50 text-hover-dark-75" *ngIf="position.medicalColumn">{{'statuses.' + medicalEnum[position.medicalColumn] | translate}}</a>
+                        <a class="font-size-lg cursor-pointer text-dark-50 text-hover-dark-75" *ngIf="!position.medicalColumn">-</a>
                       </td>
                       <td>
                         <svg-icon *ngIf="position.isActive === false" key="error" [width]="24" [height]="24"
