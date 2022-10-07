@@ -13,6 +13,7 @@
                 <th scope="col" class="text-left" style="width: 150px">{{ 'events.event' | translate }}</th>
                 <th scope="col" class="text-left" style="width: 150px">{{ 'verify-test.status' | translate }}</th>
                 <th scope="col" class="text-left" style="width: 100px">{{ 'verify-test.result' | translate }}</th>
+                <th scope="col" style="width: 100px"></th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="testRowList.length">
@@ -32,6 +33,12 @@
                 </td>
                 <td>{{'statuses.' + enum[item.testStatus] | translate}}</td>
                 <td>{{'verify-test.' + result[item.result] | translate}}</td>
+                <td>
+                    <button *ngIf="item.result == result.NotPassed || item.result == result.Passed"
+                        class="btn btn-light-success" [routerLink]="['../../../my-activities/evaluation-result/', item.id]">
+                        {{'tests.view' | translate}}
+                    </button>
+                </td>
             </tr>
         </tbody>
         <tbody class="datatable-body" *ngIf="!testRowList.length">
