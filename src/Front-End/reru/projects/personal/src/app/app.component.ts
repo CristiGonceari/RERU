@@ -224,6 +224,14 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.sidebarItems[index] && this.router.navigate([this.localize.translateRoute(this.sidebarItems[index].url)]);
 	}
 
+	getCurrentLocation(){
+		if(this.router.url === '/'){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	translateData(): void {
 		forkJoin([
 			this.translate.get('sidebar.home'),
