@@ -788,7 +788,8 @@
     "order-of-questions":"Порядок вопросов",
     "set-can-be-solicited": "Добавьте в необходимые тесты",
     "unset-from-can-be-solicited": "Удалить из обязательных тестов",
-    "can-be-solicited": "Его можно запросить"
+    "can-be-solicited": "Его можно запросить",
+    "search-by-test-mode": "Поиск по типу шаблона"
 },
   "plans": {
     "plans": "Планы",

@@ -24,6 +24,9 @@ namespace CVU.ERP.Module.Application.EnumMessages
         public const string NotPassed = "Nesusținut";
         public const string IsRecommended = "Se recomandă";
         public const string NotRecommended = "Nu se recomandă";
+        public const string Test = "Test";
+        public const string Poll = "Sondaj";
+        public const string Evaluation = "Evaluare";
 
         public static string GetTestStatus(TestStatusEnum testStatus)
         {
@@ -90,6 +93,17 @@ namespace CVU.ERP.Module.Application.EnumMessages
                 TestResultStatusEnum.NoResult => NoResult,
                 TestResultStatusEnum.Passed => IsRecommended,
                 TestResultStatusEnum.NotPassed => NotRecommended,
+                _ => "-"
+            };
+        }
+
+        public static string GetTestTemplateTypeEnum(TestTemplateModeEnum testTypeMode)
+        {
+            return testTypeMode switch
+            {
+                TestTemplateModeEnum.Test => Test,
+                TestTemplateModeEnum.Poll => Poll,
+                TestTemplateModeEnum.Evaluation => Evaluation,
                 _ => "-"
             };
         }

@@ -79,7 +79,8 @@ export class TestTemplateListTableComponent implements OnInit {
 			orientation: 2,
 			name: this.filters.name || this.testName || '',
 			eventName: this.filters.eventName || this.eventName || '',
-			status: +this.filters.status || ''
+			status: +this.filters.status || '',
+			...this.filters
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.tableData = printData;

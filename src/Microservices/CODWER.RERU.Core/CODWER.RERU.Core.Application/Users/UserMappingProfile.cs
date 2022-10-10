@@ -70,7 +70,7 @@ namespace CODWER.RERU.Core.Application.Users
                .ForMember(x => x.TestTemplateName, opts => opts.MapFrom(src => src.TestTemplate.Name))
                .ForMember(x => x.EventName, opts => opts.MapFrom(src => src.Event.Name))
                .ForMember(x => x.EventId, opts => opts.MapFrom(src => src.EventId))
-               .ForMember(x => x.UserName, opts => opts.MapFrom(src => src.UserProfile.FirstName + " " + src.UserProfile.LastName + " " + src.UserProfile.FatherName))
+               .ForMember(x => x.UserName, opts => opts.MapFrom(src => src.UserProfile.FullName))
                .ForMember(x => x.Result, opts => opts.MapFrom(src => src.ResultStatus))
                .ForMember(x => x.VerificationProgress, opts => opts.MapFrom(src => GetVerifiationStatus(src)));
 

@@ -789,7 +789,8 @@
     "order-of-questions":"The order of the questions",
     "set-can-be-solicited": "Add to can be solicited",
     "unset-from-can-be-solicited": "Unset from solicited tests",
-    "can-be-solicited": "Can be solicited"
+    "can-be-solicited": "Can be solicited",
+    "search-by-test-mode": "Search by template type"
   },
   "plans": {
     "plans": "Plans",

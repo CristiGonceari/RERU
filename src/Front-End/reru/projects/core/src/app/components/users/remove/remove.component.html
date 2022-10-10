@@ -1,5 +1,4 @@
-<app-page-title title="{{ 'pages.users.title' | translate }}"
-  subTitle="{{ 'user.delete-title' | translate }}">
+<app-page-title title="{{ 'pages.users.title' | translate }}" subTitle="{{ 'user.delete-title' | translate }}">
 </app-page-title>
 
 <app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
@@ -10,28 +9,28 @@
   <div class="d-flex flex-column-fluid">
     <div class="container">
       <div class="card card-custom gutter-b">
-				<div class="text-center border-0 pt-6 pb-0">
-					<h3 class="font-weight-bold text-dark mb-0">
-						{{'user.remove-sure' | translate}}
-					</h3>
-				</div>
+        <div class="text-center border-0 pt-6 pb-0">
+          <h3 class="font-weight-bold text-dark mb-0">
+            {{'user.remove-sure' | translate}}
+          </h3>
+        </div>
         <div class="row justify-content-center px-8 px-lg-10">
           <div class="col-xl-12 col-xxl-7">
             <div class="card-body">
-              <div class="form-group row align-items-center mb-0">
-                <label class="col-xl-5 col-lg-4 col-form-label font-weight-bold text-left text-lg-right text-muted">
-                  {{'table.name' | translate}}:
-                </label>
-                <div class="col-lg-9 col-xl-6">
-                  <p class="font-size-lg m-0">{{userData?.firstName}}</p>
-                </div>
-              </div>
               <div class="form-group row align-items-center mb-0">
                 <label class="col-xl-5 col-lg-4 col-form-label font-weight-bold text-left text-lg-right text-muted">
                   {{'table.lastName' | translate}}:
                 </label>
                 <div class="col-lg-9 col-xl-6">
                   <p class="font-size-lg m-0">{{userData?.lastName}}</p>
+                </div>
+              </div>
+              <div class="form-group row align-items-center mb-0">
+                <label class="col-xl-5 col-lg-4 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                  {{'table.name' | translate}}:
+                </label>
+                <div class="col-lg-9 col-xl-6">
+                  <p class="font-size-lg m-0">{{userData?.firstName}}</p>
                 </div>
               </div>
               <div class="form-group row align-items-center mb-0">
@@ -58,20 +57,21 @@
                     <th scope="col">{{'module-access.role' | translate}}</th>
                   </tr>
                 </thead>
-                <tbody class="text-dark-75" >
+                <tbody class="text-dark-75">
                   <tr *ngFor="let item of userData?.moduleAccess">
-                      <td>
-                        <svg-icon [key]="item.icon" [width]="32" [height]="32"></svg-icon>
-                      </td>
-                      <td>{{item.name}}</td>
-                      <td>{{item.roleName}}</td>
-                    </tr>
+                    <td>
+                      <svg-icon [key]="item.icon" [width]="32" [height]="32"></svg-icon>
+                    </td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.roleName}}</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
             <div class="text-right border-top py-10">
               <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="back()"></app-button>
-              <app-delete-button class="btn" [value]="'button.confirm' | translate" (handle)="removeUser()"></app-delete-button>
+              <app-delete-button class="btn" [value]="'button.confirm' | translate" (handle)="removeUser()">
+              </app-delete-button>
             </div>
           </div>
         </div>
