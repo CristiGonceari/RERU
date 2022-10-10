@@ -5,6 +5,7 @@ import { TestStatusEnum } from '../../../utils/enums/test-status.enum';
 import { CandidatePositionService } from '../../../utils/services/candidate-position/candidate-position.service';
 import { PrintTemplateService } from '../../../utils/services/print-template/print-template.service';
 import { saveAs } from 'file-saver';
+import { MedicalColumnEnum } from '../../../utils/enums/medical-column.enum';
 
 @Component({
   selector: 'app-positions-diagram',
@@ -18,6 +19,8 @@ export class PositionsDiagramComponent implements OnInit {
   testTemplates = [];
   positionId;
   positionName;
+  positionMedicalColumn;
+  medicalColumnEnum = MedicalColumnEnum;
   status = TestStatusEnum;
   result = TestResultStatusEnum;
 
@@ -30,7 +33,7 @@ export class PositionsDiagramComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       this.positionId = params.id;
-      this.positionService.get(this.positionId).subscribe(res => this.positionName = res.data.name);
+      this.positionService.get(this.positionId).subscribe(res => {this.positionName = res.data.name; this.positionMedicalColumn = res.data.medicalColumn;});
     });
     this.getDiagram();
   }
