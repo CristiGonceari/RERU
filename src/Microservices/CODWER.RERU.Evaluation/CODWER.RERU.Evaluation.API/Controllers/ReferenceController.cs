@@ -17,6 +17,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.Locations;
 using CVU.ERP.Module.Application.ImportProcesses;
 using CVU.ERP.StorageService.Entities;
 using RERU.Data.Entities.Enums;
+using CVU.ERP.Common.DataTransferObjects.Users;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -166,6 +167,14 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<List<SelectItem>> GetMedicalColumnEnum()
         {
             var items = EnumConverter<MedicalColumnEnum>.SelectValues;
+
+            return items;
+        }
+
+        [HttpGet("user-status/select-values")]
+        public async Task<List<SelectItem>> GetUserEnum()
+        {
+            var items = EnumConverter<UserStatusEnum>.SelectValues;
 
             return items;
         }

@@ -35,7 +35,8 @@
     "user-details": "Vizualizarea profilului utilizatorului",
     "user-email": "E-mail",
     "general-overview": "Prezentarea generală a profilului utilizatorului",
-    "navigate-core-msg": "Sunteți sigur(-ă) că doriți să navigați la vizualizarea generală a profilului utilizatorului?"
+    "navigate-core-msg": "Sunteți sigur(-ă) că doriți să navigați la vizualizarea generală a profilului utilizatorului?",
+    "search-by-user-state": "Căutați după statutul utilizatorului"
   },
   "notification": {
     "title": {
@@ -594,6 +595,8 @@
     "NotPassed": "Nesusținut",
     "employee": "Angajat",
     "candidate": "Candidat",
+    "Candidate": "Candidați",
+    "Employee": "Angajați",
     "Wait" : "În aşteptare",
     "Column1": "Coloana 1",
     "Column2": "Coloana 2",
