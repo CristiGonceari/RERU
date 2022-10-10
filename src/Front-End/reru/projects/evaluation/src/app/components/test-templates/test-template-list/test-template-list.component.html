@@ -30,10 +30,11 @@
                 <div class="col">
                   <app-test-template-search (filter)="testTable.setFilter('status', $event)" #status></app-test-template-search>
                 </div>
-                <div class="col-lg-3 col-12">
-                  <div class="w-100 text-right">
-										<app-button (handle)="clearFields(); testTable.resetFilters()" [value]="'button.reset' | translate"></app-button>
-                  </div>
+                <div class="col">
+                  <app-search-test-mode (filter)="testTable.setFilter('mode', $event)" #mode></app-search-test-mode>
+                </div>
+                <div class="col text-center">
+                  <app-button (handle)="clearFields(); testTable.resetFilters()" [value]="'button.reset' | translate"></app-button>
                 </div>
               </div>
             </div>

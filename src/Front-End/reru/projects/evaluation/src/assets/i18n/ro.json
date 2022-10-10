@@ -786,7 +786,8 @@
     "order-of-questions": "Ordinea întrebărilor",
     "set-can-be-solicited": "Adăugati in teste solicitate",
     "unset-from-can-be-solicited": "Scoateti din teste solicitate",
-    "can-be-solicited": "Poate fi solicitat"
+    "can-be-solicited": "Poate fi solicitat",
+    "search-by-test-mode": "Căutați după tipul de șablon"
 },
   "plans": {
     "plans": "Planuri",

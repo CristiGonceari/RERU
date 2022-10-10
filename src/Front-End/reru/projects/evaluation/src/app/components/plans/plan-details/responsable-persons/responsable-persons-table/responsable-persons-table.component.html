@@ -12,7 +12,7 @@
         <tbody class="datatable-body" *ngIf="attachedPersons.length">
             <tr *ngFor="let item of attachedPersons">
                 <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../user-profile', item.id]">
-                    {{item.firstName}} {{item.lastName}}
+                    {{item.lastName}} {{item.firstName}}
                 </td>
                 <td> {{item.idnp}} </td>
             </tr>

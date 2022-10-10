@@ -138,42 +138,30 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
         {
             var result = propInfo.GetValue(item, null);
 
-            if (propInfo.PropertyType == typeof(DateTime) || propInfo.PropertyType == typeof(DateTime?))
+            switch (result) {
+                case DateTime: result = Convert.ToDateTime(result).ToString("dd/MM/yyyy, HH:mm");
+                    break;
+                case List<string>: result = ParseDataByListOfStrings(result);
+                    break;
+                case bool: result = Convert.ToBoolean(result) ? "+" : "-";
+                    break;
+                case TestResultStatusEnum: result = ParseDataByTestEnum(tableName, result);
+                    break;
+                case TestStatusEnum: result = EnumMessages.EnumMessages.GetTestStatus((TestStatusEnum)result);
+                    break;
+                case QuestionTypeEnum: result = EnumMessages.EnumMessages.GetQuestionType((QuestionTypeEnum)result);
+                    break;
+                case QuestionUnitStatusEnum: result = EnumMessages.EnumMessages.GetQuestionStatus((QuestionUnitStatusEnum)result);
+                    break;
+                case TestTemplateModeEnum: result = EnumMessages.EnumMessages.GetTestTemplateTypeEnum((TestTemplateModeEnum)result);
+                    break;
+                case null: result = "-";
+                    break;
+            }
+
+            if (propInfo.PropertyType == typeof(DateTime?))
             {
                 result = Convert.ToDateTime(result).ToString("dd/MM/yyyy, HH:mm");
-            }
-            else if (propInfo.PropertyType == typeof(List<string>))
-            {
-                result = string.Join(", ", (List<string>)result);
-
-                if (result == "")
-                {
-                    result = "-";
-                }
-            }
-            else if (propInfo.PropertyType == typeof(bool))
-            {
-                result = Convert.ToBoolean(result) ? "+" : "-";
-            }
-            else if (propInfo.PropertyType == typeof(TestResultStatusEnum))
-            {
-                result = ParseDataByTestEnum(tableName, result);
-            }
-            else if (propInfo.PropertyType == typeof(TestStatusEnum))
-            {
-                result = EnumMessages.EnumMessages.GetTestStatus((TestStatusEnum)result);
-            }
-            else if (propInfo.PropertyType == typeof(QuestionTypeEnum))
-            {
-                result = EnumMessages.EnumMessages.GetQuestionType((QuestionTypeEnum)result);
-            }
-            else if (propInfo.PropertyType == typeof(QuestionUnitStatusEnum))
-            {
-                result = EnumMessages.EnumMessages.GetQuestionStatus((QuestionUnitStatusEnum)result);
-            }
-            else if (result == null)
-            {
-                result = "-";
             }
 
             return result.ToString();
@@ -193,6 +181,13 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             }
 
             return result;
+        }
+
+        private object ParseDataByListOfStrings(object result)
+        {
+            result = string.Join(", ", (List<string>)result);
+
+            return result == "" ? "-" : result;
         }
     }
 }

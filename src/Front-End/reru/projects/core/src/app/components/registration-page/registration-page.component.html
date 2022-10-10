@@ -97,20 +97,6 @@
           <form [formGroup]="userForm">
             <div class="form-row">
               <div class="form-group col-md-4">
-                <label for="inputEmail4">{{ 'table.name' | translate }}</label>
-                <input class="form-control form-control-lg form-control-solid" name="firstName" type="text"
-                  formControlName="firstName" [placeholder]="'table.name' | translate"
-                  [ngClass]="{'is-invalid': hasErrors('firstName'), 'is-valid': userForm.get('firstName').valid}" />
-                <div *ngIf="hasErrors('firstName')" class="fv-plugins-message-container">
-                  <div *ngIf="hasError('firstName', 'required')" data-field="firstName" data-validator="notEmpty"
-                    class="fv-help-block">
-                    {{ 'user-profile.empty-name' | translate }}</div>
-                  <div *ngIf="hasError('firstName', 'pattern')" data-field="firstName" data-validator="notEmpty"
-                    class="fv-help-block">
-                    {{ 'user-profile.wrong-name' | translate }}</div>
-                </div>
-              </div>
-              <div class="form-group col-md-4">
                 <label for="inputPassword4">{{ 'table.lastName' | translate }}</label>
                 <input class="form-control form-control-lg form-control-solid" name="lastName" type="text"
                   formControlName="lastName" [placeholder]="'table.lastName' | translate"
@@ -120,6 +106,20 @@
                     class="fv-help-block">
                     {{ 'user-profile.empty-name' | translate }}</div>
                   <div *ngIf="hasError('lastName', 'pattern')" data-field="lastName" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'user-profile.wrong-name' | translate }}</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputEmail4">{{ 'table.name' | translate }}</label>
+                <input class="form-control form-control-lg form-control-solid" name="firstName" type="text"
+                  formControlName="firstName" [placeholder]="'table.name' | translate"
+                  [ngClass]="{'is-invalid': hasErrors('firstName'), 'is-valid': userForm.get('firstName').valid}" />
+                <div *ngIf="hasErrors('firstName')" class="fv-plugins-message-container">
+                  <div *ngIf="hasError('firstName', 'required')" data-field="firstName" data-validator="notEmpty"
+                    class="fv-help-block">
+                    {{ 'user-profile.empty-name' | translate }}</div>
+                  <div *ngIf="hasError('firstName', 'pattern')" data-field="firstName" data-validator="notEmpty"
                     class="fv-help-block">
                     {{ 'user-profile.wrong-name' | translate }}</div>
                 </div>

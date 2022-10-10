@@ -310,7 +310,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 myDictionary.Add("{min_percentage}", item.TestTemplate.MinPercent.ToString());
                 myDictionary.Add("{event_name}", item.EventId != null ? item.Event.Name : "-");
                 myDictionary.Add("{location_name}", item.LocationId != null ? item.Location.Name : "-");
-                myDictionary.Add("{evaluat_name}", item.UserProfile.FirstName + " " + item.UserProfile.LastName);
+                myDictionary.Add("{evaluat_name}", item.UserProfile.LastName + " " + item.UserProfile.FirstName);
                 myDictionary.Add("{evaluator_name}", GetEvaluatorName(item));
                 myDictionary.Add("{tr_area_replace}", await GetTableContent(item));
             }
@@ -804,7 +804,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                     .Where(e => e.EventId == item.EventId)
                     .ToList();
 
-                list.AddRange(evaluators.Select(evaluator => evaluator.Evaluator.FirstName + " " + evaluator.Evaluator.LastName));
+                list.AddRange(evaluators.Select(evaluator => evaluator.Evaluator.LastName + " " + evaluator.Evaluator.FirstName));
                 var combineString = string.Join(", ", list);
 
                 return combineString;
@@ -812,7 +812,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             if (item.EvaluatorId != null)
             {
-                return item.Evaluator.FirstName + " " + item.Evaluator.LastName;
+                return item.Evaluator.LastName + " " + item.Evaluator.FirstName;
             }
 
             return "-";

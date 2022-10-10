@@ -46,7 +46,7 @@ export class UserProfileComponent implements OnInit {
 	}
 
   subscribeForUserChanges(user): void {
-    let matches = user && (user.firstName + ' ' + user.lastName).match(/\b(\w)/g);
+    let matches = user && (user.lastName + ' ' + user.firstName).match(/\b(\w)/g);
     if(user.lastName == null){
       matches = user && (user.firstName).match(/\b(\w)/g);
     }

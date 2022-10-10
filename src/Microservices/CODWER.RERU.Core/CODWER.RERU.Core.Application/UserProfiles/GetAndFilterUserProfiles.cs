@@ -14,7 +14,8 @@ namespace CODWER.RERU.Core.Application.UserProfiles
             var userProfiles = appDbContext.UserProfiles
                 .Include(x => x.Department)
                 .Include(x => x.Role)
-                .OrderByDescending(x => x.Id)
+                .OrderBy(up => up.LastName)
+                .ThenBy(up => up.FirstName)
                 .AsQueryable();
 
             if (currentUser.AccessModeEnum == AccessModeEnum.CurrentDepartment || currentUser.AccessModeEnum == null)

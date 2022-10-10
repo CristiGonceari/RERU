@@ -27,7 +27,7 @@ namespace RERU.Data.Entities
             SolicitedVacantPositions = new HashSet<SolicitedVacantPosition>();
         }
 
-        public string FullName => $"{FirstName} {LastName} {FatherName}";
+        public string FullName => $"{LastName} {FirstName} {FatherName}";
 
         public string FirstName { get; set; }
         public string LastName { get; set; }

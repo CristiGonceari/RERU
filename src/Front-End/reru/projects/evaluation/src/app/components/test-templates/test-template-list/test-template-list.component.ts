@@ -10,6 +10,7 @@ export class TestTemplateListComponent {
   @ViewChild('status') searchStatus: any;
   @ViewChild('templateName') templateName: any;
   @ViewChild('eventName') eventName: any;
+  @ViewChild('mode') mode: any;
 
   constructor() { }
 
@@ -22,6 +23,7 @@ export class TestTemplateListComponent {
     this.templateName.key='';
     this.eventName.key='';
 		this.searchStatus.getTestStatuses();
+		this.mode.getStatuses();
 	}
 
 }

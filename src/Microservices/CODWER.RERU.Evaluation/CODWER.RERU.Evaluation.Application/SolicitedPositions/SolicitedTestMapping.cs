@@ -10,7 +10,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions
         public SolicitedTestMapping()
         {
             CreateMap<SolicitedVacantPosition, SolicitedCandidatePositionDto>()
-                 .ForMember(x => x.UserProfileName, opts => opts.MapFrom(src => src.UserProfile.FirstName + " " + src.UserProfile.LastName + " " + src.UserProfile.FatherName))
+                 .ForMember(x => x.UserProfileName, opts => opts.MapFrom(src => src.UserProfile.FullName))
                  .ForMember(x => x.UserProfileIdnp, opts => opts.MapFrom(src => src.UserProfile.Idnp))
                  .ForMember(x => x.CandidatePositionName, opts => opts.MapFrom(src => src.CandidatePosition.Name))
                  .ForMember(x => x.SolicitedTime, opts => opts.MapFrom(src => src.CreateDate))

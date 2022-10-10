@@ -128,7 +128,7 @@ export class SearchComponent implements OnInit {
         user.lastName = "";
       }
 
-      var name = user.firstName + " " + user.lastName + ", " + user.idnp;
+      var name = user.lastName + " " + user.firstName + ", " + user.idnp;
 
       return name;
     }

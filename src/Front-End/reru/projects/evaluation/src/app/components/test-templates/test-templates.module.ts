@@ -20,7 +20,8 @@ import { TestTemplatesCategoriesComponent } from './test-template-details/test-t
 import { TestTemplatesRulesComponent } from './test-template-details/test-templates-rules/test-template-rules.component'
 import { AddTestTemplateRulesComponent } from './test-template-details/test-templates-rules/add-test-template-rules/add-test-template-rules.component'
 import { CategoryQuestionsTableComponent } from './test-template-details/test-template-categories/add-category/category-questions-table/category-questions-table.component';
-import { ViewCategoryComponent } from './test-template-details/test-template-categories/view-category/view-category.component'
+import { ViewCategoryComponent } from './test-template-details/test-template-categories/view-category/view-category.component';
+import { SearchTestModeComponent } from './test-template-list/search-test-mode/search-test-mode.component'
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ViewCategoryComponent } from './test-template-details/test-template-cat
     AddTestTemplateRulesComponent,
     CategoryQuestionsTableComponent,
     ViewCategoryComponent,
+    SearchTestModeComponent,
   ],
   imports: [
     CommonModule,

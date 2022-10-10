@@ -35,6 +35,8 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
                 .Where(x => x.IsActive)
                 .Include(up => up.EventResponsiblePersons)
                 .Include(up => up.EventUsers)
+                .OrderBy(up => up.LastName)
+                .ThenBy(up => up.FirstName)
                 .AsQueryable();
 
             if (currentUser.AccessModeEnum == AccessModeEnum.CurrentDepartment || currentUser.AccessModeEnum == null)
