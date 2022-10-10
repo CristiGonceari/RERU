@@ -96,4 +96,8 @@ export class ReferenceService extends AbstractService {
   getMedicalColumnEnum(): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/medical-enum/select-values`);
   }
+
+  getUserStatus(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-status/select-values`);
+  }
 }

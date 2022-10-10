@@ -17,14 +17,14 @@
 		</div>
 		<div class="col">
 			<erp-shared-search-input (handleSearch)="setFilter('idnp', $event)"
-				[placeholder]="'verify-test.search-student-idnp' | translate" #idnp></erp-shared-search-input>
+				[placeholder]="'login.idnp' | translate" #idnp></erp-shared-search-input>
 		</div>
-	</div>
-	<div class="row mb-5">
 		<div class="col">
 			<erp-shared-search-input (handleSearch)="setFilter('email', $event)"
 				[placeholder]="'user-profile.user-email'  | translate" #email></erp-shared-search-input>
 		</div>
+	</div>
+	<div class="row mb-5">
 		<div class="col">
 			<erp-shared-search-input (handleSearch)="setFilter('department', $event)"
 				[placeholder]="'departments.department'  | translate" #department></erp-shared-search-input>
@@ -32,6 +32,9 @@
 		<div class="col">
 			<erp-shared-search-input (handleSearch)="setFilter('role', $event)"
 				[placeholder]="'user-roles.role'  | translate" #role></erp-shared-search-input>
+		</div>
+		<div class="col">
+			<app-search-status (filter)="setFilter('userStatusEnum',  $event)" #userStatusEnum></app-search-status>
 		</div>
 		<div class="col text-center w-100">
 			<app-button class="block" (click)="resetFilters()">{{'button.reset-filters' | translate}}</app-button>
