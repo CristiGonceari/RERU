@@ -953,7 +953,8 @@
     "03030207": "All candidates from event finished test",
     "03030208": "Your solicited test was refused",
     "03002201": "You can not delete used candidate position",
-    "03002107": "Empty position name"
+    "03002107": "Empty position name",
+    "03002109": "Empty medical column"
   },
   "login": {
     "colaborator-id": "Collaborator ID",

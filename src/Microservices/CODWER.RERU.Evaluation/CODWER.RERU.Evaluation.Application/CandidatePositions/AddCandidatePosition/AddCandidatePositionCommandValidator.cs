@@ -14,6 +14,10 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.AddCandidatePosi
             RuleFor(r => r.Data)
                     .Must(x => x.To > x.From)
                     .WithErrorCode(ValidationCodes.INVALID_TIME_RANGE);
+
+            RuleFor(r => r.Data.MedicalColumn)
+                .NotNull()
+                .WithErrorCode(ValidationCodes.EMPTY_MEDICAL_COLUMN);
         }
     }
 }

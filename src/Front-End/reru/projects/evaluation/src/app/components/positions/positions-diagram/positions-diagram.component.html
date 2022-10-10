@@ -14,7 +14,7 @@
                         <div class="card-header flex-wrap border-0 py-0">
                             <div class="card-title">
                                 <h3 class="card-label" id="documentTitle">
-                                    {{ 'position.position-diagram' | translate }}: {{positionName}}
+                                    {{ 'position.position-diagram' | translate }}: <b>{{positionName}}</b><span *ngIf="positionMedicalColumn" style="font-family: INHERIT; font-size: 15px;">, {{'statuses.' + medicalColumnEnum[positionMedicalColumn] | translate}}</span>
                                 </h3>
                             </div>
                             <div class="card-toolbar">
