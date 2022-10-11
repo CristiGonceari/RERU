@@ -1,17 +1,17 @@
 ﻿using FluentValidation;
 using CODWER.RERU.Evaluation.Application.Validation;
 
-namespace CODWER.RERU.Evaluation.Application.Articles.AddEditArticle
+namespace CODWER.RERU.Evaluation.Application.Articles.AddArticle
 {
-    public class AddEditArticleCommandValidator : AbstractValidator<AddEditArticleCommand>
+    public class AddArticleCommandValidator : AbstractValidator<AddArticleCommand>
     {
-        public AddEditArticleCommandValidator()
+        public AddArticleCommandValidator()
         {
-            RuleFor(r => r.Data.Name)
+            RuleFor(r => r.Name)
                 .NotEmpty()
                 .WithErrorCode(ValidationCodes.EMPTY_NAME);
 
-            RuleFor(r => r.Data.Content)
+            RuleFor(r => r.Content)
                 .NotEmpty()
                 .WithErrorCode(ValidationCodes.EMPTY_CONTENT);
         }

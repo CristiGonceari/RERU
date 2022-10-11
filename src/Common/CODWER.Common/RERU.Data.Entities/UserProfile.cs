@@ -25,9 +25,10 @@ namespace RERU.Data.Entities
             Identities = new List<UserProfileIdentity>();
             SolicitedVacantPositionUserFiles = new HashSet<SolicitedVacantPositionUserFile>();
             SolicitedVacantPositions = new HashSet<SolicitedVacantPosition>();
+            CandidatePositionNotifications = new HashSet<CandidatePositionNotification>();
         }
 
-        public string FullName => $"{FirstName} {LastName} {FatherName}";
+        public string FullName => $"{LastName} {FirstName} {FatherName}";
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -83,5 +84,7 @@ namespace RERU.Data.Entities
         public virtual ICollection<RegistrationFluxStep> RegistrationFluxSteps { get; set; }
         [JsonIgnore]
         public virtual ICollection<SolicitedVacantPosition> SolicitedVacantPositions { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<CandidatePositionNotification> CandidatePositionNotifications { get; set; }
     }
 }

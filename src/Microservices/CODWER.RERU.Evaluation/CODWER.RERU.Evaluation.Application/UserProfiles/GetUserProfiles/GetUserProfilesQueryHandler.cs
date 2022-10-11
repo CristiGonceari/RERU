@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
+using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,8 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
                 .Where(x => x.IsActive)
                 .Include(up => up.EventResponsiblePersons)
                 .Include(up => up.EventUsers)
+                .OrderBy(up => up.LastName)
+                .ThenBy(up => up.FirstName)
                 .AsQueryable();
 
             if (currentUser.AccessModeEnum == AccessModeEnum.CurrentDepartment || currentUser.AccessModeEnum == null)
@@ -109,7 +112,19 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
                 }
             }
 
-            return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(items, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(items, request);
+
+            foreach (var user in paginatedModel.Items)
+            {
+                user.UserStatusEnum = user.DepartmentColaboratorId == null && user.RoleColaboratorId == null ? UserStatusEnum.Candidate : UserStatusEnum.Employee;
+            }
+
+            if (request.UserStatusEnum.HasValue)
+            {
+                paginatedModel.Items = paginatedModel.Items.Where(p => p.UserStatusEnum == request.UserStatusEnum);
+            }
+
+            return paginatedModel;
         }
     }
 }

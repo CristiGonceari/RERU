@@ -74,6 +74,14 @@ export class AppComponent {
     this.translateData();
     this.translate.change.subscribe(() => this.translateData());
   }
+  
+  getCurrentLocation(){
+		if(this.router.url === '/'){
+			return true;
+		} else {
+			return false;
+		}
+	}
 
   navigate(index: number): void {
     this.sidebarItems[index] && this.router.navigate([this.localize.translateRoute(this.sidebarItems[index].url)]);

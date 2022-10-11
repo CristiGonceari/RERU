@@ -7,7 +7,7 @@
 		<div class="card-header flex-wrap border-0 py-5 mx-2">
             <div class="card-title font-weight-bolder">
                 <span>
-                  <b class="margin-right text-muted cursor-pointer" (click)="back()">{{ "solicited-test.solicited-tests" | translate }}</b>
+                  <b class="margin-right text-muted cursor-pointer mt-4" (click)="back()">{{ "solicited-test.solicited-tests" | translate }}</b>
                   <span class="svg-icon svg-icon-primary svg-icon-2x margin-right">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px"
                       height="15px" viewBox="0 0 24 24" version="1.1">
@@ -24,7 +24,9 @@
                     </svg>
                   </span>
                 </span>
-                <b class="mx-2 cursor-pointer">{{ 'position.position-diagram' | translate }}: {{positionName}}</b>
+                <h5 class="mx-2 cursor-pointer mt-2">
+                    {{ 'position.position-diagram' | translate }}: <b>{{positionName}}</b><span *ngIf="positionMedicalColumn" style="font-family: INHERIT; font-size: 15px;">, {{'statuses.' + medicalColumnEnum[positionMedicalColumn] | translate}}</span>
+                </h5>
               </div>
 		</div>
 		<div class="card-body">

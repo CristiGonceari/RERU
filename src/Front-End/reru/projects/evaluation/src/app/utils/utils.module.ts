@@ -14,6 +14,7 @@ import { CalendarChunkPipe } from './pipes/calendar-chunk.pipe';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SharedModule } from '@erp/shared';
 import { AttachUserModalComponent } from './components/attach-user-modal/attach-user-modal.component';
+import { SearchStatusComponent } from './components/attach-user-modal/search-status/search-status.component';
 import { DateFilterPipe } from './pipes/date-filter.pipe';
 import { ConvertPdfDocumentModalComponent } from './modals/convert-pdf-document-modal/convert-pdf-document-modal.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
@@ -40,7 +41,8 @@ import { ReviewSolicitedVacandPositionModalComponent } from './modals/review-sol
     ViewUsersModalComponent,
     ViewTemplatesModalComponent,
     EvaluationResultModalComponent,
-    ReviewSolicitedVacandPositionModalComponent
+    ReviewSolicitedVacandPositionModalComponent,
+    SearchStatusComponent
   ],
   imports: [
     HttpClientModule,

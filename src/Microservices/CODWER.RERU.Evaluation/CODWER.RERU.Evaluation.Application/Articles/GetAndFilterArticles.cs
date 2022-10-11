@@ -8,7 +8,9 @@ namespace CODWER.RERU.Evaluation.Application.Articles
     {
         public static IQueryable<ArticleEvaluation> Filter(AppDbContext appDbContext, string name)
         {
-            var articles = appDbContext.EvaluationArticles.AsQueryable();
+            var articles = appDbContext.EvaluationArticles
+                .OrderByDescending(x => x.CreateDate)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(name))
             {

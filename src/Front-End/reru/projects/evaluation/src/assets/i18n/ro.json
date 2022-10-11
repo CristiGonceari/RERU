@@ -35,7 +35,8 @@
     "user-details": "Vizualizarea profilului utilizatorului",
     "user-email": "E-mail",
     "general-overview": "Prezentarea generală a profilului utilizatorului",
-    "navigate-core-msg": "Sunteți sigur(-ă) că doriți să navigați la vizualizarea generală a profilului utilizatorului?"
+    "navigate-core-msg": "Sunteți sigur(-ă) că doriți să navigați la vizualizarea generală a profilului utilizatorului?",
+    "search-by-user-state": "Căutați după statutul utilizatorului"
   },
   "notification": {
     "title": {
@@ -594,6 +595,8 @@
     "NotPassed": "Nesusținut",
     "employee": "Angajat",
     "candidate": "Candidat",
+    "Candidate": "Candidați",
+    "Employee": "Angajați",
     "Wait" : "În aşteptare",
     "Column1": "Coloana 1",
     "Column2": "Coloana 2",
@@ -644,15 +647,16 @@
     "subtitle": "Întrebări frecvente",
     "manage-faq": "Gestionarea întrebărilor",
     "new-article": "Adaugă articol",
-    "delete-article": "Șterge Articol",
-    "article-title": "Titlul Articolului",
+    "delete-article": "Șterge articol",
+    "article-title": "Titlul articolului",
     "name": "Nume",
     "content": "Conţinut",
     "remove": "Ștergeți articol",
     "remove-msg": "Sigur doriți să ștergeți acest articol?",
     "succes-remove-msg": "Articol a fost șters cu succes",
     "succes-add-msg": "Articol a fost adăugat cu succes",
-    "succes-edit-msg": "Articol a fost editat cu succes"
+    "succes-edit-msg": "Articol a fost editat cu succes",
+    "article-details": "Detaliile articolului"
   },
   "locations": {
     "locations": "Locații de testare",
@@ -783,7 +787,8 @@
     "order-of-questions": "Ordinea întrebărilor",
     "set-can-be-solicited": "Adăugati in teste solicitate",
     "unset-from-can-be-solicited": "Scoateti din teste solicitate",
-    "can-be-solicited": "Poate fi solicitat"
+    "can-be-solicited": "Poate fi solicitat",
+    "search-by-test-mode": "Căutați după tipul de șablon"
 },
   "plans": {
     "plans": "Planuri",
@@ -950,7 +955,8 @@
     "03030207": "Toți candidații din eveniment au terminat testul",
     "03030208": "Testul dvs. solicitat a fost refuzat",
     "03002201": "Nu puteti sterge poziția la care cineva a aplicat",
-    "03002107": "Numele poziției este gol"
+    "03002107": "Numele poziției este gol",
+    "03002109": "Coloana medicală este necompletată"
   },
   "login": {
     "colaborator-id": "Colaborator ID",

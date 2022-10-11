@@ -128,6 +128,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
             return Unit.Value;
         }
 
+        private async Task SendEmailTestResponsiblePerson(Test test, CandidatePosition position)
+        {
+            var userProfile = _candidatePositionService.GetResponsiblePerson(int.Parse(test.CreateById));
+
+            await SendEmailForCandidatePosition(userProfile, test, position?.Name);
+        }
+
         private async Task EmailPositionResponsiblePerson(Test test)
         {
             var eventUser = test.Event.EventUsers
@@ -135,9 +142,18 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 
             var position = _appDbContext.CandidatePositions.FirstOrDefault(x => x.Id == eventUser.PositionId);
 
-            var responsiblePerson = _candidatePositionService.GetResponsiblePerson(int.Parse(position?.CreateById ?? "0"));
+            var candidatePositionNotifications = _appDbContext.CandidatePositionNotifications
+                .Where(x => x.CandidatePositionId == position.Id)
+                .ToList();
 
-            await SendEmailForCandidatePosition(responsiblePerson, test, position?.Name);
+            foreach (var item in candidatePositionNotifications)
+            {
+                var userProfile = _appDbContext.UserProfiles.FirstOrDefault(x => x.Id == item.UserProfileId);
+
+                await SendEmailForCandidatePosition(userProfile, test, position?.Name);
+            }
+
+            await SendEmailTestResponsiblePerson(test, position);
         }
 
         private async Task<Unit> Send(UserProfile user, Test test, bool autoCheck)

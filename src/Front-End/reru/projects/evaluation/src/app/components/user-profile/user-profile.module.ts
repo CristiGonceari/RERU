@@ -25,6 +25,7 @@ import { EvaluationsTableComponent } from './user-evaluations/evaluations-table/
 import { UserReceivedEvaluationsComponent } from './user-received-evaluations/user-received-evaluations.component';
 import { ReceivedTableComponent } from './user-received-evaluations/received-table/received-table.component';
 import { UserPositionDiagramComponent } from './user-solicited-tests/user-position-diagram/user-position-diagram.component';
+import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-datetime';
 
 
 @NgModule({
@@ -58,7 +59,9 @@ import { UserPositionDiagramComponent } from './user-solicited-tests/user-positi
     HttpClientModule,
     UtilsModule,
     UserProfileRoutingModule,
-    SvgModule
+    SvgModule,
+    OwlDateTimeModule,
+    OwlMomentDateTimeModule,
   ]
 })
 export class UserProfileModule { }

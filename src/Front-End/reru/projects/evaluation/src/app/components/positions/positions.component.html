@@ -84,8 +84,8 @@
                       </a>
                       </td>
                       <td [routerLink]="['../edit-position', position.id]">
-                        <a class="font-size-lg cursor-pointer text-dark-50 text-hover-dark-75" *ngIf="position.medicalColumn">{{'statuses.' + medicalEnum[position.medicalColumn] | translate}}</a>
-                        <a class="font-size-lg cursor-pointer text-dark-50 text-hover-dark-75" *ngIf="!position.medicalColumn">-</a>
+                        <a class="font-size-lg cursor-pointer text-dark-50 text-hover-dark-75" *ngIf="position.medicalColumn!=null">{{'statuses.' + medicalEnum[position.medicalColumn] | translate}}</a>
+                        <a class="font-size-lg cursor-pointer text-dark-50 text-hover-dark-75" *ngIf="position.medicalColumn==null">-</a>
                       </td>
                       <td>
                         <svg-icon *ngIf="position.isActive === false" key="error" [width]="24" [height]="24"

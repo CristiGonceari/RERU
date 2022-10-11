@@ -103,7 +103,7 @@
                           <div class="col-lg-9 col-xl-9">
                             <select class="form-control form-control-lg form-control-solid" name="column"
                             [formControl]="positionForm.controls['medicalColumn']">
-                              <option value="">{{'questions.select' | translate}}</option>
+                              <option value="null">{{'questions.select' | translate}}</option>
                               <option *ngFor="let column of medicalColumsList" [value]="column.value">
                                 {{'statuses.' + column.label | translate}}
                               </option>
@@ -138,6 +138,18 @@
                               class="form-control form-control-lg form-control-solid"
                               [value]="endDate | dateFilter:'dd/MM/yy HH:mm'" />
                             <owl-date-time #tillDate></owl-date-time>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-xl-3 col-lg-3 col-form-label">
+                            {{ 'button.send-email' | translate }}
+                          </label>
+                          <div class="col-lg-9 col-xl-9">
+                            <button class="btn btn-light" (click)="attachUsers()"
+                              [style.background-color]="attachedUsers.length > 0 ? '#C9F7F5': '#FFE2E5'"
+                              [style.color]="attachedUsers.length > 0 ? '#0bb7af': '#F64E60'">
+                              {{'locations.attach' | translate}}
+                            </button>
                           </div>
                         </div>
                         <div class="form-group row">

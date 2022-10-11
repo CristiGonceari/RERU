@@ -3,6 +3,7 @@ import { UserProfileService } from '../../services/user-profile/user-profile.ser
 import { PaginationModel } from '../../models/pagination.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventService } from '../../services/event/event.service';
+import { SearchStatusComponent } from './search-status/search-status.component';
 
 @Component({
   selector: 'app-attach-user-modal',
@@ -23,6 +24,7 @@ export class AttachUserModalComponent implements OnInit {
   @ViewChild('email') email: any;
   @ViewChild('department') department: any;
   @ViewChild('role') role: any;
+  @ViewChild(SearchStatusComponent) userStatusEnum: SearchStatusComponent;
   @Input() exceptUserIds: any;
   @Input() attachedItems: number[];
   @Input() inputType: string;
@@ -153,6 +155,7 @@ export class AttachUserModalComponent implements OnInit {
     this.email.key = '';
     this.department.key = '';
     this.role.key = '';
+    this.userStatusEnum.userStatus = '';
     this.filters = {};
     this.getUsers();
 	}

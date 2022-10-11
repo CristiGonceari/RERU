@@ -85,7 +85,7 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
             var template = await File.ReadAllTextAsync(path);
 
             template = template
-                .Replace("{user_name}", test.UserProfile.FirstName + " " + test.UserProfile.LastName)
+                .Replace("{user_name}", test.UserProfile.LastName + " " + test.UserProfile.FirstName)
                 .Replace("{email_message}", GetEmailContent());
 
             var emailData = new EmailData()

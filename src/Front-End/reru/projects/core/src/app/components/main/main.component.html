@@ -3,7 +3,7 @@
         [currentLanguage]="translate.currentLanguage" [sidebarItems]="sidebarItems" [disableSidenav]="false"
         [letter]="'../assets/admin.png'" [logo]="'../assets/logo_transparent.png'" (navigate)="navigate($event)"
         (changeLanguage)="translate.use($event)" (logout)="logout()">
-        <app-location-back-button [value]="'button.back' | translate"></app-location-back-button>
+        <app-location-back-button *ngIf="!getCurrentLocation()" [value]="'button.back' | translate"></app-location-back-button>
         <router-outlet></router-outlet>
     </app-layout>
     <app-layout *ngIf="showStepper" [title]="'pages.dashboard.title' | translate" [hasBackground]="true" [config]="appSettings" [languages]="translate.langs"

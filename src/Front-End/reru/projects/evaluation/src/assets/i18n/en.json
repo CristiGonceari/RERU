@@ -35,7 +35,8 @@
     "user-details": "User profile overview",
     "user-email": "E-mail",
     "general-overview": "General user profile overview",
-    "navigate-core-msg": "Are you sure you want to navigate to general user profile overview?"
+    "navigate-core-msg": "Are you sure you want to navigate to general user profile overview?",
+    "search-by-user-state": "Search by user state"
   },
   "notification": {
     "title": {
@@ -597,6 +598,8 @@
     "NotPassed":"Not passed",
     "employee": "Employee",
     "candidate": "Candidate",
+    "Candidate": "Candidates",
+    "Employee": "Employees",
     "Column1": "Column 1",
     "Column2": "Column 2",
     "Column3": "Column 3",
@@ -646,15 +649,16 @@
     "subtitle": "Frequently Asked Questions",
     "manage-faq": "Manage questions",
     "new-article": "Add article",
-    "delete-article": "Delete Article",
-    "article-title": "Article Titile",
+    "delete-article": "Delete article",
+    "article-title": "Article titile",
     "name": "Name",
     "content": "Content",
     "remove": "Remove article",
     "remove-msg": "Are you sure you want to remove this article?",
     "succes-remove-msg": "Article was successfully deleted",
     "succes-add-msg": "Article was successfully added",
-    "succes-edit-msg": "Article was successfully edited"
+    "succes-edit-msg": "Article was successfully edited",
+    "article-details": "Article details"
   },
   "locations": {
     "locations": "Testing locations",
@@ -786,7 +790,8 @@
     "order-of-questions":"The order of the questions",
     "set-can-be-solicited": "Add to can be solicited",
     "unset-from-can-be-solicited": "Unset from solicited tests",
-    "can-be-solicited": "Can be solicited"
+    "can-be-solicited": "Can be solicited",
+    "search-by-test-mode": "Search by template type"
   },
   "plans": {
     "plans": "Plans",
@@ -953,7 +958,8 @@
     "03030207": "All candidates from event finished test",
     "03030208": "Your solicited test was refused",
     "03002201": "You can not delete used candidate position",
-    "03002107": "Empty position name"
+    "03002107": "Empty position name",
+    "03002109": "Empty medical column"
   },
   "login": {
     "colaborator-id": "Collaborator ID",

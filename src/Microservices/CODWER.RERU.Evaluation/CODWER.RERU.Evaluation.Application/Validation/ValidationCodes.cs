@@ -167,6 +167,7 @@
         public static string INVALID_POSITION = "03002106";
         public static string EMPTY_POSITION_NAME = "03002107";
         public static string CAN_NOT_DELETE_USED_CANDIDATE_POSITION = "03002201";
+        public static string EMPTY_MEDICAL_COLUMN = "03002109";
 
         //progress
         public static string INVALID_PROGRESS = "03002108";

@@ -335,6 +335,15 @@ export class AppComponent {
 		this.translate.change.subscribe(() => this.translateData());
 		this.setIntrvl();
 		this.getTestId();
+		this.getCurrentLocation();
+	}
+
+	getCurrentLocation(){
+		if(this.router.url === '/'){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	navigate(index: number): void {

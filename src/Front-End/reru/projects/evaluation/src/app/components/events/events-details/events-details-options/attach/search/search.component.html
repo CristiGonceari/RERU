@@ -6,13 +6,13 @@
                 {{option.name}}, {{option.address}}
             </div>
             <div *ngIf="searchEvaluators == false ">
-                {{option.firstName}} {{option.lastName}}
+                {{option.lastName}} {{option.firstName}} 
             </div>
             <div *ngIf=" searchUser == false">
-                {{option.firstName}} {{option.lastName}} ({{option.idnp}})
+                {{option.lastName}} {{option.firstName}} ({{option.idnp}})
             </div>
             <div *ngIf="searchPerson == false">
-                {{option.firstName}} {{option.lastName}} ({{option.idnp}})
+                {{option.lastName}} {{option.firstName}} ({{option.idnp}})
             </div>
             <div *ngIf="searchTestTemplate == false">
                 {{option.name}}

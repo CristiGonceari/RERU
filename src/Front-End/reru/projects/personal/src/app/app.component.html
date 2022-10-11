@@ -2,7 +2,7 @@
   [languages]="translate.langs" [currentLanguage]="translate.currentLanguage" [sidebarItems]="sidebarItems"
   [letter]="'assets/personal.png'" [logo]="'assets/logo_transparent.png'" (navigate)="navigate($event)"
   (changeLanguage)="translate.use($event)" (logout)="logout()">
-  <app-location-back-button [value]="'button.back' | translate"></app-location-back-button>
+  <app-location-back-button *ngIf="!getCurrentLocation()" [value]="'button.back' | translate"></app-location-back-button>
   <router-outlet></router-outlet>
 </app-layout>
 <simple-notifications [options]="options"></simple-notifications>

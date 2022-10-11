@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="d-flex flex-column">
                                     <p class="font-weight-bolder font-size-h5 text-dark-75">
-                                        {{ user.firstName }} {{user.lastName}}
+										{{user.lastName}} {{ user.firstName }}
                                     </p>
 									<p class="text-muted" *ngIf="user.departmentColaboratorId != null && user.roleColaboratorId != null">
                                         <span class="mr-2">

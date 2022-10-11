@@ -25,6 +25,11 @@ export class ReceivedTableComponent implements OnInit {
   downloadFile: boolean = false;
   headersToPrint = [];
   printTranslates: any[];
+  fromDate: string;
+  tillDate: string;
+  searchFrom: string;
+  searchTo: string;
+  filters: any = {};
 
   constructor(
     private testService: TestService,
@@ -48,9 +53,12 @@ export class ReceivedTableComponent implements OnInit {
   }
 
   getUsersEvaluations(data: any = {}) {
+    this.setTimeToSearch();
     this.isLoading = true;
     const params: any = {
       userId: this.userId,
+      fromDate: this.searchFrom || '',
+      toDate: this.searchTo || '',
       page: data.page || this.pagedSummary.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
     }
@@ -66,37 +74,64 @@ export class ReceivedTableComponent implements OnInit {
     )
   }
 
+  setTimeToSearch(): void {
+    if (this.fromDate) {
+      const date1 = new Date(this.fromDate);
+      this.searchFrom = new Date(date1.getTime() - (new Date(this.fromDate).getTimezoneOffset() * 60000)).toISOString();
+    }
+    if (this.tillDate) {
+      const date2 = new Date(this.tillDate);
+      this.searchTo = new Date(date2.getTime() - (new Date(this.tillDate).getTimezoneOffset() * 60000)).toISOString();
+    }
+  }
+
+  setFilter(field: string, value): void {
+    this.filters[field] = value;
+    this.pagedSummary.currentPage = 1;
+    this.getUsersEvaluations();
+  }
+
+  resetFilters(): void {
+    this.filters = {};
+    this.searchFrom = '';
+    this.searchTo = '';
+    this.fromDate = '';
+    this.tillDate = '';
+    this.pagedSummary.currentPage = 1;
+    this.getUsersEvaluations();
+  }
+
   getHeaders(name: string): void {
-		this.translateData();
-		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = [
-      'testTemplateName', 
+    this.translateData();
+    let headersHtml = document.getElementsByTagName('th');
+    let headersDto = [
+      'testTemplateName',
       'evaluatorName',
-      'eventName', 
-      'testStatus', 
+      'eventName',
+      'testStatus',
       'result'
     ];
-    
-		for (let i = 0; i < headersHtml.length; i++) {
-      if(i == 2){
-        this.headersToPrint.push({ value: "evaluatorIdnp", label: "Idnp",isChecked: true})
+
+    for (let i = 0; i < headersHtml.length; i++) {
+      if (i == 2) {
+        this.headersToPrint.push({ value: "evaluatorIdnp", label: "Idnp", isChecked: true })
       }
-			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
-		}
+      this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
+    }
 
     console.log(this.headersToPrint)
-		let printData = {
+    let printData = {
       userId: this.userId,
-			tableName: name,
-			fields: this.headersToPrint,
-			orientation: 2,
-		};
-		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
-		modalRef.componentInstance.tableData = printData;
-		modalRef.componentInstance.translateData = this.printTranslates;
-		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
-		this.headersToPrint = [];
-	}
+      tableName: name,
+      fields: this.headersToPrint,
+      orientation: 2,
+    };
+    const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
+    modalRef.componentInstance.tableData = printData;
+    modalRef.componentInstance.translateData = this.printTranslates;
+    modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
+    this.headersToPrint = [];
+  }
 
 
   translateData(): void {
