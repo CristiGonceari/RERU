@@ -1,5 +1,39 @@
 <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
+<div class="row w-100 mb-5 mt-0">
+    <div class="col">
+        <div class="input-group input-group-sm input-group-solid">
+            <input type="text" [owlDateTimeTrigger]="dtFrom"
+              class="form-control form-control-lg form-control-solid" [placeholder]="'events.search-from' | translate"
+              [value]="fromDate | dateFilter:'dd/MM/yyyy, HH:mm'" 
+              [readonly]="true" (ngModelChange)="setFilter('dtFrom', $event)">
+            <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
+              name="date_time" [(ngModel)]="fromDate" [owlDateTime]="dtFrom" [placeholder]="'events.search-from' | translate"
+              (ngModelChange)="setFilter('dtFrom', $event)"
+              [readonly]="true">
+            <owl-date-time #dtFrom></owl-date-time>
+        </div>
+    </div>
+    <div class="col">
+        <div class="input-group input-group-sm input-group-solid">
+            <input type="text" [owlDateTimeTrigger]="toDate"
+              class="form-control form-control-lg form-control-solid" [placeholder]="'events.search-to' | translate"
+              [value]="tillDate | dateFilter:'dd/MM/yyyy, HH:mm'" 
+              [readonly]="true" (ngModelChange)="setFilter('toDate', $event)">
+            <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
+              name="date_time" [(ngModel)]="tillDate" [owlDateTime]="toDate" [placeholder]="'events.search-to' | translate"
+              (ngModelChange)="setFilter('toDate', $event)"
+              [readonly]="true">
+            <owl-date-time #toDate></owl-date-time>
+        </div>
+    </div>
+    <div class="col-1">
+        <div class="w-100 text-right">
+            <app-button (handle)="resetFilters()" [value]="'button.reset' | translate"></app-button>
+        </div>
+    </div>
+</div>
+
 <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
     <app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'20vh'" [height]="'5rem'" [width]="'5rem'"
@@ -18,7 +52,12 @@
         </thead>
         <tbody class="datatable-body" *ngIf="testRowList.length">
             <tr *ngFor="let item of testRowList">
-                <td><span class="font-size-lg">{{ item.testTemplateName }}</span></td>
+                <td>
+                    <b>{{ item.testTemplateName }}</b>
+                    <span class="text-dark-50 d-block mb-0">
+                        {{ item.endTime | date: 'dd/MM/yyyy, HH:mm'}}
+                    </span>
+                </td>
                 <td>
                     <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
                         [routerLink]="['../../../user-profile', item.userId]" style="white-space: nowrap;">

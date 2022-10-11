@@ -103,7 +103,7 @@
                           <div class="col-lg-9 col-xl-9">
                             <select class="form-control form-control-lg form-control-solid" name="column"
                             [formControl]="positionForm.controls['medicalColumn']">
-                              <option value="">{{'questions.select' | translate}}</option>
+                              <option value="null">{{'questions.select' | translate}}</option>
                               <option *ngFor="let column of medicalColumsList" [value]="column.value">
                                 {{'statuses.' + column.label | translate}}
                               </option>

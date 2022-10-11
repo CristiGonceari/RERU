@@ -35,6 +35,16 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserReceivedEval
                 .OrderByDescending(x => x.ProgrammedTime)
                 .AsQueryable();
 
+            if (request.FromDate.HasValue)
+            {
+                evaluations = evaluations.Where(x => x.EndTime >= request.FromDate);
+            }
+
+            if (request.ToDate.HasValue)
+            {
+                evaluations = evaluations.Where(x => x.EndTime <= request.ToDate);
+            }
+
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(evaluations, request);
 
             return paginatedModel;
