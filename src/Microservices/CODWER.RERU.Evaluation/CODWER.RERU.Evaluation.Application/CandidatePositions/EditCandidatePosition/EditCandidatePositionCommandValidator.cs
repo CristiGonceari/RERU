@@ -19,6 +19,13 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.EditCandidatePos
               .SetValidator(x => new ItemMustExistValidator<CandidatePosition>(appDbContext, ValidationCodes.INVALID_POSITION,
                   ValidationMessages.NotFound));
 
+            RuleFor(r => r.Data)
+                    .Must(x => x.To > x.From)
+                    .WithErrorCode(ValidationCodes.INVALID_TIME_RANGE);
+
+            RuleFor(r => r.Data.MedicalColumn)
+               .NotNull()
+               .WithErrorCode(ValidationCodes.EMPTY_MEDICAL_COLUMN);
         }
     }
 }

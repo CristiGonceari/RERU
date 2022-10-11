@@ -178,7 +178,7 @@ export class AddEditPositionComponent implements OnInit {
 			from: this.fromDate,
 			to: this.tillDate,
 			description: this.editorData,
-			medicalColumn: this.positionForm.value.medicalColumn,
+			medicalColumn: (this.positionForm.value.medicalColumn == "null" ? null : this.positionForm.value.medicalColumn) || null,
 			requiredDocuments: tagsArr,
 			eventIds: eventArr.map(obj => obj.value)
 		} as CandidatePositionModel;
@@ -202,8 +202,6 @@ export class AddEditPositionComponent implements OnInit {
 	editRole(): void {
 		this.setTimeToSearch();
 
-		this.isLoading = true;
-
 		const tagsArr = this.tags.map(obj => typeof obj.value !== 'number' ? { ...obj, value: 0 } : obj);
 		const eventArr = [];
 
@@ -217,7 +215,7 @@ export class AddEditPositionComponent implements OnInit {
 			from: this.fromDate,
 			to: this.tillDate,
 			description: this.editorData,
-			medicalColumn: this.positionForm.value.medicalColumn,
+			medicalColumn: (this.positionForm.value.medicalColumn == "null" ? null : this.positionForm.value.medicalColumn) || null,
 			isActive: this.positionForm.value.isActive,
 			requiredDocuments: tagsArr,
 			eventIds: eventArr.map(obj => obj.value)
@@ -235,7 +233,6 @@ export class AddEditPositionComponent implements OnInit {
 				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 				this.back();
 				this.isLoading = false;
-
 			}
 		);
 	}
