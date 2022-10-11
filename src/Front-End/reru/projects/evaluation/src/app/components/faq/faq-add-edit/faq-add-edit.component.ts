@@ -7,6 +7,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-faq-add-edit',
@@ -16,7 +17,7 @@ import { I18nService } from '../../../utils/services/i18n/i18n.service';
 export class FaqAddEditComponent implements OnInit {
   editorData: string = '';
   title: string;
-  articleId: number;
+  articleId;
   isLoading: boolean = true;
   public Editor = DecoupledEditor;
   public onReady(editor) {
@@ -31,7 +32,14 @@ export class FaqAddEditComponent implements OnInit {
   no: string;
   yes: string;
 
+  articleForm: FormGroup;
+  fileId: string;
+  attachedFile: File;
+  fileType: string = null;
+  disableBtn: boolean = false;
+
   constructor(
+    private fb: FormBuilder,
     private articleService: ArticlesService,
     private activatedRoute: ActivatedRoute,
 	  public translate: I18nService,
@@ -40,14 +48,19 @@ export class FaqAddEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.articleForm = new FormGroup({
+			name: new FormControl()
+		});
+
     this.activatedRoute.params.subscribe(params => {
-      this.articleId = params.id;
+      if (params.id){
+        this.articleId = params.id;
+        this.getArticle();
+      } else {
+				this.initForm();
+				this.isLoading = false;
+			}
     });
-    if (this.articleId) {
-      this.getArticle();
-    } else {
-      this.isLoading = false;
-    }
   }
 
   getArticle(): void {
@@ -55,47 +68,89 @@ export class FaqAddEditComponent implements OnInit {
       if (res && res.data) {
         this.title = res.data.name;
         this.editorData = res.data.content;
+        this.fileId = res.data.mediaFileId;
+        this.initForm(res.data);
         this.isLoading = false;
       }
     })
   }
 
+  initForm(data?): void {
+		if (data) {
+			this.articleForm = this.fb.group({
+				name: this.fb.control(data?.name || null, [Validators.required])
+			});
+		} else {
+			this.articleForm = this.fb.group({
+				name: this.fb.control(null, [Validators.required])
+			});
+		}
+	}
+
+  checkFile(event) {
+    if (event != null) this.attachedFile = event;
+    else this.fileId = null;
+  }
+
+  addArticle(){
+    this.disableBtn = true;
+    const request = new FormData();
+
+    if (this.attachedFile) {
+      this.fileType = '4';
+      request.append('FileDto.File', this.attachedFile);
+      request.append('FileDto.Type', this.fileType);
+    }
+    request.append('Name', this.articleForm.value.name);
+    request.append('Content', this.editorData);
+
+    this.articleService.create(request).subscribe(() => {
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('faq.succes-add-msg'),
+        ]).subscribe(([title1, description]) => {
+        this.title1 = title1;
+        this.description = description;
+        });
+      this.backClicked();
+      this.disableBtn = false;
+      this.notificationService.success(this.title1, this.description, NotificationUtil.getDefaultMidConfig());
+    });
+  }
+
+  editArticle(){
+    this.disableBtn = true;
+    const request = new FormData();
+    
+    if (this.attachedFile) {
+      this.fileType = '4';
+      request.append('Data.FileDto.File', this.attachedFile);
+      request.append('Data.FileDto.Type', this.fileType);
+    }
+    request.append('Data.Id', this.articleId);
+    request.append('Data.Name', this.articleForm.value.name);
+    request.append('Data.Content', this.editorData);
+    request.append('Data.MediaFileId', this.fileId);
+
+    this.articleService.edit(request).subscribe(() => {
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('faq.succes-edit-msg'),
+        ]).subscribe(([title1, description]) => {
+        this.title1 = title1;
+        this.description = description;
+        });
+      this.disableBtn = false;
+      this.backClicked();
+      this.notificationService.success(this.title1, this.description, NotificationUtil.getDefaultMidConfig());
+    });
+  }
+
   saveArticle(): void {
-    const createData = {
-      name: this.title,
-      content: this.editorData
-    }
-
-    const editData = {
-      id: this.articleId,
-      name: this.title,
-      content: this.editorData
-    }
-
     if (this.articleId) {
-      this.articleService.create(editData).subscribe(() => {
-        forkJoin([
-          this.translate.get('modal.success'),
-          this.translate.get('faq.succes-edit-msg'),
-          ]).subscribe(([title1, description]) => {
-          this.title1 = title1;
-          this.description = description;
-          });
-        this.backClicked();
-			  this.notificationService.success(this.title1, this.description, NotificationUtil.getDefaultMidConfig());
-      });
+      this.editArticle();
     } else {
-      this.articleService.create(createData).subscribe(() => {
-        forkJoin([
-          this.translate.get('modal.success'),
-          this.translate.get('faq.succes-add-msg'),
-          ]).subscribe(([title1, description]) => {
-          this.title1 = title1;
-          this.description = description;
-          });
-        this.backClicked();
-			  this.notificationService.success(this.title1, this.description, NotificationUtil.getDefaultMidConfig());
-      });
+      this.addArticle();
     }
   }
 

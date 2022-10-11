@@ -647,15 +647,16 @@
     "subtitle": "Întrebări frecvente",
     "manage-faq": "Gestionarea întrebărilor",
     "new-article": "Adaugă articol",
-    "delete-article": "Șterge Articol",
-    "article-title": "Titlul Articolului",
+    "delete-article": "Șterge articol",
+    "article-title": "Titlul articolului",
     "name": "Nume",
     "content": "Conţinut",
     "remove": "Ștergeți articol",
     "remove-msg": "Sigur doriți să ștergeți acest articol?",
     "succes-remove-msg": "Articol a fost șters cu succes",
     "succes-add-msg": "Articol a fost adăugat cu succes",
-    "succes-edit-msg": "Articol a fost editat cu succes"
+    "succes-edit-msg": "Articol a fost editat cu succes",
+    "article-details": "Detaliile articolului"
   },
   "locations": {
     "locations": "Locații de testare",
