@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { CandidatePositionService } from '../../../utils/services/candidate-position/candidate-position.service'
 import { forkJoin } from 'rxjs';
@@ -11,8 +11,12 @@ import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { ReferenceService } from '../../../utils/services/reference/reference.service';
 import { SelectItem } from '../../../utils/models/select-item.model';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventTestTemplateService } from '../../../utils/services/event-test-template/event-test-template.service';
 import { MedicalColumnEnum } from '../../../utils/enums/medical-column.enum';
+import { AttachUserModalComponent } from 'projects/evaluation/src/app/utils/components/attach-user-modal/attach-user-modal.component';
+import { CandidatePositionNotificationService } from '../../../utils/services/candidate-position-notifications/candidate-position-notification.service'
+
 @Component({
 	selector: 'app-add-edit-position',
 	templateUrl: './add-edit-position.component.html',
@@ -20,6 +24,7 @@ import { MedicalColumnEnum } from '../../../utils/enums/medical-column.enum';
 })
 export class AddEditPositionComponent implements OnInit {
 	isLoading: boolean = true;
+	isEdit: boolean = true;
 	positionId: number;
 	positionForm: FormGroup;
 	positionName: string;
@@ -34,7 +39,9 @@ export class AddEditPositionComponent implements OnInit {
 	event = new SelectItem();
 	eventsList: any[] = [];
 	exceptUserIds = [];
+	attachedUsers: [] = [];
 	editorData: string = '';
+	userListToAdd: [] = [];
 
 	startDate;
 	endDate;
@@ -58,10 +65,13 @@ export class AddEditPositionComponent implements OnInit {
 		private notificationService: NotificationsService,
 		public translate: I18nService,
 		private route: ActivatedRoute,
+		private router: Router,
 		private positionService: CandidatePositionService,
 		private location: Location,
 		private referenceService: ReferenceService,
-		private eventTestTemplateService: EventTestTemplateService
+		private eventTestTemplateService: EventTestTemplateService,
+		private modalService: NgbModal,
+		private candidatePositionNotificationService: CandidatePositionNotificationService
 	) { }
 
 	ngOnInit(): void {
@@ -75,9 +85,9 @@ export class AddEditPositionComponent implements OnInit {
 		this.getMedicalColumnsEnum();
 		this.route.params.subscribe(params => {
 			if (params.id) {
+				this.isEdit = true;
 				this.positionId = params.id;
 				this.positionService.get(this.positionId).subscribe(res => {
-					console.log("role:", res)
 					this.initForm(res.data);
 					this.editorData = res.data.description;
 					this.startDate = res.data.from;
@@ -93,6 +103,7 @@ export class AddEditPositionComponent implements OnInit {
 				})
 				this.isLoading = false;
 			} else {
+				this.isEdit = false;
 				this.initForm();
 				this.isLoading = false;
 			}
@@ -137,6 +148,7 @@ export class AddEditPositionComponent implements OnInit {
 	}
 
 	initForm(data?): void {
+		this.getAttachedUsers();
 		if (data) {
 			this.positionForm = this.fb.group({
 				name: this.fb.control(data?.name || null, [Validators.required]),
@@ -162,6 +174,21 @@ export class AddEditPositionComponent implements OnInit {
 		})
 	}
 
+	getAttachedUsers(){
+		this.candidatePositionNotificationService.getUserIds(this.positionId).subscribe(res => this.attachedUsers = res.data )
+	}
+
+	attachUsers() {
+		const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
+		modalRef.componentInstance.exceptUserIds = [];
+		modalRef.componentInstance.page = this.router.url.split("/").pop();;
+		modalRef.componentInstance.attachedItems = this.attachedUsers;
+		modalRef.componentInstance.inputType = 'checkbox';
+		modalRef.result.then(() => {
+			this.attachedUsers = modalRef.result.__zone_symbol__value.attachedItems;
+		}, () => { });
+	}
+
 	addRole(): void {
 		this.setTimeToSearch();
 
@@ -180,7 +207,8 @@ export class AddEditPositionComponent implements OnInit {
 			description: this.editorData,
 			medicalColumn: (this.positionForm.value.medicalColumn == "null" ? null : this.positionForm.value.medicalColumn) || null,
 			requiredDocuments: tagsArr,
-			eventIds: eventArr.map(obj => obj.value)
+			eventIds: eventArr.map(obj => obj.value),
+			userProfileIds: this.attachedUsers
 		} as CandidatePositionModel;
 
 		this.positionService.create(addPositionModel).subscribe(
@@ -218,7 +246,8 @@ export class AddEditPositionComponent implements OnInit {
 			medicalColumn: (this.positionForm.value.medicalColumn == "null" ? null : this.positionForm.value.medicalColumn) || null,
 			isActive: this.positionForm.value.isActive,
 			requiredDocuments: tagsArr,
-			eventIds: eventArr.map(obj => obj.value)
+			eventIds: eventArr.map(obj => obj.value),
+			userProfileIds: this.attachedUsers
 		} as CandidatePositionModel;
 
 		this.positionService.editPosition(editPositionModel).subscribe(

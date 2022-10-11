@@ -15,5 +15,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions
         public MedicalColumnEnum? MedicalColumn { get; set; }
         public List<AssignRequiredDocumentsDto> RequiredDocuments { get; set; }
         public List<int> EventIds { get; set; }
+        public List<int> UserProfileIds { get; set; }
     }
 }
