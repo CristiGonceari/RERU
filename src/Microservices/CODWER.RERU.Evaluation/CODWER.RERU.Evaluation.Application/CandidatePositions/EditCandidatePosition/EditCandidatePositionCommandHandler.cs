@@ -19,8 +19,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.EditCandidatePos
         private readonly IAssignDocumentsAndEventsToPosition _assignDocumentsAndEventsToPosition;
         private readonly ICandidatePositionNotificationService _candidatePositionNotificationService;
 
-        public EditCandidatePositionCommandHandler(
-            AppDbContext appDbContext, 
+        public EditCandidatePositionCommandHandler(AppDbContext appDbContext, 
             IMapper mapper, 
             ILoggerService<EditCandidatePositionCommand> loggerService, 
             IAssignDocumentsAndEventsToPosition assignDocumentsAndEventsToPosition, 
@@ -32,6 +31,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.EditCandidatePos
             _assignDocumentsAndEventsToPosition = assignDocumentsAndEventsToPosition;
             _candidatePositionNotificationService = candidatePositionNotificationService;
         }
+
         public async Task<Unit> Handle(EditCandidatePositionCommand request, CancellationToken cancellationToken)
         {
             var positionToEdit = await _appDbContext.CandidatePositions.FirstAsync(x => x.Id == request.Data.Id);
