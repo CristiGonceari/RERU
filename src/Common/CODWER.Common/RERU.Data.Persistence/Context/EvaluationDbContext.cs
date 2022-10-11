@@ -47,5 +47,6 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<SolicitedVacantPositionEmailMessage> SolicitedVacantPositionEmailMessages { get; set; }
         public virtual DbSet<EmailNotification> EmailNotifications { get; set; }
         public virtual DbSet<EmailNotificationProperty> EmailNotificationProperties { get; set; }
+        public virtual DbSet<CandidatePositionNotification> CandidatePositionNotifications { get; set; }
     }
 }
