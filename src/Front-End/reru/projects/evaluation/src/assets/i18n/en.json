@@ -649,15 +649,16 @@
     "subtitle": "Frequently Asked Questions",
     "manage-faq": "Manage questions",
     "new-article": "Add article",
-    "delete-article": "Delete Article",
-    "article-title": "Article Titile",
+    "delete-article": "Delete article",
+    "article-title": "Article titile",
     "name": "Name",
     "content": "Content",
     "remove": "Remove article",
     "remove-msg": "Are you sure you want to remove this article?",
     "succes-remove-msg": "Article was successfully deleted",
     "succes-add-msg": "Article was successfully added",
-    "succes-edit-msg": "Article was successfully edited"
+    "succes-edit-msg": "Article was successfully edited",
+    "article-details": "Article details"
   },
   "locations": {
     "locations": "Testing locations",

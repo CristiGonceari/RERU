@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RERU.Data.Persistence.Context;
@@ -9,9 +10,10 @@ using RERU.Data.Persistence.Context;
 namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221011153709_Add_Media_Article")]
+    partial class Add_Media_Article
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -364,46 +366,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasIndex("MedicalColumn");
 
                     b.ToTable("CandidatePositions");
-                });
-
-            modelBuilder.Entity("RERU.Data.Entities.CandidatePositionNotification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<int>("CandidatePositionId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("CreateById")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime?>("DeleteTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("UpdateById")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("UserProfileId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CandidatePositionId");
-
-                    b.HasIndex("UserProfileId");
-
-                    b.ToTable("CandidatePositionNotifications");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.Documents.DocumentTemplate", b =>
@@ -6388,25 +6350,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("RERU.Data.Entities.CandidatePositionNotification", b =>
-                {
-                    b.HasOne("RERU.Data.Entities.CandidatePosition", "CandidatePosition")
-                        .WithMany("CandidatePositionNotifications")
-                        .HasForeignKey("CandidatePositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
-                        .WithMany("CandidatePositionNotifications")
-                        .HasForeignKey("UserProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CandidatePosition");
-
-                    b.Navigation("UserProfile");
-                });
-
             modelBuilder.Entity("RERU.Data.Entities.Documents.DocumentTemplate", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<CVU.ERP.StorageService.Entities.FileTypeEnum>", null)
@@ -8081,8 +8024,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
             modelBuilder.Entity("RERU.Data.Entities.CandidatePosition", b =>
                 {
-                    b.Navigation("CandidatePositionNotifications");
-
                     b.Navigation("RequiredDocumentPositions");
                 });
 
@@ -8288,8 +8229,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
             modelBuilder.Entity("RERU.Data.Entities.UserProfile", b =>
                 {
-                    b.Navigation("CandidatePositionNotifications");
-
                     b.Navigation("Contractor");
 
                     b.Navigation("EmailTestNotifications");

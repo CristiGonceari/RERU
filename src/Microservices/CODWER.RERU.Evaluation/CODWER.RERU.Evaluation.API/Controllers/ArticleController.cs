@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CODWER.RERU.Evaluation.API.Config;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.Articles.AddArticle;
 using CODWER.RERU.Evaluation.DataTransferObjects.Articles;
 using CODWER.RERU.Evaluation.Application.Articles.GetArticle;
 using CVU.ERP.Common.Pagination;
 using CODWER.RERU.Evaluation.Application.Articles.GetArticles;
-using CODWER.RERU.Evaluation.Application.Articles.AddEditArticle;
 using MediatR;
 using CODWER.RERU.Evaluation.Application.Articles.DeleteArticle;
+using CODWER.RERU.Evaluation.Application.Articles.EditArticle;
 using CODWER.RERU.Evaluation.Application.Articles.PrintArticles;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 
@@ -30,9 +31,15 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpPost]
-        public async Task<int> AddEditArticle([FromBody] ArticleEvaluationDto request)
+        public async Task<int> AddEditArticle([FromForm] AddArticleCommand command)
         {
-            return await Mediator.Send(new AddEditArticleCommand { Data = request });
+            return await Mediator.Send(command);
+        }
+
+        [HttpPatch]
+        public async Task<int> EditArticle([FromForm] EditArticleCommand command)
+        {
+            return await Mediator.Send(command);
         }
 
         [HttpDelete("{id}")]
