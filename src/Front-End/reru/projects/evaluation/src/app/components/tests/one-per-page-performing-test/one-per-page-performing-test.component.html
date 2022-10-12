@@ -89,18 +89,21 @@
                             </div>
                         </label>
                     </div>
-                    <div class="data-container answer"
-                        *ngIf="questionUnit.questionType == 5 && hadFile == false">
-                        <ngx-dropzone
-                            accept="image/jpeg,image/jpg,image/png,.doc,.docx,.txt,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                            [multiple]="false" [expandable]="true" (change)="setFile($event)" class="font-weight-light">
-                            <ngx-dropzone-label>
-                                <h4>{{'button.attach' | translate}}</h4>
-                            </ngx-dropzone-label>
-                            <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-                                <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
-                            </ngx-dropzone-preview>
-                        </ngx-dropzone>
+                    <div class="data-container answer" *ngIf="questionUnit.questionType == 5 && hadFile == false">
+                        <div class="col-6 col-md-12 position-relative">
+                            <ngx-dropzone
+                                accept="image/jpeg,image/jpg,image/png,.doc,.docx,.txt,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                [multiple]="false" [expandable]="true" (change)="setFile($event)" class="font-weight-light">
+                                <ngx-dropzone-label *ngIf="isLoadingSetFile">
+                                    <h4>{{'button.attach' | translate}}</h4>
+                                </ngx-dropzone-label>
+                                <ngx-spinner bdColor="transparent" type="square-jelly-box"  size="medium" [fullScreen]="false"></ngx-spinner>
+                                <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                                    <ngx-spinner> </ngx-spinner>
+                                    <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+                                </ngx-dropzone-preview>
+                            </ngx-dropzone>
+                        </div>
                     </div>
                     <div class="data-container answer text-center"
                         *ngIf="questionUnit.questionType == 5 && hadFile == true">

@@ -94,9 +94,9 @@ export class AddEditSolicitedTestComponent implements OnInit {
   }
 
   setFile(event, index, requiredDocumenId): void {
-    const file = event.target.files[0];
+    const file = event;
     const fileToAdd = this.parseFileToAdd(file, requiredDocumenId)
-
+    
     if (this.files[index] !== undefined) {
       this.files[index] = fileToAdd;
     } else {

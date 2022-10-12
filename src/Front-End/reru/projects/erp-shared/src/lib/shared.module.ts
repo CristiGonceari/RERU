@@ -47,6 +47,7 @@ import { ShowImageModalComponent } from './modals/show-image-modal/show-image-mo
 import { AddEditMediaFileComponent } from '../public-api';
 import { UploadFileModalComponent } from './modals/upload-file-modal/upload-file-modal.component';
 import { INTERNAL_NOTIFY_INTERCEPTOR } from './interceptors/internal-notify.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 export const translateModule = TranslateModule.forChild();
 
@@ -85,7 +86,8 @@ const commonExports = [
 		LocalizeRouterModule,
 		SharedPipesModule,
 		SvgModule,
-		NgxDropzoneModule
+		NgxDropzoneModule,
+		NgxSpinnerModule
 	],
 	exports: [...commonExports],
 	providers: [

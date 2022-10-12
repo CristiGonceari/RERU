@@ -21,6 +21,7 @@ import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/file-test-answer.service';
 import { saveAs } from 'file-saver';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-one-per-page-performing-test',
@@ -83,7 +84,9 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   hadFile: boolean = false;
 
   optionFileId = [];
-  isLoadingOptionMedia:  boolean = true;
+  isLoadingOptionMedia: boolean = true;
+  isLoadingSetFile: boolean = true;
+
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -94,7 +97,8 @@ export class OnePerPagePerformingTestComponent implements OnInit {
 	  public translate: I18nService,
     private router: Router,
     private testTemplateService: TestTemplateService,
-    private fileTestAnswerService: FileTestAnswerService
+    private fileTestAnswerService: FileTestAnswerService,
+    private spinner: NgxSpinnerService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
@@ -321,7 +325,13 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   }
 
   setFile(event){
-    this.files[0] = event.addedFiles[0];
+    this.spinner.show();
+    this.isLoadingSetFile = false;
+    setTimeout(() => {
+      this.files[0] = event.addedFiles[0];
+      this.spinner.hide();
+      this.isLoadingSetFile = true;
+    }, 2000);
   }
 
   checkIfDisabled(index) {
