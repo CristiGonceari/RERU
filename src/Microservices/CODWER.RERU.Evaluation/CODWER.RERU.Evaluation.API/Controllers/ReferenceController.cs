@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.References.GetAddTestProcesses;
+using CODWER.RERU.Evaluation.Application.References.GetEvaluationRoles;
 using CODWER.RERU.Evaluation.Application.References.GetEventLocationValue;
 using CODWER.RERU.Evaluation.Application.References.GetRequiredDocumentsValue;
 using CODWER.RERU.Evaluation.DataTransferObjects.BulkProcesses;
@@ -177,6 +178,14 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             var items = EnumConverter<UserStatusEnum>.SelectValues;
 
             return items;
+        }
+
+        [HttpGet("article-roles/select-values")]
+        public async Task<List<SelectItem>> GetArticleRoles()
+        {
+            var query = new GetEvaluationRolesQuery();
+
+            return await Mediator.Send(query);
         }
     }
 }

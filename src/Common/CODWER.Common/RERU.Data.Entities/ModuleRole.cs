@@ -13,5 +13,6 @@ namespace RERU.Data.Entities
         public Module Module { set; get; }
 
         public List<ModuleRolePermission> Permissions { set; get; }
+        public virtual ICollection<ArticleEvaluationModuleRole> ArticleRoles { set; get; }
     }
 }

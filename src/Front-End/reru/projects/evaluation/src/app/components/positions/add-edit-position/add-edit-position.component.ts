@@ -205,7 +205,7 @@ export class AddEditPositionComponent implements OnInit {
 			from: this.fromDate,
 			to: this.tillDate,
 			description: this.editorData,
-			medicalColumn: (this.positionForm.value.medicalColumn == "null" ? null : this.positionForm.value.medicalColumn) || null,
+			medicalColumn: !isNaN(this.positionForm.value.medicalColumn) ? this.positionForm.value.medicalColumn : null,
 			requiredDocuments: tagsArr,
 			eventIds: eventArr.map(obj => obj.value),
 			userProfileIds: this.attachedUsers
@@ -243,7 +243,7 @@ export class AddEditPositionComponent implements OnInit {
 			from: this.fromDate,
 			to: this.tillDate,
 			description: this.editorData,
-			medicalColumn: (this.positionForm.value.medicalColumn == "null" ? null : this.positionForm.value.medicalColumn) || null,
+			medicalColumn: !isNaN(this.positionForm.value.medicalColumn) ? this.positionForm.value.medicalColumn : null,
 			isActive: this.positionForm.value.isActive,
 			requiredDocuments: tagsArr,
 			eventIds: eventArr.map(obj => obj.value),

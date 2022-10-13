@@ -12,12 +12,17 @@
                 <tr>
                     <th scope="col">{{'faq.name' | translate}}</th>
                     <th scope="col" class="d-none">{{'faq.content' | translate}}</th>
+                    <th scope="col" style="text-align:center; width: 150px">{{'faq.contains-media' | translate}}</th>
                     <th scope="col" style="width: 48px"></th>
                 </tr>
             </thead>
             <tbody class="datatable-body" *ngIf="articles">
                 <tr *ngFor="let item of articles" (dblclick)="navigate(item.id)">
-                    <td style="cursor: pointer;" [routerLink]="['faq-details', item.id]">{{ item.name }}</td>
+                    <td style="cursor: pointer;">{{ item.name }}</td>
+                    <td style="cursor: pointer; text-align:center;">
+                        <i *ngIf="item.containsMedia" class="fa la-plus"></i>
+                        <i *ngIf="!item.containsMedia" class="fa la-minus"></i>
+                    </td>
                     <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
                         <div style="overflow: visible; position: relative; width: 0px">
                             <div ngbDropdown class="dropdown dropdown-inline">

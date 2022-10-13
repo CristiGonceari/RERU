@@ -2,6 +2,7 @@
 using AutoMapper;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.Services;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 using CVU.ERP.StorageService;
@@ -14,12 +15,14 @@ namespace CODWER.RERU.Evaluation.Application.Articles.AddArticle
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly IStorageFileService _storageFileService;
+        private readonly IAssignRolesToArticle _assignRolesToArticle;
 
-        public AddArticleCommandHandler(AppDbContext appDbContext, IMapper mapper, IStorageFileService storageFileService)
+        public AddArticleCommandHandler(AppDbContext appDbContext, IMapper mapper, IStorageFileService storageFileService, IAssignRolesToArticle assignRolesToArticle)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _storageFileService = storageFileService;
+            _assignRolesToArticle = assignRolesToArticle;
         }
 
         public async Task<int> Handle(AddArticleCommand request, CancellationToken cancellationToken)
@@ -38,6 +41,8 @@ namespace CODWER.RERU.Evaluation.Application.Articles.AddArticle
             await _appDbContext.EvaluationArticles.AddAsync(articleToCreate);
 
             await _appDbContext.SaveChangesAsync();
+
+            await _assignRolesToArticle.AssignRolesToArticle(request.Roles, articleToCreate.Id);
 
             return articleToCreate.Id;
         }

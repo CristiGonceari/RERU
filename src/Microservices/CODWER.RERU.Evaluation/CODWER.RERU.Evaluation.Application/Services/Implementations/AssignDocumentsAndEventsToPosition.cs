@@ -1,5 +1,4 @@
 ﻿using CODWER.RERU.Evaluation.Application.RequiredDocuments.AddEditRequiredDocument;
-using CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions;
 using CODWER.RERU.Evaluation.DataTransferObjects.Documents;
 using MediatR;
 using RERU.Data.Entities;
@@ -7,6 +6,7 @@ using RERU.Data.Persistence.Context;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.DataTransferObjects;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 {
@@ -21,7 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             _mediator = mediator;
         }
 
-        public async Task AssignRequiredDocumentsToPosition(List<AssignRequiredDocumentsDto> requiredDocuments, CandidatePosition position)
+        public async Task AssignRequiredDocumentsToPosition(List<AssignTagsValuesDto> requiredDocuments, CandidatePosition position)
         {
             var items = _appDbContext.RequiredDocumentPositions.Where(x => x.CandidatePositionId == position.Id).ToList();
 
@@ -62,7 +62,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             await _appDbContext.SaveChangesAsync();
         }
 
-        private async Task<int> AddRequiredDocumentCommand(AssignRequiredDocumentsDto document)
+        private async Task<int> AddRequiredDocumentCommand(AssignTagsValuesDto document)
         {
             var requiredDocument = new AddEditRequiredDocumentsCommand
             {

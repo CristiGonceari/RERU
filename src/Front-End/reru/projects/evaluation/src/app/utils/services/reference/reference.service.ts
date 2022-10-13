@@ -100,4 +100,8 @@ export class ReferenceService extends AbstractService {
   getUserStatus(): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-status/select-values`);
   }
+
+  getArticleRoles(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/article-roles/select-values`);
+  }
 }
