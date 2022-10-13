@@ -11,6 +11,7 @@
                 <th scope="col" class="text-left" style="width: 200px">{{ 'verify-test.student' | translate }}</th>
                 <th scope="col" class="text-left" style="width: 150px">{{ 'events.event' | translate }}</th>
                 <th scope="col" class="text-left" style="width: 150px">{{ 'events.location' | translate }}</th>
+                <th scope="col" class="text-left" style="width: 150px">{{ 'position.name' | translate }}</th>
                 <th scope="col" class="text-left" style="width: 150px">{{ 'verify-test.status' | translate }}</th>
                 <th scope="col" class="text-left" style="width: 100px">{{ 'verify-test.verified-progress' | translate }}</th>
                 <th scope="col" class="text-left" style="width: 100px">{{ 'verify-test.result' | translate }}</th>
@@ -41,6 +42,13 @@
                     <span class="font-size-lg" *ngIf="item.locationNames">{{ item.locationNames }}</span>
                     <span class="font-size-lg" *ngIf="!item.locationNames.length">-</span>
                 </td>
+                <td *ngIf="item.candidatePositionNames.length">
+                    {{ item.candidatePositionNames[0] }}
+                    <span [ngbTooltip]="parseCandidatePositions(item.candidatePositionNames)">...</span>
+                  </td>
+                  <td *ngIf="!item.candidatePositionNames.length">
+                    <span>-</span>
+                  </td>
                 <td>
                     <p *ngIf="item.modeStatus == 0">{{'statuses.' + status[item.testStatus] | translate}}</p>
                     <p *ngIf="item.modeStatus == 1 && (item.testStatus === status.Verified || item.testStatus === status.Terminated)">{{'statuses.Voted' | translate}}</p>

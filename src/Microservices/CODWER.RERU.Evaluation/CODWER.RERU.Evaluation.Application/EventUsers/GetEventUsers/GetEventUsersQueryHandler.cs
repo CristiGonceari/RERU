@@ -3,8 +3,10 @@ using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
@@ -29,7 +31,34 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.GetEventUsers
                 .Select(x => x.UserProfile)
                 .AsQueryable();
 
-            return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(eventUsers, request);
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(eventUsers, request);
+
+            return await CheckIfHasCandidatePosition(paginatedModel, request.EventId);
+        }
+
+        private async Task<PaginatedModel<UserProfileDto>> CheckIfHasCandidatePosition(PaginatedModel<UserProfileDto> paginatedModel, int eventId)
+        {
+            foreach (var item in paginatedModel.Items)
+            {
+                var eventUser = _appDbContext.EventUsers.FirstOrDefault(x => x.EventId == eventId && x.UserProfileId == item.Id);
+
+                var eventUserCandidatePositions =
+                    _appDbContext.EventUserCandidatePositions.Where(x => x.EventUserId == eventUser.Id)
+                        .Select(x => x.CandidatePositionId)
+                        .ToList();
+
+                if (!(eventUser?.PositionId > 0)) continue;
+                {
+                    var candidatePositionNames = 
+                            _appDbContext.CandidatePositions.Where(p => !eventUserCandidatePositions.All(p2 => p2 != p.Id))
+                        .Select(x => x.Name)
+                        .ToList();
+
+                    item.CandidatePositionNames = candidatePositionNames;
+                }
+            }
+
+            return paginatedModel;
         }
     }
 }

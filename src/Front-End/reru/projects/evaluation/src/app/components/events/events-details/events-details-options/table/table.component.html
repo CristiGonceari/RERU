@@ -4,9 +4,10 @@
   id="kt_datatable">
   <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading">
     <thead class="text-uppercase text-muted">
-      <tr *ngIf="users.length">
+      <tr *ngIf="users">
         <th scope="col">{{'events.name' | translate}}</th>
         <th scope="col">{{'login.idnp' | translate}}</th>
+        <th scope="col">{{'position.name' | translate}}</th>
       </tr>
       <tr *ngIf="testTemplates">
         <th scope="col">{{'events.test-type-name' | translate}}</th>
@@ -32,7 +33,8 @@
     </thead>
     <tbody class="datatable-body" *ngIf="fields.length && locations">
       <tr *ngFor="let item of fields">
-        <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../locations/location', item.id]">{{item.name}}</td>
+        <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../locations/location', item.id]">
+          {{item.name}}</td>
         <td>{{item.address}}</td>
         <td>
           <span class="font-size-lg" *ngIf="item.type == enum.Class">{{'locations.Class' | translate}}</span>
@@ -75,8 +77,9 @@
       </tr>
     </tbody>
     <tbody class="datatable-body" *ngIf="fields.length && testTemplates">
-      <tr *ngFor="let item of fields" >
-        <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../test-type/type-details', item.id]">{{item.name}}</td>
+      <tr *ngFor="let item of fields">
+        <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../test-type/type-details', item.id]">
+          {{item.name}}</td>
         <td>{{item.questionCount}}</td>
         <td>
           <span *ngIf="item.duration == 0">-</span>
@@ -118,6 +121,13 @@
           {{item.lastName}} {{item.firstName}} {{item.fatherName}}
         </td>
         <td>{{ item.idnp }}</td>
+        <td *ngIf="item.candidatePositionNames !== null">
+          {{ item.candidatePositionNames[0] }}
+          <span [ngbTooltip]="parseCandidatePositions(item.candidatePositionNames)">...</span>
+        </td>
+        <td *ngIf="item.candidatePositionNames === null">
+          <span>-</span>
+        </td>
       </tr>
     </tbody>
     <tbody class="datatable-body" *ngIf="fields.length && evaluators">

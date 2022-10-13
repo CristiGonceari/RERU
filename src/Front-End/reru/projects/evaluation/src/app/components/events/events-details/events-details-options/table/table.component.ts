@@ -248,6 +248,11 @@ export class TableComponent implements OnInit {
     }
   }
 
+  parseCandidatePositions(candidatePositionsNames: string[]){
+    let string = candidatePositionsNames.join();
+        return string.split(',').join(', ');
+  }
+
   attachEvaluators(data): void {
     let params = {
       eventId: +this.importedId,
