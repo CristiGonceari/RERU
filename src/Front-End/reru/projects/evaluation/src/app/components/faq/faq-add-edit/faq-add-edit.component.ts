@@ -8,6 +8,8 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ReferenceService } from '../../../utils/services/reference/reference.service';
+import { ArticleModel } from '../../../utils/models/article.model';
 
 @Component({
   selector: 'app-faq-add-edit',
@@ -37,6 +39,9 @@ export class FaqAddEditComponent implements OnInit {
   attachedFile: File;
   fileType: string = null;
   disableBtn: boolean = false;
+  tags: any[] = [];
+  placeHolder = '+ Rol';
+  items = [];
 
   constructor(
     private fb: FormBuilder,
@@ -44,14 +49,15 @@ export class FaqAddEditComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
 	  public translate: I18nService,
     private location: Location,
-		private notificationService: NotificationsService
+		private notificationService: NotificationsService,
+    private referenceService: ReferenceService
   ) { }
 
   ngOnInit(): void {
     this.articleForm = new FormGroup({
 			name: new FormControl()
 		});
-
+    this.onTextChange();
     this.activatedRoute.params.subscribe(params => {
       if (params.id){
         this.articleId = params.id;
@@ -69,6 +75,11 @@ export class FaqAddEditComponent implements OnInit {
         this.title = res.data.name;
         this.editorData = res.data.content;
         this.fileId = res.data.mediaFileId;
+
+        res.data.roles.forEach(element => {
+          this.tags.push({ display: element.label, value: +element.value })
+        });
+
         this.initForm(res.data);
         this.isLoading = false;
       }
@@ -87,6 +98,14 @@ export class FaqAddEditComponent implements OnInit {
 		}
 	}
 
+  onTextChange() {
+		this.referenceService.getArticleRoles().subscribe(res => {
+			res.data.forEach(element => {
+				this.items.push({ display: element.label, value: +element.value })
+			});
+		})
+	};
+
   checkFile(event) {
     if (event != null) this.attachedFile = event;
     else this.fileId = null;
@@ -94,6 +113,7 @@ export class FaqAddEditComponent implements OnInit {
 
   addArticle(){
     this.disableBtn = true;
+    const tagsArr = this.tags.map(obj => typeof obj.value !== 'number' ? { ...obj, value: 0 } : obj);
     const request = new FormData();
 
     if (this.attachedFile) {
@@ -103,6 +123,13 @@ export class FaqAddEditComponent implements OnInit {
     }
     request.append('Name', this.articleForm.value.name);
     request.append('Content', this.editorData);
+
+    for (let i = 0; i < tagsArr.length; i++) {
+      if (tagsArr[i].display !== '' && tagsArr[i].value !== '') {
+        request.append('Roles[' + i + '][display]', tagsArr[i].display);
+        request.append('Roles[' + i + '][value]', tagsArr[i].value);
+      }
+    }
 
     this.articleService.create(request).subscribe(() => {
       forkJoin([
@@ -120,6 +147,7 @@ export class FaqAddEditComponent implements OnInit {
 
   editArticle(){
     this.disableBtn = true;
+    const tagsArr = this.tags.map(obj => typeof obj.value !== 'number' ? { ...obj, value: 0 } : obj);
     const request = new FormData();
     
     if (this.attachedFile) {
@@ -130,7 +158,16 @@ export class FaqAddEditComponent implements OnInit {
     request.append('Data.Id', this.articleId);
     request.append('Data.Name', this.articleForm.value.name);
     request.append('Data.Content', this.editorData);
+
+    if(this.fileId == "null" || this.fileId == null) this.fileId = '';
     request.append('Data.MediaFileId', this.fileId);
+
+    for (let i = 0; i < tagsArr.length; i++) {
+      if (tagsArr[i].display !== '' && tagsArr[i].value !== '') {
+        request.append('Data.Roles[' + i + '][display]', tagsArr[i].display);
+        request.append('Data.Roles[' + i + '][value]', tagsArr[i].value);
+      }
+    }
 
     this.articleService.edit(request).subscribe(() => {
       forkJoin([

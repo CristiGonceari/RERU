@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RERU.Data.Persistence.Context;
@@ -9,9 +10,10 @@ using RERU.Data.Persistence.Context;
 namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221012141936_Add_Article_Role_Evaluation")]
+    partial class Add_Article_Role_Evaluation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -919,46 +921,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasIndex("UserProfileId");
 
                     b.ToTable("EventUsers");
-                });
-
-            modelBuilder.Entity("RERU.Data.Entities.EventUserCandidatePosition", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<int?>("CandidatePositionId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("CreateById")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime?>("DeleteTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("EventUserId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("UpdateById")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CandidatePositionId");
-
-                    b.HasIndex("EventUserId");
-
-                    b.ToTable("EventUserCandidatePositions");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.EventVacantPosition", b =>
@@ -6636,7 +6598,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("RERU.Data.Entities.EventUser", b =>
                 {
                     b.HasOne("RERU.Data.Entities.CandidatePosition", "CandidatePosition")
-                        .WithMany("EventUsers")
+                        .WithMany()
                         .HasForeignKey("CandidatePositionId");
 
                     b.HasOne("RERU.Data.Entities.Event", "Event")
@@ -6656,23 +6618,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("Event");
 
                     b.Navigation("UserProfile");
-                });
-
-            modelBuilder.Entity("RERU.Data.Entities.EventUserCandidatePosition", b =>
-                {
-                    b.HasOne("RERU.Data.Entities.CandidatePosition", "CandidatePosition")
-                        .WithMany("EventUserCandidatePositions")
-                        .HasForeignKey("CandidatePositionId");
-
-                    b.HasOne("RERU.Data.Entities.EventUser", "EventUser")
-                        .WithMany("EventUserCandidatePositions")
-                        .HasForeignKey("EventUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CandidatePosition");
-
-                    b.Navigation("EventUser");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.EventVacantPosition", b =>
@@ -8198,10 +8143,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                 {
                     b.Navigation("CandidatePositionNotifications");
 
-                    b.Navigation("EventUserCandidatePositions");
-
-                    b.Navigation("EventUsers");
-
                     b.Navigation("RequiredDocumentPositions");
                 });
 
@@ -8225,11 +8166,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("EventVacantPositions");
 
                     b.Navigation("Tests");
-                });
-
-            modelBuilder.Entity("RERU.Data.Entities.EventUser", b =>
-                {
-                    b.Navigation("EventUserCandidatePositions");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.Location", b =>
