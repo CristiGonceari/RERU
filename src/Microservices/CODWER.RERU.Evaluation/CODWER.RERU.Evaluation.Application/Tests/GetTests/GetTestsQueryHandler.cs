@@ -82,6 +82,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
             {
                 var eventUser = _appDbContext.EventUsers.FirstOrDefault(x => x.EventId == item.EventId && x.UserProfileId == item.UserId);
 
+                if (eventUser == null) continue;
+
                 var eventUserCandidatePositions =
                     _appDbContext.EventUserCandidatePositions.Where(x => x.EventUserId == eventUser.Id)
                         .Select(x => x.CandidatePositionId)
