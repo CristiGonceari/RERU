@@ -22,6 +22,7 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<EventResponsiblePerson> EventResponsiblePersons { get; set; }
         public virtual DbSet<EventUser> EventUsers { get; set; }
+        public virtual DbSet<EventUserCandidatePosition> EventUserCandidatePositions { get; set; }
         public virtual DbSet<EventLocation> EventLocations { get; set; }
         public virtual DbSet<EventEvaluator> EventEvaluators { get; set; }
         public virtual DbSet<EventTestTemplate> EventTestTemplates { get; set; }

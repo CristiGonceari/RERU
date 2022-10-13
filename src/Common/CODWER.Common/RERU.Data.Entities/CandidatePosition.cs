@@ -11,6 +11,8 @@ namespace RERU.Data.Entities
         {
             RequiredDocumentPositions = new HashSet<RequiredDocumentPosition>();
             CandidatePositionNotifications = new HashSet<CandidatePositionNotification>();
+            EventUsers = new HashSet<EventUser>();
+            EventUserCandidatePositions = new HashSet<EventUserCandidatePosition>();
         }
 
         public string Name { get; set; }
@@ -20,6 +22,8 @@ namespace RERU.Data.Entities
         public DateTime? To { get; set; }
         public MedicalColumnEnum? MedicalColumn { get; set; }
 
+        public virtual ICollection<EventUserCandidatePosition> EventUserCandidatePositions { get; set; }
+        public virtual ICollection<EventUser> EventUsers { get; set; }
         public virtual ICollection<RequiredDocumentPosition> RequiredDocumentPositions { get; set; }
         public virtual ICollection<CandidatePositionNotification> CandidatePositionNotifications { get; set; }
     }
