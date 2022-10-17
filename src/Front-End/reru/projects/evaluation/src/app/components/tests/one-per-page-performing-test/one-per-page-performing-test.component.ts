@@ -22,6 +22,7 @@ import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/file-test-answer.service';
 import { saveAs } from 'file-saver';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-one-per-page-performing-test',
@@ -72,7 +73,6 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   isLoading = true;
   testTemplateId;
 
-  isLoadingMedia: boolean;
   imageUrl: any;
   audioUrl: any;
   videoUrl: any;
@@ -80,13 +80,17 @@ export class OnePerPagePerformingTestComponent implements OnInit {
 
   files: any[] = [];
   answerFileid: string;
-  fileName: string;
   hadFile: boolean = false;
 
   optionFileId = [];
   isLoadingOptionMedia: boolean = true;
   isLoadingSetFile: boolean = true;
 
+  isLoadingMedia: boolean = false;
+
+  filenames: any;
+  fileName: string;
+  fileStatus = { requestType: '', percent: 1 }
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -261,15 +265,45 @@ export class OnePerPagePerformingTestComponent implements OnInit {
         this.testAnswersInput.push(this.parseAnswer(el));
       });
     }
-    this.postAnswer(+this.answerStatusEnum.Answered);
 
     if(this.questionUnit.questionType == this.questionTypeEnum.FileAnswer){
       let request = new FormData();
 
       request = this.parseFiles(request);
 
-     this.fileTestAnswerService.create(request).subscribe();
+     this.fileTestAnswerService.create(request).subscribe((res) => {
+        this.reportProggress(res);
+     }, (error => {
+      this.isLoadingMedia = false;
+     }));
+    }else{
+      this.postAnswer(+this.answerStatusEnum.Answered);
     }
+  }
+
+  private reportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
+    switch (httpEvent.type) {
+      case HttpEventType.Sent:
+        this.isLoadingMedia = true;
+        this.fileStatus.percent = 1;
+        break;
+      case HttpEventType.UploadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+      break;
+      case HttpEventType.DownloadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+        break;
+      case HttpEventType.Response:
+        this.fileStatus.requestType = "Done";
+        this.postAnswer(+this.answerStatusEnum.Answered);
+        this.isLoadingMedia = false;
+        break;
+    }
+  }
+
+  updateStatus(loaded: number, total: number | undefined, requestType: string) {
+    this.fileStatus.requestType = requestType;
+    this.fileStatus.percent = Math.round(100 * loaded / total);
   }
 
   parseFiles(request: FormData) {

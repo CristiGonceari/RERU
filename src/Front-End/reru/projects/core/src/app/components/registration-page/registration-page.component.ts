@@ -19,6 +19,7 @@ import { AcceptConditionsModalComponent } from '../../utils/modals/accept-condit
 import { VerifyEmailCodeModalComponent } from '../../utils/modals/verify-email-code-modal/verify-email-code-modal.component';
 import { saveAs } from 'file-saver';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-registration-page',
@@ -63,6 +64,12 @@ export class RegistrationPageComponent implements OnInit {
   currentLanguage: string;
 
   isCollapsed = true;
+
+  isLoadingMedia: boolean = false;
+
+  filenames: any;
+  fileName: string;
+  fileStatus = { requestType: '', percent: 1 }
 
   constructor(
     private fb: FormBuilder,
@@ -184,8 +191,8 @@ export class RegistrationPageComponent implements OnInit {
       }
       request.append('Data.UserId', res.data);
 
-      this.userService.addUserAvatar(request).subscribe(() => {
-        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      this.userService.addUserAvatar(request).subscribe((res) => {
+        this.reportProggress(res);
       })
 
       for (let userFile of this.files) {
@@ -198,7 +205,7 @@ export class RegistrationPageComponent implements OnInit {
 
       setTimeout(() => {
         this.router.navigate(['../'], { relativeTo: this.route });
-      }, 5000);
+      }, 7000);
 
     }, () => {
       forkJoin([
@@ -210,6 +217,31 @@ export class RegistrationPageComponent implements OnInit {
       });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
+  }
+
+  private reportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
+    switch (httpEvent.type) {
+      case HttpEventType.Sent:
+        this.isLoadingMedia = true;
+        this.fileStatus.percent = 1;
+        break;
+      case HttpEventType.UploadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+      break;
+      case HttpEventType.DownloadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+        break;
+      case HttpEventType.Response:
+        this.fileStatus.requestType = "Done";
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+        this.isLoadingMedia = false;
+        break;
+    }
+  }
+
+  updateStatus(loaded: number, total: number | undefined, requestType: string) {
+    this.fileStatus.requestType = requestType;
+    this.fileStatus.percent = Math.round(100 * loaded / total);
   }
 
   downloadFile(): void {

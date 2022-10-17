@@ -251,10 +251,19 @@
               (click)="verifyEmailCode()">{{ 'button.confirm' | translate }}</button>
           </form>
         </div>
-        <div *ngIf="success" class="col-xl-12 col-lg-12 col-md-12 col-xs-12"
+        <div *ngIf="success && !isLoadingMedia" class="col-xl-12 col-lg-12 col-md-12 col-xs-12"
           style="border: 1px solid #212529; border-radius: 9px; padding: 11px; margin-bottom: 7px;">
           <div class="alert alert-dark" role="alert">
             {{ 'registration-page.success-message' | translate }}
+          </div>
+        </div>
+        <div *ngIf="success && isLoadingMedia" class="col-xl-12 col-lg-12 col-md-12 col-xs-12">
+          <div class="progress mt-2 h-25px">
+            <div [style.width.%]="fileStatus.percent"
+              class="progress-bar progress-bar-animated btn-light-warning font-size-h6" role="progressbar"
+              aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+              {{ fileStatus.requestType }} {{ fileStatus.percent }}%
+            </div>
           </div>
         </div>
         <!-- <div class="col-xl-6 col-lg-6 col-md-12 col-xs-12">

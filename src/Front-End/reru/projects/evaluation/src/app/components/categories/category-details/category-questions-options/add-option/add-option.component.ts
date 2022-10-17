@@ -6,6 +6,7 @@ import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notific
 import { Location } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-option',
@@ -26,6 +27,12 @@ export class AddOptionComponent implements OnInit {
 
   title: string;
   description: string;
+
+  isLoadingMedia: boolean = false;
+
+  filenames: any;
+  fileName: string;
+  fileStatus = { requestType: '', percent: 1 }
 
   constructor(private optionService: OptionsService, 
     private route: ActivatedRoute, 
@@ -73,7 +80,7 @@ export class AddOptionComponent implements OnInit {
       request.append('IsCorrect', this.isCorrect);
       request.append('QuestionUnitId', this.questionId);
 
-    this.optionService.create(request).subscribe(() => {
+    this.optionService.create(request).subscribe((res) => {
       forkJoin([
 				this.translate.get('modal.success'),
 				this.translate.get('options.succes-add-msg'),
@@ -81,8 +88,9 @@ export class AddOptionComponent implements OnInit {
 				this.title = title;
 				this.description = description;
 				});
-      this.back();
-			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+        this.reportProggress(res);
+      // this.back();
+			// this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -100,7 +108,7 @@ export class AddOptionComponent implements OnInit {
       request.append('Data.IsCorrect', this.isCorrect);
       request.append('Data.QuestionUnitId', this.questionId);
       request.append('Data.MediaFileId', this.fileId);
-    this.optionService.edit(request).subscribe(() => {
+    this.optionService.edit(request).subscribe((res) => {
       forkJoin([
 				this.translate.get('modal.success'),
 				this.translate.get('options.succes-update-msg'),
@@ -108,8 +116,9 @@ export class AddOptionComponent implements OnInit {
 				this.title = title;
 				this.description = description;
 				});
-      this.back();
-			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+        this.reportProggress(res);
+      // this.back();
+			// this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, () => this.disableBtn = false);
   }
 
@@ -121,5 +130,31 @@ export class AddOptionComponent implements OnInit {
 
   back() {
     this.location.back();
+  }
+
+  private reportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
+    switch (httpEvent.type) {
+      case HttpEventType.Sent:
+        this.isLoadingMedia = true;
+        this.fileStatus.percent = 1;
+        break;
+      case HttpEventType.UploadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+      break;
+      case HttpEventType.DownloadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+        break;
+      case HttpEventType.Response:
+        this.fileStatus.requestType = "Done";
+        this.back();
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+        this.isLoadingMedia = false;
+        break;
+    }
+  }
+
+  updateStatus(loaded: number, total: number | undefined, requestType: string) {
+    this.fileStatus.requestType = requestType;
+    this.fileStatus.percent = Math.round(100 * loaded / total);
   }
 }

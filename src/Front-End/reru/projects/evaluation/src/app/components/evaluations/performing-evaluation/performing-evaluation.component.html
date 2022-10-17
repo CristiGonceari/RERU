@@ -4,7 +4,7 @@
 <div class="main-content py-10 content-bg">
     <div class="d-flex flex-column-fluid container">
         <div class="card card-custom gutter-c w-100">
-            <div class="card-body">
+            <div class="card-body" *ngIf="!isLoadingMedia">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="font-size-lg">
                         {{ testDto.testTemplateName }}
@@ -187,6 +187,18 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="card-body" *ngIf="isLoadingMedia">
+                <div class="justify-content-center my-10 px-8 my-lg-15 px-lg-10" >
+                    <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+                    <div class="progress mt-2" style="min-height: 25px;">
+                      <div [style.width.%]="fileStatus.percent"
+                        class="progress-bar progress-bar-animated btn-light-warning font-size-h6" role="progressbar"
+                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                        {{ fileStatus.requestType }} {{ fileStatus.percent }}%
+                      </div>
+                    </div>
+                  </div>
             </div>
         </div>
     </div>

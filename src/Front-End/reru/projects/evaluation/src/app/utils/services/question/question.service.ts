@@ -54,11 +54,19 @@ export class QuestionService extends AbstractService {
 	}
 
 	create(data): Observable<any> {
-		return this.client.post<any>(`${this.baseUrl}/${this.urlRoute}`, data);
+		return this.client.post<any>(`${this.baseUrl}/${this.urlRoute}`, data, { 
+			reportProgress: true,
+			observe: 'events',
+			responseType: 'blob' as 'json'
+		});
 	}
 
 	edit(data): Observable<any> {
-		return this.client.patch<any>(`${this.baseUrl}/${this.urlRoute}`, data);
+		return this.client.patch<any>(`${this.baseUrl}/${this.urlRoute}`, data, { 
+			reportProgress: true,
+			observe: 'events',
+			responseType: 'blob' as 'json'
+		});
 	}
 
 	editStatus(data): Observable<any> {
