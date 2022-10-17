@@ -659,7 +659,8 @@
     "article-details": "Detaliile articolului",
     "contains-media": "Conține media",
     "info-tag": "Dacă nu este selectat nici un rol, articolul este disponibil pentru toate rolurile",
-    "info-roles": "Rolurile care pot vizualiza acest articol"
+    "info-roles": "Rolurile care pot vizualiza acest articol",
+    "module-roles": "Rolurile modulului"
   },
   "locations": {
     "locations": "Locații de testare",

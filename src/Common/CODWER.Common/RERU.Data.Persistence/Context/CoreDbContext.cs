@@ -13,5 +13,6 @@ namespace RERU.Data.Persistence.Context
         public DbSet<CandidatePosition> CandidatePositions { set; get; }
         public DbSet<UserFile> UserFiles { set; get; }
         public virtual DbSet<ArticleCore> CoreArticles { get; set; }
+        public virtual DbSet<ArticleCoreModuleRole> ArticleCoreModuleRoles { get; set; }
     }
 }

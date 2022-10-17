@@ -66,4 +66,7 @@ export class ReferenceService extends AbstractService{
     return this.http.get(`${this.coreUrl}/${this.urlRoute}/military-obligation-type-enum/select-values`);
   }
 
+  getCoreRoles(): Observable<any> {
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/article-roles/select-values`);
+  }
 }
