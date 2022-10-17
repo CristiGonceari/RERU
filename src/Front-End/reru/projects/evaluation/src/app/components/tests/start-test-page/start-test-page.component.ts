@@ -22,6 +22,7 @@ export class StartTestPageComponent implements OnInit {
   interval;
   accept: boolean = false;
   startTest: boolean = false;
+  validatePostition: boolean = false;
 
   editorData: string = '';
   public Editor = DecoupledEditor;
@@ -59,6 +60,14 @@ export class StartTestPageComponent implements OnInit {
     }, 1000)
   }
 
+  parseCandidatePositions(candidatePositionsNames: string[]){
+    if(this.validatePostition){
+      let string = candidatePositionsNames.join();
+      return string.split(',').join(', ');
+    }
+     
+  }
+
   milisecondsToHms(miliseconds) {
     var seconds = Number(miliseconds / 1000);
     var h = Math.floor(seconds % (3600 * 24) / 3600);
@@ -91,6 +100,7 @@ export class StartTestPageComponent implements OnInit {
     this.testService.getTestSettings(id).subscribe(
       res => {
         this.testDto = res.data;
+        this.validatePostition = true;
       }
     )
   }

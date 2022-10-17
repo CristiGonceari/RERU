@@ -1024,7 +1024,8 @@
     "evaluation-data": "Introduceți detaliile evaluării și confirmați",
     "received-evaluations": "Evaluări primite",
     "granted-evaluations": "Evaluări acordate",
-    "performed-tests": "Teste efectuate"
+    "performed-tests": "Teste efectuate",
+    "attach-notified-users": "Utilizatorii notificați"
   },
   "footer": {
     "all-rights-reserved": "Toate drepturile rezervate",
