@@ -9,6 +9,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using RERU.Data.Persistence.Context;
 using System;
 using System.Text;
+using CVU.ERP.Common.Pagination;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetTest
 {
@@ -53,7 +54,34 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTest
                 testDto.Rules = Encoding.UTF8.GetString(base64EncodedBytes);
             }
 
+            testDto = await CheckIfHasCandidatePosition(testDto);
+
             return testDto;
+        }
+
+        private async Task<TestDto> CheckIfHasCandidatePosition(TestDto test)
+        {
+                var eventUser = _appDbContext.EventUsers.FirstOrDefault(x => x.EventId == test.EventId && x.UserProfileId == test.UserId);
+
+                if (eventUser == null) return test;
+                {
+                    var eventUserCandidatePositions =
+                        _appDbContext.EventUserCandidatePositions.Where(x => x.EventUserId == eventUser.Id)
+                            .Select(x => x.CandidatePositionId)
+                            .ToList();
+
+                    if ((!(eventUser?.PositionId > 0))) return test;
+                    {
+                        var candidatePositionNames =
+                            _appDbContext.CandidatePositions.Where(p => !eventUserCandidatePositions.All(p2 => p2 != p.Id))
+                                .Select(x => x.Name)
+                                .ToList();
+
+                        test.CandidatePositionNames = candidatePositionNames;
+                    }
+                }
+
+                return test;
         }
     }
 }

@@ -39,7 +39,7 @@ export class AddEditPositionComponent implements OnInit {
 	event = new SelectItem();
 	eventsList: any[] = [];
 	exceptUserIds = [];
-	attachedUsers: [] = [];
+	attachedUsers: any[] = [];
 	editorData: string = '';
 	userListToAdd: [] = [];
 
@@ -162,6 +162,12 @@ export class AddEditPositionComponent implements OnInit {
 				medicalColumn: this.fb.control(null, [Validators.required]),
 			});
 		}
+
+		if (!this.isEdit && this.attachedUsers.length <= 0) {
+			this.candidatePositionNotificationService.getMyId().subscribe(res => {
+				this.attachedUsers.push(+res.data)
+			})
+		}
 	}
 
 	getEvents() {
@@ -174,8 +180,8 @@ export class AddEditPositionComponent implements OnInit {
 		})
 	}
 
-	getAttachedUsers(){
-		this.candidatePositionNotificationService.getUserIds(this.positionId).subscribe(res => this.attachedUsers = res.data )
+	getAttachedUsers() {
+		this.candidatePositionNotificationService.getUserIds(this.positionId).subscribe(res => this.attachedUsers = res.data)
 	}
 
 	attachUsers() {

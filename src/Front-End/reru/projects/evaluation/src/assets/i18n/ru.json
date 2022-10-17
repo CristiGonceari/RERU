@@ -1022,7 +1022,8 @@
     "evaluation-data": "Введите детали оценки и подтвердите",
     "received-evaluations": "Полученные оценки",
     "granted-evaluations": "Выставленные оценки",
-    "performed-tests": "Проведенные тесты"
+    "performed-tests": "Проведенные тесты",
+    "attach-notified-users": "Уведомленные пользователи"
   },
   "footer": {
     "all-rights-reserved": "Все права защищены",

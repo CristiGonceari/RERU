@@ -1023,7 +1023,8 @@
     "evaluation-data": "Enter the evaluation details and confirm",
     "received-evaluations": "Received evaluations",
     "granted-evaluations": "Granted evaluations",
-    "performed-tests": "Performed tests"
+    "performed-tests": "Performed tests",
+    "attach-notified-users": "Notified users"
   },
   "footer": {
     "all-rights-reserved": "All rights reserved",

@@ -128,13 +128,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
             return Unit.Value;
         }
 
-        private async Task SendEmailTestResponsiblePerson(Test test, CandidatePosition position)
-        {
-            var userProfile = _candidatePositionService.GetResponsiblePerson(int.Parse(test.CreateById));
-
-            await SendEmailForCandidatePosition(userProfile, test, position?.Name);
-        }
-
         private async Task EmailPositionResponsiblePerson(Test test)
         {
             var eventUser = test.Event.EventUsers
@@ -152,8 +145,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 
                 await SendEmailForCandidatePosition(userProfile, test, position?.Name);
             }
-
-            await SendEmailTestResponsiblePerson(test, position);
         }
 
         private async Task<Unit> Send(UserProfile user, Test test, bool autoCheck)
