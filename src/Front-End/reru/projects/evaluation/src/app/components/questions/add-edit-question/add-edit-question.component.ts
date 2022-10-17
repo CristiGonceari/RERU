@@ -13,7 +13,6 @@ import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { QuestionUnitTypeEnum } from '../../../utils/enums/question-unit-type.enum';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmLoadingBarModalComponent } from '../../../utils/modals/confirm-loading-bar-modal/confirm-loading-bar-modal.component';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 
