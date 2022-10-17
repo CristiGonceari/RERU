@@ -42,11 +42,11 @@
                     <span class="font-size-lg" *ngIf="item.locationNames">{{ item.locationNames }}</span>
                     <span class="font-size-lg" *ngIf="!item.locationNames.length">-</span>
                 </td>
-                <td *ngIf="item.candidatePositionNames.length">
+                <td *ngIf="item.candidatePositionNames !== null">
                     {{ item.candidatePositionNames[0] }}
                     <span [ngbTooltip]="parseCandidatePositions(item.candidatePositionNames)">...</span>
                   </td>
-                  <td *ngIf="!item.candidatePositionNames.length">
+                  <td *ngIf="item.candidatePositionNames === null">
                     <span>-</span>
                   </td>
                 <td>
