@@ -31,7 +31,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpPost]
-        public async Task<int> AddEditArticle([FromForm] AddArticleCommand command)
+        public async Task<int> AddArticle([FromForm] AddArticleCommand command)
         {
             return await Mediator.Send(command);
         }

@@ -661,7 +661,8 @@
     "article-details": "Article details",
     "contains-media": "Contains media",
     "info-tag": "If no role is selected, the article is available for all roles",
-    "info-roles": "The roles that can view this article"
+    "info-roles": "The roles that can view this article",
+    "module-roles": "Module roles"
   },
   "locations": {
     "locations": "Testing locations",
