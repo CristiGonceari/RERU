@@ -12,6 +12,10 @@ import { ReferenceService } from '../../../utils/services/reference/reference.se
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { QuestionUnitTypeEnum } from '../../../utils/enums/question-unit-type.enum';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmLoadingBarModalComponent } from '../../../utils/modals/confirm-loading-bar-modal/confirm-loading-bar-modal.component';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-add-edit-question',
@@ -41,6 +45,12 @@ export class AddEditQuestionComponent implements OnInit {
 
   caretPosition: number = 0;
 
+  isLoadingMedia: boolean = false;
+
+  filenames: any;
+  fileName: string;
+  fileStatus = { requestType: '', percent: 1 }
+
   constructor(
     private questionService: QuestionService,
     private activatedRoute: ActivatedRoute,
@@ -49,7 +59,9 @@ export class AddEditQuestionComponent implements OnInit {
     private questionByCategory: QuestionByCategoryService,
     public translate: I18nService,
     private formBuilder: FormBuilder,
-    private notificationService: NotificationsService
+    private notificationService: NotificationsService,
+    private modalService: NgbModal,
+    private sanitizer: DomSanitizer,
   ) { }
 
   ngOnInit(): void {
@@ -139,21 +151,24 @@ export class AddEditQuestionComponent implements OnInit {
     request.append('QuestionType', this.questionForm.value.questionType);
     request.append('QuestionStatus', this.questionForm.value.status);
     request.append('Tags', (this.tags === undefined) ? this.tags = '' : this.tags);
-
-    this.questionService.create(request).subscribe(() => {
-      forkJoin([
-        this.translate.get('modal.success'),
-        this.translate.get('questions.succes-add-msg'),
-      ]).subscribe(([title, description]) => {
-        this.title = title;
-        this.description = description;
-      });
-      this.backClicked();
-      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+    
+    this.questionService.create(request)
+    .subscribe(res => {
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('questions.succes-add-msg'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+        this.reportProggress(res);
+        // this.backClicked();
+        // this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, () => {
       this.disableBtn = false;
     });
   }
+  
 
   onTextChange(text: string) {
     if (text.length) {
@@ -181,7 +196,7 @@ export class AddEditQuestionComponent implements OnInit {
     request.append('Data.MediaFileId', this.fileId);
     request.append('Data.Tags', (this.tags === undefined) ? this.tags = '' : this.tags);
 
-    this.questionService.edit(request).subscribe(() => {
+    this.questionService.edit(request).subscribe((res) => {
       forkJoin([
         this.translate.get('modal.success'),
         this.translate.get('questions.succes-update-msg'),
@@ -190,8 +205,7 @@ export class AddEditQuestionComponent implements OnInit {
         this.description = description;
       });
       this.disableBtn = false;
-      this.backClicked();
-      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      this.reportProggress(res);
     }, () => {
       this.disableBtn = false;
     });
@@ -201,6 +215,7 @@ export class AddEditQuestionComponent implements OnInit {
     if (this.questionUnitId) {
       this.editQuestion();
     } else {
+      // this.isLoadingMedia = true;
       this.addQuestion();
     }
   }
@@ -240,5 +255,29 @@ export class AddEditQuestionComponent implements OnInit {
     }
   }
 
+  private reportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
+    switch (httpEvent.type) {
+      case HttpEventType.Sent:
+        this.isLoadingMedia = true;
+        this.fileStatus.percent = 1;
+        break;
+      case HttpEventType.UploadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+      break;
+      case HttpEventType.DownloadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+        break;
+      case HttpEventType.Response:
+        this.fileStatus.requestType = "Done";
+        this.backClicked();
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+        this.isLoadingMedia = false;
+        break;
+    }
+  }
 
+  updateStatus(loaded: number, total: number | undefined, requestType: string) {
+    this.fileStatus.requestType = requestType;
+    this.fileStatus.percent = Math.round(100 * loaded / total);
+  }
 }

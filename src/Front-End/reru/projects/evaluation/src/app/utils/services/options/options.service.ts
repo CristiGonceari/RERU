@@ -27,12 +27,20 @@ export class OptionsService extends AbstractService {
 		return this.client.delete<OptionModel>(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}
 
-	create(data): Observable<OptionModel> {
-		return this.client.post<OptionModel>(`${this.baseUrl}/${this.urlRoute}`, data);
+	create(data): Observable<any> {
+		return this.client.post<OptionModel>(`${this.baseUrl}/${this.urlRoute}`, data, { 
+			reportProgress: true,
+			observe: 'events',
+			responseType: 'blob' as 'json'
+		});
 	}
 
-	edit(data): Observable<OptionModel> {
-		return this.client.patch<OptionModel>(`${this.baseUrl}/${this.urlRoute}`, data);
+	edit(data): Observable<any> {
+		return this.client.patch<OptionModel>(`${this.baseUrl}/${this.urlRoute}`, data, { 
+			reportProgress: true,
+			observe: 'events',
+			responseType: 'blob' as 'json'
+		});
 	}
 
 	deleteAllOptions(questionId: number): Observable<OptionModel> {

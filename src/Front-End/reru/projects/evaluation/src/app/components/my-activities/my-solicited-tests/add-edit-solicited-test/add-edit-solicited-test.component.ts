@@ -13,6 +13,7 @@ import { SolicitedVacantPositionUserFileService } from 'projects/evaluation/src/
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { saveAs } from 'file-saver';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-edit-solicited-test',
@@ -48,6 +49,11 @@ export class AddEditSolicitedTestComponent implements OnInit {
   files: any[] = [];
   userFiles: any;
 
+  isLoadingMedia: boolean = false;
+
+  filenames: any;
+  fileName: string;
+  fileStatus = { requestType: '', percent: 1 }
 
   constructor(
     private solicitedTestService: SolicitedTestService,
@@ -232,6 +238,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
   }
 
   uploadFiles(res) {
+    this.isLoading = false;
     this.files.forEach(el => {
       if (this.files[this.files.length - 1] === el) {
         let request = new FormData();
@@ -239,7 +246,8 @@ export class AddEditSolicitedTestComponent implements OnInit {
 
         if (el.file.file != null) {
           this.solicitedVacantPositionUserFileService.create(request).subscribe(res => {
-            this.backClicked();
+            this.reportProggress(res);
+            // this.backClicked();
           });
         }
 
@@ -279,5 +287,31 @@ export class AddEditSolicitedTestComponent implements OnInit {
 
   backClicked() {
     this.location.back();
+  }
+
+  private reportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
+    switch (httpEvent.type) {
+      case HttpEventType.Sent:
+        this.isLoadingMedia = true;
+        this.fileStatus.percent = 1;
+        break;
+      case HttpEventType.UploadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+      break;
+      case HttpEventType.DownloadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+        break;
+      case HttpEventType.Response:
+        this.fileStatus.requestType = "Done";
+        this.backClicked();
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+        this.isLoadingMedia = false;
+        break;
+    }
+  }
+
+  updateStatus(loaded: number, total: number | undefined, requestType: string) {
+    this.fileStatus.requestType = requestType;
+    this.fileStatus.percent = Math.round(100 * loaded / total);
   }
 }
