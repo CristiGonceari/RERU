@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.Articles;
+using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using RERU.Data.Entities;
 
@@ -17,6 +18,7 @@ namespace CODWER.RERU.Evaluation.Application.Articles
 
             CreateMap<ArticleEvaluation, EditArticleEvaluationDto>();
             CreateMap<EditArticleEvaluationDto, ArticleEvaluation>();
+            CreateMap<UserProfile, UserProfileDto>();
 
             CreateMap<ModuleRole, SelectItem>()
                 .ForMember(x => x.Value, opts => opts.MapFrom(x => x.Id))
