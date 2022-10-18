@@ -25,6 +25,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 	isLoading: boolean = true;
 	modeId;
 	modes: SelectItem[] = [{label: '', value: ''}];
+	qualifyingTypes: SelectItem[] = [{label: '', value: ''}];
 	testTemplate: TestTemplate = new TestTemplate();
 	title: string;
 	description: string;
@@ -43,11 +44,13 @@ export class AddEditTestTemplateComponent implements OnInit {
 			questionCount: new FormControl(),
 			duration: new FormControl(),
 			mode: new FormControl(),
+			qualifyingType: new FormControl(),
 			minPercent: new FormControl(),
 			status: new FormControl()
 		});
 		this.initData();
 		this.getMode();
+		this.getQualifyingType();
 	}
 
 	initData(): void {
@@ -84,6 +87,10 @@ export class AddEditTestTemplateComponent implements OnInit {
 		this.referenceService.getMode().subscribe((res) => this.modes = res.data);
 	}
 
+	getQualifyingType() {
+		this.referenceService.getQualifyingType().subscribe((res) => this.qualifyingTypes = res.data);
+	}
+
 	initForm(test?: any): void {
 		if (test) {
 			this.testForm = this.formBuilder.group({
@@ -93,6 +100,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 				duration: this.formBuilder.control((test && test.duration) || null, [Validators.required]),
 				minPercent: this.formBuilder.control(test && test.minPercent, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*\.)?$/)]),
 				mode: this.formBuilder.control((test && !isNaN(test.mode) ? test.mode : null), [Validators.required]),
+				qualifyingType: this.formBuilder.control((test && !isNaN(test.qualifyingType) ? test.qualifyingType : null), [Validators.required]),
 				status: this.statusEnum.Draft,
 			});
 			this.modeId = this.testForm.value.mode;
@@ -104,6 +112,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 				duration: this.formBuilder.control(null, [Validators.required]),
 				minPercent: this.formBuilder.control([Validators.required] , [Validators.pattern(/^-?(0|[1-9]\d*\.)?$/)]),
 				mode: this.formBuilder.control(0, [Validators.required]),
+				qualifyingType: this.formBuilder.control(5, [Validators.required]),
 				status: this.statusEnum.Draft,
 			});
 		}

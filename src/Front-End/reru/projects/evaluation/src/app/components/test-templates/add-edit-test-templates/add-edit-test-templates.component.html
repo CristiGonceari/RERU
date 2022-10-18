@@ -68,6 +68,14 @@
                                                             name="minPercent" type="number" formControlName="minPercent" min="1" placeholder="0"/>
                                                     </div>
                                                 </div>
+                                                <div *ngIf="modeId == 2" class="form-group row">
+                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'test-template.qualifying-type' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-9">
+                                                      <select (ngModelChange)="onChange($event)" [formControl]="testForm.controls['qualifyingType']" name="qualifyingType" class="form-control form-control-solid">
+                                                        <option *ngFor="let item of qualifyingTypes" [value]="item.value">{{'statuses.' + item.label | translate}}</option>
+                                                      </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

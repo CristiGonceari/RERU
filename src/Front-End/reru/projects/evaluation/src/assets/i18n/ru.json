@@ -597,7 +597,7 @@
     "NotAble":"Hе подходит",
     "Accepted":"Принят",
     "Rejected":"Oтклонен",
-    "Recommended":"Pекомендован",
+    "Recommended":"Pекомендован/Не рекомендован",
     "employee": "Сотрудник",
     "candidate": "Кандидат",
     "Candidate": "Кандидаты",
@@ -606,7 +606,11 @@
     "Column1": "Столбец 1",
     "Column2": "Столбец 2",
     "Column3": "Столбец 3",
-    "Column4": "Столбец 4"
+    "Column4": "Столбец 4",
+    "AbleNotAble": "Способный/Неспособный",
+    "PassedNotPassed": "Пройдено/Не пройдено",
+    "AcceptedRejected": "Принят/Отклоненный",
+    "NoQualifying": "Нет квалификации"
   },
   "options": {
     "start-without-confirmation": "Возможен запуск теста без подтверждения",
@@ -799,7 +803,8 @@
     "set-can-be-solicited": "Добавьте в необходимые тесты",
     "unset-from-can-be-solicited": "Удалить из обязательных тестов",
     "can-be-solicited": "Его можно запросить",
-    "search-by-test-mode": "Поиск по типу шаблона"
+    "search-by-test-mode": "Поиск по типу шаблона",
+    "qualifying-type": "Квалификационный тип"
 },
   "plans": {
     "plans": "Планы",

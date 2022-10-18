@@ -600,7 +600,7 @@
     "NotAble":"Not able",
     "Accepted":"Accepted",
     "Rejected":"Rejected",
-    "Recommended":"Recommended",
+    "Recommended":"Recommended/Not recommended",
     "employee": "Employee",
     "candidate": "Candidate",
     "Candidate": "Candidates",
@@ -608,7 +608,11 @@
     "Column1": "Column 1",
     "Column2": "Column 2",
     "Column3": "Column 3",
-    "Column4": "Column 4"
+    "Column4": "Column 4",
+    "AbleNotAble": "Able/Unable",
+    "PassedNotPassed": "Passed/Not passed",
+    "AcceptedRejected": "Accepted/Rejected",
+    "NoQualifying": "No qualifying"
   },
   "options": {
     "start-without-confirmation": "Possible to start test without confirmation",
@@ -800,7 +804,8 @@
     "set-can-be-solicited": "Add to can be solicited",
     "unset-from-can-be-solicited": "Unset from solicited tests",
     "can-be-solicited": "Can be solicited",
-    "search-by-test-mode": "Search by template type"
+    "search-by-test-mode": "Search by template type",
+    "qualifying-type": "Qualifying type"
   },
   "plans": {
     "plans": "Plans",
