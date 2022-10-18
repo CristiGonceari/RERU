@@ -21,7 +21,6 @@ import { PerformingEvaluationComponent } from './performing-evaluation/performin
 import { EvaluationsTableComponent } from './evaluations-list-table/evaluations-table/evaluations-table.component';
 import { SearchResultComponent } from './evaluations-list-table/search-result/search-result.component';
 import { ViewEvaluationResultComponent } from './view-evaluation-result/view-evaluation-result.component';
-import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -51,7 +50,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MaterialModule,
     NgxDropzoneModule,
     CKEditorModule,
-    NgxSpinnerModule
     // MatButtonModule, 
     // MatCheckboxModule, 
     // MatProgressBarModule

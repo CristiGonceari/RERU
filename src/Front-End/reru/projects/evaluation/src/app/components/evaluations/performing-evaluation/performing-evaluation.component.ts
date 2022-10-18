@@ -19,7 +19,6 @@ import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { EvaluationResultModalComponent } from '../../../utils/modals/evaluation-result-modal/evaluation-result-modal.component';
 import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/file-test-answer.service';
 import { saveAs } from 'file-saver';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
@@ -72,7 +71,6 @@ export class PerformingEvaluationComponent implements OnInit {
 
   optionFileId = [];
   isLoadingOptionMedia: boolean = true;
-  isLoadingSetFile: boolean = true;
 
   isLoadingMedia: boolean = false;
 
@@ -90,7 +88,6 @@ export class PerformingEvaluationComponent implements OnInit {
     private router: Router,
     private testTemplateService: TestTemplateService,
     private fileTestAnswerService: FileTestAnswerService,
-    private spinner: NgxSpinnerService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
@@ -154,14 +151,7 @@ export class PerformingEvaluationComponent implements OnInit {
   }
 
   setFile(event){
-    this.spinner.show();
-    this.isLoadingSetFile = false;
-    setTimeout(() => {
       this.files[0] = event.addedFiles[0];
-      this.spinner.hide();
-      this.isLoadingSetFile = true;
-  }, 2000);
-  
   }
 
   onRemove(event): void {
