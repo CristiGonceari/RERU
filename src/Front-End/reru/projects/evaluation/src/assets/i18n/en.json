@@ -805,7 +805,8 @@
     "unset-from-can-be-solicited": "Unset from solicited tests",
     "can-be-solicited": "Can be solicited",
     "search-by-test-mode": "Search by template type",
-    "qualifying-type": "Qualifying type"
+    "qualifying-type": "Qualifying type",
+    "search-by-qualifying-type": "Search by qualifying type"
   },
   "plans": {
     "plans": "Plans",
