@@ -13,6 +13,8 @@ import { SearchComponent } from './faq-list/search/search.component';
 import { UtilsModule } from '../../utils/utils.module';
 import { FaqDropdownDetailsComponent } from './faq-list/faq-dropdown-details/faq-dropdown-details.component';
 import { DetailsComponent } from './details/details.component';
+import { TagInputModule } from 'ngx-chips';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
 	declarations: [
@@ -32,7 +34,9 @@ import { DetailsComponent } from './details/details.component';
 		SharedModule,
 		CKEditorModule,
 		FaqRoutingModule,
-		UtilsModule
+		UtilsModule,
+		TagInputModule,
+		MatSelectModule
 	],
 	exports: [],
 	entryComponents: [],

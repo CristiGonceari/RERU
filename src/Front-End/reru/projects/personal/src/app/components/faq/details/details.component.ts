@@ -22,6 +22,8 @@ export class DetailsComponent implements OnInit {
   description: string;
   no: string;
   yes: string;
+  fileId: string;
+  roles = [];
 
   public Editor = DecoupledEditor;
 
@@ -54,6 +56,10 @@ export class DetailsComponent implements OnInit {
         return;
       }
       this.article = response.data;
+      this.fileId = response.data.mediaFileId;
+        if(response.data.mediaFileId == "null") this.fileId = null;
+        if(response.data.roles.length > 0)
+          this.roles = response.data.roles.map(e => e.label.replace(/\s/g, "")).join(", ");
       this.isLoading = false;
     });
   }

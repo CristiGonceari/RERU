@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CVU.ERP.Common.Data.Entities;
 using RERU.Data.Entities.Enums;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace RERU.Data.Entities
 {
@@ -15,6 +16,7 @@ namespace RERU.Data.Entities
         public List<ModuleRolePermission> Permissions { set; get; }
         public virtual ICollection<ArticleEvaluationModuleRole> ArticleEvaluationRoles { set; get; }
         public virtual ICollection<ArticleCoreModuleRole> ArticleCoreRoles { set; get; }
+        public virtual ICollection<ArticlePersonalModuleRole> ArticlePersonalRoles { set; get; }
         public virtual ICollection<UserProfileModuleRole> UserProfileModuleRole { set; get; }
     }
 }

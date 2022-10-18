@@ -155,13 +155,11 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                     break;
                 case TestTemplateModeEnum: result = EnumMessages.EnumMessages.GetTestTemplateTypeEnum((TestTemplateModeEnum)result);
                     break;
+                case MedicalColumnEnum:
+                    result = EnumMessages.EnumMessages.GetMedicalColumnEnum((MedicalColumnEnum)result);
+                    break;
                 case null: result = "-";
                     break;
-            }
-
-            if (propInfo.PropertyType == typeof(DateTime?))
-            {
-                result = Convert.ToDateTime(result).ToString("dd/MM/yyyy, HH:mm");
             }
 
             return result.ToString();

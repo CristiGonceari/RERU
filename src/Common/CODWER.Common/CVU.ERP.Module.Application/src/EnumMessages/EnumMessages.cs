@@ -27,6 +27,10 @@ namespace CVU.ERP.Module.Application.EnumMessages
         public const string Test = "Test";
         public const string Poll = "Sondaj";
         public const string Evaluation = "Evaluare";
+        public const string Column1 = "Coloana 1";
+        public const string Column2 = "Coloana 2";
+        public const string Column3 = "Coloana 3";
+        public const string Column4 = "Coloana 4";
 
         public static string GetTestStatus(TestStatusEnum testStatus)
         {
@@ -104,6 +108,18 @@ namespace CVU.ERP.Module.Application.EnumMessages
                 TestTemplateModeEnum.Test => Test,
                 TestTemplateModeEnum.Poll => Poll,
                 TestTemplateModeEnum.Evaluation => Evaluation,
+                _ => "-"
+            };
+        }
+
+        public static string GetMedicalColumnEnum(MedicalColumnEnum column)
+        {
+            return column switch
+            {
+                MedicalColumnEnum.Column1 => Column1,
+                MedicalColumnEnum.Column2 => Column2,
+                MedicalColumnEnum.Column3 => Column3,
+                MedicalColumnEnum.Column4 => Column4,
                 _ => "-"
             };
         }
