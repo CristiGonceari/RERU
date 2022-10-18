@@ -7,7 +7,7 @@
             </span>
         </div>
         <div class="ml-4 d-flex flex-column justify-content-start">
-            <div [routerLink]="['../', contractor.id]" class="text-dark-75 font-weight-bolder font-size-lg mb-0 pointer text-left">{{contractor.firstName}} {{contractor.lastName}} {{contractor.fatherName}}</div> 
+            <div [routerLink]="['../', contractor.id]" class="text-dark-75 font-weight-bolder font-size-lg mb-0 pointer text-left">{{contractor.lastName}} {{contractor.firstName}} {{contractor.fatherName}}</div> 
             <a [routerLink]="['../', contractor.id]" class="text-muted font-weight-bold text-hover-primary text-left">{{contractor.organizationRoleName || '-'}}</a>
         </div>
     </a>
@@ -21,7 +21,7 @@
                     </span>
                 </div>
                 <div class="ml-4">
-                    <div class="text-dark-75 font-weight-bolder font-size-lg mb-0 pointer">{{contractor.firstName}} {{contractor.lastName}} {{contractor.fatherName}}</div> 
+                    <div class="text-dark-75 font-weight-bolder font-size-lg mb-0 pointer">{{contractor.lastName}} {{contractor.firstName}} {{contractor.fatherName}}</div> 
                     <a class="text-muted font-weight-bold text-hover-primary">{{contractor.organizationRoleName || '-'}}</a>
                 </div>
             </div>
