@@ -19,7 +19,7 @@ namespace CODWER.RERU.Personal.Application.Articles
 
             CreateMap<EditArticlePersonalDto, Article>();
 
-            CreateMap<UserProfile, UserProfileDto>();
+            //CreateMap<UserProfile, UserProfileDto>();
 
             CreateMap<ModuleRole, SelectItem>()
                 .ForMember(x => x.Value, opts => opts.MapFrom(x => x.Id))
