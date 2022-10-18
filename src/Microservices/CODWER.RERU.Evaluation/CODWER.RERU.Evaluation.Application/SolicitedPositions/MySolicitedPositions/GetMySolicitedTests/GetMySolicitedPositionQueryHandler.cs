@@ -31,14 +31,14 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPosit
 
         public async Task<PaginatedModel<SolicitedCandidatePositionDto>> Handle(GetMySolicitedPositionQuery request, CancellationToken cancellationToken)
         {
-            var myUserProfile = await _userProfileService.GetCurrentUser();
+            var currentUserProfileId = await _userProfileService.GetCurrentUserId();
 
             var mySolicitedTests = _appDbContext.SolicitedVacantPositions
                 .Include(t => t.UserProfile)
                 .Include(t => t.CandidatePosition)
                 .Include(x => x.SolicitedVacantPositionUserFiles)
                 .Include(x => x.CandidatePosition.RequiredDocumentPositions)
-                .Where(t => t.UserProfileId == myUserProfile.Id)
+                .Where(t => t.UserProfileId == currentUserProfileId)
                 .OrderByDescending(x => x.Id)
                 .AsQueryable();
 

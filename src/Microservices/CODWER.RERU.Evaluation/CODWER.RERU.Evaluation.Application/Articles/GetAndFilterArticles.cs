@@ -9,7 +9,7 @@ namespace CODWER.RERU.Evaluation.Application.Articles
 {
     public static class GetAndFilterArticles
     {
-        public static IQueryable<ArticleEvaluation> Filter(AppDbContext appDbContext, string name, UserProfileDto currentUser)
+        public static IQueryable<ArticleEvaluation> Filter(AppDbContext appDbContext, string name, int currentUserId)
         {
             var articles = appDbContext.EvaluationArticles
                 .Include(x => x.ArticleRoles)
@@ -24,7 +24,7 @@ namespace CODWER.RERU.Evaluation.Application.Articles
             var currentUserProfile = appDbContext.UserProfiles
                 .Include(x => x.ModuleRoles)
                 .ThenInclude(x => x.ModuleRole)
-                .FirstOrDefault(x => x.Id == currentUser.Id);
+                .FirstOrDefault(x => x.Id == currentUserId);
 
             var userCurrentRole = currentUserProfile.ModuleRoles.FirstOrDefault(x => x.ModuleRole.ModuleId == currentModuleId);
 

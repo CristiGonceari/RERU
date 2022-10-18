@@ -28,7 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTest
 
         public async Task<TestDto> Handle(GetTestQuery request, CancellationToken cancellationToken)
         {
-            var curUser = await _userProfileService.GetCurrentUser();
+            var currentUserId = await _userProfileService.GetCurrentUserId();
 
             var test = await _appDbContext.Tests
                 .Include(t => t.TestTemplate)
@@ -37,7 +37,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTest
 
             var testDto = _mapper.Map<TestDto>(test);
 
-            var eventEvaluator = _appDbContext.EventEvaluators.FirstOrDefault(x => x.EvaluatorId == curUser.Id && x.EventId == testDto.EventId);
+            var eventEvaluator = _appDbContext.EventEvaluators.FirstOrDefault(x => x.EvaluatorId == currentUserId && x.EventId == testDto.EventId);
 
             if (eventEvaluator != null)
             {

@@ -18,6 +18,8 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
             _appDbContext = appDbContext;
             _userProfileService = userProfileService;
 
+            var currentUserId = _userProfileService.GetCurrentUserId().Result;
+
             RuleFor(x => x.Data)
                 .Must(x => appDbContext.TestQuestions
                     .Any(t => t.Id == appDbContext.Tests.FirstOrDefault(ts => ts.Id == x.TestId).TestQuestions.FirstOrDefault(q => q.Index == x.QuestionIndex).Id))
@@ -26,21 +28,20 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
             When(r => r.Data.ToEvaluate == true, () =>
             {
                 RuleFor(x => x.Data)
-                    .MustAsync((x, cancellation) => IsEvaluator(x))
+                    .MustAsync((x, cancellation) => IsEvaluator(x,currentUserId))
                     .WithErrorCode(ValidationCodes.INVALID_EVALUATOR_FOR_THIS_TEST);
             });
 
             When(r => r.Data.ToEvaluate == false, () =>
             {
                 RuleFor(x => x.Data)
-                    .MustAsync((x, cancellation) => IsCandidate(x))
+                    .MustAsync((x, cancellation) => IsCandidate(x, currentUserId))
                     .WithErrorCode(ValidationCodes.CANT_VIEW_TEST_RESULT);
             });
         }
 
-        private async Task<bool> IsEvaluator(VerificationTestQuestionDto data)
+        private async Task<bool> IsEvaluator(VerificationTestQuestionDto data, int currentUserId)
         {
-            var currentUser = await _userProfileService.GetCurrentUser();
             var isEvaluator = false;
 
             var test = _appDbContext.Tests
@@ -56,19 +57,18 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
 
             if (test != null && test.EvaluatorId != null)
             {
-                isEvaluator = _appDbContext.Tests.Any(t => t.Id == test.Id && t.EvaluatorId == currentUser.Id);
+                isEvaluator = _appDbContext.Tests.Any(t => t.Id == test.Id && t.EvaluatorId == currentUserId);
             } 
-            else if (test != null && test.EventId != null && eventEvaluators.Count() > 0)
+            else if (test != null && test.EventId != null && eventEvaluators.Any())
             {
-                isEvaluator = _appDbContext.EventEvaluators.Any(e => e.EventId == test.EventId && e.EvaluatorId == currentUser.Id);
+                isEvaluator = _appDbContext.EventEvaluators.Any(e => e.EventId == test.EventId && e.EvaluatorId == currentUserId);
             }
 
             return isEvaluator;
         }
 
-        private async Task<bool> IsCandidate(VerificationTestQuestionDto data)
+        private async Task<bool> IsCandidate(VerificationTestQuestionDto data, int currentUserId)
         {
-            var currentUser = await _userProfileService.GetCurrentUser();
             var isCandidate = false;
 
             var test = _appDbContext.Tests
@@ -80,10 +80,10 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
 
             if (test != null && test.TestTemplate.Settings.CanViewResultWithoutVerification)
             {
-                isCandidate = _appDbContext.Tests.Any(t => t.Id == test.Id && t.UserProfileId == currentUser.Id);
+                isCandidate = _appDbContext.Tests.Any(t => t.Id == test.Id && t.UserProfileId == currentUserId);
             }
 
-            var isEvaluator = await IsEvaluator(data);
+            var isEvaluator = await IsEvaluator(data, currentUserId);
 
             return isCandidate || isEvaluator;
         }

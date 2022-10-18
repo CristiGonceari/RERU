@@ -40,17 +40,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             CreateMap<AddEditTestDto, Test>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
 
-            CreateMap<UserProfile, UserProfileDto>();
-
             CreateMap<Test, TestDataDto>()
                 .ForMember(x => x.TestId, opts => opts.MapFrom(src => src.Id));
-
-            CreateMap<Test, TestResultDto>()
-                .ForMember(x => x.MinPercent, opts => opts.MapFrom(src => src.TestTemplate.MinPercent))
-                .ForMember(x => x.AccumulatedPercentage, opts => opts.MapFrom(src => src.AccumulatedPercentage))
-                .ForMember(x => x.Status, opts => opts.MapFrom(src => ((TestStatusEnum)src.TestStatus).ToString()))
-                .ForMember(x => x.Result, opts => opts.MapFrom(src => ((TestResultStatusEnum)src.ResultStatus).ToString()))
-                .ForMember(x => x.ResultValue, opts => opts.MapFrom(src => src.ResultStatusValue));
         }
 
         private string GetVerifiationStatus(Test inputTest)

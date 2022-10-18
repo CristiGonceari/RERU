@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions;
 using CVU.ERP.Common.DataTransferObjects.Users;
-using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles
@@ -23,6 +21,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles
         public IEnumerable<string> Permissions { get; set; }
         public List<string> CandidatePositionNames { get; set; }
 
-        public string FullName => $"{FirstName} {LastName} {FatherName}";
+        public string FullName => $"{LastName} {FirstName} {FatherName}";
     }
 }

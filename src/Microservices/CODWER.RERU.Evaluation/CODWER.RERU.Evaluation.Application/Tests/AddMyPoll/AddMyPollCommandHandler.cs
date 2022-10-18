@@ -22,15 +22,15 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddMyPoll
 
         public async Task<int> Handle(AddMyPollCommand request, CancellationToken cancellationToken)
         {
-            var curUser = await _userProfileService.GetCurrentUser();
+            var currentUserId = await _userProfileService.GetCurrentUserId();
 
-            var myPoll = _appDbContext.Tests.FirstOrDefault(x => x.TestTemplateId == request.TestTemplateId && x.UserProfileId == curUser.Id);
+            var myPoll = _appDbContext.Tests.FirstOrDefault(x => x.TestTemplateId == request.TestTemplateId && x.UserProfileId == currentUserId);
 
             if (myPoll == null)
             {
                 myPoll = new Test()
                 {
-                    UserProfileId = curUser.Id,
+                    UserProfileId = currentUserId,
                     TestTemplateId = request.TestTemplateId,
                     ProgrammedTime = DateTime.Now,
                     EventId = request.EventId

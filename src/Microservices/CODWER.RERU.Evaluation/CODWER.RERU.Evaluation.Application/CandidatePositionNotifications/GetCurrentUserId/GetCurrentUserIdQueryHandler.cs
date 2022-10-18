@@ -14,11 +14,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositionNotifications.GetC
             _userProfileService = userProfileService;
         }
 
-        public async Task<int> Handle(GetCurrentUserIdQuery request, CancellationToken cancellationToken)
-        {
-            var myProfile = await _userProfileService.GetCurrentUser();
+        public async Task<int> Handle(GetCurrentUserIdQuery request, CancellationToken cancellationToken) => (await _userProfileService.GetCurrentUserId());
 
-            return myProfile.Id;
-        }
     }
 }

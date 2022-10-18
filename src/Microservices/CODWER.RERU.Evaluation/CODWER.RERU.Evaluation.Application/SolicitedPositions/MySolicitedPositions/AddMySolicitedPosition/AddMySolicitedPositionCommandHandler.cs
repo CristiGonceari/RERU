@@ -43,7 +43,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPosit
 
         public async Task<AddSolicitedCandidatePositionResponseDto> Handle(AddMySolicitedPositionCommand request, CancellationToken cancellationToken)
         {
-            var myUserProfile = await _userProfileService.GetCurrentUser();
+            var myUserProfile = await _userProfileService.GetCurrentUserProfileDto();
 
             var solicitedTest = _mapper.Map<SolicitedVacantPosition>(request.Data);
             solicitedTest.UserProfileId = myUserProfile.Id;

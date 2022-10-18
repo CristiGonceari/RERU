@@ -29,7 +29,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
 
         public async Task<FileDataDto> Handle(PrintTestsCommand request, CancellationToken cancellationToken)
         {
-            var curUser = await _userProfileService.GetCurrentUser();
+            var curUser = await _userProfileService.GetCurrentUserProfileDto();
 
             var filterData = new TestFiltersDto
             {

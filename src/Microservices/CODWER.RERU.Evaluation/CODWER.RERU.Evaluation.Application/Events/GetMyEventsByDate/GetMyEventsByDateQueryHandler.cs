@@ -29,15 +29,15 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetMyEventsByDate
 
         public async Task<PaginatedModel<EventDto>> Handle(GetMyEventsByDateQuery request, CancellationToken cancellationToken)
         {
-            var curUser = await _userProfileService.GetCurrentUser();
+            var currentUserProfileDto = await _userProfileService.GetCurrentUserProfileDto();
 
-            if (curUser != null)
+            if (currentUserProfileDto != null)
             {
                 var myEvents = _appDbContext.Events
                     .Include(x => x.EventUsers)
                     .Include(x => x.EventTestTemplates)
                     .ThenInclude(x => x.TestTemplate)
-                    .Where(x => x.EventUsers.Any(e => e.UserProfileId == curUser.Id) 
+                    .Where(x => x.EventUsers.Any(e => e.UserProfileId == currentUserProfileDto.Id) 
                                                     && x.EventTestTemplates.Any(e => e.TestTemplate.Mode == request.TestTemplateMode) 
                                                     && x.FromDate.Date <= request.Date && x.TillDate.Date >= request.Date)
                     .OrderByDescending(x => x.Id)

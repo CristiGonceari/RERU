@@ -26,7 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetEvaluations
 
         public async Task<PaginatedModel<TestDto>> Handle(GetEvaluationsQuery request, CancellationToken cancellationToken)
         {
-            var currentUser = await _userProfileService.GetCurrentUser();
+            var currentUser = await _userProfileService.GetCurrentUserProfileDto();
 
             var filterData = new TestFiltersDto
             {

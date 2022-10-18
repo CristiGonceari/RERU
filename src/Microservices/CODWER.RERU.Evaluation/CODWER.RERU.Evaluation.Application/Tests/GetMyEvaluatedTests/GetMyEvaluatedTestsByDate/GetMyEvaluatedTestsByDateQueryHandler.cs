@@ -27,14 +27,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.GetMyEval
 
         public async Task<PaginatedModel<TestDto>> Handle(GetMyEvaluatedTestsByDateQuery request, CancellationToken cancellationToken)
         {
-            var currentUser = await _userProfileService.GetCurrentUser();
+            var currentUserId = await _userProfileService.GetCurrentUserId();
 
             var myTests = _appDbContext.Tests
                 .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Event)
-                .Where(t => (t.EvaluatorId == currentUser.Id ||
-                                    _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == currentUser.Id)) && 
+                .Where(t => (t.EvaluatorId == currentUserId ||
+                                    _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == currentUserId)) && 
                                   t.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .Where(t => t.ProgrammedTime.Date == request.Date.Date)
                 .OrderByDescending(x => x.Id)

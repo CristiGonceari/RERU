@@ -32,7 +32,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintEvaluations
 
         public async Task<FileDataDto> Handle(PrintEvaluationsCommand request, CancellationToken cancellationToken)
         {
-            var curUser = await _userProfileService.GetCurrentUser();
+            var curUser = await _userProfileService.GetCurrentUserProfileDto();
 
             var filterData = new TestFiltersDto
             {
