@@ -1,6 +1,4 @@
-﻿using RERU.Data.Entities.Enums;
-
-namespace CVU.ERP.Module.Application.EnumMessages
+﻿namespace RERU.Data.Entities.Enums
 {
     public static class EnumMessages
     {
@@ -22,11 +20,23 @@ namespace CVU.ERP.Module.Application.EnumMessages
         public const string NoResult = "Fără rezultat";
         public const string Passed = "Susținut";
         public const string NotPassed = "Nesusținut";
-        public const string IsRecommended = "Se recomandă";
-        public const string NotRecommended = "Nu se recomandă";
+
+        public const string Able = "Apt";
+        public const string NotAble = "Inapt";
+
+        public const string Accepted = "Admis";
+        public const string Rejected = "Respins";
+
+        public const string Recommended = "Se recomandă/Nu se recomanda";
+
+        //public const string NotRecommended = "Nu se recomandă";
         public const string Test = "Test";
         public const string Poll = "Sondaj";
         public const string Evaluation = "Evaluare";
+
+
+
+
 
         public static string GetTestStatus(TestStatusEnum testStatus)
         {
@@ -75,24 +85,18 @@ namespace CVU.ERP.Module.Application.EnumMessages
             };
         }
 
-        public static string GetTestResultStatus(TestResultStatusEnum testResultStatus)
+        public static string TranslateResultStatus(TestResultStatusEnum testResultStatus)
         {
             return testResultStatus switch
             {
                 TestResultStatusEnum.NoResult => NoResult,
                 TestResultStatusEnum.Passed => Passed,
                 TestResultStatusEnum.NotPassed => NotPassed,
-                _ => "-"
-            };
-        }
-
-        public static string GetEvaluationResultStatus(TestResultStatusEnum testResultStatus)
-        {
-            return testResultStatus switch
-            {
-                TestResultStatusEnum.NoResult => NoResult,
-                TestResultStatusEnum.Passed => IsRecommended,
-                TestResultStatusEnum.NotPassed => NotRecommended,
+                TestResultStatusEnum.Able => Able,
+                TestResultStatusEnum.NotAble => NotAble,
+                TestResultStatusEnum.Accepted => Accepted,
+                TestResultStatusEnum.Rejected => Rejected,
+                TestResultStatusEnum.Recommended => Recommended,
                 _ => "-"
             };
         }

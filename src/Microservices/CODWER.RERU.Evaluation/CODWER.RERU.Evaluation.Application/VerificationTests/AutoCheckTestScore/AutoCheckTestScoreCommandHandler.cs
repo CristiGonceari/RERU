@@ -40,14 +40,9 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.AutoCheckTestScor
 
                 test.AccumulatedPercentage = (int) Math.Round((double) (100 * evaluatorPointsSum) / questionPointsSum);
 
-                if (test.AccumulatedPercentage >= test.TestTemplate.MinPercent)
-                {
-                    test.ResultStatus = TestResultStatusEnum.Passed;
-                }
-                else
-                {
-                    test.ResultStatus = TestResultStatusEnum.NotPassed;
-                }
+                test.ResultStatus = test.AccumulatedPercentage >= test.TestTemplate.MinPercent 
+                    ? test.TestTemplate.QualifyingTypeValue.GetPositiveQualify() 
+                    : test.TestTemplate.QualifyingTypeValue.GetNegativeQualify();
             }
 
             await _appDbContext.SaveChangesAsync();

@@ -90,6 +90,14 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return items;
         }
 
+        [HttpGet("qualifying-results/select-values")]
+        public async Task<List<SelectItem>> GetQualifyingResults()
+        {
+            var items = EnumConverter<QualifyingTypeEnum>.SelectValues;
+
+            return items;
+        }
+
         [HttpGet("users-value/select-values")]
         public async Task<List<SelectItem>> GetUsers([FromQuery] GetUsersValueQuery query)
         {

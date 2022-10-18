@@ -20,10 +20,14 @@ namespace RERU.Data.Entities
         public int MinPercent { get; set; }
         public int Duration { get; set; }
         public TestTemplateSettings Settings { get; set; }
-
+                
         public TestTemplateStatusEnum Status { get; set; }
         public TestTemplateModeEnum Mode { get; set; }
         public SequenceEnum CategoriesSequence { get; set; }
+
+        public QualifyingTypeEnum? QualifyingType { get; set; }
+
+        public QualifyingTypeEnum QualifyingTypeValue => QualifyingType ?? QualifyingTypeEnum.PassedNotPassed;
 
         public Guid PdfFileId { get; set; }
 

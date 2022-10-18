@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCategoryQuestions;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 using Wkhtmltopdf.NetCore;
 
@@ -111,7 +112,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
             </tr>
             <tr>
                     <th colspan=""4"" style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;"">
-                          <b>{item.QuestionCount}</b> {ParseQuestion(item.QuestionCount)} din <b>{item.QuestionCategory.QuestionUnits.Count}</b>, ordinea intrebarilor - {EnumMessages.EnumMessages.GetQuestionSequence(item.SequenceType)}
+                          <b>{item.QuestionCount}</b> {ParseQuestion(item.QuestionCount)} din <b>{item.QuestionCategory.QuestionUnits.Count}</b>, ordinea intrebarilor - {EnumMessages.GetQuestionSequence(item.SequenceType)}
                     </th>
             </tr>
             <tr>
@@ -138,7 +139,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
                 current + $@"
             <tr>
                 <th colspan=""3"" style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px; max-width: 500px"">{questionUnit.Question}</th>
-                <th colspan=""1"" style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;"">{EnumMessages.EnumMessages.GetQuestionType(questionUnit.QuestionType)}</th>
+                <th colspan=""1"" style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;"">{EnumMessages.GetQuestionType(questionUnit.QuestionType)}</th>
             </tr>");
         }
         private string DecodeRules(string rules)
