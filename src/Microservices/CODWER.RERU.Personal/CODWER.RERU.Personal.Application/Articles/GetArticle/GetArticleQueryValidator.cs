@@ -1,15 +1,15 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Application.Services;
-using CODWER.RERU.Evaluation.Application.Validation;
-using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
+using CODWER.RERU.Personal.Application.Services;
+using CODWER.RERU.Personal.Application.Validation;
+using CODWER.RERU.Personal.Application.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 
-namespace CODWER.RERU.Evaluation.Application.Articles.GetArticle
+namespace CODWER.RERU.Personal.Application.Articles.GetArticle
 {
     public class GetArticleQueryValidator : AbstractValidator<GetArticleQuery>
     {
@@ -18,11 +18,11 @@ namespace CODWER.RERU.Evaluation.Application.Articles.GetArticle
 
         public GetArticleQueryValidator(AppDbContext appDbContext, IUserProfileService userProfileService)
         {
-            _userProfileService = userProfileService;
             _appDbContext = appDbContext;
+            _userProfileService = userProfileService;
 
             RuleFor(x => x.Id)
-                .SetValidator(x => new ItemMustExistValidator<ArticleEvaluation>(appDbContext, ValidationCodes.INVALID_ID,
+                .SetValidator(x => new ItemMustExistValidator<Article>(appDbContext, ValidationCodes.INVALID_ID,
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x.Id)
@@ -32,12 +32,12 @@ namespace CODWER.RERU.Evaluation.Application.Articles.GetArticle
 
         private async Task<bool> CheckUserRole(int articleId)
         {
-            var currentUser = await _userProfileService.GetCurrentUser();
+            var currentUser = await _userProfileService.GetCurrentUserProfile();
 
             var currentModuleId = _appDbContext.ModuleRolePermissions
                 .Include(x => x.Permission)
                 .Include(x => x.Role)
-                .FirstOrDefault(x => x.Permission.Code.StartsWith("P03")).Role.ModuleId;
+                .FirstOrDefault(x => x.Permission.Code.StartsWith("P02")).Role.ModuleId;
 
             var currentUserProfile = _appDbContext.UserProfiles
                 .Include(x => x.ModuleRoles)
@@ -46,7 +46,7 @@ namespace CODWER.RERU.Evaluation.Application.Articles.GetArticle
 
             var userCurrentRole = currentUserProfile.ModuleRoles.FirstOrDefault(x => x.ModuleRole.ModuleId == currentModuleId);
 
-            var article = await _appDbContext.EvaluationArticles
+            var article = await _appDbContext.Articles
                 .Include(x => x.ArticleRoles)
                 .FirstOrDefaultAsync(x => x.Id == articleId);
 

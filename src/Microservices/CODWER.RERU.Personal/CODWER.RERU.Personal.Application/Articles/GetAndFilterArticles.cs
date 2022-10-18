@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using CVU.ERP.ServiceProvider.Models;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
 using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 
@@ -8,7 +8,7 @@ namespace CODWER.RERU.Personal.Application.Articles
 {
     public static class GetAndFilterArticles
     {
-        public static IQueryable<Article> Filter(AppDbContext appDbContext, string name, ApplicationUser currentUser)
+        public static IQueryable<Article> Filter(AppDbContext appDbContext, string name, UserProfile currentUser)
         {
             var articles = appDbContext.Articles
                 .Include(x => x.ArticleRoles)
@@ -23,7 +23,7 @@ namespace CODWER.RERU.Personal.Application.Articles
             var currentUserProfile = appDbContext.UserProfiles
                 .Include(x => x.ModuleRoles)
                 .ThenInclude(x => x.ModuleRole)
-                .FirstOrDefault(x => x.Id.ToString() == currentUser.Id);
+                .FirstOrDefault(x => x.Id == currentUser.Id);
 
             var userCurrentRole = currentUserProfile.ModuleRoles.FirstOrDefault(x => x.ModuleRole.ModuleId == currentModuleId);
 
