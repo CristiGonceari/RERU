@@ -21,7 +21,6 @@ import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/file-test-answer.service';
 import { saveAs } from 'file-saver';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
@@ -84,7 +83,6 @@ export class OnePerPagePerformingTestComponent implements OnInit {
 
   optionFileId = [];
   isLoadingOptionMedia: boolean = true;
-  isLoadingSetFile: boolean = true;
 
   isLoadingMedia: boolean = false;
 
@@ -102,7 +100,6 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     private router: Router,
     private testTemplateService: TestTemplateService,
     private fileTestAnswerService: FileTestAnswerService,
-    private spinner: NgxSpinnerService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
@@ -359,13 +356,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   }
 
   setFile(event){
-    this.spinner.show();
-    this.isLoadingSetFile = false;
-    setTimeout(() => {
       this.files[0] = event.addedFiles[0];
-      this.spinner.hide();
-      this.isLoadingSetFile = true;
-    }, 2000);
   }
 
   checkIfDisabled(index) {

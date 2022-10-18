@@ -7,7 +7,6 @@ import { CloudFileService } from '../../services/cloud-file.service';
 import { I18nService } from '../../services/i18n.service';
 import { NotificationUtil } from '../../utils/notification.util';
 import { forkJoin } from 'rxjs';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-add-edit-media-file',
@@ -15,15 +14,14 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./add-edit-media-file.component.scss']
 })
 export class AddEditMediaFileComponent implements OnInit {
+
   imageFiles: File[] = [];
   videoFiles: File[] = [];
   audioFiles: File[] = [];
-  docFiles: File[] = [];
 
   imageUrl: any;
   audioUrl: any;
   videoUrl: any;
-  docUrl: any;
 
   filenames: any;
   fileName: string;
@@ -32,7 +30,6 @@ export class AddEditMediaFileComponent implements OnInit {
   addedFiles;
   attachedFile: File;
   isLoadingMedia: boolean = false;
-  isLoadingOnSelectMedia: boolean = false;
 
   title: string;
   description: string;
@@ -46,16 +43,15 @@ export class AddEditMediaFileComponent implements OnInit {
     private fileService: CloudFileService,
     public translate: I18nService,
     private modalService: NgbModal,
-    private spinner: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    if (this.fileId != undefined && this.fileId !='null') {
+    if (this.fileId != undefined && this.fileId != 'null') {
       this.isLoadingMedia = true;
       this.getMediaFile(this.fileId);
     }
   }
-  
+
   getMediaFile(fileId) {
     this.isLoadingMedia = true;
     this.fileService.get(fileId).subscribe(res => {
@@ -64,61 +60,47 @@ export class AddEditMediaFileComponent implements OnInit {
   }
 
   onSelect(event) {
-    this.spinner.show();
-    setTimeout(() => {
-      event.addedFiles.forEach((element) => {
-        this.isLoadingOnSelectMedia = true;
-        
-        const regexImage = new RegExp(/(.*?).(jpg|png|jpeg|svg|gif)$/gmi);
-        const regexVideo = new RegExp(/(.*?).(mp4|webm|ogv)$/gmi);
-        const regexAudio = new RegExp(/(.*?).(mp3|oga|wav|ogg|aac|opus)$/gmi);
-        const regexDocument = new RegExp(/(.*?).(pdf|doc|docx|ppt|pptx|xlsx)$/gmi);
-  
-        this.onRemoved();
-  
-        if (regexImage.test(element.name)) {
-          this.imageFiles.push(...event.addedFiles);
-          this.readFile(this.imageFiles[0]).then(fileContents => {
-            this.imageUrl = fileContents;
-          });
-        } else if (regexVideo.test(element.name)) {
-          this.videoFiles.push(...event.addedFiles);
-          this.readFile(this.videoFiles[0]).then(fileContents => {
-            this.videoUrl = fileContents;
-          });
-        } else if (regexAudio.test(element.name)) {
-          this.audioFiles.push(...event.addedFiles);
-          this.readFile(this.audioFiles[0]).then(fileContents => {
-            this.audioUrl = fileContents;
-            this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
-          });
-        } else if (regexDocument.test(element.name)) {
-          this.docFiles.push(...event.addedFiles);
-          this.readFile(this.docFiles[0]).then(fileContents => {
-            this.docUrl = fileContents;
-            this.docUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.docUrl);
-          });
-          } else {
-          forkJoin([
-            this.translate.get('modal.error'),
-            this.translate.get('media.invalid-type'),
-          ]).subscribe(([title, description]) => {
-            this.title = title;
-            this.description = description;
-          });
-          this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultConfig());
-        }
-        this.attachedFile = event.addedFiles[0];
-        this.handleFile.emit(this.attachedFile);
-        this.isLoadingOnSelectMedia = false;
-      });
-      this.spinner.hide();
-    }, 2000);
+    event.addedFiles.forEach((element) => {
+      const regexImage = new RegExp(/(.*?).(jpg|png|jpeg|svg|gif)$/gmi);
+      const regexVideo = new RegExp(/(.*?).(mp4|webm|ogv)$/gmi);
+      const regexAudio = new RegExp(/(.*?).(mp3|oga|wav|ogg|aac|opus)$/gmi);
+
+      this.onRemoved();
+
+      if (regexImage.test(element.name)) {
+        this.imageFiles.push(...event.addedFiles);
+        this.readFile(this.imageFiles[0]).then(fileContents => {
+          this.imageUrl = fileContents;
+        });
+      } else if (regexVideo.test(element.name)) {
+        this.videoFiles.push(...event.addedFiles);
+        this.readFile(this.videoFiles[0]).then(fileContents => {
+          this.videoUrl = fileContents;
+        });
+      } else if (regexAudio.test(element.name)) {
+        this.audioFiles.push(...event.addedFiles);
+        this.readFile(this.audioFiles[0]).then(fileContents => {
+          this.audioUrl = fileContents;
+          this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
+        });
+      } else {
+        forkJoin([
+          this.translate.get('modal.error'),
+          this.translate.get('media.invalid-type'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+        this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultConfig());
+      }
+      this.attachedFile = event.addedFiles[0];
+      this.handleFile.emit(this.attachedFile);
+    });
   }
 
   onRemoved() {
-    this.imageFiles = this.videoFiles = this.audioFiles = this.docFiles = [];
-    this.videoUrl = this.audioUrl = this.imageUrl = this.docUrl = null;
+    this.imageFiles = this.videoFiles = this.audioFiles = [];
+    this.videoUrl = this.audioUrl = this.imageUrl = null;
     this.attachedFile = null;
     this.fileName = '';
     this.handleFile.emit(this.attachedFile)
@@ -155,7 +137,7 @@ export class AddEditMediaFileComponent implements OnInit {
       case HttpEventType.UploadProgress:
         this.updateStatus(httpEvent.loaded, httpEvent.total, 'Uploading...')
         this.disableBtn.emit(true);
-      break;
+        break;
       case HttpEventType.DownloadProgress:
         this.updateStatus(httpEvent.loaded, httpEvent.total, 'Downloading...')
         break;
@@ -172,7 +154,6 @@ export class AddEditMediaFileComponent implements OnInit {
           this.readFile(file).then(fileContents => {
             if (blob.type.includes('image')) this.imageUrl = fileContents;
             else if (blob.type.includes('video')) this.videoUrl = fileContents;
-            else if (blob.type.includes('doc')) this.docUrl = fileContents;
             else if (blob.type.includes('audio')) {
               this.audioUrl = fileContents;
               this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
@@ -192,9 +173,9 @@ export class AddEditMediaFileComponent implements OnInit {
   // showImage(url): void {
   //   const modalRef = this.modalService.open(ShowImageModalComponent, { centered: true, size: 'xl' });
   //   modalRef.componentInstance.imageUrl = url;
-	// 	modalRef.result.then(
-	// 		() => { }
-	// 	);
+  // 	modalRef.result.then(
+  // 		() => { }
+  // 	);
   // }
 
 }
