@@ -498,7 +498,8 @@
       "release-day": "Issued date",
       "living-address": "Residence address",
       "residence-address": "Residence visa address",
-      "birth-place": "Birth place"
+      "birth-place": "Birth place",
+      "npp": "L.F.F."
     },
     "nomenclature": {
       "value" : "Value",

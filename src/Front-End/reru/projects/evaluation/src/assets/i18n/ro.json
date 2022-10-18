@@ -36,7 +36,8 @@
     "user-email": "E-mail",
     "general-overview": "Prezentarea generală a profilului utilizatorului",
     "navigate-core-msg": "Sunteți sigur(-ă) că doriți să navigați la vizualizarea generală a profilului utilizatorului?",
-    "search-by-user-state": "Căutați după statutul utilizatorului"
+    "search-by-user-state": "Căutați după statutul utilizatorului",
+    "npp": "N.P.P."
   },
   "notification": {
     "title": {

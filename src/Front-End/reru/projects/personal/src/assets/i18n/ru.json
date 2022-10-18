@@ -496,7 +496,8 @@
       "release-day": "Дата выдачи",
       "living-address": "Домашний адресс",
       "residence-address": "Адрес прописки",
-      "birth-place": "Место рождения"
+      "birth-place": "Место рождения",
+      "npp": "Ф.И.О."
     },
     "nomenclature": {
       "value" : "Значение",
