@@ -21,7 +21,8 @@ import { TestTemplatesRulesComponent } from './test-template-details/test-templa
 import { AddTestTemplateRulesComponent } from './test-template-details/test-templates-rules/add-test-template-rules/add-test-template-rules.component'
 import { CategoryQuestionsTableComponent } from './test-template-details/test-template-categories/add-category/category-questions-table/category-questions-table.component';
 import { ViewCategoryComponent } from './test-template-details/test-template-categories/view-category/view-category.component';
-import { SearchTestModeComponent } from './test-template-list/search-test-mode/search-test-mode.component'
+import { SearchTestModeComponent } from './test-template-list/search-test-mode/search-test-mode.component';
+import { SearchQualifyingTypeComponent } from './test-template-list/search-qualifying-type/search-qualifying-type.component'
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { SearchTestModeComponent } from './test-template-list/search-test-mode/s
     CategoryQuestionsTableComponent,
     ViewCategoryComponent,
     SearchTestModeComponent,
+    SearchQualifyingTypeComponent,
   ],
   imports: [
     CommonModule,
