@@ -13,5 +13,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates
         public SequenceEnum CategoriesSequence { get; set; }
         public TestTemplateStatusEnum Status { get; set; }
         public TestTemplateModeEnum Mode { get; set; }
+        public QualifyingTypeEnum? QualifyingType { get; set; }
     }
 }

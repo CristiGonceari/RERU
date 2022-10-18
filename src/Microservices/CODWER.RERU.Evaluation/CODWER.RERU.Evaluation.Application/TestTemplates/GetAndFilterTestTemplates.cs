@@ -8,7 +8,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates
 {
     public static class GetAndFilterTestTemplates
     {
-        public static IQueryable<TestTemplate> Filter(AppDbContext appDbContext, string name, string eventName, TestTemplateStatusEnum? status, TestTemplateModeEnum? mode)
+        public static IQueryable<TestTemplate> Filter(AppDbContext appDbContext, string name, string eventName, TestTemplateStatusEnum? status, TestTemplateModeEnum? mode, QualifyingTypeEnum? qualifyingType)
         {
             var testTemplates = appDbContext.TestTemplates
                 .Include(x => x.TestTemplateQuestionCategories)
@@ -36,6 +36,11 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates
             if (mode.HasValue)
             {
                 testTemplates = testTemplates.Where(x => x.Mode == mode);
+            }
+
+            if (qualifyingType.HasValue)
+            {
+                testTemplates = testTemplates.Where(x => x.QualifyingType == qualifyingType);
             }
 
             return testTemplates;

@@ -27,8 +27,6 @@ namespace RERU.Data.Entities
 
         public QualifyingTypeEnum? QualifyingType { get; set; }
 
-        public QualifyingTypeEnum QualifyingTypeValue => QualifyingType ?? QualifyingTypeEnum.PassedNotPassed;
-
         public Guid PdfFileId { get; set; }
 
         public virtual ICollection<Test> Tests { get; set; }

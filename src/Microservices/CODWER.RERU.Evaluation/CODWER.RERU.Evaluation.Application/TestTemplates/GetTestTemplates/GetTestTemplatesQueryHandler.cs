@@ -21,7 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplates
 
         public async Task<PaginatedModel<TestTemplateDto>> Handle(GetTestTemplatesQuery request, CancellationToken cancellationToken)
         {
-            var testTemplates = GetAndFilterTestTemplates.Filter(_appDbContext, request.Name, request.EventName, request.Status, request.Mode);
+            var testTemplates = GetAndFilterTestTemplates.Filter(_appDbContext, request.Name, request.EventName, request.Status, request.Mode, request.QualifyingType);
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<TestTemplate, TestTemplateDto>(testTemplates, request);
 

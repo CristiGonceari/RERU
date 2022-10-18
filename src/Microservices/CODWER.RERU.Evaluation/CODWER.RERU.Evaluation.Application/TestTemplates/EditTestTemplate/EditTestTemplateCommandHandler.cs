@@ -25,14 +25,14 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.EditTestTemplate
 
         public async Task<int> Handle(EditTestTemplateCommand request, CancellationToken cancellationToken)
         {
-            var updatetestTemplate = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == request.Data.Id);
+            var updateTestTemplate = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == request.Data.Id);
 
-            _mapper.Map(request.Data, updatetestTemplate);
+            _mapper.Map(request.Data, updateTestTemplate);
             await _appDbContext.SaveChangesAsync();
 
-            await LogAction(updatetestTemplate);
+            await LogAction(updateTestTemplate);
 
-            return updatetestTemplate.Id;
+            return updateTestTemplate.Id;
         }
 
         private async Task LogAction(TestTemplate testTemplate)
