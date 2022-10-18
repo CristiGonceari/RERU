@@ -1,7 +1,9 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.SetTestResult
@@ -22,9 +24,18 @@ namespace CODWER.RERU.Evaluation.Application.Tests.SetTestResult
                 .FirstOrDefaultAsync(x => x.Id == request.TestId);
 
             test.ResultStatus = request.ResultStatus;
+
+            if (request.ResultStatus == TestResultStatusEnum.Recommended)
+            {
+                test.RecommendedFor = string.Join(",", request.RecommendedFor.ToList().Select(x => x.ToString()));
+                test.NotRecommendedFor = string.Join(",", request.NotRecommendedFor.ToList().Select(x => x.ToString()));
+            }
+
             await _appDbContext.SaveChangesAsync();
 
             return Unit.Value;
         }
+
+        private 
     }
 }

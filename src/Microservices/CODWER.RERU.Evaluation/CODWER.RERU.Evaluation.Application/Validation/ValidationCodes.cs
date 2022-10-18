@@ -92,6 +92,7 @@
         public static string ONLY_IN_PROGRESS_TESTS_CAN_BE_TERMINATED = "03001502";
         public static string REACHED_ERRORS_LIMIT = "03001503";
         public static string INVALID_TEST_START_TIME = "03001504";
+        public static string INVALID_SELECTED_COLUMNS = "03001505";
 
         //test questions
         public static string INVALID_TEST_QUESTION = "03001601";
