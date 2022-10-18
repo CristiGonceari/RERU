@@ -2,9 +2,9 @@
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.DataTransferObjects.Articles;
 using CVU.ERP.Module.Application.TableExportServices;
-using CVU.ERP.ServiceProvider;
 using RERU.Data.Persistence.Context;
 using RERU.Data.Entities.PersonalEntities;
 
@@ -14,18 +14,18 @@ namespace CODWER.RERU.Personal.Application.Articles.PrintArticles
     {
         private readonly AppDbContext _appDbContext;
         private readonly IExportData<Article, ArticleDto> _printer;
-        private readonly ICurrentApplicationUserProvider _currentApplication;
+        private readonly IUserProfileService _userProfileService;
 
-        public PrintArticlesCommandHandler(AppDbContext appDbContext, IExportData<Article, ArticleDto> printer, ICurrentApplicationUserProvider currentApplication)
+        public PrintArticlesCommandHandler(AppDbContext appDbContext, IExportData<Article, ArticleDto> printer, IUserProfileService userProfileService)
         {
             _appDbContext = appDbContext;
             _printer = printer;
-            _currentApplication = currentApplication;
+            _userProfileService = userProfileService;
         }
 
         public async Task<FileDataDto> Handle(PrintArticlesCommand request, CancellationToken cancellationToken)
         {
-            var currentUser = await _currentApplication.Get();
+            var currentUser = await _userProfileService.GetCurrentUserProfile();
 
             var articles = GetAndFilterArticles.Filter(_appDbContext, request.Name, currentUser);
 
