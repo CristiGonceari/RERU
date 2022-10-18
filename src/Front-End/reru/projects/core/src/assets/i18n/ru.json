@@ -195,7 +195,8 @@
     "priority":"Приоритет",
     "status": "Статус",
     "profile-photo": "Фото профиля",
-    "number": "Число"
+    "number": "Число",
+    "npp": "Ф.И.О."
   },
   "word": {
     "search": "Поиск по Ф.И.О. или e-mail",

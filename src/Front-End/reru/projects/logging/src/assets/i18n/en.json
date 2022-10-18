@@ -32,7 +32,8 @@
    "json-message": "JSON",
    "date": "Date",
    "view-details": "View details",
-   "delete-logs": "Delete Logs"
+   "delete-logs": "Delete Logs",
+   "npp": "L.F.F."
   },
   "delete-log-modal":{
     "title": "Delete logs older than:",

@@ -2,7 +2,7 @@
 
 namespace RERU.Data.Entities
 {
-    public class ArticleEvaluationModuleRole : BaseEntity
+    public class ArticleEvaluationModuleRole : SoftDeleteBaseEntity
     {
         public int RoleId { set; get; }
         public ModuleRole Role { set; get; }

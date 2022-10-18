@@ -46,6 +46,8 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
                 .Include(c => c.Positions)
                 .ThenInclude(p => p.Role)
                 .Include(r => r.Contacts)
+                .OrderBy(x => x.LastName)
+                .ThenBy(x => x.FirstName)
                 .AsQueryable();
 
             contractors = Filter(contractors, request);
