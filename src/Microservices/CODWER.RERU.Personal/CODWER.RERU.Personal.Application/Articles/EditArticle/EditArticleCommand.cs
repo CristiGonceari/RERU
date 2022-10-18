@@ -3,11 +3,11 @@ using CODWER.RERU.Personal.DataTransferObjects.Articles;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 
-namespace CODWER.RERU.Personal.Application.Articles.AddEditArticle
+namespace CODWER.RERU.Personal.Application.Articles.EditArticle
 {
     [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_ARTICOLE)]
-    public class AddEditArticleCommand : IRequest<int>
+    public class EditArticleCommand : IRequest<int>
     {
-        public ArticleDto Data { get; set; }
+        public EditArticlePersonalDto Data { get; set; }
     }
 }

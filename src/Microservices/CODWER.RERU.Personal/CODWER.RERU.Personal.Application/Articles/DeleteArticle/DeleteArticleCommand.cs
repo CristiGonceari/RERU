@@ -2,10 +2,10 @@
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 
-namespace CODWER.RERU.Personal.Application.Articles.RemoveArticle
+namespace CODWER.RERU.Personal.Application.Articles.DeleteArticle
 {
     [ModuleOperation(permission: PermissionCodes.ACCESS_GENERAL_LA_ARTICOLE)]
-    public class RemoveArticleCommand : IRequest<Unit>
+    public class DeleteArticleCommand : IRequest<Unit>
     {
         public int Id { get; set; }
     }

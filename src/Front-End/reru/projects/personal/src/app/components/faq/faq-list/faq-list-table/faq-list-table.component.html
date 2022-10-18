@@ -7,14 +7,19 @@
     <table class="table erp-table" >
         <thead>
             <tr>
-                <th>{{'faq.name' | translate}}</th>
-                <th class="d-none">{{'faq.content' | translate}}</th>
-                <th class="text-right">&nbsp;</th>
+                <th scope="col">{{'faq.name' | translate}}</th>
+                <th scope="col" class="d-none">{{'faq.content' | translate}}</th>
+                <th scope="col" style="text-align:center; width: 150px">{{'faq.contains-media' | translate}}</th>
+                <th scope="col" style="width: 48px" class="text-right">&nbsp;</th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="articles">
             <tr *ngFor="let item of articles" (dblclick)="navigate(item.id)">
-                <td [ngStyle]="{'width.%' : 80}" style="cursor: pointer;" [routerLink]="['faq-details', item.id]">{{ item.name }}</td>
+                <td [ngStyle]="{'width.%' : 80}" style="cursor: pointer;">{{ item.name }}</td>
+                <td style="cursor: pointer; text-align:center;">
+                    <i *ngIf="item.containsMedia" class="fa la-plus"></i>
+                    <i *ngIf="!item.containsMedia" class="fa la-minus"></i>
+                </td>
                 <td [ngStyle]="{'width.%' : 20}" class="text-right">
                         <app-faq-dropdown-details 
                         [index]="i" 

@@ -4,11 +4,12 @@ using CVU.ERP.Common.Pagination;
 using MediatR;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using CODWER.RERU.Personal.API.Config;
+using CODWER.RERU.Personal.Application.Articles.AddArticle;
 using CODWER.RERU.Personal.DataTransferObjects.Articles;
 using CODWER.RERU.Personal.Application.Articles.GetArticle;
 using CODWER.RERU.Personal.Application.Articles.GetArticles;
-using CODWER.RERU.Personal.Application.Articles.AddEditArticle;
-using CODWER.RERU.Personal.Application.Articles.RemoveArticle;
+using CODWER.RERU.Personal.Application.Articles.DeleteArticle;
+using CODWER.RERU.Personal.Application.Articles.EditArticle;
 using CODWER.RERU.Personal.Application.Articles.PrintArticles;
 
 namespace CODWER.RERU.Personal.API.Controllers
@@ -30,15 +31,21 @@ namespace CODWER.RERU.Personal.API.Controllers
         }
 
         [HttpPost]
-        public async Task<int> AddEditArticle([FromBody] ArticleDto request)
+        public async Task<int> AddArticle([FromForm] AddArticleCommand command)
         {
-            return await Mediator.Send(new AddEditArticleCommand { Data = request });
+            return await Mediator.Send(command);
+        }
+
+        [HttpPatch]
+        public async Task<int> EditArticle([FromForm] EditArticleCommand command)
+        {
+            return await Mediator.Send(command);
         }
 
         [HttpDelete("{id}")]
         public async Task<Unit> DeleteArticle([FromRoute] int id)
         {
-            return await Mediator.Send(new RemoveArticleCommand { Id = id });
+            return await Mediator.Send(new DeleteArticleCommand { Id = id });
         }
 
         [HttpPut("print")]

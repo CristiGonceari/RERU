@@ -965,7 +965,12 @@
     "succes-remove-msg": "Articol a fost șters cu succes",
     "succes-add-msg": "Articol a fost adăugat cu succes",
     "succes-edit-msg": "Articol a fost editat cu succes",
-    "faq-details": "Detaliile articolului"
+    "faq-details": "Detaliile articolului",
+    "article-details": "Detaliile articolului",
+    "contains-media": "Conține media",
+    "info-tag": "Dacă nu este selectat nici un rol, articolul este disponibil pentru toate rolurile",
+    "info-roles": "Rolurile care pot vizualiza acest articol",
+    "module-roles": "Rolurile modulului"
   },
   "print": {
     "print-table": "Printare tabel",
