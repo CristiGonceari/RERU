@@ -96,19 +96,19 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                     result = ParseDataByTestEnum(tableName, result);
                     break;
                 case TestStatusEnum:
-                    result = EnumMessages.EnumMessages.GetTestStatus((TestStatusEnum)result);
+                    result = EnumMessages.GetTestStatus((TestStatusEnum)result);
                     break;
                 case QuestionTypeEnum:
-                    result = EnumMessages.EnumMessages.GetQuestionType((QuestionTypeEnum)result);
+                    result = EnumMessages.GetQuestionType((QuestionTypeEnum)result);
                     break;
                 case QuestionUnitStatusEnum:
-                    result = EnumMessages.EnumMessages.GetQuestionStatus((QuestionUnitStatusEnum)result);
+                    result = EnumMessages.GetQuestionStatus((QuestionUnitStatusEnum)result);
                     break;
                 case TestTemplateModeEnum:
-                    result = EnumMessages.EnumMessages.GetTestTemplateTypeEnum((TestTemplateModeEnum)result);
+                    result = EnumMessages.GetTestTemplateTypeEnum((TestTemplateModeEnum)result);
                     break;
                 case MedicalColumnEnum:
-                    result = EnumMessages.EnumMessages.GetMedicalColumnEnum((MedicalColumnEnum)result);
+                    result = EnumMessages.GetMedicalColumnEnum((MedicalColumnEnum)result);
                     break;
                 case null:
                     result = "-";
@@ -126,21 +126,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             worksheet.Column(column).Width = 24; ;
         }
 
-        private object ParseDataByTestEnum(string tableName, object result)
-        {
-            var names = new List<string> { "Evaluări ", "Evaluări primite", "Evaluări acordate" };
-
-            if (names.Contains(tableName))
-            {
-                result = EnumMessages.EnumMessages.GetEvaluationResultStatus((TestResultStatusEnum)result);
-            }
-            else
-            {
-                result = EnumMessages.EnumMessages.GetTestResultStatus((TestResultStatusEnum)result);
-            }
-
-            return result;
-        }
+        private object ParseDataByTestEnum(string tableName, object result) => EnumMessages.TranslateResultStatus((TestResultStatusEnum)result);
 
         private object ParseDataByListOfStrings(object result)
         {
