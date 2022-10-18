@@ -6,6 +6,16 @@ using RERU.Data.Entities.PersonalEntities;
 namespace RERU.Data.Entities
 {
     public class ModuleRole : SoftDeleteBaseEntity {
+
+        public ModuleRole()
+        {
+            UserProfileModuleRoles = new HashSet<UserProfileModuleRole>();
+            ArticleEvaluationRoles = new HashSet<ArticleEvaluationModuleRole>();
+            ArticleCoreRoles = new HashSet<ArticleCoreModuleRole>();
+            TestTemplateModuleRoles = new HashSet<TestTemplateModuleRole>();
+            ArticlePersonalRoles = new HashSet<ArticlePersonalModuleRole>();
+        }
+
         public int ModuleId { set; get; }
         public string Name { set; get; }
         public string Code { set; get; }
@@ -17,6 +27,7 @@ namespace RERU.Data.Entities
         public virtual ICollection<ArticleEvaluationModuleRole> ArticleEvaluationRoles { set; get; }
         public virtual ICollection<ArticleCoreModuleRole> ArticleCoreRoles { set; get; }
         public virtual ICollection<ArticlePersonalModuleRole> ArticlePersonalRoles { set; get; }
-        public virtual ICollection<UserProfileModuleRole> UserProfileModuleRole { set; get; }
+        public virtual ICollection<UserProfileModuleRole> UserProfileModuleRoles { set; get; }
+        public virtual ICollection<TestTemplateModuleRole> TestTemplateModuleRoles { set; get; }
     }
 }

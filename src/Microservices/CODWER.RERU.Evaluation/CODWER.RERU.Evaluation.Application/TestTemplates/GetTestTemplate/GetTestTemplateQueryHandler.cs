@@ -1,10 +1,14 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates;
+using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplate
 {
@@ -23,7 +27,25 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplate
         {
             var testTemplate = await _appDbContext.TestTemplates.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-            return _mapper.Map<TestTemplateDto>(testTemplate);
+            var mappedItem = _mapper.Map<TestTemplateDto>(testTemplate);
+
+            mappedItem.Roles = await GetRoles(testTemplate.Id);
+
+            return mappedItem;
+        }
+
+        private async Task<List<SelectItem>> GetRoles(int testTemplateId)
+        {
+            return await _appDbContext.TestTemplateModuleRoles
+                .Include(x => x.ModuleRole)
+                .Where(x => x.TestTemplateId == testTemplateId)
+                .Select(x => new ModuleRole()
+                {
+                    Id = x.ModuleRole.Id,
+                    Name = x.ModuleRole.Name
+                })
+                .Select(e => _mapper.Map<SelectItem>(e))
+                .ToListAsync();
         }
     }
 }

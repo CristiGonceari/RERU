@@ -1,4 +1,6 @@
-﻿using RERU.Data.Entities.Enums;
+﻿using System.Collections.Generic;
+using CVU.ERP.Common.DataTransferObjects.SelectValues;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates
 {
@@ -13,5 +15,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates
         public SequenceEnum CategoriesSequence { get; set; }
         public TestTemplateStatusEnum Status { get; set; }
         public TestTemplateModeEnum Mode { get; set; }
+        public List<SelectItem> Roles { get; set; }
     }
 }

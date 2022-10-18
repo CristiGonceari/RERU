@@ -88,7 +88,7 @@ export class SolicitedTestsTableComponent implements OnInit {
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['userProfileName', 'testTemplateName', 'eventName', 'solicitedTestStatus', 'status'];
+		let headersDto = ['userProfileName', 'candidatePositionName', 'attachedFilesCount', 'requiredAttachedFilesCount', 'solicitedTime', 'solicitedTestStatus'];
 		for (let i=0; i<headersHtml.length-1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}

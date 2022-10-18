@@ -14,14 +14,14 @@ namespace CODWER.RERU.Evaluation.Application.Articles.EditArticle
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly IStorageFileService _storageFileService;
-        private readonly IAssignRolesToArticle _assignRolesToArticle;
+        private readonly IAssignRoleService _assignRoleService;
 
-        public EditArticleCommandHandler(AppDbContext appDbContext, IMapper mapper, IStorageFileService storageFileService, IAssignRolesToArticle assignRolesToArticle)
+        public EditArticleCommandHandler(AppDbContext appDbContext, IMapper mapper, IStorageFileService storageFileService, IAssignRoleService assignRoleService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _storageFileService = storageFileService;
-            _assignRolesToArticle = assignRolesToArticle;
+            _assignRoleService = assignRoleService;
         }
 
         public async Task<int> Handle(EditArticleCommand request, CancellationToken cancellationToken)
@@ -43,7 +43,7 @@ namespace CODWER.RERU.Evaluation.Application.Articles.EditArticle
 
             await _appDbContext.SaveChangesAsync();
 
-            await _assignRolesToArticle.AssignRolesToArticle(request.Data.Roles, article.Id);
+            await _assignRoleService.AssignRolesToArticle(request.Data.Roles, article.Id);
 
             return article.Id;
         }

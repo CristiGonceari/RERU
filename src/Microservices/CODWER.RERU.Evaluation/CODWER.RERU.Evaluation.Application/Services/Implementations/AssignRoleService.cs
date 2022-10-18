@@ -9,11 +9,11 @@ using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 {
-    public class AssignRolesToArticleService : IAssignRolesToArticle
+    public class AssignRoleService : IAssignRoleService
     {
         private readonly AppDbContext _appDbContext;
 
-        public AssignRolesToArticleService(AppDbContext appDbContext, IMediator mediator)
+        public AssignRoleService(AppDbContext appDbContext, IMediator mediator)
         {
             _appDbContext = appDbContext;
         }
@@ -38,6 +38,23 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             await _appDbContext.SaveChangesAsync();
         }
 
+        public async Task AssignRolesToTestTemplate(List<AssignTagsValuesDto> evaluationRoles, int testTemplateId)
+        {
+            var items = _appDbContext.TestTemplateModuleRoles.Where(x => x.TestTemplateId == testTemplateId).ToList();
+
+            _appDbContext.TestTemplateModuleRoles.RemoveRange(items);
+
+                if (evaluationRoles != null)
+                {
+                    foreach (var evaluationRole in evaluationRoles.Where(evaluationRole => evaluationRole.Value != 0))
+                    {
+                        await AddTestTemplateRole(evaluationRole.Value.Value, testTemplateId);
+                    }
+                }
+
+            await _appDbContext.SaveChangesAsync();
+        }
+
         private async Task AddArticleRole(int roleId, int articleId)
         {
             var articleRole = new ArticleEvaluationModuleRole()
@@ -47,6 +64,17 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             };
 
             await _appDbContext.ArticleEvaluationModuleRoles.AddAsync(articleRole);
+        }
+
+        private async Task AddTestTemplateRole(int roleId, int testTemplateId)
+        {
+            var testTemplateRole = new TestTemplateModuleRole
+            {
+                TestTemplateId = testTemplateId,
+                ModuleRoleId = roleId
+            };
+
+            await _appDbContext.TestTemplateModuleRoles.AddAsync(testTemplateRole);
         }
     }
 }

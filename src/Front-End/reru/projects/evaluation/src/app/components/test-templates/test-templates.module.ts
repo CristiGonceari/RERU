@@ -22,6 +22,8 @@ import { AddTestTemplateRulesComponent } from './test-template-details/test-temp
 import { CategoryQuestionsTableComponent } from './test-template-details/test-template-categories/add-category/category-questions-table/category-questions-table.component';
 import { ViewCategoryComponent } from './test-template-details/test-template-categories/view-category/view-category.component';
 import { SearchTestModeComponent } from './test-template-list/search-test-mode/search-test-mode.component'
+import { TagInputModule } from 'ngx-chips';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { SearchTestModeComponent } from './test-template-list/search-test-mode/s
     TestTemplateRoutingModule,
     CKEditorModule,
     UtilsModule,
+    TagInputModule,
+    MatSelectModule,
     DragulaModule.forRoot()
   ],
   exports: [TestTemplateListComponent]

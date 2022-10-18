@@ -796,7 +796,8 @@
     "set-can-be-solicited": "Add to can be solicited",
     "unset-from-can-be-solicited": "Unset from solicited tests",
     "can-be-solicited": "Can be solicited",
-    "search-by-test-mode": "Search by template type"
+    "search-by-test-mode": "Search by template type",
+    "info-tag": "If no role is selected, the template is available for all roles"
   },
   "plans": {
     "plans": "Plans",

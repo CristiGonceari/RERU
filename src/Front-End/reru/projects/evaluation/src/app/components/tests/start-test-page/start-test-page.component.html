@@ -30,7 +30,7 @@
                                 <h3 class="card-label text-muted">{{'tests.questions' | translate}}:</h3>
                                 <h3 class="card-label">{{ testDto.questionCount }}</h3>
                             </div>
-                            <div class="card-title m-5" *ngIf="testDto.candidatePositionNames !== null && validatePostition">
+                            <div class="card-title m-5" *ngIf="testDto.candidatePositionNames !== null && validatePosition">
                                 <h3 class="card-label text-muted">{{'position.name' | translate}}:</h3>
                                 <h3 class="card-label">{{ testDto.candidatePositionNames[0] }}
                                     <span [ngbTooltip]="parseCandidatePositions(testDto.candidatePositionNames)">...</span>
