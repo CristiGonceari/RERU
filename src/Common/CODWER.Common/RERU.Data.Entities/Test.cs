@@ -21,6 +21,9 @@ namespace RERU.Data.Entities
         public TestStatusEnum TestStatus { get; set; }
         public TestResultStatusEnum ResultStatus { get; set; }
 
+        public string ResultStatusValue => ResultStatus == TestResultStatusEnum.Recommended
+            ? $"{ResultStatus}:{RecommendedFor}/{NotRecommendedFor}" : ResultStatus.ToString();
+
         public string RecommendedFor { get; set; }
         public string NotRecommendedFor { get; set; }
 
