@@ -8,7 +8,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public int AccumulatedPercentage { get; set; }
         public TestStatusEnum Status { get; set; }
         public TestResultStatusEnum Result { get; set; }
-        public string ResultStatusValue { get; set; }
-
+        public string ResultValue { get; set; }
     }
 }

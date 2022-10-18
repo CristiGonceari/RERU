@@ -30,6 +30,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.Rules, opts => opts.MapFrom(src => src.TestTemplate.Rules))
                 .ForMember(x => x.VerificationProgress, opts => opts.MapFrom(src => GetVerifiationStatus(src)))
                 .ForMember(x => x.Result, opts => opts.MapFrom(src => src.ResultStatus))
+                .ForMember(x => x.ResultValue, opts => opts.MapFrom(src => src.ResultStatusValue))
                 .ForMember(x => x.ViewTestResult, opts => opts.MapFrom(src => src.TestTemplate.Settings.CanViewResultWithoutVerification))
                 .ForMember(x => x.ModeStatus, opts => opts.MapFrom(src => src.TestTemplate.Mode))
                 .ForMember(x => x.EvaluatorName, opts => opts.MapFrom(src => src.Evaluator.FullName))
@@ -48,7 +49,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.MinPercent, opts => opts.MapFrom(src => src.TestTemplate.MinPercent))
                 .ForMember(x => x.AccumulatedPercentage, opts => opts.MapFrom(src => src.AccumulatedPercentage))
                 .ForMember(x => x.Status, opts => opts.MapFrom(src => ((TestStatusEnum)src.TestStatus).ToString()))
-                .ForMember(x => x.Result, opts => opts.MapFrom(src => ((TestResultStatusEnum)src.ResultStatus).ToString()));
+                .ForMember(x => x.Result, opts => opts.MapFrom(src => ((TestResultStatusEnum)src.ResultStatus).ToString()))
+                .ForMember(x => x.ResultValue, opts => opts.MapFrom(src => src.ResultStatusValue));
         }
 
         private string GetVerifiationStatus(Test inputTest)
@@ -58,7 +60,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 return "-";
             }
 
-            var verified = inputTest.TestQuestions.Where(x => x.Verified == VerificationStatusEnum.Verified || x.Verified == VerificationStatusEnum.VerifiedBySystem).Count();
+            var verified = inputTest.TestQuestions.Count(x => x.Verified is VerificationStatusEnum.Verified or VerificationStatusEnum.VerifiedBySystem);
             var all = inputTest.TestQuestions.Count;
 
             return $"{verified}/{all}";
