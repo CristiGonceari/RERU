@@ -20,31 +20,31 @@
         Recommended = 7,
     }
 
-    public static class TestResultStatusCalculator
-    {
-        public static TestResultStatusEnum GetPositiveQualify(this QualifyingTypeEnum type)
-        {
-            return type switch
-            {
-                QualifyingTypeEnum.PassedNotPassed => TestResultStatusEnum.Passed,
-                QualifyingTypeEnum.AbleNotAble => TestResultStatusEnum.Able,
-                QualifyingTypeEnum.AcceptedRejected => TestResultStatusEnum.Accepted,
-                QualifyingTypeEnum.Recommended => TestResultStatusEnum.Recommended,
-                _ => TestResultStatusEnum.NoResult
-            };
-        }
+    //public static class TestResultStatusCalculator
+    //{
+    //    public static TestResultStatusEnum GetPositiveQualify(this QualifyingTypeEnum type)
+    //    {
+    //        return type switch
+    //        {
+    //            QualifyingTypeEnum.PassedNotPassed => TestResultStatusEnum.Passed,
+    //            QualifyingTypeEnum.AbleNotAble => TestResultStatusEnum.Able,
+    //            QualifyingTypeEnum.AcceptedRejected => TestResultStatusEnum.Accepted,
+    //            QualifyingTypeEnum.Recommended => TestResultStatusEnum.Recommended,
+    //            _ => TestResultStatusEnum.NoResult
+    //        };
+    //    }
 
-        public static TestResultStatusEnum GetNegativeQualify(this QualifyingTypeEnum type)
-        {
-            return type switch
-            {
-                QualifyingTypeEnum.PassedNotPassed => TestResultStatusEnum.NotPassed,
-                QualifyingTypeEnum.AbleNotAble => TestResultStatusEnum.NotAble,
-                QualifyingTypeEnum.AcceptedRejected => TestResultStatusEnum.Rejected,
-                QualifyingTypeEnum.Recommended => TestResultStatusEnum.Recommended,
-                _ => TestResultStatusEnum.NoResult
-            };
-        }
+    //    public static TestResultStatusEnum GetNegativeQualify(this QualifyingTypeEnum type)
+    //    {
+    //        return type switch
+    //        {
+    //            QualifyingTypeEnum.PassedNotPassed => TestResultStatusEnum.NotPassed,
+    //            QualifyingTypeEnum.AbleNotAble => TestResultStatusEnum.NotAble,
+    //            QualifyingTypeEnum.AcceptedRejected => TestResultStatusEnum.Rejected,
+    //            QualifyingTypeEnum.Recommended => TestResultStatusEnum.Recommended,
+    //            _ => TestResultStatusEnum.NoResult
+    //        };
+    //    }
 
-    }
+    //}
 }
