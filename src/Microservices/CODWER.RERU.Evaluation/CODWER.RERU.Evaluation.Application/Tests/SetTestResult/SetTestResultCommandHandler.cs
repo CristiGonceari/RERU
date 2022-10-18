@@ -35,7 +35,5 @@ namespace CODWER.RERU.Evaluation.Application.Tests.SetTestResult
 
             return Unit.Value;
         }
-
-        private 
     }
 }
