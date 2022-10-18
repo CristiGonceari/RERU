@@ -158,6 +158,12 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                 case MedicalColumnEnum:
                     result = EnumMessages.GetMedicalColumnEnum((MedicalColumnEnum)result);
                     break;
+                case TestTemplateStatusEnum:
+                    result = EnumMessages.GetTestTemplateEnum((TestTemplateStatusEnum)result);
+                    break;
+                case QualifyingTypeEnum:
+                    result = EnumMessages.GetTestTemplateQualifyingType((QualifyingTypeEnum)result);
+                    break;
                 case null: result = "-";
                     break;
             }

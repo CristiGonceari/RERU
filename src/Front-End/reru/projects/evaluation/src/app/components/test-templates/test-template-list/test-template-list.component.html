@@ -33,6 +33,9 @@
                 <div class="col">
                   <app-search-test-mode (filter)="testTable.setFilter('mode', $event)" #mode></app-search-test-mode>
                 </div>
+                <div class="col">
+                  <app-search-qualifying-type (filter)="testTable.setFilter('qualifyingType', $event)" #qualifyingType></app-search-qualifying-type>
+                </div>
                 <div class="col text-center">
                   <app-button (handle)="clearFields(); testTable.resetFilters()" [value]="'button.reset' | translate"></app-button>
                 </div>
