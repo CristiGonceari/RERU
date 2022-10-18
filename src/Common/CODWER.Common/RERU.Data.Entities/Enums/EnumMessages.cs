@@ -17,6 +17,7 @@
         public const string Draft = "Maculator";
         public const string Active = "Activ";
         public const string Inactive = "Inactiv";
+        public const string Canceled = "Anulat";
         public const string NoResult = "Fără rezultat";
         public const string Passed = "Susținut";
         public const string NotPassed = "Nesusținut";
@@ -28,6 +29,10 @@
         public const string Rejected = "Respins";
 
         public const string Recommended = "Se recomandă/Nu se recomanda";
+        public const string PassedNotPassed = "Susținut/Nesusținut";
+        public const string AbleNotAble = "Apt/Inapt";
+        public const string AcceptedRejected = "Admis/Respins";
+        public const string NoQualifying = "Nici o calificare";
 
         //public const string NotRecommended = "Nu se recomandă";
         public const string Test = "Test";
@@ -124,6 +129,30 @@
                 MedicalColumnEnum.Column2 => Column2,
                 MedicalColumnEnum.Column3 => Column3,
                 MedicalColumnEnum.Column4 => Column4,
+                _ => "-"
+            };
+        }
+
+        public static string GetTestTemplateEnum(TestTemplateStatusEnum testTemplateEnum)
+        {
+            return testTemplateEnum switch
+            {
+                TestTemplateStatusEnum.Draft => Draft,
+                TestTemplateStatusEnum.Active => Active,
+                TestTemplateStatusEnum.Canceled => Canceled,
+                _ => "-"
+            };
+        }
+
+        public static string GetTestTemplateQualifyingType(QualifyingTypeEnum qualifyingType)
+        {
+            return qualifyingType switch
+            {
+                QualifyingTypeEnum.PassedNotPassed => PassedNotPassed,
+                QualifyingTypeEnum.AbleNotAble => AbleNotAble,
+                QualifyingTypeEnum.AcceptedRejected => AcceptedRejected,
+                QualifyingTypeEnum.Recommended => Recommended,
+                QualifyingTypeEnum.NoQualifying => NoQualifying,
                 _ => "-"
             };
         }
