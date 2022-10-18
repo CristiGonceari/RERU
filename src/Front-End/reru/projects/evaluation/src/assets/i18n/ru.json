@@ -795,7 +795,8 @@
     "set-can-be-solicited": "Добавьте в необходимые тесты",
     "unset-from-can-be-solicited": "Удалить из обязательных тестов",
     "can-be-solicited": "Его можно запросить",
-    "search-by-test-mode": "Поиск по типу шаблона"
+    "search-by-test-mode": "Поиск по типу шаблона",
+    "info-tag": "Если роль не выбрана, шаблона доступен для всех ролей"
 },
   "plans": {
     "plans": "Планы",

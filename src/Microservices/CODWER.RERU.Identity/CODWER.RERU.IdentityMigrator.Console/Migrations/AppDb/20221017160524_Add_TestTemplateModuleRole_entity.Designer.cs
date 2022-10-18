@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RERU.Data.Persistence.Context;
@@ -9,9 +10,10 @@ using RERU.Data.Persistence.Context;
 namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221017160524_Add_TestTemplateModuleRole_entity")]
+    partial class Add_TestTemplateModuleRole_entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,12 +127,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime?>("DeleteTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
@@ -203,12 +199,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime?>("DeleteTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
@@ -1888,9 +1878,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("MediaFileId")
-                        .HasColumnType("text");
-
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -1903,46 +1890,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasKey("Id");
 
                     b.ToTable("Articles");
-                });
-
-            modelBuilder.Entity("RERU.Data.Entities.PersonalEntities.ArticlePersonalModuleRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("CreateById")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime?>("DeleteTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("UpdateById")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("ArticlePersonalModuleRoles");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.PersonalEntities.Configurations.Holiday", b =>
@@ -7071,25 +7018,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("QuestionUnit");
                 });
 
-            modelBuilder.Entity("RERU.Data.Entities.PersonalEntities.ArticlePersonalModuleRole", b =>
-                {
-                    b.HasOne("RERU.Data.Entities.PersonalEntities.Article", "Article")
-                        .WithMany("ArticleRoles")
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RERU.Data.Entities.ModuleRole", "Role")
-                        .WithMany("ArticlePersonalRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Article");
-
-                    b.Navigation("Role");
-                });
-
             modelBuilder.Entity("RERU.Data.Entities.PersonalEntities.Contact", b =>
                 {
                     b.HasOne("RERU.Data.Entities.PersonalEntities.Contractor", "Contractor")
@@ -8448,18 +8376,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.Navigation("ArticleEvaluationRoles");
 
-                    b.Navigation("ArticlePersonalRoles");
-
                     b.Navigation("Permissions");
 
                     b.Navigation("TestTemplateModuleRoles");
 
                     b.Navigation("UserProfileModuleRoles");
-                });
-
-            modelBuilder.Entity("RERU.Data.Entities.PersonalEntities.Article", b =>
-                {
-                    b.Navigation("ArticleRoles");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.PersonalEntities.Contractor", b =>

@@ -17,6 +17,7 @@ export class TestTemplateOverviewComponent implements OnInit {
   testTemplate: TestTemplate;
   testEnum = TestTemplateModeEnum;
   isLoading: boolean = false;
+  roles: any;
 
   constructor(
     private service: TestTemplateService,
@@ -39,6 +40,7 @@ export class TestTemplateOverviewComponent implements OnInit {
           this.testTemplate = res.data;
           this.isLoading = false;
           this.status = TestTemplateStatusEnum[res.data.status];
+          this.roles = this.testTemplate.roles;
         }
     })
   }

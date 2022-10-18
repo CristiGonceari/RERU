@@ -793,7 +793,8 @@
     "set-can-be-solicited": "Adăugati in teste solicitate",
     "unset-from-can-be-solicited": "Scoateti din teste solicitate",
     "can-be-solicited": "Poate fi solicitat",
-    "search-by-test-mode": "Căutați după tipul de șablon"
+    "search-by-test-mode": "Căutați după tipul de șablon",
+    "info-tag": "Dacă nu este selectat nici un șablon, șablon este disponibil pentru toate rolurile"
 },
   "plans": {
     "plans": "Planuri",

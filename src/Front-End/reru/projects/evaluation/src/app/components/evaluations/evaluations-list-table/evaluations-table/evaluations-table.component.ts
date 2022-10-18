@@ -314,7 +314,7 @@ export class EvaluationsTableComponent implements OnInit {
     
 		this.testService.printEvaluations(data).subscribe(response => {
 			if (response) {
-				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(2).slice(0, -2);
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(1).slice(0, -2);
 				const blob = new Blob([response.body], { type: response.body.type });
 				const file = new File([blob], fileName, { type: response.body.type });
 				saveAs(file);
