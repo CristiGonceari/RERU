@@ -10,12 +10,13 @@
             <thead class="text-uppercase text-muted">
                 <tr>
                     <th scope="col">{{'tests.template-name' | translate}}</th>
-                    <th scope="col" class="text-left" style="width: 120px">{{'tests.category-used-count' | translate}}</th>
-                    <th scope="col" class="text-left" style="width: 120px">{{'tests.questions-to-use-count' | translate}}</th>
-                    <th scope="col" class="text-left" style="width: 100px">{{'tests.time-min' | translate}}</th>
-                    <th scope="col" class="text-left" style="width: 130px">{{'verify-test.min-points' | translate}}</th>
-                    <th scope="col" class="text-left" style="width: 75px">{{'tests.mode' | translate}}</th>
-                    <th scope="col" class="text-left" style="width: 75px">{{'tests.status' | translate}}</th>
+                    <th scope="col" class="text-center" style="width: 120px">{{'tests.category-used-count' | translate}}</th>
+                    <th scope="col" class="text-center" style="width: 120px">{{'tests.questions-to-use-count' | translate}}</th>
+                    <th scope="col" class="text-center" style="width: 100px">{{'tests.time-min' | translate}}</th>
+                    <th scope="col" class="text-center" style="width: 130px">{{'verify-test.min-points' | translate}}</th>
+                    <th scope="col" class="text-center" style="width: 75px">{{'tests.mode' | translate}}</th>
+                    <th scope="col" class="text-center" style="width: 150px">{{'test-template.qualifying-type' | translate}}</th>
+                    <th scope="col" class="text-center" style="width: 75px">{{'tests.status' | translate}}</th>
                     <th scope="col" style="width: 48px"></th> 
                 </tr>
             </thead>
@@ -33,6 +34,8 @@
                         <span *ngIf="testTemplate.minPercent == 0">-</span>
                     </td>
                     <td>{{'statuses.' + modeEnum[testTemplate.mode] | translate}}</td>
+                    <td style="text-align: center;" *ngIf="testTemplate.qualifyingType != null">{{'statuses.' + qualifyingType[testTemplate.qualifyingType] | translate}}</td>
+                    <td style="text-align: center;" *ngIf="testTemplate.qualifyingType == null">-</td>
                     <td>{{'statuses.' + statusEnum[testTemplate.status] | translate}}</td>
                     <td data-field="Actions" data-autohide-disabled="false"
                         class="datatable-cell datatable-cell-sort p-3">

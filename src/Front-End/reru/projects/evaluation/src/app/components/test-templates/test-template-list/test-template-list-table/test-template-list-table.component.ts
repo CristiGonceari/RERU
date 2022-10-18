@@ -18,6 +18,7 @@ import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18
 import { forkJoin } from 'rxjs';
 import { GenerateDocumentModalComponent } from 'projects/evaluation/src/app/utils/modals/generate-document-modal/generate-document-modal.component';
 import { FileTypeEnum } from '../../../../utils/enums/file-type.enum';
+import { QualifyingTypeEnum } from 'projects/evaluation/src/app/utils/enums/qualifying-type.enum';
 @Component({
 	selector: 'app-test-template-list-table',
 	templateUrl: './test-template-list-table.component.html',
@@ -30,6 +31,7 @@ export class TestTemplateListTableComponent implements OnInit {
 	eventName: string;
 	testName: string;
 	modeEnum = TestTemplateModeEnum;
+	qualifyingType = QualifyingTypeEnum;
 
 	keyword: string;
 	status: string = '';
