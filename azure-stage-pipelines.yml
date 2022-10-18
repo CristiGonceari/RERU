@@ -39,92 +39,97 @@ stages:
                 {
                   $name=$temp[$i]
                   echo "this is $name file"
-                  if ($name -like "src/Microservices/CODWER.RERU.Identity/CODWER.RERU.IdentityMigrator.Console/*" -or $override -eq 'True')
-                    {
-                      echo "##vso[task.setvariable variable=BuildIdentityMigrator]True"
-                    }
+                  # if ($name -like "src/Microservices/CODWER.RERU.Identity/CODWER.RERU.IdentityMigrator.Console/*" -or $override -eq 'True')
+                  #   {
+                  #     echo "##vso[task.setvariable variable=BuildIdentityMigrator]True"
+                  #   }
 
-                  if ($name -like "src/Microservices/CODWER.RERU.Storage/CODWER.RERU.Storage.Console/*" -or $override -eq 'True')
-                    {
-                      echo "##vso[task.setvariable variable=BuildStorageMigrator]True"
-                    }
+                  # if ($name -like "src/Microservices/CODWER.RERU.Storage/CODWER.RERU.Storage.Console/*" -or $override -eq 'True')
+                  #   {
+                  #     echo "##vso[task.setvariable variable=BuildStorageMigrator]True"
+                  #   }
 
-                  if ($name -like "src/Microservices/CODWER.RERU.Identity/CODWER.RERU.Identity.Web/*" -or $override -eq 'True')
-                    {
-                      echo "##vso[task.setvariable variable=BuildIdentityNew]True"
-                    }
+                  # if ($name -like "src/Microservices/CODWER.RERU.Identity/CODWER.RERU.Identity.Web/*" -or $override -eq 'True')
+                  #   {
+                  #     echo "##vso[task.setvariable variable=BuildIdentityNew]True"
+                  #   }
 
-                  if ($name -like "src/Microservices/CODWER.RERU.Gateway/CODWER.RERU.Gateway.Public/*" -or $override -eq 'True')
-                    {
-                      echo "##vso[task.setvariable variable=BuildPublicGateway]True"
-                    }
+                  # if ($name -like "src/Microservices/CODWER.RERU.Gateway/CODWER.RERU.Gateway.Public/*" -or $override -eq 'True')
+                  #   {
+                  #     echo "##vso[task.setvariable variable=BuildPublicGateway]True"
+                  #   }
 
-                  if ($name -like "src/Microservices/CODWER.RERU.Gateway/CODWER.RERU.Gateway.Internal/*" -or $override -eq 'True')
-                    {
-                      echo "##vso[task.setvariable variable=BuildInternalGateway]True"
-                    }
+                  # if ($name -like "src/Microservices/CODWER.RERU.Gateway/CODWER.RERU.Gateway.Internal/*" -or $override -eq 'True')
+                  #   {
+                  #     echo "##vso[task.setvariable variable=BuildInternalGateway]True"
+                  #   }
 
-                  if ($name -like "src/Microservices/CODWER.RERU.Core/*" -or $override -eq 'True')
-                    {
-                      echo "##vso[task.setvariable variable=BuildCore]True"
-                    }
+                  # if ($name -like "src/Microservices/CODWER.RERU.Core/*" -or $override -eq 'True')
+                  #   {
+                  #     echo "##vso[task.setvariable variable=BuildCore]True"
+                  #   }
                      
-                  if ($name -like "src/Microservices/CODWER.RERU.Logging/*" -or $override -eq 'True')
-                    {
-                      echo "##vso[task.setvariable variable=BuildLogging]True"
-                    }
+                  # if ($name -like "src/Microservices/CODWER.RERU.Logging/*" -or $override -eq 'True')
+                  #   {
+                  #     echo "##vso[task.setvariable variable=BuildLogging]True"
+                  #   }
 
-                  if ($name -like "src/Microservices/CODWER.RERU.Personal/*" -or $override -eq 'True')
-                    {
-                      echo "##vso[task.setvariable variable=BuildPersonal]True"
-                    }                
+                  # if ($name -like "src/Microservices/CODWER.RERU.Personal/*" -or $override -eq 'True')
+                  #   {
+                  #     echo "##vso[task.setvariable variable=BuildPersonal]True"
+                  #   }                
 
-                  if ($name -like "src/Microservices/CODWER.RERU.Evaluation/*" -or $override -eq 'True')
-                    {
-                      echo "##vso[task.setvariable variable=BuildEvaluation]True"
-                    }
+                  # if ($name -like "src/Microservices/CODWER.RERU.Evaluation/*" -or $override -eq 'True')
+                  #   {
+                  #     echo "##vso[task.setvariable variable=BuildEvaluation]True"
+                  #   }
 
-                  if ($name -like "src/Front-End/reru/projects/core/*" -or $override -eq 'True')
-                    {
-                      echo "##vso[task.setvariable variable=BuildCoreFe]True"
-                    }
+                  # if ($name -like "src/Front-End/reru/projects/core/*" -or $override -eq 'True')
+                  #   {
+                  #     echo "##vso[task.setvariable variable=BuildCoreFe]True"
+                  #   }
 
-                  if ($name -like "src/Front-End/reru/projects/logging/*" -or $override -eq 'True')
-                    {
-                      echo "##vso[task.setvariable variable=BuildLoggingFe]True"
-                    }
+                  # if ($name -like "src/Front-End/reru/projects/logging/*" -or $override -eq 'True')
+                  #   {
+                  #     echo "##vso[task.setvariable variable=BuildLoggingFe]True"
+                  #   }
 
-                  if ($name -like "src/Front-End/reru/projects/personal/*" -or $override -eq 'True')
-                    {
-                      echo "##vso[task.setvariable variable=BuildPersonalFE]True"
-                    }
+                  # if ($name -like "src/Front-End/reru/projects/personal/*" -or $override -eq 'True')
+                  #   {
+                  #     echo "##vso[task.setvariable variable=BuildPersonalFE]True"
+                  #   }
 
-                  if ($name -like "src/Front-End/reru/projects/evaluation/*" -or $override -eq 'True')
-                    {
+                  # if ($name -like "src/Front-End/reru/projects/evaluation/*" -or $override -eq 'True')
+                  #   {
+                  #     echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
+                  #   }
+
+                  # if ($name -like "src/Front-End/reru/projects/erp-shared/*" -or $override -eq 'True')
+                  #   {
+                  #     echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
+                  #     echo "##vso[task.setvariable variable=BuildPersonalFE]True"
+                  #     echo "##vso[task.setvariable variable=BuildCoreFe]True"
+                  #     echo "##vso[task.setvariable variable=BuildLoggingFe]True"
+                  #   }
+
+                  # if ($name -like "src/Common/*" -or $override -eq 'True')
+                  #   {
+                  #     echo "##vso[task.setvariable variable=BuildCore]True"
+                  #     echo "##vso[task.setvariable variable=BuildEvaluation]True"
+                  #     echo "##vso[task.setvariable variable=BuildPersonal]True"
+                  #     echo "##vso[task.setvariable variable=BuildLogging]True"
+
+                  #     echo "##vso[task.setvariable variable=BuildIdentityMigrator]True"
+                  #     echo "##vso[task.setvariable variable=BuildStorageMigrator]True"
+                  #     echo "##vso[task.setvariable variable=BuildIdentityNew]True"
+                  #     echo "##vso[task.setvariable variable=BuildPublicGateway]True"
+                  #     echo "##vso[task.setvariable variable=BuildInternalGateway]True"
+                  #   }
+
                       echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
-                    }
-
-                  if ($name -like "src/Front-End/reru/projects/erp-shared/*" -or $override -eq 'True')
-                    {
-                      echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
                       echo "##vso[task.setvariable variable=BuildPersonalFE]True"
                       echo "##vso[task.setvariable variable=BuildCoreFe]True"
                       echo "##vso[task.setvariable variable=BuildLoggingFe]True"
-                    }
-
-                  if ($name -like "src/Common/*" -or $override -eq 'True')
-                    {
-                      echo "##vso[task.setvariable variable=BuildCore]True"
-                      echo "##vso[task.setvariable variable=BuildEvaluation]True"
-                      echo "##vso[task.setvariable variable=BuildPersonal]True"
-                      echo "##vso[task.setvariable variable=BuildLogging]True"
-
-                      echo "##vso[task.setvariable variable=BuildIdentityMigrator]True"
-                      echo "##vso[task.setvariable variable=BuildStorageMigrator]True"
-                      echo "##vso[task.setvariable variable=BuildIdentityNew]True"
-                      echo "##vso[task.setvariable variable=BuildPublicGateway]True"
-                      echo "##vso[task.setvariable variable=BuildInternalGateway]True"
-                    }
 
                       echo "##vso[task.setvariable variable=BuildCore]True"
                       echo "##vso[task.setvariable variable=BuildEvaluation]True"
