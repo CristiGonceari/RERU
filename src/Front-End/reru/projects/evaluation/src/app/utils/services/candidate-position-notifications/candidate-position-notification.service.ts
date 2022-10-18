@@ -15,4 +15,8 @@ export class CandidatePositionNotificationService extends AbstractService {
 	getUserIds(candidatePositionId: number): Observable<any> {
 		return this.client.get<any>(`${this.baseUrl}/${this.urlRoute}/${candidatePositionId}`);
 	}
+
+	getMyId(): Observable<any> {
+		return this.client.get<any>(`${this.baseUrl}/${this.urlRoute}`);
+	}
 }

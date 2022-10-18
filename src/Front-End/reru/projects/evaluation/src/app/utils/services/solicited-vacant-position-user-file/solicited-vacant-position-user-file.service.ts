@@ -19,7 +19,11 @@ export class SolicitedVacantPositionUserFileService extends AbstractService {
 	}
 
 	create(data): Observable<any> {
-		return this.http.post(`${this.baseUrl}/${this.urlRoute}`, data);
+		return this.http.post(`${this.baseUrl}/${this.urlRoute}`, data, { 
+			reportProgress: true,
+			observe: 'events',
+			responseType: 'blob' as 'json'
+		});
 	}
 
 	get(fileId: string): Observable<any> {

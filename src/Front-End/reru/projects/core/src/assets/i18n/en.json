@@ -487,7 +487,12 @@
     "remove-msg": "Are you sure you want to remove this article?",
     "succes-remove-msg": "Article was successfully deleted",
     "succes-add-msg": "Article was successfully added",
-    "succes-edit-msg": "Article was successfully edited"
+    "succes-edit-msg": "Article was successfully edited",
+    "article-details": "Article details",
+    "contains-media": "Contains media",
+    "info-tag": "If no role is selected, the article is available for all roles",
+    "info-roles": "The roles that can view this article",
+    "module-roles": "Module roles"
   },
   "departments": {
     "overview": "Overview",

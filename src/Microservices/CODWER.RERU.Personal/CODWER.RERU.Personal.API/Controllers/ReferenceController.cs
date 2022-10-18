@@ -22,6 +22,8 @@ using CODWER.RERU.Personal.Application.References.GetCandidateNationalites;
 using CODWER.RERU.Personal.Application.References.GetStudyTypes;
 using CODWER.RERU.Personal.Application.References.GetModernLanguages;
 using CODWER.RERU.Personal.Application.References.GetMaterialStatusType;
+using CODWER.RERU.Personal.Application.References.GetPersonalRoles;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CODWER.RERU.Personal.API.Controllers
 {
@@ -251,6 +253,14 @@ namespace CODWER.RERU.Personal.API.Controllers
             var items = EnumConverter<MilitaryObligationTypeEnum>.SelectValues;
 
             return items;
+        }
+
+        [HttpGet("article-roles/select-values")]
+        public async Task<List<SelectItem>> GetPersonalRoles()
+        {
+            var query = new GetPersonalRolesQuery();
+
+            return await Mediator.Send(query);
         }
     }
 }

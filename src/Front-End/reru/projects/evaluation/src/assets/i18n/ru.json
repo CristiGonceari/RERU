@@ -656,7 +656,11 @@
     "succes-remove-msg": "Статья была успешно удалена",
     "succes-add-msg": "Статья была успешно добавлена",
     "succes-edit-msg": "Статья была успешно обновлена",
-    "article-details": "Детали cтатьи"
+    "article-details": "Детали cтатьи",
+    "contains-media": "Содержит медиа",
+    "info-tag": "Если роль не выбрана, статья доступна для всех ролей",
+    "info-roles": "Роли, которые могут просматривать эту статью",
+    "module-roles": "Роли модуля"
   },
   "locations": {
     "locations": "Локации",
@@ -1019,7 +1023,8 @@
     "evaluation-data": "Введите детали оценки и подтвердите",
     "received-evaluations": "Полученные оценки",
     "granted-evaluations": "Выставленные оценки",
-    "performed-tests": "Проведенные тесты"
+    "performed-tests": "Проведенные тесты",
+    "attach-notified-users": "Уведомленные пользователи"
   },
   "footer": {
     "all-rights-reserved": "Все права защищены",

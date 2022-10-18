@@ -65,6 +65,7 @@
     "ngx-cookie-service": "^10.0.1",
     "ngx-dropzone": "^2.2.2",
     "ngx-org-chart": "^1.1.1",
+    "ngx-spinner": "^6.1.2",
     "oidc-client": "^1.11.5",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",

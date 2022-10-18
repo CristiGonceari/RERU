@@ -73,7 +73,7 @@ export class PositionsComponent implements OnInit {
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['name', 'responsiblePerson', 'from', 'to', 'isActive'];
+		let headersDto = ['name', 'responsiblePerson', 'from', 'to', 'medicalColumn', 'isActive'];
 		for (let i=0; i<headersHtml.length-1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}

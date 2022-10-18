@@ -1,4 +1,6 @@
-﻿using CVU.ERP.StorageService.Models;
+﻿using System.Collections.Generic;
+using CVU.ERP.Common.DataTransferObjects.SelectValues;
+using CVU.ERP.StorageService.Models;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.Articles
 {
@@ -9,5 +11,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Articles
         public string Content { get; set; }
         public AddFileDto? FileDto { get; set; }
         public string MediaFileId { get; set; }
+        public bool ContainsMedia { get; set; }
+        public List<SelectItem> Roles { get; set; }
     }
 }

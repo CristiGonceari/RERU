@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using RERU.Data.Entities.Enums;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CODWER.RERU.Core.Application.References.GetCoreRoles;
 
 namespace CODWER.RERU.Core.API.Controllers
 {
@@ -128,5 +129,12 @@ namespace CODWER.RERU.Core.API.Controllers
             return items;
         }
 
+        [HttpGet("article-roles/select-values")]
+        public async Task<List<SelectItem>> GetCoreRoles()
+        {
+            var query = new GetCoreRolesQuery();
+
+            return await Mediator.Send(query);
+        }
     }
 }

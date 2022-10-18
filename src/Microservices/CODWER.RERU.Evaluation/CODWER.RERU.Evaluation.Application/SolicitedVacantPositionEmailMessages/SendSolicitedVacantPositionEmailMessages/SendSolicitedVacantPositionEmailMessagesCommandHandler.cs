@@ -70,7 +70,14 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
         {
             foreach (var eventDto in events)
             {
-                if (await ExistEventUser(userProfileId, eventDto.Id)) continue;
+                if (await ExistEventUser(userProfileId, eventDto.Id))
+                {
+                    var eventUser = await GetEventUser(userProfileId, eventDto.Id);
+
+                    await AddEventUserCandidatePosition(eventUser.Id, positionId);
+
+                    continue;
+                }
 
                 var newEventUser = new AddEventPersonDto
                 {
@@ -84,10 +91,23 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
                 await _appDbContext.EventUsers.AddAsync(result);
                 await _appDbContext.SaveChangesAsync();
 
+                await AddEventUserCandidatePosition(result.Id, positionId);
+
                 await AddEmailEventUserNotification(result);
 
             }
             await _appDbContext.SaveChangesAsync();
+        }
+
+        private async Task AddEventUserCandidatePosition(int userEventId, int positionId)
+        {
+            var eventUserCandidatePosition = new EventUserCandidatePosition
+            {
+                EventUserId = userEventId,
+                CandidatePositionId = positionId
+            };
+
+            await _appDbContext.EventUserCandidatePositions.AddAsync(eventUserCandidatePosition);
         }
 
         private async Task SendEmail(string template, SolicitedVacantPosition solicitedPosition, SendSolicitedVacantPositionEmailMessagesCommand request)
@@ -146,5 +166,9 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
         private async Task<bool> ExistEventUser(int userProfileId, int eventId) => 
             await _appDbContext.EventUsers.AnyAsync(x =>
                 x.EventId == eventId && x.UserProfileId == userProfileId);
+
+        private async Task<EventUser> GetEventUser(int userProfileId, int eventId) =>
+            await _appDbContext.EventUsers.FirstAsync(x =>
+                x.UserProfileId == userProfileId && x.EventId == eventId);
     }
 }

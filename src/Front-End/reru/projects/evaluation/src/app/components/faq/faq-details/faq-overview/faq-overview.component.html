@@ -14,6 +14,20 @@
                     <p class="font-size-lg m-0">{{articleName}}</p>
                 </div>
             </div>
+            <div class="form-group row align-items-center mb-2" *ngIf="fileId!=null">
+                <label class="col-xl-2 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">Media:</label>
+                <div class="col-lg-9 col-xl-10">
+                  <div *ngIf="fileId!=null">
+                    <app-get-media-file [fileId]="fileId"></app-get-media-file>
+                  </div>
+                </div>
+            </div>
+            <div class="form-group row align-items-center mb-2" *ngIf="roles.length > 0">
+                <label class="col-xl-2 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">{{'faq.info-roles' | translate}}:</label>
+                <div class="col-lg-9 col-xl-10">
+                    <span class="font-size-lg m-0">{{roles}}</span>
+                </div>
+            </div>
             <div class="form-group row align-items-center mb-2">
                 <label class="col-xl-2 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted" style="white-space: nowrap;">
                     {{'faq.content' | translate}}:</label>

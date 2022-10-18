@@ -22,6 +22,7 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<EventResponsiblePerson> EventResponsiblePersons { get; set; }
         public virtual DbSet<EventUser> EventUsers { get; set; }
+        public virtual DbSet<EventUserCandidatePosition> EventUserCandidatePositions { get; set; }
         public virtual DbSet<EventLocation> EventLocations { get; set; }
         public virtual DbSet<EventEvaluator> EventEvaluators { get; set; }
         public virtual DbSet<EventTestTemplate> EventTestTemplates { get; set; }
@@ -48,5 +49,6 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<EmailNotification> EmailNotifications { get; set; }
         public virtual DbSet<EmailNotificationProperty> EmailNotificationProperties { get; set; }
         public virtual DbSet<CandidatePositionNotification> CandidatePositionNotifications { get; set; }
+        public virtual DbSet<ArticleEvaluationModuleRole> ArticleEvaluationModuleRoles { get; set; }
     }
 }

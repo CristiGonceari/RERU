@@ -150,6 +150,11 @@ export class EvaluationsTableComponent implements OnInit {
     this.referenceService.getTestResults().subscribe((res) => this.testResultsList = res.data);
   }
 
+  parseCandidatePositions(candidatePositionsNames: string[]){
+    let string = candidatePositionsNames.join();
+        return string.split(',').join(', ');
+  }
+
   stopTest(id): void {
     forkJoin([
 			this.translate.get('modal.finish-test'),

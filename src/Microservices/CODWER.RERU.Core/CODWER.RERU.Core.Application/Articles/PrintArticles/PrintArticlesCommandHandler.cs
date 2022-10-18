@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CODWER.RERU.Core.DataTransferObjects.Articles;
 using CVU.ERP.Module.Application.TableExportServices;
 using CVU.ERP.Module.Application.TableExportServices.Interfaces;
+using CVU.ERP.ServiceProvider;
 using RERU.Data.Persistence.Context;
 using RERU.Data.Entities;
 
@@ -14,16 +15,20 @@ namespace CODWER.RERU.Core.Application.Articles.PrintArticles
     {
         private readonly AppDbContext _appDbContext;
         private readonly IExportData<ArticleCore, ArticleCoreDto> _printer;
+        private readonly ICurrentApplicationUserProvider _currentApplication;
 
-        public PrintArticlesCommandHandler(AppDbContext appDbContext, IExportData<ArticleCore, ArticleCoreDto> printer)
+        public PrintArticlesCommandHandler(AppDbContext appDbContext, IExportData<ArticleCore, ArticleCoreDto> printer, ICurrentApplicationUserProvider currentApplication)
         {
             _appDbContext = appDbContext;
             _printer = printer;
+            _currentApplication = currentApplication;
         }
 
         public async Task<FileDataDto> Handle(PrintArticlesCommand request, CancellationToken cancellationToken)
         {
-            var articles = GetAndFilterArticles.Filter(_appDbContext, request.Name);
+            var currentUser = await _currentApplication.Get();
+
+            var articles = GetAndFilterArticles.Filter(_appDbContext, request.Name, currentUser);
 
             var result = _printer.ExportTableSpecificFormat(new TableData<ArticleCore>
             {

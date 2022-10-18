@@ -485,7 +485,12 @@
     "remove-msg": "Sigur doriți să ștergeți acest articol?",
     "succes-remove-msg": "Articol a fost șters cu succes",
     "succes-add-msg": "Articol a fost adăugat cu succes",
-    "succes-edit-msg": "Articol a fost editat cu succes"
+    "succes-edit-msg": "Articol a fost editat cu succes",
+    "article-details": "Detaliile articolului",
+    "contains-media": "Conține media",
+    "info-tag": "Dacă nu este selectat nici un rol, articolul este disponibil pentru toate rolurile",
+    "info-roles": "Rolurile care pot vizualiza acest articol",
+    "module-roles": "Rolurile modulului"
   },
   "departments": {
     "overview": "Prezentare generală",

@@ -111,6 +111,7 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<IndividualContract> Contracts { get; set; }
         public virtual DbSet<Instruction> Instructions { get; set; }
         public virtual DbSet<Article> Articles { get; set; }
+        public virtual DbSet<ArticlePersonalModuleRole> ArticlePersonalModuleRoles { get; set; }
 
         #endregion
     }

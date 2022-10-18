@@ -92,6 +92,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("MediaFileId")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -104,6 +107,40 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasKey("Id");
 
                     b.ToTable("CoreArticles");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.ArticleCoreModuleRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("ArticleCoreModuleRoles");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.ArticleEvaluation", b =>
@@ -143,6 +180,40 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasKey("Id");
 
                     b.ToTable("EvaluationArticles");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.ArticleEvaluationModuleRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("ArticleEvaluationModuleRoles");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.Autobiography", b =>
@@ -885,6 +956,46 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasIndex("UserProfileId");
 
                     b.ToTable("EventUsers");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.EventUserCandidatePosition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<int?>("CandidatePositionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("EventUserId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CandidatePositionId");
+
+                    b.HasIndex("EventUserId");
+
+                    b.ToTable("EventUserCandidatePositions");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.EventVacantPosition", b =>
@@ -1765,6 +1876,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("MediaFileId")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -1777,6 +1891,46 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasKey("Id");
 
                     b.ToTable("Articles");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.PersonalEntities.ArticlePersonalModuleRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("ArticlePersonalModuleRoles");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.PersonalEntities.Configurations.Holiday", b =>
@@ -6344,6 +6498,44 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasDiscriminator().HasValue("ParentRoleChildRole");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.ArticleCoreModuleRole", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.ArticleCore", "Article")
+                        .WithMany("ArticleRoles")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.ModuleRole", "Role")
+                        .WithMany("ArticleCoreRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.ArticleEvaluationModuleRole", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.ArticleEvaluation", "Article")
+                        .WithMany("ArticleRoles")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.ModuleRole", "Role")
+                        .WithMany("ArticleEvaluationRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.Autobiography", b =>
                 {
                     b.HasOne("RERU.Data.Entities.PersonalEntities.Contractor", "Contractor")
@@ -6543,7 +6735,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("RERU.Data.Entities.EventUser", b =>
                 {
                     b.HasOne("RERU.Data.Entities.CandidatePosition", "CandidatePosition")
-                        .WithMany()
+                        .WithMany("EventUsers")
                         .HasForeignKey("CandidatePositionId");
 
                     b.HasOne("RERU.Data.Entities.Event", "Event")
@@ -6563,6 +6755,23 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("Event");
 
                     b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.EventUserCandidatePosition", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.CandidatePosition", "CandidatePosition")
+                        .WithMany("EventUserCandidatePositions")
+                        .HasForeignKey("CandidatePositionId");
+
+                    b.HasOne("RERU.Data.Entities.EventUser", "EventUser")
+                        .WithMany("EventUserCandidatePositions")
+                        .HasForeignKey("EventUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CandidatePosition");
+
+                    b.Navigation("EventUser");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.EventVacantPosition", b =>
@@ -6808,6 +7017,25 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .IsRequired();
 
                     b.Navigation("QuestionUnit");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.PersonalEntities.ArticlePersonalModuleRole", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.PersonalEntities.Article", "Article")
+                        .WithMany("ArticleRoles")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.ModuleRole", "Role")
+                        .WithMany("ArticlePersonalRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.PersonalEntities.Contact", b =>
@@ -7671,7 +7899,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("RERU.Data.Entities.UserProfileModuleRole", b =>
                 {
                     b.HasOne("RERU.Data.Entities.ModuleRole", "ModuleRole")
-                        .WithMany()
+                        .WithMany("UserProfileModuleRole")
                         .HasForeignKey("ModuleRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -8079,9 +8307,23 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("ParentRole");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.ArticleCore", b =>
+                {
+                    b.Navigation("ArticleRoles");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.ArticleEvaluation", b =>
+                {
+                    b.Navigation("ArticleRoles");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.CandidatePosition", b =>
                 {
                     b.Navigation("CandidatePositionNotifications");
+
+                    b.Navigation("EventUserCandidatePositions");
+
+                    b.Navigation("EventUsers");
 
                     b.Navigation("RequiredDocumentPositions");
                 });
@@ -8108,6 +8350,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("Tests");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.EventUser", b =>
+                {
+                    b.Navigation("EventUserCandidatePositions");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.Location", b =>
                 {
                     b.Navigation("EventLocations");
@@ -8126,7 +8373,20 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
             modelBuilder.Entity("RERU.Data.Entities.ModuleRole", b =>
                 {
+                    b.Navigation("ArticleCoreRoles");
+
+                    b.Navigation("ArticleEvaluationRoles");
+
+                    b.Navigation("ArticlePersonalRoles");
+
                     b.Navigation("Permissions");
+
+                    b.Navigation("UserProfileModuleRole");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.PersonalEntities.Article", b =>
+                {
+                    b.Navigation("ArticleRoles");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.PersonalEntities.Contractor", b =>

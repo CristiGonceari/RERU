@@ -43,15 +43,15 @@ export class AddEditMediaFileComponent implements OnInit {
     private fileService: CloudFileService,
     public translate: I18nService,
     private modalService: NgbModal,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    if (this.fileId != undefined && this.fileId !='null') {
+    if (this.fileId != undefined && this.fileId != 'null') {
       this.isLoadingMedia = true;
       this.getMediaFile(this.fileId);
     }
   }
-  
+
   getMediaFile(fileId) {
     this.isLoadingMedia = true;
     this.fileService.get(fileId).subscribe(res => {
@@ -137,7 +137,7 @@ export class AddEditMediaFileComponent implements OnInit {
       case HttpEventType.UploadProgress:
         this.updateStatus(httpEvent.loaded, httpEvent.total, 'Uploading...')
         this.disableBtn.emit(true);
-      break;
+        break;
       case HttpEventType.DownloadProgress:
         this.updateStatus(httpEvent.loaded, httpEvent.total, 'Downloading...')
         break;
@@ -173,9 +173,9 @@ export class AddEditMediaFileComponent implements OnInit {
   // showImage(url): void {
   //   const modalRef = this.modalService.open(ShowImageModalComponent, { centered: true, size: 'xl' });
   //   modalRef.componentInstance.imageUrl = url;
-	// 	modalRef.result.then(
-	// 		() => { }
-	// 	);
+  // 	modalRef.result.then(
+  // 		() => { }
+  // 	);
   // }
 
 }

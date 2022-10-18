@@ -658,7 +658,11 @@
     "succes-remove-msg": "Article was successfully deleted",
     "succes-add-msg": "Article was successfully added",
     "succes-edit-msg": "Article was successfully edited",
-    "article-details": "Article details"
+    "article-details": "Article details",
+    "contains-media": "Contains media",
+    "info-tag": "If no role is selected, the article is available for all roles",
+    "info-roles": "The roles that can view this article",
+    "module-roles": "Module roles"
   },
   "locations": {
     "locations": "Testing locations",
@@ -1020,7 +1024,8 @@
     "evaluation-data": "Enter the evaluation details and confirm",
     "received-evaluations": "Received evaluations",
     "granted-evaluations": "Granted evaluations",
-    "performed-tests": "Performed tests"
+    "performed-tests": "Performed tests",
+    "attach-notified-users": "Notified users"
   },
   "footer": {
     "all-rights-reserved": "All rights reserved",

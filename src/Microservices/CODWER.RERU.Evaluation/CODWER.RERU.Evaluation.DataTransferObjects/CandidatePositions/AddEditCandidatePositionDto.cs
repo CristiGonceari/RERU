@@ -13,7 +13,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions
         public DateTime? From { get; set; }
         public DateTime? To { get; set; }
         public MedicalColumnEnum? MedicalColumn { get; set; }
-        public List<AssignRequiredDocumentsDto> RequiredDocuments { get; set; }
+        public List<AssignTagsValuesDto> RequiredDocuments { get; set; }
         public List<int> EventIds { get; set; }
         public List<int> UserProfileIds { get; set; }
     }

@@ -4,18 +4,18 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Persistence.Context;
 
-namespace CODWER.RERU.Personal.Application.Articles.RemoveArticle
+namespace CODWER.RERU.Personal.Application.Articles.DeleteArticle
 {
-    public class RemoveArticleCommandHandler : IRequestHandler<RemoveArticleCommand, Unit>
+    public class DeleteArticleCommandHandler : IRequestHandler<DeleteArticleCommand, Unit>
     {
         private readonly AppDbContext _appDbContext;
 
-        public RemoveArticleCommandHandler(AppDbContext appDbContext)
+        public DeleteArticleCommandHandler(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
 
-        public async Task<Unit> Handle(RemoveArticleCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteArticleCommand request, CancellationToken cancellationToken)
         {
             var articleToDelete = await _appDbContext.Articles.FirstAsync(x => x.Id == request.Id);
 

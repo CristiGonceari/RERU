@@ -14,6 +14,8 @@ export class FaqOverviewComponent implements OnInit {
   content: string ='';
   isDisabled = false;
   isLoading: boolean = true;
+  fileId: string;
+  roles = [];
 
   public Editor = DecoupledEditor;
 
@@ -39,6 +41,10 @@ export class FaqOverviewComponent implements OnInit {
       if (res && res.data) {
         this.articleName = res.data.name;
         this.content = res.data.content;
+        this.fileId = res.data.mediaFileId;
+        if(res.data.mediaFileId == "null") this.fileId = null;
+        if(res.data.roles.length > 0)
+          this.roles = res.data.roles.map(e => e.label.replace(/\s/g, "")).join(", ");
         this.isLoading = false;
       }
     })

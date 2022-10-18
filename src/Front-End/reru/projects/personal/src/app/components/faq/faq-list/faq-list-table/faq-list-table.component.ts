@@ -61,7 +61,7 @@ export class FaqListTableComponent implements OnInit {
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['name', 'content'];
+		let headersDto = ['name', 'content', 'containsMedia'];
 		for (let i=0; i<headersHtml.length-1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML })
 		}
@@ -108,13 +108,13 @@ export class FaqListTableComponent implements OnInit {
 	}
 
 	navigate(id) {
-		this.router.navigate(['faq-details/', id, 'overview'], { relativeTo: this.route });
+		this.router.navigate(['faq-details/', id], { relativeTo: this.route });
 	}
 
 	deleteArticle(id): void {
 		this.articleService.delete(id).subscribe(() => {
 			forkJoin([
-				this.translate.get('modal.success'),
+				this.translate.get('notification.title.success'),
 				this.translate.get('faq.succes-remove-msg'),
 			]).subscribe(([title, description]) => {
 				this.title = title;

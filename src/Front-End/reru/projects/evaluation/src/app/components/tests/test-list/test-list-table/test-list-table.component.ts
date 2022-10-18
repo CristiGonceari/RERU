@@ -105,6 +105,11 @@ export class TestListTableComponent implements OnInit {
     }
   }
 
+  parseCandidatePositions(candidatePositionsNames: string[]){
+    let string = candidatePositionsNames.join();
+        return string.split(',').join(', ');
+  }
+
   getTests(data: any = {}) {
     this.setTimeToSearch();
     this.isLoading = true; 

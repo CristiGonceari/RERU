@@ -49,6 +49,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(tests, request);
 
+            paginatedModel = await CheckIfHasCandidatePosition(paginatedModel);
+
             foreach (var testDto in paginatedModel.Items)
             {
                 var eventEvaluator = _appDbContext.EventEvaluators.FirstOrDefault(x => x.EvaluatorId == currentUser.Id && x.EventId == testDto.EventId);
@@ -68,6 +70,33 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 {
                     testDto.ShowUserName = true;
                     testDto.IsEvaluator = false;
+                }
+            }
+
+            return paginatedModel;
+        }
+
+        private async Task<PaginatedModel<TestDto>> CheckIfHasCandidatePosition(PaginatedModel<TestDto> paginatedModel)
+        {
+            foreach (var item in paginatedModel.Items)
+            {
+                var eventUser = _appDbContext.EventUsers.FirstOrDefault(x => x.EventId == item.EventId && x.UserProfileId == item.UserId);
+
+                if (eventUser == null) continue;
+
+                var eventUserCandidatePositions =
+                    _appDbContext.EventUserCandidatePositions.Where(x => x.EventUserId == eventUser.Id)
+                        .Select(x => x.CandidatePositionId)
+                        .ToList();
+
+                if (!(eventUser?.PositionId > 0)) continue;
+                {
+                    var candidatePositionNames =
+                        _appDbContext.CandidatePositions.Where(p => !eventUserCandidatePositions.All(p2 => p2 != p.Id))
+                            .Select(x => x.Name)
+                            .ToList();
+
+                    item.CandidatePositionNames = candidatePositionNames;
                 }
             }
 
