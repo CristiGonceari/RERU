@@ -113,5 +113,8 @@ export class ReferenceService extends AbstractService {
   getMilitaryObligationTypeEnum(): Observable<any>{
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/military-obligation-type-enum/select-values`);
   }
- 
+
+  getArticleRoles(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/article-roles/select-values`);
+  }
 }

@@ -26,8 +26,12 @@ export class ArticlesService extends AbstractService {
 		return this.client.delete<ArticleModel>(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}
 
-	create(data: ArticleModel): Observable<ArticleModel> {
-		return this.client.post<ArticleModel>(`${this.baseUrl}/${this.urlRoute}`, data);
+	create(data: any): Observable<any> {
+		return this.client.post<any>(`${this.baseUrl}/${this.urlRoute}`, data);
+	}
+
+	edit(data: any): Observable<any> {
+		return this.client.patch<any>(`${this.baseUrl}/${this.urlRoute}`, data);
 	}
 
 	print(data): Observable<any> {

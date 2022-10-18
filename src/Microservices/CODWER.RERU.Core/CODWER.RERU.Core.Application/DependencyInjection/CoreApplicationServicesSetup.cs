@@ -7,6 +7,8 @@ using CODWER.RERU.Core.Application.Common.Services.Implementation;
 using CODWER.RERU.Core.Application.Common.Services.PasswordGenerator;
 using CODWER.RERU.Core.Application.Module.Providers;
 using CODWER.RERU.Core.Application.Permissions;
+using CODWER.RERU.Core.Application.Services;
+using CODWER.RERU.Core.Application.Services.Implementations;
 using CVU.ERP.Module.Application.DependencyInjection;
 using CVU.ERP.Module.Common.ExceptionHandlers;
 using CVU.ERP.Module.Common.Providers;
@@ -33,6 +35,7 @@ namespace CODWER.RERU.Core.Application.DependencyInjection
             services.AddTransient<ICommonServiceProvider, CommonServiceProvider>();
             services.AddTransient<IIdentityService, IdentityServerIdentityService>();
             services.AddTransient<IPasswordGenerator, PasswordGenerator>();
+            services.AddTransient<IAssignRolesToArticle, AssignRolesToArticleService>();
 
             //Exception handlers
             services.AddTransient<IResponseExceptionHandler, CreateIdentityFailedExceptionHandler>();

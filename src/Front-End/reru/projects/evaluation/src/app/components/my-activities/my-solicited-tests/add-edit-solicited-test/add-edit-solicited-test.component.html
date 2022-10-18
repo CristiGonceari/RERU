@@ -13,7 +13,7 @@
                 <div class="card-body p-0">
                     <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first"
                         data-wizard-clickable="true">
-                        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+                        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10" *ngIf="!isLoadingMedia">
                             <div class="col-xl-12 col-xxl-7">
                                 <div class="form" id="kt_contact_add_form">
                                     <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
@@ -137,6 +137,16 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="justify-content-center my-10 px-8 my-lg-15 px-lg-10" *ngIf="isLoadingMedia">
+                            <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+                            <div class="progress mt-2 h-25px">
+                              <div [style.width.%]="fileStatus.percent"
+                                class="progress-bar progress-bar-animated btn-light-warning font-size-h6" role="progressbar"
+                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                                {{ fileStatus.requestType }} {{ fileStatus.percent }}%
+                              </div>
                             </div>
                         </div>
                     </div>

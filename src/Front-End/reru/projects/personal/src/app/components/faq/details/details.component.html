@@ -55,9 +55,23 @@
                                         {{article.name || '-'}}
                                     </div>
                                 </div>
+                                <div class="form-group row align-items-center" *ngIf="fileId!=null">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-lg-right font-weight-bold">Media:</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                      <div *ngIf="fileId!=null">
+                                        <app-get-media-file [fileId]="fileId"></app-get-media-file>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center" *ngIf="roles.length > 0">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-lg-right font-weight-bold">{{'faq.info-roles' | translate}}:</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <span class="font-size-lg m-0">{{roles}}</span>
+                                    </div>
+                                </div>
                                 <div class="form-group row align-items-center">
                                     <label
-                                        class="col-xl-3 col-lg-3 col-form-label text-lg-right">{{'faq.content' | translate}}</label>
+                                        class="col-xl-3 col-lg-3 col-form-label text-lg-right font-weight-bold">{{'faq.content' | translate}}</label>
                                     <div class="col-lg-9 col-xl-6 rounded border">
                                         <ckeditor [editor]="Editor" [(ngModel)]="article.content" class="disabled-area" [ngModelOptions]="{standalone: true}"></ckeditor>
                                     </div>

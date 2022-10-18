@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using CVU.ERP.Module.Application.TableExportServices.Interfaces;
+using RERU.Data.Entities.Enums;
 
 namespace CVU.ERP.Module.Application.TableExportServices.Implementations
 {
@@ -25,7 +26,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             var workSheet = package.Workbook.Worksheets.Add("Sheet1");
 
             GetHeaderContent(workSheet, data.Fields.Select(x => x.Label).ToList());
-            GetTableContent(workSheet, _mapper.Map<List<TDestination>>(data.Items), data.Fields.Select(x => x.Value).ToList());
+            GetTableContent(data.Name, workSheet, _mapper.Map<List<TDestination>>(data.Items), data.Fields.Select(x => x.Value).ToList());
 
             var streamBytesArray = package.GetAsByteArray();
 
@@ -38,7 +39,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             var workSheet = package.Workbook.Worksheets.Add("Sheet1");
 
             GetHeaderContent(workSheet, data.Fields.Select(x => x.Label).ToList());
-            GetTableContent(workSheet, data.Items, data.Fields.Select(x => x.Value).ToList());
+            GetTableContent(data.Name, workSheet, data.Items, data.Fields.Select(x => x.Value).ToList());
 
             var streamBytesArray = package.GetAsByteArray();
 
@@ -55,7 +56,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             }
         }
 
-        private void GetTableContent(ExcelWorksheet workSheet, List<TDestination> items, List<string> fields)
+        private void GetTableContent(string tableName, ExcelWorksheet workSheet, List<TDestination> items, List<string> fields)
         {
             //every Row
             for (int i = 0; i < items.Count(); i++)
@@ -66,7 +67,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                 for (int j = 0; j < fields.Count; j++)
                 {
                     var propInfo = GetPropertyInfo(objType, fields[j]);
-                    workSheet.Cells[i + 2, j + 1].Value = ParseByDataType(propInfo, items[i]);
+                    workSheet.Cells[i + 2, j + 1].Value = ParseByDataType(propInfo, items[i], tableName);
                     SetBordersStyleOnCells(workSheet, i + 2, j + 1 );
                 }
             }
@@ -76,30 +77,42 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
         {
             return type.GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public);
         }
-        private string ParseByDataType(PropertyInfo propInfo, object item)
+        private string ParseByDataType(PropertyInfo propInfo, object item, string tableName)
         {
             var result = propInfo.GetValue(item, null);
 
-            if (propInfo.PropertyType == typeof(DateTime))
+            switch (result)
             {
-                result = Convert.ToDateTime(result).ToString("dd/MM/yyyy, HH:mm");
-            }
-            else if (propInfo.PropertyType == typeof(List<string>))
-            {
-                result = string.Join(", ", (List<string>)result);
-
-                if (result == "")
-                {
+                case DateTime:
+                    result = Convert.ToDateTime(result).ToString("dd/MM/yyyy, HH:mm");
+                    break;
+                case List<string>:
+                    result = ParseDataByListOfStrings(result);
+                    break;
+                case bool:
+                    result = Convert.ToBoolean(result) ? "+" : "-";
+                    break;
+                case TestResultStatusEnum:
+                    result = ParseDataByTestEnum(tableName, result);
+                    break;
+                case TestStatusEnum:
+                    result = EnumMessages.EnumMessages.GetTestStatus((TestStatusEnum)result);
+                    break;
+                case QuestionTypeEnum:
+                    result = EnumMessages.EnumMessages.GetQuestionType((QuestionTypeEnum)result);
+                    break;
+                case QuestionUnitStatusEnum:
+                    result = EnumMessages.EnumMessages.GetQuestionStatus((QuestionUnitStatusEnum)result);
+                    break;
+                case TestTemplateModeEnum:
+                    result = EnumMessages.EnumMessages.GetTestTemplateTypeEnum((TestTemplateModeEnum)result);
+                    break;
+                case MedicalColumnEnum:
+                    result = EnumMessages.EnumMessages.GetMedicalColumnEnum((MedicalColumnEnum)result);
+                    break;
+                case null:
                     result = "-";
-                }
-            }
-            else if (propInfo.PropertyType == typeof(bool))
-            {
-                result = Convert.ToBoolean(result) ? "+" : "-";
-            }
-            else if (result == null)
-            {
-                result = "-";
+                    break;
             }
 
             return result.ToString();
@@ -111,6 +124,29 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             worksheet.Cells[row, column].Style.Border.Right.Style = ExcelBorderStyle.Thin;
             worksheet.Cells[row, column].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
             worksheet.Column(column).Width = 24; ;
+        }
+
+        private object ParseDataByTestEnum(string tableName, object result)
+        {
+            var names = new List<string> { "Evaluări ", "Evaluări primite", "Evaluări acordate" };
+
+            if (names.Contains(tableName))
+            {
+                result = EnumMessages.EnumMessages.GetEvaluationResultStatus((TestResultStatusEnum)result);
+            }
+            else
+            {
+                result = EnumMessages.EnumMessages.GetTestResultStatus((TestResultStatusEnum)result);
+            }
+
+            return result;
+        }
+
+        private object ParseDataByListOfStrings(object result)
+        {
+            result = string.Join(", ", (List<string>)result);
+
+            return result == "" ? "-" : result;
         }
     }
 }
