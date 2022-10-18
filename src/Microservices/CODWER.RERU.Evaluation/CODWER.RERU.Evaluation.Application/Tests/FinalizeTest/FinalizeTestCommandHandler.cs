@@ -133,17 +133,24 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
             var eventUser = test.Event.EventUsers
                 .FirstOrDefault(x => x.UserProfileId == test.UserProfileId);
 
-            var position = _appDbContext.CandidatePositions.FirstOrDefault(x => x.Id == eventUser.PositionId);
-
-            var candidatePositionNotifications = _appDbContext.CandidatePositionNotifications
-                .Where(x => x.CandidatePositionId == position.Id)
-                .ToList();
-
-            foreach (var item in candidatePositionNotifications)
+            if (eventUser != null) 
             {
-                var userProfile = _appDbContext.UserProfiles.FirstOrDefault(x => x.Id == item.UserProfileId);
+                var position = _appDbContext.CandidatePositions.FirstOrDefault(x => x.Id == eventUser.PositionId);
 
-                await SendEmailForCandidatePosition(userProfile, test, position?.Name);
+                if (position != null) 
+                {
+
+                    var candidatePositionNotifications = _appDbContext.CandidatePositionNotifications
+                        .Where(x => x.CandidatePositionId == position.Id)
+                        .ToList();
+            
+                    foreach (var item in candidatePositionNotifications)
+                    {
+                        var userProfile = _appDbContext.UserProfiles.FirstOrDefault(x => x.Id == item.UserProfileId);
+
+                        await SendEmailForCandidatePosition(userProfile, test, position?.Name);
+                    }
+                }
             }
         }
 
