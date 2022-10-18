@@ -23,13 +23,23 @@ namespace CODWER.RERU.Evaluation.Application.Tests.SetTestResult
                     .Must(x => !x.RecommendedFor.Intersect(x.NotRecommendedFor).Any())
                     .WithErrorCode(ValidationCodes.INVALID_SELECTED_COLUMNS);
 
-                RuleFor(x => x.RecommendedFor)
-                    .Must(x => x.Length != 0 && x.All(c => c is > 0 and < 5))
+                RuleFor(x => x)
+                    .Must(x => x.RecommendedFor.Length != 0 || x.NotRecommendedFor.Length != 0)
                     .WithErrorCode(ValidationCodes.INVALID_SELECTED_COLUMNS);
 
-                RuleFor(x => x.RecommendedFor)
-                    .Must(x => x.Length != 0 && x.All(c => c is > 0 and < 5))
-                    .WithErrorCode(ValidationCodes.INVALID_SELECTED_COLUMNS);
+                When((x => x.RecommendedFor.Length != 0), () =>
+                {
+                    RuleFor(x => x.RecommendedFor)
+                        .Must(x => x.All(c => c is > 0 and < 5))
+                        .WithErrorCode(ValidationCodes.INVALID_SELECTED_COLUMNS);
+                });
+
+                When((x => x.NotRecommendedFor.Length != 0), () =>
+                {
+                    RuleFor(x => x.NotRecommendedFor)
+                        .Must(x => x.All(c => c is > 0 and < 5))
+                        .WithErrorCode(ValidationCodes.INVALID_SELECTED_COLUMNS);
+                });
             });
         }
     }
