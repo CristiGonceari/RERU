@@ -9,6 +9,7 @@ import { saveAs } from 'file-saver';
 import { PrintModalComponent } from '@erp/shared';
 import { forkJoin } from 'rxjs';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { EnumStringTranslatorService } from 'projects/evaluation/src/app/utils/services/enum-string-translator.service';
 
 @Component({
   selector: 'app-evaluations-table',
@@ -35,7 +36,8 @@ export class EvaluationsTableComponent implements OnInit {
     private testService: TestService,
     private activatedRoute: ActivatedRoute,
     public translate: I18nService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private enumStringTranslatorService: EnumStringTranslatorService
   ) { }
 
   ngOnInit(): void {
@@ -73,6 +75,10 @@ export class EvaluationsTableComponent implements OnInit {
       }
     )
   }
+
+  translateResultValue(item){
+		return this.enumStringTranslatorService.translateTestResultValue(item);
+	}
 
   setTimeToSearch(): void {
     if (this.fromDate) {

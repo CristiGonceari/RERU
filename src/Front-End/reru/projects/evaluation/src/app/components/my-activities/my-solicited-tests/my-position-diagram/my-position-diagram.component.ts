@@ -6,6 +6,7 @@ import { CandidatePositionService } from '../../../../utils/services/candidate-p
 import { PrintTemplateService } from '../../../../utils/services/print-template/print-template.service';
 import { saveAs } from 'file-saver';
 import { Location } from '@angular/common';
+import { EnumStringTranslatorService } from 'projects/evaluation/src/app/utils/services/enum-string-translator.service';
 
 @Component({
   selector: 'app-my-position-diagram',
@@ -25,7 +26,8 @@ export class MyPositionDiagramComponent implements OnInit {
     private positionService: CandidatePositionService,
     private activatedRoute: ActivatedRoute,
     private printService: PrintTemplateService,
-    private location: Location
+    private location: Location,
+    private enumStringTranslatorService: EnumStringTranslatorService
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +47,10 @@ export class MyPositionDiagramComponent implements OnInit {
       }
     })
   }
+
+  translateResultValue(item){
+		return this.enumStringTranslatorService.translateTestResultValue(item);
+	}
   
   getTests(testTemplateId, eventId){
     let test = [];
