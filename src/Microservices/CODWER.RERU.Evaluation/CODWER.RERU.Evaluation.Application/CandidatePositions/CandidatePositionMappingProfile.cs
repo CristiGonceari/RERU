@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions;
 using CODWER.RERU.Evaluation.DataTransferObjects.PositionDiagram;
-using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using RERU.Data.Entities;
 
@@ -30,6 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions
             CreateMap<Test, TestResultDiagramDto>()
                 .ForMember(x => x.TestId, opts => opts.MapFrom(t => t.Id))
                 .ForMember(x => x.Result, opts => opts.MapFrom(t => t.ResultStatus))
+                .ForMember(x => x.ResultValue, opts => opts.MapFrom(t => t.ResultStatusValue))
                 .ForMember(x => x.PassDate, opts => opts.MapFrom(t => t.CreateDate))
                 .ForMember(x => x.Status, opts => opts.MapFrom(t => t.TestStatus));
 
