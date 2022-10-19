@@ -161,7 +161,6 @@ export class ViewTestResultComponent implements OnInit {
       toEvaluate: false
     };
 
-    console.log("need to ceckFile:")
     this.checkIfHadFile();
 
     this.verifyService.getTest(testData).subscribe(
