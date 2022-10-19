@@ -69,7 +69,7 @@ export class TestsByEventComponent implements OnInit {
 		this.translateData();
 		let eventsTable = document.getElementById('eventsTable')
 		let headersHtml = eventsTable.getElementsByTagName('th');
-		let headersDto = ['programmedTime', 'testTemplateName', 'testStatus', 'accumulatedPercentage', 'result'];
+		let headersDto = ['programmedTime', 'testTemplateName', 'testStatus', 'accumulatedPercentage', 'resultValue'];
 		for (let i=0; i<headersHtml.length; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}

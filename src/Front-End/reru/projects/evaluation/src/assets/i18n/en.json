@@ -602,6 +602,8 @@
     "Accepted":"Accepted",
     "Rejected":"Rejected",
     "Recommended":"Recommended/Not recommended",
+    "ModalRecommended":"Recommended",
+    "NotRecommended":"Not recommended",
     "employee": "Employee",
     "candidate": "Candidate",
     "Candidate": "Candidates",

@@ -133,7 +133,7 @@ export class ViewTestResultComponent implements OnInit {
           this.pager.push(i);
         };
         this.summaryList = res.data.testQuestions;
-        this.result = res.data.result;
+        this.result = res.data.resultValue;
         this.correctAnswers = res.data.correctAnswers;
         this.count = res.data.testQuestions.length;
         this.verifiedStatus = res.data.testQuestions.map(el => el.isCorrect);

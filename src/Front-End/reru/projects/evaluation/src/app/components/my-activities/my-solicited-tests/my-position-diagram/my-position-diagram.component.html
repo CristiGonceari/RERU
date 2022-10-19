@@ -50,7 +50,7 @@
                         <td>
                             <div *ngFor="let tests of getTests(testTemplate.testTemplateId, event.eventId)">
                                 <span *ngFor="let test of tests.tests">
-                                    -{{'verify-test.' + result[test.result] | translate}},
+                                    -{{'statuses.' + test.resultValue | translate}},
                                     {{test.passDate | date: 'dd/MM/yyyy HH:mm'}},
                                     {{'statuses.' + status[test.status] | translate}} <br>
                                 </span>

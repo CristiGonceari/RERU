@@ -107,7 +107,7 @@
                                     class="btn btn-light-success" [routerLink]="['../start-evaluation', test.id]">
                                     {{'evaluations.start-evaluation' | translate}}
                                 </button>
-                                <button *ngIf="test.result == resultEnum.NotPassed || test.result == resultEnum.Passed"
+                                <button *ngIf="test.result != resultEnum.NoResult"
                                     class="btn btn-light-success" [routerLink]="['../evaluation-result', test.id]">
                                     {{'tests.view' | translate}}
                                 </button>
