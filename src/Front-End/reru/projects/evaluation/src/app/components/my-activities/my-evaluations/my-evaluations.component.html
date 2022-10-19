@@ -55,6 +55,7 @@
                             <th scope="col">{{'verify-test.student' | translate}} ({{ 'user-profile.npp' | translate }})</th>
                             <th scope="col">{{'events.event' | translate}}</th>
                             <th scope="col">{{'dashboard.status' | translate}}</th>
+                            <th scope="col">{{ 'verify-test.result' | translate }}</th>
                             <!-- <th scope="col">{{'dashboard.result' | translate}}</th> -->
                             <th scope="col" style="width: 150px"></th>
                         </tr>
@@ -64,7 +65,7 @@
                             <td>
                                 <b>{{ test.testTemplateName }}</b>
                                 <span class="text-dark-50 d-block mb-0">
-                                    {{ test.programmedTime | date: 'dd/MM/yyyy, HH:mm'}}
+                                    {{ test.endTime | date: 'dd/MM/yyyy, HH:mm'}}
                                 </span>
                             </td>
                             <td>
@@ -95,19 +96,7 @@
                                     </span>
                                 </div>
                             </td>
-                            <!-- <td>
-                                <span>
-                                    <span class="font-size-lg"
-                                        *ngIf="test.result == resultEnum.NoResult">{{'statuses.NoResult' |
-                                        translate}}</span>
-                                    <span class="font-size-lg"
-                                        *ngIf="test.result == resultEnum.Passed">{{'statuses.passed' |
-                                        translate}}</span>
-                                    <span class="font-size-lg"
-                                        *ngIf="test.result == resultEnum.NotPassed">{{'statuses.not-passed' |
-                                        translate}}</span>
-                                </span>
-                            </td> -->
+                            <td>{{'statuses.' + test.resultValue | translate}}</td>
                             <td>
                                 <button *ngIf="test.testStatus == enum.InProgress" class="btn btn-light-success"
                                     [routerLink]="['../performing-evaluation', test.id]">
