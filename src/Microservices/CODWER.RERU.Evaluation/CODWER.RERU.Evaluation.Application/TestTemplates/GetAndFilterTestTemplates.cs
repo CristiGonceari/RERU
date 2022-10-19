@@ -21,7 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates
                 .OrderByDescending(x => x.Id)
                 .AsQueryable();
 
-            var currentModuleId = appDbContext.GetCurrentModuleId(ModulePrefix.Evaluation);
+            var currentModuleId = appDbContext.GetModuleIdByPrefix(ModulePrefix.Evaluation);
 
             var currentUserProfile = appDbContext.UserProfiles
                 .Include(x => x.ModuleRoles)

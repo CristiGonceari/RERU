@@ -35,7 +35,7 @@ namespace CODWER.RERU.Core.Application.Articles.GetArticle
         {
             var currentUser = await _currentApplication.Get();
 
-            var currentModuleId = _appDbContext.GetCurrentModuleId(ModulePrefix.Core);
+            var currentModuleId = _appDbContext.GetModuleIdByPrefix(ModulePrefix.Core);
 
             var currentUserProfile = _appDbContext.UserProfiles
                 .Include(x => x.ModuleRoles)

@@ -16,7 +16,7 @@ namespace CODWER.RERU.Personal.Application.Articles
                 .OrderByDescending(x => x.CreateDate)
                 .AsQueryable();
 
-            var currentModuleId = appDbContext.GetCurrentModuleId(ModulePrefix.Personal);
+            var currentModuleId = appDbContext.GetModuleIdByPrefix(ModulePrefix.Personal);
 
             var currentUserProfile = appDbContext.UserProfiles
                 .Include(x => x.ModuleRoles)
