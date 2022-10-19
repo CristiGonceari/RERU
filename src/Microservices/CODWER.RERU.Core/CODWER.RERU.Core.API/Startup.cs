@@ -1,4 +1,4 @@
-using CODWER.RERU.Core.API.Config;
+﻿using CODWER.RERU.Core.API.Config;
 using CODWER.RERU.Core.Application.DependencyInjection;
 using CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule;
 using CODWER.RERU.Core.Data.Persistence.Context;
@@ -77,6 +77,10 @@ namespace CODWER.RERU.Core.API
                 opts.Password.RequireLowercase = true;
                 opts.Password.RequireUppercase = false;
                 opts.Password.RequireDigit = true;
+
+                opts.User.AllowedUserNameCharacters =
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ĂăÎîȘșȚț";
+                opts.User.RequireUniqueEmail = true;
             })
                 .AddEntityFrameworkStores<UserManagementDbContext>()
                 .AddUserManager<UserManager<ERPIdentityUser>>()
