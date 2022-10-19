@@ -24,7 +24,7 @@ namespace CODWER.RERU.Evaluation.Application.References.GetEvaluationRoles
 
         public async Task<List<SelectItem>> Handle(GetEvaluationRolesQuery request, CancellationToken cancellationToken)
         {
-            return await _appDbContext.GetModuleRolePermissions(ModulePrefix.Evaluation)
+            return await _appDbContext.GetModuleRolePermissionsByPrefix(ModulePrefix.Evaluation)
                 .Select(x => x.Role)
                 .Distinct()
                 .Select(e => _mapper.Map<SelectItem>(e))

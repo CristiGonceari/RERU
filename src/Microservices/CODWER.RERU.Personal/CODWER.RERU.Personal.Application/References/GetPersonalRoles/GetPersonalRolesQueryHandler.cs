@@ -24,7 +24,7 @@ namespace CODWER.RERU.Personal.Application.References.GetPersonalRoles
 
         public async Task<List<SelectItem>> Handle(GetPersonalRolesQuery request, CancellationToken cancellationToken)
         {
-            return await _appDbContext.GetModuleRolePermissions(ModulePrefix.Personal)
+            return await _appDbContext.GetModuleRolePermissionsByPrefix(ModulePrefix.Personal)
                 .Select(x => x.Role)
                 .Distinct()
                 .Select(e => _mapper.Map<SelectItem>(e))

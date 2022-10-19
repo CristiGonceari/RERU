@@ -16,7 +16,7 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<ArticleCore> CoreArticles { get; set; }
         public virtual DbSet<ArticleCoreModuleRole> ArticleCoreModuleRoles { get; set; }
 
-        public int GetCurrentModuleId(string codePrefixModule)
+        public int GetModuleIdByPrefix(string codePrefixModule)
         {
             return ModuleRolePermissions
                 .Include(x => x.Permission)
@@ -24,7 +24,7 @@ namespace RERU.Data.Persistence.Context
                 .FirstOrDefault(x => x.Permission.Code.StartsWith(codePrefixModule)).Role.ModuleId;
         }
 
-        public IQueryable<ModuleRolePermission> GetModuleRolePermissions(string codePrefixModule)
+        public IQueryable<ModuleRolePermission> GetModuleRolePermissionsByPrefix(string codePrefixModule)
         {
             return ModuleRolePermissions
                 .Include(x => x.Permission)

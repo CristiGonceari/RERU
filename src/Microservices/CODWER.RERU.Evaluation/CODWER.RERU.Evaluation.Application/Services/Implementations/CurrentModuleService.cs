@@ -3,6 +3,7 @@ using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 using System.Linq;
 using System.Threading.Tasks;
+using RERU.Data.Persistence.ModulePrefixes;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 {
@@ -19,29 +20,26 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         public async Task<UserProfileModuleRole> GetUserCurrentModuleRole()
         {
-            var currentUser = await _userProfileService.GetCurrentUser();
+            var currentUserId = await _userProfileService.GetCurrentUserId();
 
-            var currentModuleId = _appDbContext.ModuleRolePermissions
-                .Include(x => x.Permission)
-                .Include(x => x.Role)
-                .FirstOrDefault(x => x.Permission.Code.StartsWith("P03")).Role.ModuleId;
+            var currentModuleId = _appDbContext.GetModuleIdByPrefix(ModulePrefix.Evaluation);
 
             var currentUserProfile = _appDbContext.UserProfiles
                 .Include(x => x.ModuleRoles)
                 .ThenInclude(x => x.ModuleRole)
-                .FirstOrDefault(x => x.Id == currentUser.Id);
+                .FirstOrDefault(x => x.Id == currentUserId);
 
             return currentUserProfile.ModuleRoles.FirstOrDefault(x => x.ModuleRole.ModuleId == currentModuleId);
         }
 
         public async Task<UserProfile> GetCurrentUserProfile()
         {
-            var currentUser = await _userProfileService.GetCurrentUser();
+            var currentUserId = await _userProfileService.GetCurrentUserId();
 
             return _appDbContext.UserProfiles
                 .Include(x => x.ModuleRoles)
                 .ThenInclude(x => x.ModuleRole)
-                .FirstOrDefault(x => x.Id == currentUser.Id);
+                .FirstOrDefault(x => x.Id == currentUserId);
         }
     }
 }
