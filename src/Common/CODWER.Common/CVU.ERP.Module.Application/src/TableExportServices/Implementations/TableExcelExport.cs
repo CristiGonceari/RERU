@@ -93,7 +93,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                     result = Convert.ToBoolean(result) ? "+" : "-";
                     break;
                 case TestResultStatusEnum:
-                    result = ParseDataByTestEnum(tableName, result);
+                    result = EnumMessages.TranslateResultStatus((TestResultStatusEnum)result);
                     break;
                 case TestStatusEnum:
                     result = EnumMessages.GetTestStatus((TestStatusEnum)result);
@@ -131,8 +131,6 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             worksheet.Cells[row, column].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
             worksheet.Column(column).Width = 24; ;
         }
-
-        private object ParseDataByTestEnum(string tableName, object result) => EnumMessages.TranslateResultStatus((TestResultStatusEnum)result);
 
         private object ParseDataByListOfStrings(object result)
         {

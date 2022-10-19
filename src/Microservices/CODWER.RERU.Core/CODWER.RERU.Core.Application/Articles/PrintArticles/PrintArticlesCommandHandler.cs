@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.DataTransferObjects.Articles;
 using CVU.ERP.Module.Application.TableExportServices;
-using CVU.ERP.Module.Application.TableExportServices.Interfaces;
 using CVU.ERP.ServiceProvider;
 using RERU.Data.Persistence.Context;
 using RERU.Data.Entities;
