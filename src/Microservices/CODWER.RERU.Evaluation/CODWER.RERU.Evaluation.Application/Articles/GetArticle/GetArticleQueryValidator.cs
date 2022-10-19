@@ -8,6 +8,7 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.ModulePrefixes;
 
 namespace CODWER.RERU.Evaluation.Application.Articles.GetArticle
 {
@@ -34,10 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.Articles.GetArticle
         {
             var currentUserId = await _userProfileService.GetCurrentUserId();
 
-            var currentModuleId = _appDbContext.ModuleRolePermissions
-                .Include(x => x.Permission)
-                .Include(x => x.Role)
-                .FirstOrDefault(x => x.Permission.Code.StartsWith("P03")).Role.ModuleId;
+            var currentModuleId = _appDbContext.GetCurrentModuleId(ModulePrefix.Evaluation);
 
             var currentUserProfile = _appDbContext.UserProfiles
                 .Include(x => x.ModuleRoles)
