@@ -5,14 +5,126 @@
     <div style="text-align: center;">
         {{'evaluations.finish-evaluation-msg' | translate}}
     </div>
-    <div class="modal-footer d-flex justify-content-between border-0 p-0 mt-4">
-        <div></div>
-        <div>
-            <button type="button" class="btn btn-light-success mr-2" (click)="setStatus(enum.Passed)">{{'statuses.passed' | translate}}</button>
-            <button type="button" class="btn btn-light-danger" (click)="setStatus(enum.NotPassed)">{{'statuses.not-passed' | translate}}</button>
+    <div *ngIf="qualificationTypeEnum[1] == qualificationTypeEnum[qualificationTypeValue]" class="mt-10 justify-content-center d-flex">
+
+        <button type="button" class="btn btn-light-success mr-2" (click)="setStatus(enum.Passed)">{{'statuses.passed' |
+            translate}}</button>
+        <button type="button" class="btn btn-light-danger" (click)="setStatus(enum.NotPassed)">{{'statuses.not-passed' |
+            translate}}</button>
+    </div>
+    <div *ngIf="qualificationTypeEnum[2] == qualificationTypeEnum[qualificationTypeValue]" class="mt-10 justify-content-center d-flex">
+
+        <button type="button" class="btn btn-light-success mr-2" (click)="setStatus(enum.Able)">{{'statuses.Able' |
+            translate}}</button>
+        <button type="button" class="btn btn-light-danger" (click)="setStatus(enum.NotAble)">{{'statuses.NotAble' |
+            translate}}</button>
+    </div>
+    <div *ngIf="qualificationTypeEnum[3] == qualificationTypeEnum[qualificationTypeValue]" class="mt-10 justify-content-center d-flex">
+
+        <button type="button" class="btn btn-light-success mr-2"
+            (click)="setStatus(enum.Accepted)">{{'statuses.Accepted' | translate}}</button>
+        <button type="button" class="btn btn-light-danger" (click)="setStatus(enum.Rejected)">{{'statuses.Rejected' | translate}}</button>
+    </div>
+    <div *ngIf="qualificationTypeEnum[4] == qualificationTypeEnum[qualificationTypeValue]" class="mt-10">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    {{ 'statuses.ModalRecommended' | translate }}
+                </div>
+                <div class="col" *ngFor="let item of RecomdendedListOfValues">
+                    <input 
+                        class="mr-2"
+                        type="checkbox" 
+                        [(ngModel)]="item.checked" 
+                        name="list_name" 
+                        value="{{item.id}}" 
+                        (change)="isAllSelected()" 
+                        />
+
+                        <div *ngIf="item.checked === false" style="width: 25px; display: inline-block">
+                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
+                              style="enable-background: new 0 0 50 50" xml:space="preserve">
+                              <circle style="fill: #d75a4a" cx="25" cy="25" r="25" />
+                              <polyline
+                                style="fill: none; stroke: #ffffff; stroke-width: 2; stroke-linecap: round; stroke-miterlimit: 10"
+                                points="16,34 25,25 34,16 " />
+                              <polyline
+                                style="fill: none; stroke: #ffffff; stroke-width: 2; stroke-linecap: round; stroke-miterlimit: 10"
+                                points="16,16 25,25 34,34" />
+                            </svg>
+                          </div>
+                          <div *ngIf="item.checked === true" style="width: 25px; display: inline-block">
+                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
+                              style="enable-background: new 0 0 50 50" xml:space="preserve">
+                              <circle style="fill: #25ae88" cx="25" cy="25" r="25" />
+                              <polyline style="
+                                                      fill: none;
+                                                      stroke: #ffffff;
+                                                      stroke-width: 2;
+                                                      stroke-linecap: round;
+                                                      stroke-linejoin: round;
+                                                      stroke-miterlimit: 10;
+                                                  " points="38,15 22,33 12,25 " />
+                            </svg>
+                          </div>
+                    {{item.title}}
+                </div>
+            </div>
         </div>
-        <div>
-            <button type="button" class="btn btn-secondary" (click)="close()">{{'button.close' | translate}}</button>
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col">
+                    {{ 'statuses.NotRecommended' | translate }}
+                </div>
+                <div class="col" *ngFor="let item of RecomdendedListOfValues">
+                    <input type="checkbox" class="mr-2 d-none" [checked]="item.checked == true"  [disabled]="true"/>
+                    <div *ngIf="item.checked === true" style="width: 25px; display: inline-block">
+                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
+                          style="enable-background: new 0 0 50 50" xml:space="preserve">
+                          <circle style="fill: #d75a4a" cx="25" cy="25" r="25" />
+                          <polyline
+                            style="fill: none; stroke: #ffffff; stroke-width: 2; stroke-linecap: round; stroke-miterlimit: 10"
+                            points="16,34 25,25 34,16 " />
+                          <polyline
+                            style="fill: none; stroke: #ffffff; stroke-width: 2; stroke-linecap: round; stroke-miterlimit: 10"
+                            points="16,16 25,25 34,34" />
+                        </svg>
+                      </div>
+                      <div *ngIf="item.checked === false" style="width: 25px; display: inline-block">
+                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
+                          style="enable-background: new 0 0 50 50" xml:space="preserve">
+                          <circle style="fill: #25ae88" cx="25" cy="25" r="25" />
+                            <polyline style="
+                                fill: none;
+                                stroke: #ffffff;
+                                stroke-width: 2;
+                                stroke-linecap: round;
+                                stroke-linejoin: round;
+                                stroke-miterlimit: 10;
+                            " points="38,15 22,33 12,25 " />
+                        </svg>
+                      </div>
+                    {{item.title}}
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<div class="modal-footer d-flex justify-content-end">
+    <div>
+        <button type="button" class="btn btn-secondary" (click)="close()">{{'button.close' | translate}}</button>
+           <button  
+           *ngIf="qualificationTypeEnum[4] == qualificationTypeEnum[qualificationTypeValue]"
+            type="button"
+            [disabled]="recomendedValues?.length == 0 || notRecomendedValues?.length == 0"
+            class="btn btn-primary ml-2" 
+            (click)="setStatus(enum.Recommended, recomendedValues, notRecomendedValues)">{{'button.save' | translate}}</button> 
+    </div>
+</div>
+
+
+ 

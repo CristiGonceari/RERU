@@ -599,6 +599,8 @@
     "Accepted":"Принят",
     "Rejected":"Oтклонен",
     "Recommended":"Pекомендован/Не рекомендован",
+    "ModalRecommended":"Pекомендован",
+    "NotRecommended":"Hе рекомендуется",
     "employee": "Сотрудник",
     "candidate": "Кандидат",
     "Candidate": "Кандидаты",
