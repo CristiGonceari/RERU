@@ -33,7 +33,8 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
                 Keyword = request.Keyword,
                 Email = request.Email,
                 Idnp = request.Idnp,
-                Status = request.Status
+                Status = request.Status,
+                UserStatusEnum = request.UserStatusEnum
             };
 
             var currentUser = await _currentUserProvider.Get();
@@ -43,11 +44,6 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
             var userProfiles = GetAndFilterUserProfiles.Filter(_appDbContext, filterData, userProfileDto);
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto> (userProfiles, request);
-
-            if (request.UserStatusEnum.HasValue)
-            {
-                paginatedModel.Items = paginatedModel.Items.Where(p => p.UserStatusEnum == request.UserStatusEnum);
-            }
 
             return paginatedModel;
         }

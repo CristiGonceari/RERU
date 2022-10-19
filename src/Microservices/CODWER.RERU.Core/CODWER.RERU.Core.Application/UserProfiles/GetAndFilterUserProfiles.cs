@@ -2,6 +2,7 @@
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 using System.Linq;
+using CVU.ERP.Common.DataTransferObjects.Users;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities.Enums;
 
@@ -61,6 +62,18 @@ namespace CODWER.RERU.Core.Application.UserProfiles
             if (request.Status.HasValue)
             {
                 userProfiles = userProfiles.Where(p => p.IsActive == request.Status.Value);
+            }
+
+            if (request.UserStatusEnum.HasValue)
+            {
+                if (request.UserStatusEnum == UserStatusEnum.Employee)
+                {
+                    userProfiles = userProfiles.Where(x => x.DepartmentColaboratorId != null && x.RoleColaboratorId != null);
+                }
+                else if (request.UserStatusEnum == UserStatusEnum.Candidate)
+                {
+                    userProfiles = userProfiles.Where(x => x.DepartmentColaboratorId == null || x.RoleColaboratorId == null);
+                }
             }
 
             return userProfiles;

@@ -39,8 +39,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             CreateMap<AddEditTestDto, Test>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
 
-            CreateMap<UserProfile, UserProfileDto>();
-
             CreateMap<Test, TestDataDto>()
                 .ForMember(x => x.TestId, opts => opts.MapFrom(src => src.Id));
 
