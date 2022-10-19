@@ -61,7 +61,7 @@
                     <span class="font-size-lg" *ngIf="!item.locationNames.length">-</span>
                 </td>
                 <td>{{'statuses.' + status[item.testStatus] | translate}}</td>
-                <td>{{'verify-test.' + result[item.result] | translate}}</td>
+                <td>{{'statuses.' + item.resultValue | translate}}</td>
                 <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
                     <div style="overflow: visible; position: relative; width: 0px">
                         <div ngbDropdown class="dropdown dropdown-inline">
