@@ -6,18 +6,12 @@
         {{'evaluations.finish-evaluation-msg' | translate}}
     </div>
     <div *ngIf="qualificationTypeEnum[1] == qualificationTypeEnum[qualificationTypeValue]" class="mt-10 justify-content-center d-flex">
-
-        <button type="button" class="btn btn-light-success mr-2" (click)="setStatus(enum.Passed)">{{'statuses.passed' |
-            translate}}</button>
-        <button type="button" class="btn btn-light-danger" (click)="setStatus(enum.NotPassed)">{{'statuses.not-passed' |
-            translate}}</button>
+        <button type="button" class="btn btn-light-success mr-2" (click)="setStatus(enum.Passed)">{{'statuses.passed' | translate}}</button>
+        <button type="button" class="btn btn-light-danger" (click)="setStatus(enum.NotPassed)">{{'statuses.not-passed' | translate}}</button>
     </div>
     <div *ngIf="qualificationTypeEnum[2] == qualificationTypeEnum[qualificationTypeValue]" class="mt-10 justify-content-center d-flex">
-
-        <button type="button" class="btn btn-light-success mr-2" (click)="setStatus(enum.Able)">{{'statuses.Able' |
-            translate}}</button>
-        <button type="button" class="btn btn-light-danger" (click)="setStatus(enum.NotAble)">{{'statuses.NotAble' |
-            translate}}</button>
+        <button type="button" class="btn btn-light-success mr-2" (click)="setStatus(enum.Able)">{{'statuses.Able' | translate}}</button>
+        <button type="button" class="btn btn-light-danger" (click)="setStatus(enum.NotAble)">{{'statuses.NotAble' | translate}}</button>
     </div>
     <div *ngIf="qualificationTypeEnum[3] == qualificationTypeEnum[qualificationTypeValue]" class="mt-10 justify-content-center d-flex">
 
