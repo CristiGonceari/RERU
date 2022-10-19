@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
-using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using System.Linq;
-using CODWER.RERU.Evaluation.DataTransferObjects.BulkProcesses;
 using CVU.ERP.Common.DataTransferObjects.TestDatas;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;

@@ -33,6 +33,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                     EvaluatorId = t.EvaluatorId,
                     EventId = t.EventId,
                     ResultStatus = t.ResultStatus,
+                    RecommendedFor = t.RecommendedFor,
+                    NotRecommendedFor = t.NotRecommendedFor,
                     TestStatus = t.TestStatus,
                     ProgrammedTime = t.ProgrammedTime,
                     EndTime = t.EndTime,
