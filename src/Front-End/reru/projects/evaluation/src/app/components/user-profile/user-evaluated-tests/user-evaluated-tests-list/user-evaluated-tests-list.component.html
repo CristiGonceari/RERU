@@ -32,7 +32,7 @@
           <p *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</p>
           <p *ngIf="test.result != resultEnum.NoResult">{{ test.accumulatedPercentage }}% / {{test.minPercent}}%</p>
         </td>
-        <td>{{'statuses.' + test.resultValue | translate}}</td>
+        <td>{{ translateResultValue(test.resultValue) }}</td>
       </tr>
     </tbody>
     <tbody class="datatable-body" *ngIf="!testRowList.length">

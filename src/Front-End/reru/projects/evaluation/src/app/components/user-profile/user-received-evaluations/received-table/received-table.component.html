@@ -71,7 +71,7 @@
                     <span class="font-size-lg" *ngIf="!item.eventName">-</span>
                 </td>
                 <td>{{'statuses.' + enum[item.testStatus] | translate}}</td>
-                <td>{{'statuses.' + item.resultValue | translate}}</td>
+                <td>{{ translateResultValue(item.resultValue) }}</td>
                 <td *ngIf="item.result != result.NoResult" data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
                     <div style="overflow: visible; position: relative; width: 0px">
                         <div ngbDropdown class="dropdown dropdown-inline">

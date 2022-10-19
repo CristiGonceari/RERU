@@ -49,7 +49,7 @@
                                         </th>
                                         <td *ngFor="let tests of user.testsByTestTemplate">
                                             <span *ngFor="let test of tests.tests">
-                                                -{{'statuses.' + test.resultValue | translate}},
+                                                -{{ translateResultValue(test.resultValue) }},
                                                 {{test.passDate | date: 'dd/MM/yyyy HH:mm'}},
                                                 {{'statuses.' + status[test.status] | translate}} <br>
                                             </span>

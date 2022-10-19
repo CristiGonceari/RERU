@@ -612,7 +612,7 @@
     "Column2": "Column 2",
     "Column3": "Column 3",
     "Column4": "Column 4",
-    "AbleNotAble": "Able/Unable",
+    "AbleNotAble": "Able/Not able",
     "PassedNotPassed": "Passed/Not passed",
     "AcceptedRejected": "Accepted/Rejected",
     "NoQualifying": "No qualifying"
