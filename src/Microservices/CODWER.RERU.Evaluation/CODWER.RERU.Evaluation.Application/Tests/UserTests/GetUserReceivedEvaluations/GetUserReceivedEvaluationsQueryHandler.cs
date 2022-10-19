@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Common.Pagination;
 using MediatR;
@@ -15,11 +16,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserReceivedEval
     {
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
+        private readonly ICurrentModuleService _currentModuleService;
 
-        public GetUserReceivedEvaluationsQueryHandler(AppDbContext appDbContext, IPaginationService paginationService)
+        public GetUserReceivedEvaluationsQueryHandler(AppDbContext appDbContext, IPaginationService paginationService, ICurrentModuleService currentModuleService)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
+            _currentModuleService = currentModuleService;
         }
 
         public async Task<PaginatedModel<TestDto>> Handle(GetUserReceivedEvaluationsQuery request, CancellationToken cancellationToken)
@@ -35,6 +38,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserReceivedEval
                 .OrderByDescending(x => x.ProgrammedTime)
                 .AsQueryable();
 
+            evaluations = await FilterUsersTestsByModuleRole(evaluations);
+
             if (request.FromDate.HasValue)
             {
                 evaluations = evaluations.Where(x => x.EndTime >= request.FromDate);
@@ -48,6 +53,17 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserReceivedEval
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(evaluations, request);
 
             return paginatedModel;
+        }
+
+        public async Task<IQueryable<Test>> FilterUsersTestsByModuleRole(IQueryable<Test> userTests)
+        {
+            var userCurrentRole = await _currentModuleService.GetUserCurrentModuleRole();
+
+            var currentUserProfile = await _currentModuleService.GetCurrentUserProfile();
+
+            userTests = FilterByModuleRole.Filter(userTests, userCurrentRole, currentUserProfile);
+
+            return userTests;
         }
     }
 }

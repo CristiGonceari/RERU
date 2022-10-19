@@ -39,6 +39,7 @@ namespace CODWER.RERU.Evaluation.Application.DependencyInjection
                 .AddScoped(typeof(ICandidatePositionService), typeof(CandidatePositionService))
                 .AddScoped(typeof(ICandidatePositionNotificationService), typeof(CandidatePositionNotificationService))
                 .AddScoped(typeof(IAssignRoleService), typeof(AssignRoleService))
+                .AddScoped(typeof(ICurrentModuleService), typeof(CurrentModuleService))
                 .AddScoped(typeof(PlatformConfig));
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Common.Pagination;
 using MediatR;
@@ -15,11 +16,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTests
     {
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
+        private readonly ICurrentModuleService _currentModuleService;
 
-        public GetUserTestsQueryHandler(AppDbContext appDbContext, IPaginationService paginationService)
+        public GetUserTestsQueryHandler(AppDbContext appDbContext, IPaginationService paginationService, ICurrentModuleService currentModuleService)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
+            _currentModuleService = currentModuleService;
         }
 
         public async Task<PaginatedModel<TestDto>> Handle(GetUserTestsQuery request, CancellationToken cancellationToken)
@@ -34,9 +37,22 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTests
                 .OrderByDescending(x => x.ProgrammedTime)
                 .AsQueryable();
 
+            userTests = await FilterUsersTestsByModuleRole(userTests);
+
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(userTests, request);
 
             return paginatedModel;
+        }
+
+        public async Task<IQueryable<Test>> FilterUsersTestsByModuleRole(IQueryable<Test> userTests)
+        {
+            var userCurrentRole = await _currentModuleService.GetUserCurrentModuleRole();
+
+            var currentUserProfile = await _currentModuleService.GetCurrentUserProfile();
+
+            userTests = FilterByModuleRole.Filter(userTests, userCurrentRole, currentUserProfile);
+
+            return userTests;
         }
     }
 }
