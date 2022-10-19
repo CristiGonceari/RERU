@@ -65,7 +65,7 @@
 											</span>
 										</a>
 									</div> 
-									<div class="navi-item mb-2" *ngIf="user.departmentColaboratorId != null && user.roleColaboratorId != null">
+									<div class="navi-item mb-2" *ngIf="user.userStatusEnum == 1">
 										<a [routerLink]="['my-evaluations']" routerLinkActive="active" class="navi-link py-4">
 											<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
 											<span class="navi-text font-size-lg">
@@ -81,7 +81,7 @@
 											</span>
 										</a>
 									</div>
-									<div class="navi-item mb-2" *ngIf="user.departmentColaboratorId != null && user.roleColaboratorId != null">
+									<div class="navi-item mb-2" *ngIf="user.userStatusEnum == 1">
 										<a [routerLink]="['my-evaluated-tests']" routerLinkActive="active" class="navi-link py-4">
 											<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
 											<span class="navi-text font-size-lg">

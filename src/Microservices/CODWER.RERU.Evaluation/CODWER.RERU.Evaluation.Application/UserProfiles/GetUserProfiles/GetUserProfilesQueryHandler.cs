@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
@@ -114,17 +113,19 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
                 }
             }
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(items, request);
-
-            foreach (var user in paginatedModel.Items)
-            {
-                user.UserStatusEnum = user.DepartmentColaboratorId == null && user.RoleColaboratorId == null ? UserStatusEnum.Candidate : UserStatusEnum.Employee;
-            }
-
             if (request.UserStatusEnum.HasValue)
             {
-                paginatedModel.Items = paginatedModel.Items.Where(p => p.UserStatusEnum == request.UserStatusEnum);
+                if (request.UserStatusEnum == UserStatusEnum.Employee)
+                {
+                    items = items.Where(x => x.DepartmentColaboratorId != null && x.RoleColaboratorId != null);
+                }
+                else if (request.UserStatusEnum == UserStatusEnum.Candidate)
+                {
+                    items = items.Where(x => x.DepartmentColaboratorId == null || x.RoleColaboratorId == null);
+                }
             }
+
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(items, request);
 
             return paginatedModel;
         }
