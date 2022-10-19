@@ -32,7 +32,7 @@ namespace CODWER.RERU.Evaluation.Application.Articles.GetArticle
 
         private async Task<bool> CheckUserRole(int articleId)
         {
-            var currentUser = await _userProfileService.GetCurrentUser();
+            var currentUserId = await _userProfileService.GetCurrentUserId();
 
             var currentModuleId = _appDbContext.ModuleRolePermissions
                 .Include(x => x.Permission)
@@ -42,7 +42,7 @@ namespace CODWER.RERU.Evaluation.Application.Articles.GetArticle
             var currentUserProfile = _appDbContext.UserProfiles
                 .Include(x => x.ModuleRoles)
                 .ThenInclude(x => x.ModuleRole)
-                .FirstOrDefault(x => x.Id == currentUser.Id);
+                .FirstOrDefault(x => x.Id == currentUserId);
 
             var userCurrentRole = currentUserProfile.ModuleRoles.FirstOrDefault(x => x.ModuleRole.ModuleId == currentModuleId);
 
