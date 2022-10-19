@@ -36,7 +36,8 @@
     "user-email": "Электронная почта",
     "general-overview": "Общий обзор профиля",
     "navigate-core-msg": "Вы уверенны, что хотите перейти в раздел общей информации о пользователе?",
-    "search-by-user-state": "Поиск по статусу пользователя"
+    "search-by-user-state": "Поиск по статусу пользователя",
+    "npp": "Ф.И.О."
   },
   "notification": {
     "title": {
@@ -805,7 +806,8 @@
     "can-be-solicited": "Его можно запросить",
     "search-by-test-mode": "Поиск по типу шаблона",
     "qualifying-type": "Квалификационный тип",
-    "search-by-qualifying-type": "Поиск по уточняющему типу"
+    "search-by-qualifying-type": "Поиск по уточняющему типу",
+    "info-tag": "Если роль не выбрана, шаблона доступен для всех ролей"
 },
   "plans": {
     "plans": "Планы",

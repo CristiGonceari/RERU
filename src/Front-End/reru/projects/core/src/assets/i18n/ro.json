@@ -190,7 +190,8 @@
     "priority":"Prioritate",
     "status": "Statut",
     "profile-photo": "Poza de profil",
-    "number" : "Numarul"
+    "number" : "Numarul",
+    "npp": "N.P.P."
   },
   "menu": {
     "menu-sections": {

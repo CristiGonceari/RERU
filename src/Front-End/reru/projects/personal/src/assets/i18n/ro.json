@@ -499,7 +499,8 @@
       "release-day": "Data emiterii",
       "living-address": "Adresa actuală",
       "residence-address": "Adresa de reședință",
-      "birth-place": "Adresa locului de naștere"
+      "birth-place": "Adresa locului de naștere",
+      "npp": "N.P.P."
     },
     "nomenclature": {
       "value" : "Valoare",

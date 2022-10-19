@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using CODWER.RERU.Evaluation.Application.Services;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
@@ -14,12 +15,18 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddTestTemplate
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly ILoggerService<AddTestTemplateCommandHandler> _loggerService;
+        private readonly IAssignRoleService _assignRoleService;
 
-        public AddTestTemplateCommandHandler(AppDbContext appDbContext, IMapper mapper, ILoggerService<AddTestTemplateCommandHandler> loggerService)
+
+        public AddTestTemplateCommandHandler(AppDbContext appDbContext, 
+            IMapper mapper, 
+            ILoggerService<AddTestTemplateCommandHandler> loggerService, 
+            IAssignRoleService assignRoleService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _loggerService = loggerService;
+            _assignRoleService = assignRoleService;
         }
 
         public async Task<int> Handle(AddTestTemplateCommand request, CancellationToken cancellationToken)
@@ -29,6 +36,8 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddTestTemplate
             _appDbContext.TestTemplates.Add(newTestTemplate);
 
             await _appDbContext.SaveChangesAsync();
+
+            await _assignRoleService.AssignRolesToTestTemplate(request.Data.ModuleRoles, newTestTemplate.Id);
 
             await LogAction(newTestTemplate);
 

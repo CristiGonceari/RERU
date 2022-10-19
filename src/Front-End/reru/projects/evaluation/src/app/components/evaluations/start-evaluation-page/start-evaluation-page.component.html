@@ -7,20 +7,26 @@
                 <div class="col">
                     <div class="card card-custom gutter-b">
                         <div class="card-header flex-wrap border-0 py-5">
-                            <div class="card-title m-10">
+                            <div class="card-title m-5">
                                 <h3 class="card-label text-muted">{{ 'events.name' | translate }}:</h3>
                                 <h3 class="card-label">{{ testDto.testTemplateName }}</h3>
                             </div>
-                            <div class="card-title m-10">
+                            <div class="card-title m-5">
                                 <h3 class="card-label text-muted">{{'verify-test.student' | translate}}:</h3>
                                 <h3 class="card-label"> {{ testDto.userName }} 
                                     <span class="text-dark-50 font-size-lg font-weight-light">(idnp:
                                         {{testDto.idnp}})</span>
                                 </h3>
                             </div>
-                            <div class="card-title m-10">
+                            <div class="card-title m-5">
                                 <h3 class="card-label text-muted">{{'tests.questions' | translate}}:</h3>
                                 <h3 class="card-label">{{ testDto.questionCount }}</h3>
+                            </div>
+                            <div class="card-title m-5" *ngIf="testDto.candidatePositionNames !== null && validatePosition">
+                                <h3 class="card-label text-muted">{{'position.name' | translate}}:</h3>
+                                <h3 class="card-label">{{ testDto.candidatePositionNames[0] }}
+                                    <span [ngbTooltip]="parseCandidatePositions(testDto.candidatePositionNames)">...</span>
+                                </h3>
                             </div>
                         </div>
                         <div class="card-body">

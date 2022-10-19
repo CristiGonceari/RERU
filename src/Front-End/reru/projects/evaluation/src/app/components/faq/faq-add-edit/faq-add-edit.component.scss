@@ -1,0 +1,69 @@
+::ng-deep {
+    tag {
+        border-radius: 12px !important;
+        margin: .1rem .3rem !important;
+        background: #a2caf1 !important;
+        line-height: 32px !important;
+        &:hover, &:active, &:focus {
+            background: #98c5f1 !important;
+        }
+
+        .tag__text {
+            color: #fff !important;
+        }
+
+    }
+    .ng2-tag-input {
+        border-bottom: none !important;
+    }
+    
+    .ng2-tag-input__text-input {
+        padding: 0 !important;
+        background: transparent;
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+    .custom-file-upload {
+        color: #FFF !important;
+        border-radius: 0.3rem !important;
+        background: #6993FF;
+        &:hover {
+          color: #FFF;
+          background: #4A7DFF;
+        }
+    }
+    .expandable {
+        min-height: 10px !important;
+    }
+}
+
+.shadow-input {
+	position: absolute;
+	bottom: -3px;
+	width: 0px;
+	height: 0px;
+	border: none;
+  }
+
+  .example-additional-selection {
+    width: 100%;
+    background-color: #F3F6F9;
+    border-color: #F3F6F9;
+    color: #3F4254;
+    border-radius: 15px;
+  }
+
+  ::ng-deep .mat-form-field-flex{
+    display: none;
+  }
+
+  .shadow-input {
+	position: absolute;
+	width: 0px;
+	height: 0px;
+	border: none;
+}
+
+ 

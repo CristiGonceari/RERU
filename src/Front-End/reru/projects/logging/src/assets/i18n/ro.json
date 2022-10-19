@@ -32,8 +32,8 @@
     "json-message": "JSON",
     "date": "Data",
     "view-details": "Vizualizare detalii",
-    "delete-logs": "Ștergeți din jurnale"
-
+    "delete-logs": "Ștergeți din jurnale",
+    "npp": "N.P.P."
    },
    "delete-log-modal":{
     "title": "Ştergerea jurnalelor mai vechi de:",

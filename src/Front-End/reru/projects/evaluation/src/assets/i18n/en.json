@@ -36,7 +36,8 @@
     "user-email": "E-mail",
     "general-overview": "General user profile overview",
     "navigate-core-msg": "Are you sure you want to navigate to general user profile overview?",
-    "search-by-user-state": "Search by user state"
+    "search-by-user-state": "Search by user state",
+    "npp": "L.F.F."
   },
   "notification": {
     "title": {
@@ -806,7 +807,8 @@
     "can-be-solicited": "Can be solicited",
     "search-by-test-mode": "Search by template type",
     "qualifying-type": "Qualifying type",
-    "search-by-qualifying-type": "Search by qualifying type"
+    "search-by-qualifying-type": "Search by qualifying type",
+    "info-tag": "If no role is selected, the template is available for all roles"
   },
   "plans": {
     "plans": "Plans",

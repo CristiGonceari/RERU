@@ -12,4 +12,5 @@ export class TestTemplate {
     categoriesSequence: SequenceTypeEnum;
     status: TestTemplateStatusEnum;
     mode: TestTemplateModeEnum;
+    roles: any[]
 }

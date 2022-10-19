@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RERU.Data.Persistence.Context;
@@ -9,9 +10,10 @@ using RERU.Data.Persistence.Context;
 namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221018144105_Add_Soft_Delete_At_Articles")]
+    partial class Add_Soft_Delete_At_Articles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4191,14 +4193,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<int?>("MaxErrors")
                         .HasColumnType("integer");
 
-                    b.Property<string>("NotRecommendedFor")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("ProgrammedTime")
                         .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("RecommendedFor")
-                        .HasColumnType("text");
 
                     b.Property<int>("ResultStatus")
                         .HasColumnType("integer");
@@ -4439,9 +4435,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<Guid>("PdfFileId")
                         .HasColumnType("uuid");
 
-                    b.Property<int?>("QualifyingType")
-                        .HasColumnType("integer");
-
                     b.Property<int>("QuestionCount")
                         .HasColumnType("integer");
 
@@ -4463,51 +4456,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.HasIndex("Mode");
 
-                    b.HasIndex("QualifyingType");
-
                     b.HasIndex("Status");
 
                     b.ToTable("TestTemplates");
-                });
-
-            modelBuilder.Entity("RERU.Data.Entities.TestTemplateModuleRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("CreateById")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime?>("DeleteTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("ModuleRoleId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TestTemplateId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("UpdateById")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ModuleRoleId");
-
-                    b.HasIndex("TestTemplateId");
-
-                    b.ToTable("TestTemplateModuleRoles");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.TestTemplateQuestionCategory", b =>
@@ -5272,49 +5223,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         });
                 });
 
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifyingTypeEnum>", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("QualifyingTypeEnum");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "PassedNotPassed"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "AbleNotAble"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "AcceptedRejected"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Recommended"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "NoQualifying"
-                        });
-                });
-
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QuestionTypeEnum>", b =>
                 {
                     b.Property<int>("Id")
@@ -5784,31 +5692,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 2,
                             Name = "NotPassed"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Able"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "NotAble"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Accepted"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Rejected"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Recommended"
                         });
                 });
 
@@ -7915,35 +7798,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifyingTypeEnum>", null)
-                        .WithMany()
-                        .HasForeignKey("QualifyingType")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.TestTemplateStatusEnum>", null)
                         .WithMany()
                         .HasForeignKey("Status")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("RERU.Data.Entities.TestTemplateModuleRole", b =>
-                {
-                    b.HasOne("RERU.Data.Entities.ModuleRole", "ModuleRole")
-                        .WithMany("TestTemplateModuleRoles")
-                        .HasForeignKey("ModuleRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RERU.Data.Entities.TestTemplate", "TestTemplate")
-                        .WithMany("TestTemplateModuleRoles")
-                        .HasForeignKey("TestTemplateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ModuleRole");
-
-                    b.Navigation("TestTemplate");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.TestTemplateQuestionCategory", b =>
@@ -8054,7 +7913,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("RERU.Data.Entities.UserProfileModuleRole", b =>
                 {
                     b.HasOne("RERU.Data.Entities.ModuleRole", "ModuleRole")
-                        .WithMany("UserProfileModuleRoles")
+                        .WithMany("UserProfileModuleRole")
                         .HasForeignKey("ModuleRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -8154,15 +8013,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ProcessesEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ProcessesEnum>", null)
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifyingTypeEnum>", b =>
-                {
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifyingTypeEnum>", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -8545,9 +8395,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.Navigation("Permissions");
 
-                    b.Navigation("TestTemplateModuleRoles");
-
-                    b.Navigation("UserProfileModuleRoles");
+                    b.Navigation("UserProfileModuleRole");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.PersonalEntities.Article", b =>
@@ -8703,8 +8551,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("Settings");
 
                     b.Navigation("Tests");
-
-                    b.Navigation("TestTemplateModuleRoles");
 
                     b.Navigation("TestTemplateQuestionCategories");
                 });

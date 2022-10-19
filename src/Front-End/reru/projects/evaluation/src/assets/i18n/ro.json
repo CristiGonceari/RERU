@@ -36,7 +36,8 @@
     "user-email": "E-mail",
     "general-overview": "Prezentarea generală a profilului utilizatorului",
     "navigate-core-msg": "Sunteți sigur(-ă) că doriți să navigați la vizualizarea generală a profilului utilizatorului?",
-    "search-by-user-state": "Căutați după statutul utilizatorului"
+    "search-by-user-state": "Căutați după statutul utilizatorului",
+    "npp": "N.P.P."
   },
   "notification": {
     "title": {
@@ -803,7 +804,8 @@
     "can-be-solicited": "Poate fi solicitat",
     "search-by-test-mode": "Căutați după tipul de șablon",
     "qualifying-type": "Tipul de calificare",
-    "search-by-qualifying-type": "Căutați după tipul de calificare"
+    "search-by-qualifying-type": "Căutați după tipul de calificare",
+    "info-tag": "Dacă nu este selectat nici un șablon, șablon este disponibil pentru toate rolurile"
 },
   "plans": {
     "plans": "Planuri",

@@ -23,6 +23,7 @@ export class StartEvaluationPageComponent implements OnInit {
 
   editorData: string = '';
   public Editor = DecoupledEditor;
+  validatePosition: boolean = false;
 
   constructor(
     private router: Router,
@@ -47,6 +48,13 @@ export class StartEvaluationPageComponent implements OnInit {
     });
   }
 
+  parseCandidatePositions(candidatePositionsNames: string[]){
+    if(this.validatePosition){
+      let string = candidatePositionsNames.join();
+      return string.split(',').join(', ');
+    }
+  }
+
   getTestById(testId: number) {
     this.testService.getTest(testId).subscribe(
       res => {
@@ -62,6 +70,7 @@ export class StartEvaluationPageComponent implements OnInit {
     this.testService.getTestSettings(id).subscribe(
       res => {
         this.testDto = res.data;
+        this.validatePosition = true;
       }
     )
   }

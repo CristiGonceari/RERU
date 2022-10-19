@@ -32,7 +32,8 @@
     "json-message": "JSON",
     "date": "Дата",
     "view-details": "Просмотр деталей",
-    "delete-logs": "Удалить из журналов"
+    "delete-logs": "Удалить из журналов",
+    "npp": "Ф.И.О."
    },
    "delete-log-modal":{
     "title": "Удалить журналы старше:",
