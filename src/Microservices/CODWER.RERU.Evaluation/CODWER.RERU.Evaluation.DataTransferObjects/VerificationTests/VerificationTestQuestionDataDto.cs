@@ -10,7 +10,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.VerificationTests
         public int TotalQuestions { get; set; }
         public int Points { get; set; }
         public TestResultStatusEnum Result { get; set; }
-        public string ResultStatusValue { get; set; }
-
+        public string ResultValue { get; set; }
     }
 }
