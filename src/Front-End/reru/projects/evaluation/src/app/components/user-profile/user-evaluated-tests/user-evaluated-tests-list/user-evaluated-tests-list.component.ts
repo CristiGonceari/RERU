@@ -70,7 +70,7 @@ export class UserEvaluatedTestsListComponent implements OnInit {
 		this.translateData();
 		let evaluatedTestTable = document.getElementById('evaluatedTestTable')
 		let headersHtml = evaluatedTestTable.getElementsByTagName('th');
-		let headersDto = ['programmedTime', 'testTemplateName', 'testStatus', 'accumulatedPercentage', 'result'];
+		let headersDto = ['programmedTime', 'testTemplateName', 'testStatus', 'accumulatedPercentage', 'resultValue'];
 		for (let i=0; i<headersHtml.length; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}

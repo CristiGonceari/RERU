@@ -107,15 +107,13 @@ export class ReceivedTableComponent implements OnInit {
     let headersDto = [
       'testTemplateName',
       'evaluatorName',
+      'evaluatorIdnp',
       'eventName',
       'testStatus',
-      'result'
+      'resultValue'
     ];
 
-    for (let i = 0; i < headersHtml.length; i++) {
-      if (i == 2) {
-        this.headersToPrint.push({ value: "evaluatorIdnp", label: "Idnp", isChecked: true })
-      }
+    for (let i = 0; i < headersHtml.length - 1; i++) {
       this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
     }
 
