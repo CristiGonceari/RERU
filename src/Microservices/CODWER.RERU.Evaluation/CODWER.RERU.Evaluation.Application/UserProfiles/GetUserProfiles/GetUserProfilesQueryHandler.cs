@@ -28,7 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
 
         public async Task<PaginatedModel<UserProfileDto>> Handle(GetUserProfilesQuery request, CancellationToken cancellationToken)
         {
-            var currentUser = await _userProfileService.GetCurrentUser();
+            var currentUser = await _userProfileService.GetCurrentUserProfileDto();
 
             var items = _appDbContext.UserProfiles
                 .Where(x => x.IsActive)

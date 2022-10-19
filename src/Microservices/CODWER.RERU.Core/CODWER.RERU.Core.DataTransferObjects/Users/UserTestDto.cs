@@ -17,5 +17,7 @@ namespace CODWER.RERU.Core.DataTransferObjects.Users
         public string VerificationProgress { get; set; }
         public TestStatusEnum TestStatus { get; set; }
         public TestResultStatusEnum Result { get; set; }
+        public string ResultStatusValue { get; set; }
+
     }
 }

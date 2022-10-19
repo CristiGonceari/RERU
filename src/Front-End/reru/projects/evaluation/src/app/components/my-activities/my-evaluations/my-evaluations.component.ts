@@ -7,6 +7,7 @@ import { TestStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-sta
 import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { TestService } from 'projects/evaluation/src/app/utils/services/test/test.service';
+import { EnumStringTranslatorService } from 'projects/evaluation/src/app/utils/services/enum-string-translator.service';
 import { saveAs } from 'file-saver';
 import { forkJoin } from 'rxjs';
 
@@ -37,11 +38,16 @@ export class MyEvaluationsComponent implements OnInit {
 		private testService: TestService,
 		private activatedRoute: ActivatedRoute,
 		public translate: I18nService,
-		private modalService: NgbModal
+		private modalService: NgbModal,
+		private enumStringTranslatorService: EnumStringTranslatorService
 	) { }
 
 	ngOnInit(): void {
 		this.getUserTests();
+	}
+
+	translateResultValue(item){
+		return this.enumStringTranslatorService.translateTestResultValue(item);
 	}
 
 	getUserTests(data: any = {}) {

@@ -24,7 +24,10 @@ export class AddEditTestTemplateComponent implements OnInit {
 	statusEnum = TestTemplateStatusEnum;
 	isLoading: boolean = true;
 	modeId;
-	modes: SelectItem[] = [{ label: '', value: '' }];
+	modes: SelectItem[] = [{label: '', value: ''}];
+	qualifyingTypes: SelectItem[] = [{label: '', value: ''}];
+	qualifyingTypesWithout15: SelectItem[] = [{label: '', value: ''}];
+
 	testTemplate: TestTemplate = new TestTemplate();
 	title: string;
 	description: string;
@@ -47,12 +50,14 @@ export class AddEditTestTemplateComponent implements OnInit {
 			questionCount: new FormControl(),
 			duration: new FormControl(),
 			mode: new FormControl(),
+			qualifyingType: new FormControl(),
 			minPercent: new FormControl(),
 			status: new FormControl()
 		});
 		this.onTextChange();
 		this.initData();
 		this.getMode();
+		this.getQualifyingType();
 	}
 
 	initData(): void {
@@ -96,6 +101,13 @@ export class AddEditTestTemplateComponent implements OnInit {
 		this.referenceService.getMode().subscribe((res) => this.modes = res.data);
 	}
 
+	getQualifyingType() {
+		this.referenceService.getQualifyingType().subscribe((res) => {
+			this.qualifyingTypes = res.data;
+			this.qualifyingTypesWithout15 = this.qualifyingTypes.filter(x => x.value == '2' || x.value == '3' || x.value == '4');
+		});
+	}
+
 	initForm(test?: any): void {
 		if (test) {
 			this.testForm = this.formBuilder.group({
@@ -105,6 +117,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 				duration: this.formBuilder.control((test && test.duration) || null, [Validators.required]),
 				minPercent: this.formBuilder.control(test && test.minPercent, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*\.)?$/)]),
 				mode: this.formBuilder.control((test && !isNaN(test.mode) ? test.mode : null), [Validators.required]),
+				qualifyingType: this.formBuilder.control((test && !isNaN(test.qualifyingType) ? test.qualifyingType : null), [Validators.required]),
 				status: this.statusEnum.Draft,
 				moduleRoles: this.items,
 			});
@@ -118,9 +131,11 @@ export class AddEditTestTemplateComponent implements OnInit {
 				duration: this.formBuilder.control(null, [Validators.required]),
 				minPercent: this.formBuilder.control([Validators.required], [Validators.pattern(/^-?(0|[1-9]\d*\.)?$/)]),
 				mode: this.formBuilder.control(0, [Validators.required]),
+				qualifyingType: this.formBuilder.control(2, [Validators.required]),
 				status: this.statusEnum.Draft,
 				moduleRoles: this.items,
 			});
+			this.modeId = this.testForm.value.mode;
 		}
 	}
 
@@ -163,6 +178,9 @@ export class AddEditTestTemplateComponent implements OnInit {
 
 	edit() {
 		this.parseNumber();
+		if(this.modeId == 0) this.testForm.value.qualifyingType = 1;
+		if(this.modeId == 1) this.testForm.value.qualifyingType = 5;
+		
 		this.testTemplateService.editTestTemplate({ data: this.testForm.value }).subscribe(() => {
 			forkJoin([
 				this.translate.get('modal.success'),
@@ -178,7 +196,12 @@ export class AddEditTestTemplateComponent implements OnInit {
 
 	add() {
 		this.parseNumber();
-		this.testTemplateService.addTestTemplate({ data: this.testForm.value }).subscribe(res => {
+		
+		if(this.modeId == 0) this.testForm.value.qualifyingType = 1;
+		if(this.modeId == 1) this.testForm.value.qualifyingType = 5;
+
+		this.testTemplateService.addTestTemplate({data: this.testForm.value}).subscribe(res => { 
+
 			forkJoin([
 				this.translate.get('modal.success'),
 				this.translate.get('tests.succes-add-msg'),

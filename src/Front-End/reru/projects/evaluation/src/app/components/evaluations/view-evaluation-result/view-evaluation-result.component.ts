@@ -11,6 +11,7 @@ import { HashOptionInputComponent } from '../../../utils/components/hash-option-
 import { TestResultStatusEnum } from '../../../utils/enums/test-result-status.enum';
 import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/file-test-answer.service';
 import { saveAs } from 'file-saver';
+import { EnumStringTranslatorService } from '../../../utils/services/enum-string-translator.service';
 
 @Component({
   selector: 'app-view-evaluation-result',
@@ -62,7 +63,8 @@ export class ViewEvaluationResultComponent implements OnInit {
     private testQuestionService: TestQuestionService,
     private router: Router,
     private location: Location,
-    private fileTestAnswerService: FileTestAnswerService
+    private fileTestAnswerService: FileTestAnswerService,
+    private enumStringTranslatorService: EnumStringTranslatorService
 
   ) {
     this.activatedRoute.params.subscribe(params => {
@@ -82,6 +84,10 @@ export class ViewEvaluationResultComponent implements OnInit {
 
     customElements.get('app-hash-option-input') || customElements.define('app-hash-option-input', el);
   }
+
+  translateResultValue(item){
+		return this.enumStringTranslatorService.translateTestResultValue(item);
+	}
 
   getTestById() {
     this.testService.getTest(this.testId).subscribe(
@@ -131,7 +137,7 @@ export class ViewEvaluationResultComponent implements OnInit {
           this.pager.push(i);
         };
         this.summaryList = res.data.testQuestions;
-        this.result = res.data.result;
+        this.result = res.data.resultValue;
         this.correctAnswers = res.data.correctAnswers;
         this.count = res.data.testQuestions.length;
         this.verifiedStatus = res.data.testQuestions.map(el => el.isCorrect);

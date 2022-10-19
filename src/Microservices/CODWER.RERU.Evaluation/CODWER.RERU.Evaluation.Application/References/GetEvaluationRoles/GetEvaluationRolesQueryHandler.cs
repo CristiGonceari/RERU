@@ -7,6 +7,7 @@ using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.ModulePrefixes;
 
 namespace CODWER.RERU.Evaluation.Application.References.GetEvaluationRoles
 {
@@ -23,16 +24,11 @@ namespace CODWER.RERU.Evaluation.Application.References.GetEvaluationRoles
 
         public async Task<List<SelectItem>> Handle(GetEvaluationRolesQuery request, CancellationToken cancellationToken)
         {
-            var moduleRoles = await _appDbContext.ModuleRolePermissions
-                .Include(x => x.Permission)
-                .Include(x => x.Role)
-                .Where(x => x.Permission.Code.StartsWith("P03"))
+            return await _appDbContext.GetModuleRolePermissions(ModulePrefix.Evaluation)
                 .Select(x => x.Role)
                 .Distinct()
                 .Select(e => _mapper.Map<SelectItem>(e))
-                .ToListAsync();// Evaluation permissions starts with P03, check PermissionCodes.cs
-
-            return moduleRoles;
+                .ToListAsync();
         }
     }
 }

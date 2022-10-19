@@ -13,7 +13,7 @@
                 <th scope="col" class="text-left" style="width: 150px">{{ 'events.event' | translate }}</th>
                 <th scope="col" class="text-left" style="width: 150px">{{ 'events.location' | translate }}</th>
                 <th scope="col" class="text-left" style="width: 150px">{{ 'verify-test.status' | translate }}</th>
-                <th scope="col" class="text-left" style="width: 100px">{{ 'verify-test.result' | translate }}</th>
+                <th scope="col" class="text-left" style="width: 160px">{{ 'verify-test.result' | translate }}</th>
                 <th scope="col" style="width: 48px"></th>
             </tr>
         </thead>
@@ -61,7 +61,7 @@
                     <span class="font-size-lg" *ngIf="!item.locationNames.length">-</span>
                 </td>
                 <td>{{'statuses.' + status[item.testStatus] | translate}}</td>
-                <td>{{'verify-test.' + result[item.result] | translate}}</td>
+                <td>{{ translateResultValue(item.resultValue) }}</td>
                 <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
                     <div style="overflow: visible; position: relative; width: 0px">
                         <div ngbDropdown class="dropdown dropdown-inline">

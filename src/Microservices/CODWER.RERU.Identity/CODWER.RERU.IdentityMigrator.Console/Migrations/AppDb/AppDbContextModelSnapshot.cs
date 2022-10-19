@@ -4191,8 +4191,14 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<int?>("MaxErrors")
                         .HasColumnType("integer");
 
+                    b.Property<string>("NotRecommendedFor")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("ProgrammedTime")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("RecommendedFor")
+                        .HasColumnType("text");
 
                     b.Property<int>("ResultStatus")
                         .HasColumnType("integer");
@@ -4433,6 +4439,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<Guid>("PdfFileId")
                         .HasColumnType("uuid");
 
+                    b.Property<int?>("QualifyingType")
+                        .HasColumnType("integer");
+
                     b.Property<int>("QuestionCount")
                         .HasColumnType("integer");
 
@@ -4453,6 +4462,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasIndex("CategoriesSequence");
 
                     b.HasIndex("Mode");
+
+                    b.HasIndex("QualifyingType");
 
                     b.HasIndex("Status");
 
@@ -5261,6 +5272,49 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         });
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifyingTypeEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("QualifyingTypeEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "PassedNotPassed"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "AbleNotAble"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "AcceptedRejected"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Recommended"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "NoQualifying"
+                        });
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QuestionTypeEnum>", b =>
                 {
                     b.Property<int>("Id")
@@ -5730,6 +5784,31 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 2,
                             Name = "NotPassed"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Able"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "NotAble"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Accepted"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Rejected"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Recommended"
                         });
                 });
 
@@ -7836,6 +7915,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifyingTypeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("QualifyingType")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.TestTemplateStatusEnum>", null)
                         .WithMany()
                         .HasForeignKey("Status")
@@ -8070,6 +8154,15 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ProcessesEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ProcessesEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifyingTypeEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifyingTypeEnum>", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)

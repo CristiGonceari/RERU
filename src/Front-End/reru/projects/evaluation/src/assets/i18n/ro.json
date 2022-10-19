@@ -594,6 +594,13 @@
     "NoResult": "Fără rezultat",
     "Passed": "Susținut",
     "NotPassed": "Nesusținut",
+    "Able":"Apt",
+    "NotAble":"Inapt",
+    "Accepted":"Admis",
+    "Rejected":"Respins",
+    "Recommended":"Recomandat/Nerecomandat",
+    "ModalRecommended":"Recomandat",
+    "NotRecommended":"Nu se recomandă",
     "employee": "Angajat",
     "candidate": "Candidat",
     "Candidate": "Candidați",
@@ -602,7 +609,11 @@
     "Column1": "Coloana 1",
     "Column2": "Coloana 2",
     "Column3": "Coloana 3",
-    "Column4": "Coloana 4"
+    "Column4": "Coloana 4",
+    "AbleNotAble": "Apt/Inapt",
+    "PassedNotPassed": "Susținut/Nesusținut",
+    "AcceptedRejected": "Admis/Respins",
+    "NoQualifying": "Nici o calificare"
   },
   "options": {
     "start-without-confirmation": "Este posibil să porniți testul fără confirmare",
@@ -794,6 +805,8 @@
     "unset-from-can-be-solicited": "Scoateti din teste solicitate",
     "can-be-solicited": "Poate fi solicitat",
     "search-by-test-mode": "Căutați după tipul de șablon",
+    "qualifying-type": "Tipul de calificare",
+    "search-by-qualifying-type": "Căutați după tipul de calificare",
     "info-tag": "Dacă nu este selectat nici un șablon, șablon este disponibil pentru toate rolurile"
 },
   "plans": {

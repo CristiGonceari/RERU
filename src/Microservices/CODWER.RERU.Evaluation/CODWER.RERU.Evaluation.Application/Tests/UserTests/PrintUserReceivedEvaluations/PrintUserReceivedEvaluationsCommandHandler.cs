@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.TableExportServices;
@@ -16,11 +17,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserReceivedEv
     {
         private readonly AppDbContext _appDbContext;
         private readonly IExportData<Test, TestDto> _printer;
+        private readonly ICurrentModuleService _currentModuleService;
 
-        public PrintUserReceivedEvaluationsCommandHandler(AppDbContext appDbContext, IExportData<Test, TestDto> printer)
+        public PrintUserReceivedEvaluationsCommandHandler(AppDbContext appDbContext, IExportData<Test, TestDto> printer, ICurrentModuleService currentModuleService)
         {
             _appDbContext = appDbContext;
             _printer = printer;
+            _currentModuleService = currentModuleService;
         }
 
         public async Task<FileDataDto> Handle(PrintUserReceivedEvaluationsCommand request, CancellationToken cancellationToken)
@@ -36,6 +39,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserReceivedEv
                 .OrderByDescending(x => x.ProgrammedTime)
                 .AsQueryable();
 
+            evaluations = await FilterUsersTestsByModuleRole(evaluations);
+
             var result = _printer.ExportTableSpecificFormat(new TableData<Test>
             {
                 Name = request.TableName,
@@ -46,6 +51,17 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserReceivedEv
             });
 
             return result;
+        }
+
+        public async Task<IQueryable<Test>> FilterUsersTestsByModuleRole(IQueryable<Test> userTests)
+        {
+            var userCurrentRole = await _currentModuleService.GetUserCurrentModuleRole();
+
+            var currentUserProfile = await _currentModuleService.GetCurrentUserProfile();
+
+            userTests = FilterByModuleRole.Filter(userTests, userCurrentRole, currentUserProfile);
+
+            return userTests;
         }
     }
 }

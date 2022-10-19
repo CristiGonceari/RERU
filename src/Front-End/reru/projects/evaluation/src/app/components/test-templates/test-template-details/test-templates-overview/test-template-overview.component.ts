@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TestTemplateModeEnum } from 'projects/evaluation/src/app/utils/enums/test-template-mode.enum';
 import { TestTemplateStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-template-status.enum';
+import { QualifyingTypeEnum } from 'projects/evaluation/src/app/utils/enums/qualifying-type.enum';
 import { TestTemplate } from 'projects/evaluation/src/app/utils/models/test-templates/test-template.model';
 import { TestTemplateService } from 'projects/evaluation/src/app/utils/services/test-template/test-template.service';
 import { Location } from '@angular/common';
@@ -14,6 +15,7 @@ import { Location } from '@angular/common';
 export class TestTemplateOverviewComponent implements OnInit {
   testId: number;
   status;
+  qualifyingType;
   testTemplate: TestTemplate;
   testEnum = TestTemplateModeEnum;
   isLoading: boolean = false;
@@ -40,6 +42,7 @@ export class TestTemplateOverviewComponent implements OnInit {
           this.testTemplate = res.data;
           this.isLoading = false;
           this.status = TestTemplateStatusEnum[res.data.status];
+          this.qualifyingType = QualifyingTypeEnum[res.data.qualifyingType];
           this.roles = this.testTemplate.roles;
         }
     })

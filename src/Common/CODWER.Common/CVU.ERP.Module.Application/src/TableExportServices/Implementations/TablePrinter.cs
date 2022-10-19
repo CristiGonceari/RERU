@@ -147,16 +147,22 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                     break;
                 case TestResultStatusEnum: result = ParseDataByTestEnum(tableName, result);
                     break;
-                case TestStatusEnum: result = EnumMessages.EnumMessages.GetTestStatus((TestStatusEnum)result);
+                case TestStatusEnum: result = EnumMessages.GetTestStatus((TestStatusEnum)result);
                     break;
-                case QuestionTypeEnum: result = EnumMessages.EnumMessages.GetQuestionType((QuestionTypeEnum)result);
+                case QuestionTypeEnum: result = EnumMessages.GetQuestionType((QuestionTypeEnum)result);
                     break;
-                case QuestionUnitStatusEnum: result = EnumMessages.EnumMessages.GetQuestionStatus((QuestionUnitStatusEnum)result);
+                case QuestionUnitStatusEnum: result = EnumMessages.GetQuestionStatus((QuestionUnitStatusEnum)result);
                     break;
-                case TestTemplateModeEnum: result = EnumMessages.EnumMessages.GetTestTemplateTypeEnum((TestTemplateModeEnum)result);
+                case TestTemplateModeEnum: result = EnumMessages.GetTestTemplateTypeEnum((TestTemplateModeEnum)result);
                     break;
                 case MedicalColumnEnum:
-                    result = EnumMessages.EnumMessages.GetMedicalColumnEnum((MedicalColumnEnum)result);
+                    result = EnumMessages.GetMedicalColumnEnum((MedicalColumnEnum)result);
+                    break;
+                case TestTemplateStatusEnum:
+                    result = EnumMessages.GetTestTemplateEnum((TestTemplateStatusEnum)result);
+                    break;
+                case QualifyingTypeEnum:
+                    result = EnumMessages.GetTestTemplateQualifyingType((QualifyingTypeEnum)result);
                     break;
                 case null: result = "-";
                     break;
@@ -165,21 +171,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             return result.ToString();
         }
 
-        private object ParseDataByTestEnum(string tableName, object result)
-        {
-            var names = new List<string> { "Evaluări ", "Evaluări primite", "Evaluări acordate" };
-
-            if (names.Contains(tableName))
-            {
-                result = EnumMessages.EnumMessages.GetEvaluationResultStatus((TestResultStatusEnum)result);
-            }
-            else
-            {
-                result = EnumMessages.EnumMessages.GetTestResultStatus((TestResultStatusEnum)result);
-            }
-
-            return result;
-        }
+        private object ParseDataByTestEnum(string tableName, object result) => EnumMessages.TranslateResultStatus((TestResultStatusEnum)result);
 
         private object ParseDataByListOfStrings(object result)
         {

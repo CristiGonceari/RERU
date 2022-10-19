@@ -12,6 +12,7 @@ import { HashOptionInputComponent } from '../../../utils/components/hash-option-
 import { TestResultStatusEnum } from '../../../utils/enums/test-result-status.enum';
 import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/file-test-answer.service';
 import { saveAs } from 'file-saver';
+import { EnumStringTranslatorService } from '../../../utils/services/enum-string-translator.service';
 
 @Component({
   selector: 'app-view-test-result',
@@ -64,7 +65,8 @@ export class ViewTestResultComponent implements OnInit {
     private testQuestionService: TestQuestionService,
     private router: Router,
     private location: Location,
-    private fileTestAnswerService: FileTestAnswerService
+    private fileTestAnswerService: FileTestAnswerService,
+    private enumStringTranslatorService: EnumStringTranslatorService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
@@ -83,6 +85,10 @@ export class ViewTestResultComponent implements OnInit {
 
     customElements.get('app-hash-option-input') || customElements.define('app-hash-option-input', el);
   }
+
+  translateResultValue(item){
+		return this.enumStringTranslatorService.translateTestResultValue(item);
+	}
 
   checkIfHadFile(){
     let params = {
@@ -133,7 +139,7 @@ export class ViewTestResultComponent implements OnInit {
           this.pager.push(i);
         };
         this.summaryList = res.data.testQuestions;
-        this.result = res.data.result;
+        this.result = res.data.resultValue;
         this.correctAnswers = res.data.correctAnswers;
         this.count = res.data.testQuestions.length;
         this.verifiedStatus = res.data.testQuestions.map(el => el.isCorrect);
@@ -161,7 +167,6 @@ export class ViewTestResultComponent implements OnInit {
       toEvaluate: false
     };
 
-    console.log("need to ceckFile:")
     this.checkIfHadFile();
 
     this.verifyService.getTest(testData).subscribe(

@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
+﻿using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPollsByEvent
 {
@@ -42,7 +42,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPollsByEvent
                 )
                 .ToListAsync();
 
-
             var answer = new List<PollDto>();
             foreach (var testTemplate in myTestsTypes)
             {
@@ -69,5 +68,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPollsByEvent
 
             return paginatedModel;
         }
+
     }
 }

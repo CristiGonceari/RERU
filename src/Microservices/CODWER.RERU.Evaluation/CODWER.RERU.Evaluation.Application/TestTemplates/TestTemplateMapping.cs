@@ -13,12 +13,14 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates
         {
             CreateMap<TestTemplate, TestTemplateDto>()
                 .ForMember(x => x.CategoriesCount, opts => opts.MapFrom(tt => tt.TestTemplateQuestionCategories.Select(x => x.QuestionCategory).Distinct().Count()))
-                .ForMember(x => x.Status, opts => opts.MapFrom(tt => tt.Status));
+                .ForMember(x => x.Status, opts => opts.MapFrom(tt => tt.Status))
+                .ForMember(x => x.QualifyingType, opts => opts.MapFrom(tt => tt.QualifyingType));
 
             CreateMap<AddEditTestTemplateDto, TestTemplate>()
                 .ForMember(x => x.Id, opts => opts.Ignore())
                 .ForMember(x => x.Status, opts => opts.MapFrom(tt => (int)TestTemplateStatusEnum.Draft))
-                .ForMember(x => x.CategoriesSequence, opts => opts.MapFrom(tt => (int)SequenceEnum.Random));
+                .ForMember(x => x.CategoriesSequence, opts => opts.MapFrom(tt => (int)SequenceEnum.Random))
+                .ForMember(x => x.QualifyingType, opts => opts.MapFrom(tt => GetQualifyingTypeEnum(tt.Mode, tt.QualifyingType)));
 
             CreateMap<TestTemplateSettingsDto, TestTemplateSettings>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
@@ -35,6 +37,21 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates
 
             CreateMap<TestTemplate, RulesDto>()
                 .ForMember(x => x.TestTemplateId, opts => opts.MapFrom(tt => tt.Id));
+        }
+
+        private QualifyingTypeEnum GetQualifyingTypeEnum(TestTemplateModeEnum testMode, QualifyingTypeEnum explicitType)
+        {
+            switch (testMode)
+            {
+                case TestTemplateModeEnum.Poll:
+                    return QualifyingTypeEnum.NoQualifying;
+                case TestTemplateModeEnum.Test:
+                    return QualifyingTypeEnum.PassedNotPassed;
+                case TestTemplateModeEnum.Evaluation:
+                    return explicitType;
+            }
+
+            return QualifyingTypeEnum.NoQualifying;
         }
     }
 }

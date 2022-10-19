@@ -7,5 +7,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.SetTestResult
     {
         public int TestId { get; set; }
         public TestResultStatusEnum ResultStatus { get; set; }
+        public int[] RecommendedFor { get; set; }
+        public int[] NotRecommendedFor { get; set; }
     }
 }

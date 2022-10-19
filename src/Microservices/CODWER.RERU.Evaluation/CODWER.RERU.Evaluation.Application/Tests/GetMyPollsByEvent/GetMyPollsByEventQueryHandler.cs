@@ -27,7 +27,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyPollsByEvent
 
         public async Task<PaginatedModel<PollDto>> Handle(GetMyPollsByEventQuery request, CancellationToken cancellationToken)
         {
-            var myUserProfile = await _userProfileService.GetCurrentUser();
+            var currentUserId = await _userProfileService.GetCurrentUserId();
             var thisEvent = _appDbContext.Events.First(x => x.Id == request.EventId);
 
             var myTestsTypes = await _appDbContext.EventTestTemplates
@@ -49,7 +49,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyPollsByEvent
             var answer = new List<PollDto>();
             foreach (var testTemplate in myTestsTypes)
             {
-                var myPoll = await _appDbContext.Tests.Include(x => x.TestQuestions).FirstOrDefaultAsync(x => x.TestTemplateId == testTemplate.Id && x.UserProfileId == myUserProfile.Id);
+                var myPoll = await _appDbContext.Tests.Include(x => x.TestQuestions)
+                    .FirstOrDefaultAsync(x => x.TestTemplateId == testTemplate.Id && x.UserProfileId == currentUserId);
+                
                 testTemplate.TestStatus = myPoll?.TestStatus;
 
                 if (myPoll != null && myPoll.TestStatus >= TestStatusEnum.Terminated)

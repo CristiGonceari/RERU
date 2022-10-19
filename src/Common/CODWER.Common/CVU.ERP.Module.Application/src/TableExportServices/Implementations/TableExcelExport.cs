@@ -93,22 +93,28 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                     result = Convert.ToBoolean(result) ? "+" : "-";
                     break;
                 case TestResultStatusEnum:
-                    result = ParseDataByTestEnum(tableName, result);
+                    result = EnumMessages.TranslateResultStatus((TestResultStatusEnum)result);
                     break;
                 case TestStatusEnum:
-                    result = EnumMessages.EnumMessages.GetTestStatus((TestStatusEnum)result);
+                    result = EnumMessages.GetTestStatus((TestStatusEnum)result);
                     break;
                 case QuestionTypeEnum:
-                    result = EnumMessages.EnumMessages.GetQuestionType((QuestionTypeEnum)result);
+                    result = EnumMessages.GetQuestionType((QuestionTypeEnum)result);
                     break;
                 case QuestionUnitStatusEnum:
-                    result = EnumMessages.EnumMessages.GetQuestionStatus((QuestionUnitStatusEnum)result);
+                    result = EnumMessages.GetQuestionStatus((QuestionUnitStatusEnum)result);
                     break;
                 case TestTemplateModeEnum:
-                    result = EnumMessages.EnumMessages.GetTestTemplateTypeEnum((TestTemplateModeEnum)result);
+                    result = EnumMessages.GetTestTemplateTypeEnum((TestTemplateModeEnum)result);
                     break;
                 case MedicalColumnEnum:
-                    result = EnumMessages.EnumMessages.GetMedicalColumnEnum((MedicalColumnEnum)result);
+                    result = EnumMessages.GetMedicalColumnEnum((MedicalColumnEnum)result);
+                    break;
+                case TestTemplateStatusEnum:
+                    result = EnumMessages.GetTestTemplateEnum((TestTemplateStatusEnum)result);
+                    break;
+                case QualifyingTypeEnum:
+                    result = EnumMessages.GetTestTemplateQualifyingType((QualifyingTypeEnum)result);
                     break;
                 case null:
                     result = "-";
@@ -124,22 +130,6 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             worksheet.Cells[row, column].Style.Border.Right.Style = ExcelBorderStyle.Thin;
             worksheet.Cells[row, column].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
             worksheet.Column(column).Width = 24; ;
-        }
-
-        private object ParseDataByTestEnum(string tableName, object result)
-        {
-            var names = new List<string> { "Evaluări ", "Evaluări primite", "Evaluări acordate" };
-
-            if (names.Contains(tableName))
-            {
-                result = EnumMessages.EnumMessages.GetEvaluationResultStatus((TestResultStatusEnum)result);
-            }
-            else
-            {
-                result = EnumMessages.EnumMessages.GetTestResultStatus((TestResultStatusEnum)result);
-            }
-
-            return result;
         }
 
         private object ParseDataByListOfStrings(object result)

@@ -1,6 +1,4 @@
-﻿using RERU.Data.Entities.Enums;
-
-namespace CVU.ERP.Module.Application.EnumMessages
+﻿namespace RERU.Data.Entities.Enums
 {
     public static class EnumMessages
     {
@@ -19,11 +17,24 @@ namespace CVU.ERP.Module.Application.EnumMessages
         public const string Draft = "Maculator";
         public const string Active = "Activ";
         public const string Inactive = "Inactiv";
+        public const string Canceled = "Anulat";
         public const string NoResult = "Fără rezultat";
         public const string Passed = "Susținut";
         public const string NotPassed = "Nesusținut";
-        public const string IsRecommended = "Se recomandă";
-        public const string NotRecommended = "Nu se recomandă";
+
+        public const string Able = "Apt";
+        public const string NotAble = "Inapt";
+
+        public const string Accepted = "Admis";
+        public const string Rejected = "Respins";
+
+        public const string Recommended = "Se recomandă/Nu se recomanda";
+        public const string PassedNotPassed = "Susținut/Nesusținut";
+        public const string AbleNotAble = "Apt/Inapt";
+        public const string AcceptedRejected = "Admis/Respins";
+        public const string NoQualifying = "Nici o calificare";
+
+        //public const string NotRecommended = "Nu se recomandă";
         public const string Test = "Test";
         public const string Poll = "Sondaj";
         public const string Evaluation = "Evaluare";
@@ -31,6 +42,10 @@ namespace CVU.ERP.Module.Application.EnumMessages
         public const string Column2 = "Coloana 2";
         public const string Column3 = "Coloana 3";
         public const string Column4 = "Coloana 4";
+
+
+
+
 
         public static string GetTestStatus(TestStatusEnum testStatus)
         {
@@ -79,24 +94,18 @@ namespace CVU.ERP.Module.Application.EnumMessages
             };
         }
 
-        public static string GetTestResultStatus(TestResultStatusEnum testResultStatus)
+        public static string TranslateResultStatus(TestResultStatusEnum testResultStatus)
         {
             return testResultStatus switch
             {
                 TestResultStatusEnum.NoResult => NoResult,
                 TestResultStatusEnum.Passed => Passed,
                 TestResultStatusEnum.NotPassed => NotPassed,
-                _ => "-"
-            };
-        }
-
-        public static string GetEvaluationResultStatus(TestResultStatusEnum testResultStatus)
-        {
-            return testResultStatus switch
-            {
-                TestResultStatusEnum.NoResult => NoResult,
-                TestResultStatusEnum.Passed => IsRecommended,
-                TestResultStatusEnum.NotPassed => NotRecommended,
+                TestResultStatusEnum.Able => Able,
+                TestResultStatusEnum.NotAble => NotAble,
+                TestResultStatusEnum.Accepted => Accepted,
+                TestResultStatusEnum.Rejected => Rejected,
+                TestResultStatusEnum.Recommended => Recommended,
                 _ => "-"
             };
         }
@@ -120,6 +129,30 @@ namespace CVU.ERP.Module.Application.EnumMessages
                 MedicalColumnEnum.Column2 => Column2,
                 MedicalColumnEnum.Column3 => Column3,
                 MedicalColumnEnum.Column4 => Column4,
+                _ => "-"
+            };
+        }
+
+        public static string GetTestTemplateEnum(TestTemplateStatusEnum testTemplateEnum)
+        {
+            return testTemplateEnum switch
+            {
+                TestTemplateStatusEnum.Draft => Draft,
+                TestTemplateStatusEnum.Active => Active,
+                TestTemplateStatusEnum.Canceled => Canceled,
+                _ => "-"
+            };
+        }
+
+        public static string GetTestTemplateQualifyingType(QualifyingTypeEnum qualifyingType)
+        {
+            return qualifyingType switch
+            {
+                QualifyingTypeEnum.PassedNotPassed => PassedNotPassed,
+                QualifyingTypeEnum.AbleNotAble => AbleNotAble,
+                QualifyingTypeEnum.AcceptedRejected => AcceptedRejected,
+                QualifyingTypeEnum.Recommended => Recommended,
+                QualifyingTypeEnum.NoQualifying => NoQualifying,
                 _ => "-"
             };
         }

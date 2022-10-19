@@ -27,7 +27,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsByEvent
 
         public async Task<PaginatedModel<TestDto>> Handle(GetMyTestsByEventQuery request, CancellationToken cancellationToken)
         {
-            var myUserProfile = await _userProfileService.GetCurrentUser();
+            var currentUserId = await _userProfileService.GetCurrentUserId();
 
             var myTests = _appDbContext.Tests
                 .Include(t => t.TestTemplate)
@@ -36,7 +36,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsByEvent
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
                 .Include(t => t.Event)
-                .Where(t => t.UserProfileId == myUserProfile.Id && t.Event.Id == request.EventId && t.TestTemplate.Mode == TestTemplateModeEnum.Test)
+                .Where(t => t.UserProfileId == currentUserId && t.Event.Id == request.EventId && t.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .OrderByDescending(x => x.Id)
                 .AsQueryable();
 

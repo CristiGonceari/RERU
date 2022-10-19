@@ -5,7 +5,6 @@ using CODWER.RERU.Evaluation.Application.Tests.AddTests;
 using CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotification;
 using CODWER.RERU.Evaluation.Application.Tests.DeleteTest;
 using CODWER.RERU.Evaluation.Application.Tests.EditTestStatus;
-using CODWER.RERU.Evaluation.Application.Tests.ExportTests;
 using CODWER.RERU.Evaluation.Application.Tests.FinalizeTest;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.CountMyEvaluatedTests;
@@ -287,17 +286,6 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<PaginatedModel<TestDto>> GetUserEvaluatedTests([FromQuery] GetUserEvaluatedTestsQuery query)
         {
             return await Mediator.Send(query);
-        }
-
-        [HttpGet("export")]
-        public async Task<FileContentResult> ExportTests()
-        {
-            byte[] answerBytes = await Mediator.Send(new ExportTestsQuery()) as byte[];
-
-            var timeStamp = DateTime.Now;
-            return File(answerBytes, 
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", 
-                $"AllTests_{timeStamp.Year}-{timeStamp.Month.ToString("00")}-{timeStamp.Day.ToString("00")}.xlsx");
         }
 
         [HttpPut("print-tests")]

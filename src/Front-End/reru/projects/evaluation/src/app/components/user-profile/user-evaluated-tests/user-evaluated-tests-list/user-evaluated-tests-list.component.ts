@@ -9,69 +9,75 @@ import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18
 import { TestService } from 'projects/evaluation/src/app/utils/services/test/test.service';
 import { saveAs } from 'file-saver';
 import { forkJoin } from 'rxjs';
+import { EnumStringTranslatorService } from 'projects/evaluation/src/app/utils/services/enum-string-translator.service';
 
 @Component({
-  selector: 'app-user-evaluated-tests-list',
-  templateUrl: './user-evaluated-tests-list.component.html',
-  styleUrls: ['./user-evaluated-tests-list.component.scss']
+	selector: 'app-user-evaluated-tests-list',
+	templateUrl: './user-evaluated-tests-list.component.html',
+	styleUrls: ['./user-evaluated-tests-list.component.scss']
 })
 export class UserEvaluatedTestsListComponent implements OnInit {
-  testRowList: [] = [];
-  pagedSummary: PaginationModel = new PaginationModel();
-  userId: number;
-  isLoading: boolean = true;
-  enum = TestStatusEnum;
-  resultEnum = TestResultStatusEnum;
-  downloadFile: boolean = false;
-  headersToPrint = [];
-  printTranslates: any[];
-  title: string;
-  
-  constructor(
-    private testService: TestService, 
-    private activatedRoute: ActivatedRoute,
-    public translate: I18nService,
-	  private modalService: NgbModal
-  ) { }
+	testRowList: [] = [];
+	pagedSummary: PaginationModel = new PaginationModel();
+	userId: number;
+	isLoading: boolean = true;
+	enum = TestStatusEnum;
+	resultEnum = TestResultStatusEnum;
+	downloadFile: boolean = false;
+	headersToPrint = [];
+	printTranslates: any[];
+	title: string;
 
-  ngOnInit(): void {
-    this.subsribeForParams();
-  }
+	constructor(
+		private testService: TestService,
+		private activatedRoute: ActivatedRoute,
+		public translate: I18nService,
+		private modalService: NgbModal,
+		private enumStringTranslatorService: EnumStringTranslatorService
+	) { }
 
-  subsribeForParams() {
-    this.isLoading = true;
-    this.activatedRoute.parent.params.subscribe(params => {
-      if (params.id) {
-        this.userId = params.id;
-        this.getUserTests();
-      }
-    });
-  }
+	ngOnInit(): void {
+		this.subsribeForParams();
+	}
 
-  getUserTests(data: any = {}) {
-    const params: any = {
-      userId: this.userId,
-      page: data.page || this.pagedSummary.currentPage,
+	subsribeForParams() {
+		this.isLoading = true;
+		this.activatedRoute.parent.params.subscribe(params => {
+			if (params.id) {
+				this.userId = params.id;
+				this.getUserTests();
+			}
+		});
+	}
+
+	getUserTests(data: any = {}) {
+		const params: any = {
+			userId: this.userId,
+			page: data.page || this.pagedSummary.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
-    }
+		}
 
-    this.testService.getUserEvaluatedTests(params).subscribe(
-      res => {
-        if (res && res.data) {
-          this.testRowList = res.data.items;
-          this.pagedSummary = res.data.pagedSummary;
-          this.isLoading = false;
-        }
-      }
-    )
-  }
+		this.testService.getUserEvaluatedTests(params).subscribe(
+			res => {
+				if (res && res.data) {
+					this.testRowList = res.data.items;
+					this.pagedSummary = res.data.pagedSummary;
+					this.isLoading = false;
+				}
+			}
+		)
+	}
 
-  getHeaders(name: string): void {
+	translateResultValue(item) {
+		return this.enumStringTranslatorService.translateTestResultValue(item);
+	}
+
+	getHeaders(name: string): void {
 		this.translateData();
 		let evaluatedTestTable = document.getElementById('evaluatedTestTable')
 		let headersHtml = evaluatedTestTable.getElementsByTagName('th');
-		let headersDto = ['programmedTime', 'testTemplateName', 'testStatus', 'accumulatedPercentage', 'result'];
-		for (let i=0; i<headersHtml.length; i++) {
+		let headersDto = ['programmedTime', 'testTemplateName', 'testStatus', 'accumulatedPercentage', 'resultValue'];
+		for (let i = 0; i < headersHtml.length; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
 		let printData = {
@@ -87,7 +93,7 @@ export class UserEvaluatedTestsListComponent implements OnInit {
 		this.headersToPrint = [];
 	}
 
-  
+
 	translateData(): void {
 		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
 		forkJoin([
@@ -97,7 +103,7 @@ export class UserEvaluatedTestsListComponent implements OnInit {
 			this.translate.get('button.cancel')
 		]).subscribe(
 			(items) => {
-				for (let i=0; i<this.printTranslates.length; i++) {
+				for (let i = 0; i < this.printTranslates.length; i++) {
 					this.printTranslates[i] = items[i];
 				}
 			}

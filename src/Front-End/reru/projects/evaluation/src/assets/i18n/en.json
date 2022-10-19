@@ -597,6 +597,13 @@
     "NoResult": "No result",
     "Passed": "Passed",
     "NotPassed":"Not passed",
+    "Able":"Able",
+    "NotAble":"Not able",
+    "Accepted":"Accepted",
+    "Rejected":"Rejected",
+    "Recommended":"Recommended/Not recommended",
+    "ModalRecommended":"Recommended",
+    "NotRecommended":"Not recommended",
     "employee": "Employee",
     "candidate": "Candidate",
     "Candidate": "Candidates",
@@ -604,7 +611,11 @@
     "Column1": "Column 1",
     "Column2": "Column 2",
     "Column3": "Column 3",
-    "Column4": "Column 4"
+    "Column4": "Column 4",
+    "AbleNotAble": "Able/Not able",
+    "PassedNotPassed": "Passed/Not passed",
+    "AcceptedRejected": "Accepted/Rejected",
+    "NoQualifying": "No qualifying"
   },
   "options": {
     "start-without-confirmation": "Possible to start test without confirmation",
@@ -797,6 +808,8 @@
     "unset-from-can-be-solicited": "Unset from solicited tests",
     "can-be-solicited": "Can be solicited",
     "search-by-test-mode": "Search by template type",
+    "qualifying-type": "Qualifying type",
+    "search-by-qualifying-type": "Search by qualifying type",
     "info-tag": "If no role is selected, the template is available for all roles"
   },
   "plans": {

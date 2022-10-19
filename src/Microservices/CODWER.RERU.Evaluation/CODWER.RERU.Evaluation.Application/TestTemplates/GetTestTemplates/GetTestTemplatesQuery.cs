@@ -13,6 +13,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplates
     {
         public string Name { get; set; }
         public string EventName { get; set; }
+        public QualifyingTypeEnum? QualifyingType { get; set; }
         public TestTemplateStatusEnum? Status { get; set; }
         public TestTemplateModeEnum? Mode { get; set; }
     }

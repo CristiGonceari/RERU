@@ -15,9 +15,6 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetCurrentUserProfile
             _userProfileService = userProfileService;
         }
 
-        public async Task<UserProfileDto> Handle(GetCurrentUserProfileQuery request, CancellationToken cancellationToken)
-        {
-            return await _userProfileService.GetCurrentUser();
-        }
+        public async Task<UserProfileDto> Handle(GetCurrentUserProfileQuery request, CancellationToken cancellationToken) => (await _userProfileService.GetCurrentUserProfileDto());
     }
 }

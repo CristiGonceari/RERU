@@ -4,6 +4,7 @@ using CVU.ERP.Module.Application.TableExportServices;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.Services;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
@@ -13,16 +14,21 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.PrintTestTemplates
     {
         private readonly AppDbContext _appDbContext;
         private readonly IExportData<TestTemplate, TestTemplateDto> _printer;
+        private readonly IUserProfileService _userProfileService;
 
-        public PrintTestTemplatesCommandHandler(AppDbContext appDbContext, IExportData<TestTemplate, TestTemplateDto> printer)
+
+        public PrintTestTemplatesCommandHandler(AppDbContext appDbContext, IExportData<TestTemplate, TestTemplateDto> printer, IUserProfileService userProfileService)
         {
             _appDbContext = appDbContext;
             _printer = printer;
+            _userProfileService = userProfileService;
         }
 
         public async Task<FileDataDto> Handle(PrintTestTemplatesCommand request, CancellationToken cancellationToken)
         {
-            var testTemplates = GetAndFilterTestTemplates.Filter(_appDbContext, request.Name, request.EventName, request.Status, request.Mode);
+            var currentUserId = await _userProfileService.GetCurrentUserId();
+
+            var testTemplates = GetAndFilterTestTemplates.Filter(_appDbContext, request.Name, request.EventName, request.Status, request.Mode, currentUserId, request.QualifyingType);
 
             var result = _printer.ExportTableSpecificFormat(new TableData<TestTemplate>
             {

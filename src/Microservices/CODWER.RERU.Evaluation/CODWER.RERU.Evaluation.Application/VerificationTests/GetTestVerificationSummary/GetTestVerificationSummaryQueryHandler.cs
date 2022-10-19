@@ -22,24 +22,23 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetTestVerificati
 
         public async Task<VerificationTestQuestionDataDto> Handle(GetTestVerificationSummaryQuery request, CancellationToken cancellationToken)
         {
-            var testQuestions = _appDbContext.TestQuestions
-                .Include(x => x.TestAnswers)
-                .Include(x => x.QuestionUnit)
-                .Include(x => x.Test)
-                .ThenInclude(x => x.TestTemplate)
-                .Where(x => x.TestId == request.TestId)
-                .OrderBy(x => x.Index)
-                .AsQueryable();
+            var test = await _appDbContext.Tests
+                .Include(x => x.TestTemplate)
+                .Include(x => x.TestQuestions)
+                    .ThenInclude(x => x.QuestionUnit)
+                .Include(x => x.TestQuestions)
+                    .ThenInclude(x => x.TestAnswers)
+                .FirstAsync(x => x.Id == request.TestId);
 
-            var result = new VerificationTestQuestionDataDto();
-            result.TestQuestions = await testQuestions.Select(x => _mapper.Map<VerificationTestQuestionSummaryDto>(x)).ToListAsync();
-
-            result.CorrectAnswers = testQuestions.Count(x => (bool)x.IsCorrect);
-            result.Points = testQuestions.Select(x => x.Test.TestTemplate.MinPercent).First();
-            result.TotalQuestions = testQuestions.Select(x => x.Test.TestTemplate.QuestionCount).First();
-            result.Result = testQuestions.Select(x => x.Test.ResultStatus).First();
-
-            return result;
+            return new VerificationTestQuestionDataDto
+            {
+                TestQuestions = test.TestQuestions.OrderBy(x => x.Index).Select(x => _mapper.Map<VerificationTestQuestionSummaryDto>(x)).ToList(),
+                CorrectAnswers = test.TestQuestions.Count(x => x.IsCorrect is true),
+                Points = test.TestTemplate.MinPercent,
+                TotalQuestions = test.TestTemplate.QuestionCount,
+                Result = test.ResultStatus,
+                ResultValue = test.ResultStatusValue
+            };
         }
     }
 }

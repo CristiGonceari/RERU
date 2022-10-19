@@ -18,8 +18,6 @@ namespace CODWER.RERU.Evaluation.Application.Articles
 
             CreateMap<EditArticleEvaluationDto, ArticleEvaluation>();
 
-            //CreateMap<UserProfile, UserProfileDto>();
-
             CreateMap<ModuleRole, SelectItem>()
                 .ForMember(x => x.Value, opts => opts.MapFrom(x => x.Id))
                 .ForMember(x => x.Label, opts => opts.MapFrom(x => x.Name));

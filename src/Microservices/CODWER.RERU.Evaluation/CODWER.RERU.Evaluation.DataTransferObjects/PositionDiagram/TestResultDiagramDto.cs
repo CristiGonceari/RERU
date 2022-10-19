@@ -7,6 +7,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.PositionDiagram
     {
         public int TestId { get; set; }
         public TestResultStatusEnum Result { get; set; }
+        public string ResultValue { get; set; }
         public DateTime PassDate { get; set; }
         public TestStatusEnum Status { get; set; }
     }

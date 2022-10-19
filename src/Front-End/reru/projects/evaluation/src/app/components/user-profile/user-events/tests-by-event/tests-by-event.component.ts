@@ -9,68 +9,74 @@ import { PrintModalComponent } from '@erp/shared';
 import { saveAs } from 'file-saver';
 import { forkJoin } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EnumStringTranslatorService } from 'projects/evaluation/src/app/utils/services/enum-string-translator.service';
 
 @Component({
-  selector: 'app-tests-by-event',
-  templateUrl: './tests-by-event.component.html',
-  styleUrls: ['./tests-by-event.component.scss']
+	selector: 'app-tests-by-event',
+	templateUrl: './tests-by-event.component.html',
+	styleUrls: ['./tests-by-event.component.scss']
 })
 export class TestsByEventComponent implements OnInit {
-  tests = [];
-  @Input() id: number;
-  userId: number;
-  pagedSummary: PaginationModel = new PaginationModel();
-  isLoading: boolean = true;
-  enum = TestStatusEnum;
-  resultEnum = TestResultStatusEnum;
-  downloadFile: boolean = false;
-  headersToPrint = [];
-  printTranslates: any[];
+	tests = [];
+	@Input() id: number;
+	userId: number;
+	pagedSummary: PaginationModel = new PaginationModel();
+	isLoading: boolean = true;
+	enum = TestStatusEnum;
+	resultEnum = TestResultStatusEnum;
+	downloadFile: boolean = false;
+	headersToPrint = [];
+	printTranslates: any[];
 
-  constructor(
-    private testService: TestService, 
-    private activatedRoute: ActivatedRoute,
-    public translate: I18nService,
-	private modalService: NgbModal
-    ) { }
+	constructor(
+		private testService: TestService,
+		private activatedRoute: ActivatedRoute,
+		public translate: I18nService,
+		private modalService: NgbModal,
+		private enumStringTranslatorService: EnumStringTranslatorService
+	) { }
 
-  ngOnInit(): void {
-    this.subsribeForParams();
-  }
+	ngOnInit(): void {
+		this.subsribeForParams();
+	}
 
-  subsribeForParams() {
-    this.isLoading = true;
-    this.activatedRoute.parent.params.subscribe(params => {
-      if (params.id && this.id) {
-        this.userId = params.id;
-        this.getTests();
-      }
-    });
-  }
+	subsribeForParams() {
+		this.isLoading = true;
+		this.activatedRoute.parent.params.subscribe(params => {
+			if (params.id && this.id) {
+				this.userId = params.id;
+				this.getTests();
+			}
+		});
+	}
 
-  getTests(data: any = {}){
-    const params: any = {
-      eventId: this.id,
-      userId: this.userId,
-      page: data.page || this.pagedSummary.currentPage,
+	translateResultValue(item) {
+		return this.enumStringTranslatorService.translateTestResultValue(item);
+	}
+
+	getTests(data: any = {}) {
+		const params: any = {
+			eventId: this.id,
+			userId: this.userId,
+			page: data.page || this.pagedSummary.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
-    }
+		}
 
-    this.testService.getUsersTestsByEvent(params).subscribe(
-      res => {
-          this.tests = res.data.items;
-          this.pagedSummary = res.data.pagedSummary;
-          this.isLoading = false;
-      }
-    )
-  }
+		this.testService.getUsersTestsByEvent(params).subscribe(
+			res => {
+				this.tests = res.data.items;
+				this.pagedSummary = res.data.pagedSummary;
+				this.isLoading = false;
+			}
+		)
+	}
 
-  getHeaders(name: string): void {
+	getHeaders(name: string): void {
 		this.translateData();
 		let eventsTable = document.getElementById('eventsTable')
 		let headersHtml = eventsTable.getElementsByTagName('th');
-		let headersDto = ['programmedTime', 'testTemplateName', 'testStatus', 'accumulatedPercentage', 'result'];
-		for (let i=0; i<headersHtml.length; i++) {
+		let headersDto = ['programmedTime', 'testTemplateName', 'testStatus', 'accumulatedPercentage', 'resultValue'];
+		for (let i = 0; i < headersHtml.length; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
 		let printData = {
@@ -78,7 +84,7 @@ export class TestsByEventComponent implements OnInit {
 			fields: this.headersToPrint,
 			orientation: 2,
 			userId: this.userId,
-      		eventId: this.id,
+			eventId: this.id,
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.tableData = printData;
@@ -96,7 +102,7 @@ export class TestsByEventComponent implements OnInit {
 			this.translate.get('button.cancel')
 		]).subscribe(
 			(items) => {
-				for (let i=0; i<this.printTranslates.length; i++) {
+				for (let i = 0; i < this.printTranslates.length; i++) {
 					this.printTranslates[i] = items[i];
 				}
 			}

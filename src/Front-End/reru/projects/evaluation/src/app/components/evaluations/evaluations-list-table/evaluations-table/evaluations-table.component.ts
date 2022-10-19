@@ -19,6 +19,7 @@ import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18
 import { GenerateDocumentModalComponent } from 'projects/evaluation/src/app/utils/modals/generate-document-modal/generate-document-modal.component';
 import { FileTypeEnum } from 'projects/evaluation/src/app/utils/enums/file-type.enum';
 import { TestTemplateModeEnum } from '../../../../utils/enums/test-template-mode.enum';
+import { EnumStringTranslatorService } from 'projects/evaluation/src/app/utils/services/enum-string-translator.service';
 
 @Component({
   selector: 'app-evaluations-table',
@@ -76,7 +77,8 @@ export class EvaluationsTableComponent implements OnInit {
     private referenceService: ReferenceService,
     private datePipe: DatePipe,
     private notificationService: NotificationsService,
-    private printService: PrintTemplateService
+    private printService: PrintTemplateService,
+    private enumStringTranslatorService: EnumStringTranslatorService
   ) { }
 
   ngOnInit(): void {
@@ -104,6 +106,10 @@ export class EvaluationsTableComponent implements OnInit {
       this.searchTo = new Date(date.getTime() - (new Date(this.dateTimeTo).getTimezoneOffset() * 60000)).toISOString();
     }
   }
+
+  translateResultValue(item){
+		return this.enumStringTranslatorService.translateTestResultValue(item);
+	}
 
   getTests(data: any = {}) {
     this.setTimeToSearch();
@@ -264,7 +270,7 @@ export class EvaluationsTableComponent implements OnInit {
       'eventName', 
       'locationNames', 
       'testStatus', 
-      'result'
+      'resultValue'
     ];
     
 		for (let i = 0; i < headersHtml.length - 1; i++) {

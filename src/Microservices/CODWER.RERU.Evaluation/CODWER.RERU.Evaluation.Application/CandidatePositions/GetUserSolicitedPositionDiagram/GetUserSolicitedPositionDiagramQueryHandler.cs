@@ -27,7 +27,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetUserSolicited
 
         public async Task<UserPositionDiagramDto> Handle(GetUserSolicitedPositionDiagramQuery request, CancellationToken cancellationToken)
         {
-            var currentUser = await _userProfileService.GetCurrentUser();
+            var currentUser = await _userProfileService.GetCurrentUserProfile();
             var eventDiagram = new UserPositionDiagramDto();
 
             eventDiagram.EventsDiagram = GetEvenstDiagram(request.PositionId);
