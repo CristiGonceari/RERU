@@ -35,6 +35,8 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
                 .Where(x => x.IsActive)
                 .Include(up => up.EventResponsiblePersons)
                 .Include(up => up.EventUsers)
+                .Include(up => up.Role)
+                .Include(up => up.Department)
                 .OrderBy(up => up.LastName)
                 .ThenBy(up => up.FirstName)
                 .AsQueryable();
