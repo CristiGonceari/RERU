@@ -24,13 +24,13 @@ namespace CODWER.RERU.Evaluation.Application.Validators.TestTemplateValidators
             RuleFor(x => x).Custom((id, c) => ValidateTestByTestTemplateRole(id, errorCode, errorMessage, c));
         }
 
-        public async Task ValidateTestByTestTemplateRole(int id, string errorCode, string errorMessage, CustomContext context)
+        public void ValidateTestByTestTemplateRole(int id, string errorCode, string errorMessage, CustomContext context)
         {
             var testTemplate = _appDbContext.TestTemplates
                 .Include(x => x.TestTemplateModuleRoles)
                 .FirstOrDefault(x => x.Id == id);
 
-            var userCurrentRole = await _currentModuleService.GetUserCurrentModuleRole();
+            var userCurrentRole = _currentModuleService.GetUserCurrentModuleRole().Result;
 
             if (HasUserPermission(testTemplate, userCurrentRole) || HasTemplateAnyRoles(testTemplate))
             {
