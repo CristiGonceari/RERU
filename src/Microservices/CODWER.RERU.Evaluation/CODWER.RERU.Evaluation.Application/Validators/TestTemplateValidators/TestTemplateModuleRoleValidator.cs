@@ -42,7 +42,7 @@ namespace CODWER.RERU.Evaluation.Application.Validators.TestTemplateValidators
         }
 
         private bool HasUserPermission(TestTemplate testTemplate, UserProfileModuleRole userCurrentRole) =>
-            testTemplate.TestTemplateModuleRoles.Select(x => x.ModuleRole).Contains(userCurrentRole.ModuleRole);
+            !testTemplate.TestTemplateModuleRoles.Select(x => x.ModuleRole).Contains(userCurrentRole.ModuleRole);
 
         private bool HasTemplateAnyRoles(TestTemplate testTemplate) => !testTemplate.TestTemplateModuleRoles.Any();
     }
