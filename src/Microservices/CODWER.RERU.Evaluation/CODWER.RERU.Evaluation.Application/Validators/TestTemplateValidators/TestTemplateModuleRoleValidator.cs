@@ -32,7 +32,12 @@ namespace CODWER.RERU.Evaluation.Application.Validators.TestTemplateValidators
 
             var userCurrentRole = _currentModuleService.GetUserCurrentModuleRole().Result;
 
-            if (HasUserPermission(testTemplate, userCurrentRole) || HasTemplateAnyRoles(testTemplate))
+            var userHasAccess = ContainsUserPermission(testTemplate, userCurrentRole);
+            var testTemplateAnyRoles = ContainsTemplateAnyRoles(testTemplate);
+
+            if (!testTemplateAnyRoles) return;
+
+            if (!userHasAccess)
             {
                 context.AddFailure(new ValidationFailure($"{context.PropertyName}", errorMessage)
                 {
@@ -41,10 +46,10 @@ namespace CODWER.RERU.Evaluation.Application.Validators.TestTemplateValidators
             }
         }
 
-        private bool HasUserPermission(TestTemplate testTemplate, UserProfileModuleRole userCurrentRole) =>
-            !testTemplate.TestTemplateModuleRoles.Select(x => x.ModuleRole).Contains(userCurrentRole.ModuleRole);
+        private bool ContainsUserPermission(TestTemplate testTemplate, UserProfileModuleRole userCurrentRole) =>
+            testTemplate.TestTemplateModuleRoles.Select(x => x.ModuleRole).Contains(userCurrentRole.ModuleRole);
 
-        private bool HasTemplateAnyRoles(TestTemplate testTemplate) => !testTemplate.TestTemplateModuleRoles.Any();
+        private bool ContainsTemplateAnyRoles(TestTemplate testTemplate) => testTemplate.TestTemplateModuleRoles.Any();
     }
 
     

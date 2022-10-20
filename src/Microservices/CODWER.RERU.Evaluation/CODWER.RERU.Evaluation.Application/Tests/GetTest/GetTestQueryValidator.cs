@@ -2,6 +2,7 @@
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Application.Validators.TestTemplateValidators;
+using CODWER.RERU.Evaluation.Application.Validators.TestValidators;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
@@ -13,16 +14,15 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTest
 {
     public class GetTestQueryValidator : AbstractValidator<GetTestQuery>
     {
-        public GetTestQueryValidator(AppDbContext appDbContext, ICurrentModuleService currentModuleService)
+        public GetTestQueryValidator(AppDbContext appDbContext, ICurrentModuleService currentModuleService, IUserProfileService userProfileService)
         {
             RuleFor(x => x.Id)
                 .SetValidator(x => new ItemMustExistValidator<Test>(appDbContext, ValidationCodes.INVALID_TEST,
                     ValidationMessages.InvalidReference));
 
 
-            RuleFor(x => appDbContext.Tests.Include(x => x.TestTemplate)
-                                                            .FirstOrDefault(t => t.Id == x.Id).TestTemplate.Id)
-                .SetValidator(x => new TestTemplateModuleRoleValidator<TestTemplate>(currentModuleService, appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
+            RuleFor(x => x.Id)
+                .SetValidator(x => new TestModuleRoleValidator<Test>(currentModuleService, userProfileService, appDbContext, ValidationCodes.INVALID_TEST,
                     ValidationMessages.InvalidReference));
         }
     }
