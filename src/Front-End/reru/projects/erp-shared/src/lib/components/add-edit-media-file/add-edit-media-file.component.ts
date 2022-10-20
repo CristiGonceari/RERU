@@ -18,10 +18,12 @@ export class AddEditMediaFileComponent implements OnInit {
   imageFiles: File[] = [];
   videoFiles: File[] = [];
   audioFiles: File[] = [];
+  docFiles: File[] = [];
 
   imageUrl: any;
   audioUrl: any;
   videoUrl: any;
+  docUrl: any;
 
   filenames: any;
   fileName: string;
@@ -64,6 +66,7 @@ export class AddEditMediaFileComponent implements OnInit {
       const regexImage = new RegExp(/(.*?).(jpg|png|jpeg|svg|gif)$/gmi);
       const regexVideo = new RegExp(/(.*?).(mp4|webm|ogv)$/gmi);
       const regexAudio = new RegExp(/(.*?).(mp3|oga|wav|ogg|aac|opus)$/gmi);
+      const regexDocument = new RegExp(/(.*?).(pdf|doc|docx|ppt|pptx|xlsx)$/gmi);
 
       this.onRemoved();
 
@@ -83,7 +86,13 @@ export class AddEditMediaFileComponent implements OnInit {
           this.audioUrl = fileContents;
           this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
         });
-      } else {
+      } else if (regexDocument.test(element.name)) {
+        this.docFiles.push(...event.addedFiles);
+        this.readFile(this.docFiles[0]).then(fileContents => {
+          this.docUrl = fileContents;
+          this.docUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.docUrl);
+        });
+        } else {
         forkJoin([
           this.translate.get('modal.error'),
           this.translate.get('media.invalid-type'),
@@ -99,8 +108,8 @@ export class AddEditMediaFileComponent implements OnInit {
   }
 
   onRemoved() {
-    this.imageFiles = this.videoFiles = this.audioFiles = [];
-    this.videoUrl = this.audioUrl = this.imageUrl = null;
+    this.imageFiles = this.videoFiles = this.audioFiles = this.docFiles = [];
+    this.videoUrl = this.audioUrl = this.imageUrl= this.docUrl = null;
     this.attachedFile = null;
     this.fileName = '';
     this.handleFile.emit(this.attachedFile)
@@ -154,6 +163,7 @@ export class AddEditMediaFileComponent implements OnInit {
           this.readFile(file).then(fileContents => {
             if (blob.type.includes('image')) this.imageUrl = fileContents;
             else if (blob.type.includes('video')) this.videoUrl = fileContents;
+            else if (blob.type.includes('doc')) this.docUrl = fileContents;
             else if (blob.type.includes('audio')) {
               this.audioUrl = fileContents;
               this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
