@@ -20,7 +20,7 @@ export class EvaluationResultModalComponent implements OnInit {
 
   enum = TestResultStatusEnum;
 
-  RecomdendedListOfValues = [
+  recomdendedListOfValues = [
     {
       id: 1,
       title: 'C1',
@@ -50,7 +50,6 @@ export class EvaluationResultModalComponent implements OnInit {
   recomendedValues;
   notRecomendedValues;
   masterSelected: boolean;
-  setValues: boolean;
 
 
   constructor(
@@ -71,7 +70,7 @@ export class EvaluationResultModalComponent implements OnInit {
   }
  
   isAllSelected() {
-    this.masterSelected = this.RecomdendedListOfValues.every(function (item: any) {
+    this.masterSelected = this.recomdendedListOfValues.every(function (item: any) {
       return item.checked == true;
     })
     this.getCheckedItemForRecomendedValues();
@@ -79,9 +78,9 @@ export class EvaluationResultModalComponent implements OnInit {
 
   getCheckedItemForRecomendedValues() {
     this.recomendedValues = [];
-    for (var i = 0; i < this.RecomdendedListOfValues.length; i++) {
-      if (this.RecomdendedListOfValues[i].checked){
-          this.recomendedValues.push(this.RecomdendedListOfValues[i]);
+    for (var i = 0; i < this.recomdendedListOfValues.length; i++) {
+      if (this.recomdendedListOfValues[i].checked){
+          this.recomendedValues.push(this.recomdendedListOfValues[i]);
         }
     }
     // this.checkButtonToDisable();
@@ -89,11 +88,11 @@ export class EvaluationResultModalComponent implements OnInit {
   }
 
   // checkButtonToDisable(){
-  //   for (var i = 0; i < this.RecomdendedListOfValues.length; i++) {
-  //     if(!this.RecomdendedListOfValues[i].checked && this.recomendedValues.length == 2){
-  //         this.RecomdendedListOfValues[i].disabled = true;
-  //     }else if(!this.RecomdendedListOfValues[i].checked && this.RecomdendedListOfValues[i].disabled){
-  //       this.RecomdendedListOfValues[i].disabled = false;
+  //   for (var i = 0; i < this.recomdendedListOfValues.length; i++) {
+  //     if(!this.recomdendedListOfValues[i].checked && this.recomendedValues.length == 2){
+  //         this.recomdendedListOfValues[i].disabled = true;
+  //     }else if(!this.recomdendedListOfValues[i].checked && this.recomdendedListOfValues[i].disabled){
+  //       this.recomdendedListOfValues[i].disabled = false;
   //     }
   //   }
   // }
@@ -103,7 +102,7 @@ export class EvaluationResultModalComponent implements OnInit {
       let arr = [];
       for(let i = 0; i < this.recomendedValues.length; i ++){
         if(i == 0){
-          arr = this.RecomdendedListOfValues.filter(f => f.id != this.recomendedValues[i].id);
+          arr = this.recomdendedListOfValues.filter(f => f.id != this.recomendedValues[i].id);
         }else if (i >= 1){
           arr = arr.filter(f => f.id != this.recomendedValues[i].id);
         }
