@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
+using CVU.ERP.StorageService;
 using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Users.RemoveUser
@@ -17,20 +18,38 @@ namespace CODWER.RERU.Core.Application.Users.RemoveUser
     {
         private readonly IEnumerable<IIdentityService> _identityServices;
         private readonly ILoggerService<RemoveUserCommandHandler> _loggerService;
+        private readonly IStorageFileService _storageFileService;
 
         public RemoveUserCommandHandler(ICommonServiceProvider commonServiceProvider,
             IEnumerable<IIdentityService> identityServices,
-            ILoggerService<RemoveUserCommandHandler> loggerService) : base(commonServiceProvider)
+            ILoggerService<RemoveUserCommandHandler> loggerService, IStorageFileService storageFileService) : base(commonServiceProvider)
         {
             _identityServices = identityServices;
             _loggerService = loggerService;
+            _storageFileService = storageFileService;
         }
 
         public async Task<Unit> Handle(RemoveUserCommand request, CancellationToken cancellationToken)
         {
             var userProfile = await AppDbContext.UserProfiles
                 .Include(x => x.Identities)
+
+                .Include(x => x.Tests)
+                .Include(x => x.TestsWithEvaluator)
+                .Include(x => x.LocationResponsiblePersons)
+                .Include(x => x.EventResponsiblePersons)
+                .Include(x => x.PlanResponsiblePersons)
+                .Include(x => x.EventUsers)
+                .Include(x => x.Notifications)
+                .Include(x => x.EmailTestNotifications)
+                .Include(x => x.UserFiles)
+                .Include(x => x.ModuleRoles)
+                .Include(x => x.SolicitedVacantPositions)
+                .Include(x => x.SolicitedVacantPositionUserFiles)
+                .Include(x => x.CandidatePositionNotifications)
+
                 .Include(x => x.Contractor)
+
                 .FirstOrDefaultAsync(u => u.Id == request.Id);
 
             foreach (var identity in userProfile.Identities)
@@ -39,12 +58,28 @@ namespace CODWER.RERU.Core.Application.Users.RemoveUser
                 service.Remove(identity.Identificator);
             }
 
-            AppDbContext.UserProfiles.Remove(userProfile);
-
-            if (userProfile.Contractor != null)
+            foreach (var file in userProfile.UserFiles)
             {
-                AppDbContext.Contractors.Remove(userProfile.Contractor);
+                _storageFileService.RemoveFile(file.FileId);
             }
+
+            foreach (var file in userProfile.SolicitedVacantPositionUserFiles)
+            {
+                _storageFileService.RemoveFile(file.FileId);
+            }
+
+            AppDbContext.Tests.RemoveRange(userProfile.Tests);
+            AppDbContext.Tests.RemoveRange(userProfile.TestsWithEvaluator);
+            AppDbContext.LocationResponsiblePersons.RemoveRange(userProfile.LocationResponsiblePersons);
+            AppDbContext.EventResponsiblePersons.RemoveRange(userProfile.EventResponsiblePersons);
+            AppDbContext.PlanResponsiblePersons.RemoveRange(userProfile.PlanResponsiblePersons);
+            AppDbContext.EventUsers.RemoveRange(userProfile.EventUsers);
+            AppDbContext.Notifications.RemoveRange(userProfile.Notifications);
+            AppDbContext.EmailTestNotifications.RemoveRange(userProfile.EmailTestNotifications);
+            AppDbContext.SolicitedVacantPositions.RemoveRange(userProfile.SolicitedVacantPositions);
+            AppDbContext.CandidatePositionNotifications.RemoveRange(userProfile.CandidatePositionNotifications);
+
+            AppDbContext.UserProfiles.Remove(userProfile);
 
             await AppDbContext.SaveChangesAsync();
 
