@@ -74,10 +74,11 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
 
         private List<UserDiagramDto> GetUsersDiagram(int eventId, int positionId)
         {
-            return _appDbContext.EventUsers
-                .Include(x => x.UserProfile)
-                .Where(x => x.EventId == eventId && x.PositionId == positionId)
-                .OrderBy(x => x.EventId)
+            return _appDbContext.EventUserCandidatePositions
+                .Include(x => x.EventUser)
+                    .ThenInclude(x => x.UserProfile)
+                .Where(x => x.EventUser.EventId == eventId && x.CandidatePositionId == positionId)
+                .OrderBy(x => x.EventUser.EventId)
                 .Select(x => _mapper.Map<UserDiagramDto>(x))
                 .ToList();
         }
