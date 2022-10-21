@@ -7,6 +7,7 @@ import { TestQuestionService } from '../../../utils/services/test-question/test-
 import { TestTemplateService } from '../../../utils/services/test-template/test-template.service';
 import { TestService } from '../../../utils/services/test/test.service';
 import { TestVerificationProcessService } from '../../../utils/services/test-verification-process/test-verification-process.service';
+import { EnumStringTranslatorService } from '../../../utils/services/enum-string-translator.service';
 
 
 @Component({
@@ -30,11 +31,17 @@ export class FinishPageComponent implements OnInit {
     private testService: TestService,
     private testTemplateService: TestTemplateService,
     private verifyService: TestVerificationProcessService,
-    private testQuestionService: TestQuestionService) { }
+    private testQuestionService: TestQuestionService,
+    private enumStringTranslatorService: EnumStringTranslatorService
+    ) { }
 
   ngOnInit(): void {
     this.initData();
   }
+
+  translateResultValue(item){
+		return this.enumStringTranslatorService.translateTestResultValue(item);
+	}
 
   initData() {
     this.route.params.subscribe(res => {

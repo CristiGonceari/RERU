@@ -41,10 +41,7 @@
                                         {{'verify-test.result' | translate}}:
                                     </label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <p class="label label-lg label-light-success label-inline" *ngIf="result == 1">{{'statuses.passed' |
-                                            translate}}</p>
-                                        <p class="label label-lg label-light-danger label-inline" *ngIf="result == 2">{{'statuses.not-passed' |
-                                            translate}}</p>
+                                        <p class="font-size-lg m-0">{{ translateResultValue(test.resultValue) }}</p>
                                     </div>
                                 </div>
                             </div>
