@@ -1,59 +1,59 @@
 version: "3.4"
 
 # Settings and configurations that are common for all containers
-x-minio-common: &minio-common
-  image: quay.io/minio/minio:RELEASE.2021-11-24T23-19-33Z
-  command: server --console-address ":9001" http://minio{1...4}/data{1...2}
-  expose:
-    - "9000"
-    - "9001"
-  environment:
-    MINIO_ROOT_USER: minio
-    MINIO_ROOT_PASSWORD: minio123
-  healthcheck:
-    test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-    interval: 30s
-    timeout: 20s
-    retries: 3
-  networks:
-    - my-network
+# x-minio-common: &minio-common
+#   image: quay.io/minio/minio:RELEASE.2021-11-24T23-19-33Z
+#   command: server --console-address ":9001" http://minio{1...4}/data{1...2}
+#   expose:
+#     - "9000"
+#     - "9001"
+#   environment:
+#     MINIO_ROOT_USER: minio
+#     MINIO_ROOT_PASSWORD: minio123
+#   healthcheck:
+#     test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+#     interval: 30s
+#     timeout: 20s
+#     retries: 3
+#   networks:
+#     - my-network
 
 services:
-  minio1:
-    <<: *minio-common
-    hostname: minio1
-    volumes:
-      - data1-1:/data1
-      - data1-2:/data2
-    networks:
-      - my-network
+  # minio1:
+  #   <<: *minio-common
+  #   hostname: minio1
+  #   volumes:
+  #     - data1-1:/data1
+  #     - data1-2:/data2
+  #   networks:
+  #     - my-network
 
-  minio2:
-    <<: *minio-common
-    hostname: minio2
-    volumes:
-      - data2-1:/data1
-      - data2-2:/data2
-    networks:
-      - my-network
+  # minio2:
+  #   <<: *minio-common
+  #   hostname: minio2
+  #   volumes:
+  #     - data2-1:/data1
+  #     - data2-2:/data2
+  #   networks:
+  #     - my-network
 
-  minio3:
-    <<: *minio-common
-    hostname: minio3
-    volumes:
-      - data3-1:/data1
-      - data3-2:/data2
-    networks:
-      - my-network
+  # minio3:
+  #   <<: *minio-common
+  #   hostname: minio3
+  #   volumes:
+  #     - data3-1:/data1
+  #     - data3-2:/data2
+  #   networks:
+  #     - my-network
 
-  minio4:
-    <<: *minio-common
-    hostname: minio4
-    volumes:
-      - data4-1:/data1
-      - data4-2:/data2
-    networks:
-      - my-network
+  # minio4:
+  #   <<: *minio-common
+  #   hostname: minio4
+  #   volumes:
+  #     - data4-1:/data1
+  #     - data4-2:/data2
+  #   networks:
+  #     - my-network
 
   nginx:
     image: nginx:1.19.2-alpine
@@ -63,11 +63,11 @@ services:
     ports:
       - "9000:9000"
       - "9001:9001"
-    depends_on:
-      - minio1
-      - minio2
-      - minio3
-      - minio4
+    # depends_on:
+    #   - minio1
+    #   - minio2
+    #   - minio3
+    #   - minio4
     networks:
       - my-network
       
@@ -295,6 +295,38 @@ services:
       dockerfile: ./docker-files/Dockerfile-RERU-Evaluation-FE
     volumes:
       - ./docker-settings/Evaluation-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
+      
+  reru-evaluation360:
+    hostname: localhost
+    networks:
+      - my-network
+    container_name: reru-evaluation360
+    build:
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-Evaluation360
+    environment:
+      - ASPNETCORE_URLS=http://*:8080
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__RERU=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Common;
+      - ConnectionStrings__HangfireEvaluation=server=db;Port=5432;Username=postgres;Password=postgres;Database=Hangfire-Evaluation;
+      - ConnectionStrings__Log=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Logging;
+    volumes:
+      - ./docker-settings/Evaluation360/appsettings.json:/app/appsettings.json
+    depends_on:
+      - db
+      - reru-identity-migrator
+      - reru-storage-migrator
+
+  reru-evaluation360-fe:
+    hostname: localhost
+    networks:
+      - my-network
+    container_name: reru-evaluation360-fe
+    build:
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-Evaluation360-FE
+    volumes:
+      - ./docker-settings/Evaluation360-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
 
   # db:
   #   container_name: erp-sql-server
