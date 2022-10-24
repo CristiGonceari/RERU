@@ -308,7 +308,7 @@ services:
       - ASPNETCORE_URLS=http://*:8080
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__RERU=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Common;
-      - ConnectionStrings__HangfireEvaluation=server=db;Port=5432;Username=postgres;Password=postgres;Database=Hangfire-Evaluation;
+      - ConnectionStrings__HangfireEvaluation360=server=db;Port=5432;Username=postgres;Password=postgres;Database=Hangfire-Evaluation;
       - ConnectionStrings__Log=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Logging;
     volumes:
       - ./docker-settings/Evaluation360/appsettings.json:/app/appsettings.json
