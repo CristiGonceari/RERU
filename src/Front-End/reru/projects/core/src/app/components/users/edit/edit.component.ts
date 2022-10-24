@@ -170,14 +170,14 @@ export class EditComponent implements OnInit {
 					this.userService.addUserAvatar(request).subscribe(() => {
 						this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 						this.isLoading = false;
-						this.back();
+						this.backClicked();
 					})
 				} else {
 					request.append('Data.UserId', res.data);
 					this.userService.addUserAvatar(request).subscribe(() => {
 						this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 						this.isLoading = false;
-						this.back();
+						this.backClicked();
 					})
 				}
 			}
@@ -189,7 +189,7 @@ export class EditComponent implements OnInit {
 		else this.fileId = null;
 	}
 
-	back(): void {
+	backClicked() {
 		this.location.back();
 	}
 }

@@ -70,6 +70,8 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
         {
             foreach (var eventDto in events)
             {
+                if (await ExistEventEvaluator(userProfileId, eventDto.Id)) continue;
+
                 if (await ExistEventUser(userProfileId, eventDto.Id))
                 {
                     var eventUser = await GetEventUser(userProfileId, eventDto.Id);
@@ -166,6 +168,10 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
         private async Task<bool> ExistEventUser(int userProfileId, int eventId) => 
             await _appDbContext.EventUsers.AnyAsync(x =>
                 x.EventId == eventId && x.UserProfileId == userProfileId);
+
+        private async Task<bool> ExistEventEvaluator(int userProfileId, int eventId) =>
+            await _appDbContext.EventEvaluators.AnyAsync(x =>
+                x.EventId == eventId && x.EvaluatorId == userProfileId);
 
         private async Task<EventUser> GetEventUser(int userProfileId, int eventId) =>
             await _appDbContext.EventUsers.FirstAsync(x =>

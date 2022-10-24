@@ -45,7 +45,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetUserSolicited
                     positionEvent.TestTemplates.Add(new TestTemplateDiagramDto());
                 }
 
-                CalculateTestsFromTestTemplates(eventDiagram.UserDiagram, positionEvent);
+                CalculateTestsFromTestTemplates(eventDiagram.UserDiagram, positionEvent, request.PositionId);
             }
 
             GenerateTestTemplatesForUser(eventDiagram);
@@ -77,7 +77,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetUserSolicited
              return _mapper.Map<UserDiagramDto>(user);
         }
 
-        private void CalculateTestsFromTestTemplates(UserDiagramDto user, EventDiagramDto positionEvent)
+        private void CalculateTestsFromTestTemplates(UserDiagramDto user, EventDiagramDto positionEvent, int positionId)
         {
             foreach (var testTemplate in positionEvent.TestTemplates)
             {
@@ -87,7 +87,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetUserSolicited
 
                 foreach (var test in testsByTestTemplate)
                 {
-                    var tests = GetTestsResultDiagram(user.UserProfileId, positionEvent.EventId, test.TestTemplateId);
+                    var tests = GetTestsResultDiagram(user.UserProfileId, positionEvent.EventId, test.TestTemplateId, positionId);
 
                     test.Tests.AddRange(tests);
                 }
@@ -104,15 +104,30 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetUserSolicited
                 .ToList();
         }
 
-        private List<TestResultDiagramDto> GetTestsResultDiagram(int userId, int eventId, int testTemplateId)
+        private List<TestResultDiagramDto> GetTestsResultDiagram(int userId, int eventId, int testTemplateId, int positionId)
         {
-            return _appDbContext.Tests
+            var mappedTestList = new List<TestResultDiagramDto>();
+
+            var tests = _appDbContext.Tests
+                .Include(x => x.Event)
+                    .ThenInclude(x => x.EventUsers)
+                    .ThenInclude(x => x.EventUserCandidatePositions)
                 .Where(x => x.UserProfileId == userId &&
                             x.EventId == eventId &&
                             x.TestTemplateId == testTemplateId)
                 .OrderBy(x => x.EventId)
-                .Select(x => _mapper.Map<TestResultDiagramDto>(x))
                 .ToList();
+
+            foreach (var test in tests)
+            {
+                if (test.Event.EventUsers.Where(x => x.UserProfileId == userId).Any(x => x.PositionId == positionId))
+                {
+                    var mappedTest = _mapper.Map<TestResultDiagramDto>(test);
+                    mappedTestList.Add(mappedTest);
+                }
+            }
+
+            return mappedTestList;
         }
 
         private void GenerateTestTemplatesForUser(UserPositionDiagramDto eventDiagram)
