@@ -31,6 +31,7 @@ export class AttachUserModalComponent implements OnInit {
   @Input() eventId: number;
   @Input() page: string;
   @Input() whichUser: boolean;
+  @Input() testTemplateId: number;
   showEventCard: boolean = false;
 
   constructor(
@@ -54,16 +55,29 @@ export class AttachUserModalComponent implements OnInit {
         page: data.page || this.pagination.currentPage,
         itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
         exceptUserIds: exceptIds,
+        testTemplateId: this.testTemplateId || null,
         ...this.filters
       }
-      this.userService.get(params).subscribe(res => {
-        if (res && res.data) {
-          this.paginatedAttachedIds = res.data.items.map(el => el.id).some(r=> this.attachedItems.includes(r))
-          this.users = res.data.items;
-          this.pagination = res.data.pagedSummary;
-          this.isLoading = false;
-        }
-      })
+      if(this.testTemplateId == null){
+        this.userService.get(params).subscribe(res => {
+          if (res && res.data) {
+            this.paginatedAttachedIds = res.data.items.map(el => el.id).some(r=> this.attachedItems.includes(r))
+            this.users = res.data.items;
+            this.pagination = res.data.pagedSummary;
+            this.isLoading = false;
+          }
+        })
+      } else {
+        this.userService.getByTestTemplate(params).subscribe(res => {
+          if (res && res.data) {
+            this.paginatedAttachedIds = res.data.items.map(el => el.id).some(r=> this.attachedItems.includes(r))
+            this.users = res.data.items;
+            this.pagination = res.data.pagedSummary;
+            this.isLoading = false;
+          }
+        })
+      }
+     
     }
   }
 

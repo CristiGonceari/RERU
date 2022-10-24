@@ -107,6 +107,14 @@ export class AddEvaluationComponent implements OnInit {
     else this.showEventCard = false;
   }
 
+  ceckTestTemplate(testTemplate): boolean{
+    if(typeof(testTemplate.value) === 'undefined' || typeof(testTemplate.value) === 'string'){
+      return true
+    } else {
+      return false
+    }
+  }
+
   getActiveLocations() {
     let params = {
       eventId: this.event.value
@@ -253,6 +261,7 @@ export class AddEvaluationComponent implements OnInit {
     modalRef.componentInstance.page = 'add-evaluation';
     modalRef.componentInstance.eventId = +this.event.value;
     modalRef.componentInstance.whichUser = whichUser;
+    modalRef.componentInstance.testTemplateId =  whichUser ? +this.testTemplate.value : null;
     modalRef.result.then(() => {
       if (whichUser == true) this.evaluatorList = modalRef.result.__zone_symbol__value.attachedItems;
       else if (whichUser == false) this.userListToAdd = modalRef.result.__zone_symbol__value.attachedItems;

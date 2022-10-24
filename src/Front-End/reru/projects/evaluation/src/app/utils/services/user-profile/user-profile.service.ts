@@ -25,6 +25,10 @@ export class UserProfileService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}`, { params })
   }
 
+  getByTestTemplate(params): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-roles`, { params })
+  }
+
   getUserProfiles(params): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/list`, { params });
   }

@@ -36,7 +36,6 @@ namespace CODWER.RERU.Evaluation.Application.Validators.TestValidators
 
             if (test.UserProfileId == currentUserId || test.EvaluatorId == currentUserId) return;
 
-
             var userHasAccess = ContainsUserPermission(test, userCurrentRole);
             var testTemplateAnyRoles = ContainsTemplateAnyRoles(test);
 
