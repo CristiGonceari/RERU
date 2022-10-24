@@ -10,6 +10,7 @@
         public static string HangfireCore => "HangfireCore";
         public static string HangfirePersonal => "HangfirePersonal";
         public static string HangfireEvaluation => "HangfireEvaluation";
+        public static string HangfireEvaluation360 => "HangfireEvaluation360";
 
     }
 }

@@ -48,6 +48,10 @@
     "dynamic": "Dinamic",
     "default": "Static"
   },
+  "media":{
+    "invalid-type": "Tip de fișier nevalid",
+    "file-was-deleted": "Fișierul a fost șters"
+  },
   "files":{
     "title": "Documente",
     "files-list": "Lista de documente",

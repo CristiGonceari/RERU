@@ -7,7 +7,6 @@ import { TestService } from 'projects/evaluation/src/app/utils/services/test/tes
 import { TestTemplateStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-template-status.enum';
 import { TestStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-status.enum';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
-import { AddEditTest } from '../../../../utils/models/tests/add-edit-test.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
 import { forkJoin } from 'rxjs';
@@ -16,10 +15,7 @@ import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18
 import { AttachUserModalComponent } from 'projects/evaluation/src/app/utils/components/attach-user-modal/attach-user-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventService } from 'projects/evaluation/src/app/utils/services/event/event.service';
-import { EventTestTemplateService } from 'projects/evaluation/src/app/utils/services/event-test-template/event-test-template.service';
 import { TestTemplateModeEnum } from 'projects/evaluation/src/app/utils/enums/test-template-mode.enum';
-import { ViewUsersModalComponent } from 'projects/evaluation/src/app/utils/modals/view-users-modal/view-users-modal.component';
-import { ViewTemplatesModalComponent } from 'projects/evaluation/src/app/utils/modals/view-templates-modal/view-templates-modal.component';
 import { ReferenceService } from 'projects/evaluation/src/app/utils/services/reference/reference.service';
 
 @Component({
@@ -86,14 +82,13 @@ export class AddEvaluationComponent implements OnInit {
     private notificationService: NotificationsService,
     private printService: PrintTemplateService,
     private modalService: NgbModal,
-    private eventService: EventService,
-    private eventTestTemplateService: EventTestTemplateService,
+    private eventService: EventService
   ) { }
 
   ngOnInit(): void {
     this.settingsForm = new FormGroup({
-			sendTimeAndLocationEmail: new FormControl()
-		});
+      sendTimeAndLocationEmail: new FormControl()
+    });
 
     this.getEvents();
   }
@@ -120,12 +115,12 @@ export class AddEvaluationComponent implements OnInit {
     }
   }
 
-  getActiveLocations(){
+  getActiveLocations() {
     let params = {
       eventId: this.event.value
     }
 
-    this.referenceService.getEventLocations(params).subscribe(res => {this.selectActiveLocations = res.data;})
+    this.referenceService.getEventLocations(params).subscribe(res => { this.selectActiveLocations = res.data; })
   }
 
   setTimeToSearch(): void {
@@ -143,7 +138,7 @@ export class AddEvaluationComponent implements OnInit {
     });
   }
 
-  onChange(event){
+  onChange(event) {
     this.eventId = event;
   }
 
@@ -174,30 +169,34 @@ export class AddEvaluationComponent implements OnInit {
     this.disableBtn = true;
     this.isStartAddingTests = true;
 
-    this.testService.startAddProcess({ totalProcesses: this.parse().userProfileIds.length, processType: 2}).subscribe(res => {
+    this.testService.startAddProcess({ totalProcesses: this.parse().userProfileIds.length, processType: 2 }).subscribe(res => {
       this.processId = res.data;
 
       const interval = this.setIntervalGetProcess();
 
-      this.testService.createEvaluations(this.parse()).subscribe(() => {
-        forkJoin([
-          this.translate.get('modal.success'),
-          this.translate.get('tests.evaliations-were-programmed'),
-        ]).subscribe(([title, description]) => {
-          this.title = title;
-          this.description = description;
-        });
-  
-        clearInterval(interval);
-        this.isStartAddingTests = false;
-  
-        this.backClicked();
-        this.disableBtn = false;
-        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-      });
-    })
+      this.testService.createEvaluations(this.parse()).subscribe(
+        () => {
+          forkJoin([
+            this.translate.get('modal.success'),
+            this.translate.get('tests.evaliations-were-programmed'),
+          ]).subscribe(([title, description]) => {
+            this.title = title;
+            this.description = description;
+          });
 
-  
+          clearInterval(interval);
+          this.isStartAddingTests = false;
+
+          this.backClicked();
+          this.disableBtn = false;
+          this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+        },
+        (err) => {
+          clearInterval(interval);
+          this.isStartAddingTests = false;
+          this.disableBtn = false;
+        });
+    })
   }
 
   setIntervalGetProcess() {

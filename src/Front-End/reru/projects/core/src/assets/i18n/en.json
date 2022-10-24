@@ -512,6 +512,10 @@
     "department-data": "Enter the department details and confirm",
     "department-details": "Department details"
   },
+  "media":{
+    "invalid-type": "Invalid file type",
+    "file-was-deleted": "File was deleted"
+  },
   "user-roles": {
     "overview": "Overview",
     "help": "Help",

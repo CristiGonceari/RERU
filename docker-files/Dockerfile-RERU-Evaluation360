@@ -1,0 +1,24 @@
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+RUN apt-get update && apt-get install -y libgdiplus
+RUN apt-get update && apt-get install -y --no-install-recommends tzdata && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine AS build
+ARG BUILD_CONFIGURATION=Production
+
+WORKDIR /src
+COPY . .
+
+WORKDIR "/src/src/Microservices/CODWER.RERU.Evaluation360/CODWER.RERU.Evaluation360.API/"
+RUN dotnet restore --configfile Nuget.Config
+RUN dotnet publish --configuration $BUILD_CONFIGURATION --output /publish
+
+FROM base AS final
+WORKDIR /app
+
+RUN addgroup --gid 1000 app && adduser --uid 1000 app --ingroup app
+USER 1000
+
+COPY --chown=1000 --from=build /publish .
+RUN chmod 755 /app/Rotativa/Linux/wkhtmltopdf
+ENTRYPOINT ["dotnet", "CODWER.RERU.Evaluation360.API.dll"]
