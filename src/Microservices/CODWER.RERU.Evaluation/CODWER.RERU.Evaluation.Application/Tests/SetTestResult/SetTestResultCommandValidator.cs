@@ -20,10 +20,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.SetTestResult
             When((x => x.ResultStatus == TestResultStatusEnum.Recommended), () =>
             {
                 RuleFor(x => x)
-                    .Must(x => !x.RecommendedFor.Intersect(x.NotRecommendedFor).Any())
-                    .WithErrorCode(ValidationCodes.INVALID_SELECTED_COLUMNS);
-
-                RuleFor(x => x)
                     .Must(x => x.RecommendedFor.Length != 0 || x.NotRecommendedFor.Length != 0)
                     .WithErrorCode(ValidationCodes.INVALID_SELECTED_COLUMNS);
 
@@ -38,6 +34,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.SetTestResult
                 {
                     RuleFor(x => x.NotRecommendedFor)
                         .Must(x => x.All(c => c is > 0 and < 5))
+                        .WithErrorCode(ValidationCodes.INVALID_SELECTED_COLUMNS);
+                });
+
+                When((x => x.RecommendedFor.Length != 0 && x.NotRecommendedFor.Length != 0), () =>
+                {
+                    RuleFor(x => x)
+                        .Must(x => !x.RecommendedFor.Intersect(x.NotRecommendedFor).Any())
                         .WithErrorCode(ValidationCodes.INVALID_SELECTED_COLUMNS);
                 });
             });
