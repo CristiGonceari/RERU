@@ -47,8 +47,8 @@ export class EvaluationResultModalComponent implements OnInit {
     },
   ];
 
-  recomendedValues;
-  notRecomendedValues;
+  recomendedValues = [];
+  notRecomendedValues = [];
   masterSelected: boolean;
 
 
@@ -98,31 +98,39 @@ export class EvaluationResultModalComponent implements OnInit {
   // }
 
   getCheckedItemForNotRecomendedValues(){
-    // if(this.recomendedValues.length == 2){
       let arr = [];
-      for(let i = 0; i < this.recomendedValues.length; i ++){
-        if(i == 0){
-          arr = this.recomdendedListOfValues.filter(f => f.id != this.recomendedValues[i].id);
-        }else if (i >= 1){
-          arr = arr.filter(f => f.id != this.recomendedValues[i].id);
+    if(this.recomendedValues.length > 0){
+        for(let i = 0; i < this.recomendedValues.length; i ++){
+          if(i == 0){
+            arr = this.recomdendedListOfValues.filter(f => f.id != this.recomendedValues[i].id);
+          }else if (i >= 1){
+            arr = arr.filter(f => f.id != this.recomendedValues[i].id);
+          }
         }
-      }
+    }else{
+      arr = this.recomdendedListOfValues;
+    }
       this.notRecomendedValues = arr;
-    // }
   }
 
   close(): void {
     this.activeModal.close();
   }
 
-  setStatus(status, recomendedValues?, notRecomendedValues?){
-    if(recomendedValues != null){
-      recomendedValues = recomendedValues.map(function(obj) {
+  setStatus(status){
+
+    let recomendedValues = [];
+    let notRecomendedValues = [];
+
+    if(this.recomendedValues.length > 0){
+      recomendedValues = this.recomendedValues.map(function(obj) {
       return obj.id;
       });
+    }else{
+      this.getCheckedItemForNotRecomendedValues();
     }
-    if(notRecomendedValues != null){
-      notRecomendedValues = notRecomendedValues.map(function(obj) {
+    if(this.notRecomendedValues.length > 0){
+      notRecomendedValues = this.notRecomendedValues.map(function(obj) {
         return obj.id;
         });
     }
@@ -130,8 +138,8 @@ export class EvaluationResultModalComponent implements OnInit {
     let data = {
       testId: this.testId,
       resultStatus: status,
-      recommendedFor: recomendedValues || null,
-      notRecommendedFor: notRecomendedValues || null
+      recommendedFor: recomendedValues || [],
+      notRecommendedFor: notRecomendedValues || []
     }
     this.testService.setResult(data).subscribe(() => {this.close(); this.finalizeTest()});
   }

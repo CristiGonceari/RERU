@@ -66,7 +66,7 @@ export class AddEditMediaFileComponent implements OnInit {
       const regexImage = new RegExp(/(.*?).(jpg|png|jpeg|svg|gif)$/gmi);
       const regexVideo = new RegExp(/(.*?).(mp4|webm|ogv)$/gmi);
       const regexAudio = new RegExp(/(.*?).(mp3|oga|wav|ogg|aac|opus)$/gmi);
-      const regexDocument = new RegExp(/(.*?).(pdf|doc|docx|ppt|pptx|xlsx)$/gmi);
+      const regexDocument = new RegExp(/(.*?).(pdf|doc|docx|ppt|pptx|xlsx|mkv|txt|xls|avi|mov|flv|odp|key|tiff)$/gmi);
 
       this.onRemoved();
 
