@@ -547,7 +547,7 @@ stages:
             condition: and(succeeded(), eq(variables['BuildEvaluation360'], 'True'))
 
           - task: Docker@2
-            displayName: "Push Evaluation 360 back end image"
+            displayName: "Push Evaluation360 back end image"
             inputs:
               containerRegistry: $(containerRegistry)
               repository: "cvuintell/reru-evaluation360"
