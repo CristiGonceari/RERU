@@ -27,7 +27,7 @@ namespace CODWER.RERU.Evaluation360.API.Config
                     b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name)));
 
             services.AddDbContext<HangfireDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString(ConnectionString.HangfireEvaluation),
+                options.UseNpgsql(configuration.GetConnectionString(ConnectionString.HangfireEvaluation360),
                     b => b.MigrationsAssembly(typeof(HangfireDbContext).GetTypeInfo().Assembly.GetName().Name)));
         }
         #endregion
