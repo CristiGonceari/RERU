@@ -40,8 +40,6 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<EventVacantPosition> EventVacantPositions { get; set; }
         public virtual DbSet<DocumentTemplate> DocumentTemplates { get; set; }
         public virtual DbSet<DocumentTemplateKey> DocumentTemplateKeys { get; set; }
-        //public virtual DbSet<Department> Departments { get; set; }
-        //public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Process> Processes { get; set; }
         public virtual DbSet<EmailVerification> EmailVerifications { get; set; }
         public virtual DbSet<SolicitedVacantPositionUserFile> SolicitedVacantPositionUserFiles { get; set; }

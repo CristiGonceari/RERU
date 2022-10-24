@@ -7,8 +7,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace CVU.ERP.Module {
-    public static class ERPModuleDependencyInjection {
+namespace CVU.ERP.Module 
+{
+    public static class ERPModuleDependencyInjection 
+    {
 
         public static IMvcBuilder AddERPModuleControllers (this IMvcBuilder builder) 
         {

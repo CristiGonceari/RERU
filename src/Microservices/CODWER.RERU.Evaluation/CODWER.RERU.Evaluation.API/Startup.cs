@@ -23,7 +23,6 @@ using NSwag.Generation.Processors.Security;
 using System;
 using System.Text;
 using RERU.Data.Persistence.Context;
-using RERU.Data.Persistence.Initializer;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
@@ -98,11 +97,6 @@ namespace CODWER.RERU.Evaluation.API
             services.AddControllers()
                 .AddERPModuleControllers();
             services.AddWkhtmltopdf();
-
-
-            //start IMPORTANT!!! when add migration
-            //services.ForAddMigration(Configuration);
-            //end important
 
             services.AddERPModuleServices(Configuration); 
             services.AddCommonModuleApplication(Configuration);
