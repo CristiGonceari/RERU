@@ -4,6 +4,7 @@ using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.UserProfiles.GetCurrentUserProfile;
 using CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfile;
 using CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles;
+using CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfilesByModuleRole;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.Pagination;
 
@@ -28,6 +29,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpGet]
         public async Task<PaginatedModel<UserProfileDto>> GetUsers([FromQuery] GetUserProfilesQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("user-roles")]
+        public async Task<PaginatedModel<UserProfileDto>> GetUsersByModuleRole([FromQuery] GetUserProfilesByModuleRoleQuery query)
         {
             return await Mediator.Send(query);
         }

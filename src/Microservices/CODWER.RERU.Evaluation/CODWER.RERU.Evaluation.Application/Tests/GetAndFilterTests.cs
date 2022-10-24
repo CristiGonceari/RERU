@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.ModulePrefixes;
 
 namespace CODWER.RERU.Evaluation.Application.Tests
 {
@@ -45,10 +46,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 })
                 .AsQueryable();
 
-            var currentModuleId = appDbContext.ModuleRolePermissions
-                .Include(x => x.Permission)
-                .Include(x => x.Role)
-                .FirstOrDefault(x => x.Permission.Code.StartsWith("P03")).Role.ModuleId;
+            var currentModuleId = appDbContext.GetModuleIdByPrefix(ModulePrefix.Evaluation);
 
             var currentUserProfile = appDbContext.UserProfiles
                 .Include(x => x.ModuleRoles)
