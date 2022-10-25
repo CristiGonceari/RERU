@@ -152,7 +152,7 @@ export class EditComponent implements OnInit {
 		}
 
 		this.userService.editUserPersonalDetails(data).subscribe(
-			res => {
+			(res) => {
 				forkJoin([
 					this.translate.get('modal.success'),
 					this.translate.get('user.succes-edit'),
