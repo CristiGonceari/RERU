@@ -168,18 +168,16 @@ export class EditComponent implements OnInit {
 					request.append('Data.File.Type', this.fileType.toString());
 					request.append('Data.UserId', res.data);
 					this.userService.addUserAvatar(request).subscribe(() => {
-						this.back();
 						this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 						this.isLoading = false;
-						
+						this.back();
 					})
 				} else {
 					request.append('Data.UserId', res.data);
 					this.userService.addUserAvatar(request).subscribe(() => {
-						this.back();
 						this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 						this.isLoading = false;
-						
+						this.back();
 					})
 				}
 			}
@@ -192,7 +190,6 @@ export class EditComponent implements OnInit {
 	}
 
 	back(): void {
-		// this.location.back();
-		this.router.navigate(['../../../users/list'], { relativeTo: this.activatedRoute });
+		this.location.back();
 	}
 }
