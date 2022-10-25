@@ -41,16 +41,16 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
 
             var processId = request.ProcessId;
 
-            for (int i = 0; i < request.EvaluatorIds.Count; i++)
+            foreach (var evaluatorId in request.EvaluatorIds)
             {
-                for (int j = 0; j < request.UserProfileIds.Count; j++)
+                foreach (var userProfileId in request.UserProfileIds)
                 {
                     var addCommand = new AddTestCommand
                     {
                         Data = new AddEditTestDto
                         {
-                            UserProfileId = request.UserProfileIds[j],
-                            EvaluatorId = request.EvaluatorIds[i],
+                            UserProfileId = userProfileId,
+                            EvaluatorId = evaluatorId,
                             ShowUserName = request.ShowUserName,
                             TestTemplateId = request.TestTemplateId,
                             EventId = request.EventId,

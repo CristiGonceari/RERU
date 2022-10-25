@@ -31,27 +31,27 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
         {
             var newTest = _mapper.Map<Test>(request.Data);
 
-            var eventDatas = _appDbContext.Events.FirstOrDefault(e => e.Id == newTest.EventId);
+            var eventData = _appDbContext.Events.FirstOrDefault(e => e.Id == newTest.EventId);
 
-            if (eventDatas != null)
+            if (eventData != null)
             {
-                newTest.ProgrammedTime = eventDatas.FromDate;
-                newTest.EndProgrammedTime = eventDatas.TillDate;
+                newTest.ProgrammedTime = eventData.FromDate;
+                newTest.EndProgrammedTime = eventData.TillDate;
             }
 
             newTest.TestStatus = TestStatusEnum.Programmed;
 
             if (request.Data.EventId.HasValue)
             {
-                var eventtestTemplate = await _appDbContext.EventTestTemplates.FirstOrDefaultAsync(x => x.EventId == request.Data.EventId.Value && x.TestTemplateId == request.Data.TestTemplateId);
+                var eventTestTemplate = await _appDbContext.EventTestTemplates.FirstOrDefaultAsync(x => x.EventId == request.Data.EventId.Value && x.TestTemplateId == request.Data.TestTemplateId);
 
-                if (eventtestTemplate?.MaxAttempts != null)
+                if (eventTestTemplate?.MaxAttempts != null)
                 {
                     var attempts = _appDbContext.Tests.Count(x => x.UserProfileId == request.Data.UserProfileId 
                                                                   && x.EventId == request.Data.EventId.Value 
                                                                   && x.TestTemplateId == request.Data.TestTemplateId);
 
-                    if (attempts >= eventtestTemplate?.MaxAttempts)
+                    if (attempts >= eventTestTemplate?.MaxAttempts)
                     {
                         newTest.TestPassStatus = TestPassStatusEnum.Forbidden;
                     }
