@@ -49,11 +49,11 @@ data:
           "DownstreamScheme": "http",
           "DownstreamHostAndPorts": [
             {
-              "Host": "reru-evaluation-service",
+              "Host": "reru-evaluation360-service",
               "Port": 8080
             }
           ],
-          "UpstreamPathTemplate": "/ms/reru-evaluation/api/{all}"
+          "UpstreamPathTemplate": "/ms/reru-evaluation360/api/{all}"
         },
 
         {
@@ -64,11 +64,11 @@ data:
           "DownstreamScheme": "http",
           "DownstreamHostAndPorts": [
             {
-              "Host": "reru-evaluation360-service",
+              "Host": "reru-evaluation-service",
               "Port": 8080
             }
           ],
-          "UpstreamPathTemplate": "/ms/reru-evaluation360/api/{all}"
+          "UpstreamPathTemplate": "/ms/reru-evaluation/api/{all}"
         },
 
         {
@@ -140,13 +140,13 @@ data:
           "DownstreamScheme": "http",
           "DownstreamHostAndPorts": [
             {
-              "Host": "reru-evaluation-fe-service",
+              "Host": "reru-evaluation360-fe-service",
               "Port": 8080
             }
           ],
-          "UpstreamPathTemplate": "/reru-evaluation{everything}"
+          "UpstreamPathTemplate": "/reru-evaluation360{everything}"
         },
-
+        
         {
           "HttpHandlerOptions": {
             "UseTracing": true
@@ -155,11 +155,11 @@ data:
           "DownstreamScheme": "http",
           "DownstreamHostAndPorts": [
             {
-              "Host": "reru-evaluation360-fe-service",
+              "Host": "reru-evaluation-fe-service",
               "Port": 8080
             }
           ],
-          "UpstreamPathTemplate": "/reru-evaluation360{everything}"
+          "UpstreamPathTemplate": "/reru-evaluation{everything}"
         },
 
         {
@@ -280,8 +280,7 @@ data:
             }
           ],
           "UpstreamPathTemplate": "/reru-evaluation/api/{all}"
-        }
-        ,
+        },
         {
           "HttpHandlerOptions": {
             "UseTracing": true
