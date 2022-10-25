@@ -6,8 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.Models;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Services;
+using Microsoft.Extensions.Options;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
@@ -19,12 +21,17 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
+        private readonly PlatformConfig _platformConfig;
 
-        public AddTestCommandHandler(AppDbContext appDbContext, IMapper mapper, INotificationService notificationService)
+        public AddTestCommandHandler(AppDbContext appDbContext, 
+            IMapper mapper, 
+            INotificationService notificationService, 
+            IOptions<PlatformConfig> options)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _notificationService = notificationService;
+            _platformConfig = options.Value;
         }
 
         public async Task<int> Handle(AddTestCommand request, CancellationToken cancellationToken)
@@ -109,6 +116,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 
                 content += $@"<p> Prezența fizică este obligatorie. </p>";
             }
+
+            content += $"<p style= font-size: 22px;font-weight: 300;>{_platformConfig.BaseUrl}</p>";
 
             return content;
         }
