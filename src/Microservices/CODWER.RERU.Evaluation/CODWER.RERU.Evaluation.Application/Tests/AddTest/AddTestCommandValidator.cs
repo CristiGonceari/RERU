@@ -1,20 +1,20 @@
-﻿using FluentValidation;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStatus;
+﻿using CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStatus;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
+using FluentValidation;
 using MediatR;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 {
-     public class AddTestCommandValidator : AbstractValidator<AddTestCommand>
+    public class AddTestCommandValidator : AbstractValidator<AddTestCommand>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMediator _mediator;
@@ -65,13 +65,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                         .MustAsync((x, cancellation) => IsOnlyOneAnswerTest(x))
                         .WithErrorCode(ValidationCodes.MUST_ADD_EVENT_OR_EVALUATOR);
                 });
-
-                //When(r => r.Data.EventId.HasValue && r.Data.EvaluatorId.HasValue, () =>
-                //{
-                //    RuleFor(x => x.Data)
-                //        .Must(x => !appDbContext.EventEvaluators.Any(e => e.EventId == x.EventId))
-                //        .WithErrorCode(ValidationCodes.EXISTENT_EVALUATOR_IN_EVENT);
-                //});
 
                 When(r => r.Data.LocationId.HasValue, () =>
                 {

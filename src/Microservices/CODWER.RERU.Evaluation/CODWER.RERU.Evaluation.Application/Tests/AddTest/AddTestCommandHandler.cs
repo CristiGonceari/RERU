@@ -61,15 +61,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
             _appDbContext.Tests.Add(newTest);
             await _appDbContext.SaveChangesAsync();
 
-            if (request.Data.LocationId.HasValue || request.Data.SolicitedTime.HasValue)
-            {
-                await SendEmailNotification(newTest.Id, request.Data.LocationId ?? 0);
-            }
+            await SendEmailNotification(newTest.Id, request);
 
             return newTest.Id;
         }
 
-        private async Task<Unit> SendEmailNotification(int testId, int locationId)
+        private async Task<Unit> SendEmailNotification(int testId, AddTestCommand request)
         {
             var test = await _appDbContext.Tests
                 .Include(x => x.Event)
@@ -87,27 +84,31 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                 ReplacedValues = new Dictionary<string, string>()
                 {
                     { "{user_name}", test.UserProfile.FullName },
-                    { "{email_message}",  await GetEmailContent(test.TestTemplate.Name, locationId, test.SolicitedTime)}
+                    { "{email_message}",  await GetEmailContent(test.TestTemplate.Name, request)}
                 }
             });
 
             return Unit.Value;
         }
 
-        private async Task<string> GetEmailContent(string testName, int locationId, DateTime? time)
+        private async Task<string> GetEmailContent(string testName, AddTestCommand request)
         {
-            var location = _appDbContext.Locations.FirstOrDefault(x => x.Id == locationId);
+            var content = $@"<p>sunteți invitat/ă la evaluarea ""{testName}""</p>. ";
 
-            var content = $@"<p>sunteți invitat/ă la evaluarea ""{testName}""</p>. 
-                             <p> Data și ora: ""{time.Value.ToString("dd/MM/yyyy HH:mm")}"". </p> ";
-
-            if (location != null)
+            if (request.Data.SolicitedTime.HasValue)
             {
-                content += $@"<p> Locatia: ""{location.Address}"", ""{location.Name}"" </p>";
-                content += $@"<p> ""{location.Description}""</p>";
+                content += $@"<p>Data și ora: ""{request.Data.SolicitedTime.Value.ToString("dd/MM/yyyy HH:mm")}"".</p>";
             }
 
-            content += $@"<p> Prezența fizică este obligatorie. </p>";
+            if (request.Data.LocationId.HasValue)
+            {
+                var location = _appDbContext.Locations.First(x => x.Id == request.Data.LocationId);
+               
+                content += $@"<p> Locatia: ""{location.Address}"", ""{location.Name}"" </p>";
+                content += $@"<p> ""{location.Description}""</p>";
+
+                content += $@"<p> Prezența fizică este obligatorie. </p>";
+            }
 
             return content;
         }
