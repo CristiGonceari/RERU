@@ -3,6 +3,7 @@ using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 using Microsoft.Extensions.Options;
-using CODWER.RERU.Evaluation.Application.Models;
+using CVU.ERP.Common.DataTransferObjects.Config;
 
 namespace CODWER.RERU.Evaluation.Application.CronJobs
 {
@@ -20,15 +21,11 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
         private readonly INotificationService _notificationService;
         private readonly DateTime _timeRangeBeforeStart;
         private readonly DateTime _timeRangeAfterStart;
-        private readonly IOptions<PlatformConfig> _options;
-        private readonly PlatformConfig _platformConfig;
 
-        public SendEmailNotificationBeforeTest(AppDbContext appDbContext, INotificationService notificationService, IOptions<PlatformConfig> options)
+        public SendEmailNotificationBeforeTest(AppDbContext appDbContext, INotificationService notificationService)
         {
             _appDbContext = appDbContext;
             _notificationService = notificationService;
-            _options = options;
-            _platformConfig = options.Value;
             _timeRangeBeforeStart = DateTime.Now.AddMinutes(15);
             _timeRangeAfterStart = DateTime.Now.AddMinutes(-1);
         }
@@ -80,28 +77,20 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
 
         private async Task GetContentForEmailAndNotify(Test test)
         {
-            var path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
-
-            var template = await File.ReadAllTextAsync(path);
-
-            template = template
-                .Replace("{user_name}", test.UserProfile.LastName + " " + test.UserProfile.FirstName)
-                .Replace("{email_message}", GetEmailContent());
-
-            var emailData = new EmailData()
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                subject = "Notificare de test",
-                body = template,
-                from = "Do Not Reply",
-                to = test.UserProfile.Email
-            };
-
-            await _notificationService.Notify(emailData, NotificationType.Both);
+                Subject = "Notificare de test",
+                To = test.UserProfile.Email,
+                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", test.UserProfile.FullName },
+                    { "{email_message}", GetEmailContent() }
+                }
+            });
         }
 
         private string GetEmailContent()
-        => $@"<p style=""font-size: 22px; font-weight: 300;"">vă reamintim ca in decurs de 15 minute se va incepe testul la care ați fost asignat, puteți accesa linkul: </p>
-                            <p style=""font-size: 22px;font-weight: 300;"">{_platformConfig.BaseUrl}</p>";
-
+        => $@"<p style=""font-size: 22px; font-weight: 300;"">vă reamintim ca in decurs de 15 minute se va incepe testul la care ați fost asignat, puteți accesa linkul: </p>";
     }
 }

@@ -2,11 +2,12 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
@@ -16,11 +17,13 @@ namespace CODWER.RERU.Core.Application.CronJobs
     {
         private readonly AppDbContext _appDbContext;
         private readonly INotificationService _notificationService;
+        private readonly PlatformConfig _platformConfig;
 
-        public SendEmailJob(AppDbContext appDbContext, INotificationService notificationService)
+        public SendEmailJob(AppDbContext appDbContext, INotificationService notificationService, IOptions<PlatformConfig> conf)
         {
             _appDbContext = appDbContext.NewInstance();
             _notificationService = notificationService;
+            _platformConfig = conf.Value;
         }
 
         public async Task SendEmailNotification()
@@ -57,7 +60,7 @@ namespace CODWER.RERU.Core.Application.CronJobs
                     var emailData = new EmailData
                     {
                         subject = emailNotification.Subject,
-                        body = template,
+                        body = $"{template} {GetEmailBodyFooter()}",
                         from = "Do Not Reply",
                         to = emailNotification.To
                     };
@@ -86,5 +89,8 @@ namespace CODWER.RERU.Core.Application.CronJobs
 
         private async Task<string> GetFileContent(string path)
             => await File.ReadAllTextAsync(new FileInfo(path).FullName);
+
+        private string GetEmailBodyFooter() =>
+            @$"<p style=""font-size: 22px;font-weight: 300;"">Link aplicație: </p><p style=""font-size: 22px;font-weight: 300;"">{_platformConfig.BaseUrl}</p>";
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Application.Models;
+using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Services;
 using Microsoft.Extensions.Options;
@@ -117,10 +117,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                 content += $@"<p> Prezența fizică este obligatorie. </p>";
             }
 
-            content += $"<p style= font-size: 22px;font-weight: 300;>{_platformConfig.BaseUrl}</p>";
-
             return content;
         }
-
     }
 }

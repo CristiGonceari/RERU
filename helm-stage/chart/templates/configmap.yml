@@ -411,6 +411,9 @@ data:
           "ActiveTime": {
             "TokenLifetime": "0.00:05:00"
           }
+        },
+      "PlatformConfig": {
+          "BaseUrl": "http://reru-stage.codwer.com"  
         }
     }
 

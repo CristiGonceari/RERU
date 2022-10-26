@@ -26,7 +26,7 @@ using RERU.Data.Persistence.Initializer;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Evaluation360.API.Config.ServicesSetup;
-using CODWER.RERU.Evaluation360.Application.Models;
+using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using Microsoft.EntityFrameworkCore;
 

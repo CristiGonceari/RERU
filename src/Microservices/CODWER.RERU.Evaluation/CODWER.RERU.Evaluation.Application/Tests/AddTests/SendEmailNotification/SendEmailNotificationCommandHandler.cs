@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using CODWER.RERU.Evaluation.Application.Models;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Services;
 using MediatR;
@@ -9,6 +8,7 @@ using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Common.DataTransferObjects.Config;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotification
 {

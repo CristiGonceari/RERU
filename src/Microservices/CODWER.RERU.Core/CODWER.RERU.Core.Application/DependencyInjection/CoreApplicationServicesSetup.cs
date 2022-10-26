@@ -9,6 +9,7 @@ using CODWER.RERU.Core.Application.Module.Providers;
 using CODWER.RERU.Core.Application.Permissions;
 using CODWER.RERU.Core.Application.Services;
 using CODWER.RERU.Core.Application.Services.Implementations;
+using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Module.Application.DependencyInjection;
 using CVU.ERP.Module.Common.ExceptionHandlers;
 using CVU.ERP.Module.Common.Providers;
@@ -45,6 +46,8 @@ namespace CODWER.RERU.Core.Application.DependencyInjection
             services.AddTransient<IEvaluationClient, EvaluationClient>();
 
             services.AddTransient<IExportUserTestsService, ExportUserTestsService>();
+
+            services.AddScoped(typeof(PlatformConfig));
 
             return services;
         }

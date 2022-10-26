@@ -1,4 +1,4 @@
-﻿namespace CODWER.RERU.Evaluation.Application.Models
+﻿namespace CVU.ERP.Common.DataTransferObjects.Config
 {
     public class PlatformConfig
     {
