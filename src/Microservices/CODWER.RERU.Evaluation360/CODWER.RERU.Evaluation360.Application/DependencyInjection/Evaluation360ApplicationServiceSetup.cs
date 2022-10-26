@@ -1,5 +1,5 @@
-﻿using CODWER.RERU.Evaluation360.Application.Models;
-using CODWER.RERU.Evaluation360.Application.Permissions;
+﻿using CODWER.RERU.Evaluation360.Application.Permissions;
+using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Module.Common.Providers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;

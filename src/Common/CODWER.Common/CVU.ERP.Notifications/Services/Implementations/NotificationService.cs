@@ -4,7 +4,6 @@ using CVU.ERP.Common.Interfaces;
 using CVU.ERP.Notifications.Enums;
 using System.Threading.Tasks;
 using CVU.ERP.Notifications.Email;
-using Microsoft.Extensions.Configuration;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
