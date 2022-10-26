@@ -11,12 +11,10 @@ namespace CODWER.RERU.Core.Application.Common.Services.PasswordGenerator
         private int _minimumLowerCaseChars;
         private int _minimumUpperCaseChars;
         private int _minimumNumericChars;
-        private int _minimumSpecialChars;
 
         private readonly string _allLowerCaseChars;
         private readonly string _allUpperCaseChars;
         private readonly string _allNumericChars;
-        private readonly string _allSpecialChars;
         private string _allAvailableChars;
 
         private readonly RandomSecureVersion _randomSecure = new RandomSecureVersion();
@@ -28,13 +26,12 @@ namespace CODWER.RERU.Core.Application.Common.Services.PasswordGenerator
             _allLowerCaseChars = GetCharRange('a', 'z', exclusiveChars: "ilo");
             _allUpperCaseChars = GetCharRange('A', 'Z', exclusiveChars: "IO");
             _allNumericChars = GetCharRange('2', '9');
-            _allSpecialChars = "!@#%*()$?+-=";
-            InitPasswordGenerator(8, 15, 1, 1, 1, 1);
+            InitPasswordGenerator(8, 15, 1, 1, 1);
 
         }
 
         public void InitPasswordGenerator(int minimumLengthPassword = 8, int maximumLengthPassword = 15, int minimumLowerCaseChars = 1,
-                                  int minimumUpperCaseChars = 1, int minimumNumericChars = 1, int minimumSpecialChars = 1)
+                                  int minimumUpperCaseChars = 1, int minimumNumericChars = 1)
         {
             if (minimumLengthPassword < 1)
             {
@@ -61,12 +58,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.PasswordGenerator
                 throw new ArgumentException("The minimumNumeric is smaller than 0.", "minimumNumericChars");
             }
 
-            if (minimumSpecialChars < 0)
-            {
-                throw new ArgumentException("The minimumSpecial is smaller than 0.", "minimumSpecialChars");
-            }
-
-            _minimumNumberOfChars = minimumLowerCaseChars + minimumUpperCaseChars + minimumNumericChars + minimumSpecialChars;
+            _minimumNumberOfChars = minimumLowerCaseChars + minimumUpperCaseChars + minimumNumericChars;
 
             if (minimumLengthPassword < _minimumNumberOfChars)
             {
@@ -82,13 +74,11 @@ namespace CODWER.RERU.Core.Application.Common.Services.PasswordGenerator
             _minimumLowerCaseChars = minimumLowerCaseChars;
             _minimumUpperCaseChars = minimumUpperCaseChars;
             _minimumNumericChars = minimumNumericChars;
-            _minimumSpecialChars = minimumSpecialChars;
 
             _allAvailableChars =
             OnlyIfOneCharIsRequired(minimumLowerCaseChars, _allLowerCaseChars) +
             OnlyIfOneCharIsRequired(minimumUpperCaseChars, _allUpperCaseChars) +
-            OnlyIfOneCharIsRequired(minimumNumericChars, _allNumericChars) +
-            OnlyIfOneCharIsRequired(minimumSpecialChars, _allSpecialChars);
+            OnlyIfOneCharIsRequired(minimumNumericChars, _allNumericChars);
         }
 
         private string OnlyIfOneCharIsRequired(int minimum, string allChars)
@@ -104,8 +94,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.PasswordGenerator
             // add random charactes of all catagories
             var minimumChars = GetRandomString(_allLowerCaseChars, _minimumLowerCaseChars) +
                         GetRandomString(_allUpperCaseChars, _minimumUpperCaseChars) +
-                        GetRandomString(_allNumericChars, _minimumNumericChars) +
-                        GetRandomString(_allSpecialChars, _minimumSpecialChars);
+                        GetRandomString(_allNumericChars, _minimumNumericChars);
             var rest = GetRandomString(_allAvailableChars, lengthOfPassword - minimumChars.Length);
             var unshuffeledResult = minimumChars + rest;
 
