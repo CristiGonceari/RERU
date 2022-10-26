@@ -5,12 +5,12 @@
   <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading">
     <thead class="text-uppercase text-muted">
       <tr *ngIf="users">
-        <th scope="col">{{'events.name' | translate}}</th>
+        <th scope="col">{{'events.name' | translate}} ({{'user-profile.npp' | translate}})</th>
         <th scope="col">{{'login.idnp' | translate}}</th>
         <th scope="col">{{'position.name' | translate}}</th>
       </tr>
       <tr *ngIf="testTemplates">
-        <th scope="col">{{'events.test-type-name' | translate}}</th>
+        <th scope="col">{{'events.name' | translate}}</th>
         <th scope="col" style="width: 120px;" class="text-left">{{'tests.questions-to-use-count' | translate}}</th>
         <th scope="col" style="width: 100px;" class="text-left">{{'tests.time' | translate}}</th>
         <th scope="col" style="width: 48px"></th>
@@ -23,11 +23,11 @@
         <th scope="col" style="width: 48px"></th>
       </tr>
       <tr *ngIf="evaluators">
-        <th scope="col">{{'events.evaluator' | translate}}</th>
+        <th scope="col">{{'events.name' | translate}} ({{'user-profile.npp' | translate}})</th>
         <th scope="col"> {{'login.idnp' | translate}}</th>
       </tr>
       <tr *ngIf="persons">
-        <th scope="col">{{'locations.person' | translate}}</th>
+        <th scope="col">{{'events.name' | translate}} ({{'user-profile.npp' | translate}})</th>
         <th scope="col">{{'login.idnp' | translate}}</th>
       </tr>
     </thead>

@@ -36,13 +36,14 @@ export class TableComponent implements OnInit {
   attachedUsers = [];
 
   title: string;
-	description: string;
-	no: string;
-	yes: string;
+  description: string;
+  no: string;
+  yes: string;
+  currentDeleteName;
 
   constructor(private eventService: EventService,
     private route: ActivatedRoute,
-		public translate: I18nService,
+    public translate: I18nService,
     private router: Router,
     private eventTestTemplateService: EventTestTemplateService,
     private modalService: NgbModal,
@@ -72,8 +73,8 @@ export class TableComponent implements OnInit {
           this.users = true;
         }
       });
-      this.eventService.getListOfEventUsers({eventId: this.importedId}).subscribe(res => {
-        if(res && res.data) {
+      this.eventService.getListOfEventUsers({ eventId: this.importedId }).subscribe(res => {
+        if (res && res.data) {
           this.attachedUsers = res.data;
         }
       })
@@ -86,17 +87,27 @@ export class TableComponent implements OnInit {
           this.pagination = res.data.pagedSummary;
           this.isLoading = false;
           this.testTemplates = true;
+          forkJoin([
+            this.translate.get('tests.test-template')
+          ]).subscribe(([currentDeleteName]) => {
+            this.currentDeleteName = currentDeleteName;
+          });
         }
       });
     }
 
     if (this.category == "locations") {
-      this.eventService.getLocations(params).subscribe( res => {
+      this.eventService.getLocations(params).subscribe(res => {
         if (res && res.data) {
           this.fields = res.data.items;
           this.pagination = res.data.pagedSummary;
           this.isLoading = false;
           this.locations = true;
+          forkJoin([
+            this.translate.get('locations.location')
+          ]).subscribe(([currentDeleteName]) => {
+            this.currentDeleteName = currentDeleteName;
+          });
         }
       })
     }
@@ -111,8 +122,8 @@ export class TableComponent implements OnInit {
           this.evaluators = true;
         }
       });
-      this.eventService.getListOfEventEvaluators({eventId: this.importedId}).subscribe(res => {
-        if(res && res.data) {
+      this.eventService.getListOfEventEvaluators({ eventId: this.importedId }).subscribe(res => {
+        if (res && res.data) {
           this.attachedUsers = res.data;
         }
       })
@@ -128,8 +139,8 @@ export class TableComponent implements OnInit {
           this.persons = true;
         }
       });
-      this.eventService.getListOfEventPersons({eventId: this.importedId}).subscribe(res => {
-        if(res && res.data) {
+      this.eventService.getListOfEventPersons({ eventId: this.importedId }).subscribe(res => {
+        if (res && res.data) {
           this.attachedUsers = res.data;
         }
       })
@@ -138,22 +149,22 @@ export class TableComponent implements OnInit {
 
   openConfirmationDeleteModal(eventId: number, itemId): void {
     forkJoin([
-			this.translate.get('modal.delete'),
-			this.translate.get('modal.delete-msg'),
-			this.translate.get('button.no'),
-			this.translate.get('button.yes'),
-		]).subscribe(([title, description, no, yes]) => {
-			this.title = title;
-			this.description = description;
-			this.no = no;
-			this.yes = yes;
+      this.translate.get('modal.delete'),
+      this.translate.get('modal.delete-msg'),
+      this.translate.get('button.no'),
+      this.translate.get('button.yes'),
+    ]).subscribe(([title, description, no, yes]) => {
+      this.title = title;
+      this.description = description;
+      this.no = no;
+      this.yes = yes;
     });
     const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
-		modalRef.componentInstance.title = this.title;
+    modalRef.componentInstance.title = this.title;
     modalRef.componentInstance.title = 'Delete';
-    modalRef.componentInstance.description = `${this.description} ${this.currentUrl} ?`;
+    modalRef.componentInstance.description = `${this.description} ${this.currentDeleteName} ?`;
     modalRef.componentInstance.buttonNo = this.no;
-		modalRef.componentInstance.buttonYes = this.yes;
+    modalRef.componentInstance.buttonYes = this.yes;
     if (this.locations) {
       modalRef.result.then(() => this.detachLocation(eventId, itemId), () => { });
     }
@@ -166,12 +177,12 @@ export class TableComponent implements OnInit {
   detachLocation(eventId, locationId) {
     this.eventService.detachLocation(eventId, locationId).subscribe(() => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('events.succes-remove-location-msg'),
-			  ]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-				});
+        this.translate.get('modal.success'),
+        this.translate.get('events.succes-remove-location-msg'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.list();
     });
@@ -182,23 +193,23 @@ export class TableComponent implements OnInit {
       forkJoin([
         this.translate.get('modal.success'),
         this.translate.get('events.succes-remove-test-type-msg'),
-        ]).subscribe(([title, description]) => {
+      ]).subscribe(([title, description]) => {
         this.title = title;
         this.description = description;
-        });
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.list();
     });
   }
 
   openUsersModal(): void {
-		const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
-		modalRef.componentInstance.exceptUserIds = [];
-		modalRef.componentInstance.page = this.category;
-		modalRef.componentInstance.eventId = this.importedId;
-		modalRef.componentInstance.attachedItems = this.attachedUsers;
-		modalRef.componentInstance.inputType = 'checkbox';
-		modalRef.result.then(() => {
+    const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
+    modalRef.componentInstance.exceptUserIds = [];
+    modalRef.componentInstance.page = this.category;
+    modalRef.componentInstance.eventId = this.importedId;
+    modalRef.componentInstance.attachedItems = this.attachedUsers;
+    modalRef.componentInstance.inputType = 'checkbox';
+    modalRef.result.then(() => {
       if (this.persons) {
         this.attachPersons(modalRef.result.__zone_symbol__value);
       } else if (this.users) {
@@ -206,40 +217,40 @@ export class TableComponent implements OnInit {
       } else if (this.evaluators) {
         this.attachEvaluators(modalRef.result.__zone_symbol__value);
       }
-		}, () => { });
-	}
+    }, () => { });
+  }
 
-	parse(data) {
-		return {
-			eventId: +this.importedId,
-			userProfileId: data.attachedItems || this.attachedUsers
-		};
-	}
+  parse(data) {
+    return {
+      eventId: +this.importedId,
+      userProfileId: data.attachedItems || this.attachedUsers
+    };
+  }
 
-	attachPersons(data): void {
-		this.eventService.attachPerson(this.parse(data)).subscribe(() => {
-		  forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('locations.succes-add-person-msg'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
-			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-		}, () => {}, () => this.list());
-	}
+  attachPersons(data): void {
+    this.eventService.attachPerson(this.parse(data)).subscribe(() => {
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('locations.succes-add-person-msg'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+    }, () => { }, () => this.list());
+  }
 
   attachUser(data): void {
     this.eventService.attachUser(this.parse(data)).subscribe(() => {
-		  forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('events.succes-add-user-msg'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
-			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-		}, () => {}, () => this.list());
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('events.succes-add-user-msg'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+    }, () => { }, () => this.list());
   }
 
   sendEmail(): void {
@@ -248,27 +259,27 @@ export class TableComponent implements OnInit {
     }
   }
 
-  parseCandidatePositions(candidatePositionsNames: string[]){
+  parseCandidatePositions(candidatePositionsNames: string[]) {
     let string = candidatePositionsNames.join();
-        return string.split(',').join(', ');
+    return string.split(',').join(', ');
   }
 
   attachEvaluators(data): void {
     let params = {
       eventId: +this.importedId,
-			evaluatorId: data.attachedItems || this.fields,
+      evaluatorId: data.attachedItems || this.fields,
       showUserName: data.showUserName
     }
     this.eventService.attachEvaluator(params).subscribe(() => {
-		  forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('events.succes-attach-evaluator-msg'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
-			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-		}, () => {}, () => this.list());
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('events.succes-attach-evaluator-msg'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+    }, () => { }, () => this.list());
   }
 
 }

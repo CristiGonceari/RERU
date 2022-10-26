@@ -385,7 +385,8 @@
     "evaliations-were-programmed":"Evaluations were successfully programmed",
     "finish-test-msg": "Do you want to finish test?",
     "stop-test-msg": "Are you sure you want to stop this test?",
-    "please-wait": "Please wait while system import tests for users ..."
+    "please-wait": "Please wait while system import tests for users ...",
+    "test-template": "test template"
   },
   "verify-test": {
     "title": "Tests",
@@ -709,7 +710,8 @@
     "succes-remove-person-msg": "Responsible person was successfully detached",
     "succes-add-location-msg": "Location was successfully added",
     "succes-edit-location-msg": "Location was successfully edited",
-    "succes-add-person-msg": "Responsible person was successfully added"
+    "succes-add-person-msg": "Responsible person was successfully added",
+    "location": "location"
   },
   "polls": {
     "polls": "Polls",
@@ -954,6 +956,7 @@
     "03001723": "Invalid poll",
     "03001724": "Only draft tests can be deleted",
     "03001725": "Empty formula",
+    "03001727": "Can't delete test template in use",
     "03001801": "Question count reached the limit",
     "03001802": "Invalid sequence",
     "03001803": "Invalid selection type",

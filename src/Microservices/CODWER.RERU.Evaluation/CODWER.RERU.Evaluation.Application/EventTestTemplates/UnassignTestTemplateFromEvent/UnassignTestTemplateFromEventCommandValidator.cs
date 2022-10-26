@@ -10,9 +10,13 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.UnassignTestTemp
 {
     public class UnassignTestTemplateFromEventCommandValidator : AbstractValidator<UnassignTestTemplateFromEventCommand>
     {
+        private readonly AppDbContext _appDbContext;
+
         public UnassignTestTemplateFromEventCommandValidator(AppDbContext appDbContext)
         {
-                RuleFor(x => x)
+            _appDbContext = appDbContext;
+
+            RuleFor(x => x)
                 .Must(x => appDbContext.EventTestTemplates.Any(l => l.TestTemplateId == x.TestTemplateId && l.EventId == x.EventId))
                 .WithErrorCode(ValidationCodes.INVALID_RECORD);
 
@@ -23,6 +27,12 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.UnassignTestTemp
             RuleFor(x => x.TestTemplateId)
                 .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
+
+            RuleFor(x => x)
+                .Must(x => !CheckTestTemplateUses(x.EventId, x.TestTemplateId))
+                .WithErrorCode(ValidationCodes.CANT_DELETE_TEST_TEMPLATE_IN_USE);
         }
+
+        private bool CheckTestTemplateUses(int eventId, int testTemplateId) => _appDbContext.Tests.Any(x => x.EventId == eventId && x.TestTemplateId == testTemplateId);
     }
 }
