@@ -10,6 +10,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionUserFiles.Ge
     public class GetCheckedSolicitedVacantPositionUserFileQueryHandler : IRequestHandler<GetCheckedSolicitedVacantPositionUserFileQuery, bool>
     {
         private readonly AppDbContext _appDbContext;
+
         public GetCheckedSolicitedVacantPositionUserFileQueryHandler(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
@@ -20,22 +21,9 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionUserFiles.Ge
             var solicitedVacantPositionUserFiles = await _appDbContext.SolicitedVacantPositions
                 .Include(svp => svp.SolicitedVacantPositionUserFiles)
                 .Include(svp => svp.CandidatePosition.RequiredDocumentPositions)
-                .Select(x => new
-                {
-                    Id = x.Id,
-                    Files = x.SolicitedVacantPositionUserFiles.Count,
-                    RequiredFiles = x.CandidatePosition.RequiredDocumentPositions.Count
-                })
                 .FirstOrDefaultAsync(svp => svp.Id == request.Id);
 
-            if (solicitedVacantPositionUserFiles.Files == solicitedVacantPositionUserFiles.RequiredFiles)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            } 
+            return solicitedVacantPositionUserFiles.SolicitedVacantPositionUserFiles.Count() == solicitedVacantPositionUserFiles.CandidatePosition.RequiredDocumentPositions.Count();
         }
     }
 }
