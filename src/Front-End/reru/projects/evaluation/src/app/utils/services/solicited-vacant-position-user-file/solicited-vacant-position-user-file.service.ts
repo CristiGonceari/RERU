@@ -34,6 +34,10 @@ export class SolicitedVacantPositionUserFileService extends AbstractService {
 		return this.http.get<any>(`${this.baseUrl}/${this.urlRoute}/files`, { params });
 	}
 
+	getCheckedFiles(params): Observable<any> {
+		return this.http.get<any>(`${this.baseUrl}/${this.urlRoute}/check-files`, { params });
+	}
+
 	deleteFile(id): Observable<any> {
 		return this.http.delete<any>(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}
