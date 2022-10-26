@@ -58,12 +58,12 @@
     "file-name": "Denumirea documentului",
     "download": "Descarcă",
     "delete": "Șterge",
-    "upload-doc": "Încărcă document",
+    "upload-doc": "Încarcă document",
     "import-users": "Importă utilizatori",
     "import-departments": "Importă departamente",
     "import-roles": "Importă roluri",
     "modal-title": "Încărcarea documentelor",
-    "modal-description": "Încărcă document sau apasa aici pentru incarcare"
+    "modal-description": "Încarcă document sau apasa aici pentru incarcare"
   },
   "login": {
     "admin-panel": "Panou de Administrare",
@@ -410,7 +410,7 @@
     "sure-image-msg": "Asigurați-vă că încărcați o imagine.",
     "remove": "Ștergerea avatarului",
     "sure-remove-msg": "Sunteți sigur(-ă) că doriți să ștergeți avatarul?",
-    "upload-btn": "Încărcă"
+    "upload-btn": "Încarcă"
   },
   "expired-token": {
     "title": "Sesiune expirată",

@@ -22,7 +22,14 @@ namespace CODWER.RERU.Evaluation.Application.Events.DeleteEvent
 
         public async Task<Unit> Handle(DeleteEventCommand request, CancellationToken cancellationToken)
         {
-            var eventToDelete = await _appDbContext.Events.FirstOrDefaultAsync(x => x.Id == request.Id);
+            var eventToDelete = await _appDbContext.Events
+                .Include(x => x.Tests)
+                .Include(x => x.EventUsers)
+                .Include(x => x.EventEvaluators)
+                .Include(x => x.EventResponsiblePersons)
+                .Include(x => x.EventLocations)
+                .Include(x => x.EventVacantPositions)
+                .FirstOrDefaultAsync(x => x.Id == request.Id);
 
             _appDbContext.Events.Remove(eventToDelete);
 
