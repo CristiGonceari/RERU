@@ -74,7 +74,6 @@ export class ApproveSolicitedTestComponent implements OnInit {
     this.referenceService.getEvents().subscribe(res => {
       this.eventsList = res.data;
       this.getActiveTestTemplate();
-
     });
   }
 
@@ -184,6 +183,7 @@ export class ApproveSolicitedTestComponent implements OnInit {
     const modalRef: any = this.modalService.open(ReviewSolicitedVacandPositionModalComponent, { centered: true, size: 'xl' });
     modalRef.componentInstance.userEmail = this.solicitedTest.email;
     modalRef.componentInstance.userName = this.solicitedTest.userProfileName;
+    modalRef.componentInstance.solicitedTestId = this.solicitedTestId;
     modalRef.result.then(() => {
       this.sendEmailAndChangeStatus( modalRef.result.__zone_symbol__value)
     }, () => { });
