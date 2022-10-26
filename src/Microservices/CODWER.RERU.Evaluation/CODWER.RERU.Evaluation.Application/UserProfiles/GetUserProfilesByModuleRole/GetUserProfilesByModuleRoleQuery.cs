@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
+﻿using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Common.Pagination;
 using MediatR;
+using System.Collections.Generic;
 
-namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
+namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfilesByModuleRole
 {
-    public class GetUserProfilesQuery : PaginatedQueryParameter, IRequest<PaginatedModel<UserProfileDto>>
+    public class GetUserProfilesByModuleRoleQuery : PaginatedQueryParameter, IRequest<PaginatedModel<UserProfileDto>>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -16,6 +16,8 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
         public string Department { get; set; }
         public string Role { get; set; }
         public UserStatusEnum? UserStatusEnum { get; set; }
+
+        public int TestTemplateId { get; set; }
 
         public bool EventUsers { get; set; }
         public bool EventResponsiblePerson { get; set; }

@@ -78,6 +78,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                            {{'verify-test.select-test-type' | translate}}
+                        </label>
+                        <div class="col-lg-9 col-xl-9">
+                            <select class="form-control form-control-lg form-control-solid" name="test"
+                                [(ngModel)]="testTemplate.value" >
+                                <option value="">{{'questions.select' | translate}}</option>
+                                <option *ngFor="let testTemplate of selectActiveTests"
+                                    [ngValue]="testTemplate.testTemplateId">
+                                    {{testTemplate.testTemplateName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group row align-items-center">
                         <label class="col-xl-3 col-lg-3 col-form-label text-right">
                             {{'evaluations.evaluated' | translate}}</label>
@@ -89,29 +104,12 @@
                             </button>
                         </div>
                     </div>
-
-                    <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label text-right">
-                            {{'verify-test.select-test-type' | translate}}
-                        </label>
-                        <div class="col-lg-9 col-xl-9">
-                            <select class="form-control form-control-lg form-control-solid" name="test"
-                                [(ngModel)]="testTemplate.value">
-                                <option value="">{{'questions.select' | translate}}</option>
-                                <option *ngFor="let testTemplate of selectActiveTests"
-                                    [ngValue]="testTemplate.testTemplateId">
-                                    {{testTemplate.testTemplateName}}
-                                </option>
-                            </select>
-                        </div>
-                        
-                    </div>
-
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label text-right">
                             {{'events.evaluator' | translate}}</label>
                         <div class="col-lg-9 col-xl-9">
                             <button class="btn btn-light-primary" (click)="attachEvaluators()"
+                                [disabled]="ceckTestTemplate(testTemplate)"
                                 [style.background-color]="evaluatorList.length > 0 ? '#C9F7F5': '#FFE2E5'"
                                 [style.color]="evaluatorList.length > 0 ? '#0bb7af': '#F64E60'">
                                 {{'events.attach-evaluator' | translate}}

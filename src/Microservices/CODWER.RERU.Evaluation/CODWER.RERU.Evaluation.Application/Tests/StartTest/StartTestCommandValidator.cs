@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Linq;
+using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Application.Validators.TestValidators;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 using FluentValidation.Validators;
-using Humanizer;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
@@ -18,7 +19,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
     {
         private readonly AppDbContext _appDbContext;
 
-        public StartTestCommandValidator(AppDbContext appDbContext)
+        public StartTestCommandValidator(AppDbContext appDbContext, IUserProfileService userProfileService)
         {
             _appDbContext = appDbContext;
 
@@ -58,6 +59,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
                         .WithErrorCode(ValidationCodes.FINISHED_EVENT);
                     });
                 });
+
+            RuleFor(x => x.TestId)
+                .SetValidator(x => new TestCurrentUserValidator(userProfileService, appDbContext, ValidationCodes.INVALID_USER));
         }
 
         private void CheckStartTest(int testId, CustomContext context)

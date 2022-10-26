@@ -76,9 +76,12 @@ export class TestsTableComponent implements OnInit {
 		this.translateData();
 		let testTable = document.getElementById('testsTable')
 		let headersHtml = testTable.getElementsByTagName('th');
-		let headersDto = ['programmedTime', 'testTemplateName', 'testStatus', 'accumulatedPercentage', 'resultValue'];
+		let headersDto = ['programmedTime', 'testTemplateName', 'testStatus', 'accumulatedPercentage', 'minPercent', 'resultValue'];
 		for (let i=0; i<headersHtml.length; i++) {
-			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true });
+			if(i == 3){
+				this.headersToPrint[i].label = "Puncte acumulate %";
+			}
 		}
 		let printData = {
 			tableName: name,

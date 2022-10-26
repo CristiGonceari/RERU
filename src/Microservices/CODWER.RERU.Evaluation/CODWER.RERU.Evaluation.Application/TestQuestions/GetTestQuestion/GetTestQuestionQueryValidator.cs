@@ -2,7 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Application.Validators.TestValidators;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
@@ -11,9 +13,11 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
     public class GetTestQuestionQueryValidator : AbstractValidator<GetTestQuestionQuery>
     {
         private readonly AppDbContext _appDbContext;
-        public GetTestQuestionQueryValidator(AppDbContext appDbContext)
+        private readonly IUserProfileService _userProfileService;
+        public GetTestQuestionQueryValidator(AppDbContext appDbContext, IUserProfileService userProfileService)
         {
             _appDbContext = appDbContext;
+            _userProfileService = userProfileService;
 
             RuleFor(x => x)
                .Must(x => appDbContext.TestQuestions
@@ -48,6 +52,9 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
                                                                 && appDbContext.Tests.FirstOrDefault(t => t.Id == x.TestId).EndTime > DateTime.Now)
                     .WithErrorCode(ValidationCodes.TEST_IS_FINISHED);
             });
+
+            RuleFor(x => x.TestId)
+                .SetValidator(x => new TestCurrentUserValidator(userProfileService, appDbContext, ValidationCodes.INVALID_USER));
         }
 
         private bool ValidateMaxErrors(int testId)
