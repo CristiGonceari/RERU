@@ -1,7 +1,9 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.Application.Validators.TestValidators;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
@@ -9,7 +11,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.SaveTestQuestion
 {
     public class SaveTestQuestionCommandValidator : AbstractValidator<SaveTestQuestionCommand>
     {
-        public SaveTestQuestionCommandValidator(AppDbContext appDbContext)
+        public SaveTestQuestionCommandValidator(AppDbContext appDbContext, IUserProfileService userProfileService)
         {
             RuleFor(x => x.Data.Status)
                 .NotNull()
@@ -51,6 +53,9 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.SaveTestQuestion
                         .WithErrorCode(ValidationCodes.CANT_RETURN_TO_QUESTION);
                 });
             });
+
+            RuleFor(x => x.Data.TestId)
+                .SetValidator(x => new TestCurrentUserValidator(userProfileService, appDbContext, ValidationCodes.INVALID_USER));
         }
     }
 }
