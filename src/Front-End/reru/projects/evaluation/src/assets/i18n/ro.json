@@ -384,7 +384,8 @@
     "evaliations-were-programmed":"Evaluările au fost programate cu succes",
     "finish-test-msg": "Doriți sa terminați testul?",
     "stop-test-msg": "Sigur doriți să opriți acest test?",
-    "please-wait": "Vă rugăm să așteptați până sistemul importa teste pentru utilizatori ..."
+    "please-wait": "Vă rugăm să așteptați până sistemul importa teste pentru utilizatori ...",
+    "test-template": "șablon de test"
   },
   "verify-test": {
     "title": "Teste",
@@ -706,8 +707,8 @@
     "succes-remove-person-msg": "Persoana responsabilă a fost eliminată cu succes",
     "succes-add-location-msg": "Locația a fost adăugată cu succes",
     "succes-edit-location-msg": "Locația a fost editată cu succes",
-    "succes-add-person-msg": "Persoana responsabilă a fost adăugată cu succes"
-  
+    "succes-add-person-msg": "Persoana responsabilă a fost adăugată cu succes",
+    "location": "locație"
   },
   "polls": {
     "polls": "Sondaje",
@@ -761,8 +762,8 @@
     "attach-user": "Atașați utilizator",
     "attach-evaluated": "Atașați evaluatul",
     "user-name": "Utilizator",
-    "attach-test-type": "Atașați șablonul testului",
-    "attach-test-type-to-event": "Atașați șablonul testului la eveniment",
+    "attach-test-type": "Atașați șablon de teste",
+    "attach-test-type-to-event": "Atașați șablonul de teste la eveniment",
     "test-type-name": "Șablonul testului",
     "client": "Client",
     "attempts": "Încercări",
@@ -951,6 +952,7 @@
     "03001723": "Sondaj nevalid",
     "03001724": "Doar testul in statut 'maculator' poate fi sters",
     "03001725": "Formulă necompletată",
+    "03001727": "Nu se poate șterge șablonul de test în uz",
     "03001801": "Numărul de întrebări a atins limita",
     "03001802": "Secvență nevalidă",
     "03001803": "Tip de selecție nevalid",
