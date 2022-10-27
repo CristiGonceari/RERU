@@ -4,8 +4,8 @@ import { PaginationModel } from '../../models/pagination.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventService } from '../../services/event/event.service';
 import { SearchStatusComponent } from './search-status/search-status.component';
-import { SearchRoleComponent } from './search-role/search-role.component';
-import { SearchDepartmentComponent } from './search-department/search-department.component';
+import { SearchRoleComponent } from './../search-role/search-role.component';
+import { SearchDepartmentComponent } from './../search-department/search-department.component';
 
 @Component({
   selector: 'app-attach-user-modal',

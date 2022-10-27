@@ -25,8 +25,8 @@ import { ViewTemplatesModalComponent } from './modals/view-templates-modal/view-
 import { EvaluationResultModalComponent } from './modals/evaluation-result-modal/evaluation-result-modal.component';
 import { OwlMomentDateTimeModule, OwlDateTimeModule } from '@busacca/ng-pick-datetime';
 import { ReviewSolicitedVacandPositionModalComponent } from './modals/review-solicited-vacand-position-modal/review-solicited-vacand-position-modal.component';
-import { SearchDepartmentComponent } from './components/attach-user-modal/search-department/search-department.component';
-import { SearchRoleComponent } from './components/attach-user-modal/search-role/search-role.component';
+import { SearchDepartmentComponent } from './components/search-department/search-department.component';
+import { SearchRoleComponent } from './components/search-role/search-role.component';
 
 @NgModule({
   declarations: [
