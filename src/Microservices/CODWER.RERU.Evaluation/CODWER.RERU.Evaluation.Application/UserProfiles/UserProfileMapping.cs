@@ -6,6 +6,7 @@ using CVU.ERP.Module.Application.Models;
 using CVU.ERP.Module.Application.Models.Internal;
 using CVU.ERP.ServiceProvider.Models;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Evaluation.Application.UserProfiles
 {
@@ -39,7 +40,6 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles
                 .ForMember(x => x.Value, opts => opts.MapFrom(u => u.Id))
                 .ForMember(x => x.Label, opts => opts.MapFrom(u => u.FullName + " " + $"({u.Idnp})"));
 
-
             CreateMap<BaseUserProfile, UserProfile>()
                 .ForMember(x => x.Id, opts=> opts.MapFrom(u => u.Id))
                 .ForMember(x => x.FirstName, opts => opts.MapFrom(u => u.FirstName))
@@ -47,6 +47,14 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles
                 .ForMember(x => x.FatherName, opts => opts.MapFrom(u => u.FatherName))
                 .ForMember(x => x.Idnp, opts => opts.MapFrom(u => u.Idnp))
                 .ForMember(x => x.Email, opts => opts.MapFrom(u => u.Email));
+
+            CreateMap<Department, SelectItem>()
+                .ForMember(destination => destination.Value, options => options.MapFrom(src => src.Id.ToString()))
+                .ForMember(destination => destination.Label, options => options.MapFrom(src => src.Name));
+           
+            CreateMap<Role, SelectItem>()
+                .ForMember(destination => destination.Value, options => options.MapFrom(src => src.Id.ToString()))
+                .ForMember(destination => destination.Label, options => options.MapFrom(src => src.Name));
         }
     }
 }
