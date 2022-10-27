@@ -26,12 +26,10 @@
 	</div>
 	<div class="row mb-5">
 		<div class="col">
-			<erp-shared-search-input (handleSearch)="setFilter('department', $event)"
-				[placeholder]="'departments.department'  | translate" #department></erp-shared-search-input>
+			<app-search-department (filter)="setFilter('departmentId',  $event)" #departmentId></app-search-department>
 		</div>
 		<div class="col">
-			<erp-shared-search-input (handleSearch)="setFilter('role', $event)"
-				[placeholder]="'user-roles.role'  | translate" #role></erp-shared-search-input>
+			<app-search-role (filter)="setFilter('roleId',  $event)" #roleId></app-search-role>
 		</div>
 		<div class="col">
 			<app-search-status (filter)="setFilter('userStatusEnum',  $event)" #userStatusEnum></app-search-status>
