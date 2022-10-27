@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStart;
+using CODWER.RERU.Evaluation.DataTransferObjects.InternalTest;
 using CVU.ERP.Common.DataTransferObjects.TestDatas;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
@@ -28,7 +29,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("test-notification")]
-        public async Task<TestDataDto> GetUserTestId()
+        public async Task<List<GetTestForFastStartDto>> GetUserTestId()
         {
             return await Mediator.Send(new GetTestIdForFastStartQuery());
         }

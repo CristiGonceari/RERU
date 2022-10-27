@@ -1,18 +1,19 @@
 ﻿using AutoMapper;
-using CVU.ERP.Common.DataTransferObjects.TestDatas;
+using CODWER.RERU.Evaluation.DataTransferObjects.InternalTest;
+using CVU.ERP.ServiceProvider;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CVU.ERP.ServiceProvider;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStart
 {
-    public class GetTestIdForFastStartQueryHandler : IRequestHandler<GetTestIdForFastStartQuery, TestDataDto>
+    public class GetTestIdForFastStartQueryHandler : IRequestHandler<GetTestIdForFastStartQuery, List<GetTestForFastStartDto>>
     {
         private readonly AppDbContext _appDbContext;
         private readonly ICurrentApplicationUserProvider _currentApplicationUserProvider;
@@ -31,28 +32,25 @@ namespace CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStar
             _timeRangeAfterStart = DateTime.Now.AddMinutes(-1);
         }
 
-        public async Task<TestDataDto> Handle(GetTestIdForFastStartQuery request, CancellationToken cancellationToken)
+        public async Task<List<GetTestForFastStartDto>> Handle(GetTestIdForFastStartQuery request, CancellationToken cancellationToken)
         {
             var currentUser = await _currentApplicationUserProvider.Get();
 
-            //var test = _appDbContext.Tests
-            //    .Include(x => x.TestTemplate.Settings)
-            //    .Where(test => test.ProgrammedTime <= _timeRangeBeforeStart &&
-            //                   test.ProgrammedTime >= _timeRangeAfterStart &&
-            //                   (test.TestStatus == TestStatusEnum.Programmed || test.TestStatus == TestStatusEnum.AlowedToStart))
-            //    .FirstOrDefault(x => x.UserProfileId == int.Parse(currentUser.Id));
-
-            var test = _appDbContext.Tests
+            var test = await _appDbContext.Tests
                 .Include(x => x.TestTemplate.Settings)
                 .Include(x => x.TestTemplate)
+                .Include(x => x.Event)
                 .Where(test => test.UserProfileId == int.Parse(currentUser.Id) &&
+                               (test.Event == null ?
+                                        test.ProgrammedTime <= _timeRangeBeforeStart && test.ProgrammedTime >= _timeRangeAfterStart :
+                                        test.Event.FromDate <= DateTime.Now && test.Event.TillDate >= DateTime.Now) &&
                             test.TestTemplate.Mode == TestTemplateModeEnum.Test &&
-                            (test.TestStatus == TestStatusEnum.Programmed || test.TestStatus == TestStatusEnum.AlowedToStart))
-                .FirstOrDefault(test => test.Event == null
-                    ? test.ProgrammedTime <= _timeRangeBeforeStart && test.ProgrammedTime >= _timeRangeAfterStart
-                    : test.Event.FromDate <= DateTime.Now && test.Event.TillDate >= DateTime.Now);
+                                                        (test.TestStatus == TestStatusEnum.Programmed || 
+                                                         test.TestStatus == TestStatusEnum.AlowedToStart))
+                .Select(u => _mapper.Map<GetTestForFastStartDto>(u))
+                .ToListAsync();
 
-            return test == null ? new TestDataDto() : _mapper.Map<TestDataDto>(test);
+            return test;
         }
     }
 }

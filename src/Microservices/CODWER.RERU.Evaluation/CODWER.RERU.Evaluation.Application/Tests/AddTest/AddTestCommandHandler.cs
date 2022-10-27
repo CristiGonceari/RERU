@@ -100,7 +100,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 
         private async Task<string> GetEmailContent(string testName, AddTestCommand request)
         {
-            var content = $@"<p>sunteți invitat/ă la evaluarea ""{testName}""</p>. ";
+            var content = $@"<p>sunteți invitat/ă la evaluarea ""{testName}""</p>";
 
             if (request.Data.SolicitedTime.HasValue)
             {

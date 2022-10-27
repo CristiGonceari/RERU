@@ -40,7 +40,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 Idnp = request.Idnp,
                 ProgrammedTimeFrom = request.ProgrammedTimeFrom,
                 ProgrammedTimeTo = request.ProgrammedTimeTo,
-                EvaluatorName = request.EvaluatorName
+                EvaluatorName = request.EvaluatorName,
+                RoleId = request.RoleId,
+                DepartmentId = request.DepartmentId
             };
 
             var tests = GetAndFilterTests.Filter(_appDbContext, filterData, currentUser);
