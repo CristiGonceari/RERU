@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { SearchDepartmentComponent } from '../../../utils/components/search-department/search-department.component';
+import { SearchRoleComponent } from '../../../utils/components/search-role/search-role.component';
 
 @Component({
   selector: 'app-evaluations-list-table',
@@ -17,6 +19,8 @@ export class EvaluationsListTableComponent implements OnInit {
   @ViewChild('idnp') idnp: any;
   @ViewChild('selectedStatus') selectedStatus: any;
   @ViewChild('selectedResult') selectedResult: any;
+  @ViewChild(SearchDepartmentComponent) departmentId: SearchDepartmentComponent;
+  @ViewChild(SearchRoleComponent) roleId: SearchRoleComponent;
 
   constructor(
     
@@ -40,5 +44,7 @@ export class EvaluationsListTableComponent implements OnInit {
     // this.idnp.key = '';
     //this.selectedStatus.getTestStatuses();
     this.selectedResult.getTestResults();
+    this.departmentId.department = '';
+    this.roleId.role = '';
   }
 }

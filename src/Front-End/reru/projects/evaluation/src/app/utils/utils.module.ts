@@ -73,6 +73,8 @@ import { SearchRoleComponent } from './components/search-role/search-role.compon
     DateComponent,
     EventCalendarComponent,
     DateFilterPipe,
+    SearchDepartmentComponent,
+    SearchRoleComponent
   ]
 })
 export class UtilsModule { }
