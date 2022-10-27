@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { ReferenceService } from '../../../services/reference/reference.service';
+import { ReferenceService } from '../../services/reference/reference.service';
 
 @Component({
   selector: 'app-search-role',
