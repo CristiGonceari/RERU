@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using System.Linq;
+using CODWER.RERU.Evaluation.DataTransferObjects.InternalTest;
 using CVU.ERP.Common.DataTransferObjects.TestDatas;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
@@ -40,6 +41,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests
 
             CreateMap<Test, TestDataDto>()
                 .ForMember(x => x.TestId, opts => opts.MapFrom(src => src.Id));
+
+            CreateMap<Test, GetTestForFastStartDto>()
+                .ForMember(x => x.Id, opts => opts.MapFrom(src => src.Id))
+                .ForMember(x => x.EventName, opts => opts.MapFrom(src => src.Event.Name))
+                .ForMember(x => x.TestTemplateName, opts => opts.MapFrom(src => src.TestTemplate.Name))
+                .ForMember(x => x.ProgrammedTime, opts => opts.MapFrom(src => src.ProgrammedTime))
+                .ForMember(x => x.EndProgrammedTime, opts => opts.MapFrom(src => src.EndProgrammedTime));
         }
 
         private string GetVerifiationStatus(Test inputTest)
