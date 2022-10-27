@@ -150,7 +150,8 @@
     "navigate": "Navighează",
     "update": "Actualizează",
     "reset": "Resetează",
-    "search":"Căutarea",
+    "search":"Căutați",
+    "search-name": "Căutați după denumire",
     "filter": "Filtrează",
     "yes": "Da",
     "no": "Nu",
@@ -195,7 +196,8 @@
     "status": "Statut",
     "profile-photo": "Poza de profil",
     "number" : "Numarul",
-    "npp": "N.P.P."
+    "npp": "N.P.P.",
+    "posture": "Postură"
   },
   "menu": {
     "menu-sections": {
@@ -238,11 +240,14 @@
     "wrong-phone": "Vă rugăm să furnizați un format valid +37311111111",
     "available-modules": "Module disponibile",
     "idnp-length": "IDNP trebuie să conține 13 cifre!",
-    "search-by-user-state": "Căutați după statutul utilizatorului",
+    "search-by-user-state": "Căutați după statut",
+    "search-by-user-posture": "Căutați după postură",
     "access-mode": "Modul de acces",
     "code-length": "Codul trebuie să conțină 4 cifre!",
     "enter-code": "Introduceți codul",
-    "verify-process": "Procesul de verificare email"
+    "verify-process": "Procesul de verificare email",
+    "Employee": "Angajat",
+    "Candidate": "Candidat"
   },
   "user": {
     "edit-title": "Editarea utilizatorului",
@@ -258,8 +263,8 @@
     "date-format": "Vă rugăm să furnizați un format valid ZZ.LL.AAAA"
   },
   "word": {
-    "search": "Căutarea după N.P.P. sau e-mail",
-    "search-idnp": "Căutarea după IDNP"
+    "search": "Căutați după N.P.P. sau e-mail",
+    "search-idnp": "Căutați după IDNP"
   },
   "set-password": {
     "title": "Setarea Parolei",
@@ -338,9 +343,9 @@
       "give-module-access": "Dați accesul",
       "update-module-access": "Actualizați accesul",
       "remove-module-access": "Eliminați accesul",
-      "search-name": "Căutarea după N.P.P.",
-      "search-email": "Căutarea după email",
-      "search-idnp": "Căutarea după IDNP"
+      "search-name": "Căutați după N.P.P.",
+      "search-email": "Căutați după email",
+      "search-idnp": "Căutați după IDNP"
     },
     "modules": {
       "title": "Module",
@@ -369,8 +374,8 @@
       "overview": "Vizualizarea modulului",
       "roles": "Rolurile modulului",
       "permissions": "Permisiunile modulului",
-      "search-by-code": "Căutare după codul permisiunii",
-      "search-by-description": "Căutare după numele permisiunii"
+      "search-by-code": "Căutați după codul permisiunii",
+      "search-by-description": "Căutați după numele permisiunii"
     },
     "roles": {
       "view-permissions": "Vizualizați permisiunile",
