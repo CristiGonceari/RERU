@@ -89,11 +89,11 @@
     <None Update="Templates\UserRegister.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="UserGuide\GhidCore.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
 	<None Update="PersonalFile\Fisa_Personala.xlsx">
 		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
+	<None Update="UserGuide\GhidCore.pdf">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	</None>
   </ItemGroup>
   <ProjectExtensions>
