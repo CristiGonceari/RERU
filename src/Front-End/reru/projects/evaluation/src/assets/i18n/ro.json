@@ -138,7 +138,7 @@
     "key-list": "Harta de chei",
     "generate-document": "Generează document",
     "select-document": "Selectează document",
-    "search-by-type": "Caută după tipul șablonului"
+    "search-by-type": "Căutați după tipul șablonului"
   },
   "document-test-modal":{
     "all": "Toate",
@@ -216,7 +216,8 @@
     "next": "Înainte",
     "previous": "Înapoi",
     "cancel": "Anulează",
-    "search": "Caută",
+    "search": "Căutați",
+    "search-name": "Căutați după nume",
     "actions": "Acțiuni",
     "start": "Începe",
     "download": "Descărcați",
@@ -333,9 +334,9 @@
     "rules": "Reguli",
     "main-info": "Informații principale",
     "options": "Opțiuni",
-    "search-test": "Caută test",
-    "search-status": "Caută după statutul testului",
-    "search-result": "Caută după rezultatul testului",
+    "search-test": "Căutați după numele testului",
+    "search-status": "Căutați după statutul testului",
+    "search-result": "Căutați după rezultatul testului",
     "name": "Nume test",
     "template-name": "Nume șablon de test",
     "category-used-count": "Nr. categorii",
@@ -390,12 +391,12 @@
   "verify-test": {
     "title": "Teste",
     "subtitle": "Gestionarea testelor",
-    "search-test-name": "Căutare după numele testului",
-    "search-test-type": "Căutare după șablonul testului",
-    "search-test-status": "Căutare după statut",
-    "search-student": "Caută utilizator",
-    "search-email": "Căutare după email",
-    "search-student-idnp": "Caută după idnp utilizatorului",
+    "search-test-name": "Căutați după numele testului",
+    "search-test-type": "Căutați după șablonul testului",
+    "search-test-status": "Căutați după statut",
+    "search-student": "Căutați după numele evaluatului",
+    "search-email": "Căutați după email-ul evaluatului",
+    "search-student-idnp": "Căutați după idnp-ul evaluatului",
     "test-type-name": "Numele șablonului de test",
     "student": "Evaluat",
     "status": "Statut",
@@ -475,8 +476,9 @@
     "new-question": "Întrebarea Nouă",
     "add-question": "Adaugă întrebare",
     "bulk-import": "Bulk Import",
-    "search-question": "Căutare după întrebare",
-    "search-category": "Căutare după categorie",
+    "search-question": "Căutați după numele întrebării",
+    "search-category": "Căutați după numele categoriei",
+    "search-question-type": "Căutați după tipul întrebării",
     "step1": "Configurare tipului de întrebare și categoria acesteia",
     "step2": "Adăugare întrebării și răspunsul acesteia",
     "delete-question": "Șterge Întrebarea",
@@ -504,7 +506,7 @@
     "succes-add-multiple-msg": "întrebările au fost adăugate cu succes",
     "succes-update-msg": "Întrebarea a fost actualizată cu succes",
     "succes-update-status-msg": "Statutul a fost actualizat",
-    "search-by-status": "Selecteaza statutul intrebării",
+    "search-by-status": "Căutați după statutul întrebării",
     "add-tags": "Însereaza taguri",
     "bulk-import-options-msg": "Vă rugăm să descărcați și să utilizați formularul nostru special pentru a importa opțiunile"
   },
@@ -767,10 +769,10 @@
     "test-type-name": "Șablonul testului",
     "client": "Client",
     "attempts": "Încercări",
-    "search-event": "Caută eveniment",
-    "search-location": "Caută locația",
-    "search-from": "Caută din data",
-    "search-to": "Caută până la data",
+    "search-event": "Căutați după numele evenimentului",
+    "search-location": "Căutați după numele locației",
+    "search-from": "Căutați din data",
+    "search-to": "Căutați până la data",
     "import-users": "Import masiv",
     "bulk-message": "Vă rugăm să utilizați formularul nostru special pentru a importa utilizatorii",
     "evaluators": "Evaluatori",
@@ -845,7 +847,7 @@
     "filter-criteria": "Criterii de filtrare"
   },
   "select-format":{
-    "please-select-format": "Selectati formatul necesar"
+    "please-select-format": "Selectați formatul necesar"
   },
   "solicited-position":{
     "solicited-positions": "Poziție solicitate",
@@ -990,7 +992,7 @@
   },
   "word": {
     "confirmation": "Confirmare",
-    "search": "Căutare"
+    "search": "Căutați"
   },
   "print": {
     "print-table": "Printare tabel",
@@ -1035,7 +1037,7 @@
     "view-users": "Vizualizarea evaluaților",
     "view-evaluators": "Vizualizarea evaluatorilor",
     "view-templates": "Vizualizarea șabloanelor de teste",
-    "search-evaluator": "Caută evaluator",
+    "search-evaluator": "Căutați după numele evaluatorului",
     "run-evaluation": "Rulați evaluarea",
     "start-evaluation": "Începeți evaluarea",
     "view-evaluation": "Vizualizarea evaluării",
@@ -1066,7 +1068,7 @@
     "succes-edit-msg": "Departamentul a fost editat cu succes",
     "department-data": "Introduceți detaliile departamentului și confirmați",
     "department-details": "Detaliile departamentului",
-    "search-department": "Căutați după departament"
+    "search-department": "Căutați după departamentul evaluatului"
   },
   "user-roles": {
     "overview": "Prezentare generală",
@@ -1084,6 +1086,6 @@
     "succes-edit-msg": "Rolul a fost editat cu succes",
     "user-role-data": "Introduceți detaliile rolului și confirmați",
     "user-role-details": "Detaliile rolului",
-    "search-role": "Căutați după rol"
+    "search-role": "Căutați după rolul evaluatului"
   }
 }

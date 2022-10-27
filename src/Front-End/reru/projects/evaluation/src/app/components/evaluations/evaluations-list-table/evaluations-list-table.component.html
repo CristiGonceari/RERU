@@ -75,6 +75,14 @@
                                             <owl-date-time #toDate></owl-date-time>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row w-100 mt-3">
+                                    <div class="col">
+                                        <app-search-department (filter)="testsTable.setFilter('departmentId',  $event)" #departmentId></app-search-department>
+                                    </div>
+                                    <div class="col">
+                                        <app-search-role (filter)="testsTable.setFilter('roleId',  $event)" #roleId></app-search-role>
+                                    </div>
                                     <div class="col">
                                         <div class="text-right">
                                             <app-button (handle)="clearFields(); testsTable.resetFilters(); testsTable.getTests({ page: 1 })" [value]="'button.reset' | translate"

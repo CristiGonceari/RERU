@@ -17,6 +17,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .Include(t => t.TestTemplate)
                 .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
+                    .ThenInclude(x => x.Department)
+                .Include(x => x.UserProfile)
+                    .ThenInclude(x => x.Role)
                 .Include(t => t.Evaluator)
                 .Include(t => t.Location)
                 .Include(t => t.TestTemplate)
@@ -135,6 +138,16 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             if (request.ProgrammedTimeTo.HasValue)
             {
                 tests = tests.Where(x => x.ProgrammedTime <= request.ProgrammedTimeTo);
+            }
+
+            if (request.DepartmentId.HasValue)
+            {
+                tests = tests.Where(x => x.UserProfile.Department.Id == request.DepartmentId);
+            }
+
+            if (request.RoleId.HasValue)
+            {
+                tests = tests.Where(x => x.UserProfile.Role.Id == request.RoleId);
             }
 
             return tests;

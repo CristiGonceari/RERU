@@ -28,7 +28,7 @@
                             <div class="card-header border-0 mt-5 pr-5" style="min-height: 100%;">
                                 <div class="row w-100">
                                   <div class="col-5">
-									<erp-shared-search-input (handleSearch)="table.setFilter('name', $event)" [placeholder]="'button.search' | translate" #documentName></erp-shared-search-input>
+									<erp-shared-search-input (handleSearch)="table.setFilter('name', $event)" [placeholder]="'button.search-name' | translate" #documentName></erp-shared-search-input>
                                   </div>
                                   <div class="col-5">
                                     <app-search-by-type (filter)="table.setFilter('fileType', $event)" #status></app-search-by-type>
