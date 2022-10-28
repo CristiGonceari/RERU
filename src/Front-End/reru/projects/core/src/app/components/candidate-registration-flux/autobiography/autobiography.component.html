@@ -59,8 +59,13 @@
 <div class="row">
     <div class="col">
         <div class="col d-flex justify-content-end mt-3 mr-1">
-            <button class="btn btn-success" matStepperNext [disabled]="autobiographyData == null" (click)="addRegistrationFluxStep()">
+            <button class="btn btn-success" *ngIf="autobiographyData" matStepperNext
+                (click)="addRegistrationFluxStep()">
                 {{'stepper.button-next' | translate}}
+            </button>
+            <button class="btn btn-success" *ngIf="!autobiographyData" matStepperNext
+                (click)="addRegistrationFluxStep()">
+                {{'stepper.button-save-and-next-withoud-datas' | translate}}
             </button>
         </div>
     </div>

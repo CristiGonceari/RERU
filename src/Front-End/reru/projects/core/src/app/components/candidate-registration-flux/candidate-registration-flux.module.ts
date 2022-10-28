@@ -21,6 +21,7 @@ import { AutobiographyComponent } from './autobiography/autobiography.component'
 import { DeclarationComponent } from './declaration/declaration.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { DataService } from './data.service';
+
 // import { CKEditorModule } from 'ngx-ckeditor';
 
 
@@ -49,7 +50,8 @@ import { DataService } from './data.service';
     SharedModule,
     MaterialModule,
     NgxDropzoneModule,
-    CKEditorModule
+    CKEditorModule,
+    
   ],
   providers: [
     TranslatePipe,

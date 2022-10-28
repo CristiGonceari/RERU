@@ -54,16 +54,30 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetCandidateRegistrationStep
                     {
                         Value = (int)registrationSteps.Cast<RegistrationFluxStepEnum>().ToArray()[i],
                         Label = registrationSteps.Cast<RegistrationFluxStepEnum>().ToArray()[i].ToString(),
-                        IsDone = false
+                        IsDone = false,
+                        InProgress = check?.InProgress
                     });
                 }
                 else {
-                    isChecked.Add(new CheckedRegistrationFluxStepsDto()
+                    if (check.InProgress)
                     {
-                        Value = (int)registrationSteps.Cast<RegistrationFluxStepEnum>().ToArray()[i],
-                        Label = registrationSteps.Cast<RegistrationFluxStepEnum>().ToArray()[i].ToString(),
-                        IsDone = true
-                    });
+                        isChecked.Add(new CheckedRegistrationFluxStepsDto()
+                        {
+                            Value = (int)registrationSteps.Cast<RegistrationFluxStepEnum>().ToArray()[i],
+                            Label = registrationSteps.Cast<RegistrationFluxStepEnum>().ToArray()[i].ToString(),
+                            IsDone = false,
+                            InProgress = check?.InProgress
+                        });
+                    }
+                    else {
+                        isChecked.Add(new CheckedRegistrationFluxStepsDto()
+                        {
+                            Value = (int)registrationSteps.Cast<RegistrationFluxStepEnum>().ToArray()[i],
+                            Label = registrationSteps.Cast<RegistrationFluxStepEnum>().ToArray()[i].ToString(),
+                            IsDone = true,
+                            InProgress = check?.InProgress
+                        });
+                    }
                 }
             };
 

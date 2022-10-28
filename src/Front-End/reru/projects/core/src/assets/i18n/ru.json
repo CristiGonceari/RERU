@@ -692,7 +692,8 @@
     "button-next":"Перейти к следующему шагу",
     "button-update":"Обновить",
     "button-add":"Добавить",
-    "button-end": "Завершыть"
+    "button-end": "Завершыть",
+    "button-save-and-next-withoud-datas": "Пройти без добавления данных"
   },
   "step":{
     "GeneralData": "Общие данные",
@@ -705,7 +706,12 @@
   },
   "step-status":{
     "done": "Завершенный",
-    "not-done": "Hезавершенный"
+    "not-done": "Hезавершенный",
+    "in-progress": "Без заполнения"
+  },
+  "step-obligation":{
+    "obligatory": "Oбязательный",
+    "optional": "По желанию"
   },
   "validations": {
     "file-is-empty": "Файл пустой!",

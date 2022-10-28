@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RERU.Data.Persistence.Context;
@@ -9,9 +10,10 @@ using RERU.Data.Persistence.Context;
 namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221028075509_Add_InProgress_For_RegistrationSteps")]
+    partial class Add_InProgress_For_RegistrationSteps
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3783,7 +3785,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<bool>("InProgress")
+                    b.Property<bool?>("InProgress")
                         .HasColumnType("boolean");
 
                     b.Property<bool>("IsDeleted")
@@ -4044,7 +4046,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<string>("Faculty")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("GraduationYear")
+                    b.Property<DateTime>("GraduationYear")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Institution")
@@ -4071,7 +4073,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime?>("YearOfAdmission")
+                    b.Property<DateTime>("YearOfAdmission")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
