@@ -489,7 +489,7 @@ data:
         }
     }
 
-reru_evaluation360.appsettings.json: | 
+  reru_evaluation360.appsettings.json: | 
     {
        "Logging": {
           "IncludeScopes": false,
