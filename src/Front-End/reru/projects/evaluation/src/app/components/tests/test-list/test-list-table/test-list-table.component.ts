@@ -322,7 +322,7 @@ export class TestListTableComponent implements OnInit {
       'locationNames', 
       'testStatus', 
       'verificationProgress', 
-      'resultValue', 
+      'result', 
       'accumulatedPercentage', 
       'minPercent'
     ];
