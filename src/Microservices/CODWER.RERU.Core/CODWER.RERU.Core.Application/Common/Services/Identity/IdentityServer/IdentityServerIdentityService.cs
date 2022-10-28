@@ -65,7 +65,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
             _userManager = UserManagerInstance;
         }
 
-        private UserManager<ERPIdentityUser> UserManagerInstance => new (
+        private UserManager<ERPIdentityUser> UserManagerInstance =>  new (
             new UserStore<ERPIdentityUser>(_userManagementDbContext.NewInstance()),
             _optionsAccessor,
             _passwordHasher,
@@ -80,8 +80,8 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
         {
             var identityUser = new ERPIdentityUser()
             {
-                Email = userProfile.Email,
-                UserName = userProfile.Email
+                Email = userProfile.Email.Replace(" ",""),
+                UserName = userProfile.FullName.Replace(" ","").ToLower()
             };
 
             var password = _passwordGenerator.Generate();
