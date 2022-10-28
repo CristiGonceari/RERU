@@ -810,7 +810,7 @@
     "search-by-test-mode": "Căutați după tip",
     "qualifying-type": "Tipul de calificare",
     "search-by-qualifying-type": "Căutați după tipul de calificare",
-    "info-tag": "Dacă nu este selectat nici un șablon, șablon este disponibil pentru toate rolurile"
+    "info-tag": "Dacă nu este selectat nici un rol, șablon este disponibil pentru toate rolurile"
 },
   "plans": {
     "plans": "Planuri",
