@@ -138,6 +138,24 @@ reru_evaluation:
     storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     hangfireevaluation_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Evaluation-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
 
+reru_evaluation360_fe:
+  name: "reru-evaluation360-fe"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-evaluation360-fe
+
+reru_evaluation360:
+  name: "reru-evaluation360"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-evaluation360
+  database:
+    # connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Evaluation-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    hangfireevaluation360_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Evaluation360-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+
 reru_logging_fe:
   name: "reru-logging-fe"
   replicas: 1

@@ -96,9 +96,9 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
 
             myDictionary.Add("{question_name}", await GetQuestionName(items.Id));
             myDictionary.Add("{category_name}", items.QuestionCategory.Name);
-            myDictionary.Add("{question_type}", EnumMessages.EnumMessages.GetQuestionType(items.QuestionType));
+            myDictionary.Add("{question_type}", EnumMessages.GetQuestionType(items.QuestionType));
             myDictionary.Add("{question_points}", items.QuestionPoints.ToString());
-            myDictionary.Add("{question_status}", EnumMessages.EnumMessages.GetQuestionStatus(items.Status));
+            myDictionary.Add("{question_status}", EnumMessages.GetQuestionStatus(items.Status));
             myDictionary.Add("{answer_option}", GetTableContent(items));
 
             return myDictionary;

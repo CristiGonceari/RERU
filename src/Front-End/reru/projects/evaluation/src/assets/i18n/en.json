@@ -218,6 +218,7 @@
     "previous": "Previous",
     "cancel": "Cancel",
     "search": "Search",
+    "search-name": "Search by name",
     "actions": "Actions",
     "start": "Start",
     "download": "Download",
@@ -261,6 +262,7 @@
     "delete": "Delete",
     "success": "Success",
     "error": "Error",
+    "attention": "Attention",
     "finish-test": "Finish test",
     "finish-poll": "Finish poll",
     "finish-verification": "Finish test verification",
@@ -334,9 +336,9 @@
     "rules": "Rules",
     "main-info": "Main Info",
     "options": "Options",
-    "search-test": "Search test",
-    "search-status": "Search by test status",
-    "search-result": "Search by test result",
+    "search-test": "Search by test name",
+    "search-status": "Search by status",
+    "search-result": "Search by result",
     "name": "Test name",
     "template-name": "Test template name",
     "category-used-count": "No. categories",
@@ -385,7 +387,9 @@
     "evaliations-were-programmed":"Evaluations were successfully programmed",
     "finish-test-msg": "Do you want to finish test?",
     "stop-test-msg": "Are you sure you want to stop this test?",
-    "please-wait": "Please wait while system import tests for users ..."
+    "please-wait": "Please wait while system import tests for users ...",
+    "test-template": "test template",
+    "start-test": "Test is going to start in few minutes"
   },
   "verify-test": {
     "title": "Tests",
@@ -393,8 +397,8 @@
     "search-test-name": "Search by test name",
     "search-test-type": "Search by test template",
     "search-test-status": "Search by status",
-    "search-student": "Search user", 
-    "search-email": "Search by email",
+    "search-student": "Search by user", 
+    "search-email": "Search by user email",
     "search-student-idnp": "Search by user idnp",
     "test-type-name": "Test template name",
     "student": "Evaluated",
@@ -477,6 +481,7 @@
     "bulk-import": "Bulk Import Question",
     "search-question": "Search by question",
     "search-category": "Search by category",
+    "search-question-type": "Search by type",
     "step1": "Setup question type and its category",
     "step2": "Add question and its answer",
     "delete-question": "Delete Question Unit",
@@ -504,7 +509,7 @@
     "succes-add-multiple-msg": "Questions were successfully added",
     "succes-update-msg": "Question was successfully updated",
     "succes-update-status-msg": "Status was updated",
-    "search-by-status": "Select question status",
+    "search-by-status": "Search by status",
     "add-tags": "Add tags",
     "bulk-import-options-msg": "Please, download and use our special form for import options"
   },
@@ -597,6 +602,13 @@
     "NoResult": "No result",
     "Passed": "Passed",
     "NotPassed":"Not passed",
+    "Able":"Able",
+    "NotAble":"Not able",
+    "Accepted":"Accepted",
+    "Rejected":"Rejected",
+    "Recommended":"Recommended/Not recommended",
+    "ModalRecommended":"Recommended",
+    "NotRecommended":"Not recommended",
     "employee": "Employee",
     "candidate": "Candidate",
     "Candidate": "Candidates",
@@ -604,7 +616,11 @@
     "Column1": "Column 1",
     "Column2": "Column 2",
     "Column3": "Column 3",
-    "Column4": "Column 4"
+    "Column4": "Column 4",
+    "AbleNotAble": "Able/Not able",
+    "PassedNotPassed": "Passed/Not passed",
+    "AcceptedRejected": "Accepted/Rejected",
+    "NoQualifying": "No qualifying"
   },
   "options": {
     "start-without-confirmation": "Possible to start test without confirmation",
@@ -698,7 +714,8 @@
     "succes-remove-person-msg": "Responsible person was successfully detached",
     "succes-add-location-msg": "Location was successfully added",
     "succes-edit-location-msg": "Location was successfully edited",
-    "succes-add-person-msg": "Responsible person was successfully added"
+    "succes-add-person-msg": "Responsible person was successfully added",
+    "location": "location"
   },
   "polls": {
     "polls": "Polls",
@@ -759,8 +776,8 @@
     "test-type-name": "Test template",
     "client": "Client",
     "attempts": "Attempts",
-    "search-event": "Search event",
-    "search-location": "Search location",
+    "search-event": "Search by event",
+    "search-location": "Search by location",
     "search-from": "Search from date",
     "search-to": "Search to date",
     "import-users": "Bulk import users",
@@ -796,7 +813,10 @@
     "set-can-be-solicited": "Add to can be solicited",
     "unset-from-can-be-solicited": "Unset from solicited tests",
     "can-be-solicited": "Can be solicited",
-    "search-by-test-mode": "Search by template type"
+    "search-by-test-mode": "Search by type",
+    "qualifying-type": "Qualifying type",
+    "search-by-qualifying-type": "Search by qualifying type",
+    "info-tag": "If no role is selected, the template is available for all roles"
   },
   "plans": {
     "plans": "Plans",
@@ -940,6 +960,7 @@
     "03001723": "Invalid poll",
     "03001724": "Only draft tests can be deleted",
     "03001725": "Empty formula",
+    "03001727": "Can't delete test template in use",
     "03001801": "Question count reached the limit",
     "03001802": "Invalid sequence",
     "03001803": "Invalid selection type",
@@ -1018,7 +1039,7 @@
     "view-users": "View evaluated",
     "view-evaluators": "View evaluators",
     "view-templates": "View test templates",
-    "search-evaluator": "Search evaluator",
+    "search-evaluator": "Search by evaluator",
     "run-evaluation": "Run evaluation",
     "start-evaluation": "Start evaluation",
     "view-evaluation": "View evaluation",
@@ -1048,7 +1069,8 @@
     "succes-add-msg": "Department was successfully added",
     "succes-edit-msg": "Department was successfully edited",
     "department-data": "Enter the department details and confirm",
-    "department-details": "Department details"
+    "department-details": "Department details",
+    "search-department": "Search by department"
   },
   "user-roles": {
     "overview": "Overview",
@@ -1065,6 +1087,7 @@
     "succes-add-msg": "Role was successfully added",
     "succes-edit-msg": "Role was successfully edited",
     "user-role-data": "Enter the role details and confirm",
-    "user-role-details": "Role details"
+    "user-role-details": "Role details",
+    "search-role": "Search by role"
   }
 }

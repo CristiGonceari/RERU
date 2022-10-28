@@ -268,10 +268,19 @@ export class AddTestComponent implements OnInit {
     modalRef.componentInstance.inputType = inputType;
     modalRef.componentInstance.page = 'add-test';
     modalRef.componentInstance.eventId = +this.event.value;
+    modalRef.componentInstance.testTemplateId =  inputType == "radio" ? +this.testTemplate.value : null;
     modalRef.result.then(() => {
       if (inputType == 'radio') this.evaluatorList = modalRef.result.__zone_symbol__value.attachedItems;
       else if (inputType == 'checkbox') this.userListToAdd = modalRef.result.__zone_symbol__value.attachedItems;
     }, () => { });
+  }
+
+  ceckTestTemplate(testTemplate): boolean{
+    if(typeof(testTemplate.value) === 'undefined' || typeof(testTemplate.value) === 'string'){
+      return true
+    } else {
+      return false
+    }
   }
 
 }

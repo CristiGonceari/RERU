@@ -4,6 +4,8 @@ import { PaginationModel } from '../../models/pagination.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventService } from '../../services/event/event.service';
 import { SearchStatusComponent } from './search-status/search-status.component';
+import { SearchRoleComponent } from './../search-role/search-role.component';
+import { SearchDepartmentComponent } from './../search-department/search-department.component';
 
 @Component({
   selector: 'app-attach-user-modal',
@@ -22,15 +24,16 @@ export class AttachUserModalComponent implements OnInit {
   @ViewChild('fatherName') fatherName: any;
   @ViewChild('idnp') idnp: any;
   @ViewChild('email') email: any;
-  @ViewChild('department') department: any;
-  @ViewChild('role') role: any;
   @ViewChild(SearchStatusComponent) userStatusEnum: SearchStatusComponent;
+  @ViewChild(SearchRoleComponent) roleId: SearchRoleComponent;
+  @ViewChild(SearchDepartmentComponent) departmentId: SearchDepartmentComponent;
   @Input() exceptUserIds: any;
   @Input() attachedItems: number[];
   @Input() inputType: string;
   @Input() eventId: number;
   @Input() page: string;
   @Input() whichUser: boolean;
+  @Input() testTemplateId: number;
   showEventCard: boolean = false;
 
   constructor(
@@ -54,16 +57,29 @@ export class AttachUserModalComponent implements OnInit {
         page: data.page || this.pagination.currentPage,
         itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
         exceptUserIds: exceptIds,
+        testTemplateId: this.testTemplateId || null,
         ...this.filters
       }
-      this.userService.get(params).subscribe(res => {
-        if (res && res.data) {
-          this.paginatedAttachedIds = res.data.items.map(el => el.id).some(r=> this.attachedItems.includes(r))
-          this.users = res.data.items;
-          this.pagination = res.data.pagedSummary;
-          this.isLoading = false;
-        }
-      })
+      if(this.testTemplateId == null){
+        this.userService.get(params).subscribe(res => {
+          if (res && res.data) {
+            this.paginatedAttachedIds = res.data.items.map(el => el.id).some(r=> this.attachedItems.includes(r))
+            this.users = res.data.items;
+            this.pagination = res.data.pagedSummary;
+            this.isLoading = false;
+          }
+        })
+      } else {
+        this.userService.getByTestTemplate(params).subscribe(res => {
+          if (res && res.data) {
+            this.paginatedAttachedIds = res.data.items.map(el => el.id).some(r=> this.attachedItems.includes(r))
+            this.users = res.data.items;
+            this.pagination = res.data.pagedSummary;
+            this.isLoading = false;
+          }
+        })
+      }
+     
     }
   }
 
@@ -153,8 +169,8 @@ export class AttachUserModalComponent implements OnInit {
     this.fatherName.key = '';
     this.idnp.key = '';
     this.email.key = '';
-    this.department.key = '';
-    this.role.key = '';
+    this.departmentId.department = '';
+    this.roleId.role = '';
     this.userStatusEnum.userStatus = '';
     this.filters = {};
     this.getUsers();

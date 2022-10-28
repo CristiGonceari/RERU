@@ -15,6 +15,7 @@ import { ImportUsersModalComponent } from '../../../utils/modals/import-users-mo
 import { ReferenceService } from '../../../utils/services/reference.service';
 import { saveAs } from 'file-saver';
 import { AccessModeEnum } from '../../../utils/models/access-mode.enum';
+import { UserStatusEnum } from '../../../utils/models/user-status-enum.enum';
 import { ProcessService } from '../../../utils/services/process.service';
 
 @Component({
@@ -46,6 +47,7 @@ export class UserListTableComponent implements OnInit {
 	no: string;
 	yes: string;
 	accessMode = AccessModeEnum;
+	userStatusEnum = UserStatusEnum;
 
 	constructor(
 		private route: ActivatedRoute,

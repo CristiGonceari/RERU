@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.TableExportServices.Interfaces;
-using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using System;
 using System.Collections.Generic;
@@ -29,7 +28,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             source = source
                 .Replace("{table_name}", data.Name)
                 .Replace("{table_header}", GetTableHeader(data.Fields.Select(x=>x.Label).ToList()))
-                .Replace("{table_content}", GetTableContent(data.Name, _mapper.Map<List<TDestination>>(data.Items), data.Fields.Select(x=>x.Value).ToList()));
+                .Replace("{table_content}", GetTableContent(_mapper.Map<List<TDestination>>(data.Items), data.Fields.Select(x=>x.Value).ToList()));
 
             var options = new ConvertOptions
             {
@@ -51,7 +50,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             source = source
                 .Replace("{table_name}", data.Name)
                 .Replace("{table_header}", GetTableHeader(data.Fields.Select(x => x.Label).ToList()))
-                .Replace("{table_content}", GetTableContent(data.Name, data.Items, data.Fields.Select(x => x.Value).ToList()));
+                .Replace("{table_content}", GetTableContent(data.Items, data.Fields.Select(x => x.Value).ToList()));
 
             var options = new ConvertOptions
             {
@@ -72,7 +71,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             return $"<tr>{string.Join(" ", fields.Select(f => $"<th>{f}</th>"))}</tr>";
         }
 
-        private string GetTableContent(string tableName, List<TDestination> items, List<string> fields)
+        private string GetTableContent(List<TDestination> items, List<string> fields)
         {
             var records = string.Empty;
 
@@ -86,7 +85,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                 {
                     var propInfo = GetPropertyInfo(objType, field);
 
-                    records += $"<td>{ParseByDataType(propInfo, item, tableName)}</td>";
+                    records += $"<td>{ParseByDataType(propInfo, item)}</td>";
                 }
 
                 records += "</tr>";
@@ -134,7 +133,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             return type.GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public);
         }
 
-        private string ParseByDataType(PropertyInfo propInfo, object item, string tableName)
+        private string ParseByDataType(PropertyInfo propInfo, object item)
         {
             var result = propInfo.GetValue(item, null);
 
@@ -145,40 +144,35 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                     break;
                 case bool: result = Convert.ToBoolean(result) ? "+" : "-";
                     break;
-                case TestResultStatusEnum: result = ParseDataByTestEnum(tableName, result);
+                case TestResultStatusEnum:
+                    result = EnumMessages.TranslateResultStatus((TestResultStatusEnum) result);
                     break;
-                case TestStatusEnum: result = EnumMessages.EnumMessages.GetTestStatus((TestStatusEnum)result);
+                case TestStatusEnum: 
+                    result = EnumMessages.GetTestStatus((TestStatusEnum)result);
                     break;
-                case QuestionTypeEnum: result = EnumMessages.EnumMessages.GetQuestionType((QuestionTypeEnum)result);
+                case QuestionTypeEnum: 
+                    result = EnumMessages.GetQuestionType((QuestionTypeEnum)result);
                     break;
-                case QuestionUnitStatusEnum: result = EnumMessages.EnumMessages.GetQuestionStatus((QuestionUnitStatusEnum)result);
+                case QuestionUnitStatusEnum: 
+                    result = EnumMessages.GetQuestionStatus((QuestionUnitStatusEnum)result);
                     break;
-                case TestTemplateModeEnum: result = EnumMessages.EnumMessages.GetTestTemplateTypeEnum((TestTemplateModeEnum)result);
+                case TestTemplateModeEnum: 
+                    result = EnumMessages.GetTestTemplateTypeEnum((TestTemplateModeEnum)result);
                     break;
                 case MedicalColumnEnum:
-                    result = EnumMessages.EnumMessages.GetMedicalColumnEnum((MedicalColumnEnum)result);
+                    result = EnumMessages.GetMedicalColumnEnum((MedicalColumnEnum)result);
+                    break;
+                case TestTemplateStatusEnum:
+                    result = EnumMessages.GetTestTemplateEnum((TestTemplateStatusEnum)result);
+                    break;
+                case QualifyingTypeEnum:
+                    result = EnumMessages.GetTestTemplateQualifyingType((QualifyingTypeEnum)result);
                     break;
                 case null: result = "-";
                     break;
             }
 
             return result.ToString();
-        }
-
-        private object ParseDataByTestEnum(string tableName, object result)
-        {
-            var names = new List<string> { "Evaluări ", "Evaluări primite", "Evaluări acordate" };
-
-            if (names.Contains(tableName))
-            {
-                result = EnumMessages.EnumMessages.GetEvaluationResultStatus((TestResultStatusEnum)result);
-            }
-            else
-            {
-                result = EnumMessages.EnumMessages.GetTestResultStatus((TestResultStatusEnum)result);
-            }
-
-            return result;
         }
 
         private object ParseDataByListOfStrings(object result)

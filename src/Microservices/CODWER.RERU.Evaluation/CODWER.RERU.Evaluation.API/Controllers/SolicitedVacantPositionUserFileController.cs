@@ -12,6 +12,7 @@ using CODWER.RERU.Evaluation.Application.SolicitedVacantPositionUserFiles.Delete
 using CODWER.RERU.Evaluation.DataTransferObjects.Documents;
 using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions;
 using MediatR;
+using CODWER.RERU.Evaluation.Application.SolicitedVacantPositionUserFiles.GetCheckedSolicitedVacantPositionUserFile;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -33,6 +34,14 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpGet("files")]
         public async Task<List<GetSolicitedVacantPositionDto>> GetUserFiles([FromQuery] GetSolicitedVacantPositionUserFilesQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return result;
+        }
+
+        [HttpGet("check-files")]
+        public async Task<bool> GetCheckUserFiles([FromQuery] GetCheckedSolicitedVacantPositionUserFileQuery query)
         {
             var result = await Mediator.Send(query);
 

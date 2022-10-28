@@ -18,6 +18,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { GenerateDocumentModalComponent } from 'projects/evaluation/src/app/utils/modals/generate-document-modal/generate-document-modal.component';
 import { FileTypeEnum } from 'projects/evaluation/src/app/utils/enums/file-type.enum';
+import { EnumStringTranslatorService } from 'projects/evaluation/src/app/utils/services/enum-string-translator.service';
 
 
 @Component({
@@ -76,7 +77,8 @@ export class TestListTableComponent implements OnInit {
     private referenceService: ReferenceService,
     private datePipe: DatePipe,
     private notificationService: NotificationsService,
-    private printService: PrintTemplateService
+    private printService: PrintTemplateService,
+    private enumStringTranslatorService: EnumStringTranslatorService
   ) { }
 
   ngOnInit(): void {
@@ -94,6 +96,10 @@ export class TestListTableComponent implements OnInit {
       .map(key => TestResultStatusEnum[key])
       .filter(value => typeof value === 'number') as string[];
   }
+
+  translateResultValue(item){
+		return this.enumStringTranslatorService.translateTestResultValue(item);
+	}
 
   setTimeToSearch(): void {
     if (this.dateTimeFrom) {

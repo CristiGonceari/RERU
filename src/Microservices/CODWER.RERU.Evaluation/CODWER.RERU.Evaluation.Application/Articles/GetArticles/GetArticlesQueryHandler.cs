@@ -25,9 +25,9 @@ namespace CODWER.RERU.Evaluation.Application.Articles.GetArticles
 
         public async Task<PaginatedModel<ArticleEvaluationDto>> Handle(GetArticlesQuery request, CancellationToken cancellationToken)
         {
-            var currentUser = await _userProfileService.GetCurrentUser();
+            var currentUserId = await _userProfileService.GetCurrentUserId();
 
-            var articles = GetAndFilterArticles.Filter(_appDbContext, request.Name, currentUser);
+            var articles = GetAndFilterArticles.Filter(_appDbContext, request.Name, currentUserId);
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<ArticleEvaluation, ArticleEvaluationDto>(articles, request);
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import {
   ApplicationUserService,
   AvailableModulesService,
@@ -40,7 +40,7 @@ export class CandidateRegistrationFluxComponent implements OnInit {
   stepperEvent: any;
   public selectedStepIndex: number = 0;
   public loadingStep: boolean = false;
-  public isLoading: boolean = true;
+  public isLoading: boolean ;
 
   childComponent;
 
@@ -58,38 +58,41 @@ export class CandidateRegistrationFluxComponent implements OnInit {
     private referenceService: ReferenceService,
     private registrationFluxService: RegistrationFluxStepService,
     private profileService: ProfileService,
-    private ds: DataService
+    private ds: DataService,
+    private cdr: ChangeDetectorRef
     ) { 
       this.subscription = this.ds.getData().subscribe((x) => {
       this.dataPassed = x;
-      
       if(this.dataPassed){
         var stepIndex = this.steps.findIndex(x => x.value == this.dataPassed.stepId );
         this.steps[stepIndex].isDone = this.dataPassed.isDone;
+        this.steps[stepIndex].inProgress = this.dataPassed.inProgress;
       }
       
-    }); }
+    }); 
+  }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.route.params.subscribe(params => {
       this.userId = parseInt(params.id);
     });
-
     this.stepId = parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
 
     this.getStepEnum();
     this.getStepssSelectValue();
 
     const event = {
-      selectedIndex: this.route['_routerState'].snapshot.url.split("/").pop() - 1,
+      selectedIndex: this.stepId -1,
       previouslySelectedIndex: "-1"
     };
     
     this.stepperEvent = event;
     
     this.selectionChanged(event);
+    
     this.isLoading = false;
-    this.navigate(1)
+
   }
   
   ngOnDestroy() {
@@ -98,10 +101,7 @@ export class CandidateRegistrationFluxComponent implements OnInit {
   }
     
   ngAfterViewInit() {
-      setTimeout(()=>{
-        this.stepper.selectedIndex = this.stepperEvent.selectedIndex; 
-      },0);
-      
+      this.cdr.detectChanges();
   }
 
   parseInt(value){
@@ -110,7 +110,6 @@ export class CandidateRegistrationFluxComponent implements OnInit {
   }
 
   selectionChanged(event: any) {
-      
       this.selectedStepIndex = event.selectedIndex;
       
       if (event.previouslySelectedIndex > event.selectedIndex) {

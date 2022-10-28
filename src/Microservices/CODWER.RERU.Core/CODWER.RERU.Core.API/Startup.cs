@@ -1,4 +1,4 @@
-using CODWER.RERU.Core.API.Config;
+﻿using CODWER.RERU.Core.API.Config;
 using CODWER.RERU.Core.Application.DependencyInjection;
 using CODWER.RERU.Core.Application.Modules.UpdateSelfAsModule;
 using CODWER.RERU.Core.Data.Persistence.Context;
@@ -24,6 +24,7 @@ using NSwag.Generation.Processors.Security;
 using RERU.Data.Persistence.Context;
 using System.Text;
 using CODWER.RERU.Core.Application.CronJobs;
+using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Module.Application.DependencyInjection;
 using Hangfire;
@@ -61,6 +62,7 @@ namespace CODWER.RERU.Core.API
             services.Configure<SmtpOptions>(Configuration.GetSection("Smtp"));
             // services.Configure<RabbitMq> (Configuration.GetSection ("MessageQueue"));
             //services.Configure<ModuleConfiguration> (Configuration.GetSection ("ERPModule"));
+            services.Configure<PlatformConfig>(Configuration.GetSection("PlatformConfig"));
             services.Configure<TenantDto>(Configuration.GetSection("CoreSettings").GetSection("Tenant"));
             services.Configure<ActiveTimeDto>(Configuration.GetSection("CoreSettings").GetSection("ActiveTime"));
 
@@ -77,6 +79,10 @@ namespace CODWER.RERU.Core.API
                 opts.Password.RequireLowercase = true;
                 opts.Password.RequireUppercase = false;
                 opts.Password.RequireDigit = true;
+
+                opts.User.AllowedUserNameCharacters =
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ĂăÎîȘșȚț";
+                opts.User.RequireUniqueEmail = true;
             })
                 .AddEntityFrameworkStores<UserManagementDbContext>()
                 .AddUserManager<UserManager<ERPIdentityUser>>()

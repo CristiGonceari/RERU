@@ -20,10 +20,10 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPosit
 
         public async Task<Unit> Handle(DeleteMySolicitedPositionCommand request, CancellationToken cancellationToken)
         {
-            var myUserProfile = await _userProfileService.GetCurrentUser();
+            var currentUserProfileId = await _userProfileService.GetCurrentUserId();
 
             var solicitedTest = await _appDbContext.SolicitedVacantPositions.FirstOrDefaultAsync(x => x.Id == request.Id);
-            solicitedTest.UserProfileId = myUserProfile.Id;
+            solicitedTest.UserProfileId = currentUserProfileId;
 
             _appDbContext.SolicitedVacantPositions.Remove(solicitedTest);
 

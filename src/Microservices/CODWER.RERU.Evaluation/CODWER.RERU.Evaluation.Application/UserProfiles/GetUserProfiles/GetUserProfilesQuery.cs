@@ -6,15 +6,15 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
 {
-    public class GetUserProfilesQuery :PaginatedQueryParameter, IRequest<PaginatedModel<UserProfileDto>>
+    public class GetUserProfilesQuery : PaginatedQueryParameter, IRequest<PaginatedModel<UserProfileDto>>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FatherName { get; set; }
         public string Email { get; set; }
         public string Idnp { get; set; }
-        public string Department { get; set; }
-        public string Role { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? RoleId { get; set; }
         public UserStatusEnum? UserStatusEnum { get; set; }
 
         public bool EventUsers { get; set; }

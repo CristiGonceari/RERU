@@ -9,6 +9,7 @@ import { saveAs } from 'file-saver';
 import { PrintModalComponent } from '@erp/shared';
 import { forkJoin } from 'rxjs';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { EnumStringTranslatorService } from 'projects/evaluation/src/app/utils/services/enum-string-translator.service';
 
 @Component({
   selector: 'app-received-table',
@@ -35,7 +36,8 @@ export class ReceivedTableComponent implements OnInit {
     private testService: TestService,
     private activatedRoute: ActivatedRoute,
     public translate: I18nService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private enumStringTranslatorService: EnumStringTranslatorService
   ) { }
 
   ngOnInit(): void {
@@ -74,6 +76,10 @@ export class ReceivedTableComponent implements OnInit {
     )
   }
 
+  translateResultValue(item){
+		return this.enumStringTranslatorService.translateTestResultValue(item);
+	}
+
   setTimeToSearch(): void {
     if (this.fromDate) {
       const date1 = new Date(this.fromDate);
@@ -107,15 +113,13 @@ export class ReceivedTableComponent implements OnInit {
     let headersDto = [
       'testTemplateName',
       'evaluatorName',
+      'evaluatorIdnp',
       'eventName',
       'testStatus',
-      'result'
+      'resultValue'
     ];
 
-    for (let i = 0; i < headersHtml.length; i++) {
-      if (i == 2) {
-        this.headersToPrint.push({ value: "evaluatorIdnp", label: "Idnp", isChecked: true })
-      }
+    for (let i = 0; i < headersHtml.length - 1; i++) {
       this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
     }
 

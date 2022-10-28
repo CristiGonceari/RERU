@@ -9,6 +9,7 @@ import { PrintModalComponent } from '@erp/shared';
 import { saveAs } from 'file-saver';
 import { forkJoin } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EnumStringTranslatorService } from 'projects/evaluation/src/app/utils/services/enum-string-translator.service';
 
 @Component({
   selector: 'app-tests-table',
@@ -30,7 +31,8 @@ export class TestsTableComponent implements OnInit {
     private testService: TestService, 
     private activatedRoute: ActivatedRoute,
 	public translate: I18nService,
-	private modalService: NgbModal
+	private modalService: NgbModal,
+	private enumStringTranslatorService: EnumStringTranslatorService
     ) { }
 
   ngOnInit(): void {
@@ -66,13 +68,20 @@ export class TestsTableComponent implements OnInit {
     )
   }
 
+  translateResultValue(item){
+	return this.enumStringTranslatorService.translateTestResultValue(item);
+}
+
   getHeaders(name: string): void {
 		this.translateData();
 		let testTable = document.getElementById('testsTable')
 		let headersHtml = testTable.getElementsByTagName('th');
-		let headersDto = ['programmedTime', 'testTemplateName', 'testStatus', 'accumulatedPercentage', 'result'];
+		let headersDto = ['programmedTime', 'testTemplateName', 'testStatus', 'accumulatedPercentage', 'minPercent', 'resultValue'];
 		for (let i=0; i<headersHtml.length; i++) {
-			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true });
+			if(i == 3){
+				this.headersToPrint[i].label = "Puncte acumulate %";
+			}
 		}
 		let printData = {
 			tableName: name,

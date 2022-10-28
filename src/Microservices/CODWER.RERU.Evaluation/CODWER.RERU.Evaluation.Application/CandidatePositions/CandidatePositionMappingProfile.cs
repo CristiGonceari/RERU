@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions;
 using CODWER.RERU.Evaluation.DataTransferObjects.PositionDiagram;
-using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using RERU.Data.Entities;
 
@@ -30,6 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions
             CreateMap<Test, TestResultDiagramDto>()
                 .ForMember(x => x.TestId, opts => opts.MapFrom(t => t.Id))
                 .ForMember(x => x.Result, opts => opts.MapFrom(t => t.ResultStatus))
+                .ForMember(x => x.ResultValue, opts => opts.MapFrom(t => t.ResultStatusValue))
                 .ForMember(x => x.PassDate, opts => opts.MapFrom(t => t.CreateDate))
                 .ForMember(x => x.Status, opts => opts.MapFrom(t => t.TestStatus));
 
@@ -37,15 +36,11 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions
                 .ForMember(x => x.TestTemplateId, opts => opts.MapFrom(e => e.TestTemplateId))
                 .ForMember(x => x.EventId, opts => opts.MapFrom(e => e.EventId));
 
-            CreateMap<EventUser, UserDiagramDto>()
-                .ForMember(x => x.UserProfileId, opts => opts.MapFrom(t => t.UserProfileId))
-                .ForMember(x => x.FullName, opts => opts.MapFrom(t => t.UserProfile.FullName));
+            CreateMap<EventUserCandidatePosition, UserDiagramDto>()
+                .ForMember(x => x.UserProfileId, opts => opts.MapFrom(t => t.EventUser.UserProfileId))
+                .ForMember(x => x.FullName, opts => opts.MapFrom(t => t.EventUser.UserProfile.FullName));
 
             CreateMap<UserProfile, UserDiagramDto>()
-                .ForMember(x => x.UserProfileId, opts => opts.MapFrom(t => t.Id))
-                .ForMember(x => x.FullName, opts => opts.MapFrom(t => t.FullName));
-
-            CreateMap<UserProfileDto, UserDiagramDto>()
                 .ForMember(x => x.UserProfileId, opts => opts.MapFrom(t => t.Id))
                 .ForMember(x => x.FullName, opts => opts.MapFrom(t => t.FullName));
 

@@ -148,12 +148,12 @@
                         </select>
                       </div>
                     </div>
-                    
                   </div>
                 </div>
 
                 <div class="text-right border-top pt-10">
-                  <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="back()"></app-button>
+                  <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
+                  </app-button>
                   <app-add-button class="btn" [value]="'button.update' | translate" (handle)="editUser()">
                   </app-add-button>
                 </div>

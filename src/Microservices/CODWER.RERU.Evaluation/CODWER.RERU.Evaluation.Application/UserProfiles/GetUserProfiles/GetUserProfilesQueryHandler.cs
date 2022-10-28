@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
@@ -29,12 +28,14 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
 
         public async Task<PaginatedModel<UserProfileDto>> Handle(GetUserProfilesQuery request, CancellationToken cancellationToken)
         {
-            var currentUser = await _userProfileService.GetCurrentUser();
+            var currentUser = await _userProfileService.GetCurrentUserProfileDto();
 
             var items = _appDbContext.UserProfiles
                 .Where(x => x.IsActive)
                 .Include(up => up.EventResponsiblePersons)
                 .Include(up => up.EventUsers)
+                .Include(up => up.Role)
+                .Include(up => up.Department)
                 .OrderBy(up => up.LastName)
                 .ThenBy(up => up.FirstName)
                 .AsQueryable();
@@ -77,14 +78,14 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
                 items = items.Where(x => x.Idnp.Contains(request.Idnp));
             }
 
-            if (!string.IsNullOrEmpty(request.Department))
+            if (request.DepartmentId.HasValue)
             {
-                items = items.Where(x => x.Department.Name.ToLower().Contains(request.Department.ToLower()));
+                items = items.Where(x => x.Department.Id == request.DepartmentId);
             }
 
-            if (!string.IsNullOrEmpty(request.Role))
+            if (request.RoleId.HasValue)
             {
-                items = items.Where(x => x.Role.Name.ToLower().Contains(request.Role.ToLower()));
+                items = items.Where(x => x.Role.Id == request.RoleId);
             }
 
             if (request.ExceptUserIds.Count>0)
@@ -112,17 +113,19 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
                 }
             }
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(items, request);
-
-            foreach (var user in paginatedModel.Items)
-            {
-                user.UserStatusEnum = user.DepartmentColaboratorId == null && user.RoleColaboratorId == null ? UserStatusEnum.Candidate : UserStatusEnum.Employee;
-            }
-
             if (request.UserStatusEnum.HasValue)
             {
-                paginatedModel.Items = paginatedModel.Items.Where(p => p.UserStatusEnum == request.UserStatusEnum);
+                if (request.UserStatusEnum == UserStatusEnum.Employee)
+                {
+                    items = items.Where(x => x.DepartmentColaboratorId != null && x.RoleColaboratorId != null);
+                }
+                else if (request.UserStatusEnum == UserStatusEnum.Candidate)
+                {
+                    items = items.Where(x => x.DepartmentColaboratorId == null || x.RoleColaboratorId == null);
+                }
             }
+
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(items, request);
 
             return paginatedModel;
         }

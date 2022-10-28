@@ -15,6 +15,7 @@
                 <th scope="col" style="width: 170px;">
                     {{'dashboard.score' | translate}} / {{'dashboard.min-score' | translate}}
                 </th>
+                <th scope="col" class="d-none">{{ 'dashboard.min-score' | translate }} %</th>
                 <th scope="col" style="width: 100px;">{{'dashboard.result' | translate}}</th>
             </tr>
         </thead>
@@ -31,7 +32,7 @@
                     <p *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</p>
                     <p *ngIf="test.result != resultEnum.NoResult">{{ test.accumulatedPercentage }}% / {{test.minPercent}}%</p>
                 </td>
-                <td>{{'statuses.' + resultEnum[test.result] | translate}}</td>
+                <td>{{ translateResultValue(test.resultValue) }}</td>
             </tr>
         </tbody>
         <tbody class="datatable-body" *ngIf="!testRowList.length">

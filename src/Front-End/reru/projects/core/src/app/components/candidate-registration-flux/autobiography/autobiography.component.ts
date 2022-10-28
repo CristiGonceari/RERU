@@ -90,7 +90,7 @@ export class AutobiographyComponent implements OnInit {
 
       if (userData.autobiographyId != 0) {
 
-        this.getUserAutobiography(this.userGeneralData.id);
+        this.getUserAutobiography(this.contractorId);
       }
       else {
         this.addOrEditAutobiographyButton = false;
@@ -158,29 +158,31 @@ export class AutobiographyComponent implements OnInit {
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.contractorId);
     }
     else{
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractorId);
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractorId, true);
     }
   }
 
-  checkRegistrationStep(stepData, stepId, success, contractorId){
+  checkRegistrationStep(stepData, stepId, success, contractorId, inProgress?){
     const datas= {
       isDone: success,
-      stepId: this.stepId
+      stepId: this.stepId,
+      inProgress: inProgress
     }
     if(stepData.length == 0){
-      this.addCandidateRegistationStep(success, stepId, contractorId);
+      this.addCandidateRegistationStep(success, stepId, contractorId, inProgress);
       this.ds.sendData(datas);
     }else{
-      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId);
+      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId, inProgress);
       this.ds.sendData(datas);
     }
   }
 
-  addCandidateRegistationStep(isDone, step, contractorId ){
+  addCandidateRegistationStep(isDone, step, contractorId, inProgress?){
     const request = {
       isDone: isDone,
       step : step,
-      contractorId: contractorId 
+      contractorId: contractorId,
+      inProgress: inProgress
     }
     this.registrationFluxService.add(request).subscribe(res => {
       this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
@@ -189,12 +191,13 @@ export class AutobiographyComponent implements OnInit {
     })
   }
 
-  updateCandidateRegistationStep(id, isDone, step, contractorId ){
+  updateCandidateRegistationStep(id, isDone, step, contractorId, inProgress?){
     const request = {
       id: id,
       isDone: isDone,
       step : step,
-      contractorId: contractorId 
+      contractorId: contractorId,
+      inProgress: inProgress
     }
     
     this.registrationFluxService.update(request).subscribe(res => {

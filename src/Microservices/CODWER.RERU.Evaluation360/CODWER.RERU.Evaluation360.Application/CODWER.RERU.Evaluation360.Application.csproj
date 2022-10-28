@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="10.1.1" />
+		<PackageReference Include="EPPlus" Version="5.8.7" />
+		<PackageReference Include="MediatR" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.10" />
+		<PackageReference Include="Minio" Version="3.1.13" />
+		<PackageReference Include="Wkhtmltopdf.NetCore" Version="3.0.2" />
+	</ItemGroup>
+
+  <ItemGroup>
+	  <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Infrastructure\CVU.ERP.Infrastructure.csproj" />
+	  <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.MessageQueue\CVU.ERP.MessageQueue.csproj" />
+	  <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Module.Application\src\CVU.ERP.Module.Application.csproj" />
+	  <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Module.Common\src\CVU.ERP.Module.Common.csproj" />
+	  <ProjectReference Include="..\..\..\Common\CODWER.Common\RERU.Data.Persistence\RERU.Data.Persistence.csproj" />
+	  <ProjectReference Include="..\CODWER.RERU.Evaluation360.DataTransferObjects\CODWER.RERU.Evaluation360.DataTransferObjects.csproj" />
+  </ItemGroup>
+
+</Project>

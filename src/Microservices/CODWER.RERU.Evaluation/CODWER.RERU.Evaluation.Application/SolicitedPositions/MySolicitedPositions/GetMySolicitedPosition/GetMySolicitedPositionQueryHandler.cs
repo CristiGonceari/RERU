@@ -24,10 +24,10 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPosit
 
         public async Task<SolicitedCandidatePositionDto> Handle(GetMySolicitedPositionQuery request, CancellationToken cancellationToken)
         {
-            var myUserProfile = await _userProfileService.GetCurrentUser();
+            var currentUserProfileId = await _userProfileService.GetCurrentUserId();
 
             var solicitedTest = await _appDbContext.SolicitedVacantPositions.FirstOrDefaultAsync(x => x.Id == request.Id);
-            solicitedTest.UserProfileId = myUserProfile.Id;
+            solicitedTest.UserProfileId = currentUserProfileId;
 
             return _mapper.Map<SolicitedCandidatePositionDto>(solicitedTest);
         }

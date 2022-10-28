@@ -24,7 +24,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent
 
         public async Task<List<TestCount>> Handle(GetMyTestsCountWithoutEventQuery request, CancellationToken cancellationToken)
         {
-            var myUserProfile = await _userProfileService.GetCurrentUser();
+            var currentUserId = await _userProfileService.GetCurrentUserId();
 
             var myTests = _appDbContext.Tests
                 .Include(t => t.TestTemplate)
@@ -33,7 +33,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
                 .Include(t => t.Event)
-                .Where(p => p.UserProfileId == myUserProfile.Id && p.Event == null && p.TestTemplate.Mode == TestTemplateModeEnum.Test)
+                .Where(p => p.UserProfileId == currentUserId && p.Event == null && p.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .AsQueryable();
 
             var dates = new List<TestCount>();

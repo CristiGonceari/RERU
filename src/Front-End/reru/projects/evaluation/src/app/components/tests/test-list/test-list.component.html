@@ -30,7 +30,7 @@
               <div class="row w-100">
                 <div class="col">
                   <erp-shared-search-input (handleSearch)="testsTable.setFilter('testName', $event)"
-                    [placeholder]="'tests.search-test' | translate" #testName></erp-shared-search-input>
+                    [placeholder]="'button.search-name' | translate" #testName></erp-shared-search-input>
                 </div>
                 <div class="col">
                   <erp-shared-search-input (handleSearch)="testsTable.setFilter('testEvent', $event)"
@@ -85,7 +85,16 @@
                     <owl-date-time #toDate></owl-date-time>
                   </div>
                 </div>
-                <div class="col-lg-2 col-12 pr-4">
+                <div class="col-lg-2 col-12">
+                  <app-search-department (filter)="testsTable.setFilter('departmentId',  $event)" #departmentId></app-search-department>
+                </div>
+              </div>
+              <div class="row w-100 mt-3">
+                
+                <div class="col-lg-2 col-12">
+                  <app-search-role (filter)="testsTable.setFilter('roleId',  $event)" #roleId></app-search-role>
+                </div>
+                <div class="col">
                   <div class="text-right">
                     <app-button (handle)="clearFields(); testsTable.resetFilters()" [value]="'button.reset' | translate"
                       class="mr-5"></app-button>

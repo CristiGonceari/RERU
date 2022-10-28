@@ -26,7 +26,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             var workSheet = package.Workbook.Worksheets.Add("Sheet1");
 
             GetHeaderContent(workSheet, data.Fields.Select(x => x.Label).ToList());
-            GetTableContent(data.Name, workSheet, _mapper.Map<List<TDestination>>(data.Items), data.Fields.Select(x => x.Value).ToList());
+            GetTableContent(workSheet, _mapper.Map<List<TDestination>>(data.Items), data.Fields.Select(x => x.Value).ToList());
 
             var streamBytesArray = package.GetAsByteArray();
 
@@ -39,7 +39,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             var workSheet = package.Workbook.Worksheets.Add("Sheet1");
 
             GetHeaderContent(workSheet, data.Fields.Select(x => x.Label).ToList());
-            GetTableContent(data.Name, workSheet, data.Items, data.Fields.Select(x => x.Value).ToList());
+            GetTableContent(workSheet, data.Items, data.Fields.Select(x => x.Value).ToList());
 
             var streamBytesArray = package.GetAsByteArray();
 
@@ -56,7 +56,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             }
         }
 
-        private void GetTableContent(string tableName, ExcelWorksheet workSheet, List<TDestination> items, List<string> fields)
+        private void GetTableContent(ExcelWorksheet workSheet, List<TDestination> items, List<string> fields)
         {
             //every Row
             for (int i = 0; i < items.Count(); i++)
@@ -67,7 +67,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                 for (int j = 0; j < fields.Count; j++)
                 {
                     var propInfo = GetPropertyInfo(objType, fields[j]);
-                    workSheet.Cells[i + 2, j + 1].Value = ParseByDataType(propInfo, items[i], tableName);
+                    workSheet.Cells[i + 2, j + 1].Value = ParseByDataType(propInfo, items[i]);
                     SetBordersStyleOnCells(workSheet, i + 2, j + 1 );
                 }
             }
@@ -77,7 +77,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
         {
             return type.GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public);
         }
-        private string ParseByDataType(PropertyInfo propInfo, object item, string tableName)
+        private string ParseByDataType(PropertyInfo propInfo, object item)
         {
             var result = propInfo.GetValue(item, null);
 
@@ -93,22 +93,28 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                     result = Convert.ToBoolean(result) ? "+" : "-";
                     break;
                 case TestResultStatusEnum:
-                    result = ParseDataByTestEnum(tableName, result);
+                    result = EnumMessages.TranslateResultStatus((TestResultStatusEnum)result);
                     break;
                 case TestStatusEnum:
-                    result = EnumMessages.EnumMessages.GetTestStatus((TestStatusEnum)result);
+                    result = EnumMessages.GetTestStatus((TestStatusEnum)result);
                     break;
                 case QuestionTypeEnum:
-                    result = EnumMessages.EnumMessages.GetQuestionType((QuestionTypeEnum)result);
+                    result = EnumMessages.GetQuestionType((QuestionTypeEnum)result);
                     break;
                 case QuestionUnitStatusEnum:
-                    result = EnumMessages.EnumMessages.GetQuestionStatus((QuestionUnitStatusEnum)result);
+                    result = EnumMessages.GetQuestionStatus((QuestionUnitStatusEnum)result);
                     break;
                 case TestTemplateModeEnum:
-                    result = EnumMessages.EnumMessages.GetTestTemplateTypeEnum((TestTemplateModeEnum)result);
+                    result = EnumMessages.GetTestTemplateTypeEnum((TestTemplateModeEnum)result);
                     break;
                 case MedicalColumnEnum:
-                    result = EnumMessages.EnumMessages.GetMedicalColumnEnum((MedicalColumnEnum)result);
+                    result = EnumMessages.GetMedicalColumnEnum((MedicalColumnEnum)result);
+                    break;
+                case TestTemplateStatusEnum:
+                    result = EnumMessages.GetTestTemplateEnum((TestTemplateStatusEnum)result);
+                    break;
+                case QualifyingTypeEnum:
+                    result = EnumMessages.GetTestTemplateQualifyingType((QualifyingTypeEnum)result);
                     break;
                 case null:
                     result = "-";
@@ -124,22 +130,6 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             worksheet.Cells[row, column].Style.Border.Right.Style = ExcelBorderStyle.Thin;
             worksheet.Cells[row, column].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
             worksheet.Column(column).Width = 24; ;
-        }
-
-        private object ParseDataByTestEnum(string tableName, object result)
-        {
-            var names = new List<string> { "Evaluări ", "Evaluări primite", "Evaluări acordate" };
-
-            if (names.Contains(tableName))
-            {
-                result = EnumMessages.EnumMessages.GetEvaluationResultStatus((TestResultStatusEnum)result);
-            }
-            else
-            {
-                result = EnumMessages.EnumMessages.GetTestResultStatus((TestResultStatusEnum)result);
-            }
-
-            return result;
         }
 
         private object ParseDataByListOfStrings(object result)

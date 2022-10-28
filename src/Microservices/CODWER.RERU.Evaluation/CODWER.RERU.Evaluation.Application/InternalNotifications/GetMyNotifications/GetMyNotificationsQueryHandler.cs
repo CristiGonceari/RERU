@@ -23,8 +23,8 @@ namespace CODWER.RERU.Evaluation.Application.InternalNotifications.GetMyNotifica
 
         public async Task<List<NotificationDto>> Handle(GetMyNotificationsQuery request, CancellationToken cancellationToken)
         {
-            var myUserProfile = await _userProfileService.GetCurrentUser();
-            var myNotifications = await _internalNotificationService.GetMyNotifications(myUserProfile.Id);
+            var currentUserProfileId = await _userProfileService.GetCurrentUserId();
+            var myNotifications = await _internalNotificationService.GetMyNotifications(currentUserProfileId);
 
             return _mapper.Map<List<NotificationDto>>(myNotifications);
         }

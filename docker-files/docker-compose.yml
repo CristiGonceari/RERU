@@ -295,6 +295,38 @@ services:
       dockerfile: ./docker-files/Dockerfile-RERU-Evaluation-FE
     volumes:
       - ./docker-settings/Evaluation-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
+      
+  reru-evaluation360:
+    hostname: localhost
+    networks:
+      - my-network
+    container_name: reru-evaluation360
+    build:
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-Evaluation360
+    environment:
+      - ASPNETCORE_URLS=http://*:8080
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__RERU=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Common;
+      - ConnectionStrings__HangfireEvaluation360=server=db;Port=5432;Username=postgres;Password=postgres;Database=Hangfire-Evaluation360;
+      - ConnectionStrings__Log=server=db;Port=5432;Username=postgres;Password=postgres;Database=RERU-Logging;
+    volumes:
+      - ./docker-settings/Evaluation360/appsettings.json:/app/appsettings.json
+    depends_on:
+      - db
+      - reru-identity-migrator
+      - reru-storage-migrator
+
+  reru-evaluation360-fe:
+    hostname: localhost
+    networks:
+      - my-network
+    container_name: reru-evaluation360-fe
+    build:
+      context: ../
+      dockerfile: ./docker-files/Dockerfile-RERU-Evaluation360-FE
+    volumes:
+      - ./docker-settings/Evaluation360-FE/appsettings.json:/usr/share/nginx/html/assets/config/appsettings.json
 
   # db:
   #   container_name: erp-sql-server

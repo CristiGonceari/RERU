@@ -48,6 +48,10 @@
     "dynamic": "Динамический",
     "default": "По умолчанию"
   },
+  "media":{
+    "invalid-type": "Неверный тип файла",
+    "file-was-deleted": "Файл был удалён"
+  },
   "files":{
     "title": "Документы",
     "files-list": "Список документов",
@@ -152,6 +156,7 @@
     "update": "Обновить",
     "reset": "Сбросить",
     "search": "Поиск",
+    "search-name": "Поиск по имени",
     "filter": "Фильтровать",
     "yes": "Да",
     "no": "Нет",
@@ -196,7 +201,8 @@
     "status": "Статус",
     "profile-photo": "Фото профиля",
     "number": "Число",
-    "npp": "Ф.И.О."
+    "npp": "Ф.И.О.",
+    "posture": "Положение"
   },
   "word": {
     "search": "Поиск по Ф.И.О. или e-mail",
@@ -243,11 +249,14 @@
     "wrong-phone": "Пожалуйста, укажите допустимый формат +37311111111",
     "available-modules": "Доступные модули",
     "idnp-length": "IDNP должно состоять из 13 цифр!",
-    "search-by-user-state": "Поиск по статусу пользователя",
+    "search-by-user-state": "Поиск по статусу",
+    "search-by-user-posture": "Поиск по положение",
     "access-mode": "Режим доступа",
     "code-length": "Код должен содержать 4 цифры!",
     "enter-code": "Введите код",
-    "verify-process": "Процесс проверки электронной почты"
+    "verify-process": "Процесс проверки электронной почты",
+    "Employee": "Сотрудник",
+    "Candidate": "Кандидат"
   },
   "user": {
     "edit-title": "Обновить Пользователя",
@@ -683,7 +692,8 @@
     "button-next":"Перейти к следующему шагу",
     "button-update":"Обновить",
     "button-add":"Добавить",
-    "button-end": "Завершыть"
+    "button-end": "Завершыть",
+    "button-save-and-next-withoud-datas": "Пройти без добавления данных"
   },
   "step":{
     "GeneralData": "Общие данные",
@@ -696,7 +706,12 @@
   },
   "step-status":{
     "done": "Завершенный",
-    "not-done": "Hезавершенный"
+    "not-done": "Hезавершенный",
+    "in-progress": "Без заполнения"
+  },
+  "step-obligation":{
+    "obligatory": "Oбязательный",
+    "optional": "По желанию"
   },
   "validations": {
     "file-is-empty": "Файл пустой!",

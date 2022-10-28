@@ -27,15 +27,15 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests
 
         public async Task<PaginatedModel<TestDto>> Handle(GetMyEvaluatedTestsQuery request, CancellationToken cancellationToken)
         {
-            var currentUser = await _userProfileService.GetCurrentUser();
+            var currentUserId = await _userProfileService.GetCurrentUserId();
 
             var myTests = _appDbContext.Tests
                 .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Event)
-                .Where(t => (t.EvaluatorId == currentUser.Id ||
+                .Where(t => (t.EvaluatorId == currentUserId ||
                              _appDbContext.EventEvaluators.Any(x =>
-                                 x.EventId == t.EventId && x.EvaluatorId == currentUser.Id)) && t.TestTemplate.Mode == TestTemplateModeEnum.Test)
+                                 x.EventId == t.EventId && x.EvaluatorId == currentUserId)) && t.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .AsQueryable();
 
             if (request.StartTime != null && request.EndTime != null)

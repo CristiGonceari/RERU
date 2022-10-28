@@ -24,7 +24,7 @@
                                 <div class="row w-100">
                                     <div class="col">
                                         <erp-shared-search-input (handleSearch)="testsTable.setFilter('testName', $event)"
-                                            [placeholder]="'tests.search-test' | translate" #testName>
+                                            [placeholder]="'button.search-name' | translate" #testName>
                                         </erp-shared-search-input>
                                     </div>
                                     <div class="col">
@@ -74,6 +74,14 @@
                                                 [value]="testsTable.dateTimeTo | dateFilter:'dd/MM/yy HH:mm'" />
                                             <owl-date-time #toDate></owl-date-time>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row w-100 mt-3">
+                                    <div class="col">
+                                        <app-search-department (filter)="testsTable.setFilter('departmentId',  $event)" #departmentId></app-search-department>
+                                    </div>
+                                    <div class="col">
+                                        <app-search-role (filter)="testsTable.setFilter('roleId',  $event)" #roleId></app-search-role>
                                     </div>
                                     <div class="col">
                                         <div class="text-right">

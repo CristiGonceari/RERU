@@ -5,14 +5,14 @@
     <table class="datatable table font-size-lg" style="overflow: visible">
         <thead class="text-uppercase text-muted">
             <tr>
-                <th scope="col">{{'locations.person' | translate}}</th>
+                <th scope="col">{{'events.name' | translate}} ({{'user-profile.npp' | translate}})</th>
                 <th scope="col">{{'login.idnp' | translate}}</th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="attachedPersons.length">
             <tr *ngFor="let item of attachedPersons">
                 <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../user-profile', item.id]">
-                    {{item.lastName}} {{item.firstName}}
+                    {{item.lastName}} {{item.firstName}} {{item.fatherName}}
                 </td>
                 <td> {{item.idnp}} </td>
             </tr>

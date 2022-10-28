@@ -24,14 +24,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.CountMyEv
 
         public async Task<List<TestCount>> Handle(CountMyEvaluatedTestsQuery request, CancellationToken cancellationToken)
         {
-            var myUserProfile = await _userProfileService.GetCurrentUser();
+            var currentUserId = await _userProfileService.GetCurrentUserId();
 
             var myTests = _appDbContext.Tests
                 .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Event)
-                .Where(t => (t.EvaluatorId == myUserProfile.Id || 
-                             _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == myUserProfile.Id)) && 
+                .Where(t => (t.EvaluatorId == currentUserId || 
+                             _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == currentUserId)) && 
                             t.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .AsQueryable();
 

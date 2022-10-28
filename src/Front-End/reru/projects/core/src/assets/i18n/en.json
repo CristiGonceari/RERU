@@ -148,6 +148,7 @@
     "update": "Update",
     "reset": "Reset",
     "search":"Search",
+    "search-name": "Search by name",
     "filter": "Filter",
     "yes": "Yes",
     "no": "No",
@@ -192,7 +193,8 @@
     "status": "Status",
     "profile-photo": "Profile Photo",
     "number" : "Number",
-    "npp": "L.F.F."
+    "npp": "L.F.F.",
+    "posture": "Posture"
   },
   "menu": {
     "menu-sections": {
@@ -235,11 +237,14 @@
     "wrong-phone": "Please provide a valid format +37311111111",
     "available-modules": "Available modules",
     "idnp-length": "IDNP should consist of 13 numbers!",
-    "search-by-user-state": "Search by user state",
+    "search-by-user-state": "Search by statut",
+    "search-by-user-posture": "Search by posture",
     "access-mode": "Access mode",
     "code-length": "Code should consist of 4 numbers!",
     "enter-code": "Enter the code",
-    "verify-process": "Email verification process"
+    "verify-process": "Email verification process",
+    "Employee": "Employee",
+    "Candidate": "Candidate"
   },
   "user": {
     "edit-title": "Edit User",
@@ -512,6 +517,10 @@
     "department-data": "Enter the department details and confirm",
     "department-details": "Department details"
   },
+  "media":{
+    "invalid-type": "Invalid file type",
+    "file-was-deleted": "File was deleted"
+  },
   "user-roles": {
     "overview": "Overview",
     "help": "Help",
@@ -682,7 +691,8 @@
     "button-next":"Next Step",
     "button-update":"Update",
     "button-add":"Add",
-    "button-end": "Complete"
+    "button-end": "Complete",
+    "button-save-and-next-withoud-datas": "Pass without adding data"
   },
   "step":{
     "GeneralData": "General Data",
@@ -695,7 +705,12 @@
   },
   "step-status":{
     "done": "Completed",
-    "not-done": "Uncompleted"
+    "not-done": "Uncompleted",
+    "in-progress": "Without completing"
+  },
+  "step-obligation":{
+    "obligatory": "Obligatory",
+    "optional": "Optional"
   },
   "validations": {
     "file-is-empty": "The file is empty!",

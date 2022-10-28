@@ -92,6 +92,7 @@
         public static string ONLY_IN_PROGRESS_TESTS_CAN_BE_TERMINATED = "03001502";
         public static string REACHED_ERRORS_LIMIT = "03001503";
         public static string INVALID_TEST_START_TIME = "03001504";
+        public static string INVALID_SELECTED_COLUMNS = "03001505";
 
         //test questions
         public static string INVALID_TEST_QUESTION = "03001601";
@@ -132,7 +133,7 @@
         public static string ONLY_INACTIVE_TEST_CAN_BE_DELETED = "03001724";
         public static string EMPTY_FORMULA = "03001725";
         public static string ONLY_ACTIVE_TEST_CAN_BE_ADDED_TO_SOLICITED = "03001726";
-
+        public static string CANT_DELETE_TEST_TEMPLATE_IN_USE = "03001727";
 
         //test template question category 
         public static string QUESTION_COUNT_REACHED_THE_LIMIT = "03001801";

@@ -12,6 +12,7 @@ namespace RERU.Data.Entities
             Tests = new HashSet<Test>();
             TestTemplateQuestionCategories = new HashSet<TestTemplateQuestionCategory>();
             EventTestTemplates = new HashSet<EventTestTemplate>();
+            TestTemplateModuleRoles = new HashSet<TestTemplateModuleRole>();
         }
 
         public string Name { get; set; }
@@ -20,15 +21,18 @@ namespace RERU.Data.Entities
         public int MinPercent { get; set; }
         public int Duration { get; set; }
         public TestTemplateSettings Settings { get; set; }
-
+                
         public TestTemplateStatusEnum Status { get; set; }
         public TestTemplateModeEnum Mode { get; set; }
         public SequenceEnum CategoriesSequence { get; set; }
+
+        public QualifyingTypeEnum? QualifyingType { get; set; }
 
         public Guid PdfFileId { get; set; }
 
         public virtual ICollection<Test> Tests { get; set; }
         public virtual ICollection<TestTemplateQuestionCategory> TestTemplateQuestionCategories { get; set; }
         public virtual ICollection<EventTestTemplate> EventTestTemplates { get; set; }
+        public virtual ICollection<TestTemplateModuleRole> TestTemplateModuleRoles { get; set; }
     }
 }

@@ -22,7 +22,7 @@
             <div class="card-header border-0 mt-5 pr-5" style="min-height: 100%;">
               <div class="row w-100">
                 <div class="col">
-									<erp-shared-search-input (handleSearch)="testTable.setFilter('name', $event)" [placeholder]="'tests.search-test' | translate" #templateName></erp-shared-search-input>
+									<erp-shared-search-input (handleSearch)="testTable.setFilter('name', $event)" [placeholder]="'button.search-name' | translate" #templateName></erp-shared-search-input>
 							  </div>
                 <div class="col">
 									<erp-shared-search-input (handleSearch)="testTable.setFilter('eventName', $event)" [placeholder]="'events.search-event' | translate" #eventName></erp-shared-search-input>
@@ -32,6 +32,9 @@
                 </div>
                 <div class="col">
                   <app-search-test-mode (filter)="testTable.setFilter('mode', $event)" #mode></app-search-test-mode>
+                </div>
+                <div class="col">
+                  <app-search-qualifying-type (filter)="testTable.setFilter('qualifyingType', $event)" #qualifyingType></app-search-qualifying-type>
                 </div>
                 <div class="col text-center">
                   <app-button (handle)="clearFields(); testTable.resetFilters()" [value]="'button.reset' | translate"></app-button>

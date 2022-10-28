@@ -16,6 +16,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetEvaluations
         public TestResultStatusEnum? ResultStatus { get; set; }
         public string LocationKeyword { get; set; }
         public string EventName { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? RoleId { get; set; }
         public DateTime? ProgrammedTimeFrom { get; set; }
         public DateTime? ProgrammedTimeTo { get; set; }
     }

@@ -84,6 +84,11 @@ stages:
                       echo "##vso[task.setvariable variable=BuildEvaluation]True"
                     }
 
+                  if ($name -like "src/Microservices/CODWER.RERU.Evaluation360/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildEvaluation360]True"
+                    }
+
                   if ($name -like "src/Front-End/reru/projects/core/*" -or $override -eq 'True')
                     {
                       echo "##vso[task.setvariable variable=BuildCoreFe]True"
@@ -104,9 +109,15 @@ stages:
                       echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
                     }
 
+                  if ($name -like "src/Front-End/reru/projects/evaluation360/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildEvaluation360FE]True"
+                    }
+
                   if ($name -like "src/Front-End/reru/projects/erp-shared/*" -or $override -eq 'True')
                     {
                       echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
+                      echo "##vso[task.setvariable variable=BuildEvaluation360FE]True"
                       echo "##vso[task.setvariable variable=BuildPersonalFE]True"
                       echo "##vso[task.setvariable variable=BuildCoreFe]True"
                       echo "##vso[task.setvariable variable=BuildLoggingFe]True"
@@ -116,6 +127,7 @@ stages:
                     {
                       echo "##vso[task.setvariable variable=BuildCore]True"
                       echo "##vso[task.setvariable variable=BuildEvaluation]True"
+                      echo "##vso[task.setvariable variable=BuildEvaluation360]True"
                       echo "##vso[task.setvariable variable=BuildPersonal]True"
                       echo "##vso[task.setvariable variable=BuildLogging]True"
 
@@ -126,6 +138,7 @@ stages:
                       echo "##vso[task.setvariable variable=BuildInternalGateway]True"
                     }
 
+<<<<<<< HEAD
                       # echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
                       # echo "##vso[task.setvariable variable=BuildPersonalFE]True"
                       # echo "##vso[task.setvariable variable=BuildCoreFe]True"
@@ -141,6 +154,19 @@ stages:
                       # echo "##vso[task.setvariable variable=BuildIdentityNew]True"
                       # echo "##vso[task.setvariable variable=BuildPublicGateway]True"
                       # echo "##vso[task.setvariable variable=BuildInternalGateway]True"
+=======
+                      echo "##vso[task.setvariable variable=BuildCore]True"
+                      echo "##vso[task.setvariable variable=BuildEvaluation]True"
+                      echo "##vso[task.setvariable variable=BuildEvaluation360]True"
+                      echo "##vso[task.setvariable variable=BuildPersonal]True"
+                      echo "##vso[task.setvariable variable=BuildLogging]True"
+
+                      echo "##vso[task.setvariable variable=BuildIdentityMigrator]True"
+                      echo "##vso[task.setvariable variable=BuildStorageMigrator]True"
+                      echo "##vso[task.setvariable variable=BuildIdentityNew]True"
+                      echo "##vso[task.setvariable variable=BuildPublicGateway]True"
+                      echo "##vso[task.setvariable variable=BuildInternalGateway]True"
+>>>>>>> develop
                 }
 
           - task: CmdLine@2
@@ -510,6 +536,63 @@ stages:
             inputs:
               script: "docker system prune -a --force"
             condition: and(succeeded(), eq(variables['BuildEvaluation'], 'True'))
+
+            
+          - task: Docker@2
+            displayName: Build Evaluation360 front end  image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-evaluation360-fe"
+              Dockerfile: "docker-files/Dockerfile-RERU-Evaluation360-FE"
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildEvaluation360FE'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Evaluation360 front end image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-evaluation360-fe"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+            condition: and(succeeded(), eq(variables['BuildEvaluation360FE'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildEvaluation360FE'], 'True'))
+              
+          - task: Docker@2
+            displayName: Build Evaluation360 back end image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-evaluation360"
+              Dockerfile: "docker-files/Dockerfile-RERU-Evaluation360"
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildEvaluation360'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Evaluation360 back end image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-evaluation360"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+            condition: and(succeeded(), eq(variables['BuildEvaluation360'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildEvaluation360'], 'True'))
 
   - stage: DeployDev
     displayName: Deploy to DEV

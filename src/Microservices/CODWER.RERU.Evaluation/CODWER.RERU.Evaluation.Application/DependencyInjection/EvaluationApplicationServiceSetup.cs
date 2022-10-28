@@ -1,11 +1,11 @@
-﻿using CODWER.RERU.Evaluation.Application.Models;
-using CODWER.RERU.Evaluation.Application.Permissions;
+﻿using CODWER.RERU.Evaluation.Application.Permissions;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices;
 using CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices.Implementations;
 using CODWER.RERU.Evaluation.Application.Services.GetPdfServices;
 using CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementations;
 using CODWER.RERU.Evaluation.Application.Services.Implementations;
+using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Module.Common.Providers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +38,8 @@ namespace CODWER.RERU.Evaluation.Application.DependencyInjection
                 .AddScoped(typeof(IAssignDocumentsAndEventsToPosition), typeof(AssignDocumentsAndEventsToPosition))
                 .AddScoped(typeof(ICandidatePositionService), typeof(CandidatePositionService))
                 .AddScoped(typeof(ICandidatePositionNotificationService), typeof(CandidatePositionNotificationService))
-                .AddScoped(typeof(IAssignRolesToArticle), typeof(AssignRolesToArticleService))
+                .AddScoped(typeof(IAssignRoleService), typeof(AssignRoleService))
+                .AddScoped(typeof(ICurrentModuleService), typeof(CurrentModuleService))
                 .AddScoped(typeof(PlatformConfig));
         }
     }

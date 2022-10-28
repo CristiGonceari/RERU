@@ -26,7 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetEvaluations
 
         public async Task<PaginatedModel<TestDto>> Handle(GetEvaluationsQuery request, CancellationToken cancellationToken)
         {
-            var currentUser = await _userProfileService.GetCurrentUser();
+            var currentUser = await _userProfileService.GetCurrentUserProfileDto();
 
             var filterData = new TestFiltersDto
             {
@@ -39,7 +39,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetEvaluations
                 EventName = request.EventName,
                 ProgrammedTimeFrom = request.ProgrammedTimeFrom,
                 ProgrammedTimeTo = request.ProgrammedTimeTo,
-                EvaluatorName = request.EvaluatorName
+                EvaluatorName = request.EvaluatorName,
+                DepartmentId = request.DepartmentId,
+                RoleId = request.RoleId
             };
 
             var tests = GetAndFilterTests.Filter(_appDbContext, filterData, currentUser);

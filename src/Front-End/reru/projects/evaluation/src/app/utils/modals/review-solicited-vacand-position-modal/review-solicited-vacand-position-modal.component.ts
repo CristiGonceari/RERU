@@ -3,6 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { SolicitedVacantPositionEmailMessage } from '../../enums/solicited-vacant-position-email.enum';
 import { SolicitedVacantPositionEmailMessageService } from '../../services/solicited-vacant-position-email-message/solicited-vacant-position-email-message.service';
+import { SolicitedVacantPositionUserFileService } from '../../services/solicited-vacant-position-user-file/solicited-vacant-position-user-file.service';
 
 @Component({
   selector: 'app-review-solicited-vacand-position-modal',
@@ -13,6 +14,8 @@ export class ReviewSolicitedVacandPositionModalComponent implements OnInit {
 
   userEmail: string;
   userName: string;
+  solicitedTestId;
+  isSolicitedPositionFilesCompleted: boolean;
 
   messageEnum = SolicitedVacantPositionEmailMessage;
 
@@ -32,11 +35,24 @@ export class ReviewSolicitedVacandPositionModalComponent implements OnInit {
 
   constructor(
     private activeModal: NgbActiveModal,
-    private solicitedVacantPositionEmailMessageService: SolicitedVacantPositionEmailMessageService
+    private solicitedVacantPositionEmailMessageService: SolicitedVacantPositionEmailMessageService,
+    private solicitedVacantPositionUserFileService: SolicitedVacantPositionUserFileService
   ) { }
 
   ngOnInit(): void {
-    this.getEmailMessage(this.messageEnum.Approve)
+    this.getCheckedPositionFiles(this.solicitedTestId);
+  }
+
+  getCheckedPositionFiles(solicitedTestId){
+    this.solicitedVacantPositionUserFileService.getCheckedFiles({id : solicitedTestId}).subscribe((res) => {
+      const response = res.data;
+      this.isSolicitedPositionFilesCompleted = JSON.parse(response.toLowerCase());
+      if(!this.isSolicitedPositionFilesCompleted){
+        this.getEmailMessage(this.messageEnum.Reject);
+      }else{
+        this.getEmailMessage(this.messageEnum.Approve);
+      }
+    })
   }
 
   getEmailMessage(type){

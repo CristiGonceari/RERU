@@ -6,6 +6,7 @@ import { CandidatePositionService } from '../../../utils/services/candidate-posi
 import { PrintTemplateService } from '../../../utils/services/print-template/print-template.service';
 import { saveAs } from 'file-saver';
 import { MedicalColumnEnum } from '../../../utils/enums/medical-column.enum';
+import { EnumStringTranslatorService } from '../../../utils/services/enum-string-translator.service';
 
 @Component({
   selector: 'app-positions-diagram',
@@ -27,7 +28,8 @@ export class PositionsDiagramComponent implements OnInit {
   constructor(
     private positionService: CandidatePositionService,
     private activatedRoute: ActivatedRoute,
-    private printService: PrintTemplateService
+    private printService: PrintTemplateService,
+    private enumStringTranslatorService: EnumStringTranslatorService
   ) { }
 
   ngOnInit(): void {
@@ -54,6 +56,10 @@ export class PositionsDiagramComponent implements OnInit {
       }
     })
   }
+
+  translateResultValue(item){
+		return this.enumStringTranslatorService.translateTestResultValue(item);
+	}
 
   printPositionDiagram() {
     this.printService.getPositionDiagramPdf(this.positionId).subscribe((response: any) => {

@@ -32,7 +32,6 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                 .FirstAsync(x => x.Id == request.TestId);
 
             var totalCount = test.TestTemplate.QuestionCount;
-
             var testTemplateQuestionCategoriesToUse = test.TestTemplate.TestTemplateQuestionCategories;
             var categoriesCount = testTemplateQuestionCategoriesToUse.Count;
 
@@ -42,6 +41,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                 .ToListAsync();
 
             var usedInTestsQuestions = new List<int>();
+
             if (allUsersTests.Count > 1)
             {
                 allUsersTests.Remove(test);
@@ -49,21 +49,17 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
             }
 
             var index = 1;
-            int questionsPerCategory = 0;
+            var questionsPerCategory = 0;
             var remainsCategoriesCount = categoriesCount;
 
-            if (test.TestTemplate.CategoriesSequence == SequenceEnum.Strict)
-            {
-                testTemplateQuestionCategoriesToUse = testTemplateQuestionCategoriesToUse.OrderBy(x => x.CategoryIndex).ToList();
-            }
-            else
-            {
-                testTemplateQuestionCategoriesToUse = testTemplateQuestionCategoriesToUse.OrderBy(x => Guid.NewGuid()).ToList();
-            }
+            testTemplateQuestionCategoriesToUse = test.TestTemplate.CategoriesSequence == SequenceEnum.Strict 
+                ? testTemplateQuestionCategoriesToUse.OrderBy(x => x.CategoryIndex).ToList() 
+                : testTemplateQuestionCategoriesToUse.OrderBy(x => Guid.NewGuid()).ToList();
 
             if (testTemplateQuestionCategoriesToUse.Any(x => x.QuestionCount == 0))
             {
-                questionsPerCategory = (totalCount - testTemplateQuestionCategoriesToUse.Where(x => x.QuestionCount.HasValue).Sum(x => x.QuestionCount.Value)) / testTemplateQuestionCategoriesToUse.Where(x => !x.QuestionCount.HasValue).Count();
+                questionsPerCategory = (totalCount - testTemplateQuestionCategoriesToUse.Where(x => x.QuestionCount.HasValue).Sum(x => x.QuestionCount.Value)) 
+                                       / testTemplateQuestionCategoriesToUse.Count(x => !x.QuestionCount.HasValue);
             }
 
             foreach (var category in testTemplateQuestionCategoriesToUse)
@@ -77,7 +73,8 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                 {
                     if (remainsCategoriesCount == 1)
                     {
-                        categoryQuestionsCount = questionsPerCategory + (totalCount - testTemplateQuestionCategoriesToUse.Where(x => x.QuestionCount.HasValue).Sum(x => x.QuestionCount.Value) - testTemplateQuestionCategoriesToUse.Where(x => !x.QuestionCount.HasValue).Count() * questionsPerCategory);
+                        categoryQuestionsCount = 
+                            questionsPerCategory + (totalCount - GetTestTemplateQuestionCountSumValue(testTemplateQuestionCategoriesToUse) - GetTestTemplateQuestionCountWithoutValue(testTemplateQuestionCategoriesToUse) * questionsPerCategory);
                     }
                     else
                     {
@@ -142,6 +139,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                 if (usedInTestsQuestions.Count > 0)
                 {
                     var usedQuestionsThisCategory = usedInTestsQuestions.Intersect(questionIds).ToList();
+
                     if (usedQuestionsThisCategory.Count > 0)
                     {
                         if (questionIds.Count - usedQuestionsThisCategory.Count < questionCount)
@@ -190,5 +188,12 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
             var index = _random.Next(0, input.Count);
             return input[index];
         }
+
+        private int GetTestTemplateQuestionCountSumValue(ICollection<TestTemplateQuestionCategory> list)
+            => list.Where(x => x.QuestionCount.HasValue)
+                .Sum(x => x.QuestionCount.Value);
+
+        private int GetTestTemplateQuestionCountWithoutValue(ICollection<TestTemplateQuestionCategory> list)
+            => list.Count(x => !x.QuestionCount.HasValue);
     }
 }

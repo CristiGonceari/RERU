@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.ModulePrefixes;
 
 namespace CODWER.RERU.Evaluation.Application.Tests
 {
@@ -16,8 +17,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .Include(t => t.TestTemplate)
                 .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
+                    .ThenInclude(x => x.Department)
+                .Include(x => x.UserProfile)
+                    .ThenInclude(x => x.Role)
                 .Include(t => t.Evaluator)
                 .Include(t => t.Location)
+                .Include(t => t.TestTemplate)
+                    .ThenInclude(x => x.TestTemplateModuleRoles)
                 .Include(t => t.Event).ThenInclude(l => l.EventLocations).ThenInclude(l => l.Location)
                 .OrderByDescending(x => x.CreateDate)
                 .Select(t => new Test
@@ -33,6 +39,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                     EvaluatorId = t.EvaluatorId,
                     EventId = t.EventId,
                     ResultStatus = t.ResultStatus,
+                    RecommendedFor = t.RecommendedFor,
+                    NotRecommendedFor = t.NotRecommendedFor,
                     TestStatus = t.TestStatus,
                     ProgrammedTime = t.ProgrammedTime,
                     EndTime = t.EndTime,
@@ -41,17 +49,32 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 })
                 .AsQueryable();
 
-            if (currentUser.AccessModeEnum == AccessModeEnum.CurrentDepartment || currentUser.AccessModeEnum == null)
+            var currentModuleId = appDbContext.GetModuleIdByPrefix(ModulePrefix.Evaluation);
+
+            var currentUserProfile = appDbContext.UserProfiles
+                .Include(x => x.ModuleRoles)
+                .ThenInclude(x => x.ModuleRole)
+                .FirstOrDefault(x => x.Id == currentUser.Id);
+
+            var userCurrentRole = currentUserProfile.ModuleRoles.FirstOrDefault(x => x.ModuleRole.ModuleId == currentModuleId);
+
+            if (currentUserProfile.ModuleRoles.Contains(userCurrentRole))
             {
-                tests = tests.Where(x => x.UserProfile.DepartmentColaboratorId == currentUser.DepartmentColaboratorId);
+                tests = tests.Where(x => x.TestTemplate.TestTemplateModuleRoles.Select(x => x.ModuleRole).Contains(userCurrentRole.ModuleRole) || !x.TestTemplate.TestTemplateModuleRoles.Any());
             }
-            else if (currentUser.AccessModeEnum == AccessModeEnum.OnlyCandidates)
+
+            switch (currentUser.AccessModeEnum)
             {
-                tests = tests.Where(x => x.UserProfile.DepartmentColaboratorId == null && x.UserProfile.RoleColaboratorId == null);
-            }
-            else if (currentUser.AccessModeEnum == AccessModeEnum.AllDepartments)
-            {
-                tests = tests.Where(x => x.UserProfile.DepartmentColaboratorId != null);
+                case AccessModeEnum.CurrentDepartment:
+                case null:
+                    tests = tests.Where(x => x.UserProfile.DepartmentColaboratorId == currentUser.DepartmentColaboratorId);
+                    break;
+                case AccessModeEnum.OnlyCandidates:
+                    tests = tests.Where(x => x.UserProfile.DepartmentColaboratorId == null && x.UserProfile.RoleColaboratorId == null);
+                    break;
+                case AccessModeEnum.AllDepartments:
+                    tests = tests.Where(x => x.UserProfile.DepartmentColaboratorId != null);
+                    break;
             }
 
             if (!string.IsNullOrWhiteSpace(request.TestTemplateName))
@@ -115,6 +138,16 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             if (request.ProgrammedTimeTo.HasValue)
             {
                 tests = tests.Where(x => x.ProgrammedTime <= request.ProgrammedTimeTo);
+            }
+
+            if (request.DepartmentId.HasValue)
+            {
+                tests = tests.Where(x => x.UserProfile.Department.Id == request.DepartmentId);
+            }
+
+            if (request.RoleId.HasValue)
+            {
+                tests = tests.Where(x => x.UserProfile.Role.Id == request.RoleId);
             }
 
             return tests;

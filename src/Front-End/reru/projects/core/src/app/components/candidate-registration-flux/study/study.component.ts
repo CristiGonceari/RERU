@@ -37,6 +37,7 @@ export class StudyComponent implements OnInit {
   studyForm: FormGroup;
   languageForm: FormGroup;
   recommendationForm: FormGroup;
+  panelOpenState:boolean = true;
 
   studyTypes: SelectItem[];
   focus$: Subject<string>[] = [new Subject<string>()];
@@ -285,13 +286,13 @@ export class StudyComponent implements OnInit {
     return this.fb.group({
       id: this.fb.control((study && study.id) || null, []),
       institution: this.fb.control((study && study.institution) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      institutionAddress: this.fb.control((study && study.institutionAddress) ||  null, [Validators.required]),
+      institutionAddress: this.fb.control((study && study.institutionAddress) ||  null),
       studyTypeId: this.fb.control((study && study.studyTypeId) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       studyFrequency: this.fb.control((study && study.studyFrequency) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       faculty: this.fb.control((study && study.faculty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       specialty: this.fb.control((study && study.specialty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      yearOfAdmission: this.fb.control((study && study.yearOfAdmission) || null, [Validators.required]),
-      graduationYear: this.fb.control((study && study.graduationYear) || null, [Validators.required]),
+      yearOfAdmission: this.fb.control((study && study.yearOfAdmission) || null),
+      graduationYear: this.fb.control((study && study.graduationYear) || null),
       contractorId: this.fb.control(contractorId || null, [])
     });
   }

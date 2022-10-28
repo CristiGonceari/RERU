@@ -8,6 +8,7 @@ using CVU.ERP.Common.DataTransferObjects.Files;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 using Wkhtmltopdf.NetCore;
 
@@ -62,7 +63,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
                                     <th colspan=""2"" style=""border: 1px solid black; border-collapse: collapse; background-color: #1f3864; color: white; height: 30px;"">Numărul de întrebări din categorie</th>
                                 </tr>
                                 <tr>
-                                    <th colspan=""2"" style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;""><b>{testCategory.QuestionCount}</b> din <b>{testCategory.QuestionCategory.QuestionUnits.Count}</b>, oridnea - {EnumMessages.EnumMessages.GetQuestionSequence(testCategory.SequenceType)}</th>
+                                    <th colspan=""2"" style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;""><b>{testCategory.QuestionCount}</b> din <b>{testCategory.QuestionCategory.QuestionUnits.Count}</b>, oridnea - {EnumMessages.GetQuestionSequence(testCategory.SequenceType)}</th>
                                 </tr>
                                 <tr>
                                     <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; background-color: #1f3864; color: white; height: 30px;"">Lista de întrebări</th>
@@ -75,7 +76,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetPdfServices.Implementat
                 {
                     content += $@"<tr>
                                 <th style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px; max-width: 500px;"">{question.Question}</th>
-                                <th style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;"">{EnumMessages.EnumMessages.GetQuestionType(question.QuestionType)}</th>
+                                <th style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;"">{EnumMessages.GetQuestionType(question.QuestionType)}</th>
                             </tr> ";
                 }
 

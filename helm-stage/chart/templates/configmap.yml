@@ -49,6 +49,21 @@ data:
           "DownstreamScheme": "http",
           "DownstreamHostAndPorts": [
             {
+              "Host": "reru-evaluation360-service",
+              "Port": 8080
+            }
+          ],
+          "UpstreamPathTemplate": "/ms/reru-evaluation360/api/{all}"
+        },
+
+        {
+          "HttpHandlerOptions": {
+            "UseTracing": true
+          },
+          "DownstreamPathTemplate": "/api/{all}",
+          "DownstreamScheme": "http",
+          "DownstreamHostAndPorts": [
+            {
               "Host": "reru-evaluation-service",
               "Port": 8080
             }
@@ -117,6 +132,21 @@ data:
           "UpstreamPathTemplate": "/reru-personal{everything}"
         },
 
+        {
+          "HttpHandlerOptions": {
+            "UseTracing": true
+          },
+          "DownstreamPathTemplate": "/{everything}",
+          "DownstreamScheme": "http",
+          "DownstreamHostAndPorts": [
+            {
+              "Host": "reru-evaluation360-fe-service",
+              "Port": 8080
+            }
+          ],
+          "UpstreamPathTemplate": "/reru-evaluation360{everything}"
+        },
+        
         {
           "HttpHandlerOptions": {
             "UseTracing": true
@@ -250,6 +280,21 @@ data:
             }
           ],
           "UpstreamPathTemplate": "/reru-evaluation/api/{all}"
+        },
+        {
+          "HttpHandlerOptions": {
+            "UseTracing": true
+          },
+          "DownstreamPathTemplate": "/internal/api/{all}",
+
+          "DownstreamScheme": "http",
+          "DownstreamHostAndPorts": [
+            {
+              "Host": "reru-evaluation360-service",
+              "Port": 8080
+            }
+          ],
+          "UpstreamPathTemplate": "/reru-evaluation360/api/{all}"
         }
       ]
     }
@@ -275,6 +320,9 @@ data:
             "Name": "evaluation"
           },
           {
+            "Name": "evaluation360"
+          },
+          {
             "Name": "logging"
           }
         ],
@@ -283,7 +331,7 @@ data:
             "ClientId": "RERU-Web-client",
             "ClientName": "RERU web client",
             "AllowedGrantTypes": ["implicit"],
-            "AllowedScopes": ["openid", "core", "personal", "evaluation", "logging"],
+            "AllowedScopes": ["openid", "core", "personal", "evaluation", "evaluation360", "logging"],
             "RedirectUris": ["http://reru-stage.codwer.com/#/auth-callback#"],
             "PostLogoutRedirectUris": ["http://reru-stage.codwer.com/"],
             "AllowedCorsOrigins": ["http://reru-stage.codwer.com"],
@@ -363,6 +411,9 @@ data:
           "ActiveTime": {
             "TokenLifetime": "0.00:05:00"
           }
+        },
+      "PlatformConfig": {
+          "BaseUrl": "http://reru-stage.codwer.com"  
         }
     }
 
@@ -420,8 +471,83 @@ data:
           "CoreClient": {
             "BaseUrl": "http://reru-internal-gateway-service:8080/reru-core/api"
           },
+          "Evaluation360Client": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-evaluation360/api"
+          },
           "EvaluationClient": {
             "BaseUrl": "http://reru-internal-gateway-service:8080/reru-evaluation/api"
+          },
+          "PersonalClient": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-personal/api"
+          },
+          "LoggingClient": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-logging/api"
+          }
+        },
+      "PlatformConfig": {
+          "BaseUrl": "http://reru-stage.codwer.com"  
+        }
+    }
+
+reru_evaluation360.appsettings.json: | 
+    {
+       "Logging": {
+          "IncludeScopes": false,
+          "LogLevel": {
+            "Default": "Debug",
+            "System": "Information",
+            "Microsoft": "Information"
+          }
+        },
+        "Minio": {
+          "endpoint": "reru-app-demo-stage-minio:9000",
+          "accessKey": "minioaccesskey",
+          "secretKey": "miniosecretkey"
+        },
+        "SecurityKey": "TESTSECURITYKEY2018",
+        "Smtp": {
+          "FromName" : "Evaluare MAI",
+          "From": "donotreply-dev@codwer.com",
+          "EnableSsl": false,
+          "Host": "smtp.office365.com",
+          "Port": 587,
+          "UserName": "donotreply-dev@codwer.com",
+          "Password": "Zun94569",
+          "RequiresAuthentication": true,
+          "UseDefaultCredentials": false,
+          "SystemErrorRecipients": "andrian.hubencu@codwer.com"
+        },
+      "TokenProviderOptions": {
+          "Issuer": "TemplateServer",
+          "Audience": "http://localhost:43991/"
+        },
+      "AllowedHosts": "*",
+      "MessageQueue": {
+          "Hostname": "rabbitmq",
+          "QueueName": "MessageQueue",
+          "UserName": "user",
+          "Password": "password"
+        },
+      "EPPlus": {
+          "ExcelPackage": {
+            "LicenseContext": "Noncommercial" //The license context used
+          }
+        },
+        "Module": {
+          "Name": "Evaluation360Module",
+          "UsesAuthentication": true,
+          "Authentication": {
+            "Authority":"http://reru-identity-new-service:8080/ms/reru-identity-new",
+            "RequireHttpsMetadata": false
+          },
+          "CoreClient": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-core/api"
+          },
+          "EvaluationClient": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-evaluation/api"
+          },
+          "Evaluation360Client": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-evaluation360/api"
           },
           "PersonalClient": {
             "BaseUrl": "http://reru-internal-gateway-service:8080/reru-personal/api"
@@ -457,6 +583,9 @@ data:
           },
           "EvaluationClient": {
             "BaseUrl": "http://reru-internal-gateway-service:8080/reru-evaluation/api"
+          },
+          "Evaluation360Client": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-evaluation360/api"
           },
           "PersonalClient": {
             "BaseUrl": "http://reru-internal-gateway-service:8080/reru-personal/api"
@@ -522,6 +651,9 @@ data:
           "EvaluationClient": {
             "BaseUrl": "http://reru-internal-gateway-service:8080/reru-evaluation/api"
           },
+          "Evaluation360Client": {
+            "BaseUrl": "http://reru-internal-gateway-service:8080/reru-evaluation360/api"
+          },
           "PersonalClient": {
             "BaseUrl": "http://reru-internal-gateway-service:8080/reru-personal/api"
           },
@@ -577,6 +709,18 @@ data:
         "SERVER_URL": "http://reru-stage.codwer.com/ms/reru-evaluation",
         "CORE_URL": "http://reru-stage.codwer.com/ms/reru-core",
         "APP_BASE_URL": "http://reru-stage.codwer.com/reru-evaluation/#",
+        "production": true
+    }
+
+  reru_evaluation360_fe.appsettings.json: |
+    {
+      	"IDENTITY_AUTHORITY": "http://reru-stage.codwer.com/ms/reru-identity-new",
+        "IDENTITY_AUTHORITY_REDIRECT_URI": "http://reru-stage.codwer.com/#/auth-callback#",
+        "MODULE_SCOPE": "evaluation360",
+        "CLIENT_ID": "RERU-Web-client",
+        "SERVER_URL": "http://reru-stage.codwer.com/ms/reru-evaluation360",
+        "CORE_URL": "http://reru-stage.codwer.com/ms/reru-core",
+        "APP_BASE_URL": "http://reru-stage.codwer.com/reru-evaluation360/#",
         "production": true
     }
 

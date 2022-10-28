@@ -10,9 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.References.GetAddTestProcesses;
+using CODWER.RERU.Evaluation.Application.References.GetDepartmentsValue;
 using CODWER.RERU.Evaluation.Application.References.GetEvaluationRoles;
 using CODWER.RERU.Evaluation.Application.References.GetEventLocationValue;
 using CODWER.RERU.Evaluation.Application.References.GetRequiredDocumentsValue;
+using CODWER.RERU.Evaluation.Application.References.GetRolesValue;
 using CODWER.RERU.Evaluation.DataTransferObjects.BulkProcesses;
 using CODWER.RERU.Evaluation.DataTransferObjects.Locations;
 using CVU.ERP.Module.Application.ImportProcesses;
@@ -86,6 +88,14 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<List<SelectItem>> GetTestResults()
         {
             var items = EnumConverter<TestResultStatusEnum>.SelectValues;
+
+            return items;
+        }
+
+        [HttpGet("qualifying-results/select-values")]
+        public async Task<List<SelectItem>> GetQualifyingResults()
+        {
+            var items = EnumConverter<QualifyingTypeEnum>.SelectValues;
 
             return items;
         }
@@ -184,6 +194,22 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<List<SelectItem>> GetArticleRoles()
         {
             var query = new GetEvaluationRolesQuery();
+
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("departments/select-values")]
+        public async Task<List<SelectItem>> GetDepartments()
+        {
+            var query = new GetDepartmentsValuesQuery();
+
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("roles/select-values")]
+        public async Task<List<SelectItem>> GetRoles()
+        {
+            var query = new GetRolesValuesQuery();
 
             return await Mediator.Send(query);
         }

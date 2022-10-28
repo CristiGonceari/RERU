@@ -383,5 +383,6 @@ export class PerformingEvaluationComponent implements OnInit {
   submitTest() {
     const modalRef = this.modalService.open(EvaluationResultModalComponent, { centered: true, size: 'lg' });
     modalRef.componentInstance.testId = this.testId;
+    modalRef.componentInstance.testTemplateId = this.testDto.testTemplateId;
   }
 }

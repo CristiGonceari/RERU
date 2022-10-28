@@ -11,6 +11,7 @@ export class TestTemplateListComponent {
   @ViewChild('templateName') templateName: any;
   @ViewChild('eventName') eventName: any;
   @ViewChild('mode') mode: any;
+  @ViewChild('qualifyingType') qualifyingType: any;
 
   constructor() { }
 
@@ -24,6 +25,7 @@ export class TestTemplateListComponent {
     this.eventName.key='';
 		this.searchStatus.getTestStatuses();
 		this.mode.getStatuses();
+		this.qualifyingType.getStatuses();
 	}
 
 }

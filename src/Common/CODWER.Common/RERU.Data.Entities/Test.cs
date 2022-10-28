@@ -21,6 +21,12 @@ namespace RERU.Data.Entities
         public TestStatusEnum TestStatus { get; set; }
         public TestResultStatusEnum ResultStatus { get; set; }
 
+        public string ResultStatusValue => ResultStatus == TestResultStatusEnum.Recommended
+            ? $"{ResultStatus}:{RecommendedFor}/{NotRecommendedFor}" : ResultStatus.ToString();
+
+        public string RecommendedFor { get; set; }
+        public string NotRecommendedFor { get; set; }
+
         public DateTime ProgrammedTime { get; set; }
         public DateTime? EndProgrammedTime { get; set; }
         public DateTime? StartTime { get; set; }
@@ -45,6 +51,5 @@ namespace RERU.Data.Entities
 
         public virtual ICollection<TestQuestion> TestQuestions { get; set; }
         public virtual ICollection<EmailTestNotification> EmailTestNotifications { get; set; }
-
     }
 }

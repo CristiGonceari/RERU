@@ -48,6 +48,7 @@ import { AddEditMediaFileComponent } from '../public-api';
 import { UploadFileModalComponent } from './modals/upload-file-modal/upload-file-modal.component';
 import { INTERNAL_NOTIFY_INTERCEPTOR } from './interceptors/internal-notify.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { GoToTestModalComponent } from './modals/go-to-test-modal/go-to-test-modal.component';
 
 export const translateModule = TranslateModule.forChild();
 
@@ -76,7 +77,7 @@ const commonExports = [
 	ShowImageModalComponent
 ];
 @NgModule({
-	declarations: [...commonExports, ViewIconComponent, ContentComponent, UploadFileModalComponent],
+	declarations: [...commonExports, ViewIconComponent, ContentComponent, UploadFileModalComponent, GoToTestModalComponent],
 	imports: [
 		CommonModule,
 		RouterModule,

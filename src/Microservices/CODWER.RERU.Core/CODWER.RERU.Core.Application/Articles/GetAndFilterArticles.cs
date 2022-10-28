@@ -3,6 +3,7 @@ using CVU.ERP.ServiceProvider.Models;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.ModulePrefixes;
 
 namespace CODWER.RERU.Core.Application.Articles
 {
@@ -15,10 +16,7 @@ namespace CODWER.RERU.Core.Application.Articles
                 .OrderByDescending(x => x.CreateDate)
                 .AsQueryable();
 
-            var currentModuleId = appDbContext.ModuleRolePermissions
-                .Include(x => x.Permission)
-                .Include(x => x.Role)
-                .FirstOrDefault(x => x.Permission.Code.StartsWith("P00")).Role.ModuleId;
+            var currentModuleId = appDbContext.GetModuleIdByPrefix(ModulePrefix.Core);
 
             var currentUserProfile = appDbContext.UserProfiles
                 .Include(x => x.ModuleRoles)

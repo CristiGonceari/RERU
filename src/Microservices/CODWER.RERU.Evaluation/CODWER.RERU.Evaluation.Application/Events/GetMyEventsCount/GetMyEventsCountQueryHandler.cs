@@ -23,7 +23,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetMyEventsCount
 
         public async Task<List<EventCount>> Handle(GetMyEventsCountQuery request, CancellationToken cancellationToken)
         {
-            var curUser = await _userProfileService.GetCurrentUser();
+            var curUser = await _userProfileService.GetCurrentUserProfileDto();
 
              var myEvents = _appDbContext.Events
                    .Include(x => x.EventUsers)

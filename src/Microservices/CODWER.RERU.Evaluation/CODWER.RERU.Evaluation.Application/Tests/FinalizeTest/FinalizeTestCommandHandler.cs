@@ -206,9 +206,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
             return content;
         }
 
-        private async Task<string> GetEmailContentForCandidatePosition(Test finalizeTest, string userProfileName, string positionName) => 
-                         $@"<p style=""font-size: 22px; font-weight: 300;"">candidatul ""{userProfileName}"" a finalizat testul.</p>
-                            <p style=""font-size: 22px;font-weight: 300;"">La testul ""{finalizeTest.TestTemplate.Name}"" din evenimentul ""{finalizeTest.Event.Name}"".</p>
-                            <p style=""font-size: 22px;font-weight: 300;"">Care a candidat la pozitia ""{positionName}"".</p>";
+        private async Task<string> GetEmailContentForCandidatePosition(Test finalizeTest, string candidateUserProfileName, string positionName) => 
+                         $@"<p style=""font-size: 22px; font-weight: 300;"">candidatul ""{candidateUserProfileName}"", </p>
+                            <p style=""font-size: 22px;font-weight: 300;"">care a candidat la pozitia ""{positionName}"", 
+                            a finalizat testul ""{finalizeTest.TestTemplate.Name}"", din cadrul evenimentului ""{finalizeTest.Event.Name}"".</p>";
     }
 }
