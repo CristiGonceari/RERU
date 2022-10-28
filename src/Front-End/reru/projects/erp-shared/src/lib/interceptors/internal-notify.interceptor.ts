@@ -23,6 +23,8 @@ import { GoToTestModalComponent } from '../modals/go-to-test-modal/go-to-test-mo
 export class InternalNotifyInterceptor extends AbstractService implements HttpInterceptor {
 	type: string;
 	messageText: string;
+	title: string;
+	description: string;
 
 	constructor(
 		public notificationService: NotificationsService,
@@ -38,8 +40,16 @@ export class InternalNotifyInterceptor extends AbstractService implements HttpIn
 		return next.handle(req).pipe(
 			tap(evt => {
 				if (evt instanceof HttpResponse && evt.url.includes('test-notification')) {
-					if (evt && evt.body && evt.body.data) {
-						this.notificationService.warn('Start Test', 'Testul e pe cale de a incepe', {
+					if (evt && evt.body && evt.body.data.length > 0) {
+						forkJoin([
+							this.translate.get('modal.attention'),
+							this.translate.get('tests.start-test'),
+						  ]).subscribe(([title, description]) => {
+							this.title = title;
+							this.description = description;
+						  });
+						  this.notificationService.warn(this.title, this.description);
+						  this.notificationService.warn(this.title, this.description, {
 							timeOut: 29000,
 							showProgressBar: true,
 						}).click.subscribe(() => {

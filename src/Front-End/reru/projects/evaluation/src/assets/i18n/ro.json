@@ -261,6 +261,7 @@
     "delete": "Șterge",
     "success": "Succes",
     "error": "Eroare",
+    "attention": "Atenție",
     "finish-test": "Terminați testul",
     "finish-poll": "Terminați sondajul",
     "finish-verification": "Terminați verificarea testului",
@@ -386,7 +387,8 @@
     "finish-test-msg": "Doriți sa terminați testul?",
     "stop-test-msg": "Sigur doriți să opriți acest test?",
     "please-wait": "Vă rugăm să așteptați până sistemul importa teste pentru utilizatori ...",
-    "test-template": "șablon de test"
+    "test-template": "șablon de test",
+    "start-test": "Testul va începe în câteva minute"
   },
   "verify-test": {
     "title": "Teste",

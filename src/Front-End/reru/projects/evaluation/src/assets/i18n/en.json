@@ -262,6 +262,7 @@
     "delete": "Delete",
     "success": "Success",
     "error": "Error",
+    "attention": "Attention",
     "finish-test": "Finish test",
     "finish-poll": "Finish poll",
     "finish-verification": "Finish test verification",
@@ -387,7 +388,8 @@
     "finish-test-msg": "Do you want to finish test?",
     "stop-test-msg": "Are you sure you want to stop this test?",
     "please-wait": "Please wait while system import tests for users ...",
-    "test-template": "test template"
+    "test-template": "test template",
+    "start-test": "Test is going to start in few minutes"
   },
   "verify-test": {
     "title": "Tests",
