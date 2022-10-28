@@ -138,6 +138,23 @@ stages:
                       echo "##vso[task.setvariable variable=BuildInternalGateway]True"
                     }
 
+<<<<<<< HEAD
+                      # echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
+                      # echo "##vso[task.setvariable variable=BuildPersonalFE]True"
+                      # echo "##vso[task.setvariable variable=BuildCoreFe]True"
+                      # echo "##vso[task.setvariable variable=BuildLoggingFe]True"
+
+                      # echo "##vso[task.setvariable variable=BuildCore]True"
+                      # echo "##vso[task.setvariable variable=BuildEvaluation]True"
+                      # echo "##vso[task.setvariable variable=BuildPersonal]True"
+                      # echo "##vso[task.setvariable variable=BuildLogging]True"
+
+                      # echo "##vso[task.setvariable variable=BuildIdentityMigrator]True"
+                      # echo "##vso[task.setvariable variable=BuildStorageMigrator]True"
+                      # echo "##vso[task.setvariable variable=BuildIdentityNew]True"
+                      # echo "##vso[task.setvariable variable=BuildPublicGateway]True"
+                      # echo "##vso[task.setvariable variable=BuildInternalGateway]True"
+=======
                       echo "##vso[task.setvariable variable=BuildCore]True"
                       echo "##vso[task.setvariable variable=BuildEvaluation]True"
                       echo "##vso[task.setvariable variable=BuildEvaluation360]True"
@@ -149,6 +166,7 @@ stages:
                       echo "##vso[task.setvariable variable=BuildIdentityNew]True"
                       echo "##vso[task.setvariable variable=BuildPublicGateway]True"
                       echo "##vso[task.setvariable variable=BuildInternalGateway]True"
+>>>>>>> develop
                 }
 
           - task: CmdLine@2
