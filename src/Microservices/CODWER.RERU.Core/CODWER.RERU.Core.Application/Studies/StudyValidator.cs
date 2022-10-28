@@ -21,15 +21,13 @@ namespace CODWER.RERU.Core.Application.Studies
                 .SetValidator(new ItemMustExistValidator<StudyType>(appDbContext, ValidationCodes.EMPTY_BULLETIN_EMITTER,
                     ValidationMessages.InvalidReference));
 
-            RuleFor(x => x.YearOfAdmission)
-                .NotEmpty()
-                .WithErrorCode(ValidationCodes.EMPTY_STUDY_YEAR_OF_AMISION)
-                .WithMessage(ValidationMessages.InvalidInput);
 
-            RuleFor(x => x.GraduationYear)
-                .NotNull()
-                .WithErrorCode(ValidationCodes.EMPTY_STUDY_GRADUATION_YEAR)
-                .WithMessage(ValidationMessages.InvalidInput);
-    }
+            When(x => x.YearOfAdmission != null && x.GraduationYear != null, () =>
+            {
+                RuleFor(x => x)
+                   .Must(x => x.YearOfAdmission < x.GraduationYear)
+                    .WithErrorCode(ValidationCodes.INVALID_TIME_RANGE);
+            });
+        }
     }
 }

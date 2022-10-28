@@ -12,8 +12,8 @@ namespace RERU.Data.Entities
         public string Faculty { get; set; }
         public string InstitutionAddress { get; set; }
         public string Specialty { get; set; }
-        public DateTime YearOfAdmission { get; set; }
-        public DateTime GraduationYear { get; set; }
+        public DateTime? YearOfAdmission { get; set; }
+        public DateTime? GraduationYear { get; set; }
         
 
         public int StudyTypeId { get; set; }

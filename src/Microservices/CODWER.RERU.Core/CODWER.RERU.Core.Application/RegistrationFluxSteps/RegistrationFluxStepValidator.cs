@@ -18,10 +18,10 @@ namespace CODWER.RERU.Core.Application.RegistrationFluxSteps
             RuleFor(x => (int)x.Step)
                 .SetValidator(new ExistInEnumValidator<RegistrationFluxStepEnum>());
 
-            RuleFor(x => x.IsDone)
-                .NotEmpty()
-                .WithErrorCode(ValidationCodes.INVALID_INPUT)
-                .WithMessage(ValidationMessages.InvalidInput);
+            //RuleFor(x => x.IsDone)
+            //    .NotEmpty()
+            //    .WithErrorCode(ValidationCodes.INVALID_INPUT)
+            //    .WithMessage(ValidationMessages.InvalidInput);
 
             RuleFor(x => x.ContractorId)
                 .SetValidator(new ItemMustExistValidator<Contractor>(appDbContext, ValidationCodes.USER_NOT_FOUND, ValidationMessages.NotFound));

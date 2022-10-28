@@ -688,7 +688,8 @@
     "button-next":"Treci la pasul următor",
     "button-update":"Actualizează",
     "button-add":"Adaugă",
-    "button-end": "Finalizează"
+    "button-end": "Finalizează",
+    "button-save-and-next-withoud-datas": "Treci la pasul următor fără a completa"
   },
   "step":{
     "GeneralData": "Date Generale",
@@ -701,7 +702,12 @@
   },
   "step-status":{
     "done": "Efectuat",
-    "not-done": "Nefinalizat"
+    "not-done": "Nefinalizat",
+    "in-progress": "Fără completare"
+  },
+  "step-obligation":{
+    "obligatory": "Obligatoriu",
+    "optional": "Opțional"
   },
   "validations": {
     "file-is-empty": "Fișierul este pustiu",

@@ -691,7 +691,8 @@
     "button-next":"Next Step",
     "button-update":"Update",
     "button-add":"Add",
-    "button-end": "Complete"
+    "button-end": "Complete",
+    "button-save-and-next-withoud-datas": "Pass without adding data"
   },
   "step":{
     "GeneralData": "General Data",
@@ -704,7 +705,12 @@
   },
   "step-status":{
     "done": "Completed",
-    "not-done": "Uncompleted"
+    "not-done": "Uncompleted",
+    "in-progress": "Without completing"
+  },
+  "step-obligation":{
+    "obligatory": "Obligatory",
+    "optional": "Optional"
   },
   "validations": {
     "file-is-empty": "The file is empty!",
