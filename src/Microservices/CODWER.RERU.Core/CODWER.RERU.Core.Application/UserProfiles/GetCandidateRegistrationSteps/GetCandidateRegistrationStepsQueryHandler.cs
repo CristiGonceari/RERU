@@ -59,7 +59,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetCandidateRegistrationStep
                     });
                 }
                 else {
-                    if (check.InProgress)
+                    if (check.InProgress is true)
                     {
                         isChecked.Add(new CheckedRegistrationFluxStepsDto()
                         {
