@@ -26,7 +26,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             var workSheet = package.Workbook.Worksheets.Add("Sheet1");
 
             GetHeaderContent(workSheet, data.Fields.Select(x => x.Label).ToList());
-            GetTableContent(data.Name, workSheet, _mapper.Map<List<TDestination>>(data.Items), data.Fields.Select(x => x.Value).ToList());
+            GetTableContent(workSheet, _mapper.Map<List<TDestination>>(data.Items), data.Fields.Select(x => x.Value).ToList());
 
             var streamBytesArray = package.GetAsByteArray();
 
@@ -39,7 +39,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             var workSheet = package.Workbook.Worksheets.Add("Sheet1");
 
             GetHeaderContent(workSheet, data.Fields.Select(x => x.Label).ToList());
-            GetTableContent(data.Name, workSheet, data.Items, data.Fields.Select(x => x.Value).ToList());
+            GetTableContent(workSheet, data.Items, data.Fields.Select(x => x.Value).ToList());
 
             var streamBytesArray = package.GetAsByteArray();
 
@@ -56,7 +56,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             }
         }
 
-        private void GetTableContent(string tableName, ExcelWorksheet workSheet, List<TDestination> items, List<string> fields)
+        private void GetTableContent(ExcelWorksheet workSheet, List<TDestination> items, List<string> fields)
         {
             //every Row
             for (int i = 0; i < items.Count(); i++)
@@ -67,7 +67,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                 for (int j = 0; j < fields.Count; j++)
                 {
                     var propInfo = GetPropertyInfo(objType, fields[j]);
-                    workSheet.Cells[i + 2, j + 1].Value = ParseByDataType(propInfo, items[i], tableName);
+                    workSheet.Cells[i + 2, j + 1].Value = ParseByDataType(propInfo, items[i]);
                     SetBordersStyleOnCells(workSheet, i + 2, j + 1 );
                 }
             }
@@ -77,7 +77,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
         {
             return type.GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public);
         }
-        private string ParseByDataType(PropertyInfo propInfo, object item, string tableName)
+        private string ParseByDataType(PropertyInfo propInfo, object item)
         {
             var result = propInfo.GetValue(item, null);
 

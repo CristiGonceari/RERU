@@ -24,7 +24,6 @@
 
         public const string Able = "Apt";
         public const string NotAble = "Inapt";
-
         public const string Accepted = "Admis";
         public const string Rejected = "Respins";
 
@@ -42,10 +41,6 @@
         public const string Column2 = "Coloana 2";
         public const string Column3 = "Coloana 3";
         public const string Column4 = "Coloana 4";
-
-
-
-
 
         public static string GetTestStatus(TestStatusEnum testStatus)
         {
