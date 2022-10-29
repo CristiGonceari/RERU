@@ -14,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RERU.Data.Entities;
+using System.Globalization;
+using System.Text;
 
 namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 {
@@ -81,7 +83,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
             var identityUser = new ERPIdentityUser()
             {
                 Email = userProfile.Email.Replace(" ",""),
-                UserName = userProfile.FullName.Replace(" ","").ToLower()
+                UserName = RemoveDiacritics(userProfile.FullName.Replace(" ", "").ToLower())
             };
 
             var password = _passwordGenerator.Generate();
@@ -120,7 +122,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
         {
             var identityUser = await _userManager.FindByEmailAsync(lastEmail);
 
-            var usernameResult = await _userManager.SetUserNameAsync(identityUser, newEmail);
+            var usernameResult = await _userManager.SetUserNameAsync(identityUser, RemoveDiacritics(userName));
 
             var emailResult = await _userManager.SetEmailAsync(identityUser, newEmail);
 
@@ -200,6 +202,26 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                     }
                 });
             }
+        }
+
+        private string RemoveDiacritics(string text)
+        {
+            var normalizedString = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder(capacity: normalizedString.Length);
+
+            for (int i = 0; i < normalizedString.Length; i++)
+            {
+                char c = normalizedString[i];
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder
+                .ToString()
+                .Normalize(NormalizationForm.FormC);
         }
     }
 }
