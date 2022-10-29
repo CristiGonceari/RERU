@@ -57,7 +57,7 @@ namespace CODWER.RERU.Core.Application.Users.EditUserFromColaborator
             {
                 foreach (var identityService in _identityServices)
                 {
-                    var userName = $"{request.FirstName} {request.LastName}";
+                    var userName = $"{request.LastName} {request.FirstName} {request.FatherName}";
 
                     var identifier = await identityService.Update(userName, request.Email, user.Email, request.EmailNotification);
 
