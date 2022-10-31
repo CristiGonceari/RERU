@@ -41,7 +41,6 @@ export class AddEditUserRoleComponent implements OnInit {
 				this.roleId = response.id;
 				this.roleService.get(this.roleId).subscribe(res => {
 					this.initForm(res.data);
-					console.log("role", res.data)
 				})
 			}
 			else

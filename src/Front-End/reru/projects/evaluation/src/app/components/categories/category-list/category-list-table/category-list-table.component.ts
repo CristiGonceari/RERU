@@ -13,6 +13,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { BulkImportQuestionsComponent } from '../../../questions/bulk-import-questions/bulk-import-questions.component';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { saveAs } from 'file-saver';
+import { ParsePrintTabelService } from '../../../../utils/services/parse-print-table/parse-print-tabel.service';
 
 @Component({
   selector: 'app-category-list-table',
@@ -41,7 +42,8 @@ export class CategoryListTableComponent implements OnInit {
 		private router: Router,
 		private questionByCategory: QuestionByCategoryService,
 		private route: ActivatedRoute,
-		private notificationService: NotificationsService
+		private notificationService: NotificationsService,
+		private parsePrintTabelService: ParsePrintTabelService
   ) { }
 
   	ngOnInit(): void {
@@ -110,9 +112,10 @@ export class CategoryListTableComponent implements OnInit {
 		this.downloadFile = true;
 		this.questionCategoryService.print(data).subscribe(response => {
 			if (response) {
-				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(1).slice(0, -1);
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
+				let fileNameParsed = this.parsePrintTabelService.parseFileName(data.tableName, fileName);
 				const blob = new Blob([response.body], { type: response.body.type });
-				const file = new File([blob], fileName, { type: response.body.type });
+				const file = new File([blob], fileNameParsed, { type: response.body.type });
 				saveAs(file);
 				this.downloadFile = false;
 			}

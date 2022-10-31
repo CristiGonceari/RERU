@@ -37,8 +37,5 @@ export class EventsTableComponent implements OnInit {
       this.pagedSummary = res.data.pagedSummary;
       this.isLoading = false;
     })
-
-    console.log('pagination', this.pagedSummary);
-    
   }
 }

@@ -31,7 +31,6 @@ export class AddUserProcessHistoryModalComponent implements OnInit {
 
   closeAllProcesses(){
     this.processService.closeAllProcesses().subscribe(res => {
-      console.log("Closeres", res)
     })
 
     this.isRunningProcess = false;

@@ -14,6 +14,7 @@ import { forkJoin } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
+import { ParsePrintTabelService } from 'projects/evaluation/src/app/utils/services/parse-print-table/parse-print-tabel.service';
 
 @Component({
 	selector: 'app-question-list-table',
@@ -50,7 +51,8 @@ export class QuestionListTableComponent implements OnInit {
 		private notificationService: NotificationsService,
 		public translate: I18nService,
 		private modalService: NgbModal,
-		private printTemplateService: PrintTemplateService
+		private printTemplateService: PrintTemplateService,
+		private parsePrintTabelService: ParsePrintTabelService
 	) { }
 
 	ngOnInit(): void {
@@ -107,10 +109,10 @@ export class QuestionListTableComponent implements OnInit {
 		this.questionService.print(data).subscribe(response => {
 			if (response) {
 				fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
-				fileName = this.ceckFileName(fileName);
+				let fileNameParsed = this.parsePrintTabelService.parseFileName(data.tableName, fileName);
 				
 				const blob = new Blob([response.body], { type: response.body.type });
-				const file = new File([blob], fileName, { type: response.body.type });
+				const file = new File([blob], fileNameParsed, { type: response.body.type });
 				saveAs(file);
 				this.downloadFile = false;
 			}
