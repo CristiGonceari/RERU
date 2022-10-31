@@ -425,16 +425,28 @@ data:
       "SecurityKey": "TESTSECURITYKEY2018",
       "Smtp": {
         "FromName" : "Evaluare MAI",
-        "From": "donotreply-dev@codwer.com",
+        "From": "reru@mai.gov.md",
         "EnableSsl": false,
-        "Host": "smtp.office365.com",
-        "Port": 587,
-        "UserName": "donotreply-dev@codwer.com",
-        "Password": "Zun94569",
+        "Host": "mail-mai.gov.md",
+        "Port": 465,
+        "UserName": "reru@mai.gov.md",
+        "Password": "123456",
         "RequiresAuthentication": true,
         "UseDefaultCredentials": false,
         "SystemErrorRecipients": "andrian.hubencu@codwer.com"
       },
+      # "Smtp": {
+      #   "FromName" : "Evaluare MAI",
+      #   "From": "donotreply-dev@codwer.com",
+      #   "EnableSsl": false,
+      #   "Host": "smtp.office365.com",
+      #   "Port": 587,
+      #   "UserName": "donotreply-dev@codwer.com",
+      #   "Password": "Zun94569",
+      #   "RequiresAuthentication": true,
+      #   "UseDefaultCredentials": false,
+      #   "SystemErrorRecipients": "andrian.hubencu@codwer.com"
+      # },
       "AllowedHosts": "*",
       "MessageQueue": {
         "Hostname": "rabbitmq",
