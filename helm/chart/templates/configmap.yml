@@ -435,18 +435,6 @@ data:
         "UseDefaultCredentials": false,
         "SystemErrorRecipients": "andrian.hubencu@codwer.com"
       },
-      # "Smtp": {
-      #   "FromName" : "Evaluare MAI",
-      #   "From": "donotreply-dev@codwer.com",
-      #   "EnableSsl": false,
-      #   "Host": "smtp.office365.com",
-      #   "Port": 587,
-      #   "UserName": "donotreply-dev@codwer.com",
-      #   "Password": "Zun94569",
-      #   "RequiresAuthentication": true,
-      #   "UseDefaultCredentials": false,
-      #   "SystemErrorRecipients": "andrian.hubencu@codwer.com"
-      # },
       "AllowedHosts": "*",
       "MessageQueue": {
         "Hostname": "rabbitmq",
