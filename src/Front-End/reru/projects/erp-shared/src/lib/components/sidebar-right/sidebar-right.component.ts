@@ -65,7 +65,6 @@ export class SidebarRightComponent implements OnInit {
 	subscribeForUserChanges(): void {
 		if (!this.isCustomHeader) {
 			this.applicationUserService.userChange.subscribe(response => {
-				console.log('response', response);
 				if (response && response.user && response.user.avatar !== null) {
 					this.avatarString = response.user.avatar;
 					this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/*;base64, ${this.avatarString}`);

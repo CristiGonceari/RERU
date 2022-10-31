@@ -64,7 +64,6 @@ export class DismissalRequestComponent implements OnInit {
 
   openAddRequestModal(): void {
     const modalRef = this.modalService.open(AddRequestByHrModalComponent, { centered: true, backdrop: 'static', size: 'md'});
-    console.log('sending you contractor', this.contractor);
     modalRef.componentInstance.contractor = this.contractor;
     modalRef.componentInstance.contractorId = this.contractorId;
     modalRef.result.then((response: RequestProfileModel) => this.addVacation(response), () => {});

@@ -155,7 +155,6 @@ export class AddEditSolicitedTestComponent implements OnInit {
     this.candidatePosition.getPositionValues({}).subscribe((res) => (
       this.candidatePositions = res.data,
       this.selected = this.candidatePosition[0],
-      console.log("this.selected", this.selected),
       this.isLoading = false
     ));
   }

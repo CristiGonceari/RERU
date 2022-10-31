@@ -59,7 +59,6 @@ export class StartEvaluationPageComponent implements OnInit {
     this.testService.getTest(testId).subscribe(
       res => {
         this.testDto = res.data;
-        console.log(res.data)
         this.getTestTemplate();
       }
     )

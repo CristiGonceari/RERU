@@ -12,7 +12,6 @@ export class ViewUsersModalComponent implements OnInit {
   constructor(private activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
-    console.log(this.title);
   }
 
   close(): void {

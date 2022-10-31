@@ -115,7 +115,6 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
   
   postAnswer() {
     this.testQuestions.forEach(el => {
-      console.log("this.parse(el)", this.parse(el))
       this.testQuestionService.postTestQuestions(this.parse(el)).subscribe(() => {
         this.testAnswersInput = [];
       })
