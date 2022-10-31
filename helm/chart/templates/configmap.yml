@@ -426,7 +426,7 @@ data:
       "Smtp": {
         "FromName" : "Evaluare MAI",
         "From": "reru@mai.gov.md",
-        "EnableSsl": false,
+        "EnableSsl": true,
         "Host": "mail-mai.gov.md",
         "Port": 465,
         "UserName": "reru@mai.gov.md",
@@ -499,12 +499,12 @@ data:
         "SecurityKey": "TESTSECURITYKEY2018",
         "Smtp": {
           "FromName" : "Evaluare MAI",
-          "From": "donotreply-dev@codwer.com",
-          "EnableSsl": false,
-          "Host": "smtp.office365.com",
-          "Port": 587,
-          "UserName": "donotreply-dev@codwer.com",
-          "Password": "Zun94569",
+          "From": "reru@mai.gov.md",
+          "EnableSsl": true,
+          "Host": "mail-mai.gov.md",
+          "Port": 465,
+          "UserName": "reru@mai.gov.md",
+          "Password": "123456",
           "RequiresAuthentication": true,
           "UseDefaultCredentials": false,
           "SystemErrorRecipients": "andrian.hubencu@codwer.com"
@@ -571,12 +571,12 @@ data:
         "SecurityKey": "TESTSECURITYKEY2018",
         "Smtp": {
           "FromName" : "Evaluare MAI",
-          "From": "donotreply-dev@codwer.com",
-          "EnableSsl": false,
-          "Host": "smtp.office365.com",
-          "Port": 587,
-          "UserName": "donotreply-dev@codwer.com",
-          "Password": "Zun94569",
+          "From": "reru@mai.gov.md",
+          "EnableSsl": true,
+          "Host": "mail-mai.gov.md",
+          "Port": 465,
+          "UserName": "reru@mai.gov.md",
+          "Password": "123456",
           "RequiresAuthentication": true,
           "UseDefaultCredentials": false,
           "SystemErrorRecipients": "andrian.hubencu@codwer.com"
@@ -673,14 +673,14 @@ data:
           "secretKey": "miniosecretkey"
       },
        "SecurityKey":"TESTSECURITYKEY2018",
-        "Smtp": {
+      "Smtp": {
           "FromName" : "Evaluare MAI",
-          "From": "donotreply-dev@codwer.com",
-          "EnableSsl": false,
-          "Host": "smtp.office365.com",
-          "Port": 587,
-          "UserName": "donotreply-dev@codwer.com",
-          "Password": "Zun94569",
+          "From": "reru@mai.gov.md",
+          "EnableSsl": true,
+          "Host": "mail-mai.gov.md",
+          "Port": 465,
+          "UserName": "reru@mai.gov.md",
+          "Password": "123456",
           "RequiresAuthentication": true,
           "UseDefaultCredentials": false,
           "SystemErrorRecipients": "andrian.hubencu@codwer.com"
