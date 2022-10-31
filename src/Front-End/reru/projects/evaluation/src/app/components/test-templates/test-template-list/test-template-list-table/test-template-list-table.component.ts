@@ -116,7 +116,6 @@ export class TestTemplateListTableComponent implements OnInit {
 			if (response) {
 				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
 				let fileNameParsed = this.parsePrintTabelService.parseFileName(data.tableName, fileName);
-				console.warn("parser", fileNameParsed)
 				const blob = new Blob([response.body], { type: response.body.type });
 				const file = new File([blob], data.tableName, { type: response.body.type });
 				saveAs(file);
