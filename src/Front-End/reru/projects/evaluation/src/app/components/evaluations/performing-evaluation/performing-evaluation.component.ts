@@ -168,7 +168,6 @@ export class PerformingEvaluationComponent implements OnInit {
     this.testService.getTest(this.testId).subscribe(
       res => {
         this.testDto = res.data;
-        console.log(res.data)
         this.getTestTemplateSettings(res.data.testTemplateId);
       }
     )

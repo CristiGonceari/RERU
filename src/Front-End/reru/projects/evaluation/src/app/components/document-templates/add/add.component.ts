@@ -64,8 +64,8 @@ export class AddComponent implements OnInit {
   demo()
   {
     console.log("value", this.forEditFileType);
-      
   }
+  
   public ckEditorFocusCursor(event) : void {
     var selection = event.editor.getSelection();
     var range = selection.getRanges()[0];

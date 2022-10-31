@@ -286,7 +286,7 @@ export class EventsListTableComponent implements OnInit {
 			if (response) {
 				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
 				const blob = new Blob([response.body], { type: response.body.type });
-				const file = new File([blob], fileName, { type: response.body.type });
+				const file = new File([blob], data.tableName, { type: response.body.type });
 				saveAs(file);
 				this.downloadFile = false;
 			}

@@ -29,7 +29,6 @@ export class BulkImportOptionsComponent implements OnInit {
 		this.questionTypes = Object.keys(QuestionUnitTypeEnum)
 			.map(key => QuestionUnitTypeEnum[key])
 			.filter(value => typeof value === 'string') as string[];
-			console.log('question types', this.questionTypes)
 	}
 
 	selectType(val) {

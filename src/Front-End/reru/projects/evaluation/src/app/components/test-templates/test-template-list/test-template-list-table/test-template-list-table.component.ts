@@ -19,6 +19,7 @@ import { forkJoin } from 'rxjs';
 import { GenerateDocumentModalComponent } from 'projects/evaluation/src/app/utils/modals/generate-document-modal/generate-document-modal.component';
 import { FileTypeEnum } from '../../../../utils/enums/file-type.enum';
 import { QualifyingTypeEnum } from 'projects/evaluation/src/app/utils/enums/qualifying-type.enum';
+import { ParsePrintTabelService } from 'projects/evaluation/src/app/utils/services/parse-print-table/parse-print-tabel.service';
 @Component({
 	selector: 'app-test-template-list-table',
 	templateUrl: './test-template-list-table.component.html',
@@ -60,7 +61,9 @@ export class TestTemplateListTableComponent implements OnInit {
 		private route: ActivatedRoute,
 		private modalService: NgbModal,
 		private notificationService: NotificationsService,
-		private printTemplateService: PrintTemplateService
+		private printTemplateService: PrintTemplateService,
+		private parsePrintTabelService: ParsePrintTabelService
+
 	) { }
 
 	ngOnInit(): void {
@@ -111,9 +114,10 @@ export class TestTemplateListTableComponent implements OnInit {
 		this.downloadFile = true;
 		this.testTemplateService.print(data).subscribe(response => {
 			if (response) {
-				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(1).slice(0, -1);
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
+				let fileNameParsed = this.parsePrintTabelService.parseFileName(data.tableName, fileName);
 				const blob = new Blob([response.body], { type: response.body.type });
-				const file = new File([blob], fileName, { type: response.body.type });
+				const file = new File([blob], data.tableName, { type: response.body.type });
 				saveAs(file);
 				this.downloadFile = false;
 			}
@@ -242,6 +246,7 @@ export class TestTemplateListTableComponent implements OnInit {
 			if (response.body.type === 'application/pdf') {
 				fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
 			}
+
 
 			const blob = new Blob([response.body], { type: response.body.type });
 			const file = new File([blob], fileName, { type: response.body.type });
