@@ -118,7 +118,7 @@ export class TestsTableComponent implements OnInit {
 			if (response) {
 				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(2).slice(0, -2);
 				const blob = new Blob([response.body], { type: response.body.type });
-				const file = new File([blob], data.tableName, { type: response.body.type });
+				const file = new File([blob], data.tableName.trim(), { type: response.body.type });
 				saveAs(file);
 				this.downloadFile = false;
 			}

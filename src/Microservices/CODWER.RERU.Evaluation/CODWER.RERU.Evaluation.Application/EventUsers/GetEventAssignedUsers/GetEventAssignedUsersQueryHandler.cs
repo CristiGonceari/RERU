@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Common.DataTransferObjects.Users;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
@@ -75,6 +76,18 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.GetEventAssignedUsers
             if (request.RoleId.HasValue)
             {
                 userProfiles = userProfiles.Where(x => x.Role.Id == request.RoleId);
+            }
+
+            if (request.UserStatusEnum.HasValue)
+            {
+                userProfiles = request.UserStatusEnum switch
+                {
+                    UserStatusEnum.Employee => userProfiles.Where(x =>
+                        x.DepartmentColaboratorId != null && x.RoleColaboratorId != null),
+                    UserStatusEnum.Candidate => userProfiles.Where(x =>
+                        x.DepartmentColaboratorId == null || x.RoleColaboratorId == null),
+                    _ => userProfiles
+                };
             }
 
             return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(userProfiles, request);
