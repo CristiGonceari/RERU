@@ -21,6 +21,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { DateFilterPipe } from './pipes/date-filter.pipe';
 import { NgbDateFRParserFormatter } from './services/date-parse-formatter.service';
 import { BulletinAddressModalComponent } from './modals/bulletin-address-modal/bulletin-address-modal.component';
+import { SearchDepartmentComponent } from './components/search-department/search-department.component';
+import { SearchRoleComponent } from './components/search-role/search-role.component';
 
 const commonComponents = [
   Exception404Component,
@@ -35,7 +37,9 @@ const commonComponents = [
   AddUserProcessHistoryModalComponent,
   VerifyEmailCodeModalComponent,
   DateFilterPipe,
-  BulletinAddressModalComponent
+  BulletinAddressModalComponent,
+  SearchDepartmentComponent,
+  SearchRoleComponent
 ];
 
 @NgModule({

@@ -516,7 +516,8 @@
     "succes-add-msg": "Department was successfully added",
     "succes-edit-msg": "Department was successfully edited",
     "department-data": "Enter the department details and confirm",
-    "department-details": "Department details"
+    "department-details": "Department details",
+    "search-department": "Search by department"
   },
   "media":{
     "invalid-type": "Invalid file type",
@@ -537,7 +538,8 @@
     "succes-add-msg": "Role was successfully added",
     "succes-edit-msg": "Role was successfully edited",
     "user-role-data": "Enter the role details and confirm",
-    "user-role-details": "Role details"
+    "user-role-details": "Role details",
+    "search-role": "Search by role"
   },
   "general-datas":{
     "general-data":"General Data",

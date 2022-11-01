@@ -15,6 +15,8 @@ namespace CODWER.RERU.Core.DataTransferObjects.UserProfiles
         public string Order { get; set; }
         public string Sort { get; set; }
         public bool? Status { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? RoleId { get; set; }
         public UserStatusEnum? UserStatusEnum { get; set; }
     }
 }

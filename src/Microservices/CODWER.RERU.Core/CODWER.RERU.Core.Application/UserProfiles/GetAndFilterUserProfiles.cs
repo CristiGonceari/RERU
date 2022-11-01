@@ -64,6 +64,16 @@ namespace CODWER.RERU.Core.Application.UserProfiles
                 userProfiles = userProfiles.Where(p => p.IsActive == request.Status.Value);
             }
 
+            if (request.DepartmentId.HasValue)
+            {
+                userProfiles = userProfiles.Where(x => x.Department.ColaboratorId == request.DepartmentId);
+            }
+
+            if (request.RoleId.HasValue)
+            {
+                userProfiles = userProfiles.Where(x => x.Role.ColaboratorId == request.RoleId);
+            }
+
             if (request.UserStatusEnum.HasValue)
             {
                 if (request.UserStatusEnum == UserStatusEnum.Employee)

@@ -518,7 +518,8 @@
     "succes-add-msg": "Departamentul a fost adăugat cu succes",
     "succes-edit-msg": "Departamentul a fost editat cu succes",
     "department-data": "Introduceți detaliile departamentului și confirmați",
-    "department-details": "Detaliile departamentului"
+    "department-details": "Detaliile departamentului",
+    "search-department": "Căutați după departament"
   },
   "user-roles": {
     "overview": "Prezentare generală",
@@ -535,7 +536,8 @@
     "succes-add-msg": "Rolul a fost adăugat cu succes",
     "succes-edit-msg": "Rolul a fost editat cu succes",
     "user-role-data": "Introduceți detaliile rolului și confirmați",
-    "user-role-details": "Detaliile rolului"
+    "user-role-details": "Detaliile rolului",
+    "search-role": "Căutați după rol"
   },
   "general-datas":{
     "nationality": "Naţionalitatea",
