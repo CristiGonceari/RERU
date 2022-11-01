@@ -42,6 +42,10 @@ using CODWER.RERU.Evaluation.Application.Tests.AddEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.FinalizeEvaluation;
 using CODWER.RERU.Evaluation.Application.Tests.GetEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluations;
+using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyPolls;
+using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyPollsCount;
+using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTests;
+using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTestsCount;
 using CODWER.RERU.Evaluation.Application.Tests.PrintEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.SetTestResult;
 using CODWER.RERU.Evaluation.Application.Tests.StartEvaluation;
@@ -49,6 +53,7 @@ using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserReceivedEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserReceivedEvaluations;
+using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Module.Application.ImportProcesses;
 using CVU.ERP.Module.Application.ImportProcesses.GetImportProcess;
 using CVU.ERP.Module.Application.ImportProcesses.GetImportResult;
@@ -114,6 +119,30 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpGet("my-tests-by-event")]
         public async Task<PaginatedModel<TestDto>> GetMyTestsByEvent([FromQuery] GetMyTestsByEventQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("my-activities/my-tests")]
+        public async Task<PaginatedModel<TestDto>> GetMyTests([FromQuery] GetMyTestsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("my-activities/my-tests-count")]
+        public async Task<List<TestCount>> GetMyTestsCount([FromQuery] GetMyTestsCountQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("my-activities/my-polls")]
+        public async Task<PaginatedModel<PollDto>> GetMyPolls([FromQuery] GetMyPollsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("my-activities/my-polls-count")]
+        public async Task<List<EventCount>> GetMyPollsCount([FromQuery] GetMyPollsCountQuery query)
         {
             return await Mediator.Send(query);
         }

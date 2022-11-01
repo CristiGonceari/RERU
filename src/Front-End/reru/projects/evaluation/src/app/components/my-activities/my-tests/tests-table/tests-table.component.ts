@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TestResultStatusEnum } from '../../../../utils/enums/test-result-status.enum';
 import { TestStatusEnum } from '../../../../utils/enums/test-status.enum';
@@ -14,24 +14,22 @@ import { Events } from 'projects/evaluation/src/app/utils/models/calendar/events
   styleUrls: ['./tests-table.component.scss']
 })
 export class TestsTableComponent implements OnInit {
-
+  @ViewChild('testName') testName: any;
+  @ViewChild('eventName') eventName: any;
   testRowList: Test[] = [];
   pagedSummary: PaginationModel = new PaginationModel();
   isLoading: boolean = true;
-
+  filters: any = {};
   enum = TestStatusEnum;
   resultEnum = TestResultStatusEnum;
-
   testDto = new Test();
   settings: any;
   testId;
-
   startTime;
   endTime;
   selectedDay;
   myTests: any[] = [];
   countedTests: Events[] = [];
-
   displayYear: number;
   displayMonth: string;
   displayDate;
@@ -55,10 +53,12 @@ export class TestsTableComponent implements OnInit {
     const request = {
       date: this.selectedDay,
       page: data.page || this.pagedSummary.currentPage,
+      testName: this.filters.testName || '',
+      eventName: this.filters.eventName || '',
       itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
     }
 
-    this.testService.getUserTestsWithoutEventByDate(request).subscribe(response => {
+    this.testService.getMyTests(request).subscribe(response => {
       if (response.success) {
         this.testRowList = response.data.items || [];
         this.pagedSummary = response.data.pagedSummary;
@@ -67,40 +67,7 @@ export class TestsTableComponent implements OnInit {
     });
   }
 
-  getUserTests(data: any = {}) {
-    this.isLoading = true;
-
-    if (data.fromDate != null && data.tillDate != null) {
-      this.startTime = data.fromDate,
-        this.endTime = data.tillDate
-    }
-
-    if (data.displayMonth != null && data.displayYear != null) {
-      this.displayMonth = data.displayMonth;
-      this.displayYear = data.displayYear;
-    }
-
-    let params = {
-      page: data.page || this.pagedSummary.currentPage,
-      itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize,
-      startTime: this.parseDates(this.startTime),
-      endTime: this.parseDates(this.endTime),
-    }
-
-    this.testService.getUserTestsWithoutEvent(params).subscribe(
-      res => {
-        if (res && res.data) {
-          this.testRowList = res.data.items;
-          this.isLoading = false;
-          this.pagedSummary = res.data.pagedSummary;
-          this.selectedDay = null
-        }
-      }
-    )
-  }
-
   parseDates(date) {
-
     const day = date && date.getDate() || -1;
     const dayWithZero = day.toString().length > 1 ? day : '0' + day;
     const month = date && date.getMonth() + 1 || -1;
@@ -108,11 +75,9 @@ export class TestsTableComponent implements OnInit {
     const year = date && date.getFullYear() || -1;
 
     return `${year}-${monthWithZero}-${dayWithZero}`;
-
   }
 
   parseDatesForTable(date) {
-
     const day = date && date.getDate() || -1;
     const dayWithZero = day.toString().length > 1 ? day : '0' + day;
     const month = date && date.getMonth() + 1 || -1;
@@ -120,7 +85,6 @@ export class TestsTableComponent implements OnInit {
     const year = date && date.getFullYear() || -1;
 
     return `${dayWithZero}/${monthWithZero}/${year}`;
-
   }
 
   getTestById(testId: number) {
@@ -129,7 +93,6 @@ export class TestsTableComponent implements OnInit {
       this.getTestTemplate(res.data.testTemplateId);
     })
   }
-
 
   getTestTemplate(testTemplateId) {
     this.testTemplateService.getTestTemplateSettings({ testTemplateId: testTemplateId }).subscribe(res => {
@@ -152,28 +115,39 @@ export class TestsTableComponent implements OnInit {
       endTime: this.parseDates(data.tillDate)
     }
 
-    this.testService.getUserTestsWithoutEventCount(request).subscribe(response => {
+    this.testService.getMyTestsCount(request).subscribe(
+      response => {
+        if (response.success) {
+          this.countedTests = response.data;
 
-      if (response.success) {
+          for (let calendar of data.calendar) {
+            let data = new Date(calendar.date);
 
-        this.countedTests = response.data;
+            for (let values of response.data) {
+              let c = new Date(values.date);
+              let compararea = +data == +c;
 
-        for (let calendar of data.calendar) {
-
-          let data = new Date(calendar.date);
-
-          for (let values of response.data) {
-
-            let c = new Date(values.date);
-            let compararea = +data == +c;
-
-            if (compararea) {
-              calendar.count = values.count;
+              if (compararea) {
+                calendar.count = values.count;
+              }
             }
           }
         }
       }
-    })
+    )
   }
 
+  resetFilters(): void {
+    this.filters = {};
+    this.testName.key = '';
+    this.eventName.key = '';
+    this.pagedSummary.currentPage = 1;
+    this.getListByDate();
+  }
+
+  setFilter(field: string, value): void {
+    this.filters[field] = value;
+    this.pagedSummary.currentPage = 1;
+    this.getListByDate();
+  }
 }
