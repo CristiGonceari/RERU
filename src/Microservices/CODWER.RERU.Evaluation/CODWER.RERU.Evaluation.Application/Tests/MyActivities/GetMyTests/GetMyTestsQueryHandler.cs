@@ -38,9 +38,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTests
                 .Include(t => t.Event)
                 .Where(t => t.UserProfileId == currentUserId &&
                             t.TestTemplate.Mode == TestTemplateModeEnum.Test &&
-                            t.EventId != null
+                            (t.EventId != null
                                 ? t.ProgrammedTime.Date <= request.Date && t.EndProgrammedTime.Value.Date >= request.Date
-                                : t.ProgrammedTime.Date == request.Date.Date)
+                                : t.ProgrammedTime.Date == request.Date.Date))
                 .OrderByDescending(x => x.CreateDate)
                 .AsQueryable();
 
