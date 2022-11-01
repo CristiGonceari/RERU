@@ -20,6 +20,7 @@ export class ChangePersonalDataComponent implements OnInit {
 	description: string;
 	startDate;
 	birthDate;
+	date: string;
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -83,12 +84,20 @@ export class ChangePersonalDataComponent implements OnInit {
 
 	parseRequest(data: PersonalData): PersonalData {
 		return {
-			...data,
-			birthDate: this.birthDate != null ? new Date(`${this.birthDate} EDT`).toISOString() : null
+			birthDate: this.date || null,
+			...data
 		};
 	}
 
+	setBirthDate(): void {
+		if (this.birthDate) {
+			const date = new Date(this.birthDate);
+			this.date = new Date(date.getTime() - (new Date(this.birthDate).getTimezoneOffset() * 60000)).toISOString();
+		}
+	}
+
 	changePersonalData(): void {
+		this.setBirthDate();
 		const personalDataForUpdate = this.parseRequest(this.personalDataForm.value);
 
 		this.userService.changePersonalData(personalDataForUpdate).subscribe(

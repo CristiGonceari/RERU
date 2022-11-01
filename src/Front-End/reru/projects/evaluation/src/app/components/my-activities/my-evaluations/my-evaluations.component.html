@@ -4,10 +4,9 @@
             <div class="card-title font-weight-bolder">{{'evaluations.my-evaluations' | translate}}</div>
         </div>
         <div class="card-body">
-            <app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'40vh'" [height]="'5rem'"
+            <app-loading-spinner *ngIf="isLoading" [contentHeight]="'40vh'" [height]="'5rem'"
                 [width]="'5rem'" [colorClass]="'text-primary'">
             </app-loading-spinner>
-            <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
             <div class="row w-100 mb-5 mt-0">
                 <div class="col">
                     <erp-shared-search-input (handleSearch)="setFilter('evaluatedName', $event)"
@@ -48,7 +47,7 @@
             </div>
             <div class="datatable datatable-bordered datatable-default datatable-loaded" id="kt_datatable">
                 <table for="kt_datatable" class="datatable table" style="overflow: visible" id="evaluatedTestTable"
-                    *ngIf="!isLoading && !downloadFile">
+                    *ngIf="!isLoading">
                     <thead class="text-uppercase text-muted">
                         <tr>
                             <th scope="col">{{'evaluations.evaluation' | translate}}</th>

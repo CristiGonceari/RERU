@@ -244,4 +244,20 @@ export class TestService extends AbstractService {
 			observe: 'response',
 		});
 	}
+
+	getMyTests(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-activities/my-tests`, { params });
+	}
+
+	getMyTestsCount(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-activities/my-tests-count`, {params});
+	}
+
+	getMyPolls(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-activities/my-polls`, { params });
+	}
+
+	getMyPollsCount(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-activities/my-polls-count`, {params});
+	}
 }

@@ -4,6 +4,7 @@ import { TestStatusEnum } from '../../../../utils/enums/test-status.enum';
 import { MyPollStatusEnum } from '../../../../utils/enums/my-poll-status.enum';
 import { TestService } from 'projects/evaluation/src/app/utils/services/test/test.service';
 import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
+import { Events } from 'projects/evaluation/src/app/utils/models/calendar/events';
  
 @Component({
   selector: 'app-polls-table',
@@ -17,35 +18,90 @@ export class PollsTableComponent implements OnInit {
   enum = MyPollStatusEnum;
   testEnum = TestStatusEnum;
   date: any;
+  countedTests: Events[] = [];
   pagedSummary: PaginationModel = new PaginationModel();
+  selectedDay;
+  displayDate;
 
   constructor(private testService: TestService, private router: Router, private route: ActivatedRoute,
     ) { }
 
   ngOnInit(): void {
-    
-    this.date = new Date().toISOString();
-    if(this.id) this.getPolls();
   }
 
-  getPolls(data: any = {}){
-    const params: any = {
-      eventId: this.id,
-			page: data.page || this.pagedSummary.currentPage,
-			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
+  getListByDate(data: any = {}): void {
+    this.isLoading = true;
+
+    if (data.date != null) {
+      this.selectedDay = this.parseDates(data.date);
+      this.displayDate = this.parseDatesForTable(data.date);
     }
 
-    this.testService.getUserPollsByEvent(params).subscribe(
-      (res) => {
-          this.polls = res.data.items;
-          this.pagedSummary = res.data.pagedSummary;
-          this.isLoading = false;
+    const request = {
+      date: this.selectedDay,
+      page: data.page || this.pagedSummary.currentPage,
+      itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
+    }
+
+    this.testService.getMyPolls(request).subscribe(response => {
+      if (response.success) {
+        this.polls = response.data.items || [];
+        this.pagedSummary = response.data.pagedSummary;
+        this.isLoading = false;
+      }
+    });
+  }
+
+  getListOfCoutedTests(data) {
+    const request = {
+      startTime: this.parseDates(data.fromDate),
+      endTime: this.parseDates(data.tillDate)
+    }
+
+    this.testService.getMyPollsCount(request).subscribe(
+      response => {
+        if (response.success) {
+          this.countedTests = response.data;
+
+          for (let calendar of data.calendar) {
+            let data = new Date(calendar.date);
+
+            for (let values of response.data) {
+              let c = new Date(values.date);
+              let compararea = +data == +c;
+
+              if (compararea) {
+                calendar.count = values.count;
+              }
+            }
+          }
+        }
       }
     )
   }
 
-  createPoll(check: boolean, testTemplateId?) {
-    this.testService.createMinePoll({testTemplateId: testTemplateId, eventId: this.id}).subscribe((res) => {
+  parseDates(date) {
+    const day = date && date.getDate() || -1;
+    const dayWithZero = day.toString().length > 1 ? day : '0' + day;
+    const month = date && date.getMonth() + 1 || -1;
+    const monthWithZero = month.toString().length > 1 ? month : '0' + month;
+    const year = date && date.getFullYear() || -1;
+
+    return `${year}-${monthWithZero}-${dayWithZero}`;
+  }
+
+  parseDatesForTable(date) {
+    const day = date && date.getDate() || -1;
+    const dayWithZero = day.toString().length > 1 ? day : '0' + day;
+    const month = date && date.getMonth() + 1 || -1;
+    const monthWithZero = month.toString().length > 1 ? month : '0' + month;
+    const year = date && date.getFullYear() || -1;
+
+    return `${dayWithZero}/${monthWithZero}/${year}`;
+  }
+
+  createPoll(check: boolean, testTemplateId?, eventId?) {
+    this.testService.createMinePoll({testTemplateId: testTemplateId, eventId: eventId}).subscribe((res) => {
       if(check)
         this.router.navigate(['../../polls/start-poll-page', res.data], { relativeTo: this.route });
       else 

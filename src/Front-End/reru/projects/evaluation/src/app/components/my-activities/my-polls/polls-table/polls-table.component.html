@@ -1,53 +1,69 @@
-<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<app-event-calendar (onDatePicked)="getListByDate($event)" (listOfCountedEvents)="getListOfCoutedTests($event)">
+</app-event-calendar>
 
 <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
-    <table class="datatable table" style="overflow: visible" *ngIf="!isLoading">
-        <thead class="text-uppercase text-muted">
-            <tr>
-                <th scope="col" class="colored">{{'tests.name' | translate}}</th>
-                <th scope="col" style="width: 150px;">{{'tests.status' | translate}}</th>
-                <th scope="col" style="width: 200px;">{{'polls.voted-time' | translate}}</th>
-                <th scope="col" style="width: 150px;">{{'events.start-date' | translate}}</th>
-                <th scope="col" style="width: 150px;">{{'events.end-date' | translate}}</th>
-                <th scope="col" style="width: 100px"></th>
-            </tr>
-        </thead>
-        <tbody class="datatable-body" *ngIf="polls.length">
-            <tr *ngFor="let poll of polls">
-                <td>{{ poll.testTemplateName }}</td>
-                <td>{{'statuses.' + enum[poll.status] | translate}}</td>
-                <td *ngIf="poll.votedTime">{{ poll.votedTime | date: 'dd/MM/yyyy, HH:mm' }}</td>
-                <td *ngIf="!poll.votedTime">-</td>
-                <td>{{ poll.startTime | date: 'dd/MM/yyyy, HH:mm'}}</td>
-                <td>{{ poll.endTime | date: 'dd/MM/yyyy, HH:mm' }}</td>
-                <td>
-                    <button *ngIf="poll.status == enum.NotVoted && (poll.testStatus == 0 || poll.testStatus == null)" 
-                        class="btn btn-light-success" (click)="createPoll(true, poll.id)">
-                        {{'button.vote' | translate}}
-                    </button>
-                    <button *ngIf="poll.testStatus == testEnum.InProgress" (click)="createPoll(false, poll.id)"
-                        class="btn btn-light-success">
-                        {{'button.continue' | translate}}
-                    </button>
-                    <button *ngIf="poll.setting && poll.status == enum.Voted || poll.endTime < date && poll.status == enum.Voted"
-                        class="btn btn-light-success" [routerLink]="['../poll-progress', poll.id]">
-                        {{'tests.view' | translate}}
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-        <tbody class="datatable-body" *ngIf="!polls.length">
-            <tr>
-                <td colspan="6" class="text-center">
-                    {{ 'message.no-record' | translate }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage" 
-        *ngIf="polls.length" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount" [size]="pagedSummary.pageSize"
-        (sizeChange)="getPolls({ page: 1, itemsPerPage: $event })"
-        (pageChange)="getPolls({ page: $event, itemsPerPage: pagedSummary.pageSize })">
+    <div class="card">
+        <div class="card-header text-center" *ngIf="selectedDay != null">
+            {{ 'calendar.selected-date' | translate }}: {{displayDate}}
+        </div>
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+        <div class="card-body">
+            <table *ngIf="!isLoading" for="kt_datatable" class="datatable table" style="overflow: visible">
+                <thead class="text-uppercase text-muted">
+                    <tr>
+                        <th scope="col" class="colored">{{'tests.name' | translate}}</th>
+                        <th scope="col">{{'events.event' | translate}}</th>
+                        <th scope="col" style="width: 150px;">{{'tests.status' | translate}}</th>
+                        <th scope="col" style="width: 200px;">{{'polls.voted-time' | translate}}</th>
+                        <th scope="col" style="width: 150px;">{{'events.start-date' | translate}}</th>
+                        <th scope="col" style="width: 150px;">{{'events.end-date' | translate}}</th>
+                        <th scope="col" style="width: 100px"></th>
+                    </tr>
+                </thead>
+                <tbody class="datatable-body" *ngIf="polls.length">
+                    <tr *ngFor="let poll of polls">
+                        <td>{{ poll.testTemplateName }}</td>
+                        <td>
+                            <span *ngIf="poll.eventName">{{ poll.eventName }}</span>
+                            <span *ngIf="!poll.eventName">-</span>
+                        </td>
+                        <td>{{'statuses.' + enum[poll.status] | translate}}</td>
+                        <td *ngIf="poll.votedTime">{{ poll.votedTime | date: 'dd/MM/yyyy, HH:mm' }}</td>
+                        <td *ngIf="!poll.votedTime">-</td>
+                        <td>{{ poll.startTime | date: 'dd/MM/yyyy, HH:mm'}}</td>
+                        <td>{{ poll.endTime | date: 'dd/MM/yyyy, HH:mm' }}</td>
+                        <td>
+                            <button
+                                *ngIf="poll.status == enum.NotVoted && (poll.testStatus == 0 || poll.testStatus == null)"
+                                class="btn btn-light-success" (click)="createPoll(true, poll.id, poll.eventId)">
+                                {{'button.vote' | translate}}
+                            </button>
+                            <button *ngIf="poll.testStatus == testEnum.InProgress" (click)="createPoll(false, poll.id, poll.eventId)"
+                                class="btn btn-light-success">
+                                {{'button.continue' | translate}}
+                            </button>
+                            <button
+                                *ngIf="poll.setting && poll.status == enum.Voted || poll.endTime < date && poll.status == enum.Voted"
+                                class="btn btn-light-success" [routerLink]="['../poll-progress', poll.id]">
+                                {{'tests.view' | translate}}
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody class="datatable-body" *ngIf="!polls.length">
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            {{ 'message.no-record' | translate }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
+        *ngIf="selectedDay != null" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
+        [size]="pagedSummary.pageSize" (sizeChange)="getListByDate({ page: 1, itemsPerPage: $event })"
+        (pageChange)="getListByDate({ page: $event, itemsPerPage: pagedSummary.pageSize })">
     </div>
 </div>

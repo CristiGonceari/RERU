@@ -7,6 +7,8 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
     {
         public int Id { get; set; }
         public string TestTemplateName { get; set; }
+        public string EventName { get; set; }
+        public int EventId { get; set; }
         public MyPollStatusEnum Status { get; set; }
         public TestStatusEnum? TestStatus { get; set; }
         public TestTemplateStatusEnum TestTemplateStatus { get; set; }
