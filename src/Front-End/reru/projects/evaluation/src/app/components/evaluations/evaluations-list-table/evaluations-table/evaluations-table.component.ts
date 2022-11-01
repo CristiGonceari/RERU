@@ -289,7 +289,8 @@ export class EvaluationsTableComponent implements OnInit {
       userName: this.filters.userName || this.userName || '',
       evaluatorName: this.filters.evaluatorName || '',
       programmedTimeFrom: this.searchFrom || null,
-      programmedTimeTo: this.searchTo || null
+      programmedTimeTo: this.searchTo || null,
+      ...this.filters
 		};
     
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
