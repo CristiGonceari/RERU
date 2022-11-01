@@ -22,6 +22,7 @@ import { Subscription, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GetBulkProgressHistoryService } from 'projects/evaluation/src/app/utils/services/bulk-progress/get-bulk-progress-history.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { is } from 'date-fns/locale';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class AddTestComponent implements OnInit {
   @Input() testEvent: boolean;
 
   processProgress: any;
-
+  isLoading: boolean = true;
   eventsList: any;
   selectActiveTests: any;
   eventDatas: any;
@@ -91,7 +92,7 @@ export class AddTestComponent implements OnInit {
   getEvents() {
     this.referenceService.getEvents().subscribe(res => {
       this.eventsList = res.data;
-      this.getActiveTestTemplate();
+      this.getActiveTestTemplates(null);
     });
   }
 
@@ -100,28 +101,6 @@ export class AddTestComponent implements OnInit {
       const date = new Date(this.date);
       this.search = new Date(date.getTime() - (new Date(this.date).getTimezoneOffset() * 60000)).toISOString();
     }
-  }
-
-  getActiveTestTemplate() {
-    let params = {
-      testTemplateStatus: TestTemplateStatusEnum.Active,
-      eventId: this.event.value || null
-    }
-
-    this.testTemplateService.getTestTemplateByStatus(params).subscribe((res) => {
-      this.selectActiveTests = res.data;
-    })
-
-    this.userListToAdd = [];
-    this.evaluatorList = [];
-
-    if (params.eventId != null) {
-      this.getEvent(params.eventId);
-    }
-    else {
-      this.showEventCard = false;
-    }
-
   }
 
   getEvent(eventId: any) {
@@ -144,9 +123,31 @@ export class AddTestComponent implements OnInit {
     }
   }
 
-  checkIfEventHasEvaluator(event) {
+  getActiveTestTemplates(event) {
+    this.isLoading = true;
     if (event)
       this.hasEventEvaluator = this.eventsList.find(x => x.eventId === event).isEventEvaluator;
+
+    let params = {
+      testTemplateStatus: TestTemplateStatusEnum.Active,
+      eventId: event || null
+    }
+
+    this.testTemplateService.getTestTemplateByStatus(params).subscribe((res) => {
+      this.selectActiveTests = res.data;
+      this.isLoading = false;
+    })
+
+    this.userListToAdd = [];
+    this.evaluatorList = [];
+
+    if (params.eventId != null) {
+      this.getEvent(params.eventId);
+    }
+    else {
+      this.showEventCard = false;
+    }
+
   }
 
   parse() {
