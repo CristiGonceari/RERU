@@ -92,7 +92,7 @@ export class AddTestComponent implements OnInit {
   getEvents() {
     this.referenceService.getEvents().subscribe(res => {
       this.eventsList = res.data;
-      this.getActiveTestTemplates(null);
+      this.getActiveTestTemplates();
     });
   }
 
@@ -123,7 +123,7 @@ export class AddTestComponent implements OnInit {
     }
   }
 
-  getActiveTestTemplates(event) {
+  getActiveTestTemplates(event?) {
     this.isLoading = true;
     if (event)
       this.hasEventEvaluator = this.eventsList.find(x => x.eventId === event).isEventEvaluator;
