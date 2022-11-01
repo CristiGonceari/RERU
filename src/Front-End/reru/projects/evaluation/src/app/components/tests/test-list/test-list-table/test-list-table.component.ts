@@ -379,9 +379,9 @@ export class TestListTableComponent implements OnInit {
     
 		this.testService.print(data).subscribe(response => {
 			if (response) {
-				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(2).slice(0, -2);
+				const fileName = data.tableName;
 				const blob = new Blob([response.body], { type: response.body.type });
-				const file = new File([blob], data.tableName, { type: response.body.type });
+				const file = new File([blob], fileName.trim(), { type: response.body.type });
 				saveAs(file);
 				this.downloadFile = false;
 			}

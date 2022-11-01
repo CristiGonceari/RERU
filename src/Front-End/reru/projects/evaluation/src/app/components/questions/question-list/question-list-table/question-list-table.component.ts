@@ -109,7 +109,7 @@ export class QuestionListTableComponent implements OnInit {
 		this.questionService.print(data).subscribe(response => {
 			if (response) {
 				fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
-				let fileNameParsed = this.parsePrintTabelService.parseFileName(data.tableName, fileName);
+				let fileNameParsed = this.parsePrintTabelService.parseFileName(data.tableName.trim(), fileName);
 				
 				const blob = new Blob([response.body], { type: response.body.type });
 				const file = new File([blob], fileNameParsed, { type: response.body.type });
