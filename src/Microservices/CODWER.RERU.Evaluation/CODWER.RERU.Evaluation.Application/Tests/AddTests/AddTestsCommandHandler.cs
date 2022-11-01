@@ -77,7 +77,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 tasks.Add(Task.Run(() => HandleTask(request, threadCopy, processId)));
             }
 
-            await Task.WhenAll(tasks);
+            await WaitTasks(Task.WhenAll(tasks));
 
             tasks.Clear();
 
@@ -163,14 +163,19 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
         private async Task GenerateExcelResult(int i, int userProfileId, bool result, string error)
         {
+            await using (var xd = _appDbContext.NewInstance())
+            {
+                
+            }
             await using var db = _appDbContext.NewInstance();
 
             var userProfile = db.UserProfiles.FirstOrDefault(x => x.Id == userProfileId);
 
-            _excelWorksheet.Cells[i + 2, 1].Value = userProfile.GetFullName();
+            _excelWorksheet.Cells[i + 2, 1].Value = userProfile.FullName;
             _excelWorksheet.Column(1).Width = 25;
 
-            _excelWorksheet.Cells[i + 2, 2].Value = userProfile?.Idnp;
+            //_excelWorksheet.Cells[i + 2, 2].Value = userProfile?.Idnp;
+            _excelWorksheet.Cells[i + 2, 2].Value = "123456789123";
             _excelWorksheet.Column(2).Width = 25;
 
             _excelWorksheet.Cells[i + 2, 3].Value = userProfile?.Email;

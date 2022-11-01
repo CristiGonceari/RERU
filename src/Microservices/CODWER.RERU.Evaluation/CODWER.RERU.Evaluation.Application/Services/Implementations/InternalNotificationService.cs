@@ -25,25 +25,28 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 Seen = false
             };
 
-            await _appDbContext.Notifications.AddAsync(notificationToAdd);
-            await _appDbContext.SaveChangesAsync();
+            using var db = _appDbContext.NewInstance();
+            await db.Notifications.AddAsync(notificationToAdd);
+            await db.SaveChangesAsync();
         }
 
         public async Task<List<Notification>> GetMyNotifications(int myUserProfileId)
         {
-            return await _appDbContext.Notifications
+            using var db = _appDbContext.NewInstance();
+            return await db.Notifications
                 .Where(x => x.UserProfileId == myUserProfileId && x.Seen == false)
                 .ToListAsync();
         }
 
         public async Task MarkNotificationAsReed(int notificationId)
         {
-            var notification = await _appDbContext.Notifications
+            using var db = _appDbContext.NewInstance();
+            var notification = await db.Notifications
                 .FirstOrDefaultAsync(x => x.Id == notificationId);
 
             notification.Seen = true;
 
-            await _appDbContext.SaveChangesAsync();
+            await db.SaveChangesAsync();
         }
     }
 }
