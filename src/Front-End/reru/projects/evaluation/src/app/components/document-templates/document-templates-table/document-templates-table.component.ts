@@ -11,47 +11,47 @@ import { ConfirmModalComponent, PrintModalComponent } from '@erp/shared';
 import { saveAs } from 'file-saver';
 
 @Component({
-  selector: 'app-document-templates-table',
-  templateUrl: './document-templates-table.component.html',
-  styleUrls: ['./document-templates-table.component.scss']
+	selector: 'app-document-templates-table',
+	templateUrl: './document-templates-table.component.html',
+	styleUrls: ['./document-templates-table.component.scss']
 })
 export class DocumentTemplatesTableComponent implements OnInit {
-  isLoading: boolean = true;
-  documents: any[] = [];
-  editDocument: string[];
+	isLoading: boolean = true;
+	documents: any[] = [];
+	editDocument: string[];
 
-  documentName: string;
+	documentName: string;
 	fileType: string = '';
 	filters: any = {}
 	pagination: PaginationModel = new PaginationModel();
 
-  title: string;
+	title: string;
 	description: string;
-  no: string;
+	no: string;
 	yes: string;
 	downloadFile: boolean = false;
 	headersToPrint = [];
 	printTranslates: any[];
-  pagedSummary: PaginationModel = new PaginationModel();
-  
-  constructor(private documentService: DocumentTemplateService,
-    private modalService: NgbModal,
-		public translate: I18nService,
-    private notificationService: NotificationsService,) { }
+	pagedSummary: PaginationModel = new PaginationModel();
 
-  ngOnInit(): void {
-    this.getList()
-  }
-  getHeaders(name: string, documentType: string): void {
+	constructor(private documentService: DocumentTemplateService,
+		private modalService: NgbModal,
+		public translate: I18nService,
+		private notificationService: NotificationsService,) { }
+
+	ngOnInit(): void {
+		this.getList()
+	}
+	getHeaders(name: string, documentType: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
 		let headersDto = ['name', 'fileType'];
-		for (let i=0; i<headersHtml.length-1; i++) {
+		for (let i = 0; i < headersHtml.length - 1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
 		let printData = {
 			tableName: name,
-      documentType: documentType,
+			documentType: documentType,
 			fields: this.headersToPrint,
 			orientation: 2,
 			name: this.filters.name || this.documentName || '',
@@ -73,7 +73,7 @@ export class DocumentTemplatesTableComponent implements OnInit {
 			this.translate.get('button.cancel')
 		]).subscribe(
 			(items) => {
-				for (let i=0; i<this.printTranslates.length; i++) {
+				for (let i = 0; i < this.printTranslates.length; i++) {
 					this.printTranslates[i] = items[i];
 				}
 			}
@@ -93,8 +93,8 @@ export class DocumentTemplatesTableComponent implements OnInit {
 		}, () => this.downloadFile = false);
 	}
 
-  getList(data :any = {}): void {
-    this.isLoading = true;
+	getList(data: any = {}): void {
+		this.isLoading = true;
 
 		let params = {
 			name: this.documentName || '',
@@ -104,37 +104,37 @@ export class DocumentTemplatesTableComponent implements OnInit {
 			...this.filters
 		}
 
-    this.documentService.list(params).subscribe(response => {
-      if (response.success) {
-        this.documents = response.data.items || [];
-        this.pagedSummary = response.data.pagedSummary;
-        this.isLoading = false;
-      }
-    });
-  }
+		this.documentService.list(params).subscribe(response => {
+			if (response.success) {
+				this.documents = response.data.items || [];
+				this.pagedSummary = response.data.pagedSummary;
+				this.isLoading = false;
+			}
+		});
+	}
 
-  resetFilters(): void {
+	resetFilters(): void {
 		this.filters = {};
 		this.fileType = '';
 		this.pagination.currentPage = 1;
 		this.getList();
 	}
 
-  setFilter(field: string, value): void {
+	setFilter(field: string, value): void {
 		this.filters[field] = value;
 		this.fileType = this.filters.fileType;
 		this.pagination.currentPage = 1;
 		this.getList();
 	}
 
-  deleteDocument(id: number): void {
-    this.documentService.delete(id).subscribe(() => {
-      this.getList();
-      this.notificationService.success('Success', 'Document deleted!', NotificationUtil.getDefaultConfig());
-    }, (error) => {
-      this.notificationService.error('Error', 'There was an error deleting the document!', NotificationUtil.getDefaultConfig());
-    })
-  }
+	deleteDocument(id: number): void {
+		this.documentService.delete(id).subscribe(() => {
+			this.getList();
+			this.notificationService.success('Success', 'Document deleted!', NotificationUtil.getDefaultConfig());
+		}, (error) => {
+			this.notificationService.error('Error', 'There was an error deleting the document!', NotificationUtil.getDefaultConfig());
+		})
+	}
 
 	openConfirmationDeleteModal(id): void {
 		forkJoin([
@@ -145,9 +145,9 @@ export class DocumentTemplatesTableComponent implements OnInit {
 		]).subscribe(([title, description, no, yes]) => {
 			this.title = title;
 			this.description = description;
-      this.yes = yes;
-      this.no = no;
-			});
+			this.yes = yes;
+			this.no = no;
+		});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
 		modalRef.componentInstance.title = this.title;
 		modalRef.componentInstance.description = this.description;

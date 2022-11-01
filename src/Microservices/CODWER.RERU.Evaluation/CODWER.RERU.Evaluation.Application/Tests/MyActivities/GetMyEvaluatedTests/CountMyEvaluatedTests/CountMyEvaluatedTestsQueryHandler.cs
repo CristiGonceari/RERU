@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluatedTests.CountMyEvaluatedTests
+namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyEvaluatedTests.CountMyEvaluatedTests
 {
     public class CountMyEvaluatedTestsQueryHandler : IRequestHandler<CountMyEvaluatedTestsQuery, List<TestCount>>
     {

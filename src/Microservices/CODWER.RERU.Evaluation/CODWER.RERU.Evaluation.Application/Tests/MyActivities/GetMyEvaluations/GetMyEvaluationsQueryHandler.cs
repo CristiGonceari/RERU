@@ -10,7 +10,7 @@ using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.GetMyEvaluations
+namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyEvaluations
 {
     public class GetMyEvaluationsQueryHandler : IRequestHandler<GetMyEvaluationsQuery, PaginatedModel<TestDto>>
     {

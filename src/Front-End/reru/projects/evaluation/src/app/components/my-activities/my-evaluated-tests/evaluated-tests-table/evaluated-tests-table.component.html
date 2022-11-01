@@ -18,6 +18,7 @@
                             <b>{{'dashboard.date-status' | translate}}</b>
                             <i class="fas fa-arrow-down ml-1 colored"></i>
                         </th>
+                        <th scope="col">{{'verify-test.student' | translate}}</th>
                         <th scope="col">{{'dashboard.test' | translate}}</th>
                         <th scope="col" style="width: 170px;">
                             {{'dashboard.score' | translate}} / {{'dashboard.min-score' | translate}}
@@ -36,6 +37,7 @@
                                 {{'statuses.' + enum[test.testStatus] | translate}}
                             </div>
                         </td>
+                        <td>{{ test.userName }}</td>
                         <td>{{ test.testTemplateName }}</td>
                         <td>
                             <p *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</p>
