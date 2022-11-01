@@ -22,5 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
         public string Idnp { get; set; }
         public DateTime? ProgrammedTimeFrom { get; set; }
         public DateTime? ProgrammedTimeTo { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? RoleId { get; set; }
     }
 }

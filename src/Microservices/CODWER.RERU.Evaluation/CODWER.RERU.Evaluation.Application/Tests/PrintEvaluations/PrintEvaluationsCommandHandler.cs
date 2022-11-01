@@ -46,7 +46,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintEvaluations
                 EventName = request.EventName,
                 Idnp = request.Idnp,
                 ProgrammedTimeFrom = request.ProgrammedTimeFrom,
-                ProgrammedTimeTo = request.ProgrammedTimeTo
+                ProgrammedTimeTo = request.ProgrammedTimeTo,
+                RoleId = request.RoleId,
+                DepartmentId = request.DepartmentId
             };
 
             var tests = GetAndFilterTests.Filter(_appDbContext, filterData, curUser);
