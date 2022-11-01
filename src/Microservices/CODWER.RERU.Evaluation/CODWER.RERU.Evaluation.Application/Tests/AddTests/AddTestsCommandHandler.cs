@@ -174,8 +174,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             _excelWorksheet.Cells[i + 2, 1].Value = userProfile.FullName;
             _excelWorksheet.Column(1).Width = 25;
 
-            //_excelWorksheet.Cells[i + 2, 2].Value = userProfile?.Idnp;
-            _excelWorksheet.Cells[i + 2, 2].Value = "123456789123";
+            _excelWorksheet.Cells[i + 2, 2].Value = userProfile?.Idnp;
             _excelWorksheet.Column(2).Width = 25;
 
             _excelWorksheet.Cells[i + 2, 3].Value = userProfile?.Email;
