@@ -30,6 +30,8 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetAssignedEvaluato
                 .AsQueryable();
 
             var userProfiles = _appDbContext.UserProfiles
+                                            .Include(up => up.Role)
+                                            .Include(up => up.Department)
                                             .Include(up => up.EventUsers)
                                             .AsQueryable();
 
@@ -58,6 +60,16 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetAssignedEvaluato
             if (!string.IsNullOrEmpty(request.Idnp))
             {
                 userProfiles = userProfiles.Where(x => x.Idnp.Contains(request.Idnp));
+            }
+
+            if (request.DepartmentId.HasValue)
+            {
+                userProfiles = userProfiles.Where(x => x.Department.Id == request.DepartmentId);
+            }
+
+            if (request.RoleId.HasValue)
+            {
+                userProfiles = userProfiles.Where(x => x.Role.Id == request.RoleId);
             }
 
             return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(userProfiles, request);
