@@ -1,4 +1,6 @@
-﻿namespace RERU.Data.Entities.Enums
+﻿using CVU.ERP.Common.DataTransferObjects.Users;
+
+namespace RERU.Data.Entities.Enums
 {
     public static class EnumMessages
     {
@@ -22,6 +24,9 @@
         public const string Passed = "Susținut";
         public const string NotPassed = "Nesusținut";
 
+        public const string Employee = "Angajat";
+        public const string Candidate = "Candidat";
+
         public const string Able = "Apt";
         public const string NotAble = "Inapt";
         public const string Accepted = "Admis";
@@ -33,14 +38,19 @@
         public const string AcceptedRejected = "Admis/Respins";
         public const string NoQualifying = "Nici o calificare";
 
-        //public const string NotRecommended = "Nu se recomandă";
         public const string Test = "Test";
         public const string Poll = "Sondaj";
         public const string Evaluation = "Evaluare";
+
         public const string Column1 = "Coloana 1";
         public const string Column2 = "Coloana 2";
         public const string Column3 = "Coloana 3";
         public const string Column4 = "Coloana 4";
+
+        public const string All = "Toți";
+        public const string AllDepartments = "Toate departamentele";
+        public const string CurrentDepartment = "Departamentul curent";
+        public const string OnlyCandidates = "Doar candidați";
 
         public static string GetTestStatus(TestStatusEnum testStatus)
         {
@@ -148,6 +158,28 @@
                 QualifyingTypeEnum.AcceptedRejected => AcceptedRejected,
                 QualifyingTypeEnum.Recommended => Recommended,
                 QualifyingTypeEnum.NoQualifying => NoQualifying,
+                _ => "-"
+            };
+        }
+
+        public static string GetUserPosture(UserStatusEnum userStatusEnum)
+        {
+            return userStatusEnum switch
+            {
+                UserStatusEnum.Employee => Employee,
+                UserStatusEnum.Candidate => Candidate,
+                _ => "-"
+            };
+        }
+
+        public static string GetUserAccessModeEnum(AccessModeEnum accessModeEnum)
+        {
+            return accessModeEnum switch
+            {
+                AccessModeEnum.All => All,
+                AccessModeEnum.AllDepartments => AllDepartments,
+                AccessModeEnum.CurrentDepartment => CurrentDepartment,
+                AccessModeEnum.OnlyCandidates => OnlyCandidates,
                 _ => "-"
             };
         }

@@ -99,7 +99,7 @@ export class UserListTableComponent implements OnInit {
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['-', 'userName', 'idnp', 'email', 'departmentName', 'roleName', 'accessModeEnum', 'isActive'];
+		let headersDto = ['-', 'userName', 'idnp', 'email', 'departmentName', 'roleName', 'userStatusEnum', 'accessModeEnum', 'isActive'];
 
 		for (let i = 1; i < headersHtml.length - 1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true})
@@ -108,9 +108,7 @@ export class UserListTableComponent implements OnInit {
 			tableName: name,
 			fields: this.headersToPrint,
 			orientation: 2,
-			keyword: this.filters.keyword || '',
-			email: this.filters.email || '',
-			idnp: this.filters.idnp || ''
+			...this.filters
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'lg' });
 		modalRef.componentInstance.tableData = printData;

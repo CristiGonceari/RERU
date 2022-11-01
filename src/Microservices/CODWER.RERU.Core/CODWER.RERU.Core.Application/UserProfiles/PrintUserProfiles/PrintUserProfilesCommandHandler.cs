@@ -33,7 +33,11 @@ namespace CODWER.RERU.Core.Application.UserProfiles.PrintUserProfiles
             {
                 Keyword = request.Keyword,
                 Email = request.Email,
-                Idnp = request.Idnp
+                Idnp = request.Idnp,
+                Status = request.Status,
+                UserStatusEnum = request.UserStatusEnum,
+                DepartmentId = request.DepartmentId,
+                RoleId = request.RoleId
             };
 
             var currentUser = await _currentUserProvider.Get();
@@ -52,7 +56,6 @@ namespace CODWER.RERU.Core.Application.UserProfiles.PrintUserProfiles
             });
 
             return result;
-
         }
     }
 }

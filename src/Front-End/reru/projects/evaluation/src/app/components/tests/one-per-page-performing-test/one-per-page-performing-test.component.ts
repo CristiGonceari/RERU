@@ -453,7 +453,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
         },
         (error) => {
           error.error.messages.some(x => {
-            if(x.code === '03020604')
+            if(x.code === '03020604' || x.code === '03001503')
               this.finalizeTest();
           })
         }

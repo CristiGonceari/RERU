@@ -83,7 +83,8 @@
             </app-confirm-button>
             <app-add-button class="btn w-100 mb-3" width="100%" routerLink="../new" *permission="'P00000013'"
               [value]="'button.add-user' | translate"></app-add-button>
-            <button (click)="userTable.openImportModal()" type="button" class="btn btn-light-primary px-4 py-0 w-100 mb-3">
+            <button (click)="userTable.openImportModal()" type="button"
+              class="btn btn-light-primary px-4 py-0 w-100 mb-3">
               <span class="svg-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
                   height="24px" viewBox="0 0 24 24" version="1.1">
@@ -105,34 +106,44 @@
             </button>
           </div>
         </div>
-        <div class="card-header border-0 py-0 pr-0 min-h-100">
+        <div class="card-header border-0 pt-0 pb-0 pr-5" style="min-height: 100%">
           <div class="row w-100">
-            <div class="col-lg-4 col-md-4 col-12">
+            <div class="col">
               <erp-shared-search-input [placeholder]="'pages.user-details.search-name' | translate" #keyword
                 (handleSearch)="userTable.setFilter('keyword', $event)">
               </erp-shared-search-input>
             </div>
-            <div class="col-lg-4 col-md-4 col-12 mt-md-0 mt-3">
+            <div class="col">
               <erp-shared-search-input [placeholder]="'pages.user-details.search-email' | translate" #email
                 (handleSearch)="userTable.setFilter('email', $event)">
               </erp-shared-search-input>
             </div>
-            <div class="col-lg-4 col-md-4 col-12 mt-md-0 mt-3">
+            <div class="col">
               <erp-shared-search-input [placeholder]="'pages.user-details.search-idnp' | translate" #idnp
                 (handleSearch)="userTable.setFilter('idnp', $event)">
               </erp-shared-search-input>
             </div>
-            <div class="col-lg-5 col-md-6 col-12 mt-3">
+          </div>
+          <div class="row w-100 mt-3">
+            <div class="col">
+              <app-search-department (filter)="userTable.setFilter('departmentId',  $event)" #departmentId>
+              </app-search-department>
+            </div>
+            <div class="col">
+              <app-search-role (filter)="userTable.setFilter('roleId',  $event)" #roleId></app-search-role>
+            </div>
+            <div class="col">
               <app-search-status (filter)="userTable.setFilter('userStatusEnum',  $event)" #userStatusEnum>
               </app-search-status>
             </div>
-            <div class="col-lg-5 col-md-6 col-12 mt-3">
+            <div class="col">
               <app-filter-user-state (filter)="userTable.setFilter('status', $event)" #userState
                 (handleSearch)="userTable.searchValue = $event.target.value"></app-filter-user-state>
             </div>
-            <div class="col-xl-auto col-lg-2 col-md-12 mt-3 ml-auto">
-                <app-button (click)="clearFilters(); userTable.resetFilter()" width="100%" [value]="'button.reset' | translate">
-                </app-button>
+            <div class="col">
+              <app-button (click)="clearFilters(); userTable.resetFilter()" width="100%"
+                [value]="'button.reset' | translate">
+              </app-button>
             </div>
           </div>
         </div>
