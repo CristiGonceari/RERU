@@ -98,21 +98,54 @@ namespace CODWER.RERU.Core.Application.Common.Services.PasswordGenerator
 
         public string Generate()
         {
-            var lengthOfPassword = _randomSecure.Next(_minimumLengthPassword, _maximumLengthPassword);
-
-            // Get the required number of characters of each catagory and 
-            // add random charactes of all catagories
-            var minimumChars = GetRandomString(_allLowerCaseChars, _minimumLowerCaseChars) +
-                        GetRandomString(_allUpperCaseChars, _minimumUpperCaseChars) +
-                        GetRandomString(_allNumericChars, _minimumNumericChars) +
-                        GetRandomString(_allSpecialChars, _minimumSpecialChars);
-            var rest = GetRandomString(_allAvailableChars, lengthOfPassword - minimumChars.Length);
-            var unshuffeledResult = minimumChars + rest;
-
-            // Shuffle the result so the order of the characters are unpredictable
-            var result = unshuffeledResult.ShuffleTextSecure();
-            return result;
+            return $"{RandomUppercase(1)}{RandomLowercase(5)}{RandomNumber(1)}{RandomSpecialChar(1)}";
         }
+
+        public string RandomUppercase(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[new Random().Next(s.Length)]).ToArray());
+        }
+
+        public string RandomLowercase(int length)
+        {
+            const string chars = "abcdefghijklmnopqrstuvwxyz";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[new Random().Next(s.Length)]).ToArray());
+        }
+
+        public string RandomNumber(int length)
+        {
+            const string chars = "0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[new Random().Next(s.Length)]).ToArray());
+        }
+
+        public string RandomSpecialChar(int length)
+        {
+            const string chars = "!@#$%^&*()";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[new Random().Next(s.Length)]).ToArray());
+        }
+
+        //public string Generate()
+        //{
+        //    var lengthOfPassword = _randomSecure.Next(_minimumLengthPassword, _maximumLengthPassword);
+
+        //    // Get the required number of characters of each catagory and 
+        //    // add random charactes of all catagories
+        //    var minimumChars = GetRandomString(_allLowerCaseChars, _minimumLowerCaseChars) +
+        //                GetRandomString(_allUpperCaseChars, _minimumUpperCaseChars) +
+        //                GetRandomString(_allNumericChars, _minimumNumericChars) +
+        //                GetRandomString(_allSpecialChars, _minimumSpecialChars);
+        //    var rest = GetRandomString(_allAvailableChars, lengthOfPassword - minimumChars.Length);
+        //    var unshuffeledResult = minimumChars + rest;
+
+        //    // Shuffle the result so the order of the characters are unpredictable
+        //    var result = unshuffeledResult.ShuffleTextSecure();
+        //    return result;
+        //}
 
         private string GetRandomString(string possibleChars, int lenght)
         {
