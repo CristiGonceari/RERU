@@ -8,21 +8,17 @@ using System.Linq;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPollsByEvent
+namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPolls
 {
-    public class PrintUserPollsByEventCommandValidator : AbstractValidator<PrintUserPollsByEventCommand>
+    public class PrintUserPollsCommandValidator : AbstractValidator<PrintUserPollsCommand>
     {
-        public PrintUserPollsByEventCommandValidator(AppDbContext appDbContext)
+        public PrintUserPollsCommandValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.Fields.Select(x => x.Value).ToList())
                 .SetValidator(new TableExporterValidator<PollDto>(ValidationMessages.InvalidInput, ValidationCodes.INVALID_INPUT));
 
             RuleFor(x => x.UserId)
                 .SetValidator(x => new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.INVALID_USER,
-                    ValidationMessages.InvalidReference));
-
-            RuleFor(x => x.EventId)
-                .SetValidator(x => new ItemMustExistValidator<Event>(appDbContext, ValidationCodes.INVALID_EVENT,
                     ValidationMessages.InvalidReference));
         }
     }

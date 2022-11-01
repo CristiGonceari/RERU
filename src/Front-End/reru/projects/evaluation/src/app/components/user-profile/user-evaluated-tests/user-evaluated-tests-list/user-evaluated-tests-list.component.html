@@ -1,17 +1,20 @@
 <app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'20vh'" [height]="'5rem'" [width]="'5rem'"
-    [colorClass]="'text-primary'">
+  [colorClass]="'text-primary'">
 </app-loading-spinner>
 <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
 <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
   id="kt_datatable">
-  <table for="kt_datatable" class="datatable table" style="overflow: visible" id="evaluatedTestTable" *ngIf="!isLoading && !downloadFile">
+  <table for="kt_datatable" class="datatable table" style="overflow: visible" id="evaluatedTestTable"
+    *ngIf="!isLoading && !downloadFile">
     <thead class="text-uppercase text-muted">
       <tr>
         <th scope="col">
           {{'dashboard.date' | translate}}
         </th>
+        <th scope="col">{{ 'verify-test.student' | translate }} ({{ 'user-profile.npp' | translate }})</th>
         <th scope="col">{{'dashboard.test' | translate}}</th>
+        <th scope="col">{{'events.event' | translate}}</th>
         <th scope="col">{{'dashboard.status' | translate}}</th>
         <th scope="col" style="width: 170px;">
           {{'dashboard.score' | translate}} / {{'dashboard.min-score' | translate}}
@@ -27,7 +30,12 @@
             <b>{{ test.programmedTime | date: 'dd/MM/yyyy, HH:mm'}}</b>
           </span>
         </td>
+        <td>{{ test.userName }}</td>
         <td>{{ test.testTemplateName }}</td>
+        <td>
+          <label *ngIf="test.eventName">{{ test.eventName }}</label>
+          <label *ngIf="!test.eventName">-</label>
+        </td>
         <td>{{'statuses.' + enum[test.testStatus] | translate}}</td>
         <td>
           <p *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</p>
@@ -46,8 +54,7 @@
   </table>
   <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
     *ngIf="testRowList.length" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
-    [size]="pagedSummary.pageSize"
-    (sizeChange)="getUserTests({ page: 1, itemsPerPage: $event })"
+    [size]="pagedSummary.pageSize" (sizeChange)="getUserTests({ page: 1, itemsPerPage: $event })"
     (pageChange)="getUserTests({ page: $event, itemsPerPage: pagedSummary.pageSize })">
   </div>
 </div>

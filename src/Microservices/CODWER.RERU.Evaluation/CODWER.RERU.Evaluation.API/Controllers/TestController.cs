@@ -23,11 +23,9 @@ using CODWER.RERU.Evaluation.Application.Tests.PrintTests;
 using CODWER.RERU.Evaluation.Application.Tests.SetConfirmationToStartTest;
 using CODWER.RERU.Evaluation.Application.Tests.StartTest;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluatedTests;
-using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPollsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTests;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTestsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserEvaluatedTests;
-using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPollsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTests;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTestsByEvent;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
@@ -35,7 +33,6 @@ using CVU.ERP.Common.Pagination;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Tests.AddEvaluations;
@@ -50,8 +47,10 @@ using CODWER.RERU.Evaluation.Application.Tests.PrintEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.SetTestResult;
 using CODWER.RERU.Evaluation.Application.Tests.StartEvaluation;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluations;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPolls;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserReceivedEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserEvaluations;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPolls;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserReceivedEvaluations;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Module.Application.ImportProcesses;
@@ -305,8 +304,8 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
-        [HttpGet("user-polls-by-event")]
-        public async Task<PaginatedModel<PollDto>> GetUserPollsByEvent([FromQuery] GetUserPollsByEventQuery query)
+        [HttpGet("user-polls")]
+        public async Task<PaginatedModel<PollDto>> GetUserPollsByEvent([FromQuery] GetUserPollsQuery query)
         {
             return await Mediator.Send(query);
         }
@@ -396,7 +395,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpPut("print-user-polls")]
         [IgnoreResponseWrap]
-        public async Task<IActionResult> PrintUserPollsByEventPdf([FromBody] PrintUserPollsByEventCommand command)
+        public async Task<IActionResult> PrintUserPollsByEventPdf([FromBody] PrintUserPollsCommand command)
         {
             var result = await Mediator.Send(command);
 

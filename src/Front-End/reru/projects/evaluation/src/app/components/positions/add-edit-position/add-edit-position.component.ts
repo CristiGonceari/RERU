@@ -99,7 +99,11 @@ export class AddEditPositionComponent implements OnInit {
 
 					res.data.events.forEach(el => {
 						this.eventSelected.push({ display: el.label, value: +el.value })
+						this.eventsTagsList.push({ display: el.label, value: +el.value })
 					})
+
+					this.getTestTemplateByEventsIds(this.eventSelected);
+					if(this.eventSelected.length > 0) this.showEventCard = true;
 				})
 				this.isLoading = false;
 			} else {
