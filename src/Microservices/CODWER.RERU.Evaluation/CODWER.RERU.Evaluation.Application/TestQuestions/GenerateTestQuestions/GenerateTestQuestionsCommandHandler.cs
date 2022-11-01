@@ -19,7 +19,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
         public GenerateTestQuestionsCommandHandler(AppDbContext appDbContext)
         {
             _random = new Random();
-            _appDbContext = appDbContext;
+            _appDbContext = appDbContext.NewInstance();
         }
 
         public async Task<Unit> Handle(GenerateTestQuestionsCommand request, CancellationToken cancellationToken)
