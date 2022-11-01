@@ -9,6 +9,7 @@
         <thead class="text-uppercase text-muted">
             <tr>
                 <th scope="col" class="colored">{{'tests.name' | translate}}</th>
+                <th scope="col">{{'events.event' | translate}}</th>
                 <th scope="col" style="width: 100px;">{{'tests.status' | translate}}</th>
                 <th scope="col" style="width: 170px;">{{'polls.voted-time' | translate}}</th>
                 <th scope="col" style="width: 150px;">{{'events.start-date' | translate}}</th>
@@ -18,6 +19,7 @@
         <tbody class="datatable-body" *ngIf="polls.length">
             <tr *ngFor="let poll of polls">
                 <td>{{ poll.testTemplateName }}</td>
+                <td>{{ poll.eventName }}</td>
                 <td>{{'statuses.' + enum[poll.status] | translate}}</td>
                 <td *ngIf="poll.votedTime">{{ poll.votedTime | date: 'dd/MM/yyyy, HH:mm' }}</td>
                 <td *ngIf="!poll.votedTime">-</td>
@@ -35,8 +37,7 @@
     </table>
     <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
         *ngIf="polls.length > 5" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
-        [size]="pagedSummary.pageSize"
-        (sizeChange)="getPolls({ page: 1, itemsPerPage: $event })"
+        [size]="pagedSummary.pageSize" (sizeChange)="getPolls({ page: 1, itemsPerPage: $event })"
         (pageChange)="getPolls({ page: $event, itemsPerPage: pagedSummary.pageSize })">
     </div>
 </div>

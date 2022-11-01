@@ -5,18 +5,14 @@ using FluentValidation;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPollsByEvent
+namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPolls
 {
-    public class GetUserPollsByEventQueryValidator : AbstractValidator<GetUserPollsByEventQuery>
+    public class GetUserPollsQueryValidator : AbstractValidator<GetUserPollsQuery>
     {
-        public GetUserPollsByEventQueryValidator(AppDbContext appDbContext)
+        public GetUserPollsQueryValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.UserId)
                 .SetValidator(x => new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.INVALID_USER,
-                    ValidationMessages.InvalidReference));
-
-            RuleFor(x => x.EventId)
-                .SetValidator(x => new ItemMustExistValidator<Event>(appDbContext, ValidationCodes.INVALID_EVENT,
                     ValidationMessages.InvalidReference));
         }
     }

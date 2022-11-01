@@ -43,7 +43,7 @@ export class PollsByEventComponent implements OnInit {
   subsribeForParams() {
     this.isLoading = true;
     this.activatedRoute.parent.params.subscribe(params => {
-      if (params.id && this.id) {
+      if (params.id) {
         this.userId = params.id;
         this.getPolls();
       }
@@ -52,13 +52,12 @@ export class PollsByEventComponent implements OnInit {
 
   getPolls(data: any = {}){
     const params: any = {
-      eventId: this.id,
       userId: this.userId,
       page: data.page || this.pagedSummary.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
     }
 
-    this.testService.getUsersPollsByEvent(params).subscribe(
+    this.testService.getUsersPolls(params).subscribe(
       (res) => {
           this.polls = res.data.items;
           this.pagedSummary = res.data.pagedSummary;
@@ -71,7 +70,7 @@ export class PollsByEventComponent implements OnInit {
 		this.translateData();
 		let pollsTable = document.getElementById('pollsTable')
 		let headersHtml = pollsTable.getElementsByTagName('th');
-		let headersDto = ['testTemplateName', 'testStatus', 'votedTime','startTime', 'endTime'];
+		let headersDto = ['testTemplateName', 'eventName', 'testStatus', 'votedTime','startTime', 'endTime'];
 		for (let i=0; i<headersHtml.length; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
@@ -79,8 +78,7 @@ export class PollsByEventComponent implements OnInit {
 			tableName: name,
 			fields: this.headersToPrint,
 			orientation: 2,
-			userId: this.userId,
-      eventId: this.id,
+			userId: this.userId
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.tableData = printData;

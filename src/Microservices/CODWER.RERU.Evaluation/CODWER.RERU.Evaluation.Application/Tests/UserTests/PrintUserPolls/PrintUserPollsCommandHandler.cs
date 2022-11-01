@@ -1,40 +1,41 @@
 ﻿using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
-using CVU.ERP.Common.Pagination;
+using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.Module.Application.TableExportServices;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using RERU.Data.Entities.Enums;
-using RERU.Data.Persistence.Context;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities.Enums;
+using RERU.Data.Persistence.Context;
 
-namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPollsByEvent
+namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPolls
 {
-    public class GetUserPollsByEventQueryHandler : IRequestHandler<GetUserPollsByEventQuery, PaginatedModel<PollDto>>
+    public class PrintUserPollsCommandHandler : IRequestHandler<PrintUserPollsCommand, FileDataDto>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly IPaginationService _paginationService;
+        private readonly IExportData<PollDto, PollDto> _printer;
 
-        public GetUserPollsByEventQueryHandler(AppDbContext appDbContext, IPaginationService paginationService)
+        public PrintUserPollsCommandHandler(AppDbContext appDbContext, IExportData<PollDto, PollDto> printer)
         {
             _appDbContext = appDbContext;
-            _paginationService = paginationService;
+            _printer = printer;
         }
 
-        public async Task<PaginatedModel<PollDto>> Handle(GetUserPollsByEventQuery request, CancellationToken cancellationToken)
+        public async Task<FileDataDto> Handle(PrintUserPollsCommand request, CancellationToken cancellationToken)
         {
-            var thisEvent = _appDbContext.Events.First(x => x.Id == request.EventId);
-
             var myTestsTypes = await _appDbContext.EventTestTemplates
                 .Include(t => t.TestTemplate)
                 .ThenInclude(tt => tt.Settings)
-                .Where(t => t.TestTemplate.Mode == TestTemplateModeEnum.Poll && t.Event.Id == request.EventId)
+                .Where(t => t.TestTemplate.Mode == TestTemplateModeEnum.Poll)
                 .Select(t => new PollDto
                     {
                         Id = t.TestTemplateId,
-                        StartTime = thisEvent.FromDate,
-                        EndTime = thisEvent.TillDate,
+                        StartTime = t.Event.FromDate,
+                        EndTime = t.Event.TillDate,
+                        EventName = t.Event.Name,
+                        EventId = t.EventId,
                         TestTemplateName = t.TestTemplate.Name,
                         Setting = t.TestTemplate.Settings.CanViewPollProgress,
                         TestTemplateStatus = t.TestTemplate.Status
@@ -43,6 +44,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPollsByEvent
                 .ToListAsync();
 
             var answer = new List<PollDto>();
+
             foreach (var testTemplate in myTestsTypes)
             {
                 var myPoll = await _appDbContext.Tests.Include(x => x.TestQuestions).FirstOrDefaultAsync(x => x.TestTemplateId == testTemplate.Id && x.UserProfileId == request.UserId);
@@ -64,10 +66,16 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPollsByEvent
                 }
             }
 
-            var paginatedModel = _paginationService.MapAndPaginateModel<PollDto>(myTestsTypes, request);
+            var result = _printer.ExportTableSpecificFormatList(new TableListData<PollDto>
+            {
+                Name = request.TableName,
+                Items = myTestsTypes,
+                Fields = request.Fields,
+                Orientation = request.Orientation,
+                ExportFormat = request.TableExportFormat
+            });
 
-            return paginatedModel;
+            return result;
         }
-
     }
 }

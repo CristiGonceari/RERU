@@ -76,10 +76,10 @@ export class TestsTableComponent implements OnInit {
 		this.translateData();
 		let testTable = document.getElementById('testsTable')
 		let headersHtml = testTable.getElementsByTagName('th');
-		let headersDto = ['programmedTime', 'testTemplateName', 'testStatus', 'accumulatedPercentage', 'minPercent', 'resultValue'];
+		let headersDto = ['programmedTime', 'testTemplateName', 'eventName', 'testStatus', 'accumulatedPercentage', 'minPercent', 'resultValue'];
 		for (let i=0; i<headersHtml.length; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true });
-			if(i == 3){
+			if(i == 4){
 				this.headersToPrint[i].label = "Puncte acumulate %";
 			}
 		}
