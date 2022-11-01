@@ -1,6 +1,6 @@
 <select class="form-control h-35px" name="selectedStatus" id="selectedStatus" (change)="filter.emit($event.target.value)">
     <option class="default-option text-muted" selected value="">{{ 'documents-templates.search-by-type' | translate }}</option>
     <option *ngFor="let item of documentTemplatesType" [value]="item.value">
-        {{'statuses.' + item.label | translate}}
+        {{'document-test-modal.' + item.value | translate}}
     </option>
 </select>

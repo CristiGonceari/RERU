@@ -8,5 +8,6 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetEventsByDate
     public class GetEventsByDateQuery : PaginatedQueryParameter, IRequest<PaginatedModel<EventDto>>
     {
         public DateTime Date { get; set; }
+        public string Name { get; set; }
     }
 }

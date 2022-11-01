@@ -13,9 +13,9 @@ export class QuestionListComponent implements OnInit {
 	title: string;
 	@ViewChild('question') searchQuestion: any;
 	@ViewChild('category') searchCategory: any;
-	@ViewChild('type') searchType: any;
-	@ViewChild('tags') searchTags: any;
-	@ViewChild('status') searchStatus: any;
+	@ViewChild('type') type: any;
+	@ViewChild('questionTags') questionTags: any;
+	@ViewChild('status') status: any;
 	
   	constructor(
 		private modalService: NgbModal,
@@ -45,9 +45,9 @@ export class QuestionListComponent implements OnInit {
 	clearFields() {
 		this.searchQuestion.key='';
 		this.searchCategory.key='';
-		this.searchTags.key='';
-		this.searchStatus.getQuestionStatus();
-		this.searchType.getQuestionType();
+		this.questionTags.key='';
+		this.status.getQuestionStatus();
+		this.type.getQuestionType();
 	}
 
 }

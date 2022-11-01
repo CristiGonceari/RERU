@@ -1,8 +1,9 @@
-<app-loading-spinner *ngIf="isLoading" [contentHeight]="'20rem'" [height]="'5rem'" [width]="'5rem'"
+<app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'20rem'" [height]="'5rem'" [width]="'5rem'"
     [colorClass]="'text-primary'">
 </app-loading-spinner>
+<h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
-<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+<div *ngIf="!isLoading && !downloadFile" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
     <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading">
         <thead class="text-uppercase text-muted">
@@ -15,7 +16,7 @@
         <tbody class="datatable-body" *ngIf="documents.length">
             <tr *ngFor="let item of documents;" style="cursor: pointer;">
                 <td class="pointer" [routerLink]="['../edit', item.id]">{{item.name}}</td>
-                <td class="text-center">{{'document-test-modal.'+item.fileType | translate}}</td>
+                <td class="text-center">{{'document-test-modal.'+ item.fileType | translate}}</td>
                 <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
                     <div style="overflow: visible; position: relative; width: 0px">
                         <div ngbDropdown class="dropdown dropdown-inline">

@@ -175,6 +175,12 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                 case AccessModeEnum:
                     result = EnumMessages.GetUserAccessModeEnum((AccessModeEnum)result);
                     break;
+                case SolicitedPositionStatusEnum:
+                    result = EnumMessages.GetSolicitedPositionStatusEnum((SolicitedPositionStatusEnum)result);
+                    break;
+                case TestingLocationType:
+                    result = EnumMessages.GetTestingLocationType((TestingLocationType)result);
+                    break;
                 case null: result = "-";
                     break;
             }
