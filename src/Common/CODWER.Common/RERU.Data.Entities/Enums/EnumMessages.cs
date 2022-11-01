@@ -52,6 +52,14 @@ namespace RERU.Data.Entities.Enums
         public const string CurrentDepartment = "Departamentul curent";
         public const string OnlyCandidates = "Doar candidați";
 
+        public const string New = "Nou";
+        public const string Refused = "Refuzat";
+        public const string Approved = "Aprobat";
+        public const string Wait = "În aşteptare";
+
+        public const string Class = "Clasă";
+        public const string ComputerClass = "Clasă cu calculatoare";
+
         public static string GetTestStatus(TestStatusEnum testStatus)
         {
             return testStatus switch
@@ -180,6 +188,28 @@ namespace RERU.Data.Entities.Enums
                 AccessModeEnum.AllDepartments => AllDepartments,
                 AccessModeEnum.CurrentDepartment => CurrentDepartment,
                 AccessModeEnum.OnlyCandidates => OnlyCandidates,
+                _ => "-"
+            };
+        }
+
+        public static string GetSolicitedPositionStatusEnum(SolicitedPositionStatusEnum solicitedTestStatus)
+        {
+            return solicitedTestStatus switch
+            {
+                SolicitedPositionStatusEnum.New => New,
+                SolicitedPositionStatusEnum.Refused => Refused,
+                SolicitedPositionStatusEnum.Approved => Approved,
+                SolicitedPositionStatusEnum.Wait => Wait,
+                _ => "-"
+            };
+        }
+
+        public static string GetTestingLocationType(TestingLocationType testingLocationType)
+        {
+            return testingLocationType switch
+            {
+                TestingLocationType.Class => New,
+                TestingLocationType.ComputerClass => Refused,
                 _ => "-"
             };
         }

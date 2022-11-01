@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
@@ -17,6 +17,7 @@ import { saveAs } from 'file-saver';
 	styleUrls: ['./events-list-table.component.scss']
 })
 export class EventsListTableComponent implements OnInit {
+	@ViewChild('name') name: any;
 	events: Event;
 	pagination: PaginationModel = new PaginationModel();
 	isLoading: boolean = true;
@@ -76,7 +77,8 @@ export class EventsListTableComponent implements OnInit {
 			fromDate: this.searchFrom,
 			tillDate: this.searchTo,
 			page: data.page || this.pagination.currentPage,
-			itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10,
+			...this.filters
 		}
 		if (this.searchFrom != null || this.searchTo != null) {
 			this.eventService.getEvents(params).subscribe(res => {
@@ -90,19 +92,25 @@ export class EventsListTableComponent implements OnInit {
 		}
 	}
 
-	clearFields() {
+	setFilter(field: string, value): void {
+		this.filters[field] = value;
+		this.pagination.currentPage = 1;
+		this.getListByDate();
+	}
 
+	clearFields() {
+		this.filters = {};
 		this.dateTimeFrom = '';
 		this.dateTimeTo = '';
 		this.searchFrom = '';
 		this.searchTo = '';
-
+		this.name = '';
 		this.getListByDate();
 	}
 
 	list(data: any = {}) {
 		this.selectedDay = null;
-    	this.isLoading = true;
+		this.isLoading = true;
 
 		if (data.fromDate != null && data.tillDate != null) {
 			this.tillDate = data.tillDate,
@@ -117,7 +125,8 @@ export class EventsListTableComponent implements OnInit {
 			page: data.page || this.pagination.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10,
 			fromDate: this.parseDates(data.fromDate),
-			tillDate: this.parseDates(data.tillDate)
+			tillDate: this.parseDates(data.tillDate),
+			...this.filters
 		}
 
 		this.service.getEvents(params).subscribe(
@@ -134,7 +143,7 @@ export class EventsListTableComponent implements OnInit {
 	}
 
 	getListByDate(data: any = {}): void {
-    this.isLoading = true;
+		this.isLoading = true;
 
 		if (data.date != null) {
 			this.selectedDay = this.parseDates(data.date);
@@ -144,7 +153,8 @@ export class EventsListTableComponent implements OnInit {
 		const request = {
 			date: this.selectedDay,
 			page: data.page || this.pagination.currentPage,
-			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+			...this.filters
 		}
 
 		this.service.getEventByDate(request).subscribe(response => {
@@ -255,7 +265,8 @@ export class EventsListTableComponent implements OnInit {
 			fields: this.headersToPrint,
 			orientation: 2,
 			fromDate: this.searchFrom || null,
-			tillDate: this.searchTo || null
+			tillDate: this.searchTo || null,
+			...this.filters
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.tableData = printData;
