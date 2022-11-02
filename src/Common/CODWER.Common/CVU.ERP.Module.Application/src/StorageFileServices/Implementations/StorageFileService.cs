@@ -24,7 +24,7 @@ namespace CVU.ERP.Module.Application.StorageFileServices.Implementations
 
         public StorageFileService(IOptions<MinioSettings> fileOptions, StorageDbContext storageDbContext)
         {
-            _appDbContext = storageDbContext.NewInstance();
+            _appDbContext = storageDbContext;
             _minio = new MinioClient(fileOptions.Value.Endpoint, fileOptions.Value.AccessKey, fileOptions.Value.SecretKey); ;
         }
 
@@ -53,20 +53,19 @@ namespace CVU.ERP.Module.Application.StorageFileServices.Implementations
                         Type = dto.File.ContentType
                     };
 
-                    await _appDbContext.Files.AddAsync(fileToAdd);
-                    await _appDbContext.SaveChangesAsync();
+                    await using var db = _appDbContext.NewInstance();
+                    await db.Files.AddAsync(fileToAdd);
+                    await db.SaveChangesAsync();
 
                     return fileToAdd.Id.ToString();
-                }
-                else
-                {
-                    return null;
                 }
             }
             catch (Exception e)
             {
                 throw new Exception($"FILE ERROR ADD: {e.Message}");
             }
+
+            return string.Empty;
         }
 
         public async Task<string> AddFile(string fileName, FileTypeEnum fileType, string type, byte[] content)
@@ -89,8 +88,9 @@ namespace CVU.ERP.Module.Application.StorageFileServices.Implementations
                     BucketName = fileType.ToString()
                 };
 
-                _appDbContext.Files.Add(fileToAdd);
-                await _appDbContext.SaveChangesAsync();
+                await using var db = _appDbContext.NewInstance();
+                await db.Files.AddAsync(fileToAdd);
+                await db.SaveChangesAsync();
 
                 return fileToAdd.Id.ToString();
             }
@@ -104,14 +104,16 @@ namespace CVU.ERP.Module.Application.StorageFileServices.Implementations
         {
             try
             {
-                var toRemove = await _appDbContext.Files.FirstOrDefaultAsync(x => x.Id.ToString() == fileId);
+                await using var db = _appDbContext.NewInstance();
+
+                var toRemove = await db.Files.FirstOrDefaultAsync(x => x.Id.ToString() == fileId);
 
                 if (toRemove != null)
                 {
                     await _minio.RemoveObjectAsync(toRemove.BucketName, toRemove.UniqueFileName);
 
-                    _appDbContext.Files.Remove(toRemove);
-                    await _appDbContext.SaveChangesAsync();
+                    db.Files.Remove(toRemove);
+                    await db.SaveChangesAsync();
                 }
 
                 return Unit.Value;
@@ -127,7 +129,9 @@ namespace CVU.ERP.Module.Application.StorageFileServices.Implementations
         {
             try
             {
-                var dbFile = await _appDbContext.Files.FirstOrDefaultAsync(x => x.Id.ToString() == fileId);
+                await using var db = _appDbContext.NewInstance();
+
+                var dbFile = await db.Files.FirstOrDefaultAsync(x => x.Id.ToString() == fileId);
 
                 if (dbFile != null)
                 {
@@ -153,20 +157,23 @@ namespace CVU.ERP.Module.Application.StorageFileServices.Implementations
 
         public async Task<List<File>> GetDemoList()
         {
-            var list = _appDbContext.Files.ToList();
+            await using var db = _appDbContext.NewInstance();
+            var list = db.Files.ToList();
             return list;
         }
 
         public async Task<string> GetFileName(string fileId)
         {
-            var name = _appDbContext.Files.FirstOrDefault(x => x.Id.ToString() == fileId).FileName;
+            await using var db = _appDbContext.NewInstance();
+            var name = db.Files.FirstOrDefault(x => x.Id.ToString() == fileId).FileName;
             
             return name;
         }
 
         public async Task<IQueryable<File>> GetUserFiles(List<string> fileIdList)
         {
-            return _appDbContext.Files.Where(file => fileIdList.Contains(file.Id.ToString()));
+            await using var db = _appDbContext.NewInstance();
+            return db.Files.Where(file => fileIdList.Contains(file.Id.ToString()));
         }
 
         private async Task FileUpload(string bucketName, string objectName, byte[] ms)

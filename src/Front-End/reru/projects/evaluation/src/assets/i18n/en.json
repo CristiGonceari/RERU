@@ -1070,7 +1070,7 @@
     "succes-edit-msg": "Department was successfully edited",
     "department-data": "Enter the department details and confirm",
     "department-details": "Department details",
-    "search-department": "Search by department"
+    "search-department": "Search by evaluat department"
   },
   "user-roles": {
     "overview": "Overview",
@@ -1088,6 +1088,6 @@
     "succes-edit-msg": "Role was successfully edited",
     "user-role-data": "Enter the role details and confirm",
     "user-role-details": "Role details",
-    "search-role": "Search by role"
+    "search-role": "Search by evaluat role"
   }
 }

@@ -4,6 +4,8 @@ import { SearchStatusComponent } from './search-status/search-status.component';
 import { ReferenceService } from '../../../utils/services/reference.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddUserProcessHistoryModalComponent } from '../../../utils/modals/add-user-process-history-modal/add-user-process-history-modal.component'
+import { SearchDepartmentComponent } from '../../../utils/components/search-department/search-department.component';
+import { SearchRoleComponent } from '../../../utils/components/search-role/search-role.component';
 
 @Component({
   selector: 'app-user-list',
@@ -16,6 +18,8 @@ export class UserListComponent {
   @ViewChild('idnp') searchIdnp: any;
   @ViewChild(FilterUserStateComponent) userState: FilterUserStateComponent;
   @ViewChild(SearchStatusComponent) userStatusEnum: SearchStatusComponent;
+  @ViewChild(SearchDepartmentComponent) departmentId: SearchDepartmentComponent;
+  @ViewChild(SearchRoleComponent) roleId: SearchRoleComponent;
 
   title: string;
   constructor(private referenceService: ReferenceService,
@@ -53,7 +57,8 @@ export class UserListComponent {
     this.searchIdnp.key = '';
     this.userState.status = '0';
     this.userStatusEnum.userStatus = '';
-    // this.userStatusEnum.getTestStatuses();
+    this.departmentId.department = '';
+    this.roleId.role = '';
   }
 
   getTitle(): string {

@@ -111,7 +111,7 @@ export class CategoryQuestionsComponent implements OnInit {
             .split(';')[0]
             // .substring(2).slice(0, -2);
           const blob = new Blob([response.body], { type: response.body.type });
-          const file = new File([blob], data.tableName, { type: response.body.type });
+          const file = new File([blob], data.tableName.trim(), { type: response.body.type });
           saveAs(file);
           this.downloadFile = false;
         }

@@ -6,45 +6,59 @@
   (listOfCountedEvents)="getListOfCoutedEvents($event)">
 </app-event-calendar>
 
-<app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'20vh'" [height]="'5rem'" [width]="'5rem'"
-  [colorClass]="'text-primary'">
-</app-loading-spinner>
-<h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
-
-<div *ngIf="!isLoading && !downloadFile">
+<div>
   <div class="row w-100 my-4">
     <div class="col">
+      <erp-shared-search-input (handleSearch)="setFilter('name', $event)"
+        [placeholder]="'button.search-name' | translate" #name>
+      </erp-shared-search-input>
+    </div>
+    <div class="col">
       <div class="input-group input-group-sm input-group-solid">
-        <input id="from" [owlDateTime]="dtFrom" [placeholder]="'events.search-from' | translate"
-          class="shadow-input" name="date" [(ngModel)]="dateTimeFrom" (ngModelChange)="getFilteredEvents({dtFrom: $event, page: 1, itemsPerPage: pagination.pageSize})" autocomplete="off" />
-        <input id="from" [owlDateTimeTrigger]="dtFrom" [placeholder]="'events.search-from' | translate" autocomplete="off"
-          class="form-control form-control-lg form-control-solid" [value]="dateTimeFrom | dateFilter:'dd/MM/yy HH:mm'"/>
+        <input id="from" [owlDateTime]="dtFrom" [placeholder]="'events.search-from' | translate" class="shadow-input"
+          name="date" [(ngModel)]="dateTimeFrom"
+          (ngModelChange)="getFilteredEvents({dtFrom: $event, page: 1, itemsPerPage: pagination.pageSize})"
+          autocomplete="off" />
+        <input id="from" [owlDateTimeTrigger]="dtFrom" [placeholder]="'events.search-from' | translate"
+          autocomplete="off" class="form-control form-control-lg form-control-solid"
+          [value]="dateTimeFrom | dateFilter:'dd/MM/yy HH:mm'" />
+          <i class="fas fa-calendar-alt mr-2"></i>
         <owl-date-time #dtFrom></owl-date-time>
       </div>
     </div>
     <div class="col">
       <div class="input-group input-group-sm input-group-solid">
-        <input id="from" [owlDateTime]="toDate" [placeholder]="'events.search-to' | translate"
-          class="shadow-input" name="date" [(ngModel)]="dateTimeTo" (ngModelChange)="getFilteredEvents({toDate: $event, page: 1, itemsPerPage: pagination.pageSize})" autocomplete="off" />
+        <input id="from" [owlDateTime]="toDate" [placeholder]="'events.search-to' | translate" class="shadow-input"
+          name="date" [(ngModel)]="dateTimeTo"
+          (ngModelChange)="getFilteredEvents({toDate: $event, page: 1, itemsPerPage: pagination.pageSize})"
+          autocomplete="off" />
         <input id="from" [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate" autocomplete="off"
-          class="form-control form-control-lg form-control-solid" [value]="dateTimeTo | dateFilter:'dd/MM/yy HH:mm'"/>
+          class="form-control form-control-lg form-control-solid" [value]="dateTimeTo | dateFilter:'dd/MM/yy HH:mm'" />
+          <i class="fas fa-calendar-alt mr-2"></i>
         <owl-date-time #toDate></owl-date-time>
       </div>
     </div>
     <div class="col">
       <div class="w-100 text-right">
         <app-button (handle)="clearFields()" [value]="'button.reset' | translate" class="mr-5"></app-button>
-        <app-confirm-button (handle)="getFilteredEvents({page: 1, itemsPerPage: pagination.pageSize})" [value]="'button.search' | translate">
+        <app-confirm-button (handle)="getFilteredEvents({page: 1, itemsPerPage: pagination.pageSize})"
+          [value]="'button.search' | translate">
         </app-confirm-button>
       </div>
     </div>
   </div>
-  <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+  <app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'20vh'" [height]="'5rem'" [width]="'5rem'"
+    [colorClass]="'text-primary'">
+  </app-loading-spinner>
+  <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
+  <div *ngIf="!isLoading && !downloadFile"
+    class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
     <div class="card-header text-center" *ngIf="selectedDay != null">
       {{ 'calendar.selected-date' | translate }}: {{displayDate}}
     </div>
-    <table class="datatable table font-size-lg" style="overflow: visible" id="eventsTable" *ngIf="!isLoading && !downloadFile">
+    <table class="datatable table font-size-lg" style="overflow: visible" id="eventsTable"
+      *ngIf="!isLoading && !downloadFile">
       <thead class="text-uppercase text-muted">
         <tr>
           <th scope="col" style="width: 400px;">{{'events.name' | translate}}</th>
@@ -80,8 +94,7 @@
                 </div>
                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                   <div ngbDropdownMenu aria-labelledby="action1">
-                    <button [routerLink]="['event', item.id]" class="navi-link align-items-center px-6"
-                      ngbDropdownItem>
+                    <button [routerLink]="['event', item.id]" class="navi-link align-items-center px-6" ngbDropdownItem>
                       {{'categories.view-details' | translate}}
                     </button>
                     <button [routerLink]="['edit-event', item.id]" class="navi-link align-items-baseline px-6"

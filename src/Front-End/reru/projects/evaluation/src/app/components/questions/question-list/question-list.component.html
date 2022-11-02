@@ -22,12 +22,13 @@
 									</app-add-button>
 									<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
 										<div ngbDropdownMenu aria-labelledby="action1">
-											<button  class="navi-link align-items-center px-6" ngbDropdownItem 
+											<button class="navi-link align-items-center px-6" ngbDropdownItem
 												(click)="add()">
-												<i class="la la-plus mr-2"></i> 
+												<i class="la la-plus mr-2"></i>
 												{{'questions.add-question' | translate}}
 											</button>
-											<button (click)="bulkImport()" class="navi-link align-items-baseline px-6" ngbDropdownItem >
+											<button (click)="bulkImport()" class="navi-link align-items-baseline px-6"
+												ngbDropdownItem>
 												<i class="la la-download mr-2"></i>
 												{{'questions.bulk-import' | translate}}
 											</button>
@@ -39,25 +40,37 @@
 						<div class="card-header border-0 mt-5 pr-5" style="min-height: 100%;">
 							<div class="row w-100">
 								<div class="col">
-									<erp-shared-search-input (handleSearch)="questionsTable.setFilter('questionName', $event)" [placeholder]="'button.search-name' | translate" #question></erp-shared-search-input>
+									<erp-shared-search-input
+										(handleSearch)="questionsTable.setFilter('questionName', $event)"
+										[placeholder]="'button.search-name' | translate" #question>
+									</erp-shared-search-input>
 								</div>
-							  <div class="col">
-									<erp-shared-search-input (handleSearch)="questionsTable.setFilter('categoryName', $event)" [placeholder]="'questions.search-category' | translate" #category></erp-shared-search-input>
-							  </div>
-							  <div class="col">
-									<erp-shared-search-input (handleSearch)="questionsTable.setFilter('questionTags', $event)" [placeholder]="'questions.tags' | translate" #tags></erp-shared-search-input>
-							  </div>
+								<div class="col">
+									<erp-shared-search-input
+										(handleSearch)="questionsTable.setFilter('categoryName', $event)"
+										[placeholder]="'questions.search-category' | translate" #category>
+									</erp-shared-search-input>
+								</div>
+								<div class="col">
+									<erp-shared-search-input
+										(handleSearch)="questionsTable.setFilter('questionTags', $event)"
+										[placeholder]="'questions.tags' | translate" #questionTags>
+									</erp-shared-search-input>
+								</div>
 							</div>
 							<div class="row w-100 mt-4">
 								<div class="col">
-									<app-search-by-question-status (filter)="questionsTable.setFilter('status', $event)" #status></app-search-by-question-status>
+									<app-search-by-question-status (filter)="questionsTable.setFilter('status', $event)"
+										#status></app-search-by-question-status>
 								</div>
 								<div class="col">
-									<app-search-by-question-type (filter)="questionsTable.setFilter('type', $event)" #type></app-search-by-question-type>
+									<app-search-by-question-type (filter)="questionsTable.setFilter('type', $event)"
+										#type></app-search-by-question-type>
 								</div>
 								<div class="col">
 									<div class="w-100 text-right">
-										<app-button (handle)="clearFields(); questionsTable.resetFilters()" [value]="'button.reset' | translate"></app-button>
+										<app-button (handle)="clearFields(); questionsTable.resetFilters()"
+											[value]="'button.reset' | translate"></app-button>
 									</div>
 								</div>
 							</div>

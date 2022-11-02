@@ -76,10 +76,10 @@ export class UserEvaluatedTestsListComponent implements OnInit {
 		this.translateData();
 		let evaluatedTestTable = document.getElementById('evaluatedTestTable')
 		let headersHtml = evaluatedTestTable.getElementsByTagName('th');
-		let headersDto = ['programmedTime', 'testTemplateName', 'testStatus', 'accumulatedPercentage', 'minPercent', 'resultValue'];
+		let headersDto = ['programmedTime','userName', 'testTemplateName', 'eventName', 'testStatus', 'accumulatedPercentage', 'minPercent', 'result'];
 		for (let i = 0; i < headersHtml.length; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true });
-			if(i == 3){
+			if(i == 5){
 				this.headersToPrint[i].label = "Puncte acumulate %";
 			}
 		}
@@ -119,7 +119,7 @@ export class UserEvaluatedTestsListComponent implements OnInit {
 			if (response) {
 				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(1).slice(0, -1);
 				const blob = new Blob([response.body], { type: response.body.type });
-				const file = new File([blob], data.tableName, { type: response.body.type });
+				const file = new File([blob], data.tableName.trim(), { type: response.body.type });
 				saveAs(file);
 				this.downloadFile = false;
 			}

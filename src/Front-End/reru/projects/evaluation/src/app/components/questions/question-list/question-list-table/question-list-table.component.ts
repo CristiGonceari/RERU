@@ -36,9 +36,9 @@ export class QuestionListTableComponent implements OnInit {
 	type = QuestionUnitTypeEnum;
 	isLoading: boolean = true;
 	title: string;
-  	description: string;
-  	no: string;
-  	yes: string;
+	description: string;
+	no: string;
+	yes: string;
 	downloadFile: boolean = false;
 	headersToPrint = [];
 	printTranslates: any[];
@@ -63,22 +63,36 @@ export class QuestionListTableComponent implements OnInit {
 		this.questionService.uploadQuestions.subscribe(() => this.list());
 	}
 
+	list(data: any = {}): void {
+		let params = {
+			page: data.page || this.pagedSummary.currentPage,
+			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize,
+			...this.filters
+		}
+		this.questionService.getAll(params).subscribe((res) => {
+			if (res && res.data.items) {
+				this.questionList = res.data.items;
+				this.pagedSummary = res.data.pagedSummary;
+				this.qType = Object.keys(QuestionUnitTypeEnum)
+					.map(key => QuestionUnitTypeEnum[key])
+					.filter(value => typeof value === 'string') as string[];
+				this.isLoading = false;
+			}
+		});
+	}
+
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
 		let headersDto = ['question', 'categoryName', 'questionType', 'status'];
-		for (let i=0; i<headersHtml.length-1; i++) {
+		for (let i = 0; i < headersHtml.length - 1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
 		let printData = {
 			tableName: name,
 			fields: this.headersToPrint,
 			orientation: 2,
-			questionName: this.filters.questionName,
-			categoryName: this.filters.categoryName,
-			questionTags: this.filters.questionTags,
-			status: +this.filters.questionStatus,
-			type: +this.filters.questionType
+			...this.filters
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.tableData = printData;
@@ -96,7 +110,7 @@ export class QuestionListTableComponent implements OnInit {
 			this.translate.get('button.cancel')
 		]).subscribe(
 			(items) => {
-				for (let i=0; i<this.printTranslates.length; i++) {
+				for (let i = 0; i < this.printTranslates.length; i++) {
 					this.printTranslates[i] = items[i];
 				}
 			}
@@ -109,8 +123,8 @@ export class QuestionListTableComponent implements OnInit {
 		this.questionService.print(data).subscribe(response => {
 			if (response) {
 				fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
-				let fileNameParsed = this.parsePrintTabelService.parseFileName(data.tableName, fileName);
-				
+				let fileNameParsed = this.parsePrintTabelService.parseFileName(data.tableName.trim(), fileName);
+
 				const blob = new Blob([response.body], { type: response.body.type });
 				const file = new File([blob], fileNameParsed, { type: response.body.type });
 				saveAs(file);
@@ -120,36 +134,13 @@ export class QuestionListTableComponent implements OnInit {
 	}
 
 	ceckFileName(fileName): string {
-		if(fileName.includes("_") && (fileName.match(new RegExp("_", "g")) || []).length <= 3){
+		if (fileName.includes("_") && (fileName.match(new RegExp("_", "g")) || []).length <= 3) {
 			fileName = "Întrebari";
-		} else if(fileName.includes("_")){
+		} else if (fileName.includes("_")) {
 			fileName = "Вопросы";
 		}
 
 		return fileName;
-	} 
-
-	list(data: any = {}): void {
-		let params = {
-			questionName: this.keyword || '',
-			categoryName: this.categoryName || '',
-			questionTags: this.questionTag || '',
-			status: this.questionStatus,
-			type: this.questionType,
-			page: data.page || this.pagedSummary.currentPage,
-			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize,
-			...this.filters
-			}
-		this.questionService.getAll(params).subscribe((res) => {
-			if (res && res.data.items) {
-				this.questionList = res.data.items;
-				this.pagedSummary = res.data.pagedSummary;
-				this.qType = Object.keys(QuestionUnitTypeEnum)
-					.map(key => QuestionUnitTypeEnum[key])
-					.filter(value => typeof value === 'string') as string[];
-				this.isLoading = false;
-			}
-		});
 	}
 
 	setFilter(field: string, value): void {
@@ -181,7 +172,7 @@ export class QuestionListTableComponent implements OnInit {
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
-				});
+			});
 			this.list();
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 		}
@@ -192,17 +183,17 @@ export class QuestionListTableComponent implements OnInit {
 		this.router.navigate(['question-detail/', id, 'overview'], { relativeTo: this.route });
 	}
 
-	printQuestionUnitPdf(questionId){
-		this.printTemplateService.getQuestionUnitPdf(questionId).subscribe((response : any) => {
+	printQuestionUnitPdf(questionId) {
+		this.printTemplateService.getQuestionUnitPdf(questionId).subscribe((response: any) => {
 			let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
 			if (response.body.type === 'application/pdf') {
-			  fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
+				fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
 			}
-	  
+
 			const blob = new Blob([response.body], { type: response.body.type });
 			const file = new File([blob], fileName, { type: response.body.type });
 			saveAs(file);
-			  });
+		});
 	}
 
 	deleteQuestion(id): void {
@@ -213,7 +204,7 @@ export class QuestionListTableComponent implements OnInit {
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
-				});
+			});
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			this.list();
 		});
@@ -230,7 +221,7 @@ export class QuestionListTableComponent implements OnInit {
 			this.description = description;
 			this.no = no;
 			this.yes = yes;
-			});
+		});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
 		modalRef.componentInstance.title = this.title;
 		modalRef.componentInstance.description = this.description;

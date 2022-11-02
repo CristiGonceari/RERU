@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Services;
-using Microsoft.Extensions.Options;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
@@ -21,17 +18,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
-        private readonly PlatformConfig _platformConfig;
 
         public AddTestCommandHandler(AppDbContext appDbContext, 
             IMapper mapper, 
-            INotificationService notificationService, 
-            IOptions<PlatformConfig> options)
+            INotificationService notificationService)
         {
-            _appDbContext = appDbContext;
+            _appDbContext = appDbContext.NewInstance();
             _mapper = mapper;
             _notificationService = notificationService;
-            _platformConfig = options.Value;
         }
 
         public async Task<int> Handle(AddTestCommand request, CancellationToken cancellationToken)

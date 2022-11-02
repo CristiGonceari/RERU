@@ -16,11 +16,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 {
     public class AddTestCommandValidator : AbstractValidator<AddTestCommand>
     {
-        private readonly AppDbContext _appDbContext;
         private readonly IMediator _mediator;
+        private readonly AppDbContext _appDbContext;
+
         public AddTestCommandValidator(AppDbContext appDbContext, IMediator mediator)
         {
-            _appDbContext = appDbContext;
+            _appDbContext = appDbContext.NewInstance();
             _mediator = mediator;
 
             RuleFor(r => r.Data)
@@ -30,11 +31,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
             When(r => r.Data != null, () =>
             {
                 RuleFor(x => x.Data.UserProfileId)
-                    .SetValidator(x => new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.INVALID_USER,
+                    .SetValidator(x => new ItemMustExistValidator<UserProfile>(_appDbContext, ValidationCodes.INVALID_USER,
                         ValidationMessages.InvalidReference));
 
                 RuleFor(x => x.Data.TestTemplateId)
-                    .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
+                    .SetValidator(x => new ItemMustExistValidator<TestTemplate>(_appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                         ValidationMessages.InvalidReference));
 
                 When(x => x.Data.EventId == null, () =>
@@ -47,15 +48,15 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                 When(r => r.Data.EventId.HasValue, () =>
                 {
                     RuleFor(x => x.Data.EventId.Value)
-                        .SetValidator(x => new ItemMustExistValidator<Event>(appDbContext, ValidationCodes.INVALID_EVENT,
+                        .SetValidator(x => new ItemMustExistValidator<Event>(_appDbContext, ValidationCodes.INVALID_EVENT,
                             ValidationMessages.InvalidReference));
 
                     RuleFor(x => x.Data)
-                        .Must(x => appDbContext.EventTestTemplates.Any(et => et.EventId == x.EventId && et.TestTemplateId == x.TestTemplateId))
+                        .Must(x => _appDbContext.EventTestTemplates.Any(et => et.EventId == x.EventId && et.TestTemplateId == x.TestTemplateId))
                         .WithErrorCode(ValidationCodes.INEXISTENT_TEST_TEMPLATE_IN_EVENT);
 
                     RuleFor(x => x.Data)
-                        .Must(x => appDbContext.EventUsers.Any(et => et.EventId == x.EventId && et.UserProfileId == x.UserProfileId))
+                        .Must(x => _appDbContext.EventUsers.Any(et => et.EventId == x.EventId && et.UserProfileId == x.UserProfileId))
                         .WithErrorCode(ValidationCodes.INEXISTENT_CANDIDATE_IN_EVENT);
                 });
 
@@ -69,14 +70,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                 When(r => r.Data.LocationId.HasValue, () =>
                 {
                     RuleFor(x => x.Data.LocationId.Value)
-                        .SetValidator(x => new ItemMustExistValidator<Location>(appDbContext, ValidationCodes.INVALID_LOCATION,
+                        .SetValidator(x => new ItemMustExistValidator<Location>(_appDbContext, ValidationCodes.INVALID_LOCATION,
                             ValidationMessages.InvalidReference));
                 });
 
                 When(r => r.Data.EvaluatorId.HasValue, () =>
                 {
                     RuleFor(x => x.Data.EvaluatorId.Value)
-                        .SetValidator(x => new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.INVALID_USER,
+                        .SetValidator(x => new ItemMustExistValidator<UserProfile>(_appDbContext, ValidationCodes.INVALID_USER,
                             ValidationMessages.InvalidReference));
 
                     RuleFor(x => x.Data)

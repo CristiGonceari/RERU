@@ -48,6 +48,11 @@
     "dynamic": "Dynamic",
     "default": "Default"
   },
+  "footer": {
+    "all-rights-reserved": "All rights reserved",
+    "about": "About",
+    "contact": "Contact"
+  },
   "files":{
     "title": "Documents",
     "files-list": "Documents list",
@@ -467,7 +472,8 @@
     "01000501": "Invalid role",
     "01000602": "Invalid department",
     "01000107": "Duplicate email in system",
-    "01000909": "Invalid time range"
+    "01000909": "Invalid time range",
+    "01000116": "Wrong old password"
   },
   "print": {
     "print-table": "Print table",
@@ -515,7 +521,8 @@
     "succes-add-msg": "Department was successfully added",
     "succes-edit-msg": "Department was successfully edited",
     "department-data": "Enter the department details and confirm",
-    "department-details": "Department details"
+    "department-details": "Department details",
+    "search-department": "Search by department"
   },
   "media":{
     "invalid-type": "Invalid file type",
@@ -536,7 +543,8 @@
     "succes-add-msg": "Role was successfully added",
     "succes-edit-msg": "Role was successfully edited",
     "user-role-data": "Enter the role details and confirm",
-    "user-role-details": "Role details"
+    "user-role-details": "Role details",
+    "search-role": "Search by role"
   },
   "general-datas":{
     "general-data":"General Data",

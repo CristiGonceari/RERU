@@ -109,14 +109,14 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfilesByModul
                 items = items.Where(x => x.Idnp.Contains(request.Idnp));
             }
 
-            if (!string.IsNullOrEmpty(request.Department))
+            if (request.DepartmentId.HasValue)
             {
-                items = items.Where(x => x.Department.Name.ToLower().Contains(request.Department.ToLower()));
+                items = items.Where(x => x.Department.Id == request.DepartmentId);
             }
 
-            if (!string.IsNullOrEmpty(request.Role))
+            if (request.RoleId.HasValue)
             {
-                items = items.Where(x => x.Role.Name.ToLower().Contains(request.Role.ToLower()));
+                items = items.Where(x => x.Role.Id == request.RoleId);
             }
 
             if (request.ExceptUserIds.Count > 0)

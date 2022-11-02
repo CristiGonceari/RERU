@@ -16,6 +16,8 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
         public string Order { get; set; }
         public string Sort { get; set; }
         public bool? Status { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? RoleId { get; set; }
         public UserStatusEnum? UserStatusEnum { get; set; }
     }
 }

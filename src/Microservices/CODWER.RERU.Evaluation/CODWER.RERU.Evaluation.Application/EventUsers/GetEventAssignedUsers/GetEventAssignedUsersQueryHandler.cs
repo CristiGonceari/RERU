@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.Pagination;
 using MediatR;
@@ -7,7 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Common.DataTransferObjects.Users;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.EventUsers.GetEventAssignedUsers
@@ -28,10 +31,15 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.GetEventAssignedUsers
         {
             var users = _appDbContext.EventUsers
                 .Include(x => x.UserProfile)
+                    .ThenInclude(x => x.Department)
+                .Include(x => x.UserProfile)
+                     .ThenInclude(x => x.Role)
                 .Where(x => x.EventId == request.EventId )
                 .AsQueryable();
 
-            var userProfiles = _appDbContext.UserProfiles.AsQueryable();
+            var userProfiles = _appDbContext.UserProfiles
+                .Include(up => up.Role)
+                .Include(up => up.Department).AsQueryable();
 
             userProfiles = userProfiles.Where(up => users.Any(eu => eu.UserProfileId == up.Id));
 
@@ -60,7 +68,30 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.GetEventAssignedUsers
                 userProfiles = userProfiles.Where(x => x.Idnp.Contains(request.Idnp));
             }
 
+            if (request.DepartmentId.HasValue)
+            {
+                userProfiles = userProfiles.Where(x => x.Department.Id == request.DepartmentId);
+            }
+
+            if (request.RoleId.HasValue)
+            {
+                userProfiles = userProfiles.Where(x => x.Role.Id == request.RoleId);
+            }
+
+            if (request.UserStatusEnum.HasValue)
+            {
+                userProfiles = request.UserStatusEnum switch
+                {
+                    UserStatusEnum.Employee => userProfiles.Where(x =>
+                        x.DepartmentColaboratorId != null && x.RoleColaboratorId != null),
+                    UserStatusEnum.Candidate => userProfiles.Where(x =>
+                        x.DepartmentColaboratorId == null || x.RoleColaboratorId == null),
+                    _ => userProfiles
+                };
+            }
+
             return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(userProfiles, request);
         }
+
     }
 }

@@ -4,6 +4,11 @@
     "en": "English",
     "ru": "Русский"
   },
+  "footer": {
+    "all-rights-reserved": "Все права защищены",
+    "about": "О сайте",
+    "contact": "Контакт"
+  },
   "sidebar": {
     "home": "Главная",
     "personal-management": "Менеджемент персонала",

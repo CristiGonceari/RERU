@@ -19,7 +19,7 @@ namespace CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCatego
 
         public TestCategoryQuestionsQueryHandler(AppDbContext appDbContext, IMapper mapper)
         {
-            _appDbContext = appDbContext;
+            _appDbContext = appDbContext.NewInstance();
             _mapper = mapper;
         }
 

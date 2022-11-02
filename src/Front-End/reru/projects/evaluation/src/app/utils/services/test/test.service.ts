@@ -154,8 +154,8 @@ export class TestService extends AbstractService {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-tests-by-event`, { params });
 	}
 
-	getUsersPollsByEvent(params): Observable<any> {
-		return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-polls-by-event`, { params });
+	getUsersPolls(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-polls`, { params });
 	}
 
 	getUserEvaluatedTests(params): Observable<any> {
@@ -243,5 +243,21 @@ export class TestService extends AbstractService {
 			responseType: 'blob',
 			observe: 'response',
 		});
+	}
+
+	getMyTests(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-activities/my-tests`, { params });
+	}
+
+	getMyTestsCount(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-activities/my-tests-count`, {params});
+	}
+
+	getMyPolls(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-activities/my-polls`, { params });
+	}
+
+	getMyPollsCount(params): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-activities/my-polls-count`, {params});
 	}
 }

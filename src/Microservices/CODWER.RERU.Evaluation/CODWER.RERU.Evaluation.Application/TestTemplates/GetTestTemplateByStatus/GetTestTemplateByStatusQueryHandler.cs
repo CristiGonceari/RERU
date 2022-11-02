@@ -26,10 +26,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
             IMediator mediator, 
             StorageDbContext storageDbContext)
         {
-            _appDbContext = appDbContext;
+            _appDbContext = appDbContext.NewInstance();
             _mapper = mapper;
             _mediator = mediator;
-            _storageDbContext = storageDbContext;
+            _storageDbContext = storageDbContext.NewInstance();
         }
 
         public async Task<List<SelectTestTemplateValueDto>> Handle(GetTestTemplateByStatusQuery request, CancellationToken cancellationToken)

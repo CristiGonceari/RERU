@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Common.DataTransferObjects.Users;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
@@ -30,6 +31,8 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetAssignedEvaluato
                 .AsQueryable();
 
             var userProfiles = _appDbContext.UserProfiles
+                                            .Include(up => up.Role)
+                                            .Include(up => up.Department)
                                             .Include(up => up.EventUsers)
                                             .AsQueryable();
 
@@ -58,6 +61,28 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetAssignedEvaluato
             if (!string.IsNullOrEmpty(request.Idnp))
             {
                 userProfiles = userProfiles.Where(x => x.Idnp.Contains(request.Idnp));
+            }
+
+            if (request.DepartmentId.HasValue)
+            {
+                userProfiles = userProfiles.Where(x => x.Department.Id == request.DepartmentId);
+            }
+
+            if (request.RoleId.HasValue)
+            {
+                userProfiles = userProfiles.Where(x => x.Role.Id == request.RoleId);
+            }
+
+            if (request.UserStatusEnum.HasValue)
+            {
+                userProfiles = request.UserStatusEnum switch
+                {
+                    UserStatusEnum.Employee => userProfiles.Where(x =>
+                        x.DepartmentColaboratorId != null && x.RoleColaboratorId != null),
+                    UserStatusEnum.Candidate => userProfiles.Where(x =>
+                        x.DepartmentColaboratorId == null || x.RoleColaboratorId == null),
+                    _ => userProfiles
+                };
             }
 
             return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(userProfiles, request);

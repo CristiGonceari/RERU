@@ -48,6 +48,11 @@
     "dynamic": "Dinamic",
     "default": "Static"
   },
+  "footer": {
+    "all-rights-reserved": "Toate drepturile rezervate",
+    "about": "Despre",
+    "contact": "Contact"
+  },
   "media":{
     "invalid-type": "Tip de fișier nevalid",
     "file-was-deleted": "Fișierul a fost șters"
@@ -469,7 +474,8 @@
     "01000501": "Rol nevalid",
     "01000602": "Departament nevalid",
     "01000107": "Email dublicat in sistem",
-    "01000909": "Interval de timp nevalid"
+    "01000909": "Interval de timp nevalid",
+    "01000116": "Parolă veche incorectă"
   },
   "print": {
     "print-table": "Printare tabel",
@@ -517,7 +523,8 @@
     "succes-add-msg": "Departamentul a fost adăugat cu succes",
     "succes-edit-msg": "Departamentul a fost editat cu succes",
     "department-data": "Introduceți detaliile departamentului și confirmați",
-    "department-details": "Detaliile departamentului"
+    "department-details": "Detaliile departamentului",
+    "search-department": "Căutați după departament"
   },
   "user-roles": {
     "overview": "Prezentare generală",
@@ -534,7 +541,8 @@
     "succes-add-msg": "Rolul a fost adăugat cu succes",
     "succes-edit-msg": "Rolul a fost editat cu succes",
     "user-role-data": "Introduceți detaliile rolului și confirmați",
-    "user-role-details": "Detaliile rolului"
+    "user-role-details": "Detaliile rolului",
+    "search-role": "Căutați după rol"
   },
   "general-datas":{
     "nationality": "Naţionalitatea",

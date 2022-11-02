@@ -19,6 +19,11 @@
     "of": "из",
     "records": "записей"
   },
+  "footer": {
+    "all-rights-reserved": "Все права защищены",
+    "about": "О сайте",
+    "contact": "Контакт"
+  },
   "dashboard": {
     "title": "Журнал действий",
     "subtitle": "Таблица действий",

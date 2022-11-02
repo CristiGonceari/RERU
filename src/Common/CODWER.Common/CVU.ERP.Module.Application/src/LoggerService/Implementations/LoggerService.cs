@@ -21,7 +21,7 @@ namespace CVU.ERP.Module.Application.LoggerService.Implementations
         private readonly IEnumerable<ICurrentApplicationUserProvider> _userProvider;
         public LoggerService(IEnumerable<ICurrentApplicationUserProvider> userProvider, LoggingDbContext loggingDbContext)
         {
-            _localLoggingDbContext = loggingDbContext.NewInstance();
+            _localLoggingDbContext = loggingDbContext;
             _userProvider = userProvider;
         }
 
@@ -45,8 +45,9 @@ namespace CVU.ERP.Module.Application.LoggerService.Implementations
                 JsonMessage = data.SerializedObject
             };
 
-            await _localLoggingDbContext.Logs.AddAsync(toLog);
-            await _localLoggingDbContext.SaveChangesAsync();
+            await using var db = _localLoggingDbContext.NewInstance();
+            await db.Logs.AddAsync(toLog);
+            await db.SaveChangesAsync();
 
             ConsoleWrite(toLog);
         }
@@ -79,8 +80,9 @@ namespace CVU.ERP.Module.Application.LoggerService.Implementations
                 JsonMessage = data.SerializedObject
             };
 
-            await _localLoggingDbContext.Logs.AddAsync(toLog);
-            await _localLoggingDbContext.SaveChangesAsync();
+            await using var db = _localLoggingDbContext.NewInstance();
+            await db.Logs.AddAsync(toLog);
+            await db.SaveChangesAsync();
 
             ConsoleWrite(toLog);
         }

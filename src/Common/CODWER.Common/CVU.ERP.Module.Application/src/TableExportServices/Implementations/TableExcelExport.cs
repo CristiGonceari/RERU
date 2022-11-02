@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Module.Application.TableExportServices.Interfaces;
 using RERU.Data.Entities.Enums;
 
@@ -115,6 +116,18 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                     break;
                 case QualifyingTypeEnum:
                     result = EnumMessages.GetTestTemplateQualifyingType((QualifyingTypeEnum)result);
+                    break;
+                case UserStatusEnum:
+                    result = EnumMessages.GetUserPosture((UserStatusEnum)result);
+                    break;
+                case AccessModeEnum:
+                    result = EnumMessages.GetUserAccessModeEnum((AccessModeEnum)result);
+                    break;
+                case SolicitedPositionStatusEnum:
+                    result = EnumMessages.GetSolicitedPositionStatusEnum((SolicitedPositionStatusEnum)result);
+                    break;
+                case TestingLocationType:
+                    result = EnumMessages.GetTestingLocationType((TestingLocationType)result);
                     break;
                 case null:
                     result = "-";
