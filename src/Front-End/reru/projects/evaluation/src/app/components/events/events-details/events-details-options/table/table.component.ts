@@ -228,6 +228,7 @@ export class TableComponent implements OnInit {
   }
 
   attachPersons(data): void {
+    this.isLoading = true;
     this.eventService.attachPerson(this.parse(data)).subscribe(() => {
       forkJoin([
         this.translate.get('modal.success'),
@@ -236,11 +237,13 @@ export class TableComponent implements OnInit {
         this.title = title;
         this.description = description;
       });
+      this.isLoading = false;
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, () => { }, () => this.list());
   }
 
   attachUser(data): void {
+    this.isLoading = true;
     this.eventService.attachUser(this.parse(data)).subscribe(() => {
       forkJoin([
         this.translate.get('modal.success'),
@@ -249,6 +252,7 @@ export class TableComponent implements OnInit {
         this.title = title;
         this.description = description;
       });
+      this.isLoading = false;
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, () => { }, () => this.list());
   }
@@ -270,6 +274,7 @@ export class TableComponent implements OnInit {
       evaluatorId: data.attachedItems || this.fields,
       showUserName: data.showUserName
     }
+    this.isLoading = true;
     this.eventService.attachEvaluator(params).subscribe(() => {
       forkJoin([
         this.translate.get('modal.success'),
@@ -278,6 +283,7 @@ export class TableComponent implements OnInit {
         this.title = title;
         this.description = description;
       });
+      this.isLoading = false;
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, () => { }, () => this.list());
   }
