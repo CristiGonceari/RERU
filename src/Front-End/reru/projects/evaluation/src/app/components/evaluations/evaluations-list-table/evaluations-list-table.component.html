@@ -61,6 +61,7 @@
                                             <input id="from" [owlDateTimeTrigger]="dtFrom" [placeholder]="'events.search-from' | translate"
                                                 autocomplete="off" class="form-control form-control-lg form-control-solid"
                                                 [value]="testsTable.dateTimeFrom | dateFilter:'dd/MM/yy HH:mm'" />
+                                                <i class="fas fa-calendar-alt mr-2"></i>
                                             <owl-date-time #dtFrom></owl-date-time>
                                         </div>
                                     </div>
@@ -72,6 +73,7 @@
                                             <input id="from" [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate"
                                                 autocomplete="off" class="form-control form-control-lg form-control-solid"
                                                 [value]="testsTable.dateTimeTo | dateFilter:'dd/MM/yy HH:mm'" />
+                                                <i class="fas fa-calendar-alt mr-2"></i>
                                             <owl-date-time #toDate></owl-date-time>
                                         </div>
                                     </div>

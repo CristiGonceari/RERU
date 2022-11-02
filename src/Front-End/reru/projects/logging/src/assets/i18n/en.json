@@ -19,6 +19,11 @@
     "of": "of",
     "records": "records"
   },
+  "footer": {
+    "all-rights-reserved": "All rights reserved",
+    "about": "About",
+    "contact": "Contact"
+  },
   "dashboard": {
    "title": "Logging",
    "subtitle": "Logging Table",

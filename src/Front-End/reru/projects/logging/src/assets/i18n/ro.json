@@ -19,6 +19,11 @@
     "of": "din",
     "records": "înregistrări"
   },
+  "footer": {
+    "all-rights-reserved": "Toate drepturile rezervate",
+    "about": "Despre",
+    "contact": "Contact"
+  },
   "dashboard": {
     "title": "Logarea",
     "subtitle": "Tabelul de logare",

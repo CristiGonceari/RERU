@@ -4,6 +4,11 @@
     "en": "English",
     "ru": "Русский"
   },
+  "footer": {
+    "all-rights-reserved": "Toate drepturile rezervate",
+    "about": "Despre",
+    "contact": "Contact"
+  },
   "sidebar": {
     "home": "Acasă",
     "personal-management": "Management personal",

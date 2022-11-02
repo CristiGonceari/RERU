@@ -48,6 +48,11 @@
     "dynamic": "Dinamic",
     "default": "Static"
   },
+  "footer": {
+    "all-rights-reserved": "Toate drepturile rezervate",
+    "about": "Despre",
+    "contact": "Contact"
+  },
   "media":{
     "invalid-type": "Tip de fișier nevalid",
     "file-was-deleted": "Fișierul a fost șters"

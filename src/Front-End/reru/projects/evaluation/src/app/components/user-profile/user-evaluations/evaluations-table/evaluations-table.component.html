@@ -9,6 +9,7 @@
               name="date_time" [(ngModel)]="fromDate" [owlDateTime]="dtFrom" [placeholder]="'events.search-from' | translate"
               (ngModelChange)="setFilter('dtFrom', $event)"
               [readonly]="true">
+              <i class="fas fa-calendar-alt mr-2"></i>
             <owl-date-time #dtFrom></owl-date-time>
         </div>
     </div>
@@ -22,6 +23,7 @@
               name="date_time" [(ngModel)]="tillDate" [owlDateTime]="toDate" [placeholder]="'events.search-to' | translate"
               (ngModelChange)="setFilter('toDate', $event)"
               [readonly]="true">
+              <i class="fas fa-calendar-alt mr-2"></i>
             <owl-date-time #toDate></owl-date-time>
         </div>
     </div>
