@@ -48,6 +48,11 @@
     "dynamic": "Dynamic",
     "default": "Default"
   },
+  "footer": {
+    "all-rights-reserved": "All rights reserved",
+    "about": "About",
+    "contact": "Contact"
+  },
   "files":{
     "title": "Documents",
     "files-list": "Documents list",

@@ -21,7 +21,12 @@
         </thead>
         <tbody class="datatable-body" *ngIf="testTemplate.length">
             <tr *ngFor="let item of testTemplate">
-                <td><span class="font-size-lg">{{ item.testTemplateName }}</span></td>
+                <td>
+                    {{ item.testTemplateName }}
+                    <span class="text-dark-50 d-block mb-0">
+                        {{ item.programmedTime | date: 'dd/MM/yyyy, HH:mm'}}
+                    </span>
+                </td>
                 <td>
                     <p *ngIf="item.showUserName"
                         class="font-size-lg cursor-pointer text-hover-primary mb-0"

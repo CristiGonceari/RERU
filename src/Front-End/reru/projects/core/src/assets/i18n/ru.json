@@ -48,6 +48,11 @@
     "dynamic": "Динамический",
     "default": "По умолчанию"
   },
+  "footer": {
+    "all-rights-reserved": "Все права защищены",
+    "about": "О сайте",
+    "contact": "Контакт"
+  },
   "media":{
     "invalid-type": "Неверный тип файла",
     "file-was-deleted": "Файл был удалён"

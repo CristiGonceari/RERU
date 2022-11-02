@@ -4,6 +4,11 @@
     "en": "English",
     "ru": "Русский"
   },
+  "footer": {
+    "all-rights-reserved": "All rights reserved",
+    "about": "About",
+    "contact": "Contact"
+  },
   "sidebar": {
     "home": "Home",
     "personal-management": "Personal management",

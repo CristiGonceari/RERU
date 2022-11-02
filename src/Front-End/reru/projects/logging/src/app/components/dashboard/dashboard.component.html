@@ -49,6 +49,7 @@
                         class="shadow-input" name="date" [(ngModel)]="dateTimeFrom" (ngModelChange)="getLoggingValues({fromDate: $event})" autocomplete="off" />
                       <input id="from" [owlDateTimeTrigger]="fromDate" [placeholder]="'dashboard.from' | translate" autocomplete="off"
                         class="form-control form-control-lg form-control-solid" [value]="dateTimeFrom | dateFilter:'dd/MM/yy HH:mm'"/>
+                        <i class="fas fa-calendar-alt mr-2"></i>
                       <owl-date-time #fromDate></owl-date-time>
                   </div>
                 </div>
@@ -58,6 +59,7 @@
                         class="shadow-input" name="date" [(ngModel)]="dateTimeTo" (ngModelChange)="getLoggingValues({toDate: $event})" autocomplete="off" />
                       <input id="from" [owlDateTimeTrigger]="toDate" [placeholder]="'dashboard.to' | translate" autocomplete="off"
                         class="form-control form-control-lg form-control-solid" [value]="dateTimeTo | dateFilter:'dd/MM/yy HH:mm'"/>
+                        <i class="fas fa-calendar-alt mr-2"></i>
                       <owl-date-time #toDate></owl-date-time>
                   </div>
                 </div>
