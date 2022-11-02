@@ -27,6 +27,8 @@ export class AddEvaluationComponent implements OnInit {
   @Input() testEvent: boolean;
 
   processProgress: any;
+  
+  isLoading: boolean = true; 
 
   eventsList: any;
   selectActiveTests: any;
@@ -94,6 +96,7 @@ export class AddEvaluationComponent implements OnInit {
   }
 
   getActiveTestTemplate() {
+    this.isLoading = true;
     let params = {
       testTemplateStatus: TestTemplateStatusEnum.Active,
       eventId: this.event.value || null,
@@ -101,6 +104,7 @@ export class AddEvaluationComponent implements OnInit {
     }
     this.testTemplateService.getTestTemplateByStatus(params).subscribe((res) => {
       this.selectActiveTests = res.data;
+    this.isLoading = false;
     })
 
     if (params.eventId != null) this.getEvent(params.eventId);
