@@ -15,7 +15,8 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
         private readonly AppDbContext _appDbContext;
         public AssignUserToEventCommandValidator(AppDbContext appDbContext)
         {
-            _appDbContext = appDbContext;
+            _appDbContext = appDbContext.NewInstance();
+
             RuleFor(r => r)
                 .NotNull()
                 .WithErrorCode(ValidationCodes.NULL_OR_EMPTY_INPUT);
@@ -24,7 +25,7 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
             {
 
                 RuleFor(x => x.EventId)
-                    .SetValidator(x => new ItemMustExistValidator<Event>(appDbContext, ValidationCodes.INVALID_EVENT,
+                    .SetValidator(x => new ItemMustExistValidator<Event>(_appDbContext, ValidationCodes.INVALID_EVENT,
                         ValidationMessages.InvalidReference));
 
                 RuleFor(x => x)
@@ -45,9 +46,11 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
         {
             var listOfResults = new List<bool>();
 
+            var db = _appDbContext.NewInstance();
+
             foreach (var userId in data.UserProfileId)
             {
-                var result = _appDbContext.UserProfiles.Any(up => up.Id == userId);
+                var result = db.UserProfiles.Any(up => up.Id == userId);
 
                 listOfResults.Add(result);
 
@@ -65,9 +68,11 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
         {
             var listOfResults = new List<bool>();
 
+            var db = _appDbContext.NewInstance();
+
             foreach (var userId in data.UserProfileId)
             {
-                var result = _appDbContext.EventEvaluators.Any(ev => ev.EvaluatorId == userId && ev.EventId == data.EventId);
+                var result = db.EventEvaluators.Any(ev => ev.EvaluatorId == userId && ev.EventId == data.EventId);
 
                 listOfResults.Add(result);
             }
@@ -84,10 +89,11 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
         {
             var listOfResults = new List<bool>();
 
+            var db = _appDbContext.NewInstance();
 
             foreach (var userId in data.UserProfileId)
             {
-                var result = _appDbContext.EventResponsiblePersons.Any(ev => ev.UserProfileId == userId && ev.EventId == data.EventId);
+                var result = db.EventResponsiblePersons.Any(ev => ev.UserProfileId == userId && ev.EventId == data.EventId);
 
                 listOfResults.Add(result);
             }

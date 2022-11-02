@@ -54,6 +54,7 @@
             <label class="col-xl-3 col-lg-3 col-form-label text-right">
               {{'events.event-overview' | translate}}</label>
             <div class="card ml-5 col-lg-8 col-xl-8">
+              
               <div class="card-body" *ngIf="!isLoading">
                 <div class="form-group row align-items-center mb-2">
                   <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
@@ -98,8 +99,8 @@
               {{'verify-test.select-test-type' | translate}}
             </label>
             <div class="col-lg-9 col-xl-9">
-              <app-loading-spinner class="form-control form-control-lg form-control-solid" *ngIf="isLoading" [contentHeight]="'1vh'" [height]="'1rem'" [width]="'1rem'"
-                [colorClass]="'text-primary'">
+              <app-loading-spinner class="form-control form-control-lg form-control-solid" *ngIf="isLoading"
+                [contentHeight]="'1vh'" [height]="'1rem'" [width]="'1rem'" [colorClass]="'text-primary'">
               </app-loading-spinner>
               <select class="form-control form-control-lg form-control-solid" name="test" *ngIf="!isLoading"
                 [(ngModel)]="testTemplate.value" (ngModelChange)="checkIfIsOneAnswer($event)">
@@ -142,12 +143,15 @@
           <div class="form-group row mb-10" *ngIf="!testEvent">
             <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'verify-test.programmed-time' |
               translate}}</label>
-            <div class="col-lg-9 col-xl-9">
+            <div class="col-lg-9 col-xl-9" >
               <input id="from" [owlDateTime]="dtFrom" placeholder="Date Time" autocomplete="off" class="shadow-input"
                 name="date" [(ngModel)]="date" />
               <input id="from" [owlDateTimeTrigger]="dtFrom" placeholder="Date Time" autocomplete="off"
                 class="form-control form-control-lg form-control-solid" [value]="date | dateFilter:'dd/MM/yy HH:mm'" />
               <owl-date-time #dtFrom></owl-date-time>
+              <div *ngIf="validateDateTime()" class="col-lg-9 col-xl-9" style="color: rgb(255, 71, 71);">
+                {{ 'locations.empty-name' | translate }}
+              </div>
             </div>
           </div>
         </div>
@@ -156,7 +160,7 @@
         <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
         </app-button>
         <app-add-button class="btn mr-2" [value]="'button.confirm' | translate" (click)="createTest(false)"
-          [disabled]="disableBtn">
+          [disabled]="disableBtn || validateDateTime(testEvent)">
         </app-add-button>
         <app-confirm-button class="btn" title="{{messageText}}" [disabled]="!printTest || disableBtn"
           [value]="'button.confirm-print' | translate" (click)="createTest(true)">
