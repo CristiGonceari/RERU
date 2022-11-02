@@ -108,7 +108,6 @@ export class OnePerPagePerformingTestComponent implements OnInit {
 
   ngOnInit(): void {
     this.summary();
-    this.startTimer();
     this.getTestById();
     this.subscribeForHashedAnswers();
     this.testQuestionService.setData(false);
@@ -180,6 +179,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
       res => {
         this.testDto = res.data;
         this.getTestTemplateSettings(res.data.testTemplateId);
+        this.startTimer();
       }
     )
   }
