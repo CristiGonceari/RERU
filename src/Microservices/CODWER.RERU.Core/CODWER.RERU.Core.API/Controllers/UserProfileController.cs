@@ -21,6 +21,7 @@ using RERU.Data.Entities.Enums;
 using CODWER.RERU.Core.Application.UserProfiles.GetCandidateProfile;
 using CODWER.RERU.Core.Application.UserProfiles.GetCandidateGeneralDatas;
 using CODWER.RERU.Core.DataTransferObjects.Users;
+using CODWER.RERU.Core.Application.UserProfiles.ExportUserProfileData;
 
 namespace CODWER.RERU.Core.API.Controllers {
     [ApiController]
@@ -100,6 +101,18 @@ namespace CODWER.RERU.Core.API.Controllers {
         public async Task<IActionResult> PrintUserProfiles([FromBody] PrintUserProfilesCommand command)
         {
             var result = await Mediator.Send(command);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+
+        [HttpPut("print-excell")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintCandidatePosition([FromBody] ExportUserProfileDataCommand command)
+        {
+            var result = await Mediator.Send(command);
+
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);
