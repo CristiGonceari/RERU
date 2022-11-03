@@ -20,7 +20,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
         private readonly AppDbContext _appDbContext;
         private readonly IStorageFileService _storageFileService;
         private int row { get; set; }
-        private int UserProfileId { get; set; }
+        private int _userProfileId = new();
 
         public ExportUserProfileDataService(AppDbContext appDbContext, IStorageFileService storageFileService)
         {
@@ -39,17 +39,9 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                                             .ThenInclude(up => up.CandidatePosition)
                                             .ThenInclude(up => up.RequiredDocumentPositions)
                                             .Include(svp => svp.SolicitedVacantPositionUserFiles)
-                                            .Include(up => up.Tests)
-                                            .ThenInclude(up => up.Event)
-                                            .Include(up => up.Tests)
-                                            .ThenInclude(t => t.TestTemplate)
-                                            .Include(up => up.Tests)
-                                            .ThenInclude(t => t.Evaluator)
-                                            .Include(up => up.Tests)
-                                            .ThenInclude(up => up.Location)
                                             .FirstOrDefaultAsync(up => up.Id == userProfileId);
 
-            this.UserProfileId = userProfile.Id;
+            _userProfileId = userProfile.Id;
 
             var file = await CreateExcellFile(userProfile);
 
@@ -69,11 +61,11 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
 
             await SetUserProfileSolicitedPosition(userProfile.SolicitedVacantPositions.ToList(), workSheet);
 
-            await SetUserProfileTests(userProfile.Tests.ToList(), workSheet);
+            await SetUserProfileTests(workSheet);
 
-            await SetUserProfileEvaluations(userProfile.Tests.ToList(), workSheet);
+            await SetUserProfileEvaluations(workSheet);
 
-            await SetUserProfilePolls(userProfile.Tests.ToList(), workSheet);
+            await SetUserProfilePolls(workSheet);
 
             var excellFile = GetExcelFile(package);
 
@@ -315,7 +307,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
 
             return workSheet;
         }
-        private async Task<ExcelWorksheet> SetUserProfileTests(List<Test> userProfileTests, ExcelWorksheet workSheet)
+        private async Task<ExcelWorksheet> SetUserProfileTests(ExcelWorksheet workSheet)
         {
             int initialRow = this.row;
 
@@ -327,15 +319,15 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[this.row, 1, this.row + 1, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
             this.row = this.row + 2;
 
-            await SetCellsForUserPorfileTests(userProfileTests, workSheet);
+            await SetCellsForUserPorfileTests(workSheet);
 
-            await SetCellsForUserProfileEvaluatedTests(userProfileTests, workSheet);
+            await SetCellsForUserProfileEvaluatedTests(workSheet);
 
             workSheet.Cells[initialRow, 1, this.row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
 
             return workSheet;
         }
-        private async Task<ExcelWorksheet> SetUserProfileEvaluations(List<Test> userProfileTests, ExcelWorksheet workSheet)
+        private async Task<ExcelWorksheet> SetUserProfileEvaluations(ExcelWorksheet workSheet)
         {
             int initialRow = this.row;
 
@@ -347,15 +339,15 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[this.row, 1, this.row + 1, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
             this.row = this.row + 2;
 
-            await SetCellsForUserProfileEvaluations(userProfileTests, workSheet);
+            await SetCellsForUserProfileEvaluations(workSheet);
 
-            await SetCellsForUserProfileEvaluatedEvaluations(userProfileTests, workSheet);
+            await SetCellsForUserProfileEvaluatedEvaluations(workSheet);
 
             workSheet.Cells[initialRow, 1, this.row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
 
             return workSheet;
         }
-        private async Task<ExcelWorksheet> SetUserProfilePolls(List<Test> userProfileTests, ExcelWorksheet workSheet)
+        private async Task<ExcelWorksheet> SetUserProfilePolls(ExcelWorksheet workSheet)
         {
             int initialRow = this.row;
 
@@ -367,7 +359,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[this.row, 1, this.row + 1, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
             this.row = this.row + 2;
 
-            await SetCellsForUserProfilePolls(userProfileTests, workSheet);
+            await SetCellsForUserProfilePolls(workSheet);
 
             this.row--;
             workSheet.Cells[initialRow, 1, this.row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
@@ -375,7 +367,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             return workSheet;
         }
 
-        private async Task<ExcelWorksheet> SetCellsForUserPorfileTests(List<Test> tests, ExcelWorksheet workSheet)
+        private async Task<ExcelWorksheet> SetCellsForUserPorfileTests(ExcelWorksheet workSheet)
         {
             workSheet.Cells[this.row, 1, this.row, 8].Value = "Teste efectuate";
             workSheet.Cells[this.row, 1, this.row, 8].Merge = true;
@@ -419,7 +411,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[this.row, 7, this.row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
             this.row++;
 
-            var getTest = await GetUserProfileTests(tests);
+            var getTest = await GetUserProfileTestsEvaluationsPolls(TestTemplateModeEnum.Test);
 
             if (getTest.Count() != 0)
             {
@@ -455,7 +447,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
 
             return workSheet;
         }
-        private async Task<ExcelWorksheet> SetCellsForUserProfileEvaluatedTests(List<Test> tests, ExcelWorksheet workSheet)
+        private async Task<ExcelWorksheet> SetCellsForUserProfileEvaluatedTests(ExcelWorksheet workSheet)
         {
             workSheet.Cells[this.row, 1, this.row, 8].Value = "Teste evaluate";
             workSheet.Cells[this.row, 1, this.row, 8].Merge = true;
@@ -504,7 +496,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[this.row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
             this.row++;
 
-            var getEvaluatedTests = await GetUserProfileEvaluatedTests(tests);
+            var getEvaluatedTests = await GetUserProfileEvaluatedTestsOrEvaluations(TestTemplateModeEnum.Test);
 
             if (getEvaluatedTests.Count() != 0)
             {
@@ -542,7 +534,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
 
             return workSheet;
         }
-        private async Task<ExcelWorksheet> SetCellsForUserProfileEvaluations(List<Test> tests, ExcelWorksheet workSheet)
+        private async Task<ExcelWorksheet> SetCellsForUserProfileEvaluations(ExcelWorksheet workSheet)
         {
             workSheet.Cells[this.row, 1, this.row, 8].Value = "Evaluarii";
             workSheet.Cells[this.row, 1, this.row, 8].Merge = true;
@@ -591,7 +583,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[this.row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
             this.row++;
 
-            var getEvaluations = await GetUserProfileEvaluations(tests);
+            var getEvaluations = await GetUserProfileTestsEvaluationsPolls(TestTemplateModeEnum.Evaluation);
 
             if (getEvaluations.Count() != 0)
             {
@@ -630,7 +622,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
 
             return workSheet;
         }
-        private async Task<ExcelWorksheet> SetCellsForUserProfileEvaluatedEvaluations(List<Test> tests, ExcelWorksheet workSheet)
+        private async Task<ExcelWorksheet> SetCellsForUserProfileEvaluatedEvaluations(ExcelWorksheet workSheet)
         {
             workSheet.Cells[this.row, 1, this.row, 8].Value = "Evaluari evaluate";
             workSheet.Cells[this.row, 1, this.row, 8].Merge = true;
@@ -681,7 +673,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[this.row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
             this.row++;
 
-            var getEvaluatedEvaluations = await GetUserProfileEvaluatedEvaluations(tests);
+            var getEvaluatedEvaluations = await GetUserProfileEvaluatedTestsOrEvaluations(TestTemplateModeEnum.Evaluation);
 
             if (getEvaluatedEvaluations.Count() != 0)
             {
@@ -721,7 +713,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
 
             return workSheet;
         }
-        private async Task<ExcelWorksheet> SetCellsForUserProfilePolls(List<Test> tests, ExcelWorksheet workSheet)
+        private async Task<ExcelWorksheet> SetCellsForUserProfilePolls(ExcelWorksheet workSheet)
         {
             workSheet.Cells[this.row, 1].Value = "NUME";
             workSheet.Cells[this.row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
@@ -762,7 +754,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[this.row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
             this.row++;
 
-            var getPolls = await GetUserProfilePolls(tests);
+            var getPolls = await GetUserProfileTestsEvaluationsPolls(TestTemplateModeEnum.Poll);
 
             if (getPolls.Count() != 0)
             {
@@ -943,39 +935,24 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             return workSheet;
         }
 
-        private async Task<List<Test>> GetUserProfileEvaluatedTests(List<Test> userProfileTests)
+        private async Task<List<Test>> GetUserProfileEvaluatedTestsOrEvaluations(TestTemplateModeEnum mode)
         {
-            var getEvaluatedTests = userProfileTests.Where(upt => (upt.EvaluatorId == this.UserProfileId ||
-                   _appDbContext.EventEvaluators.Any(ee => ee.EventId == upt.EventId && ee.EvaluatorId == this.UserProfileId)) &&
-                   upt.TestTemplate.Mode == TestTemplateModeEnum.Test).ToList();
+            var getEvaluatedTests = _appDbContext.Tests.Where(upt => (upt.EvaluatorId == _userProfileId ||
+                   _appDbContext.EventEvaluators.Any(ee => ee.EventId == upt.EventId && ee.EvaluatorId == _userProfileId)) &&
+                   upt.TestTemplate.Mode == mode).ToList();
 
             return getEvaluatedTests;
         }
-        private async Task<List<Test>> GetUserProfileTests(List<Test> userProfileTests)
+        private async Task<List<Test>> GetUserProfileTestsEvaluationsPolls(TestTemplateModeEnum mode)
         {
-            var getUserProfileTests = userProfileTests.Where(t => t.TestTemplate.Mode == TestTemplateModeEnum.Test && t.UserProfileId == this.UserProfileId).ToList();
+            var getUserProfileTests = _appDbContext.Tests.Include(t => t.TestTemplate)
+                    .Include(t => t.Event)
+                    .Include(t => t.Evaluator)
+                    .Include(t => t.Location)
+                    .Where(t => t.TestTemplate.Mode == mode && t.UserProfileId == _userProfileId)
+                    .ToList();
 
             return getUserProfileTests;
-        }
-        private async Task<List<Test>> GetUserProfileEvaluations(List<Test> userProfileTests)
-        {
-            var getUserProfileTests = userProfileTests.Where(t => t.TestTemplate.Mode == TestTemplateModeEnum.Evaluation && t.UserProfileId == this.UserProfileId).ToList();
-
-            return getUserProfileTests;
-        }
-        private async Task<List<Test>> GetUserProfileEvaluatedEvaluations(List<Test> userProfileTests)
-        {
-            var getEvaluatedTests = userProfileTests.Where(upt => (upt.EvaluatorId == this.UserProfileId ||
-                   _appDbContext.EventEvaluators.Any(ee => ee.EventId == upt.EventId && ee.EvaluatorId == this.UserProfileId)) &&
-                   upt.TestTemplate.Mode == TestTemplateModeEnum.Evaluation).ToList();
-
-            return getEvaluatedTests;
-        }
-        private async Task<List<Test>> GetUserProfilePolls(List<Test> userProfileTests)
-        {
-            var getPolls = userProfileTests.Where(t => t.TestTemplate.Mode == TestTemplateModeEnum.Poll && t.UserProfileId == this.UserProfileId).ToList();
-
-            return getPolls;
         }
         private FileDataDto GetExcelFile(ExcelPackage package)
         {
