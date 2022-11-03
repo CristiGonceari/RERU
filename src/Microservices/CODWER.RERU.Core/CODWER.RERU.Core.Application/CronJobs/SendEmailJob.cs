@@ -55,13 +55,11 @@ namespace CODWER.RERU.Core.Application.CronJobs
 
         public async Task SendEmailNotification()
         {
-            while (_appDbContext.EmailNotifications.Any(en => en.IsSend == false && en.InUpdateProcess == false))
+            while (_appDbContext.EmailNotifications.Any(en => en.IsSend == false && en.InUpdateProcess == false && !string.IsNullOrEmpty(en.To)))
             {
-                var emailsToSend = new List<EmailData>();
-
                 var emails = _appDbContext.EmailNotifications
                     .Include(en => en.Properties)
-                    .Where(en => en.IsSend == false && en.InUpdateProcess == false)
+                    .Where(en => en.IsSend == false && en.InUpdateProcess == false && !string.IsNullOrEmpty(en.To))
                     .Take(30)  // 30 per minute
                     .ToList();
 
@@ -69,21 +67,7 @@ namespace CODWER.RERU.Core.Application.CronJobs
 
                 await SetEmailsInUpdateProcess(emails);
 
-                foreach (var email in emails)
-                {
-                    if (!string.IsNullOrEmpty(email.To))
-                    {
-                        var emailData = await GetEmailObject(email);
-
-                        emailsToSend.Add(emailData);
-
-                        email.Status = "Sent";
-                    }
-                    else
-                    {
-                        email.Status = "Email recipient is empty";
-                    }
-                }
+                var emailsToSend = await MapEmails(emails);
 
                 try
                 {
@@ -97,13 +81,27 @@ namespace CODWER.RERU.Core.Application.CronJobs
                 }
                 finally
                 {
-                    await UpdateEmailRecordsAndRemoveProperties(emails);
+                    await UpdateEmailsAndRemoveProperties(emails);
                 }
 
                 await _appDbContext.SaveChangesAsync();
 
                 Log("END EMAIL CronJob");
             }
+        }
+
+        private async Task<List<EmailData>> MapEmails(List<EmailNotification> emails)
+        {
+            var emailsToSend = new List<EmailData>();
+
+            foreach (var email in emails)
+            {
+                var emailData = await GetEmailObject(email);
+
+                emailsToSend.Add(emailData);
+            }
+
+            return emailsToSend;
         }
 
         private async Task SetEmailsInUpdateProcess(List<EmailNotification> emails)
@@ -126,7 +124,7 @@ namespace CODWER.RERU.Core.Application.CronJobs
             await _appDbContext.SaveChangesAsync();
         }
 
-        private async Task UpdateEmailRecordsAndRemoveProperties(List<EmailNotification> emails)
+        private async Task UpdateEmailsAndRemoveProperties(List<EmailNotification> emails)
         {
             var properties = emails.SelectMany(x => x.Properties).ToList();
             _appDbContext.EmailNotificationProperties.RemoveRange(properties);
@@ -134,7 +132,7 @@ namespace CODWER.RERU.Core.Application.CronJobs
             foreach (var email in emails)
             {
                 email.InUpdateProcess = false;
-                email.IsSend = false;
+                email.IsSend = true;
             }
 
             await _appDbContext.SaveChangesAsync();
