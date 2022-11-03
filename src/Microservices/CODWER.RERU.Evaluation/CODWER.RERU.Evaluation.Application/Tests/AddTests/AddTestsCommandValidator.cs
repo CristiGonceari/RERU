@@ -94,7 +94,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
             var result = dataList.FirstOrDefault(x => x.TestTemplateId == data.TestTemplateId);
 
-            return result.IsOnlyOneAnswer;
+            return result?.IsOnlyOneAnswer ?? false;
         }
 
         private async Task<bool> ExistentCandidateInEvent(AddTestsCommand data)

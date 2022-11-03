@@ -154,7 +154,7 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 
         private async Task<string> GetTableContent(EventUser eventUser)
         {
-            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la evenimentul ""{eventUser.Event.Name}"", în rol de candidat, care v-a avea loc în perioada 
+            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la evenimentul ""{eventUser.Event.Name}"", în rol de candidat, care va avea loc în perioada 
                             {eventUser.Event.FromDate.ToString("dd/MM/yyyy HH:mm")}-{eventUser.Event.TillDate.ToString("dd/MM/yyyy HH:mm")}";
 
             content += eventUser.Event.EventLocations.Any() ? $@", locația {GetLocationName(eventUser.Event)}.</p>" : $@".</p>";

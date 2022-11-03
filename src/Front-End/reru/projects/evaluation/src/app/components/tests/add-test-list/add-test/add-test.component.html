@@ -42,7 +42,7 @@
               {{'events.event' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
               <select class="form-control form-control-lg form-control-solid"
-                (ngModelChange)="getActiveTestTemplates($event)" [(ngModel)]="event.value" name="searchEvent">
+                (change)="getActiveTestTemplates($event)" [(ngModel)]="event.value" name="searchEvent">
                 <option value="">{{'questions.select' | translate}}</option>
                 <option *ngFor="let item of eventsList" [ngValue]="item.eventId">
                   {{ item.eventName }}
@@ -162,7 +162,7 @@
         <app-add-button class="btn mr-2" [value]="'button.confirm' | translate" (click)="createTest(false)"
           [disabled]="disableBtn || validateDateTime(testEvent)">
         </app-add-button>
-        <app-confirm-button class="btn" title="{{messageText}}" [disabled]="!printTest || disableBtn"
+        <app-confirm-button class="btn" title="{{messageText}}" [disabled]="!printTest || disableBtn || validateDateTime(testEvent)"
           [value]="'button.confirm-print' | translate" (click)="createTest(true)">
         </app-confirm-button>
       </div>

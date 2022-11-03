@@ -33,7 +33,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTempla
                     .WithErrorCode(ValidationCodes.EXISTENT_TEST_TEMPLATE_IN_EVENT);
 
 
-                When(r => appDbContext.TestTemplates.First(l => l.Id == r.Data.TestTemplateId).Mode == (int)TestTemplateModeEnum.Test, () =>
+                When(r => appDbContext.TestTemplates.FirstOrDefault(l => l.Id == r.Data.TestTemplateId)?.Mode == (int)TestTemplateModeEnum.Test, () =>
                 {
                     RuleFor(r => r.Data.MaxAttempts)
                     .Must(x => x > 0)
@@ -44,7 +44,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTempla
                     .WithErrorCode(ValidationCodes.ONLY_POLLS_OR_TESTS);
                 });
 
-                When(r => appDbContext.TestTemplates.First(l => l.Id == r.Data.TestTemplateId).Mode == TestTemplateModeEnum.Poll, () =>
+                When(r => appDbContext.TestTemplates.FirstOrDefault(l => l.Id == r.Data.TestTemplateId)?.Mode == TestTemplateModeEnum.Poll, () =>
                 {
                     RuleFor(r => r.Data.EventId)
                     .Must(x => !appDbContext.EventTestTemplates.Include(x => x.TestTemplate).Where(e => e.EventId == x).Any(tt => tt.TestTemplate.Mode == (int)TestTemplateModeEnum.Test))

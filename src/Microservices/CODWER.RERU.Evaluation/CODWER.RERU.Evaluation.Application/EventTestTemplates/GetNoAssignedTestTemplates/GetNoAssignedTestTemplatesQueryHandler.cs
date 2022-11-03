@@ -31,7 +31,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.GetNoAssignedTes
 
             if (!string.IsNullOrWhiteSpace(request.Keyword))
             {
-                testTemplates = testTemplates.Where(x => x.Name.Contains(request.Keyword));
+                testTemplates = testTemplates.Where(x => x.Name.ToLower().Contains(request.Keyword.ToLower()));
             }
             var answer = await testTemplates.ToListAsync();
 
