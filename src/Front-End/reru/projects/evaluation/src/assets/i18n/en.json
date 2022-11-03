@@ -796,11 +796,14 @@
     "succes-add-event-msg": "Event was successfully added",
     "succes-edit-event-msg": "Event was successfully edited",
     "succes-add-person-msg": "Responsible person was successfully attached",
+    "succes-add-delete-person-msg": "Responsible persons was successfully attached/detached",
     "succes-add-location-msg": "Location was successfully attached",
     "succes-add-user-msg": "User was successfully attached",
+    "succes-add-delte-user-msg": "Users was successfully attached/detached",
     "succes-add-test-type-msg": "Test Template was successfully attached",
     "succes-attach-evaluator-msg": "Evaluator was successfully attached",
     "succes-detach-evaluator-msg": "Evaluator was successfully detached",
+    "succes-attach-detach-evaluator-msg": "Evaluators was successfully attached/detached",
     "show-user-name": "Show user name"
   },
   "test-template": {

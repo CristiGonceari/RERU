@@ -59,7 +59,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
 
                     eventEvaluatorIds.Add(evaluatorId);
 
-                    await _internalNotificationService.AddNotification(result.EvaluatorId, NotificationMessages.YouWereInvitedToEventAsCandidate);
+                    await _internalNotificationService.AddNotification(result.EvaluatorId, NotificationMessages.YouWereInvitedToEventAsEvaluator);
 
                     await AddEmailNotification(result);
                 }

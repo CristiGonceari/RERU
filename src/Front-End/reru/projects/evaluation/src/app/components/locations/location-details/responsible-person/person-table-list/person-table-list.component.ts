@@ -87,7 +87,7 @@ export class PersonTableListComponent implements OnInit {
 		this.locationService.assignPerson(this.parse(users)).subscribe(() => {
 		  forkJoin([
 				this.translate.get('modal.success'),
-				this.translate.get('locations.succes-add-person-msg'),
+				this.translate.get('events.succes-add-delete-person-msg'),
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
