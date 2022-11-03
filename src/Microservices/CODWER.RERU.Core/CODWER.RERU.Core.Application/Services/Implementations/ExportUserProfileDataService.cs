@@ -41,7 +41,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                                             .Include(svp => svp.SolicitedVacantPositionUserFiles)
                                             .FirstOrDefaultAsync(up => up.Id == userProfileId);
 
-            _userProfileId = userProfile.Id;
+            _userProfileId = userProfileId;
 
             var file = await CreateExcellFile(userProfile);
 
