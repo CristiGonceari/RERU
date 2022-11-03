@@ -310,7 +310,7 @@ namespace CVU.ERP.Infrastructure.Email
             {
                 using (var client = new SmtpClient())
                 {
-                    Console.WriteLine("BULK-EMAIL: Email region");
+                    Console.WriteLine($"BULK-EMAIL: Email region {emailList.Count} to send");
 
                     if (env == "Development") client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
@@ -341,7 +341,6 @@ namespace CVU.ERP.Infrastructure.Email
                         {
                             Console.WriteLine($"BULK-EMAIL: ERROR to ({x.Message})");
                         }
-
                     }
 
                     await client.DisconnectAsync(true);

@@ -6,7 +6,6 @@ using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Common.Interfaces;
-using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
 using Microsoft.EntityFrameworkCore;
@@ -63,10 +62,12 @@ namespace CODWER.RERU.Core.Application.CronJobs
                 var emails = _appDbContext.EmailNotifications
                     .Include(en => en.Properties)
                     .Where(en => en.IsSend == false && en.InUpdateProcess == false)
-                    .Take(30); // 30 per minute
+                    .Take(30)  // 30 per minute
+                    .ToList();
 
-                await emails.ForEachAsync(x => x.InUpdateProcess = true);
-                await _appDbContext.SaveChangesAsync();
+                Log($"START Email CronJob for {emails.Count} items");
+
+                await SetEmailsInUpdateProcess(emails);
 
                 foreach (var email in emails)
                 {
@@ -88,22 +89,55 @@ namespace CODWER.RERU.Core.Application.CronJobs
                 {
                     await _notificationService.BulkNotify(emailsToSend, NotificationType.Both);
 
-                    await emails.ForEachAsync(x => x.Status = "Sent");
+                    await SetEmailsStatus(emails, "Sent");
                 }
                 catch(Exception e)
                 {
-                    await emails.ForEachAsync(x => x.Status = $"Error : {e.Message}");
+                    await SetEmailsStatus(emails, $"Error : {e.Message}");
                 }
                 finally
                 {
-                    _appDbContext.EmailNotificationProperties.RemoveRange(emails.SelectMany(x => x.Properties));
-
-                    await emails.ForEachAsync(x => x.InUpdateProcess = false);
-                    await emails.ForEachAsync(x => x.IsSend = true);
+                    await UpdateEmailRecordsAndRemoveProperties(emails);
                 }
 
                 await _appDbContext.SaveChangesAsync();
+
+                Log("END EMAIL CronJob");
             }
+        }
+
+        private async Task SetEmailsInUpdateProcess(List<EmailNotification> emails)
+        {
+            foreach (var email in emails)
+            {
+                email.InUpdateProcess = true;
+            }
+
+            await _appDbContext.SaveChangesAsync();
+        }
+
+        private async Task SetEmailsStatus(List<EmailNotification> emails, string message)
+        {
+            foreach (var email in emails)
+            {
+                email.Status = message;
+            }
+
+            await _appDbContext.SaveChangesAsync();
+        }
+
+        private async Task UpdateEmailRecordsAndRemoveProperties(List<EmailNotification> emails)
+        {
+            var properties = emails.SelectMany(x => x.Properties).ToList();
+            _appDbContext.EmailNotificationProperties.RemoveRange(properties);
+
+            foreach (var email in emails)
+            {
+                email.InUpdateProcess = false;
+                email.IsSend = false;
+            }
+
+            await _appDbContext.SaveChangesAsync();
         }
 
         private async Task<EmailData> GetEmailObject(EmailNotification email)
@@ -163,5 +197,7 @@ namespace CODWER.RERU.Core.Application.CronJobs
 
         private string GetEmailBodyFooter() =>
             @$"<p style=""font-size: 22px;font-weight: 300;"">Link aplicație: </p><p style=""font-size: 22px;font-weight: 300;"">{_platformConfig.BaseUrl}</p>";
+
+        private void Log(string msg) => Console.WriteLine(msg);
     }
 }
