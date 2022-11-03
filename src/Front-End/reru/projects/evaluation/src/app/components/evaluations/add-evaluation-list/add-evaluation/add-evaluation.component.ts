@@ -265,7 +265,6 @@ export class AddEvaluationComponent implements OnInit {
     modalRef.componentInstance.page = 'add-evaluation';
     modalRef.componentInstance.eventId = +this.event.value;
     modalRef.componentInstance.whichUser = whichUser;
-    modalRef.componentInstance.testTemplateId = +this.testTemplate.value;
     modalRef.componentInstance.testTemplateId =  whichUser ? +this.testTemplate.value : null;
     modalRef.result.then(() => {
       if (whichUser == true) this.evaluatorList = modalRef.result.__zone_symbol__value.attachedItems;
