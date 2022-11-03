@@ -16,6 +16,6 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetAssignedEvaluato
         public int? RoleId { get; set; }
         public UserStatusEnum? UserStatusEnum { get; set; }
         public int EventId { get; set; }
-
+        public int TestTemplateId { get; set; }
     }
 }

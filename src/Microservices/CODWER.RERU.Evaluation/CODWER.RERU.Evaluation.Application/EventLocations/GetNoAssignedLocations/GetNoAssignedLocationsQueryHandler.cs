@@ -30,7 +30,7 @@ namespace CODWER.RERU.Evaluation.Application.EventLocations.GetNoAssignedLocatio
 
             if (!string.IsNullOrWhiteSpace(request.Keyword))
             {
-                locations = locations.Where(x => x.Name.Contains(request.Keyword) || x.Address.Contains(request.Keyword));
+                locations = locations.Where(x => x.Name.ToLower().Contains(request.Keyword.ToLower()) || x.Address.ToLower().Contains(request.Keyword.ToLower()));
             }
             var answer = await locations.ToListAsync();
 

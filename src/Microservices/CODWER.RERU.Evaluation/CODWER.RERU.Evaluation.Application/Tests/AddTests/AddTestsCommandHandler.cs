@@ -275,7 +275,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                       <p> 1.Logați-vă pe pagina {_platformConfig.BaseUrl}</p>
                       <p> 2.Click pe butonul ""Evaluare"" </p>
                       <p> 3.Click pe butonul ""Activitățile mele"" </p>
-                      <p> 4.Din meniul din stânga, alegeți opțiunea TESTE dacă testul a fost programat fără eveniment și opțiunea EVENIMENTE dacă testul a fost programat cu eveniment.</p>
+                      <p> 4.Din meniul din stânga, alegeți opțiunea TESTE.</p>
                       <p> 5.Pentru a începe testul, click ""Începe Testul"" din partea dreaptă de jos a paginii </p>
                       <p> 6.Bifați acceptarea regulilor, selectează ""Acceptă"", și click butonul ""Începe"" </p>";
 
