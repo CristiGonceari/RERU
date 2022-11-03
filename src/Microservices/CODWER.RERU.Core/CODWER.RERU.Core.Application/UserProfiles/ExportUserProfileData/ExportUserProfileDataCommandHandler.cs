@@ -9,6 +9,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles.ExportUserProfileData
     public class ExportUserProfileDataCommandHandler : IRequestHandler<ExportUserProfileDataCommand, FileDataDto>
     {
         private readonly IExportUserProfileData _exportUserProfileData;
+
         public ExportUserProfileDataCommandHandler(IExportUserProfileData exportUserProfileData)
         {
             _exportUserProfileData = exportUserProfileData;
