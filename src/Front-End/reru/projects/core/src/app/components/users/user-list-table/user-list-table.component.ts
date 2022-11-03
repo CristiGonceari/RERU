@@ -17,6 +17,7 @@ import { saveAs } from 'file-saver';
 import { AccessModeEnum } from '../../../utils/models/access-mode.enum';
 import { UserStatusEnum } from '../../../utils/models/user-status-enum.enum';
 import { ProcessService } from '../../../utils/services/process.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
 	selector: 'app-user-list-table',
@@ -49,6 +50,10 @@ export class UserListTableComponent implements OnInit {
 	accessMode = AccessModeEnum;
 	userStatusEnum = UserStatusEnum;
 
+	fileName: string;
+  	fileStatus = { requestType: '', percent: 1 }
+	isLoadingMedia: boolean = false;
+
 	constructor(
 		private route: ActivatedRoute,
 		private userProfileService: UserProfileService,
@@ -58,7 +63,6 @@ export class UserListTableComponent implements OnInit {
 		private modalService: NgbModal,
 		private notificationService: NotificationsService,
 		private userService: UserService,
-		private referenceService: ReferenceService,
 		private processService: ProcessService
 	) { }
 
@@ -333,5 +337,50 @@ export class UserListTableComponent implements OnInit {
 		let host = window.location.host;
 		window.open(`http://${host}/reru-evaluation/#/user-profile/${id}/overview`, '_self')
 	}
+
+	getUserDataSheet(id: number){
+		this.isLoadingMedia = true;
+		
+		const params = {
+			userProfileId: id
+		}
+
+		this.userProfileService.exportUserProfileSheet(params).subscribe((event) => {
+			this.reportProggress(event);
+		},
+		(error) =>{
+			this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+			this.isLoadingMedia = false;
+		})
+	}
+
+	private reportProggress(httpEvent: HttpEvent<Blob>): void {
+		switch (httpEvent.type) {
+		  case HttpEventType.Sent:
+			this.fileStatus.percent = 1;
+			break;
+		  case HttpEventType.UploadProgress:
+			this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+		  break;
+		  case HttpEventType.DownloadProgress:
+			this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+			break;
+		  case HttpEventType.Response:
+			this.fileStatus.requestType = "Done";
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+
+			const fileName = httpEvent.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].slice(1, -1);
+			const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
+			const file = new File([blob], fileName, { type: httpEvent.body.type });
+			saveAs(file);
+			this.isLoadingMedia = false;
+			break;
+		}
+	  }
+	
+	  updateStatus(loaded: number, total: number | undefined, requestType: string) {
+		this.fileStatus.requestType = requestType;
+		this.fileStatus.percent = Math.round(100 * loaded / total);
+	  }
 
 }
