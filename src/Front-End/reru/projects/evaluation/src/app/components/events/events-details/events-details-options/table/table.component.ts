@@ -228,27 +228,31 @@ export class TableComponent implements OnInit {
   }
 
   attachPersons(data): void {
+    this.isLoading = true;
     this.eventService.attachPerson(this.parse(data)).subscribe(() => {
       forkJoin([
         this.translate.get('modal.success'),
-        this.translate.get('locations.succes-add-person-msg'),
+        this.translate.get('events.succes-add-delete-person-msg'),
       ]).subscribe(([title, description]) => {
         this.title = title;
         this.description = description;
       });
+      this.isLoading = false;
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, () => { }, () => this.list());
   }
 
   attachUser(data): void {
+    this.isLoading = true;
     this.eventService.attachUser(this.parse(data)).subscribe(() => {
       forkJoin([
         this.translate.get('modal.success'),
-        this.translate.get('events.succes-add-user-msg'),
+        this.translate.get('events.succes-add-delte-user-msg'),
       ]).subscribe(([title, description]) => {
         this.title = title;
         this.description = description;
       });
+      this.isLoading = false;
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, () => { }, () => this.list());
   }
@@ -270,14 +274,16 @@ export class TableComponent implements OnInit {
       evaluatorId: data.attachedItems || this.fields,
       showUserName: data.showUserName
     }
+    this.isLoading = true;
     this.eventService.attachEvaluator(params).subscribe(() => {
       forkJoin([
         this.translate.get('modal.success'),
-        this.translate.get('events.succes-attach-evaluator-msg'),
+        this.translate.get('events.succes-attach-detach-evaluator-msg'),
       ]).subscribe(([title, description]) => {
         this.title = title;
         this.description = description;
       });
+      this.isLoading = false;
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, () => { }, () => this.list());
   }

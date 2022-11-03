@@ -60,7 +60,7 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
 
                     eventUsersIds.Add(userId);
 
-                    await _internalNotificationService.AddNotification(result.UserProfileId, NotificationMessages.YouWereInvitedToEventAsCandidate);
+                    await _internalNotificationService.AddNotification(result.UserProfileId, NotificationMessages.YouWereInvitedToEventAsResponsiblePerson);
 
                     await AddEmailNotification(result);
                 }
