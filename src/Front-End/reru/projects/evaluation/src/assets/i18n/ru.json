@@ -794,11 +794,14 @@
     "succes-add-event-msg": "Событие было успешно добавлено",
     "succes-edit-event-msg": "Событие было успешно измененно",
     "succes-add-person-msg": "Ответственное лицо было успешно добавлено",
+    "succes-add-delete-person-msg": "Ответственные лица были успешно прикреплёны/удалены",
     "succes-add-location-msg": "Местоположение было успешно добавлено",
     "succes-add-user-msg": "Пользователь был успешно добавлен",
+    "succes-add-delte-user-msg": "Пользователи были успешно прикреплёны/удалены",
     "succes-add-test-type-msg": "Шаблон теста был успешно добавлен",
     "succes-attach-evaluator-msg": "Проверяющий был успешно прикреплён",
     "succes-detach-evaluator-msg": "Проверяющий был успешно удален",
+    "succes-attach-detach-evaluator-msg": "Проверяющиe были успешно прикреплёны/удалены",
     "show-user-name": "Отображать имя пользователя"
   },
   "test-template":{

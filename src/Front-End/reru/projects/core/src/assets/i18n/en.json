@@ -166,6 +166,9 @@
     "finish": "Finish",
     "back": "Back"
   },
+  "button-downloand-excell":{
+    "user-sheet":"Downloand perosnal dossier"
+  },
   "pagination": {
     "displaing": "Displaying",
     "of": "of",

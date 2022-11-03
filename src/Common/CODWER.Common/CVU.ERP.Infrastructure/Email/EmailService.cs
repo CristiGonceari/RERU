@@ -166,7 +166,7 @@ namespace CVU.ERP.Infrastructure.Email
             subject = subjectParameter.Replace("\r", string.Empty).Replace("\n", string.Empty);
             
             //subject = $"[{env}] [{AssemblyName()}] - {subject}";
-            subject = $"[{smtpOptions.FromName}] - {subject}";
+            subject = $"[{smtpOptions.FromName}] - {subject} - Do Not Reply";
 
             return this;
         }
@@ -285,7 +285,72 @@ namespace CVU.ERP.Infrastructure.Email
             }
             catch (Exception e)
             {
-                Console.WriteLine("EMAIL: ERROR " + e.Message);
+                Console.WriteLine($"EMAIL: ERROR send message to e ({to}), error ({e.Message})");
+            }
+
+            this.to.Clear();
+            this.subject = "";
+            this.body = null;
+
+            return this;
+        }
+
+        public async Task<IEmailService> BulkSendAsync(List<EmailData> emailList)
+        {
+            this.to.Clear();
+            cc.Clear();
+            bcc.Clear();
+
+            if (env == "Development")
+            {
+                AddSystemEmails();
+            }
+
+            try
+            {
+                using (var client = new SmtpClient())
+                {
+                    Console.WriteLine($"BULK-EMAIL: Email region {emailList.Count} to send");
+
+                    if (env == "Development") client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+                    if (smtpOptions.IsOutlookEmail)
+                    {
+                        await client.ConnectAsync(smtpOptions.Host, smtpOptions.Port, SecureSocketOptions.StartTls);
+                    }
+                    else
+                    {
+                        await client.ConnectAsync(smtpOptions.Host, smtpOptions.Port, smtpOptions.EnableSsl);
+                    }
+
+                    await client.AuthenticateAsync(smtpOptions.UserName, smtpOptions.Password);
+
+                    foreach(var email in emailList)
+                    {
+                        AddSubject(email.subject);
+                        AddBody(email.body);
+                        From(email.from);
+                        AddRecipient(email.to);
+
+                        try
+                        {
+                            await client.SendAsync(GenerateMessage());
+                            Console.WriteLine($"BULK-EMAIL: Email success to ({email.to})");
+                        }
+                        catch (Exception x)
+                        {
+                            Console.WriteLine($"BULK-EMAIL: ERROR to ({x.Message})");
+                        }
+                    }
+
+                    await client.DisconnectAsync(true);
+
+                    Console.WriteLine("BULK-EMAIL: Disconnect client success");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"BULK-EMAIL: ERROR {e.Message}");
             }
 
             this.to.Clear();

@@ -169,6 +169,9 @@
     "finish": "Finalizează",
     "back": "Înapoi"
   },
+  "button-downloand-excell":{
+    "user-sheet":"Descărcați dosarul persoanei"
+  },
   "pagination": {
     "displaing": "Se afișează",
     "of": "din",

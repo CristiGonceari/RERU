@@ -46,6 +46,7 @@ namespace CODWER.RERU.Core.Application.DependencyInjection
             services.AddTransient<IEvaluationClient, EvaluationClient>();
 
             services.AddTransient<IExportUserTestsService, ExportUserTestsService>();
+            services.AddTransient<IExportUserProfileData, ExportUserProfileDataService>();
 
             services.AddScoped(typeof(PlatformConfig));
 

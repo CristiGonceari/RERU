@@ -3,7 +3,6 @@ using CODWER.RERU.Evaluation.Application.Validation;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
@@ -13,7 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCatego
     {
         private readonly AppDbContext _appDbContext;
 
-        public TestCategoryQuestionsQueryValidator(IServiceProvider serviceProvider, AppDbContext appDbContext)
+        public TestCategoryQuestionsQueryValidator(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext.NewInstance();
 

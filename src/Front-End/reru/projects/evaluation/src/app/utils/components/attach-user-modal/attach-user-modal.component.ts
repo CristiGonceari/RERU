@@ -104,6 +104,7 @@ export class AttachUserModalComponent implements OnInit {
       page: data.page || this.pagination.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
       eventId: this.eventId,
+      testTemplateId: this.testTemplateId || null,
       ...this.filters
     }
     this.eventUserService.getAssignedEvaluators(params).subscribe(res => {

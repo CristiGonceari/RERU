@@ -196,7 +196,6 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                     HtmlTemplateAddress = "Templates/ResetPassword.html",
                     ReplacedValues = new Dictionary<string, string>()
                     {
-                        { "{FirstName}", $"{user.Name} {user.LastName}" },
                         { "{Password}", password },
                         { "{Login}", user.Email }
                     }

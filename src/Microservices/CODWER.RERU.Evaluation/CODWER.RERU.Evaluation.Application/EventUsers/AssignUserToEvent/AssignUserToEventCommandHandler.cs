@@ -39,17 +39,49 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 
         public async Task<List<int>> Handle(AssignUserToEventCommand request, CancellationToken cancellationToken)
         {
+            var tasks = new List<Task>();
+
             foreach (var userId in request.UserProfileId)
             {
-                var exist = ExistEventUser(userId, request.EventId);
+                tasks.Add(Task.Run(() => AssignUsersToEvent(userId, request.EventId)));
+            }
+
+            await WaitTasks(Task.WhenAll(tasks));
+
+            tasks.Clear();
+
+            await UnassignUsersFromEvent(request.EventId);
+
+            return _addedUsersIds;
+        }
+
+        private async Task WaitTasks(Task t)
+        {
+            try
+            {
+                t.Wait();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw new Exception(e.Message);
+            }
+        }
+
+        private async Task AssignUsersToEvent(int userId, int eventId)
+        {
+            try
+            {
+                var exist = await ExistEventUser(userId, eventId);
 
                 if (!exist)
                 {
-                    var result = await AssignUserToEvent(userId, request.EventId);
+                    var result = await AssignUserToEvent(userId, eventId);
 
                     _addedUsersIds.Add(result.UserProfileId);
 
-                    await _internalNotificationService.AddNotification(result.UserProfileId, NotificationMessages.YouWereInvitedToEventAsCandidate);
+                    await _internalNotificationService
+                        .AddNotification(result.UserProfileId, NotificationMessages.YouWereInvitedToEventAsCandidate);
 
                     await AddEmailNotification(result);
                 }
@@ -58,10 +90,11 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
                     _addedUsersIds.Add(userId);
                 }
             }
-
-            await UnassignUsersFromEvent(request.EventId);
-
-            return _addedUsersIds;
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         private async Task<EventUser> AssignUserToEvent(int userId, int eventId)
@@ -72,29 +105,35 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
                 EventId = eventId,
             };
 
+            await using var db = _appDbContext.NewInstance();
+
             var result = _mapper.Map<EventUser>(newEventUser);
 
-            await _appDbContext.EventUsers.AddAsync(result);
-            await _appDbContext.SaveChangesAsync();
+            await db.EventUsers.AddAsync(result);
+            await db.SaveChangesAsync();
 
             return result;
         }
 
         private async Task UnassignUsersFromEvent(int eventId)
         {
-            var userEventsToDelete = _appDbContext.EventUsers
+            await using var db = _appDbContext.NewInstance();
+
+            var userEventsToDelete = db.EventUsers
                 .Where(eu => _addedUsersIds.All(p2 => p2 != eu.UserProfileId) && eu.EventId == eventId);
 
             if (userEventsToDelete.Any())
             {
-                _appDbContext.EventUsers.RemoveRange(userEventsToDelete);
-                await _appDbContext.SaveChangesAsync();
+                db.EventUsers.RemoveRange(userEventsToDelete);
+                await db.SaveChangesAsync();
             }
         }
 
         private async Task AddEmailNotification(EventUser eventUser)
         {
-            var item = await _appDbContext.EventUsers
+            await using var db = _appDbContext.NewInstance();
+
+            var item = await db.EventUsers
                 .Include(x => x.UserProfile)
                 .Include(x => x.Event)
                     .ThenInclude(x => x.EventLocations)
@@ -108,14 +147,14 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
                 ReplacedValues = new Dictionary<string, string>()
                 {
                     { "{user_name}", item.UserProfile.FullName },
-                    { "{email_message}", GetTableContent(item) }
+                    { "{email_message}", await GetTableContent(item) }
                 }
             });
         }
 
-        private string GetTableContent(EventUser eventUser)
+        private async Task<string> GetTableContent(EventUser eventUser)
         {
-            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la evenimentul ""{eventUser.Event.Name}"", în rol de candidat, care v-a avea loc în perioada 
+            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la evenimentul ""{eventUser.Event.Name}"", în rol de candidat, care va avea loc în perioada 
                             {eventUser.Event.FromDate.ToString("dd/MM/yyyy HH:mm")}-{eventUser.Event.TillDate.ToString("dd/MM/yyyy HH:mm")}";
 
             content += eventUser.Event.EventLocations.Any() ? $@", locația {GetLocationName(eventUser.Event)}.</p>" : $@".</p>";
@@ -123,19 +162,26 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
             return content;
         }
 
-        private bool ExistEventUser(int userId, int eventId) => 
-            _appDbContext.EventUsers.Any(x =>
-            x.UserProfileId == userId && x.EventId == eventId);
-
-        private string GetLocationName(Event eventDb)
+        private async Task<bool> ExistEventUser(int userId, int eventId)
         {
+            await using var db = _appDbContext.NewInstance();
+
+            return db.EventUsers.Any(x =>
+                x.UserProfileId == userId && x.EventId == eventId);
+        }
+
+
+        private async Task<string> GetLocationName(Event eventDb)
+        {
+            await using var db = _appDbContext.NewInstance();
+
             var locations = new List<EventLocation>();
             var list = new List<string>();
 
-            locations = _appDbContext.EventLocations
+            locations = await db.EventLocations
                 .Include(e => e.Location)
                 .Where(e => e.EventId == eventDb.Id)
-                .ToList();
+                .ToListAsync();
 
             list.AddRange(locations.Select(location => location.Location.Name + "-" + location.Location.Address));
             var combineString = string.Join(", ", list);

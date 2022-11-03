@@ -194,7 +194,7 @@ export class AddTestComponent implements OnInit {
 
         clearInterval(interval);
         this.isStartAddingTests = false;
-        if(print) this.performingTestPdf(response.data);
+        if (print) this.performingTestPdf(response.data);
 
         this.backClicked();
         this.disableBtn = false;
@@ -269,19 +269,23 @@ export class AddTestComponent implements OnInit {
     modalRef.componentInstance.inputType = inputType;
     modalRef.componentInstance.page = 'add-test';
     modalRef.componentInstance.eventId = +this.event.value;
-    modalRef.componentInstance.testTemplateId =  inputType == "radio" ? +this.testTemplate.value : null;
+    modalRef.componentInstance.testTemplateId = inputType == "radio" ? +this.testTemplate.value : null;
     modalRef.result.then(() => {
       if (inputType == 'radio') this.evaluatorList = modalRef.result.__zone_symbol__value.attachedItems;
       else if (inputType == 'checkbox') this.userListToAdd = modalRef.result.__zone_symbol__value.attachedItems;
     }, () => { });
   }
 
-  ceckTestTemplate(testTemplate): boolean{
-    if(typeof(testTemplate.value) === 'undefined' || typeof(testTemplate.value) === 'string'){
+  ceckTestTemplate(testTemplate): boolean {
+    if (typeof (testTemplate.value) === 'undefined' || typeof (testTemplate.value) === 'string') {
       return true
     } else {
       return false
     }
+  }
+
+  validateDateTime(isTestEvent): boolean {
+    return isTestEvent ? false : this.date === null || typeof(this.date) === 'undefined'
   }
 
 }
