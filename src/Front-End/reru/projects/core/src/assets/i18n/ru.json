@@ -174,6 +174,9 @@
     "finish": "Завершить",
     "back": "Назад"
   },
+  "button-downloand-excell":{
+    "user-sheet":"Скачать личный файл"
+  },
   "pagination": {
     "displaing": "Показано",
     "of": "из",

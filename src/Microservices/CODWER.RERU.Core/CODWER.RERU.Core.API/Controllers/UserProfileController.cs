@@ -106,10 +106,9 @@ namespace CODWER.RERU.Core.API.Controllers {
             return File(result.Content, result.ContentType, result.Name);
         }
 
-
-        [HttpPut("print-excell")]
+        [HttpPut("print-personal-data-excell")]
         [IgnoreResponseWrap]
-        public async Task<IActionResult> PrintCandidatePosition([FromBody] ExportUserProfileDataCommand command)
+        public async Task<IActionResult> PrintUserProfileExcell([FromBody] ExportUserProfileDataCommand command)
         {
             var result = await Mediator.Send(command);
 

@@ -166,6 +166,9 @@
     "finish": "Finish",
     "back": "Back"
   },
+  "button-downloand-excell":{
+    "user-sheet":"Download the Personal File"
+  },
   "pagination": {
     "displaing": "Displaying",
     "of": "of",
