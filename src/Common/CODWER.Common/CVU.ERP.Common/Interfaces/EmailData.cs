@@ -1,4 +1,4 @@
-﻿namespace CVU.ERP.Notifications.Email
+﻿namespace CVU.ERP.Common.Interfaces
 {
     public class EmailData
     {

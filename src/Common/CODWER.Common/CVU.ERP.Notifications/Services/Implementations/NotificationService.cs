@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CVU.ERP.Notifications.Email;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Collections.Generic;
 
 namespace CVU.ERP.Notifications.Services.Implementations
 {
@@ -19,7 +20,7 @@ namespace CVU.ERP.Notifications.Services.Implementations
             _emailService = emailService;
             _appDbContext = appDbContext;
         }
-        
+
         public async Task<IEmailService> Notify(EmailData data, NotificationType type)
         {
             var result = _emailService;
@@ -35,6 +36,27 @@ namespace CVU.ERP.Notifications.Services.Implementations
             else if (type == NotificationType.Both)
             {
                 result = await _emailService.QuickSendAsync(data.subject, data.body, data.from, data.to);
+                //+ MNotification todo Service
+            }
+
+            return result;
+        }
+
+        public async Task<IEmailService> BulkNotify(List<EmailData> data, NotificationType type = NotificationType.Both)
+        {
+            var result = _emailService;
+
+            if (type == NotificationType.MNotifyNotification)
+            {
+                // to do
+            }
+            else if (type == NotificationType.LocalNotification)
+            {
+                result = await _emailService.BulkSendAsync(data);
+            }
+            else if (type == NotificationType.Both)
+            {
+                result = await _emailService.BulkSendAsync(data);
                 //+ MNotification todo Service
             }
 

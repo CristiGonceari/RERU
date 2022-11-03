@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using CVU.ERP.Common.DataTransferObjects.Config;
+using CVU.ERP.Common.Interfaces;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
@@ -26,66 +29,134 @@ namespace CODWER.RERU.Core.Application.CronJobs
             _platformConfig = conf.Value;
         }
 
+        //public async Task SendEmailNotification1()
+        //{
+        //    while (_appDbContext.EmailNotifications.Any(en => en.IsSend == false && en.InUpdateProcess == false))
+        //    {
+        //        var email = await _appDbContext.EmailNotifications
+        //            .Include(en => en.Properties)
+        //            .FirstOrDefaultAsync(en => en.IsSend == false && en.InUpdateProcess == false);
+
+        //        if (email == null) return;
+
+        //        email.InUpdateProcess = true;
+        //        await _appDbContext.SaveChangesAsync();
+
+        //        var template = await GetFileContent(email.HtmlTemplateAddress);
+
+        //        template = email.Properties
+        //            .Aggregate(template, (current, property) => current
+        //                .Replace(property.KeyToReplace, property.ValueToReplace));
+
+        //        await SendEmail(email, template);
+
+        //        await _appDbContext.SaveChangesAsync();
+        //    }
+        //}
+
         public async Task SendEmailNotification()
         {
             while (_appDbContext.EmailNotifications.Any(en => en.IsSend == false && en.InUpdateProcess == false))
             {
-                var email = await _appDbContext.EmailNotifications
+                var emailsToSend = new List<EmailData>();
+
+                var emails = _appDbContext.EmailNotifications
                     .Include(en => en.Properties)
-                    .FirstOrDefaultAsync(en => en.IsSend == false && en.InUpdateProcess == false);
+                    .Where(en => en.IsSend == false && en.InUpdateProcess == false)
+                    .Take(30); // 30 per minute
 
-                if (email == null) return;
-
-                email.InUpdateProcess = true;
+                await emails.ForEachAsync(x => x.InUpdateProcess = true);
                 await _appDbContext.SaveChangesAsync();
 
-                var template = await GetFileContent(email.HtmlTemplateAddress);
-
-                template = email.Properties
-                    .Aggregate(template, (current, property) => current
-                        .Replace(property.KeyToReplace, property.ValueToReplace));
-
-                await SendEmail(email, template);
-
-                await _appDbContext.SaveChangesAsync();
-            }
-        }
-
-        private async Task SendEmail(EmailNotification emailNotification, string template)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(emailNotification.To))
+                foreach (var email in emails)
                 {
-                    var emailData = new EmailData
+                    if (!string.IsNullOrEmpty(email.To))
                     {
-                        subject = emailNotification.Subject,
-                        body = $"{template} {GetEmailBodyFooter()}",
-                        from = "Do Not Reply",
-                        to = emailNotification.To
-                    };
+                        var emailData = await GetEmailObject(email);
 
-                    await _notificationService.Notify(emailData, (NotificationType)emailNotification.Type);
+                        emailsToSend.Add(emailData);
 
-                    emailNotification.Status = "Sent";
+                        email.Status = "Sent";
+                    }
+                    else
+                    {
+                        email.Status = "Email recipient is empty";
+                    }
                 }
-                else
+
+                try
                 {
-                    emailNotification.Status = "Email recipient is empty";
-                }
-            }
-            catch (Exception e)
-            {
-                emailNotification.Status = $"Error : {e.Message}";
-            }
-            finally
-            {
-                _appDbContext.EmailNotificationProperties.RemoveRange(emailNotification.Properties);
+                    await _notificationService.BulkNotify(emailsToSend, NotificationType.Both);
 
-                emailNotification.InUpdateProcess = false;
-                emailNotification.IsSend = true;
+                    await emails.ForEachAsync(x => x.Status = "Sent");
+                }
+                catch(Exception e)
+                {
+                    await emails.ForEachAsync(x => x.Status = $"Error : {e.Message}");
+                }
+                finally
+                {
+                    _appDbContext.EmailNotificationProperties.RemoveRange(emails.SelectMany(x => x.Properties));
+
+                    await emails.ForEachAsync(x => x.InUpdateProcess = false);
+                    await emails.ForEachAsync(x => x.IsSend = true);
+                }
+
+                await _appDbContext.SaveChangesAsync();
             }
         }
+
+        private async Task<EmailData> GetEmailObject(EmailNotification email)
+        {
+            var template = await GetFileContent(email.HtmlTemplateAddress);
+
+            template = email.Properties
+                .Aggregate(template, (current, property) => current.Replace(property.KeyToReplace, property.ValueToReplace));
+
+            return new EmailData
+            {
+                subject = email.Subject,
+                body = $"{template} {GetEmailBodyFooter()}",
+                from = "Do Not Reply",
+                to = email.To
+            };
+        }
+
+        //private async Task<EmailData> GetEmail(EmailNotification emailNotification, string template)
+        //{
+        //    try
+        //    {
+        //        if (!string.IsNullOrEmpty(emailNotification.To))
+        //        {
+        //            var emailData = new EmailData
+        //            {
+        //                subject = emailNotification.Subject,
+        //                body = $"{template} {GetEmailBodyFooter()}",
+        //                from = "Do Not Reply",
+        //                to = emailNotification.To
+        //            };
+
+        //            await _notificationService.Notify(emailData, (NotificationType)emailNotification.Type);
+
+        //            emailNotification.Status = "Sent";
+        //        }
+        //        else
+        //        {
+        //            emailNotification.Status = "Email recipient is empty";
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        emailNotification.Status = $"Error : {e.Message}";
+        //    }
+        //    finally
+        //    {
+        //        _appDbContext.EmailNotificationProperties.RemoveRange(emailNotification.Properties);
+
+        //        emailNotification.InUpdateProcess = false;
+        //        emailNotification.IsSend = true;
+        //    }
+        //}
 
         private async Task<string> GetFileContent(string path)
             => await File.ReadAllTextAsync(new FileInfo(path).FullName);
