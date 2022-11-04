@@ -297,10 +297,6 @@ namespace CVU.ERP.Infrastructure.Email
 
         public async Task<IEmailService> BulkSendAsync(List<EmailData> emailList)
         {
-            this.to.Clear();
-            cc.Clear();
-            bcc.Clear();
-
             if (env == "Development")
             {
                 AddSystemEmails();
@@ -327,6 +323,10 @@ namespace CVU.ERP.Infrastructure.Email
 
                     foreach(var email in emailList)
                     {
+                        this.to.Clear();
+                        cc.Clear();
+                        bcc.Clear();
+
                         AddSubject(email.subject);
                         AddBody(email.body);
                         From(email.from);
@@ -341,6 +341,10 @@ namespace CVU.ERP.Infrastructure.Email
                         {
                             Console.WriteLine($"BULK-EMAIL: ERROR to ({x.Message})");
                         }
+
+                        this.to.Clear();
+                        this.subject = "";
+                        this.body = null;
                     }
 
                     await client.DisconnectAsync(true);
@@ -352,10 +356,6 @@ namespace CVU.ERP.Infrastructure.Email
             {
                 Console.WriteLine($"BULK-EMAIL: ERROR {e.Message}");
             }
-
-            this.to.Clear();
-            this.subject = "";
-            this.body = null;
 
             return this;
         }
