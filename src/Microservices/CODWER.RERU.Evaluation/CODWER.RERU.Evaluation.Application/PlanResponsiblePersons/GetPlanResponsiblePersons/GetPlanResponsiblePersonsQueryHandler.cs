@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.GetPlanResponsiblePersons
 {
@@ -27,12 +28,10 @@ namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.GetPlanRespo
                 .Include(x => x.UserProfile)
                 .Where(x => x.PlanId == request.PlanId)
                 .Select(x => x.UserProfile)
-                .OrderBy(x => x.LastName)
-                .ThenBy(x => x.FirstName)
+                .OrderByFullName()
                 .AsQueryable();
 
             return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(responsiblePersons, request);
         }
     }
-
 }
