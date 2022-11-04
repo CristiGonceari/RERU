@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.GetEventResponsiblePersons
 {
@@ -27,8 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.GetEventRes
                 .Include(x => x.UserProfile)
                 .Where(x => x.EventId == request.EventId)
                 .Select(x => x.UserProfile)
-                .OrderBy(x => x.LastName)
-                .ThenBy(x => x.FirstName)
+                .OrderByFullName()
                 .AsQueryable();
 
             return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(responsiblePersons, request);
