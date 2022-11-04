@@ -42,7 +42,7 @@
               {{'events.event' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
               <select class="form-control form-control-lg form-control-solid"
-                (change)="getActiveTestTemplates($event)" [(ngModel)]="event.value" name="searchEvent">
+                (ngModelChange)="getActiveTestTemplates($event)" [(ngModel)]="event.value" name="searchEvent">
                 <option value="">{{'questions.select' | translate}}</option>
                 <option *ngFor="let item of eventsList" [ngValue]="item.eventId">
                   {{ item.eventName }}
