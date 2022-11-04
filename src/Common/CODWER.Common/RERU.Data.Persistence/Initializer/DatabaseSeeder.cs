@@ -451,7 +451,7 @@ namespace RERU.Data.Persistence.Initializer
                                                "<span style=\\\"color:black;\\\">" +
                                                "<i>Dl/Dna Maculețchi Mihaela, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i></span>" +
                                                "</p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
-                                               "<i>Ne pare rău, nu sunteți eligibil pentru testele de evaluare.</i></span></p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
+                                               "<i>Ne pare rău, nu sunteți eligibil/ă pentru testele de evaluare.</i></span></p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
                                                "<i>Cu respect MAI.</i></span></p>";
 
                 var rejectMessage = new SolicitedVacantPositionEmailMessage
@@ -464,9 +464,9 @@ namespace RERU.Data.Persistence.Initializer
                                                 "<span style=\\\"color:black;\\\">" +
                                                 "<i>Dl/Dna Maculețchi Mihaela, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i>" +
                                                 "</span></p><p style=\\\"text-align:center;\\\">" +
-                                                "<span style=\\\"color:black;\\\"><i>Sunteți admis la probele de evaluare.</i></span></p>" +
+                                                "<span style=\\\"color:black;\\\"><i>Sunteți admis/ă la probele de evaluare.</i></span></p>" +
                                                 "<p style=\\\"text-align:center;\\\">" +
-                                                "<span style=\\\"color:black;\\\"><i>În următoarele zile veți primi notificări pe adresa electoronica cu privire la data/ora /locația și modul de desfășurare a acestora.</i></span></p>";
+                                                "<span style=\\\"color:black;\\\"><i>În următoarele zile veți primi notificări pe adresa electronică cu privire la data/ora/locația și modul de desfășurare a acestora.</i></span></p>";
 
                 var approvalMessage = new SolicitedVacantPositionEmailMessage
                 {
@@ -477,7 +477,7 @@ namespace RERU.Data.Persistence.Initializer
                 const string messageToWait = "<p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
                                              "<i>Dl/Dna Maculețchi Mihaela, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i></span></p>" +
                                              "<p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
-                                             "<i>Sunteți asignat cu statut de asteptare.</i></span></p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
+                                             "<i>Sunteți asignat/ă cu statut de asteptare.</i></span></p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
                                              "<i>Vă rugăm să examinați documentele necesare atașate postului vacant.</i></span></p>";
 
                 var waitMessage = new SolicitedVacantPositionEmailMessage
@@ -489,7 +489,10 @@ namespace RERU.Data.Persistence.Initializer
                 appDbContext.SolicitedVacantPositionEmailMessages.Add(rejectMessage);
                 appDbContext.SolicitedVacantPositionEmailMessages.Add(approvalMessage);
                 appDbContext.SolicitedVacantPositionEmailMessages.Add(waitMessage);
+
             }
+
+            appDbContext.SaveChanges();
         }
 
 

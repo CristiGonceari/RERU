@@ -38,6 +38,8 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetAssignedEvaluato
                                             .Include(up => up.Role)
                                             .Include(up => up.Department)
                                             .Include(up => up.EventUsers)
+                                            .OrderBy(x => x.LastName)
+                                            .ThenBy(x => x.FirstName)
                                             .AsQueryable();
 
             userProfiles = userProfiles.Where(up => evaluators.Any(e => e.EvaluatorId == up.Id));
