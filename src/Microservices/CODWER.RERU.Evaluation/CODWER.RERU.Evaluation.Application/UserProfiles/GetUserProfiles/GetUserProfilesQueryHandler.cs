@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
 {
@@ -36,8 +37,7 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
                 .Include(up => up.EventUsers)
                 .Include(up => up.Role)
                 .Include(up => up.Department)
-                .OrderBy(up => up.LastName)
-                .ThenBy(up => up.FirstName)
+                .OrderByFullName()
                 .AsQueryable();
 
             if (currentUser.AccessModeEnum == AccessModeEnum.CurrentDepartment || currentUser.AccessModeEnum == null)

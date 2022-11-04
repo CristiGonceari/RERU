@@ -7,6 +7,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.Pagination;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.GetNoAssignedResponsiblePersons
 {
@@ -24,14 +25,13 @@ namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.GetNoAssigne
 
         public async Task<PaginatedModel<UserProfileDto>> Handle(GetNoAssignedResponsiblePersonsQuery request, CancellationToken cancellationToken)
         {
-
             var responsiblePersons = _appDbContext.PlanResponsiblePersons
                 .Include(x => x.UserProfile)
                 .Where(x => x.PlanId == request.PlanId)
                 .Select(x => x.UserProfile.Id)
                 .AsQueryable();
 
-            var userProfiles = _appDbContext.UserProfiles.AsQueryable();
+            var userProfiles = _appDbContext.UserProfiles.OrderByFullName().AsQueryable();
            
             userProfiles = userProfiles.Where(x => !responsiblePersons.Any(s => s == x.Id));
 
@@ -61,7 +61,6 @@ namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.GetNoAssigne
             }
 
             return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(userProfiles, request);
-
         }
     }
 }

@@ -10,6 +10,7 @@ using CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfilesByModuleRol
 using CVU.ERP.Common.DataTransferObjects.Users;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetAssignedEvaluators
 {
@@ -38,6 +39,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetAssignedEvaluato
                                             .Include(up => up.Role)
                                             .Include(up => up.Department)
                                             .Include(up => up.EventUsers)
+                                            .OrderByFullName()
                                             .AsQueryable();
 
             userProfiles = userProfiles.Where(up => evaluators.Any(e => e.EvaluatorId == up.Id));

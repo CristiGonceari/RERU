@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using RERU.Data.Persistence.Context;
 using RERU.Data.Entities;
+using RERU.Data.Persistence.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.GetLocationResponsiblePersons
 {
@@ -27,6 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.GetLocat
                 .Include(x => x.UserProfile)
                 .Where(x => x.LocationId == request.LocationId)
                 .Select(x => x.UserProfile)
+                .OrderByFullName()
                 .AsQueryable();
 
             return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(responsiblePersons, request);

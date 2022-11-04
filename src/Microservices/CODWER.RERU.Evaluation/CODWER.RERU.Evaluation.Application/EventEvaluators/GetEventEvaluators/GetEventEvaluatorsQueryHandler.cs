@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetEventEvaluators
 {
@@ -27,6 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetEventEvaluators
                 .Include(x => x.Evaluator)
                 .Where(x => x.EventId == request.EventId)
                 .Select(x => x.Evaluator)
+                .OrderByFullName()
                 .AsQueryable();
 
             return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(eventEvaluators, request);
