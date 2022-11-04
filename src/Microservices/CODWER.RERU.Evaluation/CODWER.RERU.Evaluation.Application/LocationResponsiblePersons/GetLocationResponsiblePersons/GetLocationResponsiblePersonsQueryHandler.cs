@@ -27,6 +27,8 @@ namespace CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.GetLocat
                 .Include(x => x.UserProfile)
                 .Where(x => x.LocationId == request.LocationId)
                 .Select(x => x.UserProfile)
+                .OrderBy(x => x.LastName)
+                .ThenBy(x => x.FirstName)
                 .AsQueryable();
 
             return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(responsiblePersons, request);

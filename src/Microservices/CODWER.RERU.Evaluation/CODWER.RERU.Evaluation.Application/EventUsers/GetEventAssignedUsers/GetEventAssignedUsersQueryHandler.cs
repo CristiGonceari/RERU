@@ -34,12 +34,15 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.GetEventAssignedUsers
                     .ThenInclude(x => x.Department)
                 .Include(x => x.UserProfile)
                      .ThenInclude(x => x.Role)
-                .Where(x => x.EventId == request.EventId )
+                .Where(x => x.EventId == request.EventId)
                 .AsQueryable();
 
             var userProfiles = _appDbContext.UserProfiles
                 .Include(up => up.Role)
-                .Include(up => up.Department).AsQueryable();
+                .Include(up => up.Department)
+                .OrderBy(x => x.LastName)
+                .ThenBy(x => x.FirstName)
+                .AsQueryable();
 
             userProfiles = userProfiles.Where(up => users.Any(eu => eu.UserProfileId == up.Id));
 

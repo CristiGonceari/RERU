@@ -27,6 +27,8 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetEventEvaluators
                 .Include(x => x.Evaluator)
                 .Where(x => x.EventId == request.EventId)
                 .Select(x => x.Evaluator)
+                .OrderBy(x => x.LastName)
+                .ThenBy(x => x.FirstName)
                 .AsQueryable();
 
             return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(eventEvaluators, request);

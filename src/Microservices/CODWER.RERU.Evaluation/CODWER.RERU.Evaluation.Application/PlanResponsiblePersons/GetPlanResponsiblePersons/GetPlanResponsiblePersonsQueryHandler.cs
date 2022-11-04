@@ -27,6 +27,8 @@ namespace CODWER.RERU.Evaluation.Application.PlanResponsiblePersons.GetPlanRespo
                 .Include(x => x.UserProfile)
                 .Where(x => x.PlanId == request.PlanId)
                 .Select(x => x.UserProfile)
+                .OrderBy(x => x.LastName)
+                .ThenBy(x => x.FirstName)
                 .AsQueryable();
 
             return await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(responsiblePersons, request);

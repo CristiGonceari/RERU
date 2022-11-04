@@ -29,6 +29,8 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.GetEventUsers
                 .Include(x => x.UserProfile)
                 .Where(x => x.EventId == request.EventId)
                 .Select(x => x.UserProfile)
+                .OrderBy(x => x.LastName)
+                .ThenBy(x => x.FirstName)
                 .AsQueryable();
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(eventUsers, request);
