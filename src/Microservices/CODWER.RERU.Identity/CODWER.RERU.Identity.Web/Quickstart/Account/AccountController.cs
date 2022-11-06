@@ -108,9 +108,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
 
             if (ModelState.IsValid)
             {
-                var preUser = await _userManager.FindByEmailAsync(model.Username);
-
-                var result = await _signInManager.PasswordSignInAsync(preUser.UserName, model.Password, model.RememberLogin, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByNameAsync(model.Username);
@@ -145,7 +143,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                     }
                 }
 
-                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId:context?.Client.ClientId));
+                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.Client.ClientId));
                 ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
             }
 
@@ -154,7 +152,6 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             return View(vm);
         }
 
-        
         /// <summary>
         /// Show logout page
         /// </summary>

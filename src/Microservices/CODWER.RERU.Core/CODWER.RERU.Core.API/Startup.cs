@@ -75,13 +75,13 @@ namespace CODWER.RERU.Core.API
             services.AddIdentity<ERPIdentityUser, IdentityRole>(opts =>
             {
                 opts.Password.RequiredLength = 6;
-                opts.Password.RequireNonAlphanumeric = true;
+                opts.Password.RequireNonAlphanumeric = false;
                 opts.Password.RequireLowercase = true;
                 opts.Password.RequireUppercase = false;
-                opts.Password.RequireDigit = true;
+                opts.Password.RequireDigit = false;
 
                 opts.User.AllowedUserNameCharacters =
-                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ĂăÎîȘșȚț";
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ĂăÎîȘșȚțÂâ";
                 opts.User.RequireUniqueEmail = true;
             })
                 .AddEntityFrameworkStores<UserManagementDbContext>()
