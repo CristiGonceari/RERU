@@ -83,7 +83,8 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
             var identityUser = new ERPIdentityUser()
             {
                 Email = userProfile.Email.Replace(" ", string.Empty),
-                UserName = RemoveDiacritics(userProfile.FullName.Replace(" ", string.Empty).ToLower())
+                UserName = userProfile.Email.Replace(" ", string.Empty),
+                //UserName = RemoveDiacritics(userProfile.FullName.Replace(" ", string.Empty).ToLower())
             };
 
             var password = _passwordGenerator.Generate();
