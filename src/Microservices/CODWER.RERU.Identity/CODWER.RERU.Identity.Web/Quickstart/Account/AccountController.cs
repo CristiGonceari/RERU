@@ -108,7 +108,9 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
 
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, lockoutOnFailure: true);
+                var preUser = await _userManager.FindByEmailAsync(model.Username);
+
+                var result = await _signInManager.PasswordSignInAsync(preUser.UserName, model.Password, model.RememberLogin, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByNameAsync(model.Username);
