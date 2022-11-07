@@ -443,54 +443,65 @@ namespace RERU.Data.Persistence.Initializer
 
         private static void AddSolicitedVacantPositionMessages(AppDbContext appDbContext)
         {
-            var existMessages = appDbContext.SolicitedVacantPositionEmailMessages.Any();
+            var oldMessageToReject = appDbContext.SolicitedVacantPositionEmailMessages.FirstOrDefault(x => x.MessageType == SolicitedVacantPositionEmailMessageEnum.Reject);
+            var  newMessageToReject = "<p style=\\\"text-align:center;\\\">" +
+                                             "<span style=\\\"color:black;\\\">" +
+                                             "<i>Dl/Dna {user_name_key}, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i></span>" +
+                                             "</p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
+                                             "<i>Ne pare rău, nu sunteți eligibil/ă pentru testele de evaluare.</i></span></p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
+                                             "<i>Cu respect MAI.</i></span></p>";
 
-            if (!existMessages)
+
+            var oldMessageToApprove = appDbContext.SolicitedVacantPositionEmailMessages.FirstOrDefault(x => x.MessageType == SolicitedVacantPositionEmailMessageEnum.Approve);
+            var newMessageToApprove = "<p style=\\\"text-align:center;\\\">" +
+                                              "<span style=\\\"color:black;\\\">" +
+                                              "<i>Dl/Dna {user_name_key}, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i>" +
+                                              "</span></p><p style=\\\"text-align:center;\\\">" +
+                                              "<span style=\\\"color:black;\\\"><i>Sunteți admis/ă la probele de evaluare.</i></span></p>" +
+                                              "<p style=\\\"text-align:center;\\\">" +
+                                              "<span style=\\\"color:black;\\\"><i>În următoarele zile veți primi notificări pe adresa electronică cu privire la data/ora/locația și modul de desfășurare a acestora.</i></span></p>";
+
+            var oldMessageToWait = appDbContext.SolicitedVacantPositionEmailMessages.FirstOrDefault(x => x.MessageType == SolicitedVacantPositionEmailMessageEnum.Waiting);
+            var newMessageToWait = "<p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
+                                            "<i>Dl/Dna {user_name_key}, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i></span></p>" +
+                                            "<p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
+                                            "<i>Sunteți asignat/ă cu statut de asteptare.</i></span></p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
+                                            "<i>Vă rugăm să examinați documentele necesare atașate postului vacant.</i></span></p>";
+
+            if (oldMessageToReject is null)
             {
-                const string messageToReject = "<p style=\\\"text-align:center;\\\">" +
-                                               "<span style=\\\"color:black;\\\">" +
-                                               "<i>Dl/Dna Maculețchi Mihaela, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i></span>" +
-                                               "</p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
-                                               "<i>Ne pare rău, nu sunteți eligibil/ă pentru testele de evaluare.</i></span></p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
-                                               "<i>Cu respect MAI.</i></span></p>";
-
                 var rejectMessage = new SolicitedVacantPositionEmailMessage
                 {
-                    Message = messageToReject,
+                    Message = newMessageToReject,
                     MessageType = SolicitedVacantPositionEmailMessageEnum.Reject
                 };
-
-                const string messageToApprove = "<p style=\\\"text-align:center;\\\">" +
-                                                "<span style=\\\"color:black;\\\">" +
-                                                "<i>Dl/Dna Maculețchi Mihaela, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i>" +
-                                                "</span></p><p style=\\\"text-align:center;\\\">" +
-                                                "<span style=\\\"color:black;\\\"><i>Sunteți admis/ă la probele de evaluare.</i></span></p>" +
-                                                "<p style=\\\"text-align:center;\\\">" +
-                                                "<span style=\\\"color:black;\\\"><i>În următoarele zile veți primi notificări pe adresa electronică cu privire la data/ora/locația și modul de desfășurare a acestora.</i></span></p>";
-
-                var approvalMessage = new SolicitedVacantPositionEmailMessage
+                
+                appDbContext.SolicitedVacantPositionEmailMessages.Add(rejectMessage);
+            }
+            if (oldMessageToApprove is null)
+            {
+                var approveMessage = new SolicitedVacantPositionEmailMessage
                 {
-                    Message = messageToApprove,
+                    Message = newMessageToApprove,
                     MessageType = SolicitedVacantPositionEmailMessageEnum.Approve
                 };
 
-                const string messageToWait = "<p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
-                                             "<i>Dl/Dna Maculețchi Mihaela, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i></span></p>" +
-                                             "<p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
-                                             "<i>Sunteți asignat/ă cu statut de asteptare.</i></span></p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
-                                             "<i>Vă rugăm să examinați documentele necesare atașate postului vacant.</i></span></p>";
-
+                appDbContext.SolicitedVacantPositionEmailMessages.Add(approveMessage);
+            }
+            if (oldMessageToWait is null)
+            {
                 var waitMessage = new SolicitedVacantPositionEmailMessage
                 {
-                    Message = messageToWait,
+                    Message = newMessageToWait,
                     MessageType = SolicitedVacantPositionEmailMessageEnum.Waiting
                 };
 
-                appDbContext.SolicitedVacantPositionEmailMessages.Add(rejectMessage);
-                appDbContext.SolicitedVacantPositionEmailMessages.Add(approvalMessage);
                 appDbContext.SolicitedVacantPositionEmailMessages.Add(waitMessage);
-
             }
+
+            if (oldMessageToReject != null && oldMessageToReject.Message != newMessageToReject) oldMessageToReject.Message = newMessageToReject;
+            if (oldMessageToApprove != null && oldMessageToApprove.Message != newMessageToApprove) oldMessageToApprove.Message = newMessageToApprove;
+            if (oldMessageToWait != null && oldMessageToWait.Message != newMessageToWait) oldMessageToWait.Message = newMessageToWait;
 
             appDbContext.SaveChanges();
         }
