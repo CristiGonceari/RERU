@@ -379,6 +379,8 @@ namespace RERU.Data.Persistence.Initializer
                 new MaterialStatusType{Name="Celibatar", TranslateId = 1 },
                 new MaterialStatusType{Name="Casatorit", TranslateId = 2 },
                 new MaterialStatusType{Name="Recasatorit", TranslateId = 3 },
+                new MaterialStatusType{Name="Văduv/ă", TranslateId = 4 },
+                new MaterialStatusType{Name="Divorțat/ă", TranslateId = 5 },
             };
 
             var types = appDbContext.MaterialStatusTypes.ToList();
@@ -449,7 +451,7 @@ namespace RERU.Data.Persistence.Initializer
             {
                 const string messageToReject = "<p style=\\\"text-align:center;\\\">" +
                                                "<span style=\\\"color:black;\\\">" +
-                                               "<i>Dl/Dna Maculețchi Mihaela, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i></span>" +
+                                               "<i>Dl/Dna, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i></span>" +
                                                "</p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
                                                "<i>Ne pare rău, nu sunteți eligibil/ă pentru testele de evaluare.</i></span></p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
                                                "<i>Cu respect MAI.</i></span></p>";
@@ -462,7 +464,7 @@ namespace RERU.Data.Persistence.Initializer
 
                 const string messageToApprove = "<p style=\\\"text-align:center;\\\">" +
                                                 "<span style=\\\"color:black;\\\">" +
-                                                "<i>Dl/Dna Maculețchi Mihaela, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i>" +
+                                                "<i>Dl/Dna, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i>" +
                                                 "</span></p><p style=\\\"text-align:center;\\\">" +
                                                 "<span style=\\\"color:black;\\\"><i>Sunteți admis/ă la probele de evaluare.</i></span></p>" +
                                                 "<p style=\\\"text-align:center;\\\">" +
@@ -475,7 +477,7 @@ namespace RERU.Data.Persistence.Initializer
                 };
 
                 const string messageToWait = "<p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
-                                             "<i>Dl/Dna Maculețchi Mihaela, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i></span></p>" +
+                                             "<i>Dl/Dna, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i></span></p>" +
                                              "<p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
                                              "<i>Sunteți asignat/ă cu statut de asteptare.</i></span></p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
                                              "<i>Vă rugăm să examinați documentele necesare atașate postului vacant.</i></span></p>";

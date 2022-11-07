@@ -595,7 +595,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                     workSheet.Cells[_row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     workSheet.Cells[_row, 1].Style.Border.Right.Style = ExcelBorderStyle.Medium;
 
-                    workSheet.Cells[_row, 2, _row, 3].Value = evaluation.Evaluator.FullName;
+                    workSheet.Cells[_row, 2, _row, 3].Value = evaluation.Evaluator?.FullName ?? "- - - - -";
                     workSheet.Cells[_row, 2, _row, 3].Merge = true;
                     workSheet.Cells[_row, 2, _row, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
