@@ -23,12 +23,12 @@ export class AddEditTestTemplateComponent implements OnInit {
 	testId: number;
 	statusEnum = TestTemplateStatusEnum;
 	isLoading: boolean = true;
-	modeId;
-	modes: SelectItem[] = [{label: '', value: ''}];
-	qualifyingTypes: SelectItem[] = [{label: '', value: ''}];
-	qualifyingTypesWithout15: SelectItem[] = [{label: '', value: ''}];
+	modeId: number = 0;
+	modes: SelectItem[] = [{ label: '', value: '' }];
+	qualifyingTypes: SelectItem[] = [{ label: '', value: '' }];
+	qualifyingTypesWithout15: SelectItem[] = [{ label: '', value: '' }];
 
-	testTemplate: TestTemplate = new TestTemplate();
+	testTemplate: TestTemplate;
 	title: string;
 	description: string;
 
@@ -55,8 +55,8 @@ export class AddEditTestTemplateComponent implements OnInit {
 			status: new FormControl()
 		});
 		this.onTextChange();
-		this.initData();
 		this.getMode();
+		this.initData();
 		this.getQualifyingType();
 	}
 
@@ -71,13 +71,13 @@ export class AddEditTestTemplateComponent implements OnInit {
 						this.initForm(res.data);
 						res.data.roles.forEach(element => {
 							this.tags.push({ display: element.label, value: +element.value })
-						  });
+						});
 					}
 				})
 			}
 			else {
-				this.isLoading = false;
 				this.initForm();
+				this.isLoading = false;
 			}
 		})
 	}
@@ -93,7 +93,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 
 			res.data.roles.forEach(element => {
 				this.tags.push({ display: element.label, value: +element.value })
-			  });
+			});
 		})
 	}
 
@@ -108,34 +108,68 @@ export class AddEditTestTemplateComponent implements OnInit {
 		});
 	}
 
-	initForm(test?: any): void {
+	initForm(test?: any, value?: number): void {
 		if (test) {
-			this.testForm = this.formBuilder.group({
-				id: this.formBuilder.control(test.id, [Validators.required]),
-				name: this.formBuilder.control((test && test.name) || null, [Validators.required]),
-				questionCount: this.formBuilder.control((test && test.questionCount) || null, [Validators.required]),
-				duration: this.formBuilder.control((test && test.duration) || null, [Validators.required]),
-				minPercent: this.formBuilder.control(test && test.minPercent, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*\.)?$/)]),
-				mode: this.formBuilder.control((test && !isNaN(test.mode) ? test.mode : null), [Validators.required]),
-				qualifyingType: this.formBuilder.control((test && !isNaN(test.qualifyingType) ? test.qualifyingType : null), [Validators.required]),
-				status: this.statusEnum.Draft,
-				moduleRoles: this.items,
-			});
-			this.modeId = this.testForm.value.mode;
+			if (value == null) {
+				this.testForm = this.formBuilder.group({
+					id: this.formBuilder.control(test.id || null, [Validators.required]),
+					name: this.formBuilder.control((test && test.name) || null, [Validators.required]),
+					questionCount: this.formBuilder.control((test && test.questionCount) || null, [Validators.required]),
+					duration: this.formBuilder.control((test && test.duration) || null, [Validators.required]),
+					minPercent: this.formBuilder.control(test && test.minPercent, [Validators.required]),
+					mode: this.formBuilder.control((test && test.mode), [Validators.required]),
+					qualifyingType: this.formBuilder.control((test && !isNaN(test.qualifyingType) ? test.qualifyingType : null), [Validators.required]),
+					status: this.statusEnum.Draft,
+					moduleRoles: this.items,
+				});
 
+				this.modeId = this.testForm.value.mode;
+			} else {
+				this.testForm = this.formBuilder.group({
+					id: this.formBuilder.control(test.id || null, [Validators.required]),
+					name: this.formBuilder.control((test && test.name) || null, [Validators.required]),
+					questionCount: this.formBuilder.control((test && test.questionCount) || null, [Validators.required]),
+					duration: this.formBuilder.control((test && test.duration) || null, [Validators.required]),
+					minPercent: this.formBuilder.control(test && test.minPercent, [Validators.required]),
+					mode: this.formBuilder.control(value, [Validators.required]),
+					qualifyingType: this.formBuilder.control((test && !isNaN(test.qualifyingType) ? test.qualifyingType : null), [Validators.required]),
+					status: this.statusEnum.Draft,
+					moduleRoles: this.items,
+				});
+
+				this.modeId = this.testForm.value.mode;
+			}
 		}
 		else {
-			this.testForm = this.formBuilder.group({
-				name: this.formBuilder.control(null, [Validators.required]),
-				questionCount: this.formBuilder.control(null, [Validators.required]),
-				duration: this.formBuilder.control(null, [Validators.required]),
-				minPercent: this.formBuilder.control([Validators.required], [Validators.pattern(/^-?(0|[1-9]\d*\.)?$/)]),
-				mode: this.formBuilder.control(0, [Validators.required]),
-				qualifyingType: this.formBuilder.control(2, [Validators.required]),
-				status: this.statusEnum.Draft,
-				moduleRoles: this.items,
-			});
-			this.modeId = this.testForm.value.mode;
+			if (this.modeId == 0) {
+				this.testForm = this.formBuilder.group({
+					name: this.formBuilder.control(null, [Validators.required]),
+					questionCount: this.formBuilder.control(null, [Validators.required]),
+					duration: this.formBuilder.control(null, [Validators.required]),
+					minPercent: this.formBuilder.control(null, [Validators.required]),
+					mode: this.formBuilder.control(this.modeId, [Validators.required]),
+					qualifyingType: this.formBuilder.control(2, [Validators.required]),
+					status: this.statusEnum.Draft,
+					moduleRoles: this.items || [],
+				});
+			} else if (this.modeId == 1) {
+				this.testForm = this.formBuilder.group({
+					name: this.formBuilder.control(null, [Validators.required]),
+					questionCount: this.formBuilder.control(null, [Validators.required]),
+					mode: this.formBuilder.control(this.modeId, [Validators.required],),
+					status: this.statusEnum.Draft,
+					moduleRoles: this.items || [],
+				});
+			} else {
+				this.testForm = this.formBuilder.group({
+					name: this.formBuilder.control(null, [Validators.required]),
+					questionCount: this.formBuilder.control(null, [Validators.required]),
+					mode: this.formBuilder.control(this.modeId, [Validators.required]),
+					qualifyingType: this.formBuilder.control(2, [Validators.required]),
+					status: this.statusEnum.Draft,
+					moduleRoles: this.items || [],
+				});
+			}
 		}
 	}
 
@@ -159,6 +193,11 @@ export class AddEditTestTemplateComponent implements OnInit {
 
 	onChange(value) {
 		this.modeId = value;
+		if (this.testTemplate != null) {
+			this.initForm(this.testTemplate, value);
+		} else {
+			this.initForm();
+		}
 	}
 
 	onSave(): void {
@@ -170,17 +209,19 @@ export class AddEditTestTemplateComponent implements OnInit {
 	}
 
 	parseNumber() {
-		let parsedNumber = this.testForm.get("minPercent").value;
-		this.testForm.get("minPercent").setValue(Math.round(parsedNumber));
+		if (this.modeId == 0) {
+			let parsedNumber = this.testForm.get("minPercent").value;
+			this.testForm.get("minPercent").setValue(Math.round(parsedNumber));
+		}
 		const tagsArr = this.tags.map(obj => typeof obj.value !== 'number' ? { ...obj, value: 0 } : obj);
 		this.testForm.get("moduleRoles").setValue(tagsArr);
 	}
 
 	edit() {
 		this.parseNumber();
-		if(this.modeId == 0) this.testForm.value.qualifyingType = 1;
-		if(this.modeId == 1) this.testForm.value.qualifyingType = 5;
-		
+		if (this.modeId == 0) this.testForm.value.qualifyingType = 1;
+		if (this.modeId == 1) this.testForm.value.qualifyingType = 5;
+
 		this.testTemplateService.editTestTemplate({ data: this.testForm.value }).subscribe(() => {
 			forkJoin([
 				this.translate.get('modal.success'),
@@ -194,13 +235,13 @@ export class AddEditTestTemplateComponent implements OnInit {
 		});
 	}
 
+
 	add() {
 		this.parseNumber();
-		
-		if(this.modeId == 0) this.testForm.value.qualifyingType = 1;
-		if(this.modeId == 1) this.testForm.value.qualifyingType = 5;
+		if (this.modeId == 0) this.testForm.value.qualifyingType = 1;
+		if (this.modeId == 1) this.testForm.value.qualifyingType = 5;
 
-		this.testTemplateService.addTestTemplate({data: this.testForm.value}).subscribe(res => { 
+		this.testTemplateService.addTestTemplate({ data: this.testForm.value }).subscribe(res => {
 
 			forkJoin([
 				this.translate.get('modal.success'),
