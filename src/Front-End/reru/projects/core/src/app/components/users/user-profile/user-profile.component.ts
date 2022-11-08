@@ -227,12 +227,25 @@ export class UserProfileComponent implements OnInit {
 		const params = {
 			userProfileId: id
 		}
-		console.log("params", params);
 		
 		this.userProfileService.exportUserProfileSheet(params).subscribe((event) => {
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('downloand-message.succes-dosier'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
 			this.reportProggress(event);
 		},
 		(error) => {
+			forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('downloand-message.error-dosier'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
 			this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			this.isLoadingMedia = false;
 		})

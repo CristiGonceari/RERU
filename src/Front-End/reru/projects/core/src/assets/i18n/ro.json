@@ -177,6 +177,10 @@
     "of": "din",
     "records": "înregistrări"
   },
+  "downloand-message":{
+    "succes-dosier": "Dosarul utilizatorului a fost descărcat cu succes!",
+    "error-dosier": "Dosarul utilizatorului nu a fost descărcat!"
+  },
   "table": {
     "add": "Adaugă",
     "icon": "Iconiță",
