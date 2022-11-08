@@ -1,22 +1,22 @@
-using System;
+﻿using System;
 using System.Linq;
 
 namespace CODWER.RERU.Core.Application.Common.Services.Identity.Exceptions
 {
-    public class CreateIdentityFailedException : Exception
+    public class UpdateIdentityFailedException : Exception
     {
-        public CreateIdentityFailedException()
+        public UpdateIdentityFailedException()
         {
             Errors = new string[] { };
         }
 
-        public CreateIdentityFailedException(string message)
+        public UpdateIdentityFailedException(string message)
         {
             Errors = new string[] { };
             Errors.Append(message);
         }
 
-        public CreateIdentityFailedException(string[] errors)
+        public UpdateIdentityFailedException(string[] errors)
         {
             Errors = errors;
         }
