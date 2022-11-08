@@ -17,12 +17,12 @@ namespace CODWER.RERU.Identity.Web
 
             var user = new ERPIdentityUser()
             {
-                Email = "admin@mail.com",
+                Email = "admin.platforma@mail.com",
                 UserName = "admin.platforma@mail.com",
                 EmailConfirmed = true,
                 PasswordHash = "AQAAAAEAACcQAAAAEPl5AizO+7pAJaojbT4e1OlRoA0lvZkU/ohahAr8/4PWMGtUSK9zLw0cydtIQwk62A==",
                 SecurityStamp = "Z53QFF4QIZWJANJ6GQUJD5KFHWJDAT4F",
-                NormalizedEmail = "ADMIN@MAIL.COM",
+                NormalizedEmail = "ADMIN.PLATFORMA@MAIL.COM",
                 NormalizedUserName = "ADMIN.PLATFORMA@MAIL.COM",
                 ConcurrencyStamp = "3002e66c-9a29-4af4-a622-2ace5e7cba90",
                 PhoneNumber = null,
