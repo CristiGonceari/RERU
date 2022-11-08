@@ -120,7 +120,7 @@
               <div class="text-right border-top pt-10">
                 <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
                 </app-button>
-                <app-add-button class="btn" (handle)="attach()" [value]="'locations.attach' | translate">
+                <app-add-button class="btn" (handle)="attach()" [disabled]="cantAdd()" [value]="'locations.attach' | translate">
                 </app-add-button>
               </div>
             </div>
