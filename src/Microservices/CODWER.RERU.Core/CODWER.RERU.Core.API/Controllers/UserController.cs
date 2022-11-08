@@ -12,7 +12,6 @@ using CODWER.RERU.Core.Application.Users.EditCandidate;
 using CODWER.RERU.Core.Application.Users.EditUser;
 using CODWER.RERU.Core.Application.Users.EditUserFromColaborator;
 using CODWER.RERU.Core.Application.Users.EditUserPersonalDetails;
-using CODWER.RERU.Core.Application.Users.ExportUserTestsList;
 using CODWER.RERU.Core.Application.Users.GetEditUserPersonalDetails;
 using CODWER.RERU.Core.Application.Users.GetPersonalData;
 using CODWER.RERU.Core.Application.Users.GetUserDetails;
@@ -185,16 +184,6 @@ namespace CODWER.RERU.Core.API.Controllers
         public Task DeactivateUser ([FromRoute] int id) 
         {
             return Mediator.Send (new DeactivateUserCommand (id));
-        }
-
-        [HttpGet("{id}/export-excel")]
-        [IgnoreResponseWrap]
-        public async Task<IActionResult> GetAllTImeSheetTableForExport([FromRoute] int id)
-        {
-            var result = await Mediator.Send(new ExportUserTestsListCommand(id));
-            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
-
-            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }

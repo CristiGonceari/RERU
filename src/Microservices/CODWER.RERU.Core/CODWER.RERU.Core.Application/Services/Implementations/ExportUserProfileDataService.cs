@@ -180,30 +180,31 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[_row, 1, 13, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
             _row = _row + 2;
 
-            workSheet.Cells[_row, 1, _row, 3].Value = "Modul";
-            workSheet.Cells[_row, 1, _row, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 1, _row, 3].Merge = true;
-            workSheet.Cells[_row, 1, _row, 3].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 1, _row, 3].Style.Font.Bold = true;
-            workSheet.Cells[_row, 1, _row, 3].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 4, _row, 6].Value = "Permisiune";
-            workSheet.Cells[_row, 4, _row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 4, _row, 6].Merge = true;
-            workSheet.Cells[_row, 4, _row, 6].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 4, _row, 6].Style.Font.Bold = true;
-            workSheet.Cells[_row, 4, _row, 6].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 7, _row, 8].Value = "Cod Permisiune";
-            workSheet.Cells[_row, 7, _row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 7, _row, 8].Merge = true;
-            workSheet.Cells[_row, 7, _row, 8].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 7, _row, 8].Style.Font.Bold = true;
-            workSheet.Cells[_row, 7, _row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-            _row++;
-
             if (userProfileModuleRoles.Count() != 0)
             {
+
+                workSheet.Cells[_row, 1, _row, 3].Value = "Modul";
+                workSheet.Cells[_row, 1, _row, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 1, _row, 3].Merge = true;
+                workSheet.Cells[_row, 1, _row, 3].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 1, _row, 3].Style.Font.Bold = true;
+                workSheet.Cells[_row, 1, _row, 3].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 4, _row, 6].Value = "Permisiune";
+                workSheet.Cells[_row, 4, _row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 4, _row, 6].Merge = true;
+                workSheet.Cells[_row, 4, _row, 6].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 4, _row, 6].Style.Font.Bold = true;
+                workSheet.Cells[_row, 4, _row, 6].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 7, _row, 8].Value = "Cod Permisiune";
+                workSheet.Cells[_row, 7, _row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 7, _row, 8].Merge = true;
+                workSheet.Cells[_row, 7, _row, 8].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 7, _row, 8].Style.Font.Bold = true;
+                workSheet.Cells[_row, 7, _row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+                _row++;
+
                 foreach (var role in userProfileModuleRoles)
                 {
                     workSheet.Cells[_row, 1, _row, 3].Value = role.ModuleRole?.Module?.Name;
@@ -225,7 +226,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             }
             else
             {
-                await EmptyCellsForUserProfileModuleAcces(workSheet);
+                workSheet.Cells[_row - 2, 1, 13, 8].Value = "1. Accesul la module: nu există informaţii.";
             }
 
             workSheet.Cells[initialRow, 1, _row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
@@ -244,37 +245,38 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[_row, 1, _row + 1, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
             _row = _row + 2;
 
-            workSheet.Cells[_row, 1, _row, 2].Value = "POZIȚIE CANDIDATĂ";
-            workSheet.Cells[_row, 1, _row, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 1, _row, 2].Merge = true;
-            workSheet.Cells[_row, 1, _row, 2].Style.Font.Bold = true;
-            workSheet.Cells[_row, 1, _row, 2].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 1, _row, 2].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 3, _row, 4].Value = "TIMP SOLICITAT";
-            workSheet.Cells[_row, 3, _row, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 3, _row, 4].Merge = true;
-            workSheet.Cells[_row, 3, _row, 4].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 3, _row, 4].Style.Font.Bold = true;
-            workSheet.Cells[_row, 3, _row, 4].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 5, _row, 6].Value = "STATUT";
-            workSheet.Cells[_row, 5, _row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 5, _row, 6].Merge = true;
-            workSheet.Cells[_row, 5, _row, 6].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 5, _row, 6].Style.Font.Bold = true;
-            workSheet.Cells[_row, 5, _row, 6].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 7, _row, 8].Value = "DOCUMENTE ATAȘATE/NECESARE";
-            workSheet.Cells[_row, 7, _row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 7, _row, 8].Merge = true;
-            workSheet.Cells[_row, 7, _row, 8].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 7, _row, 8].Style.Font.Bold = true;
-            workSheet.Cells[_row, 7, _row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-            _row++;
-
             if (solicitedVacantPosition.Count() != 0)
             {
+
+                workSheet.Cells[_row, 1, _row, 2].Value = "POZIȚIE CANDIDATĂ";
+                workSheet.Cells[_row, 1, _row, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 1, _row, 2].Merge = true;
+                workSheet.Cells[_row, 1, _row, 2].Style.Font.Bold = true;
+                workSheet.Cells[_row, 1, _row, 2].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 1, _row, 2].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 3, _row, 4].Value = "TIMP SOLICITAT";
+                workSheet.Cells[_row, 3, _row, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 3, _row, 4].Merge = true;
+                workSheet.Cells[_row, 3, _row, 4].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 3, _row, 4].Style.Font.Bold = true;
+                workSheet.Cells[_row, 3, _row, 4].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 5, _row, 6].Value = "STATUT";
+                workSheet.Cells[_row, 5, _row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 5, _row, 6].Merge = true;
+                workSheet.Cells[_row, 5, _row, 6].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 5, _row, 6].Style.Font.Bold = true;
+                workSheet.Cells[_row, 5, _row, 6].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 7, _row, 8].Value = "DOCUMENTE ATAȘATE/NECESARE";
+                workSheet.Cells[_row, 7, _row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 7, _row, 8].Merge = true;
+                workSheet.Cells[_row, 7, _row, 8].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 7, _row, 8].Style.Font.Bold = true;
+                workSheet.Cells[_row, 7, _row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+                _row++;
+
                 foreach (var vacantPosition in solicitedVacantPosition)
                 {
                     workSheet.Cells[_row, 1, _row, 2].Value = vacantPosition.CandidatePosition?.Name;
@@ -300,7 +302,8 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             }
             else
             {
-                await EmptyCellsForUserProfileVacantPositions(workSheet);
+                workSheet.Cells[_row - 2, 1, _row + 1, 8].Value = "2.Pozitii solicitate: nu există informaţii.";
+
             }
 
             workSheet.Cells[initialRow, 1, _row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
@@ -319,7 +322,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[_row, 1, _row + 1, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
             _row = _row + 2;
 
-            await SetCellsForUserPorfileTests(workSheet);
+            await SetCellsForUserProfileTests(workSheet);
 
             await SetCellsForUserProfileEvaluatedTests(workSheet);
 
@@ -367,7 +370,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             return workSheet;
         }
 
-        private async Task<ExcelWorksheet> SetCellsForUserPorfileTests(ExcelWorksheet workSheet)
+        private async Task<ExcelWorksheet> SetCellsForUserProfileTests(ExcelWorksheet workSheet)
         {
             workSheet.Cells[_row, 1, _row, 8].Value = "Teste efectuate";
             workSheet.Cells[_row, 1, _row, 8].Merge = true;
@@ -377,44 +380,44 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[_row, 1, _row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
             _row++;
 
-            workSheet.Cells[_row, 1].Value = "DATA";
-            workSheet.Cells[_row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 1].Style.Font.Bold = true;
-            workSheet.Cells[_row, 1].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 1].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 2].Value = "STATUT";
-            workSheet.Cells[_row, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 2].Style.Font.Bold = true;
-            workSheet.Cells[_row, 2].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 2].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 3, _row, 4].Value = "TESTUL";
-            workSheet.Cells[_row, 3, _row, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 3, _row, 4].Merge = true;
-            workSheet.Cells[_row, 3, _row, 4].Style.Font.Bold = true;
-            workSheet.Cells[_row, 3, _row, 4].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 3, _row, 4].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 5, _row, 6].Value = "EVENIMENT";
-            workSheet.Cells[_row, 5, _row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 5, _row, 6].Merge = true;
-            workSheet.Cells[_row, 5, _row, 6].Style.Font.Bold = true;
-            workSheet.Cells[_row, 5, _row, 6].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 5, _row, 6].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 7, _row, 8].Value = "PUNCTE / SCORUL MIN.";
-            workSheet.Cells[_row, 7, _row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 7, _row, 8].Merge = true;
-            workSheet.Cells[_row, 7, _row, 8].Style.Font.Bold = true;
-            workSheet.Cells[_row, 7, _row, 8].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 7, _row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-            _row++;
-
             var getTest = await GetUserProfileTestsEvaluationsPolls(TestTemplateModeEnum.Test);
 
             if (getTest.Count() != 0)
             {
+                workSheet.Cells[_row, 1].Value = "DATA";
+                workSheet.Cells[_row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 1].Style.Font.Bold = true;
+                workSheet.Cells[_row, 1].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 1].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 2].Value = "STATUT";
+                workSheet.Cells[_row, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 2].Style.Font.Bold = true;
+                workSheet.Cells[_row, 2].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 2].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 3, _row, 4].Value = "TESTUL";
+                workSheet.Cells[_row, 3, _row, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 3, _row, 4].Merge = true;
+                workSheet.Cells[_row, 3, _row, 4].Style.Font.Bold = true;
+                workSheet.Cells[_row, 3, _row, 4].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 3, _row, 4].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 5, _row, 6].Value = "EVENIMENT";
+                workSheet.Cells[_row, 5, _row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 5, _row, 6].Merge = true;
+                workSheet.Cells[_row, 5, _row, 6].Style.Font.Bold = true;
+                workSheet.Cells[_row, 5, _row, 6].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 5, _row, 6].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 7, _row, 8].Value = "PUNCTE / SCORUL MIN.";
+                workSheet.Cells[_row, 7, _row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 7, _row, 8].Merge = true;
+                workSheet.Cells[_row, 7, _row, 8].Style.Font.Bold = true;
+                workSheet.Cells[_row, 7, _row, 8].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 7, _row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+                _row++;
+
                 foreach (var test in getTest)
                 {
                     workSheet.Cells[_row, 1].Value = test.ProgrammedTime.ToString("dd-MM-yyyy") + "/" + (string.IsNullOrEmpty(test.EndProgrammedTime?.ToString("dd-MM-yyyy")) ? " - - - - -" : test.EndProgrammedTime?.ToString("dd-MM-yyyy"));
@@ -443,7 +446,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             }
             else
             {
-                await EmptyCellsForUserProfileTests(workSheet);
+                workSheet.Cells[_row - 1, 1, _row, 8].Value = "Teste efectuate: nu există informaţii.";
             }
 
             return workSheet;
@@ -458,49 +461,50 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[_row, 1, _row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
             _row++;
 
-            workSheet.Cells[_row, 1].Value = "DATA";
-            workSheet.Cells[_row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 1].Style.Font.Bold = true;
-            workSheet.Cells[_row, 1].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 1].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 2].Value = "STATUT";
-            workSheet.Cells[_row, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 2].Style.Font.Bold = true;
-            workSheet.Cells[_row, 2].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 2].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 3, _row, 4].Value = "EVALUAT";
-            workSheet.Cells[_row, 3, _row, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 3, _row, 4].Merge = true;
-            workSheet.Cells[_row, 3, _row, 4].Style.Font.Bold = true;
-            workSheet.Cells[_row, 3, _row, 4].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 3, _row, 4].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 5, _row, 6].Value = "TESTUL";
-            workSheet.Cells[_row, 5, _row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 5, _row, 6].Merge = true;
-            workSheet.Cells[_row, 5, _row, 6].Style.Font.Bold = true;
-            workSheet.Cells[_row, 5, _row, 6].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 5, _row, 6].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 7].Value = "PUNCTE / SCORUL MIN.";
-            workSheet.Cells[_row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 7].Style.Font.Bold = true;
-            workSheet.Cells[_row, 7].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 7].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 8].Value = "REZULTAT";
-            workSheet.Cells[_row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 8].Style.Font.Bold = true;
-            workSheet.Cells[_row, 8].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-            _row++;
-
             var getEvaluatedTests = await GetUserProfileEvaluatedTestsOrEvaluations(TestTemplateModeEnum.Test);
 
             if (getEvaluatedTests.Count() != 0)
             {
+
+                workSheet.Cells[_row, 1].Value = "DATA";
+                workSheet.Cells[_row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 1].Style.Font.Bold = true;
+                workSheet.Cells[_row, 1].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 1].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 2].Value = "STATUT";
+                workSheet.Cells[_row, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 2].Style.Font.Bold = true;
+                workSheet.Cells[_row, 2].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 2].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 3, _row, 4].Value = "EVALUAT";
+                workSheet.Cells[_row, 3, _row, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 3, _row, 4].Merge = true;
+                workSheet.Cells[_row, 3, _row, 4].Style.Font.Bold = true;
+                workSheet.Cells[_row, 3, _row, 4].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 3, _row, 4].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 5, _row, 6].Value = "TESTUL";
+                workSheet.Cells[_row, 5, _row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 5, _row, 6].Merge = true;
+                workSheet.Cells[_row, 5, _row, 6].Style.Font.Bold = true;
+                workSheet.Cells[_row, 5, _row, 6].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 5, _row, 6].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 7].Value = "PUNCTE / SCORUL MIN.";
+                workSheet.Cells[_row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 7].Style.Font.Bold = true;
+                workSheet.Cells[_row, 7].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 7].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 8].Value = "REZULTAT";
+                workSheet.Cells[_row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 8].Style.Font.Bold = true;
+                workSheet.Cells[_row, 8].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+                _row++;
+
                 foreach (var evaluatedTest in getEvaluatedTests)
                 {
                     workSheet.Cells[_row, 1].Value = evaluatedTest.ProgrammedTime.ToString("dd-MM-yyyy") + "/" + (string.IsNullOrEmpty(evaluatedTest.EndProgrammedTime?.ToString("dd-MM-yyyy")) ? " - - - - -" : evaluatedTest.EndProgrammedTime?.ToString("dd-MM-yyyy"));
@@ -530,7 +534,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             }
             else
             {
-                await EmptyCellsForUserProfileEvaluatedTests(workSheet);
+                workSheet.Cells[_row - 1 , 1, _row, 8].Value = "Teste evaluate: nu există informaţii.";
             }
 
             return workSheet;
@@ -545,49 +549,50 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[_row, 1, _row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
             _row++;
 
-            workSheet.Cells[_row, 1].Value = "NUME TEST";
-            workSheet.Cells[_row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 1].Style.Font.Bold = true;
-            workSheet.Cells[_row, 1].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 1].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 2, _row, 3].Value = "EVALUATOR";
-            workSheet.Cells[_row, 2, _row, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 2, _row, 3].Merge = true;
-            workSheet.Cells[_row, 2, _row, 3].Style.Font.Bold = true;
-            workSheet.Cells[_row, 2, _row, 3].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 2, _row, 3].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 4, _row, 5].Value = "EVENIMENT";
-            workSheet.Cells[_row, 4, _row, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 4, _row, 5].Merge = true;
-            workSheet.Cells[_row, 4, _row, 5].Style.Font.Bold = true;
-            workSheet.Cells[_row, 4, _row, 5].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 4, _row, 5].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 6].Value = "LOCAȚIE";
-            workSheet.Cells[_row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 6].Style.Font.Bold = true;
-            workSheet.Cells[_row, 6].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 6].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 7].Value = "STATUT";
-            workSheet.Cells[_row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 7].Style.Font.Bold = true;
-            workSheet.Cells[_row, 7].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 7].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 8].Value = "REZULTAT";
-            workSheet.Cells[_row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 8].Style.Font.Bold = true;
-            workSheet.Cells[_row, 8].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-            _row++;
-
             var getEvaluations = await GetUserProfileTestsEvaluationsPolls(TestTemplateModeEnum.Evaluation);
 
             if (getEvaluations.Count() != 0)
             {
+
+                workSheet.Cells[_row, 1].Value = "NUME TEST";
+                workSheet.Cells[_row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 1].Style.Font.Bold = true;
+                workSheet.Cells[_row, 1].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 1].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 2, _row, 3].Value = "EVALUATOR";
+                workSheet.Cells[_row, 2, _row, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 2, _row, 3].Merge = true;
+                workSheet.Cells[_row, 2, _row, 3].Style.Font.Bold = true;
+                workSheet.Cells[_row, 2, _row, 3].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 2, _row, 3].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 4, _row, 5].Value = "EVENIMENT";
+                workSheet.Cells[_row, 4, _row, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 4, _row, 5].Merge = true;
+                workSheet.Cells[_row, 4, _row, 5].Style.Font.Bold = true;
+                workSheet.Cells[_row, 4, _row, 5].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 4, _row, 5].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 6].Value = "LOCAȚIE";
+                workSheet.Cells[_row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 6].Style.Font.Bold = true;
+                workSheet.Cells[_row, 6].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 6].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 7].Value = "STATUT";
+                workSheet.Cells[_row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 7].Style.Font.Bold = true;
+                workSheet.Cells[_row, 7].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 7].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 8].Value = "REZULTAT";
+                workSheet.Cells[_row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 8].Style.Font.Bold = true;
+                workSheet.Cells[_row, 8].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+                _row++;
+
                 foreach (var evaluation in getEvaluations)
                 {
                     workSheet.Cells[_row, 1].Value = evaluation.TestTemplate.Name;
@@ -618,7 +623,8 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             }
             else
             {
-                await EmptyCellsForUserProfileEvaluationsAndPolls(workSheet);
+                workSheet.Cells[_row - 1, 1, _row, 8].Value = "Evaluarii: nu există informaţii.";
+
             }
 
             return workSheet;
@@ -633,51 +639,52 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[_row, 1, _row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
             _row++;
 
-            workSheet.Cells[_row, 1].Value = "DATA Programata";
-            workSheet.Cells[_row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 1].Style.Font.Bold = true;
-            workSheet.Cells[_row, 1].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 1].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 2].Value = "EVALUARE";
-            workSheet.Cells[_row, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 2].Style.Font.Bold = true;
-            workSheet.Cells[_row, 2].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 2].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 3, _row, 4].Value = "EVALUAT";
-            workSheet.Cells[_row, 3, _row, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 3, _row, 4].Merge = true;
-            workSheet.Cells[_row, 3, _row, 4].Style.Font.Bold = true;
-            workSheet.Cells[_row, 3, _row, 4].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 3, _row, 4].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 5, _row, 6].Value = "EVENIMENT";
-            workSheet.Cells[_row, 5, _row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 5, _row, 6].Merge = true;
-            workSheet.Cells[_row, 5, _row, 6].Style.Font.Bold = true;
-            workSheet.Cells[_row, 5, _row, 6].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 5, _row, 6].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 7].Value = "STATUT";
-            workSheet.Cells[_row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 7].Merge = true;
-            workSheet.Cells[_row, 7].Style.Font.Bold = true;
-            workSheet.Cells[_row, 7].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 7].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 8].Value = "REZULTAT";
-            workSheet.Cells[_row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 8].Merge = true;
-            workSheet.Cells[_row, 8].Style.Font.Bold = true;
-            workSheet.Cells[_row, 8].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-            _row++;
-
             var getEvaluatedEvaluations = await GetUserProfileEvaluatedTestsOrEvaluations(TestTemplateModeEnum.Evaluation);
 
             if (getEvaluatedEvaluations.Count() != 0)
             {
+
+                workSheet.Cells[_row, 1].Value = "DATA Programata";
+                workSheet.Cells[_row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 1].Style.Font.Bold = true;
+                workSheet.Cells[_row, 1].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 1].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 2].Value = "EVALUARE";
+                workSheet.Cells[_row, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 2].Style.Font.Bold = true;
+                workSheet.Cells[_row, 2].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 2].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 3, _row, 4].Value = "EVALUAT";
+                workSheet.Cells[_row, 3, _row, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 3, _row, 4].Merge = true;
+                workSheet.Cells[_row, 3, _row, 4].Style.Font.Bold = true;
+                workSheet.Cells[_row, 3, _row, 4].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 3, _row, 4].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 5, _row, 6].Value = "EVENIMENT";
+                workSheet.Cells[_row, 5, _row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 5, _row, 6].Merge = true;
+                workSheet.Cells[_row, 5, _row, 6].Style.Font.Bold = true;
+                workSheet.Cells[_row, 5, _row, 6].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 5, _row, 6].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 7].Value = "STATUT";
+                workSheet.Cells[_row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 7].Merge = true;
+                workSheet.Cells[_row, 7].Style.Font.Bold = true;
+                workSheet.Cells[_row, 7].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 7].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 8].Value = "REZULTAT";
+                workSheet.Cells[_row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 8].Merge = true;
+                workSheet.Cells[_row, 8].Style.Font.Bold = true;
+                workSheet.Cells[_row, 8].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+                _row++;
+
                 foreach (var evaluation in getEvaluatedEvaluations)
                 {
 
@@ -710,56 +717,58 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             }
             else
             {
-                await EmptyCellsForUserProfileEvaluatedTests(workSheet);
+                workSheet.Cells[_row - 1, 1, _row, 8].Value = "Evaluari evaluate: nu există informaţii.";
+
             }
 
             return workSheet;
         }
         private async Task<ExcelWorksheet> SetCellsForUserProfilePolls(ExcelWorksheet workSheet)
         {
-            workSheet.Cells[_row, 1].Value = "NUME";
-            workSheet.Cells[_row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 1].Style.Font.Bold = true;
-            workSheet.Cells[_row, 1].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 1].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 2, _row, 3].Value = "EVENIMENT";
-            workSheet.Cells[_row, 2, _row, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 2, _row, 3].Merge = true;
-            workSheet.Cells[_row, 2, _row, 3].Style.Font.Bold = true;
-            workSheet.Cells[_row, 2, _row, 3].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 2, _row, 3].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 4, _row, 5].Value = "STATUT";
-            workSheet.Cells[_row, 4, _row, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 4, _row, 5].Merge = true;
-            workSheet.Cells[_row, 4, _row, 5].Style.Font.Bold = true;
-            workSheet.Cells[_row, 4, _row, 5].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 4, _row, 5].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 6].Value = "TIMPUL VOTĂRII";
-            workSheet.Cells[_row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 6].Style.Font.Bold = true;
-            workSheet.Cells[_row, 6].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 6].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 7].Value = "DATA DE ÎNCEPUT";
-            workSheet.Cells[_row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 7].Style.Font.Bold = true;
-            workSheet.Cells[_row, 7].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 7].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-
-            workSheet.Cells[_row, 8].Value = "DATA DE ÎNCHEIERE";
-            workSheet.Cells[_row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 8].Style.Font.Bold = true;
-            workSheet.Cells[_row, 8].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-            _row++;
-
             var getPolls = await GetUserProfileTestsEvaluationsPolls(TestTemplateModeEnum.Poll);
 
             if (getPolls.Count() != 0)
             {
+
+                workSheet.Cells[_row, 1].Value = "NUME";
+                workSheet.Cells[_row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 1].Style.Font.Bold = true;
+                workSheet.Cells[_row, 1].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 1].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 2, _row, 3].Value = "EVENIMENT";
+                workSheet.Cells[_row, 2, _row, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 2, _row, 3].Merge = true;
+                workSheet.Cells[_row, 2, _row, 3].Style.Font.Bold = true;
+                workSheet.Cells[_row, 2, _row, 3].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 2, _row, 3].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 4, _row, 5].Value = "STATUT";
+                workSheet.Cells[_row, 4, _row, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 4, _row, 5].Merge = true;
+                workSheet.Cells[_row, 4, _row, 5].Style.Font.Bold = true;
+                workSheet.Cells[_row, 4, _row, 5].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 4, _row, 5].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 6].Value = "TIMPUL VOTĂRII";
+                workSheet.Cells[_row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 6].Style.Font.Bold = true;
+                workSheet.Cells[_row, 6].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 6].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 7].Value = "DATA DE ÎNCEPUT";
+                workSheet.Cells[_row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 7].Style.Font.Bold = true;
+                workSheet.Cells[_row, 7].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 7].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+                workSheet.Cells[_row, 8].Value = "DATA DE ÎNCHEIERE";
+                workSheet.Cells[_row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[_row, 8].Style.Font.Bold = true;
+                workSheet.Cells[_row, 8].Style.Fill.SetBackground(_color);
+                workSheet.Cells[_row, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+                _row++;
+
                 foreach (var poll in getPolls)
                 {
                     workSheet.Cells[_row, 1].Value = poll.TestTemplate.Name;
@@ -790,149 +799,9 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             }
             else
             {
-                await EmptyCellsForUserProfileEvaluationsAndPolls(workSheet);
+                workSheet.Cells[_row - 2, 1, _row -2, 8].Value = "5.Sondaje: nu există informaţii.";
+
             }
-
-            return workSheet;
-        }
-
-        private async Task<ExcelWorksheet> EmptyCellsForUserProfileModuleAcces(ExcelWorksheet workSheet)
-        {
-            workSheet.Cells[_row, 1, _row, 3].Value = " - - - - -";
-            workSheet.Cells[_row, 1, _row, 3].Merge = true;
-            workSheet.Cells[_row, 1, _row, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 1, _row, 3].Style.Border.Right.Style = ExcelBorderStyle.Medium;
-
-            workSheet.Cells[_row, 4, _row, 6].Value = " - - - - -";
-            workSheet.Cells[_row, 4, _row, 6].Merge = true;
-            workSheet.Cells[_row, 4, _row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
-            workSheet.Cells[_row, 7, _row, 8].Value = " - - - - -";
-            workSheet.Cells[_row, 7, _row, 8].Merge = true;
-            workSheet.Cells[_row, 7, _row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 7, _row, 8].Style.Border.Left.Style = ExcelBorderStyle.Medium;
-            _row++;
-
-            return workSheet;
-        }
-        private async Task<ExcelWorksheet> EmptyCellsForUserProfileVacantPositions(ExcelWorksheet workSheet)
-        {
-            workSheet.Cells[_row, 1, _row, 2].Value = " - - - - -";
-            workSheet.Cells[_row, 1, _row, 2].Merge = true;
-            workSheet.Cells[_row, 1, _row, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 1, _row, 2].Style.Border.Right.Style = ExcelBorderStyle.Medium;
-
-            workSheet.Cells[_row, 3, _row, 4].Value = " - - - - -";
-            workSheet.Cells[_row, 3, _row, 4].Merge = true;
-            workSheet.Cells[_row, 3, _row, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
-            workSheet.Cells[_row, 5, _row, 6].Value = " - - - - -";
-            workSheet.Cells[_row, 5, _row, 6].Merge = true;
-            workSheet.Cells[_row, 5, _row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 5, _row, 6].Style.Border.Left.Style = ExcelBorderStyle.Medium;
-
-            workSheet.Cells[_row, 7, _row, 8].Value = " - - - - -";
-            workSheet.Cells[_row, 7, _row, 8].Merge = true;
-            workSheet.Cells[_row, 7, _row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 7, _row, 8].Style.Border.Left.Style = ExcelBorderStyle.Medium;
-            _row++;
-
-            return workSheet;
-        }
-        private async Task<ExcelWorksheet> EmptyCellsForUserProfileTests(ExcelWorksheet workSheet)
-        {
-            workSheet.Cells[_row, 1].Value = " - - - - -";
-            workSheet.Cells[_row, 1].Merge = true;
-            workSheet.Cells[_row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 1].Style.Border.Right.Style = ExcelBorderStyle.Medium;
-
-            workSheet.Cells[_row, 2].Value = " - - - - -";
-            workSheet.Cells[_row, 2].Merge = true;
-            workSheet.Cells[_row, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 2].Style.Border.Right.Style = ExcelBorderStyle.Medium;
-
-            workSheet.Cells[_row, 3, _row, 4].Value = " - - - - -";
-            workSheet.Cells[_row, 3, _row, 4].Merge = true;
-            workSheet.Cells[_row, 3, _row, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
-            workSheet.Cells[_row, 5, _row, 6].Value = " - - - - -";
-            workSheet.Cells[_row, 5, _row, 6].Merge = true;
-            workSheet.Cells[_row, 5, _row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 5, _row, 6].Style.Border.Left.Style = ExcelBorderStyle.Medium;
-
-            workSheet.Cells[_row, 7, _row, 8].Value = " - - - - -";
-            workSheet.Cells[_row, 7, _row, 8].Merge = true;
-            workSheet.Cells[_row, 7, _row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 7, _row, 8].Style.Border.Left.Style = ExcelBorderStyle.Medium;
-            _row++;
-
-            return workSheet;
-        }
-        private async Task<ExcelWorksheet> EmptyCellsForUserProfileEvaluatedTests(ExcelWorksheet workSheet)
-        {
-            workSheet.Cells[_row, 1].Value = " - - - - -";
-            workSheet.Cells[_row, 1].Merge = true;
-            workSheet.Cells[_row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 1].Style.Border.Right.Style = ExcelBorderStyle.Medium;
-
-            workSheet.Cells[_row, 2].Value = " - - - - -";
-            workSheet.Cells[_row, 2].Merge = true;
-            workSheet.Cells[_row, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 2].Style.Border.Right.Style = ExcelBorderStyle.Medium;
-
-            workSheet.Cells[_row, 3, _row, 4].Value = " - - - - -";
-            workSheet.Cells[_row, 3, _row, 4].Merge = true;
-            workSheet.Cells[_row, 3, _row, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
-            workSheet.Cells[_row, 5, _row, 6].Value = " - - - - -";
-            workSheet.Cells[_row, 5, _row, 6].Merge = true;
-            workSheet.Cells[_row, 5, _row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 5, _row, 6].Style.Border.Left.Style = ExcelBorderStyle.Medium;
-
-            workSheet.Cells[_row, 7].Value = " - - - - -";
-            workSheet.Cells[_row, 7].Merge = true;
-            workSheet.Cells[_row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 7].Style.Border.Left.Style = ExcelBorderStyle.Medium;
-
-            workSheet.Cells[_row, 8].Value = " - - - - -";
-            workSheet.Cells[_row, 8].Merge = true;
-            workSheet.Cells[_row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 8].Style.Border.Left.Style = ExcelBorderStyle.Medium;
-            _row++;
-
-            return workSheet;
-        }
-        private async Task<ExcelWorksheet> EmptyCellsForUserProfileEvaluationsAndPolls(ExcelWorksheet workSheet)
-        {
-            workSheet.Cells[_row, 1].Value = " - - - - -";
-            workSheet.Cells[_row, 1].Merge = true;
-            workSheet.Cells[_row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 1].Style.Border.Right.Style = ExcelBorderStyle.Medium;
-
-            workSheet.Cells[_row, 2, _row, 3].Value = " - - - - -";
-            workSheet.Cells[_row, 2, _row, 3].Merge = true;
-            workSheet.Cells[_row, 2, _row, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 2, _row, 3].Style.Border.Right.Style = ExcelBorderStyle.Medium;
-
-            workSheet.Cells[_row, 4, _row, 5].Value = " - - - - -";
-            workSheet.Cells[_row, 4, _row, 5].Merge = true;
-            workSheet.Cells[_row, 4, _row, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
-            workSheet.Cells[_row, 6].Value = " - - - - -";
-            workSheet.Cells[_row, 6].Merge = true;
-            workSheet.Cells[_row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 6].Style.Border.Left.Style = ExcelBorderStyle.Medium;
-
-            workSheet.Cells[_row, 7].Value = " - - - - -";
-            workSheet.Cells[_row, 7].Merge = true;
-            workSheet.Cells[_row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 7].Style.Border.Left.Style = ExcelBorderStyle.Medium;
-
-            workSheet.Cells[_row, 8].Value = " - - - - -";
-            workSheet.Cells[_row, 8].Merge = true;
-            workSheet.Cells[_row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            workSheet.Cells[_row, 8].Style.Border.Left.Style = ExcelBorderStyle.Medium;
-            _row++;
 
             return workSheet;
         }
@@ -967,7 +836,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
         {
             var streamBytesArray = package.GetAsByteArray();
 
-            return FileDataDto.GetExcel("Fisa_Personala" + $"({name})", streamBytesArray);
+            return FileDataDto.GetExcel("Dosarul_Utilizatorului" + $"({name})", streamBytesArray);
         }
     }
 }

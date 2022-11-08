@@ -12,6 +12,7 @@ import { ConfirmModalComponent } from '@erp/shared';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
 import { saveAs } from 'file-saver';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
 	selector: 'app-user-profile',
@@ -34,6 +35,10 @@ export class UserProfileComponent implements OnInit {
 
 	@Input() user: any;
 	@Input() isCustomHeader: boolean;
+
+	fileName: string;
+  	fileStatus = { requestType: '', percent: 1 }
+	isLoadingMedia: boolean = false;
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -98,21 +103,10 @@ export class UserProfileComponent implements OnInit {
 			this.subscribeForUserChanges(response);
 			this.userId = response.data.id;
 			this.fileId = response.data.mediaFileId;
-      		this.avatarLoading = false;
+			this.avatarLoading = false;
 			this.isLoading = false;
 		});
 	}
-
-	exportUserTestExcel(id): void {
-		this.isLoading = true;
-		this.userService.exportTestExcel(id).subscribe(response => {
-		  let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0].substring(1).slice(0, -1);
-		  const blob = new Blob([response.body], { type: response.body.type });
-		  const file = new File([blob], fileName, { type: response.body.type });
-		  saveAs(file);
-		  this.isLoading = false;
-		});
-	  }
 
 	openResetPasswordModal(id: string): void {
 		forkJoin([
@@ -125,7 +119,7 @@ export class UserProfileComponent implements OnInit {
 			this.description = description;
 			this.no = no;
 			this.yes = yes;
-			});
+		});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
 		modalRef.componentInstance.title = this.title;
 		modalRef.componentInstance.description = this.description;
@@ -142,8 +136,8 @@ export class UserProfileComponent implements OnInit {
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
-				});
-			this.notificationService.success(this.title,this.description, NotificationUtil.getDefaultMidConfig());
+			});
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			window.location.reload();
 		});
 	}
@@ -159,7 +153,7 @@ export class UserProfileComponent implements OnInit {
 			this.description = description;
 			this.no = no;
 			this.yes = yes;
-			});
+		});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
 		modalRef.componentInstance.title = this.title;
 		modalRef.componentInstance.description = this.description;
@@ -182,7 +176,7 @@ export class UserProfileComponent implements OnInit {
 			this.description = description;
 			this.no = no;
 			this.yes = yes;
-			});
+		});
 		const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
 		modalRef.componentInstance.title = this.title;
 		modalRef.componentInstance.description = this.description;
@@ -202,7 +196,7 @@ export class UserProfileComponent implements OnInit {
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
-				});
+			});
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			window.location.reload();
 		});
@@ -216,14 +210,60 @@ export class UserProfileComponent implements OnInit {
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;
-				});
+			});
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			window.location.reload();
 		});
 	}
-	
+
 	navigateToEvaluation(id): void {
 		let host = window.location.host;
 		window.open(`http://${host}/reru-evaluation/#/user-profile/${id}/overview`, '_self')
+	}
+
+	getUserDataSheet(id: number) {
+		this.isLoadingMedia = true;
+
+		const params = {
+			userProfileId: id
+		}
+		console.log("params", params);
+		
+		this.userProfileService.exportUserProfileSheet(params).subscribe((event) => {
+			this.reportProggress(event);
+		},
+		(error) => {
+			this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+			this.isLoadingMedia = false;
+		})
+	}
+
+	private reportProggress(httpEvent: HttpEvent<Blob>): void {
+		switch (httpEvent.type) {
+			case HttpEventType.Sent:
+				this.fileStatus.percent = 1;
+				break;
+			case HttpEventType.UploadProgress:
+				this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+				break;
+			case HttpEventType.DownloadProgress:
+				this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+				break;
+			case HttpEventType.Response:
+				this.fileStatus.requestType = "Done";
+				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+
+				const fileName = httpEvent.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].slice(1, -1);
+				const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
+				const file = new File([blob], fileName, { type: httpEvent.body.type });
+				saveAs(file);
+				this.isLoadingMedia = false;
+				break;
+		}
+	}
+
+	updateStatus(loaded: number, total: number | undefined, requestType: string) {
+		this.fileStatus.requestType = requestType;
+		this.fileStatus.percent = Math.round(100 * loaded / total);
 	}
 }

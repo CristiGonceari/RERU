@@ -67,7 +67,7 @@ export class UserProfileService extends AbstractService {
 	exportUserProfileSheet(data): Observable<any> {
 		return this.http.put(`${this.coreUrl}/${this.routeUrl}/print-personal-data-excell`, data, {
 			reportProgress: true,
-			responseType: 'blob' as 'json',
+			responseType: 'blob',
 			observe: 'events'
 		});
 	}
