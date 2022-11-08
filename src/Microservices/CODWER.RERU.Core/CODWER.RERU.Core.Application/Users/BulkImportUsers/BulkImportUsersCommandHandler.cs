@@ -11,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.StorageService;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 
@@ -110,13 +109,11 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
         private async Task SetTotalNumberOfProcesses(int processId, int totalUsers)
         {
-            await using (var db = _appDbContext.NewInstance())
-            {
-                var process = await db.Processes.FirstAsync(x => x.Id == processId);
-                process.Total = totalUsers;
+            await using var db = _appDbContext.NewInstance();
+            var process = await db.Processes.FirstAsync(x => x.Id == processId);
+            process.Total = totalUsers;
 
-                await db.SaveChangesAsync();
-            }
+            await db.SaveChangesAsync();
         }
 
         private async Task EditUser(ExcelWorksheet workSheet, UserProfile user, BulkImportUsersCommand request, int i)
