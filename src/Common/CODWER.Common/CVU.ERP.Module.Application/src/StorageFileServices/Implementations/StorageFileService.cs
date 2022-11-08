@@ -173,7 +173,9 @@ namespace CVU.ERP.Module.Application.StorageFileServices.Implementations
         public async Task<IQueryable<File>> GetUserFiles(List<string> fileIdList)
         {
             await using var db = _appDbContext.NewInstance();
-            return db.Files.Where(file => fileIdList.Contains(file.Id.ToString()));
+            var results = db.Files.Where(file => fileIdList.Contains(file.Id.ToString())).ToList();
+
+            return results.AsQueryable();
         }
 
         private async Task FileUpload(string bucketName, string objectName, byte[] ms)

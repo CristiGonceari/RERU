@@ -23,6 +23,7 @@ import { map } from 'rxjs/operators';
 import { GetBulkProgressHistoryService } from 'projects/evaluation/src/app/utils/services/bulk-progress/get-bulk-progress-history.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { is } from 'date-fns/locale';
+import { EmitHint } from 'typescript';
 
 
 @Component({
@@ -125,8 +126,10 @@ export class AddTestComponent implements OnInit {
 
   getActiveTestTemplates(event?) {
     this.isLoading = true;
-    if (event)
+
+    if (event){
       this.hasEventEvaluator = this.eventsList.find(x => x.eventId === event).isEventEvaluator;
+    }
 
     let params = {
       testTemplateStatus: TestTemplateStatusEnum.Active,
@@ -199,7 +202,12 @@ export class AddTestComponent implements OnInit {
         this.backClicked();
         this.disableBtn = false;
         this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-      });
+      },
+        (err) => {
+          clearInterval(interval);
+          this.isStartAddingTests = false;
+          this.disableBtn = false;
+        });
     })
   }
 
