@@ -93,6 +93,7 @@
         public static string REACHED_ERRORS_LIMIT = "03001503";
         public static string INVALID_TEST_START_TIME = "03001504";
         public static string INVALID_SELECTED_COLUMNS = "03001505";
+        public static string INVALID_EVLUATED_USER_LIST = "03001506";
 
         //test questions
         public static string INVALID_TEST_QUESTION = "03001601";

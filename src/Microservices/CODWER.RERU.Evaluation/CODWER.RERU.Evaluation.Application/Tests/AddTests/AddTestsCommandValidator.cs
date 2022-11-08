@@ -31,6 +31,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
 
+            RuleFor(x => x.UserProfileId)
+                .Must(x => x.Any())
+                .WithErrorCode(ValidationCodes.INVALID_EVLUATED_USER_LIST);
+
             When(x => x.EventId == null, () =>
             {
                 RuleFor(x => x.ProgrammedTime)

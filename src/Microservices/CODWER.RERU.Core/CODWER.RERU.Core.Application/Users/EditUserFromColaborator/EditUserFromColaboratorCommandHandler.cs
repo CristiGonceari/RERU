@@ -3,13 +3,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CODWER.RERU.Core.Application.Common.Handlers;
-using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Logging;
 using MediatR;
-using Microsoft.Extensions.Configuration;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 

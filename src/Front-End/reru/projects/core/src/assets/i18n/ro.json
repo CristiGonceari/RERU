@@ -177,6 +177,10 @@
     "of": "din",
     "records": "înregistrări"
   },
+  "downloand-message":{
+    "succes-dosier": "Dosarul utilizatorului a fost descărcat cu succes!",
+    "error-dosier": "Dosarul utilizatorului nu a fost descărcat!"
+  },
   "table": {
     "add": "Adaugă",
     "icon": "Iconiță",
@@ -671,7 +675,8 @@
     "1": "Celibatar/ă",
     "2": "Casatorit/ă",
     "3": "Recasatorit/ă",
-    "4": "Vaduv"
+    "4": "Văduv/ă",
+    "5": "Divorțat/ă"
   },
   "kinshipDegree":{
     "Brother" : "Frate",

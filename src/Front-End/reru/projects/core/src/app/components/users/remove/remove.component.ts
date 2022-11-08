@@ -52,6 +52,7 @@ export class RemoveComponent implements OnInit {
 	}
 
 	removeUser(): void {
+		this.isLoading = true;
 		this.userService.removeUser(this.userId).subscribe(
 			res => {
 				forkJoin([
@@ -63,6 +64,7 @@ export class RemoveComponent implements OnInit {
 					});
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 				this.ngZone.run(() => this.router.navigate(['../../list'], { relativeTo: this.route }));
+				this.isLoading = false;
 			},
 			err => {
 				forkJoin([
@@ -73,6 +75,7 @@ export class RemoveComponent implements OnInit {
 					this.description = description;
 					});
 				this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+				this.isLoading = false;
 			}
 		);
 	}

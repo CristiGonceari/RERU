@@ -87,7 +87,7 @@ export class UserService extends AbstractService {
 	}
 
 	removeUser(id: number): Observable<any> {
-		return this.http.delete(`${this.coreUrl}/${this.routeUrl}/${id}/remove-user`, {});
+		return this.http.delete(`${this.coreUrl}/${this.routeUrl}/${id}/remove-user`, {headers: new HttpHeaders({timeout: `${3500000}`})});
 	}
 
 	blockUnblockUser(id: string): Observable<any> {
@@ -112,12 +112,5 @@ export class UserService extends AbstractService {
 
 	setPassword(data): Observable<any> {
 		return this.http.put(`${this.coreUrl}/${this.routeUrl}/set-password`, data);
-	}
-
-	exportTestExcel(id: string): Observable<any> {
-		return this.http.get(`${this.coreUrl}/${this.routeUrl}/${id}/export-excel`,  {
-			responseType: 'blob' as 'json' ,
-			observe: 'response',
-		});
 	}
 }
