@@ -115,9 +115,9 @@
                                         <app-button class="btn mr-2" [value]="'button.cancel' | translate"
                                             (handle)="backClicked()"></app-button>
 
-                                        <app-add-button class="btn" *ngIf="!testId" [disabled]="testForm.invalid"
+                                        <app-add-button class="btn" *ngIf="!testId" [disable]="testForm.invalid"
                                             (handle)="onSave()" [value]="'button.confirm' | translate"></app-add-button>
-                                        <app-confirm-button class="btn" *ngIf="testId" [disabled]="testForm.invalid"
+                                        <app-confirm-button class="btn" *ngIf="testId" [disable]="testForm.invalid"
                                             (handle)="onSave()" [value]="'button.update' | translate">
                                         </app-confirm-button>
                                     </div>

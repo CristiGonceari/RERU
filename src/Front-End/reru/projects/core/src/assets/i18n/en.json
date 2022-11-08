@@ -674,7 +674,8 @@
     "1": "Bachelor",
     "2": "Married",
     "3": "Remarried",
-    "4": "Widower"
+    "4": "Widower",
+    "5": "Divorced"
   },
   "kinshipDegree":{
     "Brother" : "Brother",
