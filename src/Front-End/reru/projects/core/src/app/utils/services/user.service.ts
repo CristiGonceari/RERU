@@ -87,7 +87,7 @@ export class UserService extends AbstractService {
 	}
 
 	removeUser(id: number): Observable<any> {
-		return this.http.delete(`${this.coreUrl}/${this.routeUrl}/${id}/remove-user`, {});
+		return this.http.delete(`${this.coreUrl}/${this.routeUrl}/${id}/remove-user`, {headers: new HttpHeaders({timeout: `${3500000}`})});
 	}
 
 	blockUnblockUser(id: string): Observable<any> {

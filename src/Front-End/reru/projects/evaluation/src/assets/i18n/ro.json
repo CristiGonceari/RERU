@@ -984,7 +984,8 @@
     "03030208": "Testul dvs. solicitat a fost refuzat",
     "03002201": "Nu puteti sterge poziția la care cineva a aplicat",
     "03002107": "Numele poziției este gol",
-    "03002109": "Coloana medicală este necompletată"
+    "03002109": "Coloana medicală este necompletată",
+    "03001506":  "Nu ați asignat nici un evaluat"
   },
   "login": {
     "colaborator-id": "Colaborator ID",

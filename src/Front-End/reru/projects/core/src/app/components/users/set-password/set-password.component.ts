@@ -61,8 +61,8 @@ export class SetPasswordComponent implements OnInit {
   initForm(user): void {
     this.passwordForm = this.fb.group({
       id: this.fb.control(user.id, [Validators.required]),
-      password: this.fb.control('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&].{6,}')]),
-      repeatNewPassword: this.fb.control('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&].{6,}')]),
+      password: this.fb.control('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*#?&)(])[A-Za-z\d@$!%*#?&].{6,}')]),
+      repeatNewPassword: this.fb.control('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*#?&)(])[A-Za-z\d@$!%*#?&].{6,}')]),
       emailNotification: this.fb.control(false, [Validators.required])
     });
     this.isLoading = false;
