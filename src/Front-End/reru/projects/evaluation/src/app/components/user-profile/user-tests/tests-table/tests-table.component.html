@@ -24,7 +24,9 @@
             <tr *ngFor="let test of testRowList">
                 <td>
                     <span class="colored d-block mb-0">
-                        <b>{{ test.programmedTime | date: 'dd/MM/yyyy, HH:mm'}}</b>
+                        <b *ngIf="!test.eventName">{{ test.programmedTime | date: 'dd/MM/yyyy, HH:mm'}}</b>
+                        <b *ngIf="test.eventName">{{ test.programmedTime | date: 'dd/MM/yyyy'}} - {{
+                            test.endProgrammedTime | date: 'dd/MM/yyyy'}}</b>
                     </span>
                 </td>
                 <td>{{ test.testTemplateName }}</td>
