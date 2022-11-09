@@ -79,6 +79,7 @@
     "token": "Token",
     "token-is-required": "Token este obligatoriu",
     "please-use-valid-email": "Vă rugăm să folosiți o formă corectă email, ex. example@mail.com",
+    "invalid-mail-yandex-ru": "Adresele precum @mail.ru sau @yandex.ru nu sunt acceptate",
     "password": "Parolă",
     "password-is-required": "Parola este obligatorie",
     "forgot-password": "Ai uitat parola?",
