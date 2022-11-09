@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { I18nService } from '../app/utils/services/i18n/i18n.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LocalizeRouterService } from '@gilsdav/ngx-translate-router';
 import { forkJoin } from 'rxjs';
 import { SidebarItemType } from '../app/utils/models/sidebar.model';
@@ -329,6 +329,12 @@ export class AppComponent {
 		this.appSettings = this.appSettingsService.settings;
 		this.navigation.startSaveHistory();
 	}
+
+	get isNotHomeRoute(): boolean {
+		return this.router.url !== '/';
+	}
+
+	set isNotHomeRoute(value) {}
 
 	ngOnInit(): void {
 		this.translateData();

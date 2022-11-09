@@ -66,6 +66,8 @@ export class EvaluatedTestsTableComponent implements OnInit {
           this.pagedSummary = response.data.pagedSummary;
           this.isLoading = false;
         }
+      }, () => {
+        this.isLoading = false;
       });
   }
 
@@ -95,6 +97,8 @@ export class EvaluatedTestsTableComponent implements OnInit {
         this.pagedSummary = res.data.pagedSummary;
         this.selectedDay = null;
       }
+    }, () => {
+      this.isLoading = false;
     });
   }
 

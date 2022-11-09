@@ -1,7 +1,7 @@
 <app-loading-spinner *ngIf="isLoading || downloadFile"></app-loading-spinner>
 <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
-<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+<div class="table-responsive-xl datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
     <table for="kt_datatable" class="datatable table" style="overflow: visible" id="testsTable" *ngIf="!isLoading">
         <thead class="text-uppercase text-muted">

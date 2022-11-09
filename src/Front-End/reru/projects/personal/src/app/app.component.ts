@@ -207,6 +207,12 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.navigation.startSaveHistory();
 	}
 
+	get isNotHomeRoute(): boolean {
+		return this.router.url !== '/';
+	}
+
+	set isNotHomeRoute(value) {}
+
 	ngOnInit(): void {
 		this.translateData();
 		this.subscribeForLanguageChange();
