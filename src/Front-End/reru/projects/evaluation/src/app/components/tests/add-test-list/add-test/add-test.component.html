@@ -149,9 +149,6 @@
               <input id="from" [owlDateTimeTrigger]="dtFrom" placeholder="Date Time" autocomplete="off"
                 class="form-control form-control-lg form-control-solid" [value]="date | dateFilter:'dd/MM/yy HH:mm'" />
               <owl-date-time #dtFrom></owl-date-time>
-              <div *ngIf="validateDateTime()" class="col-lg-9 col-xl-9" style="color: rgb(255, 71, 71);">
-                {{ 'locations.empty-name' | translate }}
-              </div>
             </div>
           </div>
         </div>
@@ -160,9 +157,9 @@
         <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
         </app-button>
         <app-add-button class="btn mr-2" [value]="'button.confirm' | translate" (click)="createTest(false)"
-          [disabled]="disableBtn || validateDateTime(testEvent)">
+          [disabled]="disableBtn || cantAdd()">
         </app-add-button>
-        <app-confirm-button class="btn" title="{{messageText}}" [disabled]="!printTest || disableBtn || validateDateTime(testEvent)"
+        <app-confirm-button class="btn" title="{{messageText}}" [disabled]="!printTest || disableBtn || cantAdd()"
           [value]="'button.confirm-print' | translate" (click)="createTest(true)">
         </app-confirm-button>
       </div>

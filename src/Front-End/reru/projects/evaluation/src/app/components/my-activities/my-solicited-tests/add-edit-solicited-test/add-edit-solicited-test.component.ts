@@ -210,6 +210,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
       if (this.files.length > 0) {
         this.uploadFiles(res);
       } else {
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
         this.isLoading = false
         this.backClicked();
       }
@@ -220,7 +221,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
     this.solicitedTestService.editMySolicitedTest(this.parseToEdit()).subscribe(res => {
       forkJoin([
         this.translate.get('modal.success'),
-        this.translate.get('solicited-test.succes-add-msg'),
+        this.translate.get('solicited-test.succes-edit-msg'),
       ]).subscribe(([title, description]) => {
         this.title = title;
         this.description = description;
@@ -230,6 +231,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
       if (this.files.length > 0) {
         this.uploadFiles(res);
       } else {
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
         this.isLoading = false
         this.backClicked();
       }
