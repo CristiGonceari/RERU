@@ -165,6 +165,7 @@ export class AddTestComponent implements OnInit {
     this.date = null
     this.evaluatorList.length = 0;
     this.testTemplate.value = null
+    this.isTestTemplateOneAnswer = false;
   }
 
   parse() {
