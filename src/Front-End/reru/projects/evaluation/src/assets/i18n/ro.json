@@ -96,12 +96,12 @@
     "manage-tests": "Șablon de teste",
     "manage-categories": "Categorii",
     "manage-questions": "Întrebări",
-    "test": "Test",
+    "test": "Teste și evaluări",
     "events": "Evenimente",
     "faq": "Întrebări frecvente",
     "documents-template": "Șabloane",
     "documents-management": "Management de Șabloane",
-    "administration": "Administrare",
+    "administration": "Administrare candidați",
     "positions": "Poziții vacante",
     "required-documents": "Documente Necesare"
   },
@@ -855,7 +855,7 @@
     "please-select-format": "Selectați formatul necesar"
   },
   "solicited-position":{
-    "solicited-positions": "Poziție solicitate",
+    "solicited-positions": "Poziții solicitate",
     "attached-documents": "Documente atașate",
     "required-documents": "Documente necesare",
     "review" : "Revizuie",

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using MediatR;
@@ -18,9 +17,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplate
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
 
-        public GetTestTemplateQueryHandler(AppDbContext appDbContext, 
-            IMapper mapper
-           )
+        public GetTestTemplateQueryHandler(AppDbContext appDbContext, IMapper mapper)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
@@ -44,7 +41,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplate
             return await _appDbContext.TestTemplateModuleRoles
                 .Include(x => x.ModuleRole)
                 .Where(x => x.TestTemplateId == testTemplateId)
-                .Select(x => new ModuleRole()
+                .Select(x => new ModuleRole
                 {
                     Id = x.ModuleRole.Id,
                     Name = x.ModuleRole.Name
