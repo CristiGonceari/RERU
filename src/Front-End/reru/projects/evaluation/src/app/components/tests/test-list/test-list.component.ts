@@ -36,12 +36,12 @@ export class TestListComponent implements OnInit {
   }
 
   clearFields() {
-    this.testName.key = '';
-    this.testEvent.key = '';
-    this.testLocation.key = '';
-    this.userName.key = '';
-    this.userEmail.key = '';
-    this.idnp.key = '';
+    // this.testName.key = '';
+    // this.testEvent.key = '';
+    // this.testLocation.key = '';
+    // this.userName.key = '';
+    // this.userEmail.key = '';
+    // this.idnp.key = '';
     this.selectedStatus.getTestStatuses();
     this.selectedResult.getTestResults();
     this.departmentId.department = '';

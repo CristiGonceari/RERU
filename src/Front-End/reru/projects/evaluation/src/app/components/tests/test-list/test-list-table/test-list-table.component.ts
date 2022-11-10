@@ -30,8 +30,6 @@ export class TestListTableComponent implements OnInit {
   pagination: PaginationModel = new PaginationModel();
   testTemplateName = [];
   testToSearch;
-  userName;
-  userEmail;
   testTemplateId: number;
   testTemplate = [];
   pager: number[] = [];
@@ -57,12 +55,17 @@ export class TestListTableComponent implements OnInit {
   testPassEnum: TestStatusEnum;
   eventName;
   locationName;
-  idnp: string;
   isLoading: boolean = true;
 	downloadFile: boolean = false;
 	headersToPrint = [];
 	printTranslates: any[];
   filters: any = {};
+  testName: string = '';
+  userName: string = '';
+  userEmail: string = '';
+  idnp: string = '';
+  testEvent: string = '';
+  testLocation: string = '';
 
   title: string;
 	description: string;
@@ -122,14 +125,14 @@ export class TestListTableComponent implements OnInit {
     
     let params = {
       mode: null,
-      testTemplateName: this.filters.testName || this.testToSearch || '',
-      locationKeyword: this.filters.testLocation || this.locationName || '',
-      idnp: this.filters.idnp ||this.idnp || '',
-      eventName: this.filters.testEvent || this.eventName || '',
-      userName: this.filters.userName || this.userName || '',
-      email: this.filters.userEmail || this.userEmail || '',
-      programmedTimeFrom: this.searchFrom,
-      programmedTimeTo: this.searchTo,
+      testTemplateName: this.testName || '',
+      locationKeyword: this.testLocation || '',
+      idnp: this.idnp || '',
+      eventName: this.testEvent || '',
+      userName: this.userName || '',
+      email: this.userEmail || this.userEmail || '',
+      programmedTimeFrom: this.searchFrom || null,
+      programmedTimeTo: this.searchTo || null,
       testStatus: this.filters.selectedStatus || this.selectedStatus,
       resultStatus: this.filters.selectedResult || this.selectedResult,
       page: data.page || this.pagination.currentPage,
@@ -151,44 +154,6 @@ export class TestListTableComponent implements OnInit {
         }
       }
     });
-  }
-
-  ChangeSortOrder(newSortOrder) {
-    this.selectedSortOrder = newSortOrder;
-    this.setTimeToSearch();
-
-    if (newSortOrder === "None") {
-      this.searchFrom = ""; this.searchTo = "";
-      this.dateTimeFrom = ""; this.dateTimeTo = "";
-    } else if (newSortOrder === "Today")
-      this.today();
-    else if (newSortOrder === "This week")
-      this.thisWeek();
-    else if (newSortOrder === "This month")
-      this.thisMonth();
-    this.getTests();
-  }
-
-  today() {
-    this.setTimeToSearch();
-
-    this.dateTimeFrom = this.datePipe.transform(new Date(new Date().setHours(0, 0)), "MM/dd/yyyy,  hh:mm a");
-    this.dateTimeTo = this.datePipe.transform(new Date(new Date().setHours(23, 59)), "MM/dd/yyyy,  hh:mm a");
-  }
-
-  thisWeek() {
-    this.setTimeToSearch();
-    let first = new Date().getDate() - new Date().getDay() + 1;
-
-    this.dateTimeFrom = this.datePipe.transform(new Date(new Date().setDate(first)).toUTCString(), "MM/dd/yyyy");
-    this.dateTimeTo = this.datePipe.transform(new Date(new Date().setDate(first + 6)).toUTCString(), "MM/dd/yyyy");
-  }
-
-  thisMonth() {
-    this.setTimeToSearch();
-
-    this.dateTimeFrom = this.datePipe.transform(new Date(new Date().getFullYear(), new Date().getMonth(), 1), "MM/dd/yyyy");
-    this.dateTimeTo = this.datePipe.transform(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0), "MM/dd/yyyy");
   }
 
   getTestStatuses() {
@@ -340,12 +305,12 @@ export class TestListTableComponent implements OnInit {
 			orientation: 2,
       testStatus: this.filters.selectedStatus || this.selectedStatus,
       resultStatus: this.filters.selectedResult || this.selectedResult,
-      testTemplateName: this.filters.testName || this.testToSearch || '',
-      locationKeyword: this.filters.testLocation || this.locationName || '',
-      idnp: this.filters.idnp ||this.idnp || '',
-      eventName: this.filters.testEvent || this.eventName || '',
-      userName: this.filters.userName || this.userName || '',
-      email: this.filters.userEmail || this.userEmail || '',
+      testTemplateName: this.testName || '',
+      locationKeyword: this.testLocation || '',
+      idnp: this.idnp || '',
+      eventName: this.testEvent || '',
+      userName: this.userName || '',
+      email: this.userEmail || '',
       programmedTimeFrom: this.searchFrom || null,
       programmedTimeTo: this.searchTo || null,
       ...this.filters
@@ -405,6 +370,12 @@ export class TestListTableComponent implements OnInit {
 	resetFilters(): void {
 		this.filters = {};
 		this.pagination.currentPage = 1;
+    this.testName = '';
+    this.testEvent = '';
+    this.testLocation = '';
+    this.userName = '';
+    this.userEmail = '';
+    this.idnp = '';
     this.dateTimeFrom = '';
     this.dateTimeTo = '';
     this.searchFrom = '';

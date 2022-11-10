@@ -107,6 +107,7 @@
   },
   "position": {
     "administration": "Administration",
+    "no-events": "This position does not contain any events",
     "management": "Vacant position management",
     "add": "Add position",
     "edit": "Edit position",
@@ -125,7 +126,9 @@
     "position-diagram": "Position diagram",
     "vacant-position": "Vacant position",
     "medical-column": "Medical column",
-    "column": "Column"
+    "column": "Column",
+    "active-from": "Active from",
+    "active-to": "Active until"
   },
   "documents-templates":{
     "title": "Document Templates",

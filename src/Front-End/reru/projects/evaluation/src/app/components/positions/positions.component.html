@@ -1,13 +1,9 @@
-<app-page-title title="{{ 'position.administration' | translate }}"
-  subTitle="{{ 'position.subtitle' | translate }}">
+<app-page-title title="{{ 'position.administration' | translate }}" subTitle="{{ 'position.subtitle' | translate }}">
 </app-page-title>
 
-<app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'20vh'" [height]="'5rem'" [width]="'5rem'"
-  [colorClass]="'text-primary'">
-</app-loading-spinner>
-<h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
-<div *ngIf="!isLoading && !downloadFile" class="content d-flex flex-column flex-column-fluid" id="kt_content">
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
   <div class="d-flex flex-column-fluid">
     <div class="container">
       <div class="row">
@@ -21,21 +17,27 @@
               </div>
               <div class="card-toolbar">
                 <app-confirm-button class="btn mr-3" (click)="getHeaders(getTitle())">
-									<i class="far fa-file-pdf text-white"></i>
-									{{'button.print' | translate}}
-								</app-confirm-button>
+                  <i class="far fa-file-pdf text-white"></i>
+                  {{'button.print' | translate}}
+                </app-confirm-button>
                 <app-add-button class="btn" routerLink="../add-position" [value]="'position.add' | translate">
                 </app-add-button>
               </div>
             </div>
             <div class="card-body">
-							<div class="row mb-5">
-								<div class="col">
-									<erp-shared-search-input (handleSearch)="getPositions({name: $event, page: 1, itemsPerPage: pagination.pageSize})" [placeholder]="'button.search-name' | translate" #search></erp-shared-search-input>
-								</div>
-								<app-button (click)="search.clear()" [value]="'button.reset' | translate" class="mr-5"></app-button>
-							</div>
-              <div id="kt_datatable"
+              <div class="row mb-5">
+                <div class="col">
+                  <erp-shared-search-input
+                    (handleSearch)="getPositions({name: $event, page: 1, itemsPerPage: pagination.pageSize})"
+                    [placeholder]="'button.search-name' | translate" #search></erp-shared-search-input>
+                </div>
+                <app-button (click)="search.clear()" [value]="'button.reset' | translate" class="mr-5"></app-button>
+              </div>
+              <app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'20vh'" [height]="'5rem'"
+                [width]="'5rem'" [colorClass]="'text-primary'">
+              </app-loading-spinner>
+              <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
+              <div *ngIf="!isLoading && !downloadFile" id="kt_datatable"
                 class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded">
                 <table class="datatable table font-size-lg">
                   <thead class="text-uppercase text-muted">
@@ -45,48 +47,35 @@
                       <th scope="col">{{'events.start-date' | translate}}</th>
                       <th scope="col">{{'events.end-date' | translate}}</th>
                       <th scope="col">{{'position.column' | translate}}</th>
-                      <th scope="col"  style="width: 75px; text-align: center; vertical-align: middle">{{'position.status' | translate}}</th>
+                      <th scope="col" style="width: 75px; text-align: center; vertical-align: middle">
+                        {{'position.status' | translate}}</th>
                       <th scope="col" style="width: 50px"></th>
                     </tr>
                   </thead>
                   <tbody class="text-dark-75">
-                    <tr *ngFor="let position of positions">
-                      <td [routerLink]="['../edit-position', position.id]">
-                        <a 
-                          class="font-size-lg cursor-pointer text-dark-50 text-hover-dark-75">
-                          {{ position.name }}
-                        </a>
+                    <tr *ngFor="let position of positions" (dblclick)="navigate(position.id)">
+                      <td  class="cursor-pointer" [routerLink]="['../position', position.id]">
+                        <a>{{ position.name }}</a>
                       </td>
                       <td>
                         <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
                           [routerLink]="['../../user-profile', position.responsiblePersonId]"
-                          style="white-space: nowrap;">
-                          {{ position.responsiblePerson || '-'}}
+                          style="white-space: nowrap;" *ngIf="position.responsiblePerson">
+                          {{ position.responsiblePerson }}
                         </p>
+                        <p *ngIf="!position.responsiblePerson">-</p>
                       </td>
-                      <td [routerLink]="['../edit-position', position.id]">
-                        <a *ngIf="position.from"
-                          class="font-size-lg cursor-pointer text-dark-50 text-hover-dark-75">
-                          {{ position.from | date: 'dd/MM/yyyy, HH:mm'}}
-                        </a>
-                        <a *ngIf="!position.from"
-                          class="font-size-lg text-dark-50 text-hover-dark-75">
-                            -
-                        </a>
+                      <td>
+                        <a *ngIf="position.from">{{ position.from | date: 'dd/MM/yyyy, HH:mm'}}</a>
+                        <a *ngIf="!position.from">-</a>
                       </td>
-                      <td [routerLink]="['../edit-position', position.id]">
-                        <a *ngIf="position.to"
-                          class="font-size-lg cursor-pointer text-dark-50 text-hover-dark-75">
-                          {{ position.to | date: 'dd/MM/yyyy, HH:mm' }}
-                        </a>
-                        <a *ngIf="!position.to"
-                        class="font-size-lg text-dark-50 text-hover-dark-75">
-                            -
-                      </a>
+                      <td>
+                        <a *ngIf="position.to">{{ position.to | date: 'dd/MM/yyyy, HH:mm' }}</a>
+                        <a *ngIf="!position.to">-</a>
                       </td>
-                      <td [routerLink]="['../edit-position', position.id]">
-                        <a class="font-size-lg cursor-pointer text-dark-50 text-hover-dark-75" *ngIf="position.medicalColumn!=null">{{'statuses.' + medicalEnum[position.medicalColumn] | translate}}</a>
-                        <a class="font-size-lg cursor-pointer text-dark-50 text-hover-dark-75" *ngIf="position.medicalColumn==null">-</a>
+                      <td>
+                        <a *ngIf="position.medicalColumn!=null">{{'statuses.' + medicalEnum[position.medicalColumn] | translate}}</a>
+                        <a *ngIf="position.medicalColumn==null">-</a>
                       </td>
                       <td>
                         <svg-icon *ngIf="position.isActive === false" key="error" [width]="24" [height]="24"
@@ -117,13 +106,16 @@
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                               <div ngbDropdownMenu [aria-labelledby]="'action' + i" class="p-0">
                                 <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
+                                  [routerLink]="['../position', position.id]">
+                                  {{'categories.view-details' | translate}}
+                                </button>
+                                <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
                                   [routerLink]="['../edit-position', position.id]">
                                   {{ 'button.edit' | translate }}
                                 </button>
                                 <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
-                                  *ngIf="position.events.length"
-                                  [routerLink]="['../diagram', position.id]">
-                                  {{ 'position.position-diagram' | translate }} 
+                                  *ngIf="position.events.length" [routerLink]="['../diagram', position.id]">
+                                  {{ 'position.position-diagram' | translate }}
                                 </button>
                                 <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
                                   (click)="openRemoveModal(position.id, position.name)">
@@ -140,7 +132,8 @@
                 <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
                   [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
                   (sizeChange)="getPositions({ name: keyword, page: 1, itemsPerPage: $event })"
-                  (pageChange)="getPositions({ name: keyword, page: $event, itemsPerPage: pagination.pageSize})" *ngIf="positions">
+                  (pageChange)="getPositions({ name: keyword, page: $event, itemsPerPage: pagination.pageSize})"
+                  *ngIf="positions">
                 </div>
               </div>
             </div>

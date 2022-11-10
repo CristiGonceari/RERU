@@ -14,9 +14,18 @@ import {MatSelectModule} from '@angular/material/select';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { PositionsDiagramComponent } from './positions-diagram/positions-diagram.component';
 import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-datetime';
+import { PositionDetailsComponent } from './position-details/position-details.component';
+import { PositionOverviewComponent } from './position-details/position-overview/position-overview.component';
+import { DiagramComponent } from './position-details/diagram/diagram.component';
 
 @NgModule({
-  declarations: [AddEditPositionComponent, PositionsDiagramComponent],
+  declarations: [
+    AddEditPositionComponent, 
+    PositionsDiagramComponent, 
+    PositionDetailsComponent, 
+    PositionOverviewComponent, 
+    DiagramComponent
+  ],
   imports: [
     CommonModule,
     RouterModule,
