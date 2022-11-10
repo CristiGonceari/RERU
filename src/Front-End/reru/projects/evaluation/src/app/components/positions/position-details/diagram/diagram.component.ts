@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TestResultStatusEnum } from '../../../utils/enums/test-result-status.enum';
-import { TestStatusEnum } from '../../../utils/enums/test-status.enum';
-import { CandidatePositionService } from '../../../utils/services/candidate-position/candidate-position.service';
-import { PrintTemplateService } from '../../../utils/services/print-template/print-template.service';
+import { TestResultStatusEnum } from '../../../../utils/enums/test-result-status.enum';
+import { TestStatusEnum } from '../../../../utils/enums/test-status.enum';
+import { CandidatePositionService } from '../../../../utils/services/candidate-position/candidate-position.service';
+import { PrintTemplateService } from '../../../../utils/services/print-template/print-template.service';
 import { saveAs } from 'file-saver';
-import { MedicalColumnEnum } from '../../../utils/enums/medical-column.enum';
-import { EnumStringTranslatorService } from '../../../utils/services/enum-string-translator.service';
+import { MedicalColumnEnum } from '../../../../utils/enums/medical-column.enum';
+import { EnumStringTranslatorService } from '../../../../utils/services/enum-string-translator.service';
 
 @Component({
-  selector: 'app-positions-diagram',
-  templateUrl: './positions-diagram.component.html',
-  styleUrls: ['./positions-diagram.component.scss']
+  selector: 'app-diagram',
+  templateUrl: './diagram.component.html',
+  styleUrls: ['./diagram.component.scss']
 })
-export class PositionsDiagramComponent implements OnInit {
+export class DiagramComponent implements OnInit {
   isLoading = true;
   eventsDiagram = [];
   usersDiagram = [];
@@ -21,6 +21,7 @@ export class PositionsDiagramComponent implements OnInit {
   positionId;
   positionName;
   positionMedicalColumn;
+  events = [];
   medicalColumnEnum = MedicalColumnEnum;
   status = TestStatusEnum;
   result = TestResultStatusEnum;
@@ -33,12 +34,15 @@ export class PositionsDiagramComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
+    this.activatedRoute.parent.params.subscribe(params => {
       this.positionId = params.id;
+      console.log(this.positionId)
       this.positionService.get(this.positionId).subscribe(res => {
         this.positionName = res.data.name; 
         this.positionMedicalColumn = res.data.medicalColumn;
-        this.getDiagram();
+        this.events = res.data.events;
+        if(this.events.length) this.getDiagram(); 
+        else this.isLoading = false;
       });
     });
   }
@@ -54,7 +58,6 @@ export class PositionsDiagramComponent implements OnInit {
             this.testTemplates.push(element)
           });
         });
-
         this.isLoading = false;
       }
     })

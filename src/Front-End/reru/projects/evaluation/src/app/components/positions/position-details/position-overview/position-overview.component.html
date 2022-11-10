@@ -1,0 +1,100 @@
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="card card-custom gutter-b" style="margin-left: 16px;">
+        <div class="card-header flex-wrap border-0 py-5">
+            <div class="card-title"><b>{{'categories.overview' | translate}}</b></div>
+        </div>
+        <app-loading-spinner *ngIf="isLoading" [contentHeight]="'20vh'" [height]="'5rem'" [width]="'5rem'"
+                [colorClass]="'text-primary'">
+        </app-loading-spinner>
+        <div class="card-body" *ngIf="!isLoading">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-lg-4 col-form-label text-right font-weight-bold text-muted">{{ 'position.name' | translate }}:</label>
+                        <div class="col-lg-8 col-xl-8 col-form-label">{{position.name}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-lg-4 col-form-label text-right font-weight-bold text-muted">{{ 'position.medical-column' | translate }}:</label>
+                        <div class="col-lg-8 col-xl-8 col-form-label">{{ 'statuses.' + medicalColumn[position.medicalColumn] | translate }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-lg-4 col-form-label text-right font-weight-bold text-muted">{{'position.active-from' | translate}}:</label>
+                        <div class="col-lg-8 col-xl-8 col-form-label">{{ position.from | date: 'dd/MM/yyyy, HH:mm'}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-lg-4 col-form-label text-right font-weight-bold text-muted">{{'position.active-to' | translate}}:</label>
+                        <div class="col-lg-8 col-xl-8 col-form-label">{{ position.to | date: 'dd/MM/yyyy, HH:mm' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group row">
+                        <label class="col-xl-2 col-lg-2 col-form-label text-right font-weight-bold text-muted">{{'require-documents.required-documents' | translate}}:</label>
+                        <div class="col-lg-10 col-xl-10 col-form-label">{{ documnets }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group row">
+                        <label class="col-xl-2 col-lg-2 col-form-label text-right font-weight-bold text-muted">{{'events.events' | translate}} ({{ countOfEvents }}):</label>
+                        <div class="col-lg-10 col-xl-10 col-form-label">{{ events }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="eventsListForDescription.length">
+                <label class="col-xl-3 col-lg-3 col-form-label text-right font-weight-bold text-muted">
+                  {{'events.event-template-details' | translate}}</label>
+                <div class="card ml-5 col-lg-8 col-xl-8">
+                  <div class="card-body" *ngIf="!isLoading">
+                    <div class="bordered form-group row align-items-center mb-2">
+                      <label *ngFor="let event of eventsListForDescription"
+                        class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-muted">
+                        <p class="text-muted mb-2">{{event.eventName}}: ({{event.testTemplates.length}} {{ 'verify-test.title' | translate }})</p>
+                        <p *ngIf="!event.testTemplates.length">-</p>
+                        <p *ngFor="let testTemplate of event.testTemplates"
+                          class="font-weight-bold text-left">
+                          {{testTemplate.testTemplateName}}
+                        </p>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group row">
+                        <label class="col-xl-2 col-lg-2 col-form-label text-right font-weight-bold text-muted">{{'evaluations.attach-notified-users' | translate}} ({{ countOfUsers }}):</label>
+                        <div class="col-lg-10 col-xl-10 col-form-label">{{ attachedUsers }} 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group row">
+                        <label class="col-xl-2 col-lg-2 col-form-label text-right font-weight-bold text-muted">{{'locations.description' | translate}}:</label>
+                        <div class="col-lg-10 col-xl-10 col-form-label rounded border">
+                            <ckeditor [editor]="Editor" [(ngModel)]="position.description" class="disabled-area"></ckeditor>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
