@@ -227,7 +227,7 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
       () => {
         this.finalizeTest();
         clearInterval(this.interval);
-      }
+      }, () => { }
     );
   }
 

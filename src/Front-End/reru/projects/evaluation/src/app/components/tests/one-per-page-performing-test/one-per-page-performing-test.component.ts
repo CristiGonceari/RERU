@@ -485,6 +485,12 @@ export class OnePerPagePerformingTestComponent implements OnInit {
         this.finalizeTest();
         clearInterval(this.interval);
         clearInterval(this.timerInterval);
+      }, () => {
+        if(this.testQuestionSummary.every(x => x.isClosed === true)){
+          this.finalizeTest();
+          clearInterval(this.interval);
+          clearInterval(this.timerInterval);
+        }
       }
     );
   }
