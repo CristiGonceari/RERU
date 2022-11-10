@@ -61,7 +61,7 @@ export class PositionOverviewComponent implements OnInit {
 
   getAttachedUsers() {
     this.candidatePositionNotificationService.getNotificatedUsers(this.position.id).subscribe(res => {
-      this.attachedUsers = res.data.map(e => e.fullName).join(", ");
+      this.attachedUsers = res.data.map(e => e.label).join(", ");
       this.countOfUsers = res.data.length;
     })
   }
