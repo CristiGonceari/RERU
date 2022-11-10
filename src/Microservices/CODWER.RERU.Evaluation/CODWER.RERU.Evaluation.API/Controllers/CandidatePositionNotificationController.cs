@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.CandidatePositionNotifications.GetCurrentUserId;
+using CODWER.RERU.Evaluation.Application.CandidatePositionNotifications.GetNotificatedUsers;
+using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
+using CVU.ERP.Common.DataTransferObjects.SelectValues;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -15,6 +18,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<List<int>> GetCandidatePositionNotifications([FromRoute] int id)
         {
             var query = new GetCandidatePositionNotificationsQuery { CandidatePositionId = id };
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("users/{id}")]
+        public async Task<List<SelectItem>> GetNotificatedUsers([FromRoute] int id)
+        {
+            var query = new GetNotificatedUsersQuery() { CandidatePositionId = id };
             return await Mediator.Send(query);
         }
 

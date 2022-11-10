@@ -96,17 +96,18 @@
     "manage-tests": "Test Template",
     "manage-categories": "Categories",
     "manage-questions": "Questions",
-    "test": "Test",
+    "test": "Tests and evaluations",
     "events": "Events",
     "faq": "Frequent questions",
     "documents-template": "Document Templates",
     "documents-management": "Document Management",
-    "administration": "Administration",
+    "administration": "Administration candidates",
     "positions": "Vacant positions",
     "required-documents": "Required Documents"
   },
   "position": {
     "administration": "Administration",
+    "no-events": "This position does not contain any events",
     "management": "Vacant position management",
     "add": "Add position",
     "edit": "Edit position",
@@ -125,7 +126,9 @@
     "position-diagram": "Position diagram",
     "vacant-position": "Vacant position",
     "medical-column": "Medical column",
-    "column": "Column"
+    "column": "Column",
+    "active-from": "Active from",
+    "active-to": "Active until"
   },
   "documents-templates":{
     "title": "Document Templates",

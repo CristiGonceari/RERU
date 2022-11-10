@@ -75,6 +75,7 @@
     "token": "Token",
     "token-is-required": "Token is required",
     "please-use-valid-email": "Please use a valid email e.g. example@mail.com",
+    "invalid-mail-yandex-ru": "Addresses like @mail.ru or @yandex.ru are not accepted",
     "password": "Password",
     "password-is-required": "Password is required",
     "forgot-password": "Forgot Password?",

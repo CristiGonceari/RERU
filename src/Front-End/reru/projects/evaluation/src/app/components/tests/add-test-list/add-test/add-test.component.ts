@@ -122,6 +122,11 @@ export class AddTestComponent implements OnInit {
     if (this.isTestTemplateOneAnswer) {
       this.evaluator.value = null;
     }
+
+    if(event) {
+      this.evaluatorList[0] = null;
+      this.evaluatorList.length = 0;
+    }
   }
 
   getActiveTestTemplates(event?) {
@@ -151,6 +156,16 @@ export class AddTestComponent implements OnInit {
       this.showEventCard = false;
     }
 
+    if (event) this.clearTestData()
+  }
+
+  clearTestData(){
+    this.userListToAdd.length = 0;
+    this.search = null
+    this.date = null
+    this.evaluatorList.length = 0;
+    this.testTemplate.value = null
+    this.isTestTemplateOneAnswer = false;
   }
 
   parse() {
@@ -165,14 +180,6 @@ export class AddTestComponent implements OnInit {
       testTemplateId: +this.testTemplate.value || 0,
       showUserName: this.showName
     })
-  }
-
-  roundUpNearest10(num) {
-    return Math.ceil(num / 10) * 10;
-  }
-
-  getSubArray(idx, _length, _array) {
-    return _array.slice(idx, idx + _length);
   }
 
   createTest(print: boolean) {
@@ -292,8 +299,17 @@ export class AddTestComponent implements OnInit {
     }
   }
 
-  validateDateTime(isTestEvent): boolean {
-    return isTestEvent ? false : this.date === null || typeof(this.date) === 'undefined'
+  cantAdd(){
+    if(this.testEvent){
+      return this.event.value == null ||
+      this.userListToAdd.length <= 0 ||
+      (this.testTemplate.value == null || this.testTemplate.value == "") ||
+      (this.hasEventEvaluator || this.isTestTemplateOneAnswer ? false : this.evaluatorList[0] == null)
+    } else {
+      return this.userListToAdd.length <= 0 ||
+      (this.isTestTemplateOneAnswer ? false : this.evaluatorList[0] == null) ||
+      (this.testTemplate.value == null || this.testTemplate.value == "") ||
+      this.date == null
+    }
   }
-
 }

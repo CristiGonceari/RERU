@@ -40,9 +40,7 @@ export class StartTestPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.startTimer();
     this.getTestById(this.testId);
-
   }
 
   startTimer() {
@@ -60,8 +58,8 @@ export class StartTestPageComponent implements OnInit {
     }, 1000)
   }
 
-  parseCandidatePositions(candidatePositionsNames: string[]){
-    if(this.validatePosition){
+  parseCandidatePositions(candidatePositionsNames: string[]) {
+    if (this.validatePosition) {
       let string = candidatePositionsNames.join();
       return string.split(',').join(', ');
     }
@@ -100,6 +98,7 @@ export class StartTestPageComponent implements OnInit {
       res => {
         this.testDto = res.data;
         this.validatePosition = true;
+        this.startTimer();
       }
     )
   }

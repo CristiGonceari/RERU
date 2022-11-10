@@ -96,17 +96,18 @@
     "manage-tests": "Шаблон тестов",
     "manage-categories": "Категории",
     "manage-questions": "Вопросы",
-    "test": "Тест",
+    "test": "Тесты и оценки",
     "events": "События",
     "faq": "Частые вопросы",
     "documents-template": "Шаблоны документов",
     "documents-management": "Управление шаблонами",
-    "administration": "Администрирование",
+    "administration": "Администрация кандидатов",
     "positions": "Вакансии",
     "required-documents": "Необходимые документы"
   },
   "position": {
     "administration": "Администрирование",
+    "no-events": "Эта позиция не содержит событий",
     "management": "Управление вакансиями",
     "add": "Добавить позицию",
     "edit": "Изменить позицию",
@@ -125,7 +126,9 @@
     "position-diagram": "Таблица вакансий",
     "vacant-position": "Вакантная должность",
     "medical-column": "Медицинский столбец",
-    "column": "Столбец"
+    "column": "Столбец",
+    "active-from": "Активен с",
+    "active-to": "Активен до"
   },
   "documents-templates":{
     "title": "Шаблоны документов",
@@ -775,7 +778,7 @@
     "client": "Клиент",
     "attempts": "Попытки",
     "search-event": "Поиск по событию",
-    "search-location": "Поиск по места",
+    "search-location": "Поиск по локации",
     "search-from": "Поиск с даты",
     "search-to": "Поиск на дату",
     "import-users": "Массовый импорт",

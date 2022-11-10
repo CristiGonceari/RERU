@@ -10,6 +10,7 @@ import { I18nService } from '../../utils/services/i18n/i18n.service';
 import { PaginationModel } from '../../utils/models/pagination.model';
 import { saveAs } from 'file-saver';
 import { MedicalColumnEnum } from 'projects/evaluation/src/app/utils/enums/medical-column.enum';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
 	selector: 'app-positions',
@@ -36,6 +37,8 @@ export class PositionsComponent implements OnInit {
 		private positionService: CandidatePositionService,
 		public translate: I18nService,
 		private modalService: NgbModal,
+		private route: ActivatedRoute,
+		private router: Router,
 		private notificationService: NotificationsService,
 	) { }
 
@@ -151,11 +154,10 @@ export class PositionsComponent implements OnInit {
 			this.notificationService.success(this.title, `${this.description} ${name}`, NotificationUtil.getDefaultMidConfig(),
 				this.getPositions()
 			);
-		},
-			// () => {
-			// 	this.notificationService.error('Errror', 'An error occured!', NotificationUtil.getDefaultMidConfig());
-			// }
-		);
+		});
 	}
 
+	navigate(id) {
+		this.router.navigate(['../position/', id, 'overview'], { relativeTo: this.route });
+	}
 }
