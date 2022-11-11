@@ -246,13 +246,13 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
         private async Task<bool> ValidateExcel(ExcelWorksheet workSheet)
         {
-           var isIdnpValid = await IsValidDataFromColumn(workSheet, (int)ExcelColumnsEnum.IdnpColumn);
-           var isEmailValid = await IsValidDataFromColumn(workSheet, (int)ExcelColumnsEnum.EmailColumn);
+           var isIdnpValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.IdnpColumn);
+           var isEmailValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.EmailColumn);
 
            return isEmailValid && isIdnpValid;
         }
 
-        private async Task<bool> IsValidDataFromColumn(ExcelWorksheet workSheet, int column)
+        private async Task<bool> IsValidDistinctDataColumn(ExcelWorksheet workSheet, int column)
         {
             var cells = workSheet.Cells;
 
