@@ -8,197 +8,201 @@
             </div>
         </div>
         <div formArrayName="obligations">
-            <table class="table table-bordered border-dark mb-10" [ngClass]="{'more': militaryObligationForm.controls.obligations.controls.length > 1  &&
-                (militaryObligationForm.controls.obligations.controls.length - 1) !== i}"
-                *ngFor="let obligation of militaryObligationForm.controls.obligations.controls; let i = index"
-                [formGroupName]="i">
-                <tbody>
-                    <tr>
-                        <th>{{ 'table.number' | translate}}</th>
-                        <td>
-                            {{i + 1}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'military-obligation.name' | translate}}</th>
-                        <td>
-                            <select class="form-control" formControlName="militaryObligationType">
-                                <option value="null">{{'module-access.select' | translate}}</option>
-                                <option *ngFor="let item of militaryObligationTypeEnum" [value]="item.value">
-                                    {{ 'militaryObligationType.' + item.label | translate }}
-                                </option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>{{'military-obligation.year-of-mobilization' | translate}}</th>
-                        <td>
-                            <app-date [parent]="obligation" [date]="'mobilizationYear'"
-                                [placeholder]="'military-obligation.year-of-mobilization' | translate"></app-date>
-                        </td>
-                    </tr>
-                    <tr>
-                    <tr>
-                        <th>{{'military-obligation.year-of-withdrawal' | translate}}</th>
-                        <td>
-                            <app-date [parent]="obligation" [date]="'withdrawalYear'"
-                                [placeholder]="'military-obligation.year-of-withdrawal' | translate"></app-date>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>{{'military-obligation.efectiv' | translate}}</th>
-                        <td>
-                            <input formControlName="efectiv" autocomplete="off" class="form-control form-control-solid"
-                                type="text" [placeholder]="'military-obligation.efectiv' | translate" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>{{'military-obligation.military-specialty' | translate}}</th>
-                        <td>
-                            <input formControlName="militarySpecialty" autocomplete="off"
-                                class="form-control form-control-solid" type="text"
-                                [placeholder]="'military-obligation.military-specialty' | translate" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>{{'military-obligation.degree' | translate}}</th>
-                        <td>
-                            <input formControlName="degree" autocomplete="off" class="form-control form-control-solid"
-                                type="text" [placeholder]="'military-obligation.degree' | translate" />
-                        </td>
-                    </tr>
+            <div class="table-responsive">
+                <table class="table table-bordered border-dark mb-10" [ngClass]="{'more': militaryObligationForm.controls.obligations.controls.length > 1  &&
+                    (militaryObligationForm.controls.obligations.controls.length - 1) !== i}"
+                    *ngFor="let obligation of militaryObligationForm.controls.obligations.controls; let i = index"
+                    [formGroupName]="i">
+                    <tbody>
+                        <tr>
+                            <th>{{ 'table.number' | translate}}</th>
+                            <td>
+                                {{i + 1}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'military-obligation.name' | translate}}</th>
+                            <td>
+                                <select class="form-control" formControlName="militaryObligationType">
+                                    <option value="null">{{'module-access.select' | translate}}</option>
+                                    <option *ngFor="let item of militaryObligationTypeEnum" [value]="item.value">
+                                        {{ 'militaryObligationType.' + item.label | translate }}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{'military-obligation.year-of-mobilization' | translate}}</th>
+                            <td>
+                                <app-date [parent]="obligation" [date]="'mobilizationYear'"
+                                    [placeholder]="'military-obligation.year-of-mobilization' | translate"></app-date>
+                            </td>
+                        </tr>
+                        <tr>
+                        <tr>
+                            <th>{{'military-obligation.year-of-withdrawal' | translate}}</th>
+                            <td>
+                                <app-date [parent]="obligation" [date]="'withdrawalYear'"
+                                    [placeholder]="'military-obligation.year-of-withdrawal' | translate"></app-date>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{'military-obligation.efectiv' | translate}}</th>
+                            <td>
+                                <input formControlName="efectiv" autocomplete="off"
+                                    class="form-control form-control-solid" type="text"
+                                    [placeholder]="'military-obligation.efectiv' | translate" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{'military-obligation.military-specialty' | translate}}</th>
+                            <td>
+                                <input formControlName="militarySpecialty" autocomplete="off"
+                                    class="form-control form-control-solid" type="text"
+                                    [placeholder]="'military-obligation.military-specialty' | translate" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{'military-obligation.degree' | translate}}</th>
+                            <td>
+                                <input formControlName="degree" autocomplete="off"
+                                    class="form-control form-control-solid" type="text"
+                                    [placeholder]="'military-obligation.degree' | translate" />
+                            </td>
+                        </tr>
 
-                    <tr class="d-lg-table-row d-none">
-                        <th rowspan="4">{{'military-obligation.military-booklet' | translate}}</th>
-                        <td>
-                            <div class="row">
-                                <div class="col-2 text-center p-3">
-                                    {{'military-obligation.series' | translate}}
+                        <tr class="d-lg-table-row d-none">
+                            <th rowspan="4">{{'military-obligation.military-booklet' | translate}}</th>
+                            <td>
+                                <div class="row">
+                                    <div class="col-2 text-center p-3">
+                                        {{'military-obligation.series' | translate}}
+                                    </div>
+                                    <div class="col-10">
+                                        <input formControlName="militaryBookletSeries" autocomplete="off"
+                                            class="form-control form-control-solid" type="text"
+                                            [placeholder]="'military-obligation.series' | translate" />
+                                    </div>
                                 </div>
-                                <div class="col-10">
-                                    <input formControlName="militaryBookletSeries" autocomplete="off"
-                                        class="form-control form-control-solid" type="text"
-                                        [placeholder]="'military-obligation.series' | translate" />
+                            </td>
+                        </tr>
+                        <tr class="d-lg-none d-table-row">
+                            <th colspan="2">{{'military-obligation.military-booklet' | translate}}</th>
+                        </tr>
+                        <tr class="d-lg-none d-table-row">
+                            <td colspan="2">
+                                <div class="row">
+                                    <div class="col-sm col-12 text-center p-3">
+                                        {{'military-obligation.series' | translate}}
+                                    </div>
+                                    <div class="col-sm col-12">
+                                        <input formControlName="militaryBookletSeries" autocomplete="off"
+                                            class="form-control form-control-solid" type="text"
+                                            [placeholder]="'military-obligation.series' | translate" />
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="d-lg-none d-table-row">
-                        <th colspan="2">{{'military-obligation.military-booklet' | translate}}</th>
-                    </tr>
-                    <tr class="d-lg-none d-table-row">
-                        <td colspan="2">
-                            <div class="row">
-                                <div class="col-sm col-12 text-center p-3">
-                                    {{'military-obligation.series' | translate}}
-                                </div>
-                                <div class="col-sm col-12">
-                                    <input formControlName="militaryBookletSeries" autocomplete="off"
-                                        class="form-control form-control-solid" type="text"
-                                        [placeholder]="'military-obligation.series' | translate" />
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
 
-                    <tr class="d-lg-table-row d-none">
-                        <td>
-                            <div class="row">
-                                <div class="col-2 text-center p-3">
-                                    {{'military-obligation.number' | translate}}
+                        <tr class="d-lg-table-row d-none">
+                            <td>
+                                <div class="row">
+                                    <div class="col-2 text-center p-3">
+                                        {{'military-obligation.number' | translate}}
+                                    </div>
+                                    <div class="col-10">
+                                        <input formControlName="militaryBookletNumber" autocomplete="off"
+                                            class="form-control form-control-solid" type="number"
+                                            [placeholder]="'military-obligation.number' | translate" />
+                                    </div>
                                 </div>
-                                <div class="col-10">
-                                    <input formControlName="militaryBookletNumber" autocomplete="off"
-                                        class="form-control form-control-solid" type="number"
-                                        [placeholder]="'military-obligation.number' | translate" />
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
 
-                    <tr class="d-lg-none d-table-row">
-                        <td colspan="2">
-                            <div class="row">
-                                <div class="col-sm col-12 text-center p-3">
-                                    {{'military-obligation.number' | translate}}
+                        <tr class="d-lg-none d-table-row">
+                            <td colspan="2">
+                                <div class="row">
+                                    <div class="col-sm col-12 text-center p-3">
+                                        {{'military-obligation.number' | translate}}
+                                    </div>
+                                    <div class="col-sm col-12">
+                                        <input formControlName="militaryBookletNumber" autocomplete="off"
+                                            class="form-control form-control-solid" type="number"
+                                            [placeholder]="'military-obligation.number' | translate" />
+                                    </div>
                                 </div>
-                                <div class="col-sm col-12">
-                                    <input formControlName="militaryBookletNumber" autocomplete="off"
-                                        class="form-control form-control-solid" type="number"
-                                        [placeholder]="'military-obligation.number' | translate" />
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
 
-                    <tr class="d-lg-table-row d-none">
-                        <td>
-                            <div class="row">
-                                <div class="col-2 text-center p-3">
-                                    {{'military-obligation.relase-day' | translate}}
+                        <tr class="d-lg-table-row d-none">
+                            <td>
+                                <div class="row">
+                                    <div class="col-2 text-center p-3">
+                                        {{'military-obligation.relase-day' | translate}}
+                                    </div>
+                                    <div class="col-10">
+                                        <app-date [parent]="obligation" [date]="'militaryBookletReleaseDay'"
+                                            [placeholder]="'military-obligation.relase-day' | translate"></app-date>
+                                    </div>
                                 </div>
-                                <div class="col-10">
-                                    <app-date [parent]="obligation" [date]="'militaryBookletReleaseDay'"
-                                        [placeholder]="'military-obligation.relase-day' | translate"></app-date>
+                            </td>
+                        </tr>
+                        <tr class="d-lg-none d-table-row">
+                            <td colspan="2">
+                                <div class="row">
+                                    <div class="col-sm col-12 text-center p-3">
+                                        {{'military-obligation.relase-day' | translate}}
+                                    </div>
+                                    <div class="col-sm col-12">
+                                        <app-date [parent]="obligation" [date]="'militaryBookletReleaseDay'"
+                                            [placeholder]="'military-obligation.relase-day' | translate"></app-date>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="d-lg-none d-table-row">
-                        <td colspan="2">
-                            <div class="row">
-                                <div class="col-sm col-12 text-center p-3">
-                                    {{'military-obligation.relase-day' | translate}}
-                                </div>
-                                <div class="col-sm col-12">
-                                    <app-date [parent]="obligation" [date]="'militaryBookletReleaseDay'"
-                                        [placeholder]="'military-obligation.relase-day' | translate"></app-date>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
 
-                    <tr class="d-lg-table-row d-none">
-                        <td>
-                            <div class="row">
-                                <div class="col-2 text-center p-3">
-                                    {{'military-obligation.eminent-authority' | translate}}
+                        <tr class="d-lg-table-row d-none">
+                            <td>
+                                <div class="row">
+                                    <div class="col-2 text-center p-3">
+                                        {{'military-obligation.eminent-authority' | translate}}
+                                    </div>
+                                    <div class="col-10">
+                                        <input formControlName="militaryBookletEminentAuthority" autocomplete="off"
+                                            class="form-control form-control-solid" type="text"
+                                            [placeholder]="'military-obligation.eminent-authority' | translate" />
+                                    </div>
                                 </div>
-                                <div class="col-10">
-                                    <input formControlName="militaryBookletEminentAuthority" autocomplete="off"
-                                        class="form-control form-control-solid" type="text"
-                                        [placeholder]="'military-obligation.eminent-authority' | translate" />
+                            </td>
+                        </tr>
+                        <tr class="d-lg-none d-table-row">
+                            <td colspan="2">
+                                <div class="row">
+                                    <div class="col-sm col-12 text-center p-3">
+                                        {{'military-obligation.eminent-authority' | translate}}
+                                    </div>
+                                    <div class="col-sm col-12">
+                                        <input formControlName="militaryBookletEminentAuthority" autocomplete="off"
+                                            class="form-control form-control-solid" type="text"
+                                            [placeholder]="'military-obligation.eminent-authority' | translate" />
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="d-lg-none d-table-row">
-                        <td colspan="2">
-                            <div class="row">
-                                <div class="col-sm col-12 text-center p-3">
-                                    {{'military-obligation.eminent-authority' | translate}}
-                                </div>
-                                <div class="col-sm col-12">
-                                    <input formControlName="militaryBookletEminentAuthority" autocomplete="off"
-                                        class="form-control form-control-solid" type="text"
-                                        [placeholder]="'military-obligation.eminent-authority' | translate" />
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
 
-                    <tr *ngIf="i > 0">
-                        <th></th>
-                        <td>
-                            <div class="d-flex justify-content-end">
-                                <button class="btn btn-icon" (click)="removeMilitaryObligation(i)">
-                                    <span class="font-size-18px">&times;</span>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        <tr *ngIf="i > 0">
+                            <th></th>
+                            <td>
+                                <div class="d-flex justify-content-end">
+                                    <button class="btn btn-icon" (click)="removeMilitaryObligation(i)">
+                                        <span class="font-size-18px">&times;</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="row">
             <div class="col">
@@ -228,8 +232,7 @@
             <button class="btn btn-success" matStepperNext *ngIf="militaryObligationData != null"
                 (click)="addRegistrationFluxStep()">{{'stepper.button-next' | translate}}</button>
             <button class="btn btn-success" matStepperNext *ngIf="militaryObligationData == null"
-                (click)="addRegistrationFluxStep()">{{'stepper.button-save-and-next-withoud-datas' |
-                translate}}</button>
+                (click)="addRegistrationFluxStep()">{{'stepper.button-save-and-next-withoud-datas' |translate}}</button>
         </div>
     </div>
 </div>

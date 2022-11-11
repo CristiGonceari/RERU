@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { UserProfileService } from '../../../utils/services/user-profile.service';
 import { MilitaryObligationService } from '../../../utils/services/military-obligation.service';
-import { Observable, Subject } from 'rxjs';
+import { forkJoin, Observable, Subject } from 'rxjs';
 import { ReferenceService } from '../../../utils/services/reference.service';
 import { MilitaryObligationModel } from '../../../utils/models/military-obligation.model';
 import { NotificationsService } from 'angular2-notifications';
@@ -11,6 +11,7 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { ObjectUtil } from '../../../utils/util/object.util';
 import { RegistrationFluxStepService } from '../../../utils/services/registration-flux-step.service';
 import { DataService } from '../data.service';
+import { I18nService } from '../../../utils/services/i18n.service';
 
 @Component({
   selector: 'app-military-obligation',
@@ -35,8 +36,10 @@ export class MilitaryObligationComponent implements OnInit {
   focus$: Subject<string>[] = [new Subject<string>()];
   click$: Subject<string>[] = [new Subject<string>()];
 
-  isDone:boolean;
+  isDone: boolean;
 
+  title: string;
+  description: string;
 
   constructor(private fb: FormBuilder,
     private userProfile: UserProfileService,
@@ -45,28 +48,27 @@ export class MilitaryObligationComponent implements OnInit {
     private referenceService: ReferenceService,
     private notificationService: NotificationsService,
     private registrationFluxService: RegistrationFluxStepService,
-    private ds: DataService
-
-
-    ) { }
+    private ds: DataService,
+    public translate: I18nService,
+  ) { }
 
   ngOnInit(): void {
     this.userId = parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
 
-    this.stepId =parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
+    this.stepId = parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
 
     this.initForm();
     this.retrieveDropdowns();
     this.getUserGeneralData();
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     // clear message
     this.ds.clearData();
   }
 
   initForm(data?): void {
-    if(data == null){
+    if (data == null) {
       this.militaryObligationForm = this.fb.group({
         obligations: this.fb.array([this.generateMilitaryObligations()])
       });
@@ -76,9 +78,9 @@ export class MilitaryObligationComponent implements OnInit {
         obligations: this.fb.array([this.generateMilitaryObligations(data, this.contractorId)])
       });
     }
-    
+
   }
-  
+
   retrieveDropdowns(): void {
     this.referenceService.getMilitaryObligationTypeEnum().subscribe(res => {
       this.militaryObligationTypeEnum = res.data;
@@ -87,7 +89,7 @@ export class MilitaryObligationComponent implements OnInit {
 
   getUserGeneralData() {
 
-    this.userProfile.getCandidateProfile(this.userId).subscribe( res => {
+    this.userProfile.getCandidateProfile(this.userId).subscribe(res => {
 
       this.userGeneralData = res.data;
       this.contractorId = res.data.contractorId;
@@ -124,7 +126,7 @@ export class MilitaryObligationComponent implements OnInit {
   }
 
   initMilitaryObligationForm(obligation) {
-    
+
     if (obligation != null) {
 
       for (let i = 0; i < obligation.length; i++) {
@@ -132,8 +134,8 @@ export class MilitaryObligationComponent implements OnInit {
         if (i > 0) {
 
           this.addMilitaryObligation(obligation[i]);
-          
-        }else{
+
+        } else {
           this.initForm(obligation[i])
         }
       }
@@ -141,7 +143,7 @@ export class MilitaryObligationComponent implements OnInit {
   }
 
   generateMilitaryObligations(militaryObligation?, contractorId?) {
-    
+
     return this.fb.group({
       id: this.fb.control((militaryObligation && militaryObligation.id) || null, []),
       militaryObligationType: this.fb.control((militaryObligation && militaryObligation.militaryObligationType) || null, [Validators.required]),
@@ -158,12 +160,26 @@ export class MilitaryObligationComponent implements OnInit {
     });
   }
 
-  createMilitaryObligations(){
+  createMilitaryObligations() {
     this.buildMilitaryObligationForm().subscribe(response => {
-      this.notificationService.success('Success', 'Military obligation relation added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.create-military-obligation-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getMilitaryObligations(this.contractorId);
     }, error => {
-      this.notificationService.error('Failure', 'Military obligation relation was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.create-military-obligation-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -182,13 +198,13 @@ export class MilitaryObligationComponent implements OnInit {
       militaryObligationType: parseInt(data.militaryObligationType),
       mobilizationYear: data.mobilizationYear,
       withdrawalYear: data.withdrawalYear,
-      efectiv : data.efectiv,
-      militarySpecialty : data.militarySpecialty,
-      degree : data.degree,
-      militaryBookletSeries : data.militaryBookletSeries,
-      militaryBookletNumber : data.militaryBookletNumber,
-      militaryBookletReleaseDay : data.militaryBookletReleaseDay,
-      militaryBookletEminentAuthority : data.militaryBookletEminentAuthority,
+      efectiv: data.efectiv,
+      militarySpecialty: data.militarySpecialty,
+      degree: data.degree,
+      militaryBookletSeries: data.militaryBookletSeries,
+      militaryBookletNumber: data.militaryBookletNumber,
+      militaryBookletReleaseDay: data.militaryBookletReleaseDay,
+      militaryBookletEminentAuthority: data.militaryBookletEminentAuthority,
       contractorId: contractorId
     })
   }
@@ -216,9 +232,9 @@ export class MilitaryObligationComponent implements OnInit {
     (<FormArray>this.militaryObligationForm.controls.obligations).controls.splice(index, 1);
   }
 
-  getExistentStep(step, contractorId){
+  getExistentStep(step, contractorId) {
     const request = {
-      contractorId : contractorId,
+      contractorId: contractorId,
       step: step
     };
 
@@ -227,57 +243,107 @@ export class MilitaryObligationComponent implements OnInit {
     })
   }
 
-  addRegistrationFluxStep(){
-    if(this.militaryObligationData != null){
+  addRegistrationFluxStep() {
+    if (this.militaryObligationData != null) {
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.contractorId);
     }
-    else{
+    else {
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractorId, true);
     }
   }
 
-  checkRegistrationStep(stepData, stepId, success, contractorId, inProgress?){
-    const datas= {
+  checkRegistrationStep(stepData, stepId, success, contractorId, inProgress?) {
+    const datas = {
       isDone: success,
       stepId: this.stepId,
       inProgress: inProgress
     }
-    if(stepData.length == 0){
+    if (stepData.length == 0) {
       this.addCandidateRegistationStep(success, stepId, contractorId, inProgress);
       this.ds.sendData(datas);
-    }else{
+    } else {
       this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId, inProgress);
       this.ds.sendData(datas);
     }
   }
 
-  addCandidateRegistationStep(isDone, step, contractorId,inProgress?){
+  addCandidateRegistationStep(isDone, step, contractorId, inProgress?) {
     const request = {
       isDone: isDone,
-      step : step,
-      contractorId: contractorId ,
-      inProgress: inProgress
-    }
-    this.registrationFluxService.add(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
-    }, error => {
-      this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
-    })
-  }
-
-  updateCandidateRegistationStep(id, isDone, step, contractorId, inProgress? ){
-    const request = {
-      id: id,
-      isDone: isDone,
-      step : step,
+      step: step,
       contractorId: contractorId,
       inProgress: inProgress
     }
-    
-    this.registrationFluxService.update(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
+    this.registrationFluxService.add(request).subscribe(res => {
+      if (!inProgress) {
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('candidate-registration-flux.step-success'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      } else {
+        forkJoin([
+          this.translate.get('step-status.in-progress'),
+          this.translate.get('candidate-registration-flux.step-in-progress'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+        this.notificationService.warn(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      }
     }, error => {
-      this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.step-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+    })
+  }
+
+  updateCandidateRegistationStep(id, isDone, step, contractorId, inProgress?) {
+    const request = {
+      id: id,
+      isDone: isDone,
+      step: step,
+      contractorId: contractorId,
+      inProgress: inProgress
+    }
+
+    this.registrationFluxService.update(request).subscribe(res => {
+      if (!inProgress) {
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('candidate-registration-flux.step-success'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      } else {
+        forkJoin([
+          this.translate.get('step-status.in-progress'),
+          this.translate.get('candidate-registration-flux.step-in-progress'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+        this.notificationService.warn(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      }
+    }, error => {
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.step-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
