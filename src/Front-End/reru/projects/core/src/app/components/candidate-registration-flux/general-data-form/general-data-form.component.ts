@@ -13,6 +13,8 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { DataService } from '../data.service';
 import { UserProfileGeneralDataService } from '../../../utils/services/user-profile-general-data.service';
 import { ArrayType } from '@angular/compiler';
+import { I18nService } from '../../../utils/services/i18n.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-general-data-form',
@@ -42,6 +44,9 @@ export class GeneralDataFormComponent implements OnInit {
   sexEnum: SelectItem[] = [{ label: "", value: "" }];
   stateLanguageLevelEnum: SelectItem[] = [{ label: "", value: "" }];
 
+  title: string;
+	description: string;
+
 
   constructor( private referenceService: ReferenceService,
     private userProfile: UserProfileService,
@@ -51,7 +56,8 @@ export class GeneralDataFormComponent implements OnInit {
     private registrationFluxService: RegistrationFluxStepService,
     public notificationService: NotificationsService,
     private ds: DataService,
-    private userProfileGeneralDataService: UserProfileGeneralDataService
+    private userProfileGeneralDataService: UserProfileGeneralDataService,
+		public translate: I18nService,
     ) { }
 
   ngOnInit(): void {
@@ -146,11 +152,25 @@ export class GeneralDataFormComponent implements OnInit {
 
   updateUserProfileGeneralData(){
     this.user.editCandidateDetails(this.parseEditUserProfileDetails(this.contractorId, this.userForm.value)).subscribe(res =>{
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.update-general-data-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId , res.success, this.contractorId);
-      this.notificationService.success('Success', 'Contractor details added!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 
     }, error => {
-      this.notificationService.error('Failure', 'Contractor details was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.update-general-data-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId , error.success, this.contractorId);
     })
   }
@@ -189,9 +209,23 @@ export class GeneralDataFormComponent implements OnInit {
       contractorId: contractorId 
     }
     this.registrationFluxService.add(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.step-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.step-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
@@ -204,10 +238,23 @@ export class GeneralDataFormComponent implements OnInit {
     }
     
     this.registrationFluxService.update(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.step-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.step-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
- 
 }

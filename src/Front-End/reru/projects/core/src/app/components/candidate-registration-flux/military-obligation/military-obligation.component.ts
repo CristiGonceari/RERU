@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { UserProfileService } from '../../../utils/services/user-profile.service';
 import { MilitaryObligationService } from '../../../utils/services/military-obligation.service';
-import { Observable, Subject } from 'rxjs';
+import { forkJoin, Observable, Subject } from 'rxjs';
 import { ReferenceService } from '../../../utils/services/reference.service';
 import { MilitaryObligationModel } from '../../../utils/models/military-obligation.model';
 import { NotificationsService } from 'angular2-notifications';
@@ -11,6 +11,7 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { ObjectUtil } from '../../../utils/util/object.util';
 import { RegistrationFluxStepService } from '../../../utils/services/registration-flux-step.service';
 import { DataService } from '../data.service';
+import { I18nService } from '../../../utils/services/i18n.service';
 
 @Component({
   selector: 'app-military-obligation',
@@ -37,6 +38,8 @@ export class MilitaryObligationComponent implements OnInit {
 
   isDone:boolean;
 
+  title: string;
+	description: string;
 
   constructor(private fb: FormBuilder,
     private userProfile: UserProfileService,
@@ -45,9 +48,8 @@ export class MilitaryObligationComponent implements OnInit {
     private referenceService: ReferenceService,
     private notificationService: NotificationsService,
     private registrationFluxService: RegistrationFluxStepService,
-    private ds: DataService
-
-
+    private ds: DataService,
+		public translate: I18nService,
     ) { }
 
   ngOnInit(): void {
@@ -160,10 +162,24 @@ export class MilitaryObligationComponent implements OnInit {
 
   createMilitaryObligations(){
     this.buildMilitaryObligationForm().subscribe(response => {
-      this.notificationService.success('Success', 'Military obligation relation added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.create-military-obligation-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getMilitaryObligations(this.contractorId);
     }, error => {
-      this.notificationService.error('Failure', 'Military obligation relation was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.create-military-obligation-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -259,9 +275,34 @@ export class MilitaryObligationComponent implements OnInit {
       inProgress: inProgress
     }
     this.registrationFluxService.add(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
+      if(!inProgress){
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('candidate-registration-flux.step-success'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      }else{
+        forkJoin([
+          this.translate.get('step-status.in-progress'),
+          this.translate.get('candidate-registration-flux.step-in-progress'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+      this.notificationService.warn(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      }
     }, error => {
-      this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.step-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
@@ -275,9 +316,34 @@ export class MilitaryObligationComponent implements OnInit {
     }
     
     this.registrationFluxService.update(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
+      if(!inProgress){
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('candidate-registration-flux.step-success'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      }else{
+        forkJoin([
+          this.translate.get('step-status.in-progress'),
+          this.translate.get('candidate-registration-flux.step-in-progress'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+      this.notificationService.warn(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      }
     }, error => {
-      this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.step-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 

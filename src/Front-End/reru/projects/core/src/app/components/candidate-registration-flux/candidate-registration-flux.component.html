@@ -10,9 +10,9 @@
                         <div class="card-body">
                             <mat-vertical-stepper (selectionChange)="selectionChanged($event)" #stepper>
                                 <mat-step *ngFor="let item of steps; let index = index;" [completed]="counter"
-                                    [state]="state" class="w-100">
-                                    <ng-template matStepLabel class="w-100">
-                                        <div class="row align-items-center w-100">
+                                    [state]="state" class="">
+                                    <ng-template matStepLabel class="">
+                                        <div class="row align-items-center">
                                             <div class="col-lg-2 col-md">
                                                 {{ 'step.' + stepsEnum[parseInt(item.value)] | translate}}
                                             </div>

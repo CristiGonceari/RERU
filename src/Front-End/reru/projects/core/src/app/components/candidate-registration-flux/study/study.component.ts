@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { merge, Observable, OperatorFunction, Subject } from 'rxjs';
+import { forkJoin, merge, Observable, OperatorFunction, Subject } from 'rxjs';
 import { SelectItem } from '../../../utils/models/select-item.model';
 import { ReferenceService } from '../../../utils/services/reference.service';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
@@ -20,6 +20,7 @@ import { RecommendationForStudyModel } from '../../../utils/models/recommendatio
 import { RegistrationFluxStepService } from '../../../utils/services/registration-flux-step.service';
 import { ProfileService } from '../../../utils/services/profile.service';
 import { DataService } from '../data.service';
+import { I18nService } from '../../../utils/services/i18n.service';
 
 @Component({
   selector: 'app-study',
@@ -63,6 +64,8 @@ export class StudyComponent implements OnInit {
   addOrEditRecommendationsButton: boolean;
   isDone: boolean;
 
+  title: string;
+	description: string;
 
   constructor(private referenceService: ReferenceService,
     private fb: FormBuilder,
@@ -73,8 +76,8 @@ export class StudyComponent implements OnInit {
     private modernLanguageLevelService: ModernLanguageLevelService,
     private recommendationForStudyService: RecommendationForStudyService,
     private registrationFluxService: RegistrationFluxStepService,
-    private ds: DataService
-
+    private ds: DataService,
+		public translate: I18nService,
     ) { }
 
   ngOnInit(): void {
@@ -346,28 +349,70 @@ export class StudyComponent implements OnInit {
 
   createStudies(): void {
     this.buildStudiesForm().subscribe(response => {
-      this.notificationService.success('Success', 'Studies added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.create-study-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getUserStudies(this.contractorId);
     }, error => {
-      this.notificationService.error('Failure', 'Studies was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.create-study-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
   creteModernLanguage(){
     this.buildModernLanguageForm().subscribe(response => {
-      this.notificationService.success('Success', 'Modern Language added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.create-modern-language-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getUserModernLanguages(this.contractorId);
     }, error => {
-      this.notificationService.error('Failure', 'Modern Language was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.create-modern-language-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
-  creteRecommendationForStudy(){
+  createRecommendationForStudy(){
     this.buildReommendationForStudyForm().subscribe(response => {
-      this.notificationService.success('Success', 'Recommendation added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.create-study-recommendation-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getUserRecommendation(this.contractorId);
     }, error => {
-      this.notificationService.error('Failure', 'Recommendation was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.create-study-recommendation-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -529,9 +574,23 @@ export class StudyComponent implements OnInit {
       contractorId: contractorId 
     }
     this.registrationFluxService.add(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.step-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.step-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
@@ -544,9 +603,23 @@ export class StudyComponent implements OnInit {
     }
     
     this.registrationFluxService.update(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.step-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.step-erorr'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 }

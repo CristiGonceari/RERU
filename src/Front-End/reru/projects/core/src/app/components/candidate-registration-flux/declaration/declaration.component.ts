@@ -1,7 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
+import { forkJoin } from 'rxjs';
 import { RegistrationFluxStepEnum } from '../../../utils/models/registrationFluxStep.enum';
+import { I18nService } from '../../../utils/services/i18n.service';
 import { ProfileService } from '../../../utils/services/profile.service';
 import { RegistrationFluxStepService } from '../../../utils/services/registration-flux-step.service';
 import { UserProfileService } from '../../../utils/services/user-profile.service';
@@ -30,6 +32,9 @@ export class DeclarationComponent implements OnInit {
   unfinishedSteps;
   allowToFinish: boolean;
 
+  title: string;
+	description: string;
+
   constructor(
     private route: ActivatedRoute,
     private registrationFluxService: RegistrationFluxStepService,
@@ -38,6 +43,7 @@ export class DeclarationComponent implements OnInit {
     private ds: DataService,
     private profileService: ProfileService,
     private userProfile: UserProfileService,
+		public translate: I18nService,
     ) { }
 
   ngOnInit(): void {
@@ -121,9 +127,23 @@ export class DeclarationComponent implements OnInit {
       contractorId: contractorId 
     }
     this.registrationFluxService.add(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.step-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.step-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
@@ -136,11 +156,23 @@ export class DeclarationComponent implements OnInit {
     }
     
     this.registrationFluxService.update(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.step-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.step-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
-
-
 }

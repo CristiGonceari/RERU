@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
-import { Observable, Subject } from 'rxjs';
+import { forkJoin, Observable, Subject } from 'rxjs';
 import { SelectItem } from '../../../utils/models/select-item.model';
 import { ReferenceService } from '../../../utils/services/reference.service';
 import { MaterialStatusModel } from '../../../utils/models/material-status.model';
@@ -21,6 +21,7 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { KinshipRelationCriminalDataModel } from '../../../utils/models/kinship-relation-criminal-data.model';
 import { RegistrationFluxStepService } from '../../../utils/services/registration-flux-step.service';
 import { DataService } from '../data.service';
+import { I18nService } from '../../../utils/services/i18n.service';
 
 @Component({
   selector: 'app-material-status',
@@ -67,6 +68,9 @@ export class MaterialStatusComponent implements OnInit {
 
   kinshipDegreeEnum;
 
+  title: string;
+	description: string;
+
   focus$: Subject<string>[] = [new Subject<string>()];
   click$: Subject<string>[] = [new Subject<string>()];
   selectedItems: SelectItem[] = [{ label: '', value: '' }];
@@ -81,7 +85,8 @@ export class MaterialStatusComponent implements OnInit {
       private kinshipRelationService: KinshipRelationService,
       private kinshipRelationCriminalDataService: KinshipRelationCriminalDataService,
       private registrationFluxService: RegistrationFluxStepService,
-      private ds: DataService
+      private ds: DataService,
+		  public translate: I18nService,
     ) { }
 
   ngOnInit(): void {
@@ -329,56 +334,140 @@ export class MaterialStatusComponent implements OnInit {
   createMaterialStatus(){
     
     this.materialStatusService.add(this.parseMaterialStatus(this.materialStatusForm.value, this.contractorId)).subscribe(res => {
-      this.notificationService.success('Success', 'Material status was added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.create-material-status-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getUserMaterialStatus(this.contractorId);
-    }, errpr => {
-      this.notificationService.error('Error', 'Material status was not added!', NotificationUtil.getDefaultMidConfig());
+    }, error => {
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.create-material-status-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
   createKinshipRelationCriminalData(){
     
     this.kinshipRelationCriminalDataService.add(this.parseKinshipRelationCriminalData(this.kinshipRelationCriminalDataForm.value, this.contractorId)).subscribe(res => {
-      this.notificationService.success('Success', 'Kinship relation was added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.create-kinship-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getKinshipRelationCriminalData(this.contractorId);
-    }, errpr => {
-      this.notificationService.error('Error', 'Kinship relation was not added!', NotificationUtil.getDefaultMidConfig());
+    }, error => {
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.create-kinship-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
   updateMaterialStatus(){
     this.materialStatusService.update(this.parseMaterialStatus(this.materialStatusForm.value, this.contractorId)).subscribe(res => {
-      this.notificationService.success('Success', 'Material status was updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.update-material-status-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getUserMaterialStatus(this.contractorId);
-    }, errpr => {
-      this.notificationService.error('Error', 'Material status was not updated!', NotificationUtil.getDefaultMidConfig());
+    }, error => {
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.update-material-status-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
   updateKinshipRelationCriminalData(){
     this.kinshipRelationCriminalDataService.update(this.parseKinshipRelationCriminalData(this.kinshipRelationCriminalDataForm.value, this.contractorId)).subscribe(res => {
-      this.notificationService.success('Success', 'Kinship relation status was updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.update-kinship-relation-criminal-data-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getKinshipRelationCriminalData(this.contractorId);
-    }, errpr => {
-      this.notificationService.error('Error', 'Kinship relation was not updated!', NotificationUtil.getDefaultMidConfig());
+    }, error => {
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.update-kinship-relation-criminal-data-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
   creteKinshipRelationWithUserProfile(){
     this.buildKinshipRelationWithUserProfileForm().subscribe(response => {
-      this.notificationService.success('Success', 'Kinship relation was added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.create-kinship-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getKinshipRelationWithUserProfile(this.contractorId);
     }, error => {
-      this.notificationService.error('Failure', 'Kinship relation was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.create-kinship-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
   creteKinshipRelation(){
     this.buildKinshipRelationForm().subscribe(response => {
-      this.notificationService.success('Success', 'Kinship relation added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.create-kinship-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getKinshipRelation(this.contractorId);
     }, error => {
-      this.notificationService.error('Failure', 'Kinship relation was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.create-kinship-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -534,9 +623,23 @@ export class MaterialStatusComponent implements OnInit {
       contractorId: contractorId 
     }
     this.registrationFluxService.add(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.step-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.step-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
@@ -549,9 +652,23 @@ export class MaterialStatusComponent implements OnInit {
     }
     
     this.registrationFluxService.update(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.step-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.step-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 }

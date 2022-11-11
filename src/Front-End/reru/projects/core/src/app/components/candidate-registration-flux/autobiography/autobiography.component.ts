@@ -10,6 +10,8 @@ import { ObjectUtil } from '../../../utils/util/object.util';
 import { AutobiographyModel } from '../../../utils/models/autobiography.model';
 import { RegistrationFluxStepService } from '../../../utils/services/registration-flux-step.service';
 import { DataService } from '../data.service';
+import { I18nService } from '../../../utils/services/i18n.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-autobiography',
@@ -33,6 +35,9 @@ export class AutobiographyComponent implements OnInit {
   autobiographyData;
   registrationFluxStep;
 
+  title: string;
+	description: string;
+
   public onReady(editor) {
     editor.ui.getEditableElement().parentElement.insertBefore(
       editor.ui.view.toolbar.element,
@@ -46,7 +51,8 @@ export class AutobiographyComponent implements OnInit {
       private autobiographyService: AutobiographyService,
       private notificationService: NotificationsService,
       private registrationFluxService: RegistrationFluxStepService,
-      private ds: DataService
+      private ds: DataService,
+		  public translate: I18nService,
     ) { }
 
   ngOnInit(): void {
@@ -117,10 +123,24 @@ export class AutobiographyComponent implements OnInit {
   createAutobiography(){
     
     this.autobiographyService.add(this.parseAutobiography(this.autobiographyForm.value, this.contractorId)).subscribe(res => {
-      this.notificationService.success('Success', 'Autobiography was added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.create-autobiography-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getUserAutobiography(this.contractorId);
     }, error => {
-      this.notificationService.error('Error', 'Autobiography was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.create-autobiography-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
@@ -135,10 +155,24 @@ export class AutobiographyComponent implements OnInit {
 
   updateAutobiography(){
     this.autobiographyService.update(this.parseAutobiography(this.autobiographyForm.value, this.contractorId)).subscribe(res => {
-      this.notificationService.success('Success', 'Autobiography was updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.update-autobiography-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getUserAutobiography(this.contractorId);
     }, error => {
-      this.notificationService.error('Error', 'Autobiography was not updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.update-autobiography-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
@@ -185,9 +219,34 @@ export class AutobiographyComponent implements OnInit {
       inProgress: inProgress
     }
     this.registrationFluxService.add(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
+      if(!inProgress){
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('candidate-registration-flux.step-success'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      }else{
+        forkJoin([
+          this.translate.get('step-status.in-progress'),
+          this.translate.get('candidate-registration-flux.step-in-progress'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+      this.notificationService.warn(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      }
     }, error => {
-      this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.step-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
@@ -201,9 +260,34 @@ export class AutobiographyComponent implements OnInit {
     }
     
     this.registrationFluxService.update(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
+      if(!inProgress){
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('candidate-registration-flux.step-success'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      }else{
+        forkJoin([
+          this.translate.get('step-status.in-progress'),
+          this.translate.get('candidate-registration-flux.step-in-progress'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+      this.notificationService.warn(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      }
     }, error => {
-      this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.step-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
