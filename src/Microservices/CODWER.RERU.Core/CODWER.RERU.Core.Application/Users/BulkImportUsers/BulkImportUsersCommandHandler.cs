@@ -252,7 +252,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
            return isEmailValid && isIdnpValid;
         }
 
-        private async Task<bool> ValidateDataFromColumns( ExcelWorksheet workSheet, int column)
+        private async Task<bool> ValidateDataFromColumns(ExcelWorksheet workSheet, int column)
         {
             var cells = workSheet.Cells;
 
