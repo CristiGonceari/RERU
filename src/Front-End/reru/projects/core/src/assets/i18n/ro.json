@@ -170,6 +170,10 @@
     "finish": "Finalizează",
     "back": "Înapoi"
   },
+  "bulk-import-users": {
+    "succes-msg" : "Utilizatorii au fost importați cu succes",
+    "error-msg" : "Documentul este invalid"
+  },
   "button-downloand-excell":{
     "user-sheet":"Descărcați dosarul persoanei"
   },

@@ -46,7 +46,9 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             var workSheet = package.Workbook.Worksheets[0];
             var totalRows = workSheet.Dimension.Rows;
 
-            await ValidateExcel(workSheet);
+            var isValid = await ValidateExcel(workSheet);
+
+            if (!isValid) return await ReturnInvalidExcel(package, request);
 
             await SetTotalNumberOfProcesses(request.ProcessId, totalRows);
 
@@ -75,7 +77,16 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             WaitTasks(Task.WhenAll(tasks));
             tasks.Clear();
 
-            var excelFile = GetExcelFile(package);
+            var excelFile = GetExcelFile(package, true);
+
+            await SaveExcelFile(request.ProcessId, excelFile);
+
+            return excelFile;
+        }
+
+        private async Task<FileDataDto> ReturnInvalidExcel(ExcelPackage package, BulkImportUsersCommand request)
+        {
+            var excelFile = GetExcelFile(package, false);
 
             await SaveExcelFile(request.ProcessId, excelFile);
 
@@ -226,20 +237,22 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             };
         }
 
-        private FileDataDto GetExcelFile(ExcelPackage package)
+        private FileDataDto GetExcelFile(ExcelPackage package, bool isValid)
         {
             var streamBytesArray = package.GetAsByteArray();
 
-            return FileDataDto.GetExcel("User-Import-Result", streamBytesArray);
+            return isValid ? FileDataDto.GetExcel("User-Import-Result", streamBytesArray) : FileDataDto.GetExcel("User-Import-Invalid", streamBytesArray);
         }
 
-        private async Task ValidateExcel(ExcelWorksheet workSheet)
+        private async Task<bool> ValidateExcel(ExcelWorksheet workSheet)
         {
-            await ValidateDataFromColumns(workSheet, (int)ExcelColumnsEnum.IdnpColumn);
-            await ValidateDataFromColumns(workSheet, (int)ExcelColumnsEnum.EmailColumn);
+           var isIdnpValid = await ValidateDataFromColumns(workSheet, (int)ExcelColumnsEnum.IdnpColumn);
+           var isEmailValid = await ValidateDataFromColumns(workSheet, (int)ExcelColumnsEnum.EmailColumn);
+
+           return isEmailValid && isIdnpValid;
         }
 
-        private async Task ValidateDataFromColumns( ExcelWorksheet workSheet, int column)
+        private async Task<bool> ValidateDataFromColumns( ExcelWorksheet workSheet, int column)
         {
             var cells = workSheet.Cells;
 
@@ -258,7 +271,9 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 .GroupBy(x => x.Value)
                 .Where(x => x.Count() > 1);
 
-            foreach (var items in repeatedItemsGroups)
+            var itemsGroups = repeatedItemsGroups as IGrouping<object, KeyValuePair<KeyValuePair<int, int>, object>>[] ?? repeatedItemsGroups.ToArray();
+         
+            foreach (var items in itemsGroups)
             {
                 foreach (var item in items)
                 {
@@ -269,6 +284,8 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                     workSheet.Cells[item.Key.Key, item.Key.Value].Style.Fill.SetBackground(_color);
                 }
             }
+
+            return !itemsGroups.Any();
         }
 
         private async Task<string> GetErrorMessage(int column)
