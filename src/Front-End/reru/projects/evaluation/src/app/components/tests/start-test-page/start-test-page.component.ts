@@ -59,12 +59,10 @@ export class StartTestPageComponent implements OnInit, OnDestroy  {
           if (!this.settings.startBeforeProgrammation && this.timeLeft == "00 : 00 : 00"){
             this.startTest = true;
             this.isLoading = false;
-
           }
         }
 
         this.isLoading = false;
-        
       }
     }, 1000)
   }
