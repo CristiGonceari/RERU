@@ -61,7 +61,6 @@ export class StartTestPageComponent implements OnInit, OnDestroy  {
             this.isLoading = false;
           }
         }
-
         this.isLoading = false;
       }
     }, 1000)
