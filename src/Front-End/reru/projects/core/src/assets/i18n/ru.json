@@ -212,7 +212,7 @@
     "update-kinship-relation-criminal-data-success": "Родство обновлено!",
     "update-kinship-relation-criminal-data-error": "Родство не обновлялось!",
     "create-military-obligation-success": "Военная обязанность былo добавленo!",
-    "create-military-obligation-error": "Военная обязанностьне добавлено!",
+    "create-military-obligation-error": "Военная обязанностьне не былo добавлено!",
     "create-autobiography-success": "Добавлена ​​автобиография!",
     "create-autobiography-error": "Автобиография не добавлена!",
     "update-autobiography-success": "Автобиография обновлена!",
