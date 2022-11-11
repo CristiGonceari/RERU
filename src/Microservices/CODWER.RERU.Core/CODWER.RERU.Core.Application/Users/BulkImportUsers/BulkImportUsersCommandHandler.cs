@@ -26,8 +26,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         private readonly AppDbContext _appDbContext;
         private readonly Color _color = Color.FromArgb(255, 0, 0);
    
-        public BulkImportUsersCommandHandler(AppDbContext appDbContext, IStorageFileService storageFileService,
-            IMediator mediator)
+        public BulkImportUsersCommandHandler(AppDbContext appDbContext, IStorageFileService storageFileService, IMediator mediator)
         {
             _appDbContext = appDbContext;
             _storageFileService = storageFileService;
