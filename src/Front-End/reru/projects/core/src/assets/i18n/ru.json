@@ -175,6 +175,10 @@
     "finish": "Завершить",
     "back": "Назад"
   },
+  "bulk-import-users": {
+    "succes-msg" : "Пользователи успешно импортированы",
+    "error-msg" : "Недействительный документ"
+  },
   "button-downloand-excell":{
     "user-sheet":"Скачать личное досье"
   },

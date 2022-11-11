@@ -167,6 +167,10 @@
     "finish": "Finish",
     "back": "Back"
   },
+  "bulk-import-users": {
+    "succes-msg" : "Users were successfully imported",
+    "error-msg" : "Invalid document"
+  },
   "button-downloand-excell":{
     "user-sheet":"Downloand perosnal dossier"
   },
