@@ -181,7 +181,7 @@
   },
   "candidate-registration-flux":{
     "step-success": "Step was added!",
-    "step-error": "Step was added!",
+    "step-error": "Step was not added!",
     "step-in-progress": "Step will be completed later!",
     "update-general-data-success": "Contractor details added!",
     "update-general-data-error": "Contractor details was not added!",
