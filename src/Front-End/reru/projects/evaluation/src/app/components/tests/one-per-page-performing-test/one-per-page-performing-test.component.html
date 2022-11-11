@@ -4,7 +4,10 @@
     <div class="d-flex flex-column-fluid container">
         <div class="card card-custom gutter-c w-100">
             <div class="card-body" *ngIf="!isLoadingMedia">
-                <div class="d-flex align-items-center justify-content-between">
+                <app-loading-spinner *ngIf="isLoading" [contentHeight]="'40vh'" [height]="'3rem'" [width]="'3rem'"
+                    [colorClass]="'text-primary'">
+                </app-loading-spinner>
+                <div class="d-flex align-items-center justify-content-between"  *ngIf="!isLoading">
                     <div class="font-size-lg">
                         {{ testDto.testTemplateName }}
                     </div>
@@ -52,9 +55,6 @@
                         </span>
                     </div>
                 </div>
-                <app-loading-spinner *ngIf="isLoading" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
-                    [colorClass]="'text-primary'">
-                </app-loading-spinner>
                 <div class="text-container mt-5 mx-auto w-80" *ngIf="!isLoading">
                     <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'"
                         [width]="'3rem'" [colorClass]="'text-primary'">
@@ -90,17 +90,17 @@
                         </label>
                     </div>
                     <div class="data-container answer" *ngIf="questionUnit.questionType == 5 && hadFile == false">
-                            <ngx-dropzone
-                                accept="image/jpeg,image/jpg,image/png,.doc,.docx,.txt,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                                [multiple]="false" [expandable]="true" (change)="setFile($event)" class="font-weight-light">
-                                <ngx-dropzone-label>
-                                    <h4>{{'button.attach' | translate}}</h4>
-                                </ngx-dropzone-label>
-                                <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-                                    <ngx-spinner> </ngx-spinner>
-                                    <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
-                                </ngx-dropzone-preview>
-                            </ngx-dropzone>
+                        <ngx-dropzone
+                            accept="image/jpeg,image/jpg,image/png,.doc,.docx,.txt,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                            [multiple]="false" [expandable]="true" (change)="setFile($event)" class="font-weight-light">
+                            <ngx-dropzone-label>
+                                <h4>{{'button.attach' | translate}}</h4>
+                            </ngx-dropzone-label>
+                            <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                                <ngx-spinner> </ngx-spinner>
+                                <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+                            </ngx-dropzone-preview>
+                        </ngx-dropzone>
                     </div>
                     <div class="data-container answer text-center"
                         *ngIf="questionUnit.questionType == 5 && hadFile == true">
@@ -124,7 +124,7 @@
                             </svg>
                         </span>
                     </div>
-                    <div class="data-container answer" *ngIf="questionUnit.questionType == questionTypeEnum.FreeText">
+                    <div class="data-container answer" *ngIf="questionUnit.questionType == questionTypeEnum.FreeText" >
                         <textarea class="form-control border rounded border-secondary p-7 my-7 w-100" rows="7"
                             placeholder="Write here..." [(ngModel)]="questionUnit.answerText"
                             name="answerText"></textarea>
@@ -203,16 +203,16 @@
                 </div>
             </div>
             <div class="card-body" *ngIf="isLoadingMedia">
-                <div class="justify-content-center my-10 px-8 my-lg-15 px-lg-10" >
+                <div class="justify-content-center my-10 px-8 my-lg-15 px-lg-10">
                     <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
                     <div class="progress mt-2" style="min-height: 25px;">
-                      <div [style.width.%]="fileStatus.percent"
-                        class="progress-bar progress-bar-animated btn-light-warning font-size-h6" role="progressbar"
-                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                        {{ fileStatus.requestType }} {{ fileStatus.percent }}%
-                      </div>
+                        <div [style.width.%]="fileStatus.percent"
+                            class="progress-bar progress-bar-animated btn-light-warning font-size-h6" role="progressbar"
+                            aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                            {{ fileStatus.requestType }} {{ fileStatus.percent }}%
+                        </div>
                     </div>
-                  </div>
+                </div>
             </div>
         </div>
     </div>

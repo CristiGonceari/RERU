@@ -49,9 +49,9 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   disableBtn: boolean = false;
 
   title: string;
-	description: string;
-	no: string;
-	yes: string;
+  description: string;
+  no: string;
+  yes: string;
 
   testOptionsList = [];
   testQuestionSummary: TestQuestionSummary[] = [];
@@ -96,7 +96,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     private testQuestionService: TestQuestionService,
     private testService: TestService,
     private modalService: NgbModal,
-	  public translate: I18nService,
+    public translate: I18nService,
     private router: Router,
     private testTemplateService: TestTemplateService,
     private fileTestAnswerService: FileTestAnswerService,
@@ -235,7 +235,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   }
 
   parse(status) {
-    return{
+    return {
       data: new AddTestQuestion({
         testId: this.testId,
         questionIndex: this.questionIndex,
@@ -246,7 +246,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     }
   }
 
-   saveAnswers() {
+  saveAnswers() {
     this.disableBtn = true;
     this.isLoading = true;
     this.testAnswersInput = [];
@@ -263,17 +263,17 @@ export class OnePerPagePerformingTestComponent implements OnInit {
       });
     }
 
-    if(this.questionUnit.questionType == this.questionTypeEnum.FileAnswer){
+    if (this.questionUnit.questionType == this.questionTypeEnum.FileAnswer) {
       let request = new FormData();
 
       request = this.parseFiles(request);
 
-     this.fileTestAnswerService.create(request).subscribe((res) => {
+      this.fileTestAnswerService.create(request).subscribe((res) => {
         this.reportProggress(res);
-     }, (error => {
-      this.isLoadingMedia = false;
-     }));
-    }else{
+      }, (error => {
+        this.isLoadingMedia = false;
+      }));
+    } else {
       this.postAnswer(+this.answerStatusEnum.Answered);
     }
   }
@@ -286,7 +286,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
         break;
       case HttpEventType.UploadProgress:
         this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
-      break;
+        break;
       case HttpEventType.DownloadProgress:
         this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
         break;
@@ -314,8 +314,8 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   }
 
   onRemove(event): void {
-		this.files.splice(this.files.indexOf(event), 1);
-	}
+    this.files.splice(this.files.indexOf(event), 1);
+  }
 
   getFile() {
     this.fileTestAnswerService.getFile(this.answerFileid).subscribe(response => {
@@ -334,18 +334,18 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     return this.fileName.length <= 20 ? this.fileName : this.fileName.slice(0, 20) + "...";
   }
 
-  deleteFile(){
+  deleteFile() {
     this.hadFile = false;
   }
 
-  checkIfHadFile(){
+  checkIfHadFile() {
     let params = {
       questionIndex: this.questionIndex,
       testId: this.testId
     };
 
     this.fileTestAnswerService.getList(params).subscribe(res => {
-      if(res.data.fileId !== null){
+      if (res.data.fileId !== null) {
         this.answerFileid = res.data.fileId;
         this.fileName = res.data.fileName;
         this.hadFile = true;
@@ -355,8 +355,8 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     })
   }
 
-  setFile(event){
-      this.files[0] = event.addedFiles[0];
+  setFile(event) {
+    this.files[0] = event.addedFiles[0];
   }
 
   checkIfDisabled(index) {
@@ -400,12 +400,12 @@ export class OnePerPagePerformingTestComponent implements OnInit {
                 isNotClosedAnswers.filter(x => x.index < this.questionIndex)[0].index;
               this.getTestQuestions(this.questionIndex);
             } else {
-                this.disableBtn = false;
-                if (this.questionIndex < this.count)
-                  this.getTestQuestions(this.questionIndex + 1);
-                else {
+              this.disableBtn = false;
+              if (this.questionIndex < this.count)
+                this.getTestQuestions(this.questionIndex + 1);
+              else {
                 this.getTestQuestions(1);
-                }
+              }
             }
           });
       }
@@ -453,7 +453,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
         },
         (error) => {
           error.error.messages.some(x => {
-            if(x.code === '03020604' || x.code === '03001503')
+            if (x.code === '03020604' || x.code === '03001503')
               this.finalizeTest();
           })
         }
@@ -465,31 +465,27 @@ export class OnePerPagePerformingTestComponent implements OnInit {
       this.testQuestionService.summary(this.testId).subscribe(() => this.disableNext = true);
     }
     forkJoin([
-			this.translate.get('modal.finish-test'),
-			this.translate.get('tests.finish-test-msg'),
-			this.translate.get('modal.no'),
-			this.translate.get('modal.yes'),
-		]).subscribe(([title, description, no, yes]) => {
-			this.title = title;
-			this.description = description;
-			this.no = no;
-			this.yes = yes;
-			});
+      this.translate.get('modal.finish-test'),
+      this.translate.get('tests.finish-test-msg'),
+      this.translate.get('modal.no'),
+      this.translate.get('modal.yes'),
+    ]).subscribe(([title, description, no, yes]) => {
+      this.title = title;
+      this.description = description;
+      this.no = no;
+      this.yes = yes;
+    });
     const modalRef = this.modalService.open(ConfirmModalComponent, { centered: true });
     modalRef.componentInstance.title = this.title;
-		modalRef.componentInstance.description = this.description;
-		modalRef.componentInstance.buttonNo = this.no;
-		modalRef.componentInstance.buttonYes = this.yes;
+    modalRef.componentInstance.description = this.description;
+    modalRef.componentInstance.buttonNo = this.no;
+    modalRef.componentInstance.buttonYes = this.yes;
     modalRef.result.then(
       () => {
-        this.finalizeTest();
-        clearInterval(this.interval);
-        clearInterval(this.timerInterval);
+        this.finishTestProcess();
       }, () => {
-        if(this.testQuestionSummary.every(x => x.isClosed === true)){
-          this.finalizeTest();
-          clearInterval(this.interval);
-          clearInterval(this.timerInterval);
+        if (this.testQuestionSummary.every(x => x.isClosed === true)) {
+          this.finishTestProcess();
         }
       }
     );
@@ -497,5 +493,12 @@ export class OnePerPagePerformingTestComponent implements OnInit {
 
   finalizeTest() {
     this.testService.finalizeTest(this.testId).subscribe(() => this.router.navigate(['my-activities/finish-page', this.testId]));
+  }
+
+  finishTestProcess() {
+    this.isLoading = true;
+    this.finalizeTest();
+    clearInterval(this.interval);
+    clearInterval(this.timerInterval);
   }
 }
