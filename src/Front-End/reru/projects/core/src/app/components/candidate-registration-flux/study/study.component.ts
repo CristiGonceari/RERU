@@ -30,7 +30,7 @@ import { I18nService } from '../../../utils/services/i18n.service';
 export class StudyComponent implements OnInit {
   @ViewChild('instance', { static: true }) instance: NgbTypeahead;
   @Output() isDoneStep = new EventEmitter<{ isDone: boolean }>();
-  
+
   isLoadingStudies: boolean = true;
   isLoadingLanguages: boolean = true;
   isLoadingRecommandations: boolean = true;
@@ -38,7 +38,7 @@ export class StudyComponent implements OnInit {
   studyForm: FormGroup;
   languageForm: FormGroup;
   recommendationForm: FormGroup;
-  panelOpenState:boolean = true;
+  panelOpenState: boolean = true;
 
   studyTypes: SelectItem[];
   focus$: Subject<string>[] = [new Subject<string>()];
@@ -65,7 +65,7 @@ export class StudyComponent implements OnInit {
   isDone: boolean;
 
   title: string;
-	description: string;
+  description: string;
 
   constructor(private referenceService: ReferenceService,
     private fb: FormBuilder,
@@ -77,32 +77,32 @@ export class StudyComponent implements OnInit {
     private recommendationForStudyService: RecommendationForStudyService,
     private registrationFluxService: RegistrationFluxStepService,
     private ds: DataService,
-		public translate: I18nService,
-    ) { }
+    public translate: I18nService,
+  ) { }
 
   ngOnInit(): void {
     this.userId = parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
 
-    this.stepId =parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
+    this.stepId = parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
 
     this.initForm();
     this.getUserGeneralData();
     this.retrieveDropdowns();
   }
-  
-  ngOnDestroy(){
+
+  ngOnDestroy() {
     // clear message
     this.ds.clearData();
   }
 
   initForm(data?, studyType?: StudyEnum): void {
-    
-    if(data == null){
+
+    if (data == null) {
 
       this.studyForm = this.fb.group({
         studies: this.fb.array([this.generateStudies()]),
       });
-  
+
       this.languageForm = this.fb.group({
         modernLanguages: this.fb.array([this.generateModernLanguage()])
       });
@@ -112,25 +112,25 @@ export class StudyComponent implements OnInit {
       });
 
     }
-    else if (studyType == StudyEnum.Studies ){
+    else if (studyType == StudyEnum.Studies) {
 
       this.studyForm = this.fb.group({
         studies: this.fb.array([this.generateStudies(data, this.contractorId)]),
       });
 
     }
-    else if (studyType == StudyEnum.ModernLanguageLevels){
-       
+    else if (studyType == StudyEnum.ModernLanguageLevels) {
+
       this.languageForm = this.fb.group({
-        modernLanguages: this.fb.array([this.generateModernLanguage(data, data.modernLanguageId,  this.contractorId)])
+        modernLanguages: this.fb.array([this.generateModernLanguage(data, data.modernLanguageId, this.contractorId)])
       });
     }
-    else if(studyType == StudyEnum.Recommandations){
+    else if (studyType == StudyEnum.Recommandations) {
 
       this.recommendationForm = this.fb.group({
         recommendation: this.fb.array([this.generateRecommendation(data, this.contractorId)])
       });
-    } 
+    }
   }
 
   retrieveDropdowns(): void {
@@ -140,7 +140,7 @@ export class StudyComponent implements OnInit {
 
     this.referenceService.getStudyTypes().subscribe(res => {
       let types = res.data;
-      this.studyTypes = types.sort(function(a, b){return a.translateId - b.translateId});
+      this.studyTypes = types.sort(function (a, b) { return a.translateId - b.translateId });
     });
 
     this.referenceService.getModernLanguages().subscribe(res => {
@@ -153,7 +153,7 @@ export class StudyComponent implements OnInit {
   }
 
   getUserGeneralData() {
-    this.userProfile.getCandidateProfile(this.userId).subscribe( res => {
+    this.userProfile.getCandidateProfile(this.userId).subscribe(res => {
 
       this.userGeneralData = res.data;
       this.contractorId = res.data.contractorId;
@@ -182,15 +182,15 @@ export class StudyComponent implements OnInit {
 
       if (userData.recomendationsForStudyCount != 0) {
 
-          this.getUserRecommendation(this.contractorId);
-        }
-        else {
-          this.addOrEditRecommendationsButton = false;
-          this.isLoadingRecommandations = false;
-          this.recommendationForStudy = null;
-        }
+        this.getUserRecommendation(this.contractorId);
+      }
+      else {
+        this.addOrEditRecommendationsButton = false;
+        this.isLoadingRecommandations = false;
+        this.recommendationForStudy = null;
+      }
 
-        this.getExistentStep(this.stepId, this.contractorId);
+      this.getExistentStep(this.stepId, this.contractorId);
     })
   }
 
@@ -238,14 +238,14 @@ export class StudyComponent implements OnInit {
   }
 
   initExistentStudyForm(study) {
-    
+
     if (study != null) {
 
       for (let i = 0; i < study.length; i++) {
 
         if (i > 0) {
           this.addStudy(study[i])
-        }else{
+        } else {
           this.initForm(study[i], StudyEnum.Studies)
         }
       }
@@ -255,14 +255,14 @@ export class StudyComponent implements OnInit {
   }
 
   initExistentLanguageForm(language) {
-    
+
     if (language != null) {
 
       for (let i = 0; i < language.length; i++) {
 
         if (i > 0) {
           this.addModernLanguage(language[i])
-        }else{
+        } else {
           this.initForm(language[i], StudyEnum.ModernLanguageLevels)
         }
       }
@@ -270,14 +270,14 @@ export class StudyComponent implements OnInit {
   }
 
   initRecommandationForm(recommendations) {
-    
+
     if (recommendations != null) {
 
       for (let i = 0; i < recommendations.length; i++) {
 
         if (i > 0) {
           this.addRecommandation(recommendations[i])
-        }else{
+        } else {
           this.initForm(recommendations[i], StudyEnum.Recommandations)
         }
       }
@@ -289,7 +289,7 @@ export class StudyComponent implements OnInit {
     return this.fb.group({
       id: this.fb.control((study && study.id) || null, []),
       institution: this.fb.control((study && study.institution) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      institutionAddress: this.fb.control((study && study.institutionAddress) ||  null),
+      institutionAddress: this.fb.control((study && study.institutionAddress) || null),
       studyTypeId: this.fb.control((study && study.studyTypeId) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       studyFrequency: this.fb.control((study && study.studyFrequency) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       faculty: this.fb.control((study && study.faculty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
@@ -301,17 +301,17 @@ export class StudyComponent implements OnInit {
   }
 
   generateModernLanguage(language?, modernLanguageId?, contractorId?) {
-    
+
     return this.fb.group({
       id: this.fb.control((language && language.id) || null, []),
-      knowledgeQuelifiers: this.fb.control((language && language.knowledgeQuelifiers)  || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      knowledgeQuelifiers: this.fb.control((language && language.knowledgeQuelifiers) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       contractorId: this.fb.control(contractorId || null, []),
       modernLanguageId: this.fb.control(modernLanguageId || null, []),
     });
   }
 
   generateRecommendation(recommendation?, contractorId?) {
-    
+
     return this.fb.group({
       id: this.fb.control((recommendation && recommendation.id) || null, []),
       name: this.fb.control((recommendation && recommendation.name) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
@@ -350,68 +350,68 @@ export class StudyComponent implements OnInit {
   createStudies(): void {
     this.buildStudiesForm().subscribe(response => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.create-study-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.create-study-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getUserStudies(this.contractorId);
     }, error => {
       forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('candidate-registration-flux.create-study-error'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.create-study-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
-  creteModernLanguage(){
+  creteModernLanguage() {
     this.buildModernLanguageForm().subscribe(response => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.create-modern-language-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.create-modern-language-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getUserModernLanguages(this.contractorId);
     }, error => {
       forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('candidate-registration-flux.create-modern-language-error'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.create-modern-language-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
-  createRecommendationForStudy(){
+  createRecommendationForStudy() {
     this.buildReommendationForStudyForm().subscribe(response => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.create-study-recommendation-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.create-study-recommendation-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getUserRecommendation(this.contractorId);
     }, error => {
       forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('candidate-registration-flux.create-study-recommendation-error'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.create-study-recommendation-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
@@ -527,9 +527,9 @@ export class StudyComponent implements OnInit {
     }
   }
 
-  getExistentStep(step, contractorId){
+  getExistentStep(step, contractorId) {
     const request = {
-      contractorId : contractorId,
+      contractorId: contractorId,
       step: step
     };
 
@@ -542,83 +542,83 @@ export class StudyComponent implements OnInit {
     this.isDoneStep.emit({ isDone: this.isDone });
   }
 
-  addRegistrationFluxStep(){
-    if(this.userStudies != null || this.userModernLanguages != null || this.recommendationForStudy != null){
+  addRegistrationFluxStep() {
+    if (this.userStudies != null || this.userModernLanguages != null || this.recommendationForStudy != null) {
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.contractorId);
-    
+
     }
-    else{
+    else {
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractorId);
     }
   }
 
-  checkRegistrationStep(stepData, stepId, success, contractorId){
-    const datas= {
+  checkRegistrationStep(stepData, stepId, success, contractorId) {
+    const datas = {
       isDone: success,
       stepId: this.stepId
     }
 
-    if(stepData.length == 0){
+    if (stepData.length == 0) {
       this.addCandidateRegistationStep(success, stepId, contractorId);
       this.ds.sendData(datas);
-    }else{
+    } else {
       this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId);
       this.ds.sendData(datas);
     }
   }
 
-  addCandidateRegistationStep(isDone, step, contractorId ){
+  addCandidateRegistationStep(isDone, step, contractorId) {
     const request = {
       isDone: isDone,
-      step : step,
-      contractorId: contractorId 
+      step: step,
+      contractorId: contractorId
     }
     this.registrationFluxService.add(request).subscribe(res => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.step-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.step-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
       forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('candidate-registration-flux.step-error'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.step-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
-  updateCandidateRegistationStep(id, isDone, step, contractorId ){
+  updateCandidateRegistationStep(id, isDone, step, contractorId) {
     const request = {
       id: id,
       isDone: isDone,
-      step : step,
-      contractorId: contractorId 
+      step: step,
+      contractorId: contractorId
     }
-    
+
     this.registrationFluxService.update(request).subscribe(res => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.step-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.step-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
       forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('candidate-registration-flux.step-erorr'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.step-erorr'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }

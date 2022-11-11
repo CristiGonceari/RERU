@@ -21,7 +21,7 @@ import { I18nService } from '../../../utils/services/i18n.service';
   styleUrls: ['./bulletin.component.scss']
 })
 export class BulletinComponent implements OnInit {
-  
+
   bulletinForm: FormGroup;
 
   isLoading: boolean;
@@ -34,13 +34,13 @@ export class BulletinComponent implements OnInit {
 
   bulletinValuesLoading: boolean = true;
   bulletinIdnp;
-  
+
   stepId;
   registrationFluxStep;
-  isDone:boolean;
+  isDone: boolean;
 
   title: string;
-	description: string;
+  description: string;
 
   constructor(private fb: FormBuilder,
     private modalService: NgbModal,
@@ -50,34 +50,34 @@ export class BulletinComponent implements OnInit {
     private userProfile: UserProfileService,
     private registrationFluxService: RegistrationFluxStepService,
     private ds: DataService,
-		public translate: I18nService,
-    ) { }
+    public translate: I18nService,
+  ) { }
 
   ngOnInit(): void {
-    this.userId =parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
+    this.userId = parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
 
-    this.stepId =parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
+    this.stepId = parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
 
     this.initForm(this.userId);
     this.getUserGeneralDatas(this.userId);
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     // clear message
     this.ds.clearData();
   }
 
-  getUserGeneralDatas(userId){
+  getUserGeneralDatas(userId) {
     this.userProfile.getCandidateProfile(userId).subscribe(res => {
       this.bulletinId = res.data.bulletinId;
       this.bulletinIdnp = res.data.idnp;
       this.contractorId = res.data.contractorId;
 
-        this.bulletinValuesLoading = false;
+      this.bulletinValuesLoading = false;
 
-      if (this.bulletinId != 0){
+      if (this.bulletinId != 0) {
         this.getExistentBulletin(this.contractorId);
-      }else{
+      } else {
         this.toAddOrUpdateButton = false;
       }
 
@@ -86,9 +86,9 @@ export class BulletinComponent implements OnInit {
 
   }
 
-  getExistentStep(stepId, contractorId){
+  getExistentStep(stepId, contractorId) {
     const request = {
-      contractorId : contractorId,
+      contractorId: contractorId,
       step: stepId
     };
 
@@ -97,7 +97,7 @@ export class BulletinComponent implements OnInit {
     })
   }
 
-  getExistentBulletin(userId){
+  getExistentBulletin(userId) {
     this.bulletinService.get(userId).subscribe(res => {
 
       this.existentBulletin = res.data;
@@ -106,14 +106,14 @@ export class BulletinComponent implements OnInit {
       let residenceAddress = this.existentBulletin.residenceAddress;
 
       this.initExistentForm(this.userId, this.bulletinId, this.existentBulletin, birthPlace, residenceAddress, parentsResidenceAddress);
-        this.toAddOrUpdateButton = true;
+      this.toAddOrUpdateButton = true;
     })
   }
 
-  parseAddress(data){
+  parseAddress(data) {
     return {
       id: data.id,
-      country: data.country, 
+      country: data.country,
       region: data.region,
       city: data.city,
       street: data.street,
@@ -124,8 +124,8 @@ export class BulletinComponent implements OnInit {
     };
   }
 
-  initForm(contractorId? : number): void {
-   
+  initForm(contractorId?: number): void {
+
     this.bulletinForm = this.fb.group({
       releaseDay: this.fb.control(null, [Validators.required]),
       series: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
@@ -137,12 +137,12 @@ export class BulletinComponent implements OnInit {
     });
   }
 
-  initExistentForm(contractorId? : number, bulletinId?, existentBulletin?, birthPlace?, residenceAddress? , parentsResidenceAddress?): void {
-   
+  initExistentForm(contractorId?: number, bulletinId?, existentBulletin?, birthPlace?, residenceAddress?, parentsResidenceAddress?): void {
+
     this.bulletinForm = this.fb.group({
       releaseDay: this.fb.control((existentBulletin && existentBulletin.releaseDay) || null, [Validators.required]),
       series: this.fb.control((existentBulletin && existentBulletin.series) || null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
-      emittedBy: this.fb.control( (existentBulletin && existentBulletin.emittedBy) || null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      emittedBy: this.fb.control((existentBulletin && existentBulletin.emittedBy) || null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
       contractorId: this.fb.control(contractorId, []),
       id: this.fb.control(bulletinId, []),
       birthPlace: this.buildExistentAddress(this.parseAddress(birthPlace)),
@@ -163,7 +163,7 @@ export class BulletinComponent implements OnInit {
     return this.fb.group({
       country: this.fb.control(data.country || 'Moldova', [Validators.required]),
       region: this.fb.control(data.region, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
-      city: this.fb.control(data.city,[Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      city: this.fb.control(data.city, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
       street: this.fb.control(data.street, [Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
       building: this.fb.control(data.building, [Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
       apartment: this.fb.control(data.apartment, [Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
@@ -177,7 +177,7 @@ export class BulletinComponent implements OnInit {
       id: this.fb.control(data.id, []),
       country: this.fb.control(data.country || 'Moldova', [Validators.required]),
       region: this.fb.control(data.region, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
-      city: this.fb.control(data.city,[Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      city: this.fb.control(data.city, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
       street: this.fb.control(data.street, [Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
       building: this.fb.control(data.building, [Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
       apartment: this.fb.control(data.apartment, [Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
@@ -188,12 +188,12 @@ export class BulletinComponent implements OnInit {
 
   openBulletinAddressModal(field: string): void {
     const modalRef = this.modalService.open(BulletinAddressModalComponent);
-    if (this.existentBulletin != null){
+    if (this.existentBulletin != null) {
       modalRef.componentInstance.addressForm = this.buildExistentAddress((<FormGroup>this.bulletinForm.get(field)).getRawValue());
-      modalRef.result.then((address: AddressModel) => this.updateExistentAddress(address, field), () => {});
-    }else{
+      modalRef.result.then((address: AddressModel) => this.updateExistentAddress(address, field), () => { });
+    } else {
       modalRef.componentInstance.addressForm = this.buildAddress((<FormGroup>this.bulletinForm.get(field)).getRawValue());
-      modalRef.result.then((address: AddressModel) => this.updateAddress(address, field), () => {});
+      modalRef.result.then((address: AddressModel) => this.updateAddress(address, field), () => { });
     }
   }
 
@@ -209,7 +209,7 @@ export class BulletinComponent implements OnInit {
 
   renderBirthPlace(): string {
     const birthPlace: AddressModel = (<FormGroup>this.bulletinForm.get('birthPlace')).getRawValue();
-    
+
     return this.renderAddressOrder(birthPlace);
   }
 
@@ -238,10 +238,10 @@ export class BulletinComponent implements OnInit {
       return `${data.country || ''}, ${data.region ? data.region + ',' : ''} ${data.city ? 'or. ' + data.city + ',' : ''} ${data.street ? 'str ' + data.street + ',' : ''} ${data.building ? 'bl. ' + data.building + ',' : ''} ${data.apartment ? 'ap. ' + data.apartment + ',' : ''} ${data.postCode ? 'Post Code. ' + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '');
     }
 
-    return `${data.country || ''}, ${data.city ? 'or. ' + data.city + ',' : ''} ${data.street ? 'str ' +data.street + ',' : ''} ${data.building ? 'bl. ' + data.building + ',' : ''} ${data.apartment ? 'ap. ' + data.apartment + ',' : ''}  ${data.postCode ? 'Post Code. ' + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '')
+    return `${data.country || ''}, ${data.city ? 'or. ' + data.city + ',' : ''} ${data.street ? 'str ' + data.street + ',' : ''} ${data.building ? 'bl. ' + data.building + ',' : ''} ${data.apartment ? 'ap. ' + data.apartment + ',' : ''}  ${data.postCode ? 'Post Code. ' + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '')
   }
 
-   hasCountryOnly(data: AddressModel): boolean {
+  hasCountryOnly(data: AddressModel): boolean {
     if (!data.city && !data.street && !data.building && !data.apartment && data.country) {
       return true;
     }
@@ -249,156 +249,156 @@ export class BulletinComponent implements OnInit {
     return false;
   }
 
-   hasAddressData(data: AddressModel): boolean {
-    for(let prop in data) {
+  hasAddressData(data: AddressModel): boolean {
+    for (let prop in data) {
       if (data[prop]) return true;
     }
 
     return false;
   }
-  
+
   parseBulletin(data: BulletinModel): BulletinModel {
     return ObjectUtil.preParseObject({
-        id: data.id,
-        series: data.series,
-        releaseDay: data.releaseDay,
-        emittedBy: data.emittedBy,
-        birthPlace: this.parseAddress(data.birthPlace),
-        parentsResidenceAddress: this.parseAddress(data.parentsResidenceAddress) ,
-        residenceAddress: this.parseAddress(data.residenceAddress),
-        contractorId: this.contractorId
+      id: data.id,
+      series: data.series,
+      releaseDay: data.releaseDay,
+      emittedBy: data.emittedBy,
+      birthPlace: this.parseAddress(data.birthPlace),
+      parentsResidenceAddress: this.parseAddress(data.parentsResidenceAddress),
+      residenceAddress: this.parseAddress(data.residenceAddress),
+      contractorId: this.contractorId
     })
   }
 
   parseAdresses(data: AddressModel): AddressModel {
     return ObjectUtil.preParseObject({
-        id: data.id,
-        country: data.country,
-        region: data.region,
-        city: data.city,
-        street: data.street,
-        building: data.building,
-        apartment: data.apartment,
-        postCode: data.postCode
+      id: data.id,
+      country: data.country,
+      region: data.region,
+      city: data.city,
+      street: data.street,
+      building: data.building,
+      apartment: data.apartment,
+      postCode: data.postCode
     })
   }
 
-  updateBulletin(){
+  updateBulletin() {
     this.bulletinService.update(this.parseBulletin(this.bulletinForm.value)).subscribe(res => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.edit-bulletin-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.edit-bulletin-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , res.success, this.contractorId);
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, res.success, this.contractorId);
 
-      },error => {
-        forkJoin([
-          this.translate.get('modal.error'),
-          this.translate.get('candidate-registration-flux.edit-bulletin-error'),
-        ]).subscribe(([title, description]) => {
-          this.title = title;
-          this.description = description;
-        });
+    }, error => {
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.edit-bulletin-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-      })
+    })
   }
 
-  createBulletin(){
+  createBulletin() {
     this.bulletinService.add(this.parseBulletin(this.bulletinForm.value)).subscribe(res => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.add-bulletin-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.add-bulletin-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , res.success, this.contractorId);
-     },error => {
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, res.success, this.contractorId);
+    }, error => {
       forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('candidate-registration-flux.add-bulletin-error'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.add-bulletin-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , error.success, this.contractorId);
-     })
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, error.success, this.contractorId);
+    })
   }
 
-  checkRegistrationStep(stepData, stepId, success, contractorId){
-    const datas= {
+  checkRegistrationStep(stepData, stepId, success, contractorId) {
+    const datas = {
       isDone: success,
       stepId: this.stepId
     }
-    if(stepData.length == 0){
+    if (stepData.length == 0) {
       this.addCandidateRegistationStep(success, stepId, contractorId);
       this.ds.sendData(datas);
-    }else{
+    } else {
       this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId);
       this.ds.sendData(datas);
     }
   }
 
-  addCandidateRegistationStep(isDone, step, contractorId ){
+  addCandidateRegistationStep(isDone, step, contractorId) {
     const request = {
       isDone: isDone,
-      step : step,
-      contractorId: contractorId 
+      step: step,
+      contractorId: contractorId
     }
     this.registrationFluxService.add(request).subscribe(res => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.step-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.step-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
       forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('candidate-registration-flux.step-error'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.step-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
-  updateCandidateRegistationStep(id, isDone, step, contractorId ){
+  updateCandidateRegistationStep(id, isDone, step, contractorId) {
     const request = {
       id: id,
       isDone: isDone,
-      step : step,
-      contractorId: contractorId 
+      step: step,
+      contractorId: contractorId
     }
-    
+
     this.registrationFluxService.update(request).subscribe(res => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.step-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.step-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
       forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('candidate-registration-flux.step-error'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.step-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
-  
+
 }

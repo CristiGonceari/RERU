@@ -69,49 +69,49 @@ export class MaterialStatusComponent implements OnInit {
   kinshipDegreeEnum;
 
   title: string;
-	description: string;
+  description: string;
 
   focus$: Subject<string>[] = [new Subject<string>()];
   click$: Subject<string>[] = [new Subject<string>()];
   selectedItems: SelectItem[] = [{ label: '', value: '' }];
-    
-    constructor(private fb: FormBuilder,
-      private referenceService: ReferenceService,
-      private notificationService: NotificationsService,
-      private route: ActivatedRoute,
-      private materialStatusService: MaterialStatusService,
-      private userProfile: UserProfileService,
-      private kinshipRelationWithUserProfileService: KinshipRelationWithUserProfileService,
-      private kinshipRelationService: KinshipRelationService,
-      private kinshipRelationCriminalDataService: KinshipRelationCriminalDataService,
-      private registrationFluxService: RegistrationFluxStepService,
-      private ds: DataService,
-		  public translate: I18nService,
-    ) { }
+
+  constructor(private fb: FormBuilder,
+    private referenceService: ReferenceService,
+    private notificationService: NotificationsService,
+    private route: ActivatedRoute,
+    private materialStatusService: MaterialStatusService,
+    private userProfile: UserProfileService,
+    private kinshipRelationWithUserProfileService: KinshipRelationWithUserProfileService,
+    private kinshipRelationService: KinshipRelationService,
+    private kinshipRelationCriminalDataService: KinshipRelationCriminalDataService,
+    private registrationFluxService: RegistrationFluxStepService,
+    private ds: DataService,
+    public translate: I18nService,
+  ) { }
 
   ngOnInit(): void {
     this.userId = parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
 
-    this.stepId =parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
+    this.stepId = parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
 
     this.initForm();
     this.retrieveDropdowns();
     this.getUserGeneralData();
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     // clear message
     this.ds.clearData();
   }
 
   initForm(data?, materialStatusEnum?: MaterialStatusEnum): void {
-    
-    if(data == null){
+
+    if (data == null) {
 
       this.materialStatusForm = this.fb.group({
-        id: this.fb.control( null, []),
-        materialStatusTypeId: this.fb.control( null, []),
-        contractorId: this.fb.control( null, [])
+        id: this.fb.control(null, []),
+        materialStatusTypeId: this.fb.control(null, []),
+        contractorId: this.fb.control(null, [])
       });
 
       this.kinshipRelationCriminalDataForm = this.fb.group({
@@ -129,7 +129,7 @@ export class MaterialStatusComponent implements OnInit {
       });
 
     }
-    else if (materialStatusEnum == MaterialStatusEnum.MaterialStatus ){
+    else if (materialStatusEnum == MaterialStatusEnum.MaterialStatus) {
 
       this.materialStatusForm = this.fb.group({
         id: this.fb.control((data && data.id) || null, []),
@@ -138,31 +138,31 @@ export class MaterialStatusComponent implements OnInit {
       });
 
     }
-    else if (materialStatusEnum == MaterialStatusEnum.KinshipRelationWithUserProfile){
-       
+    else if (materialStatusEnum == MaterialStatusEnum.KinshipRelationWithUserProfile) {
+
       this.kinshipRelationWithUserProfileForm = this.fb.group({
         relationWithUserProfile: this.fb.array([this.generateKinshipRelationWithUserProfile(data, this.contractorId)])
       });
     }
-    else if(materialStatusEnum == MaterialStatusEnum.KinshipRelation){
-      
+    else if (materialStatusEnum == MaterialStatusEnum.KinshipRelation) {
+
       this.kinshipRelationForm = this.fb.group({
         relation: this.fb.array([this.generateKinshipRelation(data, this.contractorId)])
       });
-    } 
-    else if(materialStatusEnum == MaterialStatusEnum.KinshipRelationCriminalData){
-      
+    }
+    else if (materialStatusEnum == MaterialStatusEnum.KinshipRelationCriminalData) {
+
       this.kinshipRelationCriminalDataForm = this.fb.group({
         id: this.fb.control((data && data.id) || null, []),
-        text: this.fb.control((data && data.text) ||null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+        text: this.fb.control((data && data.text) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
         contractorId: this.fb.control(data.contractorId || null, [])
       });
-    } 
+    }
   }
 
   getUserGeneralData() {
 
-    this.userProfile.getCandidateProfile(this.userId).subscribe( res => {
+    this.userProfile.getCandidateProfile(this.userId).subscribe(res => {
 
       this.userGeneralData = res.data;
       this.contractorId = res.data.contractorId;
@@ -200,19 +200,19 @@ export class MaterialStatusComponent implements OnInit {
 
       if (userData.kinshipRelationsCount != 0) {
 
-          this.getKinshipRelation(this.contractorId);
-        }
-        else {
-          this.addOrEditKinshipRelationButton = false;
-          this.isLoadingKinshipRelation = false;
-          this.kinshipRelationData = null;
-        }
+        this.getKinshipRelation(this.contractorId);
+      }
+      else {
+        this.addOrEditKinshipRelationButton = false;
+        this.isLoadingKinshipRelation = false;
+        this.kinshipRelationData = null;
+      }
 
-    this.getExistentStep(this.stepId, this.contractorId);
+      this.getExistentStep(this.stepId, this.contractorId);
     })
   }
 
-  getUserMaterialStatus(contractorId){
+  getUserMaterialStatus(contractorId) {
     this.isLoadingMaterialStatus = true;
 
     this.materialStatusService.get(contractorId).subscribe(res => {
@@ -221,10 +221,10 @@ export class MaterialStatusComponent implements OnInit {
       this.isLoadingMaterialStatus = false;
       this.addOrEditMaterialStatusButton = true;
     })
-    
+
   }
 
-  getKinshipRelationCriminalData(contractorId){
+  getKinshipRelationCriminalData(contractorId) {
     this.isLoadingKinshipRelationCriminalData = true;
 
     this.kinshipRelationCriminalDataService.get(contractorId).subscribe(res => {
@@ -233,7 +233,7 @@ export class MaterialStatusComponent implements OnInit {
       this.isLoadingKinshipRelationCriminalData = false;
       this.addOrEditKinshipRelationCriminalDataButton = true;
     })
-    
+
   }
 
   getKinshipRelationWithUserProfile(contractorId) {
@@ -265,26 +265,26 @@ export class MaterialStatusComponent implements OnInit {
       this.addOrEditKinshipRelationButton = true;
     })
   }
- 
+
   initKinshipRelationForm(relation, materialStatusEnum: MaterialStatusEnum) {
     console.log(" relation", relation);
-    
+
     if (relation != null) {
 
       for (let i = 0; i < relation.length; i++) {
 
         if (i > 0) {
-          switch(materialStatusEnum){
+          switch (materialStatusEnum) {
             case MaterialStatusEnum.KinshipRelationWithUserProfile:
-                this.addKinshipRelationWithUserProfile(relation[i]);
+              this.addKinshipRelationWithUserProfile(relation[i]);
               break;
-              case MaterialStatusEnum.KinshipRelation:
-                this.addKinshipRelation(relation[i]);
-                break;
+            case MaterialStatusEnum.KinshipRelation:
+              this.addKinshipRelation(relation[i]);
+              break;
 
           }
-          
-        }else{
+
+        } else {
           this.initForm(relation[i], materialStatusEnum)
         }
       }
@@ -292,7 +292,7 @@ export class MaterialStatusComponent implements OnInit {
   }
 
   generateKinshipRelationWithUserProfile(kinship?, contractorId?) {
-    
+
     return this.fb.group({
       id: this.fb.control((kinship && kinship.id) || null, []),
       name: this.fb.control((kinship && kinship.name) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
@@ -305,7 +305,7 @@ export class MaterialStatusComponent implements OnInit {
   }
 
   generateKinshipRelation(kinship?, contractorId?) {
-    
+
     return this.fb.group({
       id: this.fb.control((kinship && kinship.id) || null, []),
       kinshipDegree: this.fb.control((kinship && kinship.kinshipDegree) || null, []),
@@ -323,150 +323,150 @@ export class MaterialStatusComponent implements OnInit {
   retrieveDropdowns(): void {
     this.referenceService.getMaterialStatusType().subscribe(res => {
       var enums = res.data;
-      this.materialStatusTypes = enums.sort(function(a, b){return a.value - b.value});
+      this.materialStatusTypes = enums.sort(function (a, b) { return a.value - b.value });
     });
 
     this.referenceService.getKinshipDegreeEnum().subscribe(res => {
       this.kinshipDegreeEnum = res.data;
     })
   }
-  
-  createMaterialStatus(){
-    
+
+  createMaterialStatus() {
+
     this.materialStatusService.add(this.parseMaterialStatus(this.materialStatusForm.value, this.contractorId)).subscribe(res => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.create-material-status-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.create-material-status-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getUserMaterialStatus(this.contractorId);
     }, error => {
       forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('candidate-registration-flux.create-material-status-error'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.create-material-status-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
-  createKinshipRelationCriminalData(){
-    
+  createKinshipRelationCriminalData() {
+
     this.kinshipRelationCriminalDataService.add(this.parseKinshipRelationCriminalData(this.kinshipRelationCriminalDataForm.value, this.contractorId)).subscribe(res => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.create-kinship-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.create-kinship-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getKinshipRelationCriminalData(this.contractorId);
     }, error => {
       forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('candidate-registration-flux.create-kinship-error'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.create-kinship-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
-  updateMaterialStatus(){
+  updateMaterialStatus() {
     this.materialStatusService.update(this.parseMaterialStatus(this.materialStatusForm.value, this.contractorId)).subscribe(res => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.update-material-status-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.update-material-status-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getUserMaterialStatus(this.contractorId);
     }, error => {
       forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('candidate-registration-flux.update-material-status-error'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.update-material-status-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
-  updateKinshipRelationCriminalData(){
+  updateKinshipRelationCriminalData() {
     this.kinshipRelationCriminalDataService.update(this.parseKinshipRelationCriminalData(this.kinshipRelationCriminalDataForm.value, this.contractorId)).subscribe(res => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.update-kinship-relation-criminal-data-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.update-kinship-relation-criminal-data-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getKinshipRelationCriminalData(this.contractorId);
     }, error => {
       forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('candidate-registration-flux.update-kinship-relation-criminal-data-error'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.update-kinship-relation-criminal-data-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
-  creteKinshipRelationWithUserProfile(){
+  creteKinshipRelationWithUserProfile() {
     this.buildKinshipRelationWithUserProfileForm().subscribe(response => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.create-kinship-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.create-kinship-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getKinshipRelationWithUserProfile(this.contractorId);
     }, error => {
       forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('candidate-registration-flux.create-kinship-error'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.create-kinship-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
-  creteKinshipRelation(){
+  creteKinshipRelation() {
     this.buildKinshipRelationForm().subscribe(response => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.create-kinship-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.create-kinship-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getKinshipRelation(this.contractorId);
     }, error => {
       forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('candidate-registration-flux.create-kinship-error'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.create-kinship-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
@@ -517,7 +517,7 @@ export class MaterialStatusComponent implements OnInit {
   }
 
   parseKinshipRelationCriminalData(data, contractorId): KinshipRelationCriminalDataModel {
-    
+
     return ObjectUtil.preParseObject({
       id: data.id,
       text: data.text,
@@ -526,7 +526,7 @@ export class MaterialStatusComponent implements OnInit {
   }
 
   parseMaterialStatus(data, contractorId): MaterialStatusModel {
-    
+
     return ObjectUtil.preParseObject({
       id: data.id,
       materialStatusTypeId: parseInt(data.materialStatusTypeId),
@@ -554,7 +554,7 @@ export class MaterialStatusComponent implements OnInit {
     this.click$.push(new Subject<string>());
 
     console.log("kinship", kinship);
-    
+
 
     if (kinship == null) {
       (<FormArray>this.kinshipRelationForm.controls.relation).controls.push(this.generateKinshipRelation());
@@ -582,9 +582,9 @@ export class MaterialStatusComponent implements OnInit {
     (<FormArray>this.kinshipRelationForm.controls.relation).controls.splice(index, 1);
   }
 
-  getExistentStep(step, contractorId){
+  getExistentStep(step, contractorId) {
     const request = {
-      contractorId : contractorId,
+      contractorId: contractorId,
       step: step
     };
 
@@ -593,81 +593,81 @@ export class MaterialStatusComponent implements OnInit {
     })
   }
 
-  addRegistrationFluxStep(){
-    if(this.userMaterialStatus != null || this.kinshipRelationCriminalData != null || this.kinshipRelationWithUserProfileData != null || this.kinshipRelationData != null){
+  addRegistrationFluxStep() {
+    if (this.userMaterialStatus != null || this.kinshipRelationCriminalData != null || this.kinshipRelationWithUserProfileData != null || this.kinshipRelationData != null) {
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.contractorId);
     }
-    else{
+    else {
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractorId);
     }
   }
 
-  checkRegistrationStep(stepData, stepId, success, contractorId){
-    const datas= {
+  checkRegistrationStep(stepData, stepId, success, contractorId) {
+    const datas = {
       isDone: success,
       stepId: this.stepId
     }
-    if(stepData.length == 0){
+    if (stepData.length == 0) {
       this.addCandidateRegistationStep(success, stepId, contractorId);
       this.ds.sendData(datas);
-    }else{
+    } else {
       this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId);
       this.ds.sendData(datas);
     }
   }
 
-  addCandidateRegistationStep(isDone, step, contractorId ){
+  addCandidateRegistationStep(isDone, step, contractorId) {
     const request = {
       isDone: isDone,
-      step : step,
-      contractorId: contractorId 
+      step: step,
+      contractorId: contractorId
     }
     this.registrationFluxService.add(request).subscribe(res => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.step-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.step-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
       forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('candidate-registration-flux.step-error'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.step-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
-  updateCandidateRegistationStep(id, isDone, step, contractorId ){
+  updateCandidateRegistationStep(id, isDone, step, contractorId) {
     const request = {
       id: id,
       isDone: isDone,
-      step : step,
-      contractorId: contractorId 
+      step: step,
+      contractorId: contractorId
     }
-    
+
     this.registrationFluxService.update(request).subscribe(res => {
       forkJoin([
-				this.translate.get('modal.success'),
-				this.translate.get('candidate-registration-flux.step-success'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.step-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
       forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('candidate-registration-flux.step-error'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.step-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
