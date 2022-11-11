@@ -184,7 +184,7 @@
   },
   "candidate-registration-flux":{
     "step-success": "Pasul a fost trecut cu succes!",
-    "step-error": "Pasul nu a fost trecut cu succes",
+    "step-error": "Pasul nu a fost trecut cu succes!",
     "step-in-progress": "Pasul va fi finalizat mai târziu!",
     "update-general-data-success": "Detaliile utilizatorului au fost adăugate!",
     "update-general-data-error": "Detaliile utilizatorului nu au fost adăugate!",
