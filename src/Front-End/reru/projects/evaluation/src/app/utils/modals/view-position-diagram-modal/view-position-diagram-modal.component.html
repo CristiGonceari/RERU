@@ -1,0 +1,56 @@
+<div class="row parent">
+    <div class="col-12 child-header">
+        <div class="modal-header">
+            <h3 class="modal-title">{{'position.position-diagram' | translate}}</h3>
+            <button type="button" class="close"(click)="close()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                  </svg>
+            </button>
+        </div>
+    </div>
+    <div class="col-12 child-body">
+        <div class="modal-body px-7">
+            <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+                id="kt_datatable">
+                <table class="table table-bordered font-size-lg">
+                    <thead class="text-uppercase text-muted">
+                        <tr>
+                            <th rowspan="2" style="vertical-align: middle; width: 20%;">Utilizatori</th>
+                            <th [attr.colspan]="event.testTemplates.length" *ngFor="let event of eventsDiagram"
+                                class="text-center mx-4">
+                                {{event.eventName}}</th>
+                        </tr>
+                        <tr>
+                            <th *ngFor="let template of testTemplates">
+                                {{template.name}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-dark-75">
+                        <tr *ngFor="let user of usersDiagram">
+                            <th style="vertical-align: middle;">
+                                <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
+                                    [routerLink]="['../../../user-profile', user.userProfileId, 'solicited-tests']">
+                                    {{ user.fullName }}
+                                </p>
+                            </th>
+                            <td *ngFor="let tests of user.testsByTestTemplate">
+                                <span *ngFor="let test of tests.tests">
+                                    -{{ translateResultValue(test.resultValue) }},
+                                    {{test.passDate | date: 'dd/MM/yyyy HH:mm'}},
+                                    {{'statuses.' + status[test.status] | translate}} <br>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 p-0 child-footer">
+        <div class="modal-footer p-0 pr-10">
+            <button type="button" class="btn btn-secondary" (click)="close()">{{'button.close' | translate}}</button>
+        </div>
+    </div>
+</div>
