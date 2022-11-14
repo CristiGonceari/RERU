@@ -66,13 +66,19 @@
                                                         <owl-date-time #dtFrom></owl-date-time>
                                                     </div>
                                                 </div>
-                                                <div class="form-group row" *ngFor="let item of userFiles">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'18vh'"
+                                                            [height]="'5rem'" [width]="'5rem'"
+                                                            [colorClass]="'text-primary'">
+                                                        </app-loading-spinner >
+                                                <div class="form-group row" *ngFor="let item of userFiles" >
+                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right" *ngIf="!isLoadingMedia">
                                                         {{ item.requiredDocumentName }}</label>
-                                                    <div class="col-lg-9 col-xl-9">
-                                                        <p class="pt-3 px-4">
-                                                            <button *ngIf="item.fileName.length > 0" (click)="GetFile(item.fileId)"
-                                                                class="btn btn-light-success font-weight-bold mr-3" ngbTooltip="{{item.fileName}}">
+                                                    <div class="col-lg-9 col-xl-9" *ngIf="!isLoadingMedia">
+                                                        <p class="pt-3 px-4" *ngIf="!isLoadingMedia">
+                                                            <button *ngIf="item.fileName.length > 0"
+                                                                (click)="getFile(item.fileId)"
+                                                                class="btn btn-light-success font-weight-bold mr-3"
+                                                                ngbTooltip="{{item.fileName}}">
                                                                 <i class="flaticon-profile"></i>
                                                                 {{ ceckFileNameLength(item.fileName) }}
                                                             </button>
@@ -98,7 +104,6 @@
                                                                     </svg>
                                                                     <!--end::Svg Icon-->
                                                                 </span></b>
-
                                                         </p>
                                                     </div>
                                                 </div>
@@ -109,7 +114,7 @@
                                                 (handle)="backClicked()">
                                             </app-button>
                                             <app-add-button class="btn mr-2" [value]="'button.next' | translate"
-                                                (handle)="createTest()">
+                                                (handle)="next()">
                                             </app-add-button>
                                         </div>
                                     </div>
