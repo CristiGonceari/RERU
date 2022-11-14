@@ -73,7 +73,7 @@
                                                 <div class="form-group row" *ngFor="let item of userFiles" >
                                                     <label class="col-xl-3 col-lg-3 col-form-label text-right" *ngIf="!isLoadingMedia">
                                                         {{ item.requiredDocumentName }}</label>
-                                                    <div class="col-lg-9 col-xl-9" *ngIf="!isLoadingMedia">
+                                                    <div class="col-lg-9 col-xl-9">
                                                         <p class="pt-3 px-4" *ngIf="!isLoadingMedia">
                                                             <button *ngIf="item.fileName.length > 0"
                                                                 (click)="getFile(item.fileId)"
