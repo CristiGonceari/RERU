@@ -140,12 +140,12 @@ export class SidebarRightComponent implements OnInit {
 
 	navigateToChangePassword(){
 		let location = window.location;
-		window.open(`${location.protocol}//${location.host}/personal-profile/change-password`, '_self');
+		window.open(`${location.protocol}//${location.host}/#/personal-profile/change-password`, '_self');
 	}
 
 	navigateToCoreMyProfile(){
 		let location = window.location;
-		window.open(`${location.protocol}//${location.host}/personal-profile/overview`, '_self');
+		window.open(`${location.protocol}//${location.host}/#/personal-profile/overview`, '_self');
 	}
 
 	ngOnDestroy(): void {
