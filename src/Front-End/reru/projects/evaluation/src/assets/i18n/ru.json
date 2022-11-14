@@ -258,7 +258,8 @@
     "performing-test": "Печать выполнения теста",
     "attach": "Прикрепите файл",
     "confirm-print": "Подтвердить и распечатать",
-    "send-email": "Email уведомление"
+    "send-email": "Email уведомление",
+    "full-screen": "Полноэкранный режим"
   },
   "modal":{
     "delete": "Удалить",

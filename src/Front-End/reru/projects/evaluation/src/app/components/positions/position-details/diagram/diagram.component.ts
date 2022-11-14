@@ -7,12 +7,16 @@ import { PrintTemplateService } from '../../../../utils/services/print-template/
 import { saveAs } from 'file-saver';
 import { MedicalColumnEnum } from '../../../../utils/enums/medical-column.enum';
 import { EnumStringTranslatorService } from '../../../../utils/services/enum-string-translator.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ViewPositionDiagramModalComponent } from 'projects/evaluation/src/app/utils/modals/view-position-diagram-modal/view-position-diagram-modal.component';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-diagram',
   templateUrl: './diagram.component.html',
   styleUrls: ['./diagram.component.scss']
 })
+
 export class DiagramComponent implements OnInit {
   isLoading = true;
   eventsDiagram = [];
@@ -30,7 +34,8 @@ export class DiagramComponent implements OnInit {
     private positionService: CandidatePositionService,
     private activatedRoute: ActivatedRoute,
     private printService: PrintTemplateService,
-    private enumStringTranslatorService: EnumStringTranslatorService
+    private enumStringTranslatorService: EnumStringTranslatorService,
+    public modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
@@ -38,10 +43,10 @@ export class DiagramComponent implements OnInit {
       this.positionId = params.id;
       console.log(this.positionId)
       this.positionService.get(this.positionId).subscribe(res => {
-        this.positionName = res.data.name; 
+        this.positionName = res.data.name;
         this.positionMedicalColumn = res.data.medicalColumn;
         this.events = res.data.events;
-        if(this.events.length) this.getDiagram(); 
+        if (this.events.length) this.getDiagram();
         else this.isLoading = false;
       });
     });
@@ -63,9 +68,9 @@ export class DiagramComponent implements OnInit {
     })
   }
 
-  translateResultValue(item){
-		return this.enumStringTranslatorService.translateTestResultValue(item);
-	}
+  translateResultValue(item) {
+    return this.enumStringTranslatorService.translateTestResultValue(item);
+  }
 
   printPositionDiagram() {
     this.printService.getPositionDiagramPdf(this.positionId).subscribe((response: any) => {
@@ -79,5 +84,12 @@ export class DiagramComponent implements OnInit {
       const file = new File([blob], fileName, { type: response.body.type });
       saveAs(file);
     });
+  }
+
+  openFullScreenMode() {
+    const modalRef: any = this.modalService.open(ViewPositionDiagramModalComponent,{ centered: true, size: 'xl',});
+    modalRef.componentInstance.eventsDiagram = this.eventsDiagram;
+    modalRef.componentInstance.usersDiagram = this.usersDiagram;
+    modalRef.componentInstance.testTemplates = this.testTemplates;
   }
 }

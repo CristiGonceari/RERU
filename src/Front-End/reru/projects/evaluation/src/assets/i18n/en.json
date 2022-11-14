@@ -259,7 +259,8 @@
     "performing-test": "Print performing test",
     "attach": "Attach file",
     "confirm-print": "Confirm and Print",
-    "send-email": "Email notification"
+    "send-email": "Email notification",
+    "full-screen": "Full screen mode"
   },
   "modal":{
     "delete": "Delete",
