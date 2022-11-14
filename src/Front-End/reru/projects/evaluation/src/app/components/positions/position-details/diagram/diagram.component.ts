@@ -9,7 +9,6 @@ import { MedicalColumnEnum } from '../../../../utils/enums/medical-column.enum';
 import { EnumStringTranslatorService } from '../../../../utils/services/enum-string-translator.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewPositionDiagramModalComponent } from 'projects/evaluation/src/app/utils/modals/view-position-diagram-modal/view-position-diagram-modal.component';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-diagram',
@@ -46,7 +45,7 @@ export class DiagramComponent implements OnInit {
         this.positionName = res.data.name;
         this.positionMedicalColumn = res.data.medicalColumn;
         this.events = res.data.events;
-        
+
         if (this.events.length) this.getDiagram();
         else this.isLoading = false;
       });
