@@ -46,6 +46,7 @@ export class DiagramComponent implements OnInit {
         this.positionName = res.data.name;
         this.positionMedicalColumn = res.data.medicalColumn;
         this.events = res.data.events;
+        
         if (this.events.length) this.getDiagram();
         else this.isLoading = false;
       });
