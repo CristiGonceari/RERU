@@ -36,6 +36,7 @@ export class UserListTableComponent implements OnInit {
 	processId: any;
 	toolBarValue: number = 0;
 	isStartAddingUsers: boolean = false;
+	isFileValid: boolean;
 
 	downloadFile: boolean = false;
 	headersToPrint = [];
@@ -191,8 +192,32 @@ export class UserListTableComponent implements OnInit {
 					const blob = new Blob([response.body], { type: response.body.type });
 					const file = new File([blob], fileName, { type: response.body.type });
 					saveAs(file);
+
+					if (fileName.includes("Invalid")) {
+						this.isFileValid = false;
+					} else {
+						this.isFileValid = true;
+					}
 				}
-				this.notificationService.success('Success', 'Users Imported!', NotificationUtil.getDefaultMidConfig());
+				if (this.isFileValid) {
+					forkJoin([
+						this.translate.get('notification.title.success'),
+						this.translate.get('bulk-import-users.succes-msg'),
+					  ]).subscribe(([title, description]) => {
+						this.title = title;
+						this.description = description;
+					  });
+					  this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+				} else {
+					forkJoin([
+						this.translate.get('notification.title.error'),
+						this.translate.get('bulk-import-users.error-msg'),
+					  ]).subscribe(([title, description]) => {
+						this.title = title;
+						this.description = description;
+					  });
+					  this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+				}
 				this.isStartAddingUsers = false;
 				clearInterval(interval);
 				this.list();

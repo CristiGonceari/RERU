@@ -1,18 +1,21 @@
 ﻿using CODWER.RERU.Core.Application.Users.CreateUser;
 using CODWER.RERU.Core.Application.Users.EditUserFromColaborator;
+using CODWER.RERU.Core.DataTransferObjects.UserProfiles.BulkImportEnums;
 using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.StorageService;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
+using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CVU.ERP.StorageService;
-using Microsoft.EntityFrameworkCore;
-using RERU.Data.Entities;
-using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 {
@@ -21,8 +24,8 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         private readonly IStorageFileService _storageFileService;
         private readonly IMediator _mediator;
         private readonly AppDbContext _appDbContext;
-
-
+        private readonly Color _color = Color.FromArgb(255, 0, 0);
+   
         public BulkImportUsersCommandHandler(AppDbContext appDbContext, IStorageFileService storageFileService, IMediator mediator)
         {
             _appDbContext = appDbContext;
@@ -42,6 +45,10 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             using var package = new ExcelPackage(fileStream);
             var workSheet = package.Workbook.Worksheets[0];
             var totalRows = workSheet.Dimension.Rows;
+
+            var isValid = await ValidateExcel(workSheet);
+
+            if (!isValid) return await ReturnInvalidExcel(package, request);
 
             await SetTotalNumberOfProcesses(request.ProcessId, totalRows);
 
@@ -70,7 +77,16 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             WaitTasks(Task.WhenAll(tasks));
             tasks.Clear();
 
-            var excelFile = GetExcelFile(package);
+            var excelFile = GetExcelFile(package, true);
+
+            await SaveExcelFile(request.ProcessId, excelFile);
+
+            return excelFile;
+        }
+
+        private async Task<FileDataDto> ReturnInvalidExcel(ExcelPackage package, BulkImportUsersCommand request)
+        {
+            var excelFile = GetExcelFile(package, false);
 
             await SaveExcelFile(request.ProcessId, excelFile);
 
@@ -171,7 +187,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
             await using (var db = _appDbContext.NewInstance())
             {
-                var process =await db.Processes.FirstAsync(x => x.Id == processId);
+                var process = await db.Processes.FirstAsync(x => x.Id == processId);
 
                 process.FileId = fileId;
                 process.IsDone = true;
@@ -221,11 +237,70 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             };
         }
 
-        private FileDataDto GetExcelFile(ExcelPackage package)
+        private FileDataDto GetExcelFile(ExcelPackage package, bool isValid)
         {
             var streamBytesArray = package.GetAsByteArray();
 
-            return FileDataDto.GetExcel("User-Import-Result", streamBytesArray);
+            return isValid ? FileDataDto.GetExcel("User-Import-Result", streamBytesArray) : FileDataDto.GetExcel("User-Import-Invalid", streamBytesArray);
+        }
+
+        private async Task<bool> ValidateExcel(ExcelWorksheet workSheet)
+        {
+           var isIdnpValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.IdnpColumn);
+           var isEmailValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.EmailColumn);
+
+           return isEmailValid && isIdnpValid;
+        }
+
+        private async Task<bool> IsValidDistinctDataColumn(ExcelWorksheet workSheet, int column)
+        {
+            var cells = workSheet.Cells;
+
+            //Get new dictionary with keys of excel data
+            var dictionary = cells
+                .GroupBy(c => new { c.Start.Row, c.Start.Column })
+                .ToDictionary(
+                    rcg => new KeyValuePair<int, int>(rcg.Key.Row, rcg.Key.Column),
+                    rcg => cells[rcg.Key.Row, rcg.Key.Column].Value);
+
+            //Get needed column
+            var columnDictionary = dictionary.Where(x => x.Key.Value == column);
+
+            //Find repeated items by groups
+            var repeatedItemsGroups = columnDictionary
+                .GroupBy(x => x.Value)
+                .Where(x => x.Count() > 1);
+
+            var itemsGroups = repeatedItemsGroups as IGrouping<object, KeyValuePair<KeyValuePair<int, int>, object>>[] ?? repeatedItemsGroups.ToArray();
+
+            await SetInvalidCells(workSheet, itemsGroups, column);
+
+            return !itemsGroups.Any();
+        }
+
+        private async Task SetInvalidCells(ExcelWorksheet workSheet, IGrouping<object, KeyValuePair<KeyValuePair<int, int>, object>>[] itemsGroups, int column)
+        {
+            foreach (var items in itemsGroups)
+            {
+                foreach (var item in items)
+                {
+                    // item.Key.Key == rowNumber;
+                    // item.Key.Value == columnNumber;
+
+                    workSheet.Cells[item.Key.Key, 12].Value = await GetErrorMessage(column);
+                    workSheet.Cells[item.Key.Key, item.Key.Value].Style.Fill.SetBackground(_color);
+                }
+            }
+        }
+
+        private async Task<string> GetErrorMessage(int column)
+        {
+            return column switch
+            {
+                (int) ExcelColumnsEnum.IdnpColumn => "Idnp repetat",
+                (int) ExcelColumnsEnum.EmailColumn => "Email repetat",
+                _ => string.Empty
+            };
         }
     }
 }

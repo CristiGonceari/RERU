@@ -175,6 +175,10 @@
     "finish": "Завершить",
     "back": "Назад"
   },
+  "bulk-import-users": {
+    "succes-msg" : "Пользователи успешно импортированы",
+    "error-msg" : "Недействительный документ"
+  },
   "button-downloand-excell":{
     "user-sheet":"Скачать личное досье"
   },
@@ -186,6 +190,37 @@
   "downloand-message":{
     "succes-dosier": "Досье пользователя был успешно загружен!",
     "error-dosier": "Досье пользователя не загружен!"
+  },
+  "candidate-registration-flux":{
+    "step-success": "Шаг пройден успешно!",
+    "step-error": "Шаг не пройден!",
+    "step-in-progress": "Шаг будет завершен позже",
+    "update-general-data-success": "Добавлены данные пользователя!",
+    "update-general-data-error": "Данные пользователя не добавлены!",
+    "add-bulletin-success": "Бюллетень добавлен!",
+    "add-bulletin-error": "Бюллетень не добавлен!",
+    "edit-bulletin-success": "Бюллетень обновлен!",
+    "edit-bulletin-error": "Бюллетень не обновилcя!",
+    "create-study-success": "Учебное образование былo добавленo!",
+    "create-study-error": "Учебное образование не добавленo!",
+    "create-modern-language-success": "Добавлен yровень владения современным языком!",
+    "create-modern-language-error": "Hе добавлен yровень владения современным языком!",
+    "create-study-recommendation-success": "Рекомендация для образования добавлена!",
+    "create-study-recommendation-error": "Рекомендация для образования не добавлена!",
+    "create-material-status-success": "Cемейный статус добавлен!",
+    "create-material-status-error": "Cемейный статус не добавлен!",
+    "create-kinship-success": "Добавлено родство!",
+    "create-kinship-error": "Pодство не добавленo!",
+    "update-material-status-success": "Cемейный статус обновлялся!",
+    "update-material-status-error": "Семейный статус не обновлялся!",
+    "update-kinship-relation-criminal-data-success": "Родство обновлено!",
+    "update-kinship-relation-criminal-data-error": "Родство не обновлялось!",
+    "create-military-obligation-success": "Военная обязанность былo добавленo!",
+    "create-military-obligation-error": "Военная обязанностьне не былo добавлено!",
+    "create-autobiography-success": "Добавлена ​​автобиография!",
+    "create-autobiography-error": "Автобиография не добавлена!",
+    "update-autobiography-success": "Автобиография обновлена!",
+    "update-autobiography-error": "Автобиография не обновлялась!"
   },
   "table": {
     "add": "Добавить",

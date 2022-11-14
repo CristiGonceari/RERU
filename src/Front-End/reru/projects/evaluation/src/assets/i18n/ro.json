@@ -258,7 +258,8 @@
     "performing-test": "Imprimarea efectuării testului",
     "attach": "Atașați fișierul",
     "confirm-print": "Confirmă și Printează",
-    "send-email": "Email notificarea"
+    "send-email": "Email notificarea",
+    "full-screen": "Mod ecran complet"
   },
   "modal":{
     "delete": "Șterge",

@@ -167,6 +167,10 @@
     "finish": "Finish",
     "back": "Back"
   },
+  "bulk-import-users": {
+    "succes-msg" : "Users were successfully imported",
+    "error-msg" : "Invalid document"
+  },
   "button-downloand-excell":{
     "user-sheet":"Downloand perosnal dossier"
   },
@@ -178,6 +182,37 @@
   "downloand-message":{
     "succes-dosier": "User profile dosier was successfully downloaded!",
     "error-dosier": "User profile dosier was not downloaded!"
+  },
+  "candidate-registration-flux":{
+    "step-success": "Step was added!",
+    "step-error": "Step was not added!",
+    "step-in-progress": "Step will be completed later!",
+    "update-general-data-success": "Contractor details added!",
+    "update-general-data-error": "Contractor details was not added!",
+    "add-bulletin-success": "Bulletin was added!",
+    "add-bulletin-error": "Bulletin was not added!",
+    "edit-bulletin-success": "Bulletin was updated!",
+    "edit-bulletin-error": "Bulletin was not updated!",
+    "create-study-success": "Studies was added!",
+    "create-study-error": "Studies was not added!",
+    "create-modern-language-success": "Modern language was added!",
+    "create-modern-language-error": "Modern language was not added!",
+    "create-study-recommendation-success": "Recommendation was added!",
+    "create-study-recommendation-error": "Recommendation was not added!",
+    "create-material-status-success": "Material status was added!",
+    "create-material-status-error": "Material status was not added!",
+    "create-kinship-success": "Kinship relation was added!",
+    "create-kinship-error": "Kinship relation was not added!",
+    "update-material-status-success": "Material status was updated!",
+    "update-material-status-error": "Material status was not updated!",
+    "update-kinship-relation-criminal-data-success": "Kinship relation status was updated!",
+    "update-kinship-relation-criminal-data-error": "Kinship relation status was not updated!",
+    "create-military-obligation-success": "Military obligation relation added!",
+    "create-military-obligation-error": "Military obligation relationwas not added!",
+    "create-autobiography-success": "Autobiography was added!",
+    "create-autobiography-error": "Autobiography was not added!",
+    "update-autobiography-success": "Autobiography was updated!",
+    "update-autobiography-error": "Autobiography was not updated!"
   },
   "table": {
     "add": "Add",

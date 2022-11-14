@@ -20,6 +20,39 @@
             }
         }
 
-
+		@media screen and (min-width: 320px) {  
+			h4 {font-size:1.1rem;}
+			.mat-expansion-panel-header{
+				min-height: 200px;
+			}
+			table{
+				min-width: 350px;
+			}
+			table td{
+				min-width: 200px;
+			}
+		}
+		@media screen and (min-width: 600px) {  
+			h4 {font-size:1.2rem;}
+			.mat-expansion-panel-header{
+				min-height: 110px;
+			}
+			table{
+				min-width: 450px;
+			}
+			table td{
+				min-width: 200px;
+			}
+			.mat-vertical-content-container{
+				margin-left: 15px;
+			}
+		}
+		
+		@media screen and (min-width: 800px) {  
+			h4 {font-size:auto;}
+			.mat-expansion-panel-header{
+				min-height: auto;
+			}
+		}
     }
 }

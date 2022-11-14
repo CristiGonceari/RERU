@@ -170,6 +170,10 @@
     "finish": "Finalizează",
     "back": "Înapoi"
   },
+  "bulk-import-users": {
+    "succes-msg" : "Utilizatorii au fost importați cu succes",
+    "error-msg" : "Documentul este invalid"
+  },
   "button-downloand-excell":{
     "user-sheet":"Descărcați dosarul persoanei"
   },
@@ -181,6 +185,37 @@
   "downloand-message":{
     "succes-dosier": "Dosarul utilizatorului a fost descărcat cu succes!",
     "error-dosier": "Dosarul utilizatorului nu a fost descărcat!"
+  },
+  "candidate-registration-flux":{
+    "step-success": "Pasul a fost trecut cu succes!",
+    "step-error": "Pasul nu a fost trecut cu succes!",
+    "step-in-progress": "Pasul va fi finalizat mai târziu!",
+    "update-general-data-success": "Detaliile utilizatorului au fost adăugate!",
+    "update-general-data-error": "Detaliile utilizatorului nu au fost adăugate!",
+    "add-bulletin-success": "Buletinul a fost adăugat!",
+    "add-bulletin-error": "Buletinul nu a fost adăugat!",
+    "edit-bulletin-success": "Buletinul a fost actualizat!",
+    "edit-bulletin-error": "Buletinul nu a fost actualizat!",
+    "create-study-success": "Studiile au fost adăugate!",
+    "create-study-error": "Studiile nu au fost adăugate!",
+    "create-modern-language-success": "Limba modernă a fost adăugată!",
+    "create-modern-language-error": "Limba modernă nu a fost adăugată!",
+    "create-study-recommendation-success": "Recomandarea a fost adăugată!",
+    "create-study-recommendation-error": "Recomandarea nu a fost adăugată!",
+    "create-material-status-success": "Starea civilă a fost adăugată!",
+    "create-material-status-error": "Starea civilă nu a fost adăugată!",
+    "create-kinship-success": "Relația de rudenie a fost adăugată!",
+    "create-kinship-error": "Relația de rudenie nu a fost adăugată!",
+    "update-material-status-success": "Starea civilă a fost actualizată!",
+    "update-material-status-error": "Starea civilă nu a fost actualizată!",
+    "update-kinship-relation-criminal-data-success": "Relația de rudenie a fost actualizată!",
+    "update-kinship-relation-criminal-data-error": "Relația de rudenie nu a fost actualizată!",
+    "create-military-obligation-success": "Obligația militară a fost adăugată!",
+    "create-military-obligation-error": "Obligația militară nu a fost adăugată!",
+    "create-autobiography-success": "Autobiografia a fost adăugată!",
+    "create-autobiography-error": "Autobiografia nu a fost adăugată!",
+    "update-autobiography-success": "Autobiografia a fost actualizată!",
+    "update-autobiography-error": "Autobiografia nu a fost actualizată!"
   },
   "table": {
     "add": "Adaugă",
