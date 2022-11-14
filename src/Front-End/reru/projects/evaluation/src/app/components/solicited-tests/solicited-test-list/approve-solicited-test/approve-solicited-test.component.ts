@@ -84,13 +84,7 @@ export class ApproveSolicitedTestComponent implements OnInit {
   }
 
   parse(userId: number, solicitedVacantPositionId: number, candidatePositionId: number) {
-    let request = {
-      userId,
-      solicitedVacantPositionId,
-      candidatePositionId
-    }
-
-    return request
+   return { userId, solicitedVacantPositionId, candidatePositionId }  
   }
 
   next() {
