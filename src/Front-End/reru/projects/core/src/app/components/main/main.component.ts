@@ -163,6 +163,12 @@ export class MainComponent implements OnInit {
 		this.appSettings = this.appConfigService.settings;
 	}
 
+	get isNotHomeRoute(): boolean {
+		return this.router.url !== '/';
+	}
+
+	set isNotHomeRoute(value) {}
+
 	ngOnInit(): void {
 		this.subscribeForAuthChange();
 		this.translateData();

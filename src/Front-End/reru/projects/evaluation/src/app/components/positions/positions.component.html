@@ -24,15 +24,62 @@
                 </app-add-button>
               </div>
             </div>
-            <div class="card-body">
-              <div class="row mb-5">
+            <div class="card-header border-0 pt-0 pb-0 pr-5" style="min-height: 100%">
+              <div class="row w-100">
                 <div class="col">
-                  <erp-shared-search-input
-                    (handleSearch)="getPositions({name: $event, page: 1, itemsPerPage: pagination.pageSize})"
-                    [placeholder]="'button.search-name' | translate" #search></erp-shared-search-input>
+                  <div class="input-group input-group-sm input-group-solid">
+                    <input class="form-control" type="text" name="name" [(ngModel)]="name"
+                      [placeholder]="'button.search-name' | translate" />
+                  </div>
                 </div>
-                <app-button (click)="search.clear()" [value]="'button.reset' | translate" class="mr-5"></app-button>
+                <div class="col">
+                  <div class="input-group input-group-sm input-group-solid">
+                    <input class="form-control" type="text" [(ngModel)]="responsiblePersonName"
+                      name="responsiblePersonName"
+                      [placeholder]="'verify-test.search-responsible-person' | translate" />
+                  </div>
+                </div>
               </div>
+              <div class="row w-100 mt-2">
+                <div class="col">
+                  <app-search-medical-column (filter)="setFilter('medicalColumn', $event)" #medicalColumn>
+                  </app-search-medical-column>
+                </div>
+                <div class="col">
+                  <div class="input-group input-group-sm input-group-solid">
+                    <input type="text" [owlDateTimeTrigger]="activeDtFrom" [placeholder]="'position.search-from-active-date' | translate"
+                      class="form-control form-control-lg form-control-solid"
+                      [value]="activeFrom | dateFilter:'dd/MM/yyyy HH:mm'">
+                    <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
+                      name="date_time" [(ngModel)]="activeFrom" [owlDateTime]="activeDtFrom"
+                      [ngModelOptions]="{standalone: true}" [readonly]="true">
+                    <i class="fas fa-calendar-alt mr-2"></i>
+                    <owl-date-time #activeDtFrom></owl-date-time>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="input-group input-group-sm input-group-solid">
+                    <input type="text" [owlDateTimeTrigger]="activeToDate" [placeholder]="'position.search-from-inactive-date' | translate"
+                      class="form-control form-control-lg form-control-solid"
+                      [value]="activeTo | dateFilter:'dd/MM/yyyy HH:mm'">
+                    <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
+                      name="date_time" [(ngModel)]="activeTo" [owlDateTime]="activeToDate"
+                      [ngModelOptions]="{standalone: true}" [readonly]="true">
+                    <i class="fas fa-calendar-alt mr-2"></i>
+                    <owl-date-time #activeToDate></owl-date-time>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="text-right">
+                    <app-button (handle)="resetFilters()" [value]="'button.reset' | translate" class="mr-5">
+                    </app-button>
+                    <app-confirm-button (handle)="getPositions({ page: 1 })" [value]="'button.search' | translate">
+                    </app-confirm-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
               <app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'20vh'" [height]="'5rem'"
                 [width]="'5rem'" [colorClass]="'text-primary'">
               </app-loading-spinner>
@@ -44,9 +91,9 @@
                     <tr>
                       <th scope="col">{{'position.name' | translate}}</th>
                       <th scope="col">{{'locations.person' | translate}}</th>
-                      <th scope="col">{{'events.start-date' | translate}}</th>
-                      <th scope="col">{{'events.end-date' | translate}}</th>
                       <th scope="col">{{'position.column' | translate}}</th>
+                      <th scope="col" style="width: 150px">{{'position.active-from' | translate}}</th>
+                      <th scope="col" style="width: 150px">{{'position.active-to' | translate}}</th>
                       <th scope="col" style="width: 75px; text-align: center; vertical-align: middle">
                         {{'position.status' | translate}}</th>
                       <th scope="col" style="width: 50px"></th>
@@ -54,7 +101,7 @@
                   </thead>
                   <tbody class="text-dark-75">
                     <tr *ngFor="let position of positions" (dblclick)="navigate(position.id)">
-                      <td  class="cursor-pointer" [routerLink]="['../position', position.id]">
+                      <td class="cursor-pointer" [routerLink]="['../position', position.id]">
                         <a>{{ position.name }}</a>
                       </td>
                       <td>
@@ -66,6 +113,11 @@
                         <p *ngIf="!position.responsiblePerson">-</p>
                       </td>
                       <td>
+                        <a *ngIf="position.medicalColumn!=null">{{'statuses.' + medicalEnum[position.medicalColumn] |
+                          translate}}</a>
+                        <a *ngIf="position.medicalColumn==null">-</a>
+                      </td>
+                      <td>
                         <a *ngIf="position.from">{{ position.from | date: 'dd/MM/yyyy, HH:mm'}}</a>
                         <a *ngIf="!position.from">-</a>
                       </td>
@@ -73,11 +125,7 @@
                         <a *ngIf="position.to">{{ position.to | date: 'dd/MM/yyyy, HH:mm' }}</a>
                         <a *ngIf="!position.to">-</a>
                       </td>
-                      <td>
-                        <a *ngIf="position.medicalColumn!=null">{{'statuses.' + medicalEnum[position.medicalColumn] | translate}}</a>
-                        <a *ngIf="position.medicalColumn==null">-</a>
-                      </td>
-                      <td>
+                      <td class="text-center">
                         <svg-icon *ngIf="position.isActive === false" key="error" [width]="24" [height]="24"
                           data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Inactive">
                         </svg-icon>
@@ -112,6 +160,11 @@
                                 <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
                                   [routerLink]="['../edit-position', position.id]">
                                   {{ 'button.edit' | translate }}
+                                </button>
+                                <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
+                                  (click)="editStatus(position.id)">
+                                  <span *ngIf="position.isActive === false">{{ 'statuses.activate' | translate }}</span>
+                                  <span *ngIf="position.isActive === true">{{ 'statuses.inactivate' | translate }}</span>
                                 </button>
                                 <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
                                   *ngIf="position.events.length" [routerLink]="['../diagram', position.id]">

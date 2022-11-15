@@ -1,3 +1,14 @@
 .dropdown-toggle::after {
     display:none;
 }
+
+table {
+    table-layout: fixed;
+    width: 100%;   
+}
+
+th,td {
+    border-style: solid;
+    border-color: #BCBCBC;
+    word-wrap: break-word;
+}

@@ -1,14 +1,15 @@
 <app-event-calendar (onDatePicked)="getListByDate($event)" (listOfCountedEvents)="getListOfCoutedTests($event)">
 </app-event-calendar>
 
-<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
-    id="kt_datatable">
+
     <div class="card">
         <div class="card-header text-center" *ngIf="selectedDay != null">
             {{ 'calendar.selected-date' | translate }}: {{displayDate}}
         </div>
         <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
         <div class="card-body">
+            <div class="table-responsive-xl datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+    id="kt_datatable">
             <table *ngIf="!isLoading" for="kt_datatable" class="datatable table" style="overflow: visible">
                 <thead class="text-uppercase text-muted">
                     <tr>
@@ -53,17 +54,18 @@
                 </tbody>
                 <tbody class="datatable-body" *ngIf="!polls.length">
                     <tr>
-                        <td colspan="6" class="text-center">
+                        <td colspan="100" class="text-center">
                             {{ 'message.no-record' | translate }}
                         </td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
-    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
+            <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
         *ngIf="selectedDay != null" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
         [size]="pagedSummary.pageSize" (sizeChange)="getListByDate({ page: 1, itemsPerPage: $event })"
         (pageChange)="getListByDate({ page: $event, itemsPerPage: pagedSummary.pageSize })">
     </div>
-</div>
+            </div>
+        </div>
+    </div>
+    

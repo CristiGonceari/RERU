@@ -64,7 +64,43 @@ export class TestsTableComponent implements OnInit {
         this.pagedSummary = response.data.pagedSummary;
         this.isLoading = false;
       }
+    }, () => { 
+      this.isLoading = false;
     });
+  }
+
+  getUserTests(data: any = {}) {
+    this.isLoading = true;
+
+    if (data.fromDate != null && data.tillDate != null) {
+      this.startTime = data.fromDate,
+        this.endTime = data.tillDate
+    }
+
+    if (data.displayMonth != null && data.displayYear != null) {
+      this.displayMonth = data.displayMonth;
+      this.displayYear = data.displayYear;
+    }
+
+    let params = {
+      page: data.page || this.pagedSummary.currentPage,
+      itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize,
+      startTime: this.parseDates(this.startTime),
+      endTime: this.parseDates(this.endTime),
+    }
+
+    this.testService.getUserTestsWithoutEvent(params).subscribe(
+      res => {
+        if (res && res.data) {
+          this.testRowList = res.data.items;
+          this.isLoading = false;
+          this.pagedSummary = res.data.pagedSummary;
+          this.selectedDay = null
+        }
+      }, () => {
+        this.isLoading = false;
+      }
+    )
   }
 
   parseDates(date) {

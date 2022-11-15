@@ -84,20 +84,32 @@ namespace CODWER.RERU.Evaluation.Application.Tests
 
             if (!string.IsNullOrWhiteSpace(request.UserName))
             {
-                tests = tests.Where(x => x.UserProfile.FirstName.ToLower().Contains(request.UserName.ToLower()) 
-                                         || x.UserProfile.LastName.ToLower().Contains(request.UserName.ToLower()) 
-                                         || x.UserProfile.FatherName.ToLower().Contains(request.UserName.ToLower())
-                                         || x.UserProfile.Idnp.ToLower().Contains(request.UserName.ToLower())
-                                         || x.UserProfile.Email.ToLower().Contains(request.UserName.ToLower()));
+                var toSearch = request.UserName.Split(' ').ToList();
+
+                foreach (var s in toSearch)
+                {
+                    tests = tests.Where(p =>
+                        p.UserProfile.FirstName.ToLower().Contains(s.ToLower())
+                        || p.UserProfile.LastName.ToLower().Contains(s.ToLower())
+                        || p.UserProfile.FatherName.ToLower().Contains(s.ToLower())
+                        || p.UserProfile.Idnp.ToLower().Contains(s.ToLower())
+                        || p.UserProfile.Email.ToLower().Contains(s.ToLower()));
+                }
             }
 
             if (!string.IsNullOrWhiteSpace(request.EvaluatorName))
             {
-                tests = tests.Where(x => x.Evaluator.FirstName.ToLower().Contains(request.EvaluatorName.ToLower())
-                                         || x.Evaluator.LastName.ToLower().Contains(request.EvaluatorName.ToLower())
-                                         || x.Evaluator.FatherName.ToLower().Contains(request.EvaluatorName.ToLower())
-                                         || x.Evaluator.Idnp.ToLower().Contains(request.EvaluatorName.ToLower())
-                                         || x.Evaluator.Email.ToLower().Contains(request.EvaluatorName.ToLower()));
+                var toSearch = request.EvaluatorName.Split(' ').ToList();
+
+                foreach (var s in toSearch)
+                {
+                    tests = tests.Where(p =>
+                        p.Evaluator.FirstName.ToLower().Contains(s.ToLower())
+                        || p.Evaluator.LastName.ToLower().Contains(s.ToLower())
+                        || p.Evaluator.FatherName.ToLower().Contains(s.ToLower())
+                        || p.Evaluator.Idnp.ToLower().Contains(s.ToLower())
+                        || p.Evaluator.Email.ToLower().Contains(s.ToLower()));
+                }
             }
 
             if (!string.IsNullOrWhiteSpace(request.Email))

@@ -67,6 +67,8 @@ export class MyEvaluationsComponent implements OnInit {
 					this.pagedSummary = res.data.pagedSummary;
 					this.isLoading = false;
 				}
+			}, () => {
+				this.isLoading = false;
 			}
 		)
 	}

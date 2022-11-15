@@ -17,6 +17,7 @@ export class PositionDetailsComponent implements OnInit {
   isLoading: boolean = true;
   positionName;
   positionId;
+  isActive;
 
   title: string;
   description: string;
@@ -46,9 +47,26 @@ export class PositionDetailsComponent implements OnInit {
   get(id: number): void {
     this.positionService.get(id).subscribe(response => {
       this.positionName = response.data.name;
+      this.isActive = response.data.isActive;
       this.isLoading = false;
     });
   }
+
+  editStatus() {
+		this.isLoading = true;
+		this.positionService.editPositionStatus(this.positionId).subscribe(res => {
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('position.success-update'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+			this.get(this.positionId);
+			this.isLoading = false;
+		})
+	}
 
   openRemoveModal(id: number): void {
     forkJoin([
