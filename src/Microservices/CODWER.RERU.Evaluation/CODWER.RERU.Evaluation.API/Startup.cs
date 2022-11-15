@@ -53,10 +53,7 @@ namespace CODWER.RERU.Evaluation.API
             services.Configure<SmtpOptions>(this.Configuration.GetSection("Smtp"));
             services.Configure<RabbitMq>(Configuration.GetSection("MessageQueue"));
             services.Configure<PlatformConfig>(Configuration.GetSection("PlatformConfig"));
-            if (CurrentEnvironment.IsDevelopment())
-            {
-                services.AddERPModuleServices(Configuration);
-            }
+
             services.AddModuleServiceProvider(); // before conf AppDbContext
 
             ServicesSetup.ConfigureEntity(services, Configuration);
