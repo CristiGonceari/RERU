@@ -77,7 +77,6 @@ export class AddEditPositionComponent implements OnInit {
 	ngOnInit(): void {
 		this.positionForm = new FormGroup({
 			name: new FormControl(),
-			isActive: new FormControl(),
 			medicalColumn: new FormControl()
 		});
 		this.onTextChange("");
@@ -156,13 +155,11 @@ export class AddEditPositionComponent implements OnInit {
 		if (data) {
 			this.positionForm = this.fb.group({
 				name: this.fb.control(data?.name || null, [Validators.required]),
-				isActive: this.fb.control(data?.isActive || false),
 				medicalColumn: this.fb.control((data && !isNaN(data.medicalColumn) ? data.medicalColumn : null), [Validators.required])
 			});
 		} else {
 			this.positionForm = this.fb.group({
 				name: this.fb.control(null, [Validators.required]),
-				isActive: this.fb.control(false, [Validators.required]),
 				medicalColumn: this.fb.control(null, [Validators.required]),
 			});
 		}
@@ -211,7 +208,6 @@ export class AddEditPositionComponent implements OnInit {
 
 		let addPositionModel = {
 			name: this.positionForm.value.name,
-			isActive: this.positionForm.value.isActive,
 			from: this.fromDate,
 			to: this.tillDate,
 			description: this.editorData,
@@ -254,7 +250,6 @@ export class AddEditPositionComponent implements OnInit {
 			to: this.tillDate,
 			description: this.editorData,
 			medicalColumn: !isNaN(this.positionForm.value.medicalColumn) ? this.positionForm.value.medicalColumn : null,
-			isActive: this.positionForm.value.isActive,
 			requiredDocuments: tagsArr,
 			eventIds: eventArr.map(obj => obj.value),
 			userProfileIds: this.attachedUsers

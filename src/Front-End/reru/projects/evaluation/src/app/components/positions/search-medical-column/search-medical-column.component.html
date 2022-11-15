@@ -1,0 +1,6 @@
+<select class="form-control h-35px" name="selectedStatus" [(ngModel)]="column" id="column" (change)="filter.emit($event.target.value)">
+    <option class="default-option text-muted" selected value="">{{ 'position.search-column' | translate }}</option>
+    <option *ngFor="let item of list" [value]="item.value">
+        {{'statuses.' + item.label | translate}}
+    </option>
+</select>

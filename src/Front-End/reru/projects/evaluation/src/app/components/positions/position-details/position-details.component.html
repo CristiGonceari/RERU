@@ -31,9 +31,15 @@
                                                     ngbDropdownItem [routerLink]="['../../edit-position', positionId]">
                                                     {{ 'button.edit' | translate }}
                                                 </button>
+                                                <button class="navi-link align-items-baseline py-2 px-6 my-2"
+                                                    ngbDropdownItem (click)="editStatus()">
+                                                    <span *ngIf="isActive === false">{{ 'statuses.activate' |
+                                                        translate }}</span>
+                                                    <span *ngIf="isActive === true">{{ 'statuses.inactivate' |
+                                                        translate }}</span>
+                                                </button>
                                                 <button class="navi-link align-items-center py-2 px-6 my-2"
-                                                    ngbDropdownItem
-                                                    (click)="openRemoveModal(positionId)">
+                                                    ngbDropdownItem (click)="openRemoveModal(positionId)">
                                                     {{'button.delete' | translate}}
                                                 </button>
                                             </div>
@@ -41,10 +47,21 @@
                                     </div>
                                 </div>
                             </div>
+                            <app-loading-spinner *ngIf="isLoading" [contentHeight]="'10vh'" [height]="'2rem'" [width]="'2rem'"
+                                [colorClass]="'text-primary'">
+                            </app-loading-spinner>
                             <div class="d-flex align-items-center">
-                                <div class="d-flex flex-column mx-auto mt-5">
+                                <div class="d-flex flex-column mx-auto mt-5" *ngIf="!isLoading">
                                     <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
                                         {{positionName}}
+                                        <svg-icon *ngIf="isActive === false" key="error" [width]="24" [height]="24"
+                                            data-toggle="tooltip" data-placement="right" placement="right"
+                                            ngbTooltip="Inactive">
+                                        </svg-icon>
+                                        <svg-icon *ngIf="isActive === true" key="success" [width]="24" [height]="24"
+                                            data-toggle="tooltip" data-placement="right" placement="right"
+                                            ngbTooltip="Active">
+                                        </svg-icon>
                                     </a>
                                 </div>
                             </div>
