@@ -1,7 +1,9 @@
 <div class="input-group input-group-sm input-group-solid">
-    <input type="text" class="form-control" id="kt_subheader_search_form" (input)="search(key)" [placeholder]="'button.search-name' | translate" [(ngModel)]="key">
-    <div class="input-group-append">
-        <span class="input-group-text cursor-pointer" *ngIf="!key">
+    <input type="text" class="form-control" id="kt_subheader_search_form" [placeholder]="'button.search-name' | translate"
+    [(ngModel)]="value" (ngModelChange)="searchCategoryUpdate.next($event)">
+    <div class="input-group-append" [ngClass]="{'px-3': isLoading }">
+        <app-loading-spinner *ngIf="isLoading" [borderWidth]="'0.2rem'" [width]="'1.5rem'" [height]="'1.5rem'" [colorClass]="'text-primary'"></app-loading-spinner>
+        <span class="input-group-text cursor-pointer" *ngIf="!value && !isLoading">
             <span class="svg-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -12,6 +14,6 @@
                 </svg>
             </span>
         </span>
-        <i class="ki ki-close mx-3 icon-sm text-muted cursor-pointer" *ngIf="key" (click)="clearSearch()"></i>
+        <i class="ki ki-close mx-3 icon-sm text-muted cursor-pointer" *ngIf="value && !isLoading" (click)="clearSearch()"></i>
     </div>
 </div>
