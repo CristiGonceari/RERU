@@ -1,93 +1,103 @@
 <app-event-calendar (onDatePicked)="getListByDate($event)" (listOfCountedEvents)="getListOfCoutedTests($event)">
 </app-event-calendar>
 
-<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
-    id="kt_datatable">
-    <div class="card">
-        <div class="card-header text-center" *ngIf="selectedDay != null">
-            {{ 'calendar.selected-date' | translate }}: {{displayDate}}
-        </div>
-        <div class="row w-100 mt-3">
-            <div class="col">
-                <erp-shared-search-input (handleSearch)="setFilter('testName', $event)"
-                    [placeholder]="'tests.search-test' | translate" #testName>
-                </erp-shared-search-input>
-            </div>
-            <div class="col">
-                <erp-shared-search-input (handleSearch)="setFilter('eventName', $event)"
-                    [placeholder]="'events.search-event' | translate" #eventName>
-                </erp-shared-search-input>
-            </div>
-            <div class="col-1">
-                <div class="w-100 text-right">
-                    <app-button (handle)="resetFilters()" [value]="'button.reset' | translate"></app-button>
-                </div>
-            </div>
-        </div>
-        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-        <div class="card-body" >
-            <table *ngIf="!isLoading" for="kt_datatable" class="datatable table" style="overflow: visible">
-                <thead class="text-uppercase text-muted">
-                    <tr>
-                        <th scope="col" class="colored">
-                            <b>{{'dashboard.date-status' | translate}}</b>
-                            <i class="fas fa-arrow-down ml-1 colored"></i>
-                        </th>
-                        <th scope="col">{{'dashboard.test' | translate}}</th>
-                        <th scope="col">{{'events.event' | translate}}</th>
-                        <th scope="col" style="width: 170px;">{{'dashboard.score' | translate}} / {{'dashboard.min-score' | translate}}</th>
-                        <th scope="col" style="width: 120px"></th>
-                    </tr>
-                </thead>
-                <tbody class="datatable-body" *ngIf="testRowList.length">
-                    <tr *ngFor="let test of testRowList">
-                        <td>
-                            <span class="colored d-block mb-0">
-                                <b *ngIf="!test.eventName">{{ test.programmedTime | date: 'dd/MM/yyyy, HH:mm'}}</b>
-                                <b *ngIf="test.eventName">{{ test.programmedTime | date: 'dd/MM/yyyy'}} - {{
-                                    test.endProgrammedTime | date: 'dd/MM/yyyy'}}</b>
-                            </span>
-                            <div class="font-size-sm text-dark-50">{{'statuses.' + enum[test.testStatus] | translate}}</div>
-                        </td>
-                        <td>{{ test.testTemplateName }}</td>
-                        <td>
-                            <label *ngIf="test.eventName">{{ test.eventName }}</label>
-                            <label *ngIf="!test.eventName">-</label>
-                        </td>
-                        <td>
-                            <label *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</label>
-                            <label *ngIf="test.result != resultEnum.NoResult">{{ test.accumulatedPercentage }}% / {{test.minPercent}}%</label>
-                        </td>
-                        <td>
-                            <button *ngIf="test.testStatus == enum.InProgress" class="btn btn-light-success"
-                                (click)="getTestById(test.id)">
-                                {{'button.continue' | translate}}
-                            </button>
-                            <button *ngIf="test.testStatus == enum.Programmed || test.testStatus == enum.AlowedToStart"
-                                class="btn btn-light-success" [routerLink]="['../start-test', test.id]">
-                                {{'button.start-test' | translate}}
-                            </button>
-                            <button
-                                *ngIf="test.viewTestResult && (test.result == resultEnum.NotPassed || test.result == resultEnum.Passed)"
-                                class="btn btn-light-success" [routerLink]="['../test-result', test.id]">
-                                {{'tests.view' | translate}}
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody class="datatable-body" *ngIf="!testRowList.length">
-                    <tr>
-                        <td colspan="6" class="text-center">
-                            {{ 'message.no-record' | translate }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
+<div class="card">
+  <div class="card-header text-center" *ngIf="selectedDay != null">
+    <div class="card-title">
+      {{ 'calendar.selected-date' | translate }}: {{displayDate}}
     </div>
-    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
+    <div class="card-toolbar">
+      <div class="row">
+        <div class="col-md-5 col-12">
+          <erp-shared-search-input (handleSearch)="setFilter('testName', $event)"
+            [placeholder]="'tests.search-test' | translate" #testName>
+          </erp-shared-search-input>
+        </div>
+        <div class="col-md-5 col-12 pt-md-0 pt-2">
+          <erp-shared-search-input (handleSearch)="setFilter('eventName', $event)"
+            [placeholder]="'events.search-event' | translate" #eventName>
+          </erp-shared-search-input>
+        </div>
+        <div class="col-md-2 col-12 pt-md-0 pt-2">
+          <div class="d-md-block d-none">
+            <app-button (handle)="resetFilters()" [value]="'button.reset' | translate"></app-button>
+          </div>
+          <div class="d-md-none d-block">
+            <app-button width="100%" (handle)="resetFilters()" [value]="'button.reset' | translate"></app-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+  <div class="card-body">
+    <div class="table-responsive-xl datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+      id="kt_datatable">
+      <table *ngIf="!isLoading" for="kt_datatable" class="datatable table" style="overflow: visible">
+        <thead class="text-uppercase text-muted">
+          <tr>
+            <th scope="col" class="colored">
+              <b>{{'dashboard.date-status' | translate}}</b>
+              <i class="fas fa-arrow-down ml-1"></i>
+            </th>
+            <th scope="col">{{'dashboard.test' | translate}}</th>
+            <th scope="col">{{'events.event' | translate}}</th>
+            <th scope="col" style="width: 170px;">{{'dashboard.score' | translate}} /
+              {{'dashboard.min-score' | translate}}</th>
+            <th scope="col" style="width: 120px"></th>
+          </tr>
+        </thead>
+        <tbody class="datatable-body" *ngIf="testRowList.length">
+          <tr *ngFor="let test of testRowList">
+            <td>
+              <span class="colored d-block mb-0">
+                <b *ngIf="!test.eventName">{{ test.programmedTime | date: 'dd/MM/yyyy, HH:mm'}}</b>
+                <b *ngIf="test.eventName">{{ test.programmedTime | date: 'dd/MM/yyyy'}} - {{
+                                    test.endProgrammedTime | date: 'dd/MM/yyyy'}}</b>
+              </span>
+              <div class="font-size-sm text-dark-50">{{'statuses.' + enum[test.testStatus] | translate}}</div>
+            </td>
+            <td>{{ test.testTemplateName }}</td>
+            <td>
+              <label *ngIf="test.eventName">{{ test.eventName }}</label>
+              <label *ngIf="!test.eventName">-</label>
+            </td>
+            <td>
+              <label *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</label>
+              <label *ngIf="test.result != resultEnum.NoResult">{{ test.accumulatedPercentage }}% /
+                {{test.minPercent}}%</label>
+            </td>
+            <td>
+              <button *ngIf="test.testStatus == enum.InProgress" class="btn btn-light-success"
+                (click)="getTestById(test.id)">
+                {{'button.continue' | translate}}
+              </button>
+              <button *ngIf="test.testStatus == enum.Programmed || test.testStatus == enum.AlowedToStart"
+                class="btn btn-light-success" [routerLink]="['../start-test', test.id]">
+                {{'button.start-test' | translate}}
+              </button>
+              <button
+                *ngIf="test.viewTestResult && (test.result == resultEnum.NotPassed || test.result == resultEnum.Passed)"
+                class="btn btn-light-success" [routerLink]="['../test-result', test.id]">
+                {{'tests.view' | translate}}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tbody class="datatable-body" *ngIf="!testRowList.length">
+          <tr>
+            <td colspan="6" class="text-center">
+              {{ 'message.no-record' | translate }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagedSummary.currentPage"
         *ngIf="selectedDay != null" [total]="pagedSummary.totalPages" [totalRecords]="pagedSummary.totalCount"
         [size]="pagedSummary.pageSize" (sizeChange)="getListByDate({ page: 1, itemsPerPage: $event })"
         (pageChange)="getListByDate({ page: $event, itemsPerPage: pagedSummary.pageSize })">
+      </div>
     </div>
+  </div>
 </div>

@@ -31,8 +31,6 @@ export class EventCalendarComponent implements OnInit {
     "december"
   ];
 
-  url
-
   public displayMonth: string;
   public displayYear: number;
   private monthIndex: number = 0;

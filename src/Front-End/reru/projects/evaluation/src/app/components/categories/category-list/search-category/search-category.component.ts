@@ -1,23 +1,32 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-category',
   templateUrl: './search-category.component.html',
   styleUrls: ['./search-category.component.scss']
 })
-export class SearchCategoryComponent{
-
-  key: string;
+export class SearchCategoryComponent {
+  public isLoading: boolean;
+  public value: string;
+  public searchCategoryUpdate = new Subject<string>();
   @Output() handleSearch: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() { }
-
-  search(value: string): void {
-    this.handleSearch.emit(value);
+  constructor() {
+    this.searchCategoryUpdate.pipe(
+      map((result) => {this.isLoading = true; return result;}),
+      debounceTime(400),
+      distinctUntilChanged())
+      .subscribe(value => {
+        this.handleSearch.emit(value);
+        this.isLoading = false;
+      });
   }
 
   clearSearch(): void {
-    this.key = '';
+    this.value = '';
+    this.searchCategoryUpdate.next('');
     this.handleSearch.emit('');
   }
 

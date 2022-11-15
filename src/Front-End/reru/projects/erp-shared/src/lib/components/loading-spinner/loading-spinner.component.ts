@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class LoadingSpinnerComponent implements OnInit {
   @Input() height: string;
   @Input() width: string;
+  @Input() borderWidth: string;
   @Input() colorClass: string;
   @Input() contentHeight: string;
   @Input() contentWidth: string;
@@ -31,6 +32,10 @@ export class LoadingSpinnerComponent implements OnInit {
 
     if (this.width) {
       this.styles['width'] = this.width;
+    }
+
+    if (this.borderWidth) {
+      this.styles['border-width'] = this.borderWidth;
     }
   }
 
