@@ -42,9 +42,9 @@
             </app-loading-spinner>
             <div *ngIf="!events.length" class="text-center">{{'position.no-events' | translate}}</div>
             <table *ngIf="!isLoading && events.length" class="table table-bordered font-size-lg">
-                <thead class="text-uppercase text-muted">
+                <thead class="text-uppercase text-muted" >
                     <tr>
-                        <th rowspan="2" style="vertical-align: middle; width: 20%;">Utilizatori</th>
+                        <th rowspan="2" style="vertical-align: middle; width: 12%;">{{'position.users' | translate}}</th>
                         <th [attr.colspan]="event.testTemplates.length" *ngFor="let event of eventsDiagram"
                             class="text-center mx-4">
                             {{event.eventName}}</th>

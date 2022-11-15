@@ -43,6 +43,8 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.AddCandidatePosi
         {
             var candidatePosition = _mapper.Map<CandidatePosition>(request.Data);
 
+            candidatePosition.IsActive = true;
+
             await _appDbContext.CandidatePositions.AddAsync(candidatePosition);
             await _appDbContext.SaveChangesAsync();
 

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { SharedModule } from '@erp/shared';
+import { SharedModule, SvgModule } from '@erp/shared';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { UtilsModule } from '../../utils/utils.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -17,14 +17,19 @@ import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-dat
 import { PositionDetailsComponent } from './position-details/position-details.component';
 import { PositionOverviewComponent } from './position-details/position-overview/position-overview.component';
 import { DiagramComponent } from './position-details/diagram/diagram.component';
+import { PositionsComponent } from './positions.component';
+import { SearchMedicalColumnComponent } from './search-medical-column/search-medical-column.component';
+
 
 @NgModule({
   declarations: [
+    PositionsComponent,
     AddEditPositionComponent, 
     PositionsDiagramComponent, 
     PositionDetailsComponent, 
     PositionOverviewComponent, 
-    DiagramComponent
+    DiagramComponent, 
+    SearchMedicalColumnComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +47,7 @@ import { DiagramComponent } from './position-details/diagram/diagram.component';
     CKEditorModule,
     OwlDateTimeModule,
     OwlMomentDateTimeModule,
+    SvgModule
     ],
   providers: [
     TranslatePipe,

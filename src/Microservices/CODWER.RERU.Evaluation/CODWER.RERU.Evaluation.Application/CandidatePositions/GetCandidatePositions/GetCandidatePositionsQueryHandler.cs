@@ -34,7 +34,16 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetCandidatePosi
 
         public async Task<PaginatedModel<CandidatePositionDto>> Handle(GetCandidatePositionsQuery request, CancellationToken cancellationToken)
         {
-            var positions = GetAndPrintCandidatePosition.Filter(_appDbContext, request.Name);
+            var filterData = new PositionFiltersDto()
+            {
+                Name = request.Name,
+                ResponsiblePersonName = request.ResponsiblePersonName,
+                MedicalColumn = request.MedicalColumn,
+                ActiveFrom = request.ActiveFrom,
+                ActiveTo = request.ActiveTo
+            };
+
+            var positions = GetAndPrintCandidatePosition.Filter(_appDbContext, filterData);
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<CandidatePosition, CandidatePositionDto>(positions, request);
 

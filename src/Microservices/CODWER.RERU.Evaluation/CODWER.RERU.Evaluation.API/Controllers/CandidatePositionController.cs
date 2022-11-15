@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagram;
 using CODWER.RERU.Evaluation.Application.CandidatePositions.GetUserSolicitedPositionDiagram;
+using CODWER.RERU.Evaluation.Application.CandidatePositions.ChangeCandidatePositionStatus;
 using CODWER.RERU.Evaluation.DataTransferObjects.PositionDiagram;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
@@ -65,6 +66,14 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<Unit> EditCandidatePosition([FromBody] EditCandidatePositionCommand command)
         {
             var result = await Mediator.Send(command);
+
+            return result;
+        }
+
+        [HttpPatch("change-status")]
+        public async Task<Unit> EditCandidatePositionStatus([FromBody] ChangeCandidatePositionStatusCommand statusCommand)
+        {
+            var result = await Mediator.Send(statusCommand);
 
             return result;
         }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { ConfirmModalComponent, PrintModalComponent } from '@erp/shared';
@@ -18,6 +18,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 	styleUrls: ['./positions.component.scss']
 })
 export class PositionsComponent implements OnInit {
+	@ViewChild('medicalColumn') medicalColumn: any;
 	isLoading = true;
 	positions: CandidatePositionModel[];
 	pagination: PaginationModel = new PaginationModel();
@@ -26,13 +27,19 @@ export class PositionsComponent implements OnInit {
 	description: string;
 	no: string;
 	yes: string;
-	keyword: string;
+	name: string = '';
+	responsiblePersonName: string = '';
+	filters = {};
+	activeFrom: string;
+	searchActiveFrom: string;
+	activeTo: string;
+	searchActiveTo: string;
 
 	downloadFile: boolean = false;
 	headersToPrint = [];
 	printTranslates: any[];
 	medicalEnum = MedicalColumnEnum;
-	
+
 	constructor(
 		private positionService: CandidatePositionService,
 		public translate: I18nService,
@@ -45,25 +52,52 @@ export class PositionsComponent implements OnInit {
 	ngOnInit(): void {
 		this.getPositions();
 	}
-	
+
 	getTitle(): string {
 		this.documentTitle = document.getElementById('documentTitle').innerHTML;
 		return this.documentTitle
 	}
 
-	getPositions(data: any = {}): void {
-		this.keyword = data.name;
-		let params: any = {
-			name: this.keyword || '',
-			page: data.page || this.pagination.currentPage,
-			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
-		};
-		this.list(params);
+	editStatus(id) {
+		this.isLoading = true;
+		this.positionService.editPositionStatus(id).subscribe(res => {
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('position.success-update'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+			this.getPositions();
+			this.isLoading = false;
+		})
 	}
 
-	list(params): void {
-		console.warn('params', params);
-		
+	setTimeToSearch(): void {
+		if (this.activeFrom) {
+			const date = new Date(this.activeFrom);
+			this.searchActiveFrom = new Date(date.getTime() - (new Date(this.activeFrom).getTimezoneOffset() * 60000)).toISOString();
+		}
+		if (this.activeTo) {
+			const date = new Date(this.activeTo);
+			this.searchActiveTo = new Date(date.getTime() - (new Date(this.activeTo).getTimezoneOffset() * 60000)).toISOString();
+		}
+	}
+
+	getPositions(data: any = {}): void {
+		this.setTimeToSearch();
+		this.isLoading = true;
+
+		let params: any = {
+			name: this.name || '',
+			responsiblePersonName: this.responsiblePersonName || '',
+			activeFrom: this.searchActiveFrom || '',
+			activeTo: this.searchActiveTo || '',
+			page: data.page || this.pagination.currentPage,
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+			...this.filters
+		};
 		this.positionService.getList(params).subscribe(res => {
 			if (res && res.data) {
 				this.positions = res.data.items;
@@ -73,18 +107,41 @@ export class PositionsComponent implements OnInit {
 		});
 	}
 
+	resetFilters(): void {
+		this.filters = {};
+		this.pagination.currentPage = 1;
+		this.name = '';
+		this.responsiblePersonName = '';
+		this.medicalColumn.column = '';
+		this.activeFrom = null;
+		this.activeTo = null;
+		this.searchActiveFrom = null;
+		this.searchActiveTo = null;
+		this.getPositions();
+	}
+
+	setFilter(field: string, value): void {
+		this.filters[field] = value;
+		this.pagination.currentPage = 1;
+		this.getPositions();
+	}
+
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['name', 'responsiblePerson', 'from', 'to', 'medicalColumn', 'isActive'];
-		for (let i=0; i<headersHtml.length-1; i++) {
+		let headersDto = ['name', 'responsiblePerson', 'medicalColumn', 'from', 'to', 'isActive'];
+		for (let i = 0; i < headersHtml.length - 1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
 		let printData = {
 			tableName: name,
 			fields: this.headersToPrint,
 			orientation: 2,
-			name: this.keyword || ''
+			name: this.name || '',
+			responsiblePersonName: this.responsiblePersonName || '',
+			activeFrom: this.searchActiveFrom || '',
+			activeTo: this.searchActiveTo || '',
+			...this.filters
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'lg' });
 		modalRef.componentInstance.tableData = printData;
@@ -102,7 +159,7 @@ export class PositionsComponent implements OnInit {
 			this.translate.get('button.cancel')
 		]).subscribe(
 			(items) => {
-				for (let i=0; i<this.printTranslates.length; i++) {
+				for (let i = 0; i < this.printTranslates.length; i++) {
 					this.printTranslates[i] = items[i];
 				}
 			}

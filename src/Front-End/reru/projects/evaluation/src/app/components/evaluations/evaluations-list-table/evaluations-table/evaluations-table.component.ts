@@ -101,7 +101,8 @@ export class EvaluationsTableComponent implements OnInit {
     if (this.dateTimeFrom) {
       const date = new Date(this.dateTimeFrom);
       this.searchFrom = new Date(date.getTime() - (new Date(this.dateTimeFrom).getTimezoneOffset() * 60000)).toISOString();
-    } else if (this.dateTimeTo) {
+    }
+    if (this.dateTimeTo) {
       const date = new Date(this.dateTimeTo);
       this.searchTo = new Date(date.getTime() - (new Date(this.dateTimeTo).getTimezoneOffset() * 60000)).toISOString();
     }

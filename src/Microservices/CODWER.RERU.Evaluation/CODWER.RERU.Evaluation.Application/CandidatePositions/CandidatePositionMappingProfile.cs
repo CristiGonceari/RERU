@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions;
 using CODWER.RERU.Evaluation.DataTransferObjects.PositionDiagram;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
@@ -15,7 +16,8 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions
 
             CreateMap<CandidatePosition, AddEditCandidatePositionDto>();
 
-            CreateMap<CandidatePosition, CandidatePositionDto>();
+            CreateMap<CandidatePosition, CandidatePositionDto>()
+                .ForMember(x => x.IsActive, opts => opts.MapFrom(c => c.IsActive && c.From <= DateTime.Now && c.To >= DateTime.Now));
 
             CreateMap<EventVacantPosition, EventDiagramDto>()
                 .ForMember(x => x.EventId, opts => opts.MapFrom(e => e.EventId))
