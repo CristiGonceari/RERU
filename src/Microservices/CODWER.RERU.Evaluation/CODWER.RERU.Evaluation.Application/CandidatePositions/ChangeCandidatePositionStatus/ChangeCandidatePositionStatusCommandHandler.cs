@@ -19,11 +19,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.ChangeCandidateP
         {
             var position = await _appDbContext.CandidatePositions.FirstOrDefaultAsync(x => x.Id == request.PositionId);
 
-            position.IsActive = position.IsActive switch
-            {
-                true => false,
-                false => true
-            };
+            position.IsActive = !position.IsActive;
 
             await _appDbContext.SaveChangesAsync();
 
