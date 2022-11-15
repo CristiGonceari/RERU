@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 // import { AbstractService } from './abstract.service';
 import { Response, AppSettingsService, AbstractService } from '@erp/shared';
 import { User } from '../models/user.model';
 import { UserModuleAccessModel } from '../models/user-module-access.model';
-
 
 @Injectable({
 	providedIn: 'root'
@@ -15,6 +14,7 @@ export class UserProfileService extends AbstractService {
 
 	constructor(protected configService: AppSettingsService, private http: HttpClient) {
 		super(configService);
+		
 	}
 
 	getUserProfile(id: number): Observable<Response<User>> {
@@ -61,6 +61,14 @@ export class UserProfileService extends AbstractService {
 		return this.http.put(`${this.coreUrl}/${this.routeUrl}/print`, data, {
 			responseType: 'blob',
 			observe: 'response',
+		});
+	}
+
+	exportUserProfileSheet(data): Observable<any> {
+		return this.http.put(`${this.coreUrl}/${this.routeUrl}/print-personal-data-excell`, data, {
+			reportProgress: true,
+			responseType: 'blob',
+			observe: 'events'
 		});
 	}
 }

@@ -82,8 +82,9 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
         {
             var identityUser = new ERPIdentityUser()
             {
-                Email = userProfile.Email.Replace(" ",""),
-                UserName = RemoveDiacritics(userProfile.FullName.Replace(" ", "").ToLower())
+                Email = userProfile.Email.Replace(" ", string.Empty),
+                UserName = userProfile.Email.Replace(" ", string.Empty),
+                //UserName = RemoveDiacritics(userProfile.FullName.Replace(" ", string.Empty).ToLower())
             };
 
             var password = _passwordGenerator.Generate();
@@ -122,7 +123,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
         {
             var identityUser = await _userManager.FindByEmailAsync(lastEmail);
 
-            var usernameResult = await _userManager.SetUserNameAsync(identityUser, RemoveDiacritics(userName));
+            var usernameResult = await _userManager.SetUserNameAsync(identityUser, newEmail);
 
             var emailResult = await _userManager.SetEmailAsync(identityUser, newEmail);
 
@@ -152,15 +153,15 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 
             if (usernameResult.Errors.Any())
             {
-                throw new CreateIdentityFailedException(usernameResult.Errors.Select(re => $"{re.Code}: {re.Description}").ToArray());
+                throw new UpdateIdentityFailedException(usernameResult.Errors.Select(re => $"{re.Code}: {re.Description}").ToArray());
             }
 
             if (emailResult.Errors.Any())
             {
-                throw new CreateIdentityFailedException(emailResult.Errors.Select(re => $"{re.Code}: {re.Description}").ToArray());
+                throw new UpdateIdentityFailedException(emailResult.Errors.Select(re => $"{re.Code}: {re.Description}").ToArray());
             }
 
-            throw new CreateIdentityFailedException("User was not updated for unknown reason");
+            throw new UpdateIdentityFailedException("User was not updated for unknown reason");
         }
 
         public async Task Remove(string id)
@@ -196,7 +197,6 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                     HtmlTemplateAddress = "Templates/ResetPassword.html",
                     ReplacedValues = new Dictionary<string, string>()
                     {
-                        { "{FirstName}", $"{user.Name} {user.LastName}" },
                         { "{Password}", password },
                         { "{Login}", user.Email }
                     }

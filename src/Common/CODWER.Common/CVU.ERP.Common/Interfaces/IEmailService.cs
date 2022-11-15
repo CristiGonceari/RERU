@@ -21,6 +21,7 @@ namespace CVU.ERP.Common.Interfaces
 
 
         Task<IEmailService> QuickSendAsync(string subject, string body, string from, string to);
+        Task<IEmailService> BulkSendAsync(List<EmailData> emails);
         Task<IEmailService> Send(string to, string subject, string body);
     }
 }

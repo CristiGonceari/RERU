@@ -10,7 +10,6 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.Exceptions
             Errors = new string[] { };
         }
 
-
         public CreateIdentityFailedException(string message)
         {
             Errors = new string[] { };

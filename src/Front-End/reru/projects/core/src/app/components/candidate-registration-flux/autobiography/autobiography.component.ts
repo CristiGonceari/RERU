@@ -10,6 +10,8 @@ import { ObjectUtil } from '../../../utils/util/object.util';
 import { AutobiographyModel } from '../../../utils/models/autobiography.model';
 import { RegistrationFluxStepService } from '../../../utils/services/registration-flux-step.service';
 import { DataService } from '../data.service';
+import { I18nService } from '../../../utils/services/i18n.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-autobiography',
@@ -33,6 +35,9 @@ export class AutobiographyComponent implements OnInit {
   autobiographyData;
   registrationFluxStep;
 
+  title: string;
+  description: string;
+
   public onReady(editor) {
     editor.ui.getEditableElement().parentElement.insertBefore(
       editor.ui.view.toolbar.element,
@@ -41,35 +46,36 @@ export class AutobiographyComponent implements OnInit {
   }
 
   constructor(private fb: FormBuilder,
-      private userProfile: UserProfileService,
-      private route: ActivatedRoute,
-      private autobiographyService: AutobiographyService,
-      private notificationService: NotificationsService,
-      private registrationFluxService: RegistrationFluxStepService,
-      private ds: DataService
-    ) { }
+    private userProfile: UserProfileService,
+    private route: ActivatedRoute,
+    private autobiographyService: AutobiographyService,
+    private notificationService: NotificationsService,
+    private registrationFluxService: RegistrationFluxStepService,
+    private ds: DataService,
+    public translate: I18nService,
+  ) { }
 
   ngOnInit(): void {
     this.userId = parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
 
-    this.stepId =parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
+    this.stepId = parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
 
     this.initForm();
     this.getUserGeneralData();
   }
 
   initForm(data?): void {
-    
-    if(data == null){
+
+    if (data == null) {
 
       this.autobiographyForm = this.fb.group({
-        id: this.fb.control( null, []),
-        text: this.fb.control( null, []),
-        contractorId: this.fb.control( null, [])
+        id: this.fb.control(null, []),
+        text: this.fb.control(null, []),
+        contractorId: this.fb.control(null, [])
       });
 
     }
-    else{
+    else {
       this.autobiographyForm = this.fb.group({
         id: this.fb.control((data && data.id) || null, []),
         text: this.fb.control((data && data.text) || null, []),
@@ -81,11 +87,11 @@ export class AutobiographyComponent implements OnInit {
 
   getUserGeneralData() {
 
-    this.userProfile.getCandidateProfile(this.userId).subscribe( res => {
+    this.userProfile.getCandidateProfile(this.userId).subscribe(res => {
 
       this.userGeneralData = res.data;
       this.contractorId = res.data.contractorId;
-      
+
       const userData = res.data;
 
       if (userData.autobiographyId != 0) {
@@ -102,7 +108,7 @@ export class AutobiographyComponent implements OnInit {
     })
   }
 
-  getUserAutobiography(contractorId){
+  getUserAutobiography(contractorId) {
     this.isLoadingAutobiography = true;
 
     this.autobiographyService.get(contractorId).subscribe(res => {
@@ -111,21 +117,35 @@ export class AutobiographyComponent implements OnInit {
       this.isLoadingAutobiography = false;
       this.addOrEditAutobiographyButton = true;
     })
-    
+
   }
 
-  createAutobiography(){
-    
+  createAutobiography() {
+
     this.autobiographyService.add(this.parseAutobiography(this.autobiographyForm.value, this.contractorId)).subscribe(res => {
-      this.notificationService.success('Success', 'Autobiography was added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.create-autobiography-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getUserAutobiography(this.contractorId);
     }, error => {
-      this.notificationService.error('Error', 'Autobiography was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.create-autobiography-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
   parseAutobiography(data, contractorId): AutobiographyModel {
-    
+
     return ObjectUtil.preParseObject({
       id: data.id,
       text: data.text,
@@ -133,18 +153,32 @@ export class AutobiographyComponent implements OnInit {
     })
   }
 
-  updateAutobiography(){
+  updateAutobiography() {
     this.autobiographyService.update(this.parseAutobiography(this.autobiographyForm.value, this.contractorId)).subscribe(res => {
-      this.notificationService.success('Success', 'Autobiography was updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.update-autobiography-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.getUserAutobiography(this.contractorId);
     }, error => {
-      this.notificationService.error('Error', 'Autobiography was not updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.update-autobiography-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
-  getExistentStep(step, contractorId){
+  getExistentStep(step, contractorId) {
     const request = {
-      contractorId : contractorId,
+      contractorId: contractorId,
       step: step
     };
 
@@ -153,57 +187,107 @@ export class AutobiographyComponent implements OnInit {
     })
   }
 
-  addRegistrationFluxStep(){
-    if(this.autobiographyData != null){
+  addRegistrationFluxStep() {
+    if (this.autobiographyData != null) {
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.contractorId);
     }
-    else{
+    else {
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractorId, true);
     }
   }
 
-  checkRegistrationStep(stepData, stepId, success, contractorId, inProgress?){
-    const datas= {
+  checkRegistrationStep(stepData, stepId, success, contractorId, inProgress?) {
+    const datas = {
       isDone: success,
       stepId: this.stepId,
       inProgress: inProgress
     }
-    if(stepData.length == 0){
+    if (stepData.length == 0) {
       this.addCandidateRegistationStep(success, stepId, contractorId, inProgress);
       this.ds.sendData(datas);
-    }else{
+    } else {
       this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId, inProgress);
       this.ds.sendData(datas);
     }
   }
 
-  addCandidateRegistationStep(isDone, step, contractorId, inProgress?){
+  addCandidateRegistationStep(isDone, step, contractorId, inProgress?) {
     const request = {
       isDone: isDone,
-      step : step,
+      step: step,
       contractorId: contractorId,
       inProgress: inProgress
     }
     this.registrationFluxService.add(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
+      if (!inProgress) {
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('candidate-registration-flux.step-success'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      } else {
+        forkJoin([
+          this.translate.get('step-status.in-progress'),
+          this.translate.get('candidate-registration-flux.step-in-progress'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+        this.notificationService.warn(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      }
     }, error => {
-      this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.step-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
-  updateCandidateRegistationStep(id, isDone, step, contractorId, inProgress?){
+  updateCandidateRegistationStep(id, isDone, step, contractorId, inProgress?) {
     const request = {
       id: id,
       isDone: isDone,
-      step : step,
+      step: step,
       contractorId: contractorId,
       inProgress: inProgress
     }
-    
+
     this.registrationFluxService.update(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
+      if (!inProgress) {
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('candidate-registration-flux.step-success'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      } else {
+        forkJoin([
+          this.translate.get('step-status.in-progress'),
+          this.translate.get('candidate-registration-flux.step-in-progress'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+        this.notificationService.warn(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      }
     }, error => {
-      this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.step-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 

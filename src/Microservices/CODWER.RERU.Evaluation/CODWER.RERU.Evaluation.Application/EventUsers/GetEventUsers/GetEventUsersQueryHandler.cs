@@ -3,12 +3,11 @@ using CVU.ERP.Common.Pagination;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.EventUsers.GetEventUsers
 {
@@ -29,6 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.GetEventUsers
                 .Include(x => x.UserProfile)
                 .Where(x => x.EventId == request.EventId)
                 .Select(x => x.UserProfile)
+                .OrderByFullName()
                 .AsQueryable();
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<UserProfile, UserProfileDto>(eventUsers, request);

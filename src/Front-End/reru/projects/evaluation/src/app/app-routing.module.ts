@@ -92,7 +92,7 @@ const routes: Routes = [
 		canActivate: [AuthenticationGuard]
 	},
 	{
-		path: 'solicited-tests', 
+		path: 'solicited-positions', 
 		loadChildren: () => import('./components/solicited-tests/solicited-tests.module').then(m => m.SolicitedTestsModule),
 		data: { permission: 'P03001101' },
 		canActivate: [PermissionRouteGuard, AuthenticationGuard]

@@ -23,6 +23,7 @@ import { map } from 'rxjs/operators';
 import { GetBulkProgressHistoryService } from 'projects/evaluation/src/app/utils/services/bulk-progress/get-bulk-progress-history.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { is } from 'date-fns/locale';
+import { EmitHint } from 'typescript';
 
 
 @Component({
@@ -121,12 +122,19 @@ export class AddTestComponent implements OnInit {
     if (this.isTestTemplateOneAnswer) {
       this.evaluator.value = null;
     }
+
+    if(event) {
+      this.evaluatorList[0] = null;
+      this.evaluatorList.length = 0;
+    }
   }
 
   getActiveTestTemplates(event?) {
     this.isLoading = true;
-    if (event)
+
+    if (event){
       this.hasEventEvaluator = this.eventsList.find(x => x.eventId === event).isEventEvaluator;
+    }
 
     let params = {
       testTemplateStatus: TestTemplateStatusEnum.Active,
@@ -148,6 +156,16 @@ export class AddTestComponent implements OnInit {
       this.showEventCard = false;
     }
 
+    if (event) this.clearTestData()
+  }
+
+  clearTestData(){
+    this.userListToAdd.length = 0;
+    this.search = null
+    this.date = null
+    this.evaluatorList.length = 0;
+    this.testTemplate.value = null
+    this.isTestTemplateOneAnswer = false;
   }
 
   parse() {
@@ -162,14 +180,6 @@ export class AddTestComponent implements OnInit {
       testTemplateId: +this.testTemplate.value || 0,
       showUserName: this.showName
     })
-  }
-
-  roundUpNearest10(num) {
-    return Math.ceil(num / 10) * 10;
-  }
-
-  getSubArray(idx, _length, _array) {
-    return _array.slice(idx, idx + _length);
   }
 
   createTest(print: boolean) {
@@ -194,12 +204,17 @@ export class AddTestComponent implements OnInit {
 
         clearInterval(interval);
         this.isStartAddingTests = false;
-        if(print) this.performingTestPdf(response.data);
+        if (print) this.performingTestPdf(response.data);
 
         this.backClicked();
         this.disableBtn = false;
         this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-      });
+      },
+        (err) => {
+          clearInterval(interval);
+          this.isStartAddingTests = false;
+          this.disableBtn = false;
+        });
     })
   }
 
@@ -269,19 +284,32 @@ export class AddTestComponent implements OnInit {
     modalRef.componentInstance.inputType = inputType;
     modalRef.componentInstance.page = 'add-test';
     modalRef.componentInstance.eventId = +this.event.value;
-    modalRef.componentInstance.testTemplateId =  inputType == "radio" ? +this.testTemplate.value : null;
+    modalRef.componentInstance.testTemplateId = inputType == "radio" ? +this.testTemplate.value : null;
     modalRef.result.then(() => {
       if (inputType == 'radio') this.evaluatorList = modalRef.result.__zone_symbol__value.attachedItems;
       else if (inputType == 'checkbox') this.userListToAdd = modalRef.result.__zone_symbol__value.attachedItems;
     }, () => { });
   }
 
-  ceckTestTemplate(testTemplate): boolean{
-    if(typeof(testTemplate.value) === 'undefined' || typeof(testTemplate.value) === 'string'){
+  ceckTestTemplate(testTemplate): boolean {
+    if (typeof (testTemplate.value) === 'undefined' || typeof (testTemplate.value) === 'string') {
       return true
     } else {
       return false
     }
   }
 
+  cantAdd(){
+    if(this.testEvent){
+      return this.event.value == null ||
+      this.userListToAdd.length <= 0 ||
+      (this.testTemplate.value == null || this.testTemplate.value == "") ||
+      (this.hasEventEvaluator || this.isTestTemplateOneAnswer ? false : this.evaluatorList[0] == null)
+    } else {
+      return this.userListToAdd.length <= 0 ||
+      (this.isTestTemplateOneAnswer ? false : this.evaluatorList[0] == null) ||
+      (this.testTemplate.value == null || this.testTemplate.value == "") ||
+      this.date == null
+    }
+  }
 }

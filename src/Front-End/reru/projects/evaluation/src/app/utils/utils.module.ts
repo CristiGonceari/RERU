@@ -27,6 +27,7 @@ import { OwlMomentDateTimeModule, OwlDateTimeModule } from '@busacca/ng-pick-dat
 import { ReviewSolicitedVacandPositionModalComponent } from './modals/review-solicited-vacand-position-modal/review-solicited-vacand-position-modal.component';
 import { SearchDepartmentComponent } from './components/search-department/search-department.component';
 import { SearchRoleComponent } from './components/search-role/search-role.component';
+import { ViewPositionDiagramModalComponent } from './modals/view-position-diagram-modal/view-position-diagram-modal.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { SearchRoleComponent } from './components/search-role/search-role.compon
     ReviewSolicitedVacandPositionModalComponent,
     SearchStatusComponent,
     SearchDepartmentComponent,
-    SearchRoleComponent
+    SearchRoleComponent,
+    ViewPositionDiagramModalComponent
   ],
   imports: [
     HttpClientModule,

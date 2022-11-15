@@ -12,6 +12,7 @@ using CVU.ERP.Common.DataTransferObjects.Users;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.EventUsers.GetEventAssignedUsers
 {
@@ -34,12 +35,14 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.GetEventAssignedUsers
                     .ThenInclude(x => x.Department)
                 .Include(x => x.UserProfile)
                      .ThenInclude(x => x.Role)
-                .Where(x => x.EventId == request.EventId )
+                .Where(x => x.EventId == request.EventId)
                 .AsQueryable();
 
             var userProfiles = _appDbContext.UserProfiles
                 .Include(up => up.Role)
-                .Include(up => up.Department).AsQueryable();
+                .Include(up => up.Department)
+                .OrderByFullName()
+                .AsQueryable();
 
             userProfiles = userProfiles.Where(up => users.Any(eu => eu.UserProfileId == up.Id));
 

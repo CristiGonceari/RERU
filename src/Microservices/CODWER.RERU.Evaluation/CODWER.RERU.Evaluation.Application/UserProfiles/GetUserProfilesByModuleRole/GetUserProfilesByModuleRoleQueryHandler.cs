@@ -11,6 +11,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Persistence.Extensions;
 using RERU.Data.Persistence.ModulePrefixes;
 
 namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfilesByModuleRole
@@ -44,8 +45,7 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfilesByModul
                 .Include(up => up.Role)
                 .Include(up => up.Department)
                 .Include(up => up.ModuleRoles)
-                .OrderBy(up => up.LastName)
-                .ThenBy(up => up.FirstName)
+                .OrderByFullName()
                 .AsQueryable();
 
             items = await FilterByAccessModeEnum(currentUser, items);

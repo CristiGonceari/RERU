@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Test } from '../../../utils/models/tests/test.model';
 import { TestQuestionService } from '../../../utils/services/test-question/test-question.service';
@@ -12,11 +12,13 @@ import { TestStatusEnum } from '../../../utils/enums/test-status.enum';
   templateUrl: './start-test-page.component.html',
   styleUrls: ['./start-test-page.component.scss']
 })
-export class StartTestPageComponent implements OnInit {
+export class StartTestPageComponent implements OnInit, OnDestroy  {
 
   testId: number;
   testDto = new Test();
   settings;
+
+  isLoading: boolean = false;
 
   timeLeft;
   interval;
@@ -40,9 +42,8 @@ export class StartTestPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.startTimer();
+    this.isLoading = true;
     this.getTestById(this.testId);
-
   }
 
   startTimer() {
@@ -54,14 +55,19 @@ export class StartTestPageComponent implements OnInit {
         this.timeLeft = this.milisecondsToHms(Math.abs(programmedTime - date));
       } else {
         this.timeLeft = "00 : 00 : 00";
-        if (!this.settings.startBeforeProgrammation && this.timeLeft == "00 : 00 : 00")
-          this.startTest = true;
+        if (typeof this.settings !== undefined) {
+          if (!this.settings.startBeforeProgrammation && this.timeLeft == "00 : 00 : 00"){
+            this.startTest = true;
+            this.isLoading = false;
+          }
+        }
+        this.isLoading = false;
       }
     }, 1000)
   }
 
-  parseCandidatePositions(candidatePositionsNames: string[]){
-    if(this.validatePosition){
+  parseCandidatePositions(candidatePositionsNames: string[]) {
+    if (this.validatePosition) {
       let string = candidatePositionsNames.join();
       return string.split(',').join(', ');
     }
@@ -89,10 +95,9 @@ export class StartTestPageComponent implements OnInit {
     this.testService.getTest(testId).subscribe(
       res => {
         this.testDto = res.data;
-        this.getTestTemplate();
+        this.getTestTemplate(this.testDto.testTemplateId, testId);
       }
     )
-    this.validateTest(testId);
   }
 
   validateTest(id): void {
@@ -100,6 +105,7 @@ export class StartTestPageComponent implements OnInit {
       res => {
         this.testDto = res.data;
         this.validatePosition = true;
+        this.startTimer();
       }
     )
   }
@@ -110,12 +116,17 @@ export class StartTestPageComponent implements OnInit {
     }).join(''));
   }
 
-  getTestTemplate() {
-    this.testTemplateService.getTestTemplateSettings({ testTemplateId: this.testDto.testTemplateId }).subscribe(
+  getTestTemplate(testTemplateId: number, testId: number) {
+    this.testTemplateService.getTestTemplateSettings({ testTemplateId }).subscribe(
       res => {
         this.settings = res.data;
         if (this.settings.startBeforeProgrammation) this.startTest = true;
+        this.validateTest(testId);
       }
     )
+  }
+
+  ngOnDestroy(){
+    clearInterval(this.interval);
   }
 }

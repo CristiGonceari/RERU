@@ -6,7 +6,10 @@
             <div class="row">
                 <div class="col">
                     <div class="card card-custom gutter-b">
-                        <div class="card-header flex-wrap border-0 py-5">
+                        <app-loading-spinner *ngIf="isLoading" [contentHeight]="'40vh'" [height]="'3rem'"
+                            [width]="'3rem'" [colorClass]="'text-primary'">
+                        </app-loading-spinner>
+                        <div class="card-header flex-wrap border-0 py-5" *ngIf="!isLoading">
                             <div class="card-title m-5">
                                 <h3 class="card-label text-muted">{{ 'tests.name' | translate }}:</h3>
                                 <h3 class="card-label">{{ testDto.testTemplateName }}</h3>
@@ -30,10 +33,12 @@
                                 <h3 class="card-label text-muted">{{'tests.questions' | translate}}:</h3>
                                 <h3 class="card-label">{{ testDto.questionCount }}</h3>
                             </div>
-                            <div class="card-title m-5" *ngIf="testDto.candidatePositionNames !== null && validatePosition">
+                            <div class="card-title m-5"
+                                *ngIf="testDto.candidatePositionNames !== null && validatePosition">
                                 <h3 class="card-label text-muted">{{'position.name' | translate}}:</h3>
                                 <h3 class="card-label">{{ testDto.candidatePositionNames[0] }}
-                                    <span [ngbTooltip]="parseCandidatePositions(testDto.candidatePositionNames)">...</span>
+                                    <span
+                                        [ngbTooltip]="parseCandidatePositions(testDto.candidatePositionNames)">...</span>
                                 </h3>
                             </div>
                             <div class="card-title m-5" *ngIf="testDto.candidatePositionNames === null">
@@ -41,7 +46,7 @@
                                 <h3 class="card-label">-</h3>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" *ngIf="!isLoading">
                             <div class="row mb-15">
                                 <div class="col-xl-12 d-flex align-items-center" style="justify-content: center;">
                                     <h1 class="mr-5">{{'tests.test-start' | translate}}</h1>
@@ -71,7 +76,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer text-center">
+                        <div class="card-footer text-center" *ngIf="!isLoading">
                             <!-- <app-add-button class="btn" [disabled]="!(startTest && accept)" (handle)="startTestStatus()"
                                 [value]="'button.start' | translate"></app-add-button> -->
                             <app-add-button class="btn" [disabled]="!accept" (handle)="startTestStatus()"

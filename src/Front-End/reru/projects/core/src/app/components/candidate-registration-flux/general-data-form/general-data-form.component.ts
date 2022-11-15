@@ -13,6 +13,8 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { DataService } from '../data.service';
 import { UserProfileGeneralDataService } from '../../../utils/services/user-profile-general-data.service';
 import { ArrayType } from '@angular/compiler';
+import { I18nService } from '../../../utils/services/i18n.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-general-data-form',
@@ -22,7 +24,7 @@ import { ArrayType } from '@angular/compiler';
 export class GeneralDataFormComponent implements OnInit {
 
   @Output() counterChange = new EventEmitter<number>();
-  
+
   userForm: FormGroup;
   nationalities;
   citizenships;
@@ -42,8 +44,11 @@ export class GeneralDataFormComponent implements OnInit {
   sexEnum: SelectItem[] = [{ label: "", value: "" }];
   stateLanguageLevelEnum: SelectItem[] = [{ label: "", value: "" }];
 
+  title: string;
+  description: string;
 
-  constructor( private referenceService: ReferenceService,
+
+  constructor(private referenceService: ReferenceService,
     private userProfile: UserProfileService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -51,25 +56,26 @@ export class GeneralDataFormComponent implements OnInit {
     private registrationFluxService: RegistrationFluxStepService,
     public notificationService: NotificationsService,
     private ds: DataService,
-    private userProfileGeneralDataService: UserProfileGeneralDataService
-    ) { }
+    private userProfileGeneralDataService: UserProfileGeneralDataService,
+    public translate: I18nService,
+  ) { }
 
   ngOnInit(): void {
     this.initForm();
-    this.userId =parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
+    this.userId = parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
 
-    this.stepId =parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
+    this.stepId = parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
 
     this.getSelectedValue();
     this.getUserGeneralDatas();
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     // clear message
     this.ds.clearData();
   }
 
-  getUserGeneralDatas(){
+  getUserGeneralDatas() {
     const request = this.userId;
     this.userProfile.getCandidateProfile(request).subscribe(res => {
 
@@ -82,22 +88,22 @@ export class GeneralDataFormComponent implements OnInit {
 
     this.userProfile.getCandidateGeneralDatas(request).subscribe(res => {
 
-     
+
       this.generalDatas = res.data;
       this.initForm(this.generalDatas);
       this.isLoading = false;
-      
+
     })
   }
 
-  getSelectedValue(){
+  getSelectedValue() {
     this.referenceService.getCandidateSexEnum().subscribe((res) => {
       this.sexEnum = res.data;
     });
 
     this.referenceService.getCandidateStateLanguageLevelEnum().subscribe((res) => {
       let languageEnum = res.data
-      this.stateLanguageLevelEnum = languageEnum.sort(function(a, b){return a.value - b.value});
+      this.stateLanguageLevelEnum = languageEnum.sort(function (a, b) { return a.value - b.value });
     });
 
     this.referenceService.getCandidateCitizenship().subscribe((res) => {
@@ -111,28 +117,28 @@ export class GeneralDataFormComponent implements OnInit {
   }
 
   initForm(initFormData?: any): void {
-    
+
     this.userForm = this.fb.group({
-      homePhone: this.fb.control((initFormData && initFormData.homePhone)  || null, [Validators.required]),
-      workPhone: this.fb.control((initFormData && initFormData.workPhone)  || null, [Validators.required]),
-      nationalityTypeId: this.fb.control( (initFormData && initFormData.candidateNationalityId) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
-      citizenshipTypeId: this.fb.control((initFormData && initFormData.candidateCitizenshipId)  || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
-      sex: this.fb.control((initFormData && initFormData.sex)  || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
-      statelanguageLevel: this.fb.control( (initFormData && initFormData.stateLanguageLevel)  || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      homePhone: this.fb.control((initFormData && initFormData.homePhone) || null, [Validators.required]),
+      workPhone: this.fb.control((initFormData && initFormData.workPhone) || null, [Validators.required]),
+      nationalityTypeId: this.fb.control((initFormData && initFormData.candidateNationalityId) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      citizenshipTypeId: this.fb.control((initFormData && initFormData.candidateCitizenshipId) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      sex: this.fb.control((initFormData && initFormData.sex) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      statelanguageLevel: this.fb.control((initFormData && initFormData.stateLanguageLevel) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
     });
   }
 
   hasErrors(field): boolean {
-		return this.userForm.touched && this.userForm.get(field).invalid;
-	}
+    return this.userForm.touched && this.userForm.get(field).invalid;
+  }
 
-	hasError(field: string, error = 'required'): boolean {
-		return (
-			this.userForm.get(field).invalid && this.userForm.get(field).touched && this.userForm.get(field).hasError(error)
-		);
-	}
- 
-  parseEditUserProfileDetails(contractorId, generalData){
+  hasError(field: string, error = 'required'): boolean {
+    return (
+      this.userForm.get(field).invalid && this.userForm.get(field).touched && this.userForm.get(field).hasError(error)
+    );
+  }
+
+  parseEditUserProfileDetails(contractorId, generalData) {
     return {
       id: contractorId,
       workPhone: generalData.workPhone,
@@ -144,21 +150,35 @@ export class GeneralDataFormComponent implements OnInit {
     }
   }
 
-  updateUserProfileGeneralData(){
-    this.user.editCandidateDetails(this.parseEditUserProfileDetails(this.contractorId, this.userForm.value)).subscribe(res =>{
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , res.success, this.contractorId);
-      this.notificationService.success('Success', 'Contractor details added!', NotificationUtil.getDefaultMidConfig());
+  updateUserProfileGeneralData() {
+    this.user.editCandidateDetails(this.parseEditUserProfileDetails(this.contractorId, this.userForm.value)).subscribe(res => {
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.update-general-data-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, res.success, this.contractorId);
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 
     }, error => {
-      this.notificationService.error('Failure', 'Contractor details was not added!', NotificationUtil.getDefaultMidConfig());
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , error.success, this.contractorId);
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.update-general-data-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, error.success, this.contractorId);
     })
   }
 
-  getExistentStep(step, contractorId){
-    
+  getExistentStep(step, contractorId) {
+
     const request = {
-      contractorId : contractorId,
+      contractorId: contractorId,
       step: step
     };
 
@@ -168,46 +188,73 @@ export class GeneralDataFormComponent implements OnInit {
     })
   }
 
-  checkRegistrationStep(stepData, stepId, success, contractorId){
-    const datas= {
+  checkRegistrationStep(stepData, stepId, success, contractorId) {
+    const datas = {
       isDone: success,
       stepId: this.stepId
     }
-    if(stepData.length == 0){
+    if (stepData.length == 0) {
       this.addCandidateRegistationStep(success, stepId, contractorId);
       this.ds.sendData(datas);
-    }else{
+    } else {
       this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId);
       this.ds.sendData(datas);
     }
   }
 
-  addCandidateRegistationStep(isDone, step, contractorId ){
+  addCandidateRegistationStep(isDone, step, contractorId) {
     const request = {
       isDone: isDone,
-      step : step,
-      contractorId: contractorId 
+      step: step,
+      contractorId: contractorId
     }
     this.registrationFluxService.add(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.step-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.step-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
-  updateCandidateRegistationStep(id, isDone, step, contractorId ){
+  updateCandidateRegistationStep(id, isDone, step, contractorId) {
     const request = {
       id: id,
       isDone: isDone,
-      step : step,
-      contractorId: contractorId 
+      step: step,
+      contractorId: contractorId
     }
-    
+
     this.registrationFluxService.update(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.step-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.step-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
- 
 }

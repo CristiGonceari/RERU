@@ -31,9 +31,15 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
 
+            RuleFor(x => x.UserProfileId)
+                .Must(x => x.Any())
+                .WithErrorCode(ValidationCodes.INVALID_EVLUATED_USER_LIST);
+
             When(x => x.EventId == null, () =>
             {
                 RuleFor(x => x.ProgrammedTime)
+                                .NotNull()
+                                .WithErrorCode(ValidationCodes.INVALID_TIME)
                                 .GreaterThan(new DateTime(2000, 1, 1))
                                 .WithErrorCode(ValidationCodes.INVALID_TIME);
             });
@@ -92,7 +98,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
             var result = dataList.FirstOrDefault(x => x.TestTemplateId == data.TestTemplateId);
 
-            return result.IsOnlyOneAnswer;
+            return result?.IsOnlyOneAnswer ?? false;
         }
 
         private async Task<bool> ExistentCandidateInEvent(AddTestsCommand data)

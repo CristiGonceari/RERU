@@ -95,7 +95,7 @@ export class ModuleRolesComponent implements OnInit {
 		this.roleService.removeRole(id).subscribe(response => {
 			forkJoin([
 				this.translate.get('modal.success'),
-				this.translate.get('pages.modules.succes-delete-msg'),
+				this.translate.get('pages.roles.succes-delete-msg'),
 			]).subscribe(([title, description]) => {
 				this.title = title;
 				this.description = description;

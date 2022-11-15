@@ -102,7 +102,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
 
             if (!string.IsNullOrWhiteSpace(request.Email))
             {
-                tests = tests.Where(x => x.UserProfile.Email.Contains(request.Email));
+                tests = tests.Where(x => x.UserProfile.Email.ToLower().Contains(request.Email.ToLower()));
             }
 
             if (!string.IsNullOrWhiteSpace(request.Idnp))

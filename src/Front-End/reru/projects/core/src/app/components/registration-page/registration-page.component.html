@@ -187,9 +187,10 @@
                   <div *ngIf="hasError('email', 'required')" data-field="email" data-validator="notEmpty"
                     class="fv-help-block">
                     {{ 'login.email-is-required' | translate }}</div>
-                  <div *ngIf="hasError('email', 'email')" data-field="email" data-validator="notEmpty"
+                  <div *ngIf="hasError('email', 'pattern')" data-field="email" data-validator="notEmpty"
                     class="fv-help-block">
-                    {{ 'login.please-use-valid-email' | translate }}</div>
+                    {{ 'login.please-use-valid-email' | translate }}<br>
+                    {{ 'login.invalid-mail-yandex-ru' | translate }}!</div>
                 </div>
               </div>
             </div>

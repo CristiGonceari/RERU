@@ -96,17 +96,18 @@
     "manage-tests": "Test Template",
     "manage-categories": "Categories",
     "manage-questions": "Questions",
-    "test": "Test",
+    "test": "Tests and evaluations",
     "events": "Events",
     "faq": "Frequent questions",
     "documents-template": "Document Templates",
     "documents-management": "Document Management",
-    "administration": "Administration",
+    "administration": "Administration candidates",
     "positions": "Vacant positions",
     "required-documents": "Required Documents"
   },
   "position": {
     "administration": "Administration",
+    "no-events": "This position does not contain any events",
     "management": "Vacant position management",
     "add": "Add position",
     "edit": "Edit position",
@@ -125,7 +126,9 @@
     "position-diagram": "Position diagram",
     "vacant-position": "Vacant position",
     "medical-column": "Medical column",
-    "column": "Column"
+    "column": "Column",
+    "active-from": "Active from",
+    "active-to": "Active until"
   },
   "documents-templates":{
     "title": "Document Templates",
@@ -256,7 +259,8 @@
     "performing-test": "Print performing test",
     "attach": "Attach file",
     "confirm-print": "Confirm and Print",
-    "send-email": "Email notification"
+    "send-email": "Email notification",
+    "full-screen": "Full screen mode"
   },
   "modal":{
     "delete": "Delete",
@@ -796,11 +800,14 @@
     "succes-add-event-msg": "Event was successfully added",
     "succes-edit-event-msg": "Event was successfully edited",
     "succes-add-person-msg": "Responsible person was successfully attached",
+    "succes-add-delete-person-msg": "Responsible persons was successfully attached/detached",
     "succes-add-location-msg": "Location was successfully attached",
     "succes-add-user-msg": "User was successfully attached",
+    "succes-add-delte-user-msg": "Users was successfully attached/detached",
     "succes-add-test-type-msg": "Test Template was successfully attached",
     "succes-attach-evaluator-msg": "Evaluator was successfully attached",
     "succes-detach-evaluator-msg": "Evaluator was successfully detached",
+    "succes-attach-detach-evaluator-msg": "Evaluators was successfully attached/detached",
     "show-user-name": "Show user name"
   },
   "test-template": {
@@ -985,7 +992,8 @@
     "03030208": "Your solicited test was refused",
     "03002201": "You can not delete used candidate position",
     "03002107": "Empty position name",
-    "03002109": "Empty medical column"
+    "03002109": "Empty medical column",
+    "03001506": "Evaluated were not assigned"
   },
   "login": {
     "colaborator-id": "Collaborator ID",
