@@ -128,7 +128,11 @@
     "medical-column": "Medical column",
     "column": "Column",
     "active-from": "Active from",
-    "active-to": "Active until"
+    "active-to": "Active until",
+    "search-column": "Search by medical column",
+    "search-from-active-date": "Search by active from",
+    "search-from-inactive-date": "Search by active until",
+    "users": "Users"
   },
   "documents-templates":{
     "title": "Document Templates",
@@ -401,6 +405,7 @@
     "search-test-name": "Search by test name",
     "search-test-type": "Search by test template",
     "search-test-status": "Search by status",
+    "search-responsible-person": "Search by responsible person",
     "search-student": "Search by user", 
     "search-email": "Search by user email",
     "search-student-idnp": "Search by user idnp",

@@ -128,7 +128,11 @@
     "medical-column": "Медицинский столбец",
     "column": "Столбец",
     "active-from": "Активен с",
-    "active-to": "Активен до"
+    "active-to": "Активен до",
+    "search-column": "Поиск по медицинской колонке",
+    "search-from-active-date": "Поиск по активному из",
+    "search-from-inactive-date": "Поиск по активным до",
+    "users": "Пользователи"
   },
   "documents-templates":{
     "title": "Шаблоны документов",
@@ -400,6 +404,7 @@
     "search-test-name": "Поиск по названию теста",
     "search-test-type": "Поиск по шаблону теста",
     "search-test-status": "Поиск по статусу",
+    "search-responsible-person": "Поиск по ответственному лицу",
     "search-student": "Поиск по oцениваемый",
     "search-email": "Поиск по электронной почте",
     "search-student-idnp": "Поиск по idnp пользователя",

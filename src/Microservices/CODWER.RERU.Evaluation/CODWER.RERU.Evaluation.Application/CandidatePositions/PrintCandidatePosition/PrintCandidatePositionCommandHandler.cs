@@ -23,7 +23,16 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.PrintCandidatePo
 
         public async Task<FileDataDto> Handle(PrintCandidatePositionCommand request, CancellationToken cancellationToken)
         {
-            var positions = GetAndPrintCandidatePosition.Filter(_appDbContext, request.Name);
+            var filterData = new PositionFiltersDto()
+            {
+                Name = request.Name,
+                ResponsiblePersonName = request.ResponsiblePersonName,
+                MedicalColumn = request.MedicalColumn,
+                ActiveFrom = request.ActiveFrom,
+                ActiveTo = request.ActiveTo
+            };
+
+            var positions = GetAndPrintCandidatePosition.Filter(_appDbContext, filterData);
 
             var result = _printer.ExportTableSpecificFormat(new TableData<CandidatePosition>
             {

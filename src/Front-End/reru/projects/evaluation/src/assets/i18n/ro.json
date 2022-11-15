@@ -128,7 +128,11 @@
     "medical-column": "Coloana medicală",
     "column": "Coloana",
     "active-from": "Activ de la",
-    "active-to": "Activ până la"
+    "active-to": "Activ până la",
+    "search-column": "Căutați după coloana medicală",
+    "search-from-active-date": "Căutați după activ de la",
+    "search-from-inactive-date": "Căutați după activ până la",
+    "users": "Utilizatori"
   },
   "documents-templates":{
     "title": "Șabloane",
@@ -401,6 +405,7 @@
     "search-test-type": "Căutați după șablonul testului",
     "search-test-status": "Căutați după statut",
     "search-student": "Căutați după evaluat",
+    "search-responsible-person": "Căutați după persoana responsabilă",
     "search-email": "Căutați după email-ul evaluatului",
     "search-student-idnp": "Căutați după idnp-ul evaluatului",
     "test-type-name": "Numele șablonului de test",
