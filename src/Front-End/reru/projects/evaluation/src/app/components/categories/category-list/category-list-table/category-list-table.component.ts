@@ -14,6 +14,7 @@ import { BulkImportQuestionsComponent } from '../../../questions/bulk-import-que
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { saveAs } from 'file-saver';
 import { ParsePrintTabelService } from '../../../../utils/services/parse-print-table/parse-print-tabel.service';
+import { ObjectUtil } from 'projects/evaluation/src/app/utils/util/object.util';
 
 @Component({
   selector: 'app-category-list-table',
@@ -50,16 +51,14 @@ export class CategoryListTableComponent implements OnInit {
 		this.list();
  	}
 
-  	list(data: any = {}) {
-		console.warn('pagination', data.itemsPerPage, this.pagedSummary.pageSize);
-		
+  	list(data: any = {}) {		
 		this.isLoading = true;
 		this.keyword = data.keyword;
-		let params = {
+		let params = ObjectUtil.preParseObject({
 			name: this.keyword || '',
 			page: data.page || this.pagedSummary.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
-		}
+		})
 
 		this.questionCategoryService.getCategories(params).subscribe(
 			res => {

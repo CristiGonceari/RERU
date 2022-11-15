@@ -19,7 +19,7 @@ export class LayoutComponent implements OnInit {
   @Input() sidebarItems: any;
   @Input() hasBackground: boolean;
   @Input() backgroundColor: string = '#F3F6F9';
-  @Input() moduleId: number;
+  @Input() moduleCode: string;
   @Input() isCustomHeader: boolean;
   @Input() user: any;
   @Output() changeLanguage: EventEmitter<any> = new EventEmitter<any>();
