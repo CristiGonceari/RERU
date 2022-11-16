@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
-import { FileTypeEnum } from 'projects/erp-shared/src/lib/models/FileTypeEnum';
+import { FileTypeEnum } from '@erp/shared';
 import { DepartmentService } from '../../../utils/services/department.service';
 import { UserRoleService } from '../../../utils/services/user-role.service';
 import { UserProfileService } from '../../../utils/services/user-profile.service';

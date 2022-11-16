@@ -1,19 +1,19 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-    <div class="card card-custom mb-7 ml-5">
+    <div class="card card-custom">
         <div class="card-header flex-wrap border-0 py-5">
             <div class="card-title font-weight-bolder">{{'evaluations.my-evaluations' | translate}}</div>
         </div>
-        <div class="card-body">
+        <div class="card-body pt-0">
             <app-loading-spinner *ngIf="isLoading" [contentHeight]="'40vh'" [height]="'5rem'"
                 [width]="'5rem'" [colorClass]="'text-primary'">
             </app-loading-spinner>
-            <div class="row w-100 mb-5 mt-0">
-                <div class="col">
+            <div class="row mb-5 mt-0">
+                <div class="col-xl col-12">
                     <erp-shared-search-input (handleSearch)="setFilter('evaluatedName', $event)"
                         [placeholder]="'verify-test.search-student' | translate" #evaluatedName>
                     </erp-shared-search-input>
                 </div>
-                <div class="col">
+                <div class="col-xl col-12 pt-xl-0 pt-2">
                     <div class="input-group input-group-sm input-group-solid">
                         <input type="text" [owlDateTimeTrigger]="dtFrom"
                           class="form-control form-control-lg form-control-solid" [placeholder]="'events.search-from' | translate"
@@ -27,7 +27,7 @@
                         <owl-date-time #dtFrom></owl-date-time>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-xl col-12 pt-xl-0 pt-2">
                     <div class="input-group input-group-sm input-group-solid">
                         <input type="text" [owlDateTimeTrigger]="toDate"
                           class="form-control form-control-lg form-control-solid" [placeholder]="'events.search-to' | translate"
@@ -41,13 +41,16 @@
                         <owl-date-time #toDate></owl-date-time>
                     </div>
                 </div>
-                <div class="col-1">
-                    <div class="w-100 text-right">
+                <div class="col-xl-auto col-12 pt-xl-0 pt-2">
+                    <div class="text-right d-xl-block d-none">
                         <app-button (handle)="resetFilters()" [value]="'button.reset' | translate"></app-button>
+                    </div>
+                    <div class="text-right d-xl-none d-block">
+                        <app-button width="100%" (handle)="resetFilters()" [value]="'button.reset' | translate"></app-button>
                     </div>
                 </div>
             </div>
-            <div class="datatable datatable-bordered datatable-default datatable-loaded" id="kt_datatable">
+            <div class="table-responsive datatable datatable-bordered datatable-default datatable-loaded" id="kt_datatable">
                 <table for="kt_datatable" class="datatable table" style="overflow: visible" id="evaluatedTestTable"
                     *ngIf="!isLoading">
                     <thead class="text-uppercase text-muted">
@@ -57,7 +60,7 @@
                             <th scope="col">{{'events.event' | translate}}</th>
                             <th scope="col">{{'dashboard.status' | translate}}</th>
                             <th scope="col" class="text-center">{{ 'verify-test.result' | translate }}</th>
-                            <th scope="col" style="width: 150px"></th>
+                            <th scope="col">{{ 'button.actions' | translate }}</th>
                         </tr>
                     </thead>
                     <tbody class="datatable-body" *ngIf="testRowList.length">
@@ -98,17 +101,17 @@
                             </td>
                             <td class="text-center">{{ translateResultValue(test.resultValue) }}</td>
                             <td>
-                                <button *ngIf="test.testStatus == enum.InProgress" class="btn btn-light-success"
+                                <button *ngIf="test.testStatus == enum.InProgress" class="btn btn-sm btn-light-warning"
                                     [routerLink]="['../performing-evaluation', test.id]">
                                     {{'button.continue' | translate}}
                                 </button>
                                 <button
                                     *ngIf="test.testStatus == enum.Programmed || test.testStatus == enum.AlowedToStart"
-                                    class="btn btn-light-success" [routerLink]="['../start-evaluation', test.id]">
+                                    class="btn btn-sm btn-light-success" [routerLink]="['../start-evaluation', test.id]">
                                     {{'evaluations.start-evaluation' | translate}}
                                 </button>
                                 <button *ngIf="test.result != resultEnum.NoResult"
-                                    class="btn btn-light-success" [routerLink]="['../evaluation-result', test.id]">
+                                    class="btn btn-sm btn-blue" [routerLink]="['../evaluation-result', test.id]">
                                     {{'tests.view' | translate}}
                                 </button>
                             </td>

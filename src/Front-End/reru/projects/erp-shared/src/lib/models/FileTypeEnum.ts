@@ -1,4 +1,4 @@
-export enum FileTypeEnum{
+export enum FileTypeEnum {
     Question = 1,
     TestTemplate = 2,
     Test = 3,

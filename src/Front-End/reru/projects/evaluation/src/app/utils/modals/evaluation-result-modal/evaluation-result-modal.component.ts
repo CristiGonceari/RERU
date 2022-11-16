@@ -78,7 +78,7 @@ export class EvaluationResultModalComponent implements OnInit {
 
   getCheckedItemForRecomendedValues() {
     this.recomendedValues = [];
-    for (var i = 0; i < this.recomdendedListOfValues.length; i++) {
+    for (let i = 0; i < this.recomdendedListOfValues.length; i++) {
       if (this.recomdendedListOfValues[i].checked){
           this.recomendedValues.push(this.recomdendedListOfValues[i]);
         }

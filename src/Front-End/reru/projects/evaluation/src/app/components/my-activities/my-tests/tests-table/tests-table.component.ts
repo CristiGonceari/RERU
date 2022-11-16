@@ -11,7 +11,7 @@ import { Events } from 'projects/evaluation/src/app/utils/models/calendar/events
 @Component({
   selector: 'app-tests-table',
   templateUrl: './tests-table.component.html',
-  styleUrls: ['./tests-table.component.scss']
+  styleUrls: ['../../table-inherited.component.scss']
 })
 export class TestsTableComponent implements OnInit {
   @ViewChild('testName') testName: any;

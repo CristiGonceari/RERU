@@ -1,0 +1,101 @@
+/* Declaring variables */
+$border-radius: 3px;
+$blue-color: #3699ff;
+$blue-light-color: #70b7ff;
+
+/* Notifications layout */
+.simple-notification div,
+.simple-notification {
+  color: #FFF;
+}
+
+
+/* Rewrite Dropdown menu */
+.navi.navi-hover .navi-item .navi-link:hover,
+div.dahsboard-component a.nav-link,
+div.card.card-custom,
+.datatable.datatable-default > .datatable-pager > .datatable-pager-nav > li > a.datatable-pager-link,
+div.dropdown-menu {
+  border-radius: $border-radius;
+}
+
+/* Hide input type number arrows */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Rewrite border-radius across project */
+textarea[class^='form-control'],
+input[class^='form-control'],
+select[class^='form-control'] {
+  border-radius: $border-radius;
+}
+
+/* Outside the scope ng-deep */
+::ng-deep {
+/* Rewriting tag-input module  */
+  tag {
+      border-radius: 12px !important;
+      margin: .1rem .3rem !important;
+      background: #a2caf1 !important;
+      line-height: 32px !important;
+      &:hover, &:active, &:focus {
+          background: #98c5f1 !important;
+      }
+
+      .tag__text {
+          color: #fff !important;
+      }
+
+  }
+  .ng2-tag-input {
+      border-bottom: none !important;
+  }
+  
+  .ng2-tag-input__text-input {
+      padding: 0 !important;
+      background: transparent;
+  }
+
+  input[type="file"] {
+      display: none;
+  }
+  .custom-file-upload {
+      color: #FFF !important;
+      border-radius: 0.3rem !important;
+      background: #6993FF;
+      &:hover {
+        color: #FFF;
+        background: #4A7DFF;
+      }
+  }
+  .expandable {
+      min-height: 10px !important;
+  }
+}
+
+/* Buttons Color custom */
+.text-blue {
+  color: $blue-color;
+}
+
+.bg-blue {
+  background: $blue-light-color;
+}
+
+.btn.btn-blue {
+  color: white;
+  background: $blue-light-color;
+  border-color: transparent;
+  background-blend-mode: lighten;
+  &:hover {
+    color: white;
+    background: $blue-color;
+  }
+}

@@ -122,13 +122,13 @@ export class SearchComponent implements OnInit {
     }
 
     if ((this.searchPerson == false || this.searchEvaluators == false || this.searchUser == false) && id) {
-      var user = this.list.find(u => u.id === id);
+      const user = this.list.find(u => u.id === id);
 
       if (user.lastName == null) {
         user.lastName = "";
       }
 
-      var name = user.lastName + " " + user.firstName + ", " + user.idnp;
+      const name = user.lastName + " " + user.firstName + ", " + user.idnp;
 
       return name;
     }

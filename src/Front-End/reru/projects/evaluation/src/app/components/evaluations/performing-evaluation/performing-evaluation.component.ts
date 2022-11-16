@@ -175,7 +175,7 @@ export class PerformingEvaluationComponent implements OnInit {
 
   summary() {
     this.testQuestionService.summary(this.testId).subscribe((res) => {
-      for (var i = 1; i <= res.data.length; i++) {
+      for (let i = 1; i <= res.data.length; i++) {
         this.pager.push(i);
       };
       this.testQuestionSummary = res.data;
@@ -246,7 +246,7 @@ export class PerformingEvaluationComponent implements OnInit {
     if (this.questionUnit.questionType == this.questionTypeEnum.HashedAnswer)
       this.subscribeForHashedAnswers();
     else {
-      var selectedOptions = this.testOptionsList.filter(Item => Item.isSelected == true);
+      const selectedOptions = this.testOptionsList.filter(Item => Item.isSelected == true);
 
       selectedOptions.forEach(el => {
         this.testAnswersInput.push(this.parseAnswer(el));
