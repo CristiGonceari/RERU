@@ -7,6 +7,8 @@ using CODWER.RERU.Evaluation.DataTransferObjects.PositionDiagram;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.Extensions;
+
 
 namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagram
 {
@@ -74,16 +76,17 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
 
         private List<UserDiagramDto> GetUsersDiagram(int eventId, int positionId)
         {
-
-            return _appDbContext.EventUserCandidatePositions
+            var users = _appDbContext.EventUserCandidatePositions
                 .Include(x => x.EventUser)
                     .ThenInclude(x => x.UserProfile)
                 .Where(x => x.EventUser.EventId == eventId && x.CandidatePositionId == positionId)
-                .OrderBy(x => x.EventUser.UserProfile.FirstName)
-                .ThenBy(x => x.EventUser.UserProfile.LastName)
-                .ThenBy(x => x.EventUser.UserProfile.FatherName)
-                .Select(x => _mapper.Map<UserDiagramDto>(x))
+                .Select(x => x.EventUser.UserProfile)
+                .OrderByFullName()
                 .ToList();
+
+            var mappedUsers = _mapper.Map<List<UserDiagramDto>>(users);
+
+            return mappedUsers;
         }
 
         private void CalculateTestsFromTestTemplates(PositionDiagramDto eventDiagram, EventDiagramDto positionEvent, int positionId)
