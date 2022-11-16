@@ -1,4 +1,4 @@
-<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!isOpenAddTest">
     <div class="card card-custom gutter-b" style="margin-left: 16px;">
         <div class="card-header flex-wrap border-0 py-5">
             <div class="card-title"><b>{{'position.position-diagram' | translate}}</b></div>
@@ -44,14 +44,23 @@
             <table *ngIf="!isLoading && events.length" class="table table-bordered font-size-lg">
                 <thead class="text-uppercase text-muted" >
                     <tr>
-                        <th rowspan="2" style="vertical-align: middle; width: 12%;">{{'position.users' | translate}}</th>
+                        <th rowspan="2" style="vertical-align: middle; width: 15%;">{{'position.users' | translate}}</th>
                         <th [attr.colspan]="event.testTemplates.length" *ngFor="let event of eventsDiagram"
                             class="text-center mx-4">
                             {{event.eventName}}</th>
                     </tr>
                     <tr>
                         <th *ngFor="let template of testTemplates">
-                            {{template.name}}
+                            <div class="row"> 
+                                <div class="col-lg-9 col-xl-6 text-center p-2">
+                                    {{template.name}}
+                                </div>
+                                <div *ngIf="template.name != null" class="col-xl-6 col-lg-3 text-right">
+                                    <button class="btn btn-primary w-100" (click)="openAddTest(template)">
+                                    {{'tests.new-test' | translate}}
+                                    </button>  
+                                </div>
+                            </div>
                         </th>
                     </tr>
                 </thead>
@@ -73,6 +82,14 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="isOpenAddTest">
+    <div class="card card-custom gutter-b" style="margin-left: 16px;">
+        <div class="card-body">
+            <app-position-add-test [eventId]="selectedEventId" [testTemplateId]="selectedTestTemplateId"
+                [positionId]="positionId" (newItemEvent)="onChangeAddTest($event)"></app-position-add-test>
         </div>
     </div>
 </div>

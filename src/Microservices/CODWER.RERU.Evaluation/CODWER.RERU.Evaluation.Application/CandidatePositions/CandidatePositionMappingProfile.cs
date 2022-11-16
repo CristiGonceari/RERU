@@ -25,7 +25,8 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions
 
             CreateMap<EventTestTemplate, TestTemplateDiagramDto>()
                 .ForMember(x => x.Name, opts => opts.MapFrom(t => t.TestTemplate.Name))
-                .ForMember(x => x.TestTemplateId, opts => opts.MapFrom(t => t.TestTemplate.Id));
+                .ForMember(x => x.TestTemplateId, opts => opts.MapFrom(t => t.TestTemplate.Id))
+                .ForMember(x => x.EventId, opts => opts.MapFrom(t => t.EventId));
 
             CreateMap<Test, TestResultDiagramDto>()
                 .ForMember(x => x.TestId, opts => opts.MapFrom(t => t.Id))
