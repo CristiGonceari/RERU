@@ -71,7 +71,5 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 	bootstrap: [AppComponent]
 })
 export class AppModule {
-	constructor() {
-		console.log('CONSTRUCTOR APP MODULE', environment)
-	}
+	constructor() {}
  }

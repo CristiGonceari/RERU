@@ -14,9 +14,10 @@ export class SidenavComponent implements OnInit {
 	@Input() config: IAppSettings;
 	@Input() disableSidenav: boolean;
 	@Input() logo: string;
-	@Input() moduleId: number;
+	@Input() moduleCode: string;
 	isLoading = true;
-	constructor(private moduleService: AvailableModulesService, private applicationUserService: ApplicationUserService) {}
+	constructor(private moduleService: AvailableModulesService, 
+				private applicationUserService: ApplicationUserService) {}
 
 	ngOnInit(): void {
 		this.listModules();

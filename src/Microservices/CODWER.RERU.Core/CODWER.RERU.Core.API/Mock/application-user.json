@@ -4,7 +4,7 @@
   "email": "andrian.hubencu@codwer.com",
   "modules": [
     {
-      "module": { "name": "test module" },
+      "module": { "name": "Evaluation", "code": "01" },
       "role": "test role",
       "permissions": [
         "P02000001",

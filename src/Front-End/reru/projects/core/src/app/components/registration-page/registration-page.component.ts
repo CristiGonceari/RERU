@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
-import { FileTypeEnum } from 'projects/erp-shared/src/lib/models/FileTypeEnum';
+import { FileTypeEnum } from '@erp/shared';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../utils/services/i18n.service';
 import { UserService } from '../../utils/services/user.service';
@@ -148,7 +148,6 @@ export class RegistrationPageComponent implements OnInit {
   }
 
   onRemove(event) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
 

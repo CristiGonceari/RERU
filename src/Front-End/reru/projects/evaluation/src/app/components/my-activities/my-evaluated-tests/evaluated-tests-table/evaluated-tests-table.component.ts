@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TestResultStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-result-status.enum';
 import { TestStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-status.enum';
@@ -11,9 +11,9 @@ import { TestService } from 'projects/evaluation/src/app/utils/services/test/tes
 @Component({
   selector: 'app-evaluated-tests-table',
   templateUrl: './evaluated-tests-table.component.html',
-  styleUrls: ['./evaluated-tests-table.component.scss'],
+  styleUrls: ['../../table-inherited.component.scss'],
 })
-export class EvaluatedTestsTableComponent implements OnInit {
+export class EvaluatedTestsTableComponent {
   tests: any;
   testRowList: Test[] = [];
   pagedSummary: PaginationModel = new PaginationModel();
@@ -41,8 +41,6 @@ export class EvaluatedTestsTableComponent implements OnInit {
     private testTemplateService: TestTemplateService,
     private router: Router
   ) {}
-
-  ngOnInit(): void {}
 
   getListByDate(data: any = {}): void {
     this.isLoading = true;

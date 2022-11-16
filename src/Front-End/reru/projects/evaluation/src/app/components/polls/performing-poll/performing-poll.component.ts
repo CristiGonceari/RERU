@@ -102,7 +102,7 @@ export class PerformingPollComponent implements OnInit {
   summary() {
     this.testQuestionService.summary(this.testId).subscribe(
       (res) => {
-        for (var i = 1; i <= res.data.length; i++) {
+        for (let i = 1; i <= res.data.length; i++) {
           this.pager.push(i);
         };
         this.testQuestionSummary = res.data;
@@ -166,7 +166,7 @@ export class PerformingPollComponent implements OnInit {
   saveAnswers() {
     this.testAnswersInput = [];
 
-    var selectedOptions = this.testOptionsList.filter(Item => Item.isSelected == true);
+    const selectedOptions = this.testOptionsList.filter(Item => Item.isSelected == true);
 
     selectedOptions.forEach(el => {
       this.testAnswersInput.push(this.parseAnswer(el));
@@ -201,7 +201,7 @@ export class PerformingPollComponent implements OnInit {
             if (this.testQuestionSummary.every(x => x.isClosed === true)) {
               this.submitTest();
             } else if (!this.testTemplateSettings.possibleChangeAnswer || !this.testTemplateSettings.possibleGetToSkipped) {
-              var isNotClosedAnswers = this.testQuestionSummary.filter(x => x.isClosed === false);
+              const isNotClosedAnswers = this.testQuestionSummary.filter(x => x.isClosed === false);
 
               this.questionIndex = isNotClosedAnswers.some(x => x.index > this.questionIndex) ?
                 isNotClosedAnswers.filter(x => x.index > this.questionIndex)[0].index :

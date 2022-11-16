@@ -868,7 +868,7 @@
     "please-select-format": "Please select format"
   },
   "solicited-position":{
-    "solicited-positions": "Solictited positions",
+    "solicited-positions": "Solicited positions",
     "attached-documents": "Attached documents",
     "required-documents": "Required documents",
     "review" : "Review",
@@ -1054,7 +1054,7 @@
     "view-templates": "View test templates",
     "search-evaluator": "Search by evaluator",
     "run-evaluation": "Run evaluation",
-    "start-evaluation": "Start evaluation",
+    "start-evaluation": "Start",
     "view-evaluation": "View evaluation",
     "evaluation-data": "Enter the evaluation details and confirm",
     "received-evaluations": "Received evaluations",

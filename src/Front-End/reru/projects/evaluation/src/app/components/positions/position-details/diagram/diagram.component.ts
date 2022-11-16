@@ -40,7 +40,6 @@ export class DiagramComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.parent.params.subscribe(params => {
       this.positionId = params.id;
-      console.log(this.positionId)
       this.positionService.get(this.positionId).subscribe(res => {
         this.positionName = res.data.name;
         this.positionMedicalColumn = res.data.medicalColumn;

@@ -40,7 +40,6 @@ export class SignDirective implements OnInit {
   }
 
   checkFileExtension(): void {
-    console.log('name', this.name, this.id);
     if (this.name && !this.name.trim().endsWith('.pdf')) {
       this.el.nativeElement.style.display = 'none';
     }

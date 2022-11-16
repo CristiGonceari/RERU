@@ -81,7 +81,7 @@ export class EventCalendarComponent implements OnInit {
 
     let dateToAdd = startingDateOfCalendar;
 
-    for (var i = 0; i < 42; i++) {
+    for (let i = 0; i < 42; i++) {
       this.calendar.push(new CalendarDay(new Date(dateToAdd)));
       dateToAdd = new Date(dateToAdd.setDate(dateToAdd.getDate() + 1));
     }

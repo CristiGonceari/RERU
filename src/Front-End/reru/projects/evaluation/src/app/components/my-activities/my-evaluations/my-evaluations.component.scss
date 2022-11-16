@@ -1,15 +1,15 @@
-.dropdown-toggle::after {
-    display:none;
-}
+table {
+  thead tr th {
+	
+  }
 
-tbody {
-	tr {
-		td {
-			vertical-align: middle !important;
-		}
-
+  tbody {
+	td {
 		button {
-			height: auto;
+		  width: 100px;
+		  max-width: 100px;
+		  min-width: 100px;
 		}
 	}
+  }
 }

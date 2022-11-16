@@ -3,9 +3,17 @@ export class ObjectUtil {
       return JSON.parse(JSON.stringify(object));
     }
   
-    public static preParseObject(object): any {
+    /**
+     * Cleans the object containing falsy data
+     * 
+     * @param {Object} object contains list of parameters/query params/body data
+     * @returns {Object} clean parameters for that particular object
+     */
+    public static preParseObject(object: any): any {
       for (const key in object) {
-        if (!object[key]) {
+        if (!object[key] && typeof object[key] !== 'boolean' || 
+            isNaN(object[key]) && typeof object[key] === 'number') {
+
           delete object[key];
         }
       }
@@ -20,5 +28,5 @@ export class ObjectUtil {
     public static isDateStruct(data): boolean {
       return data && data.year && data.month && !!data.day;
     }
-  }
+}
   

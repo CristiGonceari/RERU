@@ -1,23 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TestResultStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-result-status.enum';
-import { TestStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-status.enum';
+import { ActivatedRoute } from '@angular/router';
 import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { SolicitedTestService } from 'projects/evaluation/src/app/utils/services/solicited-test/solicited-test.service';
-import { ConfirmModalComponent, PrintModalComponent } from '@erp/shared';
-import { saveAs } from 'file-saver';
+import { ConfirmModalComponent } from '@erp/shared';
 import { forkJoin } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { SolicitedTestStatusEnum } from 'projects/evaluation/src/app/utils/enums/solicited-test-status.model';
-import { ReferenceService } from 'projects/evaluation/src/app/utils/services/reference/reference.service';
 
 @Component({
 	selector: 'app-solicited-tests-table',
 	templateUrl: './solicited-tests-table.component.html',
-	styleUrls: ['./solicited-tests-table.component.scss']
+	styleUrls: ['../../table-inherited.component.scss']
 })
 export class SolicitedTestsTableComponent implements OnInit {
 	solicitedTests: [] = [];

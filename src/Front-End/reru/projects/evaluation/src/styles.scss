@@ -7,42 +7,7 @@
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-$border-radius: 3px;
-
-.simple-notification div,
-.simple-notification {
-  color: #FFF;
-}
-
-.navi.navi-hover .navi-item .navi-link:hover,
-div.dahsboard-component a.nav-link,
-div.card.card-custom,
-.datatable.datatable-default > .datatable-pager > .datatable-pager-nav > li > a.datatable-pager-link,
-div.dropdown-menu {
-  border-radius: $border-radius;
-}
-
-/* Hide input type number arrows */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type=number] {
-  -moz-appearance: textfield;
-}
-
-textarea[class^='form-control'],
-input[class^='form-control'],
-select[class^='form-control'] {
-  border-radius: $border-radius;
-}
-
-::ng-deep {
-  [class^='form-control'],
-  tag-input.form-control,
-  tag-input.form-control-lg {
-    border-radius: $border-radius;
-  }
+body {
+    margin: 0;
+    font-family: Poppins, Helvetica, "sans-serif";
 }

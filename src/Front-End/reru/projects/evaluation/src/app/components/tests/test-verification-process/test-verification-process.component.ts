@@ -144,7 +144,7 @@ export class TestVerificationProcessComponent implements OnInit {
 
 	pagination() {
 		this.verifyService.getSummary(this.testId).subscribe((res) => {
-			for (var i = 1; i <= res.data.testQuestions.length; i++) {
+			for (let i = 1; i <= res.data.testQuestions.length; i++) {
 				this.pager.push(i);
 			};
 		});

@@ -2,6 +2,18 @@
     display:none;
 }
 
+thead {
+	tr th {
+		min-width: 120px;
+        &:nth-child(1) {
+			min-width: 121px;
+		}
+		&:nth-child(4) {
+			min-width: 170px;
+		}
+	}
+}
+
 tbody {
 	tr {
 		td {

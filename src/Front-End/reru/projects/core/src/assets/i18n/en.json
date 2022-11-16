@@ -64,7 +64,7 @@
     "import-departments": "Import departments",
     "import-roles": "Import roles",
     "modal-title": "Upload file modal",
-    "modal-description": "Drop file hereor click to upload"
+    "modal-description": "Drop file here or click to upload"
   },
   "login": {
     "admin-panel": "Administration Panel",

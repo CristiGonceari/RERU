@@ -11,9 +11,9 @@
 			<div class="d-flex flex-row">
 				<div class="flex-row-auto offcanvas-mobile w-300px w-xl-350px mb-7" id="kt_profile_aside">
 					<div class="card card-custom">
-						<div class="card-body pt-4">
+						<div class="card-body px-2 pt-4">
 							<div class="d-flex align-items-center">
-                                <div class="btn flex-shrink-0 mr-7">
+                                <div class="btn flex-shrink-0">
                                     <!-- <div class="symbol symbol-100 symbol-sm-s" *ngIf="avatarString">
                                         <img [src]="avatar">
                                     </div> -->
@@ -57,7 +57,7 @@
 											</span>
 										</a>
 									</div>
-									<div class="navi-item mb-2" *ngIf="user.userStatusEnum == 1">
+									<div class="navi-item mb-2">
 										<a [routerLink]="['my-evaluations']" routerLinkActive="active" class="navi-link py-4">
 											<i class="far fa-question-circle icon-md mr-3"></i>
 											<span class="navi-text font-size-lg">
@@ -73,7 +73,7 @@
 											</span>
 										</a>
 									</div>
-									<div class="navi-item mb-2" *ngIf="user.userStatusEnum == 1">
+									<div class="navi-item mb-2">
 										<a [routerLink]="['my-evaluated-tests']" routerLinkActive="active" class="navi-link py-4">
 											<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
 											<span class="navi-text font-size-lg">
@@ -89,10 +89,10 @@
 				<div class="flex-row-fluid ml-lg-8">
 					<div class="mobile-container-menu">
 						<div class="card card-custom mb-7 w-100">
-						  <div class="card-body pb-4 overflow-auto">
+						  <div class="card-body px-2 pb-4 overflow-auto">
 							<div class="d-flex navi navi-bold navi-hover navi-active navi-link-rounded">
 							  <div class="navi-item mb-2">
-								<a [routerLink]="['my-solicited-position']" routerLinkActive="active" class="navi-link py-4 pr-3">
+								<a [routerLink]="['my-solicited-position']" routerLinkActive="active" class="navi-link py-4 pr-3 h-100">
 									<i class="fas fa-poll-h icon-md mr-3"></i>
 								</a>
 							  </div>
@@ -101,22 +101,17 @@
 									<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
 								</a>
 							  </div>
-							  <div class="navi-item mb-2">
-								<a [routerLink]="['my-events']" routerLinkActive="active" class="navi-link py-4 pr-3">
-									<i class="far fa-question-circle icon-md mr-3"></i>
-								</a>
-							  </div>
-							  <div class="navi-item mb-2">
+							  <div class="navi-item mb-2" *ngIf="user.userStatusEnum == 1">
 								<a [routerLink]="['my-evaluations']" routerLinkActive="active" class="navi-link py-4 pr-3">
 									<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
 								</a>
 							  </div>
 							  <div class="navi-item mb-2">
-								<a [routerLink]="['my-polls']" routerLinkActive="active" class="navi-link py-4 pr-3">
+								<a [routerLink]="['my-polls']" routerLinkActive="active" class="navi-link py-4 pr-3 h-100">
 									<i class="fas fa-poll-h icon-md mr-3"></i>
 								</a>
 							  </div>
-							  <div class="navi-item">
+							  <div class="navi-item" *ngIf="user.userStatusEnum == 1">
 								<a [routerLink]="['my-evaluated-tests']" routerLinkActive="active" class="navi-link py-4 pr-3">
 									<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
 								</a>
