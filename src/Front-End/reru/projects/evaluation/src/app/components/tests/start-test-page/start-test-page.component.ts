@@ -48,8 +48,8 @@ export class StartTestPageComponent implements OnInit, OnDestroy  {
 
   startTimer() {
     this.interval = setInterval(() => {
-      var programmedTime = new Date(this.testDto.programmedTime).getTime();
-      var date = new Date().getTime();
+      const programmedTime = new Date(this.testDto.programmedTime).getTime();
+      const date = new Date().getTime();
 
       if (programmedTime > date) {
         this.timeLeft = this.milisecondsToHms(Math.abs(programmedTime - date));
@@ -74,10 +74,10 @@ export class StartTestPageComponent implements OnInit, OnDestroy  {
   }
 
   milisecondsToHms(miliseconds) {
-    var seconds = Number(miliseconds / 1000);
-    var h = Math.floor(seconds % (3600 * 24) / 3600);
-    var m = Math.floor(seconds % 3600 / 60);
-    var s = Math.floor(seconds % 60);
+    const seconds = Number(miliseconds / 1000);
+    const h = Math.floor(seconds % (3600 * 24) / 3600);
+    const m = Math.floor(seconds % 3600 / 60);
+    const s = Math.floor(seconds % 60);
 
     return ` ${h < 10 ? '0' + h : h} : ${m < 10 ? '0' + m : m} : ${s < 10 ? '0' + s : s}`;
   }

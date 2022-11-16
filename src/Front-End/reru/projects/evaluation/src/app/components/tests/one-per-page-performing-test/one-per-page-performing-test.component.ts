@@ -127,8 +127,8 @@ export class OnePerPagePerformingTestComponent implements OnInit {
 
   startTimer() {
     this.interval = setInterval(() => {
-      var endTime = new Date(this.testDto.endTime).getTime();
-      var date = new Date().getTime();
+      const endTime = new Date(this.testDto.endTime).getTime();
+      const date = new Date().getTime();
 
       if (endTime > date) {
         this.timeLeft = this.milisecondsToHms(Math.abs(endTime - date));
@@ -160,10 +160,10 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   }
 
   milisecondsToHms(miliseconds) {
-    var seconds = Number(miliseconds / 1000);
-    var h = Math.floor(seconds % (3600 * 24) / 3600);
-    var m = Math.floor(seconds % 3600 / 60);
-    var s = Math.floor(seconds % 60);
+    const seconds = Number(miliseconds / 1000);
+    const h = Math.floor(seconds % (3600 * 24) / 3600);
+    const m = Math.floor(seconds % 3600 / 60);
+    const s = Math.floor(seconds % 60);
 
     return ` ${h < 10 ? '0' + h : h} : ${m < 10 ? '0' + m : m} : ${s < 10 ? '0' + s : s}`;
   }
@@ -186,7 +186,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
 
   summary() {
     this.testQuestionService.summary(this.testId).subscribe((res) => {
-      for (var i = 1; i <= res.data.length; i++) {
+      for (let i = 1; i <= res.data.length; i++) {
         this.pager.push(i);
       };
       this.testQuestionSummary = res.data;
@@ -256,7 +256,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     if (this.questionUnit.questionType == this.questionTypeEnum.HashedAnswer)
       this.subscribeForHashedAnswers();
     else {
-      var selectedOptions = this.testOptionsList.filter(Item => Item.isSelected == true);
+      const selectedOptions = this.testOptionsList.filter(Item => Item.isSelected == true);
 
       selectedOptions.forEach(el => {
         this.testAnswersInput.push(this.parseAnswer(el));
@@ -393,7 +393,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
               this.submitTest();
             else if (!this.testTemplateSettings.possibleChangeAnswer || !this.testTemplateSettings.possibleGetToSkipped) {
               this.disableBtn = false;
-              var isNotClosedAnswers = this.testQuestionSummary.filter(x => x.isClosed === false);
+              const isNotClosedAnswers = this.testQuestionSummary.filter(x => x.isClosed === false);
 
               this.questionIndex = isNotClosedAnswers.some(x => x.index > this.questionIndex) ?
                 isNotClosedAnswers.filter(x => x.index > this.questionIndex)[0].index :

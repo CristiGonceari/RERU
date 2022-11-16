@@ -9,17 +9,17 @@
     </div>
     <div class="card-toolbar">
       <div class="row">
-        <div class="col-md-5 col-12">
+        <div class="col-md col-12">
           <erp-shared-search-input (handleSearch)="setFilter('testName', $event)"
             [placeholder]="'tests.search-test' | translate" #testName>
           </erp-shared-search-input>
         </div>
-        <div class="col-md-5 col-12 pt-md-0 pt-2">
+        <div class="col-md col-12 pt-md-0 pt-2">
           <erp-shared-search-input (handleSearch)="setFilter('eventName', $event)"
             [placeholder]="'events.search-event' | translate" #eventName>
           </erp-shared-search-input>
         </div>
-        <div class="col-md-2 col-12 pt-md-0 pt-2">
+        <div class="col-md-auto col-12 pt-md-0 pt-2">
           <div class="d-md-block d-none">
             <app-button (handle)="resetFilters()" [value]="'button.reset' | translate"></app-button>
           </div>
@@ -32,20 +32,19 @@
   </div>
   <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
   <div class="card-body">
-    <div class="table-responsive-xl datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+    <div class="table-responsive datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
       id="kt_datatable">
       <table *ngIf="!isLoading" for="kt_datatable" class="datatable table" style="overflow: visible">
         <thead class="text-uppercase text-muted">
           <tr>
             <th scope="col" class="colored">
               <b>{{'dashboard.date-status' | translate}}</b>
-              <i class="fas fa-arrow-down ml-1"></i>
             </th>
             <th scope="col">{{'dashboard.test' | translate}}</th>
             <th scope="col">{{'events.event' | translate}}</th>
-            <th scope="col" style="width: 170px;">{{'dashboard.score' | translate}} /
+            <th scope="col">{{'dashboard.score' | translate}} /
               {{'dashboard.min-score' | translate}}</th>
-            <th scope="col" style="width: 120px"></th>
+            <th *ngIf="testRowList.length" scope="col">{{'button.actions' | translate}}</th>
           </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="testRowList.length">
@@ -69,7 +68,7 @@
                 {{test.minPercent}}%</label>
             </td>
             <td>
-              <button *ngIf="test.testStatus == enum.InProgress" class="btn btn-light-success"
+              <button *ngIf="test.testStatus == enum.InProgress" class="btn btn-light-warning"
                 (click)="getTestById(test.id)">
                 {{'button.continue' | translate}}
               </button>
@@ -83,7 +82,7 @@
               </button>
               <button
                 *ngIf="test.viewTestResult && (test.result == resultEnum.NotPassed || test.result == resultEnum.Passed)"
-                class="btn btn-light-success" [routerLink]="['../test-result', test.id]">
+                class="btn btn-blue" [routerLink]="['../test-result', test.id]">
                 {{'tests.view' | translate}}
               </button>
             </td>

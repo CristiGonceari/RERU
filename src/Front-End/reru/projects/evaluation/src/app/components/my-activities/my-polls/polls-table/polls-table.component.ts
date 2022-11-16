@@ -9,7 +9,7 @@ import { Events } from 'projects/evaluation/src/app/utils/models/calendar/events
 @Component({
   selector: 'app-polls-table',
   templateUrl: './polls-table.component.html',
-  styleUrls: ['./polls-table.component.scss']
+  styleUrls: ['../../table-inherited.component.scss']
 })
 export class PollsTableComponent implements OnInit {
   polls = [];

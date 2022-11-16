@@ -15,6 +15,7 @@ import { saveAs } from 'file-saver';
 import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { ParsePrintTabelService } from 'projects/evaluation/src/app/utils/services/parse-print-table/parse-print-tabel.service';
+import { ObjectUtil } from '../../../../utils/util/object.util';
 
 @Component({
 	selector: 'app-question-list-table',
@@ -64,11 +65,11 @@ export class QuestionListTableComponent implements OnInit {
 	}
 
 	list(data: any = {}): void {
-		let params = {
+		const params = ObjectUtil.preParseObject({
 			page: data.page || this.pagedSummary.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize,
 			...this.filters
-		}
+		})
 		this.questionService.getAll(params).subscribe((res) => {
 			if (res && res.data.items) {
 				this.questionList = res.data.items;

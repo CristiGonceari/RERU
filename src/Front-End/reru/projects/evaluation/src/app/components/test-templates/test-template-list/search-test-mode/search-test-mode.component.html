@@ -1,4 +1,4 @@
-<select class="form-control h-35px" name="selectedStatus" [(ngModel)]="modeStatus" id="selectedStatus" (change)="filter.emit($event.target.value)">
+<select class="form-control form-control-solid h-35px" name="selectedStatus" [(ngModel)]="modeStatus" id="selectedStatus" (change)="filter.emit($event.target.value)">
     <option class="default-option text-muted" selected value="">{{ 'test-template.search-by-test-mode' | translate }}</option>
     <option *ngFor="let item of statusesList" [value]="item.value">
         {{'statuses.' + item.label | translate}}

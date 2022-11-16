@@ -267,8 +267,6 @@ export class MaterialStatusComponent implements OnInit {
   }
 
   initKinshipRelationForm(relation, materialStatusEnum: MaterialStatusEnum) {
-    console.log(" relation", relation);
-
     if (relation != null) {
 
       for (let i = 0; i < relation.length; i++) {
@@ -552,9 +550,6 @@ export class MaterialStatusComponent implements OnInit {
   addKinshipRelation(kinship?): void {
     this.focus$.push(new Subject<string>());
     this.click$.push(new Subject<string>());
-
-    console.log("kinship", kinship);
-
 
     if (kinship == null) {
       (<FormArray>this.kinshipRelationForm.controls.relation).controls.push(this.generateKinshipRelation());

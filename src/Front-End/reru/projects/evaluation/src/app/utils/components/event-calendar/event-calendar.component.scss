@@ -1,3 +1,6 @@
+$table-square-size: 80px;
+$table-square-mobile-size: 50px;
+
 .calendar-table {
 	border-collapse: collapse;
 	width: 100%;
@@ -10,7 +13,18 @@
 .calendar-table thead th {
 	vertical-align: bottom;
 	border-bottom: 2px solid #dee2e6;
-	width: 14.2%;
+	// width: 14.2%;
+	width: $table-square-size;
+	min-width: $table-square-size;
+	max-width: $table-square-size;
+	@media screen and (max-width: 992px) {
+		width: $table-square-mobile-size;
+		min-width: $table-square-mobile-size;
+		max-width: initial;
+	}
+	&.mobile-bg {
+		background: #f1f1f1;
+	}
 }
 
 .calendar-table td,
@@ -26,9 +40,15 @@
 }
 
 .calendar-day {
-	height: 6vh;
-	max-height: 6vh;
+	height: $table-square-size;
+	min-height: $table-square-size;
+	max-height: $table-square-size;
 	cursor: pointer;
+	@media screen and (max-width: 992px) {
+		height: $table-square-mobile-size;
+		min-height: auto;
+		max-height: initial;
+	}
 }
 
 .calendar-items-wrapper {

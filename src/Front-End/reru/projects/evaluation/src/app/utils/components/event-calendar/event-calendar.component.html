@@ -16,17 +16,31 @@
   </div>
 </div>
 
-<div class="table-responsive-xl">
+<div class="table-responsive">
   <table class='calendar-table' *ngIf="calendar">
     <thead>
       <tr>
-        <th>{{ 'calendar.monday' | translate}}</th>
-        <th>{{ 'calendar.tuesday' | translate}}</th>
-        <th>{{ 'calendar.wednesday' | translate}}</th>
-        <th>{{ 'calendar.thursday' | translate}}</th>
-        <th>{{ 'calendar.friday' | translate}}</th>
-        <th>{{ 'calendar.saturday' | translate}}</th>
-        <th>{{ 'calendar.sunday' | translate}}</th>
+        <th class="d-xxxl-table-cell d-xxl-none d-none">{{ 'calendar.monday' | translate }}</th>
+        <th class="d-xxxl-none d-xxl-table-cell d-none">{{ 'calendar.monday' | translate | slice:0:3 }}</th>
+        <th class="d-xxl-none d-table-cell mobile-bg">{{ 'calendar.monday' | translate | slice:0:1 }}</th>
+        <th class="d-xxxl-table-cell d-xxl-none d-none">{{ 'calendar.tuesday' | translate  }}</th>
+        <th class="d-xxxl-none d-xxl-table-cell d-none">{{ 'calendar.tuesday' | translate | slice:0:3 }}</th>
+        <th class="d-xxl-none d-table-cell mobile-bg">{{ 'calendar.tuesday' | translate | slice:0:1 }}</th>
+        <th class="d-xxxl-table-cell d-xxl-none d-none">{{ 'calendar.wednesday' | translate  }}</th>
+        <th class="d-xxxl-none d-xxl-table-cell d-none">{{ 'calendar.wednesday' | translate | slice:0:3 }}</th>
+        <th class="d-xxl-none d-table-cell mobile-bg">{{ 'calendar.wednesday' | translate | slice:0:1 }}</th>
+        <th class="d-xxxl-table-cell d-xxl-none d-none">{{ 'calendar.thursday' | translate}}</th>
+        <th class="d-xxxl-none d-xxl-table-cell d-none">{{ 'calendar.thursday' | translate | slice:0:3 }}</th>
+        <th class="d-xxl-none d-table-cell mobile-bg">{{ 'calendar.thursday' | translate | slice:0:1 }}</th>
+        <th class="d-xxxl-table-cell d-xxl-none d-none">{{ 'calendar.friday' | translate }}</th>
+        <th class="d-xxxl-none d-xxl-table-cell d-none">{{ 'calendar.friday' | translate | slice:0:3 }}</th>
+        <th class="d-xxl-none d-table-cell mobile-bg">{{ 'calendar.friday' | translate | slice:0:1 }}</th>
+        <th class="d-xxxl-table-cell d-xxl-none d-none">{{ 'calendar.saturday' | translate}}</th>
+        <th class="d-xxxl-none d-xxl-table-cell d-none">{{ 'calendar.saturday' | translate | slice:0:3 }}</th>
+        <th class="d-xxl-none d-table-cell mobile-bg">{{ 'calendar.saturday' | translate | slice:0:1 }}</th>
+        <th class="d-xxxl-table-cell d-xxl-none d-none">{{ 'calendar.sunday' | translate}}</th>
+        <th class="d-xxxl-none d-xxl-table-cell d-none">{{ 'calendar.sunday' | translate | slice:0:3 }}</th>
+        <th class="d-xxl-none d-table-cell mobile-bg">{{ 'calendar.sunday' | translate | slice:0:1 }}</th>
       </tr>
     </thead>
     <tbody>
@@ -39,7 +53,10 @@
                           }" *ngFor="let c of row; let j = index" (click)="getClickedDay(c)">
           <div class="calendar-day-header">
             <strong>{{c.date.getDate()}}</strong>
-            <div class="d-flex justify-content-center" *ngIf="c.count > 0">
+            <div class="d-md-flex d-none" *ngIf="c.count > 0">
+              <span class="badge badge-square badge-danger w-100">{{c.count}}</span>
+            </div>
+            <div class="d-md-none d-flex justify-content-center" *ngIf="c.count > 0">
               <span class="badge badge-square badge-danger">{{c.count}}</span>
             </div>
           </div>

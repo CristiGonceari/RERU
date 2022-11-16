@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { QuestionByCategoryService } from '../../../utils/services/question-by-category/question-by-category.service';
@@ -9,7 +9,7 @@ import { BulkImportQuestionsComponent } from '../bulk-import-questions/bulk-impo
   templateUrl: './question-list.component.html',
   styleUrls: ['./question-list.component.scss']
 })
-export class QuestionListComponent implements OnInit {
+export class QuestionListComponent {
 	title: string;
 	@ViewChild('question') searchQuestion: any;
 	@ViewChild('category') searchCategory: any;
@@ -22,8 +22,6 @@ export class QuestionListComponent implements OnInit {
 		private router: Router,
 		private questionByCategory: QuestionByCategoryService
 	) { }
-
-	ngOnInit(): void { }
 
 	getTitle(): string {
 		this.title = document.getElementById('title').innerHTML;
