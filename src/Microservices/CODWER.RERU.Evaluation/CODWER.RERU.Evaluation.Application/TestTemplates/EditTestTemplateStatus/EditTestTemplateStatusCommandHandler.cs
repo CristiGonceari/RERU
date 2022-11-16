@@ -1,11 +1,12 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using CVU.ERP.Logging;
+﻿using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.EditTestTemplateStatus
 {
@@ -34,7 +35,18 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.EditTestTemplateStatu
 
         private async Task LogAction(TestTemplate testTemplate)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Test template status was changed", testTemplate));
+            await _loggerService.Log(LogData.AsEvaluation($"Statutul șablonului de test {testTemplate.Name} a primit un nou statut {await ParseStatus(testTemplate.Status)} ", testTemplate));
         }
+
+        private async Task<string> ParseStatus(TestTemplateStatusEnum status) => 
+            status switch
+            {
+                TestTemplateStatusEnum.Active => "activ",
+                TestTemplateStatusEnum.Canceled => "anulat",
+                TestTemplateStatusEnum.Draft => "maculator",
+                _ => string.Empty
+            };
+        
+
     }
 }

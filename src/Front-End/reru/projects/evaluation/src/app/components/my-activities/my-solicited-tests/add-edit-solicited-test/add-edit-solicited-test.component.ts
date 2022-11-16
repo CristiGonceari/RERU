@@ -159,6 +159,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
   }
 
   onSave(): void {
+    this.isLoading = true;
     if (this.isEdit) {
       this.edit();
     } else {

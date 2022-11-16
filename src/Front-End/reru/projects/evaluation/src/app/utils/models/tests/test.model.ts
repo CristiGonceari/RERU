@@ -30,7 +30,8 @@ export class Test {
     endTime?: string;
     viewTestResult?: boolean;
     idnp: string;
-    candidatePositionNames: any[] 
+    candidatePositionNames: any[];
+    canStartWithoutConfirmation: boolean; 
 }
 
 export class CreateTestModel {

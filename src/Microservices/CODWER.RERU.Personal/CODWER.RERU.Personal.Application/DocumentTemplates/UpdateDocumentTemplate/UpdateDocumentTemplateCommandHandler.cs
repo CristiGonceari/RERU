@@ -39,7 +39,7 @@ namespace CODWER.RERU.Personal.Application.DocumentTemplates.UpdateDocumentTempl
         }
         private async Task LogAction(HrDocumentTemplate documentTemplate)
         {
-            await _loggerService.Log(LogData.AsPersonal($"{documentTemplate.Name} was edited", documentTemplate));
+            await _loggerService.Log(LogData.AsPersonal($"Șablonul de documente {documentTemplate.Name} a fost actualizat", documentTemplate));
         }
     }
 }

@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
+using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
-using RERU.Data.Entities.StaticExtensions;
 using RERU.Data.Persistence.Context;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,23 +22,21 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
-        private readonly IMediator _mediator;
-        private string _path = new FileInfo("PdfTemplates/EmailNotificationTemplate.html").FullName;
+        private readonly ILoggerService<SendSolicitedVacantPositionEmailMessagesCommand> _loggerService;
 
         public SendSolicitedVacantPositionEmailMessagesCommandHandler(AppDbContext appDbContext, 
             IMapper mapper, 
-            IMediator mediator, INotificationService notificationService1)
+            INotificationService notificationService1, 
+            ILoggerService<SendSolicitedVacantPositionEmailMessagesCommand> loggerService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
-            _mediator = mediator;
             _notificationService = notificationService1;
+            _loggerService = loggerService;
         }
 
         public async Task<int> Handle(SendSolicitedVacantPositionEmailMessagesCommand request, CancellationToken cancellationToken)
         {
-            var template = await File.ReadAllTextAsync(_path);
-
             var solicitedVacantPosition = await GetSolicitedVacantPosition(request);
 
             var events = await GetEventsWithTestTemplateList(solicitedVacantPosition);
@@ -61,7 +59,9 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
 
             await _appDbContext.SaveChangesAsync();
 
-            await SendEmail(template, solicitedVacantPosition, request);
+            await LogAction(solicitedVacantPosition);
+
+            await SendEmail(solicitedVacantPosition, request);
 
             return solicitedVacantPosition.Id;
         }
@@ -112,7 +112,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
             await _appDbContext.EventUserCandidatePositions.AddAsync(eventUserCandidatePosition);
         }
 
-        private async Task SendEmail(string template, SolicitedVacantPosition solicitedPosition, SendSolicitedVacantPositionEmailMessagesCommand request)
+        private async Task SendEmail(SolicitedVacantPosition solicitedPosition, SendSolicitedVacantPositionEmailMessagesCommand request)
         {
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
@@ -147,6 +147,13 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
             });
         }
 
+        private async Task LogAction(SolicitedVacantPosition solicitedVacantPosition)
+        {
+            await _loggerService.Log(LogData.AsEvaluation($"Poziția solicitată {solicitedVacantPosition.CandidatePosition.Name}, " +
+                                                          $"la care a aplicat {solicitedVacantPosition.UserProfile.FullName}, " +
+                                                          $"a primit un statut nou {await ParseSolicitedVacantPositionStatus(solicitedVacantPosition.SolicitedPositionStatus)}", solicitedVacantPosition));
+        }
+
         private string GetTableContent(EventUser eventUser)
             => $@"sunteți invitat/ă la evenimentul “{eventUser.Event.Name}”, 
                 în rol de candidat. În scurt timp veți primi invitație la test. Acesta va fi desfășurat online.";
@@ -176,5 +183,15 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
         private async Task<EventUser> GetEventUser(int userProfileId, int eventId) =>
             await _appDbContext.EventUsers.FirstAsync(x =>
                 x.UserProfileId == userProfileId && x.EventId == eventId);
+
+        private async Task<string> ParseSolicitedVacantPositionStatus(SolicitedPositionStatusEnum status) => 
+            status switch
+            {
+                SolicitedPositionStatusEnum.Approved => "aprobat",
+                SolicitedPositionStatusEnum.New => "nou",
+                SolicitedPositionStatusEnum.Refused => "refuzat",
+                SolicitedPositionStatusEnum.Wait => "în așteptare",
+                _ => throw new ArgumentOutOfRangeException(nameof(status), status, null)
+            };
     }
 }

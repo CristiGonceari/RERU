@@ -72,9 +72,13 @@
                 (click)="getTestById(test.id)">
                 {{'button.continue' | translate}}
               </button>
-              <button *ngIf="test.testStatus == enum.Programmed || test.testStatus == enum.AlowedToStart"
+              <button *ngIf="(test.testStatus == enum.Programmed || test.testStatus == enum.AlowedToStart) && test.canStartWithoutConfirmation"
                 class="btn btn-light-success" [routerLink]="['../start-test', test.id]">
                 {{'button.start-test' | translate}}
+              </button>
+              <button ngbTooltip="{{'tooltips.option12' | translate}}" *ngIf="(test.testStatus == enum.Programmed || test.testStatus == enum.AlowedToStart) && !test.canStartWithoutConfirmation"
+                class="btn btn-light-warning " >
+                ! {{'button.start-test' | translate}}
               </button>
               <button
                 *ngIf="test.viewTestResult && (test.result == resultEnum.NotPassed || test.result == resultEnum.Passed)"
