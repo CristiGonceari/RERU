@@ -37,9 +37,8 @@ export class DashboardComponent implements OnInit {
   form: FormGroup;
 
   constructor(private loggingService: LoggingService,
-		          public modalService: NgbModal,
-              public translate: I18nService,
-              ) {}
+              public modalService: NgbModal,
+              public translate: I18nService) {}
 
   ngOnInit(): void {
     this.retriveDropdowns();

@@ -69,9 +69,11 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
 
                     await _internalNotificationService.AddNotification(result.EvaluatorId, NotificationMessages.YouWereInvitedToEventAsEvaluator);
 
-                    await LogAction(result);
+                    var evEvaluator = await GetEventEvaluator(result.Id);
 
-                    await AddEmailNotification(result);
+                    await LogAction(evEvaluator);
+
+                    await AddEmailNotification(evEvaluator);
                 }
                 else
                 {
@@ -95,33 +97,29 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
 
         private async Task AddEmailNotification(EventEvaluator eventEvaluator)
         {
-            var item = await GetEventEvaluator(eventEvaluator.Id);
-
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
                 Subject = "Notificare de eveniment",
-                To = item.Evaluator.Email,
+                To = eventEvaluator.Evaluator.Email,
                 HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
                 {
-                    { "{user_name}", item.Evaluator.FullName },
-                    { "{email_message}", GetTableContent(item) }
+                    { "{user_name}", eventEvaluator.Evaluator.FullName },
+                    { "{email_message}", GetTableContent(eventEvaluator) }
                 }
             });
         }
 
         private async Task LogAction(EventEvaluator evEvaluator)
         {
-            var eventEvaluator = await GetEventEvaluator(evEvaluator.Id);
-
-            await _loggerService.Log(LogData.AsEvaluation($"{eventEvaluator.Evaluator.FullName} a fost adăgat în rol de evaluator la evenimentul {eventEvaluator.Event.Name}"));
+            await _loggerService.Log(LogData.AsEvaluation($"{evEvaluator.Evaluator.FullName} a fost adăgat în rol de evaluator la evenimentul {evEvaluator.Event.Name}"));
         }
 
         private async Task LogAction(List<EventEvaluator> eventEvaluators)
         {
             foreach (var item in eventEvaluators)
             {
-                await _loggerService.Log(LogData.AsEvaluation($"{item.Evaluator.FullName} a fost șters din evenimentul {item.Event.Name} ca rol de evaluator"));
+                await _loggerService.Log(LogData.AsEvaluation($"{item.Evaluator.FullName} a fost șters pentru evenimentul {item.Event.Name} ca rol de evaluator"));
             }
         }
 

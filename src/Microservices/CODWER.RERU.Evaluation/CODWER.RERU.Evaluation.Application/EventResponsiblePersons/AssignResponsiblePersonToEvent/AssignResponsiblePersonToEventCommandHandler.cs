@@ -69,9 +69,11 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
 
                     await _internalNotificationService.AddNotification(result.UserProfileId, NotificationMessages.YouWereInvitedToEventAsResponsiblePerson);
 
-                    await LogAction(result);
+                    var responsiblePerson = await GetEventResponsiblePerson(result.Id);
 
-                    await AddEmailNotification(result);
+                    await LogAction(responsiblePerson);
+
+                    await AddEmailNotification(responsiblePerson);
                 }
                 else
                 {
@@ -94,33 +96,29 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
 
         private async Task AddEmailNotification(EventResponsiblePerson eventResponsiblePerson)
         {
-            var item = await GetEventResponsiblePerson(eventResponsiblePerson.Id);
-
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
                 Subject = "Notificare de test",
-                To = item.UserProfile.Email,
+                To = eventResponsiblePerson.UserProfile.Email,
                 HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
                 {
-                    { "{user_name}", item.UserProfile.FullName },
-                    { "{email_message}", GetTableContent(item) }
+                    { "{user_name}", eventResponsiblePerson.UserProfile.FullName },
+                    { "{email_message}", GetTableContent(eventResponsiblePerson) }
                 }
             });
         }
 
         private async Task LogAction(EventResponsiblePerson eventResponsiblePerson)
         {
-            var item = await GetEventResponsiblePerson(eventResponsiblePerson.Id);
-
-            await _loggerService.Log(LogData.AsEvaluation($"{item.UserProfile.FullName} a fost adăgat în rol de persoană responsabilă la evenimentul {item.Event.Name}"));
+            await _loggerService.Log(LogData.AsEvaluation($"{eventResponsiblePerson.UserProfile.FullName} a fost adăgat/ă în rol de persoană responsabilă la evenimentul {eventResponsiblePerson.Event.Name}"));
         }
 
         private async Task LogAction(List<EventResponsiblePerson> eventResponsiblePersons)
         {
             foreach (var item in eventResponsiblePersons)
             {
-                await _loggerService.Log(LogData.AsEvaluation($"{item.UserProfile.FullName} a fost ștersă din evenimentul {item.Event.Name} in rol de persoană responsabilă"));
+                await _loggerService.Log(LogData.AsEvaluation($"{item.UserProfile.FullName} a fost șters/ă pentru evenimentul {item.Event.Name} din lista de persoane responsabile"));
             }
         }
 
