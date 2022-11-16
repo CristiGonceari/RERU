@@ -2,6 +2,9 @@
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
+using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
+using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +14,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CVU.ERP.Notifications.Email;
 
 namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignResponsiblePersonToEvent
 {
@@ -21,15 +23,18 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
         private readonly IMapper _mapper;
         private readonly IInternalNotificationService _internalNotificationService;
         private readonly INotificationService _notificationService;
+        private readonly ILoggerService<AssignResponsiblePersonToEventCommand> _loggerService;
 
         public AssignResponsiblePersonToEventCommandHandler(AppDbContext appDbContext,
             IMapper mapper,
             INotificationService notificationService,
-            IInternalNotificationService internalNotificationService)
+            IInternalNotificationService internalNotificationService, 
+            ILoggerService<AssignResponsiblePersonToEventCommand> loggerService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _internalNotificationService = internalNotificationService;
+            _loggerService = loggerService;
             _notificationService = notificationService;
         }
 
@@ -38,6 +43,8 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
             var eventUsersIds = new List<int>();
 
             var eventValues = await _appDbContext.EventResponsiblePersons
+                .Include(x => x.UserProfile)
+                .Include(x => x.Event)
                 .Where(erp => erp.EventId == request.EventId)
                 .ToListAsync();
 
@@ -62,18 +69,22 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
 
                     await _internalNotificationService.AddNotification(result.UserProfileId, NotificationMessages.YouWereInvitedToEventAsResponsiblePerson);
 
+                    await LogAction(result);
+
                     await AddEmailNotification(result);
                 }
                 else
                 {
                     eventUsersIds.Add(eventResponsiblePerson.UserProfileId);
                 }
+
                 eventValues = eventValues.Where(l => l.UserProfileId != userId).ToList();
             }
 
             if (eventValues.Any())
             {
                 _appDbContext.EventResponsiblePersons.RemoveRange(eventValues);
+                await LogAction(eventValues);
             }
 
             await _appDbContext.SaveChangesAsync();
@@ -83,10 +94,7 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
 
         private async Task AddEmailNotification(EventResponsiblePerson eventResponsiblePerson)
         {
-            var item = await _appDbContext.EventResponsiblePersons
-                .Include(eu => eu.UserProfile)
-                .Include(eu => eu.Event)
-                .FirstOrDefaultAsync(x => x.Id == eventResponsiblePerson.Id);
+            var item = await GetEventResponsiblePerson(eventResponsiblePerson.Id);
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
@@ -100,6 +108,28 @@ namespace CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignRespo
                 }
             });
         }
+
+        private async Task LogAction(EventResponsiblePerson eventResponsiblePerson)
+        {
+            var item = await GetEventResponsiblePerson(eventResponsiblePerson.Id);
+
+            await _loggerService.Log(LogData.AsEvaluation($"{item.UserProfile.FullName} a fost adăgat în rol de persoană responsabilă la evenimentul {item.Event.Name}"));
+        }
+
+        private async Task LogAction(List<EventResponsiblePerson> eventResponsiblePersons)
+        {
+            foreach (var item in eventResponsiblePersons)
+            {
+                await _loggerService.Log(LogData.AsEvaluation($"{item.UserProfile.FullName} a fost ștersă din evenimentul {item.Event.Name} in rol de persoană responsabilă"));
+            }
+        }
+
+        private async Task<EventResponsiblePerson> GetEventResponsiblePerson(int id) => 
+            await _appDbContext.EventResponsiblePersons
+                .Include(x => x.Event)
+                .Include(x => x.UserProfile)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        
 
         private string GetTableContent(EventResponsiblePerson eventResponsiblePerson)
          => $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la evenimentul ""{eventResponsiblePerson.Event.Name}"", în rol de persoană responsabilă.</p>";

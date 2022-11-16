@@ -117,7 +117,7 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.GetTimeSheetTableValu
 
         private async Task LogAction(IEnumerable<ContractorTimeSheetTableDto> contractors)
         {
-            await _loggerService.Log(LogData.AsPersonal($"TimeSheetTable was viewed", contractors));
+            await _loggerService.Log(LogData.AsPersonal($"Tabela de pontaj a fost vizualizată", contractors));
         }
 
         private async Task<IQueryable<Contractor>> FilterByName(GetTimeSheetTableValuesQuery request, IQueryable<Contractor> contractors)

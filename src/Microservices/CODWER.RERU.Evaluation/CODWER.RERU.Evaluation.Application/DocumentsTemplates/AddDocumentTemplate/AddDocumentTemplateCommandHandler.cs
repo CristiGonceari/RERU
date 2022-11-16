@@ -2,10 +2,10 @@
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 using RERU.Data.Entities.Documents;
 using RERU.Data.Persistence.Context;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.DocumentsTemplates.AddDocumentTemplate
 {
@@ -38,7 +38,7 @@ namespace CODWER.RERU.Evaluation.Application.DocumentsTemplates.AddDocumentTempl
         }
         private async Task LogAction(DocumentTemplate documentTemplate)
         {
-            await _loggerService.Log(LogData.AsPersonal($"{documentTemplate.Name} was added to document templates list", documentTemplate));
+            await _loggerService.Log(LogData.AsEvaluation($"Șablonul pentru documente {documentTemplate.Name} a fost adăugat în sistem", documentTemplate));
         }
     }
 }

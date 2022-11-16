@@ -48,14 +48,21 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.EditCandidatePos
             await _assignDocumentsAndEventsToPosition
                 .AssignRequiredDocumentsToPosition(request.Data.RequiredDocuments, positionToEdit);
 
-            await LogAction(positionToEdit);
+            await LogAction(positionToEdit, request);
 
             return Unit.Value;
         }
 
-        private async Task LogAction(CandidatePosition candidatePosition)
+        private async Task LogAction(CandidatePosition candidatePosition, EditCandidatePositionCommand request)
         {
-            await _loggerService.Log(LogData.AsCore($"Cadidate position {candidatePosition.Name} was edited", candidatePosition));
+            await _loggerService.Log(LogData.AsEvaluation($"Pozția vacantă {candidatePosition.Name} a fost editată", candidatePosition));
+
+            if (candidatePosition.IsActive != request.Data.IsActive)
+            {
+              await _loggerService.Log(LogData.AsEvaluation($"Pozția vacantă {candidatePosition.Name} a primit un statut nou {GetStatus(candidatePosition.IsActive)}", candidatePosition));
+            }
         }
+
+        private string GetStatus(bool isActive) => isActive ? "activ" : "inactiv";
     }
 }

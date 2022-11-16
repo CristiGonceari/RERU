@@ -59,7 +59,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
 
         private async Task LogAction(IEnumerable<ContractorDto> contractors)
         {
-            await _loggerService.Log(LogData.AsPersonal($"Contractors list was viewed", contractors));
+            await _loggerService.Log(LogData.AsPersonal($"Lista de angajați a fost vizualizata", contractors));
         }
 
         private IQueryable<Contractor> Filter(IQueryable<Contractor> items, GetContractorsQuery request)

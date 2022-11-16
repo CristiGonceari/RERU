@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
 
 namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 {
@@ -23,17 +25,19 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
         private readonly IInternalNotificationService _internalNotificationService;
         private readonly AppDbContext _appDbContext;
         private readonly List<int> _addedUsersIds = new();
+        private readonly ILoggerService<AssignUserToEventCommand> _loggerService;
 
         public AssignUserToEventCommandHandler(AppDbContext appDbContext,
             IMapper mapper,
             INotificationService notificationService,
-            IInternalNotificationService internalNotificationService
-            )
+            IInternalNotificationService internalNotificationService, 
+            ILoggerService<AssignUserToEventCommand> loggerService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _notificationService = notificationService;
             _internalNotificationService = internalNotificationService;
+            _loggerService = loggerService;
         }
 
         public async Task<List<int>> Handle(AssignUserToEventCommand request, CancellationToken cancellationToken)
@@ -82,6 +86,8 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
                     await _internalNotificationService
                         .AddNotification(result.UserProfileId, NotificationMessages.YouWereInvitedToEventAsCandidate);
 
+                    await LogAction(result);
+
                     await AddEmailNotification(result);
                 }
                 else
@@ -118,13 +124,17 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
         {
             await using var db = _appDbContext.NewInstance();
 
-            var userEventsToDelete = db.EventUsers
-                .Where(eu => _addedUsersIds.All(p2 => p2 != eu.UserProfileId) && eu.EventId == eventId);
+            var eventUsersToDelete = await db.EventUsers
+                .Include(x => x.Event)
+                .Include(x => x.UserProfile)
+                .Where(eu => _addedUsersIds.All(p2 => p2 != eu.UserProfileId) && eu.EventId == eventId)
+                .ToListAsync();
 
-            if (userEventsToDelete.Any())
+            if (eventUsersToDelete.Any())
             {
-                db.EventUsers.RemoveRange(userEventsToDelete);
+                db.EventUsers.RemoveRange(eventUsersToDelete);
                 await db.SaveChangesAsync();
+                await LogAction(eventUsersToDelete);
             }
         }
 
@@ -185,6 +195,31 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
             var combineString = string.Join(", ", list);
 
             return combineString;
+        }
+
+        private async Task LogAction(EventUser evUser)
+        {
+            var eventUser = await GetEventUser(evUser.Id);
+
+            await _loggerService.Log(LogData.AsEvaluation($"{eventUser.UserProfile.FullName} a fost atașat/ă la evenimentul {eventUser.Event.Name} în rol de candidat "));
+        }
+
+        private async Task LogAction(List<EventUser> eventUsers)
+        {
+            foreach (var item in eventUsers)
+            {
+                await _loggerService.Log(LogData.AsEvaluation($"{item.UserProfile.FullName} a fost detașat/ă de la evenimentul {item.Event.Name} in rol de candidat"));
+            }
+        }
+
+        private async Task<EventUser> GetEventUser(int id)
+        {
+            await using var db = _appDbContext.NewInstance();
+
+            return await db.EventUsers
+                .Include(x => x.Event)
+                .Include(x => x.UserProfile)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

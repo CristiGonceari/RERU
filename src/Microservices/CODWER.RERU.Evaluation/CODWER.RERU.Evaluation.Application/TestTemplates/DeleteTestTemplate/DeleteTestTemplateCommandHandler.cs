@@ -1,11 +1,11 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using CVU.ERP.Logging;
+﻿using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.DeleteTestTemplate
 {
@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.DeleteTestTemplate
 
         private async Task LogAction(TestTemplate testTemplate)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Test template was deleted", testTemplate));
+            await _loggerService.Log(LogData.AsEvaluation($"Șablonul de test {testTemplate.Name} a fost șters din sistem", testTemplate));
         }
     }
 }

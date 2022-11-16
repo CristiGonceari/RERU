@@ -1,11 +1,11 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Threading;
-using System.Threading.Tasks;
-using CVU.ERP.Logging;
+﻿using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.Plans.DeletePlan
 {
@@ -33,7 +33,7 @@ namespace CODWER.RERU.Evaluation.Application.Plans.DeletePlan
 
         private async Task LogAction(Plan item)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Plan was deleted", item));
+            await _loggerService.Log(LogData.AsEvaluation($"Planul {item.Name} cu descrierea {item.Description} a fost șters din sistem", item));
         }
     }
 }

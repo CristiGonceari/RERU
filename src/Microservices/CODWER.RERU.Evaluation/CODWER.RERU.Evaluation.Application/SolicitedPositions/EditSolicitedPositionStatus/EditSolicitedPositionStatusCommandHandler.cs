@@ -31,6 +31,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.EditSolicitedPos
         public async Task<Unit> Handle(EditSolicitedPositionStatusCommand request, CancellationToken cancellationToken)
         {
             var solicitedTest = await _appDbContext.SolicitedVacantPositions
+                .Include(s => s.CandidatePosition)
                 .Include(s => s.UserProfile)
                 .FirstAsync(x => x.Id == request.Id);
             
@@ -88,11 +89,11 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.EditSolicitedPos
         {
             if(item.SolicitedPositionStatus == SolicitedPositionStatusEnum.Refused)
             {
-                await _loggerService.Log(LogData.AsEvaluation($"Solicited test was refused", item));
+                await _loggerService.Log(LogData.AsEvaluation($"Poziția vacantă {item.CandidatePosition.Name} la care a candidat {item.UserProfile.FullName} a fost refuzată", item));
             } 
             else if (item.SolicitedPositionStatus == SolicitedPositionStatusEnum.Approved)
             {
-                await _loggerService.Log(LogData.AsEvaluation($"Solicited test was approved", item));
+                await _loggerService.Log(LogData.AsEvaluation($"Poziția vacantă {item.CandidatePosition.Name} la care a candidat {item.UserProfile.FullName} a fost aprobată", item));
             }
         }
     }

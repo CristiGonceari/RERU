@@ -5,6 +5,8 @@ import { FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DetailsModalComponent } from '../../utils/modals/details-modal/details-modal.component';
 import { DeleteLogsModalComponent } from '../../utils/modals/delete-logs-modal/delete-logs-modal.component';
+import { I18nService } from '@erp/shared';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,23 +22,38 @@ export class DashboardComponent implements OnInit {
   searchFrom: string;
   searchTo: string;
   userName: string;
+  eventName: string;
   userIdentifier: string;
+  eventMessage: string;
+  jsonMessage: string = '';
 
   selectedProject: any;
   selectedEvent: any;
   loggingValues: [] = [];
 
-  projects: any;
-  events: any;
+  projects: any = [];
+  events: any = [];
   event: string = '';
   form: FormGroup;
 
   constructor(private loggingService: LoggingService,
-		public modalService: NgbModal) {}
+		          public modalService: NgbModal,
+              public translate: I18nService,
+              ) {}
 
   ngOnInit(): void {
     this.retriveDropdowns();
     this.getLoggingValues();
+    this.getTranslates()
+  }
+
+  getTranslates(){
+     let word;
+    forkJoin([
+      this.translate.get('dashboard.event'),
+    ]).subscribe(([title]) => {
+      word = title;
+    });
   }
 
   initFilters() {
@@ -51,6 +68,9 @@ export class DashboardComponent implements OnInit {
     this.selectedProject = '';
     this.selectedEvent = '';
     this.userName = '';
+    this.eventName = '';
+    this.eventMessage = '';
+    this.jsonMessage = '';
     this.userIdentifier = '';
 
     this.getLoggingValues();
@@ -58,9 +78,6 @@ export class DashboardComponent implements OnInit {
   }
 
   retriveDropdowns() {
-    this.events = [];
-    this.projects = [];
-
     this.loggingService.getProjectSelectItem().subscribe((res) => (this.projects = res.data));
     this.loggingService.getEventSelectItem().subscribe((res) => (this.events = res.data));
   }
@@ -87,7 +104,9 @@ export class DashboardComponent implements OnInit {
       fromDate: this.searchFrom || '',
       toDate: this.searchTo || '',
       projectName: this.selectedProject || '',
-      event: this.selectedEvent || '',
+      event: this.eventName || '',
+      eventMessage: this.eventMessage || '',
+      jsonMessage: this.jsonMessage.toString() || '',
       userName:  this.userName || '',
       userIdentifier: this.userIdentifier || '',
       page: data.page || 1,

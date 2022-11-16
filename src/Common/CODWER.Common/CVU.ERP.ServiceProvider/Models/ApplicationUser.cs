@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CVU.ERP.ServiceProvider.Models 
+namespace CVU.ERP.ServiceProvider.Models
 {
     ///<summary>
     /// This class is used to represent the user against the application
@@ -15,8 +15,10 @@ namespace CVU.ERP.ServiceProvider.Models
         }
 
         public string Id { set; get; }
+
         public bool IsAnonymous => string.IsNullOrEmpty(Id);
-        
+        public string FullName => $"{LastName} {FirstName} {FatherName}";
+
         public string FirstName { set; get; }
         public string LastName { get; set; }
         public string FatherName { get; set; }

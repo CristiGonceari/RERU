@@ -5,15 +5,14 @@ using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
-using CVU.ERP.Module.Application.Models.Internal;
+using CVU.ERP.ServiceProvider.Clients;
 using MediatR;
+using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CVU.ERP.ServiceProvider.Clients;
-using RERU.Data.Entities;
-using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Core.Application.Users.InregistrateUser
 {
@@ -94,7 +93,7 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
 
         private async Task LogAction(UserProfile userProfile)
         {
-            await _loggerService.LogWithoutUser(LogData.AsCore($"User {userProfile.FirstName} {userProfile.LastName} was inregistrated to system", userProfile));
+            await _loggerService.LogWithoutUser(LogData.AsCore($"Utilizatorul {userProfile.FullName} s-a inregistrat în sistem", userProfile));
         }
     }
 }

@@ -37,12 +37,12 @@ namespace CODWER.RERU.Logging.Application.GetLoggingValuesQuery
         {
             if (!string.IsNullOrEmpty(request.Event))
             {
-                items = items.Where(x => x.Event.Contains(request.Event));
+                items = items.Where(x => x.Event.ToLower().Contains(request.Event.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(request.ProjectName))
             {
-                items = items.Where(x => x.Project.Contains(request.ProjectName));
+                items = items.Where(x => x.Project.ToLower().Contains(request.ProjectName.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(request.UserName))
@@ -53,6 +53,16 @@ namespace CODWER.RERU.Logging.Application.GetLoggingValuesQuery
             if (!string.IsNullOrEmpty(request.UserIdentifier))
             {
                 items = items.Where(x => x.UserIdentifier.Contains(request.UserIdentifier));
+            }
+
+            if (!string.IsNullOrEmpty(request.EventMessage))
+            {
+                items = items.Where(x => x.EventMessage.ToLower().Contains(request.EventMessage.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(request.JsonMessage))
+            {
+                items = items.Where(x => x != null && x.JsonMessage.Contains(request.JsonMessage));
             }
 
             if (request.FromDate != null)
