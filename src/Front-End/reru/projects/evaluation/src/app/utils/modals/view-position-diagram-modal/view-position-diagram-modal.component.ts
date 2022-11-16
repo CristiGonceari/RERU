@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewEncapsulation } from '@angular/core';
+import { EnumStringTranslatorService } from '../../services/enum-string-translator.service';
+import { TestStatusEnum } from '../../enums/test-status.enum';
 
 @Component({
   selector: 'app-view-position-diagram-modal',
@@ -15,9 +17,17 @@ export class ViewPositionDiagramModalComponent implements OnInit {
   usersDiagram = [];
   testTemplates = [];
 
-  constructor(private activeModal: NgbActiveModal) { }
+  status = TestStatusEnum;
+
+  constructor(private activeModal: NgbActiveModal,
+    private enumStringTranslatorService: EnumStringTranslatorService,
+    ) { }
 
   ngOnInit(): void {
+  }
+
+  translateResultValue(item) {
+    return this.enumStringTranslatorService.translateTestResultValue(item);
   }
 
   close(): void {

@@ -29,6 +29,11 @@ export class DiagramComponent implements OnInit {
   status = TestStatusEnum;
   result = TestResultStatusEnum;
 
+  isOpenAddTest: boolean = false;
+
+  selectedEventId;
+  selectedTestTemplateId;
+
   constructor(
     private positionService: CandidatePositionService,
     private activatedRoute: ActivatedRoute,
@@ -86,9 +91,27 @@ export class DiagramComponent implements OnInit {
   }
 
   openFullScreenMode() {
-    const modalRef: any = this.modalService.open(ViewPositionDiagramModalComponent,{ centered: true, size: 'xl',});
+    const modalRef: any = this.modalService.open(ViewPositionDiagramModalComponent, { centered: true, size: 'xl'});
     modalRef.componentInstance.eventsDiagram = this.eventsDiagram;
     modalRef.componentInstance.usersDiagram = this.usersDiagram;
     modalRef.componentInstance.testTemplates = this.testTemplates;
+  }
+
+  openAddTest(value) {
+    this.isOpenAddTest = true;
+    this.selectedEventId = value.eventId;
+    this.selectedTestTemplateId = value.testTemplateId;
+  }
+
+  onChangeAddTest(value: boolean) {
+    this.isOpenAddTest = value;
+    this.clearDiagramData();
+    this.getDiagram();
+  }
+
+  clearDiagramData() {
+    this.eventsDiagram = [];
+    this.usersDiagram = [];
+    this.testTemplates = [];
   }
 }
