@@ -39,7 +39,7 @@ namespace CODWER.RERU.Evaluation.Application.DocumentsTemplates.UpdateDocumentTe
         }
         private async Task LogAction(DocumentTemplate documentTemplate)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Șablonul pentru documente {documentTemplate.Name} a fost actualizat", documentTemplate));
+            await _loggerService.Log(LogData.AsEvaluation($@"Șablonul pentru documente ""{documentTemplate.Name}"" a fost actualizat", documentTemplate));
         }
     }
 }

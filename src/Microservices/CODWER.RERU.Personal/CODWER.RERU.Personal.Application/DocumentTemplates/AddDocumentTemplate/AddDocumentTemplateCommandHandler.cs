@@ -39,7 +39,7 @@ namespace CODWER.RERU.Personal.Application.DocumentTemplates.AddDocumentTemplate
 
         private async Task LogAction(DocumentTemplate documentTemplate)
         {
-            await _loggerService.Log(LogData.AsPersonal($"Șablonul de documente {documentTemplate.Name} a fost adăugat în sistem", documentTemplate));
+            await _loggerService.Log(LogData.AsPersonal($@"Șablonul de documente ""{documentTemplate.Name}"" a fost adăugat în sistem", documentTemplate));
         }
     }
 }

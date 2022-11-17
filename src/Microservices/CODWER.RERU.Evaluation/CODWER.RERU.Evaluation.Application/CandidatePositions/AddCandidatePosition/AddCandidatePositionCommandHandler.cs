@@ -54,8 +54,8 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.AddCandidatePosi
         }
         private async Task LogAction(CandidatePosition candidatePosition)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Poziția vacanta {candidatePosition.Name} a fost adăugata în sistem, " +
-                                                          $"valabilă de la {candidatePosition.From:dd/MM/yyyy HH:mm} până la {candidatePosition.To:dd/MM/yyyy HH:mm}", candidatePosition));
+            await _loggerService.Log(LogData.AsEvaluation($@"Poziția vacanta ""{candidatePosition.Name}"" a fost adăugata în sistem, " +
+                                                          $@"valabilă de la ""{candidatePosition.From:dd/MM/yyyy HH:mm}"" până la ``{candidatePosition.To:dd/MM/yyyy HH:mm}``", candidatePosition));
         }
     }
 }

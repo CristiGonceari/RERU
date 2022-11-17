@@ -196,7 +196,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 .Include(x => x.TestTemplate)
                 .FirstOrDefaultAsync(x => x.Id == testId);
 
-            await _loggerService.Log(LogData.AsEvaluation($"Utilizatorul {test.UserProfile.FullName} a fost atașat/ă la testul {test.TestTemplate.Name} data: {test.ProgrammedTime:dd/MM/yyyy HH:mm}"));
+            await _loggerService.Log(LogData.AsEvaluation($@"Utilizatorul ""{test.UserProfile.FullName}"" a fost atașat/ă la testul ""{test.TestTemplate.Name}"" data: ""{test.ProgrammedTime:dd/MM/yyyy HH:mm}"""));
         }
 
         private async Task SaveExcelFile(int processId, ExcelPackage package)

@@ -34,7 +34,7 @@ namespace CODWER.RERU.Personal.Application.Departments.RemoveDepartment
 
         private async Task LogAction(Department department)
         {
-            await _loggerService.Log(LogData.AsPersonal($"Departamentul {department.Name} a fost șters din sistem", department));
+            await _loggerService.Log(LogData.AsPersonal($@"Departamentul ""{department.Name}"" a fost șters din sistem", department));
         }
     }
 }

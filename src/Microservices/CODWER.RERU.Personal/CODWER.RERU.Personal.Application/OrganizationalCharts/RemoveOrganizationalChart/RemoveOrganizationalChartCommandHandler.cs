@@ -34,7 +34,7 @@ namespace CODWER.RERU.Personal.Application.OrganizationalCharts.RemoveOrganizati
 
         private async Task LogAction(OrganizationalChart organizationalChart)
         {
-            await _loggerService.Log(LogData.AsPersonal($"Organigrama {organizationalChart.Name} a fost ștearsă din sistem", organizationalChart));
+            await _loggerService.Log(LogData.AsPersonal($@"Organigrama ""{organizationalChart.Name}"" a fost ștearsă din sistem", organizationalChart));
         }
     }
 }

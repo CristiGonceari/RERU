@@ -39,7 +39,7 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
 
         private async Task LogAction(UserProfile userProfile)
         {
-            await _loggerService.Log(LogData.AsCore($"Utilizatorul {userProfile.FullName} a fost actualizat în sistem", userProfile));
+            await _loggerService.Log(LogData.AsCore($@"Utilizatorul ""{userProfile.FullName}"" a fost actualizat în sistem", userProfile));
         }
     }
 }

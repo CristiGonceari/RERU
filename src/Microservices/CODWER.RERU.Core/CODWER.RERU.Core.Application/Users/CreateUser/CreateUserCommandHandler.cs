@@ -91,7 +91,7 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
         private async Task LogAction(UserProfile userProfile)
         {
-            await _loggerService.Log(LogData.AsCore($"Utilizatorul {userProfile.FullName} a fost adăugat în sistem", userProfile));
+            await _loggerService.Log(LogData.AsCore($@"Utilizatorul ""{userProfile.FullName}"" a fost adăugat în sistem", userProfile));
         }
 
         //private async Task SyncUserProfile(UserProfile userProfile)

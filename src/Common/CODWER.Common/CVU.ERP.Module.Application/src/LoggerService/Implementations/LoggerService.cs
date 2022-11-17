@@ -123,7 +123,7 @@ namespace CVU.ERP.Module.Application.LoggerService.Implementations
 
         private string ParseEventMessage(string eventMessage, ApplicationUser coreUser)
         {
-            return eventMessage + $", de către {coreUser.FullName}";
+            return eventMessage + $@", de către ""{coreUser.FullName}""";
         }
     }
 }

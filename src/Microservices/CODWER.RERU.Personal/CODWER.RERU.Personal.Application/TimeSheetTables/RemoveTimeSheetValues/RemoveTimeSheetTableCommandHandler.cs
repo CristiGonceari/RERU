@@ -43,7 +43,7 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.RemoveTimeSheetValues
 
         private async Task LogAction(IQueryable<TimeSheetTable> timeSheetTable, RemoveTimeSheetTableCommand request)
         {
-            await _loggerService.Log(LogData.AsPersonal($"Datele din tabela de pontaj de pe data de {request.FromDate:g} pănă la {request.ToDate:g} a fost șterse din sistem", timeSheetTable));
+            await _loggerService.Log(LogData.AsPersonal($@"Datele din tabela de pontaj de pe data de ""{request.FromDate:g}"" pănă la ""{request.ToDate:g}"" a fost șterse din sistem", timeSheetTable));
         }
     }
 }

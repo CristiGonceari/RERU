@@ -134,7 +134,7 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
                 .Include(x => x.Contractor)
                 .FirstAsync(x => x.Id == userProfileId);
 
-            await _loggerService.Log(LogData.AsPersonal($"Utilizatorul {userProfile.Contractor.FirstName} {userProfile.Contractor.LastName} a fost adăugat/actualizat în sistem", userProfile));
+            await _loggerService.Log(LogData.AsPersonal($@"Utilizatorul ""{userProfile.Contractor.FirstName} {userProfile.Contractor.LastName}"" a fost adăugat/actualizat în sistem", userProfile));
         }
     }
 }

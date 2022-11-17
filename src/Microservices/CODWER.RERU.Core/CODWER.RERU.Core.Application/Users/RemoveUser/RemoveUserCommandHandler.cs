@@ -91,7 +91,7 @@ namespace CODWER.RERU.Core.Application.Users.RemoveUser
 
         private async Task LogAction(UserProfile userProfile)
         {
-            await _loggerService.Log(LogData.AsCore($"Utilizatorul {userProfile.FullName} a fost șters din sistem", userProfile));
+            await _loggerService.Log(LogData.AsCore($@"Utilizatorul ""{userProfile.FullName}"" a fost șters din sistem", userProfile));
         }
     }
 }

@@ -55,7 +55,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.EditCandidatePos
 
         private async Task LogAction(CandidatePosition candidatePosition)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Pozția vacantă {candidatePosition.Name} a fost editată", candidatePosition));
+            await _loggerService.Log(LogData.AsEvaluation($@"Pozția vacantă ""{candidatePosition.Name}"" a fost editată", candidatePosition));
         }
     }
 }

@@ -34,7 +34,7 @@ namespace CODWER.RERU.Evaluation.Application.DocumentsTemplates.RemoveDocumentTe
 
         private async Task LogAction(DocumentTemplate documentTemplate)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Șablonul pentru documente {documentTemplate.Name} a fost șters din sistem", documentTemplate));
+            await _loggerService.Log(LogData.AsEvaluation($@"Șablonul pentru documente ""{documentTemplate.Name}"" a fost șters din sistem", documentTemplate));
         }
     }
 }

@@ -105,7 +105,7 @@ export class DashboardComponent implements OnInit {
       projectName: this.selectedProject || '',
       event: this.eventName || '',
       eventMessage: this.eventMessage || '',
-      jsonMessage: this.jsonMessage.toString() || '',
+      jsonMessage: this.jsonMessage.replace(/\s+/g, '') || '',
       userName:  this.userName || '',
       userIdentifier: this.userIdentifier || '',
       page: data.page || 1,

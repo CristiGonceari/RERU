@@ -66,7 +66,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPosit
                 .Include(x => x.CandidatePosition)
                 .FirstOrDefaultAsync(x => x.Id == solicitedVacantPosition.Id);
 
-            await _loggerService.Log(LogData.AsEvaluation($"Poziția vacantă {item.CandidatePosition.Name} a fost candidată", item));
+            await _loggerService.Log(LogData.AsEvaluation($@"Poziția vacantă ""{item.CandidatePosition.Name}"" a fost candidată", item));
         }
 
         private async Task EmailPositionResponsiblePerson(AddMySolicitedPositionCommand request, string candidateName)

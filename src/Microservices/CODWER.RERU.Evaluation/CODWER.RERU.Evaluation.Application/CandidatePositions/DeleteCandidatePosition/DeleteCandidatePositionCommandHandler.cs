@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.DeleteCandidateP
 
         private async Task LogAction(CandidatePosition candidatePosition)
         {
-            await _loggerService.Log(LogData.AsCore($"Poziția vacantă {candidatePosition.Name} a fost ștearsă", candidatePosition));
+            await _loggerService.Log(LogData.AsCore($@"Poziția vacantă ""{candidatePosition.Name}"" a fost ștearsă", candidatePosition));
         }
     }
 }
