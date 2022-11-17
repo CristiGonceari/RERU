@@ -329,6 +329,7 @@
     "title": "Teste",
     "subtitle": "Gestionarea testelor",
     "new-test": "Adaugă test",
+    "program-test": "Programează",
     "add-test-template": "Adaugă șablon",
     "update": "Modificați Testul",
     "test-option": "Opțiunile Tipului Testului",

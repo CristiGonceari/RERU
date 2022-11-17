@@ -330,6 +330,7 @@
     "title": "Test Template",
     "subtitle": "Manage Test Template",
     "new-test": "Add test",
+    "program-test": "Add test",
     "add-test-template": "Add template",
     "update": "Update Test Template",
     "test-option": "Test Template Options",

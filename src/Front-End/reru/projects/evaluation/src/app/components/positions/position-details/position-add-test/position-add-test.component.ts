@@ -34,8 +34,6 @@ export class PositionAddTestComponent implements OnInit {
 
   processProgress: any;
   isLoading: boolean = true;
-  eventsList: any;
-  selectActiveTests: any;
   eventDatas: any;
   evaluatorList = [];
   userListToAdd: number[] = [];
@@ -70,6 +68,9 @@ export class PositionAddTestComponent implements OnInit {
   messageText = '';
   exceptUserIds = [];
 
+  selectedEventName;
+  selectedTestTemplateName;
+
   constructor(
     private referenceService: ReferenceService,
     private testTemplateService: TestTemplateService,
@@ -89,8 +90,11 @@ export class PositionAddTestComponent implements OnInit {
 
   getEvents() {
     this.referenceService.getEvents().subscribe(res => {
-      this.eventsList = res.data;
-      this.getActiveTestTemplates(this.eventId);
+
+      this.hasEventEvaluator = res.data.find(x => x.eventId === this.eventId).isEventEvaluator;
+      this.selectedEventName = res.data.filter(x => x.eventId == this.eventId).map(x => x.eventName);
+
+      this.getActiveTestTemplates(this.eventId)
     });
   }
 
@@ -103,47 +107,46 @@ export class PositionAddTestComponent implements OnInit {
 
   getEvent(eventId: any) {
     this.eventService.getEvent(eventId).subscribe((res) => {
+
       this.eventDatas = res.data;
       this.showEventCard = true;
-
     })
   }
 
-  getActiveTestTemplates(event?) {
-    this.isLoading = true;
 
-    if (event) {
-      this.hasEventEvaluator = this.eventsList.find(x => x.eventId === event).isEventEvaluator;
-    }
+
+  getActiveTestTemplates(eventId) {
+    this.isLoading = true;
 
     let params = {
       testTemplateStatus: TestTemplateStatusEnum.Active,
-      eventId: event || null
+      eventId: eventId || null
     }
 
     this.testTemplateService.getTestTemplateByStatus(params).subscribe((res) => {
-      this.selectActiveTests = res.data;
-      this.checkIfIsOneAnswer(this.testTemplateId);
+      this.selectedTestTemplateName = res.data.find(x => x.testTemplateId === this.testTemplateId).testTemplateName;
+
+      this.checkIfIsOneAnswer(this.testTemplateId, res.data);
       this.isLoading = false;
     })
 
     this.userListToAdd = [];
     this.evaluatorList = [];
 
-    if (params.eventId != null) {
+    if (eventId != null) {
       this.getEvent(params.eventId);
     }
     else {
       this.showEventCard = false;
     }
 
-    if (event) this.clearTestData()
+    if (eventId) this.clearTestData()
   }
 
-  checkIfIsOneAnswer(event) {
-    if (event) {
-      this.isTestTemplateOneAnswer = this.selectActiveTests.find(x => x.testTemplateId === event).isOnlyOneAnswer;
-      this.printTest = this.selectActiveTests.find(x => x.testTemplateId === event).printTest;
+  checkIfIsOneAnswer(testTemplateId, activeTestTemplates) {
+    if (testTemplateId) {
+      this.isTestTemplateOneAnswer = activeTestTemplates.find(x => x.testTemplateId === testTemplateId).isOnlyOneAnswer;
+      this.printTest = activeTestTemplates.find(x => x.testTemplateId === testTemplateId).printTest;
     } else this.isTestTemplateOneAnswer = false;
 
     if (!this.printTest) this.messageText = "Acest test poate conține video sau audio!"
@@ -152,7 +155,7 @@ export class PositionAddTestComponent implements OnInit {
       this.evaluator.value = null;
     }
 
-    if (event) {
+    if (testTemplateId) {
       this.evaluatorList[0] = null;
       this.evaluatorList.length = 0;
     }
@@ -278,7 +281,7 @@ export class PositionAddTestComponent implements OnInit {
   openUsersModal(attachedItems, inputType): void {
     const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
     modalRef.componentInstance.exceptUserIds = this.exceptUserIds;
-    modalRef.componentInstance.eventId = this.eventId
+    modalRef.componentInstance.eventId = this.eventId;
     modalRef.componentInstance.positionId = this.positionId;
     modalRef.componentInstance.attachedItems = attachedItems;
     modalRef.componentInstance.inputType = inputType;
