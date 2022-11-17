@@ -39,7 +39,7 @@ namespace CODWER.RERU.Personal.Application.OrganizationRoles.UpdateOrganizationR
         }
         private async Task LogAction(Role Role)
         {
-            await _loggerService.Log(LogData.AsPersonal($"Rolul  {Role.Name} a fost actualizat în sistem", Role));
+            await _loggerService.Log(LogData.AsPersonal($@"Rolul ""{Role.Name}"" a fost actualizat în sistem", Role));
         }
     }
 }

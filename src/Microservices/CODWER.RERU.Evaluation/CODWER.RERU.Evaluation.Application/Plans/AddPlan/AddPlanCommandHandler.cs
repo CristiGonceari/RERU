@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.Plans.AddPlan
 
         private async Task LogAction(Plan item)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Planul {item.Name} a fost adăugat în sistem cu descrierea {item.Description}", item));
+            await _loggerService.Log(LogData.AsEvaluation($@"Planul ""{item.Name}"" a fost adăugat în sistem", item));
         }
     }
 }

@@ -55,7 +55,7 @@ namespace CODWER.RERU.Core.Application.Users.ResetUserPassword
 
         private async Task LogAction(UserProfile userProfile)
         {
-            await _loggerService.Log(LogData.AsCore($"Parola utilizatorului {userProfile.FullName} a fost resetată", userProfile));
+            await _loggerService.Log(LogData.AsCore($@"Parola utilizatorului ""{userProfile.FullName}"" a fost resetată", userProfile));
         }
     }
 }

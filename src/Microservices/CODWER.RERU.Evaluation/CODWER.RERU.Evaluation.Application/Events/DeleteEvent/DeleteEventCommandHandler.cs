@@ -41,7 +41,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.DeleteEvent
 
         private async Task LogAction(Event item)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Evenimentul {item.Name} a fost șters din sistem", item));
+            await _loggerService.Log(LogData.AsEvaluation($@"Evenimentul ""{item.Name}"" a fost șters din sistem", item));
         }
     }
 }

@@ -36,7 +36,7 @@ namespace CODWER.RERU.Evaluation.Application.Locations.EditLocation
 
         private async Task LogAction(Location item)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Locația {item.Name} a fost actualizată în sistem cu adresa {item.Address}", item));
+            await _loggerService.Log(LogData.AsEvaluation($@"Locația ""{item.Name}"" a fost actualizată în sistem cu adresa ""{item.Address}""", item));
         }
     }
 }

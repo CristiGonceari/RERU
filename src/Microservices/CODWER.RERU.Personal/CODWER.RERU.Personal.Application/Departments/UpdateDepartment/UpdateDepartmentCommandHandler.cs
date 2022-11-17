@@ -40,7 +40,7 @@ namespace CODWER.RERU.Personal.Application.Departments.UpdateDepartment
 
         private async Task LogAction(Department department)
         {
-            await _loggerService.Log(LogData.AsPersonal($"Departamentul  {department.Name} a fost actualizat în sistem", department));
+            await _loggerService.Log(LogData.AsPersonal($@"Departamentul ""{department.Name}"" a fost actualizat în sistem", department));
         }
     }
 }

@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.DeleteTestTemplate
 
         private async Task LogAction(TestTemplate testTemplate)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Șablonul de test {testTemplate.Name} a fost șters din sistem", testTemplate));
+            await _loggerService.Log(LogData.AsEvaluation($@"Șablonul de test ""{testTemplate.Name}"" a fost șters din sistem", testTemplate));
         }
     }
 }

@@ -151,7 +151,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
                 .Include(x => x.TestTemplate)
                 .FirstOrDefaultAsync(x => x.Id == testId);
 
-            await _loggerService.Log(LogData.AsEvaluation($"Evaluatorul {test.Evaluator.FullName} a fost atașat/ă ca evaluator pentru {test.UserProfile.FullName} la evaluarea {test.TestTemplate.Name}"));
+            await _loggerService.Log(LogData.AsEvaluation($@"Evaluatorul ""{test.Evaluator.FullName}"" a fost atașat/ă ca evaluator pentru ""{test.UserProfile.FullName}"" la evaluarea ``{test.TestTemplate.Name}``"));
         }
     }
 }

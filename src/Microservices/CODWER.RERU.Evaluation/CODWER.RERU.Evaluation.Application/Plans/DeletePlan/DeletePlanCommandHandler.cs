@@ -33,7 +33,7 @@ namespace CODWER.RERU.Evaluation.Application.Plans.DeletePlan
 
         private async Task LogAction(Plan item)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Planul {item.Name} cu descrierea {item.Description} a fost șters din sistem", item));
+            await _loggerService.Log(LogData.AsEvaluation($@"Planul ""{item.Name}"" a fost șters din sistem", item));
         }
     }
 }

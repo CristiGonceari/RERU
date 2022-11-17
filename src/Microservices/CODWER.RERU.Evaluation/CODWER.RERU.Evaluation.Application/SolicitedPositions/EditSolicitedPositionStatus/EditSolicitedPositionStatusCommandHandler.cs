@@ -91,13 +91,13 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.EditSolicitedPos
             switch (item.SolicitedPositionStatus)
             {
                 case SolicitedPositionStatusEnum.Refused:
-                    await _loggerService.Log(LogData.AsEvaluation($"Poziția vacantă {item.CandidatePosition.Name} la care a candidat {item.UserProfile.FullName} a fost refuzată", item));
+                    await _loggerService.Log(LogData.AsEvaluation($@"Poziția vacantă ""{item.CandidatePosition.Name}"" la care a candidat ""{item.UserProfile.FullName}"" a fost refuzată", item));
                     break;
                 case SolicitedPositionStatusEnum.Approved:
-                    await _loggerService.Log(LogData.AsEvaluation($"Poziția vacantă {item.CandidatePosition.Name} la care a candidat {item.UserProfile.FullName} a fost aprobată", item));
+                    await _loggerService.Log(LogData.AsEvaluation($@"Poziția vacantă ""{item.CandidatePosition.Name}"" la care a candidat ""{item.UserProfile.FullName}"" a fost aprobată", item));
                     break;
                 case SolicitedPositionStatusEnum.Wait:
-                    await _loggerService.Log(LogData.AsEvaluation($"Poziția vacantă {item.CandidatePosition.Name} la care a candidat {item.UserProfile.FullName} a fost pusă în așteptare", item));
+                    await _loggerService.Log(LogData.AsEvaluation($@"Poziția vacantă ""{item.CandidatePosition.Name}"" la care a candidat ""{item.UserProfile.FullName}"" a fost pusă în așteptare", item));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

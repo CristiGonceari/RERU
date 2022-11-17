@@ -38,7 +38,7 @@ namespace CODWER.RERU.Evaluation.Application.DocumentsTemplates.AddDocumentTempl
         }
         private async Task LogAction(DocumentTemplate documentTemplate)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Șablonul pentru documente {documentTemplate.Name} a fost adăugat în sistem", documentTemplate));
+            await _loggerService.Log(LogData.AsEvaluation($@"Șablonul pentru documente ""{documentTemplate.Name}"" a fost adăugat în sistem", documentTemplate));
         }
     }
 }

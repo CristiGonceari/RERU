@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.EditTestTemplateStatu
 
         private async Task LogAction(TestTemplate testTemplate)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Statutul șablonului de test {testTemplate.Name} a primit un nou statut {await ParseStatus(testTemplate.Status)} ", testTemplate));
+            await _loggerService.Log(LogData.AsEvaluation($@"Statutul șablonului de test ""{testTemplate.Name}"" a primit un nou statut ""{await ParseStatus(testTemplate.Status)}""", testTemplate));
         }
 
         private async Task<string> ParseStatus(TestTemplateStatusEnum status) => 
