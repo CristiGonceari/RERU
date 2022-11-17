@@ -22,10 +22,12 @@ namespace RERU.Data.Entities
         public TestResultStatusEnum ResultStatus { get; set; }
 
         public string ResultStatusValue => ResultStatus == TestResultStatusEnum.Recommended
-            ? $"{ResultStatus}:{RecommendedFor}/{NotRecommendedFor}" : ResultStatus.ToString();
+            ? $"{ResultStatus}:({RecommendedForValue}/{NotRecommendedForValue})" : ResultStatus.ToString();
 
         public string RecommendedFor { get; set; }
+        public string RecommendedForValue => string.IsNullOrEmpty(RecommendedFor) ? "x" : RecommendedFor;
         public string NotRecommendedFor { get; set; }
+        public string NotRecommendedForValue => string.IsNullOrEmpty(NotRecommendedFor) ? "x" : NotRecommendedFor;
 
         public DateTime ProgrammedTime { get; set; }
         public DateTime? EndProgrammedTime { get; set; }
