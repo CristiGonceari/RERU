@@ -1,7 +1,12 @@
-﻿using CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions;
+﻿using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions;
 using CODWER.RERU.Evaluation.Application.Tests.AddTest;
+using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
+using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Services;
 using CVU.ERP.StorageService;
@@ -10,18 +15,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using OfficeOpenXml;
 using RERU.Data.Entities;
-using RERU.Data.Entities.StaticExtensions;
 using RERU.Data.Persistence.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Application.Services;
-using CODWER.RERU.Evaluation.Application.Validation;
-using CVU.ERP.Common.DataTransferObjects.Config;
-using CVU.ERP.Logging;
-using CVU.ERP.Logging.Models;
 using FileTypeEnum = CVU.ERP.StorageService.Entities.FileTypeEnum;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
@@ -197,7 +196,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 .Include(x => x.TestTemplate)
                 .FirstOrDefaultAsync(x => x.Id == testId);
 
-            await _loggerService.Log(LogData.AsEvaluation($"User {test.UserProfile.FirstName} {test.UserProfile.LastName} was assigned to test with {test.TestTemplate.Name} test template at {test.ProgrammedTime:dd/MM/yyyy HH:mm}"));
+            await _loggerService.Log(LogData.AsEvaluation($@"Utilizatorul ""{test.UserProfile.FullName}"" a fost atașat/ă la testul ""{test.TestTemplate.Name}"" data: ""{test.ProgrammedTime:dd/MM/yyyy HH:mm}"""));
         }
 
         private async Task SaveExcelFile(int processId, ExcelPackage package)

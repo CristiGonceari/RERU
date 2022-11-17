@@ -330,6 +330,7 @@
     "title": "Test Template",
     "subtitle": "Manage Test Template",
     "new-test": "Add test",
+    "program-test": "Programme the test",
     "add-test-template": "Add template",
     "update": "Update Test Template",
     "test-option": "Test Template Options",
@@ -667,7 +668,8 @@
     "option8": "User will not be able to see the pagination",
     "option9": "User can view more questions per page",
     "option10": "User will not be able to continue the test if the maximum number of errors was made",
-    "option11": "User will get an email including information about location or/and specify time"
+    "option11": "User will get an email including information about location or/and specify time",
+    "option12": "Administrator have to give access to start this test"
   },
   "faq": {
     "help": "Help",
@@ -868,7 +870,7 @@
     "please-select-format": "Please select format"
   },
   "solicited-position":{
-    "solicited-positions": "Solictited positions",
+    "solicited-positions": "Solicited positions",
     "attached-documents": "Attached documents",
     "required-documents": "Required documents",
     "review" : "Review",
@@ -1054,7 +1056,7 @@
     "view-templates": "View test templates",
     "search-evaluator": "Search by evaluator",
     "run-evaluation": "Run evaluation",
-    "start-evaluation": "Start evaluation",
+    "start-evaluation": "Start",
     "view-evaluation": "View evaluation",
     "evaluation-data": "Enter the evaluation details and confirm",
     "received-evaluations": "Received evaluations",

@@ -133,7 +133,7 @@ export class ViewEvaluationResultComponent implements OnInit {
   getSummary(): void {
     this.verifyService.getSummary(this.testId).subscribe(
       (res) => {
-        for (var i = 1; i <= res.data.testQuestions.length; i++) {
+        for (let i = 1; i <= res.data.testQuestions.length; i++) {
           this.pager.push(i);
         };
         this.summaryList = res.data.testQuestions;

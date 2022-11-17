@@ -2,10 +2,10 @@
 using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Threading;
-using System.Threading.Tasks;
 using RERU.Data.Entities.Documents;
 using RERU.Data.Persistence.Context;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.DocumentsTemplates.RemoveDocumentTemplate
 {
@@ -34,7 +34,7 @@ namespace CODWER.RERU.Evaluation.Application.DocumentsTemplates.RemoveDocumentTe
 
         private async Task LogAction(DocumentTemplate documentTemplate)
         {
-            await _loggerService.Log(LogData.AsPersonal($"{documentTemplate.Name} was removed from document templates list", documentTemplate));
+            await _loggerService.Log(LogData.AsEvaluation($@"Șablonul pentru documente ""{documentTemplate.Name}"" a fost șters din sistem", documentTemplate));
         }
     }
 }

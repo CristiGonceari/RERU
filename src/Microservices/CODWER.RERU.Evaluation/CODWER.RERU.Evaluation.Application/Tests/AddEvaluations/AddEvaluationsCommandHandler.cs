@@ -36,7 +36,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
 
         public async Task<List<int>> Handle(AddEvaluationsCommand request, CancellationToken cancellationToken)
         {
-            int testId = 0;
             var testsIds = new List<int>();
 
             var processId = request.ProcessId;
@@ -61,7 +60,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
                         }
                     };
 
-                    testId = await _mediator.Send(addCommand);
+                    var testId = await _mediator.Send(addCommand);
 
                     testsIds.Add(testId);
 
@@ -152,7 +151,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
                 .Include(x => x.TestTemplate)
                 .FirstOrDefaultAsync(x => x.Id == testId);
 
-            await _loggerService.Log(LogData.AsEvaluation($"The evaluator {test.Evaluator.FirstName} {test.Evaluator.LastName} was invited to evaluate {test.UserProfile.FirstName} {test.UserProfile.LastName} by {test.TestTemplate.Name} evaluation"));
+            await _loggerService.Log(LogData.AsEvaluation($@"Evaluatorul ""{test.Evaluator.FullName}"" a fost atașat/ă ca evaluator pentru ""{test.UserProfile.FullName}"" la evaluarea ``{test.TestTemplate.Name}``"));
         }
     }
 }

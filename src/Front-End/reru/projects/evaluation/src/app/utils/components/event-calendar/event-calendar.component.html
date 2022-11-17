@@ -1,32 +1,82 @@
-<div class="center mb-5">
-  <div >
-    <a type="button child" class="buttons" (click)="decreaseMonth()" value="-">
-      <i class="ki ki-bold-arrow-back mr-xl-25 mr-lg-5 mr-2"></i>
-    </a>
-    <a class="child">
-      <strong class="fw-bolder fs-2">
+<div class="pb-5">
+  <div class="row justify-content-between button-container w-100 d-lg-flex d-none">
+    <div class="col-4 d-flex">
+      <div>
+        <button type="button" (click)="decreaseMonth()" class="btn">
+          <i class="ki ki-bold-arrow-back"></i>
+        </button>
+      </div>
+      <div>
+        <button type="button" (click)="increaseMonth()" class="btn">
+          <i class="ki ki-bold-arrow-next"></i>
+        </button>
+      </div>
+      <div class="ml-4">
+        <button type="button" (click)="setCurrentMonth()" class="btn">
+          Today
+        </button>
+      </div>
+    </div>
+    <div class="col-4 d-flex align-items-center justify-content-center">
       <h2>
-       {{ 'calendar.'+ displayMonth | translate }} {{displayYear}}
-      </h2>
-    </strong>
-    </a>
-    <a type="button child" class="buttons" (click)="increaseMonth()" value="+">
-      <i class="ki ki-bold-arrow-next ml-xl-25 ml-lg-5 ml-2"></i>
-    </a>
+        {{ 'calendar.'+ displayMonth | translate }} {{displayYear}}
+       </h2>
+    </div>
+    <div class="col-4">
+      &nbsp;&nbsp;
+    </div>
+  </div>
+  <div class="row justify-content-between button-container w-100 d-lg-none d-flex flex-column">
+    <div class="col-12 d-flex align-items-center justify-content-center">
+      <h2>
+        {{ 'calendar.'+ displayMonth | translate }} {{displayYear}}
+       </h2>
+    </div>
+    <div class="col-12 d-flex">
+      <div>
+        <button type="button" (click)="decreaseMonth()" class="btn">
+          <i class="ki ki-bold-arrow-back"></i>
+        </button>
+      </div>
+      <div>
+        <button type="button" (click)="increaseMonth()" class="btn">
+          <i class="ki ki-bold-arrow-next"></i>
+        </button>
+      </div>
+      <div class="ml-4">
+        <button type="button" (click)="setCurrentMonth()" class="btn">
+          Today
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="table-responsive-xl">
+<div class="table-responsive">
   <table class='calendar-table' *ngIf="calendar">
     <thead>
       <tr>
-        <th>{{ 'calendar.monday' | translate}}</th>
-        <th>{{ 'calendar.tuesday' | translate}}</th>
-        <th>{{ 'calendar.wednesday' | translate}}</th>
-        <th>{{ 'calendar.thursday' | translate}}</th>
-        <th>{{ 'calendar.friday' | translate}}</th>
-        <th>{{ 'calendar.saturday' | translate}}</th>
-        <th>{{ 'calendar.sunday' | translate}}</th>
+        <th class="d-xxxl-table-cell d-xxl-none d-none">{{ 'calendar.monday' | translate }}</th>
+        <th class="d-xxxl-none d-xxl-table-cell d-none">{{ 'calendar.monday' | translate | slice:0:3 }}</th>
+        <th class="d-xxl-none d-table-cell mobile-bg">{{ 'calendar.monday' | translate | slice:0:1 }}</th>
+        <th class="d-xxxl-table-cell d-xxl-none d-none">{{ 'calendar.tuesday' | translate  }}</th>
+        <th class="d-xxxl-none d-xxl-table-cell d-none">{{ 'calendar.tuesday' | translate | slice:0:3 }}</th>
+        <th class="d-xxl-none d-table-cell mobile-bg">{{ 'calendar.tuesday' | translate | slice:0:1 }}</th>
+        <th class="d-xxxl-table-cell d-xxl-none d-none">{{ 'calendar.wednesday' | translate  }}</th>
+        <th class="d-xxxl-none d-xxl-table-cell d-none">{{ 'calendar.wednesday' | translate | slice:0:3 }}</th>
+        <th class="d-xxl-none d-table-cell mobile-bg">{{ 'calendar.wednesday' | translate | slice:0:1 }}</th>
+        <th class="d-xxxl-table-cell d-xxl-none d-none">{{ 'calendar.thursday' | translate}}</th>
+        <th class="d-xxxl-none d-xxl-table-cell d-none">{{ 'calendar.thursday' | translate | slice:0:3 }}</th>
+        <th class="d-xxl-none d-table-cell mobile-bg">{{ 'calendar.thursday' | translate | slice:0:1 }}</th>
+        <th class="d-xxxl-table-cell d-xxl-none d-none">{{ 'calendar.friday' | translate }}</th>
+        <th class="d-xxxl-none d-xxl-table-cell d-none">{{ 'calendar.friday' | translate | slice:0:3 }}</th>
+        <th class="d-xxl-none d-table-cell mobile-bg">{{ 'calendar.friday' | translate | slice:0:1 }}</th>
+        <th class="d-xxxl-table-cell d-xxl-none d-none">{{ 'calendar.saturday' | translate}}</th>
+        <th class="d-xxxl-none d-xxl-table-cell d-none">{{ 'calendar.saturday' | translate | slice:0:3 }}</th>
+        <th class="d-xxl-none d-table-cell mobile-bg">{{ 'calendar.saturday' | translate | slice:0:1 }}</th>
+        <th class="d-xxxl-table-cell d-xxl-none d-none">{{ 'calendar.sunday' | translate}}</th>
+        <th class="d-xxxl-none d-xxl-table-cell d-none">{{ 'calendar.sunday' | translate | slice:0:3 }}</th>
+        <th class="d-xxl-none d-table-cell mobile-bg">{{ 'calendar.sunday' | translate | slice:0:1 }}</th>
       </tr>
     </thead>
     <tbody>
@@ -38,9 +88,21 @@
                       'selected-date': c.clickedDay
                           }" *ngFor="let c of row; let j = index" (click)="getClickedDay(c)">
           <div class="calendar-day-header">
-            <strong>{{c.date.getDate()}}</strong>
-            <div class="d-flex justify-content-center" *ngIf="c.count > 0">
-              <span class="badge badge-square badge-danger">{{c.count}}</span>
+            <strong [ngClass]="{'today': c.isToday }">{{c.date.getDate()}}</strong>
+            <div class="d-md-flex d-none" *ngIf="c.count > 0">
+              <span [ngClass]="{
+                'badge-future': c.isFutureDate,
+                'badge-today': c.isToday,
+                'badge-past': c.isPastDate
+              }"
+              class="badge w-100">{{c.count}}</span>
+            </div>
+            <div class="d-md-none d-flex justify-content-center" *ngIf="c.count > 0">
+              <span [ngClass]="{
+                'badge-future': c.isFutureDate,
+                'badge-today': c.isToday,
+                'badge-past': c.isPastDate
+              }" class="badge w-100">{{c.count}}</span>
             </div>
           </div>
         </td>

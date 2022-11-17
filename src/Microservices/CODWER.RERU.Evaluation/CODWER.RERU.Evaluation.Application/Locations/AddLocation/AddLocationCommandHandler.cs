@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
+using MediatR;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.Locations.AddLocation
 {
@@ -37,7 +37,7 @@ namespace CODWER.RERU.Evaluation.Application.Locations.AddLocation
 
         private async Task LogAction(Location item)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Location was created", item));
+            await _loggerService.Log(LogData.AsEvaluation($@"Locația ""{item.Name}"" a fost adăugat în sistem cu adresa ""{item.Address}""", item));
         }
     }
 }

@@ -31,6 +31,7 @@ export class AttachUserModalComponent implements OnInit {
   @Input() attachedItems: number[];
   @Input() inputType: string;
   @Input() eventId: number;
+  @Input() positionId: number;
   @Input() page: string;
   @Input() whichUser: boolean;
   @Input() testTemplateId: number;
@@ -47,7 +48,7 @@ export class AttachUserModalComponent implements OnInit {
   }
 
   getUsers(data: any = {}): void {
-    if (this.eventId && this.inputType == 'checkbox' && this.page == 'add-test') this.getAssignedUsers(data);
+    if (this.eventId && !this.positionId && this.inputType == 'checkbox' && this.page == 'add-test') this.getAssignedUsers(data);
     else if (this.eventId && this.inputType == 'checkbox' && this.page == 'add-evaluation' && !this.whichUser) this.getAssignedUsers(data);
     else if (this.eventId && this.inputType == 'checkbox' && this.page == 'add-evaluation' && this.whichUser) this.getAssignedEvaluators(data);
     else {
@@ -57,6 +58,8 @@ export class AttachUserModalComponent implements OnInit {
         page: data.page || this.pagination.currentPage,
         itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
         exceptUserIds: exceptIds,
+        eventId: this.eventId && this.positionId ? this.eventId : null,
+        positionId: this.eventId && this.positionId ? this.positionId : null,
         testTemplateId: this.testTemplateId || null,
         ...this.filters
       }

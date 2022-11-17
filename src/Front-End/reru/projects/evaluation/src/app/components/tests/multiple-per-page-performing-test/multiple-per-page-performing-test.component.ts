@@ -160,7 +160,7 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
     if (el.questionType == QuestionUnitTypeEnum.HashedAnswer)
       this.subscribeForHashedAnswers(el);
     else {
-      var selectedOptions = el.options.filter(item => item.isSelected == true);
+      const selectedOptions = el.options.filter(item => item.isSelected == true);
 
       selectedOptions.forEach(el => {
         this.testAnswersInput.push(this.parseAnswer(el));
@@ -184,8 +184,8 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
 
   startTimer() {
     this.interval = setInterval(() => {
-      var endTime = new Date(this.testDto.endTime).getTime();
-      var date = new Date().getTime();
+      const endTime = new Date(this.testDto.endTime).getTime();
+      const date = new Date().getTime();
 
       if (endTime > date) {
         this.timeLeft = this.milisecondsToHms(Math.abs(endTime - date));
@@ -198,10 +198,10 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
   }
 
   milisecondsToHms(miliseconds) {
-    var seconds = Number(miliseconds / 1000);
-    var h = Math.floor(seconds % (3600 * 24) / 3600);
-    var m = Math.floor(seconds % 3600 / 60);
-    var s = Math.floor(seconds % 60);
+    const seconds = Number(miliseconds / 1000);
+    const h = Math.floor(seconds % (3600 * 24) / 3600);
+    const m = Math.floor(seconds % 3600 / 60);
+    const s = Math.floor(seconds % 60);
 
     return ` ${h < 10 ? '0' + h : h} : ${m < 10 ? '0' + m : m} : ${s < 10 ? '0' + s : s}`;
   }

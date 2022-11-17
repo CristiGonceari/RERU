@@ -40,7 +40,7 @@ namespace CODWER.RERU.Personal.Application.OrganizationalCharts.AddOrganizationa
 
         private async Task LogAction(OrganizationalChart organizationalChart)
         {
-            await _loggerService.Log(LogData.AsPersonal($"{organizationalChart.Name} was added to Organigram list", organizationalChart));
+            await _loggerService.Log(LogData.AsPersonal($@"Organigrama ""{organizationalChart.Name}"" a fost adăugata în sistem", organizationalChart));
         }
     }
 }

@@ -11,7 +11,6 @@ export class AbstractService {
 	protected identityUrl: string;
 
 	constructor(protected service: AppSettingsService) {
-    console.log('===> abstract service constructor');
 		this.initConfig();
 	}
 

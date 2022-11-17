@@ -48,6 +48,11 @@ $personal-theme: mat-light-theme((
 
 @import '@swimlane/ngx-dnd/release/index.css';
 
+body {
+  margin: 0;
+  font-family: Poppins, Helvetica, "sans-serif";
+}
+
 app-main {
   width: 100%;
 }
@@ -150,30 +155,6 @@ table.table.erp-table {
     font-size: 14px;
     font-weight: 600;
   }
-}
-
-/* Hide input type number arrows */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type=number] {
-  -moz-appearance: textfield;
-}
-
-textarea.form-control {
-  border-radius: 3px;
-  font-size: 12px;
-}
-
-.navi.navi-hover .navi-item .navi-link:hover,
-div.dahsboard-component a.nav-link,
-div.card.card-custom,
-.datatable.datatable-default > .datatable-pager > .datatable-pager-nav > li > a.datatable-pager-link,
-div.dropdown-menu {
-  border-radius: 3px;
 }
 
 select.form-control,

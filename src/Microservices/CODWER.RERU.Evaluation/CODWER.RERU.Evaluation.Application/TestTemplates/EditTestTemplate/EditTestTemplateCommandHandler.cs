@@ -45,7 +45,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.EditTestTemplate
 
         private async Task LogAction(TestTemplate testTemplate)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Test template was edited", testTemplate));
+            await _loggerService.Log(LogData.AsEvaluation($@"Șablonul de test ""{testTemplate.Name}"" a fost actualizat în sistem", testTemplate));
         }
     }
 }

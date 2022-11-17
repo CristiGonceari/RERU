@@ -1,18 +1,16 @@
-using System;
-using AutoMapper;
+﻿using AutoMapper;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
+using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Persistence.Context;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using RERU.Data.Entities;
-using RERU.Data.Persistence.Context;
-using RERU.Data.Entities.PersonalEntities;
 
 namespace CODWER.RERU.Core.Application.Users.CreateUser
 {
@@ -93,7 +91,7 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
         private async Task LogAction(UserProfile userProfile)
         {
-            await _loggerService.Log(LogData.AsCore($"User {userProfile.FirstName} {userProfile.LastName} was added to system", userProfile));
+            await _loggerService.Log(LogData.AsCore($@"Utilizatorul ""{userProfile.FullName}"" a fost adăugat în sistem", userProfile));
         }
 
         //private async Task SyncUserProfile(UserProfile userProfile)

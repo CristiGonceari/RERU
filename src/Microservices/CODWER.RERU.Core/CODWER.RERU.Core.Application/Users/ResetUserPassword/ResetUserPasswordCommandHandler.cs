@@ -1,15 +1,15 @@
-using CODWER.RERU.Core.Application.Common.Handlers;
+﻿using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
+using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CVU.ERP.Logging;
-using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Users.ResetUserPassword
 {
@@ -55,7 +55,7 @@ namespace CODWER.RERU.Core.Application.Users.ResetUserPassword
 
         private async Task LogAction(UserProfile userProfile)
         {
-            await _loggerService.Log(LogData.AsCore($" User {userProfile.FirstName} {userProfile.LastName}, password was reset", userProfile));
+            await _loggerService.Log(LogData.AsCore($@"Parola utilizatorului ""{userProfile.FullName}"" a fost resetată", userProfile));
         }
     }
 }

@@ -329,6 +329,7 @@
     "title": "Teste",
     "subtitle": "Gestionarea testelor",
     "new-test": "Adaugă test",
+    "program-test": "Programează un test",
     "add-test-template": "Adaugă șablon",
     "update": "Modificați Testul",
     "test-option": "Opțiunile Tipului Testului",
@@ -665,7 +666,8 @@
     "option8": "Utilizatorul nu va putea vedea paginarea",
     "option9": "Utilizatorul poate vizualiza mai multe întrebări pe pagină",
     "option10": "Utilizatorul nu va putea continua testul dacă a făcut numărul maxim de erori posibile",
-    "option11": "Utilizatorul va primi un email care va contine informatii despre ora si/sau locatia specifica"
+    "option11": "Utilizatorul va primi un email care va contine informatii despre ora si/sau locatia specifica",
+    "option12": "Aveți nevoie de confirmarea administratorului pentru inceperea testului"
   },
   "faq": {
     "help": "Ajutor",
@@ -1054,7 +1056,7 @@
     "view-templates": "Vizualizarea șabloanelor de teste",
     "search-evaluator": "Căutați după evaluator",
     "run-evaluation": "Rulați evaluarea",
-    "start-evaluation": "Începeți evaluarea",
+    "start-evaluation": "Începe",
     "view-evaluation": "Vizualizarea evaluării",
     "evaluation-data": "Introduceți detaliile evaluării și confirmați",
     "received-evaluations": "Evaluări primite",

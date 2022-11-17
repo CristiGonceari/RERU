@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.Locations.DeleteLocation
 
         private async Task LogAction(Location item)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Location was deleted", item));
+            await _loggerService.Log(LogData.AsEvaluation($@"Locația ""{item.Name}"" cu adresa ""{item.Address}"" a fost ștersă din sistem", item));
         }
     }
 }

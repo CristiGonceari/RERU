@@ -20,6 +20,7 @@ import { GenerateDocumentModalComponent } from 'projects/evaluation/src/app/util
 import { FileTypeEnum } from '../../../../utils/enums/file-type.enum';
 import { QualifyingTypeEnum } from 'projects/evaluation/src/app/utils/enums/qualifying-type.enum';
 import { ParsePrintTabelService } from 'projects/evaluation/src/app/utils/services/parse-print-table/parse-print-tabel.service';
+import { ObjectUtil } from 'projects/evaluation/src/app/utils/util/object.util';
 @Component({
 	selector: 'app-test-template-list-table',
 	templateUrl: './test-template-list-table.component.html',
@@ -126,14 +127,14 @@ export class TestTemplateListTableComponent implements OnInit {
 
 	list(data: any = {}) {
 		this.isLoading = true;
-		let params: any = {
+		let params: any = ObjectUtil.preParseObject({
 			name: this.testName || '',
 			eventName: this.eventName || '',
 			status: this.status || '',
 			page: data.page || this.pagination.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
 			...this.filters
-		}
+		})
 
 		this.testTemplateService.getTestTemplates(params).subscribe(res => {
 			if (res && res.data) {

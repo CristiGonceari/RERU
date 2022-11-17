@@ -8,7 +8,7 @@ import { TestService } from 'projects/evaluation/src/app/utils/services/test/tes
 @Component({
   selector: 'app-events-table',
   templateUrl: './events-table.component.html',
-  styleUrls: ['./events-table.component.scss']
+  styleUrls: ['../../table-inherited.component.scss']
 })
 export class EventsTableComponent implements OnInit {
   tests = [];

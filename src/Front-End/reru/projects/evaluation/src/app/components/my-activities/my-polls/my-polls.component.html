@@ -3,7 +3,10 @@
     <div class="card-header flex-wrap border-0 py-5">
       <div class="card-title font-weight-bolder">{{'polls.polls' | translate}}</div>
     </div>
-    <div class="card-body pt-0">
+    <div class="card-body pt-0 d-md-block d-none">
+			<app-polls-table></app-polls-table>
+		</div>
+    <div class="card-body pt-0 px-2 d-md-none d-block">
 			<app-polls-table></app-polls-table>
 		</div>
   </div>

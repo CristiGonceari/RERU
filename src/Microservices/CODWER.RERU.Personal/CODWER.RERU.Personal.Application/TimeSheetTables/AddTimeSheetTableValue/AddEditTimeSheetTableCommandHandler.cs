@@ -1,13 +1,12 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using CODWER.RERU.Personal.Application.Services;
-using RERU.Data.Persistence.Context;
+﻿using AutoMapper;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities.PersonalEntities.TimeSheetTables;
+using RERU.Data.Persistence.Context;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.TimeSheetTables.AddTimeSheetTableValue
 {
@@ -16,18 +15,15 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.AddTimeSheetTableValu
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly ILoggerService<AddEditTimeSheetTableCommand> _loggerService;
-        private readonly IUserProfileService _userProfileService;
 
         public AddEditTimeSheetTableCommandHandler(
             AppDbContext appDbContext, 
             IMapper mapper, 
-            ILoggerService<AddEditTimeSheetTableCommand> loggerService,
-            IUserProfileService userProfileService)
+            ILoggerService<AddEditTimeSheetTableCommand> loggerService)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _loggerService = loggerService;
-            _userProfileService = userProfileService;
         }
 
         public async Task<int> Handle(AddEditTimeSheetTableCommand request, CancellationToken cancellationToken)
@@ -56,7 +52,7 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.AddTimeSheetTableValu
 
         private async Task LogAction(TimeSheetTable timeSheetTable)
         {
-            await _loggerService.Log(LogData.AsPersonal($"TimeSheetTable values were added/editet", timeSheetTable));
+            await _loggerService.Log(LogData.AsPersonal($@"Tabela de pontaj a fost populata cu date pe data de ""{timeSheetTable.Date:g}""", timeSheetTable));
         }
     }
 }

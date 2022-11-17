@@ -38,7 +38,7 @@ namespace CODWER.RERU.Personal.Application.OrganizationRoles.AddOrganizationRole
 
         private async Task LogAction(Role Role)
         {
-            await _loggerService.Log(LogData.AsPersonal($"{Role.Name} was added to Roles list", Role));
+            await _loggerService.Log(LogData.AsPersonal($@"Rolul ""{Role.Name}"" a fost adăugat în sistem", Role));
         }
     }
 }

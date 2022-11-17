@@ -11,6 +11,8 @@ namespace CODWER.RERU.Logging.Application.GetLoggingValuesQuery
         public string ProjectName { get; set; }
         public string UserName { get; set; }
         public string UserIdentifier { get; set; }
+        public string EventMessage { get; set; }
+        public string JsonMessage { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
     }

@@ -8,7 +8,7 @@
         </div>
         <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
         <div class="card-body">
-            <div class="table-responsive-xl datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+            <div class="table-responsive datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
             <table *ngIf="!isLoading" for="kt_datatable" class="datatable table" style="overflow: visible">
                 <thead class="text-uppercase text-muted">
@@ -19,7 +19,7 @@
                         <th scope="col" style="width: 200px;">{{'polls.voted-time' | translate}}</th>
                         <th scope="col" style="width: 150px;">{{'events.start-date' | translate}}</th>
                         <th scope="col" style="width: 150px;">{{'events.end-date' | translate}}</th>
-                        <th scope="col" style="width: 100px"></th>
+                        <th scope="col" style="width: 100px">{{'button.actions' | translate}}</th>
                     </tr>
                 </thead>
                 <tbody class="datatable-body" *ngIf="polls.length">
@@ -37,16 +37,16 @@
                         <td>
                             <button
                                 *ngIf="poll.status == enum.NotVoted && (poll.testStatus == 0 || poll.testStatus == null)"
-                                class="btn btn-light-success" (click)="createPoll(true, poll.id, poll.eventId)">
+                                class="btn btn-sm btn-light-success" (click)="createPoll(true, poll.id, poll.eventId)">
                                 {{'button.vote' | translate}}
                             </button>
                             <button *ngIf="poll.testStatus == testEnum.InProgress" (click)="createPoll(false, poll.id, poll.eventId)"
-                                class="btn btn-light-success">
+                                class="btn btn-sm btn-light-warning">
                                 {{'button.continue' | translate}}
                             </button>
                             <button
                                 *ngIf="poll.setting && poll.status == enum.Voted || poll.endTime < date && poll.status == enum.Voted"
-                                class="btn btn-light-success" [routerLink]="['../poll-progress', poll.id]">
+                                class="btn btn-sm btn-blue" [routerLink]="['../poll-progress', poll.id]">
                                 {{'tests.view' | translate}}
                             </button>
                         </td>

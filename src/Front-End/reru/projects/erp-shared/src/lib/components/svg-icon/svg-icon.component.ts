@@ -24,7 +24,6 @@ export class SvgIconComponent implements OnInit {
 
 		const el: any = icons.find((el: any) => el.name === icon);
 		this.path = el.path;
-		console.log(el.path);
 		this.isLoading = false;
 	}
 }

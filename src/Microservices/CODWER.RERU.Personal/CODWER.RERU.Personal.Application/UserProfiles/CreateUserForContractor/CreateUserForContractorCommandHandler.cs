@@ -1,32 +1,27 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using RERU.Data.Entities.PersonalEntities;
-using RERU.Data.Entities.PersonalEntities.Enums;
-using RERU.Data.Persistence.Context;
-using CVU.ERP.Logging;
+﻿using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using CVU.ERP.Module.Application.Models.Internal;
-using CVU.ERP.ServiceProvider.Clients;
 using CVU.ERP.ServiceProvider.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
+using RERU.Data.Entities.PersonalEntities;
+using RERU.Data.Entities.PersonalEntities.Enums;
+using RERU.Data.Persistence.Context;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
 {
     public class CreateUserForContractorCommandHandler : IRequestHandler<CreateUserForContractorCommand, int>
     {
-        private readonly ICoreClient _coreClient;
         private readonly AppDbContext _appDbContext;
         private ILoggerService<CreateUserForContractorCommandHandler> _loggerService;
 
-        public CreateUserForContractorCommandHandler(ICoreClient coreClient,
-            AppDbContext appDbContext,
-            ILoggerService<CreateUserForContractorCommandHandler> loggerService)
+        public CreateUserForContractorCommandHandler( AppDbContext appDbContext, ILoggerService<CreateUserForContractorCommandHandler> loggerService)
         {
-            _coreClient = coreClient;
             _appDbContext = appDbContext;
             _loggerService = loggerService;
         }
@@ -139,7 +134,7 @@ namespace CODWER.RERU.Personal.Application.UserProfiles.CreateUserForContractor
                 .Include(x => x.Contractor)
                 .FirstAsync(x => x.Id == userProfileId);
 
-            await _loggerService.Log(LogData.AsPersonal($"UserProfile {userProfile.Contractor.FirstName} {userProfile.Contractor.LastName} was created/updated", userProfile)); ; ;
+            await _loggerService.Log(LogData.AsPersonal($@"Utilizatorul ""{userProfile.Contractor.FirstName} {userProfile.Contractor.LastName}"" a fost adăugat/actualizat în sistem", userProfile));
         }
     }
 }

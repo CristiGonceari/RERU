@@ -4,15 +4,12 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { NotificationsService } from 'angular2-notifications';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { saveAs } from 'file-saver';
 import { Observable } from 'rxjs';
 import { DocumentTemplateService } from '../../../utils/services/document-template/document-template.service';
 import { DocumentKeyEnum } from '../../../utils/models/document-template/document-template-keys.enum';
 import { DocumentTemplateKeys } from '../../../utils/models/document-template/document-template-keys.model';
 import { ReferenceService } from '../../../utils/services/reference/reference.service';
 import { SelectItem } from '../../../utils/models/select-item.model';
-
-
 
 @Component({
   selector: 'app-add',
@@ -58,20 +55,14 @@ export class AddComponent implements OnInit {
   addWordButtonToCkEditor(word){
     this.isAdded = true;
     this.wordButton = word;
-    
-  }
-
-  demo()
-  {
-    console.log("value", this.forEditFileType);
   }
   
   public ckEditorFocusCursor(event) : void {
-    var selection = event.editor.getSelection();
-    var range = selection.getRanges()[0];
-    var cursor_position = range.startOffset;
+    const selection = event.editor.getSelection();
+    const range = selection.getRanges()[0];
+    const cursor_position = range.startOffset;
     if(this.isAdded){
-      var add = event.editor.insertHtml(`<span>${this.wordButton}</span>`)
+      const add = event.editor.insertHtml(`<span>${this.wordButton}</span>`)
     }
     this.isAdded = false;
 }

@@ -1,12 +1,12 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using CODWER.RERU.Evaluation.Application.Services;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddTestTemplate
 {
@@ -16,7 +16,6 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddTestTemplate
         private readonly IMapper _mapper;
         private readonly ILoggerService<AddTestTemplateCommandHandler> _loggerService;
         private readonly IAssignRoleService _assignRoleService;
-
 
         public AddTestTemplateCommandHandler(AppDbContext appDbContext, 
             IMapper mapper, 
@@ -46,7 +45,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddTestTemplate
 
         private async Task LogAction(TestTemplate testTemplate)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Test template was created", testTemplate));
+            await _loggerService.Log(LogData.AsEvaluation($@"Șablonul de test ""{testTemplate.Name}"" a fost adăugat în sistem", testTemplate));
         }
     }
 }

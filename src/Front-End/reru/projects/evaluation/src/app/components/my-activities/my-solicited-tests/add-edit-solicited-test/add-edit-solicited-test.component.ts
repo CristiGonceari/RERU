@@ -17,8 +17,7 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-edit-solicited-test',
-  templateUrl: './add-edit-solicited-test.component.html',
-  styleUrls: ['./add-edit-solicited-test.component.scss']
+  templateUrl: './add-edit-solicited-test.component.html'
 })
 export class AddEditSolicitedTestComponent implements OnInit {
   showCard: boolean = false;
@@ -160,6 +159,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
   }
 
   onSave(): void {
+    this.isLoading = true;
     if (this.isEdit) {
       this.edit();
     } else {

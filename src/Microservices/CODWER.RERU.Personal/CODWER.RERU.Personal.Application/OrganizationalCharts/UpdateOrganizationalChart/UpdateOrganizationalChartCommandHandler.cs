@@ -40,7 +40,7 @@ namespace CODWER.RERU.Personal.Application.OrganizationalCharts.UpdateOrganizati
 
         private async Task LogAction(OrganizationalChart organizationalChart)
         {
-            await _loggerService.Log(LogData.AsPersonal($"{organizationalChart.Name} was edited", organizationalChart));
+            await _loggerService.Log(LogData.AsPersonal($@"Organigrama ""{organizationalChart.Name}"" a fost actualizata în sistem", organizationalChart));
         }
     }
 }

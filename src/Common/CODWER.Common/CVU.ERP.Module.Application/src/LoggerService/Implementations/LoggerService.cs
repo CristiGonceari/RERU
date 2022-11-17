@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using CVU.ERP.Logging;
+﻿using CVU.ERP.Logging;
 using CVU.ERP.Logging.Context;
 using CVU.ERP.Logging.Entities;
 using CVU.ERP.Logging.Models;
 using CVU.ERP.ServiceProvider;
-using Microsoft.Extensions.Configuration;
 using RERU.Data.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using CVU.ERP.ServiceProvider.Models;
 
 namespace CVU.ERP.Module.Application.LoggerService.Implementations
 {
@@ -39,7 +40,7 @@ namespace CVU.ERP.Module.Application.LoggerService.Implementations
                 Project = data.Project,
                 UserName = $"{user.LastName} {user.FirstName} {user.FatherName}",
                 UserIdentifier = "",
-                Event = !string.IsNullOrWhiteSpace(data.Event) ? data.Event : ParseName(),
+                Event = !string.IsNullOrWhiteSpace(data.Event) ? data.Event : ParseEvent(),
                 EventMessage = data.EventMessage,
                 Date = DateTime.Now,
                 JsonMessage = data.SerializedObject
@@ -72,10 +73,10 @@ namespace CVU.ERP.Module.Application.LoggerService.Implementations
             {
                 Id = Guid.NewGuid().ToString(),
                 Project = data.Project,
-                UserName = $"{coreUser.LastName} {coreUser.FirstName} {coreUser.FatherName}",
+                UserName = $"{coreUser.FullName}",
                 UserIdentifier = coreUser.Id,
-                Event = !string.IsNullOrWhiteSpace(data.Event) ? data.Event : ParseName(),
-                EventMessage = data.EventMessage,
+                Event = !string.IsNullOrWhiteSpace(data.Event) ? data.Event : ParseEvent(),
+                EventMessage = ParseEventMessage(data.EventMessage, coreUser),
                 Date = DateTime.Now,
                 JsonMessage = data.SerializedObject
             };
@@ -87,14 +88,16 @@ namespace CVU.ERP.Module.Application.LoggerService.Implementations
             ConsoleWrite(toLog);
         }
 
-        private string ParseName()
+        private string ParseEvent()
         { 
             var splicedEventName = Regex.Split(typeof(T).Name, @"(?<!^)(?=[A-Z])").ToList();
             splicedEventName.Remove("Command");
             splicedEventName.Remove("Handler");
             splicedEventName.Remove("Query");
 
-            return string.Join(" ", splicedEventName.ToArray());
+            var splitString = string.Join("", splicedEventName.ToArray());
+
+            return ParseEventName(splitString);
         }
 
         private void ConsoleWrite(Log log)
@@ -105,6 +108,22 @@ namespace CVU.ERP.Module.Application.LoggerService.Implementations
             });
 
             Console.WriteLine($"Logged message :\n {consoleMessage}\n JSON Entity :\n {log.JsonMessage}\n");
+        }
+
+        private string ParseEventName(string fieldName)
+        {
+            var objType = typeof(ActionEventNames);
+
+            FieldInfo[] fields = objType.GetFields(BindingFlags.Static | BindingFlags.Public);
+
+            var fieldInfo = fields.FirstOrDefault(x => x.Name.Contains(fieldName));
+
+            return fieldInfo != null ? fieldInfo.GetValue(objType)?.ToString() : string.Empty;
+        }
+
+        private string ParseEventMessage(string eventMessage, ApplicationUser coreUser)
+        {
+            return eventMessage + $@", de către ""{coreUser.FullName}""";
         }
     }
 }

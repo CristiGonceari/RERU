@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
+using MediatR;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.Plans.AddPlan
 {
@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.Plans.AddPlan
 
         private async Task LogAction(Plan item)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Plan was added", item));
+            await _loggerService.Log(LogData.AsEvaluation($@"Planul ""{item.Name}"" a fost adăugat în sistem", item));
         }
     }
 }

@@ -10,6 +10,7 @@ import { forkJoin } from 'rxjs';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { PrintModalComponent } from '@erp/shared';
 import { saveAs } from 'file-saver';
+import { ObjectUtil } from 'projects/evaluation/src/app/utils/util/object.util';
 
 @Component({
 	selector: 'app-events-list-table',
@@ -121,13 +122,13 @@ export class EventsListTableComponent implements OnInit {
 			this.displayYear = data.displayYear;
 		}
 
-		let params = {
+		const params = ObjectUtil.preParseObject({
 			page: data.page || this.pagination.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10,
 			fromDate: this.parseDates(data.fromDate),
 			tillDate: this.parseDates(data.tillDate),
 			...this.filters
-		}
+		})
 
 		this.service.getEvents(params).subscribe(
 			res => {
@@ -150,12 +151,12 @@ export class EventsListTableComponent implements OnInit {
 			this.displayDate = this.parseDatesForTable(data.date)
 		}
 
-		const request = {
+		const request = ObjectUtil.preParseObject({
 			date: this.selectedDay,
 			page: data.page || this.pagination.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
 			...this.filters
-		}
+		})
 
 		this.service.getEventByDate(request).subscribe(response => {
 			if (response.success) {

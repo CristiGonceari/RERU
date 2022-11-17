@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Threading;
-using System.Threading.Tasks;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.Locations.EditLocation
 {
@@ -36,7 +36,7 @@ namespace CODWER.RERU.Evaluation.Application.Locations.EditLocation
 
         private async Task LogAction(Location item)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Location was edited", item));
+            await _loggerService.Log(LogData.AsEvaluation($@"Locația ""{item.Name}"" a fost actualizată în sistem cu adresa ""{item.Address}""", item));
         }
     }
 }

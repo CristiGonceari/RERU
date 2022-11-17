@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
@@ -31,6 +32,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.EditSolicitedPos
         public async Task<Unit> Handle(EditSolicitedPositionStatusCommand request, CancellationToken cancellationToken)
         {
             var solicitedTest = await _appDbContext.SolicitedVacantPositions
+                .Include(s => s.CandidatePosition)
                 .Include(s => s.UserProfile)
                 .FirstAsync(x => x.Id == request.Id);
             
@@ -86,13 +88,19 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.EditSolicitedPos
 
         private async Task LogAction(SolicitedVacantPosition item)
         {
-            if(item.SolicitedPositionStatus == SolicitedPositionStatusEnum.Refused)
+            switch (item.SolicitedPositionStatus)
             {
-                await _loggerService.Log(LogData.AsEvaluation($"Solicited test was refused", item));
-            } 
-            else if (item.SolicitedPositionStatus == SolicitedPositionStatusEnum.Approved)
-            {
-                await _loggerService.Log(LogData.AsEvaluation($"Solicited test was approved", item));
+                case SolicitedPositionStatusEnum.Refused:
+                    await _loggerService.Log(LogData.AsEvaluation($@"Poziția vacantă ""{item.CandidatePosition.Name}"" la care a candidat ""{item.UserProfile.FullName}"" a fost refuzată", item));
+                    break;
+                case SolicitedPositionStatusEnum.Approved:
+                    await _loggerService.Log(LogData.AsEvaluation($@"Poziția vacantă ""{item.CandidatePosition.Name}"" la care a candidat ""{item.UserProfile.FullName}"" a fost aprobată", item));
+                    break;
+                case SolicitedPositionStatusEnum.Wait:
+                    await _loggerService.Log(LogData.AsEvaluation($@"Poziția vacantă ""{item.CandidatePosition.Name}"" la care a candidat ""{item.UserProfile.FullName}"" a fost pusă în așteptare", item));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

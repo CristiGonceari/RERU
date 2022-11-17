@@ -3,6 +3,11 @@
     line-height: 40px;
     height: 40px;
   }
+
+  .mobile-body-container {
+    height: 70vh;
+  }
+
   ::ng-deep {
     
     .nav.nav-pills.nav-danger .nav-link:hover:not(.active) .nav-text,
