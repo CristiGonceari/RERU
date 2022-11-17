@@ -7,13 +7,13 @@
 </app-event-calendar>
 
 <div>
-  <div class="row w-100 my-4">
-    <div class="col">
+  <div class="row my-4">
+    <div class="col-xl col-12">
       <erp-shared-search-input (handleSearch)="setFilter('name', $event)"
         [placeholder]="'button.search-name' | translate" #name>
       </erp-shared-search-input>
     </div>
-    <div class="col">
+    <div class="col-xl col-12 pt-xl-0 pt-2">
       <div class="input-group input-group-sm input-group-solid">
         <input id="from" [owlDateTime]="dtFrom" [placeholder]="'events.search-from' | translate" class="shadow-input"
           name="date" [(ngModel)]="dateTimeFrom"
@@ -26,7 +26,7 @@
         <owl-date-time #dtFrom></owl-date-time>
       </div>
     </div>
-    <div class="col">
+    <div class="col-xl col-12 pt-xl-0 pt-2">
       <div class="input-group input-group-sm input-group-solid">
         <input id="from" [owlDateTime]="toDate" [placeholder]="'events.search-to' | translate" class="shadow-input"
           name="date" [(ngModel)]="dateTimeTo"
@@ -38,12 +38,18 @@
         <owl-date-time #toDate></owl-date-time>
       </div>
     </div>
-    <div class="col">
-      <div class="w-100 text-right">
+    <div class="col-xl col-12 pt-xl-0 pt-2">
+      <div class="text-right d-xl-block d-none">
         <app-button (handle)="clearFields()" [value]="'button.reset' | translate" class="mr-5"></app-button>
         <app-confirm-button (handle)="getFilteredEvents({page: 1, itemsPerPage: pagination.pageSize})"
           [value]="'button.search' | translate">
         </app-confirm-button>
+      </div>
+      <div class="w-100 d-xl-none d-flex flex-column">
+        <app-confirm-button class="w-100" width="100%" (handle)="getFilteredEvents({page: 1, itemsPerPage: pagination.pageSize})"
+          [value]="'button.search' | translate">
+        </app-confirm-button>
+        <app-button class="w-100 pt-2" width="100%" (handle)="clearFields()" [value]="'button.reset' | translate" ></app-button>
       </div>
     </div>
   </div>
@@ -52,7 +58,7 @@
   </app-loading-spinner>
   <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
   <div *ngIf="!isLoading && !downloadFile"
-    class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+    class="table-responsive-xl datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
     <div class="card-header text-center" *ngIf="selectedDay != null">
       {{ 'calendar.selected-date' | translate }}: {{displayDate}}

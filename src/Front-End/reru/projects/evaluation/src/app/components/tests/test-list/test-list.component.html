@@ -13,7 +13,7 @@
                   {{ "verify-test.title" | translate }}
                 </h3>
               </div>
-              <div class="card-toolbar">
+              <div class="card-toolbar d-md-flex d-none">
                 <button class="btn btn-light-warning font-weight-bold mr-3" (click)="openHistoryModal()">
                   <i class="far fa-file-excel"></i>
                   {{ 'processes.history' | translate }}
@@ -23,6 +23,18 @@
                   {{ "button.print" | translate }}
                 </app-confirm-button>
                 <app-add-button class="btn my-auto mr-5" [routerLink]="['add-test']"
+                  [value]="'tests.new-test' | translate"></app-add-button>
+              </div>
+              <div class="card-toolbar d-md-none d-flex flex-column w-100">
+                <button class="btn btn-light-warning font-weight-bold w-100" width="100%" (click)="openHistoryModal()">
+                  <i class="far fa-file-excel"></i>
+                  {{ 'processes.history' | translate }}
+                </button>
+                <app-confirm-button class="btn w-100 pt-2" width="100%" (click)="testsTable.getHeaders(getTitle())">
+                  <i class="far fa-file-pdf text-white"></i>
+                  {{ "button.print" | translate }}
+                </app-confirm-button>
+                <app-add-button class="btn my-auto w-100 pt-2" width="100%" [routerLink]="['add-test']"
                   [value]="'tests.new-test' | translate"></app-add-button>
               </div>
             </div>
@@ -105,7 +117,16 @@
                 <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
                   <app-search-role (filter)="testsTable.setFilter('roleId',  $event)" #roleId></app-search-role>
                 </div>
-                <div class="col-lg col-md-6 d-md-block d-none pt-lg-0 pt-2">
+                <div class="col-auto d-lg-block d-none pt-lg-0 pt-2">
+                  <div class="text-right">
+                    <app-button (handle)="clearFields(); testsTable.resetFilters()" [value]="'button.reset' | translate"
+                      class="mr-5"></app-button>
+                    <app-confirm-button (handle)="testsTable.getTests({ page: 1 })"
+                      [value]="'button.search' | translate">
+                    </app-confirm-button>
+                  </div>
+                </div>
+                <div class="col-lg offset-lg-0 offset-md-6 col-md-6 d-lg-none d-md-block d-none pt-lg-0 pt-2">
                   <div class="text-right">
                     <app-button (handle)="clearFields(); testsTable.resetFilters()" [value]="'button.reset' | translate"
                       class="mr-5"></app-button>

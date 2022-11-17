@@ -1,6 +1,28 @@
 $table-square-size: 80px;
 $table-square-mobile-size: 50px;
 
+$badge-past-color: #ffbc82;
+$badge-today-color: white;
+$badge-future-color: #ed8792;
+
+h2 {
+	font-size: 1.2rem;
+    font-weight: 500;
+    text-transform: uppercase;
+	color: #3F4254;
+}
+
+strong {
+	display: block;
+	text-align: right;
+	color: #F64E60;
+    text-decoration: none;
+    background-color: transparent;
+	&.today {
+		color: white;
+	}
+}
+
 .calendar-table {
 	border-collapse: collapse;
 	width: 100%;
@@ -12,24 +34,25 @@ $table-square-mobile-size: 50px;
 
 .calendar-table thead th {
 	vertical-align: bottom;
-	border-bottom: 2px solid #dee2e6;
-	// width: 14.2%;
+	// border-bottom: 2px solid #dee2e6;
 	width: $table-square-size;
 	min-width: $table-square-size;
 	max-width: $table-square-size;
+	color: #B5B5C3;
+
+	padding: 0.75rem 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
 	@media screen and (max-width: 992px) {
 		width: $table-square-mobile-size;
 		min-width: $table-square-mobile-size;
 		max-width: initial;
 	}
-	&.mobile-bg {
-		background: #f1f1f1;
-	}
 }
 
 .calendar-table td,
 .calendar-table th {
-	border: 1px solid #dee2e6;
+	border: 1px solid #EBEDF3;
 }
 
 .calendar-table td,
@@ -74,28 +97,55 @@ $table-square-mobile-size: 50px;
 td.calendar-day.blue-date,
 td.calendar-day.blue-date div {
 	color: white;
-	background-color: #6a93cb;
-	background-image: linear-gradient(315deg, #3699ff 0%, #3699ff 74%);
+	background-color: #7cbaf9;
 }
 
 .calendar-day.selected-date {
-	background-color: #ddd;
+	background-color: #efefef;
 }
 
-.center {
-	display: flex;
-	justify-content: center;
+.badge {
+	&.badge-past {
+		background: $badge-past-color;
+		color: white;
+	}
+	&.badge-today {
+		background: $badge-today-color;
+	}
+	&.badge-future {
+		background: $badge-future-color;
+		color: white;
+	}
 }
 
-.child {
-	display: inline-block;
-	vertical-align: middle;
-}
-
-.buttons{
-	cursor: pointer;
-}
-
-i {
-	color: #3699ff9c;
+.button-container {
+	button[type="button"] {
+		color: #B5B5C3;
+		background: transparent;
+		border: 1px solid #EBEDF3;
+		text-shadow: none !important;
+		-webkit-box-shadow: none !important;
+		box-shadow: none !important;
+		outline: none !important;
+		height: 2.75rem;
+		padding: 0 1.25rem;
+		i {
+			font-size: 0.7rem;
+		}
+		&:hover {
+			background: #F3F6F9;
+			border: 1px solid #EBEDF3;
+			i {
+				color: #B5B5C3;
+			}
+		}
+		&:active {
+			background: $badge-future-color;
+			border: 1px solid $badge-future-color;
+			color: #FFF;
+			i {
+				color: #FFF;
+			}
+		}
+	}
 }

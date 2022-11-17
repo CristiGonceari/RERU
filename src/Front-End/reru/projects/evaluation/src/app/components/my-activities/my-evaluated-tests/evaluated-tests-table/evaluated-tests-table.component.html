@@ -45,12 +45,12 @@
                         <td>{{'statuses.' + resultEnum[test.result] | translate}}</td>
                         <td>
                             <button *ngIf="test.testStatus === enum.Terminated"
-                                [routerLink]="['../../tests/verify-test', test.id]" class="btn btn-light-success">
+                                [routerLink]="['../../tests/verify-test', test.id]" class="btn btn-sm btn-light-success">
                                 {{ 'button.verify' | translate }}
                             </button>
                             <button
                                 *ngIf="test.testStatus === enum.Verified"
-                                class="btn btn-blue" [routerLink]="['../test-result', test.id]">
+                                class="btn btn-sm btn-blue" [routerLink]="['../test-result', test.id]">
                                 {{'tests.view' | translate}}
                             </button>
                         </td>

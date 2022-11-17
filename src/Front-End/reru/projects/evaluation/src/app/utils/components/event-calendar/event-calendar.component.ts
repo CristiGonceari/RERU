@@ -45,7 +45,7 @@ export class EventCalendarComponent implements OnInit {
 
   firstDayOfMonth;
   lastDayOfMonth;
-  todayDay;
+  todayDay: CalendarDay;
   dates: boolean = false;
 
   constructor(public dialog: MatDialog) { }
@@ -135,8 +135,7 @@ export class EventCalendarComponent implements OnInit {
     this.generateCalendarDays(this.monthIndex);
   }
 
-  getClickedDay(data) {
-     
+  getClickedDay(data: CalendarDay) {
     this.calendar.map(x => x.clickedDay = false);
 
     data.clickedDay = true;
