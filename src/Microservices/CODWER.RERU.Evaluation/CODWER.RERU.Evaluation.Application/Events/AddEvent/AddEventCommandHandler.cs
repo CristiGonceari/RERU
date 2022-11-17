@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.AddEvent
 
         private async Task LogAction(Event item)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Event was created", item));
+            await _loggerService.Log(LogData.AsEvaluation($"Evenimentul {item.Name} a fost adăugat în sistem", item));
         }
     }
 }

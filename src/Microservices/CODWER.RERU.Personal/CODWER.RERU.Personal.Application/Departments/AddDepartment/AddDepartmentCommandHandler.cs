@@ -39,7 +39,7 @@ namespace CODWER.RERU.Personal.Application.Departments.AddDepartment
 
         private async Task LogAction(Department department)
         {
-            await _loggerService.Log(LogData.AsPersonal($"{department.Name} was added to Departments list", department));
+            await _loggerService.Log(LogData.AsPersonal($"Departamentul {department.Name} a fost adăugat în sistem", department));
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using RERU.Data.Persistence.Context;
-using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleRelations;
+﻿using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleRelations;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities.PersonalEntities.OrganizationRoleRelations;
+using RERU.Data.Persistence.Context;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.AddDepartmentRoleRelation
 {
@@ -55,7 +55,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.AddDepartment
                 .Include(x => x.OrganizationalChart)
                 .FirstAsync(x => x.Id == departmentRoleRelation.Id);
 
-            await _loggerService.Log(LogData.AsPersonal($"New relation was added to organigram {organigram.OrganizationalChart.Name}", departmentRoleRelation));
+            await _loggerService.Log(LogData.AsPersonal($"O nouă relație a fost adăugata la organigrama {organigram.OrganizationalChart.Name}", departmentRoleRelation));
         }
 
         private ParentDepartmentChildDepartment NewDepartmentToDepartmentRelation(AddDepartmentRoleRelationCommand request)

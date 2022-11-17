@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Threading;
-using System.Threading.Tasks;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.Plans.EditPlan
 {
@@ -36,7 +36,7 @@ namespace CODWER.RERU.Evaluation.Application.Plans.EditPlan
 
         private async Task LogAction(Plan item)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Plan was edited", item));
+            await _loggerService.Log(LogData.AsEvaluation($"Planul {item.Name} a fost actualizat în sistem cu descrierea {item.Description}", item));
         }
     }
 }

@@ -21,5 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
         public bool EventResponsiblePerson { get; set; }
 
         public List<int> ExceptUserIds { get; set; }
+        public int EventId { get; set; }
+        public int PositionId { get; set; }
     }
 }

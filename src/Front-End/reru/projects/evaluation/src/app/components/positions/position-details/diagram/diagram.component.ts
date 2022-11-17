@@ -29,6 +29,11 @@ export class DiagramComponent implements OnInit {
   status = TestStatusEnum;
   result = TestResultStatusEnum;
 
+  isOpenAddTest: boolean = false;
+
+  selectedEventId;
+  selectedTestTemplateId;
+
   constructor(
     private positionService: CandidatePositionService,
     private activatedRoute: ActivatedRoute,
@@ -52,6 +57,8 @@ export class DiagramComponent implements OnInit {
   }
 
   getDiagram(): void {
+    this.isLoading = true;
+
     this.positionService.getDiagram({ positionId: this.positionId }).subscribe(res => {
       if (res && res.data) {
         this.eventsDiagram = res.data.eventsDiagram;
@@ -86,9 +93,37 @@ export class DiagramComponent implements OnInit {
   }
 
   openFullScreenMode() {
-    const modalRef: any = this.modalService.open(ViewPositionDiagramModalComponent,{ centered: true, size: 'xl',});
+    const modalRef: any = this.modalService.open(ViewPositionDiagramModalComponent, { centered: true, size: 'xl' });
     modalRef.componentInstance.eventsDiagram = this.eventsDiagram;
     modalRef.componentInstance.usersDiagram = this.usersDiagram;
     modalRef.componentInstance.testTemplates = this.testTemplates;
+    modalRef.result.then(() => {
+      if ((modalRef.result?.__zone_symbol__value?.isOpenAddTest &&
+        modalRef.result?.__zone_symbol__value?.selectedEventId &&
+        modalRef.result?.__zone_symbol__value?.selectedTestTemplateId) != null
+      ) {
+        this.isOpenAddTest = modalRef.result.__zone_symbol__value.isOpenAddTest;
+        this.selectedEventId = modalRef.result.__zone_symbol__value.selectedEventId;
+        this.selectedTestTemplateId = modalRef.result.__zone_symbol__value.selectedTestTemplateId;
+      }
+    }, () => { })
+  }
+
+  openAddTest(value) {
+    this.isOpenAddTest = true;
+    this.selectedEventId = value.eventId;
+    this.selectedTestTemplateId = value.testTemplateId;
+  }
+
+  onChangeAddTest(value: boolean) {
+    this.isOpenAddTest = value;
+    this.clearDiagramData();
+    this.getDiagram();
+  }
+
+  clearDiagramData() {
+    this.eventsDiagram = [];
+    this.usersDiagram = [];
+    this.testTemplates = [];
   }
 }

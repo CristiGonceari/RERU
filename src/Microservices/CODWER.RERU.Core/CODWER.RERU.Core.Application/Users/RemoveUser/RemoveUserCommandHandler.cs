@@ -1,16 +1,16 @@
 ﻿using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
+using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
+using CVU.ERP.StorageService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CVU.ERP.Logging;
-using CVU.ERP.Logging.Models;
-using CVU.ERP.StorageService;
-using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.Users.RemoveUser
 {
@@ -22,7 +22,8 @@ namespace CODWER.RERU.Core.Application.Users.RemoveUser
 
         public RemoveUserCommandHandler(ICommonServiceProvider commonServiceProvider,
             IEnumerable<IIdentityService> identityServices,
-            ILoggerService<RemoveUserCommandHandler> loggerService, IStorageFileService storageFileService) : base(commonServiceProvider)
+            ILoggerService<RemoveUserCommandHandler> loggerService, 
+            IStorageFileService storageFileService) : base(commonServiceProvider)
         {
             _identityServices = identityServices;
             _loggerService = loggerService;
@@ -90,7 +91,7 @@ namespace CODWER.RERU.Core.Application.Users.RemoveUser
 
         private async Task LogAction(UserProfile userProfile)
         {
-            await _loggerService.Log(LogData.AsCore($"User {userProfile.FirstName} {userProfile.LastName} was removed", userProfile));
+            await _loggerService.Log(LogData.AsCore($"Utilizatorul {userProfile.FullName} a fost șters din sistem", userProfile));
         }
     }
 }

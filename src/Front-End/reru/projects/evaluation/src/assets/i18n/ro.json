@@ -665,7 +665,8 @@
     "option8": "Utilizatorul nu va putea vedea paginarea",
     "option9": "Utilizatorul poate vizualiza mai multe întrebări pe pagină",
     "option10": "Utilizatorul nu va putea continua testul dacă a făcut numărul maxim de erori posibile",
-    "option11": "Utilizatorul va primi un email care va contine informatii despre ora si/sau locatia specifica"
+    "option11": "Utilizatorul va primi un email care va contine informatii despre ora si/sau locatia specifica",
+    "option12": "Aveți nevoie de confirmarea administratorului pentru inceperea testului"
   },
   "faq": {
     "help": "Ajutor",

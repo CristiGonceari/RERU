@@ -33,7 +33,7 @@ namespace CODWER.RERU.Personal.Application.OrganizationRoles.RemoveOrganizationR
         }
         private async Task LogAction(Role Role)
         {
-            await _loggerService.Log(LogData.AsPersonal($"{Role.Name} was removed", Role));
+            await _loggerService.Log(LogData.AsPersonal($"Rolul {Role.Name} a fost ștest din sistem", Role));
         }
     }
 }

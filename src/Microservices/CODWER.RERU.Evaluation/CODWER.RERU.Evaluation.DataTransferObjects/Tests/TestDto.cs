@@ -37,5 +37,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public DateTime? EndTime { get; set; }
         public bool? ViewTestResult { get; set; }
         public List<string> CandidatePositionNames { get; set; }
+        public bool CanStartWithoutConfirmation { get; set; }
     }
 }

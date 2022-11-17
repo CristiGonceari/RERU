@@ -1,6 +1,4 @@
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CVU.ERP.Logging;
@@ -8,6 +6,8 @@ using CVU.ERP.Logging.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
 {
@@ -17,7 +17,9 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
         private readonly IMapper _mapper;
 
         public EditUserPersonalDetailsCommandHandler(ICommonServiceProvider commonServiceProvider,
-            ILoggerService<EditUserPersonalDetailsCommandHandler> loggerService, IMapper mapper) : base(commonServiceProvider)
+            ILoggerService<EditUserPersonalDetailsCommandHandler> loggerService, 
+            IMapper mapper
+            ) : base(commonServiceProvider)
         {
             _mapper = mapper;
             _loggerService = loggerService;
@@ -37,7 +39,7 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
 
         private async Task LogAction(UserProfile userProfile)
         {
-            await _loggerService.Log(LogData.AsCore($"User {userProfile.FirstName} {userProfile.LastName} was edited", userProfile));
+            await _loggerService.Log(LogData.AsCore($"Utilizatorul {userProfile.FullName} a fost actualizat în sistem", userProfile));
         }
     }
 }

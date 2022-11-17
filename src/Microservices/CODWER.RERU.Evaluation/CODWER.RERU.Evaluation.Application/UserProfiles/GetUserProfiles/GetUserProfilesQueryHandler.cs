@@ -93,6 +93,18 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
                 items = items.Where(x => !request.ExceptUserIds.Contains(x.Id));
             }
 
+            if (request.EventId > 0 && request.PositionId > 0)
+            {
+                var users = _appDbContext.EventUserCandidatePositions
+                    .Include(eucp => eucp.EventUser)
+                    .ThenInclude(eu => eu.UserProfile)
+                    .Where(x => x.EventUser.EventId == request.EventId && x.CandidatePositionId == request.PositionId)
+                    .Select(eucp => eucp.EventUser.UserProfile.Id)
+                    .ToList();
+
+                items = items.Where(x => users.Contains(x.Id));
+            }
+
             if (request.EventUsers)
             {
                 var list = _appDbContext.EventResponsiblePersons.Select(erp => erp.UserProfileId).ToList();
