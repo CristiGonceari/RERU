@@ -22,7 +22,7 @@
                                         <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="form-group row">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">{{
+                                                    <label class="col-xl-3 col-lg-3 col-form-label text-xl-right text-left">{{
                                                         'solicited-test.position-to-candidate' | translate }}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <div *ngIf="isEdit"
@@ -127,13 +127,21 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="text-right border-top pt-10">
-                                            <app-button class="btn mr-2" [value]="'button.cancel' | translate"
+                                        <div class="d-md-block d-none text-right pt-10">
+                                            <app-button  class="btn mr-2" [value]="'button.cancel' | translate"
                                                 (handle)="backClicked()">
                                             </app-button>
                                             <app-add-button class="btn mr-2" [value]="'button.confirm' | translate"
                                                 (handle)="onSave()">
                                             </app-add-button>
+                                        </div>
+                                        <div class="d-md-none d-block pt-10">
+                                            <app-add-button width="100%" class="btn w-100" [value]="'button.confirm' | translate"
+                                                (handle)="onSave()">
+                                            </app-add-button>
+                                            <app-button width="100%" class="btn w-100" [value]="'button.cancel' | translate"
+                                                (handle)="backClicked()">
+                                            </app-button>
                                         </div>
                                     </div>
                                 </div>

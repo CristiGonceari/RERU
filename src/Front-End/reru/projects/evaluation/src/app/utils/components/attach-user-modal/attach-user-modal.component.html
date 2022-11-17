@@ -2,40 +2,43 @@
 	<h3 class="modal-title">{{'events.attach-user' | translate}}</h3>
 </div>
 <div class="modal-body px-7">
-	<div class="row mb-5">
-		<div class="col">
+	<div class="row mb-lg-2 mb-0">
+		<div class="col-lg col-12">
 			<erp-shared-search-input (handleSearch)="setFilter('lastName', $event)"
 				[placeholder]="'login.last-name' | translate" #lastName></erp-shared-search-input>
 		</div>
-		<div class="col">
+		<div class="col-lg col-12 pt-lg-0 pt-2">
 			<erp-shared-search-input (handleSearch)="setFilter('firstName', $event)"
 				[placeholder]="'login.first-name' | translate" #firstName></erp-shared-search-input>
 		</div>
-		<div class="col">
+		<div class="col-lg col-12 pt-lg-0 pt-2">
 			<erp-shared-search-input (handleSearch)="setFilter('fatherName', $event)"
 			[placeholder]="'login.father-name' | translate" #fatherName></erp-shared-search-input>
 		</div>
-		<div class="col">
+		<div class="col-lg col-12 pt-lg-0 pt-2">
 			<erp-shared-search-input (handleSearch)="setFilter('idnp', $event)"
 				[placeholder]="'login.idnp' | translate" #idnp></erp-shared-search-input>
 		</div>
-		<div class="col">
+		<div class="col-lg col-12 pt-lg-0 pt-2">
 			<erp-shared-search-input (handleSearch)="setFilter('email', $event)"
 				[placeholder]="'user-profile.user-email'  | translate" #email></erp-shared-search-input>
 		</div>
 	</div>
-	<div class="row mb-5">
-		<div class="col">
+	<div class="row">
+		<div class="col-lg col-12 pt-lg-0 pt-2">
 			<app-search-department (filter)="setFilter('departmentId',  $event)" #departmentId></app-search-department>
 		</div>
-		<div class="col">
+		<div class="col-lg col-12 pt-lg-0 pt-2">
 			<app-search-role (filter)="setFilter('roleId',  $event)" #roleId></app-search-role>
 		</div>
-		<div class="col">
+		<div class="col-lg col-12 pt-lg-0 pt-2">
 			<app-search-status (filter)="setFilter('userStatusEnum',  $event)" #userStatusEnum></app-search-status>
 		</div>
-		<div class="col text-center w-100">
+		<div class="d-lg-block d-none col-lg-auto col-12 pt-lg-0 pt-2">
 			<app-button class="block" (click)="resetFilters()">{{'button.reset-filters' | translate}}</app-button>
+		</div>
+		<div class="d-lg-none d-block col-lg-auto col-12 pt-lg-0 pt-2">
+			<app-button class="w-100" width="100%" (click)="resetFilters()">{{'button.reset-filters' | translate}}</app-button>
 		</div>
 	</div>
 
@@ -43,8 +46,7 @@
 		[colorClass]="'text-primary'">
 	</app-loading-spinner>
 
-	<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
-  	id="kt_datatable">
+
 		<div *ngIf="page == 'evaluators'" class="d-flex align-items-center mb-5">
 			<span class="h3 mb-0 pr-2">{{ 'events.show-user-name' | translate }}: </span>
 			<span>{{ 'button.no' | translate }}</span>
@@ -58,6 +60,8 @@
 		</div>
 		
 		<p *ngIf="inputType == 'checkbox'">{{ 'events.attached-users' | translate }}: {{attachedItems.length}}</p>
+		<div class="table-responsive datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+		id="kt_datatable">
 		<table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading">
 			<thead class="text-uppercase text-muted">
 				<tr>
@@ -113,11 +117,16 @@
 			(sizeChange)="getUsers({ page: 1, itemsPerPage: $event})"
 			(pageChange)="getUsers({ page: $event, itemsPerPage: pagination.pageSize})">
 		</div>
+		</div>
 	</div>
-</div>
-<div class="modal-footer">
+
+<div class="modal-footer d-lg-flex d-none">
 	<button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
 	<button type="button" class="btn btn-primary" (click)="confirm()">{{'button.confirm' | translate}}</button>
+</div>
+<div class="modal-footer d-lg-none d-flex">
+	<button type="button" class="btn btn-primary w-100" (click)="confirm()">{{'button.confirm' | translate}}</button>
+	<button type="button" class="btn btn-secondary w-100 pt-2" (click)="dismiss()">{{'button.cancel' | translate}}</button>
 </div>
 <ng-template #tooltip>
 	<p class="mb-0 font-size-sm" *ngIf="paginatedAttachedIds">{{'button.uncheck-all' | translate}}</p>

@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationModel } from '../../../../utils/models/pagination.model';
@@ -19,6 +19,7 @@ import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18
 import { GenerateDocumentModalComponent } from 'projects/evaluation/src/app/utils/modals/generate-document-modal/generate-document-modal.component';
 import { FileTypeEnum } from 'projects/evaluation/src/app/utils/enums/file-type.enum';
 import { EnumStringTranslatorService } from 'projects/evaluation/src/app/utils/services/enum-string-translator.service';
+import { ObjectUtil } from 'projects/evaluation/src/app/utils/util/object.util';
 
 
 @Component({
@@ -124,7 +125,7 @@ export class TestListTableComponent implements OnInit {
     this.setTimeToSearch();
     this.isLoading = true; 
     
-    let params = {
+    let params = ObjectUtil.preParseObject({
       mode: null,
       testTemplateName: this.testName || '',
       locationKeyword: this.testLocation || '',
@@ -139,7 +140,7 @@ export class TestListTableComponent implements OnInit {
       page: data.page || this.pagination.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
       ...this.filters
-    }
+    });
 
     this.testService.getTests(params).subscribe(res => {
       if (res && res.data) {

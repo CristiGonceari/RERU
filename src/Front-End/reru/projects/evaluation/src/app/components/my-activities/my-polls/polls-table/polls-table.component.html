@@ -37,16 +37,16 @@
                         <td>
                             <button
                                 *ngIf="poll.status == enum.NotVoted && (poll.testStatus == 0 || poll.testStatus == null)"
-                                class="btn btn-light-success" (click)="createPoll(true, poll.id, poll.eventId)">
+                                class="btn btn-sm btn-light-success" (click)="createPoll(true, poll.id, poll.eventId)">
                                 {{'button.vote' | translate}}
                             </button>
                             <button *ngIf="poll.testStatus == testEnum.InProgress" (click)="createPoll(false, poll.id, poll.eventId)"
-                                class="btn btn-light-warning">
+                                class="btn btn-sm btn-light-warning">
                                 {{'button.continue' | translate}}
                             </button>
                             <button
                                 *ngIf="poll.setting && poll.status == enum.Voted || poll.endTime < date && poll.status == enum.Voted"
-                                class="btn btn-blue" [routerLink]="['../poll-progress', poll.id]">
+                                class="btn btn-sm btn-blue" [routerLink]="['../poll-progress', poll.id]">
                                 {{'tests.view' | translate}}
                             </button>
                         </td>

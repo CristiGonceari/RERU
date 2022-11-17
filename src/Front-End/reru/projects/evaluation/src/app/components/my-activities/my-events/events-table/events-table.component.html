@@ -69,16 +69,16 @@
                     </span>
                 </td> -->
                 <td>
-                    <button *ngIf="test.testStatus == enum.InProgress" class="btn btn-light-warning"
+                    <button *ngIf="test.testStatus == enum.InProgress" class="btn btn-sm btn-light-warning"
                         [routerLink]="['../one-test-per-page', test.id]">
                         {{'button.continue' | translate}}
                     </button>
                     <button *ngIf="test.testStatus == enum.Programmed || test.testStatus == enum.AlowedToStart"
-                        class="btn btn-light-success" [routerLink]="['../start-test', test.id]">
+                        class="btn btn-sm btn-light-success" [routerLink]="['../start-test', test.id]">
                         {{'button.start-test' | translate}}
                     </button>
                     <button *ngIf="test.viewTestResult && (test.result == resultEnum.NotPassed || test.result == resultEnum.Passed)"
-                        class="btn btn-blue" [routerLink]="['../test-result', test.id]">
+                        class="btn btn-sm btn-blue" [routerLink]="['../test-result', test.id]">
                         {{'tests.view' | translate}}
                     </button>
                 </td>

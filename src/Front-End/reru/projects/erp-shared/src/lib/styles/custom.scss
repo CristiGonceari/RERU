@@ -1,7 +1,19 @@
 /* Declaring variables */
-$border-radius: 3px;
+$border-radius: 0.231rem;
+$rounded-border-radius: 0.85rem;
 $blue-color: #3699ff;
 $blue-light-color: #70b7ff;
+$font-family: Poppins, Helvetica, "sans-serif";
+
+/* Global selectors */
+.mat-body,
+.mat-body-1,
+body.mat-typography,
+body {
+  font-family: $font-family;
+}
+
+/* End Global selectors*/
 
 /* Notifications layout */
 .simple-notification div,
@@ -14,7 +26,7 @@ $blue-light-color: #70b7ff;
 .navi.navi-hover .navi-item .navi-link:hover,
 div.dahsboard-component a.nav-link,
 div.card.card-custom,
-.datatable.datatable-default > .datatable-pager > .datatable-pager-nav > li > a.datatable-pager-link,
+.datatable.datatable-default>.datatable-pager>.datatable-pager-nav>li>a.datatable-pager-link,
 div.dropdown-menu {
   border-radius: $border-radius;
 }
@@ -37,48 +49,70 @@ select[class^='form-control'] {
   border-radius: $border-radius;
 }
 
-/* Outside the scope ng-deep */
-::ng-deep {
 /* Rewriting tag-input module  */
-  tag {
+tag-input {
+  div.ng2-tag-input {
+    border-bottom: none !important;
+
+    tag {
       border-radius: 12px !important;
       margin: .1rem .3rem !important;
-      background: #a2caf1 !important;
+      background: $blue-light-color !important;
       line-height: 32px !important;
-      &:hover, &:active, &:focus {
-          background: #98c5f1 !important;
+
+      &:hover,
+      &:active,
+      &:focus {
+        background: $blue-color  !important;
       }
 
       .tag__text {
-          color: #fff !important;
+        color: #fff;
+        padding: 0 0 0 5px;
       }
 
+      delete-icon {
+        width: 25px;
+        padding: 0 5px 0 0;
+
+        svg path {
+          fill: white !important;
+          padding: 0 5px 0 0;
+        }
+      } 
+
+    }
   }
-  .ng2-tag-input {
-      border-bottom: none !important;
-  }
-  
+
+  input.ng2-tag-input__text-input,
   .ng2-tag-input__text-input {
-      padding: 0 !important;
-      background: transparent;
-  }
-
-  input[type="file"] {
-      display: none;
-  }
-  .custom-file-upload {
-      color: #FFF !important;
-      border-radius: 0.3rem !important;
-      background: #6993FF;
-      &:hover {
-        color: #FFF;
-        background: #4A7DFF;
-      }
-  }
-  .expandable {
-      min-height: 10px !important;
+    padding: 0 !important;
+    background: transparent;
+    font-family: $font-family !important;
   }
 }
+
+.custom-file-upload {
+  color: #FFF !important;
+  border-radius: 0.3rem !important;
+  background: #6993FF;
+
+  &:hover {
+    color: #FFF;
+    background: #4A7DFF;
+  }
+}
+
+.expandable {
+  min-height: 10px !important;
+}
+/* End rewriting tag-input */
+
+/* Ckeditor */
+div.ck-content {
+  background: #F3F6F9;
+}
+/* End Ckeditor */
 
 /* Buttons Color custom */
 .text-blue {
@@ -94,8 +128,18 @@ select[class^='form-control'] {
   background: $blue-light-color;
   border-color: transparent;
   background-blend-mode: lighten;
+
   &:hover {
     color: white;
     background: $blue-color;
   }
 }
+
+/* End Buttons Color custom */
+
+/* Badge custom Style */
+.badge {
+  border-radius: $rounded-border-radius !important;
+  padding: 0.55rem !important;
+}
+/* End Badge custom Style */

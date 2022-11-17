@@ -15,7 +15,7 @@
                   {{ 'position.list' | translate }}
                 </h3>
               </div>
-              <div class="card-toolbar">
+              <div class="card-toolbar d-md-flex d-none">
                 <app-confirm-button class="btn mr-3" (click)="getHeaders(getTitle())">
                   <i class="far fa-file-pdf text-white"></i>
                   {{'button.print' | translate}}
@@ -23,16 +23,24 @@
                 <app-add-button class="btn" routerLink="../add-position" [value]="'position.add' | translate">
                 </app-add-button>
               </div>
+              <div class="card-toolbar d-md-none d-flex w-100">
+                <app-confirm-button class="btn w-100" width="100%" (click)="getHeaders(getTitle())">
+                  <i class="far fa-file-pdf text-white"></i>
+                  {{'button.print' | translate}}
+                </app-confirm-button>
+                <app-add-button class="btn w-100" width="100%" routerLink="../add-position" [value]="'position.add' | translate">
+                </app-add-button>
+              </div>
             </div>
             <div class="card-header border-0 pt-0 pb-0 pr-5" style="min-height: 100%">
               <div class="row w-100">
-                <div class="col">
+                <div class="col-md col-12">
                   <div class="input-group input-group-sm input-group-solid">
                     <input class="form-control" type="text" name="name" [(ngModel)]="name"
                       [placeholder]="'button.search-name' | translate" />
                   </div>
                 </div>
-                <div class="col">
+                <div class="col-md col-12 pt-md-0 pt-2">
                   <div class="input-group input-group-sm input-group-solid">
                     <input class="form-control" type="text" [(ngModel)]="responsiblePersonName"
                       name="responsiblePersonName"
@@ -41,11 +49,11 @@
                 </div>
               </div>
               <div class="row w-100 mt-2">
-                <div class="col">
+                <div class="col-lg col-12 pt-lg-0 pt-2">
                   <app-search-medical-column (filter)="setFilter('medicalColumn', $event)" #medicalColumn>
                   </app-search-medical-column>
                 </div>
-                <div class="col">
+                <div class="col-lg col-12 pt-lg-0 pt-2">
                   <div class="input-group input-group-sm input-group-solid">
                     <input type="text" [owlDateTimeTrigger]="activeDtFrom" [placeholder]="'position.search-from-active-date' | translate"
                       class="form-control form-control-lg form-control-solid"
@@ -57,7 +65,7 @@
                     <owl-date-time #activeDtFrom></owl-date-time>
                   </div>
                 </div>
-                <div class="col">
+                <div class="col-lg col-12 pt-lg-0 pt-2">
                   <div class="input-group input-group-sm input-group-solid">
                     <input type="text" [owlDateTimeTrigger]="activeToDate" [placeholder]="'position.search-from-inactive-date' | translate"
                       class="form-control form-control-lg form-control-solid"
@@ -69,12 +77,18 @@
                     <owl-date-time #activeToDate></owl-date-time>
                   </div>
                 </div>
-                <div class="col-2">
-                  <div class="text-right">
+                <div class="col-lg-auto col-12 pt-lg-0 pt-2">
+                  <div class="text-right d-md-block d-none">
                     <app-button (handle)="resetFilters()" [value]="'button.reset' | translate" class="mr-5">
                     </app-button>
                     <app-confirm-button (handle)="getPositions({ page: 1 })" [value]="'button.search' | translate">
                     </app-confirm-button>
+                  </div>
+                  <div class="d-md-none d-flex flex-column">
+                    <app-confirm-button class="w-100" width="100%" (handle)="getPositions({ page: 1 })" [value]="'button.search' | translate">
+                    </app-confirm-button>
+                    <app-button class="w-100 pt-2" width="100%" (handle)="resetFilters()" [value]="'button.reset' | translate">
+                    </app-button>
                   </div>
                 </div>
               </div>
