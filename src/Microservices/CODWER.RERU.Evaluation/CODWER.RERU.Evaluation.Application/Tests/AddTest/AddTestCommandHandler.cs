@@ -98,7 +98,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 
             if (request.Data.SolicitedTime.HasValue)
             {
-                content += $@"<p>Data și ora: ""{request.Data.SolicitedTime.Value.ToString("dd/MM/yyyy HH:mm")}"".</p>";
+                content += $@"<p>Data și ora: ""{request.Data.SolicitedTime.Value:dd/MM/yyyy HH:mm}"".</p>";
             }
 
             if (request.Data.LocationId.HasValue)
@@ -108,7 +108,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                 content += $@"<p> Locatia: ""{location.Address}"", ""{location.Name}"" </p>";
                 content += $@"<p> ""{location.Description}""</p>";
 
-                content += $@"<p> Prezența fizică este obligatorie. </p>";
+                content += "<p> Prezența fizică este obligatorie. </p>";
             }
 
             return content;
