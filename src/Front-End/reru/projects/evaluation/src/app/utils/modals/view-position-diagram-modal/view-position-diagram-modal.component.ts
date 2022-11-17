@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewEncapsulation } from '@angular/core';
 import { EnumStringTranslatorService } from '../../services/enum-string-translator.service';
@@ -21,7 +21,7 @@ export class ViewPositionDiagramModalComponent implements OnInit {
 
   constructor(private activeModal: NgbActiveModal,
     private enumStringTranslatorService: EnumStringTranslatorService,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
   }
@@ -30,7 +30,17 @@ export class ViewPositionDiagramModalComponent implements OnInit {
     return this.enumStringTranslatorService.translateTestResultValue(item);
   }
 
+  openAddTest(value) {
+    let data = {
+      isOpenAddTest: true,
+      selectedEventId: value.eventId,
+      selectedTestTemplateId: value.testTemplateId
+    }
+
+    this.activeModal.close(data);
+  }
+
   close(): void {
-    this.activeModal.close();
+    this.activeModal.dismiss();
   }
 }
