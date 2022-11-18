@@ -3,7 +3,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-  - develop
+  - pipelines/mcloud-stage
 
 resources:
   - repo: self
@@ -12,7 +12,7 @@ variables:
   tag: dev
   containerRegistry: cvuintell-docker-hub
   HELM_VERSION: "3.0.2"
-  devK8sService: microk8s
+  devK8sService: mcloud-reru
 
 stages:
   - stage: Build
@@ -30,7 +30,7 @@ stages:
             inputs:
               targetType: "inline"
               script: |
-                $override = 'True'
+                $override = 'False'
                 $files=$(git diff HEAD --name-only)
                 $temp=$files -split ' '
                 $count=$temp.Length
@@ -108,6 +108,7 @@ stages:
                     {
                       echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
                     }
+
                   if ($name -like "src/Front-End/reru/projects/evaluation360/*" -or $override -eq 'True')
                     {
                       echo "##vso[task.setvariable variable=BuildEvaluation360FE]True"
@@ -195,13 +196,13 @@ stages:
               addPipelineData: false
               includeLatestTag: true
             condition: and(succeeded(), eq(variables['BuildInternalGateway'], 'True'))
-          
+
           - task: CmdLine@2
             displayName: Clean all docker resources
             inputs:
               script: "docker system prune -a --force"
             condition: and(succeeded(), eq(variables['BuildInternalGateway'], 'True'))
-          
+
           - task: Docker@2
             displayName: Build Identity New image
             inputs:
@@ -411,7 +412,7 @@ stages:
             inputs:
               script: "docker system prune -a --force"
             condition: and(succeeded(), eq(variables['BuildLogging'], 'True'))
-              
+
           - task: Docker@2
             displayName: Build Personal front end  image
             inputs:
@@ -501,7 +502,7 @@ stages:
             inputs:
               script: "docker system prune -a --force"
             condition: and(succeeded(), eq(variables['BuildEvaluationFE'], 'True'))
-
+              
           - task: Docker@2
             displayName: Build Evaluation back end image
             inputs:
@@ -532,6 +533,7 @@ stages:
               script: "docker system prune -a --force"
             condition: and(succeeded(), eq(variables['BuildEvaluation'], 'True'))
 
+            
           - task: Docker@2
             displayName: Build Evaluation360 front end  image
             inputs:
@@ -561,7 +563,7 @@ stages:
             inputs:
               script: "docker system prune -a --force"
             condition: and(succeeded(), eq(variables['BuildEvaluation360FE'], 'True'))
-
+              
           - task: Docker@2
             displayName: Build Evaluation360 back end image
             inputs:
@@ -597,11 +599,11 @@ stages:
     pool:
       name: "Default"
     variables:
-      k8sNamespace: reru
-      k8sReleaseName: reru-app-stage
+      k8sNamespace: reru-stage
+      k8sReleaseName: reru-app-demo-stage
     jobs:
       - deployment: DeployDev
-        environment: RERUPlatform-DEV
+        environment: RERUPlatform-STAGE
         strategy:
           runOnce:
             deploy:
@@ -618,12 +620,12 @@ stages:
                     kubernetesServiceEndpoint: $(devK8sService)
                     command: login
                 - bash:
-                    helm upgrade $(k8sReleaseName) helm/chart/
+                    helm upgrade $(k8sReleaseName) helm-stage/chart/
                     --install 
                     --atomic 
                     --namespace $(k8sNamespace)
                     --recreate-pods 
-                    --values helm/values.dev.yaml
+                    --values helm-stage/values.dev.yaml
                   #  --set-string core.database.connection_string="$(dev_core_connection_string)"
 
                 - task: Kubernetes@1
