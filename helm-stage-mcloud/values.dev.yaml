@@ -1,0 +1,244 @@
+tag: dev
+
+ingress:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/proxy-body-size: "250m"
+    nginx.org/client-body-timeout: "3600"
+    nginx.org/client-max-body-size: 250m
+    nginx.org/proxy-connect-timeout: "3600"
+    nginx.org/proxy-read-timeout: "3600"
+    nginx.org/proxy-send-timeout: "3600"
+#     nginx.ingress.kubernetes.io/configuration-snippet: |
+#       add_header Content-Security-Policy "frame-ancestors mpass.staging.egov.md;";
+
+ingress_back:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/proxy-body-size: "250m"
+    nginx.org/client-body-timeout: "3600"
+    nginx.org/client-max-body-size: 250m
+    nginx.org/proxy-connect-timeout: "3600"
+    nginx.org/proxy-read-timeout: "3600"
+    nginx.org/proxy-send-timeout: "3600"
+    # nginx.ingress.kubernetes.io/configuration-snippet: |
+    #   add_header Content-Security-Policy "frame-ancestors mpass.staging.egov.md;";
+
+# api variables
+reru_public_gateway:
+  name: "reru-public-gateway"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-public-gateway
+
+  deployment: # variables for api deployment
+    resources:
+      requests:
+        memory: "250Mi"
+        cpu: "250m"
+      limits:
+        memory: "256Mi"
+        cpu: "300m"
+  ingress:
+    enabled: true
+    host: reru.mai.gov.md
+    path: /
+    secretname: reru-codwer-com-public-gateway
+    livenessProbe: /api/discover
+
+  service:
+    port: 8080
+    portName: out
+    type: ClusterIP
+
+reru_internal_gateway:
+  name: "reru-internal-gateway"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-internal-gateway
+
+reru_core:
+  name: "reru-core"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-core
+  database:
+    # connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Core-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    identity_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    hangfirecore_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Core-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+
+reru_identity_migrator:
+  enabled: true
+  name: "reru-identity-migrator"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-identity-migrator
+  database:
+    identity_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+
+reru_storage_migrator:
+  enabled: true
+  name: "reru-storage-migrator"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-storage-migrator
+  database:
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+
+reru_core_fe:
+  name: "reru-core-fe"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-core-fe
+
+reru_personal_fe:
+  name: "reru-personal-fe"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-personal-fe
+
+reru_personal:
+  name: "reru-personal"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-personal
+  database:
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    hangfirepersonal_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Personal-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+
+reru_evaluation_fe:
+  name: "reru-evaluation-fe"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-evaluation-fe
+
+reru_evaluation:
+  name: "reru-evaluation"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-evaluation
+  database:
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    hangfireevaluation_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Evaluation-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+
+reru_evaluation360_fe:
+  name: "reru-evaluation360-fe"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-evaluation360-fe
+
+reru_evaluation360:
+  name: "reru-evaluation360"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-evaluation360
+  database:
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    hangfireevaluation360_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Evaluation360-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+
+
+reru_logging_fe:
+  name: "reru-logging-fe"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-logging-fe
+
+reru_logging:
+  name: "reru-logging"
+  replicas: 1
+  image:
+    repository: cvuintell/reru-logging
+  database:
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+
+microservices:
+  - test_saml:
+    service:
+      createService: true
+    deployment:
+      createDeployment: true
+      replicas: 1
+      volumes:
+        - name: global-application-settings
+          configMap:
+            name: global-application-settings
+      image: hashpe/docker-test-saml-idp
+      tag: latest
+      env:
+        - name: SIMPLESAMLPHP_SP_ENTITY_ID
+          value: "http://reru.mai.gov.md"
+        - name: SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE
+          value: "http://reru.mai.gov.md/ms/reru-identity-new/Saml2/Acs"
+        - name: SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE
+          value: "http://reru.mai.gov.md/ms/reru-identity-new/Saml2/Signout"
+        - name: SIMPLESAMLPHP_BASE_URL_PATH
+          value: "http://reru.mai.gov.md/ms/saml2/simplesaml/"
+
+    name: "test-saml"
+    port: 8080
+
+  - reru_identity_new:
+    service:
+      createService: true
+    deployment:
+      createDeployment: true
+      replicas: 1
+      volumes:
+        - name: global-application-settings
+          configMap:
+            name: global-application-settings
+      image: cvuintell/reru-identity-new
+      tag: dev
+      useImagePullSecrets: true
+      env:
+        - name: ASPNETCORE_URLS
+          value: "http://*:8080"
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"
+        - name: BASE_PATH
+          value: "/ms/reru-identity-new"
+        - name: SAML_METADATA_ENDPOINT
+          value: "http://reru.mai.gov.md/ms/saml2/simplesaml/saml2/idp/metadata.php"
+        - name: SAML_ENTITY_ID
+          value: "http://reru.mai.gov.md"
+        - name: SAML_CORS_PATH
+          value: "/Saml2/Acs"
+        - name: SAML_ENDPOINT
+          value: "http://reru.mai.gov.md"
+        - name: ConnectionStrings__Identity
+          value: "server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;"
+        - name: IDENTITY_ISSUER_URI
+          value: "http://reru.mai.gov.md/ms/reru-identity-new"
+        - name: IDENTITY_DISCOVERY_ENDPOINT_URI
+          value: "http://reru.mai.gov.md"
+      appsettings: reru_identity_new.appsettings.json
+    name: "reru-identity-new"
+    port: 8080
+
+minio:
+  persistence:
+    enabled: false
+
+    storageClass: "local-path"
+    VolumeName: "minio-volume"
+    accessMode: ReadWriteOnce
+    size: 20Gi
+
+    subPath: ""
+
+  accessKey: "minioaccesskey"
+  secretKey: "miniosecretkey"
+  mountPath: "/export"
+  port: 8080

@@ -30,11 +30,34 @@ stages:
             inputs:
               targetType: "inline"
               script: |
-                $override = 'True'
-                $files=$(git diff HEAD --name-only)
+                $override = 'False'
+                $files=$(git diff HEAD HEAD~ --name-only)
                 $temp=$files -split ' '
                 $count=$temp.Length
                 echo "Total changed $count files"
+                
+                $buildAllProjects = 'True'
+                if ($buildAllProjects -eq 'True')
+                {
+                  echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
+                  echo "##vso[task.setvariable variable=BuildEvaluation360FE]True"
+                  echo "##vso[task.setvariable variable=BuildPersonalFE]True"
+                  echo "##vso[task.setvariable variable=BuildCoreFe]True"
+                  echo "##vso[task.setvariable variable=BuildLoggingFe]True"
+
+                  echo "##vso[task.setvariable variable=BuildCore]True"
+                  echo "##vso[task.setvariable variable=BuildEvaluation]True"
+                  echo "##vso[task.setvariable variable=BuildEvaluation360]True"
+                  echo "##vso[task.setvariable variable=BuildPersonal]True"
+                  echo "##vso[task.setvariable variable=BuildLogging]True"
+
+                  echo "##vso[task.setvariable variable=BuildIdentityMigrator]True"
+                  echo "##vso[task.setvariable variable=BuildStorageMigrator]True"
+                  echo "##vso[task.setvariable variable=BuildIdentityNew]True"
+                  echo "##vso[task.setvariable variable=BuildPublicGateway]True"
+                  echo "##vso[task.setvariable variable=BuildInternalGateway]True"
+                }
+
                 For ($i=0; $i -lt $temp.Length; $i++)
                 {
                   $name=$temp[$i]

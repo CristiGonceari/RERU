@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ApplicationUserService } from '../../../services/application-user.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 
@@ -14,8 +14,7 @@ export class AuthenticationCallbackComponent implements OnInit {
 	constructor(
 		private authService: AuthenticationService,
 		private applicationUserService: ApplicationUserService,
-		private router: Router,
-		private route: ActivatedRoute
+		private router: Router
 	) {}
 
 	async ngOnInit() {

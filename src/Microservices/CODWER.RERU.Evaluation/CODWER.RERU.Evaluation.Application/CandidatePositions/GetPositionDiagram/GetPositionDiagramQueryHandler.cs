@@ -6,6 +6,7 @@ using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.PositionDiagram;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 using RERU.Data.Persistence.Extensions;
 
@@ -67,7 +68,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
         {
             return _appDbContext.EventTestTemplates
                 .Include(x => x.TestTemplate)
-                .Where(x => x.EventId == eventId)
+                .Where(x => x.EventId == eventId && x.TestTemplate.Status == TestTemplateStatusEnum.Active)
                 .OrderBy(x => x.EventId)
                 .ThenBy(x => x.TestTemplateId)
                 .Select(x => _mapper.Map<TestTemplateDiagramDto>(x))

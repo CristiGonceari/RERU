@@ -41,51 +41,55 @@
                 [colorClass]="'text-primary'">
             </app-loading-spinner>
             <div *ngIf="!events.length" class="text-center">{{'position.no-events' | translate}}</div>
-            <table *ngIf="!isLoading && events.length" class="table table-bordered table-resposive font-size-lg">
-                <thead class="text-uppercase text-muted">
-                    <tr>
-                        <th rowspan="2" style="vertical-align: middle; width: 15%;">{{'position.users' | translate}}
-                        </th>
-                        <th [attr.colspan]="event.testTemplates.length" *ngFor="let event of eventsDiagram"
-                            class="text-center mx-4">
-                            {{event.eventName}}</th>
-                    </tr>
-                    <tr>
-                        <th *ngFor="let template of testTemplates">
-                            <div>
-                                <div class="row d-flex align-items-center justify-content-center">
-                                    <div class="col-12 text-center">
-                                        {{template.name}}
-                                    </div>
-                                    <div class="d-inline-block text-center" style="max-width: 150px;">
-                                        <button class="btn btn btn-warning" data-toggle="tooltip" data-placement="top"
-                                            title="{{'tests.program-test' | translate}}" (click)="openAddTest(template)">
-                                            {{ 'tests.program-test' | translate }}
-                                        </button>
+            <div class="table-responsive">
+                <table *ngIf="!isLoading && events.length" class="table table-bordered font-size-lg">
+                    <thead class="text-uppercase text-muted">
+                        <tr>
+                            <th [attr.rowspan]="2" style="vertical-align: middle; width: 200px;">{{'position.users' | translate}}
+                            </th>
+                            <th [attr.colspan]="event.testTemplates.length" *ngFor="let event of eventsDiagram"
+                                [ngStyle]="{'width.px': event.testTemplates.length * 200 }"
+                                class="text-center mx-4">
+                                {{event.eventName}}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th *ngFor="let template of testTemplates">
+                                <div>
+                                    <div class="row d-flex align-items-center justify-content-center">
+                                        <div class="col-12 text-center">
+                                            {{template.name}}
+                                        </div>
+                                        <div class="d-inline-block text-center" style="max-width: 150px;">
+                                            <button class="btn btn btn-warning" data-toggle="tooltip" data-placement="top"
+                                                title="{{'tests.program-test' | translate}}" (click)="openAddTest(template)">
+                                                {{ 'tests.program-test' | translate }}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="text-dark-75">
-                    <tr *ngFor="let user of usersDiagram">
-                        <th style="vertical-align: middle;">
-                            <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
-                                [routerLink]="['../../../user-profile', user.userProfileId, 'solicited-tests']">
-                                {{ user.fullName }}
-                            </p>
-                        </th>
-                        <td *ngFor="let tests of user.testsByTestTemplate">
-                            <span *ngFor="let test of tests.tests">
-                                -{{ translateResultValue(test.resultValue) }},
-                                {{test.passDate | date: 'dd/MM/yyyy HH:mm'}},
-                                {{'statuses.' + status[test.status] | translate}} <br>
-                            </span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-dark-75">
+                        <tr *ngFor="let user of usersDiagram">
+                            <th style="vertical-align: middle;">
+                                <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
+                                    [routerLink]="['../../../user-profile', user.userProfileId, 'solicited-tests']">
+                                    {{ user.fullName }}
+                                </p>
+                            </th>
+                            <td *ngFor="let tests of user.testsByTestTemplate">
+                                <span *ngFor="let test of tests.tests">
+                                    -{{ translateResultValue(test.resultValue) }},
+                                    {{test.passDate | date: 'dd/MM/yyyy HH:mm'}},
+                                    {{'statuses.' + status[test.status] | translate}} <br>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -93,7 +97,7 @@
     <div class="card card-custom gutter-b" style="margin-left: 16px;">
         <div class="card-body">
             <app-position-add-test [eventId]="selectedEventId" [testTemplateId]="selectedTestTemplateId"
-                [positionId]="positionId" (newItemEvent)="onChangeAddTest($event)"></app-position-add-test>
+                [positionId]="positionId" [usersDiagram]="usersDiagram" (newItemEvent)="onChangeAddTest($event)"></app-position-add-test>
         </div>
     </div>
 </div>

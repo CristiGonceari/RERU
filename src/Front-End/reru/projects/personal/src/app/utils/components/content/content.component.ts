@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss']
 })
-export class ContentComponent{
+export class ContentComponent {
   @Input() isFluidContainer: boolean;
   @Input() classes: string;
   constructor() { }

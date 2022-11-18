@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.reru_personal_fe.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.reru_personal_fe.name }}
+  replicas: {{ .Values.reru_personal_fe.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.reru_personal_fe.name }}
+    spec:
+      volumes:
+      - name: {{ .Values.name }}-application-settings
+        configMap:
+          name: {{ .Values.name }}-application-settings
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecret.name }}
+      containers:
+      - name: {{ .Values.reru_personal_fe.name }}
+        image: {{ .Values.reru_personal_fe.image.repository }}:{{ .Values.tag }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ .Values.microservice.port }}
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.angular_microservice.deployment.liveness.livenessProbe }}
+            port: {{ .Values.microservice.port }}
+          initialDelaySeconds: {{ .Values.microservice.deployment.liveness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.microservice.deployment.liveness.periodSeconds }}
+          timeoutSeconds: {{ .Values.microservice.deployment.liveness.timeoutSeconds }}
+
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.angular_microservice.deployment.liveness.livenessProbe }}
+            port: {{ .Values.microservice.port }}
+          initialDelaySeconds: {{ .Values.microservice.deployment.readiness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.microservice.deployment.readiness.periodSeconds }}
+          timeoutSeconds: {{ .Values.microservice.deployment.readiness.timeoutSeconds }}
+
+        volumeMounts:
+          - name: {{ .Values.name }}-application-settings
+            mountPath: {{ .Values.angular_microservice.deployment.appsettings }}
+            subPath: reru_personal_fe.appsettings.json

@@ -12,8 +12,8 @@ import { ApplicationUserService } from '../../services/application-user.service'
 export class SidenavComponent implements OnInit {
 	modules: ApplicationUserModuleModel[] = [];
 	@Input() config: IAppSettings;
-	@Input() disableSidenav: boolean;
-	@Input() logo: string;
+	// @Input() disableSidenav: boolean;
+	@Input() appLogo: string;
 	@Input() moduleCode: string;
 	isLoading = true;
 	constructor(private moduleService: AvailableModulesService, 

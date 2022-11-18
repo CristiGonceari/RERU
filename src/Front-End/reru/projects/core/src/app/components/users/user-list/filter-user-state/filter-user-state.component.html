@@ -1,4 +1,4 @@
-<select class="form-control h-35px" name="status" id="status" [(ngModel)]="status" (change)="filter.emit(status)">
+<select class="form-control form-control-solid h-35px" name="status" id="status" [(ngModel)]="status" (change)="filter.emit(status)">
 	<option value="0" selected>{{ 'user-profile.search-by-user-state' | translate }} - ({{'statuses.all' | translate}})</option>
 	<option value="true">{{'statuses.active' | translate}}</option>
 	<option value="false">{{'statuses.inactive' | translate}}</option>

@@ -1,35 +1,31 @@
 <app-page-title title="{{ 'verify-test.subtitle' | translate }}" subTitle="{{ 'verify-test.test-data' | translate }}">
 </app-page-title>
 
-<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-    <div class="d-flex flex-column-fluid mb-5">
-        <div class="container">
-            <mat-accordion *ngIf="event == false">
-                <mat-expansion-panel (opened)="testEvent = true" (closed)="testEvent = false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            {{'tests.add-test-event' | translate}}
-                        </mat-panel-title>
-                        <mat-panel-description>
-                            {{'tests.add-test-event-description' | translate}}
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <app-add-test [testEvent]="testEvent"></app-add-test>
-                </mat-expansion-panel>
-            </mat-accordion>
-            <mat-accordion *ngIf="testEvent == false">
-                <mat-expansion-panel (opened)="event = true" (closed)="event = false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            {{'tests.add-test' | translate}}
-                        </mat-panel-title>
-                        <mat-panel-description>
-                            {{'tests.add-test-description' | translate}}
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <app-add-test></app-add-test>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </div>
-    </div>
-</div>
+<erp-shared-content>
+    <mat-accordion *ngIf="event == false">
+        <mat-expansion-panel (opened)="testEvent = true" (closed)="testEvent = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{'tests.add-test-event' | translate}}
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{'tests.add-test-event-description' | translate}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-add-test [testEvent]="testEvent"></app-add-test>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <mat-accordion *ngIf="testEvent == false">
+        <mat-expansion-panel (opened)="event = true" (closed)="event = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{'tests.add-test' | translate}}
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{'tests.add-test-description' | translate}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-add-test></app-add-test>
+        </mat-expansion-panel>
+    </mat-accordion>
+</erp-shared-content>
