@@ -9,7 +9,7 @@ resources:
   - repo: self
 
 variables:
-  tag: dev
+  tag: mstage
   containerRegistry: cvuintell-docker-hub
   HELM_VERSION: "3.0.2"
   devK8sService: mcloud-reru
@@ -30,7 +30,7 @@ stages:
             inputs:
               targetType: "inline"
               script: |
-                $override = 'False'
+                $override = 'True'
                 $files=$(git diff HEAD --name-only)
                 $temp=$files -split ' '
                 $count=$temp.Length

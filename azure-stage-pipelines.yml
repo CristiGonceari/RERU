@@ -9,7 +9,7 @@ resources:
   - repo: self
 
 variables:
-  tag: dev
+  tag: stage
   containerRegistry: cvuintell-docker-hub
   HELM_VERSION: "3.0.2"
   devK8sService: microk8s
@@ -30,8 +30,8 @@ stages:
             inputs:
               targetType: "inline"
               script: |
-                $override = 'False'
-                $files=$(git diff HEAD HEAD~ --name-only)
+                $override = 'True'
+                $files=$(git diff HEAD --name-only)
                 $temp=$files -split ' '
                 $count=$temp.Length
                 echo "Total changed $count files"
