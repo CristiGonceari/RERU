@@ -30,7 +30,7 @@ stages:
             inputs:
               targetType: "inline"
               script: |
-                $override = 'False'
+                $override = 'True'
                 $files=$(git diff HEAD HEAD~ --name-only)
                 $temp=$files -split ' '
                 $count=$temp.Length
