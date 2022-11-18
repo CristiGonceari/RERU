@@ -4,7 +4,7 @@ COPY . .
 WORKDIR "/src/src/Front-End/reru/"
 
 RUN npm install 
-RUN npm run build erp-shared 
+RUN npm run build erp-shared --prod
 RUN npm link "./dist/erp-shared" 
 RUN npm run build personal -- --prod --baseHref=/reru-personal/
 

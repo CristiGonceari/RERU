@@ -1,7 +1,6 @@
-import { ClassProvider, ComponentFactoryResolver, FactoryProvider, Injectable, Injector } from '@angular/core';
+import { ClassProvider, Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable({
@@ -29,11 +28,6 @@ export class AuthenticationHeaderInterceptor implements HttpInterceptor {
 		}
 
 		return request;
-	}
-
-	isValidToken(token: string): boolean {
-		const helper = new JwtHelperService();
-		return token && !helper.isTokenExpired(token);
 	}
 
 	setTokenOnHeader(token) {
