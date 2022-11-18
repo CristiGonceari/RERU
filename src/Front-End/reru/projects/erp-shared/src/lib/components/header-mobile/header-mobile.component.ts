@@ -9,6 +9,8 @@ import { SidebarView } from '../../models/sidebar.model';
 })
 export class HeaderMobileComponent implements OnInit {
   @Input() logo: string;
+  @Input() appLogo: string;
+  @Input() disableSidenav: boolean;
   isOpenUserIcon: boolean;
   isOpenModules: boolean;
   isOpenUser: boolean;

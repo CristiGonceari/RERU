@@ -21,10 +21,12 @@ export class HeaderComponent implements OnInit {
 	avatar: any;
 
 	@Input() logo: string;
+	@Input() appLogo: string;
 	@Input() languages: any = [];
 	@Input() currentLanguage: string;
 	@Input() user: any;
 	@Input() isCustomHeader: boolean;
+	@Input() disableSidenav: boolean;
 	@Output() changeLanguage = new EventEmitter<string>();
 
 	constructor(

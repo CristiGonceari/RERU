@@ -1,4 +1,4 @@
-<div id="kt_quick_notifications" class="offcanvas offcanvas-right px-8 py-10">
+ <div id="kt_quick_notifications" class="offcanvas offcanvas-right px-8 py-10">
   <div class="offcanvas-header d-flex align-items-center justify-content-between mb-10">
     <h3 class="font-weight-bold m-0">
       Notifications
@@ -9,7 +9,7 @@
     </a>
   </div>
 
-  <div class="offcanvas-content pr-5 mr-n5">
+  <div class="offcanvas-content pr-5 mr-n5 scroll ps ps--active-y">
     <div class="navi navi-icon-circle navi-spacer-x-0">
       <a href="javascript:;" class="navi-item">
         <div class="navi-link rounded">
@@ -220,7 +220,7 @@
       </a>
     </div>
   </div>
-</div>
+</div> 
 
 <div id="kt_quick_actions" class="offcanvas offcanvas-right px-8 py-10" [ngClass]="{'offcanvas-on': isOpenModules}">
   <div class="offcanvas-header d-flex align-items-center justify-content-between pb-10">
@@ -276,17 +276,17 @@
 
   <div class="offcanvas-content pr-5 mr-n5">
     <div class="d-flex align-items-center mt-5">
-        <div class="btn flex-shrink-0" (click)="toggle(sidebarView.USER)">
+        <div class="btn flex-shrink-0 pl-0" (click)="toggle(sidebarView.USER)">
           <div class="symbol symbol-100 symbol-sm-s" *ngIf="avatarString">
             <img [src]="avatar" />
           </div>
-          <div class="symbol symbol-100 symbol-sm-s symbol-light-success" style="size: 16px" *ngIf="!avatarString">
+          <div class="symbol symbol-100 symbol-sm-s symbol-light-success" *ngIf="!avatarString">
             <span class="font-size-h3 symbol-label font-weight-boldest">{{ acronym }}</span>
           </div>
         </div>                              
       <div class="d-flex flex-column">
         <a href="javascript:;" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">
-          {{authUserModel?.user?.name}} {{authUserModel?.user?.lastName}}
+          {{authUserModel.user.firstName}} {{authUserModel?.user?.lastName}}
         </a>
         <div class="navi mt-2">
           <a href="#" class="navi-item">
@@ -304,7 +304,11 @@
                     </g>
                   </svg>
                   </span> </span>
-              <span class="navi-text text-muted text-hover-primary text-nowrap">{{authUserModel?.user?.email}}</span>
+              <span [ngClass]="{
+                'font-size-smaller': authUserModel?.user?.email?.length > 20,
+                'text-muted': authUserModel?.user?.email?.length < 20
+              }"
+              class="navi-text text-hover-primary text-nowrap">{{authUserModel?.user?.email}}</span>
             </span>
           </a>
         </div>

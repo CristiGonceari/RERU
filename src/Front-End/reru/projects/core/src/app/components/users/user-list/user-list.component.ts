@@ -47,7 +47,7 @@ export class UserListComponent {
   }
 
   getPercents(item) {
-    var percents = Math.round(item.done * 100 / item.total)
+    const percents = Math.round(item.done * 100 / item.total)
     return `${percents} %`;
   }
 

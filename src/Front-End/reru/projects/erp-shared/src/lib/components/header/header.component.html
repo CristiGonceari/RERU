@@ -1,7 +1,13 @@
 <ng-container *ngIf="!isCustomHeader">
-	<div id="kt_header" class="header header-fixed" >
+	<div id="kt_header" class="header header-fixed py-9">
 		<div class="container d-flex align-items-stretch justify-content-between">
 			<div class="d-none d-lg-flex align-items-center mr-3 w-100">
+				<a *ngIf="disableSidenav" href="javascript:void(0)">
+					<img alt="Logo" [src]="appLogo" class="logo-sticky max-h-50px" />
+				</a>
+				<a href="javascript:void(0)">
+					<img alt="Logo" [src]="logo" class="logo-sticky max-h-35px" />
+				</a>
 				<div class="tenant-name">{{ authUserModel?.tenant?.name }}</div>
 			</div>
 
@@ -56,11 +62,11 @@
 <ng-container *ngIf="isCustomHeader">
 	<div id="kt_header" class="header header-fixed">
 		<div class="container d-flex align-items-stretch justify-content-between">
-			<div class="d-none d-lg-flex align-items-center mr-3 w-100">
+			<div class="d-lg-flex d-none align-items-center mr-3 w-100">
 				<a [routerLink]="['/']">
 					<img alt="Logo" [src]="logo" class="logo-sticky max-h-35px" />
 				</a>
-				<div class="tenant-name">ERP</div>
+				<div class="tenant-name">{{ authUserModel?.tenant?.name }}</div>
 			</div>
 
 			<div class="topbar">
@@ -97,7 +103,7 @@
 				</div>
 
 				<div class="topbar-item" style="white-space: nowrap; font-size: 14px; font-weight: 500">
-					{{ user?.name }} {{ user?.lastName }}
+					{{ user?.firstName }} {{ user?.lastName }}
 					<div class="btn flex-shrink-0 mr-7" (click)="toggle(sidebarView.USER)">
 						<div class="symbol symbol-50 symbol-sm-s symbol-light-success" style="size: 17px">
 							<span class="font-size-h3 symbol-label font-weight-boldest">{{ acronym }}</span>

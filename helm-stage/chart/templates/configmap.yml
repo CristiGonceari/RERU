@@ -208,7 +208,7 @@ data:
         }
       ],
     "GlobalConfiguration": {
-        "BaseUrl": "http://reru.mai.gov.md"
+        "BaseUrl": "http://reru-stage.codwer.com"
     }
 
     }
@@ -332,17 +332,17 @@ data:
             "ClientName": "RERU web client",
             "AllowedGrantTypes": ["implicit"],
             "AllowedScopes": ["openid", "core", "personal", "evaluation", "evaluation360", "logging"],
-            "RedirectUris": ["http://reru.mai.gov.md/#/auth-callback#"],
-            "PostLogoutRedirectUris": ["http://reru.mai.gov.md/"],
-            "AllowedCorsOrigins": ["http://reru.mai.gov.md"],
+            "RedirectUris": ["http://reru-stage.codwer.com/#/auth-callback#"],
+            "PostLogoutRedirectUris": ["http://reru-stage.codwer.com/"],
+            "AllowedCorsOrigins": ["http://reru-stage.codwer.com"],
             "AllowAccessTokensViaBrowser": true,
             "AccessTokenLifetime": 3600
           }
         ]
       },
       "PlatformConfig": {
-        "RegistrationPageUrl": "http://reru.mai.gov.md/#/registration-page",
-        "PositionsPageUrl": "http://reru.mai.gov.md/#/vacant-positions-page"
+        "RegistrationPageUrl": "http://reru-stage.codwer.com/#/registration-page",
+        "PositionsPageUrl": "http://reru-stage.codwer.com/#/vacant-positions-page"
       }
     }
 
@@ -413,7 +413,7 @@ data:
           }
         },
       "PlatformConfig": {
-          "BaseUrl": "http://reru.mai.gov.md"  
+          "BaseUrl": "http://reru-stage.codwer.com"  
         }
     }
 
@@ -485,7 +485,7 @@ data:
           }
         },
       "PlatformConfig": {
-          "BaseUrl": "http://reru.mai.gov.md"  
+          "BaseUrl": "http://reru-stage.codwer.com"  
         }
     }
 
@@ -557,7 +557,7 @@ data:
           }
         },
       "PlatformConfig": {
-          "BaseUrl": "http://reru.mai.gov.md"  
+          "BaseUrl": "http://reru-stage.codwer.com"  
         }
     }
 
@@ -678,60 +678,60 @@ data:
 
   reru_core_fe.appsettings.json: |
     {
-      	"IDENTITY_AUTHORITY": "http://reru.mai.gov.md/ms/reru-identity-new",
-        "IDENTITY_AUTHORITY_REDIRECT_URI": "http://reru.mai.gov.md/#/auth-callback#",
+      	"IDENTITY_AUTHORITY": "http://reru-stage.codwer.com/ms/reru-identity-new",
+        "IDENTITY_AUTHORITY_REDIRECT_URI": "http://reru-stage.codwer.com/#/auth-callback#",
         "MODULE_SCOPE": "core",
         "CLIENT_ID": "RERU-Web-client",
-        "SERVER_URL": "http://reru.mai.gov.md",
-        "CORE_URL": "http://reru.mai.gov.md/ms/reru-core",
-        "APP_BASE_URL": "http://reru.mai.gov.md/#",
+        "SERVER_URL": "http://reru-stage.codwer.com",
+        "CORE_URL": "http://reru-stage.codwer.com/ms/reru-core",
+        "APP_BASE_URL": "http://reru-stage.codwer.com/#",
         "production": true
     }
 
   reru_personal_fe.appsettings.json: |
     {
-      	"IDENTITY_AUTHORITY": "http://reru.mai.gov.md/ms/reru-identity-new",
-        "IDENTITY_AUTHORITY_REDIRECT_URI": "http://reru.mai.gov.md/#/auth-callback#",
+      	"IDENTITY_AUTHORITY": "http://reru-stage.codwer.com/ms/reru-identity-new",
+        "IDENTITY_AUTHORITY_REDIRECT_URI": "http://reru-stage.codwer.com/#/auth-callback#",
         "MODULE_SCOPE": "personal",
         "CLIENT_ID": "RERU-Web-client",
-        "SERVER_URL": "http://reru.mai.gov.md/ms/reru-personal",
-        "CORE_URL": "http://reru.mai.gov.md/ms/reru-core",
-        "APP_BASE_URL": "http://reru.mai.gov.md/reru-personal/#",
+        "SERVER_URL": "http://reru-stage.codwer.com/ms/reru-personal",
+        "CORE_URL": "http://reru-stage.codwer.com/ms/reru-core",
+        "APP_BASE_URL": "http://reru-stage.codwer.com/reru-personal/#",
         "production": true
     }
 
   reru_evaluation_fe.appsettings.json: |
     {
-      	"IDENTITY_AUTHORITY": "http://reru.mai.gov.md/ms/reru-identity-new",
-        "IDENTITY_AUTHORITY_REDIRECT_URI": "http://reru.mai.gov.md/#/auth-callback#",
+      	"IDENTITY_AUTHORITY": "http://reru-stage.codwer.com/ms/reru-identity-new",
+        "IDENTITY_AUTHORITY_REDIRECT_URI": "http://reru-stage.codwer.com/#/auth-callback#",
         "MODULE_SCOPE": "evaluation",
         "CLIENT_ID": "RERU-Web-client",
-        "SERVER_URL": "http://reru.mai.gov.md/ms/reru-evaluation",
-        "CORE_URL": "http://reru.mai.gov.md/ms/reru-core",
-        "APP_BASE_URL": "http://reru.mai.gov.md/reru-evaluation/#",
+        "SERVER_URL": "http://reru-stage.codwer.com/ms/reru-evaluation",
+        "CORE_URL": "http://reru-stage.codwer.com/ms/reru-core",
+        "APP_BASE_URL": "http://reru-stage.codwer.com/reru-evaluation/#",
         "production": true
     }
 
   reru_evaluation360_fe.appsettings.json: |
     {
-      	"IDENTITY_AUTHORITY": "http://reru.mai.gov.md/ms/reru-identity-new",
-        "IDENTITY_AUTHORITY_REDIRECT_URI": "http://reru.mai.gov.md/#/auth-callback#",
+      	"IDENTITY_AUTHORITY": "http://reru-stage.codwer.com/ms/reru-identity-new",
+        "IDENTITY_AUTHORITY_REDIRECT_URI": "http://reru-stage.codwer.com/#/auth-callback#",
         "MODULE_SCOPE": "evaluation360",
         "CLIENT_ID": "RERU-Web-client",
-        "SERVER_URL": "http://reru.mai.gov.md/ms/reru-evaluation360",
-        "CORE_URL": "http://reru.mai.gov.md/ms/reru-core",
-        "APP_BASE_URL": "http://reru.mai.gov.md/reru-evaluation360/#",
+        "SERVER_URL": "http://reru-stage.codwer.com/ms/reru-evaluation360",
+        "CORE_URL": "http://reru-stage.codwer.com/ms/reru-core",
+        "APP_BASE_URL": "http://reru-stage.codwer.com/reru-evaluation360/#",
         "production": true
     }
 
   reru_logging_fe.appsettings.json: |
     {
-      	"IDENTITY_AUTHORITY": "http://reru.mai.gov.md/ms/reru-identity-new",
-        "IDENTITY_AUTHORITY_REDIRECT_URI": "http://reru.mai.gov.md/#/auth-callback#",
+      	"IDENTITY_AUTHORITY": "http://reru-stage.codwer.com/ms/reru-identity-new",
+        "IDENTITY_AUTHORITY_REDIRECT_URI": "http://reru-stage.codwer.com/#/auth-callback#",
         "MODULE_SCOPE": "logging",
         "CLIENT_ID": "RERU-Web-client",
-        "SERVER_URL": "http://reru.mai.gov.md/ms/reru-logging",
-        "CORE_URL": "http://reru.mai.gov.md/ms/reru-core",
-        "APP_BASE_URL": "http://reru.mai.gov.md/reru-logging/#",
+        "SERVER_URL": "http://reru-stage.codwer.com/ms/reru-logging",
+        "CORE_URL": "http://reru-stage.codwer.com/ms/reru-core",
+        "APP_BASE_URL": "http://reru-stage.codwer.com/reru-logging/#",
         "production": true
     }

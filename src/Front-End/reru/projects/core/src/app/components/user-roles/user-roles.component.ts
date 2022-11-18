@@ -7,9 +7,6 @@ import { Component } from '@angular/core';
 })
 export class UserRolesComponent {
   title: string;
-  isLoadingButton: boolean;
-  isLoading: boolean = true;
-
   constructor() { }
 
   getTitle(): string {

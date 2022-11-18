@@ -6,11 +6,13 @@
     "umdModuleIds": {
       "@ng-bootstrap/ng-bootstrap": "NgbModule",
       "@ngx-translate/core": "TranslateModule",
-      "@auth0/angular-jwt": "JwtModule",
       "@ngx-translate/http-loader": "TranslateHttpLoader",
       "@gilsdav/ngx-translate-router": "LocalizeRouterModule",
       "ngx-cookie-service": "CookieService",
-      "angular2-notifications": "SimpleNotificationsModule"
+      "angular2-notifications": "SimpleNotificationsModule",
+      "oidc-client": "oidc-client",
+      "file-saver": "oidc-client",
+      "ngx-dropzone": "NgxDropzoneModule"
     }
   }
 }
