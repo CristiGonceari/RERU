@@ -45,11 +45,13 @@
                 <table *ngIf="!isLoading && events.length" class="table table-bordered font-size-lg">
                     <thead class="text-uppercase text-muted">
                         <tr>
-                            <th rowspan="2" style="vertical-align: middle; width: 15%;">{{'position.users' | translate}}
+                            <th [attr.rowspan]="2" style="vertical-align: middle; width: 200px;">{{'position.users' | translate}}
                             </th>
                             <th [attr.colspan]="event.testTemplates.length" *ngFor="let event of eventsDiagram"
+                                [ngStyle]="{'width.px': event.testTemplates.length * 200 }"
                                 class="text-center mx-4">
-                                {{event.eventName}}</th>
+                                {{event.eventName}}
+                            </th>
                         </tr>
                         <tr>
                             <th *ngFor="let template of testTemplates">
@@ -95,7 +97,7 @@
     <div class="card card-custom gutter-b" style="margin-left: 16px;">
         <div class="card-body">
             <app-position-add-test [eventId]="selectedEventId" [testTemplateId]="selectedTestTemplateId"
-                [positionId]="positionId" (newItemEvent)="onChangeAddTest($event)"></app-position-add-test>
+                [positionId]="positionId" [usersDiagram]="usersDiagram" (newItemEvent)="onChangeAddTest($event)"></app-position-add-test>
         </div>
     </div>
 </div>
