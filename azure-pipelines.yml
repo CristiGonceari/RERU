@@ -31,7 +31,7 @@ stages:
               targetType: "inline"
               script: |
                 $override = 'True'
-                $files=$(git diff HEAD HEAD~ --name-only)
+                $files=$(git diff HEAD --name-only)
                 $temp=$files -split ' '
                 $count=$temp.Length
                 echo "Total changed $count files"
