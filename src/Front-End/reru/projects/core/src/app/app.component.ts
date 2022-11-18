@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ApplicationUserService, NavigationService } from '@erp/shared'
-import { ProfileService } from './utils/services/profile.service';
+import { Component } from '@angular/core';
+import { NavigationService } from '@erp/shared'
 
 @Component({
 	selector: 'app-root',

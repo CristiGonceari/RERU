@@ -16,7 +16,6 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { AUTHENTICATION_HEADER_INTERCEPTOR_PROVIDER } from './interceptors/authentication-header.interceptor';
 import { HTTP_ERROR_INTERCEPTOR_PROVIDER } from './interceptors/http-error.interceptor';
 import { UNAUTHORIZED_INTERCEPTOR_PROVIDER } from './interceptors/unauthorized.interceptor';
-import { ContentComponent } from './components/content/content.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import { LocalizeRouterModule } from '@gilsdav/ngx-translate-router';
@@ -44,11 +43,12 @@ import { LocationBackButtonComponent } from './components/location-back-button/l
 import { SearchInputComponent } from './components/search-input/search-input.component';
 import { GetMediaFileComponent } from './components/get-media-file/get-media-file.component';
 import { ShowImageModalComponent } from './modals/show-image-modal/show-image-modal.component';
-import { AddEditMediaFileComponent } from '../public-api';
+import { AddEditMediaFileComponent } from './components/add-edit-media-file/add-edit-media-file.component';
 import { UploadFileModalComponent } from './modals/upload-file-modal/upload-file-modal.component';
 import { INTERNAL_NOTIFY_INTERCEPTOR } from './interceptors/internal-notify.interceptor';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { GoToTestModalComponent } from './modals/go-to-test-modal/go-to-test-modal.component';
+import { LayoutContentComponent } from './components/layout-content/layout-content.component';
+import { ContentComponent } from './components/content/content.component';
 
 export const translateModule = TranslateModule.forChild();
 
@@ -74,10 +74,17 @@ const commonExports = [
 	SearchInputComponent,
 	AddEditMediaFileComponent,
 	GetMediaFileComponent,
-	ShowImageModalComponent
+	ShowImageModalComponent,
+	ContentComponent
 ];
 @NgModule({
-	declarations: [...commonExports, ViewIconComponent, ContentComponent, UploadFileModalComponent, GoToTestModalComponent],
+	declarations: [
+		...commonExports,
+		ViewIconComponent,
+		LayoutContentComponent,
+		UploadFileModalComponent,
+		GoToTestModalComponent
+	],
 	imports: [
 		CommonModule,
 		RouterModule,
@@ -87,8 +94,7 @@ const commonExports = [
 		LocalizeRouterModule,
 		SharedPipesModule,
 		SvgModule,
-		NgxDropzoneModule,
-		NgxSpinnerModule
+		NgxDropzoneModule
 	],
 	exports: [...commonExports],
 	providers: [

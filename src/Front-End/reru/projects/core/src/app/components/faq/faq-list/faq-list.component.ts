@@ -10,7 +10,7 @@ import { saveAs } from 'file-saver';
 export class FaqListComponent {
   title: string;
   isLoadingButton: boolean = false;
-  isLoading: boolean = true;
+  isLoading: boolean = false;
 
   constructor(private guideService: GuideService,
     ) { }

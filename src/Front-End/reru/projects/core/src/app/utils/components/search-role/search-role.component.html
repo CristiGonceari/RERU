@@ -1,4 +1,4 @@
-<select class="form-control h-35px" name="selectedStatus" [(ngModel)]="role" id="role" (change)="filter.emit($event.target.value)">
+<select class="form-control form-control-solid h-35px" name="selectedStatus" [(ngModel)]="role" id="role" (change)="filter.emit($event.target.value)">
     <option class="default-option text-muted" selected value="">{{ 'user-roles.search-role' | translate }}</option>
     <option *ngFor="let item of list" [value]="item.value">
         {{ item.label }}

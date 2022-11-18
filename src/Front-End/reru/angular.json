@@ -46,7 +46,8 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "file-saver",
-              "@swimlane/dragula"
+              "@swimlane/dragula",
+              "dragula"
             ]
           },
           "configurations": {
@@ -183,7 +184,8 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "file-saver",
-              "@swimlane/dragula"
+              "@swimlane/dragula",
+              "dragula"
             ]
           },
           "configurations": {

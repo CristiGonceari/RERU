@@ -1,4 +1,4 @@
-import { Component, EventEmitter, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
@@ -11,7 +11,6 @@ import { InregistrationUserService } from '../../utils/services/inregistration-u
 import { NotificationUtil } from '../../utils/util/notification.util';
 import { ValidatorUtil } from '../../utils/util/validator.util';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { WatchInfoVideoModalComponent } from '../../utils/modals/watch-info-video-modal/watch-info-video-modal.component'
 import { UserFilesService } from '../../utils/services/user-files.service';
 import { ApplicationUserService } from '@erp/shared';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
@@ -92,10 +91,6 @@ export class RegistrationPageComponent implements OnInit {
         this.addUser();
       }
     })
-  }
-
-  openModal() {
-    const modalRef = this.modalService.open(WatchInfoVideoModalComponent, { centered: true, size: 'lg', windowClass: 'my-class' });
   }
 
   openAcceptConditionsModal() {

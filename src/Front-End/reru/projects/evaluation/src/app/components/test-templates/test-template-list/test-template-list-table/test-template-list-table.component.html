@@ -25,12 +25,12 @@
                     <td style="text-align: center;">{{ testTemplate.categoriesCount }}</td>
                     <td style="text-align: center;">{{ testTemplate.questionCount }}</td>
                     <td style="text-align: center;">
-                        <span *ngIf="testTemplate.duration > 0">{{ testTemplate.duration }}</span>
-                        <span *ngIf="testTemplate.duration == 0">-</span>
+                        <span class="font-size-lg" *ngIf="testTemplate.duration > 0">{{ testTemplate.duration }}</span>
+                        <span class="font-size-lg" *ngIf="testTemplate.duration == 0">-</span>
                     </td>
                     <td style="text-align: center;">
-                        <span *ngIf="testTemplate.minPercent > 0">{{ testTemplate.minPercent }}</span>
-                        <span *ngIf="testTemplate.minPercent == 0">-</span>
+                        <span class="font-size-lg" *ngIf="testTemplate.minPercent > 0">{{ testTemplate.minPercent }}</span>
+                        <span class="font-size-lg" *ngIf="testTemplate.minPercent == 0">-</span>
                     </td>
                     <td>{{'statuses.' + modeEnum[testTemplate.mode] | translate}}</td>
                     <td style="text-align: center;" *ngIf="testTemplate.qualifyingType != null">{{'statuses.' + qualifyingType[testTemplate.qualifyingType] | translate}}</td>
@@ -104,7 +104,7 @@
             </tbody>
             <tbody class="datatable-body" *ngIf="!testTemplateList.length">
                 <tr>
-                    <td colspan="7" class="text-center">
+                    <td colspan="100" class="text-center">
                         {{ 'message.no-record' | translate }}
                     </td>
                 </tr>

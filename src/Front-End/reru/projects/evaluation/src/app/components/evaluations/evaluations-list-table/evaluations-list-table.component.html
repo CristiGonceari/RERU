@@ -1,110 +1,103 @@
 <app-page-title title="{{'evaluations.evaluations' | translate}}" subTitle="{{'evaluations.manage-evaluations' | translate}}">
 </app-page-title>
 
-<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-	<div class="d-flex flex-column-fluid">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="card card-custom gutter-b">
-						<div class="card-header flex-wrap border-0 py-5">
-							<div class="card-title">
-								<h3 class="card-label" id="title">{{'evaluations.evaluations' | translate}} </h3>
-							</div>
-							<div class="card-toolbar">
-								<app-confirm-button class="btn mr-3" (click)="testsTable.getHeaders(getTitle())">
-									<i class="far fa-file-pdf text-white"></i>
-									{{'button.print' | translate}}
-								</app-confirm-button>
-								<app-add-button class="btn" [value]="'evaluations.add-evaluation' | translate" [routerLink]="['add']" ></app-add-button>
-							</div>
-						</div>
-						<!-- <div class="card-body"> -->
-							<div class="card-header border-0 pt-0 pb-0 pr-5" style="min-height: 100%">
-                                <div class="row w-100">
-                                    <div class="col">
-                                        <erp-shared-search-input (handleSearch)="testsTable.setFilter('testName', $event)"
-                                            [placeholder]="'button.search-name' | translate" #testName>
-                                        </erp-shared-search-input>
-                                    </div>
-                                    <div class="col">
-                                        <erp-shared-search-input (handleSearch)="testsTable.setFilter('userName', $event)"
-                                            [placeholder]="'verify-test.search-student' | translate" #userName>
-                                        </erp-shared-search-input>
-                                    </div>
-                                    <div class="col">
-                                        <erp-shared-search-input (handleSearch)="testsTable.setFilter('evaluatorName', $event)"
-                                            [placeholder]="'evaluations.search-evaluator' | translate" #evaluatorName>
-                                        </erp-shared-search-input>
-                                    </div>
-                                    <div class="col">
-                                        <erp-shared-search-input (handleSearch)="testsTable.setFilter('testEvent', $event)"
-                                            [placeholder]="'events.search-event' | translate" #testEvent>
-                                        </erp-shared-search-input>
-                                    </div>
-                                </div>
-                                <div class="row w-100 mt-3">
-                                    <div class="col">
-                                        <erp-shared-search-input (handleSearch)="testsTable.setFilter('testLocation', $event)"
-                                            [placeholder]="'events.search-location' | translate" #testLocation>
-                                        </erp-shared-search-input>
-                                    </div>
-                                    <div class="col">
-                                        <app-search-result (filter)="testsTable.setFilter('selectedResult', $event)" #selectedResult>
-                                        </app-search-result>
-                                    </div>
-                                    <div class="col">
-                                        <div class="input-group input-group-sm input-group-solid">
-                                            <input id="from" [owlDateTime]="dtFrom" [placeholder]="'events.search-from' | translate"
-                                                class="shadow-input" name="date" [(ngModel)]="testsTable.dateTimeFrom"
-                                                (ngModelChange)="testsTable.getTests({dtFrom: $event})" autocomplete="off" />
-                                            <input id="from" [owlDateTimeTrigger]="dtFrom" [placeholder]="'events.search-from' | translate"
-                                                autocomplete="off" class="form-control form-control-lg form-control-solid"
-                                                [value]="testsTable.dateTimeFrom | dateFilter:'dd/MM/yy HH:mm'" />
-                                                <i class="fas fa-calendar-alt mr-2"></i>
-                                            <owl-date-time #dtFrom></owl-date-time>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="input-group input-group-sm input-group-solid">
-                                            <input id="from" [owlDateTime]="toDate" [placeholder]="'events.search-to' | translate"
-                                                class="shadow-input" name="date" [(ngModel)]="testsTable.dateTimeTo"
-                                                (ngModelChange)="testsTable.getTests({toDate: $event})" autocomplete="off" />
-                                            <input id="from" [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate"
-                                                autocomplete="off" class="form-control form-control-lg form-control-solid"
-                                                [value]="testsTable.dateTimeTo | dateFilter:'dd/MM/yy HH:mm'" />
-                                                <i class="fas fa-calendar-alt mr-2"></i>
-                                            <owl-date-time #toDate></owl-date-time>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row w-100 mt-3">
-                                    <div class="col">
-                                        <app-search-department (filter)="testsTable.setFilter('departmentId',  $event)" #departmentId></app-search-department>
-                                    </div>
-                                    <div class="col">
-                                        <app-search-role (filter)="testsTable.setFilter('roleId',  $event)" #roleId></app-search-role>
-                                    </div>
-                                    <div class="col">
-                                        <div class="text-right">
-                                            <app-button (handle)="clearFields(); testsTable.resetFilters(); testsTable.getTests({ page: 1 })" [value]="'button.reset' | translate"
-                                                class="mr-5"></app-button>
-                                            <app-confirm-button (handle)="testsTable.getTests({ page: 1 })" [value]="'button.search' | translate">
-                                            </app-confirm-button>
-                                        </div>
-                                    </div>
+<erp-shared-content>
+    <div class="row">
+        <div class="col">
+            <div class="card card-custom gutter-b">
+                <div class="card-header flex-wrap border-0 py-5">
+                    <div class="card-title">
+                        <h3 class="card-label" id="title">{{'evaluations.evaluations' | translate}} </h3>
+                    </div>
+                    <div class="card-toolbar">
+                        <app-confirm-button class="btn mr-3" (click)="testsTable.getHeaders(getTitle())">
+                            <i class="far fa-file-pdf text-white"></i>
+                            {{'button.print' | translate}}
+                        </app-confirm-button>
+                        <app-add-button class="btn" [value]="'evaluations.add-evaluation' | translate" [routerLink]="['add']" ></app-add-button>
+                    </div>
+                </div>
+                <!-- <div class="card-body"> -->
+                    <div class="card-header border-0 pt-0 pb-0 pr-5" style="min-height: 100%">
+                        <div class="row w-100">
+                            <div class="col">
+                                <erp-shared-search-input (handleSearch)="testsTable.setFilter('testName', $event)"
+                                    [placeholder]="'button.search-name' | translate" #testName>
+                                </erp-shared-search-input>
+                            </div>
+                            <div class="col">
+                                <erp-shared-search-input (handleSearch)="testsTable.setFilter('userName', $event)"
+                                    [placeholder]="'verify-test.search-student' | translate" #userName>
+                                </erp-shared-search-input>
+                            </div>
+                            <div class="col">
+                                <erp-shared-search-input (handleSearch)="testsTable.setFilter('evaluatorName', $event)"
+                                    [placeholder]="'evaluations.search-evaluator' | translate" #evaluatorName>
+                                </erp-shared-search-input>
+                            </div>
+                            <div class="col">
+                                <erp-shared-search-input (handleSearch)="testsTable.setFilter('testEvent', $event)"
+                                    [placeholder]="'events.search-event' | translate" #testEvent>
+                                </erp-shared-search-input>
+                            </div>
+                        </div>
+                        <div class="row w-100 mt-3">
+                            <div class="col">
+                                <erp-shared-search-input (handleSearch)="testsTable.setFilter('testLocation', $event)"
+                                    [placeholder]="'events.search-location' | translate" #testLocation>
+                                </erp-shared-search-input>
+                            </div>
+                            <div class="col">
+                                <app-search-result (filter)="testsTable.setFilter('selectedResult', $event)" #selectedResult>
+                                </app-search-result>
+                            </div>
+                            <div class="col">
+                                <div class="input-group input-group-sm input-group-solid">
+                                    <input id="from" [owlDateTime]="dtFrom" [placeholder]="'events.search-from' | translate"
+                                        class="shadow-input" name="date" [(ngModel)]="testsTable.dateTimeFrom"
+                                        (ngModelChange)="testsTable.getTests({dtFrom: $event})" autocomplete="off" />
+                                    <input id="from" [owlDateTimeTrigger]="dtFrom" [placeholder]="'events.search-from' | translate"
+                                        autocomplete="off" class="form-control form-control-lg form-control-solid"
+                                        [value]="testsTable.dateTimeFrom | dateFilter:'dd/MM/yy HH:mm'" />
+                                        <i class="fas fa-calendar-alt mr-2"></i>
+                                    <owl-date-time #dtFrom></owl-date-time>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <app-evaluations-table #testsTable></app-evaluations-table>
+                            <div class="col">
+                                <div class="input-group input-group-sm input-group-solid">
+                                    <input id="from" [owlDateTime]="toDate" [placeholder]="'events.search-to' | translate"
+                                        class="shadow-input" name="date" [(ngModel)]="testsTable.dateTimeTo"
+                                        (ngModelChange)="testsTable.getTests({toDate: $event})" autocomplete="off" />
+                                    <input id="from" [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate"
+                                        autocomplete="off" class="form-control form-control-lg form-control-solid"
+                                        [value]="testsTable.dateTimeTo | dateFilter:'dd/MM/yy HH:mm'" />
+                                        <i class="fas fa-calendar-alt mr-2"></i>
+                                    <owl-date-time #toDate></owl-date-time>
+                                </div>
                             </div>
-						<!-- </div> -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-
+                        </div>
+                        <div class="row w-100 mt-3">
+                            <div class="col">
+                                <app-search-department (filter)="testsTable.setFilter('departmentId',  $event)" #departmentId></app-search-department>
+                            </div>
+                            <div class="col">
+                                <app-search-role (filter)="testsTable.setFilter('roleId',  $event)" #roleId></app-search-role>
+                            </div>
+                            <div class="col">
+                                <div class="text-right">
+                                    <app-button (handle)="clearFields(); testsTable.resetFilters(); testsTable.getTests({ page: 1 })" [value]="'button.reset' | translate"
+                                        class="mr-5"></app-button>
+                                    <app-confirm-button (handle)="testsTable.getTests({ page: 1 })" [value]="'button.search' | translate">
+                                    </app-confirm-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <app-evaluations-table #testsTable></app-evaluations-table>
+                    </div>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+</erp-shared-content>

@@ -1,60 +1,31 @@
 <app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
 [colorClass]="'text-primary'">
 </app-loading-spinner>
-<div *ngIf="!isLoading">
-	<app-page-title [title]="'pages.dashboard.title' | translate" [subTitle]="'pages.dashboard.subtitle' | translate">
-	</app-page-title>
-	<!--begin::Content-->
-	<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-		<!--begin::Entry-->
-		<div class="d-flex flex-column-fluid">
-			<!--begin::Container-->
-			<div class="container">
-				<!--begin::Dashboard-->
-				<!--begin::Row-->
-				<div class="row">
-					<div class="col">
-						<!--begin::Nav Panel Widget 2-->
-						<div class="card card-custom gutter-b card-stretch card-shadowless">
-							<!--begin::Body-->
-							<div class="card-body">
-								<!--begin::Nav Tabs-->
-								<ul
-									class="dashboard-tabs nav nav-pills nav-danger row row-paddingless m-0 p-0 flex-column flex-md-row"
-									role="tablist"
-								>
-									<!--begin::Item-->
-									<li
-										*ngFor="let userModule of modules"
-										class="nav-item d-flex flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0"
-									>
-										<a
-											class="nav-link d-flex flex-grow-1 rounded flex-column align-items-center"
-											data-toggle="pill"
-											[href]="userModule.module.publicUrl"
-										>
-											<span class="nav-icon py-2 w-auto">
-												<svg-icon [key]="userModule.module.icon" [width]="48" [height]="48"></svg-icon>
+<app-page-title [title]="'pages.dashboard.title' | translate" [subTitle]="'pages.dashboard.subtitle' | translate">
+</app-page-title>
 
-											</span>
-											<span class="nav-text font-size-lg py-2 font-weight-bold text-center">
-												{{ userModule.module.name }}
-											</span>
-										</a>
-									</li>
-									<!--end::Item-->
-								</ul>
-								<!--end::Nav Tabs-->
-							</div>
-							<!--end::Body-->
-						</div>
-						<!--begin::Nav Panel Widget 2-->
-					</div>
+<erp-shared-content *ngIf="!isLoading">
+	<div class="row">
+		<div class="col">
+			<div class="card card-custom gutter-b card-stretch card-shadowless">
+				<div class="card-body d-flex d-md-block justify-content-md-start justify-content-center">
+					<ul class="dashboard-tabs nav nav-pills nav-danger row row-paddingless m-0 p-0 flex-column flex-md-row" role="tablist">
+						<li *ngFor="let userModule of modules" class="nav-item d-flex flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
+							<a class="nav-link d-flex flex-grow-1 rounded flex-column align-items-center"
+								data-toggle="pill"
+								[href]="userModule.module.publicUrl">
+								<span class="nav-icon py-2 w-auto">
+									<svg-icon [key]="userModule.module.icon" [width]="48" [height]="48"></svg-icon>
+
+								</span>
+								<span class="nav-text font-size-lg py-2 font-weight-bold text-center">
+									{{ userModule.module.name }}
+								</span>
+							</a>
+						</li>
+					</ul>
 				</div>
-				<!--end::Row-->
-				<!--end::Dashboard-->
 			</div>
 		</div>
 	</div>
-</div>
-
+</erp-shared-content>

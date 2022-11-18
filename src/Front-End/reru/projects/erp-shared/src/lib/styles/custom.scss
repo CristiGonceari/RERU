@@ -1,9 +1,14 @@
 /* Declaring variables */
 $border-radius: 0.231rem;
 $rounded-border-radius: 0.85rem;
+$root-font-size: 13px;
+
 $blue-color: #3699ff;
 $blue-light-color: #70b7ff;
+
 $font-family: Poppins, Helvetica, "sans-serif";
+
+$dashboard-item-width: 100px;
 
 /* Global selectors */
 .mat-body,
@@ -11,9 +16,16 @@ $font-family: Poppins, Helvetica, "sans-serif";
 body.mat-typography,
 body {
   font-family: $font-family;
+  font-size: $root-font-size !important;
 }
 
 /* End Global selectors*/
+
+/* FONT SIZES */
+.font-size-smaller {
+  font-size: 0.7rem !important;
+}
+/* FONT SIZES */
 
 /* Notifications layout */
 .simple-notification div,
@@ -43,11 +55,11 @@ input[type=number] {
 }
 
 /* Rewrite border-radius across project */
-textarea[class^='form-control'],
-input[class^='form-control'],
-select[class^='form-control'] {
-  border-radius: $border-radius;
-}
+// textarea[class^='form-control'],
+// input[class^='form-control'],
+// select[class^='form-control'] {
+//   border-radius: $border-radius;
+// }
 
 /* Rewriting tag-input module  */
 tag-input {
@@ -143,3 +155,38 @@ div.ck-content {
   padding: 0.55rem !important;
 }
 /* End Badge custom Style */
+
+/* Card , Cards Bootstrap Addons - Desktop mobile */
+/* Use for one page */
+.card.erp-shared-desktop-wide {
+  height: calc(100vh - 252px);
+}
+
+/* Use for one piece in a page */
+.card.erp-shared-half-desktop-wide {
+  height: calc(50vh - 100px);
+}
+
+/* Use for two pieces in a page */
+.card.erp-shared-half-piece-desktop-wide {
+  height: calc(50vh - 140px);
+}
+
+.card.erp-shared-desktop-wide,
+.card.erp-shared-half-desktop-wide
+.card.erp-shared-half-piece-desktop-wide {
+  @media screen and (max-width: 992px) {
+    height: auto;
+  }
+}
+/* END Card , Cards Bootstrap Addons - Desktop mobile */
+
+/* CANVAS OFFMOBILE FIX HIDE */
+.offcanvas-mobile {
+  @media (max-width: 991.98px) {
+    display:block;
+    overflow:hidden;
+    height:0;
+  }
+}
+/* END CANVAS OFFMOBILE FIX HIDE */

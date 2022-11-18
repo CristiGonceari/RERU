@@ -5,202 +5,198 @@
   [colorClass]="'text-primary'">
 </app-loading-spinner>
 
-<div *ngIf="!isLoading" class="content main-content py-10 content-bg" id="kt_content">
-  <div class="d-flex flex-column-fluid">
-    <div class="container">
-      <div class="card card-custom gutter-b w-100">
-        <div class="card-header font-size-lg">
-          <div class="d-flex align-items-center">
-            <span class="text-muted mr-4">{{'tests.name' | translate}}:</span>
-            <span class="mb-0 h4">{{testData.testTemplateName}}</span>
-          </div>
-          <div class="d-flex align-items-center">
-            <span class="text-muted mr-4">{{'tests.min-score' | translate}}:</span>
-            <span class="mb-0 h4">{{testData.minPercent}} %</span>
-          </div>
-          <div class="d-flex align-items-center">
-            <span class="text-muted mr-4">{{'tests.total-questions' | translate}}:</span>
-            <span class="mb-0 h4">{{testData.questionCount}}</span>
+<erp-shared-content *ngIf="!isLoading">
+  <div class="card card-custom gutter-b w-100">
+    <div class="card-header font-size-lg">
+      <div class="d-flex align-items-center">
+        <span class="text-muted mr-4">{{'tests.name' | translate}}:</span>
+        <span class="mb-0 h4">{{testData.testTemplateName}}</span>
+      </div>
+      <div class="d-flex align-items-center">
+        <span class="text-muted mr-4">{{'tests.min-score' | translate}}:</span>
+        <span class="mb-0 h4">{{testData.minPercent}} %</span>
+      </div>
+      <div class="d-flex align-items-center">
+        <span class="text-muted mr-4">{{'tests.total-questions' | translate}}:</span>
+        <span class="mb-0 h4">{{testData.questionCount}}</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="data-container">
+        <span *ngIf="questionType == enum.HashedAnswer" class="font-size-lg">{{'verify-test.user-answer' |
+          translate}}:</span>
+        <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
+          [colorClass]="'text-primary'">
+        </app-loading-spinner>
+        <div *ngIf="!isLoadingMedia" class="data-container mb-7 bg-gray-100 text-center rounded p-7">
+          <p class="font-size-h2" [innerHTML]="question | safeHtml">
+          </p>
+          <div *ngIf="fileId">
+            <app-get-media-file [fileId]="fileId"></app-get-media-file>
           </div>
         </div>
-        <div class="card-body">
-          <div class="data-container">
-            <span *ngIf="questionType == enum.HashedAnswer" class="font-size-lg">{{'verify-test.user-answer' |
-              translate}}:</span>
-            <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'" [width]="'3rem'"
-              [colorClass]="'text-primary'">
-            </app-loading-spinner>
-            <div *ngIf="!isLoadingMedia" class="data-container mb-7 bg-gray-100 text-center rounded p-7">
-              <p class="font-size-h2" [innerHTML]="question | safeHtml">
-              </p>
-              <div *ngIf="fileId">
-                <app-get-media-file [fileId]="fileId"></app-get-media-file>
-              </div>
-            </div>
-            <span *ngIf="correctQuestion" class="font-size-lg">{{'verify-test.correct-question' | translate}}:</span>
-            <div class="mx-auto text-center">
-              <p class="font-size-h3 text-center rounded p-7 mt-2" [style.background-color]="'#ecfff4'"
-                *ngIf="correctQuestion">{{correctQuestion}}</p>
-            </div>
-            <div *ngIf="questionType == enum.FreeText">
-              <span class="font-size-lg">{{'verify-test.answer' | translate}}:</span>
-              <p class="border rounded border-secondary p-7 my-7">{{answer}}</p>
-              <span class="font-size-lg">{{'verify-test.comment' | translate}}:</span>
-              <textarea class="border rounded border-secondary p-7 my-7 w-100" [(ngModel)]="comment">{{comment}}
-              </textarea>
-            </div>
-            <div *ngIf="questionType == enum.HashedAnswer">
-              <span class="font-size-lg">{{'verify-test.comment' | translate}}:</span>
-              <textarea class="border rounded border-secondary p-7 my-7 w-100"
-                [(ngModel)]="comment">{{comment}}</textarea>
-            </div>
-            <div class="container-fluid" *ngIf="questionType == enum.MultipleAnswers || questionType == enum.OneAnswer">
-              <span class="h4">{{'tests.options' | translate}}:</span>
-              <div *ngFor="let item of options" class="d-flex border border-secondary rounded d-flex py-3 my-5"
-                [class.bg-successTransparent]="item.isSelected && item.isCorrect"
-                [class.bg-dangerTransparent]="item.isSelected && !item.isCorrect"
-                [class.bg-light-warning]="!item.isSelected && item.isCorrect">
-                <label class="px-4 checkbox checkbox-lg checkbox-inline" style="pointer-events: none;">
-                  <input type="checkbox" value="{{ item.id }}" name="option" [checked]="item.isSelected" />
-                  <span [class.bg-success]="item.isSelected && item.isCorrect"></span>
-                </label>
-                <div class="p-2 h-20px">
-                  <p class="mb-0 font-size-lg option-label">{{item.answer}}</p>
-                  <div class="form-group align-items-center">
-                    <div class="col-lg-6 col-xl-3 w-100 d-flex">
-                      <div *ngIf="item.optionMediaFileId">
-                        <app-get-media-file [fileId]="item.optionMediaFileId"></app-get-media-file>
-                      </div>
-                    </div>
+        <span *ngIf="correctQuestion" class="font-size-lg">{{'verify-test.correct-question' | translate}}:</span>
+        <div class="mx-auto text-center">
+          <p class="font-size-h3 text-center rounded p-7 mt-2" [style.background-color]="'#ecfff4'"
+            *ngIf="correctQuestion">{{correctQuestion}}</p>
+        </div>
+        <div *ngIf="questionType == enum.FreeText">
+          <span class="font-size-lg">{{'verify-test.answer' | translate}}:</span>
+          <p class="border rounded border-secondary p-7 my-7">{{answer}}</p>
+          <span class="font-size-lg">{{'verify-test.comment' | translate}}:</span>
+          <textarea class="border rounded border-secondary p-7 my-7 w-100" [(ngModel)]="comment">{{comment}}
+          </textarea>
+        </div>
+        <div *ngIf="questionType == enum.HashedAnswer">
+          <span class="font-size-lg">{{'verify-test.comment' | translate}}:</span>
+          <textarea class="border rounded border-secondary p-7 my-7 w-100"
+            [(ngModel)]="comment">{{comment}}</textarea>
+        </div>
+        <div class="container-fluid" *ngIf="questionType == enum.MultipleAnswers || questionType == enum.OneAnswer">
+          <span class="h4">{{'tests.options' | translate}}:</span>
+          <div *ngFor="let item of options" class="d-flex border border-secondary rounded d-flex py-3 my-5"
+            [class.bg-successTransparent]="item.isSelected && item.isCorrect"
+            [class.bg-dangerTransparent]="item.isSelected && !item.isCorrect"
+            [class.bg-light-warning]="!item.isSelected && item.isCorrect">
+            <label class="px-4 checkbox checkbox-lg checkbox-inline" style="pointer-events: none;">
+              <input type="checkbox" value="{{ item.id }}" name="option" [checked]="item.isSelected" />
+              <span [class.bg-success]="item.isSelected && item.isCorrect"></span>
+            </label>
+            <div class="p-2 h-20px">
+              <p class="mb-0 font-size-lg option-label">{{item.answer}}</p>
+              <div class="form-group align-items-center">
+                <div class="col-lg-6 col-xl-3 w-100 d-flex">
+                  <div *ngIf="item.optionMediaFileId">
+                    <app-get-media-file [fileId]="item.optionMediaFileId"></app-get-media-file>
                   </div>
                 </div>
-                <div class="ml-auto p-2">
-                  <p class="mb-0 font-size-lg option-label mr-5">{{item.points}}p. ({{item.percentages}}%)</p>
-                </div>
               </div>
             </div>
-            <div class="container-fluid" *ngIf="questionType == enum.MultipleAnswers || questionType == enum.OneAnswer">
-              <div *ngIf="showNegativeMessage">
-                <p class="text-muted">
-                  {{'message.negative-message' | translate}}
-                </p>
-              </div>
+            <div class="ml-auto p-2">
+              <p class="mb-0 font-size-lg option-label mr-5">{{item.points}}p. ({{item.percentages}}%)</p>
             </div>
           </div>
-          <div class="container-fluid text-center" *ngIf="questionType == 5 && hadFile == true">
-            <button (click)="getFile()" class="btn btn-light-success font-weight-bold mr-3"
-                ngbTooltip="{{fileName}}">
-                <i class="flaticon-profile"></i>
-                {{ checkFileNameLength() }}
-            </button>
         </div>
-        <div class="container-fluid text-center" *ngIf="questionType == 5 && hadFile == false">
-            <span class="datatable-error">
-                {{'document-test-modal.there-are-no-records-at-the-moment' | translate}}
-                <div class="text-center">
-                    <span class="svg-icon svg-icon-primary svg-icon-10x">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <rect x="0" y="0" width="24" height="24"/>
-                            <path d="M11.1669899,4.49941818 L2.82535718,19.5143571 C2.557144,19.9971408 2.7310878,20.6059441 3.21387153,20.8741573 C3.36242953,20.9566895 3.52957021,21 3.69951446,21 L21.2169432,21 C21.7692279,21 22.2169432,20.5522847 22.2169432,20 C22.2169432,19.8159952 22.1661743,19.6355579 22.070225,19.47855 L12.894429,4.4636111 C12.6064401,3.99235656 11.9909517,3.84379039 11.5196972,4.13177928 C11.3723594,4.22181902 11.2508468,4.34847583 11.1669899,4.49941818 Z" fill="#000000" opacity="0.3"/>
-                            <rect fill="#000000" x="11" y="9" width="2" height="7" rx="1"/>
-                            <rect fill="#000000" x="11" y="17" width="2" height="2" rx="1"/>
-                        </g>
-                    </svg>
-                    </span>
-                </div>
+        <div class="container-fluid" *ngIf="questionType == enum.MultipleAnswers || questionType == enum.OneAnswer">
+          <div *ngIf="showNegativeMessage">
+            <p class="text-muted">
+              {{'message.negative-message' | translate}}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid text-center" *ngIf="questionType == 5 && hadFile == true">
+        <button (click)="getFile()" class="btn btn-light-success font-weight-bold mr-3"
+            ngbTooltip="{{fileName}}">
+            <i class="flaticon-profile"></i>
+            {{ checkFileNameLength() }}
+        </button>
+    </div>
+    <div class="container-fluid text-center" *ngIf="questionType == 5 && hadFile == false">
+        <span class="datatable-error">
+            {{'document-test-modal.there-are-no-records-at-the-moment' | translate}}
+            <div class="text-center">
+                <span class="svg-icon svg-icon-primary svg-icon-10x">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <rect x="0" y="0" width="24" height="24"/>
+                        <path d="M11.1669899,4.49941818 L2.82535718,19.5143571 C2.557144,19.9971408 2.7310878,20.6059441 3.21387153,20.8741573 C3.36242953,20.9566895 3.52957021,21 3.69951446,21 L21.2169432,21 C21.7692279,21 22.2169432,20.5522847 22.2169432,20 C22.2169432,19.8159952 22.1661743,19.6355579 22.070225,19.47855 L12.894429,4.4636111 C12.6064401,3.99235656 11.9909517,3.84379039 11.5196972,4.13177928 C11.3723594,4.22181902 11.2508468,4.34847583 11.1669899,4.49941818 Z" fill="#000000" opacity="0.3"/>
+                        <rect fill="#000000" x="11" y="9" width="2" height="7" rx="1"/>
+                        <rect fill="#000000" x="11" y="17" width="2" height="2" rx="1"/>
+                    </g>
+                </svg>
+                </span>
+            </div>
+        </span>
+    </div>
+      <div class="d-flex justify-content-between" *ngIf="questionType == enum.OneAnswer || questionType == enum.MultipleAnswers">
+        <div class="d-flex">
+          <span class="label label-lg label-light-success label-inline h-35px px-5" *ngIf="correct===true">
+            {{'verify-test.correct' | translate}}
+          </span>
+          <span class="label label-lg label-light-primary label-inline h-35px px-5" *ngIf="correct===false">
+            {{'verify-test.not-correct' | translate}}
+          </span>
+          <span class="label label-lg label-light label-inline h-35px px-5 ml-5">
+            {{accumulatedPoints}} / {{maxPoints}}
+          </span>
+        </div>
+        <div>
+          <app-confirm-button class="btn" (handle)="next()" [value]="'verify-test.next-question' | translate">
+          </app-confirm-button>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between" *ngIf="questionType != enum.OneAnswer && questionType != enum.MultipleAnswers">
+        <div class="d-flex">
+          <div class="btn-group btn-group-toggle mr-5" ngbRadioGroup name="radioBasic" [(ngModel)]="correct">
+            <label ngbButtonLabel class="btn-light-success" [class.active]="correct===true">
+              <input ngbButton type="radio" value="1" (change)="$event ? check($event) : null">
+              {{'verify-test.correct' | translate}}
+            </label>
+            <label ngbButtonLabel class="btn-light-primary" [class.active]="correct===false"
+              style="white-space: nowrap;">
+              <input ngbButton type="radio" value="0" (change)="$event ? check($event) : null">
+              {{'verify-test.not-correct' | translate}}
+            </label>
+          </div>
+          <div class="input-group">
+            <input type="text" class="form-control h-40px" placeholder="{{'questions.points' | translate}}"
+              value="points" [(ngModel)]="points">
+            <div class="input-group-append">
+              <span class="input-group-text text-dark">{{maxPoints}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="ml-5">
+          <button type="button" (click)="verifyTest()"
+            class="btn btn-outline-success font-weight-bold font-size-h5 mr-2 py-0">
+            {{'verify-test.verify' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mx-auto">
+      <div class="d-flex justify-content-between align-items-center flex-wrap mb-7">
+        <div class="d-flex flex-wrap">
+          <button class="btn btn-icon btn-light page-link" (click)="processTestQuestion(index - 1)"
+            [disabled]="index === 1">
+            <span class="svg-icon svg-icon-primary svg-icon-1x">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                height="24px" viewBox="0 0 24 24" version="1.1">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <polygon points="0 0 24 0 24 24 0 24" />
+                  <path
+                    d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
+                    fill="#000000" fill-rule="nonzero"
+                    transform="translate(12.000003, 11.999999) scale(-1, 1) rotate(-270.000000) translate(-12.000003, -11.999999) " />
+                </g>
+              </svg>
             </span>
-        </div>
-          <div class="d-flex justify-content-between" *ngIf="questionType == enum.OneAnswer || questionType == enum.MultipleAnswers">
-            <div class="d-flex">
-              <span class="label label-lg label-light-success label-inline h-35px px-5" *ngIf="correct===true">
-                {{'verify-test.correct' | translate}}
-              </span>
-              <span class="label label-lg label-light-primary label-inline h-35px px-5" *ngIf="correct===false">
-                {{'verify-test.not-correct' | translate}}
-              </span>
-              <span class="label label-lg label-light label-inline h-35px px-5 ml-5">
-                {{accumulatedPoints}} / {{maxPoints}}
-              </span>
-            </div>
-            <div>
-              <app-confirm-button class="btn" (handle)="next()" [value]="'verify-test.next-question' | translate">
-              </app-confirm-button>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between" *ngIf="questionType != enum.OneAnswer && questionType != enum.MultipleAnswers">
-            <div class="d-flex">
-              <div class="btn-group btn-group-toggle mr-5" ngbRadioGroup name="radioBasic" [(ngModel)]="correct">
-                <label ngbButtonLabel class="btn-light-success" [class.active]="correct===true">
-                  <input ngbButton type="radio" value="1" (change)="$event ? check($event) : null">
-                  {{'verify-test.correct' | translate}}
-                </label>
-                <label ngbButtonLabel class="btn-light-primary" [class.active]="correct===false"
-                  style="white-space: nowrap;">
-                  <input ngbButton type="radio" value="0" (change)="$event ? check($event) : null">
-                  {{'verify-test.not-correct' | translate}}
-                </label>
-              </div>
-              <div class="input-group">
-                <input type="text" class="form-control h-40px" placeholder="{{'questions.points' | translate}}"
-                  value="points" [(ngModel)]="points">
-                <div class="input-group-append">
-                  <span class="input-group-text text-dark">{{maxPoints}}</span>
-                </div>
-              </div>
-            </div>
-            <div class="ml-5">
-              <button type="button" (click)="verifyTest()"
-                class="btn btn-outline-success font-weight-bold font-size-h5 mr-2 py-0">
-                {{'verify-test.verify' | translate}}
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="mx-auto">
-          <div class="d-flex justify-content-between align-items-center flex-wrap mb-7">
-            <div class="d-flex flex-wrap">
-              <button class="btn btn-icon btn-light page-link" (click)="processTestQuestion(index - 1)"
-                [disabled]="index === 1">
-                <span class="svg-icon svg-icon-primary svg-icon-1x">
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                    height="24px" viewBox="0 0 24 24" version="1.1">
-                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                      <polygon points="0 0 24 0 24 24 0 24" />
-                      <path
-                        d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
-                        fill="#000000" fill-rule="nonzero"
-                        transform="translate(12.000003, 11.999999) scale(-1, 1) rotate(-270.000000) translate(-12.000003, -11.999999) " />
-                    </g>
-                  </svg>
-                </span>
-              </button>
+          </button>
 
-              <button class="btn btn-icon page-link" *ngFor="let page of pager" (click)="processTestQuestion(page)"
-                [class.active-page]="page === index"
-                [ngClass]="{'autoverified': getAutoverified(page), 'verified': getVerified(page)}">
-                {{page}}
-              </button>
+          <button class="btn btn-icon page-link" *ngFor="let page of pager" (click)="processTestQuestion(page)"
+            [class.active-page]="page === index"
+            [ngClass]="{'autoverified': getAutoverified(page), 'verified': getVerified(page)}">
+            {{page}}
+          </button>
 
-              <button class="btn btn-icon btn-light page-link" (click)="processTestQuestion(index + 1)"
-                [disabled]="index === testData.questionCount">
-                <span class="svg-icon svg-icon-primary svg-icon-1x">
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                    height="24px" viewBox="0 0 24 24" version="1.1">
-                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                      <polygon points="0 0 24 0 24 24 0 24" />
-                      <path
-                        d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
-                        fill="#000000" fill-rule="nonzero"
-                        transform="translate(12.000003, 11.999999) rotate(-270.000000) translate(-12.000003, -11.999999) " />
-                    </g>
-                  </svg>
-                </span>
-              </button>
-            </div>
-          </div>
+          <button class="btn btn-icon btn-light page-link" (click)="processTestQuestion(index + 1)"
+            [disabled]="index === testData.questionCount">
+            <span class="svg-icon svg-icon-primary svg-icon-1x">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                height="24px" viewBox="0 0 24 24" version="1.1">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <polygon points="0 0 24 0 24 24 0 24" />
+                  <path
+                    d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
+                    fill="#000000" fill-rule="nonzero"
+                    transform="translate(12.000003, 11.999999) rotate(-270.000000) translate(-12.000003, -11.999999) " />
+                </g>
+              </svg>
+            </span>
+          </button>
         </div>
       </div>
     </div>
   </div>
-</div>
+</erp-shared-content>

@@ -1,33 +1,29 @@
 <app-page-title title="{{'locations.locations' | translate}}" subTitle="{{'locations.manage-locations' | translate}}">
 </app-page-title>
 
-<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-	<div class="d-flex flex-column-fluid">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="card card-custom gutter-b">
-						<div class="card-header flex-wrap border-0 py-5">
-							<div class="card-title">
-								<h3 class="card-label" id="title">{{'locations.locations' | translate}}</h3>
-							</div>
-							<div class="card-toolbar">
-								<app-confirm-button class="btn mr-3" (click)="locationsTable.getHeaders(getTitle())">
-									<i class="far fa-file-pdf text-white"></i>
-									{{'button.print' | translate}}
-								</app-confirm-button>
-								<app-add-button class="btn" [value]="'locations.add-location' | translate" [routerLink]="['add-location']"></app-add-button>
-							</div>
-						</div>
-						<div class="card-header border-0" style="min-height: 100%;">
-							<app-search-location style="width: 100%;" (handleSearch)="locationsTable.list({keyword: $event, page: 1})"></app-search-location>
-						</div>
-						<div class="card-body">
-							<app-location-list-table #locationsTable></app-location-list-table>
-						</div>
+<erp-shared-content>
+	<div class="row">
+		<div class="col">
+			<div class="card card-custom gutter-b">
+				<div class="card-header flex-wrap border-0 py-5">
+					<div class="card-title">
+						<h3 class="card-label" id="title">{{'locations.locations' | translate}}</h3>
 					</div>
+					<div class="card-toolbar">
+						<app-confirm-button class="btn mr-3" (click)="locationsTable.getHeaders(getTitle())">
+							<i class="far fa-file-pdf text-white"></i>
+							{{'button.print' | translate}}
+						</app-confirm-button>
+						<app-add-button class="btn" [value]="'locations.add-location' | translate" [routerLink]="['add-location']"></app-add-button>
+					</div>
+				</div>
+				<div class="card-header border-0" style="min-height: 100%;">
+					<app-search-location style="width: 100%;" (handleSearch)="locationsTable.list({keyword: $event, page: 1})"></app-search-location>
+				</div>
+				<div class="card-body">
+					<app-location-list-table #locationsTable></app-location-list-table>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</erp-shared-content>
