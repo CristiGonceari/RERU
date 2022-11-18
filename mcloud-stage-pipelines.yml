@@ -620,12 +620,12 @@ stages:
                     kubernetesServiceEndpoint: $(devK8sService)
                     command: login
                 - bash:
-                    helm upgrade $(k8sReleaseName) helm-stage/chart/
+                    helm upgrade $(k8sReleaseName) helm-stage-mcloud/chart/
                     --install 
                     --atomic 
                     --namespace $(k8sNamespace)
                     --recreate-pods 
-                    --values helm-stage/values.dev.yaml
+                    --values helm-stage-mcloud/values.dev.yaml
                   #  --set-string core.database.connection_string="$(dev_core_connection_string)"
 
                 - task: Kubernetes@1
