@@ -10,14 +10,12 @@ import { HttpLoaderFactory } from './../utils/services/i18n.service';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
-import { WatchInfoVideoModalComponent } from './modals/watch-info-video-modal/watch-info-video-modal.component';
 import { ImportUsersModalComponent } from './modals/import-users-modal/import-users-modal.component';
 import { ImportDepartmentModalComponent } from './modals/import-department-modal/import-department-modal.component';
 import { ImportRoleModalComponent } from './modals/import-role-modal/import-role-modal.component';
 import { AddUserProcessHistoryModalComponent } from './modals/add-user-process-history-modal/add-user-process-history-modal.component';
 import { VerifyEmailCodeModalComponent } from './modals/verify-email-code-modal/verify-email-code-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { DateFilterPipe } from './pipes/date-filter.pipe';
 import { NgbDateFRParserFormatter } from './services/date-parse-formatter.service';
 import { BulletinAddressModalComponent } from './modals/bulletin-address-modal/bulletin-address-modal.component';
@@ -30,7 +28,6 @@ const commonComponents = [
   DateComponent,
   SearchPipe,
   SafeHtmlPipe,
-  WatchInfoVideoModalComponent,
   ImportUsersModalComponent,
   ImportDepartmentModalComponent,
   ImportRoleModalComponent,
@@ -53,6 +50,11 @@ const commonComponents = [
     ReactiveFormsModule
   ],
   exports: [...commonComponents],
-  providers: [{ provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter }, SearchPipe, SafeHtmlPipe, DatePipe],
+  providers: [
+    { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter }, 
+    SearchPipe, 
+    SafeHtmlPipe, 
+    DatePipe
+  ],
 })
 export class UtilsModule { }

@@ -63,12 +63,11 @@ export class CandidateRegistrationFluxComponent implements OnInit {
     ) { 
       this.subscription = this.ds.getData().subscribe((x) => {
       this.dataPassed = x;
-      if(this.dataPassed){
-        var stepIndex = this.steps.findIndex(x => x.value == this.dataPassed.stepId );
+      if (this.dataPassed) {
+        const stepIndex = this.steps.findIndex(x => x.value == this.dataPassed.stepId );
         this.steps[stepIndex].isDone = this.dataPassed.isDone;
         this.steps[stepIndex].inProgress = this.dataPassed.inProgress;
       }
-      
     }); 
   }
 

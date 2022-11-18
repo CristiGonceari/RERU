@@ -1,10 +1,15 @@
 /* SIDEBAR COLLAPSE STYLE - adjust depending on the project */
+$sidebar-width: 48px;
+$sidebar-secondary-width: 290px;
+$sidebar-secondary-collapsed-width: 113px;
+$desktop-height-difference-width: 227px;
+
 div.wrapper {
-  max-width: 99%;
-  padding-left: 290px;
+  // max-width: 99%;
+  padding-left: $sidebar-secondary-width;
 
   &.collapsed {
-    padding-left: 120px;
+    padding-left: $sidebar-secondary-collapsed-width;
   }
 
   ::ng-deep {
@@ -20,16 +25,17 @@ div.wrapper {
 
       div.content#kt_content,
       app-dashboard>div.content {
-        min-height: 80vh;
+        // min-height: 80vh;
+        min-height: calc(100vh - #{$desktop-height-difference-width});
       }
     }
   }
 
   @media screen and (max-width: 700px) {
-    padding-left: 60px;
+    padding-left: $sidebar-width;
 
     &.collapsed {
-      padding-left: 60px;
+      padding-left: $sidebar-width;
     }
   }
 }

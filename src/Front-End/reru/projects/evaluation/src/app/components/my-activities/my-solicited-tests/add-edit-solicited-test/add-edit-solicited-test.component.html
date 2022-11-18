@@ -6,160 +6,156 @@
     [colorClass]="'text-primary'">
 </app-loading-spinner>
 
-<div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
-    <div class="d-flex flex-column-fluid">
-        <div class="container">
-            <div class="card card-custom gutter-b">
-                <div class="card-body p-0">
-                    <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first"
-                        data-wizard-clickable="true">
-                        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10" *ngIf="!isLoadingMedia">
-                            <div class="col-xl-12 col-xxl-7">
-                                <div class="form" id="kt_contact_add_form">
-                                    <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
-                                        <h3 class="mb-10 font-weight-bold text-dark">{{'Detaliile pozitiei solicitate' |
-                                            translate}}</h3>
-                                        <div class="row">
-                                            <div class="col-xl-12">
-                                                <div class="form-group row">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label text-xl-right text-left">{{
-                                                        'solicited-test.position-to-candidate' | translate }}</label>
-                                                    <div class="col-lg-9 col-xl-9">
-                                                        <div *ngIf="isEdit"
-                                                            class="form-control form-control-lg form-control-solid">
-                                                            {{selected.label}}
-                                                        </div>
-                                                        <select class="form-control form-control-lg form-control-solid"
-                                                            *ngIf="!isEdit" name="selectedStatus" id="selectedStatus"
-                                                            [(ngModel)]="candidatePositions.value"
-                                                            (change)="getEventsAndDocuments()">
-                                                            <option *ngFor="let item of candidatePositions"
-                                                                [ngValue]="item.value">
-                                                                {{ item.label }}
-                                                            </option>
-                                                        </select>
-                                                    </div>
+<erp-shared-content *ngIf="!isLoading">
+    <div class="card card-custom gutter-b erp-shared-desktop-wide">
+        <div class="card-body p-0">
+            <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first"
+                data-wizard-clickable="true">
+                <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10" *ngIf="!isLoadingMedia">
+                    <div class="col-xl-12 col-xxl-7">
+                        <div class="form" id="kt_contact_add_form">
+                            <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                                <h3 class="mb-10 font-weight-bold text-dark">{{'Detaliile pozitiei solicitate' |
+                                    translate}}</h3>
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="form-group row">
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-xl-right text-left">{{
+                                                'solicited-test.position-to-candidate' | translate }}</label>
+                                            <div class="col-lg-9 col-xl-9">
+                                                <div *ngIf="isEdit"
+                                                    class="form-control form-control-lg form-control-solid">
+                                                    {{selected.label}}
                                                 </div>
-                                                <div *ngIf="showCard">
-                                                    <div class="form-group row"
-                                                        *ngFor="let event of eventsWithTestList">
-                                                        <label class="col-xl-3 col-lg-3 col-form-label text-right">{{
-                                                            'events.event' | translate }}</label>
-                                                        <div class="col-lg-9 col-xl-9 col-form-label">
-                                                            <p>{{ event.eventName }} :</p>
-                                                            <ol>
-                                                                <li *ngFor="let item of event.testTemplateNames">{{ item
-                                                                    }}</li>
-                                                            </ol>
-                                                        </div>
-                                                    </div>
+                                                <select class="form-control form-control-lg form-control-solid"
+                                                    *ngIf="!isEdit" name="selectedStatus" id="selectedStatus"
+                                                    [(ngModel)]="candidatePositions.value"
+                                                    (change)="getEventsAndDocuments()">
+                                                    <option *ngFor="let item of candidatePositions"
+                                                        [ngValue]="item.value">
+                                                        {{ item.label }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="showCard">
+                                            <div class="form-group row"
+                                                *ngFor="let event of eventsWithTestList">
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-right">{{
+                                                    'events.event' | translate }}</label>
+                                                <div class="col-lg-9 col-xl-9 col-form-label">
+                                                    <p>{{ event.eventName }} :</p>
+                                                    <ol>
+                                                        <li *ngFor="let item of event.testTemplateNames">{{ item
+                                                            }}</li>
+                                                    </ol>
                                                 </div>
-                                                <div *ngIf="showCard && !isEdit">
-                                                    <div class="form-group row"
-                                                        *ngFor="let requiredDocument of requiredDocumentsList; let i = index">
-                                                        <label class="col-xl-3 col-lg-3 col-form-label text-right">{{
-                                                            requiredDocument.name }}</label>
-                                                        <div class="col-lg-9 col-xl-9">
-                                                            <div class="form-group row">
-                                                                <div class="col">
-                                                                    <!-- <input
-                                                                        (change)="setFile($event, i, requiredDocument.id)"
-                                                                        class="form-control" type="file" name="file"
-                                                                        id="file" required> -->
-                                                                    <app-add-edit-media-file (handleFile)="setFile($event, i, requiredDocument.id)"></app-add-edit-media-file>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <app-loading-spinner *ngIf="isDeleting" [contentHeight]="'20vh'"
-                                                    [height]="'5rem'" [width]="'5rem'" [colorClass]="'text-primary'">
-                                                </app-loading-spinner>
-                                                <div *ngIf="showCard && isEdit && !isDeleting">
-                                                    <div class="form-group row"
-                                                        *ngFor="let item of userFiles; let i = index">
-                                                        <label class="col-xl-3 col-lg-3 col-form-label text-right">
-                                                            {{ item.requiredDocumentName }}</label>
-                                                        <div class="col-lg-9 col-xl-9">
-                                                            <button *ngIf="item.fileName.length > 0"
-                                                                (click)="GetFile(item.fileId)"
-                                                                class="btn btn-light-success font-weight-bold mr-3"
-                                                                ngbTooltip="{{item.fileName}}">
-                                                                <i class="flaticon-profile"></i>
-                                                                {{ ceckFileNameLength(item.fileName) }}
-                                                            </button>
-                                                            <span *ngIf="item.fileName.length > 0"
-                                                                (click)="deleteFile(item.fileId)"
-                                                                class="svg-icon svg-icon-primary svg-icon-2x">
-                                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                    width="24px" height="24px" viewBox="0 0 24 24"
-                                                                    version="1.1">
-                                                                    <g stroke="none" stroke-width="1" fill="none"
-                                                                        fill-rule="evenodd">
-                                                                        <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)"
-                                                                            fill="#000000">
-                                                                            <rect x="0" y="7" width="16" height="2"
-                                                                                rx="1" />
-                                                                            <rect opacity="0.3"
-                                                                                transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) "
-                                                                                x="0" y="7" width="16" height="2"
-                                                                                rx="1" />
-                                                                        </g>
-                                                                    </g>
-                                                                </svg>
-                                                            </span>
-                                                            <b *ngIf="!item.fileName.length > 0">
-                                                                <div class="col-lg-9 col-xl-9">
-                                                                    <div class="form-group row">
-                                                                        <div class="col">
-                                                                            <!-- <input
-                                                                                (change)="setFile($event, i, item.requiredDocumentId)"
-                                                                                class="form-control" type="file"
-                                                                                name="file" id="file" required> -->
-                                                                                <app-add-edit-media-file (handleFile)="setFile($event, i, item.requiredDocumentId)"></app-add-edit-media-file>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </b>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="showCard && !isEdit">
+                                            <div class="form-group row"
+                                                *ngFor="let requiredDocument of requiredDocumentsList; let i = index">
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-right">{{
+                                                    requiredDocument.name }}</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <div class="form-group row">
+                                                        <div class="col">
+                                                            <!-- <input
+                                                                (change)="setFile($event, i, requiredDocument.id)"
+                                                                class="form-control" type="file" name="file"
+                                                                id="file" required> -->
+                                                            <app-add-edit-media-file (handleFile)="setFile($event, i, requiredDocument.id)"></app-add-edit-media-file>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="d-md-block d-none text-right pt-10">
-                                            <app-button  class="btn mr-2" [value]="'button.cancel' | translate"
-                                                (handle)="backClicked()">
-                                            </app-button>
-                                            <app-add-button class="btn mr-2" [value]="'button.confirm' | translate"
-                                                (handle)="onSave()">
-                                            </app-add-button>
-                                        </div>
-                                        <div class="d-md-none d-block pt-10">
-                                            <app-add-button width="100%" class="btn w-100" [value]="'button.confirm' | translate"
-                                                (handle)="onSave()">
-                                            </app-add-button>
-                                            <app-button width="100%" class="btn w-100" [value]="'button.cancel' | translate"
-                                                (handle)="backClicked()">
-                                            </app-button>
+                                        <app-loading-spinner *ngIf="isDeleting" [contentHeight]="'20vh'"
+                                            [height]="'5rem'" [width]="'5rem'" [colorClass]="'text-primary'">
+                                        </app-loading-spinner>
+                                        <div *ngIf="showCard && isEdit && !isDeleting">
+                                            <div class="form-group row"
+                                                *ngFor="let item of userFiles; let i = index">
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                    {{ item.requiredDocumentName }}</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <button *ngIf="item.fileName.length > 0"
+                                                        (click)="GetFile(item.fileId)"
+                                                        class="btn btn-light-success font-weight-bold mr-3"
+                                                        ngbTooltip="{{item.fileName}}">
+                                                        <i class="flaticon-profile"></i>
+                                                        {{ ceckFileNameLength(item.fileName) }}
+                                                    </button>
+                                                    <span *ngIf="item.fileName.length > 0"
+                                                        (click)="deleteFile(item.fileId)"
+                                                        class="svg-icon svg-icon-primary svg-icon-2x">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                            width="24px" height="24px" viewBox="0 0 24 24"
+                                                            version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none"
+                                                                fill-rule="evenodd">
+                                                                <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)"
+                                                                    fill="#000000">
+                                                                    <rect x="0" y="7" width="16" height="2"
+                                                                        rx="1" />
+                                                                    <rect opacity="0.3"
+                                                                        transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) "
+                                                                        x="0" y="7" width="16" height="2"
+                                                                        rx="1" />
+                                                                </g>
+                                                            </g>
+                                                        </svg>
+                                                    </span>
+                                                    <b *ngIf="!item.fileName.length > 0">
+                                                        <div class="col-lg-9 col-xl-9">
+                                                            <div class="form-group row">
+                                                                <div class="col">
+                                                                    <!-- <input
+                                                                        (change)="setFile($event, i, item.requiredDocumentId)"
+                                                                        class="form-control" type="file"
+                                                                        name="file" id="file" required> -->
+                                                                        <app-add-edit-media-file (handleFile)="setFile($event, i, item.requiredDocumentId)"></app-add-edit-media-file>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </b>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="d-md-block d-none text-right pt-10">
+                                    <app-button  class="btn mr-2" [value]="'button.cancel' | translate"
+                                        (handle)="backClicked()">
+                                    </app-button>
+                                    <app-add-button class="btn mr-2" [value]="'button.confirm' | translate"
+                                        (handle)="onSave()">
+                                    </app-add-button>
+                                </div>
+                                <div class="d-md-none d-block pt-10">
+                                    <app-add-button width="100%" class="btn w-100" [value]="'button.confirm' | translate"
+                                        (handle)="onSave()">
+                                    </app-add-button>
+                                    <app-button width="100%" class="btn w-100" [value]="'button.cancel' | translate"
+                                        (handle)="backClicked()">
+                                    </app-button>
+                                </div>
                             </div>
                         </div>
-                        <div class="justify-content-center my-10 px-8 my-lg-15 px-lg-10" *ngIf="isLoadingMedia">
-                            <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
-                            <div class="progress mt-2 h-25px">
-                              <div [style.width.%]="fileStatus.percent"
-                                class="progress-bar progress-bar-animated btn-light-warning font-size-h6" role="progressbar"
-                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                                {{ fileStatus.requestType }} {{ fileStatus.percent }}%
-                              </div>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+                <div class="justify-content-center my-10 px-8 my-lg-15 px-lg-10" *ngIf="isLoadingMedia">
+                    <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+                    <div class="progress mt-2 h-25px">
+                      <div [style.width.%]="fileStatus.percent"
+                        class="progress-bar progress-bar-animated btn-light-warning font-size-h6" role="progressbar"
+                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                        {{ fileStatus.requestType }} {{ fileStatus.percent }}%
+                      </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</erp-shared-content>

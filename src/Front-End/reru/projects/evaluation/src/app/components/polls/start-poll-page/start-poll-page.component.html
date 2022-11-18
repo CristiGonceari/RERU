@@ -1,43 +1,39 @@
 <app-page-title title="{{'polls.poll' | translate}}" subTitle="{{'polls.run-poll' | translate}}"></app-page-title>
 
-<div class="content main-content content-bg" id="kt_content">
-    <div class="d-flex flex-column-fluid">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="card card-custom gutter-b">
-                        <div class="card-header flex-wrap border-0 py-5">
-                            <div class="card-title m-10">
-                                <h3 class="card-label text-muted">{{ 'tests.name' | translate }}:</h3>
-                                <h3 class="card-label">{{testDto.testTemplateName}}</h3>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <h1 class="text-center">{{'polls.conditions' | translate}}</h1>
-                                    <div class="text mt-10"><ckeditor *ngIf="testDto.rules" [(ngModel)]="testDto.rules" [editor]="Editor" readOnly="true"
-                                        class="disabled-area"></ckeditor></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="d-flex mt-10 align-items-center">
-                                        <label class="checkbox checkbox-lg checkbox-inline mr-3">
-                                            <input type="checkbox" (change)="accept = !accept">
-                                            <span></span>
-                                        </label>
-                                        {{'button.accept' | translate}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer text-center">
-                            <app-add-button class="btn" [disabled]="!accept" (click)="editTestStatus()" [value]="'button.start' | translate"></app-add-button>
+<erp-shared-content>
+    <div class="row">
+        <div class="col">
+            <div class="card card-custom gutter-b">
+                <div class="card-header flex-wrap border-0 py-5">
+                    <div class="card-title m-10">
+                        <h3 class="card-label text-muted">{{ 'tests.name' | translate }}:</h3>
+                        <h3 class="card-label">{{testDto.testTemplateName}}</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <h1 class="text-center">{{'polls.conditions' | translate}}</h1>
+                            <div class="text mt-10"><ckeditor *ngIf="testDto.rules" [(ngModel)]="testDto.rules" [editor]="Editor" readOnly="true"
+                                class="disabled-area"></ckeditor></div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="d-flex mt-10 align-items-center">
+                                <label class="checkbox checkbox-lg checkbox-inline mr-3">
+                                    <input type="checkbox" (change)="accept = !accept">
+                                    <span></span>
+                                </label>
+                                {{'button.accept' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <app-add-button class="btn" [disabled]="!accept" (click)="editTestStatus()" [value]="'button.start' | translate"></app-add-button>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</erp-shared-content>

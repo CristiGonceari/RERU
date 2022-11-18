@@ -6,118 +6,114 @@
     [colorClass]="'text-primary'">
 </app-loading-spinner>
 
-<div *ngIf="!isLoading" class="content d-flex flex-column flex-column-fluid" id="kt_content">
-    <div class="d-flex flex-column-fluid">
-        <div class="container">
-            <div class="card card-custom gutter-b">
-                <div class="card-body p-0">
-                    <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first"
-                        data-wizard-clickable="true">
-                        <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
-                            <div class="col-xl-12 col-xxl-7">
-                                <div class="form" id="kt_contact_add_form">
-                                    <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
-                                        <h3 class="mb-10 font-weight-bold text-dark">{{'solicited-test.test-details' |
-                                            translate}}</h3>
-                                        <div class="row">
-                                            <div class="col-xl-12">
-                                                <div class="form-group row">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">
-                                                        {{'verify-test.select-user' | translate}}</label>
-                                                    <div class="col-lg-9 col-xl-9">
-                                                        <p class="pt-3 px-4"><b>{{solicitedTest.userProfileName}}</b>
-                                                            <span class="text-dark-50 font-size-lg font-weight-light">
-                                                                Idnp : {{ solicitedTest.userProfileIdnp }}</span>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">
-                                                        {{'solicited-position.phone-number' | translate}}</label>
-                                                    <div class="col-lg-9 col-xl-9">
-                                                        <p class="pt-3 px-4"><b>{{solicitedTest.phoneNumber}}</b></p>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">
-                                                        {{'user-profile.user-email' | translate}}</label>
-                                                    <div class="col-lg-9 col-xl-9">
-                                                        <p class="pt-3 px-4"><b>{{solicitedTest.email}}</b></p>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">
-                                                        {{'solicited-test.solicited-tests' | translate}}</label>
-                                                    <div class="col-lg-9 col-xl-9">
-                                                        <p class="pt-3 px-4">
-                                                            <b>{{solicitedTest.candidatePositionName}}</b>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row mb-10">
-                                                    <label
-                                                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'solicited-test.solicited-time'
-                                                        | translate}}</label>
-                                                    <div class="col-lg-9 col-xl-9">
-                                                        <input id="from" [owlDateTime]="dtFrom" [disabled]="true"
-                                                            [owlDateTimeTrigger]="dtFrom" placeholder="Date Time"
-                                                            class="form-control form-control-lg form-control-solid"
-                                                            name="date" [(ngModel)]="date" autocomplete="off" />
-                                                        <owl-date-time #dtFrom></owl-date-time>
-                                                    </div>
-                                                </div>
-                                                <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'18vh'"
-                                                            [height]="'5rem'" [width]="'5rem'"
-                                                            [colorClass]="'text-primary'">
-                                                        </app-loading-spinner >
-                                                <div class="form-group row" *ngFor="let item of userFiles" >
-                                                    <label class="col-xl-3 col-lg-3 col-form-label text-right" *ngIf="!isLoadingMedia">
-                                                        {{ item.requiredDocumentName }}</label>
-                                                    <div class="col-lg-9 col-xl-9">
-                                                        <p class="pt-3 px-4" *ngIf="!isLoadingMedia">
-                                                            <button *ngIf="item.fileName.length > 0"
-                                                                (click)="getFile(item.fileId)"
-                                                                class="btn btn-light-success font-weight-bold mr-3"
-                                                                ngbTooltip="{{item.fileName}}">
-                                                                <i class="flaticon-profile"></i>
-                                                                {{ ceckFileNameLength(item.fileName) }}
-                                                            </button>
-                                                            <b *ngIf="!item.fileName.length > 0"><span
-                                                                    class="svg-icon svg-icon-primary svg-icon-2x">
-                                                                    <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo5/dist/../src/media/svg/icons/Navigation/Close.svg--><svg
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                        width="24px" height="24px" viewBox="0 0 24 24"
-                                                                        version="1.1">
-                                                                        <g stroke="none" stroke-width="1" fill="none"
-                                                                            fill-rule="evenodd">
-                                                                            <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)"
-                                                                                fill="#000000">
-                                                                                <rect x="0" y="7" width="16" height="2"
-                                                                                    rx="1" />
-                                                                                <rect opacity="0.3"
-                                                                                    transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) "
-                                                                                    x="0" y="7" width="16" height="2"
-                                                                                    rx="1" />
-                                                                            </g>
-                                                                        </g>
-                                                                    </svg>
-                                                                    <!--end::Svg Icon-->
-                                                                </span></b>
-                                                        </p>
-                                                    </div>
-                                                </div>
+<erp-shared-content *ngIf="!isLoading">
+    <div class="card card-custom gutter-b">
+        <div class="card-body p-0">
+            <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first"
+                data-wizard-clickable="true">
+                <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+                    <div class="col-xl-12 col-xxl-7">
+                        <div class="form" id="kt_contact_add_form">
+                            <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                                <h3 class="mb-10 font-weight-bold text-dark">{{'solicited-test.test-details' |
+                                    translate}}</h3>
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="form-group row">
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                {{'verify-test.select-user' | translate}}</label>
+                                            <div class="col-lg-9 col-xl-9">
+                                                <p class="pt-3 px-4"><b>{{solicitedTest.userProfileName}}</b>
+                                                    <span class="text-dark-50 font-size-lg font-weight-light">
+                                                        Idnp : {{ solicitedTest.userProfileIdnp }}</span>
+                                                </p>
                                             </div>
                                         </div>
-                                        <div class="text-right border-top pt-10">
-                                            <app-button class="btn mr-2" [value]="'button.cancel' | translate"
-                                                (handle)="backClicked()">
-                                            </app-button>
-                                            <app-add-button class="btn mr-2" [value]="'button.next' | translate"
-                                                (handle)="next()">
-                                            </app-add-button>
+                                        <div class="form-group row">
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                {{'solicited-position.phone-number' | translate}}</label>
+                                            <div class="col-lg-9 col-xl-9">
+                                                <p class="pt-3 px-4"><b>{{solicitedTest.phoneNumber}}</b></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                {{'user-profile.user-email' | translate}}</label>
+                                            <div class="col-lg-9 col-xl-9">
+                                                <p class="pt-3 px-4"><b>{{solicitedTest.email}}</b></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                {{'solicited-test.solicited-tests' | translate}}</label>
+                                            <div class="col-lg-9 col-xl-9">
+                                                <p class="pt-3 px-4">
+                                                    <b>{{solicitedTest.candidatePositionName}}</b>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-10">
+                                            <label
+                                                class="col-xl-3 col-lg-3 col-form-label text-right">{{'solicited-test.solicited-time'
+                                                | translate}}</label>
+                                            <div class="col-lg-9 col-xl-9">
+                                                <input id="from" [owlDateTime]="dtFrom" [disabled]="true"
+                                                    [owlDateTimeTrigger]="dtFrom" placeholder="Date Time"
+                                                    class="form-control form-control-lg form-control-solid"
+                                                    name="date" [(ngModel)]="date" autocomplete="off" />
+                                                <owl-date-time #dtFrom></owl-date-time>
+                                            </div>
+                                        </div>
+                                        <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'18vh'"
+                                                    [height]="'5rem'" [width]="'5rem'"
+                                                    [colorClass]="'text-primary'">
+                                                </app-loading-spinner >
+                                        <div class="form-group row" *ngFor="let item of userFiles" >
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-right" *ngIf="!isLoadingMedia">
+                                                {{ item.requiredDocumentName }}</label>
+                                            <div class="col-lg-9 col-xl-9">
+                                                <p class="pt-3 px-4" *ngIf="!isLoadingMedia">
+                                                    <button *ngIf="item.fileName.length > 0"
+                                                        (click)="getFile(item.fileId)"
+                                                        class="btn btn-light-success font-weight-bold mr-3"
+                                                        ngbTooltip="{{item.fileName}}">
+                                                        <i class="flaticon-profile"></i>
+                                                        {{ ceckFileNameLength(item.fileName) }}
+                                                    </button>
+                                                    <b *ngIf="!item.fileName.length > 0"><span
+                                                            class="svg-icon svg-icon-primary svg-icon-2x">
+                                                            <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo5/dist/../src/media/svg/icons/Navigation/Close.svg--><svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                width="24px" height="24px" viewBox="0 0 24 24"
+                                                                version="1.1">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                    fill-rule="evenodd">
+                                                                    <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)"
+                                                                        fill="#000000">
+                                                                        <rect x="0" y="7" width="16" height="2"
+                                                                            rx="1" />
+                                                                        <rect opacity="0.3"
+                                                                            transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) "
+                                                                            x="0" y="7" width="16" height="2"
+                                                                            rx="1" />
+                                                                    </g>
+                                                                </g>
+                                                            </svg>
+                                                            <!--end::Svg Icon-->
+                                                        </span></b>
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="text-right border-top pt-10">
+                                    <app-button class="btn mr-2" [value]="'button.cancel' | translate"
+                                        (handle)="backClicked()">
+                                    </app-button>
+                                    <app-add-button class="btn mr-2" [value]="'button.next' | translate"
+                                        (handle)="next()">
+                                    </app-add-button>
                                 </div>
                             </div>
                         </div>
@@ -126,4 +122,4 @@
             </div>
         </div>
     </div>
-</div>
+</erp-shared-content>

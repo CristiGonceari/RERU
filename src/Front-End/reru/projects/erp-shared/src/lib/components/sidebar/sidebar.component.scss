@@ -1,14 +1,18 @@
+$sidebar-full-width: 232px;
+$sidebar-width: 48px;
+
 .sidebar-left-custom {
   position: fixed;
   top: 80px;
   bottom: 0;
-  left: 60px;
+  left: $sidebar-width;
   z-index: 98;
-  min-width: 220px;
-  max-width: 220px;
+  max-width: $sidebar-full-width;
+  min-width: $sidebar-full-width;
 
   .aside-menu {
-    margin-right: -10px;
+    margin-right: -15px;
+    background: transparent;
     text-overflow: ellipsis !important;
     overflow-y: scroll !important;
     &::-webkit-scrollbar {
