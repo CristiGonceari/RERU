@@ -31,7 +31,7 @@ stages:
               targetType: "inline"
               script: |
                 $override = 'False'
-                $files=$(git ls-tree -r pipelines/mcloud-stage --name-only)
+                $files=$(git ls-tree -r HEAD --name-only)
                 $temp=$files -split ' '
                 $count=$temp.Length
                 echo "Total changed $count files"
