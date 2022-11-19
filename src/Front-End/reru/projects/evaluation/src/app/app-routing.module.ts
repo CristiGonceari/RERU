@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CacheMechanism, LocalizeParser, LocalizeRouterModule, LocalizeRouterSettings } from '@gilsdav/ngx-translate-router';
-import { Location, HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { Location, HashLocationStrategy } from '@angular/common';
 import { ManualLoaderFactory } from './utils/services/i18n/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationCallbackComponent, AuthenticationGuard } from '@erp/shared';
+import { AuthenticationCallbackComponent, AuthenticationGuard, Exception404Component, Exception500Component } from '@erp/shared';
 import { PermissionRouteGuard } from '@erp/shared';
-import { Exception404Component } from './utils/exceptions/404/404.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
@@ -115,6 +114,7 @@ const routes: Routes = [
 		data: { permission: 'P03001401' },
 		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
+	{ path: '500', component: Exception500Component },
 	{ path: '404', component: Exception404Component },
 	{ path: '**', redirectTo: '404' }
 ];

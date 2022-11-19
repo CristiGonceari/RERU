@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AuthResponse } from '../models/auth-response.model';
@@ -6,6 +6,7 @@ import { ApplicationUserModel } from '../models/application-user.model';
 import { Response } from '../models/response';
 import { AbstractService } from './abstract.service';
 import { AppSettingsService } from './app-settings.service';
+import { Router } from '@angular/router';
 
 @Injectable(
   {
@@ -14,13 +15,12 @@ import { AppSettingsService } from './app-settings.service';
 )
 export class ApplicationUserService extends AbstractService {
 	private readonly userProfileKey = 'user';
-	private tokenSubject: BehaviorSubject<AuthResponse> = new BehaviorSubject<AuthResponse>(null);
+	private readonly tokenSubject: BehaviorSubject<AuthResponse> = new BehaviorSubject<AuthResponse>(null);
 
-	private userSubject: BehaviorSubject<ApplicationUserModel> = new BehaviorSubject<ApplicationUserModel>(null);
-	public userChange = this.userSubject.asObservable();
-	constructor(
-    private appSettingsService: AppSettingsService,
-    private http: HttpClient) {
+	private readonly userSubject: BehaviorSubject<ApplicationUserModel> = new BehaviorSubject<ApplicationUserModel>(null);
+	public readonly userChange = this.userSubject.asObservable();
+	constructor(private readonly appSettingsService: AppSettingsService,
+    			private readonly http: HttpClient) {
     super(appSettingsService);
    console.log('==> application user service constructor');
   }
@@ -49,7 +49,10 @@ export class ApplicationUserService extends AbstractService {
 						return false;
 					}
 				},
-				error => {
+				(error: HttpErrorResponse) => {
+					if (error.status === 0) {
+						window.open(`${location.origin}/#/500`, '_self');
+					}
 					this.sessionLogout(null);
 					return false;
 				}

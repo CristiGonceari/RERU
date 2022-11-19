@@ -9,8 +9,6 @@ import { DetailsModalComponent } from './modals/details-modal/details-modal.comp
 import { DeleteLogsModalComponent } from './modals/delete-logs-modal/delete-logs-modal.component';
 import { DateFilterPipe } from './pipes/date-filter.pipe';
 
-
-
 @NgModule({
   declarations: [DetailsModalComponent, DeleteLogsModalComponent, DateFilterPipe],
   imports: [

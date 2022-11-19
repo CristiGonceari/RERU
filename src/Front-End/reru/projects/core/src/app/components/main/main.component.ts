@@ -177,7 +177,7 @@ export class MainComponent implements OnInit {
 
 	subscribeForAuthChange(): void {
 		this.userSubject.userChange.subscribe((response) => {
-			if (response.isCandidateStatus)
+			if (response?.isCandidateStatus)
 			{
 			  this.profileService.getCandidateRegistrationSteps().subscribe(res => {
 				if (res.data.unfinishedSteps.length != 0){

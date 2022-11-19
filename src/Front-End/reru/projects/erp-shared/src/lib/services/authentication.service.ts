@@ -22,8 +22,8 @@ export class AuthenticationService extends BaseService {
 	private user: User | null;
 
 	constructor(
-		private appSettingsService: AppSettingsService,
-		@Inject(MOCK_AUTHENTICATION) private MOCK_AUTHENTICATION: boolean
+		private readonly appSettingsService: AppSettingsService,
+		@Inject(MOCK_AUTHENTICATION) private readonly MOCK_AUTHENTICATION: boolean
 	) {
 		super();
 	}
