@@ -471,7 +471,8 @@
     "hello-username": "Здравствуйте, {{username}}!",
     "have-a-good-day": "Добро пожаловать!",
     "my-activities": "Мои действия",
-    "my-evaluated-tests": "Тесты проверенные мною "
+    "my-evaluated-tests": "Тесты проверенные мною ",
+    "enclosed-mode": "Скрытый режим"
   },
   "questions": {
     "count": "Количество вопросов",
