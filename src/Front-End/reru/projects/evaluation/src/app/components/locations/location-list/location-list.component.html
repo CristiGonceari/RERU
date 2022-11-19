@@ -4,7 +4,7 @@
 <erp-shared-content>
 	<div class="row">
 		<div class="col">
-			<div class="card card-custom gutter-b">
+			<div class="card card-custom gutter-b erp-shared-desktop-wide">
 				<div class="card-header flex-wrap border-0 py-5">
 					<div class="card-title">
 						<h3 class="card-label" id="title">{{'locations.locations' | translate}}</h3>
@@ -17,7 +17,7 @@
 						<app-add-button class="btn" [value]="'locations.add-location' | translate" [routerLink]="['add-location']"></app-add-button>
 					</div>
 				</div>
-				<div class="card-header border-0" style="min-height: 100%;">
+				<div class="card-header border-0">
 					<app-search-location style="width: 100%;" (handleSearch)="locationsTable.list({keyword: $event, page: 1})"></app-search-location>
 				</div>
 				<div class="card-body">

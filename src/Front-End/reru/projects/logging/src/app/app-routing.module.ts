@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthenticationCallbackComponent, AuthenticationGuard } from '@erp/shared';
+import { AuthenticationCallbackComponent, Exception404Component, Exception500Component } from '@erp/shared';
 import { CacheMechanism, LocalizeParser, LocalizeRouterModule, LocalizeRouterSettings } from '@gilsdav/ngx-translate-router';
 import { ManualLoaderFactory } from './utils/services/i18n/i18n.service';
-import { Exception404Component } from './utils/exceptions/404/404.component';
 import { TranslateService } from '@ngx-translate/core';
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { Location } from '@angular/common';
@@ -18,6 +17,7 @@ const routes: Routes = [
 		data: { permission: 'P04000002' },
 		canActivate: [PermissionRouteGuard]
 	},
+	{ path: '500', component: Exception500Component },
 	{ path: '404', component: Exception404Component },
 	{ path: '**', redirectTo: '404' }
 ];

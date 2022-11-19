@@ -12,7 +12,6 @@ import { UserService } from '../../../utils/services/user.service';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
 import { ImportUsersModalComponent } from '../../../utils/modals/import-users-modal/import-users-modal.component';
-import { ReferenceService } from '../../../utils/services/reference.service';
 import { saveAs } from 'file-saver';
 import { AccessModeEnum } from '../../../utils/models/access-mode.enum';
 import { UserStatusEnum } from '../../../utils/models/user-status-enum.enum';
@@ -84,11 +83,11 @@ export class UserListTableComponent implements OnInit {
 	}
 
 	list(data: any = {}): void {
-		data = {
+		data = ObjectUtil.preParseObject({
 			page: data.page || this.pagination.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
 			...this.filters,
-		};
+		});
 		this.isLoading = true;
 		this.userProfileService.getUserProfiles(ObjectUtil.preParseObject(data)).subscribe(response => {
 			if (response && response.data.items) {

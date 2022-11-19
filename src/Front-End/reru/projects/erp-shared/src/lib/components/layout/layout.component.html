@@ -1,4 +1,8 @@
-<app-header-mobile [disableSidenav]="disableSidenav" [appLogo]="logo" [logo]="letter"></app-header-mobile>
+<app-header-mobile  [isEnclosed]="isEnclosed" 
+					[disableSidenav]="disableSidenav" 
+					[appLogo]="logo" 
+					[logo]="letter">
+</app-header-mobile>
 
 <div class="d-flex flex-column flex-root">
 	<!--begin::Page-->
@@ -6,9 +10,18 @@
 		<app-sidenav *ngIf="!disableSidenav" [moduleCode]="moduleCode" [appLogo]="logo" [config]="config"></app-sidenav>
 
 		<!--begin::Wrapper-->
-		<div class="d-flex flex-column flex-row-fluid" id="kt_wrapper" [ngClass]="{ collapsed: isCollapsed, wrapper: !disableSidenav  }">
-			<app-header [disableSidenav]="disableSidenav" [appLogo]="logo" [logo]="letter" [currentLanguage]="currentLanguage" [languages]="languages"
-				(changeLanguage)="changeLanguage.emit($event)" [isCustomHeader]="isCustomHeader" [user]="user"></app-header>
+		<div class="d-flex flex-column flex-row-fluid" id="kt_wrapper" [ngClass]="{ 
+				collapsed: isCollapsed, 
+				wrapper: !disableSidenav,
+				enclosed: isEnclosed
+			}">
+			<app-header [isEnclosed]="isEnclosed" 
+						[disableSidenav]="disableSidenav" 
+						[appLogo]="logo" 
+						[logo]="letter" 
+						[currentLanguage]="currentLanguage" 
+						[languages]="languages"
+						(changeLanguage)="changeLanguage.emit($event)" [isCustomHeader]="isCustomHeader"></app-header>
 				
 			<app-sidebar [title]="title" [menuItems]="sidebarItems" (navigate)="navigate.emit($event)"></app-sidebar>
 
@@ -16,9 +29,7 @@
 				<ng-content></ng-content>
 			</app-layout-content>
 
-			<app-sidebar-right (changePassword)="changePassword.emit(user.id);closeRightSidebar()"
-							   [isCustomHeader]="isCustomHeader"
-							   [user]="user"
+			<app-sidebar-right [isCustomHeader]="isCustomHeader"
 							   (logOut)="logout.emit()">
 			</app-sidebar-right>
 			<app-footer></app-footer>

@@ -11,7 +11,6 @@ import { UtilsModule } from '../../utils/utils.module';
 import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-datetime';
 import { MaterialModule } from '../../material.module';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-import { EvaluationsComponent } from './evaluations.component';
 import { EvaluationsListTableComponent } from './evaluations-list-table/evaluations-list-table.component';
 import { AddEvaluationComponent } from './add-evaluation-list/add-evaluation/add-evaluation.component';
 import { AddEvaluationListComponent } from './add-evaluation-list/add-evaluation-list.component';
@@ -24,7 +23,6 @@ import { ViewEvaluationResultComponent } from './view-evaluation-result/view-eva
 
 @NgModule({
   declarations: [
-    EvaluationsComponent,
     EvaluationsListTableComponent,
     AddEvaluationComponent,
     AddEvaluationListComponent,

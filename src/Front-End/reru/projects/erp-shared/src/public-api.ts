@@ -23,6 +23,8 @@ export * from './lib/components/search-input/search-input.component';
 export * from './lib/components/add-edit-media-file/add-edit-media-file.component';
 export * from './lib/components/get-media-file/get-media-file.component';
 export * from './lib/components/content/content.component';
+export * from './lib/components/404/404.component';
+export * from './lib/components/500/500.component';
 
 export * from './lib/services/sidebar.service';
 export * from './lib/services/icon.service';

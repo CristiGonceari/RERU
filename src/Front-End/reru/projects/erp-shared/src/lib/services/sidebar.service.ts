@@ -6,13 +6,24 @@ import { SidebarView } from '../models/sidebar.model';
   providedIn: 'root'
 })
 export class SidebarService {
-  private sidebarSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private modulesSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private userSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public sidebar$ = this.sidebarSubject.asObservable();
-  public modules$ = this.modulesSubject.asObservable();
-  public user$ = this.userSubject.asObservable();
-  constructor() { }
+  private readonly isEnclosedKey = 'erpIsEnclosed';
+  private readonly sidebarSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private readonly modulesSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private readonly userSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private readonly enclosedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public readonly sidebar$ = this.sidebarSubject.asObservable();
+  public readonly modules$ = this.modulesSubject.asObservable();
+  public readonly user$ = this.userSubject.asObservable();
+  public readonly enclosed$ = this.enclosedSubject.asObservable();
+  constructor() { 
+    console.log('init sidebarservice'+new Date().getTime());
+    this.initializeInterfaceTogglers();
+  }
+
+  private initializeInterfaceTogglers(): void {
+    const isEnclosed = localStorage.getItem(this.isEnclosedKey);
+    if (isEnclosed) this.enclosedSubject.next(isEnclosed === 'true' ? true : false);
+  }
 
   toggle(view: SidebarView, closeAll: boolean = false): void {
     if (closeAll) {
@@ -30,6 +41,15 @@ export class SidebarService {
         this.userSubject.next(!this.userSubject.getValue());
         break;
     }
+  }
+
+  toggleIsEnclosed(): void {
+    localStorage.setItem(this.isEnclosedKey, (!this.enclosedSubject.getValue())+'')
+    this.enclosedSubject.next(!this.enclosedSubject.getValue());
+  }
+
+  isEnclosedOn(): boolean {
+    return this.enclosedSubject.getValue();
   }
 
   isSidebarOn(): boolean {

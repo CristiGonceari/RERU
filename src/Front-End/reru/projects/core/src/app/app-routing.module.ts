@@ -13,9 +13,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthenticationCallbackComponent, AuthenticationGuard } from '@erp/shared';
 import { ModulesRoutingModule } from './components/modules/modules-routing.module';
 import { MyProfileRoutingModule } from './components/my-profile/my-profile-routing.module';
-import { Exception404Component } from './utils/exceptions/404/404.component';
 import { MainComponent } from './components/main/main.component';
 import { PermissionRouteGuard } from '@erp/shared';
+import { Exception404Component } from '@erp/shared';
+import { Exception500Component } from '@erp/shared';
 
 
 const routes: Routes = [
@@ -90,6 +91,7 @@ const routes: Routes = [
 			// }
 		],
 	},
+	{ path: '500', component: Exception500Component },
 	{ path: '404', component: Exception404Component },
 	{ path: '**', redirectTo: '404' }
 ];
