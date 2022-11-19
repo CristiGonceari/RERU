@@ -178,13 +178,13 @@ microservices:
       tag: latest
       env:
         - name: SIMPLESAMLPHP_SP_ENTITY_ID
-          value: "http://reru.mai.gov.md"
+          value: "https://reru.mai.gov.md"
         - name: SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE
-          value: "http://reru.mai.gov.md/ms/reru-identity-new/Saml2/Acs"
+          value: "https://reru.mai.gov.md/ms/reru-identity-new/Saml2/Acs"
         - name: SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE
-          value: "http://reru.mai.gov.md/ms/reru-identity-new/Saml2/Signout"
+          value: "https://reru.mai.gov.md/ms/reru-identity-new/Saml2/Signout"
         - name: SIMPLESAMLPHP_BASE_URL_PATH
-          value: "http://reru.mai.gov.md/ms/saml2/simplesaml/"
+          value: "https://reru.mai.gov.md/ms/saml2/simplesaml/"
 
     name: "test-saml"
     port: 8080
@@ -210,19 +210,19 @@ microservices:
         - name: BASE_PATH
           value: "/ms/reru-identity-new"
         - name: SAML_METADATA_ENDPOINT
-          value: "http://reru.mai.gov.md/ms/saml2/simplesaml/saml2/idp/metadata.php"
+          value: "https://reru.mai.gov.md/ms/saml2/simplesaml/saml2/idp/metadata.php"
         - name: SAML_ENTITY_ID
-          value: "http://reru.mai.gov.md"
+          value: "https://reru.mai.gov.md"
         - name: SAML_CORS_PATH
           value: "/Saml2/Acs"
         - name: SAML_ENDPOINT
-          value: "http://reru.mai.gov.md"
+          value: "https://reru.mai.gov.md"
         - name: ConnectionStrings__Identity
           value: "server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;"
         - name: IDENTITY_ISSUER_URI
-          value: "http://reru.mai.gov.md/ms/reru-identity-new"
+          value: "https://reru.mai.gov.md/ms/reru-identity-new"
         - name: IDENTITY_DISCOVERY_ENDPOINT_URI
-          value: "http://reru.mai.gov.md"
+          value: "https://reru.mai.gov.md"
       appsettings: reru_identity_new.appsettings.json
     name: "reru-identity-new"
     port: 8080
