@@ -472,7 +472,8 @@
     "hello-username": "Hello, {{username}}!",
     "have-a-good-day": "Welcome, have a good day!",
     "my-activities": "My activities", 
-    "my-evaluated-tests": "My evaluated Tests"
+    "my-evaluated-tests": "My evaluated Tests",
+    "enclosed-mode": "Enclosed mode"
   },
   "questions": {
     "count": "Question count",

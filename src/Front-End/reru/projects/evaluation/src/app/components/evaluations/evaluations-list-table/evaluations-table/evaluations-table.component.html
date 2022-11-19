@@ -4,7 +4,7 @@
 <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
 <div class="table-responsive-xl datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable">
-    <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading && !downloadFile">
+    <table class="datatable table erp-shared-table font-size-lg" *ngIf="!isLoading && !downloadFile">
         <thead class="text-uppercase text-muted">
             <tr>
                 <th scope="col">{{ 'tests.name' | translate }}</th>

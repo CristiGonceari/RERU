@@ -27,11 +27,11 @@ export class InternalNotifyInterceptor extends AbstractService implements HttpIn
 	description: string;
 
 	constructor(
-		public notificationService: NotificationsService,
-		public translate: I18nService,
-		public router: Router,
-		protected configService: AppSettingsService,
-		private modalService: NgbModal
+		public readonly notificationService: NotificationsService,
+		public readonly translate: I18nService,
+		public readonly router: Router,
+		protected readonly configService: AppSettingsService,
+		private readonly modalService: NgbModal
 	) {
 		super(configService);
 	}

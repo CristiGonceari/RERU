@@ -4,9 +4,8 @@ import { LocalizeRouterModule, LocalizeParser, LocalizeRouterSettings, CacheMech
 import { Location } from '@angular/common';
 import { ManualLoaderFactory } from './utils/services/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationCallbackComponent, AuthenticationGuard } from '@erp/shared';
+import { AuthenticationCallbackComponent, AuthenticationGuard, Exception404Component, Exception500Component } from '@erp/shared';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { Exception404Component } from './utils/exceptions/404/404.component';
 
 const routes: Routes = [
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent },
@@ -76,6 +75,7 @@ const routes: Routes = [
 		loadChildren: () => import('./components/faq/faq.module').then(m => m.FAQModule),
 		canActivate: [AuthenticationGuard]
 	},
+	{ path: '500', component: Exception500Component },
 	{ path: '404', component: Exception404Component },
 	{ path: '**', redirectTo: '404' }
 ];

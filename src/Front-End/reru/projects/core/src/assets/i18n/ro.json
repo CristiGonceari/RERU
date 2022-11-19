@@ -167,8 +167,7 @@
     "import": "Importa",
     "loading": "Se încarcă",
     "next": "Următorul",
-    "finish": "Finalizează",
-    "back": "Înapoi"
+    "finish": "Finalizează"
   },
   "bulk-import-users": {
     "succes-msg" : "Utilizatorii au fost importați cu succes",
@@ -372,6 +371,9 @@
   "remove-module": {
     "title": "Ștergerea modulului",
     "sure": "Sunteți sigur(-ă) că doriți să stergeți modulul?"
+  },
+  "dashboard": {
+    "enclosed-mode":"Mod restrâns"
   },
   "pages": {
     "users": {

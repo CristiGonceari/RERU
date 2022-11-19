@@ -1,13 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { Exception404Component } from './exceptions/404/404.component';
-import { Exception500Component } from './exceptions/500/500.component';
 import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateComponent } from './components/date/date.component';
 import { SearchPipe } from './pipes/search.pipe';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { HttpLoaderFactory } from './../utils/services/i18n.service';
-import { HttpClient } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientModule } from '@angular/common/http';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { ImportUsersModalComponent } from './modals/import-users-modal/import-users-modal.component';
@@ -23,8 +19,6 @@ import { SearchDepartmentComponent } from './components/search-department/search
 import { SearchRoleComponent } from './components/search-role/search-role.component';
 
 const commonComponents = [
-  Exception404Component,
-  Exception500Component,
   DateComponent,
   SearchPipe,
   SafeHtmlPipe,

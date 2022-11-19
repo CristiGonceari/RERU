@@ -471,7 +471,8 @@
     "hello-username": "Salut, {{username}}!",
     "have-a-good-day": "Bine ai venit!",
     "my-activities": "Activitățile mele",
-    "my-evaluated-tests": "Testele personal evaluate"
+    "my-evaluated-tests": "Testele personal evaluate",
+    "enclosed-mode":"Mod restrâns"
   },
   "questions": {
     "count": "Număr de întrebări",

@@ -21,16 +21,17 @@ export class LayoutComponent implements OnInit {
   @Input() backgroundColor: string = '#F3F6F9';
   @Input() moduleCode: string;
   @Input() isCustomHeader: boolean;
-  @Input() user: any;
   @Output() changeLanguage: EventEmitter<any> = new EventEmitter<any>();
   @Output() navigate: EventEmitter<any> = new EventEmitter<any>();
   @Output() logout: EventEmitter<any> = new EventEmitter<any>();
   @Output() changePassword: EventEmitter<any> = new EventEmitter<any>();
 
   isCollapsed: boolean;
+  isEnclosed: boolean;
   sidebarView = SidebarView;
   constructor(private sidebarService: SidebarService) {
     this.isCollapsed = this.sidebarService.isSidebarOn();
+    this.isEnclosed = this.sidebarService.isEnclosedOn();
   }
 
   ngOnInit(): void {
@@ -39,6 +40,7 @@ export class LayoutComponent implements OnInit {
 
   subscribeForSidebarChanges(): void {
     this.sidebarService.sidebar$.subscribe(response => this.isCollapsed = response);
+    this.sidebarService.enclosed$.subscribe(response => this.isEnclosed = response);
   }
 
   closeRightSidebar(): void {

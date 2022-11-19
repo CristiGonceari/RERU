@@ -11,6 +11,7 @@ export class HeaderMobileComponent implements OnInit {
   @Input() logo: string;
   @Input() appLogo: string;
   @Input() disableSidenav: boolean;
+  @Input() isEnclosed: boolean;
   isOpenUserIcon: boolean;
   isOpenModules: boolean;
   isOpenUser: boolean;
