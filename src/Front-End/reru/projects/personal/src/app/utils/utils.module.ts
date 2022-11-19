@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Exception404Component } from './exceptions/404/404.component';
-import { Exception500Component } from './exceptions/500/500.component';
 import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateComponent } from './components/date/date.component';
 import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
@@ -84,8 +82,6 @@ import { DateFilterPipe } from '../utils/pipes/date-filter.pipe';
 
 
 const commonComponents = [
-  Exception404Component,
-  Exception500Component,
   DateComponent,
   ConfirmModalComponent,
   PaginationComponent,

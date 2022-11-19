@@ -8,7 +8,7 @@ import {
 	HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import { ClassProvider, Injectable } from '@angular/core';
-import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { forkJoin, Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { NotificationsService } from 'angular2-notifications';
 import { I18nService } from '../services/i18n.service';
@@ -33,29 +33,45 @@ export class ResponseInterceptor implements HttpInterceptor {
 					}
 				}
 			}),
-			catchError((err: any) => {
-				if (err instanceof HttpErrorResponse) {
+			catchError((httpError: HttpResponse<HttpErrorResponse>) => {
+				if (httpError instanceof HttpErrorResponse) {
 					try {
-						let errText = err.error.messages.map(mt => mt.code);
-						for (let index = 0; index <= errText.length; index++) {
-							const element = errText[index];
-							if (element) {
-								forkJoin([
-									this.translate.get('notification.title.error'),
-									this.translate.get('message-code.' + element),
-								]).subscribe(([type, message]) => {
+						switch (httpError.status) {
+							case 0: 
+								this.translate.get('notification.title.error').subscribe((type) => {
 									this.type = type;
-									this.errorMessage = message;
-									this.notificationService.error(this.type, this.errorMessage, NotificationUtil.getDefaultMidConfig());
+									this.errorMessage = 'Server offline!';
+									this.notificationService.error(
+										this.type, 
+										this.errorMessage, 
+										NotificationUtil.getDefaultMidConfig()
+									);
 								});
-							}
+								break;
+							default:
+								const errorText = httpError?.error?.messages?.map(mt => mt.code);
+								for (let index = 0; index <= errorText?.length; index++) {
+									const code = errorText[index];
+									if (code) {
+										forkJoin([
+											this.translate.get('notification.title.error'),
+											this.translate.get('message-code.' + code),
+										]).subscribe(([type, message]) => {
+											this.type = type;
+											this.errorMessage = message;
+											this.notificationService.error(this.type, this.errorMessage, NotificationUtil.getDefaultMidConfig());
+										});
+									}
+								}
+								break;
 						}
+						
 					} catch (e) {
 						console.error('Error', 'An error occurred', e);
 					}
 				}
 				
-				return throwError(err);
+				return throwError(httpError);
 			})
 		);
 	}

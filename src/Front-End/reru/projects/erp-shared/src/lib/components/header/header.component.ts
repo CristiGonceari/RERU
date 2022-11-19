@@ -24,9 +24,9 @@ export class HeaderComponent implements OnInit {
 	@Input() appLogo: string;
 	@Input() languages: any = [];
 	@Input() currentLanguage: string;
-	@Input() user: any;
 	@Input() isCustomHeader: boolean;
 	@Input() disableSidenav: boolean;
+	@Input() isEnclosed: boolean;
 	@Output() changeLanguage = new EventEmitter<string>();
 
 	constructor(
@@ -37,6 +37,7 @@ export class HeaderComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
+		this.isEnclosed = this.sidebarService.isEnclosedOn();
 		this.subscribeForSidebarChanges();
 		this.subscribeForUserChanges();
 	}
@@ -58,7 +59,8 @@ export class HeaderComponent implements OnInit {
 				this.acronym = matches ? matches.join('') : null;
 			});
 		} else {
-			this.acronym = this.user && `${this.user.firstName[0]} ${this.user.lastName[0]}`;
+			this.acronym = this.authUserModel.user && 
+			`${this.authUserModel.user.firstName[0]} ${this.authUserModel.user.firstName[0]}`;
 		}
 	}
 
@@ -67,13 +69,17 @@ export class HeaderComponent implements OnInit {
 		this.sidebarService.user$.subscribe((response: boolean) => (this.isOpenUser = response));
 	}
 
-	toggleUserIcon() {
+	toggleUserIcon(): void {
 		this.isOpenUserIcon = !this.isOpenUserIcon;
 		if (this.isOpenUserIcon) {
 			this.renderer.addClass(document.body, 'topbar-mobile-on');
 		} else {
 			this.renderer.removeClass(document.body, 'topbar-mobile-on');
 		}
+	}
+
+	toggleEnclosed(): void {
+		this.sidebarService.toggleIsEnclosed();
 	}
 
 	toggle(view: SidebarView) {

@@ -30,12 +30,12 @@ export class SidebarRightComponent implements OnInit {
 	logoutMsg: string;
 	no: string;
 	yes: string;
+	isEnclosed: boolean;
 
 	@Input() user: any;
 	@Input() isCustomHeader: boolean;
 	@Input() modules: any[] = [];
 	@Output() logOut = new EventEmitter();
-	@Output() changePassword: EventEmitter<void> = new EventEmitter<void>();
 
 	constructor(
 		private sidebarService: SidebarService,
@@ -103,6 +103,7 @@ export class SidebarRightComponent implements OnInit {
 	}
 
 	subscribeForSidebarChanges(): void {
+		this.sidebarService.enclosed$.subscribe((response: boolean) => (this.isEnclosed = response));
 		this.sidebarService.modules$.subscribe((response: boolean) => (this.isOpenModules = response));
 		this.sidebarService.user$.subscribe((response: boolean) => {
 			this.isOpenUser = response;
@@ -130,6 +131,10 @@ export class SidebarRightComponent implements OnInit {
 		}
 	}
 
+	toggleEnclosed(): void {
+		this.sidebarService.toggleIsEnclosed();
+	}
+
 	toggle(view: SidebarView): void {
 		this.sidebarService.toggle(view);
 	}
@@ -139,14 +144,16 @@ export class SidebarRightComponent implements OnInit {
 		window.location.reload();
 	}
 
-	navigateToChangePassword(){
-		let location = window.location;
+	navigateToChangePassword(): void {
+		const location = window.location;
 		window.open(`${location.protocol}//${location.host}/#/personal-profile/change-password`, '_self');
+		this.close();
 	}
 
-	navigateToCoreMyProfile(){
-		let location = window.location;
+	navigateToCoreMyProfile(): void {
+		const location = window.location;
 		window.open(`${location.protocol}//${location.host}/#/personal-profile/overview`, '_self');
+		this.close();
 	}
 
 	ngOnDestroy(): void {

@@ -164,8 +164,7 @@
     "import": "Import",
     "loading": "Loading",
     "next": "Next",
-    "finish": "Finish",
-    "back": "Back"
+    "finish": "Finish"
   },
   "bulk-import-users": {
     "succes-msg" : "Users were successfully imported",
@@ -370,6 +369,9 @@
   "remove-module": {
     "title": "Remove module",
     "sure": "Are you sure you want to remove this module?"
+  },
+  "dashboard": {
+    "enclosed-mode": "Enclosed mode"
   },
   "pages": {
     "users": {

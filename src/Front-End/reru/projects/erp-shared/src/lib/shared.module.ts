@@ -49,6 +49,8 @@ import { INTERNAL_NOTIFY_INTERCEPTOR } from './interceptors/internal-notify.inte
 import { GoToTestModalComponent } from './modals/go-to-test-modal/go-to-test-modal.component';
 import { LayoutContentComponent } from './components/layout-content/layout-content.component';
 import { ContentComponent } from './components/content/content.component';
+import { Exception404Component } from './components/404/404.component';
+import { Exception500Component } from './components/500/500.component';
 
 export const translateModule = TranslateModule.forChild();
 
@@ -75,7 +77,9 @@ const commonExports = [
 	AddEditMediaFileComponent,
 	GetMediaFileComponent,
 	ShowImageModalComponent,
-	ContentComponent
+	ContentComponent,
+	Exception404Component,
+	Exception500Component
 ];
 @NgModule({
 	declarations: [

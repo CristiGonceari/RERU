@@ -26,12 +26,12 @@
   </div>
 </div>
 
-<div class="table-responsive-xl datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+<div class="table-responsive datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
   id="kt_datatable">
-  <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading && !isLoadingMedia">
+  <table class="datatable table font-size-lg erp-shared-table" *ngIf="!isLoading && !isLoadingMedia">
     <thead class="text-uppercase text-muted">
       <tr>
-        <th scope="col" style="width: 50px"></th>
+        <th scope="col" class="w-50px"></th>
         <th scope="col"> {{ 'table.username' | translate }} ({{ 'table.npp' | translate }})</th>
         <th scope="col"> {{ 'table.idnp' | translate }} </th>
         <th scope="col"> {{ 'table.email' | translate }} </th>
@@ -39,15 +39,15 @@
         <th scope="col"> {{ 'user-roles.role' | translate }} </th>
         <th scope="col" style="text-align: center;"> {{ 'table.posture' | translate }} </th>
         <th scope="col" style="text-align: center;"> {{ 'user-profile.access-mode' | translate }} </th>
-        <th scope="col" style="width: 75px; text-align: center; vertical-align: middle">
+        <th scope="col" style="text-align: center; vertical-align: middle">
           {{ 'table.status' | translate }}
         </th>
-        <th scope="col" style="width: 48px;"></th>
+        <th scope="col" class="w-100px">{{ 'table.actions' | translate }}</th>
       </tr>
     </thead>
     <tbody class="datatable-body" *ngIf="users">
       <tr *ngFor="let user of users" (dblclick)="navigateToDetails(user.id)">
-        <td [class.no-actions]="!viewDetails">
+        <td [class.no-actions]="!viewDetails" class="text-center w-50px">
           <div class="symbol symbol-35 symbol-sm-s symbol-light-success">
             <span class="font-size-h4 symbol-label font-weight-boldest">{{ renderText(user) }}</span>
           </div>
@@ -102,7 +102,7 @@
             </div>
           </div>
         </td>
-        <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
+        <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort w-100px px-10">
           <div style="overflow: visible; position: relative; width: 0px">
             <div ngbDropdown class="dropdown dropdown-inline">
               <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">

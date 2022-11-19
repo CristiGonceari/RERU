@@ -8,7 +8,7 @@ $blue-light-color: #70b7ff;
 
 $font-family: Poppins, Helvetica, "sans-serif";
 
-$dashboard-item-width: 100px;
+$desktop-height-difference-height: 264px; /* ONLY CHANGE IF MAIN LAYOU HEIGHT IS CHANGED*/
 
 /* Global selectors */
 .mat-body,
@@ -158,25 +158,28 @@ div.ck-content {
 
 /* Card , Cards Bootstrap Addons - Desktop mobile */
 /* Use for one page */
-.card.erp-shared-desktop-wide {
-  height: calc(100vh - 252px);
-}
+div.wrapper.enclosed {
+  .card.erp-shared-desktop-wide {
+    height: calc(100vh - #{$desktop-height-difference-height});
+  }
+  
+  /* Use for one piece in a page */
+  .card.erp-shared-half-desktop-wide {
+    height: calc(50vh - 100px);
+  }
+  
+  /* Use for two pieces in a page */
+  .card.erp-shared-half-piece-desktop-wide {
+    height: calc(50vh - 140px);
+  }
 
-/* Use for one piece in a page */
-.card.erp-shared-half-desktop-wide {
-  height: calc(50vh - 100px);
-}
-
-/* Use for two pieces in a page */
-.card.erp-shared-half-piece-desktop-wide {
-  height: calc(50vh - 140px);
-}
-
-.card.erp-shared-desktop-wide,
-.card.erp-shared-half-desktop-wide
-.card.erp-shared-half-piece-desktop-wide {
-  @media screen and (max-width: 992px) {
-    height: auto;
+  /* Deactivation (enclosed mode) wide tables for mobile */
+  .card.erp-shared-desktop-wide,
+  .card.erp-shared-half-desktop-wide
+  .card.erp-shared-half-piece-desktop-wide {
+    @media screen and (max-width: 992px) {
+      height: auto;
+    }
   }
 }
 /* END Card , Cards Bootstrap Addons - Desktop mobile */
@@ -190,3 +193,73 @@ div.ck-content {
   }
 }
 /* END CANVAS OFFMOBILE FIX HIDE */
+
+/* erp-shared-table */
+div.wrapper.enclosed {
+  div[class^='table-responsive'] {
+    &::-webkit-scrollbar {
+      cursor: pointer;
+      width: 5px !important;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #898989;
+    }
+    table.erp-shared-table {
+      $responsive-cancellation-effect-width: 992px; 
+      tbody {
+        display:block;
+        max-height: calc(60vh - 252px);
+        overflow-y :auto;
+        overflow-x : hidden;
+        &::-webkit-scrollbar {
+          cursor: pointer;
+          width: 10px !important;
+        }
+        &::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: #898989;
+        }
+        @media screen and (max-width: $responsive-cancellation-effect-width) {
+          display: table-row-group;
+          max-height: unset;
+          overflow: hidden;
+          table-layout: unset;
+        }
+      }
+    
+      thead, tbody tr {
+        display:table;
+        width: 100%;
+        table-layout:fixed;
+        @media screen and (max-width: $responsive-cancellation-effect-width) {
+          table-layout: unset;
+        }
+      }
+    
+      thead {
+        @media screen and (max-width: $responsive-cancellation-effect-width) {
+          display: table-header-group;
+          table-layout: unset;
+        }
+      }
+    
+      thead tr th,
+      tbody tr td {
+        min-width: 100px;
+        width: 100px;
+      }
+    
+      tbody tr {
+        @media screen and (max-width: $responsive-cancellation-effect-width) {
+          display: table-row;
+        }
+      }
+    }
+  }
+}
+/* END erp-shared-table */
