@@ -8,7 +8,122 @@
             </div>
         </div>
         <div formArrayName="obligations">
-            <div class="table-responsive">
+            <div class="d-sm-none d-flex flex-column gap-4">
+                <div class="row" [ngClass]="{'more': militaryObligationForm.controls.obligations.controls.length > 1  &&
+                    (militaryObligationForm.controls.obligations.controls.length - 1) !== i}"
+                    *ngFor="let obligation of militaryObligationForm.controls.obligations.controls; let i = index"
+                    [formGroupName]="i">
+                        <div class="col d-flex flex-column gap-4">
+                            <div class="row">
+                                <div class="col"><p class="font-weight-bolder">{{'table.number' | translate}}</p></div>
+                                <div class="col"><p class="font-weight-bolder text-center">{{i + 1}}</p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><p class="font-weight-bolder">{{ 'military-obligation.name' | translate}}</p></div>
+                                <div class="col-12">
+                                    <select class="form-control" formControlName="militaryObligationType">
+                                        <option value="null">{{'module-access.select' | translate}}</option>
+                                        <option *ngFor="let item of militaryObligationTypeEnum" [value]="item.value">
+                                            {{ 'militaryObligationType.' + item.label | translate }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><p class="font-weight-bolder">{{'military-obligation.year-of-mobilization' | translate}}</p></div>
+                                <div class="col-12">
+                                    <app-date [parent]="obligation" [date]="'mobilizationYear'"
+                                    [placeholder]="'military-obligation.year-of-mobilization' | translate"></app-date>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><p class="font-weight-bolder">{{'military-obligation.year-of-withdrawal' | translate}}</p></div>
+                                <div class="col-12">
+                                    <app-date [parent]="obligation" [date]="'withdrawalYear'"
+                                    [placeholder]="'military-obligation.year-of-withdrawal' | translate"></app-date>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><p class="font-weight-bolder">{{'military-obligation.efectiv' | translate}}</p></div>
+                                <div class="col-12">
+                                    <input formControlName="efectiv" autocomplete="off"
+                                    class="form-control form-control-solid" type="text"
+                                    [placeholder]="'military-obligation.efectiv' | translate" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><p class="font-weight-bolder">{{'military-obligation.military-specialty' | translate}}</p></div>
+                                <div class="col-12">
+                                    <input formControlName="militarySpecialty" autocomplete="off"
+                                    class="form-control form-control-solid" type="text"
+                                    [placeholder]="'military-obligation.military-specialty' | translate" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><p class="font-weight-bolder">{{'military-obligation.degree' | translate}}</p></div>
+                                <div class="col-12">
+                                    <input formControlName="degree" autocomplete="off"
+                                    class="form-control form-control-solid" type="text"
+                                    [placeholder]="'military-obligation.degree' | translate" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="font-weight-bolder">{{'military-obligation.military-booklet' | translate}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><p>{{'military-obligation.series' | translate}}</p></div>
+                                <div class="col-12">
+                                    <input formControlName="militaryBookletSeries" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'military-obligation.series' | translate" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><p>{{'military-obligation.number' | translate}}</p></div>
+                                <div class="col-12">
+                                    <input formControlName="militaryBookletNumber" autocomplete="off"
+                                        class="form-control form-control-solid" type="number"
+                                        [placeholder]="'military-obligation.number' | translate" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><p>{{'military-obligation.relase-day' | translate}}</p></div>
+                                <div class="col-12">
+                                    <app-date [parent]="obligation" [date]="'militaryBookletReleaseDay'"
+                                        [placeholder]="'military-obligation.relase-day' | translate"></app-date>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><p>{{'military-obligation.eminent-authority' | translate}}</p></div>
+                                <div class="col-12">
+                                    <input formControlName="militaryBookletEminentAuthority" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'military-obligation.eminent-authority' | translate" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><p>{{'military-obligation.eminent-authority' | translate}}</p></div>
+                                <div class="col-12">
+                                    <input formControlName="militaryBookletEminentAuthority" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'military-obligation.eminent-authority' | translate" />
+                                </div>
+                            </div>
+                            <div class="row pt-4" *ngIf="i > 0">
+                                <div class="col">
+                                    <button class="btn btn-icon float-right" (click)="removeMilitaryObligation(i)">
+                                        <span class="font-size-h2">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div *ngIf="militaryObligationForm.controls.obligations.controls.length > 1" class="separator separator-dashed"></div>
+                        </div>
+                </div>
+            </div>
+            <div class="table-responsive d-sm-block d-none">
                 <table class="table table-bordered border-dark mb-10" [ngClass]="{'more': militaryObligationForm.controls.obligations.controls.length > 1  &&
                     (militaryObligationForm.controls.obligations.controls.length - 1) !== i}"
                     *ngFor="let obligation of militaryObligationForm.controls.obligations.controls; let i = index"
@@ -195,7 +310,7 @@
                             <td>
                                 <div class="d-flex justify-content-end">
                                     <button class="btn btn-icon" (click)="removeMilitaryObligation(i)">
-                                        <span class="font-size-18px">&times;</span>
+                                        <span class="font-size-h2">&times;</span>
                                     </button>
                                 </div>
                             </td>
@@ -204,21 +319,21 @@
                 </table>
             </div>
         </div>
-        <div class="row">
+        <div class="row pt-4">
             <div class="col">
                 <div class="d-flex justify-content-between">
                     <button class="btn btn-icon" (click)="addMilitaryObligation()"><span
-                            class="font-size-18px">+</span></button>
+                            class="font-size-h2">+</span></button>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <div class="d-flex justify-content-end mb-3 mt-lg-0 mt-3">
-                    <button class="btn btn-success" *ngIf="addOrEditMilitaryObligationButton"
+                    <button class="btn btn-success h-35px" *ngIf="addOrEditMilitaryObligationButton"
                         [disabled]="militaryObligationForm && militaryObligationForm.invalid "
                         (click)="createMilitaryObligations()">{{'stepper.button-update' | translate}}</button>
-                    <button class="btn btn-outline-success" *ngIf="!addOrEditMilitaryObligationButton"
+                    <button class="btn btn-outline-success h-35px" *ngIf="!addOrEditMilitaryObligationButton"
                         [disabled]="militaryObligationForm && militaryObligationForm.invalid"
                         (click)="createMilitaryObligations()">{{'stepper.button-add' | translate}}</button>
                 </div>
@@ -228,10 +343,10 @@
 </form>
 <div class="row">
     <div class="col">
-        <div class="col d-flex justify-content-end mt-3 mr-1">
-            <button class="btn btn-success" matStepperNext *ngIf="militaryObligationData != null"
+        <div class="col d-flex justify-content-end my-3">
+            <button class="btn btn-success h-35px" matStepperNext *ngIf="militaryObligationData != null"
                 (click)="addRegistrationFluxStep()">{{'stepper.button-next' | translate}}</button>
-            <button class="btn btn-success" matStepperNext *ngIf="militaryObligationData == null"
+            <button class="btn btn-success h-35px" matStepperNext *ngIf="militaryObligationData == null"
                 (click)="addRegistrationFluxStep()">{{'stepper.button-save-and-next-withoud-datas' |translate}}</button>
         </div>
     </div>

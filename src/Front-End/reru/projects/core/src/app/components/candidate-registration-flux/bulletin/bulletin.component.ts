@@ -35,7 +35,7 @@ export class BulletinComponent implements OnInit {
   bulletinValuesLoading: boolean = true;
   bulletinIdnp;
 
-  stepId;
+  stepId: number;
   registrationFluxStep;
   isDone: boolean;
 

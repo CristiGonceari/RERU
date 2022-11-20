@@ -1,14 +1,14 @@
 <app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
     [colorClass]="'text-primary'">
 </app-loading-spinner>
-<div class="content d-flex flex-column flex-column-fluid pt-lg-6 pt-0" id="kt_content" *ngIf="!isLoading">
+
+<div class="content d-flex flex-column flex-column-fluid pt-lg-6 pt-18" id="kt_content" *ngIf="!isLoading">
     <div class="d-flex flex-column-fluid">
         <div class="container-fluid px-lg-4 px-0">
             <div class="card card-custom gutter-b card-stretch card-shadowless">
                 <div class="card-body p-lg-8 p-0">
                     <mat-vertical-stepper (selectionChange)="selectionChanged($event)" #stepper>
-                        <mat-step *ngFor="let item of steps; let index = index;" [completed]="counter"
-                            [state]="state" class="">
+                        <mat-step *ngFor="let item of steps; let index = index;">
                             <ng-template matStepLabel class="">
                                 <div class="row align-items-center">
                                     <div class="col-lg-2 col-md col">
@@ -17,8 +17,7 @@
                                     <div class="col-lg-10 col-md col-auto d-flex justify-content-end">
                                         <!-- <div *ngIf="item.isDone" class="alert alert-success"> <strong>{{ 'step-status.done' | translate}}</strong></div>
                                         <div *ngIf="!item.isDone" class="alert alert-danger"><strong>{{ 'step-status.not-done' | translate}}</strong></div> -->
-                                        <div *ngIf="!item.isDone && !item.inProgress" class="rounded-pill p-2"
-                                            [ngStyle]="{backgroundColor: '#c1c9d1'}">
+                                        <div *ngIf="!item.isDone && !item.inProgress" class="border border-danger text-danger rounded-pill p-2 min-w-lg-140px min-w-125px">
                                             <strong class="m-7">{{ 'step-status.not-done' | translate}}</strong>
                                             <div class="d-inline-block w-lg-30px w-20px" style="width: 30px; display: inline-block">
                                                 <svg version="1.1" id="Capa_1"
@@ -26,7 +25,7 @@
                                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                     viewBox="0 0 50 50" style="enable-background: new 0 0 50 50"
                                                     xml:space="preserve">
-                                                    <circle style="fill: #d75a4a" cx="25" cy="25" r="25" />
+                                                    <circle style="fill: var(--danger)" cx="25" cy="25" r="25" />
                                                     <polyline
                                                         style="fill: none; stroke: #ffffff; stroke-width: 2; stroke-linecap: round; stroke-miterlimit: 10"
                                                         points="16,34 25,25 34,16 " />
@@ -36,16 +35,15 @@
                                                 </svg>
                                             </div>
                                         </div>
-                                        <div *ngIf="!item.isDone && item.inProgress" class="rounded-pill p-2"
-                                            [ngStyle]="{backgroundColor: '#c1c9d1'}">
+                                        <div *ngIf="!item.isDone && item.inProgress" class="border rounded-pill p-2 min-w-lg-140px min-w-125px">
                                             <strong class="m-lg-7 m-4">{{ 'step-status.in-progress' | translate}}</strong>
-                                            <div style="width: 30px; display: inline-block">
+                                            <div class="d-inline-block w-lg-30px w-20px">
                                                 <svg version="1.1" id="Capa_1"
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                     viewBox="0 0 50 50" style="enable-background: new 0 0 50 50"
                                                     xml:space="preserve" class="bi bi-clock-history">
-                                                    <circle style="fill: #e6e93f" cx="25" cy="25" r="25" />
+                                                    <circle style="fill: var(--warning)" cx="25" cy="25" r="25" />
                                                     <svg width="35" height="35" fill="#ffffff" x="7" y="7"
                                                         viewBox="0 0 16 16">
                                                         <path
@@ -58,16 +56,15 @@
                                                 </svg>
                                             </div>
                                         </div>
-                                        <div *ngIf="item.isDone" class="border p-2"
-                                            style="border-radius: 20px; background-color: #c1c9d1;">
+                                        <div *ngIf="item.isDone" class="border border-success text-success rounded-pill p-2 min-w-lg-150px min-w-125px">
                                             <strong class="m-7">{{ 'step-status.done' | translate}}</strong>
-                                            <div style="width: 30px; display: inline-block">
+                                            <div class="d-inline-block w-lg-30px w-20px">
                                                 <svg version="1.1" id="Capa_1"
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                     viewBox="0 0 50 50" style="enable-background: new 0 0 50 50"
                                                     xml:space="preserve">
-                                                    <circle style="fill: #25ae88" cx="25" cy="25" r="25" />
+                                                    <circle style="fill: var(--success)" cx="25" cy="25" r="25" />
                                                     <polyline style="
                                                     fill: none;
                                                     stroke: #ffffff;

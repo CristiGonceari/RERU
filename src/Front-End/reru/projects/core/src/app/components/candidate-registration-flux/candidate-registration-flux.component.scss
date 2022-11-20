@@ -1,11 +1,22 @@
 :host {
     ::ng-deep {
+		div.mat-expansion-panel-body,
+		mat-expansion-panel-header.mat-expansion-panel-header {
+			@media screen and (max-width: 426px) {
+				padding: 0 12px;
+			}
+		}
+		div.mat-expansion-panel-body {
+			@media screen and (max-width: 426px) {
+				padding: 0;
+			}
+		}
         div.mat-vertical-stepper-content {
             div.mat-vertical-content {
-                @media screen and (max-width: 992px) {
-                    padding: 0 0 0 12px;
-                }
+				padding: 11px 24px 24px 24px;
             }
+
+			
         }
         mat-step-header.mat-step-header {
             height: auto;
@@ -14,6 +25,17 @@
             }
 
             div.mat-step-icon {
+				&.mat-step-icon-state-done,
+				&.mat-step-icon-state-edit {
+					mat-icon {
+						color: white;
+					}
+				}
+				&.mat-step-icon-state-done,
+				&.mat-step-icon-state-edit,
+				&.mat-step-icon-selected {
+					background: #6e76a4;
+				}
                 span {
                     color: #FFF;
                 }
@@ -22,9 +44,9 @@
 
 		@media screen and (min-width: 320px) {  
 			h4 {font-size:1.1rem;}
-			.mat-expansion-panel-header{
-				min-height: 200px;
-			}
+			// .mat-expansion-panel-header{
+			// 	min-height: 200px;
+			// }
 			table{
 				min-width: 350px;
 			}
@@ -34,18 +56,18 @@
 		}
 		@media screen and (min-width: 600px) {  
 			h4 {font-size:1.2rem;}
-			.mat-expansion-panel-header{
-				min-height: 110px;
-			}
+			// .mat-expansion-panel-header{
+			// 	min-height: 110px;
+			// }
 			table{
 				min-width: 450px;
 			}
 			table td{
 				min-width: 200px;
 			}
-			.mat-vertical-content-container{
-				margin-left: 15px;
-			}
+			// .mat-vertical-content-container{
+			// 	margin-left: 15px;
+			// }
 		}
 		
 		@media screen and (min-width: 800px) {  

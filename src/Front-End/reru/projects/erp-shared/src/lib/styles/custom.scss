@@ -22,6 +22,9 @@ body {
 /* End Global selectors*/
 
 /* FONT SIZES */
+.font-size-small {
+  font-size: 0.9rem !important;
+}
 .font-size-smaller {
   font-size: 0.7rem !important;
 }
@@ -263,3 +266,26 @@ div.wrapper.enclosed {
   }
 }
 /* END erp-shared-table */
+
+/* Custom Gap property*/
+.gap-1 {
+  gap: 0.25rem;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-3 {
+  gap: 1rem;
+}
+
+.gap-4 {
+  gap: 1.5rem;
+}
+
+.gap-5 {
+  gap: 3rem;
+}
+
+/* END Custom Gap property*/
