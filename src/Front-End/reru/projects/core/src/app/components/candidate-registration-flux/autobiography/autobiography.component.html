@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="row mx-md-10 mx-0">
-            <div class="text-center w-100">
+            <div class="text-lg-center w-100">
                 <p class="font-weight-bold">
                     {{'autobiography.title' | translate}}
                 </p>
@@ -44,11 +44,11 @@
         </div>
         <div class="row">
             <div class="col">
-                <div class="d-flex justify-content-end mb-3">
-                    <button class="btn btn-outline-success" *ngIf="addOrEditAutobiographyButton"
+                <div class="d-flex justify-content-end my-3">
+                    <button class="btn btn-outline-success h-35px" *ngIf="addOrEditAutobiographyButton"
                         [disabled]="autobiographyForm.value.text == null || autobiographyForm.value.text == '' "
                         (click)="updateAutobiography()">{{'stepper.button-update' | translate}}</button>
-                    <button class="btn btn-outline-success" *ngIf="!addOrEditAutobiographyButton"
+                    <button class="btn btn-outline-success h-35px" *ngIf="!addOrEditAutobiographyButton"
                         [disabled]="autobiographyForm.value.text == null || autobiographyForm.value.text == '' "
                         (click)="createAutobiography()">{{'stepper.button-add' | translate}}</button>
                 </div>
@@ -58,12 +58,12 @@
 </form>
 <div class="row">
     <div class="col">
-        <div class="col d-flex justify-content-end mt-3 mr-1">
-            <button class="btn btn-success" *ngIf="autobiographyData" matStepperNext
+        <div class="col d-flex justify-content-end my-3">
+            <button class="btn btn-success h-35px" *ngIf="autobiographyData" matStepperNext
                 (click)="addRegistrationFluxStep()">
                 {{'stepper.button-next' | translate}}
             </button>
-            <button class="btn btn-success" *ngIf="!autobiographyData" matStepperNext
+            <button class="btn btn-success h-35px" *ngIf="!autobiographyData" matStepperNext
                 (click)="addRegistrationFluxStep()">
                 {{'stepper.button-save-and-next-withoud-datas' | translate}}
             </button>

@@ -2,7 +2,6 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NgbDateFRParserFormatter } from '../../services/date-parse-formatter.service';
 
-
 @Component({
   selector: 'app-date',
   templateUrl: './date.component.html',
@@ -15,6 +14,9 @@ export class DateComponent implements OnChanges {
   @Input() placeholder: string;
   @Input() isReverse: boolean;
   @Input() isDisabled: boolean;
+  @Input() isLarge: boolean;
+  @Input() isSmall: boolean;
+  @Input() isSolid: boolean = true;
   isPatternError: boolean;
 
   constructor() { }
