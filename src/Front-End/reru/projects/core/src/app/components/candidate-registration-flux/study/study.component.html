@@ -1,19 +1,24 @@
-<div class="mt-3">
-    <mat-accordion>
+<div class="d-flex flex-column">
+    <mat-accordion class="gutter-b">
         <mat-expansion-panel [expanded]="true">
-            <mat-expansion-panel-header class="p-4">
+            <mat-expansion-panel-header>
                 <mat-panel-title>
-                    <h4 class="m-4">{{'step.Study' | translate}}</h4>
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="d-sm-block d-none">{{'step.Study' | translate}}</h4>
+                            <h4 class="d-sm-none d-block font-size-small">{{'step.Study' | translate}}</h4>
+                        </div>
+                    </div>
                 </mat-panel-title>
-                <mat-panel-description class="justify-content-end mr-15 p-4">
+                <mat-panel-description class="align-items-center justify-content-end">
                     {{ 'step-obligation.obligatory' | translate }}
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <form *ngIf="studyForm" class="col mb-md-3 mb-0" [formGroup]="studyForm">
+            <form *ngIf="studyForm" class="col-xl mb-md-3 mb-0" [formGroup]="studyForm">
                 <app-loading-spinner *ngIf="isLoadingStudies" contentHeight="20rem" height="5rem" width="5rem"
                     colorClass="text-primary"></app-loading-spinner>
                 <div *ngIf="!isLoadingStudies">
-                    <div formArrayName="studies" class="ml-md-10 ml-0 mt-10">
+                    <div formArrayName="studies" class="ml-0 mt-lg-10 mt-0">
                         <div class="box-square" [ngClass]="{'more': studyForm.controls.studies.controls.length > 1  &&
                                 (studyForm.controls.studies.controls.length - 1) !== i}"
                             *ngFor="let study of studyForm.controls.studies.controls;let i = index">
@@ -135,29 +140,30 @@
                                 <div class="col">
                                     <div class="d-flex justify-content-end">
                                         <button class="btn btn-icon" (click)="removeStudy(i)">
-                                            <span class="font-size-18px">&times;</span>
+                                            <span class="font-size-h2">&times;</span>
                                         </button>
                                     </div>
                                 </div>
+                            </div>
 
-                            </div>
+                            <div *ngIf="studyForm.controls.studies.controls.length > 1" class="separator separator-dashed"></div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row pt-4">
                         <div class="col">
-                            <div class="d-flex justify-content-between ml-md-10 ml-0">
+                            <div class="d-flex justify-content-between">
                                 <button class="btn btn-icon" (click)="addStudy()"><span
-                                        class="font-size-18px">+</span></button>
+                                        class="font-size-h2">+</span></button>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="d-flex justify-content-end mb-3 mt-lg-0 mt-3 ml-md-10 ml-0">
-                                <button class="btn btn-success" *ngIf="addOrEditStudyButton"
+                            <div class="d-flex justify-content-end my-3">
+                                <button class="btn btn-success h-35px" *ngIf="addOrEditStudyButton"
                                     [disabled]="studyForm && studyForm.invalid "
                                     (click)="createStudies()">{{'stepper.button-update' | translate}}</button>
-                                <button class="btn btn-outline-success" *ngIf="!addOrEditStudyButton"
+                                <button class="btn btn-outline-success h-35px" *ngIf="!addOrEditStudyButton"
                                     [disabled]="studyForm && studyForm.invalid"
                                     (click)="createStudies()">{{'stepper.button-add' | translate}}</button>
                             </div>
@@ -167,13 +173,18 @@
             </form>
         </mat-expansion-panel>
     </mat-accordion>
-    <mat-accordion class="mt-2">
+    <mat-accordion class="gutter-b">
         <mat-expansion-panel>
-            <mat-expansion-panel-header class="p-4">
+            <mat-expansion-panel-header>
                 <mat-panel-title>
-                    <h4 class="m-4">{{'language.modern-language-level' | translate}}</h4>
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="d-sm-block d-none">{{'language.modern-language-level' | translate}}</h4>
+                            <h4 class="d-sm-none d-block font-size-small">{{'language.modern-language-level' | translate}}</h4>
+                        </div>
+                    </div>
                 </mat-panel-title>
-                <mat-panel-description class="justify-content-end mr-15 p-4">
+                <mat-panel-description class="align-items-center justify-content-end">
                     {{ 'step-obligation.optional' | translate }}
                 </mat-panel-description>
             </mat-expansion-panel-header>
@@ -181,15 +192,59 @@
                 <app-loading-spinner *ngIf="isLoadingLanguages" contentHeight="20rem" height="5rem" width="5rem"
                     colorClass="text-primary"></app-loading-spinner>
                 <div *ngIf="!isLoadingLanguages">
-                    <div formArrayName="modernLanguages" class="ml-md-10 ml-0">
-                        <div class="table-responsive">
+                    <div formArrayName="modernLanguages">
+                        <div class="d-lg-none d-flex flex-column gap-2">
+                            <div class="row" [ngClass]="{'more': languageForm.controls.modernLanguages.controls.length > 1  &&
+                                (languageForm.controls.modernLanguages.controls.length - 1) !== i}"
+                                    *ngFor="let modernLanguage of languageForm.controls.modernLanguages.controls;let i = index"
+                                    [formGroupName]="i">
+                                    <div class="col d-flex flex-column gap-4">
+                                        <div class="row">
+                                            <div class="col"><p class="font-weight-bolder">{{'table.number' | translate}}</p></div>
+                                            <div class="col"><p class="font-weight-bolder text-center">{{i + 1}}</p></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col"><p class="font-weight-bolder">{{ 'language.name' | translate}}</p></div>
+                                            <div class="col-12">
+                                                <select class="form-control" formControlName="modernLanguageId">
+                                                    <option value="null">{{'module-access.select' | translate}}</option>
+                                                    <option *ngFor="let item of modernLanguages" [value]="item.value">
+                                                        {{item.label }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col"><p class="font-weight-bolder">{{ 'language.qualifier' | translate }}</p></div>
+                                            <div class="col-12">
+                                                <select class="form-control" formControlName="knowledgeQuelifiers">
+                                                    <option value="null">{{'module-access.select' | translate}}</option>
+                                                    <option *ngFor="let item of knowledgeQuelifiersEnum"
+                                                        [value]="item.value">{{
+                                                        'languageKnowledge.' + item.label | translate}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="i > 0">
+                                            <div class="col">
+                                                <button class="btn btn-icon float-right" (click)="removeModernLanguage(i)">
+                                                    <span class="font-size-h2">&times;</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div *ngIf="languageForm.controls.modernLanguages.controls.length > 1" class="separator separator-dashed"></div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive d-lg-block d-none">
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">{{'table.number' | translate}}</th>
                                         <th scope="col">{{ 'language.name' | translate}}</th>
                                         <th scope="col">{{ 'language.qualifier' |translate }}</th>
-                                        <th scope="col"></th>
+                                        <th scope="col" class="w-10px"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -215,32 +270,30 @@
                                             </select>
                                         </td>
                                         <td *ngIf="i > 0">
-                                            <div class="row justify-content-end mb-3 mr-7">
-                                                <button class="btn btn-icon" (click)="removeModernLanguage(i)">
-                                                    <span class="font-size-18px">&times;</span>
-                                                </button>
-                                            </div>
+                                            <button class="btn btn-icon" (click)="removeModernLanguage(i)">
+                                                <span class="font-size-h2">&times;</span>
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row pt-4">
                         <div class="col">
-                            <div class="d-flex justify-content-between ml-md-10 ml-0">
+                            <div class="d-flex justify-content-between">
                                 <button class="btn btn-icon" (click)="addModernLanguage()"><span
-                                        class="font-size-18px">+</span></button>
+                                        class="font-size-h2">+</span></button>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="d-flex justify-content-end mb-3 mt-lg-0 mt-3 ml-md-10 ml-0">
-                                <button class="btn btn-success" *ngIf="addOrEditLanguagesButton"
+                            <div class="d-flex justify-content-end my-3">
+                                <button class="btn btn-success h-35px" *ngIf="addOrEditLanguagesButton"
                                     [disabled]="languageForm && languageForm.invalid "
                                     (click)="creteModernLanguage()">{{'stepper.button-update' | translate}}</button>
-                                <button class="btn btn-outline-success" *ngIf="!addOrEditLanguagesButton"
+                                <button class="btn btn-outline-success h-35px" *ngIf="!addOrEditLanguagesButton"
                                     [disabled]="languageForm && languageForm.invalid"
                                     (click)="creteModernLanguage()">{{'stepper.button-add' | translate}}</button>
                             </div>
@@ -250,13 +303,18 @@
             </form>
         </mat-expansion-panel>
     </mat-accordion>
-    <mat-accordion class="mt-2">
+    <mat-accordion class="gutter-b">
         <mat-expansion-panel>
-            <mat-expansion-panel-header class="p-4">
+            <mat-expansion-panel-header>
                 <mat-panel-title>
-                    <h4 class="m-4">{{'recommendation.recommendation-name' | translate}}</h4>
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="d-sm-block d-none">{{'recommendation.recommendation-name' | translate}}</h4>
+                            <h4 class="d-sm-none  d-block font-size-small">{{'recommendation.recommendation-name' | translate}}</h4>
+                        </div>
+                    </div>
                 </mat-panel-title>
-                <mat-panel-description class="justify-content-end mr-15 p-4">
+                <mat-panel-description class="align-items-center justify-content-end">
                     {{ 'step-obligation.optional' | translate }}
                 </mat-panel-description>
             </mat-expansion-panel-header>
@@ -264,8 +322,62 @@
                 <app-loading-spinner *ngIf="isLoadingRecommandations" contentHeight="20rem" height="5rem" width="5rem"
                     colorClass="text-primary"></app-loading-spinner>
                 <div *ngIf="!isLoadingRecommandations">
-                    <div formArrayName="recommendation" class="ml-md-10 ml-0">
-                        <div class="table-responsive">
+                    <div formArrayName="recommendation">
+                        <div class="d-lg-none d-flex flex-column gap-2">
+                            <div class="row" [ngClass]="{'more': recommendationForm.controls.recommendation.controls.length > 1  &&
+                                (recommendationForm.controls.recommendation.controls.length - 1) !== i}"
+                                *ngFor="let recommendation of recommendationForm.controls.recommendation.controls; let i = index"
+                                [formGroupName]="i">
+                                    <div class="col d-flex flex-column gap-4">
+                                        <div class="row">
+                                            <div class="col"><p class="font-weight-bolder">{{'table.number' | translate}}</p></div>
+                                            <div class="col"><p class="font-weight-bolder text-center">{{i + 1}}</p></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col"><p class="font-weight-bolder">{{ 'recommendation.table-user-name' | translate }}</p></div>
+                                            <div class="col-12">
+                                                <input formControlName="name" autocomplete="off"
+                                                class="form-control form-control-solid" type="text"
+                                                [placeholder]="'recommendation.user-name' | translate" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col"><p class="font-weight-bolder">{{ 'recommendation.table-user-last-name' | translate }}</p></div>
+                                            <div class="col-12">
+                                                <input formControlName="lastName" autocomplete="off"
+                                                class="form-control form-control-solid" type="text"
+                                                [placeholder]="'recommendation.last-name' | translate" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col"><p class="font-weight-bolder">{{ 'recommendation.table-function' | translate }}</p></div>
+                                            <div class="col-12">
+                                                <input formControlName="function" autocomplete="off"
+                                                class="form-control form-control-solid" type="text"
+                                                [placeholder]="'recommendation.table-function' | translate" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col"><p class="font-weight-bolder">{{ 'recommendation.table-subdivision' | translate }}</p></div>
+                                            <div class="col-12">
+                                                <input formControlName="subdivision" autocomplete="off"
+                                                class="form-control form-control-solid" type="text"
+                                                [placeholder]="'recommendation.table-subdivision' | translate" />
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="i > 0">
+                                            <div class="col">
+                                                <button class="btn btn-icon float-right" (click)="removeRecommendation(i)">
+                                                    <span class="font-size-h2">&times;</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div *ngIf="languageForm.controls.modernLanguages.controls.length > 1" class="separator separator-dashed"></div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive d-lg-block d-none">
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -274,7 +386,7 @@
                                         <th scope="col">{{ 'recommendation.table-user-last-name' | translate }}</th>
                                         <th scope="col">{{ 'recommendation.table-function' | translate }}</th>
                                         <th scope="col">{{ 'recommendation.table-subdivision' | translate }}</th>
-                                        <th scope="col"></th>
+                                        <th scope="col" class="w-10px"w></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -304,11 +416,9 @@
                                                 [placeholder]="'recommendation.table-subdivision' | translate" />
                                         </td>
                                         <td *ngIf="i > 0">
-                                            <div class="row justify-content-end mb-3 mr-7">
-                                                <button class="btn btn-icon" (click)="removeRecommendation(i)">
-                                                    <span class="font-size-18px">&times;</span>
-                                                </button>
-                                            </div>
+                                            <button class="btn btn-icon" (click)="removeRecommendation(i)">
+                                                <span class="font-size-h2">&times;</span>
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -316,21 +426,21 @@
                             </table>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row pt-4">
                         <div class="col">
-                            <div class="d-flex justify-content-between ml-md-10 ml-0">
+                            <div class="d-flex justify-content-between">
                                 <button class="btn btn-icon" (click)="addRecommandation()"><span
-                                        class="font-size-18px">+</span></button>
+                                        class="font-size-h2">+</span></button>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="d-flex justify-content-end mb-3 mt-lg-0 mt-3 ml-md-10 ml-0">
-                                <button class="btn btn-success" *ngIf="addOrEditRecommendationsButton"
+                            <div class="d-flex justify-content-end my-3">
+                                <button class="btn btn-success h-35px" *ngIf="addOrEditRecommendationsButton"
                                     [disabled]="recommendationForm && recommendationForm.invalid "
                                     (click)="createRecommendationForStudy()">{{'stepper.button-update' | translate}}</button>
-                                <button class="btn btn-outline-success" *ngIf="!addOrEditRecommendationsButton"
+                                <button class="btn btn-outline-success h-35px" *ngIf="!addOrEditRecommendationsButton"
                                     [disabled]="recommendationForm && recommendationForm.invalid"
                                     (click)="createRecommendationForStudy()">{{'stepper.button-add' | translate}}</button>
                             </div>
@@ -342,8 +452,8 @@
     </mat-accordion>
     <div class="row">
         <div class="col">
-            <div class="col d-flex justify-content-end mt-3 mr-1">
-                <button class="btn btn-success" matStepperNext
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-success h-35px" matStepperNext
                     [disabled]="(studyForm && studyForm.invalid || userStudies == null)"
                     (click)="addRegistrationFluxStep()">{{'stepper.button-next' | translate}}</button>
             </div>

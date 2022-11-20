@@ -15,10 +15,10 @@
                     <div class="row">
                       <div class="col">
                         <div class="form-group row align-items-center mb-2">
-                          <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-left text-muted">
+                          <label class="col-xl-3 col-lg-3 col-auto col-form-label font-weight-bold text-left text-lg-left text-muted">
                             {{'table.idnp' | translate}}:
                           </label>
-                          <div class="col-lg-9 col-xl-6">
+                          <div class="col-xl-6 col-lg-9 col">
                             <p class="font-size-lg m-0">{{bulletinIdnp || "not set"}}</p>
                           </div>
                         </div>
@@ -88,7 +88,7 @@
             <h4>{{'bulletin.adresses' | translate}}</h4>
         </div>
     </div>
-    <div class="ml-lg-10 mr-lg-10 m-0">
+    <div class="mx-lg-10 m-0">
     <div class="form-group row required">
         <label class="col-xl-3 col-lg-3 col-form-label">{{'bulletin.birth-place' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
@@ -108,13 +108,13 @@
         </div>
     </div>
     </div>
-    <div class="row">
+    <div class="row mx-lg-10 m-0">
         <div class="col">
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-success" matStepperNext
+            <div class="row d-flex justify-content-md-end">
+                <button class="btn btn-success h-35px" matStepperNext
                     [disabled]="bulletinForm && bulletinForm.invalid" *ngIf="toAddOrUpdateButton"
                     (click)="updateBulletin()">{{'stepper.button-update-and-next' | translate}}</button>
-                    <button class="btn btn-success" matStepperNext
+                    <button class="btn btn-success h-35px" matStepperNext
                     [disabled]="bulletinForm && bulletinForm.invalid" *ngIf="!toAddOrUpdateButton"
                     (click)="createBulletin()">{{'stepper.button-save-and-next' | translate}}</button>
             </div>
