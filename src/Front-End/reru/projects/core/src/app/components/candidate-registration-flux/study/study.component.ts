@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { forkJoin, merge, Observable, OperatorFunction, Subject } from 'rxjs';
+import { forkJoin, Observable, Subject } from 'rxjs';
 import { SelectItem } from '../../../utils/models/select-item.model';
 import { ReferenceService } from '../../../utils/services/reference.service';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
@@ -9,7 +9,7 @@ import { StudyModel } from '../../../utils/models/study.model';
 import { ObjectUtil } from '../../../utils/util/object.util';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { NotificationsService } from 'angular2-notifications';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { StudyService } from '../../../utils/services/study.service';
 import { UserProfileService } from '../../../utils/services/user-profile.service';
 import { ModernLanguageLevelService } from '../../../utils/services/modern-language-level.service';
