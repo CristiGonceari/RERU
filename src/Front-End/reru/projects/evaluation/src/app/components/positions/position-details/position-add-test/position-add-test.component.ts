@@ -31,6 +31,7 @@ export class PositionAddTestComponent implements OnInit {
   @Input() eventId: number;
   @Input() testTemplateId: number;
   @Input() positionId: any;
+  @Input() usersDiagram: any;
 
   processProgress: any;
   isLoading: boolean = true;
@@ -112,8 +113,6 @@ export class PositionAddTestComponent implements OnInit {
       this.showEventCard = true;
     })
   }
-
-
 
   getActiveTestTemplates(eventId) {
     this.isLoading = true;
@@ -269,7 +268,7 @@ export class PositionAddTestComponent implements OnInit {
   }
 
   attachEvaluators(): void {
-    this.exceptUserIds = this.userListToAdd;
+    this.exceptUserIds = this.usersDiagram.map(x => x.userProfileId);
     this.openUsersModal(this.evaluatorList, 'radio');
   }
 

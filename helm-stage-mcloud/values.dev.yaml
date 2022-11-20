@@ -65,12 +65,12 @@ reru_core:
   image:
     repository: cvuintell/reru-core
   database:
-    # connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Core-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
-    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
-    identity_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
-    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
-    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
-    hangfirecore_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Core-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    # connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Core-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    identity_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    hangfirecore_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Core-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
 
 reru_identity_migrator:
   enabled: true
@@ -79,8 +79,8 @@ reru_identity_migrator:
   image:
     repository: cvuintell/reru-identity-migrator
   database:
-    identity_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
-    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    identity_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
 
 reru_storage_migrator:
   enabled: true
@@ -89,7 +89,7 @@ reru_storage_migrator:
   image:
     repository: cvuintell/reru-storage-migrator
   database:
-    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
 
 reru_core_fe:
   name: "reru-core-fe"
@@ -109,10 +109,10 @@ reru_personal:
   image:
     repository: cvuintell/reru-personal
   database:
-    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
-    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
-    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
-    hangfirepersonal_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Personal-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    hangfirepersonal_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Personal-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
 
 reru_evaluation_fe:
   name: "reru-evaluation-fe"
@@ -126,10 +126,10 @@ reru_evaluation:
   image:
     repository: cvuintell/reru-evaluation
   database:
-    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
-    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
-    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
-    hangfireevaluation_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Evaluation-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    hangfireevaluation_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Evaluation-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
 
 reru_evaluation360_fe:
   name: "reru-evaluation360-fe"
@@ -143,10 +143,10 @@ reru_evaluation360:
   image:
     repository: cvuintell/reru-evaluation360
   database:
-    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
-    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
-    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
-    hangfireevaluation360_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Evaluation360-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    hangfireevaluation360_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Hangfire-Evaluation360-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
 
 
 reru_logging_fe:
@@ -161,7 +161,7 @@ reru_logging:
   image:
     repository: cvuintell/reru-logging
   database:
-    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
+    log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
 
 microservices:
   - test_saml:
@@ -178,13 +178,13 @@ microservices:
       tag: latest
       env:
         - name: SIMPLESAMLPHP_SP_ENTITY_ID
-          value: "http://reru.mai.gov.md"
+          value: "https://reru.mai.gov.md"
         - name: SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE
-          value: "http://reru.mai.gov.md/ms/reru-identity-new/Saml2/Acs"
+          value: "https://reru.mai.gov.md/ms/reru-identity-new/Saml2/Acs"
         - name: SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE
-          value: "http://reru.mai.gov.md/ms/reru-identity-new/Saml2/Signout"
+          value: "https://reru.mai.gov.md/ms/reru-identity-new/Saml2/Signout"
         - name: SIMPLESAMLPHP_BASE_URL_PATH
-          value: "http://reru.mai.gov.md/ms/saml2/simplesaml/"
+          value: "https://reru.mai.gov.md/ms/saml2/simplesaml/"
 
     name: "test-saml"
     port: 8080
@@ -210,19 +210,19 @@ microservices:
         - name: BASE_PATH
           value: "/ms/reru-identity-new"
         - name: SAML_METADATA_ENDPOINT
-          value: "http://reru.mai.gov.md/ms/saml2/simplesaml/saml2/idp/metadata.php"
+          value: "https://reru.mai.gov.md/ms/saml2/simplesaml/saml2/idp/metadata.php"
         - name: SAML_ENTITY_ID
-          value: "http://reru.mai.gov.md"
+          value: "https://reru.mai.gov.md"
         - name: SAML_CORS_PATH
           value: "/Saml2/Acs"
         - name: SAML_ENDPOINT
-          value: "http://reru.mai.gov.md"
+          value: "https://reru.mai.gov.md"
         - name: ConnectionStrings__Identity
-          value: "server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;"
+          value: "server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;"
         - name: IDENTITY_ISSUER_URI
-          value: "http://reru.mai.gov.md/ms/reru-identity-new"
+          value: "https://reru.mai.gov.md/ms/reru-identity-new"
         - name: IDENTITY_DISCOVERY_ENDPOINT_URI
-          value: "http://reru.mai.gov.md"
+          value: "https://reru.mai.gov.md"
       appsettings: reru_identity_new.appsettings.json
     name: "reru-identity-new"
     port: 8080

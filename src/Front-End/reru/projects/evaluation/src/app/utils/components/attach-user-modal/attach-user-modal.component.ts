@@ -48,7 +48,7 @@ export class AttachUserModalComponent implements OnInit {
   }
 
   getUsers(data: any = {}): void {
-    if (this.eventId && !this.positionId && this.inputType == 'checkbox' && this.page == 'add-test') this.getAssignedUsers(data);
+    if (this.eventId && this.positionId == null && this.inputType == 'checkbox' && this.page == 'add-test') this.getAssignedUsers(data);
     else if (this.eventId && this.inputType == 'checkbox' && this.page == 'add-evaluation' && !this.whichUser) this.getAssignedUsers(data);
     else if (this.eventId && this.inputType == 'checkbox' && this.page == 'add-evaluation' && this.whichUser) this.getAssignedEvaluators(data);
     else {

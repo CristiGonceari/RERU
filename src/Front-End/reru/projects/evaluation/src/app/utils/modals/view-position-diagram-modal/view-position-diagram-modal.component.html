@@ -19,9 +19,9 @@
                     <table class="table table-bordered font-size-lg">
                         <thead class="text-uppercase text-muted">
                             <tr>
-                                <th rowspan="2" style="vertical-align: middle; width: 15%;">{{'position.users' |
-                                    translate}}</th>
+                                <th rowspan="2" style="vertical-align: middle; width: 200px;">{{'position.users' | translate}}</th>
                                 <th [attr.colspan]="event.testTemplates.length" *ngFor="let event of eventsDiagram"
+                                    [ngStyle]="{'min-width.px': event.testTemplates.length * 200 }"
                                     class="text-center mx-4">
                                     {{event.eventName}}</th>
                             </tr>
@@ -47,7 +47,7 @@
                             <tr *ngFor="let user of usersDiagram">
                                 <th style="vertical-align: middle;">
                                     <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
-                                        [routerLink]="['../../../user-profile', user.userProfileId, 'solicited-tests']">
+                                        [routerLink]="['../../../../user-profile', user.userProfileId, 'solicited-tests']">
                                         {{ user.fullName }}
                                     </p>
                                 </th>
