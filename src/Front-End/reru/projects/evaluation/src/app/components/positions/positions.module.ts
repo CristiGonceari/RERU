@@ -12,7 +12,6 @@ import { TagInputModule } from 'ngx-chips';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import {MatSelectModule} from '@angular/material/select';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { PositionsDiagramComponent } from './positions-diagram/positions-diagram.component';
 import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-datetime';
 import { PositionDetailsComponent } from './position-details/position-details.component';
 import { PositionOverviewComponent } from './position-details/position-overview/position-overview.component';
@@ -25,7 +24,6 @@ import { PositionAddTestComponent } from './position-details/position-add-test/p
   declarations: [
     PositionsComponent,
     AddEditPositionComponent, 
-    PositionsDiagramComponent, 
     PositionDetailsComponent, 
     PositionOverviewComponent, 
     DiagramComponent, 

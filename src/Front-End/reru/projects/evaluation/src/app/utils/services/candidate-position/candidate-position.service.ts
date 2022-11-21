@@ -57,4 +57,12 @@ export class CandidatePositionService extends AbstractService{
 			observe: 'response',
 		});
 	}
+
+	exportPositionDiagram(data): Observable<any> {
+		return this.client.put(`${this.baseUrl}/${this.urlRoute}/print-excel`, data, {
+			reportProgress: true,
+			responseType: 'blob',
+			observe: 'events'
+		});
+	}
 }

@@ -5,7 +5,6 @@ import { AddEditPositionComponent } from './add-edit-position/add-edit-position.
 import { PositionDetailsComponent } from './position-details/position-details.component';
 import { PositionOverviewComponent } from './position-details/position-overview/position-overview.component';
 import { DiagramComponent } from './position-details/diagram/diagram.component';
-import { PositionsDiagramComponent } from './positions-diagram/positions-diagram.component';
 import { PositionsComponent } from './positions.component';
 
 const routes: Routes = [
@@ -22,10 +21,6 @@ const routes: Routes = [
     {
         path: 'edit-position/:id',
         component: AddEditPositionComponent,
-    },
-    {
-        path: 'diagram/:id',
-        component: PositionsDiagramComponent,
     },
     { 
         path: 'position/:id',
