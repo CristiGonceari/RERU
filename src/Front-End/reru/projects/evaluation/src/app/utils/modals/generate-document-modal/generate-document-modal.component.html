@@ -18,7 +18,7 @@
         </button>
       </div>
     </div>
-    <ck-editor *ngIf="selectedDocument != 0" (ngModelChange)="changeValue($event)" #editor name="editor1" [(ngModel)]="editorValue" skin="moono-lisa" language="en"
+    <ck-editor *ngIf="selectedDocument != 0" ngDefaultControl="true" (ngModelChange)="changeValue($event)" #editor name="editor" [(ngModel)]="editorValue" skin="moono-lisa" language="en"
       [config]="{height: 1134, width: 794}" [editor]="Editor" [fullPage]="true" debounce="300">
     </ck-editor>
 </div> 

@@ -24,7 +24,11 @@
                             <div ngbDropdownMenu aria-labelledby="action1">
                                 <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
                                     (click)="printPositionDiagram()">
-                                    {{'button.print' | translate}}
+                                    {{'button.print' | translate}} (pdf)
+                                </button>
+                                <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
+                                    (click)="getPositionDiagramExcel()">
+                                    {{'button.export' | translate}} (xlsx)
                                 </button>
                                 <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
                                     (click)="openFullScreenMode()">
@@ -36,7 +40,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body" *ngIf="!isLoadingMedia">
             <app-loading-spinner *ngIf="isLoading" [contentHeight]="'20vh'" [height]="'5rem'" [width]="'5rem'"
                 [colorClass]="'text-primary'">
             </app-loading-spinner>
@@ -89,6 +93,21 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+        <div class="flex-row-fluid" *ngIf="isLoadingMedia">
+            <div class="content d-flex flex-column flex-column-fluid ng-star-inserted">
+                <div class="card">
+                    <div class="justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+                        <div class="progress mt-2 h-25px">
+                            <div [style.width.%]="fileStatus.percent"
+                                class="progress-bar progress-bar-animated btn-light-warning font-size-h6" role="progressbar"
+                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                                {{ fileStatus.requestType }} {{ fileStatus.percent }}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.EvaluatorName, opts => opts.MapFrom(src => src.Evaluator.FullName))
                 .ForMember(x => x.EvaluatorIdnp, opts => opts.MapFrom(src => src.Evaluator.Idnp))
                 .ForMember(x => x.EndProgrammedTime, opts => opts.MapFrom(src => src.Event.TillDate))
-                .ForMember(x => x.CanStartWithoutConfirmation, opts => opts.MapFrom(src => src.TestTemplate.Settings.StartWithoutConfirmation));
+                .ForMember(x => x.CanStartWithoutConfirmation, opts => opts.MapFrom(src => CheckCanStartWithoutConfirmation(src)));
 
             CreateMap<AddEditTestDto, Test>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
@@ -62,6 +62,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             var all = inputTest.TestQuestions.Count;
 
             return $"{verified}/{all}";
+        }
+
+        private bool CheckCanStartWithoutConfirmation(Test test)
+        {
+            if (test.TestTemplate.Settings == null) return false;
+
+            return test.TestTemplate.Settings.StartWithoutConfirmation && test.TestPassStatus is not TestPassStatusEnum.Forbidden or null;
         }
     }
 }
