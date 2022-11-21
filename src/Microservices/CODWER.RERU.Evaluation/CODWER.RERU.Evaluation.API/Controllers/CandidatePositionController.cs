@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagram;
 using CODWER.RERU.Evaluation.Application.CandidatePositions.GetUserSolicitedPositionDiagram;
 using CODWER.RERU.Evaluation.Application.CandidatePositions.ChangeCandidatePositionStatus;
+using CODWER.RERU.Evaluation.Application.CandidatePositions.ExportPositionDiagram;
 using CODWER.RERU.Evaluation.DataTransferObjects.PositionDiagram;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
@@ -87,6 +88,17 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         [HttpPut("print")]
         [IgnoreResponseWrap]
         public async Task<IActionResult> PrintCandidatePosition([FromBody] PrintCandidatePositionCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-excel")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> ExportPositionDiagramExcel([FromBody] ExportPositionDiagramCommand command)
         {
             var result = await Mediator.Send(command);
 

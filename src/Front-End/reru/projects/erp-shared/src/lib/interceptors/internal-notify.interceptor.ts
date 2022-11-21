@@ -48,7 +48,6 @@ export class InternalNotifyInterceptor extends AbstractService implements HttpIn
 							this.title = title;
 							this.description = description;
 						  });
-						  this.notificationService.warn(this.title, this.description);
 						  this.notificationService.warn(this.title, this.description, {
 							timeOut: 29000,
 							showProgressBar: true,
