@@ -380,7 +380,7 @@
     "min-percentage": "Min. procent de puncte",
     "accumulated-percent": "Procente colectate",
     "test-type-autoverify": "Șablonul de test selectat va fi verificat de sistem",
-    "event-has-evaluator": "Evenimentul selectat are propriii evaluatori",
+    "event-has-evaluator": "Evenimentul selectat are evaluatori proprii",
     "asignee": "Asigneaza",
     "user-list-to-add": "Lista de utilizatori asignati",
     "delete-msg": "Sigur doriți să ștergeți acest test?",

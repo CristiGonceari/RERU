@@ -1,6 +1,6 @@
 export class PaginationModel {
 	currentPage: number = 1;
-	pageSize: number;
+	pageSize: number = 10;
 	totalCount: number;
 	totalPages: number;
 }
