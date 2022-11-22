@@ -60,7 +60,7 @@
                                         <div class="col-12 text-center">
                                             {{template.name}}
                                         </div>
-                                        <div class="d-inline-block text-center" style="max-width: 150px;">
+                                        <div class="d-inline-block text-center" style="max-width: 150px;" *ngIf="template.testTemplateId > 0">
                                             <button class="btn btn btn-warning" data-toggle="tooltip" data-placement="top"
                                                 title="{{'tests.program-test' | translate}}" (click)="openAddTest(template)">
                                                 {{ 'tests.program-test' | translate }}
@@ -75,7 +75,7 @@
                         <tr *ngFor="let user of usersDiagram">
                             <th style="vertical-align: middle;">
                                 <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
-                                    [routerLink]="['../../../user-profile', user.userProfileId, 'solicited-tests']">
+                                    [routerLink]="['../../../../user-profile', user.userProfileId, 'solicited-tests']">
                                     {{ user.fullName }}
                                 </p>
                             </th>

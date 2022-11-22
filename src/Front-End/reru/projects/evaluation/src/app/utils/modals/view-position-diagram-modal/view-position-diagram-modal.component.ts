@@ -3,6 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewEncapsulation } from '@angular/core';
 import { EnumStringTranslatorService } from '../../services/enum-string-translator.service';
 import { TestStatusEnum } from '../../enums/test-status.enum';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-position-diagram-modal',
@@ -16,11 +17,13 @@ export class ViewPositionDiagramModalComponent implements OnInit {
   eventsDiagram = [];
   usersDiagram = [];
   testTemplates = [];
-
+  isActive: boolean = true;
   status = TestStatusEnum;
 
   constructor(private activeModal: NgbActiveModal,
     private enumStringTranslatorService: EnumStringTranslatorService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
@@ -42,5 +45,10 @@ export class ViewPositionDiagramModalComponent implements OnInit {
 
   close(): void {
     this.activeModal.dismiss();
+  }
+
+  routeToUserProfileSolicitedTests(userId) {
+    this.router.navigate(['../../../../user-profile/', userId, 'solicited-tests'], { relativeTo: this.route });
+    this.close();
   }
 }
