@@ -36,8 +36,13 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
         {
             var testTemplates = _appDbContext.TestTemplates
                 .Include(x => x.Settings)
-                .Where(x => x.Status == request.TestTemplateStatus && x.Mode == request.Mode)
+                .Where(x => x.Status == request.TestTemplateStatus)
                 .AsQueryable();
+
+            if (request.Mode != null)
+            {
+                testTemplates = testTemplates.Where(x => x.Mode == request.Mode);
+            }
 
             if (request.EventId.HasValue)
             {

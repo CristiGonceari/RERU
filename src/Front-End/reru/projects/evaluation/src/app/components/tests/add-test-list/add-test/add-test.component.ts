@@ -24,6 +24,7 @@ import { GetBulkProgressHistoryService } from 'projects/evaluation/src/app/utils
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { is } from 'date-fns/locale';
 import { EmitHint } from 'typescript';
+import { TestTemplateModeEnum } from 'projects/evaluation/src/app/utils/enums/test-template-mode.enum';
 
 
 @Component({
@@ -138,7 +139,8 @@ export class AddTestComponent implements OnInit {
 
     let params = {
       testTemplateStatus: TestTemplateStatusEnum.Active,
-      eventId: event || null
+      eventId: event || null,
+      mode: TestTemplateModeEnum.Test
     }
 
     this.testTemplateService.getTestTemplateByStatus(params).subscribe((res) => {
