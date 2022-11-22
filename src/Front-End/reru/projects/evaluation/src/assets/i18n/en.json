@@ -118,6 +118,8 @@
     "success-create": "Position successfully created",
     "success-update": "Position successfully updated",
     "success-delete": "Position successfully deleted",
+    "success-download": "Position diagram successfully downloaded",
+    "error-download": "Position diagram was not successfully downloaded",
     "delete-msg": "Are you sure you want to delete position",
     "name": "Position name",
     "status": "Status",

@@ -30,6 +30,7 @@ export class GenerateDocumentModalComponent implements OnInit {
   model: any;
   editorValue: any;
   selectedDocument: number;
+  editor: string[] =[];
   
   value: number;
   documentEditedValue: string;
