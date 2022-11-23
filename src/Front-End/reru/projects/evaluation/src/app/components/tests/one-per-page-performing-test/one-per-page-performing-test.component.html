@@ -1,218 +1,252 @@
-<app-page-title title="{{'tests.test' | translate}}" subTitle="{{'tests.run-test' | translate}}"></app-page-title>
+<!-- <app-page-title title="{{'tests.test' | translate}}" subTitle="{{'tests.run-test' | translate}}"></app-page-title> -->
+<div class="subheader subheader-transparent py-5" id="kt_subheader">
+    <div class="container d-flex justify-content-between align-items-center flex-md-nowrap flex-wrap gap-4">
+        <div class="d-flex align-items-center gap-2">
+            <h3 class="subheader-title text-dark font-weight-bolder mb-0 d-sm-inline-block d-none">{{'tests.time' | translate}}</h3>
+            <span class="btn btn-success text-white rounded-pill py-0 px-3 mb-0">{{timeLeft}}</span>
+        </div>
+        <div>
+            <app-confirm-button (handle)="submitTest()" [value]="'button.terminate-test' | translate"></app-confirm-button>
+        </div>
+    </div>
+</div>
 
-<div class="main-content py-10 content-bg">
-    <div class="d-flex flex-column-fluid container">
-        <div class="card card-custom gutter-c w-100">
-            <div class="card-body" *ngIf="!isLoadingMedia">
-                <app-loading-spinner *ngIf="isLoading" [contentHeight]="'40vh'" [height]="'3rem'" [width]="'3rem'"
-                    [colorClass]="'text-primary'">
-                </app-loading-spinner>
-                <div class="d-flex align-items-center justify-content-between"  *ngIf="!isLoading">
-                    <div class="font-size-lg">
-                        {{ testDto.testTemplateName }}
-                    </div>
-                    <div>
-                        <span class="svg-icon svg-icon-primary svg-icon-2x">
-                            <svg class="mb-2" xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <polygon points="0 0 24 0 24 24 0 24" />
-                                    <path
-                                        d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
-                                        fill="#000000" fill-rule="nonzero" opacity="0.3" />
-                                    <path
-                                        d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
-                                        fill="#000000" fill-rule="nonzero" />
-                                </g>
-                            </svg>
-                        </span>
-                        <span class="font-size-lg text-dark-50">{{ testDto.userName }}</span> <br>
-                        <span class="text-dark-50 font-size-lg font-weight-light">(idnp: {{testDto.idnp}})</span>
-                    </div>
-                    <div class="text-muted font-size-lg">
-                        {{'tests.min-percentage' | translate}}:
-                        <span class="text-dark font-size-lg ml-5">
-                            {{ testDto.minPercent }} %
-                        </span>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-success h6 pt-1 mb-0"
-                            style="width: 110px; max-width: 110px;">
-                            {{timeLeft}}
-                        </button>
-                        <app-confirm-button class="btn ml-5" (handle)="submitTest()"
-                            [value]="'button.terminate-test' | translate"></app-confirm-button>
-                    </div>
+<erp-shared-content>
+    <div class="card card-custom gutter-c w-100">
+        <div class="card-body p-md-8 p-4" *ngIf="!isLoadingMedia">
+            <app-loading-spinner *ngIf="isLoading" [contentHeight]="'40vh'" [height]="'3rem'" [width]="'3rem'"
+                [colorClass]="'text-primary'">
+            </app-loading-spinner>
+            <div *ngIf="!isLoading" class="d-flex flex-xl-row flex-column align-items-start justify-content-between">
+                <div class="font-size-lg text-dark-50">
+                    {{ testDto.testTemplateName }}
                 </div>
-                <div *ngIf="questionUnit.timeLimit" class="container my-5">
-                    <div class="progress" style="position: relative">
-                        <mat-progress-bar mode="determinate" [value]="percent"></mat-progress-bar>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <span class="completed_progress_bar"> {{timeQuestionLeft}}
-                            {{'tests.seconds-to-complete' | translate}}
-                        </span>
-                    </div>
+                <div>
+                    <span class="svg-icon icon-md mr-1">
+                        <svg class="mb-2" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                            viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <polygon points="0 0 24 0 24 24 0 24" />
+                                <path
+                                    d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
+                                    fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                <path
+                                    d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
+                                    fill="#000000" fill-rule="nonzero" />
+                            </g>
+                        </svg>
+                    </span>
+                    <span class="font-size-lg text-dark-50">{{ testDto.userName }}</span> <br class="d-xl-inline-block d-none">
+                    <span class="d-inline-block rounded bg-success text-white font-size-lg font-weight-light ml-xl-0 ml-sm-2 ml-0 py-1 px-2 mt-1">
+                        IDNP: {{testDto.idnp}}
+                    </span>
                 </div>
-                <div class="text-container mt-5 mx-auto w-80" *ngIf="!isLoading">
-                    <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'"
-                        [width]="'3rem'" [colorClass]="'text-primary'">
-                    </app-loading-spinner>
-                    <div *ngIf="!isLoadingMedia" class="data-container mb-7 bg-gray-100 text-center rounded p-7">
-                        <p class="font-size-h2" [innerHTML]="questionUnit.question | safeHtml">
-                        </p>
-                        <div *ngIf="fileId">
-                            <app-get-media-file [fileId]="fileId"></app-get-media-file>
-                        </div>
-                    </div>
-                    <div class="data-container" *ngFor="let option of testOptionsList">
-                        <label
-                            class="checkbox checkbox-lg checkbox-inline border border-secondary rounded p-5 my-4 d-flex align-items-center option-label">
-                            <input type="checkbox" name="isSelected" (change)="onItemChange($event)"
-                                value="{{option.id}}"
-                                *ngIf="questionUnit.questionType == questionTypeEnum.MultipleAnswers"
-                                [checked]="option.isSelected">
-                            <input type="radio" (change)="onItemChange($event)" name="isSelected" value="{{option.id}}"
-                                *ngIf="questionUnit.questionType == questionTypeEnum.OneAnswer"
-                                [checked]="option.isSelected">
-                            <span></span>
-                            <div class="ml-5 w-100">
-                                {{ option.answer }}
-                                <div class="form-group row align-items-center">
-                                    <div class="col-lg-6 col-xl-3">
-                                        <div *ngIf="option.mediaFileId" class="w-100">
-                                            <app-get-media-file [fileId]="option.mediaFileId"></app-get-media-file>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div class="data-container answer" *ngIf="questionUnit.questionType == 5 && hadFile == false">
-                        <ngx-dropzone
-                            accept="image/jpeg,image/jpg,image/png,.doc,.docx,.txt,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                            [multiple]="false" [expandable]="true" (change)="setFile($event)" class="font-weight-light">
-                            <ngx-dropzone-label>
-                                <h4>{{'button.attach' | translate}}</h4>
-                            </ngx-dropzone-label>
-                            <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-                                <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
-                            </ngx-dropzone-preview>
-                        </ngx-dropzone>
-                    </div>
-                    <div class="data-container answer text-center"
-                        *ngIf="questionUnit.questionType == 5 && hadFile == true">
-                        <button (click)="getFile()" class="btn btn-light-success font-weight-bold mr-3"
-                            ngbTooltip="{{fileName}}">
-                            <i class="flaticon-profile"></i>
-                            {{ checkFileNameLength() }}
-                        </button>
-                        <span (click)="deleteFile()" class="svg-icon svg-icon-primary svg-icon-2x">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)"
-                                        fill="#000000">
-                                        <rect x="0" y="7" width="16" height="2" rx="1" />
-                                        <rect opacity="0.3"
-                                            transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) "
-                                            x="0" y="7" width="16" height="2" rx="1" />
-                                    </g>
-                                </g>
-                            </svg>
-                        </span>
-                    </div>
-                    <div class="data-container answer" *ngIf="questionUnit.questionType == questionTypeEnum.FreeText" >
-                        <textarea class="form-control border rounded border-secondary p-7 my-7 w-100" rows="7"
-                            placeholder="Write here..." [(ngModel)]="questionUnit.answerText"
-                            name="answerText"></textarea>
-                    </div>
-                    <div class="d-flex justify-content-between my-15">
-                        <div class="d-flex">
-                            <button
-                                *ngIf="testTemplateSettings.possibleChangeAnswer && testTemplateSettings.hidePagination"
-                                type="button" class="btn btn-secondary h6 mr-10 py-auto pb-9"
-                                (click)="getTestQuestions(questionIndex - 1)"
-                                [disabled]="questionIndex==1">{{'button.back' | translate}}</button>
-                            <button *ngIf="testTemplateSettings.possibleGetToSkipped" type="button"
-                                class="btn btn-secondary h6 mr-10 py-auto pb-9" (click)="skipQuestion()">
-                                {{'button.skip' | translate}}
-                            </button>
-                        </div>
-                        <div class="d-flex flex-row-reverse">
-                            <button type="button" (click)="saveAnswers()" [disabled]="disableBtn"
-                                class="btn btn-success h6 py-auto pb-9">{{'button.save-and-next' | translate}}
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="card-body d-flex justify-content-between p-0"
-                            *ngIf="!testTemplateSettings.hidePagination">
-                            <div class="mx-auto">
-                                <div class="d-flex justify-content-between align-items-center flex-wrap mb-7">
-                                    <div class="d-flex flex-wrap">
-                                        <button class="btn btn-icon btn-light page-link"
-                                            (click)="getTestQuestions(questionIndex - 1)"
-                                            [disabled]="questionIndex === 1 || disableNext">
-                                            <span class="svg-icon svg-icon-primary svg-icon-1x">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                                                    height="24px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <polygon points="0 0 24 0 24 24 0 24" />
-                                                        <path
-                                                            d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
-                                                            fill="#000000" fill-rule="nonzero"
-                                                            transform="translate(12.000003, 11.999999) scale(-1, 1) rotate(-270.000000) translate(-12.000003, -11.999999) " />
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </button>
-
-                                        <button class="btn btn-icon page-link" *ngFor="let page of pager"
-                                            (click)="getTestQuestions(page)" [disabled]="disableNext"
-                                            [class.active-page]="page === questionIndex"
-                                            [ngClass]="{'viewed': getViewed(page), 'skipped': getSkipped(page), 'answered': getAnswered(page)}">
-                                            {{page}}
-                                        </button>
-
-                                        <button class="btn btn-icon btn-light page-link"
-                                            (click)="getTestQuestions(questionIndex + 1)"
-                                            [disabled]="questionIndex === testDto.questionCount || disableNext">
-                                            <span class="svg-icon svg-icon-primary svg-icon-1x">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                                                    height="24px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <polygon points="0 0 24 0 24 24 0 24" />
-                                                        <path
-                                                            d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
-                                                            fill="#000000" fill-rule="nonzero"
-                                                            transform="translate(12.000003, 11.999999) rotate(-270.000000) translate(-12.000003, -11.999999) " />
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="text-dark-50 font-size-lg">
+                    <i class="flaticon-interface-10 icon-md mr-1"></i>
+                    {{'tests.min-percentage' | translate}}:
+                    <span class="text-dark font-size-lg ml-5">
+                        {{ testDto.minPercent }} %
+                    </span>
+                </div>
+                <!-- <div>
+                    <button type="button" class="btn btn-success h6 pt-1 mb-0"
+                        style="width: 110px; max-width: 110px;">
+                        {{timeLeft}}
+                    </button>
+                    <app-confirm-button class="btn ml-5" (handle)="submitTest()"
+                        [value]="'button.terminate-test' | translate"></app-confirm-button>
+                </div> -->
+            </div>
+            <div *ngIf="questionUnit.timeLimit" class="container my-5">
+                <div class="progress" style="position: relative">
+                    <mat-progress-bar mode="determinate" [value]="percent"></mat-progress-bar>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <span class="completed_progress_bar"> {{timeQuestionLeft}}
+                        {{'tests.seconds-to-complete' | translate}}
+                    </span>
                 </div>
             </div>
-            <div class="card-body" *ngIf="isLoadingMedia">
-                <div class="justify-content-center my-10 px-8 my-lg-15 px-lg-10">
-                    <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
-                    <div class="progress mt-2" style="min-height: 25px;">
-                        <div [style.width.%]="fileStatus.percent"
-                            class="progress-bar progress-bar-animated btn-light-warning font-size-h6" role="progressbar"
-                            aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                            {{ fileStatus.requestType }} {{ fileStatus.percent }}%
+            <div class="text-container mt-5 mx-auto w-80" *ngIf="!isLoading">
+                <app-loading-spinner *ngIf="isLoadingMedia" [contentHeight]="'20vh'" [height]="'3rem'"
+                    [width]="'3rem'" [colorClass]="'text-primary'">
+                </app-loading-spinner>
+                <div *ngIf="!isLoadingMedia" class="mb-7 bg-gray-100 text-center rounded py-7 px-2 position-relative shadow-xs">
+                    <span class="text-muted position-absolute left-0 top-0 pt-2 pl-2">{{ 'questions.question' | translate }} {{questionIndex}}</span>
+                    <p *ngIf="questionUnit?.question?.length < 100" class="d-xl-block d-none question-container font-size-h2" [innerHTML]="questionUnit.question | safeHtml"></p>
+                    <p *ngIf="questionUnit?.question?.length > 100" class="text-justify d-xl-block d-none question-container font-size-h2" [innerHTML]="questionUnit.question | safeHtml"></p>
+                    <p class="d-xl-none d-block text-justify question-container font-size-h6" [innerHTML]="questionUnit.question | safeHtml"></p>
+                    <!-- <p class="question-container font-size-h2" [innerHTML]="questionUnit.question | safeHtml"></p> -->
+                    <span class="text-muted position-absolute right-0 bottom-0 pb-2 pr-2">{{ 'questions.questions-left' | translate }}: {{count - questionIndex}}</span>
+                    <div *ngIf="fileId">
+                        <app-get-media-file [fileId]="fileId"></app-get-media-file>
+                    </div>
+                </div>
+                <div *ngFor="let option of testOptionsList">
+                    <label
+                        class="checkbox checkbox-lg checkbox-inline border border-secondary rounded p-5 my-4 d-flex align-items-center option-label">
+                        <input type="checkbox" name="isSelected" (change)="onItemChange($event)"
+                            value="{{option.id}}"
+                            *ngIf="questionUnit.questionType == questionTypeEnum.MultipleAnswers"
+                            [checked]="option.isSelected">
+                        <input type="radio" (change)="onItemChange($event)" name="isSelected" value="{{option.id}}"
+                            *ngIf="questionUnit.questionType == questionTypeEnum.OneAnswer"
+                            [checked]="option.isSelected">
+                        <span></span>
+                        <div class="ml-5 w-100">
+                            {{ option.answer }}
+                            <div *ngIf="option.mediaFileId" class="form-group row align-items-center">
+                                <div class="col-lg-6 col-xl-3">
+                                    <div class="w-100">
+                                        <app-get-media-file [fileId]="option.mediaFileId"></app-get-media-file>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+                <div class="pb-4" *ngIf="questionUnit.questionType == 5 && hadFile == false">
+                    <ngx-dropzone
+                        accept="image/jpeg,image/jpg,image/png,.doc,.docx,.txt,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                        [multiple]="false" [expandable]="true" (change)="setFile($event)" class="font-weight-light py-5">
+                        <ngx-dropzone-label>
+                            <h4 class="m-0">{{'button.attach' | translate}}</h4>
+                        </ngx-dropzone-label>
+                        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                            <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+                        </ngx-dropzone-preview>
+                    </ngx-dropzone>
+                </div>
+                <div class="text-center"
+                    *ngIf="questionUnit.questionType == 5 && hadFile == true">
+                    <button (click)="getFile()" class="btn btn-light-success font-weight-bold mr-3"
+                        ngbTooltip="{{fileName}}">
+                        <i class="flaticon-profile"></i>
+                        {{ checkFileNameLength() }}
+                    </button>
+                    <span (click)="deleteFile()" class="svg-icon svg-icon-primary svg-icon-2x">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)"
+                                    fill="#000000">
+                                    <rect x="0" y="7" width="16" height="2" rx="1" />
+                                    <rect opacity="0.3"
+                                        transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) "
+                                        x="0" y="7" width="16" height="2" rx="1" />
+                                </g>
+                            </g>
+                        </svg>
+                    </span>
+                </div>
+                <div *ngIf="questionUnit.questionType == questionTypeEnum.FreeText" >
+                    <textarea class="form-control border rounded border-secondary p-7 my-7 w-100" rows="7"
+                        placeholder="Write here..." [(ngModel)]="questionUnit.answerText"
+                        name="answerText"></textarea>
+                </div>
+                <div class="d-sm-flex d-none justify-content-between">
+                    <div class="d-flex gap-2">
+                        <button
+                            *ngIf="testTemplateSettings.possibleChangeAnswer && testTemplateSettings.hidePagination"
+                            type="button" class="btn btn-secondary h6 py-auto pb-9"
+                            (click)="getTestQuestions(questionIndex - 1)"
+                            [disabled]="questionIndex==1">{{'button.back' | translate}}</button>
+                        <button *ngIf="testTemplateSettings.possibleGetToSkipped" type="button"
+                            class="btn btn-secondary h6 py-auto pb-9" (click)="skipQuestion()">
+                            {{'button.skip' | translate}}
+                        </button>
+                    </div>
+                    <button type="button" (click)="saveAnswers()" [disabled]="disableBtn"
+                        class="btn btn-success h6 py-auto pb-9">{{'button.save-and-next' | translate}}
+                    </button>
+                </div>
+                <div class="d-sm-none d-flex flex-column justify-content-between">
+                    <button type="button" (click)="saveAnswers()" [disabled]="disableBtn"
+                        class="btn btn-success h6 py-auto pb-9">{{'button.save-and-next' | translate}}
+                    </button>
+                    <div class="d-flex flex-column">
+                    <button *ngIf="testTemplateSettings.possibleGetToSkipped" type="button"
+                        class="btn btn-secondary h6 py-auto pb-9" (click)="skipQuestion()">
+                        {{'button.skip' | translate}}
+                    </button>
+                    <button
+                        *ngIf="testTemplateSettings.possibleChangeAnswer && testTemplateSettings.hidePagination"
+                        type="button" class="btn btn-secondary h6 py-auto pb-9"
+                        (click)="getTestQuestions(questionIndex - 1)"
+                        [disabled]="questionIndex==1">{{'button.back' | translate}}</button>
+                    </div>
+                </div>
+                <div>
+                    <div class="card-body d-flex justify-content-between p-0"
+                        *ngIf="!testTemplateSettings.hidePagination">
+                        <div class="mx-auto">
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mb-7">
+                                <div class="d-flex flex-wrap">
+                                    <button class="btn btn-icon btn-light page-link"
+                                        (click)="getTestQuestions(questionIndex - 1)"
+                                        [disabled]="questionIndex === 1 || disableNext">
+                                        <span class="svg-icon svg-icon-primary svg-icon-1x">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                    <path
+                                                        d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
+                                                        fill="#000000" fill-rule="nonzero"
+                                                        transform="translate(12.000003, 11.999999) scale(-1, 1) rotate(-270.000000) translate(-12.000003, -11.999999) " />
+                                                </g>
+                                            </svg>
+                                        </span>
+                                    </button>
+    
+                                    <button class="btn btn-icon page-link" *ngFor="let page of pager"
+                                        (click)="getTestQuestions(page)" [disabled]="disableNext"
+                                        [class.active-page]="page === questionIndex"
+                                        [ngClass]="{'viewed': getViewed(page), 'skipped': getSkipped(page), 'answered': getAnswered(page)}">
+                                        {{page}}
+                                    </button>
+    
+                                    <button class="btn btn-icon btn-light page-link"
+                                        (click)="getTestQuestions(questionIndex + 1)"
+                                        [disabled]="questionIndex === testDto.questionCount || disableNext">
+                                        <span class="svg-icon svg-icon-primary svg-icon-1x">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                    <path
+                                                        d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
+                                                        fill="#000000" fill-rule="nonzero"
+                                                        transform="translate(12.000003, 11.999999) rotate(-270.000000) translate(-12.000003, -11.999999) " />
+                                                </g>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="card-body" *ngIf="isLoadingMedia">
+            <div class="justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+                <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+                <div class="progress mt-2" style="min-height: 25px;">
+                    <div [style.width.%]="fileStatus.percent"
+                        class="progress-bar progress-bar-animated btn-light-warning font-size-h6" role="progressbar"
+                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                        {{ fileStatus.requestType }} {{ fileStatus.percent }}%
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</erp-shared-content>
+<!-- <div class="main-content py-10 content-bg">
+    <div class="d-flex flex-column-fluid container">
+    </div>
+</div> -->

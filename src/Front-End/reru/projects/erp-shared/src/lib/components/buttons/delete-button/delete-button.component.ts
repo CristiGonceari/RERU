@@ -12,6 +12,7 @@ export class DeleteButtonComponent {
   @Input() icon: string;
   @Input() disabled: boolean;
   @Input() width: string;
+  @Input() classes: string;
   @Output() handle: EventEmitter<void> = new EventEmitter<void>();
 
   providers: [SafeHtml]

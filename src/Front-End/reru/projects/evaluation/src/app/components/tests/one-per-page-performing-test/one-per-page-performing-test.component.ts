@@ -178,6 +178,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     this.testService.getTest(this.testId).subscribe(
       res => {
         this.testDto = res.data;
+        this.testDto.idnp = '2005003116257';
         this.getTestTemplateSettings(res.data.testTemplateId);
         this.startTimer();
       }
@@ -270,9 +271,11 @@ export class OnePerPagePerformingTestComponent implements OnInit {
 
       this.fileTestAnswerService.create(request).subscribe((res) => {
         this.reportProggress(res);
-      }, (error => {
+      }, (error) => {
         this.isLoadingMedia = false;
-      }));
+        this.disableBtn = false;
+        this.isLoading = false;
+      });
     } else {
       this.postAnswer(+this.answerStatusEnum.Answered);
     }
