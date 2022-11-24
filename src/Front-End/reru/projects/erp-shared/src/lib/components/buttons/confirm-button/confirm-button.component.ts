@@ -12,6 +12,7 @@ export class ConfirmButtonComponent {
   @Input() icon: string;
   @Input() disabled: boolean;
   @Input() width: string;
+  @Input() classes;
   @Output() handle: EventEmitter<void> = new EventEmitter<void>();
 
   providers: [SafeHtml]

@@ -13,7 +13,7 @@
             </div>
         </div>
         <div *ngIf="!isLoading" class="card-body disabled-area">
-            <ckeditor *ngIf="editorData" [(ngModel)]="editorData" [editor]="Editor" readOnly="true"></ckeditor>
+            <ckeditor *ngIf="editorData" [data]="editorData" [disabled]="true" [editor]="Editor"></ckeditor>
             <div *ngIf="editorData == null" colspan="4" class="text-center">
                 {{'message.no-record' | translate}}
             </div>

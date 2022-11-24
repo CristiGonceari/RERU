@@ -7,9 +7,6 @@ ingress:
     ingress.kubernetes.io/proxy-body-size: "250m"
     nginx.org/client-body-timeout: "3600"
     nginx.org/client-max-body-size: 250m
-    # nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
-    # nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    # nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.org/proxy-connect-timeout: "3600"
     nginx.org/proxy-read-timeout: "3600"
     nginx.org/proxy-send-timeout: "3600"
@@ -23,9 +20,6 @@ ingress_back:
     ingress.kubernetes.io/proxy-body-size: "250m"
     nginx.org/client-body-timeout: "3600"
     nginx.org/client-max-body-size: 250m
-    # nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
-    # nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    # nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.org/proxy-connect-timeout: "3600"
     nginx.org/proxy-read-timeout: "3600"
     nginx.org/proxy-send-timeout: "3600"
@@ -71,7 +65,6 @@ reru_core:
   image:
     repository: cvuintell/reru-core
   database:
-    # connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Core-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
     reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     identity_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
@@ -132,7 +125,6 @@ reru_evaluation:
   image:
     repository: cvuintell/reru-evaluation
   database:
-    # connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Evaluation-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
     reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
@@ -150,7 +142,6 @@ reru_evaluation360:
   image:
     repository: cvuintell/reru-evaluation360
   database:
-    # connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Evaluation-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;
     reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     storage_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Storage-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
@@ -235,11 +226,13 @@ microservices:
     port: 8080
 
 minio:
+  spec:
+    persistentVolumeReclaimPolicy: "Retain"
   persistence:
     enabled: true
     annotations: {}
     existingClaim: "task-pv-claim"
-    storageClass: "microk8s-hostpath"
+    storageClass: "default"
 
   accessKey: "minioaccesskey"
   secretKey: "miniosecretkey"
