@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { I18nService } from '../app/utils/services/i18n/i18n.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalizeRouterService } from '@gilsdav/ngx-translate-router';
@@ -15,7 +15,7 @@ import { NotificationsService } from 'angular2-notifications';
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, AfterViewInit {
 	type: string;
 	messageText: string;
 	testId: number;
@@ -345,9 +345,15 @@ export class AppComponent {
 	ngOnInit(): void {
 		this.translateData();
 		this.translate.change.subscribe(() => this.translateData());
-		this.setIntrvl();
-		this.getTestId();
+		
 		this.getCurrentLocation();
+	}
+
+	ngAfterViewInit(): void {
+		this.getTestId();
+		setTimeout(() => {
+			this.setIntrvl();
+		}, 360000)
 	}
 
 	getCurrentLocation(){
@@ -413,7 +419,7 @@ export class AppComponent {
 	}
 
 	setIntrvl() {
-		setInterval(() => this.getTestId(), 360_000);
+		setInterval(() => this.getTestId(), 360000);
 	}
 
 	getTestId() {

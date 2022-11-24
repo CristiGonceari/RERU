@@ -1,1 +1,4 @@
-<button [type]="type" class="btn" [ngStyle]="{ 'width': width }" [disabled]="disabled" (click)="handle.emit()"><ng-content></ng-content>{{value}}</button>
+<button class="btn" [ngClass]="classes" [type]="type" [ngStyle]="{ 'width': width }" [disabled]="disabled" (click)="handle.emit()">
+    <ng-content></ng-content>
+    {{value}}
+</button>
