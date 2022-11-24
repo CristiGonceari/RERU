@@ -524,7 +524,8 @@
     "succes-update-status-msg": "Status was updated",
     "search-by-status": "Search by status",
     "add-tags": "Add tags",
-    "bulk-import-options-msg": "Please, download and use our special form for import options"
+    "bulk-import-options-msg": "Please, download and use our special form for import options",
+    "questions-left": "Questions left"
   },
   "require-documents":{
     "document-details": "Document details",

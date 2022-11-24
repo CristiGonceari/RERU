@@ -129,11 +129,20 @@ div.ck-content {
 }
 /* End Ckeditor */
 
-/* Buttons Color custom */
+/* Test Custom */
 .text-blue {
   color: $blue-color;
 }
 
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* End Text custom */
+
+/* Buttons Color custom */
 .bg-blue {
   background: $blue-light-color;
 }
@@ -289,3 +298,9 @@ div.wrapper.enclosed {
 }
 
 /* END Custom Gap property*/
+
+/* NGX-DROPZONE */
+ngx-dropzone {
+  font-family: Arial;
+} 
+/* END NGX-DROPZONE */

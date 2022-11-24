@@ -1,90 +1,168 @@
-<app-page-title title="{{'tests.test' | translate}}" subTitle="{{'tests.run-test' | translate}}"></app-page-title>
+<div class="subheader subheader-transparent py-5" id="kt_subheader">
+    <div class="container d-flex align-items-center flex-md-nowrap flex-wrap gap-4">
+        <h3 class="subheader-title text-dark font-weight-bolder mb-0">{{'tests.test-start' | translate}}</h3>
+        <span class="btn btn-success text-white rounded-pill py-0 px-3 mb-0">{{timeLeft}}</span>
+    </div>
+</div>
 
-<div class="content main-content content-bg" id="kt_content">
-    <div class="d-flex flex-column-fluid">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="card card-custom gutter-b">
-                        <app-loading-spinner *ngIf="isLoading" [contentHeight]="'40vh'" [height]="'3rem'"
-                            [width]="'3rem'" [colorClass]="'text-primary'">
-                        </app-loading-spinner>
-                        <div class="card-header flex-wrap border-0 py-5" *ngIf="!isLoading">
-                            <div class="card-title m-5">
-                                <h3 class="card-label text-muted">{{ 'tests.name' | translate }}:</h3>
-                                <h3 class="card-label">{{ testDto.testTemplateName }}</h3>
-                            </div>
-                            <div class="card-title m-5">
-                                <h3 class="card-label text-muted">{{'verify-test.student' | translate}}:</h3>
-                                <h3 class="card-label">{{ testDto.userName }} <br>
-                                    <span class="text-dark-50 font-size-lg font-weight-light">(idnp:
-                                        {{testDto.idnp}})</span>
-                                </h3>
-                            </div>
-                            <div class="card-title m-5">
-                                <h3 class="card-label text-muted">{{'tests.time' | translate}}:</h3>
-                                <h3 class="card-label">{{ testDto.duration }} min</h3>
-                            </div>
-                            <div class="card-title m-5">
-                                <h3 class="card-label text-muted">{{'tests.min-percentage' | translate}}:</h3>
-                                <h3 class="card-label">{{ testDto.minPercent }} %</h3>
-                            </div>
-                            <div class="card-title m-5">
-                                <h3 class="card-label text-muted">{{'tests.questions' | translate}}:</h3>
-                                <h3 class="card-label">{{ testDto.questionCount }}</h3>
-                            </div>
-                            <div class="card-title m-5"
-                                *ngIf="testDto.candidatePositionNames !== null && validatePosition">
-                                <h3 class="card-label text-muted">{{'position.name' | translate}}:</h3>
-                                <h3 class="card-label">{{ testDto.candidatePositionNames[0] }}
-                                    <span
-                                        [ngbTooltip]="parseCandidatePositions(testDto.candidatePositionNames)">...</span>
-                                </h3>
-                            </div>
-                            <div class="card-title m-5" *ngIf="testDto.candidatePositionNames === null">
-                                <h3 class="card-label text-muted">{{'position.name' | translate}}:</h3>
-                                <h3 class="card-label">-</h3>
-                            </div>
+<erp-shared-content>
+    <div class="row">
+        <div class="col">
+            <div class="card card-custom gutter-b erp-shared-desktop-wide">
+                <app-loading-spinner *ngIf="isLoading" [contentHeight]="'40vh'" [height]="'3rem'"
+                    [width]="'3rem'" [colorClass]="'text-primary'">
+                </app-loading-spinner>
+                <div class="card-header border-0 pt-2 flex-xl-row flex-column" *ngIf="!isLoading">
+                    <div class="card-title align-items-start d-xl-flex d-none">
+                        <h3 class="card-label text-muted">{{ 'tests.name' | translate }}:</h3>
+                        <h3 class="card-label">{{ testDto.testTemplateName }}</h3>
+                    </div>
+                    <div class="card-title align-items-start d-xl-none d-flex row">
+                        <h3 class="card-label text-muted col-sm-4 col-12 px-0">{{ 'tests.name' | translate }}:</h3>
+                        <h3 class="card-label col-sm-auto col-12 px-0">{{ testDto.testTemplateName }}</h3>
+                    </div>
+                    <div class="card-title align-items-start d-xl-flex d-none" *ngIf="testDto.candidatePositionNames !== null && validatePosition">
+                        <h3 class="card-label text-muted">{{'position.name' | translate}}:</h3>
+                        <h3 class="card-label">{{ testDto.candidatePositionNames[0] }}
+                            <span [ngbTooltip]="parseCandidatePositions(testDto.candidatePositionNames)">...</span>
+                        </h3>
+                    </div>
+                    <div class="card-title align-items-start d-xl-none d-flex row" *ngIf="testDto.candidatePositionNames !== null && validatePosition">
+                        <h3 class="card-label text-muted col-sm-4 col-12 px-0">{{'position.name' | translate}}:</h3>
+                        <h3 class="card-label col-sm-auto col-12 px-0">{{ testDto.candidatePositionNames[0] }}
+                            <span [ngbTooltip]="parseCandidatePositions(testDto.candidatePositionNames)">...</span>
+                        </h3>
+                    </div>
+                    <div class="card-title align-items-start d-xl-flex d-none" *ngIf="testDto.candidatePositionNames === null">
+                        <h3 class="card-label text-muted">{{'position.name' | translate}}:</h3>
+                        <h3 class="card-label">-</h3>
+                    </div>
+                    <div class="card-title align-items-start d-xl-none d-flex row" *ngIf="testDto.candidatePositionNames === null">
+                        <h3 class="card-label text-muted col-sm-4 col-12 px-0">{{'position.name' | translate}}:</h3>
+                        <h3 class="card-label col-auto col-sm-auto col-12 px-0">-</h3>
+                    </div>
+                    <div class="card-title align-items-start d-xl-flex d-none">
+                        <h3 class="card-label text-muted">{{'verify-test.student' | translate}}:</h3>
+                        <h3 class="card-label"><h3 class="mw-100px text-truncate card-label">{{ testDto.userName }}</h3>
+                            <span class="d-inline-block rounded bg-success text-white font-size-lg font-weight-light py-1 px-2 mt-1">IDNP:
+                                {{testDto.idnp}}</span>
+                        </h3>
+                    </div>
+                    <div class="card-title align-items-start d-xl-none d-flex row">
+                        <h3 class="card-label text-muted col-sm-4 col-12 px-0">{{'verify-test.student' | translate}}:</h3>
+                        <h3 class="card-label col-sm-auto col-12 px-0"><h3 class="mw-100px text-truncate card-label text-wrap">{{ testDto.userName }}</h3>
+                            <span class="d-inline-block rounded bg-success text-white font-size-lg font-weight-light py-1 px-2 mt-1">IDNP:
+                                {{testDto.idnp}}</span>
+                        </h3>
+                    </div>
+                    <!-- <div class="card-title m-5">
+                        <h3 class="card-label text-muted">
+                            <i class="flaticon2-crisp-icons-1 icon-md mr-3"></i>
+                            {{'tests.time' | translate}}:</h3>
+                        <h3 class="card-label">{{ testDto.duration }} min</h3>
+                    </div>
+                    <div class="card-title m-5">
+                        <h3 class="card-label text-muted">{{'tests.min-percentage' | translate}}:</h3>
+                        <h3 class="card-label">{{ testDto.minPercent }} %</h3>
+                    </div>
+                    <div class="card-title m-5">
+                        <h3 class="card-label text-muted">
+                            <i class="flaticon-questions-circular-button icon-md mr-3"></i>
+                            {{'tests.questions' | translate}}:</h3>
+                        <h3 class="card-label">{{ testDto.questionCount }}</h3>
+                    </div>
+                    <div class="card-title m-5"
+                        *ngIf="testDto.candidatePositionNames !== null && validatePosition">
+                        <h3 class="card-label text-muted">{{'position.name' | translate}}:</h3>
+                        <h3 class="card-label">{{ testDto.candidatePositionNames[0] }}
+                            <span [ngbTooltip]="parseCandidatePositions(testDto.candidatePositionNames)">...</span>
+                        </h3>
+                    </div>
+                    <div class="card-title m-5" *ngIf="testDto.candidatePositionNames === null">
+                        <h3 class="card-label text-muted">{{'position.name' | translate}}:</h3>
+                        <h3 class="card-label">-</h3>
+                    </div> -->
+                </div>
+                <div class="card-body" *ngIf="!isLoading">
+                    <!-- <div class="row mb-15">
+                        <div class="col-xl-12 d-flex align-items-center" style="justify-content: center;">
+                            <h1 class="mr-5">{{'tests.test-start' | translate}}</h1>
+                            <button type="button"
+                                class="btn btn-success h1 px-8 py-auto font-weight-normal pb-14 rounded">
+                                {{timeLeft}}
+                            </button>
                         </div>
-                        <div class="card-body" *ngIf="!isLoading">
-                            <div class="row mb-15">
-                                <div class="col-xl-12 d-flex align-items-center" style="justify-content: center;">
-                                    <h1 class="mr-5">{{'tests.test-start' | translate}}</h1>
-                                    <button type="button"
-                                        class="btn btn-success h1 px-8 py-auto font-weight-normal pb-14 rounded">
-                                        {{timeLeft}}
-                                    </button>
-                                </div>
-                            </div>
+                    </div> -->
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col-xxl-9 col-12 d-flex flex-column gap-3">
                             <div class="row">
-                                <div class="col-xl-12">
-                                    <h1 class="text-center">{{'tests.rules' | translate}}:</h1>
-                                    <div class="text mt-10"></div>
-                                    <ckeditor *ngIf="testDto.rules" [(ngModel)]="testDto.rules" [editor]="Editor"
-                                        readOnly="true" class="disabled-area"></ckeditor>
+                                <div class="col-md col-12">
+                                    <h3 class="card-label text-muted text-md-center text-left">
+                                        <i class="flaticon2-crisp-icons-1 icon-md mr-3"></i>
+                                        {{'tests.time' | translate}}:</h3>
+                                    <h3 class="card-label text-md-center text-left">{{ testDto.duration }} min</h3>
+                                </div>
+                                <div class="col-md col-12">
+                                    <h3 class="card-label text-muted text-md-center text-left">
+                                        <i class="flaticon-questions-circular-button icon-md mr-3"></i>
+                                        {{'tests.questions' | translate}}:</h3>
+                                    <h3 class="card-label text-md-center text-left">{{ testDto.questionCount }}</h3>
+                                </div>
+                                <div class="col-md col-12" *ngIf="testDto.candidatePositionNames && validatePosition">
+                                    <h3 class="card-label text-muted text-center">
+                                        <i class="flaticon-interface-10 icon-md mr-3"></i>
+                                        {{'tests.min-percentage' | translate}}:</h3>
+                                    <h3 class="card-label text-md-center text-left">{{ testDto.minPercent }} %</h3>
+                                </div>
+                                <div class="col-md col-12" *ngIf="!testDto.candidatePositionNames">
+                                    <h3 class="card-label text-muted text-md-center text-left">
+                                        <i class="flaticon-interface-10 icon-md mr-3"></i>
+                                        {{'tests.min-percentage' | translate}}:</h3>
+                                    <h3 class="card-label text-md-center text-left">{{ testDto.minPercent }} %</h3>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="d-flex mt-10 justify-content-center align-items-center">
-                                        <label class="checkbox checkbox-square checkbox-lg checkbox-inline mr-3">
-                                            <input type="checkbox" (change)="accept = !accept">
-                                            <span></span>
-                                        </label>
-                                        {{'button.accept' | translate}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer text-center" *ngIf="!isLoading">
-                            <!-- <app-add-button class="btn" [disabled]="!(startTest && accept)" (handle)="startTestStatus()"
-                                [value]="'button.start' | translate"></app-add-button> -->
-                            <app-add-button class="btn" [disabled]="!accept" (handle)="startTestStatus()"
-                                [value]="'button.start' | translate"></app-add-button>
                         </div>
                     </div>
+                    <div class="row" *ngIf="testDto.rules">
+                        <div class="col-xl-12">
+                            <h1 class="text-center">{{'tests.rules' | translate}}:</h1>
+                            <div class="text mt-10"></div>
+                            <ckeditor [(ngModel)]="testDto.rules" [editor]="Editor" [disabled]="true"></ckeditor>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="d-flex mt-10 align-items-center" [ngClass]="{
+                                'justify-content-center': !testDto.rules
+                            }">
+                                <label class="checkbox checkbox-square checkbox-lg checkbox-inline mr-3">
+                                    <input type="checkbox" (change)="accept = !accept">
+                                    <span></span>
+                                </label>
+                                {{'button.accept' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center border-0 d-xl-block d-none" *ngIf="!isLoading">
+                    <app-add-button [disabled]="!accept" (handle)="startTestStatus()"
+                        [value]="'button.start' | translate" classes="font-size-h4 h-50px w-200px"></app-add-button>
+                </div>
+                <div class="card-footer text-center border-0 d-xl-none d-md-block d-none" *ngIf="!isLoading">
+                    <app-add-button [disabled]="!accept" (handle)="startTestStatus()"
+                        [value]="'button.start' | translate" classes="font-size-h4 h-40px"></app-add-button>
+                </div>
+                <div class="card-footer text-center border-0 d-md-none d-block" *ngIf="!isLoading">
+                    <app-add-button width="100%" [disabled]="!accept" (handle)="startTestStatus()"
+                        [value]="'button.start' | translate"></app-add-button>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</erp-shared-content>
+<!-- <div class="content main-content content-bg" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+        </div>
+    </div>
+</div> -->
