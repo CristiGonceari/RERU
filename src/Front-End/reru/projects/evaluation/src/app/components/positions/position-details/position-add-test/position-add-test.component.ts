@@ -90,8 +90,8 @@ export class PositionAddTestComponent implements OnInit {
   }
 
   getEvents() {
-    this.referenceService.getEvents().subscribe(res => {
-
+    this.referenceService.getAllEvents().subscribe(res => {
+       
       this.hasEventEvaluator = res.data.find(x => x.eventId === this.eventId).isEventEvaluator;
       this.selectedEventName = res.data.filter(x => x.eventId == this.eventId).map(x => x.eventName);
 
