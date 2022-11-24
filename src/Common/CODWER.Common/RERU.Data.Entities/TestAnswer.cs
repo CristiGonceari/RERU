@@ -1,9 +1,15 @@
-﻿using CVU.ERP.Common.Data.Entities;
+﻿using System.Collections.Generic;
+using CVU.ERP.Common.Data.Entities;
 
 namespace RERU.Data.Entities
 {
     public class TestAnswer : SoftDeleteBaseEntity
     {
+        public TestAnswer()
+        {
+            TestQuestionsTestAnswers = new HashSet<TestQuestionTestAnswer>();
+        }
+
         public string AnswerValue { get; set; }
 
         public int TestQuestionId { get; set; }
@@ -11,5 +17,7 @@ namespace RERU.Data.Entities
 
         public int? OptionId { get; set; }
         public Option Option { get; set; }
+
+        public virtual ICollection<TestQuestionTestAnswer> TestQuestionsTestAnswers { get; set; }
     }
 }

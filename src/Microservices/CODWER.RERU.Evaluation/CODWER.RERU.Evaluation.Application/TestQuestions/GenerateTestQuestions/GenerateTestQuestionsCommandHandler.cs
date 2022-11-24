@@ -24,23 +24,21 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
 
         public async Task<Unit> Handle(GenerateTestQuestionsCommand request, CancellationToken cancellationToken)
         {
-            var test = await _appDbContext.Tests
-                .Include(x => x.TestTemplate)
-                    .ThenInclude(x => x.TestTemplateQuestionCategories)
-                .Include(x => x.TestTemplate)
-                    .ThenInclude(x => x.Settings)
-                .FirstAsync(x => x.Id == request.TestId);
+            var test = await GetTest(request.TestId);
 
             var totalCount = test.TestTemplate.QuestionCount;
             var testTemplateQuestionCategoriesToUse = test.TestTemplate.TestTemplateQuestionCategories;
             var categoriesCount = testTemplateQuestionCategoriesToUse.Count;
 
+            var index = 1;
+            var questionsPerCategory = 0;
+            var remainsCategoriesCount = categoriesCount;
+            var usedInTestsQuestions = new List<int>();
+
             var allUsersTests = await _appDbContext.Tests
                 .Include(x => x.TestQuestions)
                 .Where(x => x.TestTemplateId == test.TestTemplateId && x.UserProfileId == test.UserProfileId)
                 .ToListAsync();
-
-            var usedInTestsQuestions = new List<int>();
 
             if (allUsersTests.Count > 1)
             {
@@ -48,13 +46,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                 usedInTestsQuestions = allUsersTests.SelectMany(x => x.TestQuestions).Select(x => x.QuestionUnitId).ToList();
             }
 
-            var index = 1;
-            var questionsPerCategory = 0;
-            var remainsCategoriesCount = categoriesCount;
-
-            testTemplateQuestionCategoriesToUse = test.TestTemplate.CategoriesSequence == SequenceEnum.Strict 
-                ? testTemplateQuestionCategoriesToUse.OrderBy(x => x.CategoryIndex).ToList() 
-                : testTemplateQuestionCategoriesToUse.OrderBy(x => Guid.NewGuid()).ToList();
+            testTemplateQuestionCategoriesToUse = SelectQuestionsOder(test);
 
             if (testTemplateQuestionCategoriesToUse.Any(x => x.QuestionCount == 0))
             {
@@ -86,30 +78,27 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                 remainsCategoriesCount--;
             }
 
-            //if (test.TestTemplate.Settings.StartAfterProgrammation)
-            //{
-            //    test.StartTime = DateTime.Now;
-            //    test.EndTime = DateTime.Now.AddMinutes(test.TestTemplate.Duration);
-            //}
-            //else
-            //{
-            //    test.StartTime = test.ProgrammedTime;
-            //    test.EndTime = test.ProgrammedTime.AddMinutes(test.TestTemplate.Duration);
-            //}
-
-            if (test.TestTemplate.Settings != null && test.TestTemplate.Settings.MaxErrors != null)
-            {
-                test.MaxErrors = test.TestTemplate.Settings.MaxErrors;
-            }
-            else
-            {
-                test.MaxErrors = 1;
-            }
+            test.MaxErrors = SetMaxErrors(test);
 
             await _appDbContext.SaveChangesAsync();
 
             return Unit.Value;
         }
+
+        private async Task<Test> GetTest(int testId) => await _appDbContext.Tests
+            .Include(x => x.TestTemplate)
+            .ThenInclude(x => x.TestTemplateQuestionCategories)
+            .Include(x => x.TestTemplate)
+            .ThenInclude(x => x.Settings)
+            .FirstAsync(x => x.Id == testId);
+
+        private List<TestTemplateQuestionCategory> SelectQuestionsOder(Test test) => test.TestTemplate.CategoriesSequence == SequenceEnum.Strict
+            ? test.TestTemplate.TestTemplateQuestionCategories.OrderBy(x => x.CategoryIndex).ToList()
+            : test.TestTemplate.TestTemplateQuestionCategories.OrderBy(x => Guid.NewGuid()).ToList();
+
+        private int? SetMaxErrors(Test test) => test.TestTemplate.Settings != null && test.TestTemplate.Settings.MaxErrors != null
+            ? test.TestTemplate.Settings.MaxErrors
+            : 1;
 
         private async Task<int> PreworkCategory(int testTemplateQuestionCategoryId, int testId, int questionCount, int index, List<int> usedInTestsQuestions)
         {
