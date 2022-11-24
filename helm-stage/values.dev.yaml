@@ -65,7 +65,6 @@ reru_core:
   image:
     repository: cvuintell/reru-core
   database:
-    # connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Core-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;
     reru_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     identity_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
     log_connection_string: server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Logging-STAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;
@@ -228,17 +227,15 @@ microservices:
     port: 8080
 
 minio:
+  spec:
+    persistentVolumeReclaimPolicy: "Retain"
   persistence:
-    enabled: false
-
-    storageClass: "local-path"
-    VolumeName: "minio-volume"
-    accessMode: ReadWriteOnce
-    size: 20Gi
-
-    subPath: ""
+    enabled: true
+    annotations: {}
+    existingClaim: "task-pv-claim"
+    storageClass: "default"
 
   accessKey: "minioaccesskey"
   secretKey: "miniosecretkey"
-  mountPath: "/export"
+
   port: 8080
