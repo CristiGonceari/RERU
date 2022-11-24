@@ -181,7 +181,9 @@
               "projects/evaluation/src/styles.scss",
               "projects/evaluation/src/assets/styles/picker.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/apexcharts/dist/apexcharts.min.js"
+            ],
             "allowedCommonJsDependencies": [
               "file-saver",
               "@swimlane/dragula",
