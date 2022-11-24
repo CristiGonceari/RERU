@@ -55,6 +55,7 @@
         <div class="container-fluid" *ngIf="questionType == enum.MultipleAnswers || questionType == enum.OneAnswer">
           <span class="h4">{{'tests.options' | translate}}:</span>
           <div *ngFor="let item of options" class="d-flex border border-secondary rounded d-flex py-3 my-5"
+            [ngClass]=" item.optionMediaFileId ? 'media' : 'height: auto'"
             [class.bg-successTransparent]="item.isSelected && item.isCorrect"
             [class.bg-dangerTransparent]="item.isSelected && !item.isCorrect"
             [class.bg-light-warning]="!item.isSelected && item.isCorrect">
