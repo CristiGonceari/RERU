@@ -24,7 +24,6 @@ namespace CODWER.RERU.Evaluation.Application.References.GetAllEventsValues
         public async Task<List<SelectEventValueDto>> Handle(GetAllEventsValuesQuery request, CancellationToken cancellationToken)
         {
             var events = await _appDbContext.Events
-                .AsQueryable()
                 .Select(e => _mapper.Map<SelectEventValueDto>(e))
                 .ToListAsync();
 
