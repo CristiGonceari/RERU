@@ -89,8 +89,6 @@ export class AddOptionComponent implements OnInit {
 				this.description = description;
 				});
         this.reportProggress(res);
-      // this.back();
-			// this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -107,7 +105,9 @@ export class AddOptionComponent implements OnInit {
       request.append('Data.Answer', this.answer);
       request.append('Data.IsCorrect', this.isCorrect);
       request.append('Data.QuestionUnitId', this.questionId);
-      request.append('Data.MediaFileId', this.fileId);
+      if (this.fileId) {
+        request.append('Data.MediaFileId', this.fileId);
+      }
     this.optionService.edit(request).subscribe((res) => {
       forkJoin([
 				this.translate.get('modal.success'),
@@ -117,8 +117,6 @@ export class AddOptionComponent implements OnInit {
 				this.description = description;
 				});
         this.reportProggress(res);
-      // this.back();
-			// this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, () => this.disableBtn = false);
   }
 

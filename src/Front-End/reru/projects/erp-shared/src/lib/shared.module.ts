@@ -51,6 +51,7 @@ import { LayoutContentComponent } from './components/layout-content/layout-conte
 import { ContentComponent } from './components/content/content.component';
 import { Exception404Component } from './components/404/404.component';
 import { Exception500Component } from './components/500/500.component';
+import { FormsModule } from '@angular/forms';
 
 export const translateModule = TranslateModule.forChild();
 
@@ -98,7 +99,8 @@ const commonExports = [
 		LocalizeRouterModule,
 		SharedPipesModule,
 		SvgModule,
-		NgxDropzoneModule
+		NgxDropzoneModule,
+		FormsModule
 	],
 	exports: [...commonExports],
 	providers: [

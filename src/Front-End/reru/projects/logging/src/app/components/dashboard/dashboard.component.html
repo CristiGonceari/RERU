@@ -20,22 +20,22 @@
               </div>
             </div>
             <div class="col">
-              <div class="input-group input-group-sm input-group-solid">
-                <input type="text" class="form-control" [placeholder]="'dashboard.event' | translate"
-                  name="event-name" [(ngModel)]="eventName" (ngModelChange)="getLoggingValues({eventName: $event})">
-              </div>
+                <erp-shared-search-input
+								(handleSearch)="getLoggingValues({eventName: $event})"
+								[placeholder]="'dashboard.event' | translate" #eventName>
+							</erp-shared-search-input>
             </div>
             <div class="col">
-              <div class="input-group input-group-sm input-group-solid">
-                <input type="text" class="form-control" [placeholder]="'dashboard.user-name' | translate"
-                  name="user-name" [(ngModel)]="userName" (ngModelChange)="getLoggingValues({userName: $event})">
-              </div>
+              <erp-shared-search-input
+								(handleSearch)="getLoggingValues({userName: $event})"
+								[placeholder]="'dashboard.user-name' | translate" #userName>
+							</erp-shared-search-input>
             </div>
             <div class="col">
-              <div class="input-group input-group-sm input-group-solid">
-                <input type="text" class="form-control" [placeholder]="'dashboard.event-message' | translate"
-                  name="event-message" [(ngModel)]="eventMessage" (ngModelChange)="getLoggingValues({eventMessage: $event})">
-              </div>
+              <erp-shared-search-input
+              (handleSearch)="getLoggingValues({eventMessage: $event})"
+              [placeholder]="'dashboard.event-message' | translate" #eventMessage>
+            </erp-shared-search-input>
             </div>
             <div class="col">
               <button type="button" class="btn btn-danger" style="width: 100%;" (click)="openDeleteModal()">{{ 'dashboard.delete-logs' | translate }}</button>
@@ -63,16 +63,16 @@
               </div>
             </div>
             <div class="co">
-              <div class="input-group input-group-sm input-group-solid">
-                <input type="text" class="form-control" [placeholder]="'dashboard.user-identifier' | translate"
-                  name="user-identifier" [(ngModel)]="userIdentifier" (ngModelChange)="getLoggingValues({userIdentifier: $event})"> 
-              </div> 
+              <erp-shared-search-input
+              (handleSearch)="getLoggingValues({userIdentifier: $event})"
+              [placeholder]="'dashboard.user-identifier' | translate" #userIdentifier>
+            </erp-shared-search-input>
             </div>
             <div class="col">
-              <div class="input-group input-group-sm input-group-solid">
-                <input type="text" class="form-control" [placeholder]="'dashboard.json-message' | translate"
-                  name="json-message" [(ngModel)]="jsonMessage" (ngModelChange)="getLoggingValues({jsonMessage: $event})"> 
-              </div> 
+              <erp-shared-search-input
+              (handleSearch)="getLoggingValues({jsonMessage: $event})"
+              [placeholder]="'dashboard.json-message' | translate" #jsonMessage>
+            </erp-shared-search-input>
             </div>
             <div class="col-1">
               <button class="btn btn-secondary reset" (click)="initFilters()">

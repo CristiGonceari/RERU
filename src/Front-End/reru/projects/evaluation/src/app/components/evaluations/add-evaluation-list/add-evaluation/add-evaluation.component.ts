@@ -260,7 +260,7 @@ export class AddEvaluationComponent implements OnInit {
   openUsersModal(attachedItems, inputType, whichUser): void {
     const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
     modalRef.componentInstance.exceptUserIds = this.exceptUserIds;
-    modalRef.componentInstance.attachedItems = attachedItems;
+    modalRef.componentInstance.attachedItems = [...attachedItems];
     modalRef.componentInstance.inputType = inputType;
     modalRef.componentInstance.page = 'add-evaluation';
     modalRef.componentInstance.eventId = +this.event.value;

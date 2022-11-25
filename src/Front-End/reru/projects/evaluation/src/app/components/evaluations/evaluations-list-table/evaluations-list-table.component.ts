@@ -35,11 +35,11 @@ export class EvaluationsListTableComponent implements OnInit {
   }
 
   clearFields() {
-    this.testName.key = '';
-    this.testEvent.key = '';
-    this.testLocation.key = '';
-    this.userName.key = '';
-    this.evaluatorName.key = '';
+    this.testName.value = '';
+    this.testEvent.value = '';
+    this.testLocation.value = '';
+    this.userName.value = '';
+    this.evaluatorName.value = '';
     // this.userEmail.key = '';
     // this.idnp.key = '';
     //this.selectedStatus.getTestStatuses();

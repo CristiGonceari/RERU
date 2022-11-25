@@ -21,8 +21,8 @@ export class TestTemplateListComponent {
 	}
 
   clearFields() {
-    this.templateName.key='';
-    this.eventName.key='';
+    this.templateName.value = '';
+    this.eventName.value = '';
 		this.searchStatus.getTestStatuses();
 		this.mode.getStatuses();
 		this.qualifyingType.getStatuses();

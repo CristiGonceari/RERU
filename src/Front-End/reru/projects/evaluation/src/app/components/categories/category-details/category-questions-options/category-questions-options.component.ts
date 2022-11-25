@@ -117,7 +117,9 @@ export class CategoryQuestionsOptionsComponent implements OnInit {
       request.append('Data.Answer', element.answer);
       request.append('Data.IsCorrect', element.isCorrect);
       request.append('Data.QuestionUnitId', element.questionUnitId);
-      request.append('Data.MediaFileId', element.mediaFileId);
+      if (element.mediaFileId) {
+        request.append('Data.MediaFileId', element.mediaFileId);
+      }
 
       return request;
   }
