@@ -20,59 +20,64 @@
               </div>
             </div>
             <div class="col">
-                <erp-shared-search-input
-								(handleSearch)="getLoggingValues({eventName: $event})"
-								[placeholder]="'dashboard.event' | translate" #eventName>
-							</erp-shared-search-input>
+              <erp-shared-search-input 
+                (handleSearch)="getLoggingValues({eventName: $event})"
+                [placeholder]="'dashboard.event' | translate" #eventName>
+              </erp-shared-search-input>
             </div>
             <div class="col">
-              <erp-shared-search-input
-								(handleSearch)="getLoggingValues({userName: $event})"
-								[placeholder]="'dashboard.user-name' | translate" #userName>
-							</erp-shared-search-input>
+              <erp-shared-search-input 
+                (handleSearch)="getLoggingValues({userName: $event})"
+                [placeholder]="'dashboard.user-name' | translate" #userName>
+              </erp-shared-search-input>
             </div>
             <div class="col">
-              <erp-shared-search-input
-              (handleSearch)="getLoggingValues({eventMessage: $event})"
-              [placeholder]="'dashboard.event-message' | translate" #eventMessage>
-            </erp-shared-search-input>
+              <erp-shared-search-input 
+                (handleSearch)="getLoggingValues({eventMessage: $event})"
+                [placeholder]="'dashboard.event-message' | translate" #eventMessage>
+              </erp-shared-search-input>
             </div>
             <div class="col">
-              <button type="button" class="btn btn-danger" style="width: 100%;" (click)="openDeleteModal()">{{ 'dashboard.delete-logs' | translate }}</button>
+              <button type="button" class="btn btn-danger" style="width: 100%;" (click)="openDeleteModal()">{{
+                'dashboard.delete-logs' | translate }}</button>
             </div>
           </div>
           <div class="row w-100" style="margin-top: 1%;">
             <div class="col">
               <div class="input-group input-group-sm input-group-solid">
                 <input id="from" [owlDateTime]="fromDate" [placeholder]="'dashboard.from' | translate"
-                    class="shadow-input" name="date" [(ngModel)]="dateTimeFrom" (ngModelChange)="getLoggingValues({fromDate: $event})" autocomplete="off" />
-                  <input id="from" [owlDateTimeTrigger]="fromDate" [placeholder]="'dashboard.from' | translate" autocomplete="off"
-                    class="form-control form-control-lg form-control-solid" [value]="dateTimeFrom | dateFilter:'dd/MM/yy HH:mm'"/>
-                    <i class="fas fa-calendar-alt mr-2"></i>
-                  <owl-date-time #fromDate></owl-date-time>
+                  class="shadow-input" name="date" [(ngModel)]="dateTimeFrom"
+                  (ngModelChange)="getLoggingValues({fromDate: $event})" autocomplete="off" />
+                <input id="from" [owlDateTimeTrigger]="fromDate" [placeholder]="'dashboard.from' | translate"
+                  autocomplete="off" class="form-control form-control-lg form-control-solid"
+                  [value]="dateTimeFrom | dateFilter:'dd/MM/yy HH:mm'" />
+                <i class="fas fa-calendar-alt mr-2"></i>
+                <owl-date-time #fromDate></owl-date-time>
               </div>
             </div>
             <div class="col">
               <div class="input-group input-group-sm input-group-solid">
-                <input id="from" [owlDateTime]="toDate" [placeholder]="'dashboard.to' | translate"
-                    class="shadow-input" name="date" [(ngModel)]="dateTimeTo" (ngModelChange)="getLoggingValues({toDate: $event})" autocomplete="off" />
-                  <input id="from" [owlDateTimeTrigger]="toDate" [placeholder]="'dashboard.to' | translate" autocomplete="off"
-                    class="form-control form-control-lg form-control-solid" [value]="dateTimeTo | dateFilter:'dd/MM/yy HH:mm'"/>
-                    <i class="fas fa-calendar-alt mr-2"></i>
-                  <owl-date-time #toDate></owl-date-time>
+                <input id="from" [owlDateTime]="toDate" [placeholder]="'dashboard.to' | translate" class="shadow-input"
+                  name="date" [(ngModel)]="dateTimeTo" (ngModelChange)="getLoggingValues({toDate: $event})"
+                  autocomplete="off" />
+                <input id="from" [owlDateTimeTrigger]="toDate" [placeholder]="'dashboard.to' | translate"
+                  autocomplete="off" class="form-control form-control-lg form-control-solid"
+                  [value]="dateTimeTo | dateFilter:'dd/MM/yy HH:mm'" />
+                <i class="fas fa-calendar-alt mr-2"></i>
+                <owl-date-time #toDate></owl-date-time>
               </div>
             </div>
             <div class="co">
-              <erp-shared-search-input
-              (handleSearch)="getLoggingValues({userIdentifier: $event})"
-              [placeholder]="'dashboard.user-identifier' | translate" #userIdentifier>
-            </erp-shared-search-input>
+              <erp-shared-search-input 
+                (handleSearch)="getLoggingValues({userIdentifier: $event})"
+                [placeholder]="'dashboard.user-identifier' | translate" #userIdentifier>
+              </erp-shared-search-input>
             </div>
             <div class="col">
-              <erp-shared-search-input
-              (handleSearch)="getLoggingValues({jsonMessage: $event})"
-              [placeholder]="'dashboard.json-message' | translate" #jsonMessage>
-            </erp-shared-search-input>
+              <erp-shared-search-input 
+                (handleSearch)="getLoggingValues({jsonMessage: $event})"
+                [placeholder]="'dashboard.json-message' | translate" #jsonMessage>
+              </erp-shared-search-input>
             </div>
             <div class="col-1">
               <button class="btn btn-secondary reset" (click)="initFilters()">
@@ -85,8 +90,7 @@
             </div>
           </div>
         </div>
-        <app-loading-spinner *ngIf="!isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
-                              [colorClass]="'text-primary'"></app-loading-spinner>
+        <app-loading-spinner *ngIf="!isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"[colorClass]="'text-primary'"></app-loading-spinner>
         <div class="card-body">
           <div
             class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
@@ -95,7 +99,7 @@
               <thead class="text-uppercase text-muted">
                 <tr>
                   <th scope="col" class="text-center">{{'dashboard.project' | translate }}</th>
-                  <th scope="col" class="text-center">{{'dashboard.user-name' | translate }} {{'dashboard.npp' | translate }}</th>
+                  <th scope="col" class="text-center">{{'dashboard.user-name' | translate }} {{'dashboard.npp' |translate }}</th>
                   <th scope="col" class="text-center">{{'dashboard.user-identifier' | translate }}</th>
                   <th scope="col" class="text-center">{{'dashboard.event' | translate }}</th>
                   <th scope="col" class="text-center">{{'dashboard.event-message' | translate }}</th>
@@ -111,8 +115,7 @@
                   <td class="text-center">{{ item.event }}</td>
                   <td class="text-center">{{ item.eventMessage }}</td>
                   <td class="text-center">
-                    <p class="mb-0 text-wrapper font-size-sm cursor-pointer"
-                      (click)="viewJSON(item.id, loggingValues)" *ngIf="item.jsonMessage">
+                    <p class="mb-0 text-wrapper font-size-sm cursor-pointer" (click)="viewJSON(item.id, loggingValues)" *ngIf="item.jsonMessage">
                       {{ item.jsonMessage }}
                     </p>
                   </td>
