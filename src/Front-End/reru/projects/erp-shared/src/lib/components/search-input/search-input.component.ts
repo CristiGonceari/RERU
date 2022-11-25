@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 @Component({
   selector: 'erp-shared-search-input',
@@ -6,20 +8,29 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./search-input.component.scss']
 })
 export class SearchInputComponent {
-  key: string = '';
+  public searchBy = new Subject<string>();
+  public isLoading: boolean;
+  public value: string = '';
+
   @Input() placeholder: string;
   @Output() handleSearch: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() { }
+  constructor() {
+    this.searchBy.pipe(
+      map((result) => {this.isLoading = true; return result;}),
+      debounceTime(400),
+      distinctUntilChanged())
+      .subscribe(value => {
+        this.handleSearch.emit(value);
+        this.isLoading = false;
+      });
+   }
 
-  search(value: string): void {
-    this.key = value;
-    this.handleSearch.emit(value);
-  }
 
-  clear(): void {
-    this.key = '';
-    this.search('');
+   clearSearch(): void {
+    this.value = '';
+    this.searchBy.next('');
+    this.handleSearch.emit('');
   }
 
 }

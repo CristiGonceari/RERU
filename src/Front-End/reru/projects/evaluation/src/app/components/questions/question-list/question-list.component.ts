@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+ import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { QuestionByCategoryService } from '../../../utils/services/question-by-category/question-by-category.service';
@@ -41,9 +41,9 @@ export class QuestionListComponent {
 	}
 
 	clearFields() {
-		this.searchQuestion.key='';
-		this.searchCategory.key='';
-		this.questionTags.key='';
+		this.searchQuestion.value='';
+		this.searchCategory.value='';
+		this.questionTags.value='';
 		this.status.getQuestionStatus();
 		this.type.getQuestionType();
 	}

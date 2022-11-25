@@ -2,10 +2,10 @@
 using CODWER.RERU.Evaluation.DataTransferObjects.Options;
 using CVU.ERP.StorageService;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.Options.AddOption
 {
@@ -24,7 +24,6 @@ namespace CODWER.RERU.Evaluation.Application.Options.AddOption
 
         public async Task<int> Handle(AddOptionCommand request, CancellationToken cancellationToken)
         {
-
             var storage = await _storageService.AddFile(request.FileDto);
 
             var option = new AddEditOptionDto()
@@ -32,13 +31,12 @@ namespace CODWER.RERU.Evaluation.Application.Options.AddOption
                 QuestionUnitId = request.QuestionUnitId,
                 Answer = request.Answer,
                 IsCorrect = request.IsCorrect,
-                MediaFileId = storage
+                MediaFileId = string.IsNullOrEmpty(storage) ? null : storage
             };
 
             var newOption = _mapper.Map<Option>(option);
 
             await _appDbContext.Options.AddAsync(newOption);
-
             await _appDbContext.SaveChangesAsync();
 
             return newOption.Id;

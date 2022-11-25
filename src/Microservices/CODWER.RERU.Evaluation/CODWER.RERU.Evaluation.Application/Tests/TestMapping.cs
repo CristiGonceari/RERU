@@ -48,7 +48,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.EventName, opts => opts.MapFrom(src => src.Event.Name))
                 .ForMember(x => x.TestTemplateName, opts => opts.MapFrom(src => src.TestTemplate.Name))
                 .ForMember(x => x.ProgrammedTime, opts => opts.MapFrom(src => src.ProgrammedTime))
-                .ForMember(x => x.EndProgrammedTime, opts => opts.MapFrom(src => src.EndProgrammedTime));
+                .ForMember(x => x.EndProgrammedTime, opts => opts.MapFrom(src => src.EndProgrammedTime))
+                .ForMember(x => x.CanStartWithoutConfirmation, opts => opts.MapFrom(src => CheckCanStartWithoutConfirmation(src)));
         }
 
         private string GetVerifiationStatus(Test inputTest)
