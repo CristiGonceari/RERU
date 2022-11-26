@@ -65,7 +65,7 @@ export class ResponsablePersonsTableComponent implements OnInit {
 	openUsersModal(): void {
 		const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.exceptUserIds = [];
-		modalRef.componentInstance.attachedItems = this.attachedPersons.map(el => el.id);
+		modalRef.componentInstance.attachedItems = [...this.attachedPersons.map(el => el.id)];
 		modalRef.componentInstance.inputType = 'checkbox';
 		modalRef.result.then(() => {
 			this.attachPersons(modalRef.result.__zone_symbol__value.attachedItems);

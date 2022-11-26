@@ -50,7 +50,9 @@
               <app-button (handle)="clearFields(); testTable.resetFilters()" [value]="'button.reset' | translate"></app-button>
             </div>
             <div class="col-lg-auto col-12 pt-lg-0 pt-2 d-lg-none d-block">
-              <app-button width="100%" (handle)="clearFields(); testTable.resetFilters()" [value]="'button.reset' | translate"></app-button>
+              <app-button width="100%"
+              (handle)="clearFields(); testTable.resetFilters(); templateName.clearSearch(); eventName.clearSearch()" 
+              [value]="'button.reset' | translate"></app-button>
             </div>
           </div>
         </div>
