@@ -24,11 +24,15 @@
                     <td scope="col" class="text-center" *ngIf="item.endProgrammedTime != null">{{item.endProgrammedTime | date: 'dd/MM/yyyy, HH:mm'}}</td>
                     <td scope="col" class="text-center" *ngIf="item.endProgrammedTime == null">-</td>
                     <td scope="col" class="text-center">
-                        <button 
+                        <button *ngIf="item.canStartWithoutConfirmation"
                         (click)="goToTest(item.id)"
                             class="btn btn-light-success text-nowrap">
                             {{'button.start-test' | translate}}
                         </button>
+                      <button ngbTooltip="{{'tooltips.option12' | translate}}" *ngIf="!item.canStartWithoutConfirmation"
+                        class="btn btn-sm btn-light-warning " >
+                        ! {{'button.start-test' | translate}}
+                      </button>
                     </td>
                 </tr>
             </tbody>

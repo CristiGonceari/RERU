@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { PaginationModel } from '../../utils/models/pagination.model';
 import { LoggingService } from '../../utils/services/logging-service/logging.service';
 import { FormGroup } from '@angular/forms';
@@ -13,20 +13,20 @@ import { forkJoin } from 'rxjs';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements AfterViewInit {
   pagination: PaginationModel = new PaginationModel();
   isLoading: boolean = false;
+
+  @ViewChild('eventName') searchEventName: any;
+  @ViewChild('userName') searchUserName: any;
+	@ViewChild('eventMessage') searchEventMessage: any;
+	@ViewChild('userIdentifier') searchUserIdentifier: any;
+	@ViewChild('jsonMessage') searchJsonMessage: any;
 
   dateTimeFrom: string;
   dateTimeTo: string;
   searchFrom: string;
   searchTo: string;
-  userName: string;
-  eventName: string;
-  userIdentifier: string;
-  eventMessage: string;
-  jsonMessage: string = '';
-
   selectedProject: any;
   selectedEvent: any;
   loggingValues: [] = [];
@@ -40,7 +40,8 @@ export class DashboardComponent implements OnInit {
               public modalService: NgbModal,
               public translate: I18nService) {}
 
-  ngOnInit(): void {
+
+  ngAfterViewInit(): void {
     this.retriveDropdowns();
     this.getLoggingValues();
     this.getTranslates()
@@ -60,17 +61,17 @@ export class DashboardComponent implements OnInit {
 
     this.dateTimeFrom = '';
     this.dateTimeTo = '';
-    
+
     this.searchFrom = '';
     this.searchTo = '';
 
     this.selectedProject = '';
     this.selectedEvent = '';
-    this.userName = '';
-    this.eventName = '';
-    this.eventMessage = '';
-    this.jsonMessage = '';
-    this.userIdentifier = '';
+    this.searchUserName.value = '';
+    this.searchEventName.value = '';
+    this.searchEventMessage.value = '';
+    this.searchJsonMessage.value = '';
+    this.searchUserIdentifier.value = '';
 
     this.getLoggingValues();
     this.retriveDropdowns();
@@ -103,11 +104,11 @@ export class DashboardComponent implements OnInit {
       fromDate: this.searchFrom || '',
       toDate: this.searchTo || '',
       projectName: this.selectedProject || '',
-      event: this.eventName || '',
-      eventMessage: this.eventMessage || '',
-      jsonMessage: this.jsonMessage.replace(/\s+/g, '') || '',
-      userName:  this.userName || '',
-      userIdentifier: this.userIdentifier || '',
+      event: this.searchEventName.value || '',
+      eventMessage: this.searchEventMessage.value || '',
+      jsonMessage: data.jsonMessage !== undefined ? data.jsonMessage.replace(/\s+/g, '') : '',
+      userName:  this.searchUserName.value || '',
+      userIdentifier: this.searchUserIdentifier.value || '',
       page: data.page || 1,
       itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
     };
@@ -116,7 +117,7 @@ export class DashboardComponent implements OnInit {
       if(res && res.data){
         this.loggingValues = res.data.items;
         this.pagination = res.data.pagedSummary;
-        this.isLoading = true; 
+        this.isLoading = true;
       }
     });
   }

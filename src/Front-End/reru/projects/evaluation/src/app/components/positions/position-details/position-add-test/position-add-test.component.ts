@@ -282,7 +282,7 @@ export class PositionAddTestComponent implements OnInit {
     modalRef.componentInstance.exceptUserIds = this.exceptUserIds;
     modalRef.componentInstance.eventId = this.eventId;
     modalRef.componentInstance.positionId = this.positionId;
-    modalRef.componentInstance.attachedItems = attachedItems;
+    modalRef.componentInstance.attachedItems = [...attachedItems];
     modalRef.componentInstance.inputType = inputType;
     modalRef.componentInstance.page = 'add-test';
     modalRef.componentInstance.testTemplateId = inputType == "radio" ? this.testTemplateId : null;

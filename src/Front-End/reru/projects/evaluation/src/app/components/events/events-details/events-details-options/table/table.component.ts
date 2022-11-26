@@ -207,7 +207,7 @@ export class TableComponent implements OnInit {
     modalRef.componentInstance.exceptUserIds = [];
     modalRef.componentInstance.page = this.category;
     modalRef.componentInstance.eventId = this.importedId;
-    modalRef.componentInstance.attachedItems = this.attachedUsers;
+    modalRef.componentInstance.attachedItems = [...this.attachedUsers];
     modalRef.componentInstance.inputType = 'checkbox';
     modalRef.result.then(() => {
       if (this.persons) {

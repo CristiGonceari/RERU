@@ -52,9 +52,9 @@ export class UserListComponent {
   }
 
   clearFilters(): void {
-    this.searchKeyword.key = '';
-    this.searchEmail.key = '';
-    this.searchIdnp.key = '';
+    this.searchKeyword.value = '';
+    this.searchEmail.value = '';
+    this.searchIdnp.value = '';
     this.userState.status = '0';
     this.userStatusEnum.userStatus = '';
     this.departmentId.department = '';
