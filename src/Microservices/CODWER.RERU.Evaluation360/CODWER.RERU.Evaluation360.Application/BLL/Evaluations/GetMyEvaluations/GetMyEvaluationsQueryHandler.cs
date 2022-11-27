@@ -36,7 +36,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetMyEvaluations
                                     .Include(e=> e.EvaluatedUserProfile)
                                     .Include(e=> e.EvaluatorUserProfile)
                                     .Include(e=> e.CounterSignerUserProfile)
-                                    .Where(e => e.EvaluatedUserProfileId == currentUserId ||  e.EvaluatorUserProfileId == currentUserId ||  e.CounterSingerUserProfileId == currentUserId);
+                                    .Where(e => e.EvaluatedUserProfileId == currentUserId ||  e.EvaluatorUserProfileId == currentUserId ||  e.CounterSignerUserProfileId == currentUserId);
         
          var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Evaluation, EvaluationRowDto>(evaluations, request);
 

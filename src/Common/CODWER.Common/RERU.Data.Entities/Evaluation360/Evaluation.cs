@@ -8,7 +8,7 @@ namespace RERU.Data.Entities.Evaluation360
     {
         public int EvaluatedUserProfileId { set; get; }
         public int EvaluatorUserProfileId { set; get; }
-        public int CounterSingerUserProfileId { set; get; }
+        public int CounterSignerUserProfileId { set; get; }
 
         [ForeignKey(nameof(EvaluatedUserProfileId))]
         public UserProfile EvaluatedUserProfile { set; get; }
@@ -16,7 +16,7 @@ namespace RERU.Data.Entities.Evaluation360
         [ForeignKey(nameof(EvaluatorUserProfileId))]
         public UserProfile EvaluatorUserProfile { set; get; }
 
-        [ForeignKey(nameof(CounterSingerUserProfileId))]
+        [ForeignKey(nameof(CounterSignerUserProfileId))]
         public UserProfile CounterSignerUserProfile { set; get; }
         public EvaluationTypeEnum Type { set; get; }
     
@@ -24,9 +24,8 @@ namespace RERU.Data.Entities.Evaluation360
 
         public EvaluationStatusEnum Status {set;get;}
 
-
-        //  public int Id { set; get; }
-        //  public string? SubdivisionName { set; get; }
+        public string? SubdivisionName { set; get; }
+        
         //  public string? DateCompletionGeneralData { set; get; }
         //  public string? NameSurnameEvaluatedEmployee { set; get; }
         //  public string? FunctionSubdivision { set; get; }
