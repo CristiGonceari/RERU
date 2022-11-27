@@ -3,9 +3,9 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Create
 {
-    public class CreateEvaluationCommand : IRequest<int>
+    public class CreateEvaluationsCommand : IRequest<Unit>
     {
-        public int EvaluatedUserProfileId { set; get; }
+        public int[] EvaluatedUserProfileIds { set; get; }
         public int CounterSignerUserProfileId { set; get; }
         public int Type { set; get; }
     }

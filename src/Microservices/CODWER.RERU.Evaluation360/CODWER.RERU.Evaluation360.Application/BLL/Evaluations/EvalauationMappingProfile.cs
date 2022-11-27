@@ -1,6 +1,5 @@
 using AutoMapper;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Create;
-using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update;
 using CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Entities.Evaluation360;
@@ -22,8 +21,9 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations
                 ;
             
 
-            CreateMap<CreateEvaluationCommand, Evaluation>()
+            CreateMap<CreateEvaluationsCommand, Evaluation>()
                 .ForMember(dest=> dest.EvaluatorUserProfileId, opts=> opts.Ignore())
+                .ForMember(dest=> dest.EvaluatedUserProfileId, opts=> opts.Ignore())
                 .ForMember(dest=> dest.Status, opts=> opts.MapFrom(src=> EvaluationStatusEnum.Draft))
                 ;
 
