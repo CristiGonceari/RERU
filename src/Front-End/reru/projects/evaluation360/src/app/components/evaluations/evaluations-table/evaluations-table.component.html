@@ -1,0 +1,60 @@
+<app-loading-spinner
+	*ngIf="isLoading"
+	[contentHeight]="'20rem'"
+	[height]="'5rem'"
+	[width]="'5rem'"
+	[colorClass]="'text-primary'">
+</app-loading-spinner>
+<div *ngIf="!isLoading" class="table-responsive datatable datatable-default">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Angajatul</th>
+				<th class="text-center">Evaluatorul</th>
+				<th class="text-center">Contrasemnatar</th>
+				<th class="text-center">Tipul evaluarii</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of surveys; let i = index; let even = even">
+				<td class="text-center">
+					<b>{{ item.evaluatedUserLastName }} {{ item.evaluatedUserName }} </b>
+					<br />
+					{{ item.evaluatedUserPositionName }}
+					<br />
+					{{ item.evaluatedUserDepartmentName }}
+				</td>
+				<td class="text-center">
+					<b>{{ item.evaluatorUserName }} {{ item.evaluatorUserLastName }} </b>
+					<br />
+					{{ item.evaluatorUserPositionName }}
+					<br />
+					{{ item.evaluatorUserDepartmentName }}
+				</td>
+				<td class="text-center">
+					<b>{{ item.counterSignUserName }} {{ item.counterSignUserLastName }} </b>
+					<br />
+					{{ item.counterSignUserPositionName }}
+					<br />
+					{{ item.counterSignUserDepartmentName }}
+        </td>
+        <td class="text-center">
+          {{'survey.positions.position-'+item.type | translate}}
+				</td>
+				<td>
+					<app-evaluations-dropdown-details [index]="i" [survey]="item"></app-evaluations-dropdown-details>
+				</td>
+			</tr>
+			<tr *ngIf="!isLoading && (!surveys || !surveys.length)">
+				<td colspan="10" class="text-center">Nu sunt înregistrări la moment</td>
+			</tr>
+		</tbody>
+	</table>
+	<div pagination
+		[page]="pagedSummary.currentPage"
+		[total]="pagedSummary.totalPages"
+		class="datatable-pager datatable-paging-loaded"
+		(pageChange)="list({ page: $event })">
+	</div>
+</div>

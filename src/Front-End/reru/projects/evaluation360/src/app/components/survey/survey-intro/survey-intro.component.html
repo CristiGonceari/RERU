@@ -1,0 +1,55 @@
+<!--begin::Content-->
+<app-page-title [title]="'survey.title' | translate"></app-page-title>
+
+<erp-shared-content>
+	<div class="card card-custom gutter-b erp-shared-desktop-wide">
+		<div class="card-body">
+			<div class="row justify-content-center">
+				<div class="col col-lg-7">
+					<form [formGroup]="surveyForm">
+						<div class="form-group row">
+							<label class="col col-form-label">{{ 'survey.evaluated-employees' | translate }}</label>
+							<div class="col">
+								<button class="btn btn-light" (click)="openAttachUserModal()"
+									[style.background-color]="userListToAdd.length > 0 ? '#C9F7F5': '#FFE2E5'"
+									[style.color]="userListToAdd.length > 0 ? '#0bb7af': '#F64E60'">
+									{{'button.attach-evaluateds' | translate}}
+								</button>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col col-form-label">{{ 'survey.countersigner' | translate }}</label>
+							<div class="col">
+								<button class="btn btn-light" (click)="openAttachUserModal()"
+									[style.background-color]="userListToAdd.length > 0 ? '#C9F7F5': '#FFE2E5'"
+									[style.color]="userListToAdd.length > 0 ? '#0bb7af': '#F64E60'">
+									{{'button.attach-countersigner' | translate}}
+								</button>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="evaluationType" class="col col-form-label">{{ 'survey.evaluation-type' | translate }}</label>
+							<div class="col">
+								<select class="form-control" id="typr" formControlName="type">
+									<option value="null">{{ 'survey.select-evaluation-type' | translate }}</option>
+									<option value="0">{{ 'survey.executing-position' | translate }}</option>
+									<option value="1">{{ 'survey.managing-position' | translate }}</option>
+								</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col d-flex justify-content-center">
+								<!-- <button type="button" class="btn btn-primary" (click)="submit()" [disabled]="surveyForm.invalid">
+									{{ 'button.apply' | translate }}
+								</button> -->
+								<button type="button" class="btn btn-primary" routerLink="../new">
+									{{ 'button.apply' | translate }}
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</erp-shared-content>

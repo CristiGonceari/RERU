@@ -623,12 +623,26 @@
             "aot": true,
             "assets": [
               "projects/evaluation360/src/favicon.ico",
-              "projects/evaluation360/src/assets"
+              "projects/evaluation360/src/assets",
+              {
+                "glob": "**/*",
+                "input": "projects/erp-shared/src/lib/assets",
+                "output": "/assets/"
+              }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/erp-shared/src/lib/styles"]
+            },
             "styles": [
-              "projects/evaluation360/src/styles.scss"
+              "projects/erp-shared/src/lib/styles/style.bundle.css", 
+              "projects/erp-shared/src/lib/styles/plugins.bundle.css",
+              "projects/evaluation360/src/styles.scss",
+              "projects/evaluation/src/assets/styles/picker.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "file-saver"
+            ]
           },
           "configurations": {
             "production": {
@@ -690,7 +704,10 @@
               "projects/evaluation360/src/assets"
             ],
             "styles": [
-              "projects/evaluation360/src/styles.scss"
+              "projects/erp-shared/src/lib/styles/style.bundle.css", 
+              "projects/erp-shared/src/lib/styles/plugins.bundle.css",
+              "projects/evaluation360/src/styles.scss",
+              "projects/evaluation/src/assets/styles/picker.scss"
             ],
             "scripts": []
           }
