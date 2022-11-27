@@ -14,6 +14,7 @@ import { SharedModule, SvgModule, MOCK_AUTHENTICATION } from '@erp/shared';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { environment } from '../environments/environment';
 import { NOTIFICATION_INTERCEPTOR_PROVIDER } from './utils/interceptors/notification.interceptor'
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [ AppComponent, DashboardComponent ],
@@ -35,6 +36,7 @@ import { NOTIFICATION_INTERCEPTOR_PROVIDER } from './utils/interceptors/notifica
 		UtilsModule,
 		CommonModule,
 		SvgModule,
+		NgApexchartsModule
   ],
   providers: [
     TranslatePipe, 

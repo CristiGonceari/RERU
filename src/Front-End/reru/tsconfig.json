@@ -24,5 +24,17 @@
     {
       "path": "./projects/evaluation/tsconfig.spec.json"
     },
+    {
+      "path": "./projects/evaluation360/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/evaluation360/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/logging/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/logging/tsconfig.spec.json"
+    },
   ]
 }
