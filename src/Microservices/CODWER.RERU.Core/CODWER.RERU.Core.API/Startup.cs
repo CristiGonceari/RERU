@@ -66,6 +66,10 @@ namespace CODWER.RERU.Core.API
             services.Configure<TenantDto>(Configuration.GetSection("CoreSettings").GetSection("Tenant"));
             services.Configure<ActiveTimeDto>(Configuration.GetSection("CoreSettings").GetSection("ActiveTime"));
 
+            if (CurrentEnvironment.IsDevelopment())
+            {
+                services.AddERPModuleServices(Configuration);
+            }
             services.AddCoreServiceProvider(); // before conf AppDbContext
 
             ServicesSetup.ConfigureEntity(services, Configuration);
@@ -124,11 +128,14 @@ namespace CODWER.RERU.Core.API
                 .AddERPModuleControllers();
             services.AddWkhtmltopdf();
 
+            if (!CurrentEnvironment.IsDevelopment())
+            {
+                services.AddERPModuleServices(Configuration);
+            }
 
-
-            services.AddERPModuleServices(Configuration) 
-                .AddCoreModuleApplication(Configuration)
-                .AddCommonLoggingContext(Configuration);
+            // services.AddERPModuleServices(Configuration) 
+                services.AddCoreModuleApplication(Configuration);
+                services.AddCommonLoggingContext(Configuration);
 
             services.AddHangfire(config =>
                 config.UsePostgreSqlStorage(Configuration.GetConnectionString(ConnectionString.HangfireCore)));
