@@ -53,6 +53,10 @@
 			"2": "Spre re-evaluare",
 			"3": "Spre contrasemnare",
 			"4": "Finisată"
+    },
+    "positions": {
+      "0": "De executare",
+      "1": "De management"
     }
   },
   "button": {
