@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { SelectItem } from '../../../utils/models/select-item.model';
 import { NotificationUtil } from '../../../utils/util/notification.util';
-import { SurveyService } from '../../../utils/services/survey.service';
+import { EvaluationService } from '../../../utils/services/survey.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AttachUserModalComponent } from '../../../utils/modals/attach-user-modal/attach-user-modal.component';
 
@@ -21,7 +21,7 @@ export class SurveyIntroComponent implements OnInit {
 
 	constructor(
 		private readonly fb: FormBuilder,
-		private readonly surveyService: SurveyService,
+		private readonly evaluationService: EvaluationService,
 		private readonly notificationService: NotificationsService,
 		private readonly ngZone: NgZone,
 		private readonly router: Router,
@@ -56,7 +56,7 @@ export class SurveyIntroComponent implements OnInit {
 	}
 
 	submit(): void {
-		this.surveyService.create(this.surveyForm.value).subscribe(
+		this.evaluationService.create(this.surveyForm.value).subscribe(
 			response => {
 				this.notificationService.success(
 					'Success',

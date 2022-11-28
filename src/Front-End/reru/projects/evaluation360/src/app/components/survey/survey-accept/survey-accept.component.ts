@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from '../../../utils/util/notification.util';
-import { SurveyService } from '../../../utils/services/survey.service';
+import { EvaluationService } from '../../../utils/services/survey.service';
 
 @Component({
   selector: 'app-survey-accept',
@@ -34,7 +34,7 @@ export class SurveyAcceptComponent implements OnInit {
   ];
   isLoading: boolean = true;
   constructor(private fb: FormBuilder,
-              private surveyService: SurveyService,
+              private evaluationService: EvaluationService,
               private route: ActivatedRoute,
               private notificationService: NotificationsService,
               private router: Router,
@@ -54,7 +54,7 @@ export class SurveyAcceptComponent implements OnInit {
   }
 
   retrieveEvaluation(id: number) {
-    this.surveyService.get(id).subscribe(response => {
+    this.evaluationService.get(id).subscribe(response => {
       this.initForm(response);
       this.isLoading = false;
     });
@@ -147,7 +147,7 @@ export class SurveyAcceptComponent implements OnInit {
   }
 
   submit(evaluatedAcceptance: number): void {
-    this.surveyService.accept(this.id, { evaluatedAcceptance }).subscribe(response => {
+    this.evaluationService.accept(this.id, { evaluatedAcceptance }).subscribe(response => {
       this.notificationService.success('Succes', 'Fisa a fost procesata cu succces!', NotificationUtil.getDefaultMidConfig());
       this.ngZone.run(() => this.router.navigate(['../../'], { relativeTo: this.route }));
     }, (error) => {

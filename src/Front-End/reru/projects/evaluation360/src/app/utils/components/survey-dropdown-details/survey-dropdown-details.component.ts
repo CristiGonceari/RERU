@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SurveyService } from '../../services/survey.service';
+import { EvaluationService } from '../../services/survey.service';
 
 @Component({
   selector: 'app-survey-dropdown-details',
@@ -10,10 +10,10 @@ export class SurveyDropdownDetailsComponent {
   @Input() index: number;
   @Input() survey: any;
   @Output() delete: EventEmitter<void> = new EventEmitter<void>();
-  constructor(private surveyService: SurveyService) { }
+  constructor(private evaluationService: EvaluationService) { }
 
   download(): void {
-    this.surveyService.download(this.survey.id);
+    this.evaluationService.download(this.survey.id);
   }
 
   isDisabled(): boolean {

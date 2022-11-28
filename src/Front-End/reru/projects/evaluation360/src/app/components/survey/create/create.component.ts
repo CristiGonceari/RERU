@@ -2,7 +2,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
-import { SurveyService } from '../../../utils/services/survey.service';
+import { EvaluationService } from '../../../utils/services/survey.service';
 import { ObjectUtil } from '../../../utils/util/object.util';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { DatePipe } from '@angular/common';
@@ -48,7 +48,7 @@ export class CreateComponent implements OnInit {
   parsedEvaluatingDate: string = '';
   parsedCounterSignerSignDate: string = '';
   constructor(private readonly fb: FormBuilder,
-              private readonly surveyService: SurveyService,
+              private readonly evaluationService: EvaluationService,
               private readonly router: Router,
               private readonly route: ActivatedRoute,
               private readonly notificationService: NotificationsService,
@@ -149,7 +149,7 @@ export class CreateComponent implements OnInit {
   }
 
   submit(): void {
-    this.surveyService.create(this.preParseData(this.surveyForm.value)).subscribe(response => {
+    this.evaluationService.create(this.preParseData(this.surveyForm.value)).subscribe(response => {
       this.notificationService.success('Success', 'Fisa a fost trimisă cu success!', NotificationUtil.getDefaultMidConfig());
       this.router.navigate(['../'], { relativeTo: this.route});
     }, (error) => {

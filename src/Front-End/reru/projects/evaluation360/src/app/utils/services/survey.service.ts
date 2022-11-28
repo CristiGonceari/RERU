@@ -6,11 +6,11 @@ import { AbstractService, AppSettingsService } from '@erp/shared';
 @Injectable({
   providedIn: 'root'
 })
-export class SurveyService extends AbstractService {
-  private readonly routeUrl: string = 'evaluation';
+export class EvaluationService extends AbstractService {
+  private readonly routeUrl: string = 'Evaluation';
   constructor(protected configService: AppSettingsService, private http: HttpClient) {
     super(configService);
-   }
+   }in
 
    get(id: number): Observable<any> {
      return this.http.get(`${this.baseUrl}/${this.routeUrl}/${id}`); 
