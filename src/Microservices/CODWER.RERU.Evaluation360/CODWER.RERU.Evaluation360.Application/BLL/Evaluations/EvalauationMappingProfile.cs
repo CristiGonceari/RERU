@@ -27,10 +27,25 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations
                 .ForMember(dest=> dest.Status, opts=> opts.MapFrom(src=> EvaluationStatusEnum.Draft))
                 ;
 
-              CreateMap<EditEvaluationDto, Evaluation>()
+            CreateMap<EditEvaluationDto, Evaluation>()
                 .ForMember(dest=> dest.Id, opts=> opts.Ignore())
                 ;
-               
+
+            CreateMap<AcceptRejectEvaluationDto, Evaluation>()
+                .ForMember(dest=> dest.Id, opts=> opts.Ignore())
+                .ForMember(dest=> dest.CommentsEvaluatedEmployee, opts=> opts.MapFrom(src=> $"{src.CommentsEvaluatedEmployee}"))
+                ;
+
+            CreateMap<CounterSignAcceptRejectEvaluationDto, Evaluation>()
+                .ForMember(dest=> dest.Id, opts=> opts.Ignore())
+                .ForMember(dest=> dest.CheckComment1, opts=> opts.MapFrom(src=> $"{src.CheckComment1}"))
+                .ForMember(dest=> dest.CheckComment2, opts=> opts.MapFrom(src=> $"{src.CheckComment2}"))
+                .ForMember(dest=> dest.CheckComment3, opts=> opts.MapFrom(src=> $"{src.CheckComment3}"))
+                .ForMember(dest=> dest.CheckComment4, opts=> opts.MapFrom(src=> $"{src.CheckComment4}"))
+                .ForMember(dest=> dest.OtherComments, opts=> opts.MapFrom(src=> $"{src.OtherComments}"))
+                .ForMember(dest=> dest.DecisionCountersignatory, opts=> opts.MapFrom(src=> $"{src.DecisionCountersignatory}"))
+                .ForMember(dest=> dest.DateCompletionCountersignatory, opts=> opts.MapFrom(src=> $"{src.DateCompletionCountersignatory}"))
+                ;
         }
     }
 }

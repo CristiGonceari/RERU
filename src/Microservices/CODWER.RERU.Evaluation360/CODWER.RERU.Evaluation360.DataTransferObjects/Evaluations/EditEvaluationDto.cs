@@ -1,5 +1,4 @@
 using System;
-using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
 {
@@ -9,7 +8,6 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
         public string EvaluatedName { set; get; }
         public string SubdivisionName { set; get; }
         public DateTime DateCompletionGeneralData { set; get; }
-       // public EvaluationStatusEnum Status { set; get; }
         public string NameSurnameEvaluatedEmployee { set; get; }
         public string FunctionSubdivision { set; get; }
         public string SpecialOrMilitaryGrade { set; get; }
