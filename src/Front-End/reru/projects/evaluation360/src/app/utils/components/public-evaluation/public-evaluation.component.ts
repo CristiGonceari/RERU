@@ -10,7 +10,7 @@ import { EvaluateDto } from '../../models/evaluate-dto';
 import { Evaluation } from '../../models/evaluation';
 import { hasRequiredField } from '../../util/has-required-field.util';
 import { NotificationUtil } from '../../util/notification.util';
-import { SurveyService } from '../../services/survey.service';
+import { EvaluationService } from '../../services/survey.service';
 
 @Component({
   selector: 'app-public-evaluation',
@@ -43,7 +43,7 @@ export class PublicEvaluationComponent implements OnInit {
 	isFinalManual: boolean;
 
 	constructor(
-		private surveyService: SurveyService,
+		private evaluationService: EvaluationService,
 		private fb: FormBuilder,
 		private notificationService: NotificationsService,
 		private ngZone: NgZone,
@@ -252,7 +252,7 @@ export class PublicEvaluationComponent implements OnInit {
 	}
 
 	evaluate(accept: boolean) {
-		this.surveyService.evaluate(this.evaluation.id, this.getEvaluate(this.surveyForm.value, accept)).subscribe(
+		this.evaluationService.evaluate(this.evaluation.id, this.getEvaluate(this.surveyForm.value, accept)).subscribe(
 			response => {
 				this.notificationService.success(
 					'Succes',
@@ -282,7 +282,7 @@ export class PublicEvaluationComponent implements OnInit {
 	}
 
 	autoEvaluate(dto: AutoEvaluateDto) {
-		this.surveyService.autoevaluate(this.evaluation.id, dto).subscribe(
+		this.evaluationService.autoevaluate(this.evaluation.id, dto).subscribe(
 			response => {
 				this.notificationService.success(
 					'Succes',
@@ -309,7 +309,7 @@ export class PublicEvaluationComponent implements OnInit {
 	}
 
 	counterSign(dto: CounterSignDto) {
-		this.surveyService.counterSign(this.evaluation.id, dto).subscribe(
+		this.evaluationService.counterSign(this.evaluation.id, dto).subscribe(
 			response => {
 				this.notificationService.success(
 					'Succes',

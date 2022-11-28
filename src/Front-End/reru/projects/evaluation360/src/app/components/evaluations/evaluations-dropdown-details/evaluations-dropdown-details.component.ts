@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SurveyService } from '../../../utils/services/survey.service';
+import { EvaluationService } from '../../../utils/services/survey.service';
 
 @Component({
   selector: 'app-evaluations-dropdown-details',
@@ -9,10 +9,10 @@ import { SurveyService } from '../../../utils/services/survey.service';
 export class EvaluationsDropdownDetailsComponent {
   @Input() index: number;
   @Input() survey: any;
-  constructor(private surveyService: SurveyService) { }
+  constructor(private evaluationService: EvaluationService) { }
 
   download(): void {
-    this.surveyService.download(this.survey.id);
+    this.evaluationService.download(this.survey.id);
   }
 
   isDisabled(): boolean {

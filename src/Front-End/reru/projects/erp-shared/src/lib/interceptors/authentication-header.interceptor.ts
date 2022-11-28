@@ -21,6 +21,7 @@ export class AuthenticationHeaderInterceptor implements HttpInterceptor {
 
 	tokenization(request) {
 		if (this.authenticationService.isAuthenticated()) {
+			console.log('JWT', this.authenticationService.authorizationHeaderValue)
 			request = request.clone({
 				setHeaders: this.setTokenOnHeader(this.authenticationService.authorizationHeaderValue),
 				withCredentials: true,

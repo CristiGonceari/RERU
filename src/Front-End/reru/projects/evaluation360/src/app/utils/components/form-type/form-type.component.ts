@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Evaluation } from '../../models/evaluation';
-import { SurveyService } from '../../services/survey.service';
+import { EvaluationService } from '../../services/survey.service';
 
 @Component({
   selector: 'app-form-type',
@@ -13,7 +13,7 @@ export class FormTypeComponent implements OnInit {
   @Input() action: number;
   evaluation: Evaluation;
   type: number;
-  constructor(private surveyService: SurveyService,
+  constructor(private evaluationService: EvaluationService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -21,7 +21,7 @@ export class FormTypeComponent implements OnInit {
   }
 
   getEvaluation(id: number): void {
-    this.surveyService.get(id).subscribe(response => {
+    this.evaluationService.get(id).subscribe(response => {
 			if (!response) {
 				this.router.navigate(['/']);
 				return;

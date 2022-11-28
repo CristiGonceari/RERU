@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from '../../../utils/util/notification.util';
-import { SurveyService } from '../../../utils/services/survey.service';
+import { EvaluationService } from '../../../utils/services/survey.service';
 
 @Component({
   selector: 'app-survey-autoevaluate',
@@ -34,7 +34,7 @@ export class SurveyAutoevaluateComponent implements OnInit {
   ];
   isLoading: boolean = true;
   constructor(private fb: FormBuilder,
-              private surveyService: SurveyService,
+              private evaluationService: EvaluationService,
               private route: ActivatedRoute,
               private router: Router,
               private notificationService: NotificationsService,
@@ -56,7 +56,7 @@ export class SurveyAutoevaluateComponent implements OnInit {
   }
 
   retrieveAutoevaluate(id: number): void {
-    this.surveyService.retrieveAutoevaluate(id).subscribe(response => {
+    this.evaluationService.retrieveAutoevaluate(id).subscribe(response => {
       this.initForm(response);
       this.isLoading = false;
     });
@@ -99,7 +99,7 @@ export class SurveyAutoevaluateComponent implements OnInit {
   }
 
   submit(): void {
-    this.surveyService.autoevaluate(this.id, this.surveyForm.value).subscribe(response => {
+    this.evaluationService.autoevaluate(this.id, this.surveyForm.value).subscribe(response => {
       this.notificationService.success('Succes', 'Fisa a fost transmisa cu succes!', NotificationUtil.getDefaultMidConfig());
       this.ngZone.run(() => this.router.navigate(['../../'], { relativeTo: this.route }));
     }, (error) => {

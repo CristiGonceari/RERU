@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SurveyService } from '../../../utils/services/survey.service';
+import { EvaluationService } from '../../../utils/services/survey.service';
 
 @Component({
   selector: 'app-evaluations-table',
@@ -15,7 +15,7 @@ export class EvaluationsTableComponent implements OnInit {
     currentPage: 1,
     totalPages: 1
   };
-  constructor(private readonly surveyService: SurveyService) { }
+  constructor(private readonly evaluationService: EvaluationService) { }
 
   ngOnInit(): void {
     this.list();
@@ -27,7 +27,7 @@ export class EvaluationsTableComponent implements OnInit {
       ...data,
       page: data.page || this.pagedSummary.currentPage
     }
-    this.surveyService.list(request).subscribe(response => {
+    this.evaluationService.listMine(request).subscribe(response => {
       this.surveys = response;
       this.isLoading = false;
     }, () => {
