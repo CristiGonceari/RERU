@@ -14,21 +14,21 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
     [Route("api/[controller]")]
     public class ReferenceController : BaseController
     {
-        [HttpGet("departments/select-values")]
+        [HttpGet("departments/select-items")]
         public async Task<List<SelectItem>> GetDepartments()
         {
             var query = new GetDepartmentsValuesQuery();
 
             return await Sender.Send(query);
         }
-        [HttpGet("roles/select-values")]
+        [HttpGet("roles/select-items")]
         public async Task<List<SelectItem>> GetRoles()
         {
             var query = new GetRolesValuesQuery();
 
             return await Sender.Send(query);
         }
-        [HttpGet("user-status/select-values")]
+        [HttpGet("user-status/select-items")]
         public Task<List<SelectItem>> GetUserEnum()
         {
             var items = EnumConverter<UserStatusEnum>.SelectValues;
