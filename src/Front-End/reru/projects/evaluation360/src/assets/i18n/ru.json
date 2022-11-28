@@ -1,0 +1,38 @@
+{
+  "languages": {
+    "ro": "Română",
+    "en": "English",
+    "ru": "Русский"
+  },
+  "notification": {
+    "title": {
+      "success": "Succes",
+      "error": "Eroare",
+      "warning": "Atenție",
+      "notify": "Notificare"
+    },
+    "body": {
+      "success": {
+        "create": "A fost creat cu succes!",
+        "update": "A fost actualizat cu succes!",
+        "delete": "A fost sters cu succes!",
+        "login": "Logare cu succes!"
+      },
+      "error": "A avut loc o eroare!"
+    },
+    "required": "Câmpul este obligatoriu"
+  },
+  "sidebar": {
+    "home": "Главная",
+    "administration": "АДМИНИСТРИРОВАНИЕ",
+    "evaluations": "Оценки"
+  },
+  "dashboard": {
+    "title": "Evaluation 360"
+  },
+  "footer": {
+    "all-rights-reserved": "Все права защищены",
+    "about": "О сайте",
+    "contact": "Контакт"
+  }
+}
