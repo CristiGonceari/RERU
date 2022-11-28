@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  PRODUCTION: true,
+  DEFAULT_LANGUAGE: 'ro'
 };
