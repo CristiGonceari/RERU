@@ -35,5 +35,48 @@
     "all-rights-reserved": "All rights reserved",
     "about": "About",
     "contact": "Contact"
+  },
+  "survey": {
+    "title": "Evaluare",
+    "evaluated-employees": "Angajații evaluați",
+    "countersigner": "Contrasemnatar",
+    "evaluation-type": "Tipul evaluat",
+    "select-evaluated-person": "Selectează angajatul evaluat",
+    "select-countersigner": "Selectează contrasemnatarul",
+    "select-evaluation-type": "Selectează tipul evaluat",
+    "executing-position": "Funcție de execuție",
+    "managing-position": "Funcție de conducere",
+    "status": {
+      "0": "Spre evaluare",
+			"1": "Spre auto evaluare",
+			"2": "Spre re-evaluare",
+			"3": "Spre contrasemnare",
+			"4": "Finisată"
+    }
+  },
+  "button": {
+    "back": "Back",
+    "apply": "Apply",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "reset-filters": "Reset filters",
+    "attach-evaluateds": "Attach evaluated",
+    "attach-countersigner": "Attach countersigner"
+  },
+  "attach-user-modal": {
+    "first-name": "First name",
+    "last-name": "Last name",
+    "father-name": "Father name",
+    "idnp": "IDNP",
+    "email": "Email",
+    "search-department": "Search department",
+    "search-role": "Search role",
+    "search-user-status": "Search by user status",
+    "department": "Department",
+    "role": "Role",
+    "npp": "F.L.F."
+  },
+  "message": {
+    "no-record": "There are no records found."
   }
 }

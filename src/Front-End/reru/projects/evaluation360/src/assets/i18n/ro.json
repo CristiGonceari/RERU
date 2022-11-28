@@ -46,7 +46,14 @@
     "select-countersigner": "Selectează contrasemnatarul",
     "select-evaluation-type": "Selectează tipul evaluat",
     "executing-position": "Funcție de execuție",
-    "managing-position": "Funcție de conducere"
+    "managing-position": "Funcție de conducere",
+    "status": {
+      "0": "Spre evaluare",
+			"1": "Spre auto evaluare",
+			"2": "Spre re-evaluare",
+			"3": "Spre contrasemnare",
+			"4": "Finisată"
+    }
   },
   "button": {
     "back": "Înapoi",
@@ -67,7 +74,7 @@
     "search-role": "Caută rol",
     "search-user-status": "Caută după statutul utilizatorului",
     "department": "Departament",
-    "role": "Role",
+    "role": "Rol",
     "npp": "N.P.P."
   },
   "message": {
