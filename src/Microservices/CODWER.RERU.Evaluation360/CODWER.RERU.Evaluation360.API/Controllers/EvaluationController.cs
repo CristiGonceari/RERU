@@ -33,19 +33,19 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
             return await Sender.Send(command);
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         public async Task UpdateEvaluation([FromBody] EditEvaluationDto dto)
         {
             var command = new UpdateEvaluationCommand(dto);
             await Sender.Send(command);
         }
 
-        //  [HttpPut]
-        // public async Task ConfirmEvaluation([FromBody] EditEvaluationDto dto)
-        // {
-        //     var command = new UpdateEvaluationCommand(dto);
-        //     await Sender.Send(command);
-        // }
+        [HttpPut("confirm")]
+        public async Task ConfirmEvaluation([FromBody] EditEvaluationDto dto)
+        {
+            var command = new ConfirmEvaluationCommand(dto);
+            await Sender.Send(command);
+        }
 
         //  [HttpPut]
         // public async Task AcceptEvaluation([FromBody] EditEvaluationDto dto)
