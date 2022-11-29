@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Evaluation } from '../../models/evaluation';
-import { EvaluationService } from '../../services/survey.service';
+import { Evaluation } from '../../models/evaluation.model';
+import { EvaluationService } from '../../services/evaluations.service';
 
 @Component({
   selector: 'app-form-type',

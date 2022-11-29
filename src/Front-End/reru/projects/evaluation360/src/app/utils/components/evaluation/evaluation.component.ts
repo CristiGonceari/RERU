@@ -4,13 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { I18nService } from '@erp/shared';
 import { NotificationsService } from 'angular2-notifications';
 import { forkJoin } from 'rxjs';
-import { AutoEvaluateDto } from '../../models/auto-evaluate-dto';
-import { CounterSignDto } from '../../models/counter-sign-dto';
-import { EvaluateDto } from '../../models/evaluate-dto';
-import { Evaluation } from '../../models/evaluation';
-import { NotificationUtil } from '../../util/notification.util';
-import { EvaluationService } from '../../services/survey.service';
-import { hasRequiredField } from '../../util/has-required-field.util';
+import { Evaluation, EvaluationCounterSignModel, EvaluationAcceptModel, EvaluationRejectModel } from '@utils';
+import { NotificationUtil, hasRequiredField } from '@utils';
+import { EvaluationService } from '@utils/services';
 
 @Component({
 	selector: 'app-evaluation',
@@ -347,7 +343,7 @@ export class EvaluationComponent implements OnInit {
 		this.autoEvaluate(dto);
 	}
 
-	autoEvaluate(dto: AutoEvaluateDto) {
+	autoEvaluate(dto: any) {
 		this.evaluationService.autoevaluate(this.evaluation.id, dto).subscribe(
 			response => {
 				this.notificationService.success(
@@ -429,7 +425,7 @@ export class EvaluationComponent implements OnInit {
 	}
 
 	getAutoEvaluate(data) {
-    	const dto = new AutoEvaluateDto();
+    	const dto = <any>{};
 		dto.individualObjective1 = data['individualObjective1'];
 		dto.individualObjective2 = data['individualObjective2'];
     	dto.individualObjective3 = data['individualObjective3'];
@@ -577,10 +573,10 @@ export class EvaluationComponent implements OnInit {
 
 	translateData(): void {
 		forkJoin([
-			this.translate.get('survey.qualificatives.qualificative-1'),
-			this.translate.get('survey.qualificatives.qualificative-2'),
-			this.translate.get('survey.qualificatives.qualificative-3'),
-			this.translate.get('survey.qualificatives.qualificative-4'),
+			this.translate.get('evaluations.qualificatives.qualificative-1'),
+			this.translate.get('evaluations.qualificatives.qualificative-2'),
+			this.translate.get('evaluations.qualificatives.qualificative-3'),
+			this.translate.get('evaluations.qualificatives.qualificative-4'),
 		]).subscribe(([veryGood, good, satisfactory, unsatisfactory]) => {
 			this.qualificatives = { veryGood, good, satisfactory, unsatisfactory };
 		})

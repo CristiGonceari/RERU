@@ -47,11 +47,16 @@
     "executing-position": "Funcție de execuție",
     "managing-position": "Funcție de conducere",
     "status": {
-      "0": "Spre evaluare",
-			"1": "Spre auto evaluare",
-			"2": "Spre re-evaluare",
-			"3": "Spre contrasemnare",
-			"4": "Finisată"
+      "1": "Draft",
+			"2": "Confirmed",
+			"3": "Accepted",
+			"4": "Rejected",
+			"5": "Countersign accepted",
+			"6": "Countersign rejected"
+    },
+    "positions": {
+      "1": "Execution position",
+      "2": "Management position"
     }
   },
   "button": {

@@ -4,13 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { I18nService } from '@erp/shared';
 import { NotificationsService } from 'angular2-notifications';
 import { forkJoin } from 'rxjs';
-import { AutoEvaluateDto } from '../../models/auto-evaluate-dto';
-import { CounterSignDto } from '../../models/counter-sign-dto';
-import { EvaluateDto } from '../../models/evaluate-dto';
-import { Evaluation } from '../../models/evaluation';
-import { hasRequiredField } from '../../util/has-required-field.util';
-import { NotificationUtil } from '../../util/notification.util';
-import { EvaluationService } from '../../services/survey.service';
+import { Evaluation } from '../../models/evaluation.model';
+import { hasRequiredField, NotificationUtil } from '@utils';
+import { EvaluationCounter }
+import { EvaluationService } from '@utils/services';
 
 @Component({
   selector: 'app-public-evaluation',
@@ -330,7 +327,7 @@ export class PublicEvaluationComponent implements OnInit {
 	}
 
 	getEvaluate(data, accept: boolean) {
-		const dto = new EvaluateDto();
+		const dto: Evaluation = <Evaluation>{};
 		dto.accept = accept;
 		dto.comments = data.comments;
 		dto.evaluationFromDate = data.evaluationFromDate;
@@ -455,7 +452,7 @@ export class PublicEvaluationComponent implements OnInit {
 	}
 
 	getCounterSign(data) {
-		const dto = new CounterSignDto();
+		const dto: EvaluationCounter = {};
 		dto.finalMark = !isNaN(data['finalMark']) && data['finalMark'] != null ? +data['finalMark'] : null;
 		dto.counterSingerComments = data['counterSingerComments'];
 
@@ -468,10 +465,10 @@ export class PublicEvaluationComponent implements OnInit {
 
 	translateData(): void {
 		forkJoin([
-			this.translate.get('survey.qualificatives.qualificative-1'),
-			this.translate.get('survey.qualificatives.qualificative-2'),
-			this.translate.get('survey.qualificatives.qualificative-3'),
-			this.translate.get('survey.qualificatives.qualificative-4'),
+			this.translate.get('evaluations.qualificatives.qualificative-1'),
+			this.translate.get('evaluations.qualificatives.qualificative-2'),
+			this.translate.get('evaluations.qualificatives.qualificative-3'),
+			this.translate.get('evaluations.qualificatives.qualificative-4'),
 		]).subscribe(([veryGood, good, satisfactory, unsatisfactory]) => {
 			this.qualificatives = { veryGood, good, satisfactory, unsatisfactory };
 		})

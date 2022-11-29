@@ -6,21 +6,21 @@
   },
   "notification": {
     "title": {
-      "success": "Succes",
-      "error": "Eroare",
-      "warning": "Atenție",
-      "notify": "Notificare"
+      "success": "Успешно",
+      "error": "Ошибка",
+      "warning": "Внимание",
+      "notify": "Оповещение"
     },
     "body": {
       "success": {
-        "create": "A fost creat cu succes!",
-        "update": "A fost actualizat cu succes!",
-        "delete": "A fost sters cu succes!",
-        "login": "Logare cu succes!"
+        "create": "Создан успешно!",
+        "update": "Обновлен успешно!",
+        "delete": "Удален успешно!",
+        "login": "Авторизация успешно!"
       },
-      "error": "A avut loc o eroare!"
+      "error": "Произошла ошибка!"
     },
-    "required": "Câmpul este obligatoriu"
+    "required": "Это поле обязательно"
   },
   "sidebar": {
     "home": "Главная",
@@ -28,11 +28,61 @@
     "evaluations": "Оценки"
   },
   "dashboard": {
-    "title": "Evaluation 360"
+    "title": "Evaluation 360",
+    "subtitle": "Начальная страница",
+    "enclosed-mode":"Скрытый режим"
   },
   "footer": {
     "all-rights-reserved": "Все права защищены",
     "about": "О сайте",
     "contact": "Контакт"
+  },
+  "evaluations": {
+    "title": "Тестирование",
+    "evaluated-employees": "Кандидаты",
+    "countersigner": "Проверяющиe",
+    "evaluation-type": "Тип теста",
+    "select-evaluated-person": "Выбери кандидата",
+    "select-countersigner": "Выбери проверяющего",
+    "select-evaluation-type": "Выбери тип теста",
+    "executing-position": "Исполнительная функция",
+    "managing-position": "Управляющая должность",
+    "status": {
+      "1": "Черновик",
+			"2": "Подтвержденный",
+			"3": "Принято",
+			"4": "Отклоненный",
+			"5": "Принято проверяющим",
+			"6": "Отклонено проверяющим"
+    },
+    "positions": {
+      "1": "Исполнительная функция",
+      "2": "Управляющая должность"
+    }
+  },
+  "button": {
+    "back": "Назад",
+    "apply": "Применить",
+    "confirm": "Потвердить",
+    "cancel": "Отменить",
+    "reset-filters": "Сбросить фильтры",
+    "attach-evaluateds": "Прикрепить кандидатов",
+    "attach-countersigner": "Прикрепить проверяющего"
+  },
+  "attach-user-modal": {
+    "first-name": "Имя",
+    "last-name": "Фамилмя",
+    "father-name": "Отчество",
+    "idnp": "IDNP",
+    "email": "Email",
+    "search-department": "Пойск департамента",
+    "search-role": "Пойск позиций",
+    "search-user-status": "Поиск по статусу пользователя",
+    "department": "Департамент",
+    "role": "Позиция",
+    "npp": "И.Ф.О."
+  },
+  "message": {
+    "no-record": "Запись не найдена."
   }
 }

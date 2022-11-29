@@ -11,7 +11,7 @@ import { CKEditorModule } from 'ngx-ckeditor';
 import { MaterialModule } from '../material.module';
 import { SharedModule } from '@erp/shared';
 
-import { SurveyDropdownDetailsComponent } from './components/survey-dropdown-details/survey-dropdown-details.component';
+import { EvaluationDropdownDetailsComponent } from './components/evaluation-dropdown-details/evaluation-dropdown-details.component';
 import { ConfirmDeleteSurveyModalComponent } from './modals/confirm-delete-survey-modal/confirm-delete-survey-modal.component';
 import { EvaluationComponent } from './components/evaluation/evaluation.component';
 import { EvaluationTypeTitleComponent } from './components/evaluation/evaluation-type-title/evaluation-type-title.component';
@@ -24,7 +24,7 @@ import { SearchRoleComponent } from './modals/attach-user-modal/search-role/sear
 import { SearchDepartmentComponent } from './modals/attach-user-modal/search-department/search-department.component';
 
 const commonComponents = [
-  SurveyDropdownDetailsComponent,
+  EvaluationDropdownDetailsComponent,
   ConfirmDeleteSurveyModalComponent,
   EvaluationComponent,
   EvaluationTypeTitleComponent,
