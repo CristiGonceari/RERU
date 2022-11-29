@@ -1,9 +1,13 @@
 using System;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation360.API.Config;
+using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Accept;
+using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignAccept;
+using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignReject;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Create;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluation;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetMyEvaluations;
+using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Reject;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update;
 using CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations;
 using CVU.ERP.Common.Pagination;
@@ -33,48 +37,47 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
             await Sender.Send(command);
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         public async Task UpdateEvaluation([FromBody] EditEvaluationDto dto)
         {
             var command = new UpdateEvaluationCommand(dto);
             await Sender.Send(command);
         }
 
-        //  [HttpPut]
-        // public async Task ConfirmEvaluation([FromBody] EditEvaluationDto dto)
-        // {
-        //     var command = new UpdateEvaluationCommand(dto);
-        //     await Sender.Send(command);
-        // }
+        [HttpPut("confirm")]
+        public async Task ConfirmEvaluation([FromBody] EditEvaluationDto dto)
+        {
+            var command = new ConfirmEvaluationCommand(dto);
+            await Sender.Send(command);
+        }
 
-        //  [HttpPut]
-        // public async Task AcceptEvaluation([FromBody] EditEvaluationDto dto)
-        // {
-        //     var command = new UpdateEvaluationCommand(dto);
-        //     await Sender.Send(command);
-        // }
+        [HttpPut("accept")]
+        public async Task AcceptEvaluation([FromBody] AcceptRejectEvaluationDto dto)
+        {
+            var command = new AcceptEvaluationCommand(dto);
+            await Sender.Send(command);
+        }
 
-        //    [HttpPut]
-        // public async Task RejectEvaluation([FromBody] EditEvaluationDto dto)
-        // {
-        //     var command = new UpdateEvaluationCommand(dto);
-        //     await Sender.Send(command);
-        // }
+        [HttpPut("reject")]
+        public async Task RejectEvaluation([FromBody] AcceptRejectEvaluationDto dto)
+        {
+            var command = new RejectEvaluationCommand(dto);
+            await Sender.Send(command);
+        }
 
-        //      [HttpPut]
-        // public async Task CounterSignAccept([FromBody] EditEvaluationDto dto)
-        // {
-        //     var command = new UpdateEvaluationCommand(dto);
-        //     await Sender.Send(command);
-        // }
+        [HttpPut("CounterSignAccept")]
+        public async Task CounterSignAccept([FromBody] CounterSignAcceptRejectEvaluationDto dto)
+        {
+            var command = new CounterSignAcceptEvaluationCommand(dto);
+            await Sender.Send(command);
+        }
 
         
-        //      [HttpPut]
-        // public async Task CounterSignReject([FromBody] EditEvaluationDto dto)
-        // {
-        //     var command = new UpdateEvaluationCommand(dto);
-        //     await Sender.Send(command);
-        // }
-
+        [HttpPut("CounterSignReject")]
+        public async Task CounterSignReject([FromBody] CounterSignAcceptRejectEvaluationDto dto)
+        {
+            var command = new CounterSignRejectEvaluationCommand(dto);
+            await Sender.Send(command);
+        }
     }
 }

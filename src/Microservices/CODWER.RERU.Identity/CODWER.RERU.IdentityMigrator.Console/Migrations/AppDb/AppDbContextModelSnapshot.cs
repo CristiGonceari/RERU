@@ -716,8 +716,35 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
+                    b.Property<string>("AdministrativeActOfStudies")
+                        .HasColumnType("text");
+
+                    b.Property<string>("AdministrativeActService")
+                        .HasColumnType("text");
+
+                    b.Property<string>("AppointmentDate")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CheckComment1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CheckComment2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CheckComment3")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CheckComment4")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CommentsEvaluatedEmployee")
+                        .HasColumnType("text");
+
                     b.Property<int>("CounterSignerUserProfileId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("CourseName")
+                        .HasColumnType("text");
 
                     b.Property<string>("CreateById")
                         .HasColumnType("text");
@@ -725,20 +752,230 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("DateAgreementDisagreementAwardedQualifier")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DateAppreciationLevelMnifestationEvaluatedCriteria")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DateCompletionCountersignatory")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateCompletionGeneralData")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DateEvaluatiorInterview")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DateLiftingSanction")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DateSanctionApplication")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DateSettingIindividualGoals")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DateSignatureEvaluatedEmployee")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DecisionCountersignatory")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Education")
+                        .HasColumnType("text");
 
                     b.Property<int>("EvaluatedUserProfileId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("EvaluatorComments")
+                        .HasColumnType("text");
+
                     b.Property<int>("EvaluatorUserProfileId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("FinalEvaluationQualification")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FinalScorePartialEvaluations")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Function")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FunctionSubdivision")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Goal1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Goal2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Goal3")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Goal4")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Goal5")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("KPI1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("KPI2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("KPI3")
+                        .HasColumnType("text");
+
+                    b.Property<string>("KPI4")
+                        .HasColumnType("text");
+
+                    b.Property<string>("KPI5")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ModificationServiceReportDuringEvaluationCourse")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NameSurnameEvaluatedEmployee")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NameSurnameFunctionCountersignatory")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NameSurnameFunctionEvaluator")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Need1ProfessionalDevelopmentEvaluatedEmployee")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Need2ProfessionalDevelopmentEvaluatedEmployee")
+                        .HasColumnType("text");
+
+                    b.Property<string>("OtherComments")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PartialEvaluationPeriod")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PerformanceTerm1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PerformanceTerm2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PerformanceTerm3")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PerformanceTerm4")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PerformanceTerm5")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PeriodEvaluatedFromTo")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PeriodEvaluatedUpTo")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PeriodRunningActivity")
+                        .HasColumnType("text");
+
                     b.Property<decimal>("Points")
                         .HasColumnType("numeric");
+
+                    b.Property<string>("ProfessionalTrainingActivities")
+                        .HasColumnType("text");
+
+                    b.Property<string>("QualificationEvaluationObtained2YearsPast")
+                        .HasColumnType("text");
+
+                    b.Property<string>("QualificationEvaluationObtainedPreviousYear")
+                        .HasColumnType("text");
+
+                    b.Property<string>("QualificationQuarter1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("QualificationQuarter2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("QualificationQuarter3")
+                        .HasColumnType("text");
+
+                    b.Property<string>("QualificationQuarter4")
+                        .HasColumnType("text");
+
+                    b.Property<string>("QualifierPartialEvaluations")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Question1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Question10")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Question11")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Question12")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Question13")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Question2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Question3")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Question4")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Question5")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Question6")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Question7")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Question8")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Question9")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SanctionAppliedEvaluationCourse")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Score1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Score2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Score3")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Score4")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Score5")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SpecialOrMilitaryGrade")
+                        .HasColumnType("text");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
@@ -5100,6 +5337,16 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 4,
                             Name = "Rejected"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "CounterSignAccept"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "CounterSignReject"
                         });
                 });
 
