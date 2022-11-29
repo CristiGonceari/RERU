@@ -57,7 +57,7 @@
     },
     "positions": {
       "1": "De executare",
-      "2": "De management"
+      "2": "De conducere"
     }
   },
   "button": {
@@ -67,7 +67,11 @@
     "cancel": "Anulează",
     "reset-filters": "Resetează filtrele",
     "attach-evaluateds": "Atașează evaluați",
-    "attach-countersigner": "Atașează contrasemnatar"
+    "attach-countersigner": "Atașează contrasemnatar",
+    "evaluate": "Evaluare",
+    "export": "Exporta",
+    "countersign": "Contrasemnare",
+    "delete": "Șterge"
   },
   "attach-user-modal": {
     "first-name": "Prenume",

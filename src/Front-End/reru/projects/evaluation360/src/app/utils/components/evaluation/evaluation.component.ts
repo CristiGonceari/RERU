@@ -43,7 +43,7 @@ export class EvaluationComponent implements OnInit {
 		this.translateData();
 		this.translate.change.subscribe(() => this.translateData());
 		this.initForm(this.evaluation);
-		this.buildCriterias(this.evaluation && this.evaluation.type);
+		// this.buildCriterias(this.evaluation && this.evaluation.type);
 		this.initMarkEvaluation();
 	}
 
@@ -340,28 +340,6 @@ export class EvaluationComponent implements OnInit {
 		if (evaluatedAcceptance === 1 || evaluatedAcceptance === 2 ) {
 			dto.accept = true;
 		}
-		this.autoEvaluate(dto);
-	}
-
-	autoEvaluate(dto: any) {
-		this.evaluationService.autoevaluate(this.evaluation.id, dto).subscribe(
-			response => {
-				this.notificationService.success(
-					'Succes',
-					'Fisa a fost transmisa cu succes!',
-					NotificationUtil.getDefaultMidConfig()
-				);
-				this.navigateToList();
-			},
-			error => {
-				if (error.status === 400) {
-					this.notificationService.warn('Warning', 'Validation error occured!', NotificationUtil.getDefaultMidConfig());
-					return;
-				}
-
-				this.notificationService.error('Error', 'Server error occured!', NotificationUtil.getDefaultMidConfig());
-			}
-		);
 	}
 
 	counterSignEvaluation(evaluatedAcceptance: number) {
@@ -370,7 +348,7 @@ export class EvaluationComponent implements OnInit {
 		this.counterSign(dto);
 	}
 
-	counterSign(dto: CounterSignDto) {
+	counterSign(dto: any) {
 		this.evaluationService.counterSign(this.evaluation.id, dto).subscribe(
 			response => {
 				this.notificationService.success(
@@ -392,7 +370,7 @@ export class EvaluationComponent implements OnInit {
 	}
 
 	getEvaluate(data, accept: boolean) {
-    	const dto = new EvaluateDto();
+    	const dto: any = {};
     	dto.accept = accept;
 		dto.comments = data['comments'];
 
@@ -473,7 +451,7 @@ export class EvaluationComponent implements OnInit {
 	}
 
 	getCounterSign(data) {
-    	const dto = new CounterSignDto();
+    	const dto: any = {};
     	dto.finalMark = !isNaN(data['finalMark']) && data['finalMark'] != null ? +data['finalMark'] : null;
 		dto.counterSingerComments = data['counterSingerComments'];
 		return dto;

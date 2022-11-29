@@ -25,12 +25,11 @@
 				<li ngbNavItem>
 					<a ngbNavLink>Toate testele</a>
 					<ng-template ngbNavContent>
-						<app-survey-table [evaluateType]="0"></app-survey-table>
+						<app-evaluations-table [evaluateType]="0"></app-evaluations-table>
 					</ng-template>
 				</li>
 			</ul>
 			<div [ngbNavOutlet]="nav"></div>
-			<!-- <app-personal-table #personalTable></app-personal-table> -->
 		</div>
 	</div>
 </erp-shared-content>

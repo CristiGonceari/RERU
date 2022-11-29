@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ObjectUtil } from '../../../utils/util/object.util';
-import { EvaluationService } from '../../../utils/services/evaluations.service';
+import { ObjectUtil, PaginationModel, EvaluationListModel } from '@utils';
+import { EvaluationService,  } from '@utils/services';
 import { ConfirmDeleteSurveyModalComponent } from '../../../utils/modals/confirm-delete-survey-modal/confirm-delete-survey-modal.component';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from '../../../utils/util/notification.util';
-import { EvaluationListModel } from '../../../utils/models/evaluation-list.model';
 
 @Component({
   selector: 'app-evaluations-table',
@@ -16,20 +15,27 @@ export class EvaluationsTableComponent implements OnInit {
   @Input() evaluateType: number;
   isLoading: boolean = true;
   evaluations: EvaluationListModel[] = [];
-  pagedSummary = {
-    totalCount: 0,
-    pageSize: 0,
-    currentPage: 1,
-    totalPages: 1
-  };
+  pagedSummary = new PaginationModel();
   includeAll: boolean;
   constructor(private evaluationService: EvaluationService,
               private modalService: NgbModal,
               private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
-    this.processTypeEvaluation(this.evaluateType);
+    this.processTypeEvaluation(+this.evaluateType);
   }
+
+  get isActionsEnabled(): boolean {
+    if (!this.evaluations.length) {
+      return false;
+    }
+
+    return this.evaluations.every((el: EvaluationListModel) => {
+      return (el.canDelete || el.canEvaluate || el.canCounterSign || el.canDownload);
+    })
+  }
+
+  set isActionsEnabled(value: boolean) {}
 
   processTypeEvaluation(type: number) {
     switch(type) {
@@ -49,6 +55,7 @@ export class EvaluationsTableComponent implements OnInit {
     })
     this.evaluationService.listMine(ObjectUtil.preParseObject(request)).subscribe((response: any) => {
       this.evaluations = response.data.items;
+      this.pagedSummary = response.data.pagedSummary;
       this.isLoading = false;
     }, () => {
       this.isLoading = false;

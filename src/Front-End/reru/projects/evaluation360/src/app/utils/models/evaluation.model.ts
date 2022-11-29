@@ -2,7 +2,7 @@ export class Evaluation {
 	id?: number;
 	evaluatedName: string;
 	subdivisionName: string;
-	dateCompletionGeneralData: Date;
+	dateCompletionGeneralData: string | Date;
 	nameSurnameEvaluatedEmployee: string;
 	functionSubdivision: string;
 	specialOrMilitaryGrade: string;
@@ -15,14 +15,14 @@ export class Evaluation {
 	administrativeActOfStudies: string;
 	modificationServiceReportDuringEvaluationCourse: string;
 	function: string;
-	appointmentDate: string;
+	appointmentDate: string | Date;
 	administrativeActService: string;
 	partialEvaluationPeriod: string;
 	finalScorePartialEvaluations: string;
 	qualifierPartialEvaluations: string;
 	sanctionAppliedEvaluationCourse: string;
-	dateSanctionApplication: string;
-	dateLiftingSanction: string;
+	dateSanctionApplication: string | Date;
+	dateLiftingSanction: string | Date;
 	qualificationEvaluationObtained2YearsPast: string;
 	qualificationEvaluationObtainedPreviousYear: string;
 	qualificationQuarter1: string;
@@ -63,8 +63,8 @@ export class Evaluation {
 	score4: string;
 	score5: string;
 	finalEvaluationQualification: string;
-	dateEvaluatiorInterview: string;
-	dateSettingIindividualGoals: string;
+	dateEvaluatiorInterview: string | Date;
+	dateSettingIindividualGoals: string | Date;
 	need1ProfessionalDevelopmentEvaluatedEmployee: string;
 	need2ProfessionalDevelopmentEvaluatedEmployee: string;
 	evaluatorComments: string;

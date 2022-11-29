@@ -38,10 +38,6 @@ export class EvaluationService extends AbstractService {
      return this.http.get(`${this.baseUrl}/${this.routeUrl}/evaluate`, { params: data });
    }
 
-   listAutoevaluation(data): Observable<any> {
-     return this.http.get(`${this.baseUrl}/${this.routeUrl}/auto-evaluate`, { params: data });
-   }
-
    listCountersign(data): Observable<any> {
      return this.http.get(`${this.baseUrl}/${this.routeUrl}/counter-sign`, { params: data });
    }

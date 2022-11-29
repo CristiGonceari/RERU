@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-survey-countersign',
-  templateUrl: './survey-countersign.component.html',
-  styleUrls: ['./survey-countersign.component.scss']
+  selector: 'app-evaluation-countersign',
+  templateUrl: './evaluation-countersign.component.html'
 })
-export class SurveyCountersignComponent implements OnInit {
+export class EvaluationCountersignComponent implements OnInit {
   id: number;
   isLoading: boolean = true;
   constructor(private route: ActivatedRoute) { }

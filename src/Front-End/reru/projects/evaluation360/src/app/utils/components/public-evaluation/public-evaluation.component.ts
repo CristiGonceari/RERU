@@ -6,7 +6,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { forkJoin } from 'rxjs';
 import { Evaluation } from '../../models/evaluation.model';
 import { hasRequiredField, NotificationUtil } from '@utils';
-import { EvaluationCounter }
+import { EvaluationCounterSignModel } from '@utils';
 import { EvaluationService } from '@utils/services';
 
 @Component({
@@ -17,6 +17,7 @@ import { EvaluationService } from '@utils/services';
 export class PublicEvaluationComponent implements OnInit {
 	@Input() action: number;
 	@Input() evaluation: Evaluation;
+	@Input() type: number;
 	surveyForm: FormGroup;
 
 	objectives: number[] = [1,2,3,4,5];
@@ -53,7 +54,8 @@ export class PublicEvaluationComponent implements OnInit {
 		this.translateData();
 		this.translate.change.subscribe(() => this.translateData());
 		this.initForm(this.evaluation);
-		this.buildCriterias(this.evaluation.type);
+		this.buildCriterias(this.type);
+		// this.buildCriterias(this.evaluation.type);
 		this.initMarkEvaluation();
 	}
 
@@ -275,28 +277,6 @@ export class PublicEvaluationComponent implements OnInit {
 		if (evaluatedAcceptance === 1 || evaluatedAcceptance === 2 ) {
 			dto.accept = true;
 		}
-		this.autoEvaluate(dto);
-	}
-
-	autoEvaluate(dto: AutoEvaluateDto) {
-		this.evaluationService.autoevaluate(this.evaluation.id, dto).subscribe(
-			response => {
-				this.notificationService.success(
-					'Succes',
-					'Fisa a fost transmisa cu succes!',
-					NotificationUtil.getDefaultMidConfig()
-				);
-				this.navigateToList();
-			},
-			error => {
-				if (error.status === 400) {
-					this.notificationService.warn('Warning', 'Validation error occured!', NotificationUtil.getDefaultMidConfig());
-					return;
-				}
-
-				this.notificationService.error('Error', 'Server error occured!', NotificationUtil.getDefaultMidConfig());
-			}
-		);
 	}
 
 	counterSignEvaluation(evaluatedAcceptance: number) {
@@ -305,7 +285,7 @@ export class PublicEvaluationComponent implements OnInit {
 		this.counterSign(dto);
 	}
 
-	counterSign(dto: CounterSignDto) {
+	counterSign(dto: EvaluationCounterSignModel) {
 		this.evaluationService.counterSign(this.evaluation.id, dto).subscribe(
 			response => {
 				this.notificationService.success(
@@ -328,131 +308,18 @@ export class PublicEvaluationComponent implements OnInit {
 
 	getEvaluate(data, accept: boolean) {
 		const dto: Evaluation = <Evaluation>{};
-		dto.accept = accept;
-		dto.comments = data.comments;
-		dto.evaluationFromDate = data.evaluationFromDate;
-		dto.evaluationToDate = data.evaluationToDate;
-		dto.interviewDate = data.interviewDate;
-
-		dto.needImprovement1 = data.needImprovement1;
-		dto.needImprovement2 = data.needImprovement2;
-		dto.needImprovement3 = data.needImprovement3;
-
-		dto.question1Mark = data.question1Mark;
-		dto.question2Mark = data.question2Mark;
-		dto.question3Mark = data.question3Mark;
-		dto.question4Mark = data.question4Mark;
-		dto.question5Mark = data.question5Mark;
-		dto.question6Mark = data.question6Mark;
-
-		dto.question1Comments = data.question1Comments;
-		dto.question2Comments = data.question2Comments;
-		dto.question3Comments = data.question3Comments;
-		dto.question4Comments = data.question4Comments;
-		dto.question5Comments = data.question5Comments;
-		dto.question6Comments = data.question6Comments;
-
-		dto.objective1Name = data.objective1Name;
-		dto.objective2Name = data.objective2Name;
-		dto.objective3Name = data.objective3Name;
-		dto.objective4Name = data.objective4Name;
-		dto.objective5Name = data.objective5Name;
-
-		dto.objective1Performance = data.objective1Performance;
-		dto.objective2Performance = data.objective2Performance;
-		dto.objective3Performance = data.objective3Performance;
-		dto.objective4Performance = data.objective4Performance;
-		dto.objective5Performance = data.objective5Performance;
-
-		dto.objective1Complete = data.objective1Complete;
-		dto.objective2Complete = data.objective2Complete;
-		dto.objective3Complete = data.objective3Complete;
-		dto.objective4Complete = data.objective4Complete;
-		dto.objective5Complete = data.objective5Complete;
-
-		dto.objective1Comments = data.objective1Comments;
-		dto.objective2Comments = data.objective2Comments;
-		dto.objective3Comments = data.objective3Comments;
-		dto.objective4Comments = data.objective4Comments;
-		dto.objective5Comments = data.objective5Comments;
-
-		dto.objective1Mark = data.objective1Mark;
-		dto.objective2Mark = data.objective2Mark;
-		dto.objective3Mark = data.objective3Mark;
-		dto.objective4Mark = data.objective4Mark;
-		dto.objective5Mark = data.objective5Mark;
-
 		return dto;
 	}
 
 	getAutoEvaluate(data) {
-		const dto = new AutoEvaluateDto();
-		dto.individualObjective1 = data['individualObjective1'];
-		dto.individualObjective2 = data['individualObjective2'];
-    	dto.individualObjective3 = data['individualObjective3'];
-
-    	dto.partialEvaluationFromDate = data['partialEvaluationFromDate'];
-		dto.partialEvaluationMark = !isNaN(data['partialEvaluationMark']) && data['partialEvaluationMark'] != null ? +data['partialEvaluationMark'] : null;
-		dto.partialEvaluationRate = data['partialEvaluationRate'];
-    	dto.partialEvaluationToDate = data['partialEvaluationToDate'];
-
-    	dto.sanctionEndDate = data['sanctionEndDate'];
-		dto.sanctionStartDate = data['sanctionStartDate'];
-		dto.specializationCoursesInternal = data['specializationCoursesInternal'];
-		dto.specializationCoursesInternational = data['specializationCoursesInternational'];
-		dto.specializationCoursesOthers = data['specializationCoursesOthers'];
-
-		dto.question1Mark = data.question1Mark;
-		dto.question2Mark = data.question2Mark;
-		dto.question3Mark = data.question3Mark;
-		dto.question4Mark = data.question4Mark;
-		dto.question5Mark = data.question5Mark;
-		dto.question6Mark = data.question6Mark;
-
-		dto.question1Comments = data.question1Comments;
-		dto.question2Comments = data.question2Comments;
-		dto.question3Comments = data.question3Comments;
-		dto.question4Comments = data.question4Comments;
-		dto.question5Comments = data.question5Comments;
-		dto.question6Comments = data.question6Comments;
-
-		dto.objective1Name = data.objective1Name;
-		dto.objective2Name = data.objective2Name;
-		dto.objective3Name = data.objective3Name;
-		dto.objective4Name = data.objective4Name;
-		dto.objective5Name = data.objective5Name;
-
-		dto.objective1Performance = data.objective1Performance;
-		dto.objective2Performance = data.objective2Performance;
-		dto.objective3Performance = data.objective3Performance;
-		dto.objective4Performance = data.objective4Performance;
-		dto.objective5Performance = data.objective5Performance;
-
-		dto.objective1Complete = data.objective1Complete;
-		dto.objective2Complete = data.objective2Complete;
-		dto.objective3Complete = data.objective3Complete;
-		dto.objective4Complete = data.objective4Complete;
-		dto.objective5Complete = data.objective5Complete;
-
-		dto.objective1Comments = data.objective1Comments;
-		dto.objective2Comments = data.objective2Comments;
-		dto.objective3Comments = data.objective3Comments;
-		dto.objective4Comments = data.objective4Comments;
-		dto.objective5Comments = data.objective5Comments;
-
-		dto.objective1Mark = data.objective1Mark;
-		dto.objective2Mark = data.objective2Mark;
-		dto.objective3Mark = data.objective3Mark;
-		dto.objective4Mark = data.objective4Mark;
-		dto.objective5Mark = data.objective5Mark;
-		
+		const dto:any  = {};
 		dto.evaluatedComments = data['evaluatedComments'];
 
 		return dto;
 	}
 
 	getCounterSign(data) {
-		const dto: EvaluationCounter = {};
+		const dto: any = {};
 		dto.finalMark = !isNaN(data['finalMark']) && data['finalMark'] != null ? +data['finalMark'] : null;
 		dto.counterSingerComments = data['counterSingerComments'];
 

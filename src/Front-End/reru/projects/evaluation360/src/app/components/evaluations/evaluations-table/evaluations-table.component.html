@@ -16,19 +16,19 @@
 				<th class="text-center">Tipul evaluarii</th>
 				<th class="text-center">Punctaj</th>
 				<th class="text-center">Statut</th>
-				<th>Actions</th>
+				<th *ngIf="isActionsEnabled">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr
-				*ngFor="let item of surveys; let i = index; let even = even"
+				*ngFor="let item of evaluations; let i = index; let even = even"
 				[class.table-warning]="item.state == 1"
 				[class.table-danger]="item.state == 2"
 				[class.table-info]="item.state == 3"
 				[class.table-success]="item.state == 4"
 			>
 				<td class="text-center">
-					<b>{{ item.evalauatedName }} </b>
+					<b>{{ item?.evaluatedName }} </b>
 				</td>
 				<td class="text-center">
 					<b>{{ item.evaluatorName }} </b>
@@ -48,18 +48,21 @@
 				<td class="text-center">
 					{{ 'evaluations.status.' + item.status | translate }}
 				</td>
-				<td>
+				<td *ngIf="isActionsEnabled">
 					<app-evaluation-dropdown-details [index]="i" [survey]="item" (delete)="openConfirmSurveyDeleteModal(item.id)"></app-evaluation-dropdown-details>
 				</td>
 			</tr>
-			<tr *ngIf="!isLoading && (!surveys || !surveys.length)">
+			<tr *ngIf="!evaluations.length">
 				<td colspan="10" class="text-center">{{ 'message.no-record' | translate }}</td>
 			</tr>
 		</tbody>
 	</table>
 	<div pagination
 		[page]="pagedSummary.currentPage"
+		[totalRecords]="pagedSummary.totalCount"
 		[total]="pagedSummary.totalPages"
+		[size]="pagedSummary.pageSize"
+		(sizeChange)="list({ page: 1, itemsPerPage: $event})"
 		class="datatable-pager datatable-paging-loaded"
 		(pageChange)="list({ page: $event })">
 	</div>

@@ -1,5 +1,3 @@
-export { UtilsModule } from './utils.module';
-
 export { EvaluationListModel } from './models/evaluation-list.model';
 export { EvaluationIntroModel } from './models/evaluation-setup.model';
 export { Evaluation } from './models/evaluation.model';

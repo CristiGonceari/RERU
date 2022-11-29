@@ -2,6 +2,7 @@ $editable-border-color: #000;
 $required-border-color: #F64E60;
 
 :host {
+	font-family: Arial, sans-serif;
     ::ng-deep {
 		.required-group:not(.input-group):not(.required-label) {
 			select,

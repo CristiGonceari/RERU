@@ -47,7 +47,9 @@
             "allowedCommonJsDependencies": [
               "file-saver",
               "@swimlane/dragula",
-              "dragula"
+              "dragula",
+              "ng-apexcharts",
+              "apexcharts"
             ]
           },
           "configurations": {
@@ -187,7 +189,9 @@
             "allowedCommonJsDependencies": [
               "file-saver",
               "@swimlane/dragula",
-              "dragula"
+              "dragula",
+              "ng-apexcharts",
+              "apexcharts"
             ]
           },
           "configurations": {
@@ -641,7 +645,9 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "file-saver"
+              "file-saver",
+              "ng-apexcharts",
+              "apexcharts"
             ]
           },
           "configurations": {

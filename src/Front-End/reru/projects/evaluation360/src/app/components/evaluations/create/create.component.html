@@ -8,23 +8,27 @@
         <div class="col pt-5">
           <form [formGroup]="evaluationForm">
           <div class="form-group row">
-            <label for="department" class="col-3 col-form-label">Department: </label>
+            <label for="department" class="col-3 col-form-label">Subdiviziunea: </label>
             <div class="col">
-                <input class="form-control" type="text" formControlName="department" name="department" id="department" placeholder="Departament">
+                <input class="form-control" type="text" formControlName="subdivisionName" name="subdivisionName" id="subdivisionName" placeholder="Subdiviziune">
             </div>
           </div>
             <div class="form-group row">
-              <label for="" class="col-3 col-form-label">Data evaluarii: </label>
+              <label for="" class="col-3 col-form-label">Data completării: </label>
               <div class="col position-relative">
-                <input class="position-absolute invisible" [(ngModel)]="parsedStartDate" (ngModelChange)="parseDate($event, 'startDate')" [ngModelOptions]="{standalone: true}" [owlDateTime]="deForm" autocomplete="off"
+                <input class="position-absolute invisible" [(ngModel)]="parsedDateCompletionGeneralData" (ngModelChange)="parseDate($event, 'dateCompletionGeneralData')" [ngModelOptions]="{standalone: true}" [owlDateTime]="deForm" autocomplete="off"
                 name="date" />
                 <input [owlDateTimeTrigger]="deForm"  placeholder="00.00.0000" autocomplete="off"
-                  class="form-control" [value]="parsedStartDate | date: 'dd.MM.yyyy'" />
+                  class="form-control" [value]="parsedDateCompletionGeneralData | date: 'dd.MM.yyyy'" />
                 <owl-date-time #deForm pickerType="calendar"></owl-date-time>
               </div>
             </div>
             <div class="form-group row">
               <div class="col">
+                <label for="nameSurnameEvaluatedEmployee" class="col-form-label">Nume, prenumele angajatului evaluat: </label>
+                <input class="form-control" type="text" formControlName="nameSurnameEvaluatedEmployee" name="nameSurnameEvaluatedEmployee" id="nameSurnameEvaluatedEmployee" placeholder="Nume, prenumele">
+              </div>
+              <!-- <div class="col">
                 <label for="" class="col-form-label">Nume: </label>
                 <input class="form-control" type="text" formControlName="evaluatedLastName" name="evaluatedLastName" id="evaluatedLastName" placeholder="Nume">
               </div>
@@ -35,65 +39,119 @@
               <div class="col">
                 <label for="" class="col-form-label">Patronimic: </label>
                 <input class="form-control" type="text" formControlName="evaluatedFatherName" name="evaluatedFatherName" id="evaluatedFatherName" placeholder="Patronimic">
-              </div>
+              </div> -->
             </div>
-            <div class="form-group row">
+            <!-- <div class="form-group row">
                 <label for="" class="col-3 col-form-label">Departament evaluat: </label>
                 <div class="col">
                     <input class="form-control" type="text" formControlName="evaluatedDepartmentName" name="evaluatedDepartmentName" id="evaluatedDepartmentName" placeholder="Departament evaluat">
                 </div>
-            </div>
+            </div> -->
             <div class="form-group row">
               <div class="col">
                 <div class="row">
-                  <label for="" class="col-4 col-form-label">Pozitie: </label>
+                  <label for="functionSubdivision" class="col-4 col-form-label">Functia: </label>
                   <div class="col">
-                    <input class="form-control" type="text" formControlName="evaluatedPosition" name="evaluatedPosition" id="evaluatedPosition" placeholder="Pozitie">
+                    <input class="form-control" type="text" formControlName="functionSubdivision" name="functionSubdivision" id="functionSubdivision" placeholder="Functia">
                   </div>
                 </div>
               </div>
               <div class="col">
                 <div class="row">
-                  <label for="" class="col-4 col-form-label">Divizie: </label>
+                  <label for="" class="col-4 col-form-label">Subdiviziunea: </label>
                   <div class="col">
-                    <input class="form-control" type="text" formControlName="specialRank" name="specialRank" id="specialRank" placeholder="Divizie">
+                    <input class="form-control" type="text" name="specialRank" id="specialRank" placeholder="Subdiviziunea">
                   </div>
                 </div>
               </div>
             </div>
             <div class="form-group row">
-              <div class="col">
-                Activitati de formare la care a participat angajatul<br>
-                Cursuri de perfectionare / specializare
-              </div>
+              <label for="" class="col-3 col-form-label">Gradul special/militar: </label>
+                <div class="col">
+                    <input class="form-control" type="text" formControlName="specialOrMilitaryGrade" name="specialOrMilitaryGrade" id="evaluatedDepartmentName" placeholder="Gradul special/militar">
+                </div>
             </div>
             <div class="form-group row">
               <div class="col">
                 <div class="row">
-                  <label for="" class="col-4 col-form-label">Evaluat de la: </label>
+                  <label for="" class="col-4 col-form-label">Perioada evaluată de la: </label>
                   <div class="col position-relative">
-                    <input class="position-absolute invisible" [(ngModel)]="parsedEvaluationFromDate" (ngModelChange)="parseDate($event, 'evaluationFromDate')" [ngModelOptions]="{standalone: true}" [owlDateTime]="efd" autocomplete="off"
+                    <input class="position-absolute invisible" [(ngModel)]="parsedPeriodEvaluatedFromTo" (ngModelChange)="parseDate($event, 'periodEvaluatedFromTo')" [ngModelOptions]="{standalone: true}" [owlDateTime]="efd" autocomplete="off"
                     name="date" />
                     <input [owlDateTimeTrigger]="efd"  placeholder="00.00.0000" autocomplete="off"
-                      class="form-control" [value]="parsedEvaluationFromDate | date: 'dd.MM.yyyy'" />
+                      class="form-control" [value]="parsedPeriodEvaluatedFromTo | date: 'dd.MM.yyyy'" />
                     <owl-date-time #efd pickerType="calendar"></owl-date-time>
                   </div>
                 </div>
               </div>
               <div class="col">
                 <div class="row">
-                  <label for="" class="col-4 col-form-label">Evaluat pana la: </label>
+                  <label for="" class="col-4 col-form-label">Perioada evaluată până la: </label>
                   <div class="col position-relative">
-                    <input class="position-absolute invisible" [(ngModel)]="parsedEvaluationToDate" (ngModelChange)="parseDate($event, 'evaluationToDate')" [ngModelOptions]="{standalone: true}" [owlDateTime]="etd" autocomplete="off"
+                    <input class="position-absolute invisible" [(ngModel)]="parsedPeriodEvaluatedUpTo" (ngModelChange)="parseDate($event, 'periodEvaluatedUpTo')" [ngModelOptions]="{standalone: true}" [owlDateTime]="etd" autocomplete="off"
                     name="date" />
                     <input [owlDateTimeTrigger]="etd"  placeholder="00.00.0000" autocomplete="off"
-                      class="form-control" [value]="parsedEvaluationToDate | date: 'dd.MM.yyyy'" />
+                      class="form-control" [value]="parsedPeriodEvaluatedUpTo | date: 'dd.MM.yyyy'" />
                     <owl-date-time #etd pickerType="calendar"></owl-date-time>
                   </div>
                 </div>
               </div>
             </div>
             <div class="form-group row">
+              <label for="education" class="col-1 col-form-label">Studii: </label>
+              <div class="col">
+                  <select name="education" id="education" class="form-control" formControlName="education">
+                    <option value="null">Selectează</option>
+                    <option value="1">Medii</option>
+                    <option value="2">Superioare</option>
+                    <option value="3">Masterat</option>
+                    <option value="4">Doctorat</option>
+                  </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col">
+                Activitati de formare profesională<br>
+                (perfecționare/specializare, intern/extern)
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col">
+                <div class="row">
+                  <label for="courseName" class="col-4 col-form-label">Denumirea cursului: </label>
+                  <div class="col">
+                    <input class="form-control" type="text" formControlName="courseName" name="courseName" id="courseName" placeholder="Denumirea cursului">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col">
+                <div class="row">
+                  <label for="" class="col-4 col-form-label">Perioada desfasurarii de la: </label>
+                  <div class="col position-relative">
+                    <input class="position-absolute invisible" [(ngModel)]="parsedPeriodEvaluatedFromTo" (ngModelChange)="parseDate($event, 'periodEvaluatedFromTo')" [ngModelOptions]="{standalone: true}" [owlDateTime]="efd" autocomplete="off"
+                    name="date" />
+                    <input [owlDateTimeTrigger]="efd"  placeholder="00.00.0000" autocomplete="off"
+                      class="form-control" [value]="parsedPeriodEvaluatedFromTo | date: 'dd.MM.yyyy'" />
+                    <owl-date-time #efd pickerType="calendar"></owl-date-time>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="row">
+                  <label for="" class="col-4 col-form-label">Perioada deesfasurarii până la: </label>
+                  <div class="col position-relative">
+                    <input class="position-absolute invisible" [(ngModel)]="parsedPeriodEvaluatedUpTo" (ngModelChange)="parseDate($event, 'periodEvaluatedUpTo')" [ngModelOptions]="{standalone: true}" [owlDateTime]="etd" autocomplete="off"
+                    name="date" />
+                    <input [owlDateTimeTrigger]="etd"  placeholder="00.00.0000" autocomplete="off"
+                      class="form-control" [value]="parsedPeriodEvaluatedUpTo | date: 'dd.MM.yyyy'" />
+                    <owl-date-time #etd pickerType="calendar"></owl-date-time>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="form-group row">
               <div class="col">
                 <div class="row">
                   <label for="" class="col col-form-label">Cursuri interne: </label>
@@ -118,19 +176,7 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="form-group row">
-              <label for="" class="col-1 col-form-label">Studii: </label>
-              <div class="col">
-                  <select name="degree" id="degree" class="form-control" formControlName="degree">
-                    <option value="null">Selectează</option>
-                    <option value="1">Medium</option>
-                    <option value="2">University</option>
-                    <option value="3">Master</option>
-                    <option value="4">Doctorate</option>
-                  </select>
-              </div>
-            </div>
+            </div> -->
             <div class="form-group row">
               <div class="col">
                 Ultima categorie de calificare

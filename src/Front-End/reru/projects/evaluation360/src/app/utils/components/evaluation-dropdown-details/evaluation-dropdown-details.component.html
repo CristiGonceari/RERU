@@ -70,22 +70,18 @@
         </ul>
     </div>
 </div> -->
-<a [routerLink]="['../evaluate', survey.id]" class="btn btn-success" *ngIf="survey.canEvaluate" style="margin-right:5px">
-  Evaluare
+<a [routerLink]="['../evaluate', evaluation.id]" class="btn btn-success" *ngIf="evaluation?.canEvaluate" style="margin-right:5px">
+    {{ 'button.evaluate' | translate }}
 </a>
 
-<a (click)="download()" class="btn btn-success" *ngIf="survey.canDownload" style="margin-right:5px">
-  Exporta
+<a (click)="download()" class="btn btn-success" *ngIf="evaluation?.canDownload" style="margin-right:5px">
+    {{ 'button.export' | translate }}
 </a>
 
-<a [routerLink]="['../autoevaluate', survey.id]" *ngIf="survey.canAutoEvaluate" class="btn btn-success" style="margin-right:5px">
-  Autoevaluare
+<a [routerLink]="['../countersign', evaluation?.id]" *ngIf="evaluation?.canCounterSign" class="btn btn-success" style="margin-right:5px">
+    {{ 'button.countersign' | translate }}
 </a>
 
-<a [routerLink]="['../countersign', survey.id]" *ngIf="survey.canCounterSign" class="btn btn-success" style="margin-right:5px">
-  Contrasemnare
-</a>
-
-<a href="javascript:;" (click)="delete.emit()" *ngIf="survey.canDelete" class="btn btn-success" style="margin-right:5px">
-  Șterge
+<a href="javascript:;" (click)="delete.emit()" *ngIf="evaluation?.canDelete" class="btn btn-success" style="margin-right:5px">
+  {{ 'button.delete' | translate }}
 </a>

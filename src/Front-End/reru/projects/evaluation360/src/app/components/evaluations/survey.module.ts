@@ -13,9 +13,9 @@ import { SharedModule } from '@erp/shared';
 import { UtilsModule } from '../../utils/utils.module';
 import { EvaluationsTableComponent } from './evaluations-table/evaluations-table.component';
 import { EvaluationsSetupComponent } from './evaluations-setup/evaluations-setup.component';
-import { SurveyEvaluateComponent } from './evaluations-process/evaluations-process.component';
+import { EvaluationProcessComponent } from './evaluations-process/evaluations-process.component';
 import { EvalationsAcceptComponent } from './evaluations-accept/evaluations-accept.component';
-import { SurveyCountersignComponent } from './survey-countersign/survey-countersign.component';
+import { EvaluationCountersignComponent } from './evaluation-countersign/evaluation-countersign.component';
 import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-datetime';
 
 @NgModule({
@@ -25,9 +25,9 @@ import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-dat
     ListComponent,
     EvaluationsTableComponent,
     EvaluationsSetupComponent,
-    SurveyEvaluateComponent,
+    EvaluationProcessComponent,
     EvalationsAcceptComponent,
-    SurveyCountersignComponent
+    EvaluationCountersignComponent
   ],
   imports: [
     CommonModule,

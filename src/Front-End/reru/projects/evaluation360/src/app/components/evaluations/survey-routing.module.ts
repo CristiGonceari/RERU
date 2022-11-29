@@ -4,9 +4,9 @@ import { SurveyComponent } from './survey.component';
 import { CreateComponent } from './create/create.component';
 import { ListComponent } from './list/list.component';
 import { EvaluationsSetupComponent } from './evaluations-setup/evaluations-setup.component';
-import { SurveyEvaluateComponent } from './evaluations-process/evaluations-process.component';
+import { EvaluationProcessComponent } from './evaluations-process/evaluations-process.component';
 import { EvalationsAcceptComponent } from './evaluations-accept/evaluations-accept.component';
-import { SurveyCountersignComponent } from './survey-countersign/survey-countersign.component';
+import { EvaluationCountersignComponent } from './evaluation-countersign/evaluation-countersign.component';
 
 const routes: Routes = [{
   path: '',
@@ -14,9 +14,9 @@ const routes: Routes = [{
   children: [
     { path: '', redirectTo: 'list', pathMatch: 'full'},
     { path: 'new', component: CreateComponent },
-    { path: 'evaluate/:id', component: SurveyEvaluateComponent },
+    { path: 'evaluate/:id', component: EvaluationProcessComponent },
     { path: 'accept/:id', component: EvalationsAcceptComponent },
-    { path: 'countersign/:id', component: SurveyCountersignComponent },
+    { path: 'countersign/:id', component: EvaluationCountersignComponent },
     { path: 'setup', component: EvaluationsSetupComponent },
     { path: 'list', component: ListComponent }
   ]
