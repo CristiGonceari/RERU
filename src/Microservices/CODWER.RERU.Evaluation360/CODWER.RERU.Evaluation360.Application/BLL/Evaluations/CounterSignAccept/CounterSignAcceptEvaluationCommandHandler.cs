@@ -22,7 +22,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignAccep
         public async Task<Unit> Handle(CounterSignAcceptEvaluationCommand request, CancellationToken cancellationToken)
         {
             var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Evaluation.Id);
-            evaluation.Status = EvaluationStatusEnum.Accepted;
+            evaluation.Status = EvaluationStatusEnum.CounterSignAccept;
             _mapper.Map(request.Evaluation, evaluation); 
             await _dbContext.SaveChangesAsync();
 

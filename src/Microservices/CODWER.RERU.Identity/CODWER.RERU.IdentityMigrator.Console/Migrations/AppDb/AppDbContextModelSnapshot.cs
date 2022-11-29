@@ -5337,6 +5337,16 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 4,
                             Name = "Rejected"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "CounterSignAccept"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "CounterSignReject"
                         });
                 });
 

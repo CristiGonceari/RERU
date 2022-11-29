@@ -5,7 +5,8 @@ namespace RERU.Data.Entities.Enums
         Draft = 1,
         Confirmed = 2,
         Accepted = 3,
-        Rejected= 4
-
+        Rejected = 4,
+        CounterSignAccept = 5,
+        CounterSignReject = 6
     }
 }

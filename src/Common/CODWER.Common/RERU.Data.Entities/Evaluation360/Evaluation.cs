@@ -95,12 +95,15 @@ namespace RERU.Data.Entities.Evaluation360
         public string EvaluatorComments { set; get; }
         public string CommentsEvaluatedEmployee { set; get; }
         public string DateAgreementDisagreementAwardedQualifier { set; get; }
+        public string NameSurnameFunctionEvaluator { set; get; }
+        public string DateAppreciationLevelMnifestationEvaluatedCriteria { set; get; }
         public string CheckComment1 { set; get; }
         public string CheckComment2 { set; get; }
         public string CheckComment3 { set; get; }
         public string CheckComment4 { set; get; }
         public string OtherComments { set; get; }
         public string DecisionCountersignatory { set; get; }
+        public string NameSurnameFunctionCountersignatory { set; get; }
         public string DateCompletionCountersignatory { set; get; }
         public string DateSignatureEvaluatedEmployee { set; get; }
     }
