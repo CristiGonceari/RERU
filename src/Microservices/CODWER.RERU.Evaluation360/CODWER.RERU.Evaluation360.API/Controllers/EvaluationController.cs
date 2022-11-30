@@ -5,8 +5,8 @@ using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Accept;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignAccept;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignReject;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Create;
+using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRowDto;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluation;
-using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetMyEvaluations;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Reject;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update;
 using CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations;
@@ -20,7 +20,7 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
     public class EvaluationController : BaseController
     {
         [HttpGet("mine")]
-        public async Task<PaginatedModel<EvaluationRowDto>> GetMyEvaliations([FromQuery] GetMyEvaluationsQuery query)
+        public async Task<PaginatedModel<EvaluationRowDto>> EvaluationRowDto([FromQuery] EvaluationRowDtoQuery query)
         {
             return await Sender.Send(query);
         }

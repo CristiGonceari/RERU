@@ -10,21 +10,21 @@ using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities.Evaluation360;
 using RERU.Data.Persistence.Context;
 
-namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetMyEvaluations
+namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRowDto
 {
-    public class GetMyEvaluationsQueryHandler : IRequestHandler<GetMyEvaluationsQuery, PaginatedModel<EvaluationRowDto>>
+    public class EvaluationRowDtoQueryHandler : IRequestHandler<EvaluationRowDtoQuery, PaginatedModel<EvaluationRowDto>>
     {
         private readonly AppDbContext _dbContext;
         private readonly ICurrentApplicationUserProvider _currentUserProvider;
         private readonly IPaginationService _paginationService;
-        public GetMyEvaluationsQueryHandler(AppDbContext dbContext, ICurrentApplicationUserProvider currentUserProvider, IPaginationService paginationService)
+        public EvaluationRowDtoQueryHandler(AppDbContext dbContext, ICurrentApplicationUserProvider currentUserProvider, IPaginationService paginationService)
         {
             _dbContext = dbContext;
             _currentUserProvider = currentUserProvider;
             _paginationService = paginationService;
         }
 
-        public async Task<PaginatedModel<EvaluationRowDto>> Handle(GetMyEvaluationsQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedModel<EvaluationRowDto>> Handle(EvaluationRowDtoQuery request, CancellationToken cancellationToken)
         {
             var currentUser = await _currentUserProvider.Get();
 
