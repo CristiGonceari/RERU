@@ -432,7 +432,6 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   }
 
   getTestQuestions(questionIndex?: number) {
-
     this.isLoading = true;
     this.questionIndex = questionIndex == null ? this.questionIndex : questionIndex;
 
