@@ -14,10 +14,9 @@ const routes: Routes = [
 		component: DashboardComponent,
 		canActivate: [AuthenticationGuard]
 	},
-	{ path: 'evaluations',  loadChildren: () => import('./components/evaluations/evaluations.module').then(m => m.EvaluationsModule) },
-	{ path: 'survey', loadChildren: () => import('./components/survey/survey.module').then(m => m.SurveyModule) },
-	{ path: '500', component: Exception500Component },
-	{ path: '404', component: Exception404Component },
+	{ path: 'evaluation', loadChildren: () => import('./components/evaluations/survey.module').then(m => m.SurveyModule) },
+	{ path: '500', component: Exception500Component, pathMatch: 'full' },
+	{ path: '404', component: Exception404Component, pathMatch: 'full' },
 	{ path: '**', redirectTo: '404' }
 ];
 

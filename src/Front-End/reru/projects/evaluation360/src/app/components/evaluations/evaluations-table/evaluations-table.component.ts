@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { EvaluationService } from '../../../utils/services/survey.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ObjectUtil, PaginationModel, EvaluationListModel } from '@utils';
+import { EvaluationService,  } from '@utils/services';
+import { ConfirmDeleteSurveyModalComponent } from '../../../utils/modals/confirm-delete-survey-modal/confirm-delete-survey-modal.component';
+import { NotificationsService } from 'angular2-notifications';
+import { NotificationUtil } from '../../../utils/util/notification.util';
 
 @Component({
   selector: 'app-evaluations-table',
@@ -7,31 +12,103 @@ import { EvaluationService } from '../../../utils/services/survey.service';
   styleUrls: ['./evaluations-table.component.scss']
 })
 export class EvaluationsTableComponent implements OnInit {
+  @Input() evaluateType: number;
   isLoading: boolean = true;
-  surveys: any[] = [];
-  pagedSummary = {
-    totalCount: 0,
-    pageSize: 0,
-    currentPage: 1,
-    totalPages: 1
-  };
-  constructor(private readonly evaluationService: EvaluationService) { }
+  evaluations: EvaluationListModel[] = [];
+  pagedSummary = new PaginationModel();
+  includeAll: boolean;
+  constructor(private evaluationService: EvaluationService,
+              private modalService: NgbModal,
+              private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
-    this.list();
+    this.processTypeEvaluation(+this.evaluateType);
+  }
+
+  get isActionsEnabled(): boolean {
+    if (!this.evaluations.length) {
+      return false;
+    }
+
+    return this.evaluations.every((el: EvaluationListModel) => {
+      return (el.canDelete || el.canEvaluate || el.canCounterSign || el.canDownload);
+    })
+  }
+
+  set isActionsEnabled(value: boolean) {}
+
+  processTypeEvaluation(type: number) {
+    switch(type) {
+      case 0: this.list(); break;
+      // case 1: this.listEvaluations(); break;
+      // case 2: this.listAutoevaluations(); break;
+      // case 3: this.listCountersign(); break;
+    }
   }
 
   list(data: any = {}): void {
     this.isLoading = true;
-    const request = {
+    const request = ObjectUtil.preParseObject({
       ...data,
+      includeAll: this.includeAll,
       page: data.page || this.pagedSummary.currentPage
-    }
-    this.evaluationService.listMine(request).subscribe(response => {
-      this.surveys = response;
+    })
+    this.evaluationService.listMine(ObjectUtil.preParseObject(request)).subscribe((response: any) => {
+      this.evaluations = response.data.items;
+      this.pagedSummary = response.data.pagedSummary;
       this.isLoading = false;
     }, () => {
       this.isLoading = false;
+    });
+  }
+
+  // listEvaluations(): void {
+  //   this.isLoading = true;
+  //   this.evaluationService.listEvaluation({}).subscribe(response => {
+  //     this.surveys = response;
+  //     this.isLoading = false;
+  //   }, () => {
+  //     this.isLoading = false;
+  //   });
+  // }
+
+  // listAutoevaluations(): void {
+  //   this.isLoading = true;
+  //   this.evaluationService.listAutoevaluation({}).subscribe(response => {
+  //     this.surveys = response;
+  //     this.isLoading = false;
+  //   }, () => {
+  //     this.isLoading = false;
+  //   });
+  // }
+
+  // listCountersign(): void {
+  //   this.isLoading = true;
+  //   this.evaluationService.listCountersign({}).subscribe(response => {
+  //     this.surveys = response;
+  //     this.isLoading = false;
+  //   }, () => {
+  //     this.isLoading = false;
+  //   });
+  // }
+
+  openConfirmSurveyDeleteModal(id: number): void {
+    const modalRef = this.modalService.open(ConfirmDeleteSurveyModalComponent, { centered: true });
+    modalRef.result.then(() => this.deleteSurvey(id),() => {
+
+    });
+  }
+
+  deleteSurvey(id: number): void {
+    this.evaluationService.delete(id).subscribe(response => {
+      this.notificationService.success('Success', 'Fisa a fost ștearsă cu succes', NotificationUtil.getDefaultConfig());
+      this.processTypeEvaluation(this.evaluateType);
+    }, error => {
+      if (error.status === 400) {
+        this.notificationService.warn('Warning', 'Something went wrong!', NotificationUtil.getDefaultConfig());
+      }
+
+      this.notificationService.error('Error', 'An error occured!', NotificationUtil.getDefaultConfig());
     });
   }
 

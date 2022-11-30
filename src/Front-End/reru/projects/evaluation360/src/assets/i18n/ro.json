@@ -37,7 +37,7 @@
     "about": "Despre",
     "contact": "Contact"
   },
-  "survey": {
+  "evaluations": {
     "title": "Evaluare",
     "evaluated-employees": "Angajații evaluați",
     "countersigner": "Contrasemnatar",
@@ -48,15 +48,16 @@
     "executing-position": "Funcție de execuție",
     "managing-position": "Funcție de conducere",
     "status": {
-      "0": "Spre evaluare",
-			"1": "Spre auto evaluare",
-			"2": "Spre re-evaluare",
-			"3": "Spre contrasemnare",
-			"4": "Finisată"
+      "1": "Schiță",
+			"2": "Confirmată",
+			"3": "Acceptată",
+			"4": "Respinsă",
+			"5": "Acceptată de contrasemnatar",
+			"6": "Respinsă de contrasemnatar"
     },
     "positions": {
-      "0": "De executare",
-      "1": "De management"
+      "1": "De executare",
+      "2": "De conducere"
     }
   },
   "button": {
@@ -66,7 +67,11 @@
     "cancel": "Anulează",
     "reset-filters": "Resetează filtrele",
     "attach-evaluateds": "Atașează evaluați",
-    "attach-countersigner": "Atașează contrasemnatar"
+    "attach-countersigner": "Atașează contrasemnatar",
+    "evaluate": "Evaluare",
+    "export": "Exporta",
+    "countersign": "Contrasemnare",
+    "delete": "Șterge"
   },
   "attach-user-modal": {
     "first-name": "Prenume",

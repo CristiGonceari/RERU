@@ -4,13 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { I18nService } from '@erp/shared';
 import { NotificationsService } from 'angular2-notifications';
 import { forkJoin } from 'rxjs';
-import { AutoEvaluateDto } from '../../models/auto-evaluate-dto';
-import { CounterSignDto } from '../../models/counter-sign-dto';
-import { EvaluateDto } from '../../models/evaluate-dto';
-import { Evaluation } from '../../models/evaluation';
-import { NotificationUtil } from '../../util/notification.util';
-import { EvaluationService } from '../../services/survey.service';
-import { hasRequiredField } from '../../util/has-required-field.util';
+import { Evaluation, EvaluationCounterSignModel, EvaluationAcceptModel, EvaluationRejectModel } from '@utils';
+import { NotificationUtil, hasRequiredField } from '@utils';
+import { EvaluationService } from '@utils/services';
 
 @Component({
 	selector: 'app-evaluation',
@@ -47,7 +43,7 @@ export class EvaluationComponent implements OnInit {
 		this.translateData();
 		this.translate.change.subscribe(() => this.translateData());
 		this.initForm(this.evaluation);
-		this.buildCriterias(this.evaluation && this.evaluation.type);
+		// this.buildCriterias(this.evaluation && this.evaluation.type);
 		this.initMarkEvaluation();
 	}
 
@@ -344,28 +340,6 @@ export class EvaluationComponent implements OnInit {
 		if (evaluatedAcceptance === 1 || evaluatedAcceptance === 2 ) {
 			dto.accept = true;
 		}
-		this.autoEvaluate(dto);
-	}
-
-	autoEvaluate(dto: AutoEvaluateDto) {
-		this.evaluationService.autoevaluate(this.evaluation.id, dto).subscribe(
-			response => {
-				this.notificationService.success(
-					'Succes',
-					'Fisa a fost transmisa cu succes!',
-					NotificationUtil.getDefaultMidConfig()
-				);
-				this.navigateToList();
-			},
-			error => {
-				if (error.status === 400) {
-					this.notificationService.warn('Warning', 'Validation error occured!', NotificationUtil.getDefaultMidConfig());
-					return;
-				}
-
-				this.notificationService.error('Error', 'Server error occured!', NotificationUtil.getDefaultMidConfig());
-			}
-		);
 	}
 
 	counterSignEvaluation(evaluatedAcceptance: number) {
@@ -374,7 +348,7 @@ export class EvaluationComponent implements OnInit {
 		this.counterSign(dto);
 	}
 
-	counterSign(dto: CounterSignDto) {
+	counterSign(dto: any) {
 		this.evaluationService.counterSign(this.evaluation.id, dto).subscribe(
 			response => {
 				this.notificationService.success(
@@ -396,7 +370,7 @@ export class EvaluationComponent implements OnInit {
 	}
 
 	getEvaluate(data, accept: boolean) {
-    	const dto = new EvaluateDto();
+    	const dto: any = {};
     	dto.accept = accept;
 		dto.comments = data['comments'];
 
@@ -429,7 +403,7 @@ export class EvaluationComponent implements OnInit {
 	}
 
 	getAutoEvaluate(data) {
-    	const dto = new AutoEvaluateDto();
+    	const dto = <any>{};
 		dto.individualObjective1 = data['individualObjective1'];
 		dto.individualObjective2 = data['individualObjective2'];
     	dto.individualObjective3 = data['individualObjective3'];
@@ -477,7 +451,7 @@ export class EvaluationComponent implements OnInit {
 	}
 
 	getCounterSign(data) {
-    	const dto = new CounterSignDto();
+    	const dto: any = {};
     	dto.finalMark = !isNaN(data['finalMark']) && data['finalMark'] != null ? +data['finalMark'] : null;
 		dto.counterSingerComments = data['counterSingerComments'];
 		return dto;
@@ -577,10 +551,10 @@ export class EvaluationComponent implements OnInit {
 
 	translateData(): void {
 		forkJoin([
-			this.translate.get('survey.qualificatives.qualificative-1'),
-			this.translate.get('survey.qualificatives.qualificative-2'),
-			this.translate.get('survey.qualificatives.qualificative-3'),
-			this.translate.get('survey.qualificatives.qualificative-4'),
+			this.translate.get('evaluations.qualificatives.qualificative-1'),
+			this.translate.get('evaluations.qualificatives.qualificative-2'),
+			this.translate.get('evaluations.qualificatives.qualificative-3'),
+			this.translate.get('evaluations.qualificatives.qualificative-4'),
 		]).subscribe(([veryGood, good, satisfactory, unsatisfactory]) => {
 			this.qualificatives = { veryGood, good, satisfactory, unsatisfactory };
 		})

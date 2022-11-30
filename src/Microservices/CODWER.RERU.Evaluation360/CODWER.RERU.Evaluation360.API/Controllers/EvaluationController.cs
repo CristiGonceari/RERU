@@ -32,9 +32,9 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
         }
 
         [HttpPost]
-        public async Task<int> CreateEvaluation([FromBody] CreateEvaluationCommand command)
+        public async Task CreateEvaluation([FromBody] CreateEvaluationsCommand command)
         {
-            return await Sender.Send(command);
+            await Sender.Send(command);
         }
 
         [HttpPut("update")]

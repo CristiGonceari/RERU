@@ -11,7 +11,7 @@
             </div>
   
             <div class="row my-5 px-8 my-lg-7 px-lg-10">
-                <h2>FIŞĂ DE EVALUARE a <b *ngIf="evaluation.type === 3">funcționarului public de conducere</b><b *ngIf="evaluation.type === 2">funcționarului public de executie</b></h2>
+                <h2>FIŞĂ DE EVALUARE a <b *ngIf="type === 2">funcționarului public de conducere</b><b *ngIf="type === 1">funcționarului public de executie</b></h2>
             </div>
             
             <div class="col">
@@ -253,10 +253,10 @@
                   <div class="col">
                     <select class="form-control w-100" formControlName="finalMark" name="finalMark" id="finalMark">
                       <option value="null">Selectează</option>
-                      <option value="4">{{'survey.qualificatives.qualificative-4' | translate}}</option>
-                      <option value="3">{{'survey.qualificatives.qualificative-3' | translate}}</option>
-                      <option value="2">{{'survey.qualificatives.qualificative-2' | translate}}</option>
-                      <option value="1">{{'survey.qualificatives.qualificative-1' | translate}}</option>
+                      <option value="4">{{'evaluations.qualificatives.qualificative-4' | translate}}</option>
+                      <option value="3">{{'evaluations.qualificatives.qualificative-3' | translate}}</option>
+                      <option value="2">{{'evaluations.qualificatives.qualificative-2' | translate}}</option>
+                      <option value="1">{{'evaluations.qualificatives.qualificative-1' | translate}}</option>
                     </select>
                   </div>
                 </div>
