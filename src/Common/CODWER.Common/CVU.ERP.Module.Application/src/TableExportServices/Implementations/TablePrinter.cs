@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.TableExportServices.Interfaces;
-using RERU.Data.Entities.Enums;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using CVU.ERP.Common.DataTransferObjects.Users;
 using Wkhtmltopdf.NetCore;
 using Wkhtmltopdf.NetCore.Options;
 
@@ -75,18 +71,18 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
         private string GetTableContent(List<TDestination> items, List<string> fields)
         {
             var records = string.Empty;
-
+            //every Row
             foreach (var item in items)
             {
                 var objType = item.GetType();
 
                 records += "<tr>";
-
+                //every column
                 foreach (var field in fields)
                 {
-                    var propInfo = GetPropertyInfo(objType, field);
+                    var propInfo = objType.GetPropertyInfo(field);
 
-                    records += $"<td>{ParseByDataType(propInfo, item)}</td>";
+                    records += $"<td>{propInfo.ParseByDataType(item)}</td>";
                 }
 
                 records += "</tr>";
@@ -128,71 +124,5 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             </table>
             </body>
             </html>";
-
-        public static PropertyInfo GetPropertyInfo(Type type, string propertyName)
-        {
-            return type.GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public);
-        }
-
-        private string ParseByDataType(PropertyInfo propInfo, object item)
-        {
-            var result = propInfo.GetValue(item, null);
-
-            switch (result) {
-                case DateTime: result = Convert.ToDateTime(result).ToString("dd/MM/yyyy, HH:mm");
-                    break;
-                case List<string>: result = ParseDataByListOfStrings(result);
-                    break;
-                case bool: result = Convert.ToBoolean(result) ? "+" : "-";
-                    break;
-                case TestResultStatusEnum:
-                    result = EnumMessages.TranslateResultStatus((TestResultStatusEnum) result);
-                    break;
-                case TestStatusEnum: 
-                    result = EnumMessages.GetTestStatus((TestStatusEnum)result);
-                    break;
-                case QuestionTypeEnum: 
-                    result = EnumMessages.GetQuestionType((QuestionTypeEnum)result);
-                    break;
-                case QuestionUnitStatusEnum: 
-                    result = EnumMessages.GetQuestionStatus((QuestionUnitStatusEnum)result);
-                    break;
-                case TestTemplateModeEnum: 
-                    result = EnumMessages.GetTestTemplateTypeEnum((TestTemplateModeEnum)result);
-                    break;
-                case MedicalColumnEnum:
-                    result = EnumMessages.GetMedicalColumnEnum((MedicalColumnEnum)result);
-                    break;
-                case TestTemplateStatusEnum:
-                    result = EnumMessages.GetTestTemplateEnum((TestTemplateStatusEnum)result);
-                    break;
-                case QualifyingTypeEnum:
-                    result = EnumMessages.GetTestTemplateQualifyingType((QualifyingTypeEnum)result);
-                    break;
-                case UserStatusEnum:
-                    result = EnumMessages.GetUserPosture((UserStatusEnum)result);
-                    break;
-                case AccessModeEnum:
-                    result = EnumMessages.GetUserAccessModeEnum((AccessModeEnum)result);
-                    break;
-                case SolicitedPositionStatusEnum:
-                    result = EnumMessages.GetSolicitedPositionStatusEnum((SolicitedPositionStatusEnum)result);
-                    break;
-                case TestingLocationType:
-                    result = EnumMessages.GetTestingLocationType((TestingLocationType)result);
-                    break;
-                case null: result = "-";
-                    break;
-            }
-
-            return result.ToString();
-        }
-
-        private object ParseDataByListOfStrings(object result)
-        {
-            result = string.Join(", ", (List<string>)result);
-
-            return result == "" ? "-" : result;
-        }
     }
 }
