@@ -2,13 +2,9 @@
 using CVU.ERP.Common.DataTransferObjects.Files;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Module.Application.TableExportServices.Interfaces;
-using RERU.Data.Entities.Enums;
 
 namespace CVU.ERP.Module.Application.TableExportServices.Implementations
 {
@@ -67,75 +63,13 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                 //every Column in this Row
                 for (int j = 0; j < fields.Count; j++)
                 {
-                    var propInfo = GetPropertyInfo(objType, fields[j]);
-                    workSheet.Cells[i + 2, j + 1].Value = ParseByDataType(propInfo, items[i]);
+                    var propInfo = objType.GetPropertyInfo(fields[j]);
+                    workSheet.Cells[i + 2, j + 1].Value = propInfo.ParseByDataType(items[i]);
                     SetBordersStyleOnCells(workSheet, i + 2, j + 1 );
                 }
             }
         }
 
-        private static PropertyInfo GetPropertyInfo(Type type, string propertyName)
-        {
-            return type.GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public);
-        }
-        private string ParseByDataType(PropertyInfo propInfo, object item)
-        {
-            var result = propInfo.GetValue(item, null);
-
-            switch (result)
-            {
-                case DateTime:
-                    result = Convert.ToDateTime(result).ToString("dd/MM/yyyy, HH:mm");
-                    break;
-                case List<string>:
-                    result = ParseDataByListOfStrings(result);
-                    break;
-                case bool:
-                    result = Convert.ToBoolean(result) ? "+" : "-";
-                    break;
-                case TestResultStatusEnum:
-                    result = EnumMessages.TranslateResultStatus((TestResultStatusEnum)result);
-                    break;
-                case TestStatusEnum:
-                    result = EnumMessages.GetTestStatus((TestStatusEnum)result);
-                    break;
-                case QuestionTypeEnum:
-                    result = EnumMessages.GetQuestionType((QuestionTypeEnum)result);
-                    break;
-                case QuestionUnitStatusEnum:
-                    result = EnumMessages.GetQuestionStatus((QuestionUnitStatusEnum)result);
-                    break;
-                case TestTemplateModeEnum:
-                    result = EnumMessages.GetTestTemplateTypeEnum((TestTemplateModeEnum)result);
-                    break;
-                case MedicalColumnEnum:
-                    result = EnumMessages.GetMedicalColumnEnum((MedicalColumnEnum)result);
-                    break;
-                case TestTemplateStatusEnum:
-                    result = EnumMessages.GetTestTemplateEnum((TestTemplateStatusEnum)result);
-                    break;
-                case QualifyingTypeEnum:
-                    result = EnumMessages.GetTestTemplateQualifyingType((QualifyingTypeEnum)result);
-                    break;
-                case UserStatusEnum:
-                    result = EnumMessages.GetUserPosture((UserStatusEnum)result);
-                    break;
-                case AccessModeEnum:
-                    result = EnumMessages.GetUserAccessModeEnum((AccessModeEnum)result);
-                    break;
-                case SolicitedPositionStatusEnum:
-                    result = EnumMessages.GetSolicitedPositionStatusEnum((SolicitedPositionStatusEnum)result);
-                    break;
-                case TestingLocationType:
-                    result = EnumMessages.GetTestingLocationType((TestingLocationType)result);
-                    break;
-                case null:
-                    result = "-";
-                    break;
-            }
-
-            return result.ToString();
-        }
         private static void SetBordersStyleOnCells(ExcelWorksheet worksheet, int row, int column)
         {
             worksheet.Cells[row, column].Style.Border.Top.Style = ExcelBorderStyle.Thin;
@@ -143,13 +77,6 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             worksheet.Cells[row, column].Style.Border.Right.Style = ExcelBorderStyle.Thin;
             worksheet.Cells[row, column].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
             worksheet.Column(column).Width = 24; ;
-        }
-
-        private object ParseDataByListOfStrings(object result)
-        {
-            result = string.Join(", ", (List<string>)result);
-
-            return result == "" ? "-" : result;
         }
     }
 }
