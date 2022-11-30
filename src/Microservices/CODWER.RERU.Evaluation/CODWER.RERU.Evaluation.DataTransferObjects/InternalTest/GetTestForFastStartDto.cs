@@ -9,5 +9,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.InternalTest
         public string TestTemplateName { get; set; }
         public DateTime ProgrammedTime { get; set; }
         public DateTime? EndProgrammedTime { get; set; }
+        public bool CanStartWithoutConfirmation { get; set; }
     }
 }

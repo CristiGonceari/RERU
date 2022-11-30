@@ -2,6 +2,7 @@
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using RERU.Data.Entities;
+using System.Linq;
 
 namespace CODWER.RERU.Evaluation.Application.Events
 {
@@ -20,7 +21,9 @@ namespace CODWER.RERU.Evaluation.Application.Events
 
             CreateMap<Event, SelectEventValueDto>()
                 .ForMember(x => x.EventId, opts => opts.MapFrom(e => e.Id))
-                .ForMember(x => x.EventName, opts => opts.MapFrom(e => e.Name));
+                .ForMember(x => x.EventName, opts => opts.MapFrom(e => e.Name))
+                .ForMember(x => x.IsEventEvaluator, opts => opts.MapFrom(src => src.EventEvaluators.Any()));
+           
         }
     }
 }

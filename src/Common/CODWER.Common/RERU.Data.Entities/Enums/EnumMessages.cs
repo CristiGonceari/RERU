@@ -60,7 +60,7 @@ namespace RERU.Data.Entities.Enums
         public const string Class = "Clasă";
         public const string ComputerClass = "Clasă cu calculatoare";
 
-        public static string GetTestStatus(TestStatusEnum testStatus)
+        public static string Translate(TestStatusEnum testStatus)
         {
             return testStatus switch
             {
@@ -74,7 +74,7 @@ namespace RERU.Data.Entities.Enums
             };
         }
 
-        public static string GetQuestionType(QuestionTypeEnum testStatus)
+        public static string Translate(QuestionTypeEnum testStatus)
         {
             return testStatus switch
             {
@@ -86,7 +86,7 @@ namespace RERU.Data.Entities.Enums
             };
         }
 
-        public static string GetQuestionSequence(SequenceEnum testStatus)
+        public static string Translate(SequenceEnum testStatus)
         {
             return testStatus switch
             {
@@ -96,7 +96,7 @@ namespace RERU.Data.Entities.Enums
             };
         }
 
-        public static string GetQuestionStatus(QuestionUnitStatusEnum questionStatus)
+        public static string Translate(QuestionUnitStatusEnum questionStatus)
         {
             return questionStatus switch
             {
@@ -107,7 +107,7 @@ namespace RERU.Data.Entities.Enums
             };
         }
 
-        public static string TranslateResultStatus(TestResultStatusEnum testResultStatus)
+        public static string Translate(TestResultStatusEnum testResultStatus)
         {
             return testResultStatus switch
             {
@@ -123,7 +123,7 @@ namespace RERU.Data.Entities.Enums
             };
         }
 
-        public static string GetTestTemplateTypeEnum(TestTemplateModeEnum testTypeMode)
+        public static string Translate(TestTemplateModeEnum testTypeMode)
         {
             return testTypeMode switch
             {
@@ -134,7 +134,7 @@ namespace RERU.Data.Entities.Enums
             };
         }
 
-        public static string GetMedicalColumnEnum(MedicalColumnEnum column)
+        public static string Translate(MedicalColumnEnum column)
         {
             return column switch
             {
@@ -146,7 +146,7 @@ namespace RERU.Data.Entities.Enums
             };
         }
 
-        public static string GetTestTemplateEnum(TestTemplateStatusEnum testTemplateEnum)
+        public static string Translate(TestTemplateStatusEnum testTemplateEnum)
         {
             return testTemplateEnum switch
             {
@@ -157,7 +157,7 @@ namespace RERU.Data.Entities.Enums
             };
         }
 
-        public static string GetTestTemplateQualifyingType(QualifyingTypeEnum qualifyingType)
+        public static string Translate(QualifyingTypeEnum qualifyingType)
         {
             return qualifyingType switch
             {
@@ -170,7 +170,7 @@ namespace RERU.Data.Entities.Enums
             };
         }
 
-        public static string GetUserPosture(UserStatusEnum userStatusEnum)
+        public static string Translate(UserStatusEnum userStatusEnum)
         {
             return userStatusEnum switch
             {
@@ -180,7 +180,7 @@ namespace RERU.Data.Entities.Enums
             };
         }
 
-        public static string GetUserAccessModeEnum(AccessModeEnum accessModeEnum)
+        public static string Translate(AccessModeEnum accessModeEnum)
         {
             return accessModeEnum switch
             {
@@ -192,7 +192,7 @@ namespace RERU.Data.Entities.Enums
             };
         }
 
-        public static string GetSolicitedPositionStatusEnum(SolicitedPositionStatusEnum solicitedTestStatus)
+        public static string Translate(SolicitedPositionStatusEnum solicitedTestStatus)
         {
             return solicitedTestStatus switch
             {
@@ -204,7 +204,7 @@ namespace RERU.Data.Entities.Enums
             };
         }
 
-        public static string GetTestingLocationType(TestingLocationType testingLocationType)
+        public static string Translate(TestingLocationType testingLocationType)
         {
             return testingLocationType switch
             {

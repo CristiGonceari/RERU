@@ -189,7 +189,7 @@ export class AddEditPositionComponent implements OnInit {
 		const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.exceptUserIds = [];
 		modalRef.componentInstance.page = this.router.url.split("/").pop();;
-		modalRef.componentInstance.attachedItems = this.attachedUsers;
+		modalRef.componentInstance.attachedItems = [...this.attachedUsers];
 		modalRef.componentInstance.inputType = 'checkbox';
 		modalRef.result.then(() => {
 			this.attachedUsers = modalRef.result.__zone_symbol__value.attachedItems;

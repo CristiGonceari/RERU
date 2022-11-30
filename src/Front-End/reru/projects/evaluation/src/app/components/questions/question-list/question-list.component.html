@@ -67,8 +67,9 @@
 						</div>
 						<div class="col">
 							<div class="w-100 text-right">
-								<app-button (handle)="clearFields(); questionsTable.resetFilters()"
-									[value]="'button.reset' | translate"></app-button>
+								<app-button 
+								(handle)="clearFields(); questionsTable.resetFilters(); question.clearSearch(); category.clearSearch(); questionTags.clearSearch()"
+								[value]="'button.reset' | translate"></app-button>
 							</div>
 						</div>
 					</div>
