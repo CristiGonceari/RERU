@@ -101,7 +101,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
                     foreach (var test in testTemplate.Tests)
                     {
-                        workSheet.Cells[userRow, testCol, userRow, testCol].Value = $@"- {EnumMessages.TranslateResultStatus(test.Result)}, {test.PassDate.ToString("dd/MM/yyyy HH:mm")}, {EnumMessages.GetTestStatus(test.Status)}";
+                        workSheet.Cells[userRow, testCol, userRow, testCol].Value = $@"- {EnumMessages.Translate(test.Result)}, {test.PassDate:dd/MM/yyyy HH:mm}, {EnumMessages.Translate(test.Status)}";
                     }
 
                     testCol++;
