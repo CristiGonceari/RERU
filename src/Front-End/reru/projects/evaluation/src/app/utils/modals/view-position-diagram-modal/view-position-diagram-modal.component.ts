@@ -12,6 +12,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { PrintTemplateService } from '../../services/print-template/print-template.service';
 import { CandidatePositionService } from '../../services/candidate-position/candidate-position.service';
 import { saveAs } from 'file-saver';
+import { StyleNodesService } from '../../services/style-nodes/style-nodes.service';
 
 @Component({
   selector: 'app-view-position-diagram-modal',
@@ -35,6 +36,8 @@ export class ViewPositionDiagramModalComponent implements OnInit {
   status = TestStatusEnum;
   isActive: boolean = true;
 
+  stylesToApply: string = '.modal-dialog{ min-width: 97%; height: 95% }'
+
   constructor(private activeModal: NgbActiveModal,
     private enumStringTranslatorService: EnumStringTranslatorService,
     public translate: I18nService,
@@ -43,9 +46,11 @@ export class ViewPositionDiagramModalComponent implements OnInit {
     private positionService: CandidatePositionService,
     private router: Router,
     private route: ActivatedRoute,
+    private styleNodesService: StyleNodesService
   ) { }
 
   ngOnInit(): void {
+    this.styleNodesService.addStyle('modal-dialog', this.stylesToApply)
   }
 
   translateResultValue(item) {
@@ -63,6 +68,7 @@ export class ViewPositionDiagramModalComponent implements OnInit {
   }
 
   close(): void {
+    this.styleNodesService.removeStyle('modal-dialog')
     this.activeModal.dismiss();
   }
 
