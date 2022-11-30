@@ -187,7 +187,8 @@
             "allowedCommonJsDependencies": [
               "file-saver",
               "@swimlane/dragula",
-              "dragula"
+              "dragula",
+              "apexcharts"
             ]
           },
           "configurations": {
