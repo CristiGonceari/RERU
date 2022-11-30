@@ -17,7 +17,7 @@ import { TestTemplateSettings } from '../../../utils/models/test-templates/test-
 import { AddTestQuestion } from '../../../utils/models/test-questions/add-test-question.model';
 import { SafeHtmlPipe } from '../../../utils/pipes/safe-html.pipe';
 import { ConfirmModalComponent } from '@erp/shared';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/file-test-answer.service';
 import { saveAs } from 'file-saver';
@@ -247,6 +247,17 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     }
   }
 
+  checkSaveAnswer(index) {
+      let isCkecked: boolean = false;
+      isCkecked = this.testOptionsList.some((x) => x.isSelected == true); 
+
+       if (isCkecked) {
+        this.saveAnswers();
+       } else {
+        this.getTestQuestions(index)
+      }
+  }
+
   saveAnswers() {
     this.disableBtn = true;
     this.isLoading = true;
@@ -421,6 +432,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   }
 
   getTestQuestions(questionIndex?: number) {
+
     this.isLoading = true;
     this.questionIndex = questionIndex == null ? this.questionIndex : questionIndex;
 
