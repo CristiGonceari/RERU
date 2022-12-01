@@ -67,7 +67,7 @@
 				<tr>
 					<th scope="col" style="width: 50px">
 						<span>
-							<label class="checkbox checkbox-lg checkbox-inline" [ngbTooltip]="tooltip">
+							<label class="checkbox checkbox-lg checkbox-inline" [ngbTooltip]="tooltip" *ngIf="inputType !== 'radio'">
 								<input type="checkbox" value="" name="option"
 									[checked]="paginatedAttachedIds"
 									(change)="checkAll($event)" />

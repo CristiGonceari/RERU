@@ -1,0 +1,36 @@
+<app-page-title [title]="'Evaluari'"> </app-page-title>
+
+<erp-shared-content>
+	<div class="card card-custom erp-shared-desktop-wide">
+		<div class="card-header flex-wrap border-0 pt-6 pb-0">
+			<div class="card-title">
+				<h3 class="card-label font-weight-bolder">Lista</h3>
+			</div>
+			<div class="card-toolbar flex-column justify-content-between align-items-end">
+				<a routerLink="../setup" class="btn btn-success font-weight-bolder mb-4">Evaluare nouă</a>
+				<div class="form-group row">
+					<div class="col">
+						<div class="checbox-inline">
+							<label class="checkbox">
+								<input name="includeAll" type="checkbox" [(ngModel)]="includeAll" (ngModelChange)="filterList($event)" [ngModelOptions]="{ standalone: true }">
+								<span class="mr-2"></span> Afișeaza evaluările în curs de procesare
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card-body pt-0">
+			<ul ngbNav #nav="ngbNav" class="nav-tabs">
+				<li ngbNavItem>
+					<a ngbNavLink>Toate testele</a>
+					<ng-template ngbNavContent>
+						<app-survey-table [evaluateType]="0"></app-survey-table>
+					</ng-template>
+				</li>
+			</ul>
+			<div [ngbNavOutlet]="nav"></div>
+			<!-- <app-personal-table #personalTable></app-personal-table> -->
+		</div>
+	</div>
+</erp-shared-content>

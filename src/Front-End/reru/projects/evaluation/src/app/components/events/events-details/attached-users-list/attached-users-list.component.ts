@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EventService } from 'projects/evaluation/src/app/utils/services/event/event.service';
 
 @Component({
   selector: 'app-attached-users-list',
@@ -11,7 +9,7 @@ import { EventService } from 'projects/evaluation/src/app/utils/services/event/e
 export class AttachedUsersListComponent implements OnInit {
   id;
   url: string;
-	constructor(private route: ActivatedRoute,private modalService: NgbModal, private eventService: EventService, private router: Router) { }
+	constructor(private route: ActivatedRoute, private router: Router) { }
 
 	ngOnInit(): void {
 		this.subsribeForParams();
