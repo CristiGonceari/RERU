@@ -1,0 +1,39 @@
+{
+  "languages": {
+    "ro": "Română",
+    "en": "English",
+    "ru": "Русский"
+  },
+  "notification": {
+    "title": {
+      "success": "Success",
+      "error": "Error",
+      "warning": "Warning",
+      "notify": "Notification"
+    },
+    "body": {
+      "success": {
+        "create": "Has been created successfully!",
+        "update": "Has been updated successfully!",
+        "delete": "Has been deleted successfully",
+        "login": "Login successfully!"
+      },
+      "error": "There has been an error!"
+    },
+    "required": "The field is required"
+  },
+  "sidebar": {
+    "home": "Home",
+    "administration": "Administration",
+    "evaluations": "Evaluations"
+  },
+  "dashboard": {
+    "title": "Evaluation 360",
+    "subtitle": "Start Page"
+  },
+  "footer": {
+    "all-rights-reserved": "All rights reserved",
+    "about": "About",
+    "contact": "Contact"
+  }
+}

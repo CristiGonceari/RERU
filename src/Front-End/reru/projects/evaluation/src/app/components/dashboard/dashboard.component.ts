@@ -5,8 +5,35 @@ import { CloudFileService } from '../../utils/services/cloud-file/cloud-file.ser
 import { NotificationUtil } from '../../utils/util/notification.util';
 import { NotificationsService } from 'angular2-notifications';
 import { PaginationModel } from '../../utils/models/pagination.model';
-import { map } from 'rxjs/operators'
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import {
+  ApexNonAxisChartSeries,
+  ApexPlotOptions,
+  ApexChart,
+  ApexFill,
+  ApexAxisChartSeries,
+  ApexXAxis,
+  ApexStroke,
+  ApexTooltip,
+  ApexDataLabels
+} from "ng-apexcharts";
+
+export type NotificationsChartOptions = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  labels: string[];
+  plotOptions: ApexPlotOptions;
+  fill: ApexFill;
+};
+
+export type TodaysEvaluations = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  stroke: ApexStroke;
+  tooltip: ApexTooltip;
+  dataLabels: ApexDataLabels;
+};
 
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +41,9 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  fill: ApexFill = {
+    colors: ['#F64E60']
+  }
   profile;
   isLoading: boolean = true;
   fileId;
@@ -33,14 +63,112 @@ export class DashboardComponent implements OnInit {
   fileStatus = {status: '', requestType: '', percent: 0 }
   filenames: string[] = [];
 
+  // Apex Chart
+  public notificationsChart: Partial<NotificationsChartOptions>;
+  public evaluationsChartOptions: Partial<TodaysEvaluations>;
+
   constructor(private userService: UserProfileService,
               private fileService : CloudFileService,
               private notificationService: NotificationsService,
-    ) { }
+    ) {
+      this.notificationsChart = {
+        series: [25],
+        chart: {
+          height: 250,
+          type: "radialBar"
+        },
+        plotOptions: {
+          radialBar: {
+            hollow: {
+              size: "70%"
+            },
+            dataLabels: {
+              show: true,
+              name: {
+                  color: '#1BC5BD'
+              },
+              value: {
+                formatter: () => '25/100'
+              }
+            }
+          }
+        },
+        labels: ["New notifications"],
+        fill: {
+          colors: ['#1BC5BD']
+        }
+      };
+
+      this.evaluationsChartOptions = {
+        series: [
+          {
+            name: "MAI Patrulare",
+            data: [31, 40, 28, 51, 42, 109, 100, 90, 80, 70, 60, 100, 50, 40]
+          },
+          {
+            name: "MAI Criminalistica",
+            data: [11, 32, 45, 32, 34, 52, 41, 55, 61, 55, 45, 41, 39, 14]
+          }
+        ],
+        chart: {
+          height: 350,
+          type: "area"
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: "smooth"
+        },
+        xaxis: {
+          type: "datetime",
+          categories: [
+            "2022-11-24T08:00:00.000Z",
+            "2022-11-24T09:00:00.000Z",
+            "2022-11-24T10:00:00.000Z",
+            "2022-11-24T11:00:00.000Z",
+            "2022-11-24T12:00:00.000Z",
+            "2022-11-24T13:00:00.000Z",
+            "2022-11-24T14:00:00.000Z",
+            "2022-11-24T15:00:00.000Z",
+            "2022-11-24T16:00:00.000Z",
+            "2022-11-24T17:00:00.000Z",
+            "2022-11-24T18:00:00.000Z",
+            "2022-11-24T19:00:00.000Z",
+            "2022-11-24T20:00:00.000Z",
+            "2022-11-24T21:00:00.000Z",
+          ]
+        },
+        tooltip: {
+          x: {
+            format: "dd/MM/yy HH:mm"
+          }
+        }
+      };
+
+
+    }
 
   ngOnInit(): void {
     this.retrieveProfile();
     this.getDemoList();
+    // this.evaluationsChartOptions.series = this.generateData(10, 100, 15);
+  }
+
+  generateData(baseval, count, yrange) {
+    var i = 0;
+    var series = [];
+    while (i < count) {
+      var x = Math.floor(Math.random() * (750 - 1 + 1)) + 1;
+      var y =
+        Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+      var z = Math.floor(Math.random() * (75 - 15 + 1)) + 15;
+
+      series.push([x, y, z]);
+      baseval += 86400000;
+      i++;
+    }
+    return series;
   }
 
   retrieveProfile(): void {
