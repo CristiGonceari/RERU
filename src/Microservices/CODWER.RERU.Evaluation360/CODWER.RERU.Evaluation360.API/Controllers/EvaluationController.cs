@@ -12,6 +12,7 @@ using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update;
 using CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations;
 using CVU.ERP.Common.Pagination;
 using Microsoft.AspNetCore.Mvc;
+using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.EvaluatedKnow;
 
 namespace CODWER.RERU.Evaluation360.API.Controllers
 {
@@ -77,6 +78,13 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
         public async Task CounterSignReject([FromBody] CounterSignAcceptRejectEvaluationDto dto)
         {
             var command = new CounterSignRejectEvaluationCommand(dto);
+            await Sender.Send(command);
+        }
+
+        [HttpPut("EvaluatedKnow")]
+        public async Task EvaluatedKnow([FromBody] EvaluatedKnowDto dto)
+        {
+            var command = new EvaluatedKnowCommand(dto);
             await Sender.Send(command);
         }
     }

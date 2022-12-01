@@ -13,7 +13,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Accept
         private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public AcceptEvaluationCommandHandler(AppDbContext dbContext, IMapper mapper, ISender sender)
+        public AcceptEvaluationCommandHandler(AppDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -23,6 +23,8 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Accept
         {
             var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Evaluation.Id);
             evaluation.Status = EvaluationStatusEnum.Accepted;
+            evaluation.DateAcceptOrRejectEvaluated = System.DateTime.Now;
+            evaluation.SignatureEvaluated = true;
             _mapper.Map(request.Evaluation, evaluation); 
             await _dbContext.SaveChangesAsync();
 

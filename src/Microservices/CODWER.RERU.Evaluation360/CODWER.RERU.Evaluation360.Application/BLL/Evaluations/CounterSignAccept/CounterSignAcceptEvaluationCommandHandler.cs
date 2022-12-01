@@ -23,6 +23,8 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignAccep
         {
             var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Evaluation.Id);
             evaluation.Status = EvaluationStatusEnum.CounterSignAccept;
+            evaluation.DateCompletionCounterSigner = System.DateTime.Now;
+            evaluation.SignatureCounterSigner = true;
             _mapper.Map(request.Evaluation, evaluation); 
             await _dbContext.SaveChangesAsync();
 
