@@ -122,7 +122,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
                 ReplacedValues = new Dictionary<string, string>()
                 {
                     { "{user_name}", solicitedPosition.UserProfile.FullName },
-                    { "{email_message}", request.EmailMessage.Replace("{user_name_key}", solicitedPosition.UserProfile.FullName) }
+                    { "{email_message}", request.EmailMessage }
                 }
             });
         }

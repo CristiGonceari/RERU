@@ -22,6 +22,7 @@ export class ReviewSolicitedVacandPositionModalComponent implements OnInit {
   mesageType;
 
   active = 0;
+  isLoading: boolean = true;
 
   public Editor = DecoupledEditor;
   public onReady(editor) {
@@ -44,6 +45,7 @@ export class ReviewSolicitedVacandPositionModalComponent implements OnInit {
   }
 
   getCheckedPositionFiles(solicitedTestId){
+    this.isLoading = true;
     this.solicitedVacantPositionUserFileService.getCheckedFiles({id : solicitedTestId}).subscribe((res) => {
       const response = res.data;
       this.isSolicitedPositionFilesCompleted = JSON.parse(response.toLowerCase());
@@ -58,22 +60,21 @@ export class ReviewSolicitedVacandPositionModalComponent implements OnInit {
   getEmailMessage(type){
   this.mesageType = type;
   this.solicitedVacantPositionEmailMessageService.getMessage({messageType: type}).subscribe(res => {
-    this.editorData = res.data
+    let replacedData = res.data.replace("{user_name_key}", this.userName);
+    this.editorData = replacedData;
+    this.isLoading = false;
   })
   }
 
   close(): void {
     let data = {
       messageEnum: this.mesageType,
-      EmailMessage: this.editorData
+      EmailMessage: this.editorData,
     }
-
     this.activeModal.close(data);
   }
 
   dismiss(): void {
     this.activeModal.dismiss();
   }
-
-
 }
