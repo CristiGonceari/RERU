@@ -11,4 +11,6 @@ export interface EvaluationListModel {
     canCounterSign?: boolean;
     canDownload?: boolean;
     canDelete?: boolean;
+    canAccept?: boolean;
+    canAcceptCounterSign?: boolean;
 }

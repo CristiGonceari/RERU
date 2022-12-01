@@ -18,7 +18,6 @@ export class EvaluationDropdownDetailsComponent {
   }
 
   isDisabled(): boolean {
-    return false;
     return this.evaluation &&
            !this.evaluation.canEvaluate &&
            !this.evaluation.canCounterSign &&
