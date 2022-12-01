@@ -69,6 +69,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests
         {
             if (test.TestTemplate.Settings == null) return false;
 
+            if (test.TestStatus is TestStatusEnum.AlowedToStart) return true;
+
             return test.TestTemplate.Settings.StartWithoutConfirmation && test.TestPassStatus is not TestPassStatusEnum.Forbidden or null;
         }
     }

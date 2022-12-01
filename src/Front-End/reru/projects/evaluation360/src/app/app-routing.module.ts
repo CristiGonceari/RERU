@@ -1,10 +1,43 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LocalizeRouterModule, LocalizeParser, LocalizeRouterSettings, CacheMechanism, } from '@gilsdav/ngx-translate-router';
+import { Location } from '@angular/common';
+import { ManualLoaderFactory } from './utils/services/i18n.service';
+import { TranslateService } from '@ngx-translate/core';
+import { AuthenticationCallbackComponent, AuthenticationGuard, Exception404Component, Exception500Component } from '@erp/shared';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+	{ path: 'auth-callback', component: AuthenticationCallbackComponent },
+	{
+		path: '',
+		component: DashboardComponent,
+		canActivate: [AuthenticationGuard]
+	},
+	{ path: 'evaluations',  loadChildren: () => import('./components/evaluations/evaluations.module').then(m => m.EvaluationsModule) },
+	{ path: 'survey', loadChildren: () => import('./components/survey/survey.module').then(m => m.SurveyModule) },
+	{ path: '500', component: Exception500Component },
+	{ path: '404', component: Exception404Component },
+	{ path: '**', redirectTo: '404' }
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+	imports: [
+		RouterModule.forRoot(routes, {
+			useHash: true,
+			scrollPositionRestoration: 'enabled',
+		}),
+		LocalizeRouterModule.forRoot(routes, {
+			parser: {
+				provide: LocalizeParser,
+				useFactory: ManualLoaderFactory,
+				deps: [TranslateService, Location, LocalizeRouterSettings],
+			},
+			cacheMechanism: CacheMechanism.Cookie,
+			cookieFormat: '{{value}};{{expires:20}};path=/',
+			alwaysSetPrefix: false,
+		}),
+	],
+	exports: [RouterModule, LocalizeRouterModule],
 })
 export class AppRoutingModule { }
