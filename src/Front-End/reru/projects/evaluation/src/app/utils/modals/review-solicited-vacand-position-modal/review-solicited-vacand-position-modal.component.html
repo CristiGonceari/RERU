@@ -4,22 +4,27 @@
 </div>
 <div class="modal-body px-7" *ngIf="isSolicitedPositionFilesCompleted">
     <div class="separator separator-dashed my-5"></div>
-    <div class="row">
-        <div class="d-flex" >
+    <app-loading-spinner *ngIf="isLoading" [contentHeight]="'25vh'" [height]="'5rem'" [width]="'5rem'"
+    [colorClass]="'text-primary'">
+</app-loading-spinner>
+    <div class="row" *ngIf="!isLoading">
+        <div class="d-flex">
             <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills" orientation="vertical">
                 <li [ngbNavItem]="0" (click)="getEmailMessage(messageEnum.Approve)">
                     <a ngbNavLink>{{'solicited-position.approve' | translate}}</a>
                     <ng-template ngbNavContent>
                         <div class="mb-10 editor-class">
-                            <ckeditor [editor]="Editor"  [config]="{height: 1134, width: 794}"  [(ngModel)]="editorData" (ready)="onReady($event)"></ckeditor>
+                            <ckeditor [editor]="Editor" [config]="{height: 1134, width: 794}" [(ngModel)]="editorData"
+                                (ready)="onReady($event)"></ckeditor>
                         </div>
                     </ng-template>
                 </li>
                 <li [ngbNavItem]="1" (click)="getEmailMessage(messageEnum.Reject)">
                     <a ngbNavLink>{{'solicited-position.reject' | translate}}</a>
                     <ng-template ngbNavContent>
-                        <div class="mb-10 editor-class" >
-                            <ckeditor [editor]="Editor" class="w-75" [(ngModel)]="editorData" (ready)="onReady($event)"></ckeditor>
+                        <div class="mb-10 editor-class">
+                            <ckeditor [editor]="Editor" class="w-75" [(ngModel)]="editorData" (ready)="onReady($event)">
+                            </ckeditor>
                         </div>
                     </ng-template>
                 </li>
@@ -27,7 +32,8 @@
                     <a ngbNavLink>{{'solicited-position.waiting' | translate}}</a>
                     <ng-template ngbNavContent>
                         <div class="mb-10 editor-class">
-                            <ckeditor [editor]="Editor"  [config]="{height: 1134, width: 794}"  [(ngModel)]="editorData" (ready)="onReady($event)"></ckeditor>
+                            <ckeditor [editor]="Editor" [config]="{height: 1134, width: 794}" [(ngModel)]="editorData"
+                                (ready)="onReady($event)"></ckeditor>
                         </div>
                     </ng-template>
                 </li>
@@ -36,16 +42,20 @@
         </div>
     </div>
 </div>
-<div class="modal-body px-7" *ngIf="!isSolicitedPositionFilesCompleted">
+<div class="modal-body px-7" *ngIf="!isSolicitedPositionFilesCompleted" >
     <div class="separator separator-dashed my-5"></div>
-    <div class="row" >
-        <div class="d-flex" >
+    <app-loading-spinner *ngIf="isLoading" [contentHeight]="'25vh'" [height]="'5rem'" [width]="'5rem'"
+        [colorClass]="'text-primary'">
+    </app-loading-spinner>
+    <div class="row" *ngIf="!isLoading">
+        <div class="d-flex">
             <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills" orientation="vertical">
                 <li [ngbNavItem]="0" (click)="getEmailMessage(messageEnum.Reject)">
                     <a ngbNavLink>{{'solicited-position.reject' | translate}}</a>
                     <ng-template ngbNavContent>
-                        <div class="mb-10 editor-class" >
-                            <ckeditor [editor]="Editor" class="w-75" [(ngModel)]="editorData" (ready)="onReady($event)"></ckeditor>
+                        <div class="mb-10 editor-class">
+                            <ckeditor [editor]="Editor" class="w-75" [(ngModel)]="editorData" (ready)="onReady($event)">
+                            </ckeditor>
                         </div>
                     </ng-template>
                 </li>
@@ -53,7 +63,8 @@
                     <a ngbNavLink>{{'solicited-position.waiting' | translate}}</a>
                     <ng-template ngbNavContent>
                         <div class="mb-10 editor-class">
-                            <ckeditor [editor]="Editor"  [config]="{height: 1134, width: 794}"  [(ngModel)]="editorData" (ready)="onReady($event)"></ckeditor>
+                            <ckeditor [editor]="Editor" [config]="{height: 1134, width: 794}" [(ngModel)]="editorData"
+                                (ready)="onReady($event)"></ckeditor>
                         </div>
                     </ng-template>
                 </li>
