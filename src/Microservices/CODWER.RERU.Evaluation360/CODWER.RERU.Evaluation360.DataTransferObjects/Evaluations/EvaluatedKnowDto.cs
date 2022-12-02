@@ -2,11 +2,11 @@ using System;
 
 namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
 {
-    public class AcceptRejectEvaluationDto
+    public class EvaluatedKnowDto
     {
         public int Id { set; get; }
-        public string? CommentsEvaluated { set; get; }
-        public DateTime? DateAcceptOrRejectEvaluated { set; get; }
+        public string? NameSurnameEvaluated { set; get; }
+        public DateTime? DateEvaluatedKnow { set; get; }
         public bool? SignatureEvaluated { set; get; }
     }
 }

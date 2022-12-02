@@ -26,6 +26,8 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
             await _sender.Send(new UpdateEvaluationCommand(request.Evaluation));
             var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Evaluation.Id);
             evaluation.Status = EvaluationStatusEnum.Confirmed;
+            evaluation.DateCompletionGeneralData = System.DateTime.Now;
+            evaluation.SignatureEvaluator = true;
             await _dbContext.SaveChangesAsync();
 
             return Unit.Value;

@@ -12,12 +12,12 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations
         {
             CreateMap<Evaluation, EvaluationRowDto>()
                 .ForMember(dest=> dest.EvaluatorName, opts=> opts.MapFrom(src=> $"{src.EvaluatorUserProfile.FirstName} {src.EvaluatorUserProfile.LastName}" ))
-                .ForMember(dest=> dest.EvalauatedName, opts=> opts.MapFrom(src=> $"{src.EvaluatedUserProfile.FirstName} {src.EvaluatedUserProfile.LastName}" ))
+                .ForMember(dest=> dest.EvaluatedName, opts=> opts.MapFrom(src=> $"{src.EvaluatedUserProfile.FirstName} {src.EvaluatedUserProfile.LastName}" ))
                 .ForMember(dest=> dest.CounterSignerName, opts=> opts.MapFrom(src=> $"{src.CounterSignerUserProfile.FirstName} {src.CounterSignerUserProfile.LastName}" ))
                 ;
             
             CreateMap<Evaluation, EditEvaluationDto>()
-                .ForMember(dest=> dest.EvaluatedName, opts=> opts.MapFrom(src=> $"{src.EvaluatedUserProfile.FirstName} {src.EvaluatedUserProfile.LastName}" ))
+                .ForMember(dest=> dest.NameSurnameEvaluated, opts=> opts.MapFrom(src=> $"{src.EvaluatedUserProfile.FirstName} {src.EvaluatedUserProfile.LastName}" ))
                 ;
             
 
@@ -33,7 +33,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations
 
             CreateMap<AcceptRejectEvaluationDto, Evaluation>()
                 .ForMember(dest=> dest.Id, opts=> opts.Ignore())
-                .ForMember(dest=> dest.CommentsEvaluatedEmployee, opts=> opts.MapFrom(src=> $"{src.CommentsEvaluatedEmployee}"))
+                .ForMember(dest=> dest.CommentsEvaluated, opts=> opts.MapFrom(src=> $"{src.CommentsEvaluated}"))
                 ;
 
             CreateMap<CounterSignAcceptRejectEvaluationDto, Evaluation>()
@@ -43,8 +43,9 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations
                 .ForMember(dest=> dest.CheckComment3, opts=> opts.MapFrom(src=> $"{src.CheckComment3}"))
                 .ForMember(dest=> dest.CheckComment4, opts=> opts.MapFrom(src=> $"{src.CheckComment4}"))
                 .ForMember(dest=> dest.OtherComments, opts=> opts.MapFrom(src=> $"{src.OtherComments}"))
-                .ForMember(dest=> dest.DecisionCountersignatory, opts=> opts.MapFrom(src=> $"{src.DecisionCountersignatory}"))
-                .ForMember(dest=> dest.DateCompletionCountersignatory, opts=> opts.MapFrom(src=> $"{src.DateCompletionCountersignatory}"))
+                .ForMember(dest=> dest.FunctionCounterSigner, opts=> opts.MapFrom(src=> $"{src.FunctionCounterSigner}"))
+                .ForMember(dest=> dest.DateCompletionCounterSigner, opts=> opts.MapFrom(src=> $"{src.DateCompletionCounterSigner}"))
+                .ForMember(dest=> dest.SignatureCounterSigner, opts=> opts.MapFrom(src=> $"{src.SignatureCounterSigner}"))
                 ;
         }
     }
