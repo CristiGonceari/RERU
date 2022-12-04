@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AbstractService, AppSettingsService } from '@erp/shared';
 import { EvaluationIntroModel } from '../models/evaluation-setup.model';
+import { Evaluation } from '../models/evaluation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,27 @@ export class EvaluationService extends AbstractService {
    }
 
    get(id: number): Observable<any> {
-     return this.http.get(`${this.baseUrl}/${this.routeUrl}/${id}`); 
+     return this.http.get(`${this.baseUrl}/${this.routeUrl}/${id}/edit`); 
    }
 
    create(data: EvaluationIntroModel): Observable<any> {
      return this.http.post(`${this.baseUrl}/${this.routeUrl}`, data);
+   }
+
+   update(data: Evaluation): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${this.routeUrl}/update`, data)
+   }
+
+   confirm(data: Evaluation): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${this.routeUrl}/confirm`, data)
+   }
+
+   accept(data: Evaluation): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${this.routeUrl}/accept`, data)
+   }
+  
+   reject(data: Evaluation): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${this.routeUrl}/reject`, data)
    }
 
    delete(id: number): Observable<any> {
@@ -33,34 +50,6 @@ export class EvaluationService extends AbstractService {
    listMine(data): Observable<any> {
      return this.http.get(`${this.baseUrl}/${this.routeUrl}/mine`, { params: data });
    }
-
-   listEvaluation(data): Observable<any> {
-     return this.http.get(`${this.baseUrl}/${this.routeUrl}/evaluate`, { params: data });
-   }
-
-   listCountersign(data): Observable<any> {
-     return this.http.get(`${this.baseUrl}/${this.routeUrl}/counter-sign`, { params: data });
-   }
-
-   retrieveEvaluate(id: number): Observable<any> {
-     return this.http.get(`${this.baseUrl}/${this.routeUrl}/${id}/evaluate`);
-   }
-
-   evaluate(id: number, data): Observable<any> {
-     return this.http.patch(`${this.baseUrl}/${this.routeUrl}/${id}/evaluate`, data);
-   }
-
-   accept(id: number, data): Observable<any> {
-     return this.http.patch(`${this.baseUrl}/${this.routeUrl}/${id}/accept`, data);
-   }
-
-   retrieveCounterSign(id: number): Observable<any> {
-     return this.http.get(`${this.baseUrl}/${this.routeUrl}/${id}/countersign`);
-   }
-
-   counterSign(id: number, data): Observable<any> {
-    return this.http.patch(`${this.baseUrl}/${this.routeUrl}/${id}/counter-sign`, data);
-  }
 
   download(id: number) {
     return this.http.get(`${this.baseUrl}/export/${id}`, { responseType: 'blob' as 'json', observe: 'response'}).subscribe((response: HttpResponse<Blob>) => {

@@ -1,6 +1,8 @@
 export interface EvaluationAcceptModel {
-    id?: number;
-    commentsEvaluatedEmployee: string;
+    id: number;
+    commentsEvaluated: string;
+    dateAcceptOrRejectEvaluated: string | Date;
+    signatureEvaluated: boolean;
 }
 
 export interface EvaluationRejectModel extends EvaluationAcceptModel {}

@@ -14,9 +14,7 @@ import { SharedModule } from '@erp/shared';
 import { EvaluationDropdownDetailsComponent } from './components/evaluation-dropdown-details/evaluation-dropdown-details.component';
 import { ConfirmDeleteSurveyModalComponent } from './modals/confirm-delete-survey-modal/confirm-delete-survey-modal.component';
 import { EvaluationComponent } from './components/evaluation/evaluation.component';
-import { EvaluationTypeTitleComponent } from './components/evaluation/evaluation-type-title/evaluation-type-title.component';
 import { PublicEvaluationComponent } from './components/public-evaluation/public-evaluation.component';
-import { FormTypeComponent } from './components/form-type/form-type.component';
 import { LoadingWrapperComponent } from './components/loading-wrapper/loading-wrapper.component';
 import { AttachUserModalComponent } from './modals/attach-user-modal/attach-user-modal.component';
 import { SearchStatusComponent } from './modals/attach-user-modal/search-status/search-status.component';
@@ -27,9 +25,7 @@ const commonComponents = [
   EvaluationDropdownDetailsComponent,
   ConfirmDeleteSurveyModalComponent,
   EvaluationComponent,
-  EvaluationTypeTitleComponent,
   PublicEvaluationComponent,
-  FormTypeComponent,
   LoadingWrapperComponent,
   AttachUserModalComponent
 ];

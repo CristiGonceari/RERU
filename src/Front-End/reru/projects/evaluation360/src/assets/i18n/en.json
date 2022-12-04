@@ -57,6 +57,12 @@
     "positions": {
       "1": "Execution position",
       "2": "Management position"
+    },
+    "education": {
+      "1": "Secondary",
+      "2": "Higher",
+      "3": "Master",
+      "4": "Doctorate"
     }
   },
   "button": {

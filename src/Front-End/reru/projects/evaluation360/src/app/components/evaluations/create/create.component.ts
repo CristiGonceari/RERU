@@ -1,6 +1,6 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { EvaluationService } from '@utils/services';
 import { ObjectUtil, NotificationUtil, Evaluation } from '@utils';
@@ -12,40 +12,38 @@ import * as moment from 'moment';
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent implements OnInit, OnDestroy {
+  isLoading: boolean = true;
   evaluationForm: FormGroup;
-  questions: number[] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
-  radios: number[] = [1,2,3,4];
-  criterias = [
-    'Capacitatea de a planifica, organiza, coordona, monitoriza si evalua activitatea subdiviziunii conduse',
-    'Capacitatea de a gestiona eficient activitatea personalului prin repartizarea in mod echilibrat a sarcinilor de serviciu',
-    'Capacitatea de a lua decizii in mod operativ, de a-si asuma riscurile si responsabilitatea pentru deciziile',
-    'Mentinerea unui climat optim de munca a subordonatilor',
-    'Capacitatea de a-si indeplini atributiile cu exactitate complet si calitativ',
-    'Capacitatea de a gestiona, utiliza, intocmi si aplica documentele de serviciu',
-    'Nivel de realizare a sarcinilor de serviciu si obiectivelor individuale',
-    'Executarea ordinelor si dispozitiilor conducatorilor, operativitatea in realizarea misinilor',
-    'Respectarea eticii profesionale (comportamentul cu sefii, subordonatii, cetatenii)',
-    'Abateri disciplinare (se va puncta: avertisment/observatie: -:; alte sanctiuni - 1; lipsa - 3 sau 4, dupa caz)',
-    'Cunostinte la pregatirea generala',
-    'Cunostinte la pregatirea de specialitate',
-    'Instructia tragerii (TS - dupa caz)',
-    'Interventia profesionala (normative de lupta, SPIGF)',
-    'Pregatirea fizica: (PF)'
+  questions: number[] = [1,2,3,4,5,6,7,8,9,10,11,12,13];
+  criterias: string[] = [
+    'Capacitatea de a realiza deplin sarcinile de serviciu',
+    'Capacitatea de a depăși obstacolele sau dificultățile intervenite',
+    'Capacitatea de asumare a responsabilităților, de asumare a erorilor în activitate',
+    'Capacitatea de analiză și sinteză, creativitate și spirit de inițiativă',
+    'Capacitatea de a lucra în echipă, de a-și aduce contribuția prin participare efectivă',
+    'Capacitatea de a promova și respecta normele de conduită la serviciu și în afara acestuia, în relații cu conducătorii, colegii și alte persoane',
+    'Capacitatea de a executa corect prevederile actelor normative și a disciplinii de serviciu',
+    'Sancțiuni disciplinare (Se va puncta: avertisment/observaţie – 2 puncte; alte sancţiuni – 1 puncte; lipsa – 3 sau 4, după caz)',
+    'Pregătirea generală',
+    'Pregătirea de specialitate',
+    'Instrucţia tragerii (TS – după caz)',
+    'Intervenţia profesională, (Normative de luptă, SPÎGF)',
+    'Pregătirea fizică: (P f )'
   ];
-  parsedDateCompletionGeneralData: string = '';
-  parsedPeriodEvaluatedFromTo: string = '';
-  parsedPeriodEvaluatedUpTo: string = '';
-  
-  parsedLastQualifyCategoryOrderDate: string = '';
-  parsedPartialEvaluationFromDate: string = '';
-  parsedPartialEvaluationToDate: string = '';
-  parsedSanctionStartDate: string = '';
-  parsedSanctionEndDate: string = '';
-  parsedInterviewDate: string = '';
-  parsedAcceptanceDate: string = '';
-  parsedEvaluatingDate: string = '';
-  parsedCounterSignerSignDate: string = '';
+  parsedDateCompletionGeneralData: string | Date = '';
+  parsedPeriodEvaluatedFromTo: string | Date = '';
+  parsedPeriodEvaluatedUpTo: string | Date = '';
+  parsedPeriodRunningActivityFromTo: string | Date = '';
+  parsedPeriodRunningActivityUpTo: string | Date = '';
+  parsedPartialEvaluationPeriodFromTo: string | Date = '';
+  parsedPartialEvaluationPeriodUpTo: string | Date = '';
+  parsedDateSanctionApplication: string | Date = '';
+  parsedDateLiftingSanction: string | Date = '';
+  parsedAppointmentDate: string | Date = '';
+  parsedDateEvaluatiorInterview: string | Date = '';
+  parsedDateSettingIindividualGoals: string | Date = '';
+
   constructor(private readonly fb: FormBuilder,
               private readonly evaluationService: EvaluationService,
               private readonly router: Router,
@@ -53,100 +51,51 @@ export class CreateComponent implements OnInit {
               private readonly notificationService: NotificationsService) { }
 
   ngOnInit(): void {
-    this.initForm({
-      id: 2,
-      evaluatedName: "RERU Client Evaluation",
-      subdivisionName: null,
-      dateCompletionGeneralData: "0001-01-01T00:00:00",
-      nameSurnameEvaluatedEmployee: null,
-      functionSubdivision: null,
-      specialOrMilitaryGrade: null,
-      periodEvaluatedFromTo: null,
-      periodEvaluatedUpTo: null,
-      education: null,
-      professionalTrainingActivities: null,
-      courseName: null,
-      periodRunningActivity: null,
-      administrativeActOfStudies: null,
-      modificationServiceReportDuringEvaluationCourse: null,
-      function: null,
-      appointmentDate: null,
-      administrativeActService: null,
-      partialEvaluationPeriod: null,
-      finalScorePartialEvaluations: null,
-      qualifierPartialEvaluations: null,
-      sanctionAppliedEvaluationCourse: null,
-      dateSanctionApplication: null,
-      dateLiftingSanction: null,
-      qualificationEvaluationObtained2YearsPast: null,
-      qualificationEvaluationObtainedPreviousYear: null,
-      qualificationQuarter1: null,
-      qualificationQuarter2: null,
-      qualificationQuarter3: null,
-      qualificationQuarter4: null,
-      question1: null,
-      question2: null,
-      question3: null,
-      question4: null,
-      question5: null,
-      question6: null,
-      question7: null,
-      question8: null,
-      question9: null,
-      question10: null,
-      question11: null,
-      question12: null,
-      question13: null,
-      goal1: null,
-      goal2: null,
-      goal3: null,
-      goal4: null,
-      goal5: null,
-      kpI1: null,
-      kpI2: null,
-      kpI3: null,
-      kpI4: null,
-      kpI5: null,
-      performanceTerm1: null,
-      performanceTerm2: null,
-      performanceTerm3: null,
-      performanceTerm4: null,
-      performanceTerm5: null,
-      score1: null,
-      score2: null,
-      score3: null,
-      score4: null,
-      score5: null,
-      finalEvaluationQualification: null,
-      dateEvaluatiorInterview: null,
-      dateSettingIindividualGoals: null,
-      need1ProfessionalDevelopmentEvaluatedEmployee: null,
-      need2ProfessionalDevelopmentEvaluatedEmployee: null,
-      evaluatorComments: null
+    this.subscribeForParams();
+  }
+
+  subscribeForParams(): void {
+    this.route.params.subscribe((params: Params) => {
+      if (params.id) {
+        this.evaluationService.get(params.id).subscribe((response: any) => {
+          this.initForm(response.data);
+          this.assignDates(response.data);
+          this.isLoading = false;
+        }, error => {
+          this.isLoading = false;
+          this.router.navigate(['../../evaluation'])
+        });
+      } else {
+        this.router.navigate(['../../evaluation'])
+      }
     })
   }
 
   initForm(data?: Evaluation): void {
     this.evaluationForm = this.fb.group({
       id: this.fb.control(data?.id, []),
-      evaluatedName: this.fb.control(data?.evaluatedName, []),
       subdivisionName: this.fb.control(data?.subdivisionName, []),
+      evaluatedName: this.fb.control({value: data?.evaluatedName, disabled: true }, []),
       dateCompletionGeneralData: this.fb.control(data?.dateCompletionGeneralData, []),
-      nameSurnameEvaluatedEmployee: this.fb.control(data?.nameSurnameEvaluatedEmployee, []),
+      nameSurnameEvaluated: this.fb.control(data?.nameSurnameEvaluated, []),
       functionSubdivision: this.fb.control(data?.functionSubdivision, []),
       specialOrMilitaryGrade: this.fb.control(data?.specialOrMilitaryGrade, []),
+      specialOrMilitaryGradeText: this.fb.control(data?.specialOrMilitaryGradeText, []),
       periodEvaluatedFromTo: this.fb.control(data?.periodEvaluatedFromTo, []),
       periodEvaluatedUpTo: this.fb.control(data?.periodEvaluatedUpTo, []),
-      education: this.fb.control(data?.education, []),
+      educationEnum: this.fb.control(data?.educationEnum, []),
       professionalTrainingActivities: this.fb.control(data?.professionalTrainingActivities, []),
+      professionalTrainingActivitiesType: this.fb.control(data?.professionalTrainingActivitiesType, []),
       courseName: this.fb.control(data?.courseName, []),
-      periodRunningActivity: this.fb.control(data?.periodRunningActivity, []),
+      periodRunningActivityFromTo: this.fb.control(data?.periodRunningActivityFromTo, []),
+      periodRunningActivityUpTo: this.fb.control(data?.periodRunningActivityUpTo, []),
       administrativeActOfStudies: this.fb.control(data?.administrativeActOfStudies, []),
-      modificationServiceReportDuringEvaluationCourse: this.fb.control(data?.modificationServiceReportDuringEvaluationCourse, []),
-      function: this.fb.control(data?.function, []),
+      serviceDuringEvaluationCourse: this.fb.control(data?.serviceDuringEvaluationCourse),
+      functionEvaluated: this.fb.control(data?.functionEvaluated, []),
       appointmentDate: this.fb.control(data?.appointmentDate, []),
       administrativeActService: this.fb.control(data?.administrativeActService, []),
-      partialEvaluationPeriod: this.fb.control(data?.partialEvaluationPeriod, []),
+      partialEvaluationPeriodFromTo: this.fb.control(data?.partialEvaluationPeriodFromTo, []),
+      partialEvaluationPeriodUpTo: this.fb.control(data?.partialEvaluationPeriodUpTo, []),
       finalScorePartialEvaluations: this.fb.control(data?.finalScorePartialEvaluations, []),
       qualifierPartialEvaluations: this.fb.control(data?.qualifierPartialEvaluations, []),
       sanctionAppliedEvaluationCourse: this.fb.control(data?.sanctionAppliedEvaluationCourse, []),
@@ -194,10 +143,25 @@ export class CreateComponent implements OnInit {
       finalEvaluationQualification: this.fb.control(data?.finalEvaluationQualification, []),
       dateEvaluatiorInterview: this.fb.control(data?.dateEvaluatiorInterview, []),
       dateSettingIindividualGoals: this.fb.control(data?.dateSettingIindividualGoals, []),
-      need1ProfessionalDevelopmentEvaluatedEmployee: this.fb.control(data?.need1ProfessionalDevelopmentEvaluatedEmployee, []),
-      need2ProfessionalDevelopmentEvaluatedEmployee: this.fb.control(data?.need2ProfessionalDevelopmentEvaluatedEmployee, []),
-      evaluatorComments: this.fb.control(data?.evaluatorComments, []),
+      need1ProfessionalDevelopmentEvaluated: this.fb.control(data?.need1ProfessionalDevelopmentEvaluated, []),
+      need2ProfessionalDevelopmentEvaluated: this.fb.control(data?.need2ProfessionalDevelopmentEvaluated, []),
+      commentsEvaluator: this.fb.control(data?.commentsEvaluator, []),
     });
+  }
+
+  assignDates(data: Evaluation): void {
+    this.parsedDateCompletionGeneralData = data.dateCompletionGeneralData;
+    this.parsedPeriodEvaluatedFromTo = data.periodEvaluatedFromTo; 
+    this.parsedPeriodEvaluatedUpTo = data.periodEvaluatedUpTo; 
+    this.parsedPeriodRunningActivityFromTo = data.periodRunningActivityFromTo; 
+    this.parsedPeriodRunningActivityUpTo = data.periodEvaluatedUpTo; 
+    this.parsedPartialEvaluationPeriodFromTo = data.partialEvaluationPeriodFromTo; 
+    this.parsedPartialEvaluationPeriodUpTo = data.partialEvaluationPeriodUpTo; 
+    this.parsedDateSanctionApplication = data.dateSanctionApplication; 
+    this.parsedDateLiftingSanction = data.dateLiftingSanction; 
+    this.parsedAppointmentDate = data.appointmentDate; 
+    this.parsedDateEvaluatiorInterview = data.dateEvaluatiorInterview; 
+    this.parsedDateSettingIindividualGoals = data.dateSettingIindividualGoals;
   }
 
   parseDate(value: Moment, formControlName: string): void {
@@ -205,10 +169,14 @@ export class CreateComponent implements OnInit {
     this.evaluationForm.get(formControlName).patchValue(new Date(date).toISOString());
   }
 
-  submit(): void {
-    this.evaluationService.create(this.preParseData(this.evaluationForm.value)).subscribe(response => {
-      this.notificationService.success('Success', 'Fisa a fost trimisă cu success!', NotificationUtil.getDefaultMidConfig());
-      this.router.navigate(['../'], { relativeTo: this.route});
+  submit(isConfirm: boolean = false): void {
+    this.evaluationService[isConfirm ? 'confirm' : 'update'](this.preParseData(this.evaluationForm.value)).subscribe(response => {
+      this.notificationService.success('Success', 
+                                        isConfirm? 'Fisa a fost trimisă cu success!' : 'Fisa a fost salvata cu succes!', 
+                                       NotificationUtil.getDefaultMidConfig());
+      if (isConfirm) {
+        this.router.navigate(['../../'], { relativeTo: this.route});
+      }
     }, (error) => {
       if (error.status === 400) {
         this.notificationService.warn('Warning', 'Eroare de validare', NotificationUtil.getDefaultMidConfig());
@@ -232,6 +200,10 @@ export class CreateComponent implements OnInit {
     }
 
     return ObjectUtil.preParseObject(old);
+  }
+
+  ngOnDestroy(): void {
+    console.log('destroyed')
   }
 
 }

@@ -8,6 +8,9 @@ import { Evaluation, EvaluationCounterSignModel, EvaluationAcceptModel, Evaluati
 import { NotificationUtil, hasRequiredField } from '@utils';
 import { EvaluationService } from '@utils/services';
 
+/**
+ * @deprecated Old component
+ */
 @Component({
 	selector: 'app-evaluation',
 	templateUrl: './evaluation.component.html',
@@ -314,24 +317,24 @@ export class EvaluationComponent implements OnInit {
 	}
 
 	evaluate(accept: boolean) {
-		this.evaluationService.evaluate(this.evaluation.id, this.getEvaluate(this.surveyForm.value, accept)).subscribe(
-			response => {
-				this.notificationService.success(
-					'Succes',
-					'Fisa a fost transmisa cu succes!',
-					NotificationUtil.getDefaultMidConfig()
-				);
-				this.navigateToList();
-			},
-			error => {
-				if (error.status === 400) {
-					this.notificationService.warn('Warning', 'Validation error occured!', NotificationUtil.getDefaultMidConfig());
-					return;
-				}
+		// this.evaluationService.evaluate(this.evaluation.id, this.getEvaluate(this.surveyForm.value, accept)).subscribe(
+		// 	response => {
+		// 		this.notificationService.success(
+		// 			'Succes',
+		// 			'Fisa a fost transmisa cu succes!',
+		// 			NotificationUtil.getDefaultMidConfig()
+		// 		);
+		// 		this.navigateToList();
+		// 	},
+		// 	error => {
+		// 		if (error.status === 400) {
+		// 			this.notificationService.warn('Warning', 'Validation error occured!', NotificationUtil.getDefaultMidConfig());
+		// 			return;
+		// 		}
 
-				this.notificationService.error('Error', 'Server error occured!', NotificationUtil.getDefaultMidConfig());
-			}
-		);
+		// 		this.notificationService.error('Error', 'Server error occured!', NotificationUtil.getDefaultMidConfig());
+		// 	}
+		// );
 	}
 
 	acceptEvaluation(evaluatedAcceptance: number) {
@@ -349,24 +352,24 @@ export class EvaluationComponent implements OnInit {
 	}
 
 	counterSign(dto: any) {
-		this.evaluationService.counterSign(this.evaluation.id, dto).subscribe(
-			response => {
-				this.notificationService.success(
-					'Succes',
-					'Fisa a fost transmisa cu succes!',
-					NotificationUtil.getDefaultMidConfig()
-				);
-				this.navigateToList();
-			},
-			error => {
-				if (error.status === 400) {
-					this.notificationService.warn('Warning', 'Validation error occured!', NotificationUtil.getDefaultMidConfig());
-					return;
-				}
+		// this.evaluationService.counterSign(this.evaluation.id, dto).subscribe(
+		// 	response => {
+		// 		this.notificationService.success(
+		// 			'Succes',
+		// 			'Fisa a fost transmisa cu succes!',
+		// 			NotificationUtil.getDefaultMidConfig()
+		// 		);
+		// 		this.navigateToList();
+		// 	},
+		// 	error => {
+		// 		if (error.status === 400) {
+		// 			this.notificationService.warn('Warning', 'Validation error occured!', NotificationUtil.getDefaultMidConfig());
+		// 			return;
+		// 		}
 
-				this.notificationService.error('Error', 'Server error occured!', NotificationUtil.getDefaultMidConfig());
-			}
-		);
+		// 		this.notificationService.error('Error', 'Server error occured!', NotificationUtil.getDefaultMidConfig());
+		// 	}
+		// );
 	}
 
 	getEvaluate(data, accept: boolean) {

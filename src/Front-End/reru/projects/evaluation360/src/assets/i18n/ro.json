@@ -58,6 +58,12 @@
     "positions": {
       "1": "De executare",
       "2": "De conducere"
+    },
+    "education": {
+      "1": "Medii",
+      "2": "Superioare",
+      "3": "Masterat",
+      "4": "Doctorat"
     }
   },
   "button": {

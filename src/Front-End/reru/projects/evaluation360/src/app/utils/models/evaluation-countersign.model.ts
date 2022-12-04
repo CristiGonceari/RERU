@@ -1,10 +1,11 @@
 export interface EvaluationCounterSignModel {
  id: number;
- checkComment1: string;
- checkComment2: string;
- checkComment3: string;
- checkComment4: string;
+ checkComment1: boolean;
+ checkComment2: boolean;
+ checkComment3: boolean;
+ checkComment4: boolean;
  otherComments: string;
- decisionCountersignatory: string;
- dateCompletionCountersignatory: string;
+ functionCounterSigner: string;
+ dateCompletionCounterSigner: string | Date;
+ signatureCounterSigner: boolean;
 }
