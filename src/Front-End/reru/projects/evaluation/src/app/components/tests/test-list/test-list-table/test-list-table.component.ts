@@ -145,6 +145,7 @@ export class TestListTableComponent implements OnInit {
     this.testService.getTests(params).subscribe(res => {
       if (res && res.data) {
         this.testTemplate = res.data.items;
+        console.log("testTemplates:", res.data.items)
         this.verificationProgress = res.data.items.map(el => el.verificationProgress);
         this.testTemplateName = res.data.items.map(it => it.testTemplateName);
         this.score = res.data.items.map(s => s.score);
@@ -285,18 +286,25 @@ export class TestListTableComponent implements OnInit {
 		let headersDto = [
       'testTemplateName', 
       'userName', 
-      'eventName', 
+      'eventName',
+      'departmentName',
       'locationNames', 
       'testStatus', 
       'verificationProgress', 
-      'result', 
+      'result',
       'accumulatedPercentage', 
       'minPercent'
     ];
     
 		for (let i = 0; i < headersHtml.length - 1; i++) {
       if(i == 2){
-        this.headersToPrint.push({ value: "idnp", label: "Idnp",isChecked: true})
+        this.headersToPrint.push({ value: "idnp", label: "Idnp", isChecked: true})
+      }
+      if(i == 3){
+         headersHtml[i].innerHTML = headersHtml[i].innerHTML.split('/')[0]
+      }
+      if(i == 4){
+        this.headersToPrint.push({ value: "roleName", label: "Role", isChecked: true})
       }
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
@@ -368,6 +376,14 @@ export class TestListTableComponent implements OnInit {
 		this.pagination.currentPage = 1;
 		this.getTests();
 	}
+
+  parseStringLength(name: string): string{
+    if(name.length > 12) {
+     return name.slice(0, 12) + "...";
+    }
+
+    return name;
+  }
 
 	resetFilters(): void {
 		this.filters = {};

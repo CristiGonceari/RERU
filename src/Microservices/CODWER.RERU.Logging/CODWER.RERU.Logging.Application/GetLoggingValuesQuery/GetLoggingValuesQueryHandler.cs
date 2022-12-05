@@ -62,7 +62,7 @@ namespace CODWER.RERU.Logging.Application.GetLoggingValuesQuery
 
             if (!string.IsNullOrEmpty(request.JsonMessage))
             {
-                items = items.Where(x => x != null && x.JsonMessage.Contains(request.JsonMessage));
+                items = items.Where(x => x.JsonMessage.Replace(" ", string.Empty).Contains(request.JsonMessage));
             }
 
             if (request.FromDate != null)
