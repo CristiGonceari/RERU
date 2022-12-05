@@ -116,7 +116,6 @@
                                 <p class="tooltip-text">{{ item.roleName || '-' }}</p>
                             </dt>
                         </dl>
-
                     </ng-template>
                     <span [ngbTooltip]="tipContent">
                         <div class="row">
@@ -136,7 +135,6 @@
                     <span class="font-size-lg" *ngIf="item.locationNames">{{ item.locationNames }}</span>
                     <span class="font-size-lg" *ngIf="!item.locationNames.length">-</span>
                 </td>
-
                 <!-- <td *ngIf="item.candidatePositionNames !== null">
                     {{ item.candidatePositionNames[0] }}
                     <span [ngbTooltip]="parseCandidatePositions(item.candidatePositionNames)">...</span>
@@ -146,9 +144,7 @@
                   </td> -->
                 <td>
                     <p *ngIf="item.modeStatus == 0">{{'statuses.' + status[item.testStatus] | translate}}</p>
-                    <p
-                        *ngIf="item.modeStatus == 1 && (item.testStatus === status.Verified || item.testStatus === status.Terminated)">
-                        {{'statuses.Voted' | translate}}</p>
+                    <p *ngIf="item.modeStatus == 1 && (item.testStatus === status.Verified || item.testStatus === status.Terminated)">{{'statuses.Voted' | translate}}</p>
                 </td>
                 <td>
                     <p class="font-size-lg cursor-pointer text-hover-primary"
@@ -163,7 +159,6 @@
                     <p *ngIf="item.modeStatus == 0">{{ translateResultValue(item.resultValue) }}</p>
                     <p *ngIf="item.modeStatus == 1">-</p>
                 </td>
-                
                 <td style="text-align: center;">
                     <p *ngIf="item.modeStatus == 0">{{ item.accumulatedPercentage }}</p>
                     <p *ngIf="item.modeStatus == 1">-</p>

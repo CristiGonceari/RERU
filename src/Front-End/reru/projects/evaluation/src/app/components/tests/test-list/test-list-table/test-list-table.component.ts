@@ -145,7 +145,6 @@ export class TestListTableComponent implements OnInit {
     this.testService.getTests(params).subscribe(res => {
       if (res && res.data) {
         this.testTemplate = res.data.items;
-        console.log("testTemplates:", res.data.items)
         this.verificationProgress = res.data.items.map(el => el.verificationProgress);
         this.testTemplateName = res.data.items.map(it => it.testTemplateName);
         this.score = res.data.items.map(s => s.score);
