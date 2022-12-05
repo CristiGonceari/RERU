@@ -106,7 +106,7 @@ export class DashboardComponent implements AfterViewInit {
       projectName: this.selectedProject || '',
       event: this.searchEventName.value || '',
       eventMessage: this.searchEventMessage.value || '',
-      jsonMessage: data.jsonMessage !== undefined ? data.jsonMessage.replace(/\s+/g, '') : '',
+      jsonMessage: this.searchJsonMessage.value.replace(/\s+/g, '') || '',
       userName:  this.searchUserName.value || '',
       userIdentifier: this.searchUserIdentifier.value || '',
       page: data.page || 1,
