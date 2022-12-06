@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -22,6 +22,7 @@ import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/file-test-answer.service';
 import { saveAs } from 'file-saver';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { StyleNodesService } from '../../../utils/services/style-nodes/style-nodes.service';
 
 @Component({
   selector: 'app-one-per-page-performing-test',
@@ -30,7 +31,7 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
   providers: [SafeHtmlPipe]
 
 })
-export class OnePerPagePerformingTestComponent implements OnInit {
+export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
 
   testId: number;
   questionIndex: number = 1;
@@ -90,6 +91,8 @@ export class OnePerPagePerformingTestComponent implements OnInit {
   fileName: string;
   fileStatus = { requestType: '', percent: 1 }
 
+  stylesToApply: string = '.breadcrumb{ display: none !important; }'
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private injector: Injector,
@@ -100,6 +103,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     private router: Router,
     private testTemplateService: TestTemplateService,
     private fileTestAnswerService: FileTestAnswerService,
+    private styleNodesService: StyleNodesService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
@@ -111,6 +115,11 @@ export class OnePerPagePerformingTestComponent implements OnInit {
     this.getTestById();
     this.subscribeForHashedAnswers();
     this.testQuestionService.setData(false);
+    this.styleNodesService.addStyle('breadcrumb', this.stylesToApply);
+  }
+
+  ngOnDestroy() {
+    this.styleNodesService.removeStyle('breadcrumb');
   }
 
   subscribeForHashedAnswers() {
@@ -507,6 +516,7 @@ export class OnePerPagePerformingTestComponent implements OnInit {
 
   finalizeTest() {
     this.testService.finalizeTest(this.testId).subscribe(() => this.router.navigate(['my-activities/finish-page', this.testId]));
+    this.styleNodesService.removeStyle('breadcrumb');
   }
 
   finishTestProcess() {

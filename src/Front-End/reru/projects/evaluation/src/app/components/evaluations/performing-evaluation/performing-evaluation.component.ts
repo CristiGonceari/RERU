@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -20,13 +20,14 @@ import { EvaluationResultModalComponent } from '../../../utils/modals/evaluation
 import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/file-test-answer.service';
 import { saveAs } from 'file-saver';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { StyleNodesService } from '../../../utils/services/style-nodes/style-nodes.service';
 
 @Component({
   selector: 'app-performing-evaluation',
   templateUrl: './performing-evaluation.component.html',
   styleUrls: ['./performing-evaluation.component.scss']
 })
-export class PerformingEvaluationComponent implements OnInit {
+export class PerformingEvaluationComponent implements OnInit, OnDestroy {
   testId: number;
   questionIndex: number = 1;
   testDto = new Test();
@@ -76,7 +77,9 @@ export class PerformingEvaluationComponent implements OnInit {
 
   filenames: any;
   fileName: string;
-  fileStatus = { requestType: '', percent: 1 }
+  fileStatus = { requestType: '', percent: 1 };
+
+  stylesToApply: string = '.breadcrumb{ display: none !important; }';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -88,6 +91,7 @@ export class PerformingEvaluationComponent implements OnInit {
     private router: Router,
     private testTemplateService: TestTemplateService,
     private fileTestAnswerService: FileTestAnswerService,
+    private styleNodesService: StyleNodesService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
@@ -99,6 +103,11 @@ export class PerformingEvaluationComponent implements OnInit {
     this.getTestById();
     this.subscribeForHashedAnswers();
     this.testQuestionService.setData(false);
+    this.styleNodesService.addStyle('breadcrumb', this.stylesToApply);
+  }
+
+  ngOnDestroy() {
+    this.styleNodesService.removeStyle('breadcrumb');
   }
 
   subscribeForHashedAnswers() {
