@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTestsCount
 {
@@ -34,13 +35,15 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTestsCount
                 .Include(t => t.Location)
                 .Include(t => t.Event)
                 .Where(p => p.UserProfileId == currentUserId && p.TestTemplate.Mode == TestTemplateModeEnum.Test)
+                .DistinctBy(x => x.HashGroupKey != null ? x.HashGroupKey : x.Id.ToString())
                 .AsQueryable();
 
             var dates = new List<TestCount>();
 
             for (var dt = request.StartTime.Date; dt <= request.EndTime.Date; dt = dt.AddDays(1))
             {
-                var count = myTests.Count(t => t.EventId != null
+                var count = myTests
+                    .Count(t => t.EventId != null
                     ? t.ProgrammedTime.Date <= dt.Date && dt.Date <= t.EndProgrammedTime.Value.Date
                     : t.ProgrammedTime.Date == dt.Date.Date);
 

@@ -12,6 +12,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public int TestTemplateId { get; set; }
         public int? EventId { get; set; }
         public int? LocationId { get; set; }
+        public string HashGroupKey { get; set; }
         public TestStatusEnum TestStatus { get; set; }
         public DateTime? ProgrammedTime { get; set; }
         public DateTime? SolicitedTime { get; set; }

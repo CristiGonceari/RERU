@@ -23,7 +23,6 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
 
             When(r => r != null, () =>
             {
-
                 RuleFor(x => x.EventId)
                     .SetValidator(x => new ItemMustExistValidator<Event>(_appDbContext, ValidationCodes.INVALID_EVENT,
                         ValidationMessages.InvalidReference));
@@ -40,8 +39,26 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
                 RuleFor(r => r)
                     .Must(x => !ExistentResponsiblePersonSameWithCandidate(x))
                     .WithErrorCode(ValidationCodes.CANDIDATE_AND_RESPONSIBLE_PERSON_CANT_BE_THE_SAME);
+
+                RuleFor(r => r)
+                    .Must(x => IsCandidateInUse(x))
+                    .WithErrorCode(ValidationCodes.CANT_DELETE_CANDIDATE_IN_USE);
             });
         }
+
+        private bool IsCandidateInUse(AssignUserToEventCommand data)
+        {
+            var candidatesIdsInUse = _appDbContext.Tests
+                .Where(t => t.EventId == data.EventId)
+                .Select(x => x.UserProfileId)
+                .Distinct()
+                .ToList();
+
+            return Contains(candidatesIdsInUse, data.UserProfileId);
+        }
+
+        private bool Contains(List<int> list1, List<int> list2) => list1.Intersect(list2).Count() == list1.Count();
+
         private async Task<bool> ExistentUser(AssignUserToEventCommand data)
         {
             var listOfResults = new List<bool>();
