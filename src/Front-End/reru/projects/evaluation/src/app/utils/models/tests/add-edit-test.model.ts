@@ -2,8 +2,8 @@ import { TestStatusEnum } from "../../enums/test-status.enum";
 
 export class AddEditTest {
     id?: number;
-    userProfileId: number[];
-    evaluatorId?: any;
+    userProfileIds: number[];
+    evaluatorIds?: any;
     showUserName?: boolean;
     testTemplateId: any;
     eventId?: number;
@@ -15,22 +15,22 @@ export class AddEditTest {
     constructor(testModel?: AddEditTest) {
         if (testModel) {
             this.id = testModel.id;
-            this.userProfileId = testModel.userProfileId;
+            this.userProfileIds = testModel.userProfileIds;
             this.eventId = testModel.eventId;
             this.programmedTime = testModel.programmedTime;
             this.testStatus = testModel.testStatus;
             this.testTemplateId = testModel.testTemplateId;
-            this.evaluatorId = testModel.evaluatorId;
+            this.evaluatorIds = testModel.evaluatorIds;
             this.showUserName = testModel.showUserName;
             this.processId = testModel.processId;
         } else {
             this.id = null;
-            this.userProfileId = null;
+            this.userProfileIds = null;
             this.programmedTime = null;
             this.testStatus = null;
             this.testTemplateId = null;
             this.eventId = null;
-            this.evaluatorId = null;
+            this.evaluatorIds = null;
             this.showUserName = null;
         }
     }

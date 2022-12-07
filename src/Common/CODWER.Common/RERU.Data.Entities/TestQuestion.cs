@@ -28,6 +28,8 @@ namespace RERU.Data.Entities
         public int TestId { get; set; }
         public Test Test { get; set; }
 
+        public string HashGroupKey { get; set; }
+
         public virtual ICollection<TestAnswer> TestAnswers { get; set; }
         public virtual ICollection<FileTestAnswer> FileTestAnswers { get; set; }
         public virtual ICollection<TestQuestionTestAnswer> TestQuestionsTestAnswers { get; set; }

@@ -29,7 +29,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetPollResult
                     .ThenInclude(x => x.QuestionUnit)
                         .ThenInclude(x => x.Options)
                 .Include(x => x.TestQuestions)
-                    .ThenInclude(x => x.TestAnswers)
+                    .ThenInclude(x => x.TestQuestionsTestAnswers)
+                        .ThenInclude(x => x.TestAnswer)
                 .Where(x => x.TestTemplateId == request.TestTemplateId)
                 .ToListAsync();
 
@@ -80,7 +81,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetPollResult
 
                 foreach (var option in question.QuestionUnit.Options)
                 {
-                    var votedOptionCount = questions.Where(tq => tq.TestAnswers.Any(a => a.OptionId == option.Id))?.Count();
+                    //var votedOptionCount = questions.Where(tq => tq.TestAnswers.Any(a => a.OptionId == option.Id))?.Count();
+
+                    var votedOptionCount = questions.Where(tq => tq.TestQuestionsTestAnswers
+                            .Select(x => x.TestAnswer)
+                            .ToList()
+                            .Any(a => a.OptionId == option.Id))?
+                        .Count();
 
                     var thisOption = new PollOptionDto()
                     {

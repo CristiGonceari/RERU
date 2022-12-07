@@ -20,6 +20,7 @@ namespace RERU.Data.Entities
         public TestPassStatusEnum? TestPassStatus { get; set; }
         public TestStatusEnum TestStatus { get; set; }
         public TestResultStatusEnum ResultStatus { get; set; }
+        public string HashGroupKey { get; set; }
 
         public string ResultStatusValue => ResultStatus == TestResultStatusEnum.Recommended
             ? $"{ResultStatus}:({RecommendedForValue}/{NotRecommendedForValue})" : ResultStatus.ToString();

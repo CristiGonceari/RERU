@@ -11,6 +11,8 @@ using CODWER.RERU.Evaluation.Application.Articles.DeleteArticle;
 using CODWER.RERU.Evaluation.Application.Articles.EditArticle;
 using CODWER.RERU.Evaluation.Application.Articles.PrintArticles;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
+using RERU.Data.Entities;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -18,6 +20,32 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     [Route("api/[controller]")]
     public class ArticleController : BaseController
     {
+        private readonly AppDbContext _appDbContext;
+
+        public ArticleController(AppDbContext appDbContext)
+        {
+            _appDbContext = appDbContext;
+        }
+
+        [HttpGet("populate-intermediate-table")]
+        public async Task<string> PopulateNXNTable()
+        {
+            var testAnswers = _appDbContext.TestAnswers.AsQueryable();
+
+            foreach (var testAnswer in testAnswers)
+            {
+                var newTestQuestionTestAnswer = new TestQuestionTestAnswer
+                {
+                    TestAnswerId = testAnswer.Id,
+                    TestQuestionId = testAnswer.TestQuestionId
+                };
+
+                await _appDbContext.SaveChangesAsync();
+            }
+
+            return "Success";
+        }
+
         [HttpGet("{id}")]
         public async Task<ArticleEvaluationDto> GetArticle([FromRoute] int id)
         {

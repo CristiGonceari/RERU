@@ -82,7 +82,8 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             var item = _appDbContext.Tests
                 .Include(t => t.TestQuestions)
-                .ThenInclude(t => t.TestAnswers)
+                    .ThenInclude(t => t.TestQuestionsTestAnswers)
+                        .ThenInclude(t => t.TestAnswer)
                 .Include(t => t.TestTemplate)
                 .ThenInclude(tt => tt.TestTemplateQuestionCategories)
                 .ThenInclude(tc => tc.QuestionCategory)
@@ -99,7 +100,8 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             var item = _appDbContext.Tests
                 .Include(t => t.TestQuestions)
-                .ThenInclude(t => t.TestAnswers)
+                    .ThenInclude(t => t.TestQuestionsTestAnswers)
+                        .ThenInclude(t => t.TestAnswer)
                 .Include(t => t.TestTemplate)
                 .ThenInclude(tt => tt.TestTemplateQuestionCategories)
                 .ThenInclude(tc => tc.QuestionCategory)
@@ -568,7 +570,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                     .Include(t => t.Evaluator)
                     .Include(t => t.TestTemplate)
                     .Include(t => t.TestQuestions)
-                    .ThenInclude(tq => tq.QuestionUnit)
+                        .ThenInclude(x => x.TestQuestionsTestAnswers)
+                            .ThenInclude(x => x.TestAnswer)
+                    .Include(t => t.TestQuestions)
+                        .ThenInclude(tq => tq.QuestionUnit)
                     .ThenInclude(q => q.Options)
                     .FirstOrDefault(t => t.Id == testId);
 
@@ -1029,6 +1034,8 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         private async Task<string> GetHashedAnswerQuestion(TestQuestion testQuestion, string content)
         {
             var question = await _questionUnitService.GetUnHashedQuestionUnit(testQuestion.QuestionUnitId);
+            var testAnswers = testQuestion.TestQuestionsTestAnswers.Select(x => x.TestAnswer).ToList();
+            var answerText = testQuestion.Test.TestTemplate.Mode == TestTemplateModeEnum.Test ? "Răspunsul evaluatului" : "Răspunsul evaluatorului";
 
             if (question.Options != null)
             {
@@ -1051,15 +1058,13 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             content += $@"</th></tr>";
 
-            if (testQuestion.TestAnswers != null)
+            if (testAnswers.Any())
             {
-                foreach (var answer in testQuestion.TestAnswers)
+                foreach (var answer in testAnswers)
                 {
                     testQuestion.QuestionUnit.Question = question.Question.Replace($@"<input type=""text"">", $@"<input type=""text"" value=""{answer.AnswerValue}"">");
                 }
             }
-
-            var answerText = testQuestion.Test.TestTemplate.Mode == TestTemplateModeEnum.Test ? "Răspunsul evaluatului" : "Răspunsul evaluatorului";
            
             content += $@"<tr>
                         <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"" colspan=""2"">
@@ -1072,7 +1077,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             {
                 foreach (var option in testQuestion.QuestionUnit.Options)
                 {
-                    var testAnswer = testQuestion.TestAnswers.FirstOrDefault(x => x.OptionId == option.Id);
+                    var testAnswer = testAnswers.FirstOrDefault(x => x.OptionId == option.Id);
                     testQuestion.QuestionUnit.Question = question.Question.Replace($"{testAnswer.AnswerValue}", $"{option.Answer}");
                 }
             }
@@ -1110,7 +1115,9 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         private async Task<string> GetFreeTextQuestion(TestQuestion testQuestion, string content)
         {
-            var answer = _appDbContext.TestAnswers.FirstOrDefault(x => x.TestQuestionId == testQuestion.Id);
+            var answer = _appDbContext.TestQuestionsTestAnswers
+                .Include(x => x.TestAnswer)
+                .FirstOrDefault(x => x.TestQuestionId == testQuestion.Id)?.TestAnswer;
 
             var answerText = testQuestion.Test.TestTemplate.Mode == TestTemplateModeEnum.Test ? "Răspunsul evaluatului" : "Răspunsul evaluatorului";
 
@@ -1184,9 +1191,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                         </tr>";
             }
 
+            var testAnswers = testQuestion.TestQuestionsTestAnswers.Select(x => x.TestAnswer).ToList();
+
             foreach (var option in testQuestion.QuestionUnit.Options.Select((value, i) => new {i, value}))
             {
-                var answers = testQuestion.TestAnswers.Select(x => x.OptionId);
+                var answers = testAnswers.Select(x => x.OptionId);
 
                 content += $@"<tr><th style=""border: 1px solid black; border-collapse: collapse; text-align: left; padding-left: 5px; height: 30px; margin: 5px 5px 5px 5px;"">";
 

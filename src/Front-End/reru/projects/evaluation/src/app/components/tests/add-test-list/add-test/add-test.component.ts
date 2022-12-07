@@ -173,10 +173,10 @@ export class AddTestComponent implements OnInit {
   parse() {
     this.setTimeToSearch();
     return new AddEditTest({
-      userProfileId: this.userListToAdd,
+      userProfileIds: this.userListToAdd,
       programmedTime: this.search || null,
       eventId: +this.event.value || null,
-      evaluatorId: this.evaluatorList[0] || null,
+      evaluatorIds: this.evaluatorList || null,
       testStatus: TestStatusEnum.Programmed,
       processId: this.processId || null,
       testTemplateId: +this.testTemplate.value || 0,
@@ -188,7 +188,7 @@ export class AddTestComponent implements OnInit {
     this.disableBtn = true
     this.isStartAddingTests = true;
 
-    this.testService.startAddProcess({ totalProcesses: this.parse().userProfileId.length, processType: 2 }).subscribe(res => {
+    this.testService.startAddProcess({ totalProcesses: this.parse().userProfileIds.length, processType: 2 }).subscribe(res => {
       this.processId = res.data;
 
       const interval = this.setIntervalGetProcess();
@@ -271,25 +271,32 @@ export class AddTestComponent implements OnInit {
 
   attachEvaluators(): void {
     this.exceptUserIds = this.userListToAdd;
-    this.openUsersModal(this.evaluatorList, 'radio');
+    this.openUsersModal(this.evaluatorList, 'radio', true);
   }
 
   attachUsers(): void {
     this.exceptUserIds = this.evaluatorList;
-    this.openUsersModal(this.userListToAdd, 'checkbox');
+    this.openUsersModal(this.userListToAdd, 'checkbox', false);
   }
 
-  openUsersModal(attachedItems, inputType): void {
+  openUsersModal(attachedItems, inputType, whichUser): void {
     const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
     modalRef.componentInstance.exceptUserIds = this.exceptUserIds;
     modalRef.componentInstance.attachedItems = attachedItems;
     modalRef.componentInstance.inputType = inputType;
     modalRef.componentInstance.page = 'add-test';
     modalRef.componentInstance.eventId = +this.event.value;
+    modalRef.componentInstance.whichUser = whichUser;
     modalRef.componentInstance.testTemplateId = inputType == "radio" ? +this.testTemplate.value : null;
     modalRef.result.then(() => {
-      if (inputType == 'radio') this.evaluatorList = modalRef.result.__zone_symbol__value.attachedItems;
-      else if (inputType == 'checkbox') this.userListToAdd = modalRef.result.__zone_symbol__value.attachedItems;
+      if (whichUser) {
+        console.log("evaluatori", this.evaluatorList)
+        this.evaluatorList = modalRef.result.__zone_symbol__value.attachedItems;
+      }
+      else if(!whichUser) {
+        console.log("useri", this.userListToAdd)
+         this.userListToAdd = modalRef.result.__zone_symbol__value.attachedItems;
+      }
     }, () => { });
   }
 

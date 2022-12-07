@@ -399,7 +399,8 @@
     "stop-test-msg": "Sigur doriți să opriți acest test?",
     "please-wait": "Vă rugăm să așteptați până sistemul importa teste pentru utilizatori ...",
     "test-template": "șablon de test",
-    "start-test": "Testul va începe în câteva minute"
+    "start-test": "Testul va începe în câteva minute",
+    "verified-by-system": "Verificat de către sistem"
   },
   "verify-test": {
     "title": "Teste",
@@ -813,7 +814,8 @@
     "succes-attach-evaluator-msg": "Evaluator a fost atașat cu succes",
     "succes-detach-evaluator-msg": "Evaluator a fost eliminat cu succes",
     "succes-attach-detach-evaluator-msg": "Evaluatorii au fost atașați/eliminați cu succes",
-    "show-user-name": "Afișează numele utilizatorului"
+    "show-user-name": "Afișează numele utilizatorului",
+    "from-event": "Din eveniment"
   },
   "test-template":{
     "test-template": "Șablon de teste",
@@ -902,12 +904,14 @@
     "03000302": "Evaluatorul există deja în test",
     "03000303": "Evaluatorul și candidatul nu pot fi aceeași persoană",
     "03000304": "Evaluator inexistent în eveniment",
+    "03000305": "Nu se poate șterge evaluatorul în uz",
     "03000401": "Locația există deja în eveniment",
     "03000501": "Utilizatorul nu este responsabil pentru acest eveniment",
     "03000502": "Evaluatorul și persoana responsabilă nu pot fi aceeași persoană",
     "03000601": "Tipul de test există în eveniment",
     "03000701": "Candidatul nu există în eveniment",
     "03000702": "Candidatul și persoana responsabilă nu pot fi aceeași persoană",
+    "03000703": "Nu se poate șterge candidatul în uz",
     "03000801": "Adresa este necompletată",
     "03000802": "Numărul de calculatoare este necompletat",
     "03000803": "Numărul calculatorului este necompletat",

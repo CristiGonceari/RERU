@@ -28,6 +28,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public string VerificationProgress { get; set; }
         public bool ShowUserName { get; set; }
         public bool IsEvaluator { get; set; }
+        public bool IsVerificatedAutomat { get; set; }
         public TestStatusEnum TestStatus { get; set; }
         public TestTemplateModeEnum ModeStatus { get; set; }
         public TestResultStatusEnum Result { get; set; }
@@ -36,6 +37,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public DateTime? EndProgrammedTime { get; set; }
         public DateTime? EndTime { get; set; }
         public bool? ViewTestResult { get; set; }
+        public string HashGroupKey { get; set; }
         public List<string> CandidatePositionNames { get; set; }
         public bool CanStartWithoutConfirmation { get; set; }
     }

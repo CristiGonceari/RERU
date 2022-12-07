@@ -5,6 +5,7 @@ using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Minio.DataModel;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
@@ -38,10 +39,26 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
                     .WithErrorCode(ValidationCodes.EVALUATOR_AND_CANDIDATE_CANT_BE_THE_SAME);
 
                 RuleFor(r => r)
-                    .Must(x => appDbContext.Tests.Where(t => t.EventId == x.EventId).All(t => t.EvaluatorId == null))
-                    .WithErrorCode(ValidationCodes.EXISTENT_EVALUATOR_IN_EVENT);
+                    .Must(x => IsEvaluatorInUse(x))
+                    .WithErrorCode(ValidationCodes.CANT_DELETE_EVALUATOR_IN_USE);
             });
         }
+
+        private bool IsEvaluatorInUse(AssignEvaluatorToEventCommand data)
+        {
+            var evaluatorsIdsInUse = _appDbContext.Tests
+                .Where(t => t.EventId == data.EventId)
+                .Select(x => x.EvaluatorId)
+                .Distinct()
+                .ToList();
+
+            var list = evaluatorsIdsInUse.Where(x => x != null).Select(x => x.Value).ToList();
+
+            return Contains(list, data.EvaluatorId);
+        }
+
+        private bool Contains(List<int> list1, List<int> list2) => list1.Intersect(list2).Count() == list1.Count();
+
         private async Task<bool> ExistentUser(AssignEvaluatorToEventCommand data)
         {
             var listOfResults = new List<bool>();
@@ -51,7 +68,6 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
                 var result = _appDbContext.UserProfiles.Any(up => up.Id == userId);
 
                 listOfResults.Add(result);
-
             }
 
             if (listOfResults.Contains(false))

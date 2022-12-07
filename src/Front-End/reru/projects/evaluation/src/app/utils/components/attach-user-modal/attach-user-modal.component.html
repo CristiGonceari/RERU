@@ -47,7 +47,7 @@
 	</app-loading-spinner>
 
 
-		<div *ngIf="page == 'evaluators'" class="d-flex align-items-center mb-5">
+		<!-- <div *ngIf="page == 'evaluators'" class="d-flex align-items-center mb-5">
 			<span class="h3 mb-0 pr-2">{{ 'events.show-user-name' | translate }}: </span>
 			<span>{{ 'button.no' | translate }}</span>
 			<span class="switch switch-primary switch-sm mx-3">
@@ -57,9 +57,9 @@
 				</label>
 			</span>
 			<span>{{ 'button.yes' | translate }}</span>
-		</div>
+		</div> -->
 		
-		<p *ngIf="inputType == 'checkbox'">{{ 'events.attached-users' | translate }}: {{attachedItems.length}}</p>
+		<p>{{ 'events.attached-users' | translate }}: {{attachedItems.length}}</p>
 		<div class="table-responsive datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
 		id="kt_datatable">
 		<table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading">
@@ -86,7 +86,7 @@
 				<tr *ngFor="let user of users">
 					<td>
 						<label class="checkbox checkbox-lg checkbox-inline">
-							<input type="{{inputType}}" value="{{ user.id }}" name="option"
+							<input type="checkbox" value="{{ user.id }}" name="option"
 								[checked]="attachedItems.includes(user.id)" (change)="checkInput($event)" />
 							<span></span>
 						</label>

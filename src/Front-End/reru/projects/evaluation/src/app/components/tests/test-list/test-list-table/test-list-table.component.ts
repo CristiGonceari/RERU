@@ -63,6 +63,7 @@ export class TestListTableComponent implements OnInit {
   filters: any = {};
   testName: string = '';
   userName: string = '';
+  evaluatorName: string = '';
   userEmail: string = '';
   idnp: string = '';
   testEvent: string = '';
@@ -132,6 +133,7 @@ export class TestListTableComponent implements OnInit {
       idnp: this.idnp || '',
       eventName: this.testEvent || '',
       userName: this.userName || '',
+      evaluatorName: this.evaluatorName || '',
       email: this.userEmail || this.userEmail || '',
       programmedTimeFrom: this.searchFrom || null,
       programmedTimeTo: this.searchTo || null,
@@ -284,7 +286,8 @@ export class TestListTableComponent implements OnInit {
 		let headersHtml = document.getElementsByTagName('th');
 		let headersDto = [
       'testTemplateName', 
-      'userName', 
+      'userName',
+      'evaluatorName', 
       'eventName', 
       'locationNames', 
       'testStatus', 
@@ -312,6 +315,7 @@ export class TestListTableComponent implements OnInit {
       idnp: this.idnp || '',
       eventName: this.testEvent || '',
       userName: this.userName || '',
+      evaluatorName: this.evaluatorName || '',
       email: this.userEmail || '',
       programmedTimeFrom: this.searchFrom || null,
       programmedTimeTo: this.searchTo || null,
@@ -376,6 +380,7 @@ export class TestListTableComponent implements OnInit {
     this.testEvent = '';
     this.testLocation = '';
     this.userName = '';
+    this.evaluatorName = '';
     this.userEmail = '';
     this.idnp = '';
     this.dateTimeFrom = '';

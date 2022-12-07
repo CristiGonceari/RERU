@@ -25,7 +25,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .Include(t => t.TestTemplate)
                     .ThenInclude(x => x.TestTemplateModuleRoles)
                 .Include(t => t.Event).ThenInclude(l => l.EventLocations).ThenInclude(l => l.Location)
-                .OrderByDescending(x => x.CreateDate)
+                .OrderByDescending(x => x.Id)
                 .Select(t => new Test
                 {
                     Id = t.Id,

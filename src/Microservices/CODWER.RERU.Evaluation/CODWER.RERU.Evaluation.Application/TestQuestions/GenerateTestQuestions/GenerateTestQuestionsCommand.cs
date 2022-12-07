@@ -8,6 +8,5 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
     public class GenerateTestQuestionsCommand : IRequest<Unit>
     {
         public int TestId { get; set; }
-        public int EvaluatorId { get; set; }
     }
 }

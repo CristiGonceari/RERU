@@ -45,7 +45,8 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
             var eventValues = await _appDbContext.EventEvaluators
                 .Include(x => x.Event)
                 .Include(x => x.Evaluator)
-                .Where(ee => ee.EventId == request.EventId).ToListAsync();
+                .Where(ee => ee.EventId == request.EventId)
+                .ToListAsync();
 
             foreach (var evaluatorId in request.EvaluatorId)
             {
@@ -57,7 +58,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
                     {
                         EvaluatorId = evaluatorId,
                         EventId = request.EventId,
-                        ShowUserName = request.ShowUserName
+                        //ShowUserName = request.ShowUserName
                     };
 
                     var result = _mapper.Map<EventEvaluator>(newEventEvaluator);

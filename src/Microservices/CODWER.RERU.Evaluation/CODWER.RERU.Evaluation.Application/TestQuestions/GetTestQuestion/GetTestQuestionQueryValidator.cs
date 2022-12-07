@@ -64,7 +64,8 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
                     .ThenInclude(x => x.QuestionUnit)
                         .ThenInclude(x => x.Options)
                 .Include(x => x.TestQuestions)
-                    .ThenInclude(x => x.TestAnswers)
+                    .ThenInclude(x => x.TestQuestionsTestAnswers)
+                        .ThenInclude(x => x.TestAnswer)
                 .First(x => x.Id == testId);
 
             var questions = test.TestQuestions.Where(x => x.AnswerStatus == AnswerStatusEnum.Answered && (x.QuestionUnit.QuestionType == QuestionTypeEnum.MultipleAnswers || x.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer));
@@ -73,10 +74,11 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
             foreach (var testQuestion in questions)
             {
                 var correctAnswer = true;
+                var testAnswers = testQuestion.TestQuestionsTestAnswers.Select(x => x.TestAnswer).ToList();
 
                 foreach (var option in testQuestion.QuestionUnit.Options)
                 {
-                    var answer = testQuestion.TestAnswers.FirstOrDefault(x => x.OptionId.Value == option.Id);
+                    var answer = testAnswers.FirstOrDefault(x => x.OptionId.Value == option.Id);
 
                     if (answer == null)
                     {
