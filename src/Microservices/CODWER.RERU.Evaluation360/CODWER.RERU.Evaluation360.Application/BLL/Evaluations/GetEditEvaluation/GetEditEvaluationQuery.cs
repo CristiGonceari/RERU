@@ -3,12 +3,12 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluation
 {
-    public class GetEditEvaluationQuery: IRequest<EditEvaluationDto>
+    public class GetEditEvaluationQuery: IRequest<EvaluationRowDto>
     {
         public GetEditEvaluationQuery(int id)
         {
             Id = id;
         }
-        public int Id {set;get;}
+        public int Id { set; get; }
     }
 }

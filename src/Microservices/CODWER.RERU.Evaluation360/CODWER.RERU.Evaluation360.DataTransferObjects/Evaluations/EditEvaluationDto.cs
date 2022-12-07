@@ -7,10 +7,10 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
     {
         public int Id { set; get; }
         public string? SubdivisionName { set; get; }
-        public DateTime? DateCompletionGeneralData { set; get; }
         public string? NameSurnameEvaluated { set; get; }
+        public string? FunctionSubdivision { set; get; }
+        public string? SubdivisionEvaluated { set; get; }
         public GradeEnum? SpecialOrMilitaryGrade { set; get; }
-        public String? SpecialOrMilitaryGradeText { set; get; }
         public DateTime? PeriodEvaluatedFromTo { set; get; }
         public DateTime? PeriodEvaluatedUpTo { set; get; }
         public EducationEnum? EducationEnum { set; get; }
@@ -26,7 +26,7 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
         public string? AdministrativeActService { set; get; }
         public DateTime? PartialEvaluationPeriodFromTo { set; get; }
         public DateTime? PartialEvaluationPeriodUpTo { set; get; }
-        public string? FinalScorePartialEvaluations { set; get; }
+        public decimal? FinalScore { set; get; }
         public QualifierEnum? QualifierPartialEvaluations { set; get; }
         public string? SanctionAppliedEvaluationCourse { set; get; }
         public DateTime? DateSanctionApplication { set; get; }

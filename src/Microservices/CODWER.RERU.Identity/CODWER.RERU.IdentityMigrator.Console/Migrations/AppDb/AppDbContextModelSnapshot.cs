@@ -779,6 +779,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("DateSettingIindividualGoals")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<int?>("DecisionCounterSigner")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("timestamp without time zone");
 
@@ -794,6 +797,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<int?>("FinalEvaluationQualification")
                         .HasColumnType("integer");
 
+                    b.Property<decimal?>("FinalScore")
+                        .HasColumnType("numeric");
+
                     b.Property<string>("FinalScorePartialEvaluations")
                         .HasColumnType("text");
 
@@ -804,6 +810,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("text");
 
                     b.Property<string>("FunctionEvaluator")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FunctionSubdivision")
                         .HasColumnType("text");
 
                     b.Property<string>("Goal1")
@@ -1001,6 +1010,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<int?>("Status")
                         .HasColumnType("integer");
 
+                    b.Property<string>("SubdivisionEvaluated")
+                        .HasColumnType("text");
+
                     b.Property<string>("SubdivisionName")
                         .HasColumnType("text");
 
@@ -1016,6 +1028,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasKey("Id");
 
                     b.HasIndex("CounterSignerUserProfileId");
+
+                    b.HasIndex("DecisionCounterSigner");
 
                     b.HasIndex("EducationEnum");
 
@@ -6487,6 +6501,34 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         });
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.DecisionCounterSignerEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("DecisionCounterSignerEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Accept"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Reevaluation"
+                        });
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.EducationEnum>", b =>
                 {
                     b.Property<int>("Id")
@@ -6602,12 +6644,87 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         new
                         {
                             Id = 1,
-                            Name = "Special"
+                            Name = "Soldat"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Military"
+                            Name = "Caporal"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "SergentInferior"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Sergent"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "SergentMajor"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Plutonier"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "PlutonierMajor"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "PlutonierAdjutant"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Locotenent"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "LocotenentMajor"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "Capitan"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "Maior"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "LocotenentColonel"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Name = "Colonel"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Name = "GeneralDeBrigada"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Name = "GeneralDeDivizie"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Name = "GeneralDeCorpArmata"
                         });
                 });
 
@@ -7407,6 +7524,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasForeignKey("CounterSignerUserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.DecisionCounterSignerEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("DecisionCounterSigner")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.EducationEnum>", null)
                         .WithMany()
@@ -9094,6 +9216,15 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ContactTypeEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ContactTypeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.DecisionCounterSignerEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.DecisionCounterSignerEnum>", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)

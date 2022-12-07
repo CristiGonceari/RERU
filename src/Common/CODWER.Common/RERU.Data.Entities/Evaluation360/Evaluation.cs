@@ -24,9 +24,12 @@ namespace RERU.Data.Entities.Evaluation360
         public EvaluationTypeEnum? Type { set; get; }
         public decimal Points { set; get; }
         public EvaluationStatusEnum? Status {set;get;}
+        
         public string? SubdivisionName { set; get; }
         public DateTime? DateCompletionGeneralData { set; get; }
         public string? NameSurnameEvaluated { set; get; }
+        public string? FunctionSubdivision { set; get; }
+        public string? SubdivisionEvaluated { set; get; }
         public GradeEnum? SpecialOrMilitaryGrade { set; get; }
         public String? SpecialOrMilitaryGradeText { set; get; }
         public DateTime? PeriodEvaluatedFromTo { set; get; }
@@ -44,6 +47,7 @@ namespace RERU.Data.Entities.Evaluation360
         public string? AdministrativeActService { set; get; }
         public DateTime? PartialEvaluationPeriodFromTo { set; get; }
         public DateTime? PartialEvaluationPeriodUpTo { set; get; }
+        public decimal? FinalScore { set; get; }
         public string? FinalScorePartialEvaluations { set; get; }
         public QualifierEnum? QualifierPartialEvaluations { set; get; }
         public string? SanctionAppliedEvaluationCourse { set; get; }
@@ -105,6 +109,7 @@ namespace RERU.Data.Entities.Evaluation360
         public bool? CheckComment3 { set; get; }
         public bool? CheckComment4 { set; get; }
         public string? OtherComments { set; get; }
+        public DecisionCounterSignerEnum? DecisionCounterSigner { set; get; }
         public string? NameSurnameCounterSigner { set; get; }
         public string? FunctionCounterSigner { set; get; }
         public DateTime? DateCompletionCounterSigner { set; get; }

@@ -8,6 +8,5 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Create
         public int[] EvaluatedUserProfileIds { set; get; }
         public int CounterSignerUserProfileId { set; get; }
         public int Type { set; get; }
-        
     }
 }

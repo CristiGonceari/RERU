@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation360.API.Config;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Accept;
@@ -26,8 +25,8 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
             return await Sender.Send(query);
         }
 
-        [HttpGet("{id}/edit")]
-        public async Task<EditEvaluationDto> GetEdit([FromRoute] int id)
+        [HttpGet("{id}")]
+        public async Task<EvaluationRowDto> GetEdit([FromRoute] int id)
         {
             return await Sender.Send(new GetEditEvaluationQuery(id));
         }
@@ -66,7 +65,7 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
             await Sender.Send(command);
         }
 
-        [HttpPut("CounterSignAccept")]
+        [HttpPut("counter-sign-accept")]
         public async Task CounterSignAccept([FromBody] CounterSignAcceptRejectEvaluationDto dto)
         {
             var command = new CounterSignAcceptEvaluationCommand(dto);
@@ -74,14 +73,14 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
         }
 
         
-        [HttpPut("CounterSignReject")]
+        [HttpPut("counter-sign-reject")]
         public async Task CounterSignReject([FromBody] CounterSignAcceptRejectEvaluationDto dto)
         {
             var command = new CounterSignRejectEvaluationCommand(dto);
             await Sender.Send(command);
         }
 
-        [HttpPut("EvaluatedKnow")]
+        [HttpPut("evaluated-know")]
         public async Task EvaluatedKnow([FromBody] EvaluatedKnowDto dto)
         {
             var command = new EvaluatedKnowCommand(dto);

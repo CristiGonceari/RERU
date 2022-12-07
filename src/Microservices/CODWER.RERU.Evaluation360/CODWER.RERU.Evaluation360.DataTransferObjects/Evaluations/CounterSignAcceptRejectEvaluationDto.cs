@@ -1,4 +1,5 @@
 using System;
+using RERU.Data.Entities.PersonalEntities.Enums;
 
 namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
 {
@@ -11,7 +12,6 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
         public bool? CheckComment4 { set; get; }
         public string? OtherComments { set; get; }
         public string? FunctionCounterSigner { set; get; }
-        public DateTime? DateCompletionCounterSigner { set; get; }
-        public bool? SignatureCounterSigner { set; get; }
+        public  DecisionCounterSignerEnum? DecisionCounterSigner { set; get; }
     }
 }
