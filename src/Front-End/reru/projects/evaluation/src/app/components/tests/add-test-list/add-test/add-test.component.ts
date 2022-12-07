@@ -271,7 +271,7 @@ export class AddTestComponent implements OnInit {
 
   attachEvaluators(): void {
     this.exceptUserIds = this.userListToAdd;
-    this.openUsersModal(this.evaluatorList, 'radio', true);
+    this.openUsersModal(this.evaluatorList, 'checkbox', true);
   }
 
   attachUsers(): void {

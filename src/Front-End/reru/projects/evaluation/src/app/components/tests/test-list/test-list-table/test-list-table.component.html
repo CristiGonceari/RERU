@@ -7,25 +7,24 @@
     <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading && !downloadFile">
         <thead class="text-uppercase text-muted">
             <tr>
-                <th scope="col">{{ 'tests.name' | translate }}</th>
-                <th scope="col" class="text-left" style="width: 200px">{{ 'verify-test.student' | translate }} ({{ 'user-profile.npp' | translate }})</th>
-                <th scope="col" class="text-left" style="width: 200px">{{ 'events.evaluator' | translate }} ({{ 'user-profile.npp' | translate }})</th>
-                <th scope="col" class="text-left">{{ 'events.event' | translate }}</th>
+                <th class="text-left" scope="col">{{ 'tests.name' | translate }}</th>
+                <th scope="col" style="width: 200px">{{ 'verify-test.student' | translate }} ({{ 'user-profile.npp' | translate }})</th>
+                <th scope="col" style="width: 200px">{{ 'events.evaluator' | translate }} ({{ 'user-profile.npp' | translate }})</th>
+                <th scope="col">{{ 'events.event' | translate }}</th>
                 <th scope="col" style="width: 100px">{{ 'departments.department' | translate }} / {{ 'user-roles.role' | translate }}</th>
-                <th scope="col" class="text-left">{{ 'events.location' | translate }}</th>
-                <th scope="col" class="text-left" style="width: 100px">{{ 'verify-test.status' | translate }}</th>
-                <th scope="col" class="text-left" style="width: 50px">{{ 'verify-test.verified-progress' | translate }}
-                </th>
-                <th scope="col" class="text-left" style="width: 100px">{{ 'verify-test.result' | translate }}</th>
-                <th scope="col" class="text-left" style="width: 50px">{{ 'verify-test.score' | translate }}</th>
-                <th scope="col" class="text-left" style="width: 50px">{{ 'verify-test.min-points' | translate }}</th>
+                <th scope="col">{{ 'events.location' | translate }}</th>
+                <th scope="col" style="width: 100px">{{ 'verify-test.status' | translate }}</th>
+                <th scope="col" style="width: 50px">{{ 'verify-test.verified-progress' | translate }}</th>
+                <th scope="col" style="width: 100px">{{ 'verify-test.result' | translate }}</th>
+                <th scope="col" style="width: 50px">{{ 'verify-test.score' | translate }}</th>
+                <th scope="col" style="width: 50px">{{ 'verify-test.min-points' | translate }}</th>
 
                 <th scope="col" style="width: 48px"></th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="testTemplate.length">
             <tr *ngFor="let item of testTemplate">
-                <td>
+                <td class="text-left">
                     {{ item.testTemplateName }}
                     <span class="text-dark-50 d-block mb-0">
                         <b *ngIf="!item.eventName">{{ item.programmedTime | date: 'dd/MM/yyyy, HH:mm'}}</b>
