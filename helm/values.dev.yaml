@@ -221,6 +221,8 @@ microservices:
           value: "http://reru.codwer.com/ms/reru-identity-new"
         - name: IDENTITY_DISCOVERY_ENDPOINT_URI
           value: "http://reru.codwer.com"
+        - name: TZ
+          value: "Europe/Chisinau"
       appsettings: reru_identity_new.appsettings.json
     name: "reru-identity-new"
     port: 8080
