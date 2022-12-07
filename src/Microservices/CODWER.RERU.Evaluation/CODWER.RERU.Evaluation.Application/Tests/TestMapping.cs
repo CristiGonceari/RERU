@@ -35,7 +35,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.EvaluatorName, opts => opts.MapFrom(src => src.Evaluator.FullName))
                 .ForMember(x => x.EvaluatorIdnp, opts => opts.MapFrom(src => src.Evaluator.Idnp))
                 .ForMember(x => x.EndProgrammedTime, opts => opts.MapFrom(src => src.Event.TillDate))
-                .ForMember(x => x.CanStartWithoutConfirmation, opts => opts.MapFrom(src => CheckCanStartWithoutConfirmation(src)));
+                .ForMember(x => x.CanStartWithoutConfirmation, opts => opts.MapFrom(src => CheckCanStartWithoutConfirmation(src)))
+                .ForMember(x => x.DepartmentName, opts => opts.MapFrom(src => src.UserProfile.Department.Name))
+                .ForMember(x => x.RoleName, opts => opts.MapFrom(src => src.UserProfile.Role.Name));
 
             CreateMap<AddEditTestDto, Test>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
@@ -48,7 +50,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.EventName, opts => opts.MapFrom(src => src.Event.Name))
                 .ForMember(x => x.TestTemplateName, opts => opts.MapFrom(src => src.TestTemplate.Name))
                 .ForMember(x => x.ProgrammedTime, opts => opts.MapFrom(src => src.ProgrammedTime))
-                .ForMember(x => x.EndProgrammedTime, opts => opts.MapFrom(src => src.EndProgrammedTime));
+                .ForMember(x => x.EndProgrammedTime, opts => opts.MapFrom(src => src.EndProgrammedTime))
+                .ForMember(x => x.CanStartWithoutConfirmation, opts => opts.MapFrom(src => CheckCanStartWithoutConfirmation(src)));
         }
 
         private string GetVerifiationStatus(Test inputTest)
@@ -67,6 +70,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests
         private bool CheckCanStartWithoutConfirmation(Test test)
         {
             if (test.TestTemplate.Settings == null) return false;
+
+            if (test.TestStatus is TestStatusEnum.AlowedToStart) return true;
 
             return test.TestTemplate.Settings.StartWithoutConfirmation && test.TestPassStatus is not TestPassStatusEnum.Forbidden or null;
         }

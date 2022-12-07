@@ -50,7 +50,6 @@ namespace RERU.Data.Entities
 
         public int? LocationId { get; set; }
         public Location Location { get; set; }
-      
 
         public virtual ICollection<TestQuestion> TestQuestions { get; set; }
         public virtual ICollection<EmailTestNotification> EmailTestNotifications { get; set; }

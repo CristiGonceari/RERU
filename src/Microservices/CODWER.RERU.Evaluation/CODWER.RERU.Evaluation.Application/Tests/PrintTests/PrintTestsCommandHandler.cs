@@ -6,6 +6,7 @@ using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
@@ -51,25 +52,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
             var tests = GetAndFilterTests.Filter(_appDbContext, filterData, curUser);
 
             tests = tests.Where(x => x.TestTemplate.Mode == TestTemplateModeEnum.Poll || x.TestTemplate.Mode == TestTemplateModeEnum.Test);
-
-            foreach (var testDto in tests.ToList())
-            {
-                var eventEvaluator = _appDbContext.EventEvaluators.FirstOrDefault(x => x.EvaluatorId == curUser.Id && x.EventId == testDto.EventId);
-                var testEvaluator = _appDbContext.Tests.FirstOrDefault(x => x.EvaluatorId == curUser.Id && x.Id == testDto.Id);
-
-                if (eventEvaluator != null)
-                {
-                    testDto.ShowUserName = eventEvaluator.ShowUserName;
-                }
-                else if (testEvaluator != null && testEvaluator.ShowUserName != null)
-                {
-                    testDto.ShowUserName = (bool)testEvaluator.ShowUserName;
-                }
-                else
-                {
-                    testDto.ShowUserName = true;
-                }
-            }
 
             var result = _printer.ExportTableSpecificFormat(new TableData<Test>
             {

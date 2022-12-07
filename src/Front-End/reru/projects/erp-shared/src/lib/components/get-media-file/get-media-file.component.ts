@@ -1,5 +1,5 @@
 import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ShowImageModalComponent } from '../../modals/show-image-modal/show-image-modal.component';
@@ -10,7 +10,7 @@ import { CloudFileService } from '../../services/cloud-file.service';
   templateUrl: './get-media-file.component.html',
   styleUrls: ['./get-media-file.component.scss']
 })
-export class GetMediaFileComponent implements OnInit {
+export class GetMediaFileComponent implements OnChanges {
 
   imageUrl: any;
   audioUrl: any;
@@ -27,9 +27,6 @@ export class GetMediaFileComponent implements OnInit {
     private fileService: CloudFileService,
     private modalService: NgbModal,
   ) { }
-
-  ngOnInit(): void {
-  }
 
   ngOnChanges( changes: SimpleChanges ) {
     if (this.fileId != 'null' && changes.fileId.previousValue != this.fileId) {

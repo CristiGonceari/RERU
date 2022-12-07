@@ -40,5 +40,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public string HashGroupKey { get; set; }
         public List<string> CandidatePositionNames { get; set; }
         public bool CanStartWithoutConfirmation { get; set; }
+        public string DepartmentName { get; set; }
+        public string RoleName { get; set; }
     }
 }

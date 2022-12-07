@@ -18,7 +18,7 @@ export class StartTestPageComponent implements OnInit, OnDestroy  {
   testDto = new Test();
   settings;
 
-  isLoading: boolean = false;
+  isLoading: boolean = true;
 
   timeLeft;
   interval;
@@ -42,7 +42,6 @@ export class StartTestPageComponent implements OnInit, OnDestroy  {
   }
 
   ngOnInit(): void {
-    this.isLoading = true;
     this.getTestById(this.testId);
   }
 
@@ -66,7 +65,7 @@ export class StartTestPageComponent implements OnInit, OnDestroy  {
     }, 1000)
   }
 
-  parseCandidatePositions(candidatePositionsNames: string[]) {
+  parseCandidatePositions(candidatePositionsNames: string[]): string {
     if (this.validatePosition) {
       let string = candidatePositionsNames.join();
       return string.split(',').join(', ');
@@ -105,6 +104,7 @@ export class StartTestPageComponent implements OnInit, OnDestroy  {
       res => {
         this.testDto = res.data;
         this.validatePosition = true;
+        this.isLoading = false;
         this.startTimer();
       }
     )

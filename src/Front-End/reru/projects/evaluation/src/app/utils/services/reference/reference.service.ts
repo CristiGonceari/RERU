@@ -65,6 +65,10 @@ export class ReferenceService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/events-value/select-values`);
   }
 
+  getAllEvents(): Observable<any>{
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/all-events-value/select-values`);
+  }
+
   getMode(): Observable<any>{
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/test-type-mode/select-values`);
   }

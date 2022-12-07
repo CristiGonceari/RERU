@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { createCustomElement } from '@angular/elements';
@@ -12,13 +12,14 @@ import { TestResultStatusEnum } from '../../../utils/enums/test-result-status.en
 import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/file-test-answer.service';
 import { saveAs } from 'file-saver';
 import { EnumStringTranslatorService } from '../../../utils/services/enum-string-translator.service';
+import { StyleNodesService } from '../../../utils/services/style-nodes/style-nodes.service';
 
 @Component({
   selector: 'app-view-evaluation-result',
   templateUrl: './view-evaluation-result.component.html',
   styleUrls: ['./view-evaluation-result.component.scss']
 })
-export class ViewEvaluationResultComponent implements OnInit {
+export class ViewEvaluationResultComponent implements OnInit, OnDestroy {
   testId: number;
   index = 1;
   count: number;
@@ -54,6 +55,8 @@ export class ViewEvaluationResultComponent implements OnInit {
 
   optionFileId = [];
   isLoadingOptionMedia:  boolean = true;
+
+  stylesToApply: string = '.breadcrumb{ display: none !important; }';
   
   constructor(
     private verifyService: TestVerificationProcessService,
@@ -64,8 +67,8 @@ export class ViewEvaluationResultComponent implements OnInit {
     private router: Router,
     private location: Location,
     private fileTestAnswerService: FileTestAnswerService,
-    private enumStringTranslatorService: EnumStringTranslatorService
-
+    private enumStringTranslatorService: EnumStringTranslatorService,
+    private styleNodesService: StyleNodesService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
@@ -77,6 +80,11 @@ export class ViewEvaluationResultComponent implements OnInit {
     this.getTestById();
     this.ngDoBoostrap();
     this.testQuestionService.setData(true);
+    this.styleNodesService.addStyle('breadcrumb', this.stylesToApply);
+  }
+  
+  ngOnDestroy() {
+    this.styleNodesService.removeStyle('breadcrumb');
   }
 
   ngDoBoostrap() {

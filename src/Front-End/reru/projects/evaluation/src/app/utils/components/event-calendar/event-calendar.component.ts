@@ -142,7 +142,8 @@ export class EventCalendarComponent implements OnInit {
 
     const dates = {
       date: data.date,
-      clickedDay: data.clickedDay
+      clickedDay: data.clickedDay,
+      page : 1
     }
     
     this.onDatePicked.emit(dates)

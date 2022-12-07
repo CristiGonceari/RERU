@@ -15,16 +15,11 @@ export class EvaluationsListTableComponent implements OnInit {
   @ViewChild('testLocation') testLocation: any;
   @ViewChild('userName') userName: any;
   @ViewChild('evaluatorName') evaluatorName: any;
-  @ViewChild('userEmail') userEmail: any;
-  @ViewChild('idnp') idnp: any;
-  @ViewChild('selectedStatus') selectedStatus: any;
   @ViewChild('selectedResult') selectedResult: any;
   @ViewChild(SearchDepartmentComponent) departmentId: SearchDepartmentComponent;
   @ViewChild(SearchRoleComponent) roleId: SearchRoleComponent;
 
-  constructor(
-    
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
@@ -35,14 +30,11 @@ export class EvaluationsListTableComponent implements OnInit {
   }
 
   clearFields() {
-    this.testName.key = '';
-    this.testEvent.key = '';
-    this.testLocation.key = '';
-    this.userName.key = '';
-    this.evaluatorName.key = '';
-    // this.userEmail.key = '';
-    // this.idnp.key = '';
-    //this.selectedStatus.getTestStatuses();
+    this.testName.value = '';
+    this.testEvent.value = '';
+    this.testLocation.value = '';
+    this.userName.value = '';
+    this.evaluatorName.value = '';
     this.selectedResult.getTestResults();
     this.departmentId.department = '';
     this.roleId.role = '';

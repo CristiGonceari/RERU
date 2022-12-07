@@ -12,6 +12,7 @@ export class ButtonComponent {
   @Input() icon: string;
   @Input() width: string;
   @Input() disabled: boolean;
+  @Input() classes: string;
   @Output() handle: EventEmitter<void> = new EventEmitter<void>();
 
   providers: [SafeHtml]

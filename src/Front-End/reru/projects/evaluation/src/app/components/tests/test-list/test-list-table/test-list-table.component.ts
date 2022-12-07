@@ -289,17 +289,24 @@ export class TestListTableComponent implements OnInit {
       'userName',
       'evaluatorName', 
       'eventName', 
+      'departmentName',
       'locationNames', 
       'testStatus', 
       'verificationProgress', 
-      'result', 
+      'result',
       'accumulatedPercentage', 
       'minPercent'
     ];
     
 		for (let i = 0; i < headersHtml.length - 1; i++) {
       if(i == 2){
-        this.headersToPrint.push({ value: "idnp", label: "Idnp",isChecked: true})
+        this.headersToPrint.push({ value: "idnp", label: "Idnp", isChecked: true})
+      }
+      if(i == 3){
+         headersHtml[i].innerHTML = headersHtml[i].innerHTML.split('/')[0]
+      }
+      if(i == 4){
+        this.headersToPrint.push({ value: "roleName", label: "Role", isChecked: true})
       }
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
@@ -372,6 +379,14 @@ export class TestListTableComponent implements OnInit {
 		this.pagination.currentPage = 1;
 		this.getTests();
 	}
+
+  parseStringLength(name: string): string{
+    if(name.length > 12) {
+     return name.slice(0, 12) + "...";
+    }
+
+    return name;
+  }
 
 	resetFilters(): void {
 		this.filters = {};

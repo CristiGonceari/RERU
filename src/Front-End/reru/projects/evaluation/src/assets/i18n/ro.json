@@ -240,7 +240,7 @@
     "close": "Închide",
     "all": "Toate",
     "continue": "Continuă",
-    "start-test": "Începe Testul",
+    "start-test": "Începe",
     "allow-to-start": "Permiteți să înceapă",
     "yes": "Da",
     "no": "Nu",
@@ -524,7 +524,8 @@
     "succes-update-status-msg": "Statutul a fost actualizat",
     "search-by-status": "Căutați după statut",
     "add-tags": "Însereaza taguri",
-    "bulk-import-options-msg": "Vă rugăm să descărcați și să utilizați formularul nostru special pentru a importa opțiunile"
+    "bulk-import-options-msg": "Vă rugăm să descărcați și să utilizați formularul nostru special pentru a importa opțiunile",
+    "questions-left": "Întrebări rămase"
   },
   "require-documents":{
     "document-details": "Detaliile documentului",

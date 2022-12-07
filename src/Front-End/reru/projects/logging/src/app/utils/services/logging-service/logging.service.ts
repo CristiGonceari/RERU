@@ -27,7 +27,6 @@ export class LoggingService extends AbstractService {
   }
 
   deleteLogs(years) : Observable<any>{
-   
     return this.http.delete(`${this.baseUrl}/${this.urlRoute}/${years}`);
   }
   

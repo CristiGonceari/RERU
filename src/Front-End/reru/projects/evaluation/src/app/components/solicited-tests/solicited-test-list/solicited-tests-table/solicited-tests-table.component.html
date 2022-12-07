@@ -28,7 +28,12 @@
                         <span class="text-dark-50 font-size-lg font-weight-light">{{ item.userProfileIdnp }}</span>
                     </p>
                 </td>
-                <td>{{ item.candidatePositionName }}</td>
+                <td>
+                    <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
+                    [routerLink]="['../positions/position', item.candidatePositionId]"
+                        style="white-space: nowrap;">
+                        {{ item.candidatePositionName }}
+                </td>
                 <td>{{ item.attachedFilesCount }}</td>
                 <td>{{ item.requiredAttachedFilesCount }}</td>
                 <td>{{ item.solicitedTime | date: 'dd/MM/yyyy, HH:mm'}}</td>

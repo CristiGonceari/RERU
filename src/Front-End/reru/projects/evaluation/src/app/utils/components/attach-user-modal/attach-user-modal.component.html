@@ -67,7 +67,7 @@
 				<tr>
 					<th scope="col" style="width: 50px">
 						<span>
-							<label class="checkbox checkbox-lg checkbox-inline" [ngbTooltip]="tooltip">
+							<label class="checkbox checkbox-lg checkbox-inline" [ngbTooltip]="tooltip" *ngIf="inputType !== 'radio'">
 								<input type="checkbox" value="" name="option"
 									[checked]="paginatedAttachedIds"
 									(change)="checkAll($event)" />
@@ -75,7 +75,7 @@
 							</label>
 						</span>
 					</th>
-					<th scope="col"> {{ 'login.last-name' | translate }} ({{ 'user-profile.npp' | translate }})</th>
+					<th scope="col"> {{ 'login.last-name' | translate }} ({{ 'user-profile.npp' | translate }}) </th>
 					<th scope="col"> {{ 'login.idnp' | translate }} </th>
 					<th scope="col"> {{ 'user-profile.user-email' | translate }} </th>
 					<th scope="col"> {{ 'departments.department' | translate }} </th>
@@ -86,12 +86,12 @@
 				<tr *ngFor="let user of users">
 					<td>
 						<label class="checkbox checkbox-lg checkbox-inline">
-							<input type="checkbox" value="{{ user.id }}" name="option"
+							<input #currentCheckbox type="{{inputType}}" value="{{ user.id }}" name="option"
 								[checked]="attachedItems.includes(user.id)" (change)="checkInput($event)" />
 							<span></span>
 						</label>
 					</td>
-					<td> {{ user.lastName }} {{ user.firstName }} {{ user.fatherName }}</td>
+					<td> <a class="text-dark-75 text-hover-primary" (click)="currentCheckbox.click()" href="javascript:void(0)">{{ user.lastName }} {{ user.firstName }} {{ user.fatherName }}</a></td>
 					<td> {{ user.idnp }} </td>
 					<td> {{ user.email }} </td>
 					<td>

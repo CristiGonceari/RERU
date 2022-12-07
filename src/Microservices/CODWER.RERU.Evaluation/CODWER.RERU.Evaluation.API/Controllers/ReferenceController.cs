@@ -21,6 +21,7 @@ using CVU.ERP.Module.Application.ImportProcesses;
 using CVU.ERP.StorageService.Entities;
 using RERU.Data.Entities.Enums;
 using CVU.ERP.Common.DataTransferObjects.Users;
+using CODWER.RERU.Evaluation.Application.References.GetAllEventsValues;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -124,6 +125,14 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<List<SelectEventValueDto>> GetEvents()
         {
             var query = new GetEventsValueQuery();
+
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("all-events-value/select-values")]
+        public async Task<List<SelectEventValueDto>> GetAllEvents()
+        {
+            var query = new GetAllEventsValuesQuery();
 
             return await Mediator.Send(query);
         }

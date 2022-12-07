@@ -328,9 +328,9 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             myDictionary.Add("{question_image}", questionImage);
             myDictionary.Add("'image_config'", imageConfig.ToString());
             myDictionary.Add("{category_name}", items.QuestionCategory.Name);
-            myDictionary.Add("{question_type}", EnumMessages.GetQuestionType(items.QuestionType));
+            myDictionary.Add("{question_type}", EnumMessages.Translate(items.QuestionType));
             myDictionary.Add("{question_points}", items.QuestionPoints.ToString());
-            myDictionary.Add("{question_status}", EnumMessages.GetQuestionStatus(items.Status));
+            myDictionary.Add("{question_status}", EnumMessages.Translate(items.Status));
             myDictionary.Add("{answer_option}", await GetTableContent(items));
 
             var dictionary = new Dictionary<string, Image>();
@@ -398,7 +398,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             </tr>
             <tr>
                     <th colspan=""4"" style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;"">
-                          <b>{item.QuestionCount}</b> {ParseQuestion(item.QuestionCount)} din <b>{item.QuestionCategory.QuestionUnits.Count}</b>, ordinea intrebarilor - {EnumMessages.GetQuestionSequence(item.SequenceType)}
+                          <b>{item.QuestionCount}</b> {ParseQuestion(item.QuestionCount)} din <b>{item.QuestionCategory.QuestionUnits.Count}</b>, ordinea intrebarilor - {EnumMessages.Translate(item.SequenceType)}
                     </th>
             </tr>
             <tr>
@@ -437,7 +437,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                                     <th colspan=""2"" style=""border: 1px solid black; border-collapse: collapse; background-color: #1f3864; color: white; height: 30px;"">Numărul de întrebări din categorie</th>
                                 </tr>
                                 <tr>
-                                    <th colspan=""2"" style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;""><b>{testCategory.QuestionCount}</b> din <b>{testCategory.QuestionCategory.QuestionUnits.Count}</b>, oridnea - {EnumMessages.GetQuestionSequence(testCategory.SequenceType)}</th>
+                                    <th colspan=""2"" style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;""><b>{testCategory.QuestionCount}</b> din <b>{testCategory.QuestionCategory.QuestionUnits.Count}</b>, oridnea - {EnumMessages.Translate(testCategory.SequenceType)}</th>
                                 </tr>
                                 <tr>
                                     <th style=""border: 1px solid black; border-collapse: collapse; text-align: left; background-color: #1f3864; color: white; height: 30px;"">Lista de întrebări</th>
@@ -450,7 +450,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 {
                     content += $@"<tr>
                                 <th style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px; max-width: 500px;"">{question.Question}</th>
-                                <th style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;"">{EnumMessages.GetQuestionType(question.QuestionType)}</th>
+                                <th style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;"">{EnumMessages.Translate(question.QuestionType)}</th>
                             </tr> ";
                 }
 
@@ -631,7 +631,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
                     foreach (var test in testTemplate.Tests)
                     {
-                        content.Append($@"<span>- {EnumMessages.TranslateResultStatus(test.Result)}, {test.PassDate.ToString("dd/MM/yyyy HH:mm")}, {EnumMessages.GetTestStatus(test.Status)}</span><br>");
+                        content.Append($@"<span>- {EnumMessages.Translate(test.Result)}, {test.PassDate:dd/MM/yyyy HH:mm}, {EnumMessages.Translate(test.Status)}</span><br>");
                     }
 
                     content.Append($@"</td>");
@@ -677,7 +677,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 current + $@"
             <tr>
                 <th colspan=""3"" style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px; max-width: 500px"">{questionUnit.Question}</th>
-                <th colspan=""1"" style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;"">{EnumMessages.GetQuestionType(questionUnit.QuestionType)}</th>
+                <th colspan=""1"" style=""border: 1px solid black; border-collapse: collapse; height: 30px; font-size: 15px;"">{EnumMessages.Translate(questionUnit.QuestionType)}</th>
             </tr>");
         }
 
