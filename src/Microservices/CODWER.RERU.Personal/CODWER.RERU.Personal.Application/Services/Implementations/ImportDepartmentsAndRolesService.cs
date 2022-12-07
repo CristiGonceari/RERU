@@ -40,7 +40,16 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
 
             for (var i = 1; i <= _totalRows; i++)
             {
-                await AddEditData(type, i);
+                if (!string.IsNullOrEmpty(_workSheet.Cells[i, 1]?.Value?.ToString() ?? string.Empty) && 
+                    !string.IsNullOrEmpty(_workSheet.Cells[i, 2]?.Value?.ToString() ?? string.Empty)
+                    )
+                {
+                    await AddEditData(type, i);
+                }
+                else 
+                {
+                    _workSheet.Cells[i, 5].Value = $"Error: Fișierul trebuie să conțină în mod necesar colaboratorId și nume";
+                }
             }
 
             var streamBytesArray = _package.GetAsByteArray();
