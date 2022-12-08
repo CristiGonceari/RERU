@@ -23,14 +23,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
         private readonly IUserProfileService _userProfileService;
-        private readonly IMediator _mediator;
 
-        public GetTestsQueryHandler(AppDbContext appDbContext, IPaginationService paginationService, IUserProfileService userProfileService, IMediator mediator)
+        public GetTestsQueryHandler(AppDbContext appDbContext, IPaginationService paginationService, IUserProfileService userProfileService)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
             _userProfileService = userProfileService;
-            _mediator = mediator;
         }
 
         public async Task<PaginatedModel<TestDto>> Handle(GetTestsQuery request, CancellationToken cancellationToken)
@@ -129,30 +127,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
         {
             foreach (var testDto in paginatedModel.Items)
             {
-                var testTemplate = _appDbContext.TestTemplates
-                    .Include(tt => tt.TestTemplateQuestionCategories)
-                    .FirstOrDefault(tt => tt.Id == testDto.TestTemplateId);
+                var test = await _appDbContext.Tests
+                    .Include(tt => tt.TestQuestions)
+                    .ThenInclude(tt => tt.QuestionUnit)
+                    .FirstOrDefaultAsync(tt => tt.Id == testDto.Id);
 
-                var testTemplateCategories = testTemplate.TestTemplateQuestionCategories
-                    .Where(tt => tt.TestTemplateId == testTemplate.Id)
-                    .ToList();
-
-                var questionsList = new List<QuestionUnitDto>();
-
-                foreach (var testTemplateCategory in testTemplateCategories)
-                {
-                    var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { TestTemplateQuestionCategoryId = testTemplateCategory.Id });
-
-                    questionsList.AddRange(testCategoryQuestionData.Questions);
-                    testDto.IsVerificatedAutomat = questionsList.All(x => x.QuestionType == QuestionTypeEnum.OneAnswer || x.QuestionType == QuestionTypeEnum.MultipleAnswers);
-                }
-
-                if (testTemplateCategories.All(tt => tt.QuestionType == QuestionTypeEnum.OneAnswer || tt.QuestionType == QuestionTypeEnum.MultipleAnswers))
-                {
-                    testDto.IsVerificatedAutomat = true;
-                }
+                testDto.IsVerificatedAutomat = test.TestQuestions.All(x => x.QuestionUnit.QuestionType is QuestionTypeEnum.OneAnswer or QuestionTypeEnum.MultipleAnswers);
             }
-           
+
             return paginatedModel;
         }
     }

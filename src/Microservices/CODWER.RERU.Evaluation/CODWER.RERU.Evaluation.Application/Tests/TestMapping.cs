@@ -37,7 +37,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.EndProgrammedTime, opts => opts.MapFrom(src => src.Event.TillDate))
                 .ForMember(x => x.CanStartWithoutConfirmation, opts => opts.MapFrom(src => CheckCanStartWithoutConfirmation(src)))
                 .ForMember(x => x.DepartmentName, opts => opts.MapFrom(src => src.UserProfile.Department.Name))
-                .ForMember(x => x.RoleName, opts => opts.MapFrom(src => src.UserProfile.Role.Name));
+                .ForMember(x => x.RoleName, opts => opts.MapFrom(src => src.UserProfile.Role.Name))
+                .ForMember(x => x.HashGroupKey, opts => opts.MapFrom(src => src.HashGroupKey));
 
             CreateMap<AddEditTestDto, Test>()
                 .ForMember(x => x.Id, opts => opts.Ignore());

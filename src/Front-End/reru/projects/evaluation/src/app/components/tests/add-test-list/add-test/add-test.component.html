@@ -115,7 +115,7 @@
             <label class="col-xl-3 col-lg-4 col-form-label text-lg-right text-left">
               {{'events.evaluator' | translate}}</label>
             <div class="col-xl-9 col-lg-8">
-              <button class="btn btn-light-primary" *ngIf="!(hasEventEvaluator || isTestTemplateOneAnswer)"
+              <button class="btn btn-light-primary" *ngIf="!isTestTemplateOneAnswer"
                 [disabled]="ceckTestTemplate(testTemplate)" (click)="attachEvaluators()"
                 [style.background-color]="evaluatorList.length > 0 ? '#C9F7F5': '#FFE2E5'"
                 [style.color]="evaluatorList.length > 0 ? '#0bb7af': '#F64E60'">

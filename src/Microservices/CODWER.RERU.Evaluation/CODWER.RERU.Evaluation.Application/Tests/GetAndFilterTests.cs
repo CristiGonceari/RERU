@@ -45,7 +45,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                     ProgrammedTime = t.ProgrammedTime,
                     EndTime = t.EndTime,
                     TestTemplateId = t.TestTemplateId,
-                    TestPassStatus = t.TestPassStatus
+                    TestPassStatus = t.TestPassStatus,
+                    HashGroupKey = t.HashGroupKey
                 })
                 .AsQueryable();
 
