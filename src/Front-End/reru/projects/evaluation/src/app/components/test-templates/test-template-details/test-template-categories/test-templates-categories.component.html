@@ -3,8 +3,9 @@
         <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title"><b>{{'categories.categories' | translate}}</b></div>
-            <div class="card-toolbar" >
-                <app-add-button *ngIf="!disable && !isLoading" class="btn" [value]="'categories.new-category' | translate"
+            <div class="card-toolbar">
+                <app-add-button *ngIf="!disable && !isLoading" class="btn"
+                    [value]="'categories.new-category' | translate"
                     [routerLink]="['../../../category', testTemplateId, 'add']"></app-add-button>
             </div>
         </div>
@@ -35,8 +36,10 @@
                     <tbody dragula="Categories" [(dragulaModel)]="categories">
                         <tr *ngFor="let item of categories; let i = index">
                             <td [ngClass]="{'disabled-area': !sequence}">{{ i + 1 }}</td>
-                            <td [ngClass]="{'disabled-area': !sequence}" >{{ item.categoryName }}</td>
-                            <td [ngClass]="{'disabled-area': !sequence}"><div (click)="demo(item.questionType, item.id)">{{ item.questionCount }}</div></td>
+                            <td [ngClass]="{'disabled-area': !sequence}">{{ item.categoryName }}</td>
+                            <td [ngClass]="{'disabled-area': !sequence}">
+                                <div (click)="demo(item.questionType, item.id)">{{ item.questionCount }}</div>
+                            </td>
                             <td [ngClass]="{'disabled-area': !sequence}">
                                 <label *ngIf="item.questionType">{{'statuses.'+ type[item.questionType] | translate}}</label>
                                 <label *ngIf="!item.questionType">-</label>
@@ -62,11 +65,13 @@
                                         </div>
                                         <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                                             <div ngbDropdownMenu aria-labelledby="action1">
-                                                <button (click)="openConfirmationDeleteModal(item.id, item.categoryName)" *ngIf="status == 1"
-                                                    class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                                                <button
+                                                    (click)="openConfirmationDeleteModal(item.id, item.categoryName)"
+                                                    *ngIf="status == 1" class="navi-link align-items-baseline px-6"
+                                                    ngbDropdownItem>
                                                     {{ 'button.delete' | translate }}
                                                 </button>
-                                                <button  (click)="openView(item.id)"
+                                                <button (click)="openView(item.id)"
                                                     class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                                     {{ 'button.view' | translate }}
                                                 </button>
@@ -82,7 +87,8 @@
                     </tbody>
                 </table>
                 <div *ngIf="!isLoading" class="text-right border-top pt-7">
-                    <app-add-button *ngIf="!disable" class="btn" [value]="'button.update' | translate" (handle)="confirm(categories)">
+                    <app-add-button *ngIf="!disable" class="btn" [value]="'button.update' | translate"
+                        (handle)="confirm(categories)" [disabled]="categories.length == 0">
                     </app-add-button>
                 </div>
             </div>
@@ -90,4 +96,3 @@
     </div>
 </div>
 <div>
-
