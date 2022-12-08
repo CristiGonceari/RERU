@@ -797,9 +797,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<int?>("FinalEvaluationQualification")
                         .HasColumnType("integer");
 
-                    b.Property<decimal?>("FinalScore")
-                        .HasColumnType("numeric");
-
                     b.Property<string>("FinalScorePartialEvaluations")
                         .HasColumnType("text");
 
@@ -871,6 +868,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.Property<DateTime?>("PartialEvaluationPeriodUpTo")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<decimal?>("PartialEvlauationScore")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("PerformanceTerm1")
                         .HasColumnType("text");
@@ -1025,19 +1025,19 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<bool?>("canAccept")
+                    b.Property<bool>("canAccept")
                         .HasColumnType("boolean");
 
-                    b.Property<bool?>("canCounterSign")
+                    b.Property<bool>("canCounterSign")
                         .HasColumnType("boolean");
 
-                    b.Property<bool?>("canDelete")
+                    b.Property<bool>("canDelete")
                         .HasColumnType("boolean");
 
-                    b.Property<bool?>("canEvaluate")
+                    b.Property<bool>("canEvaluate")
                         .HasColumnType("boolean");
 
-                    b.Property<bool?>("canFinished")
+                    b.Property<bool>("canFinished")
                         .HasColumnType("boolean");
 
                     b.HasKey("Id");
