@@ -1,9 +1,9 @@
 export { EvaluationListModel } from './models/evaluation-list.model';
 export { EvaluationIntroModel } from './models/evaluation-setup.model';
-export { Evaluation } from './models/evaluation.model';
+export { EvaluationModel, EvaluationClass } from './models/evaluation.model';
 export { EvaluationAcceptModel, EvaluationRejectModel } from './models/evaluation-accept.model';
 export { EvaluationCounterSignModel } from './models/evaluation-countersign.model';
-export { PaginationModel } from './models/pagination.model';
+export { PaginationModel, PaginationClass } from './models/pagination.model';
 export { RoleEnum } from './models/role.model';
 export { SelectItem } from './models/select-item.model';
 export { UserModel } from './models/user.model';

@@ -49,7 +49,7 @@
 					{{ 'evaluations.status.' + item.status | translate }}
 				</td>
 				<td *ngIf="isActionsEnabled">
-					<app-evaluation-dropdown-details [index]="i" [survey]="item" (delete)="openConfirmSurveyDeleteModal(item.id)"></app-evaluation-dropdown-details>
+					<app-evaluation-dropdown-details [index]="i" [evaluation]="item" (delete)="openConfirmEvaluationDeleteModal(item.id)"></app-evaluation-dropdown-details>
 				</td>
 			</tr>
 			<tr *ngIf="!evaluations.length">

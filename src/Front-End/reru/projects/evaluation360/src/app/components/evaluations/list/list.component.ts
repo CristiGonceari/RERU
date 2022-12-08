@@ -7,17 +7,19 @@ import { EvaluationsTableComponent } from '../evaluations-table/evaluations-tabl
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent {
-  @ViewChild(EvaluationsTableComponent) surveyTable: EvaluationsTableComponent;
+  @ViewChild(EvaluationsTableComponent) evaluationsTable: EvaluationsTableComponent;
   includeAll: boolean;
-  constructor() { }
+  constructor() {
+    console.log('list constructor')
+   }
 
   filterList(includeAll: boolean): void {
     if (includeAll) {
-      this.surveyTable.includeAll = true;
-      this.surveyTable.list();
+      this.evaluationsTable.includeAll = true;
+      this.evaluationsTable.list();
     } else {
-      this.surveyTable.includeAll = false;
-      this.surveyTable.list();
+      this.evaluationsTable.includeAll = false;
+      this.evaluationsTable.list();
     }
   }
 }

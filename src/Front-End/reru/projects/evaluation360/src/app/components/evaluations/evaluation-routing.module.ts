@@ -1,18 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SurveyComponent } from './survey.component';
-import { CreateComponent } from './create/create.component';
+import { EvaluationComponent } from './evaluation.component';
+import { EvaluationProcessComponent } from './evaluation-process/evaluation-process.component';
 import { ListComponent } from './list/list.component';
 import { EvaluationsSetupComponent } from './evaluations-setup/evaluations-setup.component';
 
 const routes: Routes = [{
   path: '',
-  component: SurveyComponent,
+  component: EvaluationComponent,
   children: [
     { path: '', redirectTo: 'list', pathMatch: 'full'},
-    { path: 'evaluate/:id', component: CreateComponent },
-    { path: 'accept/:id', component: CreateComponent },
-    { path: 'countersign/:id', component: CreateComponent },
+    { path: 'evaluate/:id', component: EvaluationProcessComponent },
+    { path: 'accept/:id', component: EvaluationProcessComponent },
+    { path: 'countersign/:id', component: EvaluationProcessComponent },
+    { path: 'acknowledge/:id', component: EvaluationProcessComponent },
     { path: 'setup', component: EvaluationsSetupComponent },
     { path: 'list', component: ListComponent }
   ]
@@ -22,4 +23,4 @@ const routes: Routes = [{
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SurveyRoutingModule { }
+export class EvaluationRoutingModule { }

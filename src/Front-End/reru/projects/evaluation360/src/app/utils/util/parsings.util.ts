@@ -1,6 +1,8 @@
-import { Evaluation, EvaluationAcceptModel, EvaluationCounterSignModel } from '../index';
+import { EvaluationModel, EvaluationAcceptModel, EvaluationCounterSignModel } from '../index';
+import { EvaluationAcceptClass } from '../models/evaluation-accept.model';
+import { EvaluationCounterSignClass } from '../models/evaluation-countersign.model';
 
-export const parseEvaluation = (data: Evaluation): Evaluation => {
+export const parseEvaluation = (data: EvaluationModel): EvaluationModel => {
     return {
         id: data.id ? +data.id : undefined,
         subdivisionName: data.subdivisionName,
@@ -8,47 +10,47 @@ export const parseEvaluation = (data: Evaluation): Evaluation => {
         dateCompletionGeneralData: data.dateCompletionGeneralData,
         nameSurnameEvaluated: data.nameSurnameEvaluated,
         functionSubdivision: data.functionSubdivision,
-        specialOrMilitaryGrade: data.specialOrMilitaryGrade,
-        specialOrMilitaryGradeText: data.subdivisionName,
+        subdivisionEvaluated: data.subdivisionEvaluated,
+        specialOrMilitaryGrade: +data.specialOrMilitaryGrade,
         periodEvaluatedFromTo: data.subdivisionName,
         periodEvaluatedUpTo: data.subdivisionName,
-        educationEnum: data.educationEnum,
-        professionalTrainingActivities: data.professionalTrainingActivities,
-        professionalTrainingActivitiesType: data?.professionalTrainingActivitiesType,
+        educationEnum: +data.educationEnum,
+        professionalTrainingActivities: +data.professionalTrainingActivities,
+        professionalTrainingActivitiesType: +data?.professionalTrainingActivitiesType,
         courseName: data?.courseName,
         periodRunningActivityFromTo: data?.periodRunningActivityFromTo,
         periodRunningActivityUpTo: data?.periodRunningActivityUpTo,
         administrativeActOfStudies: data?.administrativeActOfStudies,
-        serviceDuringEvaluationCourse: data?.serviceDuringEvaluationCourse,
+        serviceDuringEvaluationCourse: +data?.serviceDuringEvaluationCourse,
         functionEvaluated: data?.functionEvaluated,
         appointmentDate: data?.appointmentDate,
         administrativeActService: data?.administrativeActService,
         partialEvaluationPeriodFromTo: data?.partialEvaluationPeriodFromTo,
         partialEvaluationPeriodUpTo: data?.partialEvaluationPeriodUpTo,
-        finalScorePartialEvaluations: data?.finalScorePartialEvaluations,
-        qualifierPartialEvaluations: data?.qualifierPartialEvaluations,
+        partialEvaluationScore: data?.partialEvaluationScore,
+        qualifierPartialEvaluations: +data?.qualifierPartialEvaluations,
         sanctionAppliedEvaluationCourse: data?.sanctionAppliedEvaluationCourse,
         dateSanctionApplication: data?.dateSanctionApplication,
         dateLiftingSanction: data?.dateLiftingSanction,
-        qualificationEvaluationObtained2YearsPast: data?.qualificationEvaluationObtained2YearsPast,
-        qualificationEvaluationObtainedPreviousYear: data?.qualificationEvaluationObtainedPreviousYear,
-        qualificationQuarter1: data?.qualificationQuarter1,
-        qualificationQuarter2: data?.qualificationQuarter2,
-        qualificationQuarter3: data?.qualificationQuarter3,
-        qualificationQuarter4: data?.qualificationQuarter4,
-        question1: data?.question1,
-        question2: data?.question2,
-        question3: data?.question3,
-        question4: data?.question4,
-        question5: data?.question5,
-        question6: data?.question6,
-        question7: data?.question7,
-        question8: data?.question8,
-        question9: data?.question9,
-        question10: data?.question10,
-        question11: data?.question11,
-        question12: data?.question12,
-        question13: data?.question13,
+        qualificationEvaluationObtained2YearsPast: +data?.qualificationEvaluationObtained2YearsPast,
+        qualificationEvaluationObtainedPreviousYear: +data?.qualificationEvaluationObtainedPreviousYear,
+        qualificationQuarter1: +data?.qualificationQuarter1,
+        qualificationQuarter2: +data?.qualificationQuarter2,
+        qualificationQuarter3: +data?.qualificationQuarter3,
+        qualificationQuarter4: +data?.qualificationQuarter4,
+        question1: +data?.question1,
+        question2: +data?.question2,
+        question3: +data?.question3,
+        question4: +data?.question4,
+        question5: +data?.question5,
+        question6: +data?.question6,
+        question7: +data?.question7,
+        question8: +data?.question8,
+        question9: +data?.question9,
+        question10: +data?.question10,
+        question11: +data?.question11,
+        question12: +data?.question12,
+        question13: +data?.question13,
         goal1: data.goal1,
         goal2: data.goal2,
         goal3: data.goal3,
@@ -64,12 +66,12 @@ export const parseEvaluation = (data: Evaluation): Evaluation => {
         performanceTerm3: data.performanceTerm3,
         performanceTerm4: data.performanceTerm4,
         performanceTerm5: data.performanceTerm5,
-        score1: data.score1,
-        score2: data.score2,
-        score3: data.score3,
-        score4: data.score4,
-        score5: data.score5,
-        finalEvaluationQualification: data.score5,
+        score1: +data.score1,
+        score2: +data.score2,
+        score3: +data.score3,
+        score4: +data.score4,
+        score5: +data.score5,
+        finalEvaluationQualification: +data.finalEvaluationQualification,
         dateEvaluatiorInterview: data.dateEvaluatiorInterview,
         dateSettingIindividualGoals: data.dateSettingIindividualGoals,
         need1ProfessionalDevelopmentEvaluated: data.need1ProfessionalDevelopmentEvaluated,
@@ -78,25 +80,38 @@ export const parseEvaluation = (data: Evaluation): Evaluation => {
     }
 }
 
-export const parseEvaluatedModel= (data: EvaluationAcceptModel): EvaluationAcceptModel => {
+export const parseEvaluatedModel = (data: EvaluationAcceptModel | EvaluationModel): EvaluationAcceptModel => {
+    if (data instanceof EvaluationAcceptClass) {
+        return {
+            id: +data.id,
+            commentsEvaluated: data.commentsEvaluated
+        }
+    }
+
     return {
         id: +data.id,
-        commentsEvaluated: data.commentsEvaluated,
-        dateAcceptOrRejectEvaluated: data.dateAcceptOrRejectEvaluated,
-        signatureEvaluated: !!data.signatureEvaluated
+        commentsEvaluated: null,
     }
 }
 
-export const parseCounterSignModel = (data: EvaluationCounterSignModel): EvaluationCounterSignModel => {
+export const parseCounterSignModel = (data: EvaluationCounterSignModel | EvaluationModel): EvaluationCounterSignModel => {
+    if (data instanceof EvaluationCounterSignClass) {
+        return {
+            id: +data.id,
+            checkComment1: !!data.checkComment1,
+            checkComment2: !!data.checkComment2,
+            checkComment3: !!data.checkComment3,
+            checkComment4: !!data.checkComment4,
+            otherComments: data.otherComments
+        }
+    }
+
     return {
         id: +data.id,
-        checkComment1: !!data.checkComment1,
-        checkComment2: !!data.checkComment2,
-        checkComment3: !!data.checkComment3,
-        checkComment4: !!data.checkComment4,
-        otherComments: data.otherComments,
-        functionCounterSigner: data.functionCounterSigner,
-        dateCompletionCounterSigner: data.dateCompletionCounterSigner,
-        signatureCounterSigner: !!data.signatureCounterSigner
+        checkComment1: false,
+        checkComment2: false,
+        checkComment3: false,
+        checkComment4: false,
+        otherComments: null
     }
 }

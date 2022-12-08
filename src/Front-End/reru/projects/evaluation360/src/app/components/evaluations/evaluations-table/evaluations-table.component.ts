@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ObjectUtil, PaginationModel, EvaluationListModel } from '@utils';
+import { ObjectUtil, EvaluationListModel } from '@utils';
 import { EvaluationService,  } from '@utils/services';
-import { ConfirmDeleteSurveyModalComponent } from '../../../utils/modals/confirm-delete-survey-modal/confirm-delete-survey-modal.component';
+import { ConfirmDeleteEvaluationModalComponent } from '../../../utils/modals/confirm-delete-evaluation-modal/confirm-delete-evaluation-modal.component';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from '../../../utils/util/notification.util';
+import { PaginationClass, PaginationModel } from '../../../utils/models/pagination.model';
 
 @Component({
   selector: 'app-evaluations-table',
@@ -15,7 +16,7 @@ export class EvaluationsTableComponent implements OnInit {
   @Input() evaluateType: number;
   isLoading: boolean = true;
   evaluations: EvaluationListModel[] = [];
-  pagedSummary = new PaginationModel();
+  pagedSummary: PaginationModel = new PaginationClass();
   includeAll: boolean;
   constructor(private evaluationService: EvaluationService,
               private modalService: NgbModal,
@@ -30,7 +31,7 @@ export class EvaluationsTableComponent implements OnInit {
       return false;
     }
 
-    return this.evaluations.every((el: EvaluationListModel) => {
+    return this.evaluations.some((el: EvaluationListModel) => {
       return (el.canDelete || el.canEvaluate || el.canCounterSign || el.canDownload);
     })
   }
@@ -92,14 +93,12 @@ export class EvaluationsTableComponent implements OnInit {
   //   });
   // }
 
-  openConfirmSurveyDeleteModal(id: number): void {
-    const modalRef = this.modalService.open(ConfirmDeleteSurveyModalComponent, { centered: true });
-    modalRef.result.then(() => this.deleteSurvey(id),() => {
-
-    });
+  openConfirmEvaluationDeleteModal(id: number): void {
+    const modalRef = this.modalService.open(ConfirmDeleteEvaluationModalComponent, { centered: true });
+    modalRef.result.then(() => this.deleteEvaluation(id),() => {});
   }
 
-  deleteSurvey(id: number): void {
+  deleteEvaluation(id: number): void {
     this.evaluationService.delete(id).subscribe(response => {
       this.notificationService.success('Success', 'Fisa a fost ștearsă cu succes', NotificationUtil.getDefaultConfig());
       this.processTypeEvaluation(this.evaluateType);
