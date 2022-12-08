@@ -12,7 +12,6 @@ const routes: Routes = [{
     { path: '', redirectTo: 'list', pathMatch: 'full' },
     { path: 'list', component: ListComponent },
     { path: 'new', component: AddComponent },
-    { path: 'edit/:id', component: EditComponent },
     { path: ':id', component: DetailsComponent },
   ]
 }];

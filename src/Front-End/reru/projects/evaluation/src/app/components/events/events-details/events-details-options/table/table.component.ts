@@ -253,8 +253,9 @@ export class TableComponent implements OnInit {
         this.description = description;
       });
       this.isLoading = false;
+      this.list();
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-    }, () => { }, () => this.list());
+    }, (err) => {this.list(); this.isLoading = false;});
   }
 
   sendEmail(): void {
@@ -272,10 +273,10 @@ export class TableComponent implements OnInit {
     let params = {
       eventId: +this.importedId,
       evaluatorId: data.attachedItems || this.fields,
-      showUserName: data.showUserName
+      // showUserName: data.showUserName
     }
     this.isLoading = true;
-    this.eventService.attachEvaluator(params).subscribe(() => {
+    this.eventService.attachEvaluator(params).subscribe((res) => {
       forkJoin([
         this.translate.get('modal.success'),
         this.translate.get('events.succes-attach-detach-evaluator-msg'),
@@ -284,8 +285,9 @@ export class TableComponent implements OnInit {
         this.description = description;
       });
       this.isLoading = false;
+      this.list();
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-    }, () => { }, () => this.list());
+    }, (err) => {this.list(); this.isLoading = false;});
   }
 
 }

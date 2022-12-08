@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RERU.Data.Persistence.Context;
@@ -9,9 +10,10 @@ using RERU.Data.Persistence.Context;
 namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221122123548_Add_TestQuestionTestAnswer_Entity")]
+    partial class Add_TestQuestionTestAnswer_Entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4185,9 +4187,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<int?>("EventId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("HashGroupKey")
-                        .HasColumnType("text");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
@@ -4364,9 +4363,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("HashGroupKey")
-                        .HasColumnType("text");
 
                     b.Property<int>("Index")
                         .HasColumnType("integer");

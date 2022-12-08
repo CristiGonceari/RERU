@@ -69,11 +69,24 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             var processId = request.ProcessId;
             var tasks = new List<Task>();
 
-            for (int i = 0; i < request.UserProfileId.Count; i++)
+            for (int userProfileIndex = 0; userProfileIndex < request.UserProfileIds.Count; userProfileIndex++)
             {
-                int threadCopy = i;
+                var myHashGroupKey = Guid.NewGuid().ToString();
+                int userProfileIndexCopy = userProfileIndex;
+                var myHashGroupKeyCopy = myHashGroupKey;
 
-                tasks.Add(Task.Run(() => HandleTask(request, threadCopy, processId)));
+                if (request.EvaluatorIds.Any())
+                {
+                    for (int evaluatorIndex = 0; evaluatorIndex < request.EvaluatorIds.Count; evaluatorIndex++)
+                    {
+                        int evaluatorIndexCopy = evaluatorIndex;
+                        tasks.Add(Task.Run(() => HandleTask(request, userProfileIndexCopy, evaluatorIndexCopy, processId, myHashGroupKeyCopy)));
+                    }
+                }
+                else
+                {
+                    tasks.Add(Task.Run(() => HandleTask(request, userProfileIndexCopy, null, processId, myHashGroupKeyCopy)));
+                }
             }
 
             await WaitTasks(Task.WhenAll(tasks));
@@ -81,8 +94,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             tasks.Clear();
 
             await SaveExcelFile(processId, _excelPackage);
-
-            await SendEmailNotificationToEvaluator(request.EvaluatorId, request.TestTemplateId);
 
             return _testsIds;
         }
@@ -100,9 +111,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             }
         }
 
-        private async Task HandleTask(AddTestsCommand request, int i, int processId)
+        private async Task HandleTask(AddTestsCommand request, int i, int? j, int processId, string myHashGroupKey)
         {
-            var addCommand = await GetCommand(request, i);
+            var addCommand = await GetCommand(request, i, j, myHashGroupKey);
 
             try
             {
@@ -112,7 +123,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
                 var generateCommand = new GenerateTestQuestionsCommand
                 {
-                    TestId = testId
+                    TestId = testId,
                 };
 
                 await _mediator.Send(generateCommand);
@@ -122,6 +133,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 await GenerateExcelResult(i, addCommand.Data.UserProfileId, true, string.Empty);
 
                 await SendEmailNotificationToEvaluat(testId);
+
+                if (addCommand.Data.EvaluatorId != null)
+                {
+                    await SendEmailNotificationToEvaluator(addCommand.Data.EvaluatorId, request.TestTemplateId);
+                }
 
                 await LogAction(testId);
             }
@@ -133,16 +149,17 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             }
         }
 
-        private async Task<AddTestCommand> GetCommand(AddTestsCommand request, int i)
+        private async Task<AddTestCommand> GetCommand(AddTestsCommand request, int userProfileIndex, int? evaluatorIndex, string myHashGroupKey)
         {
             return new AddTestCommand
             {
                 Data = new AddEditTestDto
                 {
-                    UserProfileId = request.UserProfileId[i],
-                    EvaluatorId = request.EvaluatorId,
+                    UserProfileId = request.UserProfileIds[userProfileIndex],
+                    EvaluatorId = evaluatorIndex != null ? request.EvaluatorIds[(int)evaluatorIndex] : null,
                     ShowUserName = request.ShowUserName,
                     TestTemplateId = request.TestTemplateId,
+                    HashGroupKey = myHashGroupKey,
                     EventId = request.EventId,
                     TestStatus = request.TestStatus,
                     ProgrammedTime = request.ProgrammedTime

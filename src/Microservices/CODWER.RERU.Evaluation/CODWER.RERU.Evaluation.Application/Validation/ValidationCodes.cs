@@ -32,6 +32,7 @@
         public static string EXISTENT_EVALUATOR_IN_TEST = "03000302";
         public static string EVALUATOR_AND_CANDIDATE_CANT_BE_THE_SAME = "03000303";
         public static string INEXISTENT_EVALUATOR_IN_EVENT = "03000304";
+        public static string CANT_DELETE_EVALUATOR_IN_USE = "03000305";
 
         //event location
         public static string EXISTENT_LOCATION_IN_EVENT = "03000401";
@@ -45,6 +46,7 @@
         //event user
         public static string INEXISTENT_CANDIDATE_IN_EVENT = "03000701";
         public static string CANDIDATE_AND_RESPONSIBLE_PERSON_CANT_BE_THE_SAME = "03000702";
+        public static string CANT_DELETE_CANDIDATE_IN_USE = "03000703";
 
         //location
         public static string EMPTY_ADDRESS = "03000801";

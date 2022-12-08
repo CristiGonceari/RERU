@@ -2,29 +2,34 @@
 </app-loading-spinner>
 <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
 
-<div class="table-responsive-xl datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable">
+<div class="table-responsive-xl datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+    id="kt_datatable">
     <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading && !downloadFile">
         <thead class="text-uppercase text-muted">
             <tr>
-                <th scope="col">{{ 'tests.name' | translate }}</th>
+                <th class="text-left" scope="col">{{ 'tests.name' | translate }}</th>
                 <th scope="col" style="width: 200px">{{ 'verify-test.student' | translate }} ({{ 'user-profile.npp' | translate }})</th>
-                <th scope="col" style="width: 150px">{{ 'events.event' | translate }}</th>
+                <th scope="col" style="width: 200px">{{ 'events.evaluator' | translate }} ({{ 'user-profile.npp' | translate }})</th>
+                <th scope="col">{{ 'events.event' | translate }}</th>
                 <th scope="col" style="width: 100px">{{ 'departments.department' | translate }} / {{ 'user-roles.role' | translate }}</th>
-                <th scope="col" style="width: 150px">{{ 'events.location' | translate }}</th>
-                <th scope="col" style="width: 150px">{{ 'verify-test.status' | translate }}</th>
-                <th scope="col" style="width: 100px">{{ 'verify-test.verified-progress' | translate }}</th>
+                <th scope="col">{{ 'events.location' | translate }}</th>
+                <th scope="col" style="width: 100px">{{ 'verify-test.status' | translate }}</th>
+                <th scope="col" style="width: 50px">{{ 'verify-test.verified-progress' | translate }}</th>
                 <th scope="col" style="width: 100px">{{ 'verify-test.result' | translate }}</th>
-                <th scope="col" style="width: 100px">{{ 'verify-test.score' | translate }}</th>
-                <th scope="col" style="width: 100px">{{ 'verify-test.min-points' | translate }}</th>
+                <th scope="col" style="width: 50px">{{ 'verify-test.score' | translate }}</th>
+                <th scope="col" style="width: 50px">{{ 'verify-test.min-points' | translate }}</th>
+
                 <th scope="col" style="width: 48px"></th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="testTemplate.length">
             <tr *ngFor="let item of testTemplate">
-                <td>
+                <td class="text-left">
                     {{ item.testTemplateName }}
                     <span class="text-dark-50 d-block mb-0">
-                        {{ item.programmedTime | date: 'dd/MM/yyyy, HH:mm'}}
+                        <b *ngIf="!item.eventName">{{ item.programmedTime | date: 'dd/MM/yyyy, HH:mm'}}</b>
+                        <b *ngIf="item.eventName">{{ item.programmedTime | date: 'dd/MM/yyyy'}} - {{
+                            item.endProgrammedTime | date: 'dd/MM/yyyy'}}</b>
                     </span>
                 </td>
                 <td>
@@ -35,6 +40,22 @@
                         <span class="text-dark-50 font-size-lg font-weight-light">{{ item.idnp }}</span>
                     </p>
                     <span *ngIf="!item.showUserName" class="font-size-lg">-</span>
+                </td>
+                <td>
+                    <div *ngIf="item.evaluatorName">
+                        <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
+                            [routerLink]="['../user-profile', item.userId]" style="white-space: nowrap;">
+                            {{ item.evaluatorName }}
+                            <br>
+                            <span class="text-dark-50 font-size-lg font-weight-light">{{ item.evaluatorIdnp }}</span>
+                        </p>
+                    </div>
+                    <div *ngIf="item.isVerificatedAutomat">
+                        <p class="font-size-lg mb-0">{{ 'tests.verified-by-system' | translate }}</p>
+                    </div>
+                    <div *ngIf="!item.evaluatorName && item.eventName && !item.isVerificatedAutomat">
+                        <p class="font-size-lg mb-0">{{ 'events.from-event' | translate }}</p>
+                    </div>
                 </td>
                 <td>
                     <span class="font-size-lg" *ngIf="item.eventName">{{ item.eventName }}</span>
@@ -144,7 +165,9 @@
                   </td> -->
                 <td>
                     <p *ngIf="item.modeStatus == 0">{{'statuses.' + status[item.testStatus] | translate}}</p>
-                    <p *ngIf="item.modeStatus == 1 && (item.testStatus === status.Verified || item.testStatus === status.Terminated)">{{'statuses.Voted' | translate}}</p>
+                    <p
+                        *ngIf="item.modeStatus == 1 && (item.testStatus === status.Verified || item.testStatus === status.Terminated)">
+                        {{'statuses.Voted' | translate}}</p>
                 </td>
                 <td>
                     <p class="font-size-lg cursor-pointer text-hover-primary"

@@ -35,6 +35,9 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
                         .ThenInclude(q => q.QuestionCategory)
                             .ThenInclude(x => x.QuestionUnits)
                                 .ThenInclude(q => q.Options)
+                .Include(t => t.TestQuestions)
+                    .ThenInclude(x => x.TestQuestionsTestAnswers)
+                        .ThenInclude(x => x.TestAnswer)
                 .FirstAsync(x => x.Id == request.TestId);
 
             var testQuestion = test.TestQuestions.FirstOrDefault(x => x.Index == request.QuestionIndex);
@@ -46,6 +49,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
             }
 
             var answer = _mapper.Map<TestQuestionDto>(questionUnit);
+            answer.Id = testQuestion.Id;
             answer.AnswerStatus = testQuestion.AnswerStatus;
             answer.TimeLimit = testQuestion.TimeLimit;
 
@@ -59,11 +63,17 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
             {
                 if (testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.FreeText)
                 {
-                    answer.AnswerText = _appDbContext.TestAnswers.FirstOrDefault(x => x.TestQuestionId == testQuestion.Id).AnswerValue;
+                    answer.AnswerText = _appDbContext.TestQuestionsTestAnswers
+                        .Include(x => x.TestAnswer)
+                        .FirstOrDefault(x => x.TestQuestionId == testQuestion.Id)?.TestAnswer.AnswerValue;
                 }
                 else
                 {
-                    var savedAnswers = _appDbContext.TestAnswers.Where(x => x.TestQuestionId == testQuestion.Id).ToList();
+                    var savedAnswers = _appDbContext.TestQuestionsTestAnswers
+                        .Include(x => x.TestAnswer)
+                        .Where(x => x.TestQuestionId == testQuestion.Id)
+                        .Select(x => x.TestAnswer)
+                        .ToList();
 
                     foreach (var savedAnswer in savedAnswers)
                     {
