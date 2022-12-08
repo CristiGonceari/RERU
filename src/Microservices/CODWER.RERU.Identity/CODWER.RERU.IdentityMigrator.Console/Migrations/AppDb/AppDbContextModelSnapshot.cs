@@ -869,7 +869,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("PartialEvaluationPeriodUpTo")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<decimal?>("PartialEvlauationScore")
+                    b.Property<decimal?>("PartialEvaluationScore")
                         .HasColumnType("numeric");
 
                     b.Property<string>("PerformanceTerm1")

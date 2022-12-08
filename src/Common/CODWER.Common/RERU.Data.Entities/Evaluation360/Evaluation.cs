@@ -53,7 +53,7 @@ namespace RERU.Data.Entities.Evaluation360
         public string? AdministrativeActService { set; get; }
         public DateTime? PartialEvaluationPeriodFromTo { set; get; }
         public DateTime? PartialEvaluationPeriodUpTo { set; get; }
-        public decimal? PartialEvlauationScore { set; get; }
+        public decimal? PartialEvaluationScore { set; get; }
         public string? FinalScorePartialEvaluations { set; get; }
         public QualifierEnum? QualifierPartialEvaluations { set; get; }
         public string? SanctionAppliedEvaluationCourse { set; get; }
