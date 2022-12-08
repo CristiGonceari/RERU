@@ -107,7 +107,7 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
 
   onChangeSelection(event){
     this.selectQuestions = event;
-    this.reset()
+    this.reset();
   }
 
   onChangeSequence(event){
@@ -199,6 +199,7 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
     this.list();
     this.preview = false;
     this.questionCount = null;
+    this.selectedQuestions = [];
   }
 
   refresh(): void {
@@ -206,9 +207,11 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   }
 
   getQuestionCategory(id): void {
+    this.isLoading = true;
     this.referenceService.getQuestionCategory().subscribe(res => {
       this.questionCategoryName = res.data.filter(el => el.value === id).map(name => name.label);
     });
+    this.isLoading = false;
   }
 
   ngOnDestroy(): void {
