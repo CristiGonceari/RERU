@@ -1025,6 +1025,21 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<bool?>("canAccept")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("canCounterSign")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("canDelete")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("canEvaluate")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("canFinished")
+                        .HasColumnType("boolean");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CounterSignerUserProfileId");

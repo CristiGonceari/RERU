@@ -24,6 +24,12 @@ namespace RERU.Data.Entities.Evaluation360
         public EvaluationTypeEnum? Type { set; get; }
         public decimal Points { set; get; }
         public EvaluationStatusEnum? Status {set;get;}
+        public bool canEvaluate { set; get; }
+        public bool canDelete { set; get; }
+        public bool canAccept { set; get; }
+        public bool canCounterSign { set; get; }
+        public bool canFinished { set; get; }
+        //public bool? canDownload { set; get; }
         
         public string? SubdivisionName { set; get; }
         public DateTime? DateCompletionGeneralData { set; get; }
