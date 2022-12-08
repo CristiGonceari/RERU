@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using CODWER.RERU.Evaluation.API.Config;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Articles.AddArticle;
@@ -30,14 +31,16 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         [HttpGet("populate-intermediate-table")]
         public async Task<string> PopulateNXNTable()
         {
-            var testAnswers = _appDbContext.TestAnswers.AsQueryable();
+            var testAnswers = _appDbContext.TestAnswers
+                .Select(x=>new {answerId = x.Id, questionId = x.TestQuestionId})
+                .ToList();
 
             foreach (var testAnswer in testAnswers)
             {
                 var newTestQuestionTestAnswer = new TestQuestionTestAnswer
                 {
-                    TestAnswerId = testAnswer.Id,
-                    TestQuestionId = testAnswer.TestQuestionId
+                    TestAnswerId = testAnswer.answerId,
+                    TestQuestionId = testAnswer.questionId
                 };
 
                 await _appDbContext.TestQuestionsTestAnswers.AddAsync(newTestQuestionTestAnswer);
