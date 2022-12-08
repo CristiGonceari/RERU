@@ -22,6 +22,12 @@ spec:
       - name: {{ .Values.reru_evaluation360_fe.name }}
         image: {{ .Values.reru_evaluation360_fe.image.repository }}:{{ .Values.tag }}
         imagePullPolicy: Always
+        env:
+        - name: TZ
+          value: {{ .Values.timeZone }}        
+        {{- if .Values.microservice.deployment.env }}
+          {{ toYaml .Values.microservice.deployment.env | indent 8 }}
+        {{- end }}     
         ports:
         - containerPort: {{ .Values.microservice.port }}
         livenessProbe:

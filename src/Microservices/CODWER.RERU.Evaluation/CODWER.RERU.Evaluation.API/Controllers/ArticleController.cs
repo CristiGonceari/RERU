@@ -40,6 +40,8 @@ namespace CODWER.RERU.Evaluation.API.Controllers
                     TestQuestionId = testAnswer.TestQuestionId
                 };
 
+                await _appDbContext.TestQuestionsTestAnswers.AddAsync(newTestQuestionTestAnswer);
+
                 await _appDbContext.SaveChangesAsync();
             }
 

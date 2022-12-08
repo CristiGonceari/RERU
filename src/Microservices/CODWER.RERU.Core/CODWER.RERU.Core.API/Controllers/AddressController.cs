@@ -16,13 +16,6 @@ namespace CODWER.RERU.Core.API.Controllers
     {
         public AddressController(IMediator mediator) : base(mediator) { }
 
-
-        [HttpGet("date")]
-        public async Task<string> GetCurrentTime()
-        {
-            return DateTime.Now.ToString();
-        }
-
         [HttpGet("{id}")]
         public async Task<AddressDto> GetAddress([FromRoute] int id)
         {
