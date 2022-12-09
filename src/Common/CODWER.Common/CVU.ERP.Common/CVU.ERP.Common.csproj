@@ -1,14 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <!--<Import Project="..\CVU.ERP.CodeAnalysis.targets" />-->
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>CVU.ERP.Common</AssemblyName>
-    <RootNamespace>CVU.ERP.Common</RootNamespace>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>CVU Intelligence</Authors>
-    <Company>CVU Intelligence</Company>
-    <Description>CVU Intelligence</Description>
-    <Version>2.3.3</Version>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />

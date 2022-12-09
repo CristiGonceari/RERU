@@ -5,6 +5,7 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using CVU.ERP.Common;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
@@ -13,7 +14,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTestSettings
 {
     public class GetTestSettingsQueryValidator : AbstractValidator<GetTestSettingsQuery>
     {
-        public GetTestSettingsQueryValidator(AppDbContext appDbContext)
+        public GetTestSettingsQueryValidator(AppDbContext appDbContext, IDateTime dateTime)
         {
             RuleFor(x => x.Id)
                 .SetValidator(x => new ItemMustExistValidator<Test>(appDbContext, ValidationCodes.INVALID_TEST,
@@ -41,7 +42,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTestSettings
                     //    .TestTemplate.Settings.StartBeforeProgrammation, () =>
                     //    {
                     //        RuleFor(x => x.Id)
-                    //        .Must(x => appDbContext.Tests.First(t => t.Id == x).ProgrammedTime <= DateTime.Now)
+                    //        .Must(x => appDbContext.Tests.First(t => t.Id == x).ProgrammedTime <= dateTime.Now)
                     //        .WithErrorCode(ValidationCodes.WAIT_THE_START_TIME);
                     //    });
 
@@ -55,7 +56,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTestSettings
                     When(x => appDbContext.Tests.First(t => t.Id == x.Id).EventId.HasValue, () =>
                     {
                         RuleFor(x => x.Id)
-                        .Must(x => appDbContext.Tests.Include(x => x.Event).First(t => t.Id == x).Event.TillDate > DateTime.Now)
+                        .Must(x => appDbContext.Tests.Include(x => x.Event).First(t => t.Id == x).Event.TillDate > dateTime.Now)
                         .WithErrorCode(ValidationCodes.FINISHED_EVENT);
                     });
                 });

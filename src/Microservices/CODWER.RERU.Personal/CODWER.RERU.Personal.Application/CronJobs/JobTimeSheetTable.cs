@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CVU.ERP.Common;
 using RERU.Data.Entities.PersonalEntities.Configurations;
 using RERU.Data.Entities.PersonalEntities.Enums;
 using RERU.Data.Entities.PersonalEntities.StaticExtensions;
@@ -18,6 +19,7 @@ namespace CODWER.RERU.Personal.Application.CronJobs
         private List<TimeSheetTable> ExistentWorkedHours;
         private DateTime Now;
         private DateTime Yesterday;
+        private IDateTime _dateTime;
 
         public JobTimeSheetTable(AppDbContext appDbContext)
         {
@@ -33,7 +35,7 @@ namespace CODWER.RERU.Personal.Application.CronJobs
         {
             var contractor = _appDbContext.Contractors
                    .Include(c => c.Positions)
-                   .InServiceAt(DateTime.Now);
+                   .InServiceAt(_dateTime.Now);
 
             foreach (var el in contractor)
             {
@@ -52,7 +54,7 @@ namespace CODWER.RERU.Personal.Application.CronJobs
                 .Include(x => x.TimeSheetTables)
                 .Include(c => c.Vacations)
                 .Include(c => c.Positions)
-                .InServiceAt(DateTime.Now);
+                .InServiceAt(_dateTime.Now);
 
             var list = new List<TimeSheetTable>();
             var oneDay = _appDbContext.TimeSheetTables.Select(x=>x.Value);
@@ -130,7 +132,7 @@ namespace CODWER.RERU.Personal.Application.CronJobs
                     list.Add(new TimeSheetTable()
                     {
                         ContractorId = el.Id,
-                        Date = DateTime.Now,
+                        Date = _dateTime.Now,
                         Value = TimeSheetValueEnum.Sn
                     });
                 }

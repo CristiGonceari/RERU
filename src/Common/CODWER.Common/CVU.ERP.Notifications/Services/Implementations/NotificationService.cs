@@ -7,6 +7,7 @@ using CVU.ERP.Notifications.Email;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 using System.Collections.Generic;
+using CVU.ERP.Common;
 
 namespace CVU.ERP.Notifications.Services.Implementations
 {
@@ -14,11 +15,13 @@ namespace CVU.ERP.Notifications.Services.Implementations
     {
         private readonly IEmailService _emailService;
         private readonly AppDbContext _appDbContext;
+        private readonly IDateTime _dateTime;
 
-        public NotificationService(IEmailService emailService, AppDbContext appDbContext)
+        public NotificationService(IEmailService emailService, AppDbContext appDbContext, IDateTime dateTime)
         {
             _emailService = emailService;
             _appDbContext = appDbContext;
+            _dateTime = dateTime;
         }
 
         public async Task<IEmailService> Notify(EmailData data, NotificationType type)
@@ -75,7 +78,7 @@ namespace CVU.ERP.Notifications.Services.Implementations
                     InUpdateProcess = false,
                     HtmlTemplateAddress = email.HtmlTemplateAddress,
                     Type = (byte)type,
-                    Created = DateTime.Now,
+                    Created = _dateTime.Now,
 
                     Properties = email.ReplacedValues.Select(x => new EmailNotificationProperty
                     {

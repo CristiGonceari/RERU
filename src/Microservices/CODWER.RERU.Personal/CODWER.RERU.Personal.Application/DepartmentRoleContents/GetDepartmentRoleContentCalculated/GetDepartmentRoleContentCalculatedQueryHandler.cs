@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using RERU.Data.Entities.PersonalEntities.StaticExtensions;
 using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleContents;
+using CVU.ERP.Common;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -14,15 +15,17 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.GetDepartmentR
     public class GetDepartmentRoleContentCalculatedQueryHandler : IRequestHandler<GetDepartmentRoleContentCalculatedQuery, DepartmentRoleContentDto>
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IDateTime _dateTime;
 
-        public GetDepartmentRoleContentCalculatedQueryHandler(AppDbContext appDbContext)
+        public GetDepartmentRoleContentCalculatedQueryHandler(AppDbContext appDbContext, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
+            _dateTime = dateTime;
         }
 
         public async Task<DepartmentRoleContentDto> Handle(GetDepartmentRoleContentCalculatedQuery request, CancellationToken cancellationToken)
         {
-            var now = DateTime.Now;
+            var now = _dateTime.Now;
 
             var positions = _appDbContext.Positions
                 .Include(p => p.Contractor)

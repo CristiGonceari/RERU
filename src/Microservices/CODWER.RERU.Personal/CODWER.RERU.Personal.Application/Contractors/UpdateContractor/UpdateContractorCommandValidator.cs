@@ -6,6 +6,7 @@ using CVU.ERP.Common.Validation;
 using FluentValidation;
 using FluentValidation.Validators;
 using System.Linq;
+using CVU.ERP.Common;
 using CVU.ERP.Common.Extensions;
 
 namespace CODWER.RERU.Personal.Application.Contractors.UpdateContractor
@@ -14,14 +15,14 @@ namespace CODWER.RERU.Personal.Application.Contractors.UpdateContractor
     {
         private readonly AppDbContext _appDbContext;
 
-        public UpdateContractorCommandValidator(AppDbContext appDbContext)
+        public UpdateContractorCommandValidator(AppDbContext appDbContext, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
 
             RuleFor(x => x.Data.Id)
                 .SetValidator(new ItemMustExistValidator<Contractor>(appDbContext, ValidationCodes.CONTRACTOR_NOT_FOUND, ValidationMessages.NotFound));
 
-            RuleFor(x => x.Data).SetValidator(new ContractorValidator(appDbContext));
+            RuleFor(x => x.Data).SetValidator(new ContractorValidator(appDbContext, dateTime));
 
             //RuleFor(x => x.Data.Idnp)
             //   .Custom(CheckIfUniqueIdnpOnCreate);

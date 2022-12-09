@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CVU.ERP.Common;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using RERU.Data.Entities;
@@ -12,7 +13,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetPollResult
 {
     public class GetPollResultQueryValidator : AbstractValidator<GetPollResultQuery>
     {
-        public GetPollResultQueryValidator(AppDbContext appDbContext)
+        public GetPollResultQueryValidator(AppDbContext appDbContext, IDateTime dateTime)
         {
             RuleFor(x => x.TestTemplateId)
                 .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
@@ -25,7 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetPollResult
             When(r => !appDbContext.TestTemplateSettings.First(x => x.TestTemplateId == r.TestTemplateId).CanViewPollProgress, () =>
             {
                 RuleFor(x => x.TestTemplateId)
-                .Must(x => appDbContext.EventTestTemplates.Include(s => s.Event).First(s => s.TestTemplateId == x).Event.TillDate <= DateTime.Now)
+                .Must(x => appDbContext.EventTestTemplates.Include(s => s.Event).First(s => s.TestTemplateId == x).Event.TillDate <= dateTime.Now)
                 .WithErrorCode(ValidationCodes.POLL_ISNT_TERMINATED);
             });
         }

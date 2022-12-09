@@ -9,6 +9,7 @@ using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Entities.PersonalEntities.StaticExtensions;
 using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Contractors;
+using CVU.ERP.Common;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
@@ -23,17 +24,19 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
         private readonly IPaginationService _paginationService;
         private readonly ILoggerService<GetContractorsQuery> _loggerService;
         private readonly IUserProfileService _userProfileService;
+        private readonly IDateTime _dateTime;
 
         public GetContractorsQueryHandler(
             AppDbContext appDbContext, 
             IPaginationService paginationService,
             ILoggerService<GetContractorsQuery> loggerService,
-            IUserProfileService userProfileService)
+            IUserProfileService userProfileService, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
             _loggerService = loggerService;
             _userProfileService = userProfileService;
+            _dateTime = dateTime;
         }
 
         public async Task<PaginatedModel<ContractorDto>> Handle(GetContractorsQuery request, CancellationToken cancellationToken)
@@ -72,7 +75,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
 
             // search by current employers state
 
-            var now = DateTime.Now;
+            var now = _dateTime.Now;
 
             if (request.EmployerStates == EmployersStateEnum.InService)
             {

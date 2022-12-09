@@ -11,12 +11,13 @@ using RERU.Data.Entities.Enums;
 using RERU.Data.Entities;
 using CODWER.RERU.Personal.Application.Validators;
 using CODWER.RERU.Personal.Application.Validators.Bulletin;
+using CVU.ERP.Common;
 
 namespace CODWER.RERU.Personal.Application.Contractors
 {
     public class ContractorValidator : AbstractValidator<AddEditContractorDto>
     {
-        public ContractorValidator(AppDbContext appDbContext)
+        public ContractorValidator(AppDbContext appDbContext, IDateTime dateTime)
         {
             RuleFor(x => x.FirstName).NotEmpty()
                 .WithMessage(ValidationMessages.InvalidInput)
@@ -31,7 +32,7 @@ namespace CODWER.RERU.Personal.Application.Contractors
                 .WithErrorCode(ValidationCodes.INVALID_INPUT);
 
             RuleFor(x => x.BirthDate)
-                .Must(x => x > DateTime.Now.AddYears(-100))
+                .Must(x => x > dateTime.Now.AddYears(-100))
                 .WithMessage(ValidationMessages.InvalidInput)
                 .WithErrorCode(ValidationCodes.INVALID_INPUT);
 

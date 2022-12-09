@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities.Enums;
@@ -11,10 +12,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeEvaluation
     public class FinalizeEvaluationCommandHandler : IRequestHandler<FinalizeEvaluationCommand, Unit>
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IDateTime _dateTime;
 
-        public FinalizeEvaluationCommandHandler(AppDbContext appDbContext)
+        public FinalizeEvaluationCommandHandler(AppDbContext appDbContext, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
+            _dateTime = dateTime;
         }
 
         public async Task<Unit> Handle(FinalizeEvaluationCommand request, CancellationToken cancellationToken)
@@ -24,7 +27,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeEvaluation
                 .FirstOrDefaultAsync(x => x.Id == request.TestId);
 
             testToFinalize.TestStatus = TestStatusEnum.Verified;
-            testToFinalize.EndTime = DateTime.Now;
+            testToFinalize.EndTime = _dateTime.Now;
 
             await _appDbContext.SaveChangesAsync();
 

@@ -6,6 +6,7 @@ using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Entities.PersonalEntities.Enums;
 using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Positions;
+using CVU.ERP.Common;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 
@@ -13,17 +14,17 @@ namespace CODWER.RERU.Personal.Application.Positions
 {
     public class PositionValidator : AbstractValidator<AddEditPositionDto>
     {
-        public PositionValidator(AppDbContext appDbContext)
+        public PositionValidator(AppDbContext appDbContext, IDateTime dateTime)
         {
             RuleFor(x => x.FromDate)
                 .NotEmpty()
-                .Must(x=>x > DateTime.Now.AddYears(-100))
+                .Must(x=>x > dateTime.Now.AddYears(-100))
                 .WithMessage(ValidationMessages.InvalidInput)
                 .WithErrorCode(ValidationCodes.INVALID_INPUT);
 
             RuleFor(x => x.GeneratedDate)
                 .NotEmpty()
-                .Must(x => x > DateTime.Now.AddYears(-100))
+                .Must(x => x > dateTime.Now.AddYears(-100))
                 .WithMessage(ValidationMessages.InvalidInput)
                 .WithErrorCode(ValidationCodes.INVALID_INPUT);
 

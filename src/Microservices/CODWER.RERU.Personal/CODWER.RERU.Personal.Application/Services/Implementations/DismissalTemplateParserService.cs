@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CVU.ERP.Common;
 using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Personal.Application.Services.Implementations
@@ -22,6 +23,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         private readonly IStorageFileService _storageFileService;
         private readonly IVacationIntervalService _vacationIntervalService;
         private readonly IPersonalStorageClient _personalStorageClient;
+        private readonly IDateTime _dateTime;
         private readonly EmployerData _employerData;
         private readonly string _fileNameRequest;
         private readonly string _fileNameOrder;
@@ -31,13 +33,14 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             IStorageFileService storageFileService,
             IVacationIntervalService vacationIntervalService,
             IOptions<EmployerData> options,
-            IPersonalStorageClient personalStorageClient)
+            IPersonalStorageClient personalStorageClient, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
             _templateConvertor = templateConvertor;
             _storageFileService = storageFileService;
             _vacationIntervalService = vacationIntervalService;
             _personalStorageClient = personalStorageClient;
+            _dateTime = dateTime;
             _employerData = options.Value;
 
             _fileNameRequest = "ContractorTemplates/Requests/Cerere Cu Privire La Demisionare.html";
@@ -92,10 +95,10 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             myDictionary.Add("{nume_replace}", contractor.LastName);
             myDictionary.Add("{prenume_replace}", contractor.FirstName);
 
-            myDictionary.Add("{functia_replace}", contractor.GetCurrentPositionOnData(DateTime.Now)?.Role.Name);
+            myDictionary.Add("{functia_replace}", contractor.GetCurrentPositionOnData(_dateTime.Now)?.Role.Name);
 
             myDictionary.Add("{data_demisia_replace}", from.ToString("dd/MM/yyyy"));
-            myDictionary.Add("{data_replace}", DateTime.Now.ToString("dd/MM/yyyy"));
+            myDictionary.Add("{data_replace}", _dateTime.Now.ToString("dd/MM/yyyy"));
 
             return myDictionary;
         }
@@ -107,13 +110,13 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
               .ThenInclude(x => x.Role)
               .FirstAsync(x => x.Id == contractorId);
 
-            var position = contractor.GetCurrentPositionOnData(DateTime.Now);
+            var position = contractor.GetCurrentPositionOnData(_dateTime.Now);
 
             var nonUsedVacationDays = $"{await _vacationIntervalService.GetContractorAvailableDays(contractorId):0.0}";
 
             var myDictionary = new Dictionary<string, string>();
 
-            myDictionary.Add("{data_replace}", DateTime.Now.ToString("dd/MM/yyyy"));
+            myDictionary.Add("{data_replace}", _dateTime.Now.ToString("dd/MM/yyyy"));
             myDictionary.Add("{nr_replace}", (_appDbContext.DismissalRequests.Count(x => x.Status == StageStatusEnum.Approved) + 1).ToString("000"));
 
             myDictionary.Add("{sex_type_replace}", contractor.Sex == SexTypeEnum.Male ? "Domnul" : "Doamna");
