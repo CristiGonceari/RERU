@@ -70,18 +70,29 @@
         </ul>
     </div>
 </div> -->
-<a [routerLink]="['../evaluate', evaluation.id]" class="btn btn-success" *ngIf="evaluation?.canEvaluate" style="margin-right:5px">
-    {{ 'button.evaluate' | translate }}
-</a>
 
-<a (click)="download()" class="btn btn-success" *ngIf="evaluation?.canDownload" style="margin-right:5px">
-    {{ 'button.export' | translate }}
-</a>
+<div class="d-flex gap-2">
+    <a [routerLink]="['../evaluate', evaluation?.id]" *ngIf="evaluation?.canEvaluate" [ngbTooltip]="'button.evaluate' | translate">
+        <i class="flaticon2-sheet text-success"></i>
+    </a>
 
-<a [routerLink]="['../countersign', evaluation?.id]" *ngIf="evaluation?.canCounterSign" class="btn btn-success" style="margin-right:5px">
-    {{ 'button.countersign' | translate }}
-</a>
-
-<a href="javascript:;" (click)="delete.emit()" *ngIf="evaluation?.canDelete" class="btn btn-success" style="margin-right:5px">
-  {{ 'button.delete' | translate }}
-</a>
+    <a [routerLink]="['../evaluate', evaluation?.id]" *ngIf="evaluation?.canEvaluate" [ngbTooltip]="'button.edit' | translate">
+        <i class="flaticon2-pen text-warning"></i>
+    </a>
+    
+    <a [routerLink]="['../accept', evaluation?.id]" *ngIf="evaluation?.canAccept" [ngbTooltip]="'button.accept' | translate">
+        <i class="flaticon2-sheet text-success"></i>
+    </a>
+    
+    <a href="javascript:;" (click)="download()" *ngIf="evaluation?.canDownload" [ngbTooltip]="'button.export' | translate">
+        <i class="flaticon-download text-blue"></i>
+    </a>
+    
+    <a [routerLink]="['../countersign', evaluation?.id]" *ngIf="evaluation?.canCounterSign" [ngbTooltip]="'button.countersign' | translate">
+        <i class="flaticon2-sheet text-success"></i>
+    </a>
+    
+    <a href="javascript:;" (click)="delete.emit()" [ngbTooltip]="'button.delete' | translate">
+        <i class="flaticon2-trash text-danger"></i>
+    </a>
+</div>

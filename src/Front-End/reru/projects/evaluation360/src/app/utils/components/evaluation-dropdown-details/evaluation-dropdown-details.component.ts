@@ -19,8 +19,10 @@ export class EvaluationDropdownDetailsComponent {
 
   isDisabled(): boolean {
     return this.evaluation &&
-           !this.evaluation.canEvaluate &&
-           !this.evaluation.canCounterSign &&
-           !this.evaluation.canDownload;
+           !this.evaluation?.canEvaluate &&
+           !this.evaluation?.canCounterSign &&
+           !this.evaluation?.canDownload && 
+           !this.evaluation?.canDelete &&
+           !this.evaluation?.canFinished;;
   }
 }

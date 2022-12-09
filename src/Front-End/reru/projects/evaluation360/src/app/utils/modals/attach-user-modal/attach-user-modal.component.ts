@@ -7,6 +7,7 @@ import { SearchRoleComponent } from './search-role/search-role.component';
 import { SearchDepartmentComponent } from './search-department/search-department.component';
 import { ObjectUtil } from '../../util/object.util';
 import { UserModel } from '@utils';
+import { PaginationClass } from '../../models/pagination.model';
 
 export interface AttachUserModel {
   selectedUsers: number[];
@@ -20,7 +21,7 @@ export interface AttachUserModel {
 export class AttachUserModalComponent implements OnInit {
   users: UserModel[] = [];
   paginatedAttachedIds: boolean = false;
-  pagination: PaginationModel = new PaginationModel();
+  pagination: PaginationModel = new PaginationClass();
   isLoading = true;
   filters = {};
   @ViewChild('firstName') firstName: any;

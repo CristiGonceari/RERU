@@ -64,7 +64,85 @@
       "2": "Superioare",
       "3": "Masterat",
       "4": "Doctorat"
-    }
+    },
+    "military-grade": {
+      "title": "Gradul special/militar",
+      "1": "Soldat",
+      "2": "Caporal",
+      "3": "Sergent Inferior",
+      "4": "Sergent",
+      "5": "Sergent major",
+      "6": "Plutonier",
+      "7": "Plutonier major",
+      "8": "Plutonier adjutant",
+      "9": "Locotenent",
+      "10": "Locotenent major",
+      "11": "Capitan",
+      "12": "Maior",
+      "13": "Locotenent colonel",
+      "14": "Colonel",
+      "15": "General de Brigada",
+      "16": "General de divizie",
+      "17": "General de Corp de Armata"
+    },
+    "execution-assessment-sheet": "FIȘĂ DE EVALUARE <br>a angajatului care exercită funcție de execuție",
+    "managing-assessment-sheet": "FIȘĂ DE EVALUARE <br>a angajatului care exercită funcție de conducere",
+    "criterias": {
+      "execution": {
+        "1": "Capacitatea de a realiza deplin sarcinile de serviciu",
+        "2": "Capacitatea de a depăși obstacolele sau dificultățile intervenite",
+        "3": "Capacitatea de asumare a responsabilităților, de asumare a erorilor în activitate",
+        "4": "Capacitatea de analiză și sinteză, creativitate și spirit de inițiativă",
+        "5": "Capacitatea de a lucra în echipă, de a-și aduce contribuția prin participare efectivă",
+        "6": "Punctajul stabilit la compartimentul 1) “Competenţa profesională” (M¹)",
+        "7": "Capacitatea de a promova și respecta normele de conduită la serviciu și în afara acestuia, în relații cu conducătorii, colegii și alte persoane",
+        "8": "Capacitatea de a executa corect prevederile actelor normative și a disciplinii de serviciu",
+        "9": "Sancțiuni disciplinare (Se va puncta: avertisment/observaţie – 2 puncte; alte sancţiuni – 1 puncte; lipsa – 3 sau 4, după caz)",
+        "10": "Punctajul stabilit la compartimentul 2) “Conduita de serviciu” (M²)",
+        "11": "",
+        "12": "Punctajul stabilit la compartimentul 3) “Obiective individuale” (M³):",
+        "13": "Pregătirea generală",
+        "14": "Pregătirea de specialitate",
+        "15": "Instrucţia tragerii (TS – după caz)",
+        "16": "Intervenţia profesională (Normative de luptă, SPÎGF)",
+        "17": "Media aritmetică de la compartimentele pregătirii de bază 1 – 4: (Pb)",
+        "18": "Pregătirea fizică: (Pf)"
+      },
+      "management": {
+        "1": "Capacitatea de a planifica și organiza activitatea structurii conduse",
+        "2": "Capacitatea de a conduce, monitoriza și gestiona eficient activitatea personalului",
+        "3": "Capacitatea de control și supraveghere a modului de executare a deciziilor",
+        "4": "Capacitatea de a motiva și de a încuraja activitatea personalului, menţinerea unui climat optim de muncă",
+        "5": "Capacitatea de a dezvolta abilitățile profesionale ale personalului",
+        "6": "Punctajul stabilit la compartimentul 1) “Competenţa managerială” (M¹)",
+        "7": "Capacitatea de a promova normele de conduită şi de a asiguaă respectarea acestora de către subalterni",
+        "8": "Capacitatea de a promova și a consolida prin propria prestație imaginea publică a instituției pe care o reprezintă;",
+        "9": "Sancțiuni disciplinare (Se va puncta: avertisment/observaţie – 2 puncte; alte sancţiuni – 1 puncte; lipsa – 3 sau 4, după caz)",
+        "10": "Punctajul stabilit la compartimentul 2) “Conduita de serviciu” (M²)",
+        "11": "",
+        "12": "Punctajul stabilit la compartimentul 3) “Obiective individuale” (M³):",
+        "13": "Pregătirea generală",
+        "14": "Pregătirea de specialitate",
+        "15": "Instrucţia tragerii (TS – după caz)",
+        "16": "Intervenţia profesională (Normative de luptă, SPÎGF)",
+        "17": "Media aritmetică de la compartimentele pregătirii de bază 1 – 4: (Pb)",
+        "18": "Pregătirea fizică: (Pf)"
+      }
+    },
+    "counter-signer-comments": {
+      "1": "a fost respectată procedura de evaluare şi cerinţele stabilite de Regulament",
+      "2": "a fost verifică corectitudinea informaţiilor înscrise în fişa de evaluare",
+      "3": "au fost respectate perioadele şi termenele de realizare a procedurilor de evaluare",
+      "4": "aprecierile consemnate în fişa de evaluare de către evaluator corespund realităţii"
+    },
+    "final-evaluation-qualification": {
+      "very-good": "Foarte bine (FB)",
+      "good": "Bine (B)",
+      "satisfactory": "Satisfăcător",
+      "unsatisfactory": "Nesatisfăcător"
+    },
+    "are-you-sure-you-want-to-delete-evaluation": "Sunteți sigur că doriți să ștergeți evaluarea?",
+    "confirmation": "Confirmare"
   },
   "button": {
     "back": "Înapoi",
@@ -77,7 +155,12 @@
     "evaluate": "Evaluare",
     "export": "Exporta",
     "countersign": "Contrasemnare",
-    "delete": "Șterge"
+    "delete": "Șterge",
+    "select": "Selectează",
+    "save": "Salvează",
+    "reject": "Respinge",
+    "accept": "Acceptă",
+    "edit": "Modifică"
   },
   "attach-user-modal": {
     "first-name": "Prenume",

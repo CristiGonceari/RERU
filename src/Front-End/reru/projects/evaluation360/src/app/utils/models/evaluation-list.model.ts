@@ -8,9 +8,9 @@ export interface EvaluationListModel {
     status: number;
 
     canEvaluate?: boolean;
+    canAccept?: boolean;
     canCounterSign?: boolean;
     canDownload?: boolean;
     canDelete?: boolean;
-    canAccept?: boolean;
-    canAcceptCounterSign?: boolean;
+    canFinished?: boolean;
 }

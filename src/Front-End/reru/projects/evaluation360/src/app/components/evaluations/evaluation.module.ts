@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 
-import { SurveyRoutingModule } from './survey-routing.module';
-import { SurveyComponent } from './survey.component';
-import { CreateComponent } from './create/create.component';
+import { EvaluationRoutingModule } from './evaluation-routing.module';
+import { EvaluationComponent } from './evaluation.component';
+import { EvaluationProcessComponent } from './evaluation-process/evaluation-process.component';
 import { ListComponent } from './list/list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,26 +13,23 @@ import { SharedModule } from '@erp/shared';
 import { UtilsModule } from '../../utils/utils.module';
 import { EvaluationsTableComponent } from './evaluations-table/evaluations-table.component';
 import { EvaluationsSetupComponent } from './evaluations-setup/evaluations-setup.component';
-import { EvaluationProcessComponent } from './evaluations-process/evaluations-process.component';
 import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-datetime';
 
 @NgModule({
   declarations: [
-    SurveyComponent,
-    CreateComponent,
+    EvaluationComponent,
+    EvaluationProcessComponent,
     ListComponent,
     EvaluationsTableComponent,
     EvaluationsSetupComponent,
-    EvaluationProcessComponent
   ],
   imports: [
     CommonModule,
-    SurveyRoutingModule,
+    EvaluationRoutingModule,
     HttpClientModule,
     FormsModule,
     TranslateModule,
     ReactiveFormsModule,
-    TranslateModule,
     NgbModule,
     SharedModule,
     UtilsModule,
@@ -41,4 +38,4 @@ import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-dat
   ],
   providers: [TranslatePipe, DatePipe]
 })
-export class SurveyModule { }
+export class EvaluationModule { }
