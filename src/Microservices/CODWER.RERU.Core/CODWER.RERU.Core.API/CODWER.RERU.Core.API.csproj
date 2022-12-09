@@ -33,6 +33,9 @@
     <ProjectReference Include="..\CODWER.RERU.Core.Application\CODWER.RERU.Core.Application.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="Files\Certificates\926_reru.mai.pki.gov.md _eSystems-Trust.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Rotativa\Linux\wkhtmltopdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -96,6 +99,9 @@
 	<None Update="UserGuide\GhidCore.pdf">
 	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	</None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Files\Certificates\" />
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>

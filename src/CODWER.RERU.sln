@@ -105,6 +105,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CODWER.RERU.Evaluation360.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CODWER.RERU.Core.Data.Persistence", "Microservices\CODWER.RERU.Core\CODWER.RERU.Core.Data.Persistence\CODWER.RERU.Core.Data.Persistence.csproj", "{B8B8F961-37C3-44E2-BF19-19409B71E383}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MNotifyPackages", "MNotifyPackages", "{2B5D02BB-F939-43A9-8DC7-E6C34D2E8AE6}"
+	ProjectSection(SolutionItems) = preProject
+		Common\MNotifyPackages\age.extensions.configuration.6.0.7.nupkg = Common\MNotifyPackages\age.extensions.configuration.6.0.7.nupkg
+		Common\MNotifyPackages\Age.Integrations.MNotify.6.0.4.nupkg = Common\MNotifyPackages\Age.Integrations.MNotify.6.0.4.nupkg
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -637,6 +643,7 @@ Global
 		{C1AB72FD-747A-4257-B8A3-A9018E9AAD65} = {03A0F27C-A16D-4598-B3E3-27ED8BF66F3F}
 		{2CA740D2-2CC6-4FC6-87EA-65F456895AC5} = {03A0F27C-A16D-4598-B3E3-27ED8BF66F3F}
 		{B8B8F961-37C3-44E2-BF19-19409B71E383} = {9BF9A642-6D4A-4E83-9488-EB3CEAFD80D0}
+		{2B5D02BB-F939-43A9-8DC7-E6C34D2E8AE6} = {D2FE3D6E-F069-4769-B9BC-34DA747A1622}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4E2CF7AA-C2D3-4126-A2F9-BCC47BB4321F}
