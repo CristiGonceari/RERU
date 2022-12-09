@@ -17,5 +17,9 @@
     <audio *ngIf="audioUrl" controls>
         <source [src]="audioUrl" type="audio/mpeg">
     </audio>
+    <doc *ngIf="docUrl" controls>
+        <p class="mb-0 ml-5 mt-2 font-weght-lighter">{{fileName}}</p>
+        <source [src]="docUrl" type="file">
+    </doc>
 </div>
  

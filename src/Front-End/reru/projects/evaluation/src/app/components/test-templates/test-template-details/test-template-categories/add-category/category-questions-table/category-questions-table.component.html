@@ -13,8 +13,7 @@ id="kt_datatable">
                 <div class="row col-12 w-100 m-0">
                     <div class="col-6" [class.col-lg-4]="selectQuestions == 1" [class.col-lg-7]="selectQuestions == 0">
                         <div class="d-flex flex-column">
-                            <label class="col-form-label pb-0 text-dark-50">{{'questions.select-questions' |
-                                translate}}</label>
+                            <label class="col-form-label pb-0 text-dark-50">{{'questions.select-questions' | translate}}</label>
                             <select class="form-control h-35px" name="selectQuestions" [(ngModel)]="selectQuestions" (ngModelChange)="onChangeSelection($event)">
                                 <option selected value='0' class="default-option"> {{ 'button.all' | translate }}
                                 </option>
@@ -24,8 +23,7 @@ id="kt_datatable">
                     </div>
                     <div class="col-6 pr-0" *ngIf="selectQuestions == 1" [class.col-lg-4]="selectQuestions == 1" [class.col-lg-5]="selectQuestions == 0">
                         <div class="d-flex flex-column">
-                            <label class="col-form-label pb-0 text-dark-50">{{'questions.order-questions' |
-                                translate}}</label>
+                            <label class="col-form-label pb-0 text-dark-50">{{'questions.order-questions' | translate}}</label>
                             <select class="form-control h-35px" name="orderQuestions" [(ngModel)]="orderQuestions" (ngModelChange)="onChangeSequence($event)">
                                 <option selected value='0' class="default-option"> {{'button.random' | translate}}
                                 </option>
@@ -71,7 +69,7 @@ id="kt_datatable">
                 </tr>
             </thead>
             <tbody class="datatable-body" dragula="Questions" [(dragulaModel)]="itemsToAdd">
-                <tr *ngFor="let item of questions; let i = index" [ngClass]="{'disabled-area': orderQuestions == 0}">
+                   <tr *ngFor="let item of questions; let i = index" [ngClass]="{'disabled-area': orderQuestions == 0}">
                     <td *ngIf="selectQuestions == 1 && !preview">
                         <label class="checkbox mx-5 d-block" (change)="selectQuestion($event)">
                             <input name="selected" type="checkbox" [value]="item.id">
@@ -82,7 +80,7 @@ id="kt_datatable">
                     <td>{{ item.question }}</td>
                     <td>{{ 'statuses.' + questionStatus[item.status] | translate}}</td>
                     <td>{{ 'statuses.' + qType[item.questionType] | translate}}</td>
-                </tr>
+                    </tr> 
             </tbody>
             <tbody class="datatable-body" *ngIf="!questions.length">
                 <tr>
