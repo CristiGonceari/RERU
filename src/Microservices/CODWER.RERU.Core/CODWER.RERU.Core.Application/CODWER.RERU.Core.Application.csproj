@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <!--<Import Project="..\CODWER.RERU.Core.CodeAnalysis.targets" />-->
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>CODWER.RERU.Core.Application</AssemblyName>
-    <RootNamespace>CODWER.RERU.Core.Application</RootNamespace>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,7 +28,6 @@
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Infrastructure\CVU.ERP.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Module.Application\src\CVU.ERP.Module.Application.csproj" />
     <ProjectReference Include="..\..\..\Common\CODWER.Common\RERU.Data.Persistence\RERU.Data.Persistence.csproj" />
-    <ProjectReference Include="..\CODWER.RERU.Core.Data.Entities\CODWER.RERU.Core.Data.Entities.csproj" />
     <ProjectReference Include="..\CODWER.RERU.Core.Data.Persistence\CODWER.RERU.Core.Data.Persistence.csproj" />
     <ProjectReference Include="..\CODWER.RERU.Core.DataTransferObjects\CODWER.RERU.Core.DataTransferObjects.csproj" />
   </ItemGroup>

@@ -19,8 +19,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
-using NSwag;
-using NSwag.Generation.Processors.Security;
+//using NSwag;
+//using NSwag.Generation.Processors.Security;
 using RERU.Data.Persistence.Context;
 using System.Text;
 using CODWER.RERU.Core.Application.CronJobs;
@@ -66,6 +66,7 @@ namespace CODWER.RERU.Core.API
             services.Configure<TenantDto>(Configuration.GetSection("CoreSettings").GetSection("Tenant"));
             services.Configure<ActiveTimeDto>(Configuration.GetSection("CoreSettings").GetSection("ActiveTime"));
 
+            services.AddERPModuleServices(Configuration); // before conf AppDbContext
             services.AddCoreServiceProvider(); // before conf AppDbContext
 
             ServicesSetup.ConfigureEntity(services, Configuration);
@@ -104,21 +105,23 @@ namespace CODWER.RERU.Core.API
                 options.SuppressModelStateInvalidFilter = true;
             });
 
-            services.AddSwaggerDocument(document =>
-            {
-                // Add an authenticate button to Swagger for JWT tokens
-                document.OperationProcessors.Add(new OperationSecurityScopeProcessor("JWT"));
-                document.DocumentProcessors.Add(new SecurityDefinitionAppender("JWT", new OpenApiSecurityScheme
-                {
-                    Type = OpenApiSecuritySchemeType.ApiKey,
-                    Name = "Authorization",
-                    In = OpenApiSecurityApiKeyLocation.Header,
-                    Description = "Type into the textbox: Bearer {your JWT token}. You can get a JWT token from /Authorization/Authenticate.",
-                }));
+            services.AddSwaggerGen();
 
-                // Post process the generated document
-                document.PostProcess = d => d.Info.Title = "CODWER.RERU.Core REST Client!";
-            });
+            //services.AddSwaggerDocument(document =>
+            //{
+            //    // Add an authenticate button to Swagger for JWT tokens
+            //    document.OperationProcessors.Add(new OperationSecurityScopeProcessor("JWT"));
+            //    document.DocumentProcessors.Add(new SecurityDefinitionAppender("JWT", new OpenApiSecurityScheme
+            //    {
+            //        Type = OpenApiSecuritySchemeType.ApiKey,
+            //        Name = "Authorization",
+            //        In = OpenApiSecurityApiKeyLocation.Header,
+            //        Description = "Type into the textbox: Bearer {your JWT token}. You can get a JWT token from /Authorization/Authenticate.",
+            //    }));
+
+            //    // Post process the generated document
+            //    document.PostProcess = d => d.Info.Title = "CODWER.RERU.Core REST Client!";
+            //});
 
             services.AddControllers()
                 .AddERPModuleControllers();
@@ -126,7 +129,8 @@ namespace CODWER.RERU.Core.API
 
 
 
-            services.AddERPModuleServices(Configuration) 
+            //services.AddERPModuleServices(Configuration) 
+            services
                 .AddCoreModuleApplication(Configuration)
                 .AddCommonLoggingContext(Configuration);
 
@@ -144,11 +148,11 @@ namespace CODWER.RERU.Core.API
 
             app.UseAuthentication();
 
-            app.UseSwaggerUi3(settings =>
-            {
-                settings.Path = "/api";
-                settings.DocumentPath = "/api/specification.json";
-            });
+            //app.UseSwaggerUi3(settings =>
+            //{
+            //    settings.Path = "/api";
+            //    settings.DocumentPath = "/api/specification.json";
+            //});
 
             hangfireDbContext.Database.Migrate();
             app.UseHangfireDashboard();
@@ -160,6 +164,10 @@ namespace CODWER.RERU.Core.API
             // global cors policy
             if (env.IsDevelopment())
             {
+
+                app.UseSwagger();
+                app.UseSwaggerUI();
+
                 // app.UseCors (x => x
                 //     .WithOrigins ("http://localhost:4200")
                 //     .AllowAnyMethod ()
@@ -171,6 +179,12 @@ namespace CODWER.RERU.Core.API
                 );
             }
 
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                options.RoutePrefix = string.Empty;
+            });
+
             //DatabaseSeeder.SeedDb(appDbContext);
 
             app.UseERPMiddlewares();
@@ -181,9 +195,9 @@ namespace CODWER.RERU.Core.API
                 routes.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.UseOpenApi();
+            //app.UseOpenApi();
 
-            app.UseSwaggerUi3();
+            //app.UseSwaggerUi3();
 
             mediator.Send(new UpdateSelfAsModuleCommand()).Wait();
         }
