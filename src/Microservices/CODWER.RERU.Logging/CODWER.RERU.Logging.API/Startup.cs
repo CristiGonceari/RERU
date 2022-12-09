@@ -17,7 +17,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Reflection;
+using CVU.ERP.Common;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
+using CVU.ERP.Infrastructure;
 using RERU.Data.Persistence.Context;
 using Wkhtmltopdf.NetCore;
 
@@ -71,6 +73,7 @@ namespace CODWER.RERU.Logging.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CODWER.RERU.Logging.API", Version = "v1" });
             });
 
+            services.AddTransient<IDateTime, MachineDateTime>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

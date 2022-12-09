@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CODWER.RERU.Personal.Application.Validation;
+using CVU.ERP.Common;
 using RERU.Data.Entities.PersonalEntities.Enums;
 using RERU.Data.Persistence.Context;
 using CVU.ERP.Common.Extensions;
@@ -14,13 +15,15 @@ namespace CODWER.RERU.Personal.Application.DismissalRequests.AddDismissalRequest
     public class AddDismissalRequestCommandValidator: AbstractValidator<AddDismissalRequestCommand>
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IDateTime _dateTime;
 
-        public AddDismissalRequestCommandValidator(AppDbContext appDbContext)
+        public AddDismissalRequestCommandValidator(AppDbContext appDbContext, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
+            _dateTime = dateTime;
 
             RuleFor(x => x.Data.From)
-                .Must(x => x.Date >= DateTime.Now.Date)
+                .Must(x => x.Date >= _dateTime.Now.Date)
                 .WithErrorCode(ValidationCodes.INVALID_INPUT)
                 .WithMessage(ValidationMessages.InvalidInput);
 

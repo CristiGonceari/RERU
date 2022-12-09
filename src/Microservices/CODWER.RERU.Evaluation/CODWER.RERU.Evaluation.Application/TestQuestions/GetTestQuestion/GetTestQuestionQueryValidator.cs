@@ -5,6 +5,7 @@ using System.Linq;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Application.Validators.TestValidators;
+using CVU.ERP.Common;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 
@@ -14,7 +15,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
     {
         private readonly AppDbContext _appDbContext;
         private readonly IUserProfileService _userProfileService;
-        public GetTestQuestionQueryValidator(AppDbContext appDbContext, IUserProfileService userProfileService)
+        public GetTestQuestionQueryValidator(AppDbContext appDbContext, IUserProfileService userProfileService, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
             _userProfileService = userProfileService;
@@ -49,7 +50,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
             {
                 RuleFor(x => x)
                     .Must(x => appDbContext.Tests.FirstOrDefault(t => t.Id == x.TestId).TestStatus == TestStatusEnum.InProgress
-                                                                && appDbContext.Tests.FirstOrDefault(t => t.Id == x.TestId).EndTime > DateTime.Now)
+                                                                && appDbContext.Tests.FirstOrDefault(t => t.Id == x.TestId).EndTime > dateTime.Now)
                     .WithErrorCode(ValidationCodes.TEST_IS_FINISHED);
             });
 

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CVU.ERP.Common;
 using CVU.ERP.StorageService.Entities;
 using Wkhtmltopdf.NetCore;
 
@@ -16,11 +17,13 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
     {
         private readonly AppDbContext _appDbContext;
         private readonly IGeneratePdf _generatePdf;
+        private readonly IDateTime _dateTime;
 
-        public GetTestDocumentReplacedKeys(AppDbContext appDbContext, IGeneratePdf generatePdf)
+        public GetTestDocumentReplacedKeys(AppDbContext appDbContext, IGeneratePdf generatePdf, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
             _generatePdf = generatePdf;
+            _dateTime = dateTime;
         }
 
         public async Task<string> GetTestDocumentReplacedKey(Test test, int documentTemplateId)
@@ -76,7 +79,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
                 {
                     case "{cheie_pentru_data_de_azi}":
 
-                        var date = DateTime.Now;
+                        var date = _dateTime.Now;
 
                         myDictionary.Add(item, date.ToString("dd/MM/yyyy").Replace("-", "/"));
 

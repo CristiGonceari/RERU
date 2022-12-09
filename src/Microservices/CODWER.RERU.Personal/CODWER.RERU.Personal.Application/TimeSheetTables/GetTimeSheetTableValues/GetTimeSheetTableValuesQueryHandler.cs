@@ -8,6 +8,7 @@ using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Entities.PersonalEntities.StaticExtensions;
 using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.TimeSheetTables;
+using CVU.ERP.Common;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
@@ -23,18 +24,20 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.GetTimeSheetTableValu
         private readonly ITimeSheetTableService _timeSheetTableService;
         private readonly ILoggerService<GetTimeSheetTableValuesQuery> _loggerService;
         private readonly IUserProfileService _userProfileService;
+        private readonly IDateTime _dateTime;
 
         public GetTimeSheetTableValuesQueryHandler(AppDbContext appDbContext,
             IPaginationService paginationService,
             ITimeSheetTableService timeSheetTableService,
             ILoggerService<GetTimeSheetTableValuesQuery> loggerService,
-            IUserProfileService userProfileService)
+            IUserProfileService userProfileService, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
             _timeSheetTableService = timeSheetTableService;
             _loggerService = loggerService;
             _userProfileService = userProfileService;
+            _dateTime = dateTime;
         }
         public async Task<PaginatedModel<ContractorTimeSheetTableDto>> Handle(GetTimeSheetTableValuesQuery request, CancellationToken cancellationToken)
         {
@@ -44,7 +47,7 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.GetTimeSheetTableValu
                 .Include(c => c.Positions)
                     .ThenInclude(p => p.Role)
                 .Include(c => c.TimeSheetTables)
-                .InServiceAt(DateTime.Now)
+                .InServiceAt(_dateTime.Now)
                 .Select(c => new Contractor
                 {
                     Id = c.Id, 
@@ -103,7 +106,7 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.GetTimeSheetTableValu
                     ValueId = x.ValueId, 
                     Value = x.Value 
                 })
-                .Where(x => x.Date == DateTime.Today.AddDays(-1)).ToList(),
+                .Where(x => x.Date == _dateTime.Today.AddDays(-1)).ToList(),
                 WorkedHours = c.WorkedHours,
                 FreeHours = c.FreeHours,
                 WorkingDays = c.WorkingDays

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
@@ -13,10 +14,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
     public class StartTestCommandHandler : IRequestHandler<StartTestCommand, Unit>
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IDateTime _dateTime;
 
-        public StartTestCommandHandler(AppDbContext appDbContext)
+        public StartTestCommandHandler(AppDbContext appDbContext, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
+            _dateTime = dateTime;
         }
 
         public async Task<Unit> Handle(StartTestCommand request, CancellationToken cancellationToken)
@@ -26,8 +29,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
                 .FirstAsync(x => x.Id == request.TestId);
 
             test.TestStatus = TestStatusEnum.InProgress;
-            test.StartTime = DateTime.Now;
-            test.EndTime = DateTime.Now.AddMinutes(test.TestTemplate.Duration);
+            test.StartTime = _dateTime.Now;
+            test.EndTime = _dateTime.Now.AddMinutes(test.TestTemplate.Duration);
 
             await _appDbContext.SaveChangesAsync();
 
@@ -46,8 +49,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
                 foreach (var test in testsWithTheSameHash.ToList())
                 {
                     test.TestStatus = TestStatusEnum.InProgress;
-                    test.StartTime = DateTime.Now;
-                    test.EndTime = DateTime.Now.AddMinutes(test.TestTemplate.Duration);
+                    test.StartTime = _dateTime.Now;
+                    test.EndTime = _dateTime.Now.AddMinutes(test.TestTemplate.Duration);
                 }
             }
 

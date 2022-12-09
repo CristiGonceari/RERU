@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Application.TemplateParsers;
+using CVU.ERP.Common;
 using RERU.Data.Entities.PersonalEntities.Enums;
 using RERU.Data.Entities.PersonalEntities.Files;
 using RERU.Data.Persistence.Context;
@@ -21,17 +22,19 @@ namespace CODWER.RERU.Personal.Application.Profiles.Vacations.SubordinatesVacati
         private readonly ITemplateConvertor _templateConvertor;
         private readonly IStorageFileService _storageFileService;
         private readonly IPersonalStorageClient _personalStorageClient;
+        private readonly IDateTime _dateTime;
         private readonly string _fileName;
 
         public ApproveRejectVacationCommandHandler(AppDbContext appDbContext, 
             ITemplateConvertor templateConvertor, 
             IStorageFileService storageFileService, 
-            IPersonalStorageClient personalStorageClient)
+            IPersonalStorageClient personalStorageClient, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
             _templateConvertor = templateConvertor;
             _storageFileService = storageFileService;
             _personalStorageClient = personalStorageClient;
+            _dateTime = dateTime;
             _fileName = "ContractorTemplates/Orders/Ordin Cu Privire La Concediu.html";
         }
 
@@ -81,7 +84,7 @@ namespace CODWER.RERU.Personal.Application.Profiles.Vacations.SubordinatesVacati
             var myDictionary = new Dictionary<string, string>();
 
             myDictionary.Add("{nr_replace}", (_appDbContext.Vacations.Count(x=>x.Status == StageStatusEnum.Approved) + 1).ToString("000"));
-            myDictionary.Add("{data_replace}", DateTime.Now.ToString("dd/MM/yyyy"));
+            myDictionary.Add("{data_replace}", _dateTime.Now.ToString("dd/MM/yyyy"));
 
             myDictionary.Add("{nume_replace}", contractor.LastName);
             myDictionary.Add("{prenume_replace}", contractor.FirstName);

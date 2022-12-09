@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Common;
 
 namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionsSelectValues
 {
@@ -16,12 +17,14 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionsSele
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly IDateTime _dateTime;
         private List<SelectItem> _list = new ();
 
-        public GetPositionsSelectValuesQueryHandler(AppDbContext appDbContext, IMapper mapper)
+        public GetPositionsSelectValuesQueryHandler(AppDbContext appDbContext, IMapper mapper, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _dateTime = dateTime;
         }
 
         public async Task<List<SelectItem>> Handle(GetPositionsSelectValuesQuery request, CancellationToken cancellationToken)
@@ -40,7 +43,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionsSele
 
         private async Task<List<SelectItem>> GetCandidatePositionsSelectValues() =>  
                _appDbContext.CandidatePositions.AsQueryable()
-                .Where(x => x.From.Value <= DateTime.Now && x.To.Value >= DateTime.Now && x.IsActive)
+                .Where(x => x.From.Value <= _dateTime.Now && x.To.Value >= _dateTime.Now && x.IsActive)
                 .Select(tt => _mapper.Map<SelectItem>(tt))
                 .ToList();
         

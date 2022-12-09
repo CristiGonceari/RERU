@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
+using CVU.ERP.Common;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
@@ -13,11 +14,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddMyPoll
     {
         private readonly AppDbContext _appDbContext;
         private readonly IUserProfileService _userProfileService;
+        private readonly IDateTime _dateTime;
 
-        public AddMyPollCommandHandler(AppDbContext appDbContext, IUserProfileService userProfileService)
+        public AddMyPollCommandHandler(AppDbContext appDbContext, IUserProfileService userProfileService, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
             _userProfileService = userProfileService;
+            _dateTime = dateTime;
         }
 
         public async Task<int> Handle(AddMyPollCommand request, CancellationToken cancellationToken)
@@ -32,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddMyPoll
                 {
                     UserProfileId = currentUserId,
                     TestTemplateId = request.TestTemplateId,
-                    ProgrammedTime = DateTime.Now,
+                    ProgrammedTime = _dateTime.Now,
                     EventId = request.EventId
                 };
 

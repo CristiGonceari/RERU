@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CODWER.RERU.Personal.Application.Validation;
+using CVU.ERP.Common;
 using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Entities.PersonalEntities.ContractorEvents;
 using RERU.Data.Entities.PersonalEntities.Enums;
@@ -16,33 +17,35 @@ namespace CODWER.RERU.Personal.Application.Services.VacationInterval
     {
         private readonly VacationConfiguration _configuration;
         private readonly AppDbContext _appDbContext;
+        private readonly IDateTime _dateTime;
         private List<Holiday> _holidays;
 
-        public VacationIntervalService(AppDbContext appDbContext)
+        public VacationIntervalService(AppDbContext appDbContext, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
+            _dateTime = dateTime;
             _configuration = appDbContext.VacationConfigurations.FirstOrDefault() ??
-            new VacationConfiguration
-            {
-                PaidLeaveDays = 28,
-                NonPaidLeaveDays = 60,
-                StudyLeaveDays = 62,
-                DeathLeaveDays = 3,
-                ChildCareLeaveDays = 792,
-                ChildBirthLeaveDays = 126,
-                MarriageLeaveDays = 3,
-                PaternalistLeaveDays = 14,
-                IncludeOffDays = true,
-                IncludeHolidayDays = true,
+                             new VacationConfiguration
+                             {
+                                 PaidLeaveDays = 28,
+                                 NonPaidLeaveDays = 60,
+                                 StudyLeaveDays = 62,
+                                 DeathLeaveDays = 3,
+                                 ChildCareLeaveDays = 792,
+                                 ChildBirthLeaveDays = 126,
+                                 MarriageLeaveDays = 3,
+                                 PaternalistLeaveDays = 14,
+                                 IncludeOffDays = true,
+                                 IncludeHolidayDays = true,
 
-                MondayIsWorkDay = true,
-                TuesdayIsWorkDay = true,
-                WednesdayIsWorkDay = true,
-                ThursdayIsWorkDay = true,
-                FridayIsWorkDay = true,
-                SaturdayIsWorkDay = false,
-                SundayIsWorkDay = false
-            };
+                                 MondayIsWorkDay = true,
+                                 TuesdayIsWorkDay = true,
+                                 WednesdayIsWorkDay = true,
+                                 ThursdayIsWorkDay = true,
+                                 FridayIsWorkDay = true,
+                                 SaturdayIsWorkDay = false,
+                                 SundayIsWorkDay = false
+                             };
         }
 
         public async Task<int> GetVacationDaysByInterval(DateTime from, DateTime? to)
@@ -63,7 +66,7 @@ namespace CODWER.RERU.Personal.Application.Services.VacationInterval
                 .Include(x => x.Vacations)
                 .FirstAsync(x => x.Id == contractorId);
 
-            var currentPosition = contractor.GetCurrentPositionOnData(DateTime.Now);
+            var currentPosition = contractor.GetCurrentPositionOnData(_dateTime.Now);
             var contract = contractor.Contracts.LastOrDefault();
 
             if (currentPosition?.FromDate == null)
@@ -76,7 +79,7 @@ namespace CODWER.RERU.Personal.Application.Services.VacationInterval
                 throw new Exception(ValidationCodes.CONTRACT_NOT_FOUND);
             }
 
-            var contractorTotalVacationDays = (DateTime.Now - currentPosition.FromDate).Value.Days
+            var contractorTotalVacationDays = (_dateTime.Now - currentPosition.FromDate).Value.Days
                                               * contract.VacationDays
                                               / 356;
 
@@ -95,7 +98,7 @@ namespace CODWER.RERU.Personal.Application.Services.VacationInterval
                 .Include(x => x.Vacations)
                 .FirstAsync(x => x.Id == contractorId);
 
-            var currentPosition = contractor.GetCurrentPositionOnData(DateTime.Now);
+            var currentPosition = contractor.GetCurrentPositionOnData(_dateTime.Now);
             var contract = contractor.Contracts.LastOrDefault();
 
             if (currentPosition?.FromDate == null)
@@ -138,7 +141,7 @@ namespace CODWER.RERU.Personal.Application.Services.VacationInterval
                     return await CalculateDaysByConfigurations(currentPosition, contractor, contract.VacationDays, VacationType.PaidAnnual);
 
             }
-            var contractorTotalVacationDays = (DateTime.Now - currentPosition.FromDate).Value.Days
+            var contractorTotalVacationDays = (_dateTime.Now - currentPosition.FromDate).Value.Days
                                                                   * contract.VacationDays
                                                                   / 356;
 
@@ -151,7 +154,7 @@ namespace CODWER.RERU.Personal.Application.Services.VacationInterval
 
         private async Task<double> CalculateDaysByConfigurations(Position currentPosition, Contractor contractor, int configurationCoeficient, VacationType vacationType)
         {
-            var contractorAvailableDays = (DateTime.Now - currentPosition.FromDate).Value.Days
+            var contractorAvailableDays = (_dateTime.Now - currentPosition.FromDate).Value.Days
                                        * configurationCoeficient / 356;
 
             var usedDays = contractor.Vacations
