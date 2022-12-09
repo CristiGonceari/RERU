@@ -59,6 +59,9 @@ namespace CODWER.RERU.Core.API
         //[Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSystemCertificate(Configuration.GetSection("Certificate"));
+            services.AddMNotifyClient(Configuration.GetSection("MNotify"));
+
             services.Configure<SmtpOptions>(Configuration.GetSection("Smtp"));
             // services.Configure<RabbitMq> (Configuration.GetSection ("MessageQueue"));
             //services.Configure<ModuleConfiguration> (Configuration.GetSection ("ERPModule"));

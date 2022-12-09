@@ -100,9 +100,6 @@
 	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	</None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Files\Certificates\" />
-  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties appsettings_1json__JsonSchema="" />
