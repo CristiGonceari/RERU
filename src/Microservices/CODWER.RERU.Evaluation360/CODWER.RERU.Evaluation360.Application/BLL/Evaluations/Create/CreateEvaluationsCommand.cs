@@ -1,4 +1,3 @@
-using System;
 using MediatR;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Create

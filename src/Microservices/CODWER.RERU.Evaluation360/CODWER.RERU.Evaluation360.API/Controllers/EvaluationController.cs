@@ -12,6 +12,8 @@ using CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations;
 using CVU.ERP.Common.Pagination;
 using Microsoft.AspNetCore.Mvc;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.EvaluatedKnow;
+using RERU.Data.Entities.Evaluation360;
+using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.DeleteEvaluation;
 
 namespace CODWER.RERU.Evaluation360.API.Controllers
 {
@@ -26,7 +28,7 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<EvaluationRowDto> GetEdit([FromRoute] int id)
+        public async Task<GetEvaluationDto> GetEdit([FromRoute] int id)
         {
             return await Sender.Send(new GetEditEvaluationQuery(id));
         }
@@ -35,6 +37,12 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
         public async Task CreateEvaluation([FromBody] CreateEvaluationsCommand command)
         {
             await Sender.Send(command);
+        }
+
+        [HttpDelete("{id}/delete")]
+        public async Task DeleteEvaluation([FromRoute] int id)
+        {
+            await Sender.Send(new DeleteEvaluationQuery(id));
         }
 
         [HttpPut("update")]

@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -11,7 +10,7 @@ using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluation
 {
-    public class GetEditEvaluationQueryHandler : IRequestHandler<GetEditEvaluationQuery, EvaluationRowDto>
+    public class GetEditEvaluationQueryHandler : IRequestHandler<GetEditEvaluationQuery, GetEvaluationDto>
     {
         private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -24,7 +23,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluatio
             _currentUserProvider = currentUserProvider;
         }
 
-        public async Task<EvaluationRowDto> Handle(GetEditEvaluationQuery request, CancellationToken cancellationToken)
+        public async Task<GetEvaluationDto> Handle(GetEditEvaluationQuery request, CancellationToken cancellationToken)
         {
             var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Id);
             var currentUser = await _currentUserProvider.Get();
@@ -51,11 +50,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluatio
                 evaluation.canFinished = true;
             }
 
-            return _mapper.Map<EvaluationRowDto>(await _dbContext.Evaluations
-                .Include(e=> e.EvaluatedUserProfile)
-                .Include(e=> e.EvaluatorUserProfile)
-                .Include(e=> e.CounterSignerUserProfile)
-                .FirstOrDefaultAsync(e=> e.Id == request.Id));
+            return _mapper.Map<GetEvaluationDto>(evaluation);
         }
     }
 }

@@ -1,5 +1,6 @@
 using AutoMapper;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Create;
+using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluation;
 using CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Entities.Evaluation360;
@@ -22,6 +23,8 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations
                 .ForMember(dest=> dest.Status, opts=> opts.MapFrom(src=> EvaluationStatusEnum.Draft))
                 ;
 
+            CreateMap<Evaluation, GetEvaluationDto>();
+
             CreateMap<EditEvaluationDto, Evaluation>()
                 .ForMember(dest=> dest.Id, opts=> opts.Ignore())
                 ;
@@ -38,12 +41,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations
                 .ForMember(dest=> dest.CheckComment3, opts=> opts.MapFrom(src=> $"{src.CheckComment3}"))
                 .ForMember(dest=> dest.CheckComment4, opts=> opts.MapFrom(src=> $"{src.CheckComment4}"))
                 .ForMember(dest=> dest.OtherComments, opts=> opts.MapFrom(src=> $"{src.OtherComments}"))
-                .ForMember(dest=> dest.DecisionCounterSigner, opts=> opts.MapFrom(src=> $"{src.DecisionCounterSigner}"))
                 ;
-            
-            CreateMap<EvaluatedKnowDto, Evaluation>()
-                .ForMember(dest=> dest.NameSurnameEvaluated, opts=> opts.MapFrom(src=> $"{src.NameSurnameEvaluated}" ))
-            ;
         }
     }
 }

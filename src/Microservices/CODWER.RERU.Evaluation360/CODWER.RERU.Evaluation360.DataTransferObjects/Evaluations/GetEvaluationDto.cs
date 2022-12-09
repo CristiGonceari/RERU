@@ -1,43 +1,20 @@
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using CVU.ERP.Common.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Entities.PersonalEntities.Enums;
 
-namespace RERU.Data.Entities.Evaluation360
+namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
 {
-    public class Evaluation : SoftDeleteBaseEntity
+    public class GetEvaluationDto
     {
-        public int EvaluatedUserProfileId { set; get; }
-        public int EvaluatorUserProfileId { set; get; }
-        public int CounterSignerUserProfileId { set; get; }
-
-        [ForeignKey(nameof(EvaluatedUserProfileId))]
-        public UserProfile EvaluatedUserProfile { set; get; }
-
-        [ForeignKey(nameof(EvaluatorUserProfileId))]
-        public UserProfile EvaluatorUserProfile { set; get; }
-
-        [ForeignKey(nameof(CounterSignerUserProfileId))]
-        public UserProfile CounterSignerUserProfile { set; get; }
-
+        public int Id { set; get; }
         public EvaluationTypeEnum? Type { set; get; }
-        public decimal Points { set; get; }
-        public EvaluationStatusEnum? Status {set;get;}
-        public bool canEvaluate { set; get; }
-        public bool canDelete { set; get; }
-        public bool canAccept { set; get; }
-        public bool canCounterSign { set; get; }
-        public bool canFinished { set; get; }
-        //public bool? canDownload { set; get; }
         
         public string? SubdivisionName { set; get; }
+        public string? EvaluatedName { set; get; }
         public DateTime? DateCompletionGeneralData { set; get; }
-        public string? NameSurnameEvaluated { set; get; }
         public string? FunctionSubdivision { set; get; }
         public string? SubdivisionEvaluated { set; get; }
         public GradeEnum? SpecialOrMilitaryGrade { set; get; }
-        public String? SpecialOrMilitaryGradeText { set; get; }
         public DateTime? PeriodEvaluatedFromTo { set; get; }
         public DateTime? PeriodEvaluatedUpTo { set; get; }
         public EducationEnum? EducationEnum { set; get; }
@@ -54,7 +31,6 @@ namespace RERU.Data.Entities.Evaluation360
         public DateTime? PartialEvaluationPeriodFromTo { set; get; }
         public DateTime? PartialEvaluationPeriodUpTo { set; get; }
         public decimal? PartialEvaluationScore { set; get; }
-        public string? FinalScorePartialEvaluations { set; get; }
         public QualifierEnum? QualifierPartialEvaluations { set; get; }
         public string? SanctionAppliedEvaluationCourse { set; get; }
         public DateTime? DateSanctionApplication { set; get; }
@@ -104,22 +80,15 @@ namespace RERU.Data.Entities.Evaluation360
         public string? Need1ProfessionalDevelopmentEvaluated { set; get; }
         public string? Need2ProfessionalDevelopmentEvaluated { set; get; }
         public string? CommentsEvaluator { set; get; }
+        public string? EvaluatorName { set; get; }
         public string? CommentsEvaluated { set; get; }
-        public DateTime? DateAcceptOrRejectEvaluated { set; get; }
-        public bool? SignatureEvaluated { set; get; }
-        public string? NameSurnameEvaluator { set; get; }
         public string? FunctionEvaluator { set; get; }
-        public bool? SignatureEvaluator { set; get; }
         public bool? CheckComment1 { set; get; }
         public bool? CheckComment2 { set; get; }
         public bool? CheckComment3 { set; get; }
         public bool? CheckComment4 { set; get; }
         public string? OtherComments { set; get; }
-        public string? NameSurnameCounterSigner { set; get; }
+        public string? CounterSignerName { set; get; }
         public string? FunctionCounterSigner { set; get; }
-        public DateTime? DateCompletionCounterSigner { set; get; }
-        public bool? SignatureCounterSigner { set; get; }
-        public DateTime? DateEvaluatedKnow { set; get; }
-        public bool? SignatureAcknowledgeEvaluated { set; get; }
     }
 }

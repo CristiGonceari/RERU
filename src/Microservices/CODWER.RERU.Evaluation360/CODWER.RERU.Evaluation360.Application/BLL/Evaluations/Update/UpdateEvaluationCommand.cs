@@ -9,6 +9,6 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
         {
             Evaluation = evaluation;
         }
-       public EditEvaluationDto Evaluation {set;get;}
+        public EditEvaluationDto Evaluation {set;get;}
     }
 }

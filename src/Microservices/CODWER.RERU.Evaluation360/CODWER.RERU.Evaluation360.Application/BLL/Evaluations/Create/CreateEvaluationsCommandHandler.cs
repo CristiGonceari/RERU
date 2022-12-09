@@ -1,10 +1,8 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using CVU.ERP.ServiceProvider;
 using MediatR;
-using RERU.Data.Entities.Enums;
 using RERU.Data.Entities.Evaluation360;
 using RERU.Data.Persistence.Context;
 
@@ -26,8 +24,8 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Create
         {
             var currentUser = await _currentUserProvider.Get();
             var currentuserId = int.Parse(currentUser.Id);
-           
-           foreach(var evaluatedUserId in request.EvaluatedUserProfileIds)
+            
+            foreach(var evaluatedUserId in request.EvaluatedUserProfileIds)
             {
                 var newEvaluation = _mapper.Map<Evaluation>(request);
                 
