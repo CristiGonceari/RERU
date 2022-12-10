@@ -26,11 +26,6 @@
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Identity\CVU.ERP.Identity.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Identity\CVU.ERP.Identity.csproj" />
-    <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Infrastructure\CVU.ERP.Infrastructure.csproj" />
-  </ItemGroup>
-
 
 
   <ItemGroup>
