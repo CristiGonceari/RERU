@@ -1,4 +1,4 @@
-tag: dev
+tag: mstage
 
 ingress:
   annotations:
