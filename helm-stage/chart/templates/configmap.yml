@@ -414,7 +414,14 @@ data:
         },
       "PlatformConfig": {
           "BaseUrl": "http://reru-stage.codwer.com"  
-        }
+        },
+      "Certificate": {
+        "Path": "Files/Certificates/926_reru.mai.pki.gov.md _eSystems-Trust.pfx",
+        "Password": "926"
+      },
+      "MNotify": {
+        "ServiceAddress": "https://mnotify.staging.egov.md:8443"
+      }
     }
 
   reru_evaluation.appsettings.json: | 
