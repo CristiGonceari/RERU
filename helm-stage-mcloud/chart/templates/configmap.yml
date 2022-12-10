@@ -420,7 +420,7 @@ data:
         "Password": "926"
       },
       "MNotify": {
-        "ServiceAddress": "https://mnotify.staging.egov.md:8443"
+        "BaseAddress": "https://mnotify.staging.egov.md:8443"
       }
     }
 
