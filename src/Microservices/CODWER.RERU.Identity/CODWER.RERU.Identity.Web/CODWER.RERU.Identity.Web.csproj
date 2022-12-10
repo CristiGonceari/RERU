@@ -29,6 +29,9 @@
 
 
   <ItemGroup>
+    <None Update="926_reru.mai.pki.gov.md _eSystems-Trust.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="tempkey.jwk">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
