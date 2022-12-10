@@ -3,11 +3,9 @@
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using CODWER.RERU.Identity.Web.Quickstart.Models;
-using CVU.ERP.Common;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Identity.Context;
 using CVU.ERP.Identity.Models;
-using CVU.ERP.Infrastructure;
 using IdentityServer4;
 using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -98,7 +96,6 @@ namespace CODWER.RERU.Identity.Web
 
             services.AddCors();
             services.AddSwaggerGen();
-            services.AddTransient<IDateTime, MachineDateTime>();
         }
 
         private void CheckSameSite(HttpContext httpContext, CookieOptions options)
