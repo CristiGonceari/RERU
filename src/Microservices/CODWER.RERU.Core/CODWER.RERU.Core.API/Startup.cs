@@ -69,7 +69,7 @@ namespace CODWER.RERU.Core.API
             services.Configure<TenantDto>(Configuration.GetSection("CoreSettings").GetSection("Tenant"));
             services.Configure<ActiveTimeDto>(Configuration.GetSection("CoreSettings").GetSection("ActiveTime"));
 
-            services.AddERPModuleServices(Configuration); // before conf AppDbContext
+            //services.AddERPModuleServices(Configuration); // before conf AppDbContext
             services.AddCoreServiceProvider(); // before conf AppDbContext
 
             ServicesSetup.ConfigureEntity(services, Configuration);
@@ -132,7 +132,7 @@ namespace CODWER.RERU.Core.API
 
 
 
-            //services.AddERPModuleServices(Configuration) 
+            services.AddERPModuleServices(Configuration);
             services
                 .AddCoreModuleApplication(Configuration)
                 .AddCommonLoggingContext(Configuration);
