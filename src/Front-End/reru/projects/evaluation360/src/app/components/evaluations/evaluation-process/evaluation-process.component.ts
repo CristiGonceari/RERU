@@ -55,6 +55,8 @@ export class EvaluationProcessComponent implements OnInit {
                                         NotificationUtil.getDefaultMidConfig());
         if (form.action === ActionFormEnum.isConfirm) {
           this.router.navigate(['../../'], { relativeTo: this.route});
+        } else {
+          this.isLoading = false;
         }
       }, (error) => {
         this.isLoading = false;
@@ -124,7 +126,7 @@ export class EvaluationProcessComponent implements OnInit {
       case this.router.url.includes('evaluate'): return EvaluationRoleEnum.Evaluator;
       case this.router.url.includes('accept'): return EvaluationRoleEnum.Evaluated;
       case this.router.url.includes('countersign'): return EvaluationRoleEnum.CounterSigner;
-      case this.router.url.includes('getknow'): return EvaluationRoleEnum.EvaluatedKnow;
+      case this.router.url.includes('acknowledge'): return EvaluationRoleEnum.EvaluatedKnow;
     }
   }
 }

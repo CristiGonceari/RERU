@@ -28,35 +28,35 @@ export class EvaluationService extends AbstractService {
    }
 
    update(data: EvaluationModel): Observable<Response<string>> {
-    return this.http.put<Response<string>>(`${this.baseUrl}/${this.routeUrl}/update`, data);
+    return this.http.put<Response<string>>(`${this.baseUrl}/${this.routeUrl}/${data.id}/update`, data);
    }
 
    confirm(data: EvaluationModel): Observable<Response<string>> {
-    return this.http.put<Response<string>>(`${this.baseUrl}/${this.routeUrl}/confirm`, data);
+    return this.http.put<Response<string>>(`${this.baseUrl}/${this.routeUrl}/${data.id}/confirm`, data);
    }
 
    accept(data: EvaluationAcceptModel): Observable<Response<string>> {
-    return this.http.put<Response<string>>(`${this.baseUrl}/${this.routeUrl}/accept`, data);
+    return this.http.put<Response<string>>(`${this.baseUrl}/${this.routeUrl}/${data.id}/accept`, data);
    }
   
    reject(data: EvaluationRejectModel): Observable<Response<string>> {
-    return this.http.put<Response<string>>(`${this.baseUrl}/${this.routeUrl}/reject`, data);
+    return this.http.put<Response<string>>(`${this.baseUrl}/${this.routeUrl}/${data.id}/reject`, data);
    }
 
    delete(id: number): Observable<Response<string>> {
-    return this.http.delete<Response<string>>(`${this.baseUrl}/${this.routeUrl}/${id}/delete`);
+    return this.http.delete<Response<string>>(`${this.baseUrl}/${this.routeUrl}/${id}`);
   }
 
   counterSignAccept(data: EvaluationCounterSignModel): Observable<Response<string>> {
-    return this.http.put<Response<string>>(`${this.baseUrl}/${this.routeUrl}/counter-sign-accept`, data);
+    return this.http.put<Response<string>>(`${this.baseUrl}/${this.routeUrl}/${data.id}/counter-sign-accept`, data);
    }
 
   counterSignReject(data: EvaluationCounterSignModel): Observable<Response<string>> {
-    return this.http.put<Response<string>>(`${this.baseUrl}/${this.routeUrl}/counter-sign-reject`, data);
+    return this.http.put<Response<string>>(`${this.baseUrl}/${this.routeUrl}/${data.id}/counter-sign-reject`, data);
   }
 
   acknowledge(data: { id: number }): Observable<Response<string>> {
-    return this.http.put<Response<string>>(`${this.baseUrl}/${this.routeUrl}/evaluated-know`, data);
+    return this.http.put<Response<string>>(`${this.baseUrl}/${this.routeUrl}/${data.id}/evaluated-know`, data);
   }
 
    listMine(data: HttpParams | { [param: string] : string }): Observable<ResponseArray<EvaluationListModel>> {
