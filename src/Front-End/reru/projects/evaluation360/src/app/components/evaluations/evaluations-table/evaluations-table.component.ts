@@ -6,6 +6,7 @@ import { ConfirmDeleteEvaluationModalComponent } from '../../../utils/modals/con
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { PaginationClass, PaginationModel } from '../../../utils/models/pagination.model';
+import { EvaluationStatusEnum } from '../../../utils/models/evaluation-status.enum';
 
 @Component({
   selector: 'app-evaluations-table',
@@ -14,10 +15,14 @@ import { PaginationClass, PaginationModel } from '../../../utils/models/paginati
 })
 export class EvaluationsTableComponent implements OnInit {
   @Input() evaluateType: number;
+  @Input() showHighlighted (event) {
+    console.log('event', event);
+  }
   isLoading: boolean = true;
   evaluations: EvaluationListModel[] = [];
   pagedSummary: PaginationModel = new PaginationClass();
   includeAll: boolean;
+  EvaluationStatusEnum = EvaluationStatusEnum;
   constructor(private evaluationService: EvaluationService,
               private modalService: NgbModal,
               private notificationService: NotificationsService) { }

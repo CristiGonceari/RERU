@@ -4,9 +4,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { RouterModule } from '@angular/router';
-import { ViewDatePipe } from './pipes/view-date.pipe';
 import { CKEditorModule } from 'ngx-ckeditor';
 import { MaterialModule } from '../material.module';
 import { SharedModule } from '@erp/shared';
@@ -20,6 +18,7 @@ import { SearchRoleComponent } from './modals/attach-user-modal/search-role/sear
 import { SearchDepartmentComponent } from './modals/attach-user-modal/search-department/search-department.component';
 import { FormComponent } from './components/form/form.component';
 import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-datetime';
+import { QualificationSelectComponent } from './components/qualification-select/qualification-select.component';
 
 const commonComponents = [
   EvaluationDropdownDetailsComponent,
@@ -35,6 +34,7 @@ const commonComponents = [
     SearchStatusComponent,
     SearchRoleComponent,
     SearchDepartmentComponent,
+    QualificationSelectComponent,
   ],
   imports: [
     HttpClientModule,
@@ -53,11 +53,6 @@ const commonComponents = [
   exports: [
     TranslateModule,
     ...commonComponents
-  ],
-  providers: [
-    SafeHtmlPipe, 
-    ViewDatePipe
-  ],
-  entryComponents: [],
+  ]
 })
 export class UtilsModule { }

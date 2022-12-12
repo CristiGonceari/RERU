@@ -4,6 +4,12 @@
     "en": "English",
     "ru": "Русский"
   },
+  "right-sidebar": {
+    "header": "Profilul utilizatorului",
+    "my-profile": "Profilul meu",
+    "change-password": "Schimbarea parolei",
+    "logout": "Ieșire"
+  },
   "notification": {
     "title": {
       "success": "Succes",
@@ -135,14 +141,91 @@
       "3": "au fost respectate perioadele şi termenele de realizare a procedurilor de evaluare",
       "4": "aprecierile consemnate în fişa de evaluare de către evaluator corespund realităţii"
     },
-    "final-evaluation-qualification": {
+    "qualification": {
       "very-good": "Foarte bine (FB)",
       "good": "Bine (B)",
       "satisfactory": "Satisfăcător",
       "unsatisfactory": "Nesatisfăcător"
     },
     "are-you-sure-you-want-to-delete-evaluation": "Sunteți sigur că doriți să ștergeți evaluarea?",
-    "confirmation": "Confirmare"
+    "confirmation": "Confirmare",
+    "select-a-valid-qualification": "Selectează o calificare",
+    "all-tests": "Toate testele",
+    "list": "Lista",
+    "new-evaluation": "Evaluare nouă",
+    "list-table": {
+      "number": "Nr.",
+      "evaluations-criteria": "Criterii de evaluare",
+      "established-score": "Punctajul stabilit",
+      "individual-objectives": "Obiective individuale",
+      "performance-indicators": "Indicatori de performanță",
+      "release-term": "Termenul de realizare",
+      "employee": "Angajatul",
+      "evaluator": "Evaluatorul",
+      "countersigner": "Contrasemnatar",
+      "evaluation-type": "Tipul evaluării",
+      "points": "Punctaj",
+      "status": "Statut",
+      "actions": "Acțiuni"
+    },
+    "subdivision": "Subdiviziunea",
+    "evaluated-name": "Numele, prenumele angajatului",
+    "evaluated-function": "Funcția angajatului",
+    "evaluated-period-from": "Perioada evaluată de la",
+    "evaluated-period-to": "Perioada evaluată până la",
+    "evaluated-subdivision": "Subdiviziunea angajatului",
+    "studies": "Studii",
+    "professional-training-activities": {
+      "title": "Activități de formare profesională",
+      "1": "Perfecționare",
+      "2": "Specializare"
+    },
+    "professional-training-activities-type": {
+      "1": "Intern",
+      "2": "Extern"
+    },
+    "course-name": "Denumirea cursului",
+    "period-running-activity-from": "Perioada desfășurării de la",
+    "period-running-activity-to": "Perioada desfășurării până la",
+    "administrative-act-of-course": "Actul administrativ (curs)",
+    "modifying-service-during-evaluation-course": {
+      "title": "Modificarea raportului de serviciul pe parcursul perioadei evaluate",
+      "1": "Angajare",
+      "2": "Transferare",
+      "3": "Detașare"
+    },
+    "function": "Funcția",
+    "appointment-date": "Data numirii",
+    "administrative-act-of-service": "Actul administrativ (raportul de serviciu)",
+    "partial-evaluations-results": "Rezultate evaluarii parțiale",
+    "final-points": "Punctaj final",
+    "calificative": "Calificativ",
+    "saction-applied-evalution-course": "Sancţiuni disciplinare aplicate pe parcursul perioadei evaluate",
+    "sanction": "Sancţiunea",
+    "sanction-date-applied-from": "Data aplicării <br>sancţiunii (ordinul)",
+    "sanction-date-applied-to": "Data ridicării <br>sancţiunii (ordinul)",
+    "qualifications-evaluation-obtained-yearly-last-2-years": "Calificative de evaluare anuale obţinute în ultimii 2 ani",
+    "two-years-ago": "2 ani în urmă",
+    "last-year": "Anul precedent",
+    "trimestrial-qualifications-established-against-performance": "Calificativele trimestriale pentru stabilirea sporului pentru performanţă",
+    "trimester": "Trimestrul",
+    "objective": "Obiectiv",
+    "indicator": "Indicator",
+    "term": "Termen",
+    "established-score-on-fourth-compartment": "Punctajul stabilit la compartimentul 4) “Pregătirea de bază” (M⁴)",
+    "yearly-evaluation-score": "Punctajul la evaluarea anuală",
+    "evaluation-final-calificative": "Calificativul de evaluare final",
+    "date-evaluation-interview": "Data desfăşurării interviului de evaluare",
+    "individual-objective-established": "Obiective individuale au fost stabilite (data)",
+    "professional-development-needs-evaluated": "Necesităţi de dezvoltare profesională a angajatului evaluat",
+    "evaluator-name": "Nume, prenume evaluator",
+    "evaluator-comments": "Comentarii evaluator",
+    "evaluated-comments": "Comentarii angajat",
+    "countersigner-name": "Nume, prenume contrasemnatar",
+    "countersigner-comments": "Comentarii contrasemnatar",
+    "check": "Bifați",
+    "countersigner-function": "Funcția contrasemnatarului",
+    "highlight": "Evidențiază"
   },
   "button": {
     "back": "Înapoi",
@@ -176,6 +259,8 @@
     "npp": "N.P.P."
   },
   "message": {
-    "no-record": "Nu a fost găsită nicio înregistrare."
+    "no-record": "Nu a fost găsită nicio înregistrare.",
+    "there-are-errors-to-be-fixed": "Ați introdus date invalide, verificați forma!",
+    "use-date-format": "Folosiți formatul ZZ.LL.AAAA, de ex. 31.08.2020"
   }
 }

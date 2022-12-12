@@ -4,6 +4,12 @@
     "en": "English",
     "ru": "Русский"
   },
+  "right-sidebar": {
+    "header": "User profile",
+    "my-profile": "My profile",
+    "change-password": "Change password",
+    "logout": "Logout"
+  },
   "notification": {
     "title": {
       "success": "Success",
@@ -29,23 +35,24 @@
   },
   "dashboard": {
     "title": "Evaluation 360",
-    "subtitle": "Start Page"
+    "subtitle": "Start Page",
+    "enclosed-mode":"Enclosed mode"
   },
   "footer": {
     "all-rights-reserved": "All rights reserved",
     "about": "About",
     "contact": "Contact"
   },
-  "survey": {
-    "title": "Evaluare",
-    "evaluated-employees": "Angajații evaluați",
-    "countersigner": "Contrasemnatar",
-    "evaluation-type": "Tipul evaluat",
-    "select-evaluated-person": "Selectează angajatul evaluat",
-    "select-countersigner": "Selectează contrasemnatarul",
-    "select-evaluation-type": "Selectează tipul evaluat",
-    "executing-position": "Funcție de execuție",
-    "managing-position": "Funcție de conducere",
+  "evaluations": {
+    "title": "Evaluation",
+    "evaluated-employees": "Evaluated employees",
+    "countersigner": "Countersigner",
+    "evaluation-type": "Evaluation type",
+    "select-evaluated-person": "Select evaluated employee",
+    "select-countersigner": "Select countersigner",
+    "select-evaluation-type": "Select evaluation type",
+    "executing-position": "Executing function",
+    "managing-position": "Managing function",
     "status": {
       "1": "Draft",
 			"2": "Confirmed",
@@ -63,7 +70,162 @@
       "2": "Higher",
       "3": "Master",
       "4": "Doctorate"
-    }
+    },
+    "military-grade": {
+      "title": "Special/military rank",
+      "1": "Soldat",
+      "2": "Caporal",
+      "3": "Sergent Inferior",
+      "4": "Sergent",
+      "5": "Sergent major",
+      "6": "Plutonier",
+      "7": "Plutonier major",
+      "8": "Plutonier adjutant",
+      "9": "Locotenent",
+      "10": "Locotenent major",
+      "11": "Capitan",
+      "12": "Maior",
+      "13": "Locotenent colonel",
+      "14": "Colonel",
+      "15": "General de Brigada",
+      "16": "General de divizie",
+      "17": "General de Corp de Armata"
+    },
+    "execution-assessment-sheet": "EVALUATION SHEET <br>of the employee who exercises the function of execution",
+    "managing-assessment-sheet": "EVALUATION SHEET <br>of the employee who exercises the function of execution",
+    "criterias": {
+      "execution": {
+        "1": "The ability to fully perform the duties of the job",
+        "2": "The ability to overcome obstacles or difficulties encountered",
+        "3": "The ability to assume responsibilities, to assume errors in the activity",
+        "4": "The capacity for analysis and synthesis, creativity and initiative",
+        "5": "The ability to work in a team, to contribute through effective participation",
+        "6": "The score established in compartment 1) \"Professional competence\" (M¹)",
+        "7": "The ability to promote and respect the rules of conduct at work and outside it, in relations with managers, colleagues and other people",
+        "8": "The ability to correctly execute the provisions of normative acts and service discipline",
+        "9": "Disciplinary sanctions (It will be scored: warning/observation – 2 points; other sanctions – 1 point; absence – 3 or 4, as the case may be)",
+        "10": "The score established in compartment 2) \"Service duct\" (M²)",
+        "11": "",
+        "12": "The score established in compartment 3) \"Individual goals\" (M³):",
+        "13": "General training",
+        "14": "Specialized training",
+        "15": "Shooting instruction (TS – as applicable)",
+        "16": "Professional intervention (Combat Regulations, SPÎGF)",
+        "17": "Arithmetic average from basic training sections 1 – 4: (Pb)",
+        "18": "Physical training: (Pf)"
+      },
+      "management": {
+        "1": "The ability to plan and organize the activity of the managed structure:",
+        "2": "The ability to effectively lead, monitor and manage the work of staff:",
+        "3": "The ability to control and supervise the execution of decisions:",
+        "4": "The ability to motivate and encourage the activity of the staff, maintaining an optimal work climate:",
+        "5": "The ability to develop the professional skills of the staff:",
+        "6": "The score set for compartment 1) \"Managerial competence\" (M¹):",
+        "7": "The ability to promote the rules of conduct and ensure their compliance by subordinates:",
+        "8": "The ability to promote and strengthen through one's performance the public image of the institution it represents:",
+        "9": "Disciplinary sanctions (It will be scored: warning/observation – 2 points; other sanctions – 1 point; absence – 3 or 4, as the case may be):",
+        "10": "The score established in compartment 2) \"Service duct\" (M²):",
+        "11": "",
+        "12": "The score established in compartment 3) \"Individual goals\" (M³):",
+        "13": "General training:",
+        "14": "Specialized training:",
+        "15": "Shooting instruction (TS – as applicable):",
+        "16": "Professional intervention (Combat Regulations, SPÎGF):",
+        "17": "Arithmetic average from basic training sections 1 – 4: (Pb)",
+        "18": "Physical training: (Pf)"
+      }
+    },
+    "counter-signer-comments": {
+      "1": "the evaluation procedure and the requirements established by the Regulation were respected",
+      "2": "was verifying the correctness of the information entered in the evaluation sheet",
+      "3": "the periods and deadlines for carrying out the evaluation procedures were respected",
+      "4": "the assessments recorded in the evaluation form by the evaluator correspond to reality"
+    },
+    "qualification": {
+      "very-good": "Very good (VG)",
+      "good": "Good (G)",
+      "satisfactory": "Satisfactory",
+      "unsatisfactory": "Unsatisfactory"
+    },
+    "are-you-sure-you-want-to-delete-evaluation": "Are you sure you want to delete the evaluation?",
+    "confirmation": "Confirmation",
+    "select-a-valid-qualification": "Select a qualification",
+    "all-tests": "All tests",
+    "list": "List",
+    "new-evaluation": "New evaluation",
+    "list-table": {
+      "number": "Nr.",
+      "evaluations-criteria": "Evaluations criterias",
+      "established-score": "Established score",
+      "individual-objectives": "Individual objectives",
+      "performance-indicators": "Performance indicators",
+      "release-term": "Release term",
+      "employee": "Employee",
+      "evaluator": "Evaluator",
+      "countersigner": "Countersigner",
+      "evaluation-type": "Evaluation type",
+      "points": "Points",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "subdivision": "Subdiviziunea",
+    "evaluated-name": "Numele, prenumele angajatului",
+    "evaluated-function": "Funcția angajatului",
+    "evaluated-period-from": "Perioada evaluată de la",
+    "evaluated-period-to": "Perioada evaluată până la",
+    "evaluated-subdivision": "Subdiviziunea angajatului",
+    "studies": "Studii",
+    "professional-training-activities": {
+      "title": "Activități de formare profesională",
+      "1": "Perfecționare",
+      "2": "Specializare"
+    },
+    "professional-training-activities-type": {
+      "1": "Intern",
+      "2": "Extern"
+    },
+    "course-name": "Denumirea cursului",
+    "period-running-activity-from": "Perioada desfășurării de la",
+    "period-running-activity-to": "Perioada desfășurării până la",
+    "administrative-act-of-course": "Actul administrativ (curs)",
+    "modifying-service-during-evaluation-course": {
+      "title": "Modificarea raportului de serviciul pe parcursul perioadei evaluate",
+      "1": "Angajare",
+      "2": "Transferare",
+      "3": "Detașare"
+    },
+    "function": "Function",
+    "appointment-date": "Appointment date",
+    "administrative-act-of-service": "Administrative act of studies",
+    "partial-evaluations-results": "Partial evaluation results",
+    "final-points": "Final score",
+    "calificative": "Calfiicative",
+    "saction-applied-evalution-course": "Sancţiuni disciplinare aplicate pe parcursul perioadei evaluate",
+    "sanction": "Sanction",
+    "sanction-date-applied-from": "Data aplicării <br>sancţiunii (ordinul)",
+    "sanction-date-applied-to": "Data ridicării <br>sancţiunii (ordinul)",
+    "qualifications-evaluation-obtained-yearly-last-2-years": "Calificative de evaluare anuale obţinute în ultimii 2 ani",
+    "two-years-ago": "2 years ago",
+    "last-year": "Last year",
+    "trimestrial-qualifications-established-against-performance": "Calificativele trimestriale pentru stabilirea sporului pentru performanţă",
+    "trimester": "Trimester",
+    "objective": "Objective",
+    "indicator": "Indicator",
+    "term": "Term",
+    "established-score-on-fourth-compartment": "Punctajul stabilit la compartimentul 4) “Pregătirea de bază” (M⁴)",
+    "yearly-evaluation-score": "Punctajul la evaluarea anuală",
+    "evaluation-final-calificative": "Calificativul de evaluare final",
+    "date-evaluation-interview": "Data desfăşurării interviului de evaluare",
+    "individual-objective-established": "Obiective individuale au fost stabilite (data)",
+    "professional-development-needs-evaluated": "Necesităţi de dezvoltare profesională a angajatului evaluat",
+    "evaluator-name": "Name, surname evaluator",
+    "evaluator-comments": "Comments evaluator",
+    "evaluated-comments": "Comments evaluated",
+    "countersigner-name": "Name, surname countersigner",
+    "countersigner-comments": "Countersigner comments",
+    "check": "Check",
+    "countersigner-function": "Countersigner function",
+    "highlight": "Highlight"
   },
   "button": {
     "back": "Back",
@@ -72,7 +234,16 @@
     "cancel": "Cancel",
     "reset-filters": "Reset filters",
     "attach-evaluateds": "Attach evaluated",
-    "attach-countersigner": "Attach countersigner"
+    "attach-countersigner": "Attach countersigner",
+    "evaluate": "Assessment",
+    "export": "Export",
+    "countersign": "Countersign",
+    "delete": "Delete",
+    "select": "Select",
+    "save": "Save",
+    "reject": "Reject",
+    "accept": "Accept",
+    "edit": "Edit"
   },
   "attach-user-modal": {
     "first-name": "First name",
@@ -88,6 +259,8 @@
     "npp": "F.L.F."
   },
   "message": {
-    "no-record": "There are no records found."
+    "no-record": "There are no records found.",
+    "there-are-errors-to-be-fixed": "You have entered invalid data, please check the form!",
+    "use-date-format": "Use the following date format dd.MM.YYYY, for e.g. 31.08.2020"
   }
 }

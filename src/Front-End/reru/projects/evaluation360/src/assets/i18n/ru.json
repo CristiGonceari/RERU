@@ -4,6 +4,12 @@
     "en": "English",
     "ru": "Русский"
   },
+  "right-sidebar": {
+    "header": "Профиль пользователя",
+    "my-profile": "Мой профиль",
+    "change-password": "Смена пароля",
+    "logout": "Выход"
+  },
   "notification": {
     "title": {
       "success": "Успешно",
@@ -25,10 +31,10 @@
   "sidebar": {
     "home": "Главная",
     "administration": "АДМИНИСТРИРОВАНИЕ",
-    "evaluations": "Оценки"
+    "evaluations": "Тесты"
   },
   "dashboard": {
-    "title": "Evaluation 360",
+    "title": "Тесты 360",
     "subtitle": "Начальная страница",
     "enclosed-mode":"Скрытый режим"
   },
@@ -64,7 +70,162 @@
       "2": "Высшее образование",
       "3": "Мастера",
       "4": "Докторская степень"
-    }
+    },
+    "military-grade": {
+      "title": "Специальное/воинское звание",
+      "1": "Soldat",
+      "2": "Caporal",
+      "3": "Sergent Inferior",
+      "4": "Sergent",
+      "5": "Sergent major",
+      "6": "Plutonier",
+      "7": "Plutonier major",
+      "8": "Plutonier adjutant",
+      "9": "Locotenent",
+      "10": "Locotenent major",
+      "11": "Capitan",
+      "12": "Maior",
+      "13": "Locotenent colonel",
+      "14": "Colonel",
+      "15": "General de Brigada",
+      "16": "General de divizie",
+      "17": "General de Corp de Armata"
+    },
+    "execution-assessment-sheet": "ОЦЕНОЧНЫЙ ЛИСТ<br> кандидата, исполняющего функции исполнителя",
+    "managing-assessment-sheet": "ОЦЕНОЧНЫЙ ЛИСТ <br> кандидата, выполняющего управленческие функции",
+    "criterias": {
+      "execution": {
+        "1": "Способность полностью выполнять должностные обязанности",
+        "2": "Способность преодолевать препятствия или возникающие трудности",
+        "3": "Способность брать на себя ответственность, допускать ошибки в деятельности",
+        "4": "Способность к анализу и синтезу, творчество и инициатива",
+        "5": "Умение работать в команде, вносить свой вклад через эффективное участие",
+        "6": "Балл, установленный в разделе 1) «Профессиональная компетентность» (М¹):",
+        "7": "Умение продвигать и соблюдать правила поведения на работе и вне ее, в отношениях с руководителями, коллегами и другими людьми",
+        "8": "Умение правильно выполнять положения нормативных актов и служебной дисциплины",
+        "9": "Дисциплинарные взыскания (Засчитываются: предупреждение/замечание – 2 балла, другие санкции – 1 балл, отсутствие – 3 или 4, в зависимости от обстоятельств)",
+        "10": "Счет установлен в отсеке 2) «Технический воздуховод» (м²):",
+        "11": "",
+        "12": "Счет, установленный в отсеке 3) «Индивидуальные голы» (M³):",
+        "13": "Общая подготовка",
+        "14": "Специализированное обучение",
+        "15": "Инструктаж по стрельбе (TS - если применимо)",
+        "16": "Профессиональное вмешательство (Боевой устав, SPÎGF)",
+        "17": "Среднее арифметическое из разделов базовой подготовки 1 – 4: (Pb)",
+        "18": "Физическая подготовка: (Pf)"
+      },
+      "management": {
+        "1": "Возможность планировать и организовывать деятельность управляемой структуры",
+        "2": "Умение эффективно руководить, контролировать и управлять работой персонала",
+        "3": "Возможность контролировать и контролировать исполнение решений",
+        "4": "Способность мотивировать и поощрять активность персонала, поддерживая оптимальный рабочий климат",
+        "5": "Возможность развивать профессиональные навыки сотрудников",
+        "6": "Балл, выставленный по разделу 1) «Управленческая компетентность» (М¹):",
+        "7": "Способность продвигать правила поведения и обеспечивать их соблюдение подчиненными",
+        "8": "Способность продвигать и укреплять общественный имидж учреждения, которое оно представляет, посредством собственной деятельности:",
+        "9": "Дисциплинарные взыскания (Засчитываются: предупреждение/замечание – 2 балла, другие санкции – 1 балл, отсутствие – 3 или 4, в зависимости от обстоятельств)",
+        "10": "Балл установлен в разделе 2) «Деловое поведение»(M²):",
+        "11": "",
+        "12": "Счет, установленный в отсеке 3) «Индивидуальные голы» (M³):",
+        "13": "Общая подготовка",
+        "14": "Специализированное обучение",
+        "15": "Инструктаж по стрельбе (TS - если применимо)",
+        "16": "Профессиональное вмешательство (Боевой устав, SPÎGF)",
+        "17": "Среднее арифметическое из разделов базовой подготовки 1 – 4: (Pb)",
+        "18": "Физическая подготовка: (Pf)"
+      }
+    },
+    "counter-signer-comments": {
+      "1": "процедура оценки и требования, установленные Положением, соблюдены",
+      "2": "проверял правильность информации, введенной в форму оценки",
+      "3": "сроки и сроки проведения процедур оценки соблюдались",
+      "4": "оценки, зафиксированные в оценочной форме оценщиком, соответствуют действительности"
+    },
+    "qualification": {
+      "very-good": "Очень хорошо (ОХ)",
+      "good": "Хорошо (Х)",
+      "satisfactory": "Удовлетворительно",
+      "unsatisfactory": "Неудовлетворительно"
+    },
+    "are-you-sure-you-want-to-delete-evaluation": "Вы уверены, что хотите удалить тест?",
+    "confirmation": "Подтверждение",
+    "select-a-valid-qualification": "Выберите квалификацию",
+    "all-tests": "Все тесты",
+    "list": "Список",
+    "new-evaluation": "Новый тест",
+    "list-table": {
+      "number": "Nr.",
+      "evaluations-criteria": "Evaluations criterias",
+      "established-score": "Established score",
+      "individual-objectives": "Individual objectives",
+      "performance-indicators": "Performance indicators",
+      "release-term": "Release term",
+      "employee": "Кандидат",
+      "evaluator": "Оценщик",
+      "countersigner": "Проверяющий",
+      "evaluation-type": "Тип теста",
+      "points": "Очки",
+      "status": "Статус",
+      "actions": "Действия"
+    },
+    "subdivision": "Subdiviziunea",
+    "evaluated-name": "Numele, prenumele angajatului",
+    "evaluated-function": "Funcția angajatului",
+    "evaluated-period-from": "Perioada evaluată de la",
+    "evaluated-period-to": "Perioada evaluată până la",
+    "evaluated-subdivision": "Subdiviziunea angajatului",
+    "studies": "Studii",
+    "professional-training-activities": {
+      "title": "Activități de formare profesională",
+      "1": "Perfecționare",
+      "2": "Specializare"
+    },
+    "professional-training-activities-type": {
+      "1": "Intern",
+      "2": "Extern"
+    },
+    "course-name": "Denumirea cursului",
+    "period-running-activity-from": "Perioada desfășurării de la",
+    "period-running-activity-to": "Perioada desfășurării până la",
+    "administrative-act-of-course": "Actul administrativ (curs)",
+    "modifying-service-during-evaluation-course": {
+      "title": "Modificarea raportului de serviciul pe parcursul perioadei evaluate",
+      "1": "Angajare",
+      "2": "Transferare",
+      "3": "Detașare"
+    },
+    "function": "Function",
+    "appointment-date": "Appointment date",
+    "administrative-act-of-service": "Administrative act of studies",
+    "partial-evaluations-results": "Partial evaluation results",
+    "final-points": "Final score",
+    "calificative": "Calfiicative",
+    "saction-applied-evalution-course": "Sancţiuni disciplinare aplicate pe parcursul perioadei evaluate",
+    "sanction": "Sanction",
+    "sanction-date-applied-from": "Data aplicării <br>sancţiunii (ordinul)",
+    "sanction-date-applied-to": "Data ridicării <br>sancţiunii (ordinul)",
+    "qualifications-evaluation-obtained-yearly-last-2-years": "Calificative de evaluare anuale obţinute în ultimii 2 ani",
+    "two-years-ago": "2 years ago",
+    "last-year": "Last year",
+    "trimestrial-qualifications-established-against-performance": "Calificativele trimestriale pentru stabilirea sporului pentru performanţă",
+    "trimester": "Trimester",
+    "objective": "Objective",
+    "indicator": "Indicator",
+    "term": "Term",
+    "established-score-on-fourth-compartment": "Punctajul stabilit la compartimentul 4) “Pregătirea de bază” (M⁴)",
+    "yearly-evaluation-score": "Punctajul la evaluarea anuală",
+    "evaluation-final-calificative": "Calificativul de evaluare final",
+    "date-evaluation-interview": "Data desfăşurării interviului de evaluare",
+    "individual-objective-established": "Obiective individuale au fost stabilite (data)",
+    "professional-development-needs-evaluated": "Necesităţi de dezvoltare profesională a angajatului evaluat",
+    "evaluator-name": "Name, surname evaluator",
+    "evaluator-comments": "Comments evaluator",
+    "evaluated-comments": "Comments evaluated",
+    "countersigner-name": "Name, surname countersigner",
+    "countersigner-comments": "Countersigner comments",
+    "check": "Check",
+    "countersigner-function": "Countersigner function",
+    "highlight": "Подчеркнуть"
   },
   "button": {
     "back": "Назад",
@@ -73,7 +234,16 @@
     "cancel": "Отменить",
     "reset-filters": "Сбросить фильтры",
     "attach-evaluateds": "Прикрепить кандидатов",
-    "attach-countersigner": "Прикрепить проверяющего"
+    "attach-countersigner": "Прикрепить проверяющего",
+    "evaluate": "Начать тестирование",
+    "export": "Exporta",
+    "countersign": "Подписать",
+    "delete": "Удалить",
+    "select": "Выбрать",
+    "save": "Сохранить",
+    "reject": "Отклонить",
+    "accept": "Принять",
+    "edit": "Изменить"
   },
   "attach-user-modal": {
     "first-name": "Имя",
@@ -89,6 +259,8 @@
     "npp": "И.Ф.О."
   },
   "message": {
-    "no-record": "Запись не найдена."
+    "no-record": "Запись не найдена.",
+    "there-are-errors-to-be-fixed": "Вы ввели неверные данные, проверьте форму!",
+    "use-date-format": "Используй формат даты ДД.ММ.ГГГГ, пример 31.08.2020"
   }
 }
