@@ -31,20 +31,18 @@ namespace CVU.ERP.Notifications.Services.Implementations
         {
             var result = _emailService;
 
-            if (type == NotificationType.MNotifyNotification)
+            switch (type)
             {
-                // to do
-            }
-            else if (type == NotificationType.LocalNotification)
-            {
-                result = await _emailService.QuickSendAsync(data.subject, data.body, data.from, data.to);
-            }
-            else if (type == NotificationType.Both)
-            {
-                result = await _emailService.QuickSendAsync(data.subject, data.body, data.from, data.to);
-                //+ MNotification todo Service
-                //await SendMNotifyEmail(data);
-
+                case NotificationType.MNotifyNotification:
+                    await SendMNotifyEmail(data);
+                    break;
+                case NotificationType.LocalNotification:
+                    result = await _emailService.QuickSendAsync(data.subject, data.body, data.from, data.to);
+                    break;
+                case NotificationType.Both:
+                    result = await _emailService.QuickSendAsync(data.subject, data.body, data.from, data.to);
+                    await SendMNotifyEmail(data);
+                    break;
             }
 
             return result;
@@ -54,25 +52,33 @@ namespace CVU.ERP.Notifications.Services.Implementations
         {
             var result = _emailService;
 
-            if (type == NotificationType.MNotifyNotification)
+            switch (type)
             {
-                // to do
-            }
-            else if (type == NotificationType.LocalNotification)
-            {
-                result = await _emailService.BulkSendAsync(data);
-            }
-            else if (type == NotificationType.Both)
-            {
-                result = await _emailService.BulkSendAsync(data);
-                //+ MNotification todo Service
-                //foreach (var email in data)
-                //{
-                //    await SendMNotifyEmail(email);
-                //}
+                case NotificationType.MNotifyNotification:
+                {
+                    await BulkMnotify(data);
+                    break;
+                }
+                case NotificationType.LocalNotification:
+                    result = await _emailService.BulkSendAsync(data);
+                    break;
+                case NotificationType.Both:
+                { 
+                    result = await _emailService.BulkSendAsync(data);
+                    await BulkMnotify(data);
+                    break;
+                }
             }
 
             return result;
+        }
+
+        private async Task BulkMnotify(List<EmailData> emails)
+        {
+            foreach (var email in emails)
+            {
+                await SendMNotifyEmail(email);
+            }
         }
 
         public async Task PutEmailInQueue(QueuedEmailData email, NotificationType type = NotificationType.Both)
@@ -112,8 +118,8 @@ namespace CVU.ERP.Notifications.Services.Implementations
                     new NotificationRecipient { Type = NotificationRecipientType.Email, Value = data.to }
                 },
                 Priority = NotificationPriority.Medium,
-                ShortBody = new NotificationContent { Romanian = "Notificare RERU" },
-                Subject = new NotificationContent { Romanian = data.subject },
+                ShortBody = new NotificationContent { Romanian = "Notificare SI RERU al MAI " },
+                Subject = new NotificationContent { Romanian = $"{data.subject} - Do Not Reply" },
 
             };
 
