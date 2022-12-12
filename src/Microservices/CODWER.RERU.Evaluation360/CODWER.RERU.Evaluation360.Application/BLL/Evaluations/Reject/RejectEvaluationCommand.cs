@@ -5,10 +5,12 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Reject
 {
     public class RejectEvaluationCommand: IRequest<Unit>
     {
-        public RejectEvaluationCommand(AcceptRejectEvaluationDto evaluation)
+        public RejectEvaluationCommand(int id, AcceptRejectEvaluationDto evaluation)
         {
+            Id = id;
             Evaluation = evaluation;
         }
-       public AcceptRejectEvaluationDto Evaluation {set;get;}
+        public AcceptRejectEvaluationDto Evaluation { set; get; }
+        public int Id { set; get; }
     }
 }

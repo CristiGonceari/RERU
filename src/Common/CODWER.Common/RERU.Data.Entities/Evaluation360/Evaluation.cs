@@ -99,7 +99,7 @@ namespace RERU.Data.Entities.Evaluation360
         public decimal? Question12 { set; get; }
         public decimal? Question13 { set; get; }
         public QualifierEnum? FinalEvaluationQualification { set; get; }
-        public DateTime? DateEvaluatiorInterview { set; get; }
+        public DateTime? DateEvaluationInterview { set; get; }
         public DateTime? DateSettingIindividualGoals { set; get; }
         public string? Need1ProfessionalDevelopmentEvaluated { set; get; }
         public string? Need2ProfessionalDevelopmentEvaluated { set; get; }

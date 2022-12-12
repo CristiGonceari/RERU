@@ -12,7 +12,6 @@ using CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations;
 using CVU.ERP.Common.Pagination;
 using Microsoft.AspNetCore.Mvc;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.EvaluatedKnow;
-using RERU.Data.Entities.Evaluation360;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.DeleteEvaluation;
 
 namespace CODWER.RERU.Evaluation360.API.Controllers
@@ -39,59 +38,59 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
             await Sender.Send(command);
         }
 
-        [HttpDelete("{id}/delete")]
+        [HttpDelete("{id}")]
         public async Task DeleteEvaluation([FromRoute] int id)
         {
             await Sender.Send(new DeleteEvaluationQuery(id));
         }
 
-        [HttpPut("update")]
-        public async Task UpdateEvaluation([FromBody] EditEvaluationDto dto)
+        [HttpPut("{id}/update")]
+        public async Task UpdateEvaluation([FromRoute] int id, [FromBody] EditEvaluationDto dto)
         {
-            var command = new UpdateEvaluationCommand(dto);
+            var command = new UpdateEvaluationCommand(id, dto);
             await Sender.Send(command);
         }
 
-        [HttpPut("confirm")]
-        public async Task ConfirmEvaluation([FromBody] EditEvaluationDto dto)
+        [HttpPut("{id}/confirm")]
+        public async Task ConfirmEvaluation([FromRoute] int id, [FromBody] EditEvaluationDto dto)
         {
-            var command = new ConfirmEvaluationCommand(dto);
+            var command = new ConfirmEvaluationCommand(id, dto);
             await Sender.Send(command);
         }
 
-        [HttpPut("accept")]
-        public async Task AcceptEvaluation([FromBody] AcceptRejectEvaluationDto dto)
+        [HttpPut("{id}/accept")]
+        public async Task AcceptEvaluation([FromRoute] int id, [FromBody] AcceptRejectEvaluationDto dto)
         {
-            var command = new AcceptEvaluationCommand(dto);
+            var command = new AcceptEvaluationCommand(id, dto);
             await Sender.Send(command);
         }
 
-        [HttpPut("reject")]
-        public async Task RejectEvaluation([FromBody] AcceptRejectEvaluationDto dto)
+        [HttpPut("{id}/reject")]
+        public async Task RejectEvaluation([FromRoute] int id, [FromBody] AcceptRejectEvaluationDto dto)
         {
-            var command = new RejectEvaluationCommand(dto);
+            var command = new RejectEvaluationCommand(id, dto);
             await Sender.Send(command);
         }
 
-        [HttpPut("counter-sign-accept")]
-        public async Task CounterSignAccept([FromBody] CounterSignAcceptRejectEvaluationDto dto)
+        [HttpPut("{id}/counter-sign-accept")]
+        public async Task CounterSignAccept([FromRoute] int id, [FromBody] CounterSignAcceptRejectEvaluationDto dto)
         {
-            var command = new CounterSignAcceptEvaluationCommand(dto);
+            var command = new CounterSignAcceptEvaluationCommand(id, dto);
             await Sender.Send(command);
         }
 
         
-        [HttpPut("counter-sign-reject")]
-        public async Task CounterSignReject([FromBody] CounterSignAcceptRejectEvaluationDto dto)
+        [HttpPut("{id}/counter-sign-reject")]
+        public async Task CounterSignReject([FromRoute] int id, [FromBody] CounterSignAcceptRejectEvaluationDto dto)
         {
-            var command = new CounterSignRejectEvaluationCommand(dto);
+            var command = new CounterSignRejectEvaluationCommand(id, dto);
             await Sender.Send(command);
         }
 
-        [HttpPut("evaluated-know")]
-        public async Task EvaluatedKnow([FromBody] EvaluatedKnowDto dto)
+        [HttpPut("{id}/evaluated-know")]
+        public async Task EvaluatedKnow([FromRoute] int id)
         {
-            var command = new EvaluatedKnowCommand(dto);
+            var command = new EvaluatedKnowCommand(id);
             await Sender.Send(command);
         }
     }

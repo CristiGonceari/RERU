@@ -7,7 +7,7 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
     {
         public int Id { set; get; }
         public string? SubdivisionName { set; get; }
-        public string? NameSurnameEvaluated { set; get; }
+        public string EvaluatedName { set; get; }
         public string? FunctionSubdivision { set; get; }
         public string? SubdivisionEvaluated { set; get; }
         public GradeEnum? SpecialOrMilitaryGrade { set; get; }
@@ -71,7 +71,7 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
         public decimal? Question12 { set; get; }
         public decimal? Question13 { set; get; }
         public QualifierEnum? FinalEvaluationQualification { set; get; }
-        public DateTime? DateEvaluatiorInterview { set; get; }
+        public DateTime? DateEvaluationInterview { set; get; }
         public DateTime? DateSettingIindividualGoals { set; get; }
         public string? Need1ProfessionalDevelopmentEvaluated { set; get; }
         public string? Need2ProfessionalDevelopmentEvaluated { set; get; }

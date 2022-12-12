@@ -21,7 +21,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Accept
 
         public async Task<Unit> Handle(AcceptEvaluationCommand request, CancellationToken cancellationToken)
         {
-            var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Evaluation.Id);
+            var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Id);
             evaluation.Status = EvaluationStatusEnum.Accepted;
             evaluation.DateAcceptOrRejectEvaluated = System.DateTime.Now;
             evaluation.SignatureEvaluated = true;

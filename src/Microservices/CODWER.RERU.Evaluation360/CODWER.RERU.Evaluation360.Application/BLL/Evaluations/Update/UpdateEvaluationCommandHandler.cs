@@ -20,7 +20,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
 
         public async Task<Unit> Handle(UpdateEvaluationCommand request, CancellationToken cancellationToken)
         {
-            var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Evaluation.Id );
+            var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Id );
             _mapper.Map(request.Evaluation, evaluation);
             await _dbContext.SaveChangesAsync();
 

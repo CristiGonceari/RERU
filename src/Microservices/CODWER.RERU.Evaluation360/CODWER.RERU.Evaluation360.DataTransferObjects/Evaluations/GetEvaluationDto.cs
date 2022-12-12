@@ -7,10 +7,12 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
     public class GetEvaluationDto
     {
         public int Id { set; get; }
+        public string EvaluatedName { set; get; }
+        public string EvaluatorName { set; get; }
+        public string CounterSignerName { set; get; }
         public EvaluationTypeEnum? Type { set; get; }
         
         public string? SubdivisionName { set; get; }
-        public string? EvaluatedName { set; get; }
         public DateTime? DateCompletionGeneralData { set; get; }
         public string? FunctionSubdivision { set; get; }
         public string? SubdivisionEvaluated { set; get; }
@@ -75,12 +77,11 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
         public decimal? Question12 { set; get; }
         public decimal? Question13 { set; get; }
         public QualifierEnum? FinalEvaluationQualification { set; get; }
-        public DateTime? DateEvaluatiorInterview { set; get; }
+        public DateTime? DateEvaluationInterview { set; get; }
         public DateTime? DateSettingIindividualGoals { set; get; }
         public string? Need1ProfessionalDevelopmentEvaluated { set; get; }
         public string? Need2ProfessionalDevelopmentEvaluated { set; get; }
         public string? CommentsEvaluator { set; get; }
-        public string? EvaluatorName { set; get; }
         public string? CommentsEvaluated { set; get; }
         public string? FunctionEvaluator { set; get; }
         public bool? CheckComment1 { set; get; }
@@ -88,7 +89,6 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
         public bool? CheckComment3 { set; get; }
         public bool? CheckComment4 { set; get; }
         public string? OtherComments { set; get; }
-        public string? CounterSignerName { set; get; }
         public string? FunctionCounterSigner { set; get; }
     }
 }

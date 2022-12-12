@@ -767,7 +767,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("DateEvaluatedKnow")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime?>("DateEvaluatiorInterview")
+                    b.Property<DateTime?>("DateEvaluationInterview")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("DateLiftingSanction")
@@ -778,9 +778,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.Property<DateTime?>("DateSettingIindividualGoals")
                         .HasColumnType("timestamp without time zone");
-
-                    b.Property<int?>("DecisionCounterSigner")
-                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("timestamp without time zone");
@@ -1043,8 +1040,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasKey("Id");
 
                     b.HasIndex("CounterSignerUserProfileId");
-
-                    b.HasIndex("DecisionCounterSigner");
 
                     b.HasIndex("EducationEnum");
 
@@ -6516,34 +6511,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         });
                 });
 
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.DecisionCounterSignerEnum>", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("DecisionCounterSignerEnum");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Accept"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Reevaluation"
-                        });
-                });
-
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.EducationEnum>", b =>
                 {
                     b.Property<int>("Id")
@@ -7539,11 +7506,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasForeignKey("CounterSignerUserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.DecisionCounterSignerEnum>", null)
-                        .WithMany()
-                        .HasForeignKey("DecisionCounterSigner")
-                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.EducationEnum>", null)
                         .WithMany()
@@ -9231,15 +9193,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ContactTypeEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ContactTypeEnum>", null)
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.DecisionCounterSignerEnum>", b =>
-                {
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.DecisionCounterSignerEnum>", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)

@@ -6,6 +6,7 @@ using CVU.ERP.ServiceProvider;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities.Enums;
+using RERU.Data.Entities.Evaluation360;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluation
@@ -25,7 +26,11 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluatio
 
         public async Task<GetEvaluationDto> Handle(GetEditEvaluationQuery request, CancellationToken cancellationToken)
         {
-            var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Id);
+            var evaluation = await _dbContext.Evaluations
+                .Include(e=> e.EvaluatedUserProfile)
+                .Include(e=> e.EvaluatorUserProfile)
+                .Include(e=> e.CounterSignerUserProfile)
+                .FirstOrDefaultAsync(e=> e.Id == request.Id);
             var currentUser = await _currentUserProvider.Get();
             var currentUserId = int.Parse(currentUser.Id);
 

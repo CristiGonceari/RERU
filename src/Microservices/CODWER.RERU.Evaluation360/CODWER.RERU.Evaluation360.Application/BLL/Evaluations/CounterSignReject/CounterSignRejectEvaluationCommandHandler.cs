@@ -21,7 +21,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignRejec
 
         public async Task<Unit> Handle(CounterSignRejectEvaluationCommand request, CancellationToken cancellationToken)
         {
-            var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Evaluation.Id);
+            var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Id);
             evaluation.Status = EvaluationStatusEnum.CounterSignReject;
             evaluation.DateCompletionCounterSigner = System.DateTime.Now;
             evaluation.SignatureCounterSigner = true;

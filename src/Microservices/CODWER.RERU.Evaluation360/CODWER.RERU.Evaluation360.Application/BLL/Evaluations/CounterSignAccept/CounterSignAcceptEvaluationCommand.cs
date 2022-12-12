@@ -5,10 +5,12 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignAccep
 {
     public class CounterSignAcceptEvaluationCommand: IRequest<Unit>
     {
-        public CounterSignAcceptEvaluationCommand(CounterSignAcceptRejectEvaluationDto evaluation)
+        public CounterSignAcceptEvaluationCommand(int id, CounterSignAcceptRejectEvaluationDto evaluation)
         {
+            Id = id;
             Evaluation = evaluation;
         }
-       public CounterSignAcceptRejectEvaluationDto Evaluation {set;get;}
+        public CounterSignAcceptRejectEvaluationDto Evaluation { set; get; }
+        public int Id { set; get; }
     }
 }

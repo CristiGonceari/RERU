@@ -5,10 +5,12 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
 {
     public class UpdateEvaluationCommand: IRequest<Unit>
     {
-        public UpdateEvaluationCommand(EditEvaluationDto evaluation)
+        public UpdateEvaluationCommand(int id, EditEvaluationDto evaluation)
         {
+            Id = id;
             Evaluation = evaluation;
         }
-        public EditEvaluationDto Evaluation {set;get;}
+        public EditEvaluationDto Evaluation { set; get; }
+        public int Id { set; get; }
     }
 }

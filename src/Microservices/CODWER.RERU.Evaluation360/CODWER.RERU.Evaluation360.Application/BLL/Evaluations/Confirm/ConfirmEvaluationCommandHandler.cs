@@ -23,8 +23,8 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
 
         public async Task<Unit> Handle(ConfirmEvaluationCommand request, CancellationToken cancellationToken)
         {
-            await _sender.Send(new UpdateEvaluationCommand(request.Evaluation));
-            var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Evaluation.Id);
+            await _sender.Send(new UpdateEvaluationCommand(request.Id, request.Evaluation));
+            var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Id);
             evaluation.Status = EvaluationStatusEnum.Confirmed;
             evaluation.DateCompletionGeneralData = System.DateTime.Now;
             evaluation.SignatureEvaluator = true;
