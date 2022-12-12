@@ -1,19 +1,17 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { EvaluationModel } from '../../models/evaluation.model';
+import { EvaluationClass, EvaluationModel } from '../../models/evaluation.model';
 import { createEvaluatorForm, 
          createEvaluatedForm, 
          createCounterSignForm,
          isInvalidPattern,
+         isInvalidRequired,
          isValid, 
 } from '../../util/forms.util';
-import { parseEvaluatedModel, parseCounterSignModel } from '../../util/parsings.util';
+import { parseEvaluatedModel, parseCounterSignModel, parseDate } from '../../util/parsings.util';
 import { EvaluationRoleEnum } from '../../models/evaluation-role.enum';
-import { EvaluationAcceptModel } from '../../models/evaluation-accept.model';
-import { EvaluationCounterSignModel } from '../../models/evaluation-countersign.model';
 import { EvaluationTypeEnum } from '../../models/type.enum';
-import { Moment } from 'moment';
-import * as moment from 'moment';
+import { ActionFormEnum, ActionFormModel, ActionFormType } from '../../models/action-form.type';
 
 @Component({
   selector: 'app-form',
@@ -30,14 +28,14 @@ export class FormComponent implements OnInit {
 
   EvaluatinRoleEnum = EvaluationRoleEnum;
   EvaluationTypeEnum = EvaluationTypeEnum;
+  ActionFormEnum = ActionFormEnum;
 
   @ViewChild('finalEvalNum') finalEvalNum: ElementRef;
   @Input() evaluation: EvaluationModel;
   @Input() evaluationRole: EvaluationRoleEnum;
-  @Output() request: EventEmitter<EvaluationModel|EvaluationAcceptModel|EvaluationCounterSignModel> = 
-  new EventEmitter<EvaluationModel|EvaluationAcceptModel|EvaluationCounterSignModel>();
+  @Output() request: EventEmitter<ActionFormModel> = new EventEmitter<ActionFormModel>();
 
-  parsedDateCompletionGeneralData: string | Date = '';
+  // parsedDateCompletionGeneralData: string | Date = '';
   parsedPeriodEvaluatedFromTo: string | Date = '';
   parsedPeriodEvaluatedUpTo: string | Date = '';
   parsedPeriodRunningActivityFromTo: string | Date = '';
@@ -47,16 +45,21 @@ export class FormComponent implements OnInit {
   parsedDateSanctionApplication: string | Date = '';
   parsedDateLiftingSanction: string | Date = '';
   parsedAppointmentDate: string | Date = '';
-  parsedDateEvaluatiorInterview: string | Date = '';
+  parsedDateEvaluationInterview: string | Date = '';
   parsedDateSettingIindividualGoals: string | Date = '';
 
   questions: number[] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
   
   isInvalidPattern: Function;
   isValid: Function;
+  isInvalidRequired: Function;
+  parseDate: Function;
+  showWarnning: boolean;
   constructor() {
     this.isInvalidPattern = isInvalidPattern.bind(this);
     this.isValid = isValid.bind(this);
+    this.isInvalidRequired = isInvalidRequired.bind(this);
+    this.parseDate = parseDate.bind(this);
    }
 
   get isEvaluatorRoleView(): boolean {
@@ -132,21 +135,26 @@ export class FormComponent implements OnInit {
     }
   }
 
-  submit(isConfirm?): void {
-
-  }
-
-  parseDate(value: Moment, formControlName: string, form: FormGroup): void {
-    if (!Date.parse(value as any)) {
+  submit(action: ActionFormType): void {
+    if (this.evaluationForm.invalid && action === ActionFormEnum.isSave) {
+      this.evaluationForm.markAllAsTouched();
+      this.showWarnning = true;
       return;
     }
-
-    const date = moment(value).toDate();
-    form.get(formControlName).patchValue(new Date(date).toISOString());
+    this.showWarnning = false;
+    switch(action) {
+      case ActionFormEnum.isSave: this.request.emit({ action, data: new EvaluationClass(this.evaluationForm.value)}); break;
+      case ActionFormEnum.isConfirm: this.request.emit({ action, data:this.evaluationForm.value}); break;
+      case ActionFormEnum.isAccept: this.request.emit({ action, data:this.evaluatedForm.value}); break;
+      case ActionFormEnum.isReject: this.request.emit({ action, data:this.evaluatedForm.value}); break;
+      case ActionFormEnum.isCounterSignAccept: this.request.emit({ action, data:this.counterSignForm.value}); break;
+      case ActionFormEnum.isCounterSignReject: this.request.emit({ action, data:this.counterSignForm.value}); break;
+      case ActionFormEnum.isAcknowledge: this.request.emit({ action, data:this.evaluationForm.value}); break;
+    }
   }
 
   assignDates(data: EvaluationModel): void {
-    this.parsedDateCompletionGeneralData = data.dateCompletionGeneralData;
+    // this.parsedDateCompletionGeneralData = data.dateCompletionGeneralData;
     this.parsedPeriodEvaluatedFromTo = data.periodEvaluatedFromTo; 
     this.parsedPeriodEvaluatedUpTo = data.periodEvaluatedUpTo; 
     this.parsedPeriodRunningActivityFromTo = data.periodRunningActivityFromTo; 
@@ -156,7 +164,7 @@ export class FormComponent implements OnInit {
     this.parsedDateSanctionApplication = data.dateSanctionApplication; 
     this.parsedDateLiftingSanction = data.dateLiftingSanction; 
     this.parsedAppointmentDate = data.appointmentDate; 
-    this.parsedDateEvaluatiorInterview = data.dateEvaluatiorInterview; 
+    this.parsedDateEvaluationInterview = data.dateEvaluationInterview; 
     this.parsedDateSettingIindividualGoals = data.dateSettingIindividualGoals;
   }
 
@@ -176,8 +184,8 @@ export class FormComponent implements OnInit {
   }
 
   /**
-   * Calculating M1 - index 6, M2 - index 10 and M3 - indx 12
-   * @returns {number} Media (M1, M2, Pb)
+   * Calculating M1 - index 6, M2 - index 10, M3 - index 12, Pb - index 17
+   * @returns {number} Media (M1, M2, M3, Pb)
    * isFixed = defaults true for UI
    */
   calculateAverageCriterias(index: number, isFixed: boolean = true): number {
@@ -185,7 +193,7 @@ export class FormComponent implements OnInit {
       switch(index) {
         case 6: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc + (+this.evaluationForm.get(`question${i+1}`)?.value || 0), 0) / 5).toFixed(2);
         case 10: return +(Array.from(Array(3).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm.get(`question${i+6}`)?.value || 0), 0.00) / 3).toFixed(2);
-        case 12: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm.get(`score${i + 1}`)?.value || 0), 0.00) / 3).toFixed(2);
+        case 12: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm.get(`score${i + 1}`)?.value || 0), 0.00) / 5).toFixed(2);
         case 17: return +(Array.from(Array(4).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm.get(`question${i+9}`)?.value || 0), 0.00) / 4).toFixed(2);
       }
     }
@@ -193,18 +201,9 @@ export class FormComponent implements OnInit {
     switch(index) {
       case 6: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc + (+this.evaluationForm.get(`question${i+1}`)?.value || 0), 0) / 5)
       case 10: return +(Array.from(Array(3).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm.get(`question${i+6}`)?.value || 0), 0.00) / 3)
-      case 12: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm.get(`score${i + 1}`)?.value || 0), 0.00) / 3)
+      case 12: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm.get(`score${i + 1}`)?.value || 0), 0.00) / 5)
       case 17: return +(Array.from(Array(4).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm.get(`question${i+9}`)?.value || 0), 0.00) / 4)
     }
-  }
-
-  /**
-   * 
-   * @returns {number} Obiective individuale (M3)
-   * isFixed = defaults true for UI
-   */
-  calculateM3(isFixed: boolean = true): number {
-    return +(Array.from(Array(3).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm.get(`question${i+6}`)?.value || 0), 0.00) / 3)
   }
 
   /**
@@ -225,8 +224,8 @@ export class FormComponent implements OnInit {
    */
   calculateMea(isFixed: boolean = true): number {
     const m1 = +this.calculateAverageCriterias(6, false)
-    const m2 = +this.calculateAverageCriterias(6, false)
-    const m3 = this.calculateM3();
+    const m2 = +this.calculateAverageCriterias(10, false)
+    const m3 = this.calculateAverageCriterias(12, false);
     const m4 = this.calculateM4();
 
     return isFixed ? +((m1 + m2 + m3 + m4) / 4).toFixed(2) : (m1 + m2 + m3 + m4) / 4; 

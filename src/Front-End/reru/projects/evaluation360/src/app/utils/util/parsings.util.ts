@@ -1,3 +1,6 @@
+import { FormGroup } from '@angular/forms';
+import * as moment from 'moment';
+import { Moment } from 'moment';
 import { EvaluationModel, EvaluationAcceptModel, EvaluationCounterSignModel } from '../index';
 import { EvaluationAcceptClass } from '../models/evaluation-accept.model';
 import { EvaluationCounterSignClass } from '../models/evaluation-countersign.model';
@@ -7,8 +10,7 @@ export const parseEvaluation = (data: EvaluationModel): EvaluationModel => {
         id: data.id ? +data.id : undefined,
         subdivisionName: data.subdivisionName,
         evaluatedName: data.evaluatedName,
-        dateCompletionGeneralData: data.dateCompletionGeneralData,
-        nameSurnameEvaluated: data.nameSurnameEvaluated,
+        // dateCompletionGeneralData: data.dateCompletionGeneralData,
         functionSubdivision: data.functionSubdivision,
         subdivisionEvaluated: data.subdivisionEvaluated,
         specialOrMilitaryGrade: +data.specialOrMilitaryGrade,
@@ -72,7 +74,7 @@ export const parseEvaluation = (data: EvaluationModel): EvaluationModel => {
         score4: +data.score4,
         score5: +data.score5,
         finalEvaluationQualification: +data.finalEvaluationQualification,
-        dateEvaluatiorInterview: data.dateEvaluatiorInterview,
+        dateEvaluationInterview: data.dateEvaluationInterview,
         dateSettingIindividualGoals: data.dateSettingIindividualGoals,
         need1ProfessionalDevelopmentEvaluated: data.need1ProfessionalDevelopmentEvaluated,
         need2ProfessionalDevelopmentEvaluated: data.need2ProfessionalDevelopmentEvaluated,
@@ -113,5 +115,24 @@ export const parseCounterSignModel = (data: EvaluationCounterSignModel | Evaluat
         checkComment3: false,
         checkComment4: false,
         otherComments: null
+    }
+}
+
+export const parseDate = (value: Moment | string, formControlName: string, form: FormGroup): void => {
+    const nationalDateRegex = new RegExp(/^(0{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-1])\.(0{1}[1-9]{1}|1{1}[0-2]{1})\.([1-9]{1}[0-9]{1}[0-9]{1}[0-9]{1})$/);
+    if (typeof value === 'string' && !nationalDateRegex.test(value as string)) {
+        form.get(formControlName).setErrors({ pattern: true });
+        form.get(formControlName).markAsTouched();
+        return;
+    }
+
+    if (typeof value === 'string') {
+        const date = '12.12.2020'.split('.');
+        form.get(formControlName).patchValue(new Date(`${date[2]}-${date[1]}-${date[0]}`).toISOString());
+    }
+
+    if (typeof value === 'object') {
+        const date = moment(value).toDate();
+        form.get(formControlName).patchValue(new Date(date).toISOString());
     }
 }

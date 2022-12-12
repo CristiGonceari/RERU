@@ -1,9 +1,8 @@
 export interface EvaluationModel {
 	id?: number;
 	subdivisionName: string;
-	evaluatedName: string;
-	dateCompletionGeneralData: string | Date;
-	nameSurnameEvaluated: string;
+	evaluatedName?: string;
+	// dateCompletionGeneralData: string | Date;
 	functionSubdivision: string;
 	specialOrMilitaryGrade: number;
 	periodEvaluatedFromTo: string;
@@ -67,7 +66,7 @@ export interface EvaluationModel {
 	score4: number;
 	score5: number;
 	finalEvaluationQualification: number;
-	dateEvaluatiorInterview: string | Date;
+	dateEvaluationInterview: string | Date;
 	dateSettingIindividualGoals: string | Date;
 	need1ProfessionalDevelopmentEvaluated: string;
 	need2ProfessionalDevelopmentEvaluated: string;
@@ -75,6 +74,7 @@ export interface EvaluationModel {
 
 	/* Read-onlyy mode */
 	type?: number;
+	evaluatorName?: string;
 	commentsEvaluated?: string;
 	functionEvaluator?: string;
 	checkComment1?: boolean;
@@ -90,8 +90,7 @@ export class EvaluationClass implements EvaluationModel {
 	id?: number;
 	subdivisionName: string;
 	evaluatedName: string;
-	dateCompletionGeneralData: string | Date;
-	nameSurnameEvaluated: string;
+	// dateCompletionGeneralData: string | Date;
 	functionSubdivision: string;
 	specialOrMilitaryGrade: number;
 	periodEvaluatedFromTo: string;
@@ -155,9 +154,85 @@ export class EvaluationClass implements EvaluationModel {
 	score4: number;
 	score5: number;
 	finalEvaluationQualification: number;
-	dateEvaluatiorInterview: string | Date;
+	dateEvaluationInterview: string | Date;
 	dateSettingIindividualGoals: string | Date;
 	need1ProfessionalDevelopmentEvaluated: string;
 	need2ProfessionalDevelopmentEvaluated: string;
 	commentsEvaluator: string;
+	constructor(evaluation?: EvaluationModel) {
+		if (evaluation) {
+			this.id = evaluation.id;
+			this.subdivisionName = evaluation.subdivisionName;
+			this.evaluatedName = evaluation.evaluatedName;
+			// this.dateCompletionGeneralData = evaluation.dateCompletionGeneralData;
+			this.functionSubdivision = evaluation.functionSubdivision;
+			this.subdivisionEvaluated = evaluation.subdivisionEvaluated;
+			this.specialOrMilitaryGrade = +evaluation.specialOrMilitaryGrade;
+			this.periodEvaluatedFromTo = evaluation.subdivisionName;
+			this.periodEvaluatedUpTo = evaluation.subdivisionName;
+			this.educationEnum = +evaluation.educationEnum;
+			this.professionalTrainingActivities = +evaluation.professionalTrainingActivities;
+			this.professionalTrainingActivitiesType = +evaluation.professionalTrainingActivitiesType;
+			this.courseName = evaluation.courseName;
+			this.periodRunningActivityFromTo = evaluation.periodRunningActivityFromTo;
+			this.periodRunningActivityUpTo = evaluation.periodRunningActivityUpTo;
+			this.administrativeActOfStudies = evaluation.administrativeActOfStudies;
+			this.serviceDuringEvaluationCourse = +evaluation.serviceDuringEvaluationCourse;
+			this.functionEvaluated = evaluation.functionEvaluated;
+			this.appointmentDate = evaluation.appointmentDate;
+			this.administrativeActService = evaluation.administrativeActService;
+			this.partialEvaluationPeriodFromTo = evaluation.partialEvaluationPeriodFromTo;
+			this.partialEvaluationPeriodUpTo = evaluation.partialEvaluationPeriodUpTo;
+			this.partialEvaluationScore = evaluation.partialEvaluationScore;
+			this.qualifierPartialEvaluations = +evaluation.qualifierPartialEvaluations;
+			this.sanctionAppliedEvaluationCourse = evaluation.sanctionAppliedEvaluationCourse;
+			this.dateSanctionApplication = evaluation.dateSanctionApplication;
+			this.dateLiftingSanction = evaluation.dateLiftingSanction;
+			this.qualificationEvaluationObtained2YearsPast = +evaluation.qualificationEvaluationObtained2YearsPast;
+			this.qualificationEvaluationObtainedPreviousYear = +evaluation.qualificationEvaluationObtainedPreviousYear;
+			this.qualificationQuarter1 = +evaluation.qualificationQuarter1;
+			this.qualificationQuarter2 = +evaluation.qualificationQuarter2;
+			this.qualificationQuarter3 = +evaluation.qualificationQuarter3;
+			this.qualificationQuarter4 = +evaluation.qualificationQuarter4;
+			this.question1 = +evaluation.question1;
+			this.question2 = +evaluation.question2;
+			this.question3 = +evaluation.question3;
+			this.question4 = +evaluation.question4;
+			this.question5 = +evaluation.question5;
+			this.question6 = +evaluation.question6;
+			this.question7 = +evaluation.question7;
+			this.question8 = +evaluation.question8;
+			this.question9 = +evaluation.question9;
+			this.question10 = +evaluation.question10;
+			this.question11 = +evaluation.question11;
+			this.question12 = +evaluation.question12;
+			this.question13 = +evaluation.question13;
+			this.goal1 = evaluation.goal1;
+			this.goal2 = evaluation.goal2;
+			this.goal3 = evaluation.goal3;
+			this.goal4 = evaluation.goal4;
+			this.goal5 = evaluation.goal5;
+			this.kpI1 = evaluation.kpI1;
+			this.kpI2 = evaluation.kpI2;
+			this.kpI3 = evaluation.kpI3;
+			this.kpI4 = evaluation.kpI4;
+			this.kpI5 = evaluation.kpI5;
+			this.performanceTerm1 = evaluation.performanceTerm1;
+			this.performanceTerm2 = evaluation.performanceTerm2;
+			this.performanceTerm3 = evaluation.performanceTerm3;
+			this.performanceTerm4 = evaluation.performanceTerm4;
+			this.performanceTerm5 = evaluation.performanceTerm5;
+			this.score1 = +evaluation.score1;
+			this.score2 = +evaluation.score2;
+			this.score3 = +evaluation.score3;
+			this.score4 = +evaluation.score4;
+			this.score5 = +evaluation.score5;
+			this.finalEvaluationQualification = +evaluation.finalEvaluationQualification;
+			this.dateEvaluationInterview = evaluation.dateEvaluationInterview;
+			this.dateSettingIindividualGoals = evaluation.dateSettingIindividualGoals;
+			this.need1ProfessionalDevelopmentEvaluated = evaluation.need1ProfessionalDevelopmentEvaluated;
+			this.need2ProfessionalDevelopmentEvaluated = evaluation.need2ProfessionalDevelopmentEvaluated;
+			this.commentsEvaluator = evaluation.commentsEvaluator;
+		}
+	}
 }

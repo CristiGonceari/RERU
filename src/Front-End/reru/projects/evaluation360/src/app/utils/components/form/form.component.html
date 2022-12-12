@@ -2,42 +2,46 @@
   [colorClass]="'text-primary'">
 </app-loading-spinner>
 
-<h2 *ngIf="evaluation.type === EvaluationTypeEnum.Execution" class="font-weight-bolder text-center pb-5" [innerHTML]="'evaluations.execution-assessment-sheet' | translate"></h2>
-<h2 *ngIf="evaluation.type === EvaluationTypeEnum.Management" class="font-weight-bolder text-center pb-5" [innerHTML]="'evaluations.managing-assessment-sheet' | translate"></h2>
+<h2 *ngIf="!isLoading && evaluation.type === EvaluationTypeEnum.Execution" class="font-weight-bolder text-center pb-5" [innerHTML]="'evaluations.execution-assessment-sheet' | translate"></h2>
+<h2 *ngIf="!isLoading && evaluation.type === EvaluationTypeEnum.Management" class="font-weight-bolder text-center pb-5" [innerHTML]="'evaluations.managing-assessment-sheet' | translate"></h2>
 
-<form *ngIf="isEvaluatorRoleView" [formGroup]="evaluationForm">
+<form *ngIf="!isLoading && isEvaluatorRoleView" [formGroup]="evaluationForm">
   <div class="row">
     <!-- DESKTOP LEFT SIDE -->
     <div class="col-xl col-12">
-      <div class="form-group row">
-        <label for="department" class="col-3 col-form-label">Subdiviziunea: </label>
-        <div class="col">
+      <div class="form-group row position-relative">
+        <label for="department" class="col-lg-4 col-12 col-form-label">{{ 'evaluations.subdivision' | translate }}: </label>
+        <div class="col-lg col-12">
             <input [ngClass]="{'is-valid': isValid(evaluationForm, 'subdivisionName'),
               'is-invalid': isInvalidPattern(evaluationForm, 'subdivisionName')}" class="form-control" type="text" formControlName="subdivisionName" name="subdivisionName" id="subdivisionName" placeholder="Subdiviziunea">
-            <div *ngIf="isInvalidPattern(evaluationForm, 'subdivisionName')" class="invalid-feedback">
+            <div *ngIf="isInvalidPattern(evaluationForm, 'subdivisionName')" class="invalid-feedback position-absolute">
               Foloseste doar litere, cifre si simbolul -
             </div>
         </div>
       </div>
-      <div class="form-group row">
-        <label for="nameSurnameEvaluated" class="col-3">Nume, prenumele angajatului evaluat: </label>
-        <div class="col">
-          <input class="form-control" type="text" formControlName="nameSurnameEvaluated" name="nameSurnameEvaluated" id="nameSurnameEvaluated" placeholder="Nume, prenumele">
+      <div class="form-group row position-relative">
+        <label for="evaluatedName" class="col-lg-4 col-12">{{ 'evaluations.evaluated-name' | translate }}: </label>
+        <div class="col-lg col-12">
+          <input [ngClass]="{'is-invalid': isInvalidRequired(evaluationForm, 'evaluatedName'), 'is-valid':  isValid(evaluationForm, 'evaluatedName')}" class="form-control" type="text" formControlName="evaluatedName" name="evaluatedName" id="evaluatedName" placeholder="Nume, prenumele angajatului">
+          <div *ngIf="isInvalidRequired(evaluationForm, 'evaluatedName')" class="invalid-feedback position-absolute">{{'notification.required' | translate}}</div>
         </div>
       </div>
       <div class="form-group row">
-        <label for="functionSubdivision" class="col-3 col-form-label">Functia angajatului: </label>
-          <div class="col">
+        <label for="functionSubdivision" class="col-lg-4 col-12 col-form-label">{{ 'evaluations.evaluated-function' | translate }}: </label>
+          <div class="col-lg col-12">
             <input class="form-control" type="text" formControlName="functionSubdivision" name="functionSubdivision" id="functionSubdivision" placeholder="Functia">
           </div>
       </div>
       <div class="form-group row">
-        <label for="" class="col-3">Perioada evaluată de la: </label>
-          <div class="col position-relative">
+        <label for="" class="col-lg-4 col-12 col-form-label">{{ 'evaluations.evaluated-period-from' | translate }}: </label>
+          <div class="col-lg col-12 position-relative">
             <input class="position-absolute invisible" [(ngModel)]="parsedPeriodEvaluatedFromTo" (ngModelChange)="parseDate($event, 'periodEvaluatedFromTo', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="efd" autocomplete="off"
             name="date" />
-            <input [disabled]="isDisabledEvaluator" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="efd"  placeholder="00.00.0000" autocomplete="off"
-              class="form-control" [value]="parsedPeriodEvaluatedFromTo | date: 'dd.MM.yyyy'" />
+            <input [disabled]="isDisabledEvaluator" [readonly]="isDisabledEvaluator"
+            [ngClass]="{'is-invalid': isInvalidPattern(evaluationForm, 'periodEvaluatedFromTo'), 'is-valid': isValid(evaluationForm, 'periodEvaluatedFromTo')}"
+            [owlDateTimeTrigger]="efd"  placeholder="00.00.0000" autocomplete="off"
+              class="form-control" [value]="parsedPeriodEvaluatedFromTo | date: 'dd.MM.yyyy'" (keyup)="parseDate($event.target.value, 'periodEvaluatedFromTo', evaluationForm)" />
+            <div *ngIf="isInvalidPattern(evaluationForm, 'periodEvaluatedFromTo')" class="invalid-feedback">{{'message.use-date-format' | translate }}</div>
             <owl-date-time [disabled]="isDisabledEvaluator" #efd pickerType="calendar"></owl-date-time>
           </div>
       </div>
@@ -45,7 +49,7 @@
 
     <!-- DESKTOP RIGHT SIDE -->
     <div class="col-xl col-12 d-flex flex-column">
-      <div class="form-group row order-1">
+      <!-- <div class="form-group row order-1">
         <label for="" class="col-3 col-form-label">Data completării: </label>
         <div class="col position-relative">
           <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedDateCompletionGeneralData" (ngModelChange)="parseDate($event, 'dateCompletionGeneralData', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="deForm" autocomplete="off"
@@ -54,10 +58,10 @@
             class="form-control" [value]="parsedDateCompletionGeneralData | date: 'dd.MM.yyyy'" />
           <owl-date-time [disabled]="isDisabledEvaluator" #deForm pickerType="calendar"></owl-date-time>
         </div>
-      </div>
+      </div> -->
       <div class="form-group row order-1">
-        <label for="specialOrMilitaryGrade" class="col-3 col-form-label">{{ 'evaluations.military-grade.title' | translate }}: </label>
-        <div class="col">
+        <label for="specialOrMilitaryGrade" class="col-lg-3 col-12 col-form-label">{{ 'evaluations.military-grade.title' | translate }}: </label>
+        <div class="col-lg col-12">
           <select name="specialOrMilitaryGrade" id="specialOrMilitaryGrade" class="form-control" formControlName="specialOrMilitaryGrade">
             <option value="null">{{ 'button.select' | translate }}</option>
             <option value="1">{{ 'evaluations.military-grade.1' | translate }}</option>
@@ -81,18 +85,34 @@
         </div>
       </div>
       <div class="form-group row order-1">
-        <label for="subdivisionEvaluated" class="col-3">Subdiviziunea angajatului: </label>
-          <div class="col">
-            <input type="text" class="form-control" formControlName="subdivisionEvaluated" name="subdivisionEvaluated" id="subdivisionEvaluated" placeholder="Subdiviziunea">
+        <label for="subdivisionEvaluated" class="col-lg-3 col-12">{{ 'evaluations.evaluated-subdivision' | translate }}: </label>
+          <div class="col-lg col-12">
+            <input type="text" class="form-control" formControlName="subdivisionEvaluated" name="subdivisionEvaluated" id="subdivisionEvaluated" [placeholder]="'evaluations.evaluated-subdivision' | translate">
           </div>
       </div>
+      <div class="form-group row order-1">
+        <label for="educationEnum" class="col-lg-3 col-12 col-form-label">{{ 'evaluations.studies' | translate }}: </label>
+        <div class="col-lg col-12">
+            <select name="educationEnum" id="educationEnum" class="form-control" formControlName="educationEnum">
+              <option value="null">{{'button.select' | translate}}</option>
+              <option value="1">{{ 'evaluations.education.1' | translate }}</option>
+              <option value="2">{{ 'evaluations.education.2' | translate }}</option>
+              <option value="3">{{ 'evaluations.education.3' | translate }}</option>
+              <option value="4">{{ 'evaluations.education.4' | translate }}</option>
+            </select>
+        </div>
+      </div>
       <div class="form-group row order-xl-1 order-0">
-        <label for="" class="col-3">Perioada evaluată până la: </label>
-          <div class="col position-relative">
+        <label for="" class="col-lg-3 col-12 col-form-label">{{ 'evaluations.evaluated-period-to' | translate }}: </label>
+          <div class="col-lg col-12 position-relative">
             <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedPeriodEvaluatedUpTo" (ngModelChange)="parseDate($event, 'periodEvaluatedUpTo', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="etd" autocomplete="off"
             name="date" />
-            <input [disabled]="isDisabledEvaluator" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="etd"  placeholder="00.00.0000" autocomplete="off"
+            <input [disabled]="isDisabledEvaluator" 
+            [ngClass]="{'is-invalid': isInvalidPattern(evaluationForm, 'periodEvaluatedUpTo'), 'is-valid': isValid(evaluationForm, 'periodEvaluatedUpTo')}"
+            (keyup)="parseDate($event.target.value, 'periodEvaluatedUpTo', evaluationForm)"
+            [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="etd"  placeholder="00.00.0000" autocomplete="off"
               class="form-control" [value]="parsedPeriodEvaluatedUpTo | date: 'dd.MM.yyyy'" />
+              <div *ngIf="isInvalidPattern(evaluationForm, 'periodEvaluatedUpTo')" class="invalid-feedback">{{'message.use-date-format' | translate }}</div>
             <owl-date-time [disabled]="isDisabledEvaluator" #etd pickerType="calendar"></owl-date-time>
           </div>
       </div>
@@ -100,7 +120,7 @@
     <!-- END DESKTOP RIGHT SIDE -->
   </div>
 
-  <div class="form-group row">
+  <!-- <div class="form-group row">
     <label for="educationEnum" class="col-2 col-form-label">Studii: </label>
     <div class="col">
         <select name="educationEnum" id="educationEnum" class="form-control" formControlName="educationEnum">
@@ -111,33 +131,33 @@
           <option value="4">{{ 'evaluations.education.4' | translate }}</option>
         </select>
     </div>
-  </div>
+  </div> -->
 
     <div class="form-group row">
       <div class="col-2">
-        Activitati de formare profesională
+        {{'evaluations.professional-training-activities.title' | translate}}
       </div>
       <div class="col">
         <select class="form-control" formControlName="professionalTrainingActivities" name="professionalTrainingActivities" id="professionalTrainingActivities">
-          <option value="null">Selectează</option>
-          <option value="1">Perfecționare</option>
-          <option value="2">Specializare</option>
+          <option value="null">{{'button.select' | translate }}</option>
+          <option value="1"> {{'evaluations.professional-training-activities.1' | translate}}</option>
+          <option value="2"> {{'evaluations.professional-training-activities.2' | translate}}</option>
         </select>
       </div>
       <div class="col">
         <select class="form-control" formControlName="professionalTrainingActivitiesType" name="professionalTrainingActivitiesType" id="professionalTrainingActivitiesType">
-          <option value="null">Selectează</option>
-          <option value="1">Intern</option>
-          <option value="2">Extern</option>
+          <option value="null">{{'button.select' | translate }}</option>
+          <option value="1">{{'evaluations.professional-training-activities-type.1' | translate}}</option>
+          <option value="2">{{'evaluations.professional-training-activities-type.2' | translate}}</option>
         </select>
       </div>
     </div>
     <div class="form-group row">
       <div class="col">
         <div class="row">
-          <label for="courseName" class="col-2 col-form-label">Denumirea cursului: </label>
+          <label for="courseName" class="col-2 col-form-label">{{ 'evaluations.course-name' | translate }}: </label>
           <div class="col">
-            <input class="form-control" type="text" formControlName="courseName" name="courseName" id="courseName" placeholder="Denumirea cursului">
+            <input class="form-control" type="text" formControlName="courseName" name="courseName" id="courseName" [placeholder]="'evaluations.course-name' | translate">
           </div>
         </div>
       </div>
@@ -145,7 +165,7 @@
     <div class="form-group row">
       <div class="col">
         <div class="row">
-          <label for="parsedPeriodRunningActivityFromTo" class="col-4 col-form-label">Perioada desfasurarii de la: </label>
+          <label for="parsedPeriodRunningActivityFromTo" class="col-4 col-form-label">{{ 'evaluations.period-running-activity-from' | translate }}: </label>
           <div class="col position-relative">
             <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedPeriodRunningActivityFromTo" (ngModelChange)="parseDate($event, 'periodRunningActivityFromTo', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="praft" autocomplete="off"
             name="parsedPeriodRunningActivityFromTo" />
@@ -157,7 +177,7 @@
       </div>
       <div class="col">
         <div class="row">
-          <label for="parsedPeriodRunningActivityUpTo" class="col-4 col-form-label">Perioada desfasurarii până la: </label>
+          <label for="parsedPeriodRunningActivityUpTo" class="col-4 col-form-label">{{ 'evaluations.period-running-activity-to' | translate }}: </label>
           <div class="col position-relative">
             <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedPeriodRunningActivityUpTo" (ngModelChange)="parseDate($event, 'periodRunningActivityUpTo', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="praut" autocomplete="off"
             name="date" />
@@ -169,30 +189,36 @@
       </div>
     </div>
     <div class="form-group row">
-      <label for="administrativeActOfStudies" class="col-2  col-form-label">Actul administrativ (curs): </label>
+      <label for="administrativeActOfStudies" class="col-2  col-form-label">{{ 'evaluations.administrative-act-of-course' | translate }}: </label>
         <div class="col">
-            <input class="form-control" type="text" formControlName="administrativeActOfStudies" name="administrativeActOfStudies" id="administrativeActOfStudies" placeholder="Actul administrativ">
+            <input class="form-control" type="text" formControlName="administrativeActOfStudies" name="administrativeActOfStudies" id="administrativeActOfStudies" [placeholder]="'evaluations.administrative-act-of-course' | translate">
         </div>
     </div>
 
     <div class="form-group row">
+      <label for="administrativeActOfStudies" class="col-2  col-form-label">{{ 'evaluations.modifying-service-during-evaluation-course.title' | translate }}: </label>
       <div class="col">
-        <p class="m-0">Modificarea raportului de serviciul pe parcursul perioadei evaluate</p>
+        <select class="form-control" name="serviceDuringEvaluationCourse" id="serviceDuringEvaluationCourse" formControlName="serviceDuringEvaluationCourse">
+          <option value="null">{{'button.select' | translate }}</option>
+          <option value="1">{{ 'evaluations.modifying-service-during-evaluation-course.1' | translate }}</option>
+          <option value="2">{{ 'evaluations.modifying-service-during-evaluation-course.2' | translate }}</option>
+          <option value="3">{{ 'evaluations.modifying-service-during-evaluation-course.3' | translate }}</option>
+        </select>
       </div>
     </div>
 
     <div class="form-group row">
       <div class="col">
         <div class="row">
-          <label for="functionEvaluated" class="col-auto  col-form-label">Funcția: </label>
+          <label for="functionEvaluated" class="col-auto  col-form-label">{{ 'evaluations.function' | translate }}: </label>
           <div class="col">
-              <input class="form-control" type="text" formControlName="functionEvaluated" name="functionEvaluated" id="functionEvaluated" placeholder="Funcția">
+              <input class="form-control" type="text" formControlName="functionEvaluated" name="functionEvaluated" id="functionEvaluated" [placeholder]="'evaluations.function' | translate">
           </div>
         </div>
       </div>
       <div class="col">
         <div class="row">
-          <label for="appointmentDate" class="col-4 col-form-label">Data numirii: </label>
+          <label for="appointmentDate" class="col-4 col-form-label">{{ 'evaluations.appointment-date' | translate }}: </label>
           <div class="col position-relative">
             <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedAppointmentDate" (ngModelChange)="parseDate($event, 'appointmentDate', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="pad" autocomplete="off"
             name="parsedAppointmentDate" />
@@ -204,9 +230,9 @@
       </div>
       <div class="col">
         <div class="row">
-          <label for="administrativeActService" class="col-auto  col-form-label">Actul administrativ: </label>
+          <label for="administrativeActService" class="col-auto  col-form-label">{{ 'evaluations.administrative-act-of-service' | translate }}: </label>
           <div class="col">
-              <input class="form-control" type="text" formControlName="administrativeActService" name="administrativeActService" id="administrativeActService" placeholder="Actul administrativ">
+              <input class="form-control" type="text" formControlName="administrativeActService" name="administrativeActService" id="administrativeActService" [placeholder]="'evaluations.administrative-act-of-service' | translate">
           </div>
         </div>
       </div>
@@ -214,14 +240,14 @@
 
     <div class="row form-group">
       <div class="col">
-        <p class="m-0">Rezultate evaluarii parțiale</p>
+        <p class="m-0">{{'evaluations.partial-evaluations-results' | translate }}</p>
       </div>
     </div>
 
     <div class="row form-group">
       <div class="col">
         <div class="row">
-          <label for="parsedPartialEvaluationPeriodFromTo" class="col-4 col-form-label">Perioada desfasurarii de la: </label>
+          <label for="parsedPartialEvaluationPeriodFromTo" class="col-4 col-form-label">{{ 'evaluations.period-running-activity-from' | translate }}: </label>
           <div class="col position-relative">
             <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedPartialEvaluationPeriodFromTo" (ngModelChange)="parseDate($event, 'partialEvaluationPeriodFromTo', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="epft" autocomplete="off"
             name="date" />
@@ -233,7 +259,7 @@
       </div>
       <div class="col">
         <div class="row">
-          <label for="parsedPartialEvaluationPeriodUpTo" class="col-4 col-form-label">Perioada desfasurarii până la: </label>
+          <label for="parsedPartialEvaluationPeriodUpTo" class="col-4 col-form-label">{{ 'evaluations.period-running-activity-to' | translate }}: </label>
           <div class="col position-relative">
             <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedPartialEvaluationPeriodUpTo" (ngModelChange)="parseDate($event, 'partialEvaluationPeriodUpTo', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="eput" autocomplete="off"
             name="date" />
@@ -248,7 +274,7 @@
     <div class="form-group row">
       <div class="col">
         <div class="row">
-          <label for="partialEvaluationScore" class="col-4  col-form-label">Punctaj final: </label>
+          <label for="partialEvaluationScore" class="col-4  col-form-label">{{'evaluations.final-points' | translate }}: </label>
           <div class="col">
               <input class="form-control" type="number" formControlName="partialEvaluationScore" name="partialEvaluationScore" id="partialEvaluationScore" placeholder="Punctaj final">
           </div>
@@ -256,15 +282,9 @@
       </div>
       <div class="col">
         <div class="row">
-          <label for="qualifierPartialEvaluations" class="col-4  col-form-label">Calificativ: </label>
+          <label for="qualifierPartialEvaluations" class="col-4  col-form-label">{{'evaluations.calificative' | translate }}: </label>
           <div class="col">
-            <select class="form-control" formControlName="qualifierPartialEvaluations">
-                <option value="null">{{ 'button.select' | translate }}</option>
-                <option value="1">1 (nesatisfacator)</option>
-                <option value="2">2 (satisfacator)</option>
-                <option value="3">3 (bine)</option>
-                <option value="4">4 (foarte bine)</option>
-              </select>
+            <app-qualification-select field="qualifierPartialEvaluations" [formGroup]="evaluationForm"></app-qualification-select>
           </div>
         </div>
       </div>
@@ -277,7 +297,7 @@
     </div>
 
     <div class="form-group row">
-      <label for="sanctionAppliedEvaluationCourse" class="col-2  col-form-label">Sancțiunea: </label>
+      <label for="sanctionAppliedEvaluationCourse" class="col-2  col-form-label">{{ 'evaluations.sanction' | translate }}: </label>
           <div class="col">
               <input class="form-control" type="text" formControlName="sanctionAppliedEvaluationCourse" name="sanctionAppliedEvaluationCourse" id="sanctionAppliedEvaluationCourse" placeholder="Sancțiunea">
           </div>
@@ -286,7 +306,7 @@
     <div class="form-group row">
       <div class="col">
         <div class="row">
-          <label for="parsedDateSanctionApplication" class="col-4">Data aplicării <br>sancţiunii (ordinul): </label>
+          <label for="parsedDateSanctionApplication" class="col-4" [innerHTML]="'evaluations.sanction-date-applied-from' | translate"></label>
           <div class="col position-relative">
             <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedDateSanctionApplication" (ngModelChange)="parseDate($event, 'dateSanctionApplication', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="dsa" autocomplete="off"
             name="date" />
@@ -298,7 +318,7 @@
       </div>
       <div class="col">
         <div class="row">
-          <label for="parsedDateLiftingSanction" class="col-4">Data ridicării <br>sancţiunii (ordinul): </label>
+          <label for="parsedDateLiftingSanction" class="col-4" [innerHTML]="'evaluations.sanction-date-applied-to' | translate"></label>
           <div class="col position-relative">
             <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedDateLiftingSanction" (ngModelChange)="parseDate($event, 'dateLiftingSanction', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="dlfs" autocomplete="off"
             name="date" />
@@ -312,24 +332,24 @@
 
     <div class="form-group row">
       <div class="col">
-        <p class="m-0">Calificative de evaluare anuale obţinute în ultimii 2 ani</p>
+        <p class="m-0">{{'evaluations.qualifications-evaluation-obtained-yearly-last-2-years' | translate }}</p>
       </div>
     </div>
 
     <div class="form-group row">
       <div class="col">
         <div class="row">
-          <label for="qualificationEvaluationObtained2YearsPast" class="col-4 col-form-label">2 ani în urmă</label>
+          <label for="qualificationEvaluationObtained2YearsPast" class="col-4 col-form-label">{{'evaluations.two-years-ago' | translate }}</label>
           <div class="col">
-            <input class="form-control" type="number" formControlName="qualificationEvaluationObtained2YearsPast" name="qualificationEvaluationObtained2YearsPast" id="qualificationEvaluationObtained2YearsPast" placeholder="Calificative 2 ani în urmă">
+            <app-qualification-select field="qualificationEvaluationObtained2YearsPast" [formGroup]="evaluationForm"></app-qualification-select>
           </div>
         </div>
       </div>
       <div class="col">
         <div class="row">
-          <label for="qualificationEvaluationObtainedPreviousYear" class="col-4 col-form-label">Anul precedent</label>
+          <label for="qualificationEvaluationObtainedPreviousYear" class="col-4 col-form-label">{{'evaluations.last-year' | translate }}</label>
           <div class="col">
-            <input class="form-control" type="number" formControlName="qualificationEvaluationObtainedPreviousYear" name="qualificationEvaluationObtainedPreviousYear" id="qualificationEvaluationObtainedPreviousYear" placeholder="Calificative din anul precedent">
+            <app-qualification-select field="qualificationEvaluationObtainedPreviousYear" [formGroup]="evaluationForm"></app-qualification-select>
           </div>
         </div>
       </div>
@@ -337,41 +357,41 @@
 
     <div class="form-group row">
       <div class="col">
-        <p class="m-0">Calificativele trimestriale pentru stabilirea sporului pentru performanţă</p>
+        <p class="m-0">{{'evaluations.trimestrial-qualifications-established-against-performance' | translate }}</p>
       </div>
     </div>
 
     <div class="form-group row">
       <div class="col">
         <div class="row">
-          <label for="qualificationQuarter1" class="col-auto  col-form-label">Trimestrul I: </label>
+          <label for="qualificationQuarter1" class="col-auto  col-form-label">{{'evaluations.trimester' | translate }} I: </label>
           <div class="col">
-              <input class="form-control" type="number" formControlName="qualificationQuarter1" name="qualificationQuarter1" id="qualificationQuarter1" placeholder="Trimestul I">
-          </div>
+              <app-qualification-select field="qualificationQuarter1" [formGroup]="evaluationForm"></app-qualification-select>
+            </div>
         </div>
       </div>
       <div class="col">
         <div class="row">
-          <label for="qualificationQuarter2" class="col-auto  col-form-label">Trimestrul II: </label>
+          <label for="qualificationQuarter2" class="col-auto  col-form-label">{{'evaluations.trimester' | translate }} II: </label>
           <div class="col">
-              <input class="form-control" type="number" formControlName="qualificationQuarter2" name="qualificationQuarter2" id="qualificationQuarter2" placeholder="Trimestrul II">
-          </div>
+              <app-qualification-select field="qualificationQuarter2" [formGroup]="evaluationForm"></app-qualification-select>
+            </div>
         </div>
       </div>
       <div class="col">
         <div class="row">
-          <label for="qualificationQuarter3" class="col-auto  col-form-label">Trimestrul III: </label>
+          <label for="qualificationQuarter3" class="col-auto  col-form-label">{{'evaluations.trimester' | translate }} III: </label>
           <div class="col">
-              <input class="form-control" type="number" formControlName="qualificationQuarter3" name="qualificationQuarter3" id="qualificationQuarter3" placeholder="Trimestrul III">
-          </div>
+              <app-qualification-select field="qualificationQuarter3" [formGroup]="evaluationForm"></app-qualification-select>
+            </div>
         </div>
       </div>
       <div class="col">
         <div class="row">
-          <label for="qualificationQuarter4" class="col-auto  col-form-label">Trimestrul IV: </label>
+          <label for="qualificationQuarter4" class="col-auto  col-form-label">{{'evaluations.trimester' | translate }} IV: </label>
           <div class="col">
-              <input class="form-control" type="number" formControlName="qualificationQuarter4" name="qualificationQuarter4" id="qualificationQuarter4" placeholder="Trimestrul IV">
-          </div>
+              <app-qualification-select field="qualificationQuarter4" [formGroup]="evaluationForm"></app-qualification-select>
+            </div>
         </div>
       </div>
     </div>
@@ -382,9 +402,9 @@
           <table class="table">
             <thead>
               <tr>
-                <th [ngStyle]="{'width.%': 2}">Nr.</th>
-                <th>Criterii de evaluare</th>
-                <th>Punctajul stabilit</th>
+                <th [ngStyle]="{'width.%': 2}">{{'evaluations.list-table.number' | translate}}</th>
+                <th>{{'evaluations.list-table.evaluations-criteria' | translate}}</th>
+                <th>{{'evaluations.list-table.established-score' | translate}}</th>
               </tr>
             </thead>
             <tbody>
@@ -396,45 +416,40 @@
                   <td colspan="2" *ngIf="[6, 10, 12, 17].includes(i)" class="align-middle font-weight-bolder">{{'evaluations.criterias.execution.'+(i) | translate}}</td>
                   <td *ngIf="![6, 10, 11, 12, 17].includes(i)" class="align-middle">{{'evaluations.criterias.execution.'+(i) | translate}}</td>
                   <td *ngIf="i != 11">
-                    <div>
-                      <select *ngIf="![6, 10, 12, 17].includes(i)" class="form-control" 
-                      [formControlName]="'question'+(i > 17 ? i - 5 : i > 12 ? i - 4 : i > 6 ? i - 1 : i)">
-                        <option value="null">{{ 'button.select' | translate }}</option>
-                        <option value="1">1 (nesatisfacator)</option>
-                        <option value="2">2 (satisfacator)</option>
-                        <option value="3">3 (bine)</option>
-                        <option value="4">4 (foarte bine)</option>
-                      </select>
+                    <div *ngIf="![6, 10, 12, 17].includes(i)">
+                      <app-qualification-select [hasErrorSpace]="true" [field]="'question'+(i > 17 ? i - 5 : i > 12 ? i - 4 : i > 6 ? i - 1 : i)" [formGroup]="evaluationForm" [showNumbers]="true"></app-qualification-select>
                     </div>
                     <div *ngIf="[6, 10, 12, 17].includes(i)" class="text-center">{{calculateAverageCriterias(i)}}</div>
                   </td>
                   <td *ngIf="i === 11" colspan="3">
-                    <table class="table">
-                      <thead>
-                        <th>Nr.</th>
-                        <th>Obiective individuale</th>
-                        <th>Indicatori de performanta</th>
-                        <th>Termenul de realizare</th>
-                        <th>Punctajul stabilit</th>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let item of [1,2,3,4,5]; let i = index">
-                          <td class="align-middle">{{i+1}}.</td>
-                          <td><input type="text" class="form-control" [formControlName]="'goal'+(i+1)" placeholder="Obiectiv"></td>
-                          <td><input type="text" class="form-control" [formControlName]="'kpI'+(i+1)" placeholder="Indicator"></td>
-                          <td><input type="text" class="form-control" [formControlName]="'performanceTerm'+(i+1)" placeholder="Termen"></td>
-                          <td><input type="number" class="form-control" [formControlName]="'score'+(i+1)" placeholder="0"></td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <div class="table-responsive-xl">
+                      <table class="table">
+                        <thead>
+                          <th [ngStyle]="{'width.%': 2}">{{'evaluations.list-table.number' | translate}}</th>
+                          <th>{{'evaluations.list-table.individual-objectives' | translate}}</th>
+                          <th>{{'evaluations.list-table.performance-indicators' | translate}}</th>
+                          <th>{{'evaluations.list-table.release-term' | translate}}</th>
+                          <th>{{'evaluations.list-table.established-score' | translate}}</th>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of [1,2,3,4,5]; let i = index">
+                            <td class="align-middle">{{i+1}}.</td>
+                            <td><input type="text" class="form-control" [formControlName]="'goal'+(i+1)" [placeholder]="('evaluations.objective' | translate)+' '+(i+1)"></td>
+                            <td><input type="text" class="form-control" [formControlName]="'kpI'+(i+1)" [placeholder]="('evaluations.indicator' | translate)+' '+(i+1)"></td>
+                            <td><input type="text" class="form-control" [formControlName]="'performanceTerm'+(i+1)" [placeholder]="('evaluations.term' | translate)+' '+(i+1)"></td>
+                            <td><app-qualification-select [field]="'score'+(i+1)" [formGroup]="evaluationForm" [showNumbers]="true" [hasErrorSpace]="true"></app-qualification-select></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </td>
                 </tr>
                 <tr>
-                  <td class="font-weight-bolder" colspan="2">Punctajul stabilit la compartimentul 4) “Pregătirea de bază” (M 4 ):</td>
+                  <td class="font-weight-bolder" colspan="2">{{'evaluations.established-score-on-fourth-compartment' | translate }}:</td>
                   <td class="text-center">{{calculateM4()}}</td>
                 </tr>
                 <tr>
-                  <td class="font-weight-bolder" colspan="2">Punctajul la evaluarea anuală:</td>
+                  <td class="font-weight-bolder" colspan="2">{{'evaluations.yearly-evaluation-score' | translate }}:</td>
                   <td class="text-center">{{calculateMea()}}</td>
                 </tr>
             </tbody>
@@ -444,39 +459,31 @@
     </div>
 
     <div class="form-group row">
-          <label for="finalEvaluationQualification" class="col-2 col-form-label">Calificativul de evaluare final</label>
-          <div class="col-5">
-            <select class="form-control" 
-            formControlName="finalEvaluationQualification"
-            (change)="handleFinalQualificationChange($event.target.value)"
-            name="finalEvaluationQualification" 
-            id="finalEvaluationQualification">
-              <option value="null">{{'button.select' | translate}}</option>
-              <option value="4">{{'evaluations.final-evaluation-qualification.very-good' | translate }}</option>
-              <option value="3">{{'evaluations.final-evaluation-qualification.good' | translate }}</option>
-              <option value="2">{{'evaluations.final-evaluation-qualification.satisfactory' | translate }}</option>
-              <option value="1">{{'evaluations.final-evaluation-qualification.unsatisfactory' | translate }}</option>
-            </select>
+          <label for="finalEvaluationQualification" class="col-lg-2 col-12 col-form-label">{{'evaluations.evaluation-final-calificative' | translate }}</label>
+          <div class="col-lg-5 col-12 pb-lg-0 pb-7">
+            <app-qualification-select field="finalEvaluationQualification" [formGroup]="evaluationForm"
+                                      (handleChange)="handleFinalQualificationChange($event)">
+            </app-qualification-select>
           </div>
-          <div class="col-5 d-flex align-items-center">
+          <div class="col-lg-5 col-12 d-flex align-items-center">
             <input [disabled]="isDisabledEvaluator" #finalEvalNum (input)="handleFinalQualificationChange($event.target.value, true)" class="form-control" type="number" placeholder="0.00" step="2" min="1" max="4" pattern="\d*" maxlength="3" required>
           </div>
     </div>
 
     <div class="form-group row">
-      <label for="parsedDateEvaluatiorInterview" class="col-2 col-form-label">Data desfăşurării interviului de evaluare: </label>
-      <div class="col position-relative">
-        <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedDateEvaluatiorInterview" (ngModelChange)="parseDate($event, 'dateEvaluatiorInterview', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="pdei" autocomplete="off"
-        name="parsedDateEvaluatiorInterview" />
+      <label for="parsedDateEvaluationInterview" class="col-lg-2 col-12 col-form-label">{{'evaluations.date-evaluation-interview' | translate}}: </label>
+      <div class="col-lg col-12 position-relative">
+        <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedDateEvaluationInterview" (ngModelChange)="parseDate($event, 'dateEvaluationInterview', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="pdei" autocomplete="off"
+        name="parsedDateEvaluationInterview" />
         <input [disabled]="isDisabledEvaluator" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="pdei"  placeholder="00.00.0000" autocomplete="off"
-          class="form-control" [value]="parsedDateEvaluatiorInterview | date: 'dd.MM.yyyy'" />
+          class="form-control" [value]="parsedDateEvaluationInterview | date: 'dd.MM.yyyy'" />
         <owl-date-time [disabled]="isDisabledEvaluator" #pdei pickerType="calendar"></owl-date-time>
       </div>
     </div>
 
     <div class="form-group row">
-      <label for="parsedDateEvaluatiorInterview" class="col-2 col-form-label">Obiective individuale au fost stabilite (data): </label>
-      <div class="col position-relative">
+      <label for="parsedDateSettingIindividualGoals" class="col-lg-2 col-12 col-form-label">{{ 'evaluations.individual-objective-established' | translate }}: </label>
+      <div class="col-lg col-12 position-relative">
         <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedDateSettingIindividualGoals" (ngModelChange)="parseDate($event, 'dateSettingIindividualGoals', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="pdsig" autocomplete="off"
         name="parsedDateSettingIindividualGoals" />
         <input [disabled]="isDisabledEvaluator" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="pdsig"  placeholder="00.00.0000" autocomplete="off"
@@ -491,7 +498,7 @@
           <table class="table">
             <thead>
               <tr>
-                <th colspan="2">Necesităţi de dezvoltare profesională a angajatului evaluat</th>
+                <th colspan="2">{{'evaluations.professional-development-needs-evaluated' | translate}}</th>
               </tr>
             </thead>
             <tbody>
@@ -513,91 +520,93 @@
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-2 col-form-label">Nume, prenume evaluator:</label>
-      <div class="col d-flex align-items-center">
+      <label class="col-lg-2 col-12 col-form-label">{{'evaluations.evaluator-name' | translate}}:</label>
+      <div class="col-lg col-12 d-flex align-items-center">
         {{evaluation?.evaluatorName || '-'}}
       </div>
     </div>
     <div class="form-group row">
-      <label for="commentsEvaluator" class="col-2 col-form-label">Comentarii evaluator:</label>
-      <div class="col">
-        <textarea placeholder="Comentarii evaluator..." class="form-control" type="text" formControlName="commentsEvaluator" name="commentsEvaluator" id="commentsEvaluator"></textarea>
+      <label for="commentsEvaluator" class="col-lg-2 col-12 col-form-label">{{'evaluations.evaluator-comments' | translate}}:</label>
+      <div class="col-lg col-12">
+        <textarea [placeholder]="('evaluations.evaluator-comments' | translate)+'...'" class="form-control" type="text" formControlName="commentsEvaluator" name="commentsEvaluator" id="commentsEvaluator"></textarea>
       </div>
     </div>
 </form>
 
-<form [formGroup]="evaluatedForm" *ngIf="isEvaluatedRoleView">
+<form [formGroup]="evaluatedForm" *ngIf="!isLoading && isEvaluatedRoleView">
   <div class="form-group row">
-    <label class="col-2 col-form-label">Nume, prenume contrasemnatar:</label>
-    <div class="col d-flex align-items-center">
+    <label class="col-lg-2 col-12 col-form-label">{{'evaluations.evaluated-name' | translate}}:</label>
+    <div class="col-lg col-12 d-flex align-items-center">
       {{evaluation?.evaluatedName || '-'}}
     </div>
   </div>
   <div class="form-group row">
-    <label for="commentsEvaluated" class="col-2 col-form-label">Comentarii angajat:</label>
-    <div class="col">
-      <textarea placeholder="Comentarii angajat..." class="form-control" type="text" formControlName="commentsEvaluated" name="commentsEvaluated" id="commentsEvaluated"></textarea>
+    <label for="commentsEvaluated" class="col-lg-2 col-12 col-form-label">{{'evaluations.evaluated-comments' | translate}}:</label>
+    <div class="col-lg col-12">
+      <textarea [placeholder]="('evaluations.evaluated-comments' | translate)+'...'" class="form-control" type="text" formControlName="commentsEvaluated" name="commentsEvaluated" id="commentsEvaluated"></textarea>
     </div>
   </div>
 </form>
 
-<form [formGroup]="counterSignForm" *ngIf="isCounterSignerView">
+<form [formGroup]="counterSignForm" *ngIf="!isLoading && isCounterSignerView">
   <div class="form-group row">
     <div class="col">
-      <table class="table">
-        <thead>
-          <tr>
-            <th [ngStyle]="{'width.%': 2}">Nr.</th>
-            <th>Comentariile contrasemnatarului:</th>
-            <th>Bifati</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of [1,2,3,4]">
-            <td>{{item}}</td>
-            <td>{{ 'evaluations.counter-signer-comments.'+item | translate }}</td>
-            <td>
-              <input [ngStyle]="{'width.px': 25}" type="checkbox" class="form-control" [formControlName]="'checkComment'+(item)" [name]="'checkComment'+(item)">
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive-xl">
+        <table class="table">
+          <thead>
+            <tr>
+              <th [ngStyle]="{'width.%': 2}">{{'evaluations.list-table.number' | translate}}</th>
+              <th>{{'evaluations.countersigner-comments' | translate}}:</th>
+              <th>{{'evaluations.check' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of [1,2,3,4]">
+              <td>{{ item }}</td>
+              <td>{{ 'evaluations.counter-signer-comments.'+item | translate }}</td>
+              <td>
+                <input [ngStyle]="{'width.px': 25}" type="checkbox" class="form-control" [formControlName]="'checkComment'+(item)" [name]="'checkComment'+(item)">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-2 col-form-label">Nume, prenume contrasemnatar:</label>
-    <div class="col d-flex align-items-center">
+    <label class="col-lg-2 col-12 col-form-label">{{'evaluations.countersigner-name' | translate}}:</label>
+    <div class="col-lg col-12 d-flex align-items-center">
       {{evaluation?.counterSignerName || '-'}}
     </div>
-    <label class="col-2 col-form-label d-flex align-items-center">Functia contrasemnatarului:</label>
-    <div class="col d-flex align-items-center">
+    <label class="col-lg-2 col-12 col-form-label d-flex align-items-center">{{'evaluations.countersigner-function' | translate}}:</label>
+    <div class="col-lg col-12 d-flex align-items-center">
       {{evaluation?.functionCounterSigner || '-'}}
     </div>
   </div>
   <div class="form-group row">
-    <label for="otherComments" class="col-2 col-form-label">Comentarii contrasemnatar:</label>
+    <label for="otherComments" class="col-2 col-form-label">{{'evaluations.countersigner-comments' | translate}}:</label>
     <div class="col">
-      <textarea placeholder="Comentarii contrasemnatar..." class="form-control" type="text" formControlName="otherComments" name="otherComments" id="otherComments"></textarea>
+      <textarea placeholder="('evaluations.countersigner-comments' | translate)+'...'" class="form-control" type="text" formControlName="otherComments" name="otherComments" id="otherComments"></textarea>
     </div>
   </div>
 </form>
-
-<div *ngIf="evaluationRole === EvaluatinRoleEnum.Evaluator" class="d-flex justify-content-center gap-2">
-  <button type="button" class="btn btn-secondary" routerLink="../../">{{ 'button.cancel' | translate }}</button>
-  <button type="button" class="btn btn-warning" (click)="submit()">{{ 'button.save' | translate }}</button>
-  <button type="button" class="btn btn-success" (click)="submit(true)">{{ 'button.confirm' | translate }}</button>
+<div *ngIf="showWarnning" class="text-danger">{{'message.there-are-errors-to-be-fixed' | translate }}</div>
+<div *ngIf="!isLoading && evaluationRole === EvaluatinRoleEnum.Evaluator" class="d-flex flex-xl-row flex-column justify-content-center gap-2">
+  <button type="button" class="btn btn-secondary order-xl-1 order-2" routerLink="../../">{{ 'button.cancel' | translate }}</button>
+  <button type="button" class="btn btn-warning order-xl-1 order-1" (click)="submit(ActionFormEnum.isSave)">{{ 'button.save' | translate }}</button>
+  <button [disabled]="evaluationForm.invalid" type="button" class="btn btn-success order-xl-1 order-0" (click)="submit(ActionFormEnum.isConfirm)">{{ 'button.confirm' | translate }}</button>
 </div>
-<div *ngIf="evaluationRole === EvaluatinRoleEnum.Evaluated" class="d-flex justify-content-center gap-2">
+<div *ngIf="!isLoading && evaluationRole === EvaluatinRoleEnum.Evaluated" class="d-flex justify-content-center gap-2">
   <button type="button" class="btn btn-secondary" routerLink="../../">{{ 'button.cancel' | translate }}</button>
-  <button type="button" class="btn btn-success" (click)="submit(true)">{{ 'button.accept' | translate }}</button>
-  <button type="button" class="btn btn-danger" (click)="submit(false)">{{ 'button.reject' | translate }}</button>
+  <button [disabled]="evaluatedForm.invalid" type="button" class="btn btn-success" (click)="submit(ActionFormEnum.isAccept)">{{ 'button.accept' | translate }}</button>
+  <button [disabled]="evaluatedForm.invalid" type="button" class="btn btn-danger" (click)="submit(ActionFormEnum.isReject)">{{ 'button.reject' | translate }}</button>
 </div>
-<div *ngIf="evaluationRole === EvaluatinRoleEnum.CounterSigner" class="d-flex justify-content-center gap-2">
+<div *ngIf="!isLoading && evaluationRole === EvaluatinRoleEnum.CounterSigner" class="d-flex justify-content-center gap-2">
   <button type="button" class="btn btn-secondary" routerLink="../../">{{ 'button.cancel' | translate }}</button>
-  <button type="button" class="btn btn-success" (click)="submit(true)">{{ 'button.accept' | translate }}</button>
-  <button type="button" class="btn btn-danger" (click)="submit(false)">{{ 'button.reject' | translate }}</button>
+  <button [disabled]="counterSignForm.invalid" type="button" class="btn btn-success" (click)="submit(ActionFormEnum.isCounterSignAccept)">{{ 'button.accept' | translate }}</button>
+  <button [disabled]="counterSignForm.invalid" type="button" class="btn btn-danger" (click)="submit(ActionFormEnum.isCounterSignReject)">{{ 'button.reject' | translate }}</button>
 </div>
-<div *ngIf="evaluationRole === EvaluatinRoleEnum.EvaluatedKnow" class="d-flex justify-content-center gap-2">
+<div *ngIf="!isLoading && evaluationRole === EvaluatinRoleEnum.EvaluatedKnow" class="d-flex justify-content-center gap-2">
   <button type="button" class="btn btn-secondary" routerLink="../../">{{ 'button.cancel' | translate }}</button>
-  <button type="button" class="btn btn-success" (click)="submit(true)">{{ 'button.accept' | translate }}</button>
+  <button type="button" class="btn btn-success" (click)="submit(ActionFormEnum.isAcknowledge)">{{ 'button.accept' | translate }}</button>
 </div>

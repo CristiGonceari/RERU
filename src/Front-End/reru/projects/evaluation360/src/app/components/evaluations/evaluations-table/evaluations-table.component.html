@@ -6,50 +6,50 @@
 	[colorClass]="'text-primary'"
 >
 </app-loading-spinner>
-<div *ngIf="!isLoading" class="table-responsive datatable datatable-default">
+<div *ngIf="!isLoading" class="table-responsive-xl datatable datatable-default">
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Angajatul</th>
-				<th class="text-center">Evaluatorul</th>
-				<th class="text-center">Contrasemnatar</th>
-				<th class="text-center">Tipul evaluarii</th>
-				<th class="text-center">Punctaj</th>
-				<th class="text-center">Statut</th>
-				<th *ngIf="isActionsEnabled">Actions</th>
+				<th>{{'evaluations.list-table.employee' | translate}}</th>
+				<th class="text-center">{{'evaluations.list-table.evaluator' | translate}}</th>
+				<th class="text-center">{{'evaluations.list-table.countersigner' | translate}}</th>
+				<th class="text-center">{{'evaluations.list-table.evaluation-type' | translate}}</th>
+				<th class="text-center">{{'evaluations.list-table.points' | translate}}</th>
+				<th class="text-center">{{'evaluations.list-table.status' | translate}}</th>
+				<th *ngIf="isActionsEnabled">{{'evaluations.list-table.actions' | translate}}</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr
-				*ngFor="let item of evaluations; let i = index; let even = even"
-				[class.table-warning]="item.state == 1"
-				[class.table-danger]="item.state == 2"
-				[class.table-info]="item.state == 3"
-				[class.table-success]="item.state == 4"
+				*ngFor="let evaluation of evaluations; let i = index"
+				[class.table-warning]="showHighlighted && evaluation.status === EvaluationStatusEnum.Draft"
+				[class.table-danger]="showHighlighted && evaluation.status === EvaluationStatusEnum.Confirmed"
+				[class.table-info]="showHighlighted && evaluation.status === EvaluationStatusEnum.Accepted"
+				[class.table-success]="showHighlighted && evaluation.status === EvaluationStatusEnum.Rejected"
 			>
 				<td class="text-center">
-					<b>{{ item?.evaluatedName }} </b>
+					<b>{{ evaluation?.evaluatedName }} </b>
 				</td>
 				<td class="text-center">
-					<b>{{ item.evaluatorName }} </b>
+					<b>{{ evaluation.evaluatorName }} </b>
 				</td>
 				<td class="text-center">
-					<b>{{ item.counterSignerName }} </b>
-				</td>
-
-				<td class="text-center">
-					{{ 'evaluations.positions.' + item.type | translate }}
+					<b>{{ evaluation.counterSignerName }} </b>
 				</td>
 
 				<td class="text-center">
-					{{ item.points }} <br />
+					{{ 'evaluations.positions.' + evaluation.type | translate }}
 				</td>
 
 				<td class="text-center">
-					{{ 'evaluations.status.' + item.status | translate }}
+					{{ evaluation.points }} <br />
+				</td>
+
+				<td class="text-center">
+					{{ 'evaluations.status.' + evaluation.status | translate }}
 				</td>
 				<td *ngIf="isActionsEnabled">
-					<app-evaluation-dropdown-details [index]="i" [evaluation]="item" (delete)="openConfirmEvaluationDeleteModal(item.id)"></app-evaluation-dropdown-details>
+					<app-evaluation-dropdown-details [index]="i" [evaluation]="evaluation" (delete)="openConfirmEvaluationDeleteModal(evaluation.id)"></app-evaluation-dropdown-details>
 				</td>
 			</tr>
 			<tr *ngIf="!evaluations.length">
