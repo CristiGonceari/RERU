@@ -23,6 +23,7 @@ using Newtonsoft.Json.Serialization;
 //using NSwag.Generation.Processors.Security;
 using RERU.Data.Persistence.Context;
 using System.Text;
+using Age.Integrations.MNotify;
 using CODWER.RERU.Core.Application.CronJobs;
 using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
@@ -60,7 +61,9 @@ namespace CODWER.RERU.Core.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSystemCertificate(Configuration.GetSection("Certificate"));
-            services.AddMNotifyClient(Configuration.GetSection("MNotify"));
+            //services.AddMNotifyClient(Configuration.GetSection("MNotify"));
+           // services.Configure<MNotifyClientOptions>(Configuration.GetSection("MNotify"));
+
 
             services.Configure<SmtpOptions>(Configuration.GetSection("Smtp"));
             // services.Configure<RabbitMq> (Configuration.GetSection ("MessageQueue"));
