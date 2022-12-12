@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CODWER.RERU.Core.Application.Addresses.AddAddress;
+﻿using CODWER.RERU.Core.Application.Addresses.AddAddress;
 using CODWER.RERU.Core.Application.Addresses.GetAddress;
 using CODWER.RERU.Core.Application.Addresses.RemoveAddress;
 using CODWER.RERU.Core.Application.Addresses.UpdateAddress;
@@ -8,11 +6,6 @@ using CODWER.RERU.Core.DataTransferObjects.Address;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Age.Integrations.MNotify;
-using Age.Integrations.MNotify.Models;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace CODWER.RERU.Core.API.Controllers
 {   
@@ -20,44 +13,9 @@ namespace CODWER.RERU.Core.API.Controllers
     [Route("api/[controller]")]
     public class AddressController : BaseController
     {
-        private readonly IMNotifyClient _mNotifyClient;
-
-        public AddressController(IMediator mediator, IMNotifyClient mNotifyClient) : base(mediator)
+        public AddressController(IMediator mediator) : base(mediator)
         {
-            _mNotifyClient = mNotifyClient;
         }
-
-        [HttpGet("test")]
-        public async Task<string> SendMail()
-        {
-            var notif = new NotificationRequest
-            {
-                
-                Body = new NotificationContent { Romanian = "test content" },
-                Recipients = new List<NotificationRecipient>()
-                {
-                    new NotificationRecipient { Type = NotificationRecipientType.Email, Value = "hubencu.andrian@gmail.com" }
-                },
-                Priority = NotificationPriority.Medium,
-                ShortBody = new NotificationContent { Romanian = "short body test" },
-                Subject = new NotificationContent { Romanian = "subject test" },
-                
-            };
-
-            try
-            {
-                await _mNotifyClient.SendNotification(notif);
-            }
-            catch (Exception e)
-            {
-                var mes = $"ERROR Mnotify {e.Message}";
-                Console.WriteLine(mes);
-                return mes;
-            }
-
-            return "Success";
-        }
-
 
         [HttpGet("{id}")]
         public async Task<AddressDto> GetAddress([FromRoute] int id)

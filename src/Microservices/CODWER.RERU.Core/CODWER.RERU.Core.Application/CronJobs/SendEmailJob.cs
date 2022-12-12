@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Common.Interfaces;
@@ -18,40 +17,15 @@ namespace CODWER.RERU.Core.Application.CronJobs
     public class SendEmailJob
     {
         private readonly AppDbContext _appDbContext;
-        private readonly INotificationService _notificationService;
+        private readonly IEmailSenderService _emailSenderService;
         private readonly PlatformConfig _platformConfig;
 
-        public SendEmailJob(AppDbContext appDbContext, INotificationService notificationService, IOptions<PlatformConfig> conf)
+        public SendEmailJob(AppDbContext appDbContext, IOptions<PlatformConfig> conf, IEmailSenderService emailSenderService)
         {
             _appDbContext = appDbContext.NewInstance();
-            _notificationService = notificationService;
+            _emailSenderService = emailSenderService;
             _platformConfig = conf.Value;
         }
-
-        //public async Task SendEmailNotification1()
-        //{
-        //    while (_appDbContext.EmailNotifications.Any(en => en.IsSend == false && en.InUpdateProcess == false))
-        //    {
-        //        var email = await _appDbContext.EmailNotifications
-        //            .Include(en => en.Properties)
-        //            .FirstOrDefaultAsync(en => en.IsSend == false && en.InUpdateProcess == false);
-
-        //        if (email == null) return;
-
-        //        email.InUpdateProcess = true;
-        //        await _appDbContext.SaveChangesAsync();
-
-        //        var template = await GetFileContent(email.HtmlTemplateAddress);
-
-        //        template = email.Properties
-        //            .Aggregate(template, (current, property) => current
-        //                .Replace(property.KeyToReplace, property.ValueToReplace));
-
-        //        await SendEmail(email, template);
-
-        //        await _appDbContext.SaveChangesAsync();
-        //    }
-        //}
 
         public async Task SendEmailNotification()
         {
@@ -71,7 +45,7 @@ namespace CODWER.RERU.Core.Application.CronJobs
 
                 try
                 {
-                    await _notificationService.BulkNotify(emailsToSend, NotificationType.Both);
+                    await _emailSenderService.BulkNotify(emailsToSend, NotificationType.MNotifyNotification);
 
                     await SetEmailsStatus(emails, "Sent");
                 }
