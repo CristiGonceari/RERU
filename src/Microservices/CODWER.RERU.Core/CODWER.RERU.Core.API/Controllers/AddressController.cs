@@ -8,7 +8,11 @@ using CODWER.RERU.Core.DataTransferObjects.Address;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Age.Integrations.MNotify;
 using Age.Integrations.MNotify.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace CODWER.RERU.Core.API.Controllers
 {   
@@ -28,6 +32,7 @@ namespace CODWER.RERU.Core.API.Controllers
         {
             var notif = new NotificationRequest
             {
+                
                 Body = new NotificationContent { Romanian = "test content" },
                 Recipients = new List<NotificationRecipient>()
                 {
@@ -35,7 +40,8 @@ namespace CODWER.RERU.Core.API.Controllers
                 },
                 Priority = NotificationPriority.Medium,
                 ShortBody = new NotificationContent { Romanian = "short body test" },
-                Subject = new NotificationContent { Romanian = "subject teest" }
+                Subject = new NotificationContent { Romanian = "subject test" },
+                
             };
 
             try
@@ -44,11 +50,12 @@ namespace CODWER.RERU.Core.API.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                //throw;
+                var mes = $"ERROR Mnotify {e.Message}";
+                Console.WriteLine(mes);
+                return mes;
             }
 
-            return string.Empty;
+            return "Success";
         }
 
 

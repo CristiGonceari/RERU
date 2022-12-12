@@ -7,6 +7,7 @@ using CVU.ERP.Notifications.Email;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 using System.Collections.Generic;
+using Age.Integrations.MNotify.Models;
 using CVU.ERP.Common;
 
 namespace CVU.ERP.Notifications.Services.Implementations
@@ -16,12 +17,14 @@ namespace CVU.ERP.Notifications.Services.Implementations
         private readonly IEmailService _emailService;
         private readonly AppDbContext _appDbContext;
         private readonly IDateTime _dateTime;
+        private readonly IMNotifyClient _mNotifyClient;
 
-        public NotificationService(IEmailService emailService, AppDbContext appDbContext, IDateTime dateTime)
+        public NotificationService(IEmailService emailService, AppDbContext appDbContext, IDateTime dateTime, IMNotifyClient mNotifyClient)
         {
             _emailService = emailService;
             _appDbContext = appDbContext;
             _dateTime = dateTime;
+            _mNotifyClient = mNotifyClient;
         }
 
         public async Task<IEmailService> Notify(EmailData data, NotificationType type)
@@ -40,6 +43,8 @@ namespace CVU.ERP.Notifications.Services.Implementations
             {
                 result = await _emailService.QuickSendAsync(data.subject, data.body, data.from, data.to);
                 //+ MNotification todo Service
+                //await SendMNotifyEmail(data);
+
             }
 
             return result;
@@ -61,6 +66,10 @@ namespace CVU.ERP.Notifications.Services.Implementations
             {
                 result = await _emailService.BulkSendAsync(data);
                 //+ MNotification todo Service
+                //foreach (var email in data)
+                //{
+                //    await SendMNotifyEmail(email);
+                //}
             }
 
             return result;
@@ -89,6 +98,32 @@ namespace CVU.ERP.Notifications.Services.Implementations
 
                 await db.EmailNotifications.AddAsync(item);
                 await db.SaveChangesAsync();
+            }
+        }
+
+        private async Task SendMNotifyEmail(EmailData data)
+        {
+            var notif = new NotificationRequest
+            {
+
+                Body = new NotificationContent { Romanian = data.body },
+                Recipients = new List<NotificationRecipient>()
+                {
+                    new NotificationRecipient { Type = NotificationRecipientType.Email, Value = data.to }
+                },
+                Priority = NotificationPriority.Medium,
+                ShortBody = new NotificationContent { Romanian = "Notificare RERU" },
+                Subject = new NotificationContent { Romanian = data.subject },
+
+            };
+
+            try
+            {
+                await _mNotifyClient.SendNotification(notif);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"ERROR Mnotify {e.Message}");
             }
         }
     }
