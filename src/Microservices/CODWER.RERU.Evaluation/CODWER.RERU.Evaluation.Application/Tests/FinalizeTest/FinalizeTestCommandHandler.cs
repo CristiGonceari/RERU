@@ -78,6 +78,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
             {
                 await _mediator.Send(new AutoCheckTestScoreCommand { TestId = test.Id });
                 test.TestStatus = TestStatusEnum.Verified;
+                test.FinalAccumulatedPercentage = test.AccumulatedPercentage;
+                test.FinalStatusResult = test.ResultStatus;
                 await _appDbContext.SaveChangesAsync();
 
                 await SendEmailNotificationToCandidate(test);

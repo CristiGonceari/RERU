@@ -146,7 +146,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
             var sameTestQuestions = _appDbContext.TestQuestions
                 .Include(x => x.Test)
                 .Where(x => x.HashGroupKey == test.HashGroupKey && test.TestTemplate.Mode == TestTemplateModeEnum.Test)
-                .DistinctBy(x => x.Index)
+                .DistinctBy2(x => x.Index)
                 .OrderBy(x => x.Index)
                 .ToList();
 

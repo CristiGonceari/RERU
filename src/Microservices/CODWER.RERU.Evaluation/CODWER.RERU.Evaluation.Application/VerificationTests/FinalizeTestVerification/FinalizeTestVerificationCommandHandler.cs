@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
@@ -31,7 +33,9 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.FinalizeTestVerif
 
         public async Task<Unit> Handle(FinalizeTestVerificationCommand request, CancellationToken cancellationToken)
         {
-            var testToFinalize = await _appDbContext.Tests.FirstAsync(x => x.Id == request.TestId);
+            var testToFinalize = await _appDbContext.Tests
+                .Include(x => x.TestTemplate)
+                .FirstAsync(x => x.Id == request.TestId);
 
             testToFinalize.TestStatus = TestStatusEnum.Verified;
 
@@ -41,7 +45,34 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.FinalizeTestVerif
 
             await _internalNotificationService.AddNotification(testToFinalize.UserProfileId, NotificationMessages.YourTestWasVerified);
 
-            await SendEmailNotification(testToFinalize);
+            await CalculateEvaluatorsAverage(testToFinalize);
+
+            return Unit.Value;
+        }
+
+        private async Task<Unit> CalculateEvaluatorsAverage(Test testToFinalize)
+        {
+            var testsWithTheSameHash = _appDbContext.Tests.Where(x => x.HashGroupKey == testToFinalize.HashGroupKey);
+
+            if (testsWithTheSameHash.Any())
+            {
+                if (testsWithTheSameHash.All(x => x.TestStatus == TestStatusEnum.Verified))
+                {
+                    var average = testsWithTheSameHash.Sum(x => x.AccumulatedPercentage) / testsWithTheSameHash.Count();
+
+                    await testsWithTheSameHash.ForEachAsync(x =>
+                    {
+                        x.FinalAccumulatedPercentage = (int) Math.Round((double) average);
+                        x.FinalStatusResult = x.FinalAccumulatedPercentage >= x.TestTemplate.MinPercent
+                            ? TestResultStatusEnum.Passed
+                            : TestResultStatusEnum.NotPassed;
+                    });
+
+                    await SendEmailNotification(testToFinalize);
+                }
+            }
+
+            await _appDbContext.SaveChangesAsync();
 
             return Unit.Value;
         }
@@ -73,7 +104,7 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.FinalizeTestVerif
         private async Task<string> GetTableContent(Test test)
         {
             var content = $@"<p style=""font-size: 22px; font-weight: 300;"">testul ""{test.TestTemplate.Name}"" a fost verificat.</p>
-                <p style=""font-size: 22px;font-weight: 300;"">Ați acumulat {test.AccumulatedPercentage}% din 100 %.</p>";
+                <p style=""font-size: 22px;font-weight: 300;"">Ați acumulat {test.FinalAccumulatedPercentage}% din 100 %.</p>";
 
             return content;
         }

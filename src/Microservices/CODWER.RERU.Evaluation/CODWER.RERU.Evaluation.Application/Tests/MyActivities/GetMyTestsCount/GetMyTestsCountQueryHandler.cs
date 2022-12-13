@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTestsCount
                 .Include(t => t.Location)
                 .Include(t => t.Event)
                 .Where(p => p.UserProfileId == currentUserId && p.TestTemplate.Mode == TestTemplateModeEnum.Test)
-                .DistinctBy(x => x.HashGroupKey != null ? x.HashGroupKey : x.Id.ToString())
+                .DistinctBy2(x => x.HashGroupKey != null ? x.HashGroupKey : x.Id.ToString())
                 .AsQueryable();
 
             var dates = new List<TestCount>();

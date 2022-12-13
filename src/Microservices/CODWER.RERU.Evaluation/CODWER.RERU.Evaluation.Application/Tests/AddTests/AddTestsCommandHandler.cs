@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities.Enums;
 using FileTypeEnum = CVU.ERP.StorageService.Entities.FileTypeEnum;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
@@ -71,22 +72,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
             for (int userProfileIndex = 0; userProfileIndex < request.UserProfileIds.Count; userProfileIndex++)
             {
-                var myHashGroupKey = Guid.NewGuid().ToString();
                 int userProfileIndexCopy = userProfileIndex;
-                var myHashGroupKeyCopy = myHashGroupKey;
 
-                if (request.EvaluatorIds.Any())
-                {
-                    for (int evaluatorIndex = 0; evaluatorIndex < request.EvaluatorIds.Count; evaluatorIndex++)
-                    {
-                        int evaluatorIndexCopy = evaluatorIndex;
-                        tasks.Add(Task.Run(() => HandleTask(request, userProfileIndexCopy, evaluatorIndexCopy, processId, myHashGroupKeyCopy)));
-                    }
-                }
-                else
-                {
-                    tasks.Add(Task.Run(() => HandleTask(request, userProfileIndexCopy, null, processId, myHashGroupKeyCopy)));
-                }
+                tasks.Add(Task.Run(() => StartTasks(userProfileIndexCopy, request, processId)));
             }
 
             await WaitTasks(Task.WhenAll(tasks));
@@ -96,6 +84,26 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             await SaveExcelFile(processId, _excelPackage);
 
             return _testsIds;
+        }
+
+        private async Task StartTasks(int userProfileIndex, AddTestsCommand request, int processId)
+        {
+            var myHashGroupKey = Guid.NewGuid().ToString();
+            int userProfileIndexCopy = userProfileIndex;
+            var myHashGroupKeyCopy = myHashGroupKey;
+
+            if (request.EvaluatorIds.Any())
+            {
+                for (int evaluatorIndex = 0; evaluatorIndex < request.EvaluatorIds.Count; evaluatorIndex++)
+                {
+                    int evaluatorIndexCopy = evaluatorIndex;
+                    await HandleTask(request, userProfileIndexCopy, evaluatorIndexCopy, processId, myHashGroupKeyCopy);
+                }
+            }
+            else
+            {
+                await HandleTask(request, userProfileIndexCopy, null, processId, myHashGroupKeyCopy);
+            }
         }
 
         private async Task WaitTasks(Task t)
@@ -162,7 +170,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                     HashGroupKey = myHashGroupKey,
                     EventId = request.EventId,
                     TestStatus = request.TestStatus,
-                    ProgrammedTime = request.ProgrammedTime
+                    ProgrammedTime = request.ProgrammedTime,
+                    FinalStatusResult = TestResultStatusEnum.NoResult,
+                    FinalAccumulatedPercentage = 0
                 }
             };
         }
