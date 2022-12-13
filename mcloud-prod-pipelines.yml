@@ -1,0 +1,657 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+  - pipelines/mcloud-prod
+
+resources:
+  - repo: self
+
+variables:
+  tag: mprod
+  containerRegistry: cvuintell-docker-hub
+  HELM_VERSION: "3.0.2"
+  devK8sService: mcloud-reru
+
+stages:
+  - stage: Build
+    displayName: Building Images and  publishing images
+    jobs:
+      - job: Build
+        timeoutInMinutes: 120
+        displayName: Build images
+        pool:
+          name: "Default"
+
+        steps:
+          - task: PowerShell@2
+            displayName: Calculating changed projects
+            inputs:
+              targetType: "inline"
+              script: |
+                $override = 'False'
+                $files=$(git diff HEAD --name-only)
+                $temp=$files -split ' '
+                $count=$temp.Length
+                echo "Total changed $count files"
+
+                $buildAllProjects = 'True'
+                if ($buildAllProjects -eq 'True')
+                {
+                  echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
+                  echo "##vso[task.setvariable variable=BuildEvaluation360FE]True"
+                  echo "##vso[task.setvariable variable=BuildPersonalFE]True"
+                  echo "##vso[task.setvariable variable=BuildCoreFe]True"
+                  echo "##vso[task.setvariable variable=BuildLoggingFe]True"
+
+                  echo "##vso[task.setvariable variable=BuildCore]True"
+                  echo "##vso[task.setvariable variable=BuildEvaluation]True"
+                  echo "##vso[task.setvariable variable=BuildEvaluation360]True"
+                  echo "##vso[task.setvariable variable=BuildPersonal]True"
+                  echo "##vso[task.setvariable variable=BuildLogging]True"
+
+                  echo "##vso[task.setvariable variable=BuildIdentityMigrator]True"
+                  echo "##vso[task.setvariable variable=BuildStorageMigrator]True"
+                  echo "##vso[task.setvariable variable=BuildIdentityNew]True"
+                  echo "##vso[task.setvariable variable=BuildPublicGateway]True"
+                  echo "##vso[task.setvariable variable=BuildInternalGateway]True"
+                }
+
+                For ($i=0; $i -lt $temp.Length; $i++)
+                {
+                  $name=$temp[$i]
+                  echo "this is $name file"
+                  if ($name -like "src/Microservices/CODWER.RERU.Identity/CODWER.RERU.IdentityMigrator.Console/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildIdentityMigrator]True"
+                    }
+
+                  if ($name -like "src/Microservices/CODWER.RERU.Storage/CODWER.RERU.Storage.Console/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildStorageMigrator]True"
+                    }
+
+                  if ($name -like "src/Microservices/CODWER.RERU.Identity/CODWER.RERU.Identity.Web/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildIdentityNew]True"
+                    }
+
+                  if ($name -like "src/Microservices/CODWER.RERU.Gateway/CODWER.RERU.Gateway.Public/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildPublicGateway]True"
+                    }
+
+                  if ($name -like "src/Microservices/CODWER.RERU.Gateway/CODWER.RERU.Gateway.Internal/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildInternalGateway]True"
+                    }
+
+                  if ($name -like "src/Microservices/CODWER.RERU.Core/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildCore]True"
+                    }
+                     
+                  if ($name -like "src/Microservices/CODWER.RERU.Logging/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildLogging]True"
+                    }
+
+                  if ($name -like "src/Microservices/CODWER.RERU.Personal/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildPersonal]True"
+                    }                
+
+                  if ($name -like "src/Microservices/CODWER.RERU.Evaluation/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildEvaluation]True"
+                    }
+
+                  if ($name -like "src/Microservices/CODWER.RERU.Evaluation360/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildEvaluation360]True"
+                    }
+
+                  if ($name -like "src/Front-End/reru/projects/core/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildCoreFe]True"
+                    }
+
+                  if ($name -like "src/Front-End/reru/projects/logging/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildLoggingFe]True"
+                    }
+
+                  if ($name -like "src/Front-End/reru/projects/personal/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildPersonalFE]True"
+                    }
+
+                  if ($name -like "src/Front-End/reru/projects/evaluation/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
+                    }
+
+                  if ($name -like "src/Front-End/reru/projects/evaluation360/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildEvaluation360FE]True"
+                    }
+
+                  if ($name -like "src/Front-End/reru/projects/erp-shared/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildEvaluationFE]True"
+                      echo "##vso[task.setvariable variable=BuildEvaluation360FE]True"
+                      echo "##vso[task.setvariable variable=BuildPersonalFE]True"
+                      echo "##vso[task.setvariable variable=BuildCoreFe]True"
+                      echo "##vso[task.setvariable variable=BuildLoggingFe]True"
+                    }
+
+                  if ($name -like "src/Common/*" -or $override -eq 'True')
+                    {
+                      echo "##vso[task.setvariable variable=BuildCore]True"
+                      echo "##vso[task.setvariable variable=BuildEvaluation]True"
+                      echo "##vso[task.setvariable variable=BuildEvaluation360]True"
+                      echo "##vso[task.setvariable variable=BuildPersonal]True"
+                      echo "##vso[task.setvariable variable=BuildLogging]True"
+
+                      echo "##vso[task.setvariable variable=BuildIdentityMigrator]True"
+                      echo "##vso[task.setvariable variable=BuildStorageMigrator]True"
+                      echo "##vso[task.setvariable variable=BuildIdentityNew]True"
+                      echo "##vso[task.setvariable variable=BuildPublicGateway]True"
+                      echo "##vso[task.setvariable variable=BuildInternalGateway]True"
+                    }
+                }
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+
+          - task: Docker@2
+            displayName: Build Public Gateway image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-public-gateway"
+              Dockerfile: "docker-files/Dockerfile-RERU-PublicGateway"
+              tags: $(tag)
+              includeLatestTag: true
+            condition: and(succeeded(), eq(variables['BuildPublicGateway'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Public Gateway image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-public-gateway"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+              includeLatestTag: true
+            condition: and(succeeded(), eq(variables['BuildPublicGateway'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildPublicGateway'], 'True'))
+
+          - task: Docker@2
+            displayName: Build Internal Gateway image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-internal-gateway"
+              Dockerfile: "docker-files/Dockerfile-RERU-InternalGateway"
+              includeLatestTag: true
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildInternalGateway'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Internal Gateway image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-internal-gateway"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+              includeLatestTag: true
+            condition: and(succeeded(), eq(variables['BuildInternalGateway'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildInternalGateway'], 'True'))
+
+          - task: Docker@2
+            displayName: Build Identity New image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-identity-new"
+              Dockerfile: "docker-files/Dockerfile-RERU-Identity"
+              includeLatestTag: true
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildIdentityNew'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Identity New image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-identity-new"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+              includeLatestTag: true
+            condition: and(succeeded(), eq(variables['BuildIdentityNew'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildIdentityNew'], 'True'))
+
+          - task: Docker@2
+            displayName: Build Identity Migrator back end image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-identity-migrator"
+              Dockerfile: "docker-files/Dockerfile-RERU-IdentityMigrator"
+              includeLatestTag: true
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildIdentityMigrator'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Identity Migrator back end image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-identity-migrator"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+              includeLatestTag: true
+            condition: and(succeeded(), eq(variables['BuildIdentityMigrator'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildIdentityMigrator'], 'True'))
+
+          - task: Docker@2
+            displayName: Build Storage Migrator back end image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-storage-migrator"
+              Dockerfile: "docker-files/Dockerfile-RERU-StorageMigrator"
+              includeLatestTag: true
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildStorageMigrator'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Storage Migrator back end image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-storage-migrator"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+              includeLatestTag: true
+            condition: and(succeeded(), eq(variables['BuildStorageMigrator'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildStorageMigrator'], 'True'))
+
+          - task: Docker@2
+            displayName: Build Core front end image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-core-fe"
+              Dockerfile: "docker-files/Dockerfile-RERU-Core-FE"
+              includeLatestTag: true
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildCoreFE'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Core front end image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-core-fe"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+              includeLatestTag: true
+            condition: and(succeeded(), eq(variables['BuildCoreFE'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildCoreFE'], 'True'))
+
+          - task: Docker@2
+            displayName: Build Core image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-core"
+              Dockerfile: "docker-files/Dockerfile-RERU-Core"
+              includeLatestTag: true
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildCore'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Core Image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-core"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+              includeLatestTag: true
+            condition: and(succeeded(), eq(variables['BuildCore'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildCore'], 'True'))
+
+          - task: Docker@2
+            displayName: Build Logging front end image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-logging-fe"
+              Dockerfile: "docker-files/Dockerfile-RERU-Logging-FE"
+              includeLatestTag: true
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildLoggingFE'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Logging front end image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-logging-fe"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+              includeLatestTag: true
+            condition: and(succeeded(), eq(variables['BuildLoggingFE'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildLoggingFE'], 'True'))
+
+          - task: Docker@2
+            displayName: Build Logging image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-logging"
+              Dockerfile: "docker-files/Dockerfile-RERU-Logging"
+              includeLatestTag: true
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildLogging'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Logging Image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-logging"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+              includeLatestTag: true
+            condition: and(succeeded(), eq(variables['BuildLogging'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildLogging'], 'True'))
+
+          - task: Docker@2
+            displayName: Build Personal front end  image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-personal-fe"
+              Dockerfile: "docker-files/Dockerfile-RERU-Personal-FE"
+              includeLatestTag: true
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildPersonalFE'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Personal front end image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-personal-fe"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+              includeLatestTag: true
+            condition: and(succeeded(), eq(variables['BuildPersonalFE'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildPersonalFE'], 'True'))
+
+          - task: Docker@2
+            displayName: Build Personal back end image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-personal"
+              Dockerfile: "docker-files/Dockerfile-RERU-Personal"
+              includeLatestTag: true
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildPersonal'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Personal back end image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-personal"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+              includeLatestTag: true
+            condition: and(succeeded(), eq(variables['BuildPersonal'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildPersonal'], 'True'))
+
+          - task: Docker@2
+            displayName: Build Evaluation front end  image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-evaluation-fe"
+              Dockerfile: "docker-files/Dockerfile-RERU-Evaluation-FE"
+              includeLatestTag: true
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildEvaluationFE'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Evaluation front end image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-evaluation-fe"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+              includeLatestTag: true
+            condition: and(succeeded(), eq(variables['BuildEvaluationFE'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildEvaluationFE'], 'True'))
+              
+          - task: Docker@2
+            displayName: Build Evaluation back end image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-evaluation"
+              Dockerfile: "docker-files/Dockerfile-RERU-Evaluation"
+              includeLatestTag: true
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildEvaluation'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Evaluation back end image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-evaluation"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+              includeLatestTag: true
+            condition: and(succeeded(), eq(variables['BuildEvaluation'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildEvaluation'], 'True'))
+
+            
+          - task: Docker@2
+            displayName: Build Evaluation360 front end  image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-evaluation360-fe"
+              Dockerfile: "docker-files/Dockerfile-RERU-Evaluation360-FE"
+              includeLatestTag: true
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildEvaluation360FE'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Evaluation360 front end image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-evaluation360-fe"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+              includeLatestTag: true
+            condition: and(succeeded(), eq(variables['BuildEvaluation360FE'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildEvaluation360FE'], 'True'))
+              
+          - task: Docker@2
+            displayName: Build Evaluation360 back end image
+            inputs:
+              command: build
+              buildContext: /home/justin/myagent/_work/17/s
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-evaluation360"
+              Dockerfile: "docker-files/Dockerfile-RERU-Evaluation360"
+              includeLatestTag: true
+              tags: |
+                $(tag)
+            condition: and(succeeded(), eq(variables['BuildEvaluation360'], 'True'))
+
+          - task: Docker@2
+            displayName: "Push Evaluation360 back end image"
+            inputs:
+              containerRegistry: $(containerRegistry)
+              repository: "cvuintell/reru-evaluation360"
+              command: "push"
+              tags: $(tag)
+              addPipelineData: false
+              includeLatestTag: true
+            condition: and(succeeded(), eq(variables['BuildEvaluation360'], 'True'))
+
+          - task: CmdLine@2
+            displayName: Clean all docker resources
+            inputs:
+              script: "docker system prune -a --force"
+            condition: and(succeeded(), eq(variables['BuildEvaluation360'], 'True'))
+
+  - stage: DeployDev
+    displayName: Deploy to DEV
+    pool:
+      name: "Default"
+    variables:
+      k8sNamespace: reru-prod
+      k8sReleaseName: reru-app-demo-prod
+    jobs:
+      - deployment: DeployDev
+        environment: RERUPlatform-PRODUCTION
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                  lfs: 'True'
+                - task: HelmInstaller@1
+                  displayName: Install Helm CLI
+
+                - task: Kubernetes@1
+                  displayName: Login to Kubernetes
+                  inputs:
+                    connectionType: Kubernetes Service Connection
+                    kubernetesServiceEndpoint: $(devK8sService)
+                    command: login
+                - bash:
+                    helm upgrade $(k8sReleaseName) helm-prod-mcloud/chart/
+                    --install 
+                    --atomic 
+                    --namespace $(k8sNamespace)
+                    --recreate-pods 
+                    --values helm-prod-mcloud/values.dev.yaml
+                  #  --set-string core.database.connection_string="$(dev_core_connection_string)"
+
+                - task: Kubernetes@1
+                  displayName: Logout from Kubernetes
+                  inputs:
+                    command: logout
