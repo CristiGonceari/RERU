@@ -67,7 +67,7 @@
                                         }}</span>
                                 </p>
                             </div>
-                            <div *ngIf="item.isVerificatedAutomat">
+                            <div *ngIf="!item.evaluatorName && item.isVerificatedAutomat">
                                 <p class="font-size-lg mb-0">{{ 'tests.verified-by-system' | translate }}</p>
                             </div>
                             <div *ngIf="!item.evaluatorName && item.eventName && !item.isVerificatedAutomat">
