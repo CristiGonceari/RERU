@@ -799,6 +799,7 @@
     "import-users": "Bulk import users",
     "bulk-message": "Please, use our special form to import users",
     "evaluators": "Evaluators",
+    "evaluators-e": "evaluators",
     "evaluator": "Evaluator",
     "attach-evaluator": "Attach evaluator",
     "detach-evaluator": "Remove evaluator",

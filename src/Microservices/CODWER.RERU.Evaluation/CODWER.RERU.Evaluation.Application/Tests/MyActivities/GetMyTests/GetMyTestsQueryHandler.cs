@@ -43,7 +43,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTests
                                 ? t.ProgrammedTime.Date <= request.Date && t.EndProgrammedTime.Value.Date >= request.Date
                                 : t.ProgrammedTime.Date == request.Date.Date))
                 .OrderByDescending(x => x.CreateDate)
-                .DistinctBy(x => x.HashGroupKey != null ? x.HashGroupKey : x.Id.ToString())
+                .DistinctBy2(x => x.HashGroupKey != null ? x.HashGroupKey : x.Id.ToString())
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(request.TestName))

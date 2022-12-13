@@ -105,7 +105,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
                 if (testEvaluator != null)
                 {
-                    testDto.ShowUserName = testEvaluator.ShowUserName != null ? (bool)testEvaluator.ShowUserName : true;
+                    testDto.ShowUserName = testEvaluator.ShowUserName ?? true;
                     testDto.IsEvaluator = true;
                 }
                 else if (eventEvaluator != null)

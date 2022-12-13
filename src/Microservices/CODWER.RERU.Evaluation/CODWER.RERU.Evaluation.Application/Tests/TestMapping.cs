@@ -38,6 +38,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.CanStartWithoutConfirmation, opts => opts.MapFrom(src => CheckCanStartWithoutConfirmation(src)))
                 .ForMember(x => x.DepartmentName, opts => opts.MapFrom(src => src.UserProfile.Department.Name))
                 .ForMember(x => x.RoleName, opts => opts.MapFrom(src => src.UserProfile.Role.Name))
+                .ForMember(x => x.FinalAccumulatedPercentage, opts => opts.MapFrom(src => src.FinalAccumulatedPercentage))
+                .ForMember(x => x.FinalResult, opts => opts.MapFrom(src => src.FinalStatusResult))
                 .ForMember(x => x.HashGroupKey, opts => opts.MapFrom(src => src.HashGroupKey));
 
             CreateMap<AddEditTestDto, Test>()

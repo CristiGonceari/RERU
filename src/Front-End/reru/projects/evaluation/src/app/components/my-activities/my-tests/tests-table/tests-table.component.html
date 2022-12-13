@@ -63,9 +63,17 @@
               <label *ngIf="!test.eventName">-</label>
             </td>
             <td>
-              <label *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</label>
-              <label *ngIf="test.result != resultEnum.NoResult">{{ test.accumulatedPercentage }}% /
-                {{test.minPercent}}%</label>
+              <div *ngIf="test.hashGroupKey != null">
+                <p class="mb-0" *ngIf="(test.finalResult == resultEnum.NoResult || test.finalResult == null)"> - / {{test.minPercent}}%</p>
+                <p class="mb-0" *ngIf="test.finalResult != resultEnum.NoResult && test.finalAccumulatedPercentage != null">{{ test.finalAccumulatedPercentage
+                    }}% / {{test.minPercent}}%</p>
+              </div>
+              <div *ngIf="test.hashGroupKey == null">
+                  <p class="mb-0" *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</p>
+                  <p class="mb-0" *ngIf="test.result != resultEnum.NoResult">{{ test.accumulatedPercentage
+                      }}% /
+                      {{test.minPercent}}%</p>
+              </div>
             </td>
             <td>
               <button *ngIf="test.testStatus == enum.InProgress" class="btn btn-sm btn-light-warning"
