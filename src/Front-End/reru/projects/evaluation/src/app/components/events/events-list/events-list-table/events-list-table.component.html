@@ -3,7 +3,7 @@
 </app-loading-spinner>
 
 <app-event-calendar (onDatePicked)="getListByDate($event)" (listOfDates)="list($event)" *ngIf="isLoadingCalendar"
-  (listOfCountedEvents)="getListOfCoutedEvents($event)">
+  (listOfCountedEvents)="getListOfCoutedEvents($event)" [isLoading]="isLoadingCountedTests">
 </app-event-calendar>
 
 <div>

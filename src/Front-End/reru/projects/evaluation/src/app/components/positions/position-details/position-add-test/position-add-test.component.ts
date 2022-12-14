@@ -174,7 +174,7 @@ export class PositionAddTestComponent implements OnInit {
       userProfileIds: this.userListToAdd,
       programmedTime: this.search || null,
       eventId: this.eventId || null,
-      evaluatorIds: this.evaluatorList[0] || null,
+      evaluatorIds: this.evaluatorList || [],
       testStatus: TestStatusEnum.Programmed,
       processId: this.processId || null,
       testTemplateId: this.testTemplateId || 0,

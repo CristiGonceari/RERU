@@ -399,6 +399,7 @@
     "stop-test-msg": "Sigur doriți să opriți acest test?",
     "please-wait": "Vă rugăm să așteptați până sistemul importa teste pentru utilizatori ...",
     "test-template": "șablon de test",
+    "test-template-delete-modal": "șablonul de test",
     "start-test": "Testul va începe în câteva minute",
     "verified-by-system": "Verificat de către sistem"
   },

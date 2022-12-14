@@ -97,7 +97,8 @@
               }"
               class="badge w-100">{{c.count}}</span>
             </div>
-            <div class="d-md-none d-flex justify-content-center" *ngIf="c.count > 0">
+              <app-loading-spinner class="justify-content-center" *ngIf="isLoading"></app-loading-spinner>
+            <div class="d-md-none d-flex justify-content-center" *ngIf="(c.count > 0) && !isLoading">
               <span [ngClass]="{
                 'badge-future': c.isFutureDate,
                 'badge-today': c.isToday,

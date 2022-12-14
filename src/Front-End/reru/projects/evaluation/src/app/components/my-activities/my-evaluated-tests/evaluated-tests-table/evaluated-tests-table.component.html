@@ -1,5 +1,5 @@
 <app-event-calendar (onDatePicked)="getListByDate($event)" (listOfDates)="getUserTests($event)"
-    (listOfCountedEvents)="getListOfCoutedTests($event)">
+    (listOfCountedEvents)="getListOfCoutedTests($event)" [isLoading]="isLoadingCountedTests">
 </app-event-calendar>
 
     <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
