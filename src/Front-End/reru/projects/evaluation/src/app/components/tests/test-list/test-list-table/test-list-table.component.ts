@@ -330,10 +330,10 @@ export class TestListTableComponent implements OnInit {
       if(i == 2){
         this.headersToPrint.push({ value: "idnp", label: "Idnp", isChecked: true})
       }
-      if(i == 3){
+      if(i == 4){
          headersHtml[i].innerHTML = headersHtml[i].innerHTML.split('/')[0]
       }
-      if(i == 4){
+      if(i == 5){
         this.headersToPrint.push({ value: "roleName", label: "Role", isChecked: true})
       }
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })

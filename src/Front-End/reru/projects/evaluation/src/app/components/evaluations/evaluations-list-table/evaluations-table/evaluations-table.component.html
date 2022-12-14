@@ -15,7 +15,7 @@
                 <th scope="col" style="width: 150px">{{ 'events.location' | translate }}</th>
                 <th scope="col" style="width: 150px">{{ 'verify-test.status' | translate }}</th>
                 <th scope="col" style="width: 160px">{{ 'verify-test.result' | translate }}</th>
-                <th scope="col" style="width: 48px"></th>
+                <th *ngIf="testTemplate.length" class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="testTemplate.length">
@@ -117,17 +117,9 @@
 
                     </ng-template>
                     <span [ngbTooltip]="tipContent">
-                        <div class="row">
-                            <div class="col-5 p-0">
-                                <p class="font-size-lg text-truncate">{{ item.departmentName || '-'}}</p>
-                            </div>
-                            <div class="col-2 p-0">
-                                <p class="text-center">/</p>
-                            </div>
-                            <div class="col-5 p-0">
-                                <p class="font-size-lg text-truncate">{{ item.roleName || '-'}}</p>
-                            </div>
-                        </div>
+                        <p class="text-truncate"> {{ item.departmentName || '-'}}<br>
+                            <span class="text-dark-50 font-size-lg font-weight-light text-truncate">{{ item.roleName || '-'}}</span>
+                        </p>
                     </span>
                 </td>
                 <td class="text-center">
@@ -136,9 +128,9 @@
                 </td>
                 <td>{{'statuses.' + status[item.testStatus] | translate}}</td>
                 <td>{{ translateResultValue(item.resultValue) }}</td>
-                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-                    <div style="overflow: visible; position: relative; width: 0px">
-                        <div ngbDropdown class="dropdown dropdown-inline">
+                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+                    <div>
+                        <div ngbDropdown class="dropdown dropdown-inline" container="body">
                             <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                                 <span class="svg-icon svg-icon-md" ngbDropdownToggle>
                                     <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"

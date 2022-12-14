@@ -470,7 +470,8 @@
     "reset": "Resetare",
     "upload": "Încarcă",
     "applay": "Aplică filtru",
-    "update":"Actualizează"
+    "update":"Actualizează",
+    "actions": "Acțiuni"
   },
   "entity": {
     "personal": {

@@ -382,6 +382,7 @@
     "min-percentage": "Min. procent de puncte",
     "accumulated-percent": "Procente colectate",
     "test-type-autoverify": "Șablonul de test selectat va fi verificat de sistem",
+    "select-before-event-pls": "Selectați evenimentul necesar",
     "event-has-evaluator": "Evenimentul selectat are evaluatori proprii",
     "asignee": "Asigneaza",
     "user-list-to-add": "Lista de utilizatori asignati",

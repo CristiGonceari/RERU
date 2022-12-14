@@ -36,7 +36,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.ChangeCandidateP
 
         private async Task LogAction(CandidatePosition candidatePosition)
         {
-            await _loggerService.Log(LogData.AsEvaluation($@"Pozția vacantă ""{candidatePosition.Name}"" a primit un statut nou ``{GetStatus(candidatePosition.IsActive)}``", candidatePosition));
+            await _loggerService.Log(LogData.AsEvaluation($@"Poziția vacantă ""{candidatePosition.Name}"" a primit un statut nou ``{GetStatus(candidatePosition.IsActive)}``", candidatePosition));
         }
 
         private string GetStatus(bool isActive) => isActive ? "activ" : "inactiv";

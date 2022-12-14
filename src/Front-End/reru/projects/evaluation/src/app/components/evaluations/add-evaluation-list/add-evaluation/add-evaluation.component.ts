@@ -25,24 +25,28 @@ import { ReferenceService } from 'projects/evaluation/src/app/utils/services/ref
 })
 export class AddEvaluationComponent implements OnInit {
   @Input() testEvent: boolean;
+  @Input() isTestEvent: boolean;
 
   processProgress: any;
-  
-  isLoading: boolean = true; 
+
+  isLoading: boolean = true;
+  hasSelectedEvent: boolean = true;
 
   eventsList: any;
-  selectActiveTests: any;
+  selectActiveTestsWithoutEvent: any;
+  selectActiveTestsWithEvent: any;
   selectActiveLocations: any;
   eventDatas: any;
-  evaluatorList = [];
+  evaluatorList: number[] = [];
   userListToAdd: number[] = [];
   processId: number;
 
   title: string;
   description: string;
 
-  event = new SelectItem();
-  testTemplate = new SelectItem();
+  event = new SelectItem({value: "0", label: "Select"});
+  testTemplate = new SelectItem({value: "0", label: "Select"});
+  locationSelect = new SelectItem({value: "0", label: "Select"});
   evaluator = new SelectItem();
   myControl = new FormControl();
 
@@ -73,7 +77,7 @@ export class AddEvaluationComponent implements OnInit {
   templatesIds = [];
   settingsForm: FormGroup;
   disable: boolean = false;
-  locationId: any;
+  locationId: number;
 
   constructor(
     private referenceService: ReferenceService,
@@ -92,27 +96,66 @@ export class AddEvaluationComponent implements OnInit {
       sendTimeAndLocationEmail: new FormControl()
     });
 
-    this.getEvents();
+    this.getActiveTestTemplateWithoutEvent();
+    if (this.isTestEvent) this.getEvents();
   }
 
-  getActiveTestTemplate() {
+  getActiveTestTemplateWithoutEvent() {
     this.isLoading = true;
+
     let params = {
       testTemplateStatus: TestTemplateStatusEnum.Active,
-      eventId: this.event.value || null,
+      eventId: null,
       mode: TestTemplateModeEnum.Evaluation
     }
+
+    if ((params.eventId == null || params.eventId === undefined) && this.isTestEvent) {
+      this.showEventCard = false;
+      this.isLoading = true;
+      return;
+    }
+
     this.testTemplateService.getTestTemplateByStatus(params).subscribe((res) => {
-      this.selectActiveTests = res.data;
-    this.isLoading = false;
+      this.selectActiveTestsWithoutEvent = res.data;
+      this.isLoading = false;
     })
 
     if (params.eventId != null) this.getEvent(params.eventId);
     else this.showEventCard = false;
   }
 
-  ceckTestTemplate(testTemplate): boolean{
-    if(typeof(testTemplate.value) === 'undefined' || typeof(testTemplate.value) === 'string'){
+  getActiveTestTemplateWithEvent() {
+    if (this.event.value == "0") {
+      this.clearForm();
+      return;
+    }
+
+    this.hasSelectedEvent = false;
+    this.isLoading = true;
+
+    let params = {
+      testTemplateStatus: TestTemplateStatusEnum.Active,
+      eventId: this.event.value || null,
+      mode: TestTemplateModeEnum.Evaluation
+    }
+
+    if ((params.eventId == null || params.eventId === undefined) && this.isTestEvent) {
+      this.showEventCard = false;
+      this.isLoading = true;
+      return;
+    }
+
+    this.testTemplateService.getTestTemplateByStatus(params).subscribe((res) => {
+      this.selectActiveTestsWithEvent = res.data;
+      this.isLoading = false;
+    })
+
+    if (params.eventId != null) this.getEvent(params.eventId);
+    else this.showEventCard = false;
+  }
+
+  ceckTestTemplate(testTemplate): boolean {
+    if (typeof (testTemplate.value) === 'undefined' || typeof (testTemplate.value) === 'string') {
       return true
     } else {
       return false
@@ -124,7 +167,7 @@ export class AddEvaluationComponent implements OnInit {
       eventId: this.event.value
     }
 
-    this.referenceService.getEventLocations(params).subscribe(res => { this.selectActiveLocations = res.data; })
+    this.referenceService.getLocationsSelectValue(params).subscribe(res => {this.selectActiveLocations = res.data;})
   }
 
   setTimeToSearch(): void {
@@ -134,11 +177,18 @@ export class AddEvaluationComponent implements OnInit {
     }
   }
 
+  clearForm(){
+    this.hasSelectedEvent =
+    this.showEventCard = false;
+    this.isLoading = true;
+    this.evaluatorList.length = 0;
+    this.testTemplate.value = null
+    this.isTestTemplateOneAnswer = false;
+  }
+
   getEvents() {
     this.referenceService.getEvents().subscribe(res => {
       this.eventsList = res.data;
-      this.getActiveTestTemplate();
-      this.getActiveLocations();
     });
   }
 
@@ -147,6 +197,7 @@ export class AddEvaluationComponent implements OnInit {
   }
 
   getEvent(eventId: any) {
+    if (eventId == 0) return;
     this.eventService.getEvent(eventId).subscribe((res) => {
       this.eventDatas = res.data;
       this.showEventCard = true;
@@ -160,11 +211,11 @@ export class AddEvaluationComponent implements OnInit {
       programmedTime: null,
       solicitedTime: this.search,
       eventId: +this.event.value || null,
-      evaluatorIds: this.evaluatorList || null,
+      evaluatorIds: this.evaluatorList || [],
       testStatus: TestStatusEnum.Programmed,
       testTemplateId: +this.testTemplate.value || 0,
       processId: this.processId || null,
-      locationId: this.locationId || null,
+      locationId: this.locationSelect.value == "0" ? null : this.locationSelect.value,
       showUserName: true
     }
   }
@@ -265,7 +316,7 @@ export class AddEvaluationComponent implements OnInit {
     modalRef.componentInstance.page = 'add-evaluation';
     modalRef.componentInstance.eventId = +this.event.value;
     modalRef.componentInstance.whichUser = whichUser;
-    modalRef.componentInstance.testTemplateId =  whichUser ? +this.testTemplate.value : null;
+    modalRef.componentInstance.testTemplateId = whichUser ? +this.testTemplate.value : null;
     modalRef.result.then(() => {
       if (whichUser == true) this.evaluatorList = modalRef.result.__zone_symbol__value.attachedItems;
       else if (whichUser == false) this.userListToAdd = modalRef.result.__zone_symbol__value.attachedItems;

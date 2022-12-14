@@ -113,7 +113,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
 
         private async Task LogAction(EventEvaluator evEvaluator)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"{evEvaluator.Evaluator.FullName} a fost adăgat în rol de evaluator la evenimentul {evEvaluator.Event.Name}"));
+            await _loggerService.Log(LogData.AsEvaluation($"{evEvaluator.Evaluator.FullName} a fost adăugat în rol de evaluator la evenimentul {evEvaluator.Event.Name}"));
         }
 
         private async Task LogAction(List<EventEvaluator> eventEvaluators)

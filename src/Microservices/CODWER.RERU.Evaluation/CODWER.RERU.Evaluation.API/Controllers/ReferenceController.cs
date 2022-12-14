@@ -22,6 +22,7 @@ using CVU.ERP.StorageService.Entities;
 using RERU.Data.Entities.Enums;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CODWER.RERU.Evaluation.Application.References.GetAllEventsValues;
+using CODWER.RERU.Evaluation.Application.References.GetLocationsSelectValues;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -117,6 +118,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpGet("event-locations/select-values")]
         public async Task<List<LocationDto>> GetEventLocations([FromQuery] GetEventLocationValueQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("locations-event/select-values")]
+        public async Task<List<SelectItem>> GetLocationsSelectValues([FromQuery] GetLocationSelectValuesQuery query)
         {
             return await Mediator.Send(query);
         }

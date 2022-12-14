@@ -10,16 +10,16 @@ class="table-responsive-xl datatable datatable-bordered datatable-head-custom da
             <tr>
                 <th scope="col">{{'document-test-modal.reports.name' | translate}}</th>
                 <th scope="col" class="text-center">{{'document-test-modal.reports.fileType' | translate}}</th>
-                <th scope="col" style="width: 48px">&nbsp;</th>
+                <th *ngIf="documents.length" class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="documents.length">
             <tr *ngFor="let item of documents;" style="cursor: pointer;">
                 <td class="pointer" [routerLink]="['../edit', item.id]">{{item.name}}</td>
                 <td class="text-center">{{'document-test-modal.'+ item.fileType | translate}}</td>
-                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-                    <div style="overflow: visible; position: relative; width: 0px">
-                        <div ngbDropdown class="dropdown dropdown-inline">
+                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+                    <div>
+                        <div ngbDropdown class="dropdown dropdown-inline" container="body">
                             <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                                 <span class="svg-icon svg-icon-md" ngbDropdownToggle>
                                     <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
