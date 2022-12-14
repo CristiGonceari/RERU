@@ -101,7 +101,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
             foreach (var testDto in paginatedModel.Items)
             {
                 var eventEvaluator = _appDbContext.EventEvaluators.FirstOrDefault(x => x.EvaluatorId == currentUser.Id && x.EventId == testDto.EventId);
-                var testEvaluator = _appDbContext.Tests.FirstOrDefault(x => x.EvaluatorId == currentUser.Id && x.Id == testDto.Id);
+                var testEvaluator = _appDbContext.Tests.FirstOrDefault(x => (x.EvaluatorId == currentUser.Id || x.CreateById == currentUser.Id.ToString()) && x.Id == testDto.Id);
 
                 if (testEvaluator != null)
                 {
