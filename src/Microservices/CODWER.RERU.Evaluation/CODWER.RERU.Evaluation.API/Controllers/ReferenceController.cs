@@ -123,7 +123,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpGet("locations-event/select-values")]
-        public async Task<List<SelectItem>> GetLocationsSelectValues([FromQuery] GetLocationSelectValuesQuery query)
+        public async Task<List<SelectItem>> GetLocationsSelectValues([FromQuery] GetLocationsSelectValuesQuery query)
         {
             return await Mediator.Send(query);
         }
