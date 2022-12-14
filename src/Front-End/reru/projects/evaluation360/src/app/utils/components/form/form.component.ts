@@ -12,6 +12,8 @@ import { parseEvaluatedModel, parseCounterSignModel, parseDate } from '../../uti
 import { EvaluationRoleEnum } from '../../models/evaluation-role.enum';
 import { EvaluationTypeEnum } from '../../models/type.enum';
 import { ActionFormEnum, ActionFormModel, ActionFormType } from '../../models/action-form.type';
+import { EvaluationAcceptClass } from '../../models/evaluation-accept.model';
+import { EvaluationCounterSignClass } from '../../models/evaluation-countersign.model';
 
 @Component({
   selector: 'app-form',
@@ -144,12 +146,12 @@ export class FormComponent implements OnInit {
     this.showWarnning = false;
     switch(action) {
       case ActionFormEnum.isSave: this.request.emit({ action, data: new EvaluationClass(this.evaluationForm.value)}); break;
-      case ActionFormEnum.isConfirm: this.request.emit({ action, data:this.evaluationForm.value}); break;
-      case ActionFormEnum.isAccept: this.request.emit({ action, data:this.evaluatedForm.value}); break;
-      case ActionFormEnum.isReject: this.request.emit({ action, data:this.evaluatedForm.value}); break;
-      case ActionFormEnum.isCounterSignAccept: this.request.emit({ action, data:this.counterSignForm.value}); break;
-      case ActionFormEnum.isCounterSignReject: this.request.emit({ action, data:this.counterSignForm.value}); break;
-      case ActionFormEnum.isAcknowledge: this.request.emit({ action, data:this.evaluationForm.value}); break;
+      case ActionFormEnum.isConfirm: this.request.emit({ action, data: new EvaluationClass(this.evaluationForm.value)}); break;
+      case ActionFormEnum.isAccept: this.request.emit({ action, data: new  EvaluationAcceptClass(this.evaluatedForm.value)}); break;
+      case ActionFormEnum.isReject: this.request.emit({ action, data: new  EvaluationAcceptClass(this.evaluatedForm.value)}); break;
+      case ActionFormEnum.isCounterSignAccept: this.request.emit({ action, data: new  EvaluationCounterSignClass(this.counterSignForm.value)}); break;
+      case ActionFormEnum.isCounterSignReject: this.request.emit({ action, data: new  EvaluationCounterSignClass(this.counterSignForm.value)}); break;
+      case ActionFormEnum.isAcknowledge: this.request.emit({ action, data: this.evaluationForm.value}); break;
     }
   }
 
