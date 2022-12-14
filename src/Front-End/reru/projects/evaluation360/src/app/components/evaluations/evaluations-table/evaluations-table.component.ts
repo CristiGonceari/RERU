@@ -15,9 +15,7 @@ import { EvaluationStatusEnum } from '../../../utils/models/evaluation-status.en
 })
 export class EvaluationsTableComponent implements OnInit {
   @Input() evaluateType: number;
-  @Input() showHighlighted (event) {
-    console.log('event', event);
-  }
+  @Input() showHighlighted: boolean;
   isLoading: boolean = true;
   evaluations: EvaluationListModel[] = [];
   pagedSummary: PaginationModel = new PaginationClass();

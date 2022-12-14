@@ -46,6 +46,13 @@ export class EvaluationProcessComponent implements OnInit {
     })
   }
 
+  refetchEvaluation(id: number): void {
+    this.evaluationService.get(id).subscribe((response: Response<EvaluationModel>) => {
+      this.evaluation = response.data;
+      this.isLoading = false;
+    })
+  }
+
   submit(form: ActionFormModel): void {
     this.isLoading = true;
     if ((form.action === ActionFormEnum.isSave || form.action === ActionFormEnum.isConfirm) && form.data instanceof EvaluationClass) {
@@ -56,7 +63,7 @@ export class EvaluationProcessComponent implements OnInit {
         if (form.action === ActionFormEnum.isConfirm) {
           this.router.navigate(['../../'], { relativeTo: this.route});
         } else {
-          this.isLoading = false;
+          this.refetchEvaluation(this.evaluation.id);
         }
       }, (error) => {
         this.isLoading = false;

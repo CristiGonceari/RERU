@@ -168,8 +168,8 @@ export class EvaluationClass implements EvaluationModel {
 			this.functionSubdivision = evaluation.functionSubdivision;
 			this.subdivisionEvaluated = evaluation.subdivisionEvaluated;
 			this.specialOrMilitaryGrade = +evaluation.specialOrMilitaryGrade;
-			this.periodEvaluatedFromTo = evaluation.subdivisionName;
-			this.periodEvaluatedUpTo = evaluation.subdivisionName;
+			this.periodEvaluatedFromTo = evaluation.periodEvaluatedFromTo;
+			this.periodEvaluatedUpTo = evaluation.periodEvaluatedUpTo;
 			this.educationEnum = +evaluation.educationEnum;
 			this.professionalTrainingActivities = +evaluation.professionalTrainingActivities;
 			this.professionalTrainingActivitiesType = +evaluation.professionalTrainingActivitiesType;
