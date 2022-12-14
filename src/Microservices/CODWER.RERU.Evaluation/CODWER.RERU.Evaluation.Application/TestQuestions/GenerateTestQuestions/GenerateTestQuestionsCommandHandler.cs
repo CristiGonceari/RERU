@@ -145,7 +145,9 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
 
             var sameTestQuestions = _appDbContext.TestQuestions
                 .Include(x => x.Test)
-                .Where(x => x.HashGroupKey == test.HashGroupKey && test.TestTemplate.Mode == TestTemplateModeEnum.Test)
+                .Include(x => x.QuestionUnit)
+                    .ThenInclude(x => x.QuestionCategory)
+                .Where(x => x.HashGroupKey == test.HashGroupKey && test.TestTemplate.Mode == TestTemplateModeEnum.Test && x.QuestionUnit.QuestionCategoryId == testTemplateQuestionCategory.QuestionCategoryId)
                 .DistinctBy2(x => x.Index)
                 .OrderBy(x => x.Index)
                 .ToList();
@@ -156,7 +158,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                 {
                     var testQuestionToAdd = new TestQuestion
                     {
-                        Index = index,
+                        Index = sameTestQuestion.Index,
                         QuestionUnitId = sameTestQuestion.QuestionUnitId,
                         TestId = test.Id,
                         HashGroupKey = test.HashGroupKey,
