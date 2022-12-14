@@ -69,7 +69,6 @@ export class EventCalendarComponent implements OnInit {
     }
 
     const day: Date = new Date(this.dayValue.setMonth(new Date().getMonth() + monthIndex));
-    const dayForCount: Date = new Date(this.dayValue.setMonth(new Date().getMonth() + monthIndex));
 
     this.onChangeMonth = day.getMonth()
 
@@ -87,11 +86,11 @@ export class EventCalendarComponent implements OnInit {
       this.calendar.push(new CalendarDay(new Date(dateToAdd)));
       dateToAdd = new Date(dateToAdd.setDate(dateToAdd.getDate() + 1));
     }
-
-    this.deleteCells(dayForCount);
+    
+    this.deleteCells();
 
     for (let calendar of this.calendar) {
-      if (calendar.isToday && calendar.month == dayForCount.getMonth()) {
+      if (calendar.isToday && calendar.month == day.getMonth() + 1) {
         this.todayDay = calendar;
       }
     }
@@ -106,17 +105,17 @@ export class EventCalendarComponent implements OnInit {
     this.getListOfCoutedEvents(data);
   }
 
-  private deleteCells(day) {
+  private deleteCells() {
     this.cellsForDelete.push(
       {
         week: 'firstWeek',
         forDelete: this.calendar.slice(0, 7).every(el =>
-          new Date(el.date.getFullYear(), el.month) < new Date(day.getFullYear(), day.getMonth()))
+          new Date(el.date.getFullYear(), el.month) < new Date(this.dayValue.getFullYear(), this.dayValue.getMonth()))
       },
       {
         week: 'lastWeek',
         forDelete: this.calendar.slice(this.calendarTotalCells - 7).every(el =>
-          new Date(el.date.getFullYear(), el.month) > new Date(day.getFullYear(), day.getMonth()))
+          new Date(el.date.getFullYear(), el.month) > new Date(this.dayValue.getFullYear(), this.dayValue.getMonth()))
       },
     );
 
