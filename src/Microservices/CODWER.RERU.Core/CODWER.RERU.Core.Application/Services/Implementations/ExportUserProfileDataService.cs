@@ -35,7 +35,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                                             .ThenInclude(mr => mr.Module)
                                             .Include(up => up.Role)
                                             .Include(up => up.Department)
-                                            .Include(up => up.SolicitedVacantPositions)
+                                            .Include(up => up.SolicitedVacantPositions.OrderByDescending(svp => svp.CreateDate))
                                             .ThenInclude(up => up.CandidatePosition)
                                             .ThenInclude(up => up.RequiredDocumentPositions)
                                             .Include(svp => svp.SolicitedVacantPositionUserFiles)
@@ -57,7 +57,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
 
             await SetUserProfileModuleAccess(userProfile.ModuleRoles, workSheet);
 
-            await SetUserProfileSolicitedPosition(userProfile.SolicitedVacantPositions.ToList(), workSheet);
+            await SetUserProfileSolicitedPosition(userProfile.SolicitedVacantPositions.ToList(), workSheet); ;
 
             await SetUserProfileTests(workSheet);
 
@@ -288,7 +288,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                     workSheet.Cells[_row, 3, _row, 4].Merge = true;
                     workSheet.Cells[_row, 3, _row, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-                    workSheet.Cells[_row, 5, _row, 6].Value = vacantPosition.SolicitedPositionStatus.ToString();
+                    workSheet.Cells[_row, 5, _row, 6].Value = TranslateSolicitedPositionStatusEnum(vacantPosition.SolicitedPositionStatus);
                     workSheet.Cells[_row, 5, _row, 6].Merge = true;
                     workSheet.Cells[_row, 5, _row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     workSheet.Cells[_row, 5, _row, 6].Style.Border.Left.Style = ExcelBorderStyle.Medium;
@@ -424,7 +424,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                     workSheet.Cells[_row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     workSheet.Cells[_row, 1].Style.Border.Right.Style = ExcelBorderStyle.Medium;
 
-                    workSheet.Cells[_row, 2].Value = test.TestStatus.ToString();
+                    workSheet.Cells[_row, 2].Value = TranslateTestStatusEnum(test.TestStatus);
                     workSheet.Cells[_row, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     workSheet.Cells[_row, 2].Style.Border.Right.Style = ExcelBorderStyle.Medium;
 
@@ -511,7 +511,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                     workSheet.Cells[_row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     workSheet.Cells[_row, 1].Style.Border.Right.Style = ExcelBorderStyle.Medium;
 
-                    workSheet.Cells[_row, 2].Value = evaluatedTest.TestStatus.ToString();
+                    workSheet.Cells[_row, 2].Value = TranslateTestStatusEnum(evaluatedTest.TestStatus);
                     workSheet.Cells[_row, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
                     workSheet.Cells[_row, 3, _row, 4].Value = evaluatedTest.UserProfile?.FullName ?? " - - - - -";
@@ -526,7 +526,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                     workSheet.Cells[_row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     workSheet.Cells[_row, 7].Style.Border.Left.Style = ExcelBorderStyle.Medium;
 
-                    workSheet.Cells[_row, 8].Value = evaluatedTest.ResultStatusValue;
+                    workSheet.Cells[_row, 8].Value = TranslateResultStatusValue(evaluatedTest.ResultStatusValue);
                     workSheet.Cells[_row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     workSheet.Cells[_row, 8].Style.Border.Left.Style = ExcelBorderStyle.Medium;
                     _row++;
@@ -611,11 +611,11 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                     workSheet.Cells[_row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     workSheet.Cells[_row, 6].Style.Border.Left.Style = ExcelBorderStyle.Medium;
 
-                    workSheet.Cells[_row, 7].Value = evaluation.TestStatus.ToString();
+                    workSheet.Cells[_row, 7].Value = TranslateTestStatusEnum(evaluation.TestStatus);
                     workSheet.Cells[_row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     workSheet.Cells[_row, 7].Style.Border.Left.Style = ExcelBorderStyle.Medium;
 
-                    workSheet.Cells[_row, 8].Value = evaluation.ResultStatusValue;
+                    workSheet.Cells[_row, 8].Value = TranslateResultStatusValue(evaluation.ResultStatusValue);
                     workSheet.Cells[_row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     workSheet.Cells[_row, 8].Style.Border.Left.Style = ExcelBorderStyle.Medium;
                     _row++;
@@ -705,11 +705,11 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                     workSheet.Cells[_row, 5, _row, 6].Merge = true;
                     workSheet.Cells[_row, 5, _row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-                    workSheet.Cells[_row, 7].Value = evaluation.TestStatus.ToString();
+                    workSheet.Cells[_row, 7].Value = TranslateTestStatusEnum(evaluation.TestStatus);
                     workSheet.Cells[_row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     workSheet.Cells[_row, 7].Style.Border.Left.Style = ExcelBorderStyle.Medium;
 
-                    workSheet.Cells[_row, 8].Value = evaluation.ResultStatusValue;
+                    workSheet.Cells[_row, 8].Value = TranslateResultStatusValue(evaluation.ResultStatusValue);
                     workSheet.Cells[_row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     workSheet.Cells[_row, 8].Style.Border.Left.Style = ExcelBorderStyle.Medium;
                     _row++;
@@ -780,7 +780,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                     workSheet.Cells[_row, 2, _row, 3].Merge = true;
                     workSheet.Cells[_row, 2, _row, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-                    workSheet.Cells[_row, 4, _row, 5].Value = poll.TestStatus.ToString();
+                    workSheet.Cells[_row, 4, _row, 5].Value = TranslateTestStatusEnum(poll.TestStatus);
                     workSheet.Cells[_row, 4, _row, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
                     workSheet.Cells[_row, 6].Value = string.IsNullOrEmpty(poll.ProgrammedTime.ToString("dd-MM-yyyy")) ? " - - - - -" : poll.ProgrammedTime.ToString("dd-MM-yyyy");
@@ -816,6 +816,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                     .Where(upt => (upt.EvaluatorId == _userProfileId ||
                         _appDbContext.EventEvaluators.Any(ee => ee.EventId == upt.EventId && ee.EvaluatorId == _userProfileId)) &&
                         upt.TestTemplate.Mode == mode)
+                    .OrderByDescending(t => t.CreateDate)
                     .ToList();
 
             return getEvaluatedTests;
@@ -828,6 +829,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                     .Include(t => t.Evaluator)
                     .Include(t => t.Location)
                     .Where(t => t.TestTemplate.Mode == mode && t.UserProfileId == _userProfileId)
+                    .OrderByDescending(t => t.CreateDate)
                     .ToList();
 
             return getUserProfileTests;
@@ -837,6 +839,103 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             var streamBytesArray = package.GetAsByteArray();
 
             return FileDataDto.GetExcel("Dosarul_Utilizatorului" + $"({name})", streamBytesArray);
+        }
+        private string TranslateTestStatusEnum(TestStatusEnum status) 
+        {
+            string translatedStatus = "";
+
+            switch (status) 
+            {
+                case TestStatusEnum.Programmed:
+                    translatedStatus = "Programat";
+                    break;
+
+                case TestStatusEnum.AlowedToStart:
+                    translatedStatus = "Permis să înceapă";
+                    break;
+
+                case TestStatusEnum.InProgress:
+                    translatedStatus = "În progres";
+                    break;
+
+                case TestStatusEnum.Terminated:
+                    translatedStatus = "Finisat";
+                    break;
+
+                case TestStatusEnum.Verified:
+                    translatedStatus = "Verificat";
+                    break;
+
+                case TestStatusEnum.Closed:
+                    translatedStatus = "Închis";
+                    break;
+            }
+
+            return translatedStatus;
+        }
+        private string TranslateResultStatusValue(string result)
+        {
+            string translatedResult = "";
+
+            if (result.Contains("Recommended"))
+            {
+                translatedResult = result.Replace("Recommended", "Se recomandă");
+            }
+            else if (result.Contains("NoResult"))
+            {
+                translatedResult = result.Replace("NoResult", "Fără rezultat");
+            }
+            else if (result.Contains("Passed"))
+            {
+                translatedResult = result.Replace("Passed", "Susținut");
+            }
+            else if (result.Contains("Rejected"))
+            {
+                translatedResult = result.Replace("Rejected", "Respins");
+            }
+            else if (result.Contains("Accepted"))
+            {
+                translatedResult = result.Replace("Accepted", "Admis");
+            }
+            else if (result.Contains("NotAble"))
+            {
+                translatedResult = result.Replace("Not able", "Inapt");
+            }
+            else if (result.Contains("Able"))
+            {
+                translatedResult = result.Replace("Able", "Apt");
+            }
+            else
+            {
+                return result;
+            }
+
+            return translatedResult;
+        }
+        private string TranslateSolicitedPositionStatusEnum(SolicitedPositionStatusEnum positionStatus)
+        {
+            string translatedPositionStatus = "";
+
+            switch (positionStatus)
+            {
+                case SolicitedPositionStatusEnum.New:
+                    translatedPositionStatus = "Nou";
+                    break;
+
+                case SolicitedPositionStatusEnum.Refused:
+                    translatedPositionStatus = "Refuzat";
+                    break;
+
+                case SolicitedPositionStatusEnum.Approved:
+                    translatedPositionStatus = "Aprobat";
+                    break;
+
+                case SolicitedPositionStatusEnum.Wait:
+                    translatedPositionStatus = "În aşteptare";
+                    break;
+            }
+
+            return translatedPositionStatus;
         }
     }
 }

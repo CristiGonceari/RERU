@@ -653,9 +653,9 @@
     "user-name": "Numele persoanei",
     "last-name": "Prenumele persoanei",
     "biography-data": "Date biografice ale rudelor apropiate candidatului",
-    "birth-place":"Locul nasterii",
-    "birthday-date": "Data nasterii",
-    "residence": "Domiciliu",
+    "birth-place":"Locul nașterii",
+    "birthday-date": "Data nașterii",
+    "residence": "Domiciliul",
     "work-place": "Locul de muncă",
     "kinship-criminal-data-name": "Date referitoare la răspunderea penală sau contravențională a rudelor apropiate ale candidatului"
   },

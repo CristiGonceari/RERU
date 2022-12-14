@@ -1,4 +1,5 @@
-<app-event-calendar (onDatePicked)="getListByDate($event)" (listOfCountedEvents)="getListOfCoutedTests($event)">
+<app-event-calendar (onDatePicked)="getListByDate($event)" (listOfDates)="getUserTests($event)" 
+  (listOfCountedEvents)="getListOfCoutedTests($event)" [isLoading]="isLoadingCountedTests">
 </app-event-calendar>
 
 

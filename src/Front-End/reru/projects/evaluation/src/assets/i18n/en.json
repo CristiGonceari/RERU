@@ -401,7 +401,8 @@
     "please-wait": "Please wait while system import tests for users ...",
     "test-template": "test template",
     "start-test": "Test is going to start in few minutes",
-    "verified-by-system": "Verified by the system"
+    "verified-by-system": "Verified by the system",
+    "test-template-delete-modal": "test template"
   },
   "verify-test": {
     "title": "Tests",
