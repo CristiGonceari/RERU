@@ -75,7 +75,7 @@
 							<img [src]="avatar" />
 						</div>
 						<div class="symbol symbol-40 symbol-sm-s symbol-light-success" style="size: 16px" *ngIf="!avatarString">
-							<span class="font-size-h3 symbol-label font-weight-boldest">{{ acronym }}</span>
+							<span [ngClass]="{'font-size-h3': acronym?.length === 2}" class=" symbol-label font-weight-boldest">{{ acronym }}</span>
 						</div>
 					</div>
 				</div>
