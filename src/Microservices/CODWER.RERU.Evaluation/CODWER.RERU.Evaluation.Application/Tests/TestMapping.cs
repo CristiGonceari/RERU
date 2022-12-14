@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using System.Linq;
 using CODWER.RERU.Evaluation.DataTransferObjects.InternalTest;
@@ -20,7 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.QuestionCount, opts => opts.MapFrom(src => src.TestTemplate.QuestionCount))
                 .ForMember(x => x.AccumulatedPercentage, opts => opts.MapFrom(src => src.AccumulatedPercentage))
                 .ForMember(x => x.TestTemplateName, opts => opts.MapFrom(src => src.TestTemplate.Name))
-                .ForMember(x => x.LocationNames, opts => opts.MapFrom(src => src.Event.EventLocations.Select(el => el.Location.Name)))
+                .ForMember(x => x.LocationNames, opts => opts.MapFrom(src => new List<string>{src.Location.Name, src.Location.Address}))
                 .ForMember(x => x.EventName, opts => opts.MapFrom(src => src.Event.Name))
                 .ForMember(x => x.EvaluatorId, opts => opts.MapFrom(src => src.EvaluatorId))
                 .ForMember(x => x.EventId, opts => opts.MapFrom(src => src.EventId))

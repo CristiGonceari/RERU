@@ -11,19 +11,13 @@ import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notific
 import { AddEditTest } from '../../../../utils/models/tests/add-edit-test.model';
 import { FormControl } from '@angular/forms';
 import { PrintTemplateService } from 'projects/evaluation/src/app/utils/services/print-template/print-template.service';
-import { BehaviorSubject, forkJoin, interval, Subscribable, Subscriber } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { AttachUserModalComponent } from 'projects/evaluation/src/app/utils/components/attach-user-modal/attach-user-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventService } from 'projects/evaluation/src/app/utils/services/event/event.service';
-import { NgtscCompilerHost } from '@angular/compiler-cli/src/ngtsc/file_system';
-import { Subscription, timer } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { GetBulkProgressHistoryService } from 'projects/evaluation/src/app/utils/services/bulk-progress/get-bulk-progress-history.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { is } from 'date-fns/locale';
-import { EmitHint } from 'typescript';
 import { TestTemplateModeEnum } from 'projects/evaluation/src/app/utils/enums/test-template-mode.enum';
 
 
@@ -34,11 +28,15 @@ import { TestTemplateModeEnum } from 'projects/evaluation/src/app/utils/enums/te
 })
 export class AddTestComponent implements OnInit {
   @Input() testEvent: boolean;
+  @Input() isTestEvent: boolean;
 
+  isLoadingRequest: any;
+  hasSelectedEvent: boolean = true;
   processProgress: any;
   isLoading: boolean = true;
   eventsList: any;
-  selectActiveTests: any;
+  selectActiveTestsWithEvent: any;
+  selectActiveTestsWithoutEvent: any;
   eventDatas: any;
   evaluatorList = [];
   userListToAdd: number[] = [];
@@ -47,8 +45,8 @@ export class AddTestComponent implements OnInit {
   title: string;
   description: string;
 
-  event = new SelectItem();
-  testTemplate = new SelectItem();
+  event = new SelectItem({value: "0", label: "Select"});
+  testTemplate = new SelectItem({value: "0", label: "Select"});
   evaluator = new SelectItem();
   myControl = new FormControl();
 
@@ -61,7 +59,6 @@ export class AddTestComponent implements OnInit {
   isStartAddingTests: boolean = false;
 
   cancelRequest: any;
-  request;
 
   toolBarValue: number = 0;
   toolBarProcents: number = 0;
@@ -87,14 +84,15 @@ export class AddTestComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getEvents();
+    if(this.isTestEvent) this.getEvents();
+    this.getActiveTestTemplateWithoutEvent();
     this.getProcessService.currentSendToCancelRequest.subscribe(msg => { this.cancelRequest = msg });
+    
   }
 
   getEvents() {
     this.referenceService.getEvents().subscribe(res => {
       this.eventsList = res.data;
-      this.getActiveTestTemplates();
     });
   }
 
@@ -113,16 +111,15 @@ export class AddTestComponent implements OnInit {
   }
 
   checkIfIsOneAnswer(event) {
+    if (event == 0)  return;
     if (event) {
-      this.isTestTemplateOneAnswer = this.selectActiveTests.find(x => x.testTemplateId === event).isOnlyOneAnswer;
-      this.printTest = this.selectActiveTests.find(x => x.testTemplateId === event).printTest;
+      this.isTestTemplateOneAnswer = this.isTestEvent ? this.selectActiveTestsWithEvent.find(x => x.testTemplateId === event).isOnlyOneAnswer : this.selectActiveTestsWithoutEvent.find(x => x.testTemplateId === event).isOnlyOneAnswer;
+      this.printTest = this.isTestEvent ?  this.selectActiveTestsWithEvent.find(x => x.testTemplateId === event).printTest : this.selectActiveTestsWithoutEvent.find(x => x.testTemplateId === event).printTest;
     } else this.isTestTemplateOneAnswer = false;
 
     if (!this.printTest) this.messageText = "Acest test poate conține video sau audio!"
 
-    if (this.isTestTemplateOneAnswer) {
-      this.evaluator.value = null;
-    }
+    if (this.isTestTemplateOneAnswer) this.evaluator.value = null;
 
     if(event) {
       this.evaluatorList[0] = null;
@@ -130,7 +127,54 @@ export class AddTestComponent implements OnInit {
     }
   }
 
-  getActiveTestTemplates(event?) {
+  getActiveTestTemplatesWithEvent(event?) {
+    if (event == 0) {
+      this.clearForm();
+      return;
+    }
+
+    this.hasSelectedEvent = false;
+    this.isLoading = true;
+
+    if (event) this.hasEventEvaluator = this.eventsList.find(x => x.eventId === event).isEventEvaluator;
+
+    let params = {
+      testTemplateStatus: TestTemplateStatusEnum.Active,
+      eventId: event || null,
+      mode: TestTemplateModeEnum.Test
+    }
+
+    if((params.eventId == null  || params.eventId === undefined) && this.isTestEvent){
+      this.showEventCard = false;
+      this.isLoading = true;
+      return;
+    }
+
+    this.isLoadingRequest = this.testTemplateService.getTestTemplateByStatus(params).subscribe((res) => {
+      this.testTemplate.value = "0";
+      this.selectActiveTestsWithEvent = res.data;
+      this.isLoading = false;
+    })
+   
+    if (params.eventId != null) {
+      this.getEvent(params.eventId);
+    }
+    else {
+      this.showEventCard = false;
+    }
+
+    this.userListToAdd = [];
+    this.evaluatorList = [];
+
+    if (event) this.clearTestData()
+  }
+
+  getActiveTestTemplateWithoutEvent(event?) {
+    if (event == 0) {
+      this.clearForm();
+      return;
+    }
+
     this.isLoading = true;
 
     if (event){
@@ -143,14 +187,17 @@ export class AddTestComponent implements OnInit {
       mode: TestTemplateModeEnum.Test
     }
 
-    this.testTemplateService.getTestTemplateByStatus(params).subscribe((res) => {
-      this.selectActiveTests = res.data;
+    if((params.eventId == null  || params.eventId === undefined) && this.isTestEvent){
+      this.showEventCard = false;
+      this.isLoading = true;
+      return;
+    }
+
+    this.isLoadingRequest = this.testTemplateService.getTestTemplateByStatus(params).subscribe((res) => {
+      this.selectActiveTestsWithoutEvent = res.data;
       this.isLoading = false;
     })
-
-    this.userListToAdd = [];
-    this.evaluatorList = [];
-
+   
     if (params.eventId != null) {
       this.getEvent(params.eventId);
     }
@@ -158,7 +205,19 @@ export class AddTestComponent implements OnInit {
       this.showEventCard = false;
     }
 
+    this.userListToAdd = [];
+    this.evaluatorList = [];
+
     if (event) this.clearTestData()
+  }
+
+  clearForm(){
+    this.showEventCard = false;
+    this.hasSelectedEvent = true;
+    this.isLoading = true;
+    this.evaluatorList.length = 0;
+    this.testTemplate.value = null
+    this.isTestTemplateOneAnswer = false;
   }
 
   clearTestData(){
@@ -193,7 +252,7 @@ export class AddTestComponent implements OnInit {
 
       const interval = this.setIntervalGetProcess();
 
-      this.request = this.testService.createTest(this.parse()).subscribe((response) => {
+    this.testService.createTest(this.parse()).subscribe((response) => {
         forkJoin([
           this.translate.get('modal.success'),
           this.translate.get('tests.tests-were-programmed'),

@@ -23,7 +23,7 @@
                             {{'dashboard.score' | translate}} / {{'dashboard.min-score' | translate}}
                         </th>
                         <th scope="col" style="width: 170px;">{{'dashboard.result' | translate}}</th>
-                        <th scope="col" style="width: 120px"></th>
+                        <th *ngIf="testRowList.length" scope="col">{{'button.actions' | translate}}</th>
                     </tr>
                 </thead>
                 <tbody class="datatable-body" *ngIf="testRowList.length">

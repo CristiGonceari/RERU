@@ -12,7 +12,7 @@
                 <th scope="col" style="width: 300px;">{{'locations.address' | translate}}</th>
                 <th scope="col" style="width: 200px;">{{'questions.type' | translate}}</th>
                 <th scope="col" style="width: 100px;">{{'locations.places' | translate}}</th>
-                <th scope="col" style="width: 48px"></th>
+                <th *ngIf="locations.length" class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="locations.length">
@@ -24,8 +24,8 @@
                     <span class="font-size-lg" *ngIf="item.type == enum.ComputerClass">{{'locations.ComputerClass' | translate}}</span>
                 </td>
                 <td style="text-align: center;">{{item.places}}</td>
-                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-                    <div style="overflow: visible; position: relative; width: 0px">
+                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+                    <div>
                         <div ngbDropdown container="body" class="dropdown dropdown-inline">
                             <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                                 <span class="svg-icon svg-icon-md" ngbDropdownToggle>

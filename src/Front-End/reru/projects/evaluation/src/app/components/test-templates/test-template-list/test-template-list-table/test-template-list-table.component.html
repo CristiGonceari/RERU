@@ -16,7 +16,7 @@
                     <th scope="col" class="text-center" style="width: 75px">{{'tests.mode' | translate}}</th>
                     <th scope="col" class="text-center" style="width: 150px">{{'test-template.qualifying-type' | translate}}</th>
                     <th scope="col" class="text-center" style="width: 75px">{{'tests.status' | translate}}</th>
-                    <th scope="col" style="width: 48px"></th> 
+                    <th *ngIf="testTemplateList.length" class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
                 </tr>
             </thead>
             <tbody class="datatable-body" *ngIf="testTemplateList.length">
@@ -37,8 +37,8 @@
                     <td style="text-align: center;" *ngIf="testTemplate.qualifyingType == null">-</td>
                     <td>{{'statuses.' + statusEnum[testTemplate.status] | translate}}</td>
                     <td data-field="Actions" data-autohide-disabled="false"
-                        class="datatable-cell datatable-cell-sort p-3">
-                        <div style="overflow: visible; position: relative; width: 0px">
+                        class="datatable-cell datatable-cell-sort p-3 text-center">
+                        <div>
                             <div ngbDropdown class="dropdown dropdown-inline" container="body">
                                 <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                                     <span class="svg-icon svg-icon-md" ngbDropdownToggle>

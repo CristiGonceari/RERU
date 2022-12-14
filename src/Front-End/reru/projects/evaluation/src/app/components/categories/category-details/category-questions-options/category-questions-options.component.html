@@ -97,7 +97,7 @@
                 {{ "answers.correct" | translate }}
               </th>
               <th scope="col">{{ "events.name" | translate }}</th>
-              <th scope="col" style="width: 48px"></th>
+              <th *ngIf="options.length" class="col-1 w-50px">{{'button.actions' | translate}}</th>
             </tr>
           </thead>
           <tbody class="datatable-body">
@@ -121,9 +121,8 @@
                   </div>
                 </div>
               </td>
-              <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-                <div style="overflow: visible; position: relative; width: 0px"
-                  [ngClass]="{ 'invisible-area': disable }">
+              <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+                <div>
                   <div ngbDropdown class="dropdown dropdown-inline" container="body">
                     <div class="btn btn-sm btn-default btn-hover-default btn-iconmr-2">
                       <span class="svg-icon svg-icon-md" ngbDropdownToggle>

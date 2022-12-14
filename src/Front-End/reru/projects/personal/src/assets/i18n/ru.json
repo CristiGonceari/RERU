@@ -467,7 +467,8 @@
     "reset": "Сброс",
     "upload": "Загрузить",
     "applay": "Применить",
-    "update":"Обновить"
+    "update":"Обновить",
+    "actions": "Действия"
   },
   "entity": {
     "personal": {

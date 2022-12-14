@@ -93,7 +93,7 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
 
         private async Task LogAction(UserProfile userProfile)
         {
-            await _loggerService.LogWithoutUser(LogData.AsCore($@"Utilizatorul ""{userProfile.FullName}"" s-a inregistrat în sistem", userProfile));
+            await _loggerService.LogWithoutUser(LogData.AsCore($@"Utilizatorul ""{userProfile.FullName}"" s-a înregistrat în sistem", userProfile));
         }
     }
 }

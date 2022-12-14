@@ -23,7 +23,10 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.FinalizeTestVerif
         private readonly INotificationService _notificationService;
         private readonly IInternalNotificationService _internalNotificationService;
 
-        public FinalizeTestVerificationCommandHandler(AppDbContext appDbContext, IMediator mediator, INotificationService notificationService, IInternalNotificationService internalNotificationService)
+        public FinalizeTestVerificationCommandHandler(AppDbContext appDbContext, 
+            IMediator mediator, 
+            INotificationService notificationService, 
+            IInternalNotificationService internalNotificationService)
         {
             _appDbContext = appDbContext;
             _mediator = mediator;

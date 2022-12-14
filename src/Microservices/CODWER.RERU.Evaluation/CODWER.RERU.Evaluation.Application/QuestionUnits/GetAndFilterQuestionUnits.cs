@@ -1,8 +1,8 @@
 ﻿using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Linq;
 
 namespace CODWER.RERU.Evaluation.Application.QuestionUnits
 {
@@ -21,7 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits
 
             if (!string.IsNullOrWhiteSpace(filterData.QuestionName))
             {
-                questions = questions.Where(x => x.Question.ToLower().Contains(filterData.QuestionName.ToLower()) || x.QuestionUnitTags.Any(qu => qu.Tag.Name.ToLower().Contains(filterData.QuestionName.ToLower())));
+                questions = questions.Where(x => x.Question.ToLower().Contains(filterData.QuestionName.ToLower()));
             }
 
             if (!string.IsNullOrWhiteSpace(filterData.CategoryName))

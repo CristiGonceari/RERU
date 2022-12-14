@@ -18,7 +18,7 @@
               <th scope="col">{{ 'table.title' | translate }}</th>
               <th scope="col" style="width: 80px">{{ 'table.default' | translate }}</th>
               <th scope="col" style="width: 100px">{{ 'table.type' | translate }}</th>
-              <th scope="col" style="width: 50px"></th>
+              <th scope="col" class="w-100px">{{ 'table.actions' | translate }}</th>
             </tr>
           </thead>
           <tbody class="text-dark-75" *ngIf="roles">
@@ -36,8 +36,8 @@
                 <span *ngIf="role.type === 1" class="font-size-lg text-dark-75">{{'module-type.default' | translate}}</span>
                 <span *ngIf="role.type === 2" class="font-size-lg text-dark-75">{{'module-type.dynamic' | translate}}</span>
               </td>
-              <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-                <div style="overflow: visible; position: relative; width: 0px">
+              <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+                <div>
                   <div ngbDropdown class="dropdown dropdown-inline">
                     <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                       <span class="svg-icon svg-icon-md" [id]="'action' + i" ngbDropdownToggle>

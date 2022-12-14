@@ -5,7 +5,7 @@
 
 <div class="table-responsive-xl datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
-    <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading && !downloadFile">
+    <table class="datatable table font-size-lg" style="overflow: visible; table-layout: fixed;" *ngIf="!isLoading && !downloadFile">
         <thead class="text-uppercase text-muted">
             <tr>
                 <th class="text-left" scope="col">{{ 'tests.name' | translate }}</th>
@@ -14,15 +14,13 @@
                 <th scope="col" style="width: 200px">{{ 'events.evaluator' | translate }} ({{ 'user-profile.npp' |
                     translate }})</th>
                 <th scope="col">{{ 'events.event' | translate }}</th>
-                <th scope="col" style="width: 100px">{{ 'departments.department' | translate }} / {{ 'user-roles.role' |
-                    translate }}</th>
-                <th scope="col">{{ 'events.location' | translate }}</th>
-                <th scope="col" style="width: 100px">{{ 'verify-test.status' | translate }}</th>
-                <th scope="col" style="width: 50px">{{ 'verify-test.verified-progress' | translate }}</th>
+                <th scope="col" style="white-space: nowrap;" class="text-center">{{ 'departments.department' | translate }} / {{ 'user-roles.role' | translate }}</th>
+                <th scope="col" style="width: 100px;">{{ 'events.location' | translate }}</th>
+                <th scope="col" style="width: 108px">{{ 'verify-test.status' | translate }}</th>
+                <th scope="col" style="width: 80px">{{ 'verify-test.verified-progress' | translate }}</th>
                 <th scope="col" style="width: 100px">{{ 'verify-test.result' | translate }}</th>
-                <th scope="col" style="width: 100px">{{'dashboard.score' | translate}} /
-                    {{'dashboard.min-score' | translate}}</th>
-                <th scope="col" style="width: 48px"></th>
+                <th scope="col" style="width: 100px">{{'dashboard.score' | translate}} / {{'dashboard.min-score' | translate}}</th>
+                <th *ngIf="testTemplate.length" class="col-1 text-center" style="width: 79px">{{'button.actions' | translate}}</th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="testTemplate.length">
@@ -44,7 +42,7 @@
                     </td>
                     <td>
                         <p *ngIf="item.showUserName" class="font-size-lg cursor-pointer text-hover-primary mb-0"
-                            [routerLink]="['../user-profile', item.userId]" style="white-space: nowrap;">
+                            [routerLink]="['../user-profile', item.userId]">
                             {{ item.userName }}
                             <br>
                             <span class="text-dark-50 font-size-lg font-weight-light">{{ item.idnp }}</span>
@@ -60,11 +58,10 @@
                         <div *ngIf="hasTestHashGroup(item.hashGroupKey, item.id) <= 1">
                             <div *ngIf="item.evaluatorName">
                                 <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
-                                    [routerLink]="['../user-profile', item.userId]" style="white-space: nowrap;">
+                                    [routerLink]="['../user-profile', item.userId]">
                                     {{ item.evaluatorName }}
                                     <br>
-                                    <span class="text-dark-50 font-size-lg font-weight-light">{{ item.evaluatorIdnp
-                                        }}</span>
+                                    <span class="text-dark-50 font-size-lg font-weight-light">{{ item.evaluatorIdnp }}</span>
                                 </p>
                             </div>
                             <div *ngIf="!item.evaluatorName && item.isVerificatedAutomat">
@@ -76,12 +73,33 @@
                         </div>
                     </td>
                     <td>
+                        <ng-template #positionsTipContent width='600px' height='60px'>
+                            <dl class="list-group nav list-inline">
+                                <dt>
+                                    <span class="svg-icon svg-icon-primary svg-icon-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                        <path
+                                                        d="M18,14 C16.3431458,14 15,12.6568542 15,11 C15,9.34314575 16.3431458,8 18,8 C19.6568542,8 21,9.34314575 21,11 C21,12.6568542 19.6568542,14 18,14 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z"
+                                                        fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                        <path
+                                                        d="M17.6011961,15.0006174 C21.0077043,15.0378534 23.7891749,16.7601418 23.9984937,20.4 C24.0069246,20.5466056 23.9984937,21 23.4559499,21 L19.6,21 C19.6,18.7490654 18.8562935,16.6718327 17.6011961,15.0006174 Z M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z"
+                                                        fill="#000000" fill-rule="nonzero" />
+                                             </g>
+                                        </svg>
+                                    </span>
+                                    <span style="text-transform:uppercase;">{{ 'solicited-position.solicited-positions' | translate }} :</span>
+                                    <ol>
+                                        <li *ngFor="let positionName of item.candidatePositionNames; let i = index" class="tooltip-text font-size-lg">{{ positionName || '-'}}</li>
+                                    </ol>
+                                </dt>
+                            </dl>
+                        </ng-template>
                         <span class="font-size-lg" *ngIf="item.eventName">{{ item.eventName }}</span>
-                        <span class="font-size-lg" *ngIf="item.candidatePositionNames !== null"
-                            [ngbTooltip]="parseCandidatePositions(item.candidatePositionNames)"
-                            style="margin-left: 3px;">
+                        <span class="font-size-lg" *ngIf="item.candidatePositionNames !== null" [ngbTooltip]="positionsTipContent" style="margin-left: 3px;">
                             <span class="svg-icon svg-icon-primary svg-icon-2x">
-                                <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo5/dist/../src/media/svg/icons/Communication/Clipboard-list.svg--><svg
+                               <svg
                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                     width="6px" height="6px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -105,7 +123,7 @@
                         <span class="font-size-lg" *ngIf="!item.eventName">-</span>
                     </td>
                     <td class="department-td">
-                        <ng-template #tipContent width='600px' height='60px'>
+                            <ng-template #departmentAndRoleTipContent width='600px' height='60px'>
                             <dl class="list-group nav list-inline">
                                 <dt>
                                     <span class="svg-icon svg-icon-primary svg-icon-2x">
@@ -159,19 +177,12 @@
                                     <p class="tooltip-text">{{ item.roleName || '-' }}</p>
                                 </dt>
                             </dl>
-                        </ng-template>
-                        <span [ngbTooltip]="tipContent" class="font-size-lg">
-                            <div class="row" style="margin-top: 13px;">
-                                <div class="col-5 p-0">
-                                    <p class="font-size-lg text-truncate">{{ item.departmentName || '-'}}</p>
-                                </div>
-                                <div class="col-2 p-0">
-                                    <p class="text-center">/</p>
-                                </div>
-                                <div class="col-5 p-0">
-                                    <p class="font-size-lg text-truncate">{{ item.roleName || '-'}}</p>
-                                </div>
-                            </div>
+                        </ng-template>  
+                        <span [ngbTooltip]="departmentAndRoleTipContent">    
+                            <p *ngIf="item.showUserName" class="text-truncate"> {{ item.departmentName || '-'}}<br>   
+                                <span class="text-dark-50 font-size-lg font-weight-light text-truncate">{{ item.roleName || '-'}}</span>    
+                            </p>   
+                            <span *ngIf="!item.showUserName" class="font-size-lg">-</span>   
                         </span>
                     </td>
                     <td>
@@ -229,10 +240,9 @@
                         </div>
                     </td>
                     <td data-field="Actions" data-autohide-disabled="false"
-                        class="datatable-cell datatable-cell-sort p-3">
-                        <div *ngIf="hasTestHashGroup(item.hashGroupKey, item.id) <= 1"
-                            style="overflow: visible; position: relative; width: 0px">
-                            <div ngbDropdown class="dropdown dropdown-inline">
+                        class="datatable-cell datatable-cell-sort p-3 text-center">
+                        <div *ngIf="hasTestHashGroup(item.hashGroupKey, item.id) <= 1">
+                            <div ngbDropdown class="dropdown dropdown-inline" container="body">
                                 <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                                     <span class="svg-icon svg-icon-md" ngbDropdownToggle>
                                         <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"

@@ -1,6 +1,5 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!isActive">
     <div class="card card-custom mb-7" style="margin-left: 16px;">
-        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title"><b>{{'categories.categories' | translate}}</b></div>
             <div class="card-toolbar">
@@ -10,6 +9,7 @@
             </div>
         </div>
         <div class="card-body">
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
             <div *ngIf="!isLoading"
                 class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
                 id="kt_datatable">
@@ -30,7 +30,7 @@
                             <th scope="col">{{'categories.category-name' | translate}}</th>
                             <th scope="col">{{'tests.questions' | translate}}</th>
                             <th scope="col">{{'questions.type' | translate}}</th>
-                            <th scope="col" style="width: 48px"></th>
+                            <th *ngIf="categories.length" class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
                         </tr>
                     </thead>
                     <tbody dragula="Categories" [(dragulaModel)]="categories">
@@ -47,7 +47,7 @@
                             <td data-field="Actions" data-autohide-disabled="false"
                                 class="datatable-cell datatable-cell-sort p-3">
                                 <div style="overflow: visible; position: relative; width: 0px">
-                                    <div ngbDropdown class="dropdown dropdown-inline">
+                                    <div ngbDropdown class="dropdown dropdown-inline" container="body">
                                         <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                                             <span class="svg-icon svg-icon-md" ngbDropdownToggle>
                                                 <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"

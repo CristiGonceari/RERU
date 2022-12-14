@@ -44,7 +44,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             AppDbContext appDbContext,
             INotificationService notificationService,
             IOptions<PlatformConfig> options,
-            IStorageFileService storageFileService, IInternalNotificationService internalNotificationService, ILoggerService<AddTestsCommandHandler> loggerService)
+            IStorageFileService storageFileService, 
+            IInternalNotificationService internalNotificationService, 
+            ILoggerService<AddTestsCommandHandler> loggerService)
         {
             _mediator = mediator;
             _appDbContext = appDbContext;
@@ -189,10 +191,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
         private async Task GenerateExcelResult(int i, int userProfileId, bool result, string error)
         {
-            await using (var xd = _appDbContext.NewInstance())
-            {
-                
-            }
             await using var db = _appDbContext.NewInstance();
 
             var userProfile = db.UserProfiles.FirstOrDefault(x => x.Id == userProfileId);
@@ -223,7 +221,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 .Include(x => x.TestTemplate)
                 .FirstOrDefaultAsync(x => x.Id == testId);
 
-            await _loggerService.Log(LogData.AsEvaluation($@"Utilizatorul ""{test.UserProfile.FullName}"" a fost atașat/ă la testul ""{test.TestTemplate.Name}"" data: ""{test.ProgrammedTime:dd/MM/yyyy HH:mm}"""));
+            await _loggerService.Log(LogData.AsEvaluation($@"Utilizatorul ""{test.UserProfile.FullName}"" a fost atașat/ă la testul ""{test.TestTemplate.Name}"", data: ""{test.ProgrammedTime:dd/MM/yyyy HH:mm}"""));
         }
 
         private async Task SaveExcelFile(int processId, ExcelPackage package)
@@ -251,7 +249,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
         }
 
 
-        #region EvaluatorMail
+        #region EvaluatorEmail
         private async Task SendEmailNotificationToEvaluator(int? evaluatorId, int testTemplateId)
         {
             if (evaluatorId == null) return;
@@ -274,7 +272,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
         }
         #endregion
 
-        #region EvaluatMail
+        #region EvaluatEmail
         private async Task SendEmailNotificationToEvaluat(int testId)
         {
             await using var db = _appDbContext.NewInstance();
@@ -319,7 +317,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 ReplacedValues = new Dictionary<string, string>()
                 {
                     { "{user_name}", user.FullName },
-                    { "{email_message}",message }
+                    { "{email_message}", message }
                 }
             });
         }

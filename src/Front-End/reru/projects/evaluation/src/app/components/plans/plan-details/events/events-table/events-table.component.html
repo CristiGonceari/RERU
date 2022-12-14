@@ -8,7 +8,7 @@
         <th scope="col">{{'events.name' | translate}}</th>
         <th scope="col" style="width: 200px;" class="text-left">{{'events.start-date' | translate}}</th>
         <th scope="col" style="width: 200px;" class="text-left">{{'events.end-date' | translate}}</th>
-        <th scope="col" style="width: 48px"></th>
+        <th *ngIf="events.length" class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
       </tr>
     </thead>
     <tbody class="datatable-body" *ngIf="events.length">
@@ -16,9 +16,9 @@
         <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../events/event', item.id]">{{item.name}}</td>
         <td>{{item.fromDate | date: 'dd/MM/yyyy'}}</td>
         <td>{{item.tillDate | date: 'dd/MM/yyyy'}}</td>
-        <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-          <div style="overflow: visible; position: relative; width: 0px">
-            <div ngbDropdown class="dropdown dropdown-inline">
+        <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-ceter">
+          <div>
+            <div ngbDropdown class="dropdown dropdown-inline" container="body">
               <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                 <span class="svg-icon svg-icon-md" ngbDropdownToggle>
                   <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"

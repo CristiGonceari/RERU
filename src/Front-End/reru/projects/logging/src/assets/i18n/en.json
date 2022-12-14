@@ -38,7 +38,8 @@
    "date": "Date",
    "view-details": "View details",
    "delete-logs": "Delete Logs",
-   "npp": "L.F.F."
+   "npp": "L.F.F.",
+   "enclosed-mode": "Enclosed mode"
   },
   "delete-log-modal":{
     "title": "Delete logs older than:",

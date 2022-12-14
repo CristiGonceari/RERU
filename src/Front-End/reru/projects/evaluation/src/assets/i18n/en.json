@@ -383,6 +383,7 @@
     "min-percentage": "Min. percentage of points(%)",
     "accumulated-percent": "Collected percentages",
     "test-type-autoverify": "Selected test template will be veified by system",
+    "select-before-event-pls": "Select please needed event",
     "event-has-evaluator": "Selected event has its own evaluators",
     "asignee": "Assign",
     "user-list-to-add": "User list to add",

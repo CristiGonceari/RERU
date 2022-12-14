@@ -469,7 +469,8 @@
     "reset": "Reset",
     "upload": "Upload",
     "applay": "Apply filter",
-    "update":"Update"
+    "update":"Update",
+    "actions": "Actions"
   },
   "entity": {
     "personal": {

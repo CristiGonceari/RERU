@@ -105,9 +105,8 @@
                   <th scope="col">{{'position.column' | translate}}</th>
                   <th scope="col" style="width: 150px">{{'position.active-from' | translate}}</th>
                   <th scope="col" style="width: 150px">{{'position.active-to' | translate}}</th>
-                  <th scope="col" style="width: 75px; text-align: center; vertical-align: middle">
-                    {{'position.status' | translate}}</th>
-                  <th scope="col" style="width: 50px"></th>
+                  <th scope="col" style="width: 75px; text-align: center; vertical-align: middle">{{'position.status' | translate}}</th>
+                  <th *ngIf="positions.length" class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
                 </tr>
               </thead>
               <tbody class="text-dark-75">
@@ -144,10 +143,9 @@
                       data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Active">
                     </svg-icon>
                   </td>
-                  <td data-field="Actions" data-autohide-disabled="false"
-                    class="datatable-cell datatable-cell-sort p-3">
-                    <div style="overflow: visible; position: relative; width: 0px">
-                      <div ngbDropdown class="dropdown dropdown-inline" class="p-0">
+                  <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+                    <div>
+                      <div ngbDropdown class="dropdown dropdown-inline" class="p-0" container="body">
                         <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                           <span class="svg-icon svg-icon-md" [id]="'action' + i" ngbDropdownToggle>
                             <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
